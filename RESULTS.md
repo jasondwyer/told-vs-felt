@@ -21,6 +21,88 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-16 — **LOCK-m-F0 v1.0 (PROPOSAL-m v1.11 §8 step 15, m:286): COMMITTED on the PI's cap, hour cap = 40 h.
+  `LOCK-m-F0.md` now opens with the v1.0 amendment, and the v0.2 text follows it byte for byte (the blob at `db7d970`),
+  except four truncations of superseded hashes in its v0.1 copy. The sentence table of record is placed at
+  `data/m/gates/m_posting_sentences.json`. The window that opened at `b046b16` closes.** The PI's word, 2026-10-16:
+  "Commit v1.0 on this cap and push". Model-free; outcome-blind; no model process.
+  - **The lock:** `LOCK-m-F0.md`, sha256 `fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c`. This is the `lock_sha256` the campaign and VERDICTS cite (v1.0 §0).
+    - The commit is authored and committed as the PI, Jason Dwyer, the identity of the laptop commits (the PI's word,
+      2026-10-16). Its committer date is 2026-10-16, in UTC.
+    - The Clock date is 2026-10-30, and the Clock is UTC by R1 C7: the seat's correction, routed by the PI (v1.0 §5).
+  - **What v1.0 settles** (each item the draft marked pending, named where it stands in the lock):
+    - **The cap:** `hour cap = 40 h` and `launch counts = A0 128, A0s 64` (v1.0 §4).
+    - **The PI's confirmation** that "placed" settles m:58's and m:356's "before step 15" and m:58's "redraft from
+      v1.1" (v1.0 §2).
+    - **The seat's step-15b answers** (`dd097ab`): Q1's rules, Q3–Q5, Code's additions (Q4) and both G-PWR departures
+      accepted (v1.0 §§0–3, 8).
+    - **The table of record:** r6, `af5cb816…f902`, with its firing over the 1,080 tuples. The r5→r6 change stands as
+      the r6 entry has it (v1.0 §2).
+    - **G-PWR's run of record** (`43f3bb2`) and its figures (v1.0 §3).
+    - **Strikes recorded:** none, as the seat's read of the draft has it (v1.0 §8).
+    - The draft the seat read is the snapshot `c4571818…442d` (`78f5602`). A script composes v1.0 from it, and that
+      script is in the check raw. Each of its replacements asserts that its old text occurs exactly once, with these
+      exceptions:
+      - four blocks are rewritten by slicing between anchors (the header, §1's "What would move these lines", §2's
+        table-of-record paragraph and its r5→r6 bullet);
+      - v1.0 §4 is replaced whole;
+      - one §14 cell is asserted at its three occurrences;
+      - "this draft" → "the draft" is applied throughout, asserted at its 7 occurrences, none inside a quotation.
+  - **The truncations** (the step-10 read's Q1; the step-15b answers, Q3), in the v0.1 copy only. Each superseded hash is
+    cut to its first 16 hex and "…" in lock §1 and lock §9.1: the analyzer `66fb521488db41e7…` and the placeholder
+    `b1cce4f844f78e45…`. Neither full value appears anywhere in the file. Reversing the four cuts gives the v0.2 blob
+    byte for byte.
+  - **Code's mechanical check** (`results/raw/2026-10-16_m-lock-v1.0_check.txt`, sha256 `3efe5f6c584708cd71b6e267e5b2d2027c0f48aac94decd48c7aac0bfa107d2f`): PASS, with one
+    note. The note is a quote of v1.0's own text, the bold lead of a §1 bullet ("What would have moved these lines").
+    - The v0.2 tail is exact, and the superseded hashes are nowhere in the file.
+    - Every 64-hex value in the amendment (48 distinct) matches a recomputed sha256, with three exceptions:
+      - two are values read from committed records: the renders, from G-CAL, and the G-ANL-F0 closure, from its
+        manifest;
+      - one is the v1.1 reference's, compared in full with the untracked file at root.
+
+      The G-PWR closure is among the recomputed values, from its 13 files.
+    - 35 backticked commit ids resolve (the clone was unshallowed first; the weights snapshot id is not counted).
+    - Every number of every section reference resolves.
+    - 82 of 83 long quotes are found verbatim. The 83rd is the note above. The PI's chat words are checked against
+      Code's transcription of them.
+    - `stages.licence_problems` returns `[]` for the campaign's identity, and four negative controls are refused, the
+      committed v0.2 among them (the window).
+    - The driver's `stage_identity_extra` accepts the file for `time`, `id` and `qual`.
+    - PIN-40 holds against the placed table: `table_problems` `[]`, kind `of-record`, the preprint's sha256 recorded,
+      and both sha256 named in full.
+    - The line forms: each stands in v1.0 §4 and in the PI's quoted cap in §0, and every `hour cap` and
+      `launch counts` form in the file is the cap's.
+    - The table is placed in this commit, beside `LOCK-m-F0.md`, this entry, the check raw and the values-check raw.
+      The analyzer's VERDICTS path refuses a table not committed at HEAD.
+  - **The window's control** (the step-15 answers' "The not-questions", "The window"; v1.0 §12). In a scratch clone,
+    under a scratch Python with `huggingface_hub` 2.2.0, the driver self-test was run at HEAD and then with this
+    `LOCK-m-F0.md` committed.
+    - At HEAD it gives 794/796. The two failures are the window's `time` refusal check, one check over 31 cases that
+      fails on its lock-named case, and an environmental `qwen_snapshot` check.
+    - With v1.0 it gives 795/796. Only the environmental failure remains.
+    - The self-test of record runs on the laptop. The seat's "The window" says it returns from 795/796 to 796/796 when
+      a lock line names the new analyzer. This control agrees with that, but it is not that figure.
+  - **The values-check:** `results/raw/2026-10-16_m-lock-v1.0_valuescheck.txt`, sha256 `f88244972606633a338da869911d6f6730ffdea20c81066762763d9b3d75452f`, with Code's dispositions.
+    It found no wrong hash, cell or figure of record. Its failures were in text:
+    - a settled departure reading still shown as open;
+    - Code's readings within Q7 not entered;
+    - a wrong section citation in v1.0 §4;
+    - the entry's counts, sources and claims.
+
+    All are disposed in the lock and in this entry. Code alone checked the edits made after the pass: the composer, the
+    mechanical check and the window's control were re-run on the final file.
+  - **Corrections, as the PI directs (2026-10-16):**
+    - **The r6 entry** truncates the step-15c read's sha256 as `a8d07909…dd7f`; it ends `…ddf7` (in full,
+      `a8d07909caa04fef0495e5798d60f080ce73b4f2ce378bbdd0080b24d91cddf7`). The same truncation stands in the r6 raw's
+      workflow prompt and in two of the returns it carries; the r6 raw's header and the r6 commit message carry it in full.
+    - **The r6 entry's Next 2**, edited in place by this commit, drops its sentence on `TZ` set to the PI's zone. That
+      sentence also carried the 2026-10-29 EDT alternative (step 15c §5.3), which rested on the same premise. The
+      identity setting stands.
+  - **Next:**
+    1. Step 16, the campaign wiring (v1.0 §13 item 1): the Q3 redaction and the campaign's `REVISION_STAGES` entry,
+       reviewed as the `qual` wiring was. It tests the line forms of v1.0 §4 as substrings.
+    2. The Q-F0 campaign on the PI's word (v1.0 §13 item 2). Step 17 in a later session.
+
 - 2026-10-16 — **THE SENTENCE TABLE OF RECORD, r6: THE SEAT'S STRIKE ON R262.05 (PROPOSAL-m v1.11 m:286, §8 step 15;
   the seat's step-15c read, `results/raw/2026-10-16_m-design-to-code_step15c_answers.md`, sha256 `a8d07909…dd7f`,
   committed at `3c7f8c7`; the PI's word of 2026-10-16: "Apply as r6: R262.05 −e2b, rows only; rebuild, re-hash,
@@ -77,8 +159,7 @@ applied to CLAUDE.md.
        - ≈5.3–14.0 hours at the three measured uncached sham sessions (100–262 s);
        - the seat's note: a STOP, so above the honest projection, 40 h.
     2. Before v1.0's commit, this clone's git identity is set to match the PI's laptop commits (the PI's word,
-       2026-10-16). Because the Clock reads the committer date as recorded, v1.0's commit is made with `TZ` set to the
-       PI's zone, or on or before 2026-10-29 EDT (step 15c §5.3).
+       2026-10-16).
     3. v1.0 on the PI's cap: the table placed at `data/m/gates/m_posting_sentences.json` in v1.0's commit, its sha256
        beside the preprint's (PIN-40). v1.0's text states the all-PASS enumeration from the table of record (step 15c
        C3). The committer date is on or before 2026-10-30.

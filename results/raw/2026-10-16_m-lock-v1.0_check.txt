@@ -1,0 +1,799 @@
+# LOCK-m-F0 v1.0 -- Code's mechanical check of the file before its commit (read-only; no model or tokenizer), as v0.2's
+# (results/raw/2026-10-13_m-lock-v0.2_check.txt), with the window's control beside it.
+# Code stamp: 2026-10-16 15:24 UTC (date -u); HEAD 681f197; the lock LOCK-m-F0.md, sha256 fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c, uncommitted, byte-identical to the file
+# committed with this raw. The cloud container; the clone unshallowed first (git fetch --unshallow) so that every commit
+# id resolves; Python 3.13 with a scratch virtualenv (--system-site-packages, plus huggingface_hub 2.2.0) for the
+# driver's import; every run -I -B.
+# Contents: (1) the composer (compose_v10.py), which writes the file from the draft's committed snapshot and db7d970's
+#   blob; (2) the check (check_v10.py); (3) its output on the file; (4) the window's control: the driver self-test in a
+#   scratch clone at HEAD and with this file committed (summary and FAIL lines; the rest of each output is PASS lines).
+#   The composer and the check as the values-check pass read them are in the values-check raw
+#   (results/raw/2026-10-16_m-lock-v1.0_valuescheck.txt).
+====================================================================================================================
+(1) THE COMPOSER, compose_v10.py, verbatim; sha256 1fd208dc77489854bf26021166f49698b54b09ba1f13fa602933ac360c244892; run: python3 -I -B compose_v10.py <repo> <out>
+====================================================================================================================
+"""Compose LOCK-m-F0.md v1.0: the committed draft snapshot (results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md,
+sha256 c4571818...442d) with every [PENDING] item settled, then the v0.2 text (db7d970's blob) with the four truncations
+v1.0 §0 lists. Each rep() asserts its old text occurs exactly once. Otherwise: three blocks (the header, §1's "What would
+move these lines", §2's table-of-record paragraph; later §2's r5 -> r6 bullet) are rewritten by slicing between anchors
+located with index(); v1.0 §4 is replaced whole; one §14 cell is asserted at its three occurrences; and "this draft" ->
+"the draft" is applied throughout, asserted at its 7 occurrences at that point, none inside a quotation.
+usage: python3 -I -B compose_v10.py <repo> <out LOCK-m-F0.md>"""
+import hashlib, subprocess, sys
+from pathlib import Path
+
+REPO, OUT = Path(sys.argv[1]), Path(sys.argv[2])
+sha = lambda b: hashlib.sha256(b).hexdigest()
+C = {c: subprocess.run(["git", "-C", sys.argv[1], "rev-parse", c], capture_output=True, check=True, text=True).stdout.strip()
+     for c in ("681f197", "4f8f361", "43f3bb2", "78f5602")}
+def blob(rev, rel): return subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{rel}"], capture_output=True, check=True).stdout
+draft_b = blob("78f5602", "results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md")
+assert sha(draft_b) == "c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d"
+v02_b = blob("db7d970", "LOCK-m-F0.md")
+assert sha(v02_b) == "0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e"
+t = draft_b.decode("utf-8")
+
+def rep(old, new):
+    global t
+    assert t.count(old) == 1, ("not exactly once", old[:90], t.count(old))
+    t = t.replace(old, new)
+
+def section(n):
+    a = t.index(f"\n## v1.0 §{n}. ")
+    b = t.find("\n## v1.0 §", a + 5)
+    return a, (b if b != -1 else len(t))
+
+def replace_section(n, new_body):
+    global t
+    a, b = section(n)
+    t = t[:a] + "\n" + new_body.rstrip("\n") + "\n" + t[b:]
+
+T6 = "af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902"
+GPWR = "b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68"
+GPWR_RAW = "3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145"
+SNAP = "c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d"
+
+# ---- the header ------------------------------------------------------------------------------------------------------
+h0 = t.index("**DRAFT, 2026-10-15.**"); h1 = t.index("\n## v1.0 §0.")
+t = t[:h0] + """**COMMITTED, 2026-10-16, on the PI's cap.** This is the amendment whose draft G-PWR's run of record read (the
+snapshot `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md`, committed at `78f5602`, v1.0 §3) and the seat read,
+with every item the draft marked pending settled by the run, answer or word it waited on, each named where it stands.
+The seat's read of the draft, as the PI routed it (2026-10-16): "no strikes; v1.0 §8 records none from the seat; the
+table’s r5→r6 change stands in v1.0 §2 as the r6 entry has it". The commit waited on G-PWR's run of record and the PI's
+cap (R2 3; the step-14 read §4 item 5) and on the seat's Q2 ruling with the table of record's sha256 (m:286; PIN-40),
+with a committer date on or before 2026-10-30 (D1, v1.0 §5). The v0.2 text follows this amendment, byte for byte as
+committed at `db7d970` except the truncations v1.0 §0 lists.
+""" + t[h1:]
+
+# ---- §0 --------------------------------------------------------------------------------------------------------------
+rep("- **Drafted by Code on the PI's word, and committed only on the PI's cap.** The PI's words, verbatim:",
+    "- **Drafted by Code on the PI's word, and committed on the PI's cap.** The PI's words, verbatim:")
+rep("  - **[PENDING]** The PI's cap (v1.0 §4).\n",
+    """  - The routing of the seat's step-15b answers (2026-10-15, in `dd097ab`'s message): "Confirmed: 'placed' was my word
+    for patch v8".
+  - The routing of the seat's step-15c read (chat, 2026-10-16): "Apply as r6: R262.05 −e2b, rows only; rebuild,
+    re-hash, table_problems, one values-check pass. The five rows stand; the variant is declined." And: "Before v1.0’s
+    commit, set this clone’s git identity to match my laptop commits."
+  - **The cap** (chat, 2026-10-16): "PI’s cap: hour cap = 40 h (v1.0 §4’s line form; launch counts = A0 128, A0s 64).
+    Confirmed: 'placed' settles m:58’s and m:356’s 'before step 15' and m:58’s 'redraft from v1.1' (v1.0 §2). Seat’s
+    read of the v1.0 draft (c4571818…442d): no strikes; v1.0 §8 records none from the seat; the table’s r5→r6 change
+    stands in v1.0 §2 as the r6 entry has it. Seat’s correction: the Clock is UTC by R1 C7 (v1.0 §5) — no TZ setting
+    matters; the deadline is 2026-10-30 23:59:59 UTC". And: "Commit v1.0 on this cap and push".
+""")
+rep("""  - **[PENDING]** The seat's answers to Code's step-15b ping (`results/raw/2026-10-15_m-code-to-design_step15b.md`)
+    and its addendum (`results/raw/2026-10-15_m-code-to-design_step15b_addendum.md`). Until they arrive, this draft
+    applies Code's defaults, each marked where it stands.
+""", """  - **The seat's step-15b answers** (`results/raw/2026-10-15_m-design-to-code_step15b_answers.md`, committed at
+    `dd097ab`), to Code's step-15b ping (`results/raw/2026-10-15_m-code-to-design_step15b.md`) and its addendum
+    (`results/raw/2026-10-15_m-code-to-design_step15b_addendum.md`): Q1's rules accepted, with Q2's ruling (A4, tests
+    1–7) for scope; Q3–Q5 accepted; Code's additions kept (Q4); both G-PWR departures accepted post hoc. Each default
+    of the ping's that the draft applied is accepted, and named so where it stands.
+  - **The seat's step-15c read** (`results/raw/2026-10-16_m-design-to-code_step15c_answers.md`, committed at
+    `3c7f8c7`): the table of record stands on the five rows, the seat-enumeration variant declined, with one strike,
+    R262.05 −e2b (rows only), applied as r6 (v1.0 §2).
+""")
+rep("""  - The analyzer's rows are Q1's. The placeholder's are Code's default in the step-15b ping's Q3 **[PENDING the
+    seat]**: it moved by one line at `ed8e886`, and nothing tests its old value. The same default: the file "is
+    replaced in place as the builder's output, not moved by PIN-37, which governs write-once outputs".
+""", """  - The analyzer's rows are Q1's. The placeholder's are the seat's (the step-15b answers, Q3): "In v1.0, v0.1's two
+    placeholder rows are marked superseded and truncated as the analyzer's sha256 is, with the old bytes resolving at
+    `64df36b`; the file is replaced in place as a builder output, outside PIN-37". It moved by one line at `ed8e886`,
+    and nothing tests its old value.
+""")
+rep("""  - the reading that the PI's "placed" settles m:58's and m:356's "before step 15" and m:58's "redraft from v1.1"
+    (v1.0 §2);
+  - the defaults of the step-15b ping and its addendum, until the seat answers (marked **[PENDING the seat]**), and
+    the reading that they stand unless the seat answers otherwise (the header);
+""", """  - the reading that the PI's "placed" settles m:58's and m:356's "before step 15" and m:58's "redraft from v1.1"
+    (v1.0 §2), which the PI confirmed (2026-10-16, above);
+  - the defaults of the step-15b ping and its addendum, which the seat's step-15b answers accept (Q1, Q3–Q5; Q4: "All
+    kept, on Q1's terms");
+""")
+
+# ---- §1 --------------------------------------------------------------------------------------------------------------
+rep("""  blocks, P288 (PIN-17's site), P300 (PIN-10's V2 site) and PIN-45's site P329, are held on the same terms: Code's
+  reading (the step-15b ping, "The PIN index") **[PENDING the seat]**, except what R2 2 made the seat's (below).
+  Code's additions in them are the step-15b ping's Q4 list **[PENDING the seat]**. P301's (PIN-9's site) only change
+  is Q5's ordered correction.""", """  blocks, P288 (PIN-17's site), P300 (PIN-10's V2 site) and PIN-45's site P329, are held on the same terms (the
+  seat's step-15b answers, Q4: "All kept, on Q1's terms"), except what R2 2 made the seat's (below). Code's additions
+  in them are the step-15b ping's Q4 list, which the seat kept. P301's (PIN-9's site) only change is Q5's ordered
+  correction.""")
+rep("  - **Declared here: PIN-1 to PIN-46, Code's readings, none struck [PENDING: as v1.0 §8],** except, as at lock §9.3,",
+    "  - **Declared here: PIN-1 to PIN-46, Code's readings, none struck (v1.0 §8),** except, as at lock §9.3,")
+rep("""    | 3 | Q7: the planning row "recomputed at G-PWR with PIN-3's base case re-derived at the planned floors (R1 C6)" (v1.0 §3) |
+""", """    | 3 | Q7: the planning row "recomputed at G-PWR with PIN-3's base case re-derived at the planned floors (R1 C6)" (v1.0 §3) |
+    | 10, 17, 45 (P300, P288, P329) | the step-15b answers, Q4: "All kept, on Q1's terms" (PIN-45's placement; PIN-10's V2 site sentence; PIN-17's provenance parenthetical and `SEAT_ROUTED`'s entry) |
+""")
+rep("""  - Code's additions beyond the order's letter are the step-15b ping's Q4 list, Code's default "kept" **[PENDING the
+    seat]**.""", """  - Code's additions beyond the order's letter are the step-15b ping's Q4 list, which the seat's step-15b answers keep
+    (Q4: "All kept, on Q1's terms").""")
+a = t.index("- **What would move these lines** (the addendum,"); b = t.index("\n## v1.0 §2.")
+t = t[:a] + """- **What would have moved these lines** (the addendum, "After the ruling" and "What proceeds meanwhile"; the step-15b
+  ping, Q4): a patch v9 under Q2's (C), a strike of a Q4 item, or a strike of a Q7 default. None happened. The seat
+  ruled A4 ("No patch v9; no analyzer byte moves", the step-15b answers), kept every Q4 item, and struck no Q7 default
+  (v1.0 §3); its rulings changed the table's rows only (v1.0 §2). G-PWR was not re-run, and these lines are the draft's.
+""" + t[b:]
+
+# ---- §2 --------------------------------------------------------------------------------------------------------------
+rep("""    v1.1", where the placed copy is patch v8 of the root copy. Code reads the PI's "placed" (2026-10-14) as settling
+    both: Code's reading, for the PI to confirm **[PENDING the PI]**. On the seat's texts: the step-14 read's §4 item 3""",
+    """    v1.1", where the placed copy is patch v8 of the root copy. Code read the PI's "placed" (2026-10-14) as settling
+    both, and the PI confirmed it (2026-10-16): "Confirmed: 'placed' settles m:58’s and m:356’s 'before step 15' and
+    m:58’s 'redraft from v1.1' (v1.0 §2)." On the seat's texts: the step-14 read's §4 item 3""")
+a = t.index("- **The sentence table of record:** `data/m/gates/m_posting_sentences.json`, sha256 **[PENDING the seat's Q2]**.")
+b = t.index("- **PIN-17, re-verified against the placed copy**")
+t = t[:a] + f"""- **The sentence table of record:** `data/m/gates/m_posting_sentences.json`, placed by this commit, sha256
+  `{T6}` (55 rows; `table_problems` returns `[]` on the
+  analyzer of record, v1.0 §1, reading the preprint above). PIN-40 reads its sha256 and the preprint's, each in full,
+  here and in v1.0 §6; VERDICTS (step 17) enumerates over it (m:286).
+  - **How it was built.** Code's candidate, built from the placed copy outcome-blind under Code's spec (the table raw,
+    `results/raw/2026-10-15_m-table-draft-step15.txt`) and values-checked in two passes
+    (`results/raw/2026-10-15_m-table-of-record-valuescheck_interim.txt`), was `7206d78b…d0c5`. The seat's step-15b
+    answers ruled its scope (Q2, option A4, tests 1–7). Code applied the ruling to every scope row, values-checked the
+    sweep in five passes, and hashed it: r5, `74781b90…f907` (`results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt`,
+    `4f8f361`). The seat's step-15c read kept the five rows on which r5 followed test 5's text against the ruling's
+    applied paragraph, declined the seat-enumeration variant (`29a878cf…5490`), and struck e2b from R262.05. Code
+    applied the strike as r6, with one values-check pass (`results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt`,
+    `681f197`).
+  - **The change r5 → r6, as the r6 entry has it:** one cell, R262.05's e2b, struck (e2a, f1, olmo-base, olmo-sft,
+    olmo-dpo, olmo-instruct); rationales on R262.05, R254.02, R242.01, the five rows (25.04, 232.01–232.03, 240.06) and
+    R194.04; no other field moves. r6's table is byte-equal to r2's (the r5 raw records r2's), since the builder reads
+    no rationale. Superseded: the candidate `7206d78b…d0c5`, r5 `74781b90…f907` and the variant `29a878cf…5490`.
+  - **Its firing over the 1,080 tuples** (the step-15c read, C3: "v1.0's text states the all-PASS enumeration from the
+    table of record"): 14 rows fire clause (a) in every tuple (R025.04, R123.01, R186.02, R186.04, R220.01, R232.01,
+    R232.02, R232.03, R236.02, R240.02, R240.03, R240.06, R250.03, R262.05). At the all-PASS tuple the enumeration
+    has 23 items under the flag of record, 14 by (a) and 10 by (b), R236.02 under both; under the other flag, 24
+    (R182.06 by (c)). The interim raw's sentence that paragraph 248 is rewritten at every posting is superseded (C3).
+  - **The rules** are Code's readings (PIN-20), which the seat accepted (the step-15b answers, Q1: "Accepted as
+    declared"), with the seat's rulings on scope: A4's tests 1–7 (the step-15b answers, Q2); test 5's precise form
+    (the step-15c read, §1: a unit that ranges over the data, the results or the paper asserts its null on e2b and the
+    base row; one that ranges over the lineage or every stage and no wider, on the base row only); a row the ruling
+    names under a test taking that test's result for the clause named (§2); test 3's enumeration of the labeled nulls
+    including S1 (§3); the weight channel outside test 5, which reaches only cells that carry a choice figure (C4). The
+    rows of record and their rationales are in the r6 raw.
+  - **For the posting** (the step-15b answers, "Two notes for the PI, not the table"; posting-time rewrites by row id,
+    not reasons for a patch v9): 30.2's "is reported, not labeled" and 176.3's and 270.5's *concluded, not answered*
+    name the same cell differently; and the printed labels at VERDICTS are m:338's, which differ in wording from v8's
+    :176 and :184.
+  - The placeholder (`data/m/gates/m_posting_sentences.placeholder.json`, v1.0 §1) serves G-ANL-F0 only (m:286).
+""" + t[b:]
+rep("  - Notes 1, 3 and 4 also stand as the table's kinds' re-anchoring **[PENDING the seat, Q5]**.",
+    "  - Notes 1, 3 and 4 also stand as the table's kinds' re-anchoring (the step-15b answers, Q5: \"Accepted under\n    reading (A)\").")
+rep("""    - the e2b and base-row label wordings against m:338 (the step-15b ping's Q2, whose label default -- "nothing in
+      the analyzer moves, and the posting takes m:338's labels" -- stands **[PENDING the seat]**; Code's reading: the
+      addendum withdraws Q2's (A) only, and the label default is a separate default of Q2);""",
+    """    - the e2b and base-row label wordings against m:338: nothing in the analyzer moves, and the printed labels at
+      VERDICTS are m:338's (the step-15b answers, "Two notes for the PI, not the table");""")
+rep("- **The table's kinds, re-anchored** (Code's step-15b ping, Q5; **[PENDING the seat]**; dated notes, 2026-10-15):",
+    "- **The table's kinds, re-anchored** (Code's step-15b ping, Q5, accepted by the seat under reading (A); dated notes,\n  2026-10-15):")
+
+# ---- §3 --------------------------------------------------------------------------------------------------------------
+rep("## v1.0 §3. G-PWR (m:285; the answers' Q7) **[PENDING: its run of record]**", "## v1.0 §3. G-PWR (m:285; the answers' Q7)")
+rep("""- Its run of record reads this draft's committed snapshot, `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md`:
+  this amendment alone, as it stood before G-PWR ran (the v0.2 text is joined to it at v1.0's commit). It records that
+  file's sha256, and its raw's header quotes this draft's line naming the analyzer (Code's step-15 ping). The command
+  of record, which its raw's header states with the launch check before it (the jlens-qwen36 interpreter, in a""",
+    f"""- Its run of record read the draft's committed snapshot, `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md`
+  (committed at `78f5602`): the amendment alone, as it stood before G-PWR ran. The record's `lock_draft.sha256` is that
+  file's, `{SNAP}`, and its raw's header quotes the draft's line naming the analyzer (Code's step-15 ping). The command
+  of record, which its raw's header states with the launch check before it (the jlens-qwen36 interpreter, in a""")
+rep("""- **Its preparation: two departures, declared for the seat** (its review raw states when the preparation began).""",
+    """- **Its preparation: two departures, declared for the seat and accepted post hoc** (the step-15b answers, "The two
+  G-PWR departures": "Both accepted post hoc; neither re-runs anything"; its review raw states when the preparation
+  began).""")
+rep("""- Its methods, the seat's (Q7): "Code's defaults are the seat's, declared at G-PWR on Q1's terms (strikable until
+  v1.0's commit; a strike recomputes figures only)". The figures, the n_j assumptions and Code's readings within Q7
+  are entered here from its output, `data/m/gates/Q-F0_G-PWR.json`, and its raw.
+- PIN-3 is re-derived at G-PWR (R1 C6): the figure at the planned floors.""",
+    f"""- Its methods, the seat's (Q7): "Code's defaults are the seat's, declared at G-PWR on Q1's terms (strikable until
+  v1.0's commit; a strike recomputes figures only)". None was struck.
+- **Its run of record**, on HEAD `78f5602`, committed at `43f3bb2`: the raw `results/raw/2026-10-15_m-gpwr-qf0.txt`,
+  sha256 `{GPWR_RAW}`; the record `data/m/gates/Q-F0_G-PWR.json`, sha256
+  `{GPWR}` (v1.0 §6). The wrapper's last line but one: "EXIT 0;
+  fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0". The committed blobs equal the sha256 the wrapper printed (the r5 entry).
+- **Its figures** (the record, where the exact fractions stand; design figures, which issue no verdict, m:330):
+  - power at the floors (A0 80, A0s 32): 0.878 (0.8784) ≥ .85; no n raised. **PIN-3**, re-derived at the floors (R1
+    C6): 0.878, split [40, 40], mS 32;
+  - launch counts (m:192): A0 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s 64 (floor 32;
+    37; N₉₀ 48; up to 32); 192 in all; 5 looks. The same row holds at k = 17 to 20, and equals Q7's planning row;
+  - round_degeneracy's sequential false-pause probability (p0 .05, α .05 per look, on the sham's rounds): the
+    projection 0.0976; the sham at its floor at r (A0s 43) 0.0797; at the fewest launches (A0s 32) 0.0593; at
+    G-F0m-Qwen's 136 of 160 realised rounds 0.0890;
+  - the exclusion guard at the common rate .20 (absolute, Fisher, union): the projection 0.1086, 0.0766, 0.1496; the
+    sham at its floor at r 0.1073, 0.0669, 0.1461; at the fewest launches 0.0999, 0.0579, 0.1343. The union's grid
+    maximum over common rates p ≤ .20 is 0.1496, at 1/5;
+  - the joint figure (Q7 (c)): round_degeneracy's own, 0.0976, with the guard's union 0.1496 beside; the joint over the
+    two is not computed, and the record gives the reason. The hair triggers and the lexical bar carry no figure (m:271;
+    m:330).
+- PIN-3 is re-derived at G-PWR (R1 C6): the figure at the planned floors, above.""")
+
+# ---- §4 --------------------------------------------------------------------------------------------------------------
+replace_section(4, """## v1.0 §4. Launch counts per arm and the hour cap (m:286)
+
+- **Launch counts** (m:192; G-PWR's record, v1.0 §3): A0 128, A0s 64, 192 in all, over 5 looks. They are "a
+  projection, not a bound" (m:192): the campaign launches each arm until its domain count reaches its floor, the unit's
+  cap, or a PI stop (lock §6; `stages.run_campaign`).
+- **The hour cap: 40 h**, the PI's (2026-10-16, v1.0 §0), set "with both in view" (the step-10 read's Q6). On the
+  planning basis the launch counts come to about 26.0 Qwen hours (192 × 488 s, v0.2 §2.4); on the three measured
+  uncached sham sessions (100–262 s), to about 5.3–14.0 hours; the step-14 read's §4 item 2 beside (G-F0m-Qwen's sham
+  figure, and "r = .75 raising launches by a third over the planning tables' assumption"). The seat's note to the PI
+  with the step-15c read: "a STOP, so above the honest projection — 40 h".
+- **Line forms** (Code's, for the campaign wiring to test as substrings, as the driver tests `path = uncached`):
+  - `launch counts = A0 128, A0s 64`
+  - `hour cap = 40 h`
+""")
+
+# ---- §5 --------------------------------------------------------------------------------------------------------------
+rep("""  path" (the addendum, "What proceeds meanwhile").""", """  path" (the addendum, "What proceeds meanwhile").
+- The seat's correction, as the PI routed it (2026-10-16): "the Clock is UTC by R1 C7 (v1.0 §5) — no TZ setting
+  matters; the deadline is 2026-10-30 23:59:59 UTC". This commit's committer date, in UTC, is named in the LOCK-m-F0
+  v1.0 entry.""")
+
+# ---- §6 --------------------------------------------------------------------------------------------------------------
+rep("| the sentence table of record | `data/m/gates/m_posting_sentences.json` | **[PENDING the seat's Q2]** |",
+    f"| the sentence table of record (r6, v1.0 §2) | `data/m/gates/m_posting_sentences.json` | `{T6}` |")
+rep("| G-PWR's output (v1.0 §3) | `data/m/gates/Q-F0_G-PWR.json` | **[PENDING: G-PWR's run of record]** |",
+    f"| G-PWR's output (v1.0 §3) | `data/m/gates/Q-F0_G-PWR.json` | `{GPWR}` |")
+
+# ---- §8 --------------------------------------------------------------------------------------------------------------
+rep("""    Q1's terms; P288, P300 and P329 on the same terms by Code's reading **[PENDING the seat]**; except what R2 2 made""",
+    """    Q1's terms; P288, P300 and P329 on the same terms (the step-15b answers, Q4); except what R2 2 made""")
+rep("""- **Strikes recorded at this commit:** none **[PENDING: strikes recorded until this commit, including any in the
+  seat's answers to the step-15b ping]**.""", """- **Strikes recorded at this commit:** none. The seat's step-15b answers strike no register entry, index site or
+  driver reading, and the seat's read of the v1.0 draft records none ("no strikes; v1.0 §8 records none from the
+  seat", v1.0 §0). The seat's strike on R262.05 (the step-15c read, §2) is a strike of a table row under the step-15b
+  answers' Q1 ("a strike changes rows only"), and stands in v1.0 §2.""")
+
+# ---- §14 -------------------------------------------------------------------------------------------------------------
+rep("""| this draft's snapshot, `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md` (v1.0 §3) | not named in the snapshot: G-PWR's record carries it **[PENDING: G-PWR's run of record]** | with this draft's snapshot **[PENDING: its commit, named at v1.0]** |""",
+    f"""| the draft's snapshot, `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md` (v1.0 §3) | `{SNAP}` (G-PWR's record carries it) | `78f5602` |
+| the draft's values-check, `results/raw/2026-10-15_m-lock-v1.0-draft_valuescheck.txt` | `a420be4d38a93059e562f8839774b7cc392a6d5486abc943db7cad3303e18e6b` | `78f5602` |
+| G-PWR's run of record (v1.0 §3), `results/raw/2026-10-15_m-gpwr-qf0.txt` | `{GPWR_RAW}` | `43f3bb2` |
+| G-PWR's record (v1.0 §§3, 6), `data/m/gates/Q-F0_G-PWR.json` | `{GPWR[:8]}…{GPWR[-4:]}` (v1.0 §6) | `43f3bb2` |
+| G-PWR's probe battery, `results/raw/2026-10-15_m-gpwr-probes.txt` | `11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3` | `43f3bb2` |
+| G-PWR's entry's values-check, `results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt` | `b8ba23465e734a711141d79b0a62e927e6059360c26426f8abdfcab9382f1e10` | `43f3bb2` |
+| the seat's step-15b answers, `results/raw/2026-10-15_m-design-to-code_step15b_answers.md` | `db9edf3be03a157558e29d25c45c620c9db28f8837b106981fb8389336619a7b` | `dd097ab` |
+| the table of record's A4 sweep (r5), `results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt` | `17be6cfd09d90c2aac242b0a01c2771ffee6cb07fd8c1b369350ebc83b501ea4` | `4f8f361` |
+| the seat's step-15c read, `results/raw/2026-10-16_m-design-to-code_step15c_answers.md` | `a8d07909caa04fef0495e5798d60f080ce73b4f2ce378bbdd0080b24d91cddf7` | `3c7f8c7` |
+| the table of record, r6 (v1.0 §2), `results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt` | `f2d19ae18976f039b7dbfa59eec14062dfd004da9f923b630e97342618fe9580` | `681f197` |""")
+for old, new in [
+    ("| with this draft's snapshot **[PENDING: its commit, named at v1.0]** |", "| `78f5602` |"),
+]:
+    assert t.count(old) == 3, t.count(old)
+    t = t.replace(old, new)
+rep("""| Entry | Commit |
+|---|---|
+""", f"""| Entry | Commit |
+|---|---|
+| 2026-10-16 The sentence table of record, r6: the seat's strike on R262.05 | `{C['681f197']}` |
+| 2026-10-16 The sentence table of record: the seat's A4 ruling applied, values-checked, and hashed (r5) | `{C['4f8f361']}` |
+| 2026-10-15 G-PWR for Q-F0, run of record | `{C['43f3bb2']}` |
+| 2026-10-15 G-PWR's program, committed before its run, with the LOCK v1.0 draft that names the analyzer | `{C['78f5602']}` |
+""")
+rep("**Code's mechanical check of this file** (`results/raw/<date>_m-lock-v1.0_check.txt`, as v0.2's): **[PENDING]**.",
+    "**Code's mechanical check of this file:** `results/raw/2026-10-16_m-lock-v1.0_check.txt`, as v0.2's, committed with this\nfile; its sha256 is in the LOCK-m-F0 v1.0 entry.")
+
+assert t.count("this draft") == 7, t.count("this draft")
+t = t.replace("this draft", "the draft")
+
+# ---- after-read fixes -------------------------------------------------------------------------------------------------
+rep("""  - Code's readings marked where they stand in v1.0 §§1–2: the second round's changed blocks held on Q1's terms (the
+    step-15b ping, "The PIN index"); a Q4 strike's redo under the meanwhile order; the addendum's withdrawal read as
+    Q2's (A) only;""", """  - Code's reading in v1.0 §1 that the second round's changed blocks are held on Q1's terms (the step-15b ping, "The
+    PIN index"), which the seat kept (Q4). The draft's two other readings there, a Q4 strike's redo under the meanwhile
+    order and the addendum's withdrawal read as Q2's (A) only, became moot with the seat's answers (v1.0 §§1–2);""")
+rep("""    - the e2b and base-row label wordings against m:338: nothing in the analyzer moves, and the printed labels at
+      VERDICTS are m:338's (the step-15b answers, "Two notes for the PI, not the table");""",
+    """    - the e2b and base-row label wordings against m:338, since settled: nothing in the analyzer moves, and the
+      printed labels at VERDICTS are m:338's (the step-15b answers, "Two notes for the PI, not the table");""")
+rep("""  not-questions"; v1.0 §12). When it re-runs: v1.0 §1, "What would move these lines".""",
+    """  not-questions"; v1.0 §12). It was not re-run: v1.0 §1, "What would have moved these lines".""")
+rep("""  (committed at `78f5602`): the amendment alone, as it stood before G-PWR ran. The record's `lock_draft.sha256` is that
+  file's, `c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d`, and its raw's header quotes the draft's line naming the analyzer (Code's step-15 ping). The command""",
+    """  (committed at `78f5602`): the amendment alone, as it stood before G-PWR ran. The record's `lock_draft.sha256` is
+  that file's, `c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d`, and its raw's header
+  quotes the draft's line naming the analyzer (Code's step-15 ping). The command""")
+rep("""- **Its run of record**, on HEAD `78f5602`, committed at `43f3bb2`: the raw `results/raw/2026-10-15_m-gpwr-qf0.txt`,
+  sha256 `3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145`; the record `data/m/gates/Q-F0_G-PWR.json`, sha256
+  `b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68` (v1.0 §6). The wrapper's last line but one: "EXIT 0;
+  fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0". The committed blobs equal the sha256 the wrapper printed (the r5 entry).""",
+    """- **Its run of record**, on HEAD `78f5602`, committed at `43f3bb2`: the raw `results/raw/2026-10-15_m-gpwr-qf0.txt`,
+  sha256 `3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145`; the record
+  `data/m/gates/Q-F0_G-PWR.json`, sha256 `b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68`
+  (v1.0 §6). The wrapper's last line but one: "EXIT 0; fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0". The committed blobs
+  equal the sha256 the wrapper printed (the r5 entry).""")
+# ---- the values-check's dispositions (pass of 2026-10-16) -------------------------------------------------------------
+rep("""  - Code's reading in v1.0 §1 that the second round's changed blocks are held on Q1's terms (the step-15b ping, "The
+    PIN index"), which the seat kept (Q4). The draft's two other readings there,""",
+    """  - Code's reading in v1.0 §1 that the second round's changed blocks are held on Q1's terms (the step-15b ping, "The
+    PIN index"), which stands: the seat answered nothing otherwise and struck nothing in its read of the draft; Code's
+    additions in those blocks the seat kept (Q4). The draft's two other readings there,""")
+rep("""  blocks, P288 (PIN-17's site), P300 (PIN-10's V2 site) and PIN-45's site P329, are held on the same terms (the
+  seat's step-15b answers, Q4: "All kept, on Q1's terms"), except what R2 2 made the seat's (below). Code's additions
+  in them are the step-15b ping's Q4 list, which the seat kept. P301's (PIN-9's site) only change is Q5's ordered
+  correction.""", """  blocks, P288 (PIN-17's site), P300 (PIN-10's V2 site) and PIN-45's site P329, are held on the same terms: Code's
+  reading (the step-15b ping, "The PIN index"), which stands, the seat having answered nothing otherwise and struck
+  nothing in its read of the draft (v1.0 §8), except what R2 2 made the seat's (below). Code's additions in them are
+  the step-15b ping's Q4 list, which the seat kept (the step-15b answers, Q4: "All kept, on Q1's terms"). P301's
+  (PIN-9's site) only change is Q5's ordered correction.""")
+rep("""  - **The seat's step-15 words against the entries they touched** (as lock §9.3's table records the seat's word on each
+    entry):
+
+    | PIN | The seat's word (the step-15 answers, 2026-10-14) |""", """  - **The seat's step-15 words against the entries they touched** (as lock §9.3's table records the seat's word on each
+    entry; the last row is the step-15b answers'):
+
+    | PIN | The seat's word (the step-15 answers, 2026-10-14; the last row, the step-15b answers, 2026-10-15) |""")
+rep("""(PIN-45's placement; PIN-10's V2 site sentence; PIN-17's provenance parenthetical and `SEAT_ROUTED`'s entry) |""",
+    """(Code's additions: PIN-45's placement, REF-2's and REF-3's clauses, the stop→terminal sentence's detail, the citation clause; PIN-10's V2 site sentence; PIN-17's provenance parenthetical and `SEAT_ROUTED`'s entry) |""")
+rep("""    Q1's terms; P288, P300 and P329 on the same terms (the step-15b answers, Q4); except what R2 2 made""",
+    """    Q1's terms; P288, P300 and P329 on the same terms by Code's reading, which stands (v1.0 §1); except what R2 2 made""")
+rep("""    - "§7.5's first sentence" is v1.1's tagged lineage sentence, §7.5's second (the kind `s7.5-first`, Code's reading);""",
+    """    - "§7.5's first sentence" is v1.1's tagged lineage sentence, §7.5's second (the kind `s7.5-first`, Code's reading),
+      since settled (the step-15b answers, Q5);""")
+a0 = t.index("  - **The change r5 → r6, as the r6 entry has it:**"); a1 = t.index("  - **Its firing over the 1,080 tuples**")
+t = t[:a0] + """  - **The change r5 → r6, as the r6 entry (`681f197`) has it:**
+    - **One cell.** R262.05's e2b is struck, leaving e2a, f1, olmo-base, olmo-sft, olmo-dpo and olmo-instruct
+      (step 15c §2).
+    - **Rationales.** R262.05 states tests 3 and 1 for its first clause and test 5, in its precise form, for its third.
+      It also states §2's rule: a row the ruling names under a test takes that test's result for the clause named.
+    - R254.02 states the seat's correction of test 3's enumeration to include S1.
+    - R242.01 states that a heading takes its section's scope by context; the flag is closed.
+    - The five rows (25.04, 232.01–232.03, 240.06) state §1's ground: the ruling's text governs, and they range over
+      the data.
+    - R194.04 is neither data-wide nor lineage-wide.
+    - No other field moves.
+    - The correction to S1 is applied on R254.02 as ordered and is inert on the other test-3 rows: they exclude S1 on
+      their own grounds, and S1 is *Answered* in every tuple.
+    - r6's table is byte-equal to r2's, which had the same cells (the r5 raw records r2's); the builder reads no
+      rationale. Superseded: the candidate `7206d78b…d0c5`, r5 `74781b90…f907` and the variant `29a878cf…5490`.
+""" + t[a1:]
+rep("""    has 23 items under the flag of record, 14 by (a) and 10 by (b), R236.02 under both; under the other flag, 24
+    (R182.06 by (c)).""", """    has 23 items under the flag of record, 14 by (a) and 10 by (b), R236.02 under both: by (b) alone, R003.01,
+    R013.15, R230.01, R234.01, R234.02, R234.04, R234.05, R234.06 and R258.04. Under the other flag, 24 (R182.06 by
+    (c)).""")
+rep("""    inputs, uncommitted", as Code's step-15 ping had proposed. That is a departure. Code's reading beside it is that
+    R2 3's "before G-PWR … runs" governs the run of record, which reads the draft's committed snapshot, and that the
+    scratch runs are its review.""", """    inputs, uncommitted", as Code's step-15 ping had proposed. That is a departure. Code's reading beside it, which the
+    seat adopted: R2 3's "before G-PWR … runs" governs the run of record, which reads the draft's committed snapshot,
+    and the scratch runs are its review. The seat (the step-15b answers, "The two G-PWR departures"): "the run of
+    record, which reads the committed snapshot, is what R2 3's 'before G-PWR … runs' governs. The scratch runs are its
+    review." """.rstrip(" ") )
+rep("""    read's Q4). That is stated as a departure. Code's reading beside it is that the snapshot under `results/raw/` is
+    not "a lock's committed text", and that the run of record follows its commit. It is stated in the review raw's
+    first committed text, before the run of record; whether that meets Q4's "at the time" is the seat's to say.""",
+    """    read's Q4). That is stated as a departure. Code's reading beside it, which the seat adopted: the snapshot under
+    `results/raw/` is not "a lock's committed text", and the run of record follows its commit. It is stated in the
+    review raw's first committed text, before the run of record. The seat (the same answers): "The statement in the
+    review raw's first committed text meets Q4's 'at the time'." """.rstrip(" "))
+rep("""  v1.0's commit; a strike recomputes figures only)". None was struck.""",
+    """  v1.0's commit; a strike recomputes figures only)". None was struck: the step-15b answers strike none, and the seat's
+  read of the draft records none (v1.0 §8).
+- **Code's readings within Q7**, entered from the record's `readings` (its texts, in brief): within Q7 (a), "the sham
+  arm leaving the rotation at its floor" is computed at two launch counts, ⌈32 / r⌉ = 43 at r = 18/24 and 32, the
+  fewest at which the sham can reach its floor, A0 launching to its L in both; the 136-of-160 case changes rounds only,
+  so only round_degeneracy is recomputed there. Within Q7 (b), "the supremum" is reported as the maximum over the grid
+  j/100 (j = 1..99), refined to .001 within ±.01 of that maximum, a grid maximum bounding the supremum from below; the
+  union is also reported at its grid maximum over common rates p ≤ .20; the grid, its maximum and the union's maximum
+  are figured on the projection only. m:190's raise is not triggered.""")
+rep("""    sham at its floor at r 0.1073, 0.0669, 0.1461; at the fewest launches 0.0999, 0.0579, 0.1343. The union's grid
+    maximum over common rates p ≤ .20 is 0.1496, at 1/5;""", """    sham at its floor at r 0.1073, 0.0669, 0.1461; at the fewest launches 0.0999, 0.0579, 0.1343. On the projection,
+    the Fisher half's grid maximum is 0.0836 at 1/2, refined to 0.0836 at 251/500; the union's grid maximum over common
+    rates p ≤ .20 is 0.1496, at 1/5;""")
+rep("""  planning basis the launch counts come to about 26.0 Qwen hours (192 × 488 s, v0.2 §2.4); on the three measured""",
+    """  planning basis the launch counts come to about 26.0 Qwen hours (192 × 488 s, the proposal's §2.4 basis, m:205, as
+  v0.2 §2 carries it); on the three measured""")
+
+assert "[PENDING" not in t and "DRAFT" not in t, [l for l in t.splitlines() if "[PENDING" in l or "DRAFT" in l][:5]
+
+# ---- join: the v0.2 text with the truncations in its v0.1 copy -------------------------------------------------------
+v02 = v02_b.decode("utf-8")
+cut = v02.index("\n# The v0.1 text\n")
+TRUNC = [("66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e", "66fb521488db41e7…", 2),
+         ("b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b", "b1cce4f844f78e45…", 2)]
+head, tail = v02[:cut], v02[cut:]
+for full, short, n in TRUNC:
+    assert full not in head and tail.count(full) == n, (full[:16], tail.count(full))
+    tail = tail.replace(full, short)
+joined = t.rstrip("\n") + "\n\n---\n\n# The v0.2 text\n\n" + \
+    "Everything below is LOCK-m-F0 v0.2's text, a copy carried for reading, which itself carries the v0.1 text. The record\n" \
+    "is the committed blob at `db7d970` (sha256 `0908b5b7…945e`, v1.0 §0). The copy is byte for byte except the four\n" \
+    "truncations of superseded hashes in its v0.1 copy that v1.0 §0 lists (the step-10 read's Q1); they edit the copy, not\n" \
+    "the record. Where the amendment above changes the standing of something below, the amendment governs.\n\n" + head + tail
+OUT.write_text(joined, encoding="utf-8")
+print(f"wrote {OUT}: {len(joined.encode())} bytes, {joined.count(chr(10))} lines, sha256 {sha(joined.encode())}")
+====================================================================================================================
+(2) THE CHECK, check_v10.py, verbatim; sha256 073654ed5d396764aea336c3ecb31cab28974a6796e95244c7a20858a4e6f8eb
+====================================================================================================================
+#!/usr/bin/env python3
+"""Mechanical checks on LOCK-m-F0 v1.0 before its commit (read-only on the repo but for nothing; no model or tokenizer).
+Run from the repository root: python3 -I -B check_v10.py LOCK-m-F0.md
+(1) the v0.2 record: the file's tail, with the four truncations v1.0 §0 lists reversed, byte-identical to db7d970's blob,
+    and the truncations exactly those four, one each in lock §1 and lock §9.1 of the v0.1 copy (asserted);
+(2) the superseded analyzer's and placeholder's full sha256 nowhere in the file; the analyzer of record, the package and
+    the closure in full in v1.0 §1; the table of record's and the preprint's sha256 in full in v1.0 §§2 and 6;
+(3) every 64-hex string in the amendment equals a recomputed sha256, or a value read from a committed record (the renders,
+    from G-CAL_model-free.json; the G-ANL-F0 closure, from its manifest), or the untracked v1.1 reference's sha256,
+    compared in full with the file at root;
+(4) commit ids in the amendment resolve (the weights snapshot id skipped and not counted); (5) every number of a
+    "v1.0 §N", "v0.2 §N" or "lock §N" reference (single or §§ list) names a heading of its text, v0.2's exactly;
+(6) quoted spans of 25 characters or more found verbatim (bold markers, whitespace and the quote convention aside) in a
+    source, misses noted; the PI's chat words of 2026-10-16 are checked against Code's transcription in this script;
+(7) stages.licence_problems with LOCK-m-F0.md served from the file returns [] for the campaign's identity (the analyzer
+    of record, the package, the proposal), and four negative controls are refused;
+(8) the driver's stage_identity_extra accepts the file for time, id and qual;
+(9) PIN-40 against the placed table: data/m/gates/m_posting_sentences.json hashes to the sha256 v1.0 names, is kind
+    of-record with table_problems [] on the analyzer of record, and records the preprint of record's sha256;
+(10) the line forms `launch counts = A0 128, A0s 64` and `hour cap = 40 h` at least once in the amendment and in v1.0 §4,
+    every such form in the file equal to them; `path = uncached` in the file; no "[PENDING" in the amendment."""
+import sys
+sys.dont_write_bytecode = True
+import hashlib, importlib.util, json, re, subprocess
+from pathlib import Path
+from unittest import mock
+REPO = Path.cwd()
+sys.path.insert(0, str(REPO))
+from valence_core.m import stages  # noqa: E402
+
+LOCK = Path(sys.argv[1])
+FAILS, NOTES = [], []
+def fail(m): FAILS.append(m); print("  FAIL:", m)
+def note(m): NOTES.append(m); print("  NOTE:", m)
+def sha(b): return hashlib.sha256(b).hexdigest()
+def git(*a, binary=False):
+    r = subprocess.run(["git", "--no-optional-locks", "-C", str(REPO), *a], capture_output=True)
+    if r.returncode: raise RuntimeError(r.stderr.decode()[:200])
+    return r.stdout if binary else r.stdout.decode()
+
+lb = LOCK.read_bytes(); text = lb.decode("utf-8")
+V02 = git("show", "db7d970:LOCK-m-F0.md", binary=True)
+V02SHA = "0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e"
+V01SHA = "1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b"
+ANA = "655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f"
+ANA_OLD = "66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e"
+PLACE_OLD = "b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b"
+PKG = "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771"
+CLOSURE = "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b"
+PROP = "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"
+PRE = "45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41"
+TAB = "af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902"
+
+print("(1) the v0.2 record: the tail, truncations reversed, byte-identical to db7d970's blob")
+if sha(V02) != V02SHA: fail("v0.2 blob sha")
+SEP = "\n---\n\n# The v0.2 text\n\n"
+if text.count(SEP) != 1: fail("separator not exactly once")
+amend, rest = text.split(SEP, 1)
+intro_end = rest.index("# LOCK-m-F0.md — v0.2 (")
+intro, tail = rest[:intro_end], rest[intro_end:]
+rev = tail
+TR = [(ANA_OLD, ANA_OLD[:16] + "…"), (PLACE_OLD, PLACE_OLD[:16] + "…")]
+for full, short in TR:
+    if tail.count(short) != 2: fail(f"{short} not exactly twice in the copy ({tail.count(short)})")
+    rev = rev.replace(short, full)
+if rev.encode("utf-8") != V02: fail("the tail with the truncations reversed is not db7d970's blob")
+else: print(f"  amendment {amend.count(chr(10))} lines; intro {intro.count(chr(10))} lines; v0.2 copy {tail.count(chr(10))} lines; ok")
+v02_text = V02.decode("utf-8"); v01_start = v02_text.index("\n# The v0.1 text\n")
+for full, short in TR:
+    for ln in [i for i, l in enumerate(tail.splitlines(), 1) if short in l]:
+        line = tail.splitlines()[ln - 1]
+        print(f"  truncated at copy line {ln}: {line[:70]}")
+    # both occurrences lie in the v0.1 copy, one in lock §1's table, one in lock §9.1's
+    pos = [m.start() for m in re.finditer(re.escape(full), v02_text)]
+    if not all(p > v01_start for p in pos): fail(f"{short} truncated outside the v0.1 copy")
+    heads = []
+    for p in pos:
+        h = [m.group(1) for m in re.finditer(r"^## (\d+(?:\.\d+)?)\. ", v02_text[:p], re.M)]
+        heads.append(h[-1] if h else None)
+    sub = []
+    for p in pos:
+        h = [m.group(1) for m in re.finditer(r"^### (\d+\.\d+)[. ]", v02_text[:p], re.M)]
+        sub.append(h[-1] if h else None)
+    print(f"  {short}: sections {heads}, subsections {sub}")
+    if heads != ["1", "9"] or sub[1] != "9.1": fail(f"{short}: not one each in lock §1 and lock §9.1 ({heads}, {sub})")
+
+print("(2) superseded hashes nowhere in full; hashes of record in full where v1.0 names them")
+for nm, h in (("superseded analyzer", ANA_OLD), ("superseded placeholder", PLACE_OLD)):
+    if h in text: fail(f"{nm} in full in the file")
+def sec(n):
+    a = amend.index(f"\n## v1.0 §{n}. "); b = amend.find("\n## v1.0 §", a + 5)
+    return amend[a: b if b != -1 else len(amend)]
+for nm, h, n in (("analyzer", ANA, 1), ("package", PKG, 1), ("closure", CLOSURE, 1), ("table", TAB, 2), ("preprint", PRE, 2),
+                 ("table", TAB, 6), ("preprint", PRE, 6), ("proposal", PROP, 6)):
+    if h not in sec(n): fail(f"{nm} not in full in v1.0 §{n}")
+print("  ok" if not [f for f in FAILS if "in full" in f] else "")
+
+print("(3) every 64-hex in the amendment matches a recomputed value")
+known = {}
+def blob_sha(rv, rel): return sha(git("show", f"{rv}:{rel}", binary=True))
+for rel in ["results/raw/2026-10-14_m-design-to-code_step15_answers.md", "results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md",
+            "results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md", "results/raw/2026-10-14_m-code-to-design_step15.md",
+            "results/raw/2026-10-15_m-code-to-design_step15b.md", "results/raw/2026-10-15_m-code-to-design_step15b_addendum.md",
+            "results/raw/2026-10-15_m-table-of-record-valuescheck_interim.txt", "results/raw/2026-10-14_m-analyzer-round-step15_review.txt",
+            "results/raw/2026-10-15_m-analyzer-round2-step15_review.txt", "results/raw/2026-10-15_m-table-draft-step15.txt",
+            "results/raw/2026-10-14_m-ganl-f0-rerun-step15.txt", "results/raw/2026-10-15_m-ganl-f0-rerun-step15b.txt",
+            "results/raw/2026-10-15_m-lock-v1.0_reanchoring.txt", "results/raw/2026-10-15_m-lock-v1.0_pin-index-addendum.txt",
+            "scripts/m_gpwr.py", "results/raw/2026-10-15_m-gpwr-program_review.txt", "results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md",
+            "results/raw/2026-10-15_m-lock-v1.0-draft_valuescheck.txt", "results/raw/2026-10-15_m-gpwr-qf0.txt", "data/m/gates/Q-F0_G-PWR.json",
+            "results/raw/2026-10-15_m-gpwr-probes.txt", "results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt",
+            "results/raw/2026-10-15_m-design-to-code_step15b_answers.md", "results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt",
+            "results/raw/2026-10-16_m-design-to-code_step15c_answers.md", "results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt",
+            "results/raw/2026-10-13_m-lock-v0.2_pin-index-addendum.txt", "results/raw/2026-10-10_m-lock-v0.1_pin-index.txt",
+            "scripts/m_analyze.py", "data/m/gates/G-ANL-F0.json", "data/m/gates/m_posting_sentences.placeholder.json",
+            "PROPOSAL-m-gating-campaign-v1_11.md", "PREPRINT-v1_0-draft.md", "DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md",
+            "scripts/m_sessions.py", "data/m/schedules/manifest.json", "data/m/schedules/Q-F0_campaign_A0.json",
+            "data/m/schedules/Q-F0_campaign_A0s.json", "data/f/pools.json"]:
+    known[blob_sha("HEAD", rel)] = rel
+known[V02SHA] = "LOCK v0.2 blob"; known[V01SHA] = "LOCK v0.1 blob"
+known[sha((REPO / "data/m/gates/m_posting_sentences.json").read_bytes())] = "the table of record (working tree, placed)"
+anl = json.loads(git("show", "HEAD:data/m/gates/G-ANL-F0.json"))
+from valence_core.m import resume  # noqa: E402
+known[resume.package_sha256()] = "package_sha256 (computed now)"
+gcal = json.loads(git("show", "HEAD:data/m/gates/G-CAL_model-free.json"))
+def walk(o):
+    if isinstance(o, dict):
+        for v in o.values(): yield from walk(v)
+    elif isinstance(o, list):
+        for v in o: yield from walk(v)
+    elif isinstance(o, str) and re.fullmatch(r"[0-9a-f]{64}", o): yield o
+for h in walk(gcal): known.setdefault(h, "a value in G-CAL_model-free.json")
+for h in walk(anl): known.setdefault(h, "a value in G-ANL-F0.json")
+for rel in ["data/m/gates/G-ANL-F0.superseded-2026-10-14.json", "data/m/gates/G-ANL-F0.superseded-2026-10-15.json"]:
+    known[blob_sha("HEAD", rel)] = rel
+gp = json.loads(git("show", "HEAD:data/m/gates/Q-F0_G-PWR.json"))
+for h in walk(gp): known.setdefault(h, "a value in Q-F0_G-PWR.json")
+CL = ["valence_core/__init__.py", "valence_core/adapters/__init__.py", "valence_core/adapters/base.py", "valence_core/e2d/__init__.py",
+      "valence_core/e2d/audit_v3.py", "valence_core/e2d/config.py", "valence_core/e2d/contentclass.py", "valence_core/e2d/contentclass_v4.py",
+      "valence_core/e2d/contentclass_v5.py", "valence_core/e2d/habit.py", "valence_core/session.py", "valence_core/session_e2a.py", "valence_core/stats.py"]
+known[sha(json.dumps({f: blob_sha("HEAD", f) for f in CL}, sort_keys=True).encode())] = "G-PWR's closure (13 modules at HEAD, json.dumps keys sorted)"
+V11 = REPO / "PREPRINT-v1_1-draft.md"
+if V11.is_file():
+    known[sha(V11.read_bytes())] = "PREPRINT-v1_1-draft.md (untracked reference at root, hashed in full now)"
+occ = re.findall(r"(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])", amend)
+found = sorted(set(occ))
+print(f"  {len(occ)} occurrences, {len(found)} distinct values")
+for h in found:
+    print(f"  {h[:16]}… -> {known.get(h, 'UNMATCHED')}")
+    if h not in known: fail(f"unmatched 64-hex {h}")
+v11 = REPO / "PREPRINT-v1_1-draft.md"
+if v11.exists():
+    print(f"  PREPRINT-v1_1-draft.md (untracked, at root) sha256 {sha(v11.read_bytes())[:16]}…")
+
+print("(4) commit ids in the amendment resolve")
+cids = sorted(set(re.findall(r"`([0-9a-f]{7}|[0-9a-f]{40})`", amend)) - {"c000ac2c2057d94be3fa931000c31723aac53282"})
+for c in cids:
+    try: git("rev-parse", "--verify", "--quiet", f"{c}^{{commit}}")
+    except RuntimeError: fail(f"unresolvable commit {c}")
+print("  checked", len(cids))
+
+print("(5) section references")
+v01_text = v02_text[v01_start:]
+v01heads = set(re.findall(r"^#{2,3} (\d+(?:\.\d+)?)[. ]", v01_text, re.M))
+v02heads = set(re.findall(r"^## v0\.2 §(\d+)\.", v02_text, re.M))
+v10heads = set(re.findall(r"^## v1\.0 §(\d+)\.", amend, re.M))
+def refs(prefix):
+    out = set()
+    for m in re.finditer(prefix + r" §(§?)((?:\d+(?:\.\d+)?)(?:(?:, | and |–)\d+(?:\.\d+)?)*)", amend):
+        out.update(re.split(r", | and |–", m.group(2)) if m.group(1) else [m.group(2).split(",")[0].split(" ")[0]])
+    return sorted(out)
+for ref in refs("lock"):
+    if ref not in v01heads: fail(f"lock §{ref} not a v0.1 heading")
+for ref in refs(r"v0\.2"):
+    if ref not in v02heads: fail(f"v0.2 §{ref} not a v0.2 heading")
+for ref in refs(r"v1\.0"):
+    if ref not in v10heads: fail(f"v1.0 §{ref} not a v1.0 heading")
+print("  lock refs", refs("lock"), "v0.2 refs", refs(r"v0\.2"))
+print("  v1.0 heads", sorted(v10heads, key=int))
+
+print("(6) quoted spans (>= 25 chars) found verbatim in a source")
+srcs = {r: git("show", f"HEAD:{r}") for r in [
+    "results/raw/2026-10-14_m-design-to-code_step15_answers.md", "results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md",
+    "results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md", "results/raw/2026-10-15_m-design-to-code_step15b_answers.md",
+    "results/raw/2026-10-16_m-design-to-code_step15c_answers.md", "results/raw/2026-10-15_m-code-to-design_step15b_addendum.md",
+    "results/raw/2026-10-15_m-code-to-design_step15b.md", "results/raw/2026-10-14_m-code-to-design_step15.md",
+    "PROPOSAL-m-gating-campaign-v1_11.md", "RESULTS.md", "valence_core/m/stages.py", "scripts/m_analyze.py",
+    "DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md", "results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md"]}
+srcs["lock v0.2"] = v02_text
+srcs["commit messages"] = git("log", "--format=%B", "-60")
+srcs["the PI's words of 2026-10-16 (this session)"] = (
+    "Apply as r6: R262.05 −e2b, rows only; rebuild, re-hash, table_problems, one values-check pass. The five rows stand; "
+    "the variant is declined. Commit by path on your branch and push it; I’ll fast-forward main. Send the cap request with "
+    "r6’s hash. Before v1.0’s commit, set this clone’s git identity to match my laptop commits. "
+    "PI’s cap: hour cap = 40 h (v1.0 §4’s line form; launch counts = A0 128, A0s 64). Confirmed: 'placed' settles m:58’s "
+    "and m:356’s 'before step 15' and m:58’s 'redraft from v1.1' (v1.0 §2). Seat’s read of the v1.0 draft (c4571818…442d): "
+    "no strikes; v1.0 §8 records none from the seat; the table’s r5→r6 change stands in v1.0 §2 as the r6 entry has it. "
+    "Seat’s correction: the Clock is UTC by R1 C7 (v1.0 §5) — no TZ setting matters; the deadline is 2026-10-30 23:59:59 UTC; "
+    "drop 'TZ set to the PI’s zone' from Next 2 (the identity setting stands). Correct in v1.0’s entry: the r6 entry "
+    "truncates the step-15c read’s sha256 as …dd7f; it ends …ddf7. Commit v1.0 on this cap and push; I’ll fast-forward main.")
+norm = lambda s: " ".join(s.replace("**", "").replace("“", "'").replace("”", "'").replace('"', "'").split())
+nsrc = {k: norm(v) for k, v in srcs.items()}
+qs = re.findall(r'"([^"\n]*(?:\n[^"\n]*)*?)"', amend)
+miss = 0; long_q = 0
+for q in qs:
+    nq = norm(q)
+    if len(nq) < 25: continue
+    long_q += 1
+    if not [k for k, v in nsrc.items() if nq in v]:
+        miss += 1; note(f"quote not found verbatim: {nq[:140]}")
+print(f"  {long_q} long quotes; {miss} not found (reported for review)")
+
+print("(7) stages.licence_problems with LOCK-m-F0.md served from the file (the campaign's identity)")
+real = stages._committed
+def run_licence(lock_bytes, **over):
+    def fake(rel, repo=stages.REPO):
+        if rel == "LOCK-m-F0.md": return [], lock_bytes
+        return real(rel, repo)
+    extra = {"proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md", "proposal_sha256": PROP, "lock_file": "LOCK-m-F0.md",
+             "lock_sha256": sha(lock_bytes), "analyzer_sha256": ANA, "package_sha256": PKG}
+    extra.update(over)
+    with mock.patch.object(stages, "_committed", side_effect=fake):
+        return stages.licence_problems(extra)
+pr = run_licence(lb); print("  licence_problems(v1.0) =", pr)
+if pr: fail(f"licence on v1.0: {pr}")
+for label, b2, over, want in [("lock_sha256 = v0.2's", lb, {"lock_sha256": V02SHA}, "lock LOCK-m-F0.md"),
+                              ("the analyzer of record removed from the text", lb.replace(ANA.encode(), (ANA[:16] + "…").encode()), {}, "analyzer_sha256"),
+                              ("the package removed from the text", lb.replace(PKG.encode(), (PKG[:16] + "…").encode()), {}, "package_sha256"),
+                              ("the committed v0.2 served instead (the window)", V02, {"lock_sha256": V02SHA}, "analyzer_sha256")]:
+    p2 = run_licence(b2, **over); live = any(want in x for x in p2)
+    print(f"  control ({label}): {'refused' if live else 'NOT REFUSED'} {p2[:1]}")
+    if not live: fail(f"control not refused: {label}")
+
+print("(8) the driver's stage_identity_extra with the file served (time, id, qual)")
+spec = importlib.util.spec_from_file_location("m_sessions_chk", REPO / "scripts" / "m_sessions.py")
+ms = importlib.util.module_from_spec(spec); spec.loader.exec_module(ms)
+def fake2(rel, repo=stages.REPO):
+    if rel == "LOCK-m-F0.md": return [], lb
+    return real(rel, repo)
+with mock.patch.object(stages, "_committed", side_effect=fake2):
+    for st in ("time", "id", "qual"):
+        try:
+            ex, probs = ms.stage_identity_extra(st, "PROPOSAL-m-gating-campaign-v1_11.md", "LOCK-m-F0.md", analyzer_sha256=ANA,
+                                                package_sha256=PKG, renders_sha16="a04f67b0e5105a05")
+        except Exception as e:
+            ex, probs = None, [f"{type(e).__name__}: {e}"]
+        ok = (not probs) and ex and ex["lock_sha256"] == sha(lb)
+        print(f"  {st}: problems {probs}; lock_sha256 == file: {bool(ex) and ex['lock_sha256'] == sha(lb)}")
+        if not ok: fail(f"driver identity on v1.0 ({st}): {probs}")
+
+print("(9) PIN-40 against the placed table")
+tb = (REPO / "data/m/gates/m_posting_sentences.json").read_bytes()
+if sha(tb) != TAB: fail("the placed table's sha256 is not the one v1.0 names")
+spec2 = importlib.util.spec_from_file_location("m_an_chk", REPO / "scripts" / "m_analyze.py")
+ma = importlib.util.module_from_spec(spec2); sys.modules["m_an_chk"] = ma; spec2.loader.exec_module(ma)
+tab = json.loads(tb)
+tp = ma.table_problems(tab, read_repo_file=lambda rel: (REPO / rel).read_bytes() if (REPO / rel).is_file() else None)
+print(f"  table_problems {tp}; kind {tab.get('kind')!r}; preprint {tab.get('preprint', {}).get('sha256', '')[:16]}…; rows {len(tab.get('rows', []))}")
+if tp or tab.get("kind") != "of-record" or tab.get("preprint", {}).get("sha256") != PRE: fail("PIN-40's table checks")
+for what, val in (("table", sha(tb)), ("preprint", tab["preprint"]["sha256"])):
+    if val not in text: fail(f"PIN-40: the lock does not name the {what}'s sha256")
+
+print("(10) line forms; no pending marks")
+for lf, pat in (("launch counts = A0 128, A0s 64", r"launch counts = A0 \d+, A0s \d+"), ("hour cap = 40 h", r"hour cap = [0-9.]+ h")):
+    allf = re.findall(pat, text); n = amend.count(lf)
+    print(f"  {lf!r}: {n} in the amendment (§4 and the PI's quoted cap in §0); every form in the file: {sorted(set(allf))}")
+    if n < 1 or set(allf) != {lf} or lf not in sec(4): fail(f"line form {lf!r}: {n} in the amendment, forms {set(allf)}")
+if "path = uncached" not in text: fail("path = uncached absent")
+if "[PENDING" in amend: fail("a [PENDING mark in the amendment")
+
+print("\nSUMMARY:", "PASS" if not FAILS else f"{len(FAILS)} FAIL", f"; {len(NOTES)} notes; LOCK-m-F0.md sha256 {sha(lb)}")
+sys.exit(1 if FAILS else 0)
+====================================================================================================================
+(3) ITS OUTPUT, verbatim: (cd <repo>; <venv>/bin/python -I -B check_v10.py LOCK-m-F0.md) -- exit 0
+====================================================================================================================
+(1) the v0.2 record: the tail, truncations reversed, byte-identical to db7d970's blob
+  amendment 608 lines; intro 5 lines; v0.2 copy 2012 lines; ok
+  truncated at copy line 519: | **the analyzer** | `scripts/m_analyze.py` | `66fb521488db41e7…` |
+  truncated at copy line 1554: | Analyzer (last changed at `b7737ef`) | `scripts/m_analyze.py` | `66f
+  66fb521488db41e7…: sections ['1', '9'], subsections [None, '9.1']
+  truncated at copy line 523: | the placeholder sentence table | `data/m/gates/m_posting_sentences.p
+  truncated at copy line 1556: | Placeholder sentence table (committed at `64df36b`) | `data/m/gates/
+  b1cce4f844f78e45…: sections ['1', '9'], subsections [None, '9.1']
+(2) superseded hashes nowhere in full; hashes of record in full where v1.0 names them
+  ok
+(3) every 64-hex in the amendment matches a recomputed value
+  54 occurrences, 48 distinct values
+  0234d6cbb030062e… -> results/raw/2026-10-15_m-table-of-record-valuescheck_interim.txt
+  05132089fd6b8c17… -> data/m/gates/G-ANL-F0.superseded-2026-10-14.json
+  07cd8e5f4535c95c… -> results/raw/2026-10-14_m-design-to-code_step15_answers.md
+  0908b5b7ab7a1fbf… -> LOCK v0.2 blob
+  0c1e8244b99e656b… -> results/raw/2026-10-15_m-code-to-design_step15b.md
+  0e5f29e82a2a2a61… -> results/raw/2026-10-13_m-lock-v0.2_pin-index-addendum.txt
+  11e7ee2c5203c21e… -> results/raw/2026-10-15_m-gpwr-probes.txt
+  163e5f600c424019… -> PREPRINT-v1_1-draft.md (untracked reference at root, hashed in full now)
+  17be6cfd09d90c2a… -> results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt
+  1ae57a6db0d10255… -> results/raw/2026-10-14_m-code-to-design_step15.md
+  1d7c0fe3a5997c1e… -> scripts/m_gpwr.py
+  1dae14b901e42ae5… -> data/m/gates/G-ANL-F0.superseded-2026-10-15.json
+  2ad451752167a1fe… -> data/m/gates/G-ANL-F0.json
+  38ab22677650e82a… -> data/m/schedules/Q-F0_campaign_A0s.json
+  3c35a36f2e01c35c… -> results/raw/2026-10-15_m-gpwr-qf0.txt
+  3e462f472b9549ad… -> results/raw/2026-10-15_m-gpwr-program_review.txt
+  42ab36ecc814c9c4… -> PROPOSAL-m-gating-campaign-v1_11.md
+  44f1a2d42064fd1b… -> data/m/gates/m_posting_sentences.placeholder.json
+  45b67246f2b2bcb4… -> PREPRINT-v1_0-draft.md
+  49c33b708a3f0c6e… -> results/raw/2026-10-15_m-table-draft-step15.txt
+  56a5a643384a272d… -> results/raw/2026-10-14_m-analyzer-round-step15_review.txt
+  5f646db6e82c5561… -> package_sha256 (computed now)
+  655e0f7f6743d0bf… -> scripts/m_analyze.py
+  661313ceeb6808f4… -> results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md
+  8547d9a11ba55b95… -> data/f/pools.json
+  87ba4698a2a3936a… -> results/raw/2026-10-15_m-lock-v1.0_reanchoring.txt
+  8c89636addb846c8… -> data/m/schedules/manifest.json
+  915245b5d69f1907… -> results/raw/2026-10-10_m-lock-v0.1_pin-index.txt
+  a04f67b0e5105a05… -> a value in G-CAL_model-free.json
+  a3bc7bb9df3d8361… -> a value in G-ANL-F0.json
+  a420be4d38a93059… -> results/raw/2026-10-15_m-lock-v1.0-draft_valuescheck.txt
+  a573faf31ce52d76… -> data/m/schedules/Q-F0_campaign_A0.json
+  a8d07909caa04fef… -> results/raw/2026-10-16_m-design-to-code_step15c_answers.md
+  ad48bb4784381319… -> results/raw/2026-10-15_m-ganl-f0-rerun-step15b.txt
+  af5cb81622f4af74… -> the table of record (working tree, placed)
+  b5331ba132f358a1… -> data/m/gates/Q-F0_G-PWR.json
+  b6a0de0d6c5c557a… -> results/raw/2026-10-15_m-lock-v1.0_pin-index-addendum.txt
+  b8ba23465e734a71… -> results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt
+  b950d6478802270e… -> results/raw/2026-10-15_m-analyzer-round2-step15_review.txt
+  c0a897f5d07be94d… -> scripts/m_sessions.py
+  c2cc448f441bcc32… -> results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md
+  c457181825dc69fa… -> results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md
+  c85d0b8f6bf38b11… -> results/raw/2026-10-15_m-code-to-design_step15b_addendum.md
+  db9edf3be03a1575… -> results/raw/2026-10-15_m-design-to-code_step15b_answers.md
+  f10acb14afcdda82… -> results/raw/2026-10-14_m-ganl-f0-rerun-step15.txt
+  f2d19ae18976f039… -> results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt
+  fa543713db39cb17… -> G-PWR's closure (13 modules at HEAD, json.dumps keys sorted)
+  fab576d8e6364be5… -> DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md
+  PREPRINT-v1_1-draft.md (untracked, at root) sha256 163e5f600c424019…
+(4) commit ids in the amendment resolve
+  checked 35
+(5) section references
+  lock refs ['0', '1', '10', '11', '6', '8.2', '8.5', '9.1', '9.3', '9.4', '9.5', '9.6'] v0.2 refs ['0', '1', '2', '3', '4', '7', '8']
+  v1.0 heads ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14']
+(6) quoted spans (>= 25 chars) found verbatim in a source
+  NOTE: quote not found verbatim: What would have moved these lines
+  83 long quotes; 1 not found (reported for review)
+(7) stages.licence_problems with LOCK-m-F0.md served from the file (the campaign's identity)
+  licence_problems(v1.0) = []
+  control (lock_sha256 = v0.2's): refused ["lock LOCK-m-F0.md: sha256 fc7e9db8ecfa28d6... is not identity_extra's 0908b5b7ab7a1fbf..."]
+  control (the analyzer of record removed from the text): refused ["lock LOCK-m-F0.md: its committed text does not name identity_extra's analyzer_sha256 655e0f7f6743d0bf... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)"]
+  control (the package removed from the text): refused ["lock LOCK-m-F0.md: its committed text does not name identity_extra's package_sha256 5f646db6e82c5561... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)"]
+  control (the committed v0.2 served instead (the window)): refused ["lock LOCK-m-F0.md: its committed text does not name identity_extra's analyzer_sha256 655e0f7f6743d0bf... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)"]
+(8) the driver's stage_identity_extra with the file served (time, id, qual)
+  time: problems []; lock_sha256 == file: True
+  id: problems []; lock_sha256 == file: True
+  qual: problems []; lock_sha256 == file: True
+(9) PIN-40 against the placed table
+  table_problems []; kind 'of-record'; preprint 45b67246f2b2bcb4…; rows 55
+(10) line forms; no pending marks
+  'launch counts = A0 128, A0s 64': 2 in the amendment (§4 and the PI's quoted cap in §0); every form in the file: ['launch counts = A0 128, A0s 64']
+  'hour cap = 40 h': 2 in the amendment (§4 and the PI's quoted cap in §0); every form in the file: ['hour cap = 40 h']
+
+SUMMARY: PASS ; 1 notes; LOCK-m-F0.md sha256 fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c
+====================================================================================================================
+(4) THE WINDOW'S CONTROL (the step-15 answers' "The not-questions", "The window"; v1.0 §12): <venv>/bin/python -B
+    scripts/m_sessions.py --selftest in a scratch clone, (a) at HEAD 681f197; (b) with this LOCK-m-F0.md and the placed
+    table committed on top (a scratch commit, never pushed). Summary and FAIL lines verbatim (each FAIL line cut at 400
+    characters).
+====================================================================================================================
+---- (a) at HEAD
+  [FAIL] m_sessions: qwen_snapshot's production defaults read huggingface_hub's HF_HUB_CACHE and os.environ at call time (clear with HF_HUB_OFFLINE=1, refused without it; an explicit environ wins); QWEN_MODEL_ID is QwenMLXAdapter's default and _load_qwen passes it explicitly; MLX_LM_ALLOW_PATTERNS is mlx_lm.utils._download's default list ([], ["HF_HUB_OFFLINE is None, not '1' (Code's form of the o
+  [FAIL] m_sessions: time --unit Q-F0 on the Qwen path (main, no factory) refuses with exit 2 before the loader and the DRIVER and SNAPSHOT lines, no file under the test root created, removed or rewritten, naming its problem, in 31 cases: a missing flag; a proposal outside the repository or not committed; a symlink loop (proposal, lock); a lock other than LOCK-m-F0.md; a proposal the lock does not
+  794/796 m selftest checks pass
+---- (b) with v1.0 committed
+  [FAIL] m_sessions: qwen_snapshot's production defaults read huggingface_hub's HF_HUB_CACHE and os.environ at call time (clear with HF_HUB_OFFLINE=1, refused without it; an explicit environ wins); QWEN_MODEL_ID is QwenMLXAdapter's default and _load_qwen passes it explicitly; MLX_LM_ALLOW_PATTERNS is mlx_lm.utils._download's default list ([], ["HF_HUB_OFFLINE is None, not '1' (Code's form of the o
+  795/796 m selftest checks pass

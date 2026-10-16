@@ -1,3 +1,621 @@
+# LOCK-m-F0.md — v1.0 (Q-F0's lock for the campaign, PROPOSAL-m v1.11 §8 step 15)
+
+**COMMITTED, 2026-10-16, on the PI's cap.** This is the amendment whose draft G-PWR's run of record read (the
+snapshot `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md`, committed at `78f5602`, v1.0 §3) and the seat read,
+with every item the draft marked pending settled by the run, answer or word it waited on, each named where it stands.
+The seat's read of the draft, as the PI routed it (2026-10-16): "no strikes; v1.0 §8 records none from the seat; the
+table’s r5→r6 change stands in v1.0 §2 as the r6 entry has it". The commit waited on G-PWR's run of record and the PI's
+cap (R2 3; the step-14 read §4 item 5) and on the seat's Q2 ruling with the table of record's sha256 (m:286; PIN-40),
+with a committer date on or before 2026-10-30 (D1, v1.0 §5). The v0.2 text follows this amendment, byte for byte as
+committed at `db7d970` except the truncations v1.0 §0 lists.
+
+## v1.0 §0. Header and status
+
+- **Version** v1.0. It amends LOCK-m-F0 v0.2 and v0.1 as m:286 provides, verbatim: "**LOCK-m-F0 v1.0.** Launch
+  counts per arm; the Q-F0 hour cap (PI); G-PWR; D1; hashes of this document, **the preprint of record at root
+  (required here; the PI places it before this lock)**, schedules, pools and renders, the analyzer, **the sentence
+  table of record — built by Code here from the placed preprint, values-checked and hashed here, so that the VERDICTS
+  entry (step 17) enumerates over it (the placeholder table serves G-ANL-F0 only; on the Q-F0 NOT-RUN path the table
+  is built at the posting instead, §3.1 G-ANL-F0)**, the decisions block." The proposal is unchanged:
+  `PROPOSAL-m-gating-campaign-v1_11.md`, sha256 in v1.0 §6.
+- **Drafted by Code on the PI's word, and committed on the PI's cap.** The PI's words, verbatim:
+  - The routing of the seat's step-14 read (chat, 2026-10-13; quoted in the G-F0m-Qwen entry's close line, `5af9e07`):
+    "…Then go for step 15 in the read’s §4 order: the analyzer round and G-ANL-F0 re-run first, the v1.0 draft, G-PWR
+    on the uncached path with r = 18/24; v1.0’s commit waits on my cap."
+  - The routing of the seat's step-15 answers (chat, 2026-10-14): "PI 1: patch v8 of the root copy is coming from
+    the seat today; hold the table until I say “placed.” PI 2: PREPRINT-v1_1-draft.md is at root, untracked, as the
+    reference. PI 3: commit the decisions block. PI 4: proceed in the answers’ order; v1.0’s commit waits on my cap."
+  - "Placed" (chat, 2026-10-14): "the preprint of record is placed — PREPRINT-v1_0-draft.md at root, patch v8, sha256
+    45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41 (patch v5’s five items on the audited v7 copy;
+    its header note lists the gated sentences). Build the table from it, inside the analyzer round the seat’s answers
+    order; PIN-17 re-verified against it there."
+  - The hold (chat, 2026-10-15): the PI chose Code's option "Hold table, rest proceeds (Recommended)" over "Hold
+    everything" and "Close the strict rule now". Its description, in Code's words as offered, reads in part:
+    "Meanwhile I draft v1.0 and run G-PWR, which don't depend on the table's content. That departs from the answers'
+    order, which puts the table first; v1.0's draft would carry the table's hash as pending until the ruling." (Code's
+    addendum to the step-15b ping quotes it in full.)
+  - The routing of the seat's step-15b answers (2026-10-15, in `dd097ab`'s message): "Confirmed: 'placed' was my word
+    for patch v8".
+  - The routing of the seat's step-15c read (chat, 2026-10-16): "Apply as r6: R262.05 −e2b, rows only; rebuild,
+    re-hash, table_problems, one values-check pass. The five rows stand; the variant is declined." And: "Before v1.0’s
+    commit, set this clone’s git identity to match my laptop commits."
+  - **The cap** (chat, 2026-10-16): "PI’s cap: hour cap = 40 h (v1.0 §4’s line form; launch counts = A0 128, A0s 64).
+    Confirmed: 'placed' settles m:58’s and m:356’s 'before step 15' and m:58’s 'redraft from v1.1' (v1.0 §2). Seat’s
+    read of the v1.0 draft (c4571818…442d): no strikes; v1.0 §8 records none from the seat; the table’s r5→r6 change
+    stands in v1.0 §2 as the r6 entry has it. Seat’s correction: the Clock is UTC by R1 C7 (v1.0 §5) — no TZ setting
+    matters; the deadline is 2026-10-30 23:59:59 UTC". And: "Commit v1.0 on this cap and push".
+- **The rulings it rests on** (sha256 and commits in v1.0 §14):
+  - **The seat's step-15 answers** (`results/raw/2026-10-14_m-design-to-code_step15_answers.md`, committed at
+    `5dca58b`). Their "The order from here": "4. The v1.0 draft naming the analyzer and the table. 5. G-PWR on the
+    uncached path with r = 18/24, on Q7's methods. 6. The PI's cap; v1.0's commit, with a committer date on or
+    before 2026-10-30."
+  - **The step-14 read** (`results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md`, committed at `5af9e07`),
+    §4 item 5 (its bold dropped): "LOCK v1.0 committed after G-PWR and the cap, carrying the hashes, Q-F0's Clock date
+    (2026-10-30), the decisions block, and the sentence from Q5." Also its §4 item 2 (v1.0 §4), §4 item 3 (v1.0 §2),
+    Q2 (v1.0 §8), Q3 and Q4 (v1.0 §12), Q5 (v1.0 §9) and "What Code does now" 3 (v1.0 §13).
+  - **The step-10 read** (`results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md`, committed at `27450dc`): Q1
+    (the form and the truncation), Q2 (the driver's sha256 recorded in v1.0), Q5 (the snapshot, "v1.0 keeps it"), Q6
+    (the cap "with both in view", v1.0 §4).
+  - **R2 3** (lock §9.6), the sequencing: "the edit and the re-run land, the LOCK v1.0 draft names the new analyzer
+    sha256 before G-PWR or any other non-stub stage runs, and the commit of v1.0 follows G-PWR and the PI's cap as
+    m:358 lists them."
+  - **R1 C4, C6, C7** (lock §§9.3–9.5): PIN-17 re-verified against the placed preprint; C6's strike window, which
+    closes at this commit; the Clock's boundary day.
+  - **R2 2** (lock §§8.5, 9.3, 10): what it made the seat's within PIN-9 and PIN-10, and at the index sites lock §10
+    lists for it, the analyzer half of the stage-start check among them (v1.0 §1).
+  - **The seat's step-15b answers** (`results/raw/2026-10-15_m-design-to-code_step15b_answers.md`, committed at
+    `dd097ab`), to Code's step-15b ping (`results/raw/2026-10-15_m-code-to-design_step15b.md`) and its addendum
+    (`results/raw/2026-10-15_m-code-to-design_step15b_addendum.md`): Q1's rules accepted, with Q2's ruling (A4, tests
+    1–7) for scope; Q3–Q5 accepted; Code's additions kept (Q4); both G-PWR departures accepted post hoc. Each default
+    of the ping's that the draft applied is accepted, and named so where it stands.
+  - **The seat's step-15c read** (`results/raw/2026-10-16_m-design-to-code_step15c_answers.md`, committed at
+    `3c7f8c7`): the table of record stands on the five rows, the seat-enumeration variant declined, with one strike,
+    R262.05 −e2b (rows only), applied as r6 (v1.0 §2).
+- **Form** (the step-10 read's Q1): "v1.0 amends above both". This amendment is followed by the v0.2 text, byte for
+  byte as committed at `db7d970`, which itself carries the v0.1 text; the only edits to that copy are the
+  truncations below. The records are the committed blobs: v0.1 at `e3bef6f` (sha256 `1a043c28…8b6b`), v0.2 at
+  `db7d970` (sha256 `0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e`). Q1: a truncation "edits the
+  copy of the v0.1 text that the amended file carries for reading; it does not edit the record".
+- **The truncations** (Q1: "the section, the hash's first 16 hex, and where the full value stands"):
+
+  | Section of the v0.1 copy | Hash, first 16 hex | What it is | Where the full value stands |
+  |---|---|---|---|
+  | lock §1 (the table of hashes) | `66fb521488db41e7…` | the analyzer of v0.1 | the v0.1 blob (`e3bef6f`), the v0.2 blob (`db7d970`), and the G-ANL-F0 manifest it belonged to, now `data/m/gates/G-ANL-F0.superseded-2026-10-14.json` (PIN-37) |
+  | lock §9.1 (identity of record) | `66fb521488db41e7…` | the same | the same |
+  | lock §1 | `b1cce4f844f78e45…` | the placeholder table of v0.1 | the v0.1 and v0.2 blobs; the file's own bytes at `64df36b`; the superseded manifests `data/m/gates/G-ANL-F0.superseded-2026-10-14.json` and `-2026-10-15.json` (PIN-37) |
+  | lock §9.1 | `b1cce4f844f78e45…` | the same | the same |
+
+  - The analyzer's rows are Q1's. The placeholder's are the seat's (the step-15b answers, Q3): "In v1.0, v0.1's two
+    placeholder rows are marked superseded and truncated as the analyzer's sha256 is, with the old bytes resolving at
+    `64df36b`; the file is replaced in place as a builder output, outside PIN-37". It moved by one line at `ed8e886`,
+    and nothing tests its old value.
+  - **Kept in full, as the answers' "Truncation" rules:** "the closure kept in full where PIN-14 reads it, since it
+    did not move and 'superseded' conditions it; the superseded manifest's sha256 kept in full and marked superseded
+    with its new path". The closure (`a3bc7bb9…`, lock §§1, 10) and the package (`5f646db6…`, lock §§1, 10) did not
+    move; the v0.1 manifest `05132089…` (lock §§1, 9.1) is marked superseded here, in v1.0 §1, and not in the copy.
+  - No other full hash in the copy is superseded and tested (check (f) and PIN-14 read the analyzer, the package and
+    the closure, and v1.0 §1 names all three in full; the driver's identity build (`stage_identity_extra`,
+    `m_sessions.py:542`, `:557`: the proposal's sha256, the path, the weights) and PIN-40 (the table, the preprint)
+    read the lock's text too, and none of their values is superseded).
+- **How the campaign and VERDICTS cite this file.**
+  - `lock_file` is `"LOCK-m-F0.md"`; `lock_sha256` is the sha256 of this file as committed at v1.0, which the
+    `LOCK-m-F0 v1.0` entry names.
+  - The campaign runs under v1.0 (`stages.py:976–980`, PIN: "G-TIME and G-ID follow LOCK v0.1, qualification v0.2,
+    the campaign v1.0") and carries `locked_path` `"uncached"` (v0.2 §1). Its prior is G-F0m-Qwen's checkpoint
+    (`PRIOR_STAGE`, `stages.py:644`).
+  - The licence by file (lock §1) runs unchanged. Check (f) finds `analyzer_sha256` and `package_sha256` in full in
+    v1.0 §1; the superseded analyzer appears nowhere in full.
+  - VERDICTS reads this file's committed text: PIN-14 (the analyzer, the package and the closure, each in full,
+    v1.0 §1) and PIN-40 (the sentence table of record's sha256 and its preprint's, each in full, v1.0 §2).
+- **Conventions** as lock §0's and v0.2 §0's, with these additions. "v1.0 §N" is a section of this amendment, "v0.2
+  §N" of the v0.2 text, "lock §N" of the v0.1 text. Code file:line anchors are at HEAD `2186659` (no analyzer, driver
+  or package byte differs from `2f46fa8`, step 15's re-run commit) unless a section names another. Inner double quotes
+  of a quoted text are rendered as single quotes.
+  v1.0 §2 also names in full the two hashes PIN-40 reads (the table of record's and the preprint's), beside v1.0 §6,
+  as lock §0 lets lock §9.1 and lock §10 name theirs; a quotation keeps the hashes it quotes. "PIN-n" runs to PIN-46
+  (v1.0 §1), and "Pnnn" includes P321–P330 of v1.0's addendum (v1.0 §8) beside P314–P320 of v0.2's.
+- **What this amendment is.** As v0.2 §0: each reading in it is the seat's, quoted with its file and item; the PI's,
+  quoted with its date; Code's PIN, declared in code or in an entry; or the proposal's (m:N). Layout and wording are
+  Code's. Code's items new at v1.0, each marked where it stands:
+  - the numbering of the PIN-index addendum's new sites (v1.0 §8);
+  - G-PWR's home, `scripts/m_gpwr.py`, outside the package and the analyzer, and its mechanism for R2 3's order (its
+    run records the draft's sha256 and refuses a draft that does not begin "# LOCK-m-F0.md — v1.0" or does not name
+    the analyzer in full), and the checks around its run (v1.0 §3);
+  - the line forms of the launch counts and the cap (v1.0 §4);
+  - the marking of the v0.1 manifest as superseded in v1.0 §1 rather than in the copy (above);
+  - the reading that the PI's "placed" settles m:58's and m:356's "before step 15" and m:58's "redraft from v1.1"
+    (v1.0 §2), which the PI confirmed (2026-10-16, above);
+  - the defaults of the step-15b ping and its addendum, which the seat's step-15b answers accept (Q1, Q3–Q5; Q4: "All
+    kept, on Q1's terms");
+  - Code's reading in v1.0 §1 that the second round's changed blocks are held on Q1's terms (the step-15b ping, "The
+    PIN index"), which stands: the seat answered nothing otherwise and struck nothing in its read of the draft; Code's
+    additions in those blocks the seat kept (Q4). The draft's two other readings there, a Q4 strike's redo under the meanwhile
+    order and the addendum's withdrawal read as Q2's (A) only, became moot with the seat's answers (v1.0 §§1–2);
+  - the step-15b ping's "Not questions" as v1.0 §11 records them, the restatement of lock §9.3's PIN-17 row in the
+    placed copy's coordinates among them (v1.0 §11).
+
+  v1.0 §§12, 13 and 14 (the process rulings restated; what follows; the record) are Code's additions, as v0.2 §§7, 8
+  and 9 were.
+
+## v1.0 §1. The analyzer of record, the package and G-ANL-F0 (R2 3; the seat's step-15 answers)
+
+**The hashes of record** (recomputed by Code at HEAD `2186659`; each file committed with identical working-tree
+bytes):
+
+| Binds | Path | sha256 |
+|---|---|---|
+| **the analyzer** (last changed at `ed8e886`) | `scripts/m_analyze.py` | `655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f` |
+| **`package_sha256`** (unchanged since v0.1) | `valence_core/m/*.py` (18 files) | `5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771` |
+| **the analyzer's closure** (unchanged since v0.1) | `G-ANL-F0.json` `closure` | `a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b` |
+| G-ANL-F0's manifest of record (run on `ed8e886`, committed at `2f46fa8`) | `data/m/gates/G-ANL-F0.json` | `2ad451752167a1fe7da8c3d3d1d801f8cfcfda4e263deb60b36a2c0305aecf7a` |
+| the placeholder sentence table (moved at `ed8e886`) | `data/m/gates/m_posting_sentences.placeholder.json` | `44f1a2d42064fd1bb295b5988082619316fb3db8a200792147f5e4e854db0af9` |
+
+- **Two rounds at step 15.**
+  - The first (`b046b16`, R2 3's three edits: (a) C7's posting bar; (b) a fired end look without a matching pause;
+    (c) the end look's launch count) moved the analyzer `66fb521488db41e7…` → `522e80576659aff1…`. G-ANL-F0 re-ran on
+    it, PASS 444/444 (manifest `1dae14b9…ff66`, committed at `e4f0da3`).
+  - The second (`ed8e886`, the answers' order: Q2's class check at every STOP, Q5's texts, PIN-45's scope sentence,
+    PIN-17's anchor, and the table's kind `s8.1-a1-a3`) moved it to `655e0f7f…c16f`. G-ANL-F0 re-ran on it, PASS
+    448/448, 461 coverage ids (manifest `2ad45175…`, above).
+- **Superseded manifests, each moved by hand with `git mv` (PIN-37):**
+  - `05132089fd6b8c177df47e4d5ff7f77a6f1b47e9ef63568d25c07ceffe7afe9b` (v0.1's, lock §§1 and 9.1) →
+    `data/m/gates/G-ANL-F0.superseded-2026-10-14.json`, at `e4f0da3`;
+  - `1dae14b901e42ae58f1f71778148c9d91fb841625a95c877744f8dbbd543ff66` (the first round's) →
+    `data/m/gates/G-ANL-F0.superseded-2026-10-15.json`, at `2f46fa8`.
+- **The register,** PIN-1 to PIN-46, is the manifest's `pins`. PIN-44, PIN-45 and PIN-46, new at step 15, and PIN-26's
+  extended text (the posting's exit 5) are held, with the first round's index changes, "on C6's terms as extended —
+  Code's readings, strikable from `b046b16` until LOCK v1.0's commit" (the answers, Q1). The second round's changed
+  blocks, P288 (PIN-17's site), P300 (PIN-10's V2 site) and PIN-45's site P329, are held on the same terms: Code's
+  reading (the step-15b ping, "The PIN index"), which stands, the seat having answered nothing otherwise and struck
+  nothing in its read of the draft (v1.0 §8), except what R2 2 made the seat's (below). Code's additions in them are
+  the step-15b ping's Q4 list, which the seat kept (the step-15b answers, Q4: "All kept, on Q1's terms"). P301's
+  (PIN-9's site) only change is Q5's ordered correction.
+  - **Declared here: PIN-1 to PIN-46, Code's readings, none struck (v1.0 §8),** except, as at lock §9.3,
+    what R2 2 made the seat's: "within PIN-9 the pause raised at a STOP and its route, and within PIN-10 that pause,
+    the end look's reuse of the cadence look recorded at N (a multiple of 40), its route, and the V2 refusal", and at
+    the index sites lock §10 lists for it (P196, P197, P209, P245–P247, P252, P281, P300, P301). PIN-9's and PIN-10's
+    texts now carry Q5's "the seat's by R2 2 (2026-10-10)".
+  - **The seat's step-15 words against the entries they touched** (as lock §9.3's table records the seat's word on each
+    entry; the last row is the step-15b answers'):
+
+    | PIN | The seat's word (the step-15 answers, 2026-10-14; the last row, the step-15b answers, 2026-10-15) |
+    |---|---|
+    | 26, 44, 45, 46 | Q1: held "on C6's terms as extended — Code's readings, strikable from `b046b16` until LOCK v1.0's commit" (PIN-26's extended text among them); PIN-46's widening accepted |
+    | 45 | Q2: its class check "at every STOP"; its text states the stop→terminal route at its full scope |
+    | 17 | Q3: re-verified against the placed copy; its anchor sentence in the seat's words |
+    | 7, 9, 10 | Q5: the stale texts corrected (PIN-9's and PIN-10's "the seat's by R2 2 (2026-10-10)"; PIN-7 and PIN-10 name PIN-45 and PIN-46) |
+    | 3 | Q7: the planning row "recomputed at G-PWR with PIN-3's base case re-derived at the planned floors (R1 C6)" (v1.0 §3) |
+    | 10, 17, 45 (P300, P288, P329) | the step-15b answers, Q4: "All kept, on Q1's terms" (Code's additions: PIN-45's placement, REF-2's and REF-3's clauses, the stop→terminal sentence's detail, the citation clause; PIN-10's V2 site sentence; PIN-17's provenance parenthetical and `SEAT_ROUTED`'s entry) |
+
+  - Code's additions beyond the order's letter are the step-15b ping's Q4 list, which the seat's step-15b answers keep
+    (Q4: "All kept, on Q1's terms").
+  - C6's window closes at this commit. The answers, Q1: "After v1.0 a reading is corrected only as a register entry
+    is: by a disclosed amendment, or at a hash-moving round."
+- **The licence.** From `b046b16` (on `655e0f7f…` from `ed8e886`) until this file's commit, every non-stub stage
+  refuses at its start (lock §9.3); this file's commit ends that.
+- **What would have moved these lines** (the addendum, "After the ruling" and "What proceeds meanwhile"; the step-15b
+  ping, Q4): a patch v9 under Q2's (C), a strike of a Q4 item, or a strike of a Q7 default. None happened. The seat
+  ruled A4 ("No patch v9; no analyzer byte moves", the step-15b answers), kept every Q4 item, and struck no Q7 default
+  (v1.0 §3); its rulings changed the table's rows only (v1.0 §2). G-PWR was not re-run, and these lines are the draft's.
+
+## v1.0 §2. The preprint of record and the sentence table of record (m:286)
+
+- **The preprint of record:** `PREPRINT-v1_0-draft.md` at patch v8, placed by the PI (v1.0 §0), committed by path at
+  `1523cce`: sha256 `45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41`, 88,668 bytes, 468 lines.
+  - Code's step-15 ping (PI 1) noted two points as the PI's: a copy placed inside step 15 meets m:286 ("the PI places
+    it before this lock") but not m:58's and m:356's "before step 15"; and m:58 describes "the PI's redraft from
+    v1.1", where the placed copy is patch v8 of the root copy. Code read the PI's "placed" (2026-10-14) as settling
+    both, and the PI confirmed it (2026-10-16): "Confirmed: 'placed' settles m:58’s and m:356’s 'before step 15' and
+    m:58’s 'redraft from v1.1' (v1.0 §2)." On the seat's texts: the step-14 read's §4 item 3
+    lists the placement inside step 15, under m:286; the answers' Q3 recommends patch v8 of the root copy; and their
+    "The order from here" item 1 is the PI's routing, whose PI 1 announced it.
+- **The sentence table of record:** `data/m/gates/m_posting_sentences.json`, placed by this commit, sha256
+  `af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902` (55 rows; `table_problems` returns `[]` on the
+  analyzer of record, v1.0 §1, reading the preprint above). PIN-40 reads its sha256 and the preprint's, each in full,
+  here and in v1.0 §6; VERDICTS (step 17) enumerates over it (m:286).
+  - **How it was built.** Code's candidate, built from the placed copy outcome-blind under Code's spec (the table raw,
+    `results/raw/2026-10-15_m-table-draft-step15.txt`) and values-checked in two passes
+    (`results/raw/2026-10-15_m-table-of-record-valuescheck_interim.txt`), was `7206d78b…d0c5`. The seat's step-15b
+    answers ruled its scope (Q2, option A4, tests 1–7). Code applied the ruling to every scope row, values-checked the
+    sweep in five passes, and hashed it: r5, `74781b90…f907` (`results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt`,
+    `4f8f361`). The seat's step-15c read kept the five rows on which r5 followed test 5's text against the ruling's
+    applied paragraph, declined the seat-enumeration variant (`29a878cf…5490`), and struck e2b from R262.05. Code
+    applied the strike as r6, with one values-check pass (`results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt`,
+    `681f197`).
+  - **The change r5 → r6, as the r6 entry (`681f197`) has it:**
+    - **One cell.** R262.05's e2b is struck, leaving e2a, f1, olmo-base, olmo-sft, olmo-dpo and olmo-instruct
+      (step 15c §2).
+    - **Rationales.** R262.05 states tests 3 and 1 for its first clause and test 5, in its precise form, for its third.
+      It also states §2's rule: a row the ruling names under a test takes that test's result for the clause named.
+    - R254.02 states the seat's correction of test 3's enumeration to include S1.
+    - R242.01 states that a heading takes its section's scope by context; the flag is closed.
+    - The five rows (25.04, 232.01–232.03, 240.06) state §1's ground: the ruling's text governs, and they range over
+      the data.
+    - R194.04 is neither data-wide nor lineage-wide.
+    - No other field moves.
+    - The correction to S1 is applied on R254.02 as ordered and is inert on the other test-3 rows: they exclude S1 on
+      their own grounds, and S1 is *Answered* in every tuple.
+    - r6's table is byte-equal to r2's, which had the same cells (the r5 raw records r2's); the builder reads no
+      rationale. Superseded: the candidate `7206d78b…d0c5`, r5 `74781b90…f907` and the variant `29a878cf…5490`.
+  - **Its firing over the 1,080 tuples** (the step-15c read, C3: "v1.0's text states the all-PASS enumeration from the
+    table of record"): 14 rows fire clause (a) in every tuple (R025.04, R123.01, R186.02, R186.04, R220.01, R232.01,
+    R232.02, R232.03, R236.02, R240.02, R240.03, R240.06, R250.03, R262.05). At the all-PASS tuple the enumeration
+    has 23 items under the flag of record, 14 by (a) and 10 by (b), R236.02 under both: by (b) alone, R003.01,
+    R013.15, R230.01, R234.01, R234.02, R234.04, R234.05, R234.06 and R258.04. Under the other flag, 24 (R182.06 by
+    (c)). The interim raw's sentence that paragraph 248 is rewritten at every posting is superseded (C3).
+  - **The rules** are Code's readings (PIN-20), which the seat accepted (the step-15b answers, Q1: "Accepted as
+    declared"), with the seat's rulings on scope: A4's tests 1–7 (the step-15b answers, Q2); test 5's precise form
+    (the step-15c read, §1: a unit that ranges over the data, the results or the paper asserts its null on e2b and the
+    base row; one that ranges over the lineage or every stage and no wider, on the base row only); a row the ruling
+    names under a test taking that test's result for the clause named (§2); test 3's enumeration of the labeled nulls
+    including S1 (§3); the weight channel outside test 5, which reaches only cells that carry a choice figure (C4). The
+    rows of record and their rationales are in the r6 raw.
+  - **For the posting** (the step-15b answers, "Two notes for the PI, not the table"; posting-time rewrites by row id,
+    not reasons for a patch v9): 30.2's "is reported, not labeled" and 176.3's and 270.5's *concluded, not answered*
+    name the same cell differently; and the printed labels at VERDICTS are m:338's, which differ in wording from v8's
+    :176 and :184.
+  - The placeholder (`data/m/gates/m_posting_sentences.placeholder.json`, v1.0 §1) serves G-ANL-F0 only (m:286).
+- **PIN-17, re-verified against the placed copy** (R1 C4; the answers' Q3), inside the second round. The substance
+  holds as C4 confirmed it: v8 §8.1 (:268–:280) holds A0 (:270), A0-OLMo at SFT, DPO and instruct (:272), and A1, A2,
+  A3 (:274–:278); §8.2 (:282) is the Tagliabue arms; Step 7 is "open" at v1. The anchor sentence reads, in Q3's words,
+  "A1 belongs to §8.1's A1–A3 paragraphs (v1.1's §8.2), 'open' at v1". Nothing re-opens C4.
+- **The re-anchoring of v1.1's referents** (m:58; m:371; the answers' Q4, reading (A): "Each reference is re-anchored
+  where a counterpart exists and recorded 'no counterpart' as a dated note where none does, with what it rests on").
+  The reference text is `PREPRINT-v1_1-draft.md`, placed at root by the seat (PI 2), untracked, sha256
+  `163e5f600c424019dea62161b450f0bff572eecc1959a252850dcf0dca11fa91`, recorded as a reference and not as a copy of
+  record; no check binds it (PIN-40 requires the table of record's own sha256 beside a preprint's).
+  - **The table of referents** (`results/raw/2026-10-15_m-lock-v1.0_reanchoring.txt`): a sweep of the proposal in
+    full, every preprint referent in v1.1's numbering with its v8 counterpart or "no counterpart", checked by a strict
+    refuter, with Code's dispositions; committed with the draft's snapshot (v1.0 §3), sha256 in v1.0 §14.
+  - **The section translation** v1.1 → v8: §7.4–§7.8 → §7.2–§7.6 (v1.1 §7.2, §7.3 none); §8.1 + §8.2 → v8 §8.1;
+    §8.3–§8.6 → §8.2–§8.5 (§8.7 none); below the top level, v1.1 §2.2–§2.8 → v8 §2.1–§2.7 (§2.1 none) and v1.1 §3.5
+    none.
+  - **"No counterpart", dated notes of 2026-10-15** (each resting on the two texts as the raw quotes them):
+    1. m:14's "TAB 2 rows": TAB 2 is a slot in both texts and carries no rows; the slot re-anchors v1.1:183 → v8:170.
+    2. m:342's "the new §5.7" (and m:291's and m:361's Step-6 text): a prospective section in neither text; §5.7
+       stays free in v8.
+    3. m:349's "§7.2's 'what we establish for the sceptic'" (v1.1:258): v1.1 §7.2 has no v8 counterpart.
+    4. m:349's "§7.7's penultimate sentence" (v1.1:290): v8 §7.5 omits it.
+    5. v1.1:250's last sentence, a §7.1 thesis paraphrase, dropped at v8:236 (it bears on m:14, m:61, m:65, m:96,
+       m:349's clause (b) and m:349's "§7.1's title sentences").
+    6. m:62's and m:341's "not acted on" as the title-line phrase: v1.1:3 carries it in the Fallback-1 title, and
+       v8:3 carries the Main title; the phrase itself stands at v8:30 and v8:168.
+  - Notes 1, 3 and 4 also stand as the table's kinds' re-anchoring (the step-15b answers, Q5: "Accepted under
+    reading (A)").
+  - **Flagged by the map, not adjudicated here** (Code's notes, for the seat and the PI):
+    - the e2b and base-row label wordings against m:338, since settled: nothing in the analyzer moves, and the
+      printed labels at VERDICTS are m:338's (the step-15b answers, "Two notes for the PI, not the table");
+    - v8:3 carries the Main title, which m:341 makes unreachable at v1 and v8's header note says is not used in this
+      version; v8:13's untagged thesis sentence; clause (b)'s enumeration is by rule, not by tag, so the table built
+      from v8 reaches :3, :13, :230 and :234 (as the table raw's rows do);
+    - "§7.5's first sentence" is v1.1's tagged lineage sentence, §7.5's second (the kind `s7.5-first`, Code's reading),
+      since settled (the step-15b answers, Q5);
+    - Step 7's "§8.1's sentences" reads wider in v8 coordinates, consistent with Q3's kinds;
+    - v1.1's own patch-v5 item list against m:58's (m:58 governs);
+    - the ethics section's §8.1/§8.2 wording, dropped at v8:292;
+    - v8:182 carries f1's dose note as text, governed at posting by clause (c) and the flag;
+    - archive/ holds six pre-patch copies, where m:371 and m:354 count three.
+  - The referents of Code's step-15 ping (Q4) all resolve: §0.1's §8.2 and Step 7's "§8.2 status" → v8 §8.1's A1–A3
+    paragraphs (:274–:278); Step 4's "§8.2's screen" → v8:278; §7.4's "§8.2 stays open" → :274–:278; Step 6's §7.6
+    rival → v8 §7.4 (:246, and :248 at root:248's coordinate); §7.5's v1.1-only seed items → notes 3 and 4 and the
+    kinds below.
+- **The table's kinds, re-anchored** (Code's step-15b ping, Q5, accepted by the seat under reading (A); dated notes,
+  2026-10-15):
+  - `s7.4-last` (v1.1 §7.4's last sentence) → v8 §7.2's last (:240);
+  - `s7.5-first` (v1.1 §7.5's "first sentence") → v8 §7.3's lineage sentence (:244); Code's reading: in v1.1 the
+    tagged sentence is §7.5's second, so the header note's gating decides, not the ordinal;
+  - `s7.2-sceptic` (v1.1 §7.2), `s7.7-penultimate` (v1.1 §7.7's "they do not") and `tab2-row` (TAB 2 is a slot): no
+    counterpart in v8.
+
+## v1.0 §3. G-PWR (m:285; the answers' Q7)
+
+- The program: `scripts/m_gpwr.py` (sha256 in v1.0 §6), committed with the draft's snapshot after its review
+  (`results/raw/2026-10-15_m-gpwr-program_review.txt`, v1.0 §14), model-free and exact, outside `valence_core/m` and
+  not the analyzer, so it moves neither hash (Code's choice of home, v1.0 §0). Its run of record records the sha256 of
+  the draft it is given and refuses unless that draft begins "# LOCK-m-F0.md — v1.0" and names the analyzer's sha256
+  in full (Code's mechanism for R2 3's order). G-PWR "is not a `stages.py` stage" (the answers' "The
+  not-questions"; v1.0 §12). It was not re-run: v1.0 §1, "What would have moved these lines".
+- Its run of record read the draft's committed snapshot, `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md`
+  (committed at `78f5602`): the amendment alone, as it stood before G-PWR ran. The record's `lock_draft.sha256` is
+  that file's, `c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d`, and its raw's header
+  quotes the draft's line naming the analyzer (Code's step-15 ping). The command
+  of record, which its raw's header states with the launch check before it (the jlens-qwen36 interpreter, in a
+  scrubbed environment): `python -I -B -X pycache_prefix=<a path that does not exist> -X utf8 scripts/m_gpwr.py
+  --lock-draft results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md --record data/m/gates/Q-F0_G-PWR.json`.
+- Around the run (Code's wrapper; its raw carries both checks and the verifier's source): `git fsck` before launch and
+  after the run, and an out-of-process verifier. The verifier re-hashes every object it reads and checks the record
+  against the run's commit; against the program, analyzer, package and closure sha256 the draft names (v1.0 §§1 and
+  6); against the reviewed figures; and against the printed output and the raw as it stands at its call, byte for
+  byte. What the wrapper appends after it is bound by the sha256 the wrapper prints at its end.
+- **Its preparation: two departures, declared for the seat and accepted post hoc** (the step-15b answers, "The two
+  G-PWR departures": "Both accepted post hoc; neither re-runs anything"; its review raw states when the preparation
+  began).
+  - In scratch and uncommitted, the program's first dry run computed every G-PWR figure on the inputs of record
+    before the draft's first text named the analyzer, and round 1's lenses had begun on the same inputs by then. The
+    later dry runs, the review rounds, and the trials and replays re-run at its entry's values-check ran on the same
+    inputs before the draft's snapshot was committed. The answers allowed G-PWR's scratch preparation "on synthetic
+    inputs, uncommitted", as Code's step-15 ping had proposed. That is a departure. Code's reading beside it, which the
+    seat adopted: R2 3's "before G-PWR … runs" governs the run of record, which reads the draft's committed snapshot,
+    and the scratch runs are its review. The seat (the step-15b answers, "The two G-PWR departures"): "the run of
+    record, which reads the committed snapshot, is what R2 3's 'before G-PWR … runs' governs. The scratch runs are its
+    review."
+  - Its draft check and its verifier read the draft's text and were built before the snapshot's commit (the step-14
+    read's Q4). That is stated as a departure. Code's reading beside it, which the seat adopted: the snapshot under
+    `results/raw/` is not "a lock's committed text", and the run of record follows its commit. It is stated in the
+    review raw's first committed text, before the run of record. The seat (the same answers): "The statement in the
+    review raw's first committed text meets Q4's 'at the time'."
+- Its inputs: k = 18 of n_q = 24 on the uncached path (the G-F0m-Qwen entry: "r for Q-F0's launch rule is 18/24 (A0
+  7/8, A0s 11/16)", its bold markers dropped); the floors A0 80 and A0s 32 (v0.2 §1); the bars of lock §8.2 rows 7–9;
+  and Q7's planning row: "The planning row stands as the input (m:210: k = 18 of 24 uncached → L = 128 and 64, total
+  192, 5 looks; power at the floors .878 ≥ .85, no n raised), recomputed at G-PWR with PIN-3's base case re-derived at
+  the planned floors (R1 C6)."
+- Its methods, the seat's (Q7): "Code's defaults are the seat's, declared at G-PWR on Q1's terms (strikable until
+  v1.0's commit; a strike recomputes figures only)". None was struck: the step-15b answers strike none, and the seat's
+  read of the draft records none (v1.0 §8).
+- **Code's readings within Q7**, entered from the record's `readings` (its texts, in brief): within Q7 (a), "the sham
+  arm leaving the rotation at its floor" is computed at two launch counts, ⌈32 / r⌉ = 43 at r = 18/24 and 32, the
+  fewest at which the sham can reach its floor, A0 launching to its L in both; the 136-of-160 case changes rounds only,
+  so only round_degeneracy is recomputed there. Within Q7 (b), "the supremum" is reported as the maximum over the grid
+  j/100 (j = 1..99), refined to .001 within ±.01 of that maximum, a grid maximum bounding the supremum from below; the
+  union is also reported at its grid maximum over common rates p ≤ .20; the grid, its maximum and the union's maximum
+  are figured on the projection only. m:190's raise is not triggered.
+- **Its run of record**, on HEAD `78f5602`, committed at `43f3bb2`: the raw `results/raw/2026-10-15_m-gpwr-qf0.txt`,
+  sha256 `3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145`; the record
+  `data/m/gates/Q-F0_G-PWR.json`, sha256 `b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68`
+  (v1.0 §6). The wrapper's last line but one: "EXIT 0; fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0". The committed blobs
+  equal the sha256 the wrapper printed (the r5 entry).
+- **Its figures** (the record, where the exact fractions stand; design figures, which issue no verdict, m:330):
+  - power at the floors (A0 80, A0s 32): 0.878 (0.8784) ≥ .85; no n raised. **PIN-3**, re-derived at the floors (R1
+    C6): 0.878, split [40, 40], mS 32;
+  - launch counts (m:192): A0 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s 64 (floor 32;
+    37; N₉₀ 48; up to 32); 192 in all; 5 looks. The same row holds at k = 17 to 20, and equals Q7's planning row;
+  - round_degeneracy's sequential false-pause probability (p0 .05, α .05 per look, on the sham's rounds): the
+    projection 0.0976; the sham at its floor at r (A0s 43) 0.0797; at the fewest launches (A0s 32) 0.0593; at
+    G-F0m-Qwen's 136 of 160 realised rounds 0.0890;
+  - the exclusion guard at the common rate .20 (absolute, Fisher, union): the projection 0.1086, 0.0766, 0.1496; the
+    sham at its floor at r 0.1073, 0.0669, 0.1461; at the fewest launches 0.0999, 0.0579, 0.1343. On the projection,
+    the Fisher half's grid maximum is 0.0836 at 1/2, refined to 0.0836 at 251/500; the union's grid maximum over common
+    rates p ≤ .20 is 0.1496, at 1/5;
+  - the joint figure (Q7 (c)): round_degeneracy's own, 0.0976, with the guard's union 0.1496 beside; the joint over the
+    two is not computed, and the record gives the reason. The hair triggers and the lexical bar carry no figure (m:271;
+    m:330).
+- PIN-3 is re-derived at G-PWR (R1 C6): the figure at the planned floors, above.
+
+## v1.0 §4. Launch counts per arm and the hour cap (m:286)
+
+- **Launch counts** (m:192; G-PWR's record, v1.0 §3): A0 128, A0s 64, 192 in all, over 5 looks. They are "a
+  projection, not a bound" (m:192): the campaign launches each arm until its domain count reaches its floor, the unit's
+  cap, or a PI stop (lock §6; `stages.run_campaign`).
+- **The hour cap: 40 h**, the PI's (2026-10-16, v1.0 §0), set "with both in view" (the step-10 read's Q6). On the
+  planning basis the launch counts come to about 26.0 Qwen hours (192 × 488 s, the proposal's §2.4 basis, m:205, as
+  v0.2 §2 carries it); on the three measured
+  uncached sham sessions (100–262 s), to about 5.3–14.0 hours; the step-14 read's §4 item 2 beside (G-F0m-Qwen's sham
+  figure, and "r = .75 raising launches by a third over the planning tables' assumption"). The seat's note to the PI
+  with the step-15c read: "a STOP, so above the honest projection — 40 h".
+- **Line forms** (Code's, for the campaign wiring to test as substrings, as the driver tests `path = uncached`):
+  - `launch counts = A0 128, A0s 64`
+  - `hour cap = 40 h`
+
+## v1.0 §5. D1, Q-F0's Clock date
+
+- **2026-10-30** (lock §11 item 5; the step-14 read §4 item 5). R1 C7: v1.0 is "committed by its Clock date" iff the
+  commit's committer date, in UTC, falls on or before it; the day is inclusive and ends at 23:59:59 UTC. If v1.0 is
+  not committed by then, Q-F0 is NOT-RUN (m:324). The seat's Q2 ruling is on this path: "The ruling is now on that
+  path" (the addendum, "What proceeds meanwhile").
+- The seat's correction, as the PI routed it (2026-10-16): "the Clock is UTC by R1 C7 (v1.0 §5) — no TZ setting
+  matters; the deadline is 2026-10-30 23:59:59 UTC". This commit's committer date, in UTC, is named in the LOCK-m-F0
+  v1.0 entry.
+
+## v1.0 §6. The hashes of record (m:286's list)
+
+| Binds | Path | sha256 |
+|---|---|---|
+| the proposal | `PROPOSAL-m-gating-campaign-v1_11.md` | `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b` |
+| the preprint of record | `PREPRINT-v1_0-draft.md` | `45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41` |
+| the sentence table of record (r6, v1.0 §2) | `data/m/gates/m_posting_sentences.json` | `af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902` |
+| the schedules' manifest (25 files; Q-F0's seven in lock §6, unchanged since `5f7b968`) | `data/m/schedules/manifest.json` | `8c89636addb846c8d45cd9c6dcf97a7663df3e2b535dd91b3d40302cccc8d6bb` |
+| the campaign schedule, A0 | `data/m/schedules/Q-F0_campaign_A0.json` | `a573faf31ce52d760c1d45040e57b98ccd29edc4f470bac641e98adf934429b7` |
+| the campaign schedule, A0s | `data/m/schedules/Q-F0_campaign_A0s.json` | `38ab22677650e82af257b01d47adb26dcac05bb0dc24cdb76927eb5d78f29d0c` |
+| the pools | `data/f/pools.json` | `8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0` |
+| the renders of record (a value; E6's serialization, lock §1) | from `data/m/gates/G-CAL_model-free.json` | `a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372` |
+| the analyzer, the package, the closure, G-ANL-F0's manifest, the placeholder | v1.0 §1 | v1.0 §1 |
+| the decisions block (committed at `5dca58b`, the PI's PI 3) | `DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md` | `fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8` |
+| the driver of record (the step-10 read's Q2; the `qual` wiring, `4630cfd`) | `scripts/m_sessions.py` | `c0a897f5d07be94dee08d37bab16ed76b9f7cc87d1c4929ed49725d44faef4b2` |
+| G-PWR's program (v1.0 §3) | `scripts/m_gpwr.py` | `1d7c0fe3a5997c1e2b7ed34fd4f65112692126c6a784a68ab1900db59363111c` |
+| G-PWR's closure (v1.0 §3): the repository modules its run loads beside the program, the analyzer and the package; the sha256 of their map, each value the file's sha256 (json.dumps, keys sorted) | `valence_core/__init__.py`; `valence_core/adapters/__init__.py`, `base.py`; `valence_core/e2d/__init__.py`, `audit_v3.py`, `config.py`, `contentclass.py`, `contentclass_v4.py`, `contentclass_v5.py`, `habit.py`; `valence_core/session.py`, `session_e2a.py`, `stats.py` (13 files) | `fa543713db39cb176da9d4ac62726bcef70b88eb69bd4948a1541815cfbb5e22` |
+| G-PWR's output (v1.0 §3) | `data/m/gates/Q-F0_G-PWR.json` | `b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68` |
+| this lock's PIN-index addendum (v1.0 §8) | `results/raw/2026-10-15_m-lock-v1.0_pin-index-addendum.txt` | `b6a0de0d6c5c557a14e1bef3d66e1e35082fab9e33da78f93ad80d44ed6acb15` |
+
+## v1.0 §7. Carried from v0.2
+
+- **`path = uncached`** (v0.2 §1). The floors A0 80, A0s 32; the looks m:330's uncached figures.
+- **The weights of record** (v0.2 §4): model id `mlx-community/Qwen3.6-27B-4bit`, snapshot
+  `c000ac2c2057d94be3fa931000c31723aac53282` — Q5: "v1.0 keeps it". Every later Qwen stage of Q-F0 loads offline,
+  the snapshot id in each raw's header and each entry.
+- **The driver of record** (v1.0 §6), its history in v0.2 §3 and the step-14 entry.
+
+## v1.0 §8. The PIN-index addendum and the strike window
+
+- **The addendum** (`results/raw/2026-10-15_m-lock-v1.0_pin-index-addendum.txt`), extracted mechanically by the v0.1
+  index's rules from the driver `c0a897f5…` and the analyzer `655e0f7f…`; the v0.1 index and the v0.2 addendum are
+  not edited.
+  - **The driver** (the step-14 read, Q2): the seven sites declared at LOCK v1.0, P321–P327 (`m_sessions.py:453`,
+    `:464`, `:479`, `:550`, `:736`, `:819`, `:857`), "held on C6's terms as extended, strikable from the step-14 commit
+    until LOCK v1.0's commit, the same close as the register's"; the three v0.2 blocks the extraction rule changes
+    (Q2: "P315 and P318 truncated at the new markers; P317's `wanted` line rewritten"; on Code's extraction P317 is
+    truncated too: P315 at P324 (`:550`), P317 at P325 (`:736`), P318 at P326 (`:819`)); the other v0.2 sites and the
+    ten v0.1 sites unchanged.
+  - **The analyzer** (the answers' Q1: v1.0's addendum "takes the form the step-14 read's Q2 gave the driver's"): the
+    three sites declared at LOCK v1.0, P328–P330 (`m_analyze.py:2026` PIN-46, `:2052` PIN-45, `:2555` PIN-44), PIN-45's
+    changed at the second round; P311 no longer a marker block; P313 (PIN-26's site) extended at the first round;
+    P288 (PIN-17's site), P300 (PIN-10's V2 site) and P301 (PIN-9's site) changed at the second round; the other 43
+    v0.1 sites unchanged. Their terms, as v1.0 §1 states them: the new sites, the first round's changes and P313 on
+    Q1's terms; P288, P300 and P329 on the same terms by Code's reading, which stands (v1.0 §1); except what R2 2 made
+    the seat's at the sites lock §10 lists for it (P300 and P301 among them).
+  - The numbering of the new sites is Code's (v1.0 §0).
+- **The step-14 read's Q2 sentence, stated here:** "a strike of a driver site after the stage it gates has run does
+  not re-run the stage." In Q2's words: "The stage's record stands as obtained on the blob its entry names; the
+  strike is applied to the driver at its next edit (the campaign wiring) and named there and in v1.0; where the struck
+  reading affected what the stage *recorded* rather than what it ran, the entry is corrected by amendment, as for the
+  register."
+- **Strikes recorded at this commit:** none. The seat's step-15b answers strike no register entry, index site or
+  driver reading, and the seat's read of the v1.0 draft records none ("no strikes; v1.0 §8 records none from the
+  seat", v1.0 §0). The seat's strike on R262.05 (the step-15c read, §2) is a strike of a table row under the step-15b
+  answers' Q1 ("a strike changes rows only"), and stands in v1.0 §2.
+- **After this commit** (the answers' Q1; the step-14 read's Q2): a register entry, an index site or a driver reading
+  is corrected only by a disclosed amendment, or at a hash-moving round. "The campaign wiring's own sites are declared
+  at the campaign and strikable until its launch entry".
+
+## v1.0 §9. The phase-only form on Qwen (the step-14 read's Q5)
+
+On Qwen the phase-only line withholds the position and the pick and not the class: under m:261's lenient scope the
+only free-round event that excludes a Qwen session is a lexical hit, so `excluded@free` implies the class.
+
+## v1.0 §10. The decisions block (m:286)
+
+`DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md`, sha256 `fab576d8…34f8` (v1.0 §6), committed by path at `5dca58b` on the
+PI's PI 3 and the seat's recommendation ("commit it, so that the sha256 v1.0 names resolves in the repository (rule
+27)"). Its records of (6′) and (7), quoted verbatim with the marks m:16 sets beside them, as step 3 quoted them
+(m:356):
+
+- :91, the record of (6′):
+
+  > - **Title under the Clock — PI decision (6) revised, 2026-09-27 02:43 (PI clock): the Clock posts under Fallback-2** (*Marked, expressed, remembered*), the wanting question stated open. With §5.5 unlicensed, Fallback-1's "not acted on" would rest on nulls from an instrument of unmeasured sensitivity — the paper's own criticism of the field. Not running and running-and-failing-A0 now reach the same ceiling. The preprint patch's clock sentence is corrected in patch v2 (delivered with v1.3).
+
+  m:16's mark: :91's clause "Not running and running-and-failing-A0 now reach the same ceiling" **superseded** (shown
+  false at STOP-3 B2).
+- :96, the record of (7):
+
+  > - **OLMo Q3 — PI decision 2026-09-27 02:43 (PI clock): the OLMo arm is added.** A Qwen A0 licenses the Qwen F0 cells (e2a, e2b, f1) and does not license OLMo Q3; the arm below does. Its shape, for Code's feasibility check before v1.3 (roster admissibility, session rate, box):
+
+  m:16's marks: :96's clause "A Qwen A0 licenses the Qwen F0 cells (e2a, e2b, f1)" **superseded for e2b by decision
+  (12)**, and its "the arm below does" **superseded by (7′)**.
+- :97–:101, not quoted here (the seat's instruct-only OLMo design of 09-27, not a record of (6′) or (7)): m:16 marks
+  them, its bold dropped, "superseded by (7)/(7′), by this document, and — for :100 — by the PI's routing line that a
+  pod start needs the PI's go"; ":102, Welfare, is consistent with §7.3 and stays unmarked".
+
+## v1.0 §11. Declared limits (the answers' Q2 and "The not-questions"; the step-15b ping's "Not questions")
+
+- **PIN-45's limits, as its text states them** ("No V2 refusal catches any of the three"):
+  - an end look with every fired flag cleared, fresh or reused, cannot be told at V2 from a silent one;
+  - the stop→terminal route: a hair-trigger STOP whose stop block is removed beside a terminal PI-STOP or CAP block
+    reaches VERDICTS without PIN-8's PI-stop record, at a silent end look, at a fresh fired one given the seat's
+    adjudication, and at a reused look; a COMPLETE block passes too where every arm's floor is reached;
+  - the G-VER relabel, with its id moved to an id not recorded.
+- **Not built, and declared as PIN-45's limits** (the answers' Q2): the s-count check (a G-VER STOP's s against its
+  template's recorded sessions) and the stop-block shape check on non-id fields.
+- **L2-9:** "an empty-string path reads as absent where a surplus file would be refused; a needed input stays refused;
+  no verdict changes" (the answers).
+- **Declared, not built** (the step-15b ping): a V2 read of the hour cap; a refusal of a stop block beside a terminal
+  block; an exact-type id comparison; Q2's s-count and stop-block shape checks; `table_problems`' uncaught TypeError
+  on an unhashable row id (beside L2-9).
+- **Class relabels that evade no seat input** (the step-15b ping): a G-VER STOP rewritten as a terminal PI-STOP or CAP
+  (at no launch, a NOT-RUN under another cause); a terminal end rewritten as a STOP.
+- **Stale texts noted, not changed** (the step-15b ping): PIN-7 omits PIN-10's own V2 refusal; SEAT_ROUTED's PIN-9
+  entry does not name R2 2; the comment at `m_analyze.py:1588–1589` calls PREPRINT-v1_0-draft.md "not the preprint of
+  record"; PIN-20's site "(LOCK v0.1 hashes it)" (`m_analyze.py:1472`) names a path whose bytes LOCK v0.1 no longer
+  hashes; PIN-10's third statement (at `guard_at_last_look`) names neither PIN-46 nor PIN-45; lock §9.4 quotes C4 in
+  v1.1 coordinates, as ruled; the step-15 entry's reading "on Code's reading the table needs none" is superseded by the
+  kind `s8.1-a1-a3` (its "The round made no `KINDS_VOCAB` or schema change" stays true of `b046b16`).
+- **Lock §9.3's PIN-17 row, restated in the placed copy's coordinates** (Code's restatement, on PIN-17's anchor as
+  the answers' Q3 corrected it): §8.1 clauses for A0 and A0-OLMo; "A1 belongs to §8.1's A1–A3 paragraphs (v1.1's
+  §8.2), 'open' at v1". The v0.1 copy keeps its row, "§8.1 clauses; A1 is §8.2's".
+
+## v1.0 §12. Process rulings that bind the campaign
+
+- As v0.2 §7: the launch line (the checklist's own line, verbatim, or the header says what was run instead); no finish
+  stamp in any raw or commit message of a stage with contrast sessions; F1 ("Qwen stages launch only when the audit
+  session is idle").
+- **The step-14 read's Q4**, going forward: "a build whose checks read a lock's committed text starts after that
+  lock's commit, or states the departure in its review raw at the time".
+- **The step-14 read's Q3:** a `CHECKPOINT STATE INCONSISTENT` line "is not quoted or computed against before VERDICTS
+  and goes to the seat in a sealed form"; the driver-only redaction is "scheduled with the campaign wiring".
+- **The window** (the answers' "The not-questions"): "no licensed stage runs between `b046b16` and v1.0's commit;
+  G-PWR is not a `stages.py` stage; the driver self-test's 795/796 is the window's artifact and returns to 796/796
+  when a lock line names the new analyzer."
+
+## v1.0 §13. What follows
+
+1. **The campaign wiring** (step 16's driver edit), after this commit, "with the Q3 redaction and the campaign's
+   `REVISION_STAGES` entry, reviewed as the `qual` wiring was" (the step-14 read, "What Code does now" 3).
+2. **The Q-F0 campaign** (m:358 step 16) on the PI's word, detached and checkpointed, A0/A0s interleaved, per-arm stop
+   at floor, §6 monitoring.
+3. **Step 17** in a later session on the PI's word: `PROPOSAL-m Q-F0 — VERDICTS`, its enumeration over the table of
+   record (v1.0 §2).
+4. **The OLMo track** is unchanged (lock §11 item 7): the PI's go for a pod start, the runpod MCP re-authorised first.
+
+## v1.0 §14. Record
+
+**Rulings, blocks and outputs** (sha256 recomputed; all committed):
+
+| File | sha256 | Commit |
+|---|---|---|
+| the seat's step-15 answers, `results/raw/2026-10-14_m-design-to-code_step15_answers.md` | `07cd8e5f4535c95c61428a07c426490e694d16601818096d48210c534f780767` | `5dca58b` |
+| the step-14 read, `results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md` | `661313ceeb6808f4aa38e8eeb1968997b824514c3bbeb5cd903cd700184b5c02` | `5af9e07` |
+| the step-10 read, `results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md` | `c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7` | `27450dc` |
+| Code's step-15 ping, `results/raw/2026-10-14_m-code-to-design_step15.md` | `1ae57a6db0d10255c8f091c78c9301be70d24c22cc6db7c1c88b2e7ce77ae886` | `e4f0da3` |
+| Code's step-15b ping, `results/raw/2026-10-15_m-code-to-design_step15b.md` | `0c1e8244b99e656bc6356b446d195b0506c314377e32a66c071c3a31fdca3875` | `2f46fa8` |
+| Code's addendum to it, `results/raw/2026-10-15_m-code-to-design_step15b_addendum.md` | `c85d0b8f6bf38b11df46a2be24ccb63803d378ba381a311d53af162ccb7a9fed` | `2186659` |
+| the table of record's values-check so far, `results/raw/2026-10-15_m-table-of-record-valuescheck_interim.txt` | `0234d6cbb030062e704ffdf690f69dbebc32b72a898230f3bb4270ca0f94fc15` | `2186659` |
+| the first round's review, `results/raw/2026-10-14_m-analyzer-round-step15_review.txt` | `56a5a643384a272de39c1725fcf400b80d4854f21cee2a88229fb6633158b039` | `b046b16` |
+| the second round's review, `results/raw/2026-10-15_m-analyzer-round2-step15_review.txt` | `b950d6478802270ef990ffa11282692d052b5ffdfa1012a04989ca61ba400d32` | `ed8e886` |
+| the table raw, `results/raw/2026-10-15_m-table-draft-step15.txt` | `49c33b708a3f0c6eb5b9fdbf7c7c268d9b345b48552d066a89277b8f30927ffd` | `ed8e886` |
+| G-ANL-F0's re-run on the first round, `results/raw/2026-10-14_m-ganl-f0-rerun-step15.txt` | `f10acb14afcdda825ae3aaa3b67bab5a8809190d91bf71490d9757ee5b86479a` | `e4f0da3` |
+| G-ANL-F0's re-run on the second round, `results/raw/2026-10-15_m-ganl-f0-rerun-step15b.txt` | `ad48bb47843813198eaea050e3007db6185f0a1f27f875250d94bd38444d7ec8` | `2f46fa8` |
+| the re-anchoring of v1.1's referents (v1.0 §2), `results/raw/2026-10-15_m-lock-v1.0_reanchoring.txt` | `87ba4698a2a3936accc1b68ca15423b9f85afa89b1eb6ea12c66698c737460d4` | `78f5602` |
+| this lock's PIN-index addendum (v1.0 §8), `results/raw/2026-10-15_m-lock-v1.0_pin-index-addendum.txt` | `b6a0de0d…cb15` (v1.0 §6) | `78f5602` |
+| G-PWR's program (v1.0 §3), `scripts/m_gpwr.py`, and its review, `results/raw/2026-10-15_m-gpwr-program_review.txt` | `1d7c0fe3…111c` (v1.0 §6); the review `3e462f472b9549ad9de45ef8715a75f191c16099cae03579ce6df9d20c159313` | `78f5602` |
+| the draft's snapshot, `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md` (v1.0 §3) | `c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d` (G-PWR's record carries it) | `78f5602` |
+| the draft's values-check, `results/raw/2026-10-15_m-lock-v1.0-draft_valuescheck.txt` | `a420be4d38a93059e562f8839774b7cc392a6d5486abc943db7cad3303e18e6b` | `78f5602` |
+| G-PWR's run of record (v1.0 §3), `results/raw/2026-10-15_m-gpwr-qf0.txt` | `3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145` | `43f3bb2` |
+| G-PWR's record (v1.0 §§3, 6), `data/m/gates/Q-F0_G-PWR.json` | `b5331ba1…3a68` (v1.0 §6) | `43f3bb2` |
+| G-PWR's probe battery, `results/raw/2026-10-15_m-gpwr-probes.txt` | `11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3` | `43f3bb2` |
+| G-PWR's entry's values-check, `results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt` | `b8ba23465e734a711141d79b0a62e927e6059360c26426f8abdfcab9382f1e10` | `43f3bb2` |
+| the seat's step-15b answers, `results/raw/2026-10-15_m-design-to-code_step15b_answers.md` | `db9edf3be03a157558e29d25c45c620c9db28f8837b106981fb8389336619a7b` | `dd097ab` |
+| the table of record's A4 sweep (r5), `results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt` | `17be6cfd09d90c2aac242b0a01c2771ffee6cb07fd8c1b369350ebc83b501ea4` | `4f8f361` |
+| the seat's step-15c read, `results/raw/2026-10-16_m-design-to-code_step15c_answers.md` | `a8d07909caa04fef0495e5798d60f080ce73b4f2ce378bbdd0080b24d91cddf7` | `3c7f8c7` |
+| the table of record, r6 (v1.0 §2), `results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt` | `f2d19ae18976f039b7dbfa59eec14062dfd004da9f923b630e97342618fe9580` | `681f197` |
+| the v0.2 PIN-index addendum, `results/raw/2026-10-13_m-lock-v0.2_pin-index-addendum.txt` | `0e5f29e82a2a2a61f962acddfd2ec23aa06904c8bdd28b3506711cc46e15b8b6` | `db7d970` |
+| the v0.1 PIN index, `results/raw/2026-10-10_m-lock-v0.1_pin-index.txt` | `915245b5d69f1907928c98a1c184aca3a91e0351b0c5361da98b8f8382dfd2ce` | `e3bef6f` |
+| LOCK-m-F0 v0.2, the record (its text follows below) | `0908b5b7…945e` (v1.0 §0) | `db7d970` |
+
+**RESULTS.md entries cited**, newest first. Each commit is the one that added the entry (`git log -S`).
+
+| Entry | Commit |
+|---|---|
+| 2026-10-16 The sentence table of record, r6: the seat's strike on R262.05 | `681f197e3fe72893ca2ca56f67405dd8e365d18f` |
+| 2026-10-16 The sentence table of record: the seat's A4 ruling applied, values-checked, and hashed (r5) | `4f8f361f0a0ac9fa8ca6796e0058ca7d8379fdce` |
+| 2026-10-15 G-PWR for Q-F0, run of record | `43f3bb25c4e1391ac0247c269f2c6857a5dc16c8` |
+| 2026-10-15 G-PWR's program, committed before its run, with the LOCK v1.0 draft that names the analyzer | `78f56023012bcd8d08e674a29efb56190ccbb7a4` |
+| 2026-10-15 The table of record held for the seat's Q2 (the PI's hold) | `21866593151b8cdab92d6db3eadc034d173d6e81` |
+| 2026-10-15 Step 15's second analyzer round, the table's draft and the G-ANL-F0 re-run (the PI's words of 2026-10-14) | `2f46fa8ae05c6a66e12e38ad73fe4d8936959f65` |
+| 2026-10-14 The R2 3 analyzer round and the G-ANL-F0 re-run (the step-15 entry) | `e4f0da3706ad6cbbfaa9492519f65c056b1ef217` |
+| 2026-10-13 G-F0m-Qwen (its close line: the PI's routing of 2026-10-13) | `5af9e0745b1e512b284fc730a4089745475d4390` |
+| 2026-10-13 G-F0m-Qwen (the step-14 entry: r = 18/24) | `6920b4be26a4ea758af4e9e1c61261b89824e326` |
+
+**Other commits cited:**
+
+| Commit | What it is |
+|---|---|
+| `ed8e88673a234466245ad6e059707d4b5e98a794` | step 15's second analyzer round (the analyzer `655e0f7f…`) |
+| `1523cce4adcd6e4b3c799ce0a7eb0d0352e1528a` | the preprint of record, placed by the PI, committed by path |
+| `b046b16598bb09386b0e346ebc90a732c300eff8` | step 15's first analyzer round (R2 3's three edits) |
+| `4630cfde054d7c37cdfdcec2dc5b7c2e70cdfa51` | G-F0m-Qwen's driver (the `qual` wiring) |
+| `64df36b9901bd8d61423cd4460a75fdbc0a32414` | G-ANL-F0's tooling (the placeholder's first bytes) |
+| `5f7b968cc3aa44ecc0d38f9da4b64c4d51374014` | the m package build (the schedules unchanged since) |
+
+**Code's mechanical check of this file:** `results/raw/2026-10-16_m-lock-v1.0_check.txt`, as v0.2's, committed with this
+file; its sha256 is in the LOCK-m-F0 v1.0 entry.
+
+---
+
+# The v0.2 text
+
+Everything below is LOCK-m-F0 v0.2's text, a copy carried for reading, which itself carries the v0.1 text. The record
+is the committed blob at `db7d970` (sha256 `0908b5b7…945e`, v1.0 §0). The copy is byte for byte except the four
+truncations of superseded hashes in its v0.1 copy that v1.0 §0 lists (the step-10 read's Q1); they edit the copy, not
+the record. Where the amendment above changes the standing of something below, the amendment governs.
+
 # LOCK-m-F0.md — v0.2 (Q-F0's lock after G-ID-F0m, PROPOSAL-m v1.11 §8 step 13)
 
 ## v0.2 §0. Header and status
@@ -516,11 +1134,11 @@ changes the standing of something in the v0.1 text, the amendment governs.
 | Binds | Path | sha256 |
 |---|---|---|
 | the proposal | `PROPOSAL-m-gating-campaign-v1_11.md` | `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b` |
-| **the analyzer** | `scripts/m_analyze.py` | `66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e` |
+| **the analyzer** | `scripts/m_analyze.py` | `66fb521488db41e7…` |
 | **`package_sha256`** | `valence_core/m/*.py` (18 files) | `5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771` |
 | **the analyzer's closure** (`closure_sha256`; 15 modules, 1 data file) | `G-ANL-F0.json` `closure` | `a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b` |
 | G-ANL-F0's manifest of record | `data/m/gates/G-ANL-F0.json` | `05132089fd6b8c177df47e4d5ff7f77a6f1b47e9ef63568d25c07ceffe7afe9b` |
-| the placeholder sentence table | `data/m/gates/m_posting_sentences.placeholder.json` | `b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b` |
+| the placeholder sentence table | `data/m/gates/m_posting_sentences.placeholder.json` | `b1cce4f844f78e45…` |
 | the PIN index this lock declares (lock §10) | `results/raw/2026-10-10_m-lock-v0.1_pin-index.txt` | `915245b5d69f1907928c98a1c184aca3a91e0351b0c5361da98b8f8382dfd2ce` |
 | G-PORT | `data/m/gates/Q-F0_G-PORT.json` | `137e7010a7ca344faa0d4488665a3272b98c2790fbc4fba5158c36ff42fa5c34` |
 | G-CAL, model-free half | `data/m/gates/G-CAL_model-free.json` | `aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af` |
@@ -1551,9 +2169,9 @@ Recomputed by Code at HEAD `9bf36ad` (committed blob = working tree for each fil
 
 | What | Path | sha256 |
 |---|---|---|
-| Analyzer (last changed at `b7737ef`) | `scripts/m_analyze.py` | `66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e` |
+| Analyzer (last changed at `b7737ef`) | `scripts/m_analyze.py` | `66fb521488db41e7…` |
 | G-ANL-F0 manifest of record (run on `b7737ef`, committed at `c464482`) | `data/m/gates/G-ANL-F0.json` | `05132089fd6b8c177df47e4d5ff7f77a6f1b47e9ef63568d25c07ceffe7afe9b` |
-| Placeholder sentence table (committed at `64df36b`) | `data/m/gates/m_posting_sentences.placeholder.json` | `b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b` |
+| Placeholder sentence table (committed at `64df36b`) | `data/m/gates/m_posting_sentences.placeholder.json` | `b1cce4f844f78e45…` |
 | `package_sha256` (manifest field; `resume.package_sha256()` recomputes it) | `valence_core/m/*.py` | `5f646db6…d771` (lock §1) |
 | `closure_sha256` (15 modules outside `valence_core/m` and `data/olmo/a1_repair_roster.json`) | manifest `closure` | `a3bc7bb9…b22b` (lock §§1, 10) |
 | The proposal, pinned in the analyzer (PIN-31, m_analyze.py:80) | `PROPOSAL-m-gating-campaign-v1_11.md` | `42ab36ec…6c6b` (lock §1) |
