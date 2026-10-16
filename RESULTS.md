@@ -21,6 +21,97 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-16 — **THE SENTENCE TABLE OF RECORD: THE SEAT'S A4 RULING APPLIED TO EVERY SCOPE ROW, VALUES-CHECKED, AND
+  HASHED (PROPOSAL-m v1.11 m:286, §8 step 15; the seat's step-15b answers, "What follows" item 1; the PI's word with
+  the routing, 2026-10-15).** Model-free; outcome-blind (no campaign result exists). No file under `data/m/gates/`
+  moves: the table's path is LOCK v1.0's, and five rows' e2b cells await the seat's choice (below). Site: the cloud
+  container; no model process.
+  - **The table of record:** 55 rows, sha256
+    `74781b9044b6aa4a490d6542f10b16e6a2d02ea7a72d524195b41ab6621df907`; `table_problems` returns `[]` on the analyzer
+    `655e0f7f…c16f` reading the preprint of record `45b67246…7a41`. Its rows of record (r5) are
+    `025dca2946e3e39829f513ab4aa6254fa4232ae7486fd16b024330d9dc33a83f`. The raw is
+    `results/raw/2026-10-16_m-table-of-record-a4-sweep_valuescheck.txt`, sha256
+    `17be6cfd09d90c2aac242b0a01c2771ffee6cb07fd8c1b369350ebc83b501ea4`, which carries the table, its rows and report,
+    the sweep's script, the five passes and Code's dispositions. The table rebuilds byte for byte from the raw's rows
+    text with the committed builder and segmenter (table raw, `ed8e886`) at HEAD `dd097ab`.
+  - **The sweep** (from the candidate `7206d78b…d0c5`, whose rows are the interim raw's section (1)). The ruling's tests
+    decide e2b and olmo-base membership only, and no other cell moves.
+    - **The seat's ten applied changes, as written:**
+      - six rows drop e2b and the base row: 30.02 (e2b only; it never carried the base row), 33.02, 236.01, 248.02,
+        254.02 and 276.05;
+      - three rows gain the base row: 123.01 (which gains e2b too), 186.04 and 236.02;
+      - 186.02 trades e2b for the base row;
+      - 240.03 keeps the base row.
+    - **Plus e2b on five rows** the seat lists under test 5 whose cells lacked it: 25.04, 232.01, 232.02, 232.03 and
+      240.06. These follow test 5's letter, which says such a unit "asserts its null on e2b and the base row too";
+      the applied paragraph names no e2b change for them. The firing counts are unchanged; what changes is which
+      cells each row's posting rewrite must clear.
+    - **R262.05 keeps e2b**, as in the applied paragraph, now by test 5.
+    - **R254.02 keeps S1**, on its earlier ground.
+    - Fifteen further rationales are re-grounded on the test that decides them, with no cell change (30 rows
+      touched in all).
+  - **The firing counts** (asserted from both reports and from `readings2.py` on the rows; the flag-invariance and
+    item-set claims rest on the checkers' independent loops over all 1,080 tuples × both flags, passes 3–5):
+    - **14 rows fire clause (a) in all 1,080 tuples, which confirms the seat's count:** R025.04, R123.01, R186.02,
+      R186.04, R220.01, R232.01, R232.02, R232.03, R236.02, R240.02, R240.03, R240.06, R250.03 and R262.05.
+    - **Distinct (a) counts:** 1080 ×14, 1079 ×13, 1075 ×5, 864 ×6, 0 ×17. The candidate had 1080 ×17, 1079 ×10, and
+      the same below.
+    - **At the all-PASS tuple:** under flag TRUE (of record), 23 items: 14 by (a) and 10 by (b), with R236.02 counted
+      under both, and no (c). Under flag FALSE, 24 items, with R182.06 by (c). The candidate had 27 and 28.
+  - **The seat-enumeration variant, for the seat's choice:** the seat's ten applied changes only. Its table is
+    `29a878cf578cebf7f90dea1292447f37d208051336294648482abf69222d5490` (`table_problems []`), and its rows (r5) are
+    `3407b4601a39bb64f1569da225c28c7318ce25c4dba27661ba67b71bd3bbe728`. It differs from the table of record on the
+    five rows' e2b cells only, with every count, clause and item set identical. A strike choosing it changes rows
+    only (Q1).
+  - **The values-check:** five passes, each checker strict, the later ones with refuters and critics: pass 1 two
+    checkers; pass 2 four lenses, four refuters and a critic; pass 3 three, three and a critic; pass 4 two and two;
+    pass 5 one and one. The script went through five revisions, r1 to r5. What each pass found that failed:
+    - **Pass 1:** r1 replaced the seat's test-7 ground on R240.03 with one the paper contradicts. r1 also dropped S1
+      on 254.02, beyond the ruling. Both were fixed.
+    - **Pass 2:** r1–r2's removal of e2b from R262.05 contradicted the five additions and R220.01. It was withdrawn in
+      r3, which applies test 5's letter uniformly. Several rationales misattributed provenance, among them T3 on
+      33.2, 248.2 and 276.5. These were fixed.
+    - **Pass 3:** r3's shared R262.05 text contradicted the variant's own rows. It was made neutral. v2's sentence on
+      R250.03, "The thesis value changes no firing", was false, because (b) fires in 864 tuples. It was corrected.
+    - **Pass 4:** the raw's draft was stale and overclaimed what its generator asserts. Both were fixed.
+    - **Pass 5:** found nothing in the rows. Its findings were in the raw's disclosure, which is completed below.
+    - After pass 5 only header and disposition wording changed, and Code alone checked it. No row, table or figure
+      changed.
+  - **Disclosures, for the PI** (in full in the raw's header):
+    - **Reads.** Several content scans in this work searched `results/raw/` with the G-F0m-Qwen stage raw
+      (`2026-10-13_m-gf0m-qwen.txt`) among the files read, and Code's own early `grep -rl` from the repo root also
+      read files under `data/`. Eight checkers' scans (thirteen commands) are listed, besides Code's. Each printed only file names or lines
+      of other files. Pass 5 counted, across every transcript, zero output lines from the stage raw, and no line of
+      any file under `data/` was displayed. The one file under `data/` whose bytes were read is
+      `data/m/gates/Q-F0_G-PWR.json`, hashed for the item below.
+    - **Bytecode.** Code's builds through r2, and some checkers told "-I (or -s -B)", wrote gitignored `__pycache__`
+      directories under `scripts/` and `valence_core/`. Code removed them before r3, and none exists now.
+    - **Provenance.** The r1 and r2 scripts were overwritten in place and do not survive. Their outputs' hashes are in
+      the raw.
+  - **For the seat** (findings, not applied beyond the table of record):
+    - the five rows: test 5's letter against the applied paragraph;
+    - R254.02's S1: test 3's enumeration omits S1, but the ruling decides e2b and the base row only;
+    - R242.01: test 4's letter would give the §7.3 heading e2a and f1, making (a) 1,079, not 1,075;
+    - the notes C2, C3, C4, C7 and V7 in the raw's pass-2 dispositions. C3 says the interim raw's sentence that
+      paragraph 248 is rewritten at every posting is stale under A4.
+  - **G-PWR's "Next" item 1, done:** the committed blobs equal the wrapper's printed sha256. The raw
+    `results/raw/2026-10-15_m-gpwr-qf0.txt` is `3c35a36f…d145` and the record `data/m/gates/Q-F0_G-PWR.json` is
+    `b5331ba1…3a68`, both committed at `43f3bb2`, with the working tree clean.
+  - **Next:**
+    1. **The cap request goes to the PI** with the table's sha256 above and G-PWR's figures:
+       - launch counts A0 128, A0s 64, 192 in all, over 5 looks;
+       - on v0.2 §2.4's planning basis of 488 s per uncached session, 192 × 488 s ≈ 26.0 Qwen hours;
+       - on the three measured uncached sham sessions (100–262 s), ≈ 5.3–14.0 hours. Contrast sessions can run
+         longer or end early at an exclusion, and no contrast figure is readable before VERDICTS.
+
+       The PI's word on "placed" is already given (`dd097ab`).
+    2. The seat's choice on the five rows (a strike chooses the variant) and its read of the flagged notes, routed by
+       the PI, at or before v1.0.
+    3. v1.0's text takes the chosen table's full sha256 beside the preprint's (PIN-40, the interim raw's M2), G-PWR's
+       figures, the cap and the notes the answers order. The table is placed at `data/m/gates/m_posting_sentences.json`
+       in v1.0's commit, on the PI's cap, with a committer date on or before 2026-10-30.
+    4. Step 16, the campaign wiring, after v1.0.
+
 - 2026-10-15 — **G-PWR FOR Q-F0, RUN OF RECORD (PROPOSAL-m v1.11 §8 step 15, m:285; the seat's step-15 answers,
   item 5 and Q7; the PI's word of 2026-10-15).** Model-free and exact; no model process.
   - **The run:**
