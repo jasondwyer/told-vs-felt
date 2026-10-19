@@ -21,6 +21,347 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-19 — **THE Q-F0 CAMPAIGN (PROPOSAL-m v1.11 §8 step 16, m:358; LOCK-m-F0 v1.0; the PI's word of 2026-10-18):
+  COMPLETE, exit 0. A0 launched 94 sessions and A0s 35, and each arm ended with its domain at its floor (80 and 32).
+  Four looks fired no bar. The campaign had no pause and no STOP. This is the campaign's launch entry (the step-10
+  read's Q2; v1.0 §8). Step 17 (VERDICTS) waits on the PI's word.**
+  - **The words** (the PI's, in chat; each verbatim).
+    - **2026-10-18, on the return to the laptop:** "Back on the laptop. main is at a6c81f2 (step 16’s driver, sha256
+      609bb469…2015). git status first; the untracked drafts stay. Copy the handoff into scratch only — git show
+      origin/wip/cloud-handoff-2026-10-18:README.md and :campaign_dry_precheck.py — never merge a wip/ branch. Then the
+      README’s §1: the self-test of record (expect 825/825 with HF_HUB_OFFLINE unset and =1), the dry precheck (every
+      list [], DRIVER 609bb469…2015, SNAPSHOT c000ac2c…3282), m:267’s checklist. If the canary check fails on the
+      laptop, report it and launch nothing. Report the results; the launch waits on my word."
+      - On this word, before the launch word: `git status`; the handoff copied into scratch by `git show`
+        (launch-checks raw §1); the process check (§1b); the two self-test runs; the first dry precheck; and the
+        checklist probe. The results were reported before the launch word.
+    - **2026-10-18, the launch:** "Audit session is idle; launch the campaign." On a pause's outputs, which the handoff
+      README's §2 left to the PI before the launch: "And yes: at each pause (exit 3), commit the checkpoint and the raw
+      as it stands, by explicit path, with a message naming only the pause’s kind and launch count — no figures, no
+      finish stamp."
+      - The second dry precheck, the pre-launch scan, the header and the launch ran on this word. Both prechecks
+        printed identical output on the same HEAD, and the scan run with the second found no tracked change.
+      - No pause occurred, so the pause ruling was not engaged. Both words are in the raw's header.
+    - **2026-10-19, this entry:** "The campaign invocation has ended. Write the launch entry: the self-test of record
+      (825/825) and the dry precheck as run; the launch line as typed, with the header saying whatever was run; the
+      DRIVER sha256 609bb469…2015 (the step-10 read’s Q2); the end state under the lock’s rules — the exit, the
+      launches per arm, the looks and the monitors as the lock lets them print, m:271’s redactions, no finish stamp in
+      the raw or the message. Commit the three outputs by path (the checkpoint, the report, the raw) with the entry
+      and push. If it ended at a pause (exit 3) or a STOP, say which and stop there: the pause comes to the seat. If
+      COMPLETE or CAP, step 17 (VERDICTS) waits on the PI’s word."
+    - **The handoff** is `README.md` at `1886fdf` on `origin/wip/cloud-handoff-2026-10-18` (sha256 `4fda8600…2d37`),
+      never merged. Its text is in the launch-checks raw §1.
+  - **The run** ([`_campaign-qf0`](results/raw/2026-10-18_m-campaign-qf0.txt)). One invocation of
+    `campaign --unit Q-F0` ran on the committed driver `609bb469…2015` (`a6c81f2`) under LOCK-m-F0 v1.0
+    (`fc7e9db8…015c`), uncached. It loaded offline from the snapshot of record
+    **`c000ac2c2057d94be3fa931000c31723aac53282`** (`mlx-community/Qwen3.6-27B-4bit`, `refs/main`, the cache's only
+    snapshot; the SNAPSHOT line before the load, and its re-read after the load unchanged).
+    - **The lines before the sessions:** INVOCATION, DRIVER, SNAPSHOT and its re-read, then GATE, LICENCE and
+      PROVENANCE.
+      - The PROVENANCE line's start stamp is one of Q4's records.
+      - Its `gdn_inference_mode` string names the cached half only (v0.2 §1); the campaign ran uncached.
+    - **Launches:** 129 sessions in strict rotation. A0 and A0s alternate for 35 pairs (A0s's last launch is the
+      70th), and then A0 runs alone for 59, under the per-arm stop at floor.
+      - A0: 94 launches, `s=0` to `s=93`. A0s: 35 launches, `s=0` to `s=34`.
+      - The launch counts were a projection (v1.0 §4): A0 128, A0s 64.
+    - **Domain:** A0 80 and A0s 32, the floors (A0 80, A0s 32).
+    - **The end:** the terminal state is COMPLETE at 129 launches, and the 40 h hour cap was not reached (the report's
+      `hour_cap_reached` is false). Then come `STAGE campaign-Q-F0 COMPLETE path=uncached`, the CHECKPOINT and REPORT
+      lines, and `EXIT=0`, the raw's only EXIT line.
+      - The report's `pauses` is empty and its `stop` is null. No ruling was offered, so the raw has no RULING line.
+      - No adjudication excerpt was written.
+    - **No problem lines:** outside the raw's header, no STOP, REFUSED, NOT APPLIED or traceback line printed, and no
+      `CHECKPOINT STATE INCONSISTENT` line. The header's own rule text names CHECKPOINT STATE INCONSISTENT and NOT
+      APPLIED, so the counts were made over the non-header lines (launch-checks raw §9).
+    - **The line-form check** (the step-14 review's O2-8; the README's §2) is a property of the self-test's stub runs
+      (825/825, both runs). The stage's GATE and LICENCE lines print on no stub run.
+      - Read after EXIT, this raw's GATE and LICENCE lines carry no clock field: hashes and HEAD only.
+      - The raw has no PATH or RE-FINISH line (launch-checks raw §9: the identity lines and the line types).
+    - **The start check.** m:358's step 16 ends "verify once; end the session". Just after the launch, one check
+      confirmed:
+      - PID 17315 alive, its command naming `m_sessions.py campaign`;
+      - caffeinate (17317) holding PreventSystemSleep and PreventUserIdleSystemSleep on its behalf, and no display
+        assertion;
+      - the stage's Python (17318) running.
+
+      This check ran within seconds of the launch, not "about 180 s later" as the step-14 review's O2-1 has it. A
+      pre-load refusal would have ended the end-wait at once.
+    - **The session did not end at the launch.** It ran the README's §2 end-wait: one background loop on the PID alone
+      (the step-14 review's O3-1), with `pgrep` empty before the raw was read. On Code's reading of the PI's word on
+      pauses, a pause's commit would have been this session's.
+      - Its other calls while the campaign ran, by Code's attestation from the session transcript:
+        - the typed-command comparison;
+        - `git log` with a `git check-ignore -v` naming the raw's and the checkpoint's paths (what it printed is below,
+          under the operational rules);
+        - a grep of `valence_core/m/stages.py`;
+        - the writing of the after-exit check;
+        - the writing of a memory file, whose index append ended with a second `kill -0` on the PID (it printed only
+          that the process was alive).
+      - **For the seat, disclosed.** Taken literally, two things depart from m:358's "verify once; end the session"
+        and from the step-14 review's O2-1, which makes one `kill -0` check:
+        - the second `kill -0`;
+        - the open session.
+
+        The step-14 review's OPS-8 says "liveness checks by pgrep only". The checks here used `kill -0` and `ps`, as
+        O2-1 and O3-1 have it, and the first also ran `pgrep`.
+
+        Code's reading: the end-wait and the PI's word on pauses kept the session open; it ends after this entry; step
+        17 runs in a later session. While the campaign ran, no figure was read and the raw was not read.
+  - **The looks and the monitors.** The BAR lines are as the stage printed them; the rest comes from the report's
+    looks. Looks follow m:330 (every 40 launches and at the end): ⌈129/40⌉ = 4, at 40, 80 and 120 launches and the end
+    at 129. Each look printed three BAR lines, all `silent`.
+    - **`round_degeneracy`** (A0s's rounds, p0 .05, α .05):
+      - look 1: 4/193, P = .9882 (critical 16);
+      - looks 2, 3 and the end: 6/328, P = .9992 (critical 24). The sham arm stopped at launch 70, before look 2.
+    - **`exclusion_guard_fisher`** (A0's pre-pick exclusions against A0s's, one-sided Fisher, α .05):
+      - look 1: 0/20 against 1/20, P = 1.0000;
+      - look 2: 4/45 against 3/35, P = .6398;
+      - look 3: 12/85 against 3/35, P = .3069;
+      - the end: 14/94 against 3/35, P = .2648.
+    - **`exclusion_guard_abs`** (A0's pre-pick exclusions, p0 .20, α .05):
+      - look 1: 0/20, P = 1.0000 (critical 8);
+      - look 2: 4/45, P = .9871 (critical 15);
+      - look 3: 12/85, P = .9373 (critical 24);
+      - the end: 14/94, P = .9183 (critical 26).
+    - **Hair triggers** (`scaffold_absorption`, `template_breakage`, `schedule_mismatch`) and G-VER: none fired and
+      no mismatch. Either would have stopped the campaign (m:271, m:284), and none did.
+    - **Pooled pre-pick exclusion counts per arm** (m:318; the report's looks), with domain beside:
+      - A0: 0/20, 4/45, 12/85 and 14/94; domain 20, 41, 73 and 80;
+      - A0s: 1/20, then 3/35 at looks 2, 3 and the end; domain 19, then 32.
+    - **Reported, not bars** (m:330; the report's looks):
+      - **Low label mass (below .20) and top-1-not-a-label.** A0 is counted over the first reads of its domain
+        sessions, one per session; its later reads stay withheld (Code's PIN, `stages.py:1937`). A0s is counted over
+        all its reads.
+        - A0: 14/20 and 20/20 at look 1; 25/41 and 39/41 at look 2; 44/73 and 71/73 at look 3; 49/80 and 78/80 at
+          the end.
+        - A0s: 22/114 and 33/114 at look 1; 33/192 and 51/192 at looks 2, 3 and the end.
+      - **A0's forced-round degeneracy** (forced rounds only; build flag (d)): 0/80, 1/179, 4/336 and 5/372.
+  - **m:271's redactions** (with m:263 and m:318).
+    - **Withheld:** the contrast sessions' free-round events (exclusions, degeneracy, any class) and their picks.
+      m:271 states the rule for the gate stages: "withheld to the unit's VERDICTS entry or NOT-RUN record". For the
+      campaign the same withholding binds through m:263 (stdout and every pre-VERDICTS report) and m:318, and at the
+      looks through Code's PIN at `stages.py:1973` (build flag (d)).
+      - The session lines print a contrast session's free-round exclusion as the phase alone, `excluded@free`. On
+        Qwen that line "withholds the position and the pick and not the class" (v1.0 §9).
+      - This entry counts none of them. The 80 A0 sessions not excluded before the pick are given pooled, as the
+        domain, and are not split into valid and `excluded@free`. Code's extraction pooled them before printing
+        (launch-checks raw §9).
+      - The per-property table and the contrast reads after the first are VERDICTS-only.
+      - The campaign writes no reads file and reports no first-pick share, sham included (Code's PIN at
+        `stages.py:2390`). Its reads are the VERDICTS entry's (m:318).
+    - **The sham arm**, which carries no contrast information: 32 sessions valid; 3 excluded at a forced round
+      (`audit@forced` 2, `lexical@forced` 1); none excluded at a free round.
+    - **The checkpoint**, `data/m/ckpt/Q-F0_campaign.json`, holds the picks. It is hashed, not opened.
+    - **Timing:**
+      - no session's seconds and no stage duration is computed or quoted;
+      - the report's sham generation total is not quoted;
+      - the contrast seconds stay in the checkpoint until VERDICTS (Code's PIN at `stages.py:2390`, LOCK v0.1, on
+        m:318; the docstring at `stages.py:99`; the step-10 read's Q4 and Q6).
+    - **Records not computed against** (the step-10 read's Q4):
+      - Q4's list: the commit times, the report's PROVENANCE start stamp, and the entry's own stamps (here its calendar
+        date alone);
+      - the launch stamp in the header, which "stays, since it carries nothing";
+      - the clock-bearing fields of the launch-checks raw, among them:
+        - §1b's process elapsed times and the venv link's file date;
+        - §2's run-time stamps inside the self-test output;
+        - §4's pmset readings: its clock line, the battery estimate, and the assertion ages and timeout;
+        - §5's and §6's commit times;
+        - §7's assertion ages.
+
+        All were read before the launch word or in the launch's first moments.
+
+      The raw has no finish stamp, and the commit message restates no stamp. This entry carries no time stamp beyond
+      its calendar date.
+  - **The launch.** The raw's header was written before the launch by Code's generator (`gen_header16.py`, verbatim in
+    the launch-checks raw §6, adapted from step 14's generator).
+    - **What the generator reads or asserts:**
+      - it reads or asserts every hash, revision and path the header checks. It takes the package's and the renders'
+        values as the lock names them. Both are also bound through the dry precheck's `[]` lists: the licence's
+        package hash, and `stage_precheck`'s renders check. The command's interpreter path is formed from the
+        repository root, not checked;
+      - it asserts the dry precheck's lines, the two self-test tallies, and the checklist's power and process readings.
+        It reads the disk and macOS values.
+
+      The audit session's line and the PI's words are passed in. Some of the header is fixed text:
+      - the rule text;
+      - three checklist items: departures none; display sleep only, by the typed `caffeinate -is`; the gate line, the
+        run's own GATE line;
+      - the post-run target `c4626cc0…`;
+      - line 1's values:
+        - its counts, floors and cap are backed by the asserts on the lock's line forms and on the dry precheck's
+          campaign-values line;
+        - its path is backed through the dry precheck's `[]` identity list;
+        - "strict rotation" is unbound fixed text, checked after the run (launch-checks raw §9).
+    - **The command:** m:267's checklist line as written, typed in Code's Bash tool as one line, followed in the same
+      call by `; echo "PID=$!"`. The header records the typed command (its line 4). As typed:
+
+      `nohup caffeinate -is /bin/zsh -c 'cd /Users/jasondwyer/Documents/code/jspace-lab && export HF_HUB_OFFLINE=1 && /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py campaign --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05 2>&1; echo "EXIT=$?"' >> /Users/jasondwyer/Documents/code/jspace-lab/results/raw/2026-10-18_m-campaign-qf0.txt 2>&1 & disown; echo "PID=$!"`
+
+      - Code compared what was typed, read from the session transcript, with the generator's printed copy of the
+        header: equal, 686 characters (ASCII) (launch-checks raw §7).
+      - The raw's first 14 lines (the 13 header lines and the generator's blank line 14) hash equal to that copy
+        (§9). The header says what was run.
+    - **The checklist,** with no departures, as the header states:
+      - AC power at 140 W;
+      - no jlens, mlx, qwen, ipykernel, m_sessions or self-test Python process, and no batch (the package's own
+        `preflight_laptop()` returned `[]` beforehand, launch-checks raw §4);
+      - display sleep only (`caffeinate -is`; the assertions above);
+      - 485 GiB of disk free;
+      - the gate line, which is the run's GATE line;
+      - macOS 15.6.1 (24G90).
+    - **The audit session was idle (F1)**, on the PI's word. Its last commit on its paths is `11cc35b`, 2026-10-12.
+      The pre-launch scan ran just before the generator wrote the header. In the 30 minutes before it, no file outside
+      `.git/`, `jlens-qwen36/` and `data/m/` had changed, and there was no tracked change.
+    - **The operational rules** carried over from step 14, extended across pauses: OPS-1 to OPS-8, O2-1 to O2-8 save
+      O2-7 (refuted at step 14), with O2-2's wait as O3-1 corrected it, and O3-1 to O3-10 (the README's §2).
+      - The header names and states OPS-1 to OPS-6, O2-1 to O2-6, O3-1, O3-2 and O3-7 to O3-10, with F3-4, F3-5 and
+        C2-4.
+      - OPS-7 (one line when typed) is met by the command above. O2-8 is carried here (the line-form check, above).
+      - O3-4 to O3-6 are the generator's: its driver assert, its reads of the snapshot, the dry precheck and the
+        checklist, and the header's record of the typed command (launch-checks raw §6).
+      - OPS-8's window was the campaign's own: v1.0 §4's projection under the 40 h cap, across pauses. No span is
+        stated.
+      - While the invocation ran, by Code's attestation from the session transcript:
+        - there was no streaming, Monitor, read, stat or listing of the raw, `data/m/ckpt` or `data/m/reports`;
+        - no jlens-venv Python, notebook kernel or workflow ran;
+        - Code ran no macOS, conda or pip update (OPS-4);
+        - there was no checkout, stash, reset, pull or rebase (OPS-2), and no hub-cache operation (O2-6).
+
+        The one `git check-ignore -v` above was given two paths. It printed the matching `.gitignore` rule for each,
+        with the path: the checkpoint's un-ignore rule, and nothing for the raw. It printed no content or metadata
+        and enumerated nothing, so Code does not count it as a listing.
+      - No commit or edit by Code touched the lock, the proposal, CLAUDE.md, the analyzer, the driver,
+        `valence_core/**`, `data/m/**` (the stage's own outputs excepted) or `jlens-qwen36/`. HEAD is still
+        `a6c81f2`, with no tracked change. The clone's import closure and the three adapter files re-hash equal to the
+        header's line 7 after the end (launch-checks raw §9).
+  - **The self-test of record and the dry precheck, as run** (launch-checks raw §§2–3; the checklist probe is §4).
+    - **The self-test:** 825/825 twice on the laptop, both exit 0.
+      - It ran in the jlens venv on the committed driver at `a6c81f2`, once with HF_HUB_OFFLINE unset and once with it
+        set to "1". The venv's interpreter is Python 3.12.9 (its `-V` in launch-checks raw §1b).
+      - No check failed. The cloud's one failure, `qwen_snapshot`'s production-defaults check, passes here.
+      - The canary checks pass in both runs: the differential canary, the canary clock, and the reader's plants. So
+        the review's interpreter limit ("Should the self-test of record fail the canary check on the laptop … launch
+        nothing") was not engaged.
+    - **The dry precheck:** the handoff's `campaign_dry_precheck.py` (`4ec947f5…82ae`, at `1886fdf`, copied to
+      scratch). It ran twice: after the self-test, and just before the launch on the same tree. Each run, offline:
+      - `stage_identity_extra('campaign')` `[]`; the licence, unpatched, `[]`; `stage_precheck('campaign')` `[]`
+        (no `--resume`, no rulings); `driver_problems` `[]`; `qwen_snapshot` `[]`;
+      - the revision of record equal;
+      - the DRIVER line `609bb469…2015` and the SNAPSHOT line `c000ac2c…3282`;
+      - the campaign values: launch counts A0 128 and A0s 64, floors 80 and 32, hour cap 40, and both lock line forms;
+      - exit 0.
+
+      `stage_precheck` read the qualification's checkpoint (the prior gate) through the package, as the run does, and
+      printed only problems. Code opened nothing under `data/m/ckpt`.
+  - **The driver** (the step-10 read's Q2).
+    - **Its sha256** moves from `c0a897f5…f4b2` (v1.0 §6; the `qual` wiring, `4630cfd`) to
+      **`609bb469d97ca40c0f5cc1592902976019f16b2c09b14961fe8352ecaf932015`**, committed at `a6c81f2`.
+      - The run's DRIVER line printed it at HEAD `a6c81f2`, with identical working-tree bytes.
+      - Nothing under `valence_core/m` changed: `package_sha256` stays `5f646db6…d771`, and the analyzer stays
+        `655e0f7f…c16f`.
+    - **The build** started after v1.0's commit (`d474406`), as v1.0 §12 binds the step-14 read's Q4 (the review
+      raw's header).
+    - **The review** ([`_campaign-driver_review`](results/raw/2026-10-18_m-campaign-driver_review.txt)). It was
+      reviewed as the `qual` wiring was (the step-10 read's Q2: "the build reviewed as the step-10 edit was, with the
+      self-test extended"):
+      - four rounds of four lenses, each with a strict refuter, and no FAILS;
+      - four values-check passes with strict refuters;
+      - a final batch on the committed blob: 186 mutants, 183 killed. The three survivors are the declared
+        equivalents `c63_pre_raw`, `mx12a_mirror_pi_offered_only` and `mx13_blank_visible_C_only`. Its 7 baselines
+        gave 824/825, the one failure the environmental check;
+      - the self-test extended from 796 checks to 825 (the driver's from 141 to 170).
+    - **The PIN sites:** 14 new sites marked "declared at the campaign wiring". They are at `m_sessions.py:529`,
+      `:535`, `:546`, `:572`, `:587`, `:686`, `:882`, `:987`, `:1038`, `:1060`, `:1115`, `:1174`, `:1224` and
+      `:1286` in the committed blob.
+      - They are "declared at the campaign and strikable until its launch entry" (v1.0 §8). This is that entry.
+      - No strike of them reached Code after `a6c81f2`; v1.0 §8 records none at the lock's commit, before they
+        existed. The window closes here. From now on a driver reading is corrected "only as a register entry is, by a
+        disclosed amendment or at a hash-moving round" (the step-14 read's Q2).
+      - The step-14 read's Q2 sentence ("a strike of a driver site after the stage it gates has run does not re-run
+        the stage") has no strike to apply.
+    - **The index's extraction rule** on the committed blob, in v1.0 §8's form:
+      - P317 (stage_precheck's v0.2 docstring PIN) and P318 (`_run_stage`'s) change by the rule alone, with their
+        prose unchanged.
+      - The docstring's closing quotes move past a blank line to close the campaign paragraph. Each block now ends at
+        its own last prose line, before that blank line: P317 is 18 lines (968–985), P318 11 lines (1162–1172).
+      - In the v1.0 driver (`c0a897f5…f4b2`), these blocks ran on into code lines, up to P325's and P326's markers.
+        Those lines now lie in the campaign sites at 987 and 1174 or outside every block. The wiring rewrote two of
+        P317's and six of P318's.
+      - The other 22 indexed sites are identical. The review raw's last section carries the table.
+    - **The declared limits,** in the review raw's words (its header; the README's §4 carries them in the same
+      words):
+      - "B1-2: the Q3 redaction covers Q3's line at the stage subcommands' prints and stage_precheck's list; the
+        package's other messages print as the package words them." Q3's rule, which v1.0 §12 binds on the campaign:
+        a `CHECKPOINT STATE INCONSISTENT` line "is not quoted or computed against before VERDICTS and goes to the
+        seat in a sealed form".
+      - "B1-4, B2-3, F3-7, B3-4 and RM4-1: where a ruling's sha16 is printed -- the RULING line (the PI stop's even
+        where the report carries no digest of it, and a ruling offered beside an end pending that the checkpoint does
+        not record), the report (a pause's adjudication_sha16) and a later NO PAUSE TO ADJUDICATE refusal."
+      - "O3-3/O3-4: a campaign checkpoint nested past the recursion limit is labelled by the precheck's checkpoint
+        block in HEAD's words, "the checkpoint path does not resolve (RecursionError)" (beside the campaign's own
+        refusal)."
+      - "RO4-M1: an unsearchable data/m/ckpt raises from the prior gate before the load (HEAD's id/qual prior-gate
+        code, extended to the campaign; a traceback, exit 1, nothing loaded)."
+      - "The canary reader's limits (B2-4, F2-6, B3-1, B4-1 and RB4-1), in the self-test's comment."
+      - "VC3-5: the self-test pins the re-run guidance in the campaign's help (camp_pauses and the two flags' help);
+        the module docstring, _run_stage's docstring and the handoff README agree with it by review, unpinned."
+      - "VC4-1 and VC4-2, for the driver's next edit: its PI's-stop re-run sentence names only the exception of a
+        terminal end or a STOP -- where the end left pending is a look's or an exhausted schedule's pause, the stop is
+        NOT APPLIED there and offered again, and an adjudication recorded beside a recorded stop meets an ended-kind
+        NOT APPLIED and needs nothing; its "recorded, it resumes the campaign or re-finishes an end its finish left
+        pending" does not name a finish completed before the kill (the re-run then shows the new pause, or is refused
+        as ended); the "Beside an end pending" sentence governs these cases, and README §3 states them. The module
+        docstring's reason for never re-offering an adjudication offered beside an end pending is exact in its first
+        alternative only; the rule stands."
+      - "The interpreter: the cloud's runs are on Python 3.13, the self-test of record on the laptop's 3.12.9; and the
+        canary's reading of laptop paths is bounded by scrub() (the repository, the temp root and sys.executable
+        replaced), the reader's 5-digit floor and its letter boundaries -- a residual risk the self-test of record
+        tests (round 4's operations lens). Should the self-test of record fail the canary check on the laptop, that is
+        the class: report it before the launch, and launch nothing."
+
+      The run engaged none of the run-time limits (B1-2; B1-4, B2-3, F3-7, B3-4 and RM4-1; O3-3/O3-4; RO4-M1). It
+      printed no RULING line, no pause and no `CHECKPOINT STATE INCONSISTENT` line, made no precheck refusal and
+      raised no traceback. The others are not run conditions:
+      - the canary reader's limits and the interpreter's are the self-test's (above);
+      - VC3-5 concerns the help text;
+      - VC4-1 and VC4-2 wait for the driver's next edit.
+    - **Not built,** for the seat if it wants them (the review raw): round 1's O1-3 option, RM4-1's option, and the
+      operations refuter's alternative to O4-1.
+  - **The identity** (the report; the handoff README's §2):
+    - `lock_sha256` is v1.0's, `fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c`;
+    - `schedule_sha256` is `c4626cc01060529a6f7cc6ebfd41dec272de06527f18ae1d6b45d332e51e303e`, lock §6's value for
+      the campaign, which v0.2 §6 scheduled to become checked at step 16;
+    - `path` is `uncached`;
+    - every other key of the report's identity block equals G-TIME-F0's report identity: `audit_v2_sha16`,
+      `backend_identifier` (`a734dadec8f8ce9b`, so the backend is unchanged), `ban_sha`, `package_sha256`,
+      `pool_sha16`, `proposal_sha256` and `renders_sha16`;
+    - the report's top level carries `unit` Q-F0 (G-TIME-F0's report: Q-F0), `stage` campaign and `hour_cap` 40. It
+      carries the identity's per-arm `n` as `schedule_n` (A0 2624, A0s 960; `stages.py:2348–2350`, `:2401`).
+
+    The other resume-identity keys (`template_set`, `stop_cap`, `key_templates`, `pod_id`) are in the checkpoint's
+    identity, which was not opened. The LICENCE line passed at stage start. No commit has touched `LOCK-m-F0.md` since
+    `d474406`.
+  - **The outputs** (this commit, each committed as written, by path):
+    - the raw, `results/raw/2026-10-18_m-campaign-qf0.txt`, sha256
+      `ca6e51eb499c4814b86a5d844a07dd499821e55fa58a348e97d9c8833a4ee4b9`;
+    - `data/m/reports/Q-F0_campaign_report.json`, sha256
+      `87238b7e42904a08b6eba899b67f7f1275d930ab31a98fcc179a01a19be13bac`;
+    - `data/m/ckpt/Q-F0_campaign.json`, sha256 `dd389eca073ae099e3d3e4dfe917ff2972b75a1500c3f173b2def15f6d5f1b00`
+      (hashed, not opened).
+
+    Beside them:
+    - [`_campaign-qf0_launchchecks`](results/raw/2026-10-18_m-campaign-qf0_launchchecks.txt): the launch checks and
+      the end reads, as run, with the scripts that made them;
+    - [`_campaign-qf0-entry_valuescheck`](results/raw/2026-10-19_m-campaign-qf0-entry_valuescheck.txt): this entry's
+      values-check, with Code's dispositions.
+  - **What follows.**
+    - m:358's step 16 ends here.
+    - **Step 17** is the analysis of Q-F0 and the entry `PROPOSAL-m Q-F0 — VERDICTS`. It runs in a later session on
+      the PI's word (m:358; v1.0 §13 item 3). Until then the pre-VERDICTS window stays open, with its blinding.
+    - **The OLMo track** is unchanged: the PI's go for a pod start, with the runpod MCP re-authorised first.
+    - **The handoff branches** on origin (`wip/cloud-handoff-2026-10-15`, `wip/cloud-handoff-2026-10-18`,
+      `wip/step16-review-scratch`) were never merged. Deleting them is the PI's call.
+
 - 2026-10-16 — **LOCK-m-F0 v1.0 (PROPOSAL-m v1.11 §8 step 15, m:286): COMMITTED on the PI's cap, hour cap = 40 h.
   `LOCK-m-F0.md` now opens with the v1.0 amendment, and the v0.2 text follows it byte for byte (the blob at `db7d970`),
   except four truncations of superseded hashes in its v0.1 copy. The sentence table of record is placed at

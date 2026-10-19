@@ -1,0 +1,356 @@
+{
+ "arms": {
+  "A0": {
+   "domain": 80,
+   "launched": 94,
+   "prepick_excluded": 14
+  },
+  "A0s": {
+   "domain": 32,
+   "launched": 35,
+   "prepick_excluded": 3
+  }
+ },
+ "end_look": {
+  "arms": {
+   "A0": {
+    "domain": 80,
+    "launched": 94,
+    "prepick_excluded": 14,
+    "read_flags": {
+     "low_label_mass": 49,
+     "reads": 80,
+     "scope": "first reads of domain sessions",
+     "top1_not_label": 78
+    }
+   },
+   "A0s": {
+    "domain": 32,
+    "launched": 35,
+    "prepick_excluded": 3,
+    "read_flags": {
+     "low_label_mass": 33,
+     "reads": 192,
+     "scope": "all reads",
+     "top1_not_label": 51
+    }
+   }
+  },
+  "at_launches": 129,
+  "contrast_forced_degeneracy": {
+   "k": 5,
+   "n": 372
+  },
+  "fired": false,
+  "look": "end",
+  "results": [
+   {
+    "binding": true,
+    "crit": 24,
+    "exceeds": false,
+    "fired": false,
+    "k": 6,
+    "message": "BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=end 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328",
+    "n": 328,
+    "name": "round_degeneracy@campaign-Q-F0",
+    "p": "1092705532800892021188402997018754953112278357373205202543401047775045666632601442028265702153001865678940381978229604915147775069172433710479262840574543350912053287434721144525346761183424057703603038841956244185907168015696726615670115896581516079580311050053292759379669967294390330504430094197202692889787345740926850463568983907748912576542658759934738385965977656112533875575368828814981869355226292491563603915400953793/1093625362391505962186251113558810682676584715446606218212885303204976499599687961611756588511526912000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+   },
+   {
+    "binding": true,
+    "crit": null,
+    "exceeds": false,
+    "fired": false,
+    "k": 14,
+    "message": "BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=end contrast 14/94 vs sham 3/35 one-sided Fisher P=0.2648 > alpha 0.05",
+    "n": 94,
+    "name": "exclusion_guard_fisher@campaign-Q-F0",
+    "p": "285807026367/1079469304100"
+   },
+   {
+    "binding": true,
+    "crit": 26,
+    "exceeds": false,
+    "fired": false,
+    "k": 14,
+    "message": "BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=end 14/94 exact one-sided P=0.9183 > alpha 0.05 vs p0 0.20; critical 26 at n=94",
+    "n": 94,
+    "name": "exclusion_guard_abs@campaign-Q-F0",
+    "p": "463646152014325027286477225750801639085322113519043748510934183593/504870979341447555463506281780983186990852118469774723052978515625"
+   }
+  ]
+ },
+ "files": {
+  "checkpoint": "ckpt/Q-F0_campaign.json"
+ },
+ "floors": {
+  "A0": 80,
+  "A0s": 32
+ },
+ "form": "pick-free campaign report (m:318: at looks, pooled pre-pick exclusion counts per arm)",
+ "hour_cap": 40,
+ "hour_cap_reached": false,
+ "identity": {
+  "audit_v2_sha16": "7aa235d25eeb66dc",
+  "backend_identifier": "a734dadec8f8ce9b",
+  "ban_sha": "a934f1ad2b702245",
+  "lock_sha256": "fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c",
+  "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
+  "path": "uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "renders_sha16": "a04f67b0e5105a05",
+  "schedule_sha256": "c4626cc01060529a6f7cc6ebfd41dec272de06527f18ae1d6b45d332e51e303e"
+ },
+ "launch_counts_projection": {
+  "A0": 128,
+  "A0s": 64
+ },
+ "looks": [
+  {
+   "arms": {
+    "A0": {
+     "domain": 20,
+     "launched": 20,
+     "prepick_excluded": 0,
+     "read_flags": {
+      "low_label_mass": 14,
+      "reads": 20,
+      "scope": "first reads of domain sessions",
+      "top1_not_label": 20
+     }
+    },
+    "A0s": {
+     "domain": 19,
+     "launched": 20,
+     "prepick_excluded": 1,
+     "read_flags": {
+      "low_label_mass": 22,
+      "reads": 114,
+      "scope": "all reads",
+      "top1_not_label": 33
+     }
+    }
+   },
+   "at_launches": 40,
+   "contrast_forced_degeneracy": {
+    "k": 0,
+    "n": 80
+   },
+   "fired": false,
+   "look": 1,
+   "results": [
+    {
+     "binding": true,
+     "crit": 16,
+     "exceeds": false,
+     "fired": false,
+     "k": 4,
+     "message": "BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=1 4/193 exact one-sided P=0.9882 > alpha 0.05 vs p0 0.05; critical 16 at n=193",
+     "n": 193,
+     "name": "round_degeneracy@campaign-Q-F0",
+     "p": "6203228207068187149508830571669590590823578685941182419803170538754486787164273809488996380186372571978256379811558508623202976560959209644333609228529014235841728630898470367904735544175029714538515893111599603396461223609553474489368845318373795791/6277101735386680763835789423207666416102355444464034512896000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+     "binding": true,
+     "crit": null,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=1 contrast 0/20 vs sham 1/20 one-sided Fisher P=1.0000 > alpha 0.05",
+     "n": 20,
+     "name": "exclusion_guard_fisher@campaign-Q-F0",
+     "p": "1/1"
+    },
+    {
+     "binding": true,
+     "crit": 8,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=1 0/20 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 8 at n=20",
+     "n": 20,
+     "name": "exclusion_guard_abs@campaign-Q-F0",
+     "p": "1/1"
+    }
+   ]
+  },
+  {
+   "arms": {
+    "A0": {
+     "domain": 41,
+     "launched": 45,
+     "prepick_excluded": 4,
+     "read_flags": {
+      "low_label_mass": 25,
+      "reads": 41,
+      "scope": "first reads of domain sessions",
+      "top1_not_label": 39
+     }
+    },
+    "A0s": {
+     "domain": 32,
+     "launched": 35,
+     "prepick_excluded": 3,
+     "read_flags": {
+      "low_label_mass": 33,
+      "reads": 192,
+      "scope": "all reads",
+      "top1_not_label": 51
+     }
+    }
+   },
+   "at_launches": 80,
+   "contrast_forced_degeneracy": {
+    "k": 1,
+    "n": 179
+   },
+   "fired": false,
+   "look": 2,
+   "results": [
+    {
+     "binding": true,
+     "crit": 24,
+     "exceeds": false,
+     "fired": false,
+     "k": 6,
+     "message": "BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=2 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328",
+     "n": 328,
+     "name": "round_degeneracy@campaign-Q-F0",
+     "p": "1092705532800892021188402997018754953112278357373205202543401047775045666632601442028265702153001865678940381978229604915147775069172433710479262840574543350912053287434721144525346761183424057703603038841956244185907168015696726615670115896581516079580311050053292759379669967294390330504430094197202692889787345740926850463568983907748912576542658759934738385965977656112533875575368828814981869355226292491563603915400953793/1093625362391505962186251113558810682676584715446606218212885303204976499599687961611756588511526912000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+     "binding": true,
+     "crit": null,
+     "exceeds": false,
+     "fired": false,
+     "k": 4,
+     "message": "BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=2 contrast 4/45 vs sham 3/35 one-sided Fisher P=0.6398 > alpha 0.05",
+     "n": 45,
+     "name": "exclusion_guard_fisher@campaign-Q-F0",
+     "p": "461949/721981"
+    },
+    {
+     "binding": true,
+     "crit": 15,
+     "exceeds": false,
+     "fired": false,
+     "k": 4,
+     "message": "BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=2 4/45 exact one-sided P=0.9871 > alpha 0.05 vs p0 0.20; critical 15 at n=45",
+     "n": 45,
+     "name": "exclusion_guard_abs@campaign-Q-F0",
+     "p": "28055472606906673214142782920981/28421709430404007434844970703125"
+    }
+   ]
+  },
+  {
+   "arms": {
+    "A0": {
+     "domain": 73,
+     "launched": 85,
+     "prepick_excluded": 12,
+     "read_flags": {
+      "low_label_mass": 44,
+      "reads": 73,
+      "scope": "first reads of domain sessions",
+      "top1_not_label": 71
+     }
+    },
+    "A0s": {
+     "domain": 32,
+     "launched": 35,
+     "prepick_excluded": 3,
+     "read_flags": {
+      "low_label_mass": 33,
+      "reads": 192,
+      "scope": "all reads",
+      "top1_not_label": 51
+     }
+    }
+   },
+   "at_launches": 120,
+   "contrast_forced_degeneracy": {
+    "k": 4,
+    "n": 336
+   },
+   "fired": false,
+   "look": 3,
+   "results": [
+    {
+     "binding": true,
+     "crit": 24,
+     "exceeds": false,
+     "fired": false,
+     "k": 6,
+     "message": "BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=3 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328",
+     "n": 328,
+     "name": "round_degeneracy@campaign-Q-F0",
+     "p": "1092705532800892021188402997018754953112278357373205202543401047775045666632601442028265702153001865678940381978229604915147775069172433710479262840574543350912053287434721144525346761183424057703603038841956244185907168015696726615670115896581516079580311050053292759379669967294390330504430094197202692889787345740926850463568983907748912576542658759934738385965977656112533875575368828814981869355226292491563603915400953793/1093625362391505962186251113558810682676584715446606218212885303204976499599687961611756588511526912000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+     "binding": true,
+     "crit": null,
+     "exceeds": false,
+     "fired": false,
+     "k": 12,
+     "message": "BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=3 contrast 12/85 vs sham 3/35 one-sided Fisher P=0.3069 > alpha 0.05",
+     "n": 85,
+     "name": "exclusion_guard_fisher@campaign-Q-F0",
+     "p": "843525822345/2748795519571"
+    },
+    {
+     "binding": true,
+     "crit": 24,
+     "exceeds": false,
+     "fired": false,
+     "k": 12,
+     "message": "BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=3 12/85 exact one-sided P=0.9373 > alpha 0.05 vs p0 0.20; critical 24 at n=85",
+     "n": 85,
+     "name": "exclusion_guard_abs@campaign-Q-F0",
+     "p": "48458508663687187267624028985971139401812356527807394530609/51698788284564229679463043254372678347863256931304931640625"
+    }
+   ]
+  }
+ ],
+ "looks_count": 4,
+ "pauses": [],
+ "provenance": [
+  {
+   "launched": 129,
+   "record": {
+    "adapter": "qwen3.6-27b-4bit-mlx",
+    "backend": "mlx",
+    "choice_window_declared": 8192,
+    "dtype": "4bit-quantized (MLX)",
+    "gdn_inference_mode": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "library_versions": {
+     "mlx": "0.31.2",
+     "mlx-lm": "0.31.3",
+     "numpy": "2.5.1"
+    },
+    "mlx_version": "0.31.2",
+    "model_id": "mlx-community/Qwen3.6-27B-4bit",
+    "n_encodes_clipped": 0,
+    "n_layers": 64,
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "python": "3.12.9"
+   },
+   "stamp": "2026-10-19T03:26:56Z"
+  }
+ ],
+ "schedule_n": {
+  "A0": 2624,
+  "A0s": 960
+ },
+ "schema": "m-stage-report-v1",
+ "sham_generation_ms": 4366042,
+ "stage": "campaign",
+ "stage_name": "campaign-Q-F0",
+ "status": "COMPLETE",
+ "stop": null,
+ "terminal": {
+  "at_launches": 129,
+  "status": "COMPLETE"
+ },
+ "unit": "Q-F0"
+}

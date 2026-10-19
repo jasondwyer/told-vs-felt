@@ -1,0 +1,166 @@
+# The Q-F0 campaign (PROPOSAL-m v1.11 §8 step 16, m:358) -- A0 (contrast) and A0s (sham) in strict rotation, uncached, on Qwen under LOCK-m-F0 v1.0: launch counts A0 128, A0s 64 (a projection, not a bound), floors A0 80, A0s 32, hour cap 40 h; canonical run on the committed driver.
+# Code stamp (the launch's; Q4 keeps it): 2026-10-19 03:26:36 UTC (date -u); HEAD a6c81f2; driver scripts/m_sessions.py sha256 609bb469d97ca40c0f5cc1592902976019f16b2c09b14961fe8352ecaf932015 (committed at a6c81f2; the campaign wiring, reviewed in the cloud; the self-test of record 825/825 on the laptop with HF_HUB_OFFLINE unset and with it set to "1"); LOCK-m-F0.md sha256 fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c (v1.0, committed at d474406; no later commit touches it); analyzer scripts/m_analyze.py 655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f; package_sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771; renders_sha16 a04f67b0e5105a05; offline load: HF_HUB_OFFLINE=1, snapshot mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282 (refs/main, read now; the cache repo's only snapshot directory, /Users/jasondwyer/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; the revision of record, LOCK-m-F0 v1.0 §1 / v0.2 §4; the dry precheck's DRIVER and SNAPSHOT lines on this driver, asserted, every list it prints []); no mlx-community/ at the repo root; no campaign checkpoint, excerpt or report on disk (a first launch, no --resume).
+# The PI's word of 2026-10-18 (chat), verbatim: "Audit session is idle; launch the campaign."
+# Launched with m:267's checklist line as written, typed in Code's Bash-tool shell (zsh), which returns at once, followed in the same call by `; echo "PID=$!"` (the PID the waits use; the checklist line is unchanged): nohup caffeinate -is /bin/zsh -c 'cd /Users/jasondwyer/Documents/code/jspace-lab && export HF_HUB_OFFLINE=1 && /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py campaign --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05 2>&1; echo "EXIT=$?"' >> /Users/jasondwyer/Documents/code/jspace-lab/results/raw/2026-10-18_m-campaign-qf0.txt 2>&1 & disown; echo "PID=$!"
+# Departures from m:267's checklist: none. The checklist at launch, read by the header's generator: power adapter Wattage = 140 W, 'Now drawing from 'AC Power''; one process -- no jlens, mlx, qwen, ipykernel, m_sessions or self-test python process (pgrep -ifl python), no batch (pgrep), the preflight repeats it at stage start; display sleep only (caffeinate -is); disk 485Gi free of 926Gi; the gate line is the run's GATE line. macOS 15.6.1 (24G90).
+# The audit session (F1: Qwen stages launch only when it is idle): idle by the PI's word of 2026-10-18 ("Audit session is idle"); its last commit touching its paths is 11cc35b, 2026-10-12 18:38 -0400; the last commit overall is a6c81f2 (the driver's); no file in the tree outside .git/, jlens-qwen36/ and data/m/ (not scanned; data/m by O2-3) modified in the 30 minutes before the launch; no tracked change.
+# The inputs no check binds (round 1's OPS-6, round 3's O3-8): the adapter's clone import closure (jlens-qwen36/jlens_qwen, gitignored; read, not edited; each equal to G-ID-F0m's header), sha256: model.py 5da19b3d68296c7fe9f952b100eeb30343004e3fdb5502c2743e3ea581466b0b, patch_gdn.py 77a1a3ec38fa76421fab858913a047dc1d6bab0499def512d32f6cdaf8a77760, custom_gdn_patch.py c47263e66bf6bb130d13ed407c8b232bb8d2aefe5f2f656a7aac78f665e2c85c, custom_gdn_vjp.py 3fe41d735c3b44ae526568f454d58d074d40b807183c77a651260b33844f2ac3, gdn_backward.py a952e79f27dcc9b4540e9925814970455a9193e1ff0bcd7f67e7255b157d1873, conditioning.py 075939bc039b721abe3f116736b11e4cce7a7682f21e5d26d288e76c335b803f, forced_choice.py d30483cf42a416ed7d7d0d5c4239872617b9a9a477b5e7663c89e0ad8b3d3511; valence_core/adapters/qwen_mlx.py a3fc7b45749175239a88bf1cf6ff64190568a72eacf5a2e301a1e04e11d52c6b (lock §5.2's value), __init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a (qwen_or_explain, the loader _load_qwen calls), base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf (all three committed, identical to HEAD, outside package_sha256).
+# NO FINISH STAMP follows any EXIT: the campaign has contrast sessions (the seat's step-10 read, Q4; v1.0 §12); no commit message restates a stamp.
+# While an invocation runs (OPS-1, OPS-3, OPS-4, O2-1, O2-2, O2-5, O3-1, O3-2, O3-7): this raw is not read in any form (head, cat, tail, a printing grep, the Read tool) until the invocation has ended; the start is confirmed by the PID's liveness alone; the end is awaited by one background loop on the PID ($!, nohup's, which execs the zsh -c wrapper naming m_sessions.py campaign; caffeinate holds its assertions from a child of it) while kill -0 holds and its command matches '[m]_sessions\.py campaign', and then `pgrep -fl '[m]_sessions\.py campaign'` must be empty before this raw is read; EXIT lines are counted, one per invocation; no streaming, Monitor, stat or listing of this raw, data/m/ckpt or data/m/reports; no jlens-venv python, notebook kernel or workflow; macOS, conda and pip updates off.
+# From the launch until the campaign has ended and its outputs are committed, across its pauses (OPS-2, OPS-6, O2-6, O3-8, O3-9, F3-5; README §2): no commit or working-tree edit to LOCK-m-F0.md, the proposal, CLAUDE.md, scripts/m_analyze.py, scripts/m_sessions.py, valence_core/**, data/m/** (the pause commits below and the outputs' own commit excepted) or jlens-qwen36/; no add or commit of this raw, or of results/raw/ wholesale, before the end, save as the PI ruled for a pause (below); no checkout, stash, reset, pull or rebase; no hub-cache operation (an online load, an hf or huggingface-cli download or delete-cache).
+# The PI's word of 2026-10-18 on a pause's outputs (README §2 left it to the PI before the launch), verbatim: "And yes: at each pause (exit 3), commit the checkpoint and the raw as it stands, by explicit path, with a message naming only the pause’s kind and launch count — no figures, no finish stamp."
+# Exits and resumes (O2-6, O3-10, OPS-4, OPS-6, F3-4; the driver's codes, README §3): EXIT=0 (COMPLETE, CAP or PI-STOP) ends the campaign; EXIT=3 (PAUSE) is escalated -- the checkpoint and this raw committed as the PI ruled, by explicit path -- and a resume runs only on the seat's ruling or the PI's stop, routed by the PI: the same line with --resume and the ruling file, appended here under a header line with no stamp, its DRIVER and SNAPSHOT lines compared with this one's; Code never self-adjudicates; EXIT=4 (STOP, or NOT APPLIED) is escalated; EXIT=2 (refused before the load) is relaunched, once its cause is fixed, by appending here under a '# Relaunch after EXIT=2: <reason>' line carrying its own checklist and typed command (its launch stamp allowed, Q4); EXIT=1, or an ended PID with no EXIT line, goes to the seat through the PI. Nothing is computed from the PROVENANCE stamps.
+# Until Q-F0's VERDICTS (O2-3, C2-4): no size or time metadata of this raw, data/m/ckpt or data/m/reports (ls -l/-t/-s, stat, du, wc -c, find -newer, git ls-tree -l, git cat-file -s, git --stat); files are verified by name-status, ls-files and shasum; a STOP or REFUSED line naming CHECKPOINT STATE INCONSISTENT is not quoted or computed against and goes to the seat in a sealed form. After the end: the report's identity.lock_sha256 is checked equal to fc7e9db8ecfa28d6... and schedule_sha256 to c4626cc0... (OPS-5, O2-4; README §2).
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py campaign --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/m_sessions.py 609bb469d97ca40c0f5cc1592902976019f16b2c09b14961fe8352ecaf932015: committed at HEAD a6c81f201b574b7f950c4303496ff5dcb9ca8c47, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; /Users/jasondwyer/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE campaign-Q-F0: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py 655e0f7f6743d0bf, HEAD a6c81f201b574b7f950c4303496ff5dcb9ca8c47
+LICENCE campaign-Q-F0: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F0.md fc7e9db8ecfa28d6: committed at HEAD a6c81f201b574b7f950c4303496ff5dcb9ca8c47, working tree identical; analyzer 655e0f7f6743d0bf and package 5f646db6e82c5561: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-10-19T03:26:56Z"}
+campaign A0 s=0 valid
+campaign A0s s=0 valid
+campaign A0 s=1 valid
+campaign A0s s=1 valid
+campaign A0 s=2 valid
+campaign A0s s=2 valid
+campaign A0 s=3 valid
+campaign A0s s=3 valid
+campaign A0 s=4 valid
+campaign A0s s=4 valid
+campaign A0 s=5 valid
+campaign A0s s=5 valid
+campaign A0 s=6 valid
+campaign A0s s=6 valid
+campaign A0 s=7 valid
+campaign A0s s=7 valid
+campaign A0 s=8 valid
+campaign A0s s=8 valid
+campaign A0 s=9 valid
+campaign A0s s=9 valid
+campaign A0 s=10 valid
+campaign A0s s=10 valid
+campaign A0 s=11 valid
+campaign A0s s=11 valid
+campaign A0 s=12 valid
+campaign A0s s=12 valid
+campaign A0 s=13 valid
+campaign A0s s=13 valid
+campaign A0 s=14 valid
+campaign A0s s=14 valid
+campaign A0 s=15 valid
+campaign A0s s=15 excluded:audit@forced
+campaign A0 s=16 valid
+campaign A0s s=16 valid
+campaign A0 s=17 valid
+campaign A0s s=17 valid
+campaign A0 s=18 valid
+campaign A0s s=18 valid
+campaign A0 s=19 valid
+campaign A0s s=19 valid
+BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=1 4/193 exact one-sided P=0.9882 > alpha 0.05 vs p0 0.05; critical 16 at n=193
+BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=1 contrast 0/20 vs sham 1/20 one-sided Fisher P=1.0000 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=1 0/20 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 8 at n=20
+campaign A0 s=20 valid
+campaign A0s s=20 valid
+campaign A0 s=21 excluded:audit@forced
+campaign A0s s=21 valid
+campaign A0 s=22 excluded:content@forced
+campaign A0s s=22 valid
+campaign A0 s=23 excluded:lexical@forced
+campaign A0s s=23 valid
+campaign A0 s=24 valid
+campaign A0s s=24 valid
+campaign A0 s=25 excluded:lexical@forced
+campaign A0s s=25 valid
+campaign A0 s=26 valid
+campaign A0s s=26 valid
+campaign A0 s=27 valid
+campaign A0s s=27 excluded:audit@forced
+campaign A0 s=28 valid
+campaign A0s s=28 valid
+campaign A0 s=29 valid
+campaign A0s s=29 valid
+campaign A0 s=30 valid
+campaign A0s s=30 valid
+campaign A0 s=31 valid
+campaign A0s s=31 excluded:lexical@forced
+campaign A0 s=32 valid
+campaign A0s s=32 valid
+campaign A0 s=33 valid
+campaign A0s s=33 valid
+campaign A0 s=34 valid
+campaign A0s s=34 valid
+campaign A0 s=35 valid
+campaign A0 s=36 valid
+campaign A0 s=37 valid
+campaign A0 s=38 valid
+campaign A0 s=39 valid
+campaign A0 s=40 excluded:excluded@free
+campaign A0 s=41 valid
+campaign A0 s=42 valid
+campaign A0 s=43 excluded:excluded@free
+campaign A0 s=44 valid
+BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=2 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328
+BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=2 contrast 4/45 vs sham 3/35 one-sided Fisher P=0.6398 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=2 4/45 exact one-sided P=0.9871 > alpha 0.05 vs p0 0.20; critical 15 at n=45
+campaign A0 s=45 valid
+campaign A0 s=46 valid
+campaign A0 s=47 excluded:lexical@forced
+campaign A0 s=48 excluded:excluded@free
+campaign A0 s=49 valid
+campaign A0 s=50 valid
+campaign A0 s=51 valid
+campaign A0 s=52 valid
+campaign A0 s=53 excluded:content@forced
+campaign A0 s=54 valid
+campaign A0 s=55 valid
+campaign A0 s=56 valid
+campaign A0 s=57 valid
+campaign A0 s=58 valid
+campaign A0 s=59 valid
+campaign A0 s=60 excluded:audit@forced
+campaign A0 s=61 excluded:lexical@forced
+campaign A0 s=62 valid
+campaign A0 s=63 excluded:audit@forced
+campaign A0 s=64 valid
+campaign A0 s=65 valid
+campaign A0 s=66 valid
+campaign A0 s=67 excluded:audit@forced
+campaign A0 s=68 excluded:lexical@forced
+campaign A0 s=69 valid
+campaign A0 s=70 valid
+campaign A0 s=71 valid
+campaign A0 s=72 valid
+campaign A0 s=73 valid
+campaign A0 s=74 valid
+campaign A0 s=75 valid
+campaign A0 s=76 valid
+campaign A0 s=77 valid
+campaign A0 s=78 valid
+campaign A0 s=79 valid
+campaign A0 s=80 valid
+campaign A0 s=81 valid
+campaign A0 s=82 valid
+campaign A0 s=83 excluded:content@forced
+campaign A0 s=84 valid
+BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=3 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328
+BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=3 contrast 12/85 vs sham 3/35 one-sided Fisher P=0.3069 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=3 12/85 exact one-sided P=0.9373 > alpha 0.05 vs p0 0.20; critical 24 at n=85
+campaign A0 s=85 valid
+campaign A0 s=86 valid
+campaign A0 s=87 valid
+campaign A0 s=88 valid
+campaign A0 s=89 excluded:audit@forced
+campaign A0 s=90 valid
+campaign A0 s=91 excluded:content@forced
+campaign A0 s=92 valid
+campaign A0 s=93 valid
+BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=end 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328
+BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=end contrast 14/94 vs sham 3/35 one-sided Fisher P=0.2648 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=end 14/94 exact one-sided P=0.9183 > alpha 0.05 vs p0 0.20; critical 26 at n=94
+STAGE campaign-Q-F0 COMPLETE path=uncached
+CHECKPOINT /Users/jasondwyer/Documents/code/jspace-lab/data/m/ckpt/Q-F0_campaign.json
+REPORT /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_campaign_report.json
+EXIT=0
