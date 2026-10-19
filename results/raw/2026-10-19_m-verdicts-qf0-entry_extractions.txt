@@ -1,0 +1,390 @@
+# PROPOSAL-m Q-F0 -- VERDICTS: Code's extractions for the VERDICTS entry (the seat's block v1.1 §5: the looks with the contrast side filled in; the seconds and stage durations; the sham first-pick share; the gate stages' release, their later picks included; A0's reads after the first; the enumeration's values-check by independent re-derivation; any CHECKPOINT STATE INCONSISTENT line), 2026-10-19 (Code's date -u).
+# Made after the analyzer's output exists (bfc179c; the pre-VERDICTS window closed at the 'VERDICTS Q-F0:' line of results/raw/2026-10-19_m-verdicts-qf0.txt). Descriptive; no verdict reads it; E12 is post-hoc (m:320), labeled. Read-only, model-free: the checkpoints through resume.read_checkpoint and readrule.release_full, as the analyzer reads them; the looks through the stage's own stages.campaign_look, each compared with the look the campaign recorded.
+# Revisions, each a whole re-run of the script: E10 and E11 added after the entries' values-check pass 1 (rules R12, X1, X2); after pass 2, E2's check relabelled (the output's field is `looks`), E3's displays made half-up from exact ms (pass 2's M14; only G-TIME-F0's tie, 261,650 ms, moves: 261.6 -> 261.7), and E12 added (pass 2's fidelity X4, rules R13).
+# Run: cd <repo> && jlens-qwen36/.venv/bin/python -I -B <scratch>/extract17.py <repo>, at HEAD bfc179c4ba3779d1f857c059e5f0b0a1b00733b0. The output, then the script verbatim (sha256 0cc4f4899940a614890ad2f9a2a33dee96467460c31d05d6529b3596d74dc7ac).
+
+== E1. the inputs: each checkpoint's sha256 equals the VERDICTS output's record; read through resume.read_checkpoint (verified) and released through readrule.release_full (m:271), as the analyzer reads them
+  [OK]   campaign: data/m/ckpt/Q-F0_campaign.json dd389eca073ae099e3d3e4dfe917ff2972b75a1500c3f173b2def15f6d5f1b00
+  [OK]   time: data/m/ckpt/Q-F0_time.json 483f32ea240014404b885cc39a04027b2a31bb16ebc3c9434791769f58e2557a
+  [OK]   qual: data/m/ckpt/Q-F0_qual.json 9a187fbc4654aae1801ca9b53e261401d12799d85719c7a3e1d32c3d43ed5148
+  [OK]   the released campaign records keep the checkpoint's order (launch order)
+
+== E2. the looks: each re-derived by stages.campaign_look over the first n records and compared with the look the campaign recorded (ck.looks[i].result; the end look, ck.campaign.end_look); then the contrast side the looks withheld (build flag (d), stages.py:1973; the first-reads-only read flags, stages.py:1937): A0's read flags over ALL reads, A0's FREE-round degeneracy (claims in bars.DEGEN_CLAIMS['qwen']), and A0's domain split into valid and excluded@free
+  [OK]   look 1 at 40 launches: re-derived == recorded (at_launches, fired, results, arms, contrast_forced_degeneracy): True
+    look 1 (40 launches) A0: launched 20, domain 20 = valid 20 + excluded@free 0 {}; read flags, first reads of domain sessions (printed at the look): low label mass 14/20, top-1-not-a-label 20/20; ALL reads (withheld): low label mass 22/120, top-1-not-a-label 36/120; forced-round degeneracy (printed) 0/80; FREE-round degeneracy (withheld) 4/120
+  [OK]   look 2 at 80 launches: re-derived == recorded (at_launches, fired, results, arms, contrast_forced_degeneracy): True
+    look 2 (80 launches) A0: launched 45, domain 41 = valid 39 + excluded@free 2 {'lexical': 2}; read flags, first reads of domain sessions (printed at the look): low label mass 25/41, top-1-not-a-label 39/41; ALL reads (withheld): low label mass 37/240, top-1-not-a-label 65/240; forced-round degeneracy (printed) 1/179; FREE-round degeneracy (withheld) 8/240
+  [OK]   look 3 at 120 launches: re-derived == recorded (at_launches, fired, results, arms, contrast_forced_degeneracy): True
+    look 3 (120 launches) A0: launched 85, domain 73 = valid 70 + excluded@free 3 {'lexical': 3}; read flags, first reads of domain sessions (printed at the look): low label mass 44/73, top-1-not-a-label 71/73; ALL reads (withheld): low label mass 66/428, top-1-not-a-label 114/428; forced-round degeneracy (printed) 4/336; FREE-round degeneracy (withheld) 11/428
+  [OK]   look end at 129 launches: re-derived == recorded (at_launches, fired, results, arms, contrast_forced_degeneracy): True
+    look end (129 launches) A0: launched 94, domain 80 = valid 77 + excluded@free 3 {'lexical': 3}; read flags, first reads of domain sessions (printed at the look): low label mass 49/80, top-1-not-a-label 78/80; ALL reads (withheld): low label mass 73/470, top-1-not-a-label 127/470; forced-round degeneracy (printed) 5/372; FREE-round degeneracy (withheld) 12/470
+  [OK]   the output's `looks` (written by the analyzer's every_look; look, at_launches, Fisher p, abs p) equals the recorded looks' guard results
+    BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=1 4/193 exact one-sided P=0.9882 > alpha 0.05 vs p0 0.05; critical 16 at n=193 | BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=1 contrast 0/20 vs sham 1/20 one-sided Fisher P=1.0000 > alpha 0.05 | BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=1 0/20 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 8 at n=20
+    BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=2 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328 | BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=2 contrast 4/45 vs sham 3/35 one-sided Fisher P=0.6398 > alpha 0.05 | BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=2 4/45 exact one-sided P=0.9871 > alpha 0.05 vs p0 0.20; critical 15 at n=45
+    BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=3 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328 | BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=3 contrast 12/85 vs sham 3/35 one-sided Fisher P=0.3069 > alpha 0.05 | BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=3 12/85 exact one-sided P=0.9373 > alpha 0.05 vs p0 0.20; critical 24 at n=85
+    BAR round_degeneracy@campaign-Q-F0 silent template=A0s look=end 6/328 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 24 at n=328 | BAR exclusion_guard_fisher@campaign-Q-F0 silent template=A0 look=end contrast 14/94 vs sham 3/35 one-sided Fisher P=0.2648 > alpha 0.05 | BAR exclusion_guard_abs@campaign-Q-F0 silent template=A0 look=end 14/94 exact one-sided P=0.9183 > alpha 0.05 vs p0 0.20; critical 26 at n=94
+
+== E3. the seconds (Code's PIN at stages.py:2390: a total that includes contrast sessions stays in the checkpoint until VERDICTS; reportable now): per stage and arm, each finished session's generation seconds as the hour cap counts them (resume.session_ms), and the stage's hour_cap_ms_used
+    time: sessions 2; hour_cap_ms_used 306164 ms = 0.085 h; the sum of its records' session_ms 306164 ms (equal)
+      A0: n 1, total 44.514 s = 0.012 h, mean 44.5 s, median 44.5 s, min 44.5 s, max 44.5 s (exact ms, half-up displays)
+      A0s: n 1, total 261.650 s = 0.073 h, mean 261.7 s, median 261.7 s, min 261.7 s, max 261.7 s (exact ms, half-up displays)
+      A0 domain sessions: n 1, total 44.514 s = 0.012 h, mean 44.5 s, median 44.5 s, min 44.5 s, max 44.5 s (exact ms, half-up displays); A0 excluded pre-pick: none
+    qual: sessions 24; hour_cap_ms_used 3200788 ms = 0.889 h; the sum of its records' session_ms 3200788 ms (equal)
+      A0: n 8, total 1460.091 s = 0.406 h, mean 182.5 s, median 149.5 s, min 66.3 s, max 365.0 s (exact ms, half-up displays)
+      A0s: n 16, total 1740.697 s = 0.484 h, mean 108.8 s, median 98.7 s, min 25.5 s, max 321.4 s (exact ms, half-up displays)
+      A0 domain sessions: n 8, total 1460.091 s = 0.406 h, mean 182.5 s, median 149.5 s, min 66.3 s, max 365.0 s (exact ms, half-up displays); A0 excluded pre-pick: none
+    campaign: sessions 129; hour_cap_ms_used 16724598 ms = 4.646 h; the sum of its records' session_ms 16724598 ms (equal)
+      A0: n 94, total 12358.556 s = 3.433 h, mean 131.5 s, median 107.8 s, min 10.9 s, max 424.9 s (exact ms, half-up displays)
+      A0s: n 35, total 4366.042 s = 1.213 h, mean 124.7 s, median 99.0 s, min 9.0 s, max 303.6 s (exact ms, half-up displays)
+      A0 domain sessions: n 80, total 11779.282 s = 3.272 h, mean 147.2 s, median 110.8 s, min 34.0 s, max 424.9 s (exact ms, half-up displays); A0 excluded pre-pick: n 14, total 579.274 s = 0.161 h, mean 41.4 s, median 20.7 s, min 10.9 s, max 128.2 s (exact ms, half-up displays)
+  [OK]   the campaign report's sham_generation_ms 4366042 == the A0s records' session_ms sum 4366042
+    the campaign's hour cap 40 h; used 4.646 h (hour_cap_exceeded: False)
+
+== E4. the sham first-pick shares (m:318: the campaign reported none; the gate stages' were reported at G-TIME and qualification under exception (2))
+  [OK]   campaign A0s: 18/32 on the P-role label (the output's sham block: 18/32)
+    time A0s (reported at the stage): 1/1 domain sessions on the P-role label; A0s launched 1
+    time A0: launched 1, domain 1, first free pick on the P-role label 1; picked roles at the first read ['P']
+    qual A0s (reported at the stage): 7/14 domain sessions on the P-role label; A0s launched 16
+    qual A0: launched 8, domain 8, first free pick on the P-role label 8; picked roles at the first read ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P']
+
+== E5. the gate stages' release, re-derived from the released records and compared with the output's gate_release
+  [OK]   time: contrast first picks [{'s': 0, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}]
+    time: released free-round events [{'ci': 2, 'claim': 'lexical', 'property': 'clean', 's': 0}, {'exclusion': 'lexical', 'phase': 'free', 's': 0}]; stage_end {'adjudication': None, 'fired': [], 'status': 'PASS'}
+      A0 s=0: exclusion {'class': 'lexical', 'detail': 'lexical:saddle', 'phase': 'free'}; choices taken 3
+  [OK]   qual: contrast first picks [{'s': 0, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 1, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 2, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 3, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 4, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 5, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 6, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}, {'s': 7, 'domain': True, 'first_pick_role': 'P', 'first_free_pick_P': True}]
+    qual: released free-round events [{'ci': 0, 'claim': 'lexical', 'property': 'clean', 's': 1}, {'exclusion': 'lexical', 'phase': 'free', 's': 1}]; stage_end {'adjudication': None, 'fired': [], 'status': 'PASS'}
+      A0 s=1: exclusion {'class': 'lexical', 'detail': 'lexical:granite', 'phase': 'free'}; choices taken 1
+
+== E6. the §7.5 enumeration re-derived independently of the analyzer's functions, from the table of record and m:338 (labels), m:341 (ceiling), m:349 (clauses (a)-(c)), under the tuple (PASS; PENDING x3) and the flag of record
+  [OK]   independent enumeration == the output's: 39 items vs 39; differences []
+    39 items: (a) 32, (b) 10, (c) 0; under both (a) and (b): ['R013.15', 'R234.04', 'R236.02']; the dose-note rows of the table: ['R182.06'] (flag True: (c) carries them as they stand)
+    for comparison, the all-PASS tuple under the flag of record (v1.0 §2: 23): 23 items; this tuple adds ['R005.01', 'R013.11', 'R030.02', 'R033.02', 'R061.03', 'R168.01', 'R184.04', 'R184.07', 'R194.04', 'R236.01', 'R242.01', 'R244.02', 'R248.02', 'R248.06', 'R254.02', 'R276.05'] (16) and drops []
+
+== E7. CHECKPOINT STATE INCONSISTENT lines (the step-14 read's Q3): counted over each raw's non-'#' lines
+    results/raw/2026-10-18_m-campaign-qf0.txt: 0 of 153 non-header lines
+    results/raw/2026-10-19_m-verdicts-qf0.txt: 1 of 889 non-header lines
+      line 499, under the section headed '2.2 RUN 2, OF RECORD (after the inputs were written; nothing': [PASS] refused: unverified (not a verified record) REFUSED: the campaign checkpoint: CHECKPOINT STATE INCONSISTENT (<tmp>
+
+== E8. exact figures the entries state beyond the output's displays (Fractions from the output's exact strings)
+    p_up = 81/1208925819614629174706176 = 81/2^80: True; = 6.700e-23
+    1 - p_down = 1/1208925819614629174706176 (8.272e-25)
+    dead_tail = 1 - 1.079e-15 (DEAD needs < 1/40 and k < n)
+    guard at the end look: Fisher p = 0.264766, absolute p = 0.918346
+    look 1 at 40: Fisher p 1.0000, absolute p 1.0000, fired False
+    look 2 at 80: Fisher p 0.6398, absolute p 0.9871, fired False
+    look 3 at 120: Fisher p 0.3069, absolute p 0.9373, fired False
+    look end at 129: Fisher p 0.2648, absolute p 0.9183, fired False
+    power: of record 0.8784 (split [40, 40], mS 32); realised split 0.8780 (split [41, 39])
+    P - P_sham = 17/40; E = |P_sham - 1/2| = 1/16 (the output: 1/16); Delta_c = P - 1/2 = 39/80 (the output: 39/80)
+
+== E9. the excluded sessions behind the counters' n_excluded_included (that field counts counter increments from excluded sessions, session.DescriptiveCounters.note(excluded=True), not sessions)
+    A0: launched 94, excluded (any phase) 17, of which pre-pick 14 and at a free round 3; strict_exclusion set 36
+    A0s: launched 35, excluded (any phase) 3, of which pre-pick 3 and at a free round 0; strict_exclusion set 13
+    the output's counters.n_excluded_included 42; n_sessions 129
+
+== E10. A0's reads after the first (the block §5: 'the A0 reads after the first, withheld at the looks ... now counted'), apart from its first reads
+    after the first: 390 reads, low label mass 24, top-1-not-a-label 49; all A0 reads 470 (73, 127); reads in A0 sessions outside the domain 0
+  [OK]   the reads after the first equal secondary (b)'s transitions: 11 + 379
+
+== E11. the gate stages' A0 picks beyond the first (PIN-32's output carries first picks only) and their free-round advisories (v5; an advisory claims and excludes nothing)
+    time: picks by session [(0, ['P', 'P', 'P'])]; 3 picks, 3 on the P role, 2 after the first
+  [OK]   time: A0 free rounds 3, all clean; the output's counters_beside free_rounds A0|clean 3
+    time: A0 free rounds carrying an advisory (s, ci, property, claim, advisory): []
+    qual: picks by session [(0, ['P', 'P', 'P', 'P', 'P', 'P']), (1, ['P']), (2, ['P', 'P', 'P', 'P', 'P', 'P']), (3, ['P', 'P', 'P', 'P', 'P', 'P']), (4, ['P', 'P', 'P', 'P', 'P', 'P']), (5, ['P', 'P', 'P', 'P', 'P', 'P']), (6, ['P', 'P', 'P', 'P', 'P', 'P']), (7, ['P', 'P', 'P', 'P', 'P', 'P'])]; 43 picks, 43 on the P role, 35 after the first
+  [OK]   qual: A0 free rounds 43, all clean; the output's counters_beside free_rounds A0|clean 43
+    qual: A0 free rounds carrying an advisory (s, ci, property, claim, advisory): [(5, 2, 'clean', None, ['content:task_echo']), (5, 5, 'clean', None, ['content:task_echo'])]
+
+== E12. POST-HOC (m:320; labeled; licensing at most a new pre-registration): secondary (e) over the domain sessions alone, beside the analyzer's (e), which is over every round of every session of the arm (m_analyze.py:1256-1261; m:312 declares each secondary on its post-exclusion domain; no PIN states (e)'s domain). Added after values-check pass 2 (its fidelity X4 and rules R13), for the seat
+  [OK]   A0 forced: the analyzer's (e) 1/372 == all sessions 1/372; over the domain sessions alone 0/320
+  [OK]   A0 free: the analyzer's (e) 1/470 == all sessions 1/470; over the domain sessions alone 1/470
+  [OK]   A0s forced: the analyzer's (e) 0/136 == all sessions 0/136; over the domain sessions alone 0/128
+  [OK]   A0s free: the analyzer's (e) 0/192 == all sessions 0/192; over the domain sessions alone 0/192
+    termination round: A0 s=17, phase free, property clean, session in the domain True, its exclusion None
+    termination round: A0 s=21, phase forced, property corrupted, session in the domain False, its exclusion {'class': 'v2', 'detail': 'audit:frame:evaluation session', 'phase': 'forced'}
+
+EXTRACTIONS: 21/21 checks equal
+EXIT=0
+
+---- extract17.py, verbatim
+"""Step 17's entry extractions (Code's; descriptive, after the analyzer's output exists -- the pre-VERDICTS window closed
+at the 'VERDICTS Q-F0:' line of results/raw/2026-10-19_m-verdicts-qf0.txt). Read-only, model-free. Run from the repository
+root in the jlens venv: python -I -B extract17.py <repo>. Each section prints what the seat's block §5 asks the VERDICTS entry
+to carry beyond the analyzer's output, with a check against the output or the checkpoint's own record where one exists.
+"""
+import hashlib, json, statistics, sys
+from fractions import Fraction
+from pathlib import Path
+
+REPO = Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(REPO))
+from valence_core.m import resume, readrule, stages, bars, keys    # noqa: E402
+
+V = json.loads((REPO / "data/m/verdicts/Q-F0_VERDICTS.json").read_text(encoding="utf-8"))
+S = json.loads((REPO / "data/m/verdicts/Q-F0_secondary.json").read_text(encoding="utf-8"))
+T = json.loads((REPO / "data/m/gates/m_posting_sentences.json").read_text(encoding="utf-8"))
+OK = []
+
+
+def check(ok, line):
+    print(("  [OK]   " if ok else "  [DIFF] ") + line)
+    OK.append(bool(ok))
+
+
+def sha(rel):
+    return hashlib.sha256((REPO / rel).read_bytes()).hexdigest()
+
+
+print("== E1. the inputs: each checkpoint's sha256 equals the VERDICTS output's record; read through resume.read_checkpoint "
+      "(verified) and released through readrule.release_full (m:271), as the analyzer reads them")
+CK = {}
+for stg in ("campaign", "time", "qual"):
+    rel = V["inputs"][stg]["path"]
+    check(sha(rel) == V["inputs"][stg]["sha256"], f"{stg}: {rel} {sha(rel)}")
+    ck = resume.read_checkpoint(REPO / rel)
+    CK[stg] = (ck, readrule.release_full(ck["sessions"]))
+ck, recs = CK["campaign"]
+check([(r["template"], r["s"]) for r in recs] == [(r["template"], r["s"]) for r in ck["sessions"]],
+      "the released campaign records keep the checkpoint's order (launch order)")
+
+print("\n== E2. the looks: each re-derived by stages.campaign_look over the first n records and compared with the look the "
+      "campaign recorded (ck.looks[i].result; the end look, ck.campaign.end_look); then the contrast side the looks withheld "
+      "(build flag (d), stages.py:1973; the first-reads-only read flags, stages.py:1937): A0's read flags over ALL reads, A0's "
+      "FREE-round degeneracy (claims in bars.DEGEN_CLAIMS['qwen']), and A0's domain split into valid and excluded@free")
+looks = [(lk["result"]["look"], lk["result"]) for lk in ck["looks"]] + [("end", ck["campaign"]["end_look"])]
+DEG = bars.DEGEN_CLAIMS["qwen"]
+for look, rec_res in looks:
+    n = rec_res["at_launches"]
+    sub = recs[:n]
+    got = stages.campaign_look("Q-F0", sub, look)
+    same = all(got[k] == rec_res[k] for k in ("at_launches", "fired", "results", "arms", "contrast_forced_degeneracy"))
+    check(same, f"look {look} at {n} launches: re-derived == recorded (at_launches, fired, results, arms, "
+                f"contrast_forced_degeneracy): {same}")
+    con = [r for r in sub if r["template"] == "A0"]
+    allr = stages._read_flags(con, first_only=False)
+    free = [x for r in con for x in r["rounds"] if x["phase"] == "free"]
+    kfree = sum((x["audit"] or {}).get("claim") in DEG for x in free)
+    dom = [r for r in con if r["domain"]]
+    exfree = [r for r in dom if (r.get("exclusion") or {}).get("phase") == "free"]
+    cls = {}
+    for r in exfree:
+        cls[r["exclusion"]["class"]] = cls.get(r["exclusion"]["class"], 0) + 1
+    first = got["arms"]["A0"]["read_flags"]
+    print(f"    look {look} ({n} launches) A0: launched {len(con)}, domain {len(dom)} = valid {len(dom) - len(exfree)} + "
+          f"excluded@free {len(exfree)} {dict(sorted(cls.items()))}; read flags, first reads of domain sessions (printed at "
+          f"the look): low label mass {first['low_label_mass']}/{first['reads']}, top-1-not-a-label "
+          f"{first['top1_not_label']}/{first['reads']}; ALL reads (withheld): low label mass {allr['low_label_mass']}/"
+          f"{allr['reads']}, top-1-not-a-label {allr['top1_not_label']}/{allr['reads']}; forced-round degeneracy (printed) "
+          f"{got['contrast_forced_degeneracy']['k']}/{got['contrast_forced_degeneracy']['n']}; FREE-round degeneracy "
+          f"(withheld) {kfree}/{len(free)}")
+ev = [(lk["look"], lk["at_launches"], lk["fisher"]["p"], lk["abs"]["p"]) for lk in V["looks"]]
+rec_ev = [(look, r["at_launches"]) + tuple(next(x["p"] for x in r["results"] if x["name"].startswith(nm))
+                                          for nm in ("exclusion_guard_fisher", "exclusion_guard_abs"))
+          for look, r in looks]
+check(ev == rec_ev, "the output's `looks` (written by the analyzer's every_look; look, at_launches, Fisher p, abs p) equals the recorded "
+      "looks' guard results")
+for look, r in looks:
+    print("    " + " | ".join(x["message"] for x in r["results"]))
+
+print("\n== E3. the seconds (Code's PIN at stages.py:2390: a total that includes contrast sessions stays in the checkpoint until "
+      "VERDICTS; reportable now): per stage and arm, each finished session's generation seconds as the hour cap counts them "
+      "(resume.session_ms), and the stage's hour_cap_ms_used")
+
+
+def _hu(fr, places):
+    # half-up decimal display from an exact Fraction (the program's display convention, PIN-2 / PIN-36)
+    from decimal import Decimal, ROUND_HALF_UP
+    return str((Decimal(fr.numerator) / Decimal(fr.denominator)).quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP))
+
+
+def secs(rs):
+    ms = sorted(resume.session_ms(r) for r in rs)
+    if not ms:
+        return "none"
+    n = len(ms)
+    med = Fraction(ms[n // 2]) if n % 2 else Fraction(ms[n // 2 - 1] + ms[n // 2], 2)
+    s1 = lambda fr: _hu(Fraction(fr) / 1000, 1)
+    return (f"n {n}, total {_hu(Fraction(sum(ms), 1000), 3)} s = {_hu(Fraction(sum(ms), 3_600_000), 3)} h, mean "
+            f"{s1(Fraction(sum(ms), n))} s, median {s1(med)} s, min {s1(ms[0])} s, max {s1(ms[-1])} s "
+            f"(exact ms, half-up displays)")
+
+
+for stg in ("time", "qual", "campaign"):
+    c, rs = CK[stg]
+    tot = sum(resume.session_ms(r) for r in rs)
+    used = c["state"].get("hour_cap_ms_used")
+    print(f"    {stg}: sessions {len(rs)}; hour_cap_ms_used {used} ms = {used / 3_600_000:.3f} h; the sum of its records' "
+          f"session_ms {tot} ms ({'equal' if used == tot else 'differs by ' + str(used - tot) + ' ms'})")
+    for a in ("A0", "A0s"):
+        print(f"      {a}: {secs([r for r in rs if r['template'] == a])}")
+    for a in ("A0",):
+        d_ = [r for r in rs if r["template"] == a and r["domain"]]
+        x_ = [r for r in rs if r["template"] == a and not r["domain"]]
+        print(f"      {a} domain sessions: {secs(d_)}; {a} excluded pre-pick: {secs(x_)}")
+rep = json.loads((REPO / "data/m/reports/Q-F0_campaign_report.json").read_text(encoding="utf-8"))
+ms_s = sum(resume.session_ms(r) for r in recs if r["template"] == "A0s")
+check(rep["sham_generation_ms"] == ms_s, f"the campaign report's sham_generation_ms {rep['sham_generation_ms']} == the A0s "
+                                         f"records' session_ms sum {ms_s}")
+ident = ck["identity"]
+print(f"    the campaign's hour cap {ident['hour_cap']} h; used {ck['state']['hour_cap_ms_used'] / 3_600_000:.3f} h "
+      f"(hour_cap_exceeded: {resume.hour_cap_exceeded(ck, ident['hour_cap'])})")
+
+print("\n== E4. the sham first-pick shares (m:318: the campaign reported none; the gate stages' were reported at G-TIME and "
+      "qualification under exception (2))")
+sh = [r for r in recs if r["template"] == "A0s" and r["domain"]]
+j = sum(bool(r["first_free_pick_P"]) for r in sh)
+check(j == V["sham"]["j"] and len(sh) == V["sham"]["domain"], f"campaign A0s: {j}/{len(sh)} on the P-role label "
+                                                                 f"(the output's sham block: {V['sham']['j']}/{V['sham']['domain']})")
+for stg in ("time", "qual"):
+    _, rs = CK[stg]
+    shs = [r for r in rs if r["template"] == "A0s" and r["domain"]]
+    print(f"    {stg} A0s (reported at the stage): {sum(bool(r['first_free_pick_P']) for r in shs)}/{len(shs)} domain "
+          f"sessions on the P-role label; A0s launched {sum(r['template'] == 'A0s' for r in rs)}")
+    con = [r for r in rs if r["template"] == "A0"]
+    print(f"    {stg} A0: launched {len(con)}, domain {sum(bool(r['domain']) for r in con)}, first free pick on the P-role "
+          f"label {sum(bool(r['first_free_pick_P']) for r in con if r['domain'])}; picked roles at the first read "
+          f"{[r['choices'][0]['picked_role'] for r in con if r['domain']]}")
+
+print("\n== E5. the gate stages' release, re-derived from the released records and compared with the output's gate_release")
+for stg in ("time", "qual"):
+    _, rs = CK[stg]
+    picks = [{"s": r["s"], "domain": bool(r["domain"]),
+              "first_pick_role": r["choices"][0]["picked_role"] if r["domain"] else None,
+              "first_free_pick_P": r["first_free_pick_P"]} for r in rs if r["template"] == "A0"]
+    check(picks == V["gate_release"][stg]["contrast_first_picks"], f"{stg}: contrast first picks {picks}")
+    print(f"    {stg}: released free-round events {V['gate_release'][stg]['released_free_round_events']}; stage_end "
+          f"{V['gate_release'][stg]['stage_end']}")
+    for r in rs:
+        if r["template"] == "A0" and r.get("exclusion"):
+            print(f"      A0 s={r['s']}: exclusion {r['exclusion']}; choices taken {len(r['choices'])}")
+
+print("\n== E6. the §7.5 enumeration re-derived independently of the analyzer's functions, from the table of record and "
+      "m:338 (labels), m:341 (ceiling), m:349 (clauses (a)-(c)), under the tuple (PASS; PENDING x3) and the flag of record")
+L0 = V["tuple"]["Q-F0"] == "PASS"
+answered = {"e2a": L0, "f1": L0, "S1": True, "e2b": False, "weight": False, "olmo-base": False,
+            "olmo-sft": V["tuple"]["OLMo-sft"] == "PASS", "olmo-dpo": V["tuple"]["OLMo-dpo"] == "PASS",
+            "olmo-instruct": V["tuple"]["OLMo-instruct"] == "PASS"}
+ceil = "fallback-1" if L0 else "fallback-2"
+rank = {"main": 3, "fallback-1": 2, "fallback-2": 1}
+flag = V["flag"]["value"]
+has_dose = any(r["dose_note"] for r in T["rows"])
+mine = []
+for r in T["rows"]:
+    cl, cells = [], [x for x in r["null_cells"] if not answered[x]]
+    if cells:
+        cl.append("a")
+    if r["thesis"] is not None and rank[r["thesis"]] > rank[ceil]:
+        cl.append("b")
+    if (not flag and r["dose_note"]) or (flag and not has_dose and "f1-corr-line" in r["kinds"]):
+        cl.append("c")
+    if cl:
+        mine.append((r["id"], tuple(cl), tuple(cells)))
+theirs = [(e["row_id"], tuple(e["clauses"]), tuple(c["cell"] for c in (e["a"] or {}).get("cells", [])))
+          for e in V["v1_outputs"]["enumeration"]]
+check(mine == theirs, f"independent enumeration == the output's: {len(mine)} items vs {len(theirs)}; "
+                      f"differences {sorted(set(mine) ^ set(theirs))}")
+na = sum("a" in c for _, c, _ in mine); nb = sum("b" in c for _, c, _ in mine); nc = sum("c" in c for _, c, _ in mine)
+print(f"    {len(mine)} items: (a) {na}, (b) {nb}, (c) {nc}; under both (a) and (b): "
+      f"{[i for i, c, _ in mine if 'a' in c and 'b' in c]}; the dose-note rows of the table: "
+      f"{[r['id'] for r in T['rows'] if r['dose_note']]} (flag {flag}: (c) {'strikes them' if not flag else 'carries them as they stand'})")
+allpass = {k: True for k in answered}; allpass.update({"e2b": False, "weight": False, "olmo-base": False})
+ap = [r["id"] for r in T["rows"] if any(not allpass[x] for x in r["null_cells"]) or
+      (r["thesis"] is not None and rank[r["thesis"]] > rank["fallback-1"])]
+print(f"    for comparison, the all-PASS tuple under the flag of record (v1.0 §2: 23): {len(ap)} items; this tuple adds "
+      f"{[i for i, _, _ in mine if i not in ap]} ({len([i for i, _, _ in mine if i not in ap])}) and drops "
+      f"{[i for i in ap if i not in [m[0] for m in mine]]}")
+
+print("\n== E7. CHECKPOINT STATE INCONSISTENT lines (the step-14 read's Q3): counted over each raw's non-'#' lines")
+for rel in ("results/raw/2026-10-18_m-campaign-qf0.txt", "results/raw/2026-10-19_m-verdicts-qf0.txt"):
+    lines = (REPO / rel).read_text(encoding="utf-8").splitlines()
+    print(f"    {rel}: {sum('CHECKPOINT STATE INCONSISTENT' in l for l in lines if not l.startswith('#'))} of "
+          f"{sum(not l.startswith('#') for l in lines)} non-header lines")
+    import re as _re
+    sec = None
+    for i, l in enumerate(lines, 1):
+        if _re.match(r"^[0-9]+(\.[0-9]+)? [A-Z]", l):
+            sec = l[:60]
+        if "CHECKPOINT STATE INCONSISTENT" in l and not l.startswith("#"):
+            print(f"      line {i}, under the section headed {sec!r}: {l.strip()[:150]}")
+
+print("\n== E8. exact figures the entries state beyond the output's displays (Fractions from the output's exact strings)")
+t, st = V["tests"], V["arm"]["stats"]
+pu = Fraction(t["p_up"]["p"])
+print(f"    p_up = {pu} = 81/2^80: {pu == Fraction(81, 2 ** 80)}; = {float(pu):.3e}")
+print(f"    1 - p_down = {1 - Fraction(t['p_down']['p'])} ({float(1 - Fraction(t['p_down']['p'])):.3e})")
+print(f"    dead_tail = 1 - {float(1 - Fraction(t['dead_tail']['p'])):.3e} (DEAD needs < 1/40 and k < n)")
+print(f"    guard at the end look: Fisher p = {float(Fraction(t['guard_fisher']['p'])):.6f}, absolute p = "
+      f"{float(Fraction(t['guard_abs']['p'])):.6f}")
+for lk in V["looks"]:
+    print(f"    look {lk['look']} at {lk['at_launches']}: Fisher p {float(Fraction(lk['fisher']['p'])):.4f}, absolute p "
+          f"{float(Fraction(lk['abs']['p'])):.4f}, fired {lk['fired']}")
+print(f"    power: of record {float(Fraction(V['power']['of_record']['exact'])):.4f} (split {V['power']['of_record']['split']}, "
+      f"mS {V['power']['of_record']['mS']}); realised split {float(Fraction(V['power']['realised_split']['exact'])):.4f} "
+      f"(split {V['power']['realised_split']['split']})")
+print(f"    P - P_sham = {Fraction(st['P']['exact']) - Fraction(st['PS']['exact'])}; E = |P_sham - 1/2| = "
+      f"{abs(Fraction(st['PS']['exact']) - Fraction(1, 2))} (the output: {st['E']['exact']}); Delta_c = P - 1/2 = "
+      f"{Fraction(st['P']['exact']) - Fraction(1, 2)} (the output: {st['delta']['exact']})")
+
+print("\n== E9. the excluded sessions behind the counters' n_excluded_included (that field counts counter increments from "
+      "excluded sessions, session.DescriptiveCounters.note(excluded=True), not sessions)")
+for a_ in ("A0", "A0s"):
+    g_ = [r for r in recs if r["template"] == a_]
+    print(f"    {a_}: launched {len(g_)}, excluded (any phase) {sum(bool(r['excluded']) for r in g_)}, of which pre-pick "
+          f"{sum((r.get('exclusion') or {}).get('phase') == 'forced' for r in g_)} and at a free round "
+          f"{sum((r.get('exclusion') or {}).get('phase') == 'free' for r in g_)}; strict_exclusion set "
+          f"{sum(bool(r.get('strict_exclusion')) for r in g_)}")
+print(f"    the output's counters.n_excluded_included {V['counters']['n_excluded_included']}; n_sessions "
+      f"{V['counters']['n_sessions']}")
+
+print("\n== E10. A0's reads after the first (the block §5: 'the A0 reads after the first, withheld at the looks ... now "
+      "counted'), apart from its first reads")
+c0 = [r for r in recs if r["template"] == "A0"]
+later = [ch for r in c0 for ch in (r["choices"] or [])[1:]]
+allc = [ch for r in c0 for ch in (r["choices"] or [])]
+print(f"    after the first: {len(later)} reads, low label mass {sum(bool(x['low_label_mass']) for x in later)}, "
+      f"top-1-not-a-label {sum(bool(x['top1_not_label']) for x in later)}; all A0 reads {len(allc)} "
+      f"({sum(bool(x['low_label_mass']) for x in allc)}, {sum(bool(x['top1_not_label']) for x in allc)}); reads in A0 "
+      f"sessions outside the domain {sum(len(r['choices'] or []) for r in c0 if not r['domain'])}")
+b_ = S["b"]["A0"]
+check(len(later) == b_["corrupted"]["den"] + b_["clean"]["den"],
+      f"the reads after the first equal secondary (b)'s transitions: {b_['corrupted']['den']} + {b_['clean']['den']}")
+
+print("\n== E11. the gate stages' A0 picks beyond the first (PIN-32's output carries first picks only) and their free-round "
+      "advisories (v5; an advisory claims and excludes nothing)")
+for stg in ("time", "qual"):
+    _, rs = CK[stg]
+    a0 = [r for r in rs if r["template"] == "A0"]
+    roles = [(r["s"], [ch["picked_role"] for ch in r["choices"]]) for r in a0]
+    n = sum(len(x) for _, x in roles)
+    print(f"    {stg}: picks by session {roles}; {n} picks, {sum(v == 'P' for _, x in roles for v in x)} on the P role, "
+          f"{n - len(a0)} after the first")
+    fr = [x for r in a0 for x in r["rounds"] if x["phase"] == "free"]
+    check(len(fr) == V["gate_release"][stg]["counters_beside"]["denominators"]["free_rounds"].get("A0|clean", 0)
+          and all(x["property"] == "clean" for x in fr),
+          f"{stg}: A0 free rounds {len(fr)}, all clean; the output's counters_beside free_rounds A0|clean "
+          f"{V['gate_release'][stg]['counters_beside']['denominators']['free_rounds'].get('A0|clean')}")
+    adv = [(r["s"], x.get("ci"), x["property"], (x["audit"] or {}).get("claim"), (x["audit"] or {}).get("advisory"))
+           for r in a0 for x in r["rounds"] if x["phase"] == "free" and (x["audit"] or {}).get("advisory")]
+    print(f"    {stg}: A0 free rounds carrying an advisory (s, ci, property, claim, advisory): {adv}")
+
+print("\n== E12. POST-HOC (m:320; labeled; licensing at most a new pre-registration): secondary (e) over the domain "
+      "sessions alone, beside the analyzer's (e), which is over every round of every session of the arm (m_analyze.py:1256-1261; "
+      "m:312 declares each secondary on its post-exclusion domain; no PIN states (e)'s domain). Added after values-check pass 2 "
+      "(its fidelity X4 and rules R13), for the seat")
+for a_ in ("A0", "A0s"):
+    g_ = [r for r in recs if r["template"] == a_]
+    d_ = [r for r in g_ if r["domain"]]
+    for ph in ("forced", "free"):
+        ka = sum(bool(x.get("termination")) for r in g_ for x in r["rounds"] if x["phase"] == ph)
+        na = sum(x["phase"] == ph for r in g_ for x in r["rounds"])
+        kd = sum(bool(x.get("termination")) for r in d_ for x in r["rounds"] if x["phase"] == ph)
+        nd = sum(x["phase"] == ph for r in d_ for x in r["rounds"])
+        e_ = S["e"][a_][ph]
+        check((ka, na) == (e_["num"], e_["den"]), f"{a_} {ph}: the analyzer's (e) {e_['num']}/{e_['den']} == all sessions "
+                                                  f"{ka}/{na}; over the domain sessions alone {kd}/{nd}")
+for r in recs:
+    for x in r["rounds"]:
+        if x.get("termination"):
+            print(f"    termination round: {r['template']} s={r['s']}, phase {x['phase']}, property {x['property']}, "
+                  f"session in the domain {bool(r['domain'])}, its exclusion {r.get('exclusion')}")
+
+print(f"\nEXTRACTIONS: {sum(OK)}/{len(OK)} checks equal")

@@ -21,6 +21,431 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-19 — **PROPOSAL-m Q-F0 — VERDICTS (v1.11 §8 step 17, m:358; LOCK-m-F0 v1.0; the PI's word of 2026-10-19 with
+  the seat's step-17 block, v1.1, and its addendum): A0 PASS. P = 79/80, Δ_c = +0.4875 (two-sided Clopper–Pearson 95% CI
+  [+0.4323, +0.4997]) against E = 0.0625 from A0s; exact one-sided p toward clean = 81/2^80. L0 holds, so e2a and f1 are
+  *Answered* and the v1 ceiling is Fallback-1. The unit is ANALYZED, COMPLETE at its floors. "The reads" (m:318) are
+  open: this entry closes at the seat's read.**
+  - **The words** (the PI's, in chat, 2026-10-19; each verbatim).
+    - **The step-17 word**, Part 1 of the seat's block (the same text in v1.0 and v1.1): "Fresh session, on the laptop.
+      `main` is at `de6dfc5` (the Q-F0 campaign's launch entry: COMPLETE, exit 0). `git status` first; the untracked
+      drafts stay. Step 17 on my word: run the analyzer of record (`655e0f7f…c16f`) over the campaign checkpoint and the
+      table of record, and write `PROPOSAL-m Q-F0 — VERDICTS` and `PROPOSAL-m Q-F0 — secondary DVs` as m:358 and LOCK
+      v1.0 have them. The seat's block below carries its rulings on the launch entry and the content of the two declared
+      inputs. Nothing in the driver, the package or the analyzer moves before VERDICTS. Commit the outputs, the inputs
+      and the raw by path, then the two entries; the VERDICTS entry stays open at "the reads" and closes at the seat's
+      read. On a refusal or a STOP, stop there and report the message; nothing is edited."
+    - **On the block's v1.1**: "There should be a v1.1 version of the file that supercede's v1.0. Do you see it? If so
+      work from there"; then "I just saved a file with today's date an 1.1 in the body intro".
+    - **On the addendum**: "Let's try again. I believe Design added to the repo now." Its own text carries the PI's word
+      for Code: "Second invocation, on the seat's addendum: the same command with every path on the command line
+      absolute. Nothing else changes; the analyzer is not edited. Append the invocation as typed, its stdout and stderr
+      verbatim and EXIT to the same raw as its next section. On exit 0, commit as the block's §4 has it."
+    - **The seat's files**, untracked at this commit and the PI's to commit by path:
+      `results/raw/2026-10-19_m-design-to-code_step17.md` (v1.1, sha256 `0b5716e6…b5cb`; the PI saved it at the root,
+      and the seat moved it there with its bytes unchanged, addendum item 3) and
+      `results/raw/2026-10-19_m-design-to-code_step17_addendum.md` (sha256 `5187cd71…3983`). v1.0 reached Code pasted in
+      chat; no file of it was in the tree at the run (the raw's header); v1.1 "replaces the uncommitted v1.0 … nothing
+      of substance moves" (its header).
+  - **The run** ([`_verdicts-qf0`](results/raw/2026-10-19_m-verdicts-qf0.txt), one raw, its §§1–8).
+    - **Preconditions** (block §1), checked twice by Code's read-only script, both PASS (raw §§1, 4):
+      - HEAD `de6dfc5`, `main == origin/main`, no tracked change, and only `de6dfc5` since `a6c81f2`;
+      - the analyzer `655e0f7f…c16f`, `package_sha256` `5f646db6…d771` (18 files) and the closure `a3bc7bb9…b22b` (15
+        modules, 1 data file), each at HEAD with identical working-tree bytes and each in full in the lock (PIN-14);
+      - the table of record `af5cb816…f902` (`kind` `of-record`, `table_problems` `[]`) and its preprint
+        `45b67246…7a41`, both in full in the lock (PIN-40); the proposal `42ab36ec…6c6b` (PIN-31); the lock
+        `fc7e9db8…015c`;
+      - the campaign checkpoint's bytes `dd389eca…1b00`, the launch entry's (hashed, not opened before the run); the
+        pick-free report's end: COMPLETE at 129, `pauses` `[]`, `stop` null, the end look at 129 silent, floors 80 and
+        32; the gate checkpoints' bytes, and their reports' ends `Q-F0/time` PASS and `Q-F0/qual` PASS; the flag source
+        committed; one process.
+    - **The analyzer's battery** (block §1). Run 1: 446/448, exit 1. Code wrote the two declared inputs into
+      `data/m/verdicts/` while it ran, and the battery's write-free check (`m_analyze.py:8018`, data/m before == after)
+      named those two files (its list is capped at two, `m_analyze.py:8019`; the raw's status diff and file listing show
+      no third); the coverage id `STR-NO-CANONICAL-WRITE` failed with it. The battery behaved as built. Code's reading:
+      run 1 failed through Code's own concurrent write and was not a §1 departure, so Code re-ran rather than stopping.
+      Run 2, with nothing else running, is the battery of record: **448/448, exit 0, write-free** (no change to `git
+      status --porcelain --ignored -uall`; no file newer than its marker and not newer than the after-listing) (raw §2).
+      The seat: run 1 "is inert; run 2 … is the battery of record" (addendum item 3).
+    - **The two declared inputs** (block §2: the seat's content, Code's files; their homes and names, set before v1.1
+      arrived, meet v1.1's rule, raw §7.2): `data/m/verdicts/Q-F0_olmo-states.json` (`c8320eff…489b`: OLMo-sft, -dpo and
+      -instruct each `PENDING`, `unlocked-before-D_O`, `clock_passed` false, `date` 2026-10-19, Code's `date -u` at the
+      Clock comparison; D_O 2026-10-30 inclusive to 23:59:59 UTC, C7) and `data/m/verdicts/Q-F0_decisions.json`
+      (`93cf4964…4ab2`: `decisions_with_other_outcomes_known` `[]`, m:318).
+    - **The first invocation** (raw §5), the block's §3 command, every path typed relative: `--lock LOCK-m-F0.md` and
+      `--sentences data/m/gates/m_posting_sentences.json`, the two the analyzer checks as committed
+      (`m_analyze.py:1929`, `:1958`), and `--decisions` and `--olmo-states`, which it reads without that check: the gate
+      line, then **REFUSED, exit 2, nothing written**: "REFUSED: the lock is not committed at HEAD: ['LOCK-m-F0.md:
+      outside the repository']". Code stopped, edited nothing and reported. Code's diagnosis (raw §6.3):
+      `_prod_committed` (`m_analyze.py:1768–1773`) returns "outside the repository" whenever `_repo_rel(p) == str(p)`,
+      which holds for any path typed repository-relative from the root; the absolute form of each file returns its blob
+      of record. Beside it (raw §6.3b): `flag_of_record` on a relative `--flag-source` records the flag FALSE without a
+      refusal. Code's check of v1.1, which arrived after the run, found the run's steps conform to it and its §3 command
+      unchanged in the two relative paths (raw §7).
+    - **The seat's addendum**, quoted: "**The refusal is accepted as the analyzer's reading of the command, not of the
+      record.** … The block's §3 gave `--lock` and `--sentences` relative; that is the seat's slip, not Code's, and it
+      is corrected here. The analyzer of record is not edited (PIN-14 binds its hash to the lock's text); the quirk is a
+      CLI reading, **flagged for the next hash-moving round of the analyzer** (before step 19, where C7 defers
+      G-ANL-F3's versioning), with Code's §6.3b beside it … so at step 18 the `posting` command's `--sentences`,
+      `--rewrites` and `--flag-source` are given absolute too. Carried to the step-18 block." And: "The block's 'one
+      invocation' is read as one invocation that reaches V2; this is the second typed and the first that does."
+    - **The second invocation** (raw §8), on the addendum: the same command with every path on the command line
+      absolute. Code's reading of "every path" (raw §8.2): the interpreter and the script were typed absolute too,
+      beside the addendum's four input paths. The typed line also gives the raw's redirect path absolute, and prefixes a
+      `cd` to the repository root (absolute) that the first invocation did not have; both ran from the root, so it is
+      inert. The addendum's own line has `python scripts/m_analyze.py` relative; Code followed its rule, and the
+      analyzer resolves its own path in either form. The argument order follows the addendum's line (the first
+      invocation's followed v1.0's), inert under argparse. The other arguments stayed at their REPO-based defaults. The
+      tree had changed only in untracked files (the raw itself, appended after §4, and the seat's block and addendum,
+      addendum item 3); HEAD, the tracked files and every pinned input were unchanged since raw §4 (raw §8.1), so no
+      third precondition pass (Code's reading of addendum item 4). After the analyzer's INVOCATION line, the gate line
+      printed (V0), then the §5 sentence, then `VERDICTS Q-F0: written: Q-F0_VERDICTS.json, Q-F0_secondary.json`,
+      **EXIT=0**. From the sentence's line the pre-VERDICTS window is closed (the block §3, reading m:271).
+    - **The outputs**, written once (PIN-37): `data/m/verdicts/Q-F0_VERDICTS.json`
+      `ec7d208203ad3192ac623a4cf47feacd2a8f1f6c237f900097db223b5c8e35ea`, which records every input's path
+      repository-relative and its sha256, and `data/m/verdicts/Q-F0_secondary.json`
+      `dcaaaac3e9e3603e6e9c81af679e1687300957a38b809c80fb5d7ec6e3d6e9b7`, which records none (its provenance is the
+      VERDICTS output's). Committed by path at `bfc179c` with the two inputs, the raw (`1eb10c97…1e2c`) and the
+      `.gitignore` admit block for `data/m/verdicts/` (PIN-25's deferral; the `data/m/gates/` pattern; no `-diff`, the
+      outputs being written at the release), and pushed.
+  - **A0, with its §5 sentence** (PIN-4's clauses in order), verbatim from the output: "A0 (Q-F0): PASS; n = 80 domain
+    sessions of 94 launched (map 0: 40/41, map 1: 39/39 on the clean-role label); P = 79/80 = 0.9875; Δ_c = +0.4875,
+    two-sided Clopper–Pearson 95% CI [+0.4323, +0.4997]; E = 0.0625 from A0s (18/32 domain sessions, P_sham = 0.5625);
+    P_arm − P_sham = +0.4250; exact one-sided binomial vs 0.5: p = 0.0000 toward clean, p = 1.0000 toward corrupted, α =
+    .01; pre-pick exclusion rate 14/94 = 0.1489 beside A0s's 3/35 = 0.0857; the guard at the unit's last look (the end
+    look at 129 launches): Fisher one-sided vs A0s p = 0.2648, not fired (binding); absolute vs .20 p = 0.9183, not
+    fired (binding)."
+    - **m:326's order.** A domain exists and E is defined, so not INDETERMINATE-no-read. REVERSE needs (i)–(iii) toward
+      corrupted: none holds. PASS needs (i)–(iii) toward clean (m:310), at A0's α .01 (m:326):
+      - (i) Δ_c = +0.4875 = 39/80 > E = 0.0625 = 1/16 (E = |P_sham − .5|, f1's as-run form);
+      - (ii) each map's clean share ≥ .5: map 0 40/41 = 0.9756, map 1 39/39 = 1.0000;
+      - (iii) exact one-sided binomial vs 0.5 toward clean, P(X ≥ 79), X ~ Bin(80, 1/2): p = 81/2^80 ≈ 6.70 × 10^-23 <
+        .01.
+
+      All three hold (the output's `pred`: `i_up`, `ii_up`, `iii_up` true; every `_dn` false), so **PASS**; DEAD is not
+      reached (its tail, P(X ≤ 79) under Bin(80, 13/20), is 1 − 1.08 × 10^-15, not < 1/40).
+    - **Every rate with its domain** (the output's `rates`; PIN-2's exact forms): P 79/80 (A0 domain sessions, m:308,
+      coded on the P-role label at the first free choice, m:306); P_sham 18/32 (A0s domain sessions); share on map 0
+      40/41 and on map 1 39/39 (A0 domain sessions on that map); pre-pick exclusions A0 14/94 and A0s 3/35 (the arm's
+      campaign session records launched; numerator excluded at the forced phase, `stages._prepick`'s definition).
+    - **Every p with its test** (the output's `tests`, exact): `p_up` 81/1208925819614629174706176 ("exact one-sided
+      binomial vs 0.5 toward clean, P(X >= k), X ~ Bin(n, 1/2); (iii) at alpha .01"); `p_down`
+      1208925819614629174706175/1208925819614629174706176 (the same toward corrupted, P(X <= k); "(iii) for REVERSE at
+      alpha .01"); `dead_tail` 1 − 1.08 × 10^-15 (its exact fraction in the output; "DEAD iff < 1/40 and k < n");
+      `guard_fisher` 285807026367/1079469304100 ("one-sided Fisher exact, the arm's pre-pick exclusions vs its sham's,
+      alpha .05, at the unit's last look (m:316)"); `guard_abs` 0.9183458… (its exact fraction in the output; "exact
+      one-sided binomial of the arm's pre-pick exclusions vs .20, alpha .05, at the unit's last look (m:316)").
+    - **Δ_c with its interval**: +0.4875, CP 95% on P [0.9323, 0.9997], on Δ_c [+0.4323, +0.4997].
+    - **The attained power of record at the realised n** (PIN-3; m:190's base case: the arm split floor(n/2) / ceil(n/2)
+      per map at clean share .70, the sham pooled at .5, α .01; descriptive): **0.878** (0.8784; split 40/40, m_S 32),
+      the value G-PWR gave at the floors (v1.0 §3), each arm having ended at its floor. The realised split 41/39 gives
+      0.8780, beside and not of record. PIN-4 puts power into the sentence only when an arm is below its floor (m:247);
+      neither is.
+    - **The pre-pick exclusion rate beside the sham's, and the guard at the last look** (m:316, m:326): A0 14/94 =
+      0.1489, A0s 3/35 = 0.0857. At the unit's last look, the end look at 129 launches: Fisher one-sided p = 0.2648, not
+      fired; absolute vs .20 p = 0.9183, not fired; both binding on Qwen. No look fired.
+  - **The sham, A0s** (the output's `sham`; "E only (tier sham, m:182-183)"): domain 32 of 35 launched; P_sham 18/32 =
+    0.5625 on the P-role label (map 0 8/17, map 1 10/15); E = |0.5625 − 0.5| = 0.0625. This is the campaign's sham
+    first-pick share, which the campaign reported nowhere (m:318; Code's PIN at `stages.py:2390`).
+  - **The unit outcome**: **ANALYZED, COMPLETE at its floors** (A0 80 and A0s 32 domain sessions on 94 and 35 launches).
+    The 40 h hour cap was not reached: the campaign used 4.646 h of generation (16,724,598 ms; the extractions raw, E3).
+    No pause, no STOP, nothing quarantined, no adjudication and no PI-stop record (the output's `pauses` `[]`,
+    `stop_bar` null, `quarantined` `[]`).
+  - **§7's v1 outputs** (the output's `v1_outputs`), under the tuple (Q-F0 PASS; OLMo-sft, OLMo-dpo, OLMo-instruct
+    PENDING) and the flag of record, **TRUE** (`data/m/gates/G-CAL_model-free.json`, `aad8096a…34af`, introduced at
+    `bab921c`: "committed, schema m-gcal-model-free-v1, f1_012 present"; `renders_sha_matches_calib` true, beside and
+    not part of the flag, PIN-19).
+    - **Step 1, licensing:** L0 true; L0-OLMo-sft, -dpo and -instruct false (pending).
+    - **Step 2, labels**, as the output prints them, in m:338's words:
+      - e2a: *Answered*; f1: *Answered* (L0).
+      - e2b: *concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172,
+        exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside* (always, decision (12)).
+      - OLMo-sft, OLMo-dpo and OLMo-instruct: *concluded, not answered — the told control at this stage is
+        pre-registered and pending at this posting*.
+      - OLMo base: *concluded, not answered — told control not run at base, by decision (7′)* (always).
+
+      These differ in wording from v8's :176 (e2b, there without the interval) and :184 (the base row, there "told
+      control not applicable at base (no instruction-following)"). The step-15b answers make that a posting-time rewrite
+      by row id, not a reason for a v9 ("Two notes for the PI, not the table").
+    - **Step 5, the ceiling:** **Fallback-1**, *Marked, expressed, remembered, not acted on* (Fallback-1 iff L0; Main is
+      unreachable at v1).
+    - **The abstract's OLMo clause** (PIN-27, verbatim; no OLMo stage passes): "; the OLMo lineage's post-training nulls
+      are reported as concluded, not answered (§5.5)". Its host sentence, R013.11 (the table's one row of kind
+      `abstract-olmo-clause`), is itself enumerated under (a) on OLMo-sft, -dpo and -instruct (below). So the clause,
+      emitted verbatim, can dangle in the posting's output (PIN-27, as the G-ANL-F0 entry noted). Code's reading: where
+      it attaches is settled when the PI rewrites R013.11, an enumerated sentence, at step 18 (m:349; m:358 step 18).
+    - **§8.1's status text** (PIN-17; Step 7): "A0 (Q-F0): PASS; A0-OLMo-sft: pending; A0-OLMo-dpo: pending;
+      A0-OLMo-instruct: pending". **Step 7: "open"** (by construction at v1).
+    - **The dose note** (§7.5 (c)), under the flag of record: **carried**, its text the table's span at R182.06, "at the
+      corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64
+      CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before
+      the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3;
+      G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean".
+    - **The §7.5 enumeration of record** over the table of record (`af5cb816…f902`, 55 rows), by row id: **39 items**,
+      32 by clause (a), 10 by (b), none by (c); 3 under both (a) and (b). The treatments are the analyzer's: (a) "assert
+      no null on these cells", (b) "state as a reading proposed, not a result".
+      - (b) alone, thesis *main* above the ceiling Fallback-1 (7): R003.01, R230.01, R234.01, R234.02, R234.05, R234.06,
+        R258.04.
+      - (a) and (b) (3): R013.15 and R234.04 on OLMo-sft, -dpo, -instruct; R236.02 on OLMo-base, -sft, -dpo, -instruct.
+      - (a) alone, on e2b, OLMo-base, -sft, -dpo and -instruct (9): R025.04, R123.01, R220.01, R232.01, R232.02,
+        R232.03, R240.02, R240.06, R250.03.
+      - (a) alone, on OLMo-base, -sft, -dpo and -instruct (4): R186.02, R186.04, R240.03, R262.05.
+      - (a) alone, on OLMo-sft, -dpo and -instruct (16): R005.01, R013.11, R030.02, R033.02, R061.03, R168.01, R184.04,
+        R184.07, R194.04, R236.01, R242.01, R244.02, R248.02, R248.06, R254.02, R276.05.
+      - (c): none. The table's one dose-note row, R182.06, carries the note, and the flag is TRUE (PIN-21: with a
+        dose-note row and the flag true, (c) yields nothing).
+
+      **Count against v1.0 §2.** The all-PASS tuple's 23 items are not this tuple's expectation. This tuple keeps all 23
+      rows (the 14 that fire (a) in every tuple and the 10 by (b), R236.02 under both) and adds 16. The added rows are
+      the 16 (a) rows on OLMo-sft, -dpo and -instruct alone, which fire because those three cells are pending. R013.15
+      and R234.04, by (b) alone at all-PASS (v1.0 §2), here also fire (a) on the same three cells, so (a) counts 32 = 14
+      + 16 + 2; and the 14 every-tuple rows carry the three pending cells too. **Values-checked:** Code re-derived the
+      enumeration from the table and m:338, m:341 and m:349 without the analyzer's functions, under PIN-21's (c),
+      PIN-22's S1 (it decides R180.02 and R180.03, whose one null cell is S1, and keeps S1 out of R254.02's cells) and
+      the table's classification (PIN-20). It is equal, item for item, row ids, clauses and cells (the extractions raw,
+      E6). The entry's values-check read it too (below).
+  - **Counters by property** (rule 23; m:314): over all 129 campaign sessions, the 20 excluded ones included (A0 17, A0s
+    3; the output's `n_excluded_included`, 42, counts the counter increments those sessions made, not sessions; E9).
+    Each is a rate over units generated (the output's `counters` and `counter_rates`):
+    - **rounds** (A0: forced clean 186, forced corrupted 186, free clean 459, free corrupted 11; A0s: forced clean 136,
+      free clean 192):
+      - `audit_degenerate` (v2): A0 forced clean 3 frame + 1 junk, forced corrupted 1 frame, free clean 6 frame + 6
+        junk; A0s forced clean 2 frame, free clean 4 frame (23 in all);
+      - `content_exclusion` (v3/v4): A0 forced clean 1 null_response + 2 stuck_attractor, forced corrupted 1
+        null_response, free clean 3 null_response + 19 stuck_attractor; A0s free clean 1 null_response + 7
+        stuck_attractor (34);
+      - `content_advisory` (v5): wrong_task, 1 in A0's and 1 in A0s's free clean rounds;
+      - `lexical`: A0 forced clean 4, forced corrupted 1, free clean 3; A0s forced clean 1 (9);
+      - `cap_hit`: A0 forced corrupted 1, free clean 2; A0s forced clean 1 (4);
+      - `termination`: A0 forced corrupted 1, free clean 1 (2);
+      - `harness_echo`: 0.
+    - **free rounds**, `post_choice_degeneracy` (free rounds with a v2, echo or content claim): A0 clean 22 content + 12
+      v2 of 459; A0s clean 8 content + 4 v2 of 192. A0's 11 free corrupted rounds carry none.
+    - **reads by position 1–6** (A0 80, 80, 78, 78, 77, 77; A0s 32 at each):
+      - `low_label_mass`: A0 49, 0, 1, 2, 6, 15; A0s 23, 0, 0, 2, 2, 6;
+      - `top1_not_label`: A0 78, 5, 10, 5, 9, 20; A0s 32, 1, 3, 4, 4, 7.
+    - **sessions**, `pre_pick_exclusion`, keyed by the excluding forced round's property: A0 clean 11, corrupted 3 (of
+      94); A0s clean 3 (of 35).
+    - Not tabulated at Q-F0: reasoning-line defects by class (Q-F3's, G-ANL-F3).
+  - **The per-property exclusion table** (m:314; VERDICTS-only, m:318; the output's `per_property_table`). Per arm ×
+    property: rounds generated; rounds claimed, and rounds excluding, by class; sessions excluded pre-pick, the column
+    of record (the seat's C7, the column f1's 7-vs-1 refers to); sessions excluded in any phase beside it.
+    - A0 clean: 645 rounds; claimed content 25, lexical 7, v2 16, echo 0; excluding content 3, lexical 7, v2 4;
+      **pre-pick 11**; any phase 14.
+    - A0 corrupted: 197 rounds; claimed and excluding content 1, lexical 1, v2 1; **pre-pick 3**; any phase 3.
+    - A0s clean: 328 rounds; claimed content 8, lexical 1, v2 6; excluding lexical 1, v2 2; **pre-pick 3**; any phase 3.
+    - A0s corrupted: no round (a sham session has none).
+    - The reference (m:314): f1 CORR's 7 vs 1, which on f1's archive is 5 vs 1 pre-pick under f1's audit and 5 vs 3
+      under m's (the record's G-PORT A5). Descriptive here; no criterion reads it.
+  - **Beside** (the output's `beside`; m:308, m:330): whole-session validity, lenient (complete, no exclusion, no hair
+    trigger) / strict (also no claim in any round) (PIN-12): A0 77 / 58 of 94, A0s 32 / 22 of 35. Scaffold absorption: 0
+    sessions in either phase, both arms. Round degeneracy (v2 or echo): A0 forced 5/372, free 12/470; A0s forced 2/136,
+    free 4/192.
+  - **The release** (m:271; V3, `readrule.release_full`, `valence_core/m/readrule.py:799`). The output: "the contrast
+    picks are reported and the withheld free-round events are released". The campaign's A0 picks are the analysis itself
+    (above).
+    - **The gate stages' contrast picks** (PIN-32, `gate_release`; tabulated apart from the counters of record and never
+      merged into them):
+      - G-TIME-F0's A0 session (s = 0): in the domain; first pick on the P role. Released: a lexical claim on its free
+        round after choice index 2 (clean property), which excluded it at the free phase (`lexical:saddle`) after 3
+        reads.
+      - G-F0m-Qwen's 8 A0 sessions (s = 0–7): all in the domain; **all 8 first picks on the P role**. Released: s = 1's
+        lexical claim on its free round after choice index 0 (clean), which excluded it at the free phase
+        (`lexical:granite`) after 1 read. No other free-round claim or exclusion (PIN-32's released events). Beside
+        them, the output's `counters_beside` counts two content_advisory marks (v5, task_echo) on A0's clean free
+        rounds; Code's extraction (E11) places both in s = 5, after choice indices 2 and 5, with no claim on either
+        round. v5 is advisory, not exclusion-bearing (m:261, m:283).
+      - Both stages ended PASS, nothing fired, no adjudication. Their counters are in the output beside each stage,
+        apart.
+      - The output carries first picks only (PIN-32). Every later pick was also on the P role: G-TIME-F0's 2 and
+        G-F0m-Qwen's 35, each followed by a clean free round, as was every first pick (46 picks and 46 free rounds in
+        all: the output's `counters_beside`, free rounds A0|clean 3 and 43; E11).
+      - The exclusion details, the read counts and the later picks are Code's extraction (E5, E11). The first picks are
+        re-derived there and equal the output's.
+    - **The sham first-pick shares**: the campaign's A0s 18/32 (above); the gate stages' were reported at their stages
+      under m:318's exception (2) (G-TIME-F0's A0s 1/1; G-F0m-Qwen's A0s 7/14 domain sessions, of 16 launched).
+    - **The seconds and the stage durations** (Code's PIN at `stages.py:2390`; reportable now), each finished session's
+      generation seconds as the hour cap counts them, with each stage's `hour_cap_ms_used`, equal to its records' sum
+      (E3):
+      - **the campaign**: 4.646 h. A0 94 sessions, 12,358.6 s (3.433 h; mean 131.5 s, median 107.8 s, 10.9–424.9 s): its
+        80 domain sessions 11,779.3 s (mean 147.2 s, median 110.8 s, 34.0–424.9 s), its 14 pre-pick exclusions 579.3 s
+        (mean 41.4 s, median 20.7 s, 10.9–128.2 s). A0s 35 sessions, 4,366.0 s (1.213 h; mean 124.7 s, median 99.0 s,
+        9.0–303.6 s; the report's `sham_generation_ms` 4,366,042 equal);
+      - **G-F0m-Qwen**: 0.889 h. A0 8 sessions 1,460.1 s (mean 182.5 s, median 149.5 s, 66.3–365.0 s); A0s 16 sessions
+        1,740.7 s (mean 108.8 s, median 98.7 s, 25.5–321.4 s);
+      - **G-TIME-F0**: 0.085 h. A0 1 session 44.5 s; A0s 1 session 261.65 s.
+    - **A0's reads after the first**, withheld at the looks (`stages.py:1937`), now counted: 390 reads (positions 2–6),
+      low label mass 24 and top-1-not-a-label 49 (E10; 390 is also secondary (b)'s 11 + 379 transitions). Over all 470
+      reads of A0, the first included, 73 and 127 (the output's `beside`). Its first reads of domain sessions, as the
+      looks printed them, were 49/80 and 78/80. By position, under the counters above.
+  - **The looks** (m:330; the output's `looks`, written by the analyzer's `every_look`; the guard at each). The guard
+    columns are the output's. The contrast columns are Code's extraction from the released records (E2): A0's read flags
+    over all reads and its free-round degeneracy, which the looks withheld (first reads only, `stages.py:1937`; build
+    flag (d), `stages.py:1973`), and the domain's split with its class. The looks printed the domain totals; the raw's
+    session lines printed a contrast free-round exclusion as phase alone (m:318), the launch entry pooled them, and the
+    class was withheld (build flag (d); m:271). Before it, the stage's own `campaign_look`, re-run over the first n
+    records, was checked equal to the recorded look at all four. The end row's contrast columns equal the output's
+    `beside` (all-reads flags 73/470 and 127/470, free-round degeneracy 12/470, the 77 valid its lenient whole-session
+    validity); its guard columns are the output's `guard_last_look`:
+
+    | look (launches) | guard: Fisher p / absolute p | A0 domain = valid + excluded@free | A0 all reads: low label mass / top-1-not-a-label | A0 free-round degeneracy |
+    |---|---|---|---|---|
+    | 1 (40) | 1.0000 / 1.0000 | 20 = 20 + 0 | 22/120 / 36/120 | 4/120 |
+    | 2 (80) | 0.6398 / 0.9871 | 41 = 39 + 2 (lexical 2) | 37/240 / 65/240 | 8/240 |
+    | 3 (120) | 0.3069 / 0.9373 | 73 = 70 + 3 (lexical 3) | 66/428 / 114/428 | 11/428 |
+    | end (129) | 0.2648 / 0.9183 | 80 = 77 + 3 (lexical 3) | 73/470 / 127/470 | 12/470 |
+
+    The printed side stands as the launch entry gave it: `round_degeneracy` on A0s 4/193, then 6/328, silent; pooled
+    pre-pick exclusions A0 0/20, 4/45, 12/85, 14/94 against A0s 1/20, then 3/35; A0's forced-round degeneracy 0/80,
+    1/179, 4/336, 5/372. No look fired. **The guard at the last look** is the end look's, above.
+  - **`CHECKPOINT STATE INCONSISTENT`** (the step-14 read's Q3): none printed in the campaign raw: 0 of its 153
+    non-header lines (the string's one occurrence there is header line 13, the rule text that names it). In this unit's
+    VERDICTS raw the string occurs once, at line 499. That line is inside the battery's run-2 output, the label of a
+    synthetic refusal check on a temp-directory stub, and is not from either invocation (E7). No V2 or V4 finding
+    against any checkpoint (exit 0).
+  - **The seat's rulings on the launch entry** (block v1.1, §7; quoted):
+    - "**The two disclosures** — the second `kill -0` on the PID, and the session kept open for the end-wait —
+      **accepted, inert:** neither read a figure or a raw, the open session made no commit, and the end-wait was the
+      README's §2's. No strike."
+    - "**The 14 PIN sites** of the campaign wiring (`scripts/m_sessions.py:529` to `:1286`, as the launch entry lists
+      them), closed at the launch entry with no strike (v1.0 §8): stands."
+    - "**O1-3, RM4-1 and O4-1** (not built; flagged with Q3's package message): the next unit's driver edit, not step
+      17's. Nothing in the driver, the package or the analyzer moves before VERDICTS — PIN-14 binds the three hashes to
+      the lock's text, and a moved hash is a refusal."
+    - "**The `posting` command** (`posting --posting v1`; PIN-44's bar; the rewrite list by row id; PIN-23's tuple file)
+      is step 18's, run on the posted text at the v1 posting. It is not run now; no dry run is needed — the VERDICTS
+      output already carries the enumeration of record."
+  - **For the seat** (Code's readings and disclosures; none moves a figure).
+    - The battery's run 1 (above), which the addendum rules inert.
+    - The first invocation's refusal, which the addendum accepts as the analyzer's reading of the command, the relative
+      paths being the seat's slip. The quirk is flagged for the analyzer's next hash-moving round, with
+      `flag_of_record`'s silent FALSE beside it; the absolute paths are carried to the step-18 block.
+    - Code's reading of "every path on the command line absolute" (raw §8.2): the interpreter and the script were typed
+      absolute, beside the addendum's four input paths, though the addendum's own line types the script relative. The
+      typed line also gives the redirect path absolute and prefixes a `cd` to the root, which the first invocation did
+      not have (both ran from the root; inert).
+    - An anchor, not in this entry: the raw's §6.3 (and the addendum after it) gives the defaults at
+      `m_analyze.py:8224–8232`. That holds for `--campaign`, `--time`, `--qual` and `--out`; `--flag-source`'s default
+      is applied at `:1986` (the values-check's pass-1 mechanics M6). Nothing reads it.
+    - **O2-3, departed from before the VERDICTS line** (the values-check's pass-2 rules R14, and Code's sweep of this
+      session's transcript for the commands O2-3 names). O2-3, as the campaign raw's header line 13 states it: "Until
+      Q-F0's VERDICTS (O2-3, C2-4): no size or time metadata of this raw, data/m/ckpt or data/m/reports (ls -l/-t/-s,
+      stat, du, wc -c, find -newer, git ls-tree -l, git cat-file -s, git --stat)". Before the `VERDICTS Q-F0:` line Code
+      ran, by its attestation from the session transcript:
+      - `ls -la results/raw/`, filtered to two dates, which printed the campaign raw's size and modification time;
+      - `ls -t results/raw`, which printed eight names in modification order, the campaign raw among them;
+      - `find` with `-newermt` over the tree, looking for the seat's v1.1 file, which listed the campaign checkpoint,
+        its report and the raw among the files modified that day;
+      - `find -newer` over the tree, unpruned, for the battery's write-free evidence (raw §2) and when the addendum
+        arrived, which listed only the two inputs, the addendum, or nothing;
+      - `git diff --stat` at the session's start, which printed nothing (no tracked change).
+
+      None read a checkpoint's or a report's content, a pick or a figure, and nothing was computed against them. The
+      battery's own write-free check stats the files under `data/m/ckpt` and `data/m/reports` by design (PIN-29's
+      `_bt_snapshot`, `m_analyze.py:3286`); these were the steps outside it. Code's reading: inert. For the seat.
+    - The order of the reads. m:318 has "the reads" "performed after the analyzer's output exists and before the entry
+      is committed". The block orders this entry committed open at the reads and closed at the seat's read (block §§5–6,
+      the PI's word), as the G-F0m-Qwen entry closed at `5af9e07`. Code follows the block. Code's reading: the close
+      line, with the read committed, completes the entry.
+  - **The extractions**
+    ([`_verdicts-qf0-entry_extractions`](results/raw/2026-10-19_m-verdicts-qf0-entry_extractions.txt), this commit):
+    Code's script and its output, E1–E12, 21 of 21 checks equal. Descriptive, made after the output existed; no verdict
+    reads them. It is committed beside the values-check raw, an addition to block §4's list that carries no figure of
+    record. The split of the seconds by domain and pre-pick exclusion, and their means, medians and ranges (E3), are
+    Code's additions: post-hoc, labeled here, licensing at most a new pre-registration (m:320; rule 11). So is E12
+    (secondary (e) over the domain alone, for the secondary entry).
+  - **The values-check**
+    ([`_verdicts-qf0-entries_valuescheck`](results/raw/2026-10-19_m-verdicts-qf0-entries_valuescheck.txt), this commit):
+    both entries in the campaign entry's form, two passes of three lenses, each with a strict refuter, and Code's
+    dispositions.
+  - **The reads (m:318): OPEN.** They are the seat's full read of the unit's sessions, campaign and gate-stage,
+    unredacted, made after the analyzer's output exists. In the block's §6 order:
+    1. A0's verdict against its bar and the §5 sentence;
+    2. the A0s sham figures;
+    3. the §7 v1 outputs (the labels, the ceiling, the abstract clause, §8.1's text, the enumeration);
+    4. the contrast side (the per-property table, the counters by property, the gate stages' contrast picks and released
+       events, the seconds);
+    5. every session of the unit from the checkpoints as committed: 155 sessions, 129 of the campaign (94 A0, 35 A0s),
+       the 2 of G-TIME-F0 and the 24 of G-F0m-Qwen (G-ID's 2 were read in full at G-ID, PIN-32). The attractor tally on
+       the contrast forced rounds is carried forward, and the free rounds are now counted.
+
+    The seat records the read as a dated file under `results/raw/` (m-design-to-code, VERDICTS read). The PI places it
+    untracked and commits it by path, and Code adds this entry's close line. That closes the rule-25 window (the block
+    §6; m:271).
+  - **What follows.**
+    - **Step 18**, the v1 posting by the PI under the ceiling obtained (Fallback-1), with every enumerated sentence
+      rewritten, and the `POSTING v1` entry (m:358). The `posting` command runs there, on the posted text, with its
+      `--sentences`, `--rewrites` and `--flag-source` given absolute (the addendum, item 1; carried to the step-18
+      block).
+    - **The OLMo track** is unchanged: each checkpoint is PENDING, D_O 2026-10-30, and a pod starts only on the PI's go,
+      with the runpod MCP re-authorised first.
+    - A decision about an OLMo unit taken now is taken with Q-F0's outcome known. It is recorded in that unit's VERDICTS
+      entry or NOT-RUN record (m:318).
+
+- 2026-10-19 — **PROPOSAL-m Q-F0 — secondary DVs (v1.11 §8 step 17, m:358; m:312; PIN-13): issuing no claim.**
+  Secondaries (a), (b), (d) and (e), computed by the analyzer of record in the same invocation as Q-F0's VERDICTS (the
+  entry above) and written to `data/m/verdicts/Q-F0_secondary.json`
+  (`dcaaaac3e9e3603e6e9c81af679e1687300957a38b809c80fb5d7ec6e3d6e9b7`, committed at `bfc179c`). The output's own line:
+  "none -- secondary DVs issue no claim (m:358)". (c) and (f) are Q-F3's (G-ANL-F3); the output: "(c) and (f) are [Q-F3]
+  (G-ANL-F3)".
+  - **Form** (m:312; rule 28(a)). (a), (b) and (d) are each defined against the exclusion rule on its post-exclusion
+    domain; (e) is the analyzer's reading of m:312's round event (built under PIN-13, which the seat accepted at C6; no
+    PIN states its domain): every round generated in the campaign's 129 sessions, excluded sessions included (the
+    counters' denominators). m:312 declares each secondary on its post-exclusion domain. Over the domain sessions alone,
+    post-hoc (m:320; the extractions raw, E12), (e)'s denominators shrink (A0 forced 320, A0s forced 128) and A0's one
+    forced termination round, in s = 21, a session excluded pre-pick, drops out: A0 forced 0/320, free 1/470; A0s forced
+    0/128, free 0/192. For the seat; (e) issues no claim. m's decidable-n floor is 20 events. At or above it a rate
+    carries a two-sided Clopper–Pearson 95% interval (the analyzer's `rate()`, `m_analyze.py:1173`); below it, a count
+    without an interval (`count_only`). Every rate is num/den with its domain. The output's `share` field prints the
+    reduced fraction (76/78 as 38/39, 22/22 as 1/1, 0/136 as 0/1), and its num and den carry the counts given here.
+  - **(a) Clean-label share by position 1–6, by arm** (the P-role label chosen at free choice p, over sessions valid
+    through position p: the choice at p was made and no exclusion-bearing event preceded it):
+
+    | position | A0 | A0s |
+    |---|---|---|
+    | 1 | 79/80 = 0.9875 [0.9323, 0.9997] | 18/32 = 0.5625 [0.3766, 0.7364] |
+    | 2 | 77/80 = 0.9625 [0.8943, 0.9922] | 14/32 = 0.4375 [0.2636, 0.6234] |
+    | 3 | 76/78 = 0.9744 [0.9104, 0.9969] | 17/32 = 0.5313 [0.3474, 0.7091] |
+    | 4 | 74/78 = 0.9487 [0.8739, 0.9859] | 13/32 = 0.4063 [0.2370, 0.5936] |
+    | 5 | 76/77 = 0.9870 [0.9298, 0.9997] | 17/32 = 0.5313 [0.3474, 0.7091] |
+    | 6 | 77/77 = 1.0000 [0.9532, 1.0000] | 15/32 = 0.4688 [0.2909, 0.6526] |
+
+    Position 1 is the primary's domain and share (the VERDICTS entry). Every denominator is at or above the floor. The
+    output, verbatim: "its comparison with f1 at positions 5–6 crosses f1's 512-token read tail (§2.7 (12)), stated
+    beside".
+  - **(b) Lose-shift, contrast arm only** (m:312: "a sham session has no corrupted round"; the output's scope "contrast
+    arm only (m:312)"). P(the next free pick switches label | the previous chosen round was corrupted) against P(switch
+    | it was clean), over transitions in sessions valid through the next choice:
+    - after a chosen corrupted round: **11/11**, count only (below the floor);
+    - after a chosen clean round: **10/379 = 0.0264** [0.0127, 0.0480].
+  - **(d) Per-pair first-pick shares pooled over maps, the order-counterbalanced contrast within pairs, and
+    `e2d/habit.py`'s within-arm identity.**
+    - **A0, per pair** (pooled over maps): pair 0 22/22 = 1.0000 [0.8456, 1.0000]; pair 1 20/21 = 0.9524 [0.7618,
+      0.9988]; pair 2 21/21 = 1.0000 [0.8389, 1.0000]; pair 3 16/16, count only (below the floor; m:312 expects an
+      imbalance at the 80-floor arms to put a pair below it). **Per pair and start order** (all count only): 0|0 11/11,
+      0|1 11/11, 1|0 11/11, 1|1 9/10, 2|0 12/12, 2|1 9/9, 3|0 9/9, 3|1 7/7.
+    - **A0s, per pair** (all count only at the planned floor, m:312: 32 gives 8 per pair): pair 0 5/7, pair 1 4/8, pair
+      2 4/8, pair 3 5/9. Per pair and start order: 0|0 3/3, 0|1 2/4, 1|0 3/4, 1|1 1/4, 2|0 3/4, 2|1 1/4, 3|0 3/4, 3|1
+      2/5.
+    - **The within-arm identity** (`habit.break_rates` over the arm's domain sessions, recomputed in Fractions, PIN-13).
+      b+ is the rate of breaking the forced habit when the forced phase ended on the + pole, which picks the + label;
+      b_sham is the same when it ended on the − pole, which picks the sham label. The weighted form (n+/N)·b+ +
+      (n_s/N)·(1 − b_s) − 1/2 equals the arm's measured Δ_c at any balance:
+      - A0: b+ 36/37, b_sham 0/43; forced ends 37 + and 43 −, not exactly balanced; weighted form 39/80 = +0.4875 = Δ_c;
+        the identity holds; 0 undecidable;
+      - A0s: b+ 6/17, b_sham 3/15; forced ends 17 + and 15 −; weighted form 1/16 = +0.0625; the identity holds; 0
+        undecidable.
+  - **(e) Termination attempts per round** (rounds generated):
+    - A0: forced 1/372 = 0.0027 [0.0001, 0.0149]; free 1/470 = 0.0021 [0.0001, 0.0118];
+    - A0s: forced 0/136 [0.0000, 0.0268]; free 0/192 [0.0000, 0.0190].
+
+    These are the counters' `termination` rounds, A0's one forced on a corrupted round and one free on a clean one (the
+    VERDICTS entry).
+  - **Not built here:** (c), the "noticed, not wanted" counter on A3's first reasoning lines, and (f), the
+    reasoning-line statistics, both [Q-F3] (m:312).
+  - Nothing in this entry is a verdict or licenses one. Any analysis beyond m:312's list is post-hoc, labeled, and
+    licenses at most a new pre-registration (m:320; rule 11). The values-check is the VERDICTS entry's raw.
+
 - 2026-10-19 — **THE Q-F0 CAMPAIGN (PROPOSAL-m v1.11 §8 step 16, m:358; LOCK-m-F0 v1.0; the PI's word of 2026-10-18):
   COMPLETE, exit 0. A0 launched 94 sessions and A0s 35, and each arm ended with its domain at its floor (80 and 32).
   Four looks fired no bar. The campaign had no pause and no STOP. This is the campaign's launch entry (the step-10
