@@ -1,0 +1,3159 @@
+{
+ "adjudication": null,
+ "analyzer_sha256": "655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f",
+ "arm": {
+  "noread": null,
+  "pred": {
+   "dead": false,
+   "i_dn": false,
+   "i_up": true,
+   "ii_dn": false,
+   "ii_up": true,
+   "iii_dn": false,
+   "iii_up": true
+  },
+  "route": null,
+  "state": "PASS",
+  "stats": {
+   "E": {
+    "display": "0.0625",
+    "exact": "1/16"
+   },
+   "P": {
+    "display": "0.9875",
+    "exact": "79/80"
+   },
+   "PS": {
+    "display": "0.5625",
+    "exact": "9/16"
+   },
+   "dead_tail": {
+    "display": "1.0000",
+    "exact": "120892581961462787013378094868498655027985564498702989164958212738026227737687826798039425946837241604799/120892581961462917470617600000000000000000000000000000000000000000000000000000000000000000000000000000000"
+   },
+   "delta": {
+    "display": "+0.4875",
+    "exact": "39/80"
+   },
+   "j": 18,
+   "k": 79,
+   "k0": 40,
+   "k1": 39,
+   "mS": 32,
+   "n": 80,
+   "n0": 41,
+   "n1": 39,
+   "p_down": {
+    "display": "1.0000",
+    "exact": "1208925819614629174706175/1208925819614629174706176"
+   },
+   "p_up": {
+    "display": "0.0000",
+    "exact": "81/1208925819614629174706176"
+   },
+   "share0": {
+    "display": "0.9756",
+    "exact": "40/41"
+   },
+   "share1": {
+    "display": "1.0000",
+    "exact": "1/1"
+   }
+  },
+  "template": "A0"
+ },
+ "beside": {
+  "A0": {
+   "prepick_pooled": {
+    "den": 94,
+    "domain": "A0 campaign sessions launched",
+    "num": 14
+   },
+   "read_flags": {
+    "all_reads": {
+     "low_label_mass": 73,
+     "reads": 470,
+     "top1_not_label": 127
+    },
+    "first_reads_of_domain_sessions": {
+     "low_label_mass": 49,
+     "reads": 80,
+     "top1_not_label": 78
+    }
+   },
+   "round_degeneracy": {
+    "forced": {
+     "den": 372,
+     "domain": "A0 forced rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 5
+    },
+    "free": {
+     "den": 470,
+     "domain": "A0 free rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 12
+    }
+   },
+   "scaffold_absorption_sessions": {
+    "forced": 0,
+    "free": 0
+   },
+   "whole_session_validity": {
+    "launched": 94,
+    "valid_lenient": 77,
+    "valid_strict": 58
+   }
+  },
+  "A0s": {
+   "prepick_pooled": {
+    "den": 35,
+    "domain": "A0s campaign sessions launched",
+    "num": 3
+   },
+   "read_flags": {
+    "all_reads": {
+     "low_label_mass": 33,
+     "reads": 192,
+     "top1_not_label": 51
+    },
+    "first_reads_of_domain_sessions": {
+     "low_label_mass": 23,
+     "reads": 32,
+     "top1_not_label": 32
+    }
+   },
+   "round_degeneracy": {
+    "forced": {
+     "den": 136,
+     "domain": "A0s forced rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 2
+    },
+    "free": {
+     "den": 192,
+     "domain": "A0s free rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 4
+    }
+   },
+   "scaffold_absorption_sessions": {
+    "forced": 0,
+    "free": 0
+   },
+   "whole_session_validity": {
+    "launched": 35,
+    "valid_lenient": 32,
+    "valid_strict": 22
+   }
+  }
+ },
+ "closure_sha256": "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b",
+ "counter_rates": [
+  {
+   "counter": "audit_degenerate",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|forced|frame|clean",
+   "num": 3
+  },
+  {
+   "counter": "audit_degenerate",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0|forced|frame|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "audit_degenerate",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|forced|junk|clean",
+   "num": 1
+  },
+  {
+   "counter": "audit_degenerate",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|frame|clean",
+   "num": 6
+  },
+  {
+   "counter": "audit_degenerate",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|junk|clean",
+   "num": 6
+  },
+  {
+   "counter": "audit_degenerate",
+   "den": 136,
+   "domain": "A0s forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|forced|frame|clean",
+   "num": 2
+  },
+  {
+   "counter": "audit_degenerate",
+   "den": 192,
+   "domain": "A0s free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|free|frame|clean",
+   "num": 4
+  },
+  {
+   "counter": "cap_hit",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0|forced|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "cap_hit",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|clean",
+   "num": 2
+  },
+  {
+   "counter": "cap_hit",
+   "den": 136,
+   "domain": "A0s forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|forced|clean",
+   "num": 1
+  },
+  {
+   "counter": "content_advisory",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|wrong_task|clean",
+   "num": 1
+  },
+  {
+   "counter": "content_advisory",
+   "den": 192,
+   "domain": "A0s free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|free|wrong_task|clean",
+   "num": 1
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|forced|null_response|clean",
+   "num": 1
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0|forced|null_response|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|forced|stuck_attractor|clean",
+   "num": 2
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|null_response|clean",
+   "num": 3
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|stuck_attractor|clean",
+   "num": 19
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 192,
+   "domain": "A0s free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|free|null_response|clean",
+   "num": 1
+  },
+  {
+   "counter": "content_exclusion",
+   "den": 192,
+   "domain": "A0s free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|free|stuck_attractor|clean",
+   "num": 7
+  },
+  {
+   "counter": "lexical",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|forced|clean",
+   "num": 4
+  },
+  {
+   "counter": "lexical",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0|forced|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "lexical",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|clean",
+   "num": 3
+  },
+  {
+   "counter": "lexical",
+   "den": 136,
+   "domain": "A0s forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|forced|clean",
+   "num": 1
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 80,
+   "domain": "A0 reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0|1",
+   "num": 49
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 78,
+   "domain": "A0 reads taken at position 3; all campaign sessions, excluded included",
+   "key": "A0|3",
+   "num": 1
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 78,
+   "domain": "A0 reads taken at position 4; all campaign sessions, excluded included",
+   "key": "A0|4",
+   "num": 2
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 77,
+   "domain": "A0 reads taken at position 5; all campaign sessions, excluded included",
+   "key": "A0|5",
+   "num": 6
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 77,
+   "domain": "A0 reads taken at position 6; all campaign sessions, excluded included",
+   "key": "A0|6",
+   "num": 15
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 32,
+   "domain": "A0s reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0s|1",
+   "num": 23
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 32,
+   "domain": "A0s reads taken at position 4; all campaign sessions, excluded included",
+   "key": "A0s|4",
+   "num": 2
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 32,
+   "domain": "A0s reads taken at position 5; all campaign sessions, excluded included",
+   "key": "A0s|5",
+   "num": 2
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 32,
+   "domain": "A0s reads taken at position 6; all campaign sessions, excluded included",
+   "key": "A0s|6",
+   "num": 6
+  },
+  {
+   "counter": "post_choice_degeneracy",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|content|clean",
+   "num": 22
+  },
+  {
+   "counter": "post_choice_degeneracy",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|v2|clean",
+   "num": 12
+  },
+  {
+   "counter": "post_choice_degeneracy",
+   "den": 192,
+   "domain": "A0s free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|content|clean",
+   "num": 8
+  },
+  {
+   "counter": "post_choice_degeneracy",
+   "den": 192,
+   "domain": "A0s free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s|v2|clean",
+   "num": 4
+  },
+  {
+   "counter": "pre_pick_exclusion",
+   "den": 94,
+   "domain": "A0 sessions launched (numerator keyed by the excluding round's property, clean); all campaign sessions, excluded included",
+   "key": "A0|clean",
+   "num": 11
+  },
+  {
+   "counter": "pre_pick_exclusion",
+   "den": 94,
+   "domain": "A0 sessions launched (numerator keyed by the excluding round's property, corrupted); all campaign sessions, excluded included",
+   "key": "A0|corrupted",
+   "num": 3
+  },
+  {
+   "counter": "pre_pick_exclusion",
+   "den": 35,
+   "domain": "A0s sessions launched (numerator keyed by the excluding round's property, clean); all campaign sessions, excluded included",
+   "key": "A0s|clean",
+   "num": 3
+  },
+  {
+   "counter": "termination",
+   "den": 186,
+   "domain": "A0 forced rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0|forced|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "termination",
+   "den": 459,
+   "domain": "A0 free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0|free|clean",
+   "num": 1
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 80,
+   "domain": "A0 reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0|1",
+   "num": 78
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 80,
+   "domain": "A0 reads taken at position 2; all campaign sessions, excluded included",
+   "key": "A0|2",
+   "num": 5
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 78,
+   "domain": "A0 reads taken at position 3; all campaign sessions, excluded included",
+   "key": "A0|3",
+   "num": 10
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 78,
+   "domain": "A0 reads taken at position 4; all campaign sessions, excluded included",
+   "key": "A0|4",
+   "num": 5
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 77,
+   "domain": "A0 reads taken at position 5; all campaign sessions, excluded included",
+   "key": "A0|5",
+   "num": 9
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 77,
+   "domain": "A0 reads taken at position 6; all campaign sessions, excluded included",
+   "key": "A0|6",
+   "num": 20
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0s|1",
+   "num": 32
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s reads taken at position 2; all campaign sessions, excluded included",
+   "key": "A0s|2",
+   "num": 1
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s reads taken at position 3; all campaign sessions, excluded included",
+   "key": "A0s|3",
+   "num": 3
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s reads taken at position 4; all campaign sessions, excluded included",
+   "key": "A0s|4",
+   "num": 4
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s reads taken at position 5; all campaign sessions, excluded included",
+   "key": "A0s|5",
+   "num": 4
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s reads taken at position 6; all campaign sessions, excluded included",
+   "key": "A0s|6",
+   "num": 7
+  }
+ ],
+ "counters": {
+  "counters": {
+   "audit_degenerate": {
+    "by_key": {
+     "A0s|forced|frame|clean": 2,
+     "A0s|free|frame|clean": 4,
+     "A0|forced|frame|clean": 3,
+     "A0|forced|frame|corrupted": 1,
+     "A0|forced|junk|clean": 1,
+     "A0|free|frame|clean": 6,
+     "A0|free|junk|clean": 6
+    },
+    "total": 23
+   },
+   "cap_hit": {
+    "by_key": {
+     "A0s|forced|clean": 1,
+     "A0|forced|corrupted": 1,
+     "A0|free|clean": 2
+    },
+    "total": 4
+   },
+   "content_advisory": {
+    "by_key": {
+     "A0s|free|wrong_task|clean": 1,
+     "A0|free|wrong_task|clean": 1
+    },
+    "total": 2
+   },
+   "content_exclusion": {
+    "by_key": {
+     "A0s|free|null_response|clean": 1,
+     "A0s|free|stuck_attractor|clean": 7,
+     "A0|forced|null_response|clean": 1,
+     "A0|forced|null_response|corrupted": 1,
+     "A0|forced|stuck_attractor|clean": 2,
+     "A0|free|null_response|clean": 3,
+     "A0|free|stuck_attractor|clean": 19
+    },
+    "total": 34
+   },
+   "harness_echo": {
+    "by_key": {},
+    "total": 0
+   },
+   "lexical": {
+    "by_key": {
+     "A0s|forced|clean": 1,
+     "A0|forced|clean": 4,
+     "A0|forced|corrupted": 1,
+     "A0|free|clean": 3
+    },
+    "total": 9
+   },
+   "low_label_mass": {
+    "by_key": {
+     "A0s|1": 23,
+     "A0s|4": 2,
+     "A0s|5": 2,
+     "A0s|6": 6,
+     "A0|1": 49,
+     "A0|3": 1,
+     "A0|4": 2,
+     "A0|5": 6,
+     "A0|6": 15
+    },
+    "total": 106
+   },
+   "post_choice_degeneracy": {
+    "by_key": {
+     "A0s|content|clean": 8,
+     "A0s|v2|clean": 4,
+     "A0|content|clean": 22,
+     "A0|v2|clean": 12
+    },
+    "total": 46
+   },
+   "pre_pick_exclusion": {
+    "by_key": {
+     "A0s|clean": 3,
+     "A0|clean": 11,
+     "A0|corrupted": 3
+    },
+    "total": 17
+   },
+   "termination": {
+    "by_key": {
+     "A0|forced|corrupted": 1,
+     "A0|free|clean": 1
+    },
+    "total": 2
+   },
+   "top1_not_label": {
+    "by_key": {
+     "A0s|1": 32,
+     "A0s|2": 1,
+     "A0s|3": 3,
+     "A0s|4": 4,
+     "A0s|5": 4,
+     "A0s|6": 7,
+     "A0|1": 78,
+     "A0|2": 5,
+     "A0|3": 10,
+     "A0|4": 5,
+     "A0|5": 9,
+     "A0|6": 20
+    },
+    "total": 178
+   }
+  },
+  "declared": [
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "cap_hit",
+    "numerator": "round.cap_hit",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "cap_hit",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "category",
+     "property"
+    ],
+    "name": "audit_degenerate",
+    "numerator": "audit.claim == 'v2'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "audit_degenerate (v2)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "harness_echo",
+    "numerator": "audit.claim == 'echo'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "harness_echo",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "class",
+     "property"
+    ],
+    "name": "content_exclusion",
+    "numerator": "audit.claim == 'content'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "content_exclusion (v3/v4)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "class",
+     "property"
+    ],
+    "name": "content_advisory",
+    "numerator": "each entry of audit.advisory (v5 advisory classes)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "content_advisory (v5)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "lexical",
+    "numerator": "audit.claim == 'lexical'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "lexical",
+    "unit": "round"
+   },
+   {
+    "denominator": "free rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "claim",
+     "property"
+    ],
+    "name": "post_choice_degeneracy",
+    "numerator": "free round with audit.claim in {v2, echo, content} (audit.tally's PIN)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "post_choice_degeneracy",
+    "unit": "round"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "low_label_mass",
+    "numerator": "choice.low_label_mass",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "low_label_mass",
+    "unit": "read"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "top1_not_label",
+    "numerator": "choice.top1_not_label",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "top1_not_label",
+    "unit": "read"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "termination",
+    "numerator": "round.termination (f's patterns, raw; not a claim)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "termination",
+    "unit": "round"
+   },
+   {
+    "denominator": "reasoning lines generated",
+    "keys_verdicts": [],
+    "name": "reasoning_line_defect",
+    "numerator": "not tabulated at Q-F0: Q-F3's runner and scorer (G-ANL-F3, step 19)",
+    "q_f3_only": true,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "reasoning-line defects by class [Q-F3]",
+    "unit": "line"
+   },
+   {
+    "denominator": "sessions launched",
+    "keys_verdicts": [
+     "arm",
+     "property of the excluding forced round"
+    ],
+    "name": "pre_pick_exclusion",
+    "numerator": "exclusion.phase == 'forced'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "pre-pick exclusions",
+    "unit": "session"
+   }
+  ],
+  "denominators": {
+   "free_rounds": {
+    "A0s|clean": 192,
+    "A0|clean": 459,
+    "A0|corrupted": 11
+   },
+   "reads": {
+    "A0s|1": 32,
+    "A0s|2": 32,
+    "A0s|3": 32,
+    "A0s|4": 32,
+    "A0s|5": 32,
+    "A0s|6": 32,
+    "A0|1": 80,
+    "A0|2": 80,
+    "A0|3": 78,
+    "A0|4": 78,
+    "A0|5": 77,
+    "A0|6": 77
+   },
+   "rounds": {
+    "A0s|forced|clean": 136,
+    "A0s|free|clean": 192,
+    "A0|forced|clean": 186,
+    "A0|forced|corrupted": 186,
+    "A0|free|clean": 459,
+    "A0|free|corrupted": 11
+   },
+   "sessions": {
+    "A0": 94,
+    "A0s": 35
+   }
+  },
+  "n_excluded_included": 42,
+  "n_sessions": 129,
+  "not_tabulated": [
+   "reasoning_line_defect"
+  ],
+  "scope": "all campaign sessions, excluded included",
+  "tabulated_over_excluded_too": true
+ },
+ "counts": {
+  "domain": {
+   "A0": 80,
+   "A0s": 32
+  },
+  "launched": {
+   "A0": 94,
+   "A0s": 35
+  },
+  "prepick": {
+   "A0": 14,
+   "A0s": 3
+  }
+ },
+ "decisions_with_other_outcomes_known": [],
+ "ended": "COMPLETE",
+ "flag": {
+  "introduced_at": "bab921c",
+  "path": "data/m/gates/G-CAL_model-free.json",
+  "reason": "committed, schema m-gcal-model-free-v1, f1_012 present",
+  "renders_sha_matches_calib": true,
+  "sha256": "aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af",
+  "value": true
+ },
+ "floors": {
+  "A0": 80,
+  "A0s": 32
+ },
+ "gate_release": {
+  "qual": {
+   "contrast_first_picks": [
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 0
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 1
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 2
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 3
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 4
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 5
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 6
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 7
+    }
+   ],
+   "counters_beside": {
+    "counters": {
+     "audit_degenerate": {
+      "by_key": {
+       "A0s|forced|junk|clean": 1,
+       "A0s|free|frame|clean": 1
+      },
+      "total": 2
+     },
+     "cap_hit": {
+      "by_key": {
+       "A0s|forced|clean": 1
+      },
+      "total": 1
+     },
+     "content_advisory": {
+      "by_key": {
+       "A0|free|task_echo|clean": 2
+      },
+      "total": 2
+     },
+     "content_exclusion": {
+      "by_key": {
+       "A0s|free|stuck_attractor|clean": 3
+      },
+      "total": 3
+     },
+     "harness_echo": {
+      "by_key": {},
+      "total": 0
+     },
+     "lexical": {
+      "by_key": {
+       "A0s|forced|clean": 1,
+       "A0s|free|clean": 3,
+       "A0|free|clean": 1
+      },
+      "total": 5
+     },
+     "low_label_mass": {
+      "by_key": {
+       "A0s|1": 10,
+       "A0s|4": 1,
+       "A0s|5": 1,
+       "A0s|6": 2,
+       "A0|1": 5,
+       "A0|4": 1,
+       "A0|5": 1,
+       "A0|6": 1
+      },
+      "total": 22
+     },
+     "post_choice_degeneracy": {
+      "by_key": {
+       "A0s|content|clean": 3,
+       "A0s|v2|clean": 1
+      },
+      "total": 4
+     },
+     "pre_pick_exclusion": {
+      "by_key": {
+       "A0s|clean": 2
+      },
+      "total": 2
+     },
+     "termination": {
+      "by_key": {},
+      "total": 0
+     },
+     "top1_not_label": {
+      "by_key": {
+       "A0s|1": 14,
+       "A0s|3": 1,
+       "A0s|4": 2,
+       "A0s|5": 1,
+       "A0s|6": 5,
+       "A0|1": 8,
+       "A0|3": 1,
+       "A0|4": 1,
+       "A0|5": 1,
+       "A0|6": 2
+      },
+      "total": 36
+     }
+    },
+    "declared": [
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "cap_hit",
+      "numerator": "round.cap_hit",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "cap_hit",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "category",
+       "property"
+      ],
+      "name": "audit_degenerate",
+      "numerator": "audit.claim == 'v2'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "audit_degenerate (v2)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "harness_echo",
+      "numerator": "audit.claim == 'echo'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "harness_echo",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "class",
+       "property"
+      ],
+      "name": "content_exclusion",
+      "numerator": "audit.claim == 'content'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "content_exclusion (v3/v4)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "class",
+       "property"
+      ],
+      "name": "content_advisory",
+      "numerator": "each entry of audit.advisory (v5 advisory classes)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "content_advisory (v5)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "lexical",
+      "numerator": "audit.claim == 'lexical'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "lexical",
+      "unit": "round"
+     },
+     {
+      "denominator": "free rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "claim",
+       "property"
+      ],
+      "name": "post_choice_degeneracy",
+      "numerator": "free round with audit.claim in {v2, echo, content} (audit.tally's PIN)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "post_choice_degeneracy",
+      "unit": "round"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "low_label_mass",
+      "numerator": "choice.low_label_mass",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "low_label_mass",
+      "unit": "read"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "top1_not_label",
+      "numerator": "choice.top1_not_label",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "top1_not_label",
+      "unit": "read"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "termination",
+      "numerator": "round.termination (f's patterns, raw; not a claim)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "termination",
+      "unit": "round"
+     },
+     {
+      "denominator": "reasoning lines generated",
+      "keys_verdicts": [],
+      "name": "reasoning_line_defect",
+      "numerator": "not tabulated at Q-F0: Q-F3's runner and scorer (G-ANL-F3, step 19)",
+      "q_f3_only": true,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "reasoning-line defects by class [Q-F3]",
+      "unit": "line"
+     },
+     {
+      "denominator": "sessions launched",
+      "keys_verdicts": [
+       "arm",
+       "property of the excluding forced round"
+      ],
+      "name": "pre_pick_exclusion",
+      "numerator": "exclusion.phase == 'forced'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "pre-pick exclusions",
+      "unit": "session"
+     }
+    ],
+    "denominators": {
+     "free_rounds": {
+      "A0s|clean": 72,
+      "A0|clean": 43
+     },
+     "reads": {
+      "A0s|1": 14,
+      "A0s|2": 14,
+      "A0s|3": 11,
+      "A0s|4": 11,
+      "A0s|5": 11,
+      "A0s|6": 11,
+      "A0|1": 8,
+      "A0|2": 7,
+      "A0|3": 7,
+      "A0|4": 7,
+      "A0|5": 7,
+      "A0|6": 7
+     },
+     "rounds": {
+      "A0s|forced|clean": 64,
+      "A0s|free|clean": 72,
+      "A0|forced|clean": 16,
+      "A0|forced|corrupted": 16,
+      "A0|free|clean": 43
+     },
+     "sessions": {
+      "A0": 8,
+      "A0s": 16
+     }
+    },
+    "n_excluded_included": 17,
+    "n_sessions": 24,
+    "not_tabulated": [
+     "reasoning_line_defect"
+    ],
+    "scope": "all campaign sessions, excluded included",
+    "tabulated_over_excluded_too": true
+   },
+   "released_free_round_events": [
+    {
+     "ci": 0,
+     "claim": "lexical",
+     "property": "clean",
+     "s": 1
+    },
+    {
+     "exclusion": "lexical",
+     "phase": "free",
+     "s": 1
+    }
+   ],
+   "stage": "qual",
+   "stage_end": {
+    "adjudication": null,
+    "fired": [],
+    "status": "PASS"
+   }
+  },
+  "time": {
+   "contrast_first_picks": [
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 0
+    }
+   ],
+   "counters_beside": {
+    "counters": {
+     "audit_degenerate": {
+      "by_key": {},
+      "total": 0
+     },
+     "cap_hit": {
+      "by_key": {},
+      "total": 0
+     },
+     "content_advisory": {
+      "by_key": {},
+      "total": 0
+     },
+     "content_exclusion": {
+      "by_key": {},
+      "total": 0
+     },
+     "harness_echo": {
+      "by_key": {},
+      "total": 0
+     },
+     "lexical": {
+      "by_key": {
+       "A0|free|clean": 1
+      },
+      "total": 1
+     },
+     "low_label_mass": {
+      "by_key": {
+       "A0s|1": 1,
+       "A0|1": 1
+      },
+      "total": 2
+     },
+     "post_choice_degeneracy": {
+      "by_key": {},
+      "total": 0
+     },
+     "pre_pick_exclusion": {
+      "by_key": {},
+      "total": 0
+     },
+     "termination": {
+      "by_key": {},
+      "total": 0
+     },
+     "top1_not_label": {
+      "by_key": {
+       "A0s|1": 1,
+       "A0|1": 1
+      },
+      "total": 2
+     }
+    },
+    "declared": [
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "cap_hit",
+      "numerator": "round.cap_hit",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "cap_hit",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "category",
+       "property"
+      ],
+      "name": "audit_degenerate",
+      "numerator": "audit.claim == 'v2'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "audit_degenerate (v2)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "harness_echo",
+      "numerator": "audit.claim == 'echo'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "harness_echo",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "class",
+       "property"
+      ],
+      "name": "content_exclusion",
+      "numerator": "audit.claim == 'content'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "content_exclusion (v3/v4)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "class",
+       "property"
+      ],
+      "name": "content_advisory",
+      "numerator": "each entry of audit.advisory (v5 advisory classes)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "content_advisory (v5)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "lexical",
+      "numerator": "audit.claim == 'lexical'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "lexical",
+      "unit": "round"
+     },
+     {
+      "denominator": "free rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "claim",
+       "property"
+      ],
+      "name": "post_choice_degeneracy",
+      "numerator": "free round with audit.claim in {v2, echo, content} (audit.tally's PIN)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "post_choice_degeneracy",
+      "unit": "round"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "low_label_mass",
+      "numerator": "choice.low_label_mass",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "low_label_mass",
+      "unit": "read"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "top1_not_label",
+      "numerator": "choice.top1_not_label",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "top1_not_label",
+      "unit": "read"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "termination",
+      "numerator": "round.termination (f's patterns, raw; not a claim)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "termination",
+      "unit": "round"
+     },
+     {
+      "denominator": "reasoning lines generated",
+      "keys_verdicts": [],
+      "name": "reasoning_line_defect",
+      "numerator": "not tabulated at Q-F0: Q-F3's runner and scorer (G-ANL-F3, step 19)",
+      "q_f3_only": true,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "reasoning-line defects by class [Q-F3]",
+      "unit": "line"
+     },
+     {
+      "denominator": "sessions launched",
+      "keys_verdicts": [
+       "arm",
+       "property of the excluding forced round"
+      ],
+      "name": "pre_pick_exclusion",
+      "numerator": "exclusion.phase == 'forced'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "pre-pick exclusions",
+      "unit": "session"
+     }
+    ],
+    "denominators": {
+     "free_rounds": {
+      "A0s|clean": 6,
+      "A0|clean": 3
+     },
+     "reads": {
+      "A0s|1": 1,
+      "A0s|2": 1,
+      "A0s|3": 1,
+      "A0s|4": 1,
+      "A0s|5": 1,
+      "A0s|6": 1,
+      "A0|1": 1,
+      "A0|2": 1,
+      "A0|3": 1
+     },
+     "rounds": {
+      "A0s|forced|clean": 4,
+      "A0s|free|clean": 6,
+      "A0|forced|clean": 2,
+      "A0|forced|corrupted": 2,
+      "A0|free|clean": 3
+     },
+     "sessions": {
+      "A0": 1,
+      "A0s": 1
+     }
+    },
+    "n_excluded_included": 3,
+    "n_sessions": 2,
+    "not_tabulated": [
+     "reasoning_line_defect"
+    ],
+    "scope": "all campaign sessions, excluded included",
+    "tabulated_over_excluded_too": true
+   },
+   "released_free_round_events": [
+    {
+     "ci": 2,
+     "claim": "lexical",
+     "property": "clean",
+     "s": 0
+    },
+    {
+     "exclusion": "lexical",
+     "phase": "free",
+     "s": 0
+    }
+   ],
+   "stage": "time",
+   "stage_end": {
+    "adjudication": null,
+    "fired": [],
+    "status": "PASS"
+   }
+  }
+ },
+ "guard_last_look": {
+  "abs": {
+   "binding": true,
+   "exceeds": false,
+   "fired": false,
+   "name": "exclusion_guard_abs@campaign-Q-F0",
+   "p": "463646152014325027286477225750801639085322113519043748510934183593/504870979341447555463506281780983186990852118469774723052978515625"
+  },
+  "at_stop": false,
+  "fisher": {
+   "binding": true,
+   "fired": false,
+   "name": "exclusion_guard_fisher@campaign-Q-F0",
+   "p": "285807026367/1079469304100"
+  },
+  "label": "the end look at 129 launches",
+  "reached": true,
+  "source": "end_look"
+ },
+ "inputs": {
+  "campaign": {
+   "path": "data/m/ckpt/Q-F0_campaign.json",
+   "sha256": "dd389eca073ae099e3d3e4dfe917ff2972b75a1500c3f173b2def15f6d5f1b00"
+  },
+  "decisions": {
+   "path": "data/m/verdicts/Q-F0_decisions.json",
+   "sha256": "93cf496407e630dfce62cf1fcf6f0434a92b53d733691ca61f8ca8c163b44ab2"
+  },
+  "lock": {
+   "path": "LOCK-m-F0.md",
+   "sha256": "fc7e9db8ecfa28d61b1ce1765d869000fbf827dcb013cd1d65220c9e85e0015c"
+  },
+  "olmo_states": {
+   "path": "data/m/verdicts/Q-F0_olmo-states.json",
+   "sha256": "c8320eff71e74f4f521ba69088d37e2457cf97faa4f929913ce6c4290c41489b"
+  },
+  "qual": {
+   "path": "data/m/ckpt/Q-F0_qual.json",
+   "sha256": "9a187fbc4654aae1801ca9b53e261401d12799d85719c7a3e1d32c3d43ed5148"
+  },
+  "sentences": {
+   "path": "data/m/gates/m_posting_sentences.json",
+   "sha256": "af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902"
+  },
+  "time": {
+   "path": "data/m/ckpt/Q-F0_time.json",
+   "sha256": "483f32ea240014404b885cc39a04027b2a31bb16ebc3c9434791769f58e2557a"
+  }
+ },
+ "looks": [
+  {
+   "abs": {
+    "binding": true,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-Q-F0",
+    "p": "1/1"
+   },
+   "at_launches": 40,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-Q-F0",
+    "p": "1/1"
+   },
+   "look": 1
+  },
+  {
+   "abs": {
+    "binding": true,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-Q-F0",
+    "p": "28055472606906673214142782920981/28421709430404007434844970703125"
+   },
+   "at_launches": 80,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-Q-F0",
+    "p": "461949/721981"
+   },
+   "look": 2
+  },
+  {
+   "abs": {
+    "binding": true,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-Q-F0",
+    "p": "48458508663687187267624028985971139401812356527807394530609/51698788284564229679463043254372678347863256931304931640625"
+   },
+   "at_launches": 120,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-Q-F0",
+    "p": "843525822345/2748795519571"
+   },
+   "look": 3
+  },
+  {
+   "abs": {
+    "binding": true,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-Q-F0",
+    "p": "463646152014325027286477225750801639085322113519043748510934183593/504870979341447555463506281780983186990852118469774723052978515625"
+   },
+   "at_launches": 129,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-Q-F0",
+    "p": "285807026367/1079469304100"
+   },
+   "look": "end"
+  }
+ ],
+ "olmo_states_declared": {
+  "OLMo-dpo": {
+   "clock_passed": false,
+   "date": "2026-10-19",
+   "state": "PENDING",
+   "substate": "unlocked-before-D_O"
+  },
+  "OLMo-instruct": {
+   "clock_passed": false,
+   "date": "2026-10-19",
+   "state": "PENDING",
+   "substate": "unlocked-before-D_O"
+  },
+  "OLMo-sft": {
+   "clock_passed": false,
+   "date": "2026-10-19",
+   "state": "PENDING",
+   "substate": "unlocked-before-D_O"
+  }
+ },
+ "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
+ "pauses": [],
+ "per_property_table": {
+  "by_arm": {
+   "A0": {
+    "clean": {
+     "rounds_claimed_by_class": {
+      "content": 25,
+      "echo": 0,
+      "lexical": 7,
+      "v2": 16
+     },
+     "rounds_excluding_by_class": {
+      "content": 3,
+      "echo": 0,
+      "lexical": 7,
+      "v2": 4
+     },
+     "rounds_generated": 645,
+     "sessions_excluded_any_phase": 14,
+     "sessions_excluded_prepick": 11
+    },
+    "corrupted": {
+     "rounds_claimed_by_class": {
+      "content": 1,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 1
+     },
+     "rounds_excluding_by_class": {
+      "content": 1,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 1
+     },
+     "rounds_generated": 197,
+     "sessions_excluded_any_phase": 3,
+     "sessions_excluded_prepick": 3
+    }
+   },
+   "A0s": {
+    "clean": {
+     "rounds_claimed_by_class": {
+      "content": 8,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 6
+     },
+     "rounds_excluding_by_class": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 2
+     },
+     "rounds_generated": 328,
+     "sessions_excluded_any_phase": 3,
+     "sessions_excluded_prepick": 3
+    },
+    "corrupted": {
+     "rounds_claimed_by_class": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 0
+     },
+     "rounds_excluding_by_class": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 0
+     },
+     "rounds_generated": 0,
+     "sessions_excluded_any_phase": 0,
+     "sessions_excluded_prepick": 0
+    }
+   }
+  },
+  "reference": "f1 CORR's 7-vs-1 anomaly (archive:91-93) is the reference (m:314); the column it refers to is sessions_excluded_prepick, m's pre-pick column (sessions excluded before the first read, by property; the seat's C7 on G-PORT A5, 2026-10-10); sessions_excluded_any_phase is reported beside it"
+ },
+ "pi_stop_record": null,
+ "power": {
+  "of_record": {
+   "basis": "m:190's base case at the realised n: the arm split floor(n/2) / ceil(n/2) per map at clean share .70, the sham pooled at .5, alpha .01 (descriptive; the power figure of record)",
+   "display": "0.878",
+   "exact": "23580137590619550262453647860730650718860164320031952018772537889516328421138081855812111/26843545600000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "mS": 32,
+   "n": 80,
+   "split": [
+    40,
+    40
+   ]
+  },
+  "realised_split": {
+   "basis": "the realised per-map domain counts (beside; not of record)",
+   "display": "0.878",
+   "exact": "11783678903321943315881098229651369547839374230262058386685992067931981419074567365303043/13421772800000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "mS": 32,
+   "split": [
+    41,
+    39
+   ]
+  }
+ },
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "quarantined": [],
+ "rates": [
+  {
+   "den": 80,
+   "domain": "A0 domain sessions (m:308), coded on the P-role label at the first free choice (m:306)",
+   "num": 79,
+   "rate": "P"
+  },
+  {
+   "den": 32,
+   "domain": "A0s domain sessions (m:308)",
+   "num": 18,
+   "rate": "P_sham"
+  },
+  {
+   "den": 41,
+   "domain": "A0 domain sessions on map 0",
+   "num": 40,
+   "rate": "share_map0"
+  },
+  {
+   "den": 39,
+   "domain": "A0 domain sessions on map 1",
+   "num": 39,
+   "rate": "share_map1"
+  },
+  {
+   "den": 94,
+   "domain": "A0 campaign session records (launched); numerator excluded at the forced phase (stages._prepick's definition)",
+   "num": 14,
+   "rate": "prepick_A0"
+  },
+  {
+   "den": 35,
+   "domain": "A0s campaign session records (launched); numerator excluded at the forced phase (stages._prepick's definition)",
+   "num": 3,
+   "rate": "prepick_A0s"
+  }
+ ],
+ "release": "readrule.release_full: the contrast picks are reported and the withheld free-round events are released (m:271)",
+ "rows": {
+  "e2a": "Answered",
+  "f1": "Answered"
+ },
+ "schema": "m-verdicts-v1",
+ "sentence": "A0 (Q-F0): PASS; n = 80 domain sessions of 94 launched (map 0: 40/41, map 1: 39/39 on the clean-role label); P = 79/80 = 0.9875; Δ_c = +0.4875, two-sided Clopper–Pearson 95% CI [+0.4323, +0.4997]; E = 0.0625 from A0s (18/32 domain sessions, P_sham = 0.5625); P_arm − P_sham = +0.4250; exact one-sided binomial vs 0.5: p = 0.0000 toward clean, p = 1.0000 toward corrupted, α = .01; pre-pick exclusion rate 14/94 = 0.1489 beside A0s's 3/35 = 0.0857; the guard at the unit's last look (the end look at 129 launches): Fisher one-sided vs A0s p = 0.2648, not fired (binding); absolute vs .20 p = 0.9183, not fired (binding).",
+ "sham": {
+  "by_map": {
+   "0": {
+    "j": 8,
+    "n": 17
+   },
+   "1": {
+    "j": 10,
+    "n": 15
+   }
+  },
+  "domain": 32,
+  "j": 18,
+  "role": "E only (tier sham, m:182-183)",
+  "template": "A0s"
+ },
+ "stop_bar": null,
+ "tests": {
+  "dead_tail": {
+   "display": "1.0000",
+   "p": "120892581961462787013378094868498655027985564498702989164958212738026227737687826798039425946837241604799/120892581961462917470617600000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "test": "P(X <= k), X ~ Bin(n, 13/20): DEAD iff < 1/40 and k < n (the two-sided Clopper-Pearson 95% upper bound on Delta_c < +0.15)"
+  },
+  "guard_abs": {
+   "p": "463646152014325027286477225750801639085322113519043748510934183593/504870979341447555463506281780983186990852118469774723052978515625",
+   "test": "exact one-sided binomial of the arm's pre-pick exclusions vs .20, alpha .05, at the unit's last look (m:316)"
+  },
+  "guard_fisher": {
+   "p": "285807026367/1079469304100",
+   "test": "one-sided Fisher exact, the arm's pre-pick exclusions vs its sham's, alpha .05, at the unit's last look (m:316)"
+  },
+  "p_down": {
+   "display": "1.0000",
+   "p": "1208925819614629174706175/1208925819614629174706176",
+   "test": "exact one-sided binomial vs 0.5 toward corrupted, P(X <= k), X ~ Bin(n, 1/2); (iii) for REVERSE at alpha .01"
+  },
+  "p_up": {
+   "display": "0.0000",
+   "p": "81/1208925819614629174706176",
+   "test": "exact one-sided binomial vs 0.5 toward clean, P(X >= k), X ~ Bin(n, 1/2); (iii) at alpha .01"
+  }
+ },
+ "tuple": {
+  "OLMo-dpo": "PENDING",
+  "OLMo-instruct": "PENDING",
+  "OLMo-sft": "PENDING",
+  "Q-F0": "PASS"
+ },
+ "unit": "Q-F0",
+ "unit_state": "ANALYZED",
+ "v1_outputs": {
+  "abstract_clause": "; the OLMo lineage's post-training nulls are reported as concluded, not answered (§5.5)",
+  "ceiling": {
+   "name": "Fallback-1",
+   "title": "Marked, expressed, remembered, not acted on"
+  },
+  "dose_note": {
+   "status": "carried",
+   "text": "at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean"
+  },
+  "enumeration": [
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 3,
+     "section": "Functional for the Character, Not for the Network",
+     "sentence": 1
+    },
+    "row_id": "R003.01",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 5,
+     "section": "Language models represent, express and remember an evaluative state, but do not act on it when its consequences must be learned rather than read",
+     "sentence": 1
+    },
+    "row_id": "R005.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 13,
+     "section": "Abstract",
+     "sentence": 11
+    },
+    "row_id": "R013.11",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "a",
+     "b"
+    ],
+    "loc": {
+     "line": 13,
+     "section": "Abstract",
+     "sentence": 15
+    },
+    "row_id": "R013.15",
+    "treatments": [
+     "assert no null on these cells",
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 25,
+     "section": "1 Introduction",
+     "sentence": 4
+    },
+    "row_id": "R025.04",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 30,
+     "section": "1 Introduction",
+     "sentence": 2
+    },
+    "row_id": "R030.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 33,
+     "section": "1 Introduction",
+     "sentence": 2
+    },
+    "row_id": "R033.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 61,
+     "section": "2.6 Reward and seeking",
+     "sentence": 3
+    },
+    "row_id": "R061.03",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 123,
+     "section": "5 Results: five links in one chain",
+     "sentence": 1
+    },
+    "row_id": "R123.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 168,
+     "section": "5.5 Link 5 — Not acted on from experience",
+     "sentence": 1
+    },
+    "row_id": "R168.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 184,
+     "section": "5.5 Link 5 — Not acted on from experience",
+     "sentence": 4
+    },
+    "row_id": "R184.04",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 184,
+     "section": "5.5 Link 5 — Not acted on from experience",
+     "sentence": 7
+    },
+    "row_id": "R184.07",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 186,
+     "section": "5.5 Link 5 — Not acted on from experience",
+     "sentence": 2
+    },
+    "row_id": "R186.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 186,
+     "section": "5.5 Link 5 — Not acted on from experience",
+     "sentence": 4
+    },
+    "row_id": "R186.04",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 194,
+     "section": "5.6 What the shields caught, and other hazards quantified",
+     "sentence": 4
+    },
+    "row_id": "R194.04",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 220,
+     "section": "6 Reading the published record against the framework",
+     "sentence": 1
+    },
+    "row_id": "R220.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 230,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 1
+    },
+    "row_id": "R230.01",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 232,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 1
+    },
+    "row_id": "R232.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 232,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 2
+    },
+    "row_id": "R232.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 232,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 3
+    },
+    "row_id": "R232.03",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 234,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 1
+    },
+    "row_id": "R234.01",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 234,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 2
+    },
+    "row_id": "R234.02",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "a",
+     "b"
+    ],
+    "loc": {
+     "line": 234,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 4
+    },
+    "row_id": "R234.04",
+    "treatments": [
+     "assert no null on these cells",
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 234,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 5
+    },
+    "row_id": "R234.05",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 234,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 6
+    },
+    "row_id": "R234.06",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 236,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 1
+    },
+    "row_id": "R236.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "a",
+     "b"
+    ],
+    "loc": {
+     "line": 236,
+     "section": "7.1 Functional for the character, not for the network",
+     "sentence": 2
+    },
+    "row_id": "R236.02",
+    "treatments": [
+     "assert no null on these cells",
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 240,
+     "section": "7.2 Why a want would have shown up uninvited",
+     "sentence": 2
+    },
+    "row_id": "R240.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 240,
+     "section": "7.2 Why a want would have shown up uninvited",
+     "sentence": 3
+    },
+    "row_id": "R240.03",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 240,
+     "section": "7.2 Why a want would have shown up uninvited",
+     "sentence": 6
+    },
+    "row_id": "R240.06",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 242,
+     "section": "7.3 Reward chisels marking; it does not install seeking",
+     "sentence": 1
+    },
+    "row_id": "R242.01",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 244,
+     "section": "7.3 Reward chisels marking; it does not install seeking",
+     "sentence": 2
+    },
+    "row_id": "R244.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 248,
+     "section": "7.4 Alternatives stated, not defeated",
+     "sentence": 2
+    },
+    "row_id": "R248.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 248,
+     "section": "7.4 Alternatives stated, not defeated",
+     "sentence": 6
+    },
+    "row_id": "R248.06",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "e2b",
+       "label": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside"
+      },
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 250,
+     "section": "7.4 Alternatives stated, not defeated",
+     "sentence": 3
+    },
+    "row_id": "R250.03",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 254,
+     "section": "7.4 Alternatives stated, not defeated",
+     "sentence": 2
+    },
+    "row_id": "R254.02",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": null,
+    "b": {
+     "ceiling": "Fallback-1",
+     "thesis": "main"
+    },
+    "c": null,
+    "clauses": [
+     "b"
+    ],
+    "loc": {
+     "line": 258,
+     "section": "7.5 What this does and does not say about welfare",
+     "sentence": 4
+    },
+    "row_id": "R258.04",
+    "treatments": [
+     "state as a reading proposed, not a result"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-base",
+       "label": "concluded, not answered — told control not run at base, by decision (7′)"
+      },
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 262,
+     "section": "7.6 Limitations",
+     "sentence": 5
+    },
+    "row_id": "R262.05",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   },
+   {
+    "a": {
+     "cells": [
+      {
+       "cell": "olmo-sft",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-dpo",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      },
+      {
+       "cell": "olmo-instruct",
+       "label": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+      }
+     ]
+    },
+    "b": null,
+    "c": null,
+    "clauses": [
+     "a"
+    ],
+    "loc": {
+     "line": 276,
+     "section": "8 Pre-registered next experiments / 8.1",
+     "sentence": 5
+    },
+    "row_id": "R276.05",
+    "treatments": [
+     "assert no null on these cells"
+    ]
+   }
+  ],
+  "labels": {
+   "e2a": "Answered",
+   "e2b": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside",
+   "f1": "Answered",
+   "olmo-base": "concluded, not answered — told control not run at base, by decision (7′)",
+   "olmo-dpo": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting",
+   "olmo-instruct": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting",
+   "olmo-sft": "concluded, not answered — the told control at this stage is pre-registered and pending at this posting"
+  },
+  "licensing": {
+   "L0": true,
+   "L0-OLMo-dpo": false,
+   "L0-OLMo-instruct": false,
+   "L0-OLMo-sft": false
+  },
+  "s81": "A0 (Q-F0): PASS; A0-OLMo-sft: pending; A0-OLMo-dpo: pending; A0-OLMo-instruct: pending",
+  "step7": "open"
+ }
+}

@@ -1,0 +1,565 @@
+{
+ "a": {
+  "A0": {
+   "1": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0 sessions valid through position 1",
+    "floor": 20,
+    "interval": [
+     "0.9323",
+     "0.9997"
+    ],
+    "num": 79,
+    "share": "79/80",
+    "share_display": "0.9875"
+   },
+   "2": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0 sessions valid through position 2",
+    "floor": 20,
+    "interval": [
+     "0.8943",
+     "0.9922"
+    ],
+    "num": 77,
+    "share": "77/80",
+    "share_display": "0.9625"
+   },
+   "3": {
+    "count_only": false,
+    "den": 78,
+    "domain": "A0 sessions valid through position 3",
+    "floor": 20,
+    "interval": [
+     "0.9104",
+     "0.9969"
+    ],
+    "num": 76,
+    "share": "38/39",
+    "share_display": "0.9744"
+   },
+   "4": {
+    "count_only": false,
+    "den": 78,
+    "domain": "A0 sessions valid through position 4",
+    "floor": 20,
+    "interval": [
+     "0.8739",
+     "0.9859"
+    ],
+    "num": 74,
+    "share": "37/39",
+    "share_display": "0.9487"
+   },
+   "5": {
+    "count_only": false,
+    "den": 77,
+    "domain": "A0 sessions valid through position 5",
+    "floor": 20,
+    "interval": [
+     "0.9298",
+     "0.9997"
+    ],
+    "num": 76,
+    "share": "76/77",
+    "share_display": "0.9870"
+   },
+   "6": {
+    "count_only": false,
+    "den": 77,
+    "domain": "A0 sessions valid through position 6",
+    "floor": 20,
+    "interval": [
+     "0.9532",
+     "1.0000"
+    ],
+    "num": 77,
+    "share": "1/1",
+    "share_display": "1.0000"
+   }
+  },
+  "A0s": {
+   "1": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s sessions valid through position 1",
+    "floor": 20,
+    "interval": [
+     "0.3766",
+     "0.7364"
+    ],
+    "num": 18,
+    "share": "9/16",
+    "share_display": "0.5625"
+   },
+   "2": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s sessions valid through position 2",
+    "floor": 20,
+    "interval": [
+     "0.2636",
+     "0.6234"
+    ],
+    "num": 14,
+    "share": "7/16",
+    "share_display": "0.4375"
+   },
+   "3": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s sessions valid through position 3",
+    "floor": 20,
+    "interval": [
+     "0.3474",
+     "0.7091"
+    ],
+    "num": 17,
+    "share": "17/32",
+    "share_display": "0.5313"
+   },
+   "4": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s sessions valid through position 4",
+    "floor": 20,
+    "interval": [
+     "0.2370",
+     "0.5936"
+    ],
+    "num": 13,
+    "share": "13/32",
+    "share_display": "0.4063"
+   },
+   "5": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s sessions valid through position 5",
+    "floor": 20,
+    "interval": [
+     "0.3474",
+     "0.7091"
+    ],
+    "num": 17,
+    "share": "17/32",
+    "share_display": "0.5313"
+   },
+   "6": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s sessions valid through position 6",
+    "floor": 20,
+    "interval": [
+     "0.2909",
+     "0.6526"
+    ],
+    "num": 15,
+    "share": "15/32",
+    "share_display": "0.4688"
+   }
+  }
+ },
+ "b": {
+  "A0": {
+   "clean": {
+    "count_only": false,
+    "den": 379,
+    "domain": "A0 transitions after a chosen clean round by sessions valid through the next choice",
+    "floor": 20,
+    "interval": [
+     "0.0127",
+     "0.0480"
+    ],
+    "num": 10,
+    "share": "10/379",
+    "share_display": "0.0264"
+   },
+   "corrupted": {
+    "count_only": true,
+    "den": 11,
+    "domain": "A0 transitions after a chosen corrupted round by sessions valid through the next choice",
+    "floor": 20,
+    "interval": null,
+    "num": 11,
+    "share": "1/1",
+    "share_display": "1.0000"
+   }
+  },
+  "scope": "contrast arm only (m:312)"
+ },
+ "claim": "none -- secondary DVs issue no claim (m:358)",
+ "d": {
+  "A0": {
+   "habit": {
+    "b_plus": {
+     "breaks": 36,
+     "n": 37,
+     "rate": "36/37"
+    },
+    "b_sham": {
+     "breaks": 0,
+     "n": 43,
+     "rate": "0/1"
+    },
+    "delta_c": "39/80",
+    "delta_first_weighted_display": "+0.4875",
+    "delta_first_weighted_form": "39/80",
+    "forced_end_balance": {
+     "exactly_balanced": false,
+     "neg": 43,
+     "pos": 37
+    },
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance",
+    "identity_holds": true,
+    "n_undecidable": 0
+   },
+   "per_pair": {
+    "0": {
+     "count_only": false,
+     "den": 22,
+     "domain": "A0 domain sessions of pair 0, pooled over maps",
+     "floor": 20,
+     "interval": [
+      "0.8456",
+      "1.0000"
+     ],
+     "num": 22,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "1": {
+     "count_only": false,
+     "den": 21,
+     "domain": "A0 domain sessions of pair 1, pooled over maps",
+     "floor": 20,
+     "interval": [
+      "0.7618",
+      "0.9988"
+     ],
+     "num": 20,
+     "share": "20/21",
+     "share_display": "0.9524"
+    },
+    "2": {
+     "count_only": false,
+     "den": 21,
+     "domain": "A0 domain sessions of pair 2, pooled over maps",
+     "floor": 20,
+     "interval": [
+      "0.8389",
+      "1.0000"
+     ],
+     "num": 21,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "3": {
+     "count_only": true,
+     "den": 16,
+     "domain": "A0 domain sessions of pair 3, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 16,
+     "share": "1/1",
+     "share_display": "1.0000"
+    }
+   },
+   "per_pair_start": {
+    "0|0": {
+     "count_only": true,
+     "den": 11,
+     "domain": "A0 domain sessions of pair 0, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 11,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "0|1": {
+     "count_only": true,
+     "den": 11,
+     "domain": "A0 domain sessions of pair 0, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 11,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "1|0": {
+     "count_only": true,
+     "den": 11,
+     "domain": "A0 domain sessions of pair 1, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 11,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "1|1": {
+     "count_only": true,
+     "den": 10,
+     "domain": "A0 domain sessions of pair 1, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 9,
+     "share": "9/10",
+     "share_display": "0.9000"
+    },
+    "2|0": {
+     "count_only": true,
+     "den": 12,
+     "domain": "A0 domain sessions of pair 2, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 12,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "2|1": {
+     "count_only": true,
+     "den": 9,
+     "domain": "A0 domain sessions of pair 2, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 9,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "3|0": {
+     "count_only": true,
+     "den": 9,
+     "domain": "A0 domain sessions of pair 3, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 9,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "3|1": {
+     "count_only": true,
+     "den": 7,
+     "domain": "A0 domain sessions of pair 3, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 7,
+     "share": "1/1",
+     "share_display": "1.0000"
+    }
+   }
+  },
+  "A0s": {
+   "habit": {
+    "b_plus": {
+     "breaks": 6,
+     "n": 17,
+     "rate": "6/17"
+    },
+    "b_sham": {
+     "breaks": 3,
+     "n": 15,
+     "rate": "1/5"
+    },
+    "delta_c": "1/16",
+    "delta_first_weighted_display": "+0.0625",
+    "delta_first_weighted_form": "1/16",
+    "forced_end_balance": {
+     "exactly_balanced": false,
+     "neg": 15,
+     "pos": 17
+    },
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance",
+    "identity_holds": true,
+    "n_undecidable": 0
+   },
+   "per_pair": {
+    "0": {
+     "count_only": true,
+     "den": 7,
+     "domain": "A0s domain sessions of pair 0, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 5,
+     "share": "5/7",
+     "share_display": "0.7143"
+    },
+    "1": {
+     "count_only": true,
+     "den": 8,
+     "domain": "A0s domain sessions of pair 1, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 4,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "2": {
+     "count_only": true,
+     "den": 8,
+     "domain": "A0s domain sessions of pair 2, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 4,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "3": {
+     "count_only": true,
+     "den": 9,
+     "domain": "A0s domain sessions of pair 3, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 5,
+     "share": "5/9",
+     "share_display": "0.5556"
+    }
+   },
+   "per_pair_start": {
+    "0|0": {
+     "count_only": true,
+     "den": 3,
+     "domain": "A0s domain sessions of pair 0, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 3,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "0|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s domain sessions of pair 0, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "1|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s domain sessions of pair 1, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 3,
+     "share": "3/4",
+     "share_display": "0.7500"
+    },
+    "1|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s domain sessions of pair 1, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 1,
+     "share": "1/4",
+     "share_display": "0.2500"
+    },
+    "2|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s domain sessions of pair 2, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 3,
+     "share": "3/4",
+     "share_display": "0.7500"
+    },
+    "2|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s domain sessions of pair 2, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 1,
+     "share": "1/4",
+     "share_display": "0.2500"
+    },
+    "3|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s domain sessions of pair 3, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 3,
+     "share": "3/4",
+     "share_display": "0.7500"
+    },
+    "3|1": {
+     "count_only": true,
+     "den": 5,
+     "domain": "A0s domain sessions of pair 3, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "2/5",
+     "share_display": "0.4000"
+    }
+   }
+  }
+ },
+ "e": {
+  "A0": {
+   "forced": {
+    "count_only": false,
+    "den": 372,
+    "domain": "A0 forced rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0001",
+     "0.0149"
+    ],
+    "num": 1,
+    "share": "1/372",
+    "share_display": "0.0027"
+   },
+   "free": {
+    "count_only": false,
+    "den": 470,
+    "domain": "A0 free rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0001",
+     "0.0118"
+    ],
+    "num": 1,
+    "share": "1/470",
+    "share_display": "0.0021"
+   }
+  },
+  "A0s": {
+   "forced": {
+    "count_only": false,
+    "den": 136,
+    "domain": "A0s forced rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0000",
+     "0.0268"
+    ],
+    "num": 0,
+    "share": "0/1",
+    "share_display": "0.0000"
+   },
+   "free": {
+    "count_only": false,
+    "den": 192,
+    "domain": "A0s free rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0000",
+     "0.0190"
+    ],
+    "num": 0,
+    "share": "0/1",
+    "share_display": "0.0000"
+   }
+  }
+ },
+ "f1_crossing_note": "its comparison with f1 at positions 5–6 crosses f1's 512-token read tail (§2.7 (12)), stated beside",
+ "floor_events": 20,
+ "not_built": "(c) and (f) are [Q-F3] (G-ANL-F3)",
+ "schema": "m-secondary-v1",
+ "unit": "Q-F0"
+}

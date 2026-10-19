@@ -240,6 +240,12 @@ __pycache__/
 /data/m/ckpt/*
 !/data/m/ckpt/*.json
 !/data/m/ckpt/*.json.podchange-*
+# The units' VERDICTS outputs and their declared inputs (PROPOSAL-m v1.11 §8 step 17, m:318;
+# PIN-25 defers this block to the commit that first writes there). They are written at the
+# unit's release (m:271), so no -diff.
+!/data/m/verdicts/
+/data/m/verdicts/*
+!/data/m/verdicts/*.json
 # G-CAL's seat read request (markdown, Code -> design; m:176 condition (3)).
 !/data/m/gates/G-CAL_seat_read_request.md
 # The seat's legibility read of record (markdown, design -> Code via the PI; m:176 condition (3),

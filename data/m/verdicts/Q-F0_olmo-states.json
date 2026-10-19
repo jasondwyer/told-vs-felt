@@ -1,0 +1,23 @@
+{
+ "schema": "m-olmo-states-v1",
+ "states": {
+  "OLMo-sft": {
+   "state": "PENDING",
+   "substate": "unlocked-before-D_O",
+   "clock_passed": false,
+   "date": "2026-10-19"
+  },
+  "OLMo-dpo": {
+   "state": "PENDING",
+   "substate": "unlocked-before-D_O",
+   "clock_passed": false,
+   "date": "2026-10-19"
+  },
+  "OLMo-instruct": {
+   "state": "PENDING",
+   "substate": "unlocked-before-D_O",
+   "clock_passed": false,
+   "date": "2026-10-19"
+  }
+ }
+}
