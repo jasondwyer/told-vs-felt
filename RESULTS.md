@@ -381,6 +381,27 @@ applied to CLAUDE.md.
       with the runpod MCP re-authorised first.
     - A decision about an OLMo unit taken now is taken with Q-F0's outcome known. It is recorded in that unit's VERDICTS
       entry or NOT-RUN record (m:318).
+  - **The reads' close (2026-10-19; the seat's VERDICTS read, §6).** The seat's read is committed by path in the commit
+    that adds this line. That commit is the read's first commit, so `git log --diff-filter=A --
+    results/raw/2026-10-19_m-design-to-code_VERDICTS_read.md` names it:
+    [`_design-to-code_VERDICTS_read`](results/raw/2026-10-19_m-design-to-code_VERDICTS_read.md), sha256
+    `e31f893b3ed9b4a99a85f1027f8e78dcfd8d0d1cb7e7bb796dde356e7c0a92a6`. A commit cannot name its own hash; the next
+    RESULTS entry names it in full.
+    - §6, for Code: "the VERDICTS entry's close line, citing this file by path and sha256 and stating the
+      carried-forward tallies of §3 (strict and wider, forced and free) beside the entry's release; nothing else moves.
+      The secondary-DVs entry needs no line."
+    - The short form: "**A0 PASS stands as the analyzer computed it,** and the seat's read of all 155 sessions moves
+      nothing". And §0: "The rule-25 window closes with this read (m:271)."
+    - **Beside the release (above): the carried-forward tallies**, §3's "Carried-forward totals for the unit, contrast
+      arm", verbatim: "strict definition — forced 4 of 408 (G-TIME-F0 0/4, G-F0m-Qwen 0/32, campaign 4/372), free 3 of
+      516 (G-TIME-F0 1/3, the `saddle`; G-F0m-Qwen 0/43; campaign 2/470; the free denominators are the free rounds
+      generated on those sessions, Code's E11 giving the gate stages' 3 and 43); wider class — forced 10 of 408, free 30
+      of 516 (the campaign's 27, G-F0m-Qwen's `garbled text` and `corrupt days`, G-TIME-F0's `saddle`)." The sham,
+      beside it (§0): "the sham carries 2 of 136 forced and 1 of 192 free, all three banner fragments. Reported; no bar;
+      nothing reclassified." The strict definition is the record's (RESULTS.md@e186162:2335–2340, as §0 cites it).
+    - Code's finding aid, proposing nothing; the read is the record. Its §4 disposes of this entry's "For the seat"
+      items: none is struck, and its O2-3 item adds a note for the next unit's README. Its §5 flags three disclosures
+      for Appendix D, not applied. Its §6 leaves step 18's inputs to the PI and the step-18 block to the seat.
 
 - 2026-10-19 — **PROPOSAL-m Q-F0 — secondary DVs (v1.11 §8 step 17, m:358; m:312; PIN-13): issuing no claim.**
   Secondaries (a), (b), (d) and (e), computed by the analyzer of record in the same invocation as Q-F0's VERDICTS (the
