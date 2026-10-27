@@ -1,4 +1,8 @@
-# jspace-lab
+# told-vs-felt
+
+**Companion to the Research Note posted 2026-10-27 on LessWrong and the Alignment Forum.** Start at [`README-NOTE.md`](./README-NOTE.md): it maps every figure and claim in the note to the committed file that carries it. The note links this repository at the tag `note-2026-10-v2`; `main` keeps moving and nothing points a reader at it.
+
+This repository was named `jspace-lab` until the release, after the J-lens (Jacobian-space) replication it began as; the old name appears throughout the log and in paths, and the old URL redirects here.
 
 Began as a local replication of Anthropic's J-lens / global-workspace
 interpretability work (July 2026) against Qwen3.6-27B on Apple Silicon. It
@@ -10,7 +14,7 @@ question across a training series.
 **Read [`CLAUDE.md`](./CLAUDE.md) first** — it is the operative design law
 (v3.1), including the constraints ledger every run answers to.
 
-## Where the program stands (2026-08-20)
+## Where the program stood at 2026-08-20 (kept as written)
 
 Four cycles on Qwen converged on **reward-marking without reward-seeking**:
 the evaluative state exists, is causally potent, is implantable, and couples
@@ -29,16 +33,20 @@ refactor-regression law, all four checkpoints are acquired and
 hash-anchored, and the CUDA backend is characterized. Phase A (calibration)
 is under way.
 
+The program's results as of the release are stated in the note, not here. The labels of record are in `data/m/verdicts/Q-F0_VERDICTS.json`; the dated log is [`RESULTS.md`](./RESULTS.md).
+
 ## Orientation
 
 | you want | read |
 |---|---|
+| the note's companion: every figure's provenance, the pre-registration table, the audit | [`README-NOTE.md`](./README-NOTE.md) |
 | the operative law | [`CLAUDE.md`](./CLAUDE.md) |
-| what is being tested now, and the bars | [`PROPOSAL-g-…`](./PROPOSAL-g-ontogeny-of-evaluation.md) |
+| the pre-registrations of record and the locks | `PROPOSAL-*.md`, `LOCK-*.md` — committed before data; the commit hash is the timestamp (tabulated in README-NOTE §2) |
+| the Phase-2 pre-registration and its bars | [`PROPOSAL-g-…`](./PROPOSAL-g-ontogeny-of-evaluation.md) |
 | the dated experiment log (newest first) | [`RESULTS.md`](./RESULTS.md) |
-| current state + next actions | the newest `HANDOFF-*.md` |
 | prior-cycle syntheses | `FINDINGS*.md` |
 | frozen prior logs | `archive/` (tags `cycle-2-close`, `cycle-4-close`) |
+| licenses | [`LICENSING.md`](./LICENSING.md) |
 
 ## Code
 
@@ -55,7 +63,7 @@ path:
 python -m valence_core.regression.analysis
 ```
 
-Model-free; must print **103/103**. Runs anywhere, including the box, because
+Model-free; must print **154/154**. Runs anywhere, including the box, because
 it reads only committed artifacts. The oracle tier
 (`valence_core.regression.oracle`) needs the laptop Qwen stack and reproduces
 the three criteria that require real inference.
