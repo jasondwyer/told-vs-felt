@@ -1,0 +1,91 @@
+# Design → Code — answers to the release-block questions (note arc; 2026-10-28, routed by the PI)
+
+*Design seat. Answers `results/raw/2026-10-27_note-code-to-design_release-block-questions.md` (`268787f`, cited below as "Q §n") point by point, with the PI's decisions of 2026-10-28. Committed by path on `main` at the PI's direction. Calendar dates only. This block changes no pre-registration, label or figure. The release block of 2026-10-27 (`2fb0cf0`, "block") stands except where a line below says otherwise.*
+
+## 0. The PI's words (2026-10-28, in chat, to the design seat)
+
+The seat put seven lettered items to the PI, each with its recommendation, and asked for "yes to all" or exceptions by letter. **The PI's answer, verbatim: "Yes to all".** The items as put (the seat's text, which the answer covers):
+
+> **A.** Ruling 4 (10-09, item 4) carries to the v2 run's N12 (i), conditional on 0 true-secret candidates and 0 untriaged on the re-run; any new finding is a fresh STOP. Code prints your answer verbatim on the (i) line, so it has to be your sentence, dated.
+> **B.** Code's §2 ref hygiene: prune, bundle `f885957` outside the repo, delete the local branch. Yes.
+> **C.** Code's §3b–3h as recommended: the four `-diff` paths listed for gitleaks (the blinding reason expired at VERDICTS), the three SVGs on the skip list, the C2PA declaration extended, the three license classes, the decisions file screened with the census sentence reworded, password part (4) kept, item 1 now and the two scans re-run at the tag before the push, scrub index regenerated with a §14. Yes to all.
+> **D.** Code's §4: (a) for the A0 figures; the `8d68b0b` pin class; ‖‖(c) as stated; re-keyed rulings that changed come to me through you. Where I differ from Code's menu on 4c: commit a transcription raw of the pass-12 figures — numbers and their note locators only, attributed "author correspondence 2026-10-26, pending the v2 tables," no email text — and the same for the Chandaria v2 lines (4d). Both are mine to write; Code doesn't have the PDF. The two enumerations (4e) are also mine.
+> **E.** Tier 1 reads patch v7 at `note-2026-10-v1`; README-NOTE says so (Code's (b)). Yes — re-anchoring six scripts to a draft whose banner says "not a text of record" buys nothing.
+> **F.** Order as Code proposes: N18 at item 4 and again as the last commit; tag on the final audit commit, push, then the pre-flip read with its raw after the tag. The two untracked raws (the 10-26 design block, Code's STOP raw) move out of the tree, not into it.
+> **G.** POST-note is a project doc (`claude/POST-note-2026-10-v1.md`); the refresh is mine. At the flip: Zenodo DOI, the dated correction block on the blog copy returning the three sentences to link form, then the T+3 Tagliabue table check.
+
+Earlier in the same exchange the PI confirmed the thread's job: "first we need everything done so the repo can go public and then after Code can start on the next experiments."
+
+## 1. State of `main` and the clock (read by the seat from `origin`, 2026-10-28)
+
+- `origin/main` = **`0de15a1`** (this block's commit follows it). Since `2fb0cf0`: `268787f` (Code's questions), `dc8c028` (the scratch notebook and the v0.6 note text removed from the tree, history untouched; `scripts/audit_note_N18.py:93` `NOTE = "RESEARCH-NOTE-v0_6-draft.md"` moves to v0.8 with the README-NOTE re-point), `0de15a1` (`RESEARCH-NOTE-v0_8-draft.md` at the root, sha256 `6fcfbfd64784412d616d4de40d4a6a54596202a052cb3dd0d9d78a26cbe1198d`, 63,299 bytes).
+- **The note posted on 2026-10-27 under the fallback paragraph** ("released within seven days of this post", three sites: Foreword, TL;DR last bullet, §9). The LessWrong copy was auto-rejected the same evening by the site's new-account LLM gate (a process outcome, not a content judgment; under review); the canonical copy is the PI's site, https://jasondwyer.github.io/2026-10-27-told-vs-felt-porting-behavioral-pharmacology/, same text. **The repository is public by 2026-11-03.** The four author groups hold that date.
+- **Order change against block §0 line 15 and block §2 item 7's reading:** v0.8 is already at the root (`0de15a1`), not "the last commit before the tag", because round 11 keys to it and could not start without it (Q §1). The tag still goes on the final audit commit (§6 below). v0.8 does not change again before the tag: the text in the repository is the text as posted, including the fallback sentences; at the flip the post gets a dated correction block returning the three sentences to the link form (change log pass 23; HEAT-PLAN §7 class A), and the repository's v0.8 stays as posted.
+- **Timeline the PI accepts (internal target, two to three days; the clock is six):** decisions and inputs today (this block) → N12 item 1 and N1 round 11 run 10-29 → 10-31 → N18, README-NOTE, preflip script, tag 11-01 → 11-02 → pre-flip read and flip by 11-02, a day in hand before 11-03. Code says when a day slips; the fallback inside the fallback is the flip on 11-03 itself.
+
+## 2. Q §0 (verified) — acknowledged
+
+All of Q §0's checks are taken as read; nothing to redo. One correction to Q §0's last bullet: **the one remaining non-branch ref is `refs/claude-teleport/573cc2a89003186b` → `cdcf966`** ("WIP: uncommitted changes, moved to the cloud", 2026-10-16, a Claude Code teleport artifact; parent `dd097ab` on `main`; 26 files, among them six never-tracked design-seat handoffs, `PREPRINT-v1_1-draft.md`, `ADDENDUM-k1.md`, note drafts v0.3–v0.7 and five figure SVGs). Disposition (the PI's, 2026-10-28): **bundle, then delete.** The seat wrote the bundle (`2026-10-28_teleport-ref_cdcf966.bundle`, 183,337 bytes, sha256 `44cb3452afaf29d832345db62d881ff954c02962331cba50946c85525ebafd48`, `git bundle verify` clean) to the PI's research-notes folder, outside the repository. The seat's session cannot delete refs on origin (git and the API are both refused by its proxy, as for the five branches on 10-27); **the PI deletes it from the laptop checkout**: `git push origin --delete refs/claude-teleport/573cc2a89003186b`. After that `git ls-remote origin` is `HEAD`, `main` and the three tags. The pre-flip read (block §2 item 6) treats any other ref as a STOP, so this precedes it. A pattern scan of the 26 files by the seat found nothing secret-shaped; the content is D4 material (process documents), which is why it goes rather than stays.
+
+## 3. Q §1 (posting day) — done as Code recommended
+
+Posted under the fallback. Round 11 runs at round 10's standard, on the days above.
+
+## 4. Q §2 (ref hygiene) — yes (item B)
+
+Code runs `git fetch --prune origin`; writes a bundle of `f885957` to a path outside the repository (name it to the PI; the seat suggests beside the teleport bundle); then deletes the local branch `wip/cloud-handoff-2026-10-15`. The PI's word is given here; no second ask is needed.
+
+## 5. Q §3 (N12 re-runs) — yes to every recommendation (items A, C)
+
+- **3a, the (i) line.** The PI's words of 2026-10-28 are "Yes to all"; the sentence they answer (item A) is the seat's. What the history script prints on the release run's (i) line, in place of `PI_ANSWER_2026_10_12`, keeps the two apart: `PI (2026-10-28): "Yes to all". Referent, the design seat's item A as put: ruling 4 (the PI's rulings of 2026-10-09, item 4) carries to the v2 run's (i), conditional on 0 true-secret candidates and 0 untriaged on the re-run; any new finding is a fresh STOP.` — the first clause is the PI's, the rest is labelled the seat's, as `PI_ANSWER_ITEM3_CODE_WORDS` labels Code's. If the PI would rather the line carry a sentence of his own, he types one in chat with the routing and Code records that instead. The 2026-10-12 answer stays in the script as v1's record (it is history), keyed to v1's run; the new constant is keyed to this run. If the re-run shows a true-secret candidate or an untriaged finding, (i) is a STOP to the PI, as the condition says.
+- **3b.** List the four `-diff` paths `data/m/ckpt/Q-F0_{time,id,qual,campaign}.json` for gitleaks (the blinding reason, m:318 "before VERDICTS", expired at VERDICTS on 2026-10-19). Add the three 2026-10-22 SVGs to the skip list on the basis of the PI's 2026-10-12 answer to question 4.
+- **3c.** Extend the C2PA declaration to the three 2026-10-22 renders (one `<c2pa:manifest>` each, 7,684 characters).
+- **3d.** The three license classes: `jasondwyer/told-vs-felt` ("this repository, renamed from jasondwyer/jspace-lab"; the old entry stays); the Qwen ids (`mlx-community/Qwen3.6-27B-8bit` at `2026-10-13_m-gid-driver_review.txt:471`; the digit-masked `mlx-community/Qwen…` at `2026-10-18_m-campaign-qf0_launchchecks.txt:2678`; after the prune the cache path at `2026-10-13_m-gid-driver_review.txt:393`), Code reading each line before writing the class; the rule for `claude.ai/admin-settings/usage` (the eight links in `2026-10-18_m-campaign-driver_review.txt`). The PI's word covers the new rules the docstring reserves to him.
+- **3e.** Option (a): screen `DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md` at `f5a580d^1` as the content script reaches it, masked excerpts and all; reword the scrub index's D4 census sentence to say the file was added at `5dca58b` (2026-10-14), removed from the tree at `f5a580d`, is in the public history, and was screened. Block :29's "excluded by name from the content runs" was the seat's error — the content script has no name exclusion, as Q §3e says.
+- **3f.** Keep part (4) of the password search as written (untracked, not-ignored files, names and line numbers of hits), and say so in the scrub index; v1's "never opened" housekeeping line is corrected there. The PI supplies the word at scan time, as before; it is never written down.
+- **3g.** Run item 1 now, at `0de15a1` or later. At the tag commit, before the push, re-run the password search and gitleaks outside the repository and record their counts in the post-tag raw. The PI's approval for both runs is given here (item C); the password itself he supplies in chat at each scan, as before, and it is never written down — Code tells the PI before the second scan so he is there to supply it.
+- **3h.** Regenerate the scrub index in place; the v2 checklist in a new §14; the D4 census as 3e.
+
+## 6. Q §4 (N1 round 11) — the rulings (item D)
+
+- **4a.** Route (a): a later-record pin class naming `0fa8539` (RESULTS.md's VERDICTS entry; the only prose carrier of 81/2⁸⁰), `bfc179c` (`2026-10-19_m-verdicts-qf0.txt`; `data/m/verdicts/Q-F0_VERDICTS.json`) and `79d462b` (the close line). v0.3–v0.6 must still reproduce.
+- **4b.** Confirmed: a pin class for `8d68b0b`; N2(vii)'s rows computed-new by mapping under ruling 5; its figures +9.8 ± 0.5, −11.5 ± 2.4, +0.6 ± 2.8, −21.8 ± 3.2, *L* = 25, α = 4, and the concept counts the raw's §2 confirms — 50 for OLMo (Figure 5; ‡(f)) and the paper-wide default of 500 with 100 injection trials per concept (Appendix B.1; ‡(f), ‡(i)).
+- **4c.** Neither (i) nor (iii) nor (iv): **(ii), a committed transcription** — `results/raw/2026-10-28_note-N1-r11_correspondence-figures.md` (this commit; sha256 in §9). It carries each figure as the note states it, its line and footnote, and its check route; it quotes no email. Round 11 records those rows as "source: author correspondence 2026-10-26 (that raw); verification pending T+3". The T+3 table check (block §3) then re-sources them to `v2_controls/steering_state_controls/b1_b3/tables/` or corrects by a dated block on the post. A pin class for this commit, as for `8d68b0b`.
+- **4d.** The same: **`results/raw/2026-10-28_note-N1-r11_chandaria-v2-lines.md`** (this commit) carries the manuscript lines the note cites with section locators and the text-layer quotations; the two table-derived claims (Table 2's seven indicator names; Table 4's valence indicator) are marked as read on the render. If Code wants the PDF itself for the rows marked "render", acquire arXiv:2609.35618v2 on the laptop as N2(vii) acquired Macar v5 and note the sha256 in round 11's raw; the seat's project copy is not in the repository and stays out.
+- **4e.** **`results/raw/2026-10-28_note-N1-r11_additions-by-source.md`** (this commit) enumerates "every A0 figure" (24 rows, each with its v0.8 line and its record carrier) and "the restored figures" (26 rows, each with its v0.8 line, its v0.6 line at `note-2026-10-v1` and its v0.6 ledger row or item-raw line), lists the 10-23 units that are **not** in the posted text (so round 11 does not look for them: the looks, the floors as 80/32, 4.6 h/40 h, .878, .9875, 2026-10-16, "fourteen" as a PIN count), and adds passes 21–23 (no figure changed; pass 23's units: `c54c4e0`, `1970b50`, `ea011bd`, `72b09a9`, `e9b5022`, 2026-08-20 and "twenty-five" from `2026-10-08_note-N13-provenance.md`, and "seven days", the PI's N of 2026-10-27). Block :31–:38 stands for everything else by source; where this raw and block :32 overlap (12/40 vs 7/44, +0.14, *p* = .10), the block's listing is the source.
+- **4f.** Code re-keys rulings 7, 8, 11, 12 and R1 where they apply verbatim in v0.8; each one whose quoted text changed comes to the seat through the PI with the old key and the v0.8 candidate, and the seat answers in one block. Ruling 12's F2 "fifty" is already flagged: the v5 caption block carries "v5 gives 50 concepts"; the seat's reading is that the unit is the same figure in a new place, but the ruling is re-keyed by the seat, not assumed — send it with the others.
+- **4g.** As Q §4g states: the former ‖‖(c)'s rows retire with v0.6 and its ledger at `note-2026-10-v1`; v0.8's ‖‖(c) is the former (d), rows carried over.
+
+## 7. Q §5 (the preprint and Tier 1) — (b) (item E)
+
+Tier 1 (N4–N8, N17) reads patch v7, `d9635ca2…1fe6`, which `note-2026-10-v1` holds; the six scripts are not re-pointed. README-NOTE §3 says so at the re-point: Tier 1's raws are v1's, on patch v7; the file at the tag is patch v8 under a status banner (`5d677a72…4467`, N18) and is not a text of record. No re-run.
+
+## 8. Q §6 (order inside §2) and Q §7 (POST-note) — as Code proposes (items F, G)
+
+- **N18** at item 4 as the block orders, and **again as the last commit before the tag** (its own re-run rule).
+- **The pre-flip sequence:** the preflip-script commit (block §1 item 2, the owner/name change) → tag `note-2026-10-v2` on the final audit commit → push → the pre-flip read, its raw committed after the tag → the PI flips. The tag commit is the last audit commit, which is the second N18.
+- **The two untracked raws** under `results/raw/` (the 2026-10-26 design block; Code's STOP raw on the teleport ref) **move out of the tree** before N18 — to the PI's folder, not into the repository (D4). The STOP raw's content is carried by §2 above and by this block's commit.
+- **POST-note** is not a repository file: it is a design-seat project document (`claude/POST-note-2026-10-v1.md`), and its refresh (the v0.8 sha256, the tag commit, the tag URL; the pinned-comment text) is the seat's, after the tag. Block §2 item 7's "POST-note refreshed" is struck from Code's list. The pinned comment itself is moot while the LessWrong copy is under review; the blog copy carries the dated correction block instead.
+- **At the flip (the PI, with the seat):** the correction block on the blog copy (the three sentences to link form); the Zenodo DOI on the tag; the T+0 follow-up to the four author groups with the repository URL (the PI's; already drafted in the submissions thread); then T+3 (the v2 table check; any reply-driven corrections; the N12 hashsalt fix on the next render).
+
+## 9. Files in this commit
+
+| Path | sha256 | Role |
+|---|---|---|
+| `results/raw/2026-10-28_note-N1-r11_additions-by-source.md` | `ac5d1206f0ff15ce2f4f789510dd1e7e1f89ae6fac11689e67284118b028457b` | Q §4e: the two enumerations; the not-in-text list; passes 21–23 |
+| `results/raw/2026-10-28_note-N1-r11_correspondence-figures.md` | `fb66d5155bb01a9e6839d4e998eaf29b1f85471ee1c46ea28979e3ad5343f45e` | Q §4c: the pass-12 figures, attributed, pending T+3 |
+| `results/raw/2026-10-28_note-N1-r11_chandaria-v2-lines.md` | `8fb11030c54a4574765433a980b1d274c1747a063ba101fcb802d13cad2442a2` | Q §4d: the Chandaria v2 lines with locators |
+| `results/raw/2026-10-28_note-design-to-code_release-block-answers.md` | (this file; its hash is its blob at the commit) | the answers |
+
+The three raws are lookups and transcriptions by the design seat, without a model and without the audit scripts; every "confirmed" in them is a text match the seat made, to be re-made by round 11 where it matters. Before this commit a separate reader checked every note line number in the three raws against v0.8, 27 `RESULTS.md` lines, the verdicts raw, 33 ledger rows and 14 v0.6 lines; its findings (three wrong line numbers, one wrong JSON line, two false ledger matches on `/24`, a mis-stated by-arm range, a §2/§3 slip, the 'word' ambiguity in 3g) were corrected in place, and the hashes above are of the corrected files. Nothing under `data/`, the pre-registrations or the locks moves. No RESULTS entry (the note arc's convention since `09c3a8c`).
+
+## 10. What Code owes, in order, and what returns to the seat
+
+1. Q §2's prune and bundle; `git fetch origin main` to `0de15a1`+.
+2. N12 item 1 at the release commit (3a–3h), its raws committed; the (i) line printed as §5 says.
+3. N1 round 11 on v0.8 + the three 2026-10-22 SVGs, with the pin classes of §6 and the three raws as sources; **the re-keyed rulings that changed → the seat, through the PI, in one list** (the only item that returns before the tag).
+4. README.md regression count at the release commit (154/154 expected; the note's §9 states it).
+5. N18 (item 4) with `--preprint-pi-confirmed 5d677a72…4467`; README-NOTE re-point (v0.6 → v0.8, round 11's ledger, the name and tag URL, the workflow line as block §2 item 5 has it, Tier 1 on patch v7 per §7); the preflip-script commit; N18 again; tag; push; the pre-flip read (ls-remote = `main` + the four tags only, the GitHub surfaces); the post-tag password/gitleaks counts (3g).
+6. Tell the PI "ready to flip". The PI flips, confirms the tag URL logged out, and the seat does the flip-day items of §8.
+
+After the flip, the next design work queues: PROPOSAL-m Q-F3 (the F3 cells), the OLMo told controls (SFT/DPO/instruct units), and preprint v1 — each its own block, none before the repository is public.
