@@ -1,8 +1,13 @@
 # told-vs-felt
 
-**Companion to the Research Note posted 2026-10-27 on LessWrong and the Alignment Forum.** Start at [`README-NOTE.md`](./README-NOTE.md): it maps every figure and claim in the note to the committed file that carries it. The note links this repository at the tag `note-2026-10-v2`; `main` keeps moving and nothing points a reader at it.
+**Companion to the Research Note of 2026-10-27** (posted at https://jasondwyer.github.io/2026-10-27-told-vs-felt-porting-behavioral-pharmacology/; a LessWrong copy is under that site's review). Start at [`README-NOTE.md`](./README-NOTE.md): it maps every figure and claim in the note to the committed file that carries it. The note links this repository at the tag `note-2026-10-v2`; `main` keeps moving and nothing points a reader at it.
 
 This repository was named `jspace-lab` until the release, after the J-lens (Jacobian-space) replication it began as; the old name appears throughout the log and in paths, and the old URL redirects here.
+
+> **Names you will see.** Three things share the "J" and none of them is a method of this work.
+> - **`jspace-lab`** is this repository's former name; it appears in paths and in every log line written before the release. The old URL redirects here.
+> - **`jlens-qwen36`** and its package **`jlens_qwen`** are an external dependency, not code of this repository: an MLX port of Anthropic's Jacobian-lens code (github.com/WeZZard/jlens-qwen36, Apache-2.0, pinned at `d788bc3`; a gitignored clone, never committed here) that served as the Qwen inference stack — model loader, kernel patch, Python environment — for every Qwen run from cycle 1 through the PROPOSAL-m told control. The scripts' `jlens-qwen36/.venv/bin/python` lines name that environment.
+> - **"J-space"** and **"J-lens"** in the early documents are the terms of Anthropic's global-workspace paper: the small set of internal representations its Jacobian lens reads. The program began (July 2026) by replicating that paper's five functional properties on Qwen ([`FINDINGS.md`](./FINDINGS.md)), and the lab kept the name. The lens then had two roles: cycle 1's state induction used steering directions built from its vocabulary basis — the design the 2026-08-01 pivot retired — and the Qwen cycles ran a lens-based evaluation-awareness monitor on every trial (unsteered arms decision-relevant; [`CLAUDE.md`](./CLAUDE.md) ledger rule 8). From that pivot on, every state the Research Note reports is extracted and read in the raw residual stream (ledger rule 3: "no vocabulary-basis shortcuts"); the note itself does not use the lens, and the OLMo arm uses none (the models run on PyTorch/CUDA; only the laptop-side analysis scripts are invoked from that same Python environment).
 
 Began as a local replication of Anthropic's J-lens / global-workspace
 interpretability work (July 2026) against Qwen3.6-27B on Apple Silicon. It
