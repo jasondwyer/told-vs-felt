@@ -9,15 +9,37 @@ context text gitleaks matched with the secret already redacted, and Code's triag
 with its reason. Verdicts are keyed by fingerprint, and a finding with no verdict is
 printed as UNTRIAGED. No secret value is ever written: the report is redacted at source.
 
-Release run (the PI's answer of 2026-10-12, "Yes to all five; tag it"): the default output is
-the NEW dated raw results/raw/2026-10-12_note-N12-gitleaks-release.md, and the script refuses
-to write any path git already tracks, so a committed raw is never overwritten. It also runs
-`gitleaks dir` over .txt copies of the five release files (the preprint, note v0.6, the three
-2026-10-10 renders) as HEAD holds them: each is read from HEAD's blob (`git cat-file`), its
-sha256 asserted, and the working-tree copy asserted equal. gitleaks' default config skips .svg
-files by path (accepted by the PI, answer 4), and the copies are an extra check, not a substitute.
+Release runs. v1 (tag note-2026-10-v1; the PI's answer of 2026-10-12, "Yes to all five; tag it")
+wrote results/raw/2026-10-12_note-N12-gitleaks-release.md over the five v1 release files (the
+preprint at patch v7, note v0.6, the three 2026-10-10 renders); DEFAULT_OUT_V1, RELEASE_V1,
+KNOWN_ATTR_PATHS_V1, KNOWN_SKIP_PATHS_V1 and BASIS_V1 keep that run's values as its record. v2 (tag
+note-2026-10-v2; the design seat's answers of 2026-10-28 with the PI's "Yes to all",
+results/raw/2026-10-28_note-design-to-code_release-block-answers.md, section 5, 3a-3b): the default
+output is the NEW dated raw results/raw/2026-10-29_note-N12-gitleaks-release.md, and the script
+refuses to write any path git already tracks, so a committed raw is never overwritten. It also runs
+`gitleaks dir` over .txt copies of the five release files (the preprint, patch v8 under its status
+banner; note v0.8; the three 2026-10-22 renders) as HEAD holds them: each is read from HEAD's blob
+(`git cat-file`), its sha256 asserted, and the working-tree copy asserted equal. gitleaks' default
+config skips .svg files by path (accepted by the PI, answer of 2026-10-12, question 4; the answers
+of 2026-10-28, section 5, 3b, add the three 2026-10-22 renders to the skip list on that basis), and
+the copies are an extra check, not a substitute.
+
+v2's pass line records the v2 basis (BASIS_V2, the line the answers' section 5, 3a give) only in the
+release raw itself (--out is DEFAULT_OUT); a rehearsal or a re-run (--out elsewhere, e.g. the tag-commit
+re-run, whose raw takes its own dated name) says so instead. It also states how far the run's coverage
+reaches and what covers the commits after it (TAG_RERUNS_V2: the scans re-run at the tag commit, before the
+push; 3g names gitleaks and the password search, and the PI's word of 2026-10-29 adds the history, content
+and licenses scripts, their raws committed after the tag, as v1's were). Item 4's basis is printed by part:
+the .svg skip (the 2026-10-12 answer, carried by the seat's item C), and trufflehog, which runs over all
+history in its own script (scripts/audit_note_N12_trufflehog.py), not this one, on the PI's word of
+2026-10-29 (TRUFFLEHOG_V2_PI_WORDS). Before the raw is written its text is checked for the
+origin-only ref the answers name (their section 2, read from the committed line at run time, never
+printed): the ref's namespace, or a hex run of 7+ characters that is a prefix of its id or its commit (or
+begins with one), refuses the write (exit 2, nothing written).
 
 The gate fails closed. It is a STOP (exit 1) when: a finding has no verdict or is a true secret;
+a TRIAGE entry added after v1's six (a finding new since v1's release run) has no recorded PI ruling
+(TRIAGE_V2_PI; the seat's item A: "any new finding is a fresh STOP");
 the copies have a finding; a release file is absent at HEAD or its hash does not match; a TRIAGE
 fingerprint is not re-found (history only grows, so every triaged finding must recur); either
 gitleaks report is absent or does not parse; the history scan logs no "commits scanned" line or
@@ -50,7 +72,7 @@ holding a random generic-api-key line is written at every history path in a temp
 and `gitleaks dir` is run over it; a path with no finding is skipped. Every historical version of
 every skipped path is then scanned as a .txt copy. A skipped path not in KNOWN_SKIP_PATHS is a STOP.
 
-    python -B scripts/audit_note_N12_gitleaks.py [--out results/raw/2026-10-12_note-N12-gitleaks-release.md]
+    python -B scripts/audit_note_N12_gitleaks.py [--out results/raw/2026-10-29_note-N12-gitleaks-release.md]
 """
 import argparse
 import hashlib
@@ -66,7 +88,39 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLOCK = "AUDIT-note-release-v1_2.md"
-DEFAULT_OUT = "results/raw/2026-10-12_note-N12-gitleaks-release.md"
+DEFAULT_OUT_V1 = "results/raw/2026-10-12_note-N12-gitleaks-release.md"   # v1's release run (2026-10-12): its record
+DEFAULT_OUT = "results/raw/2026-10-29_note-N12-gitleaks-release.md"   # the v2 release run (answers of 2026-10-28, section 5, 3b)
+# The companion raws of the v2 run's (i): the history script's release raw of the same run (HIST_RAW), and trufflehog's
+# (TRUFFLEHOG_RAW, below; the PI's word of 2026-10-29).
+HIST_RAW = "results/raw/2026-10-29_note-N12-history-release.md"
+# The v2 run's date is in its raws' names, and these two must name the same one. The answers of 2026-10-28 (section 1)
+# run block section 2 item 1 over 2026-10-29 to 10-31: if the run of record falls on another PI-local date, every v2
+# name changes in one edit across the N12 scripts (here DEFAULT_OUT, HIST_RAW and TRUFFLEHOG_RAW; the history script's
+# RELEASE_MD, RELEASE_JSON and TRUFFLEHOG_RAW_V2; the trufflehog script's DEFAULT_OUT, GL_RAW, HIST_RAW and docstring
+# command; the licenses script's docstring command; the scrub generator's RELEASE2_RAWS) before the scripts commit.
+assert os.path.basename(HIST_RAW)[:10] == os.path.basename(DEFAULT_OUT)[:10], "DEFAULT_OUT and HIST_RAW: two run dates"
+# The v2 tag (the release block of 2026-10-27, section 2 item 7; the answers of 2026-10-28, section 8: on the final
+# audit commit, before the push).
+TAG_V2 = "note-2026-10-v2"
+# Release v2: the scans the release sequence re-runs at the tag commit, before the push. TAG_RERUNS_3G is the record
+# (what the design seat's answers of 2026-10-28, section 5, 3g, name: outputs outside the repository, their counts in
+# the post-tag raw); TAG_RERUNS_V2 is the switch, extended on the PI's word of 2026-10-29 (his answer, item 3,
+# TAG_RERUNS_V2_PI_WORDS: all five, their raws committed after the tag, as v1's were; item 1 now is the baseline), and
+# the pass line's bound on this run's coverage follows it.
+TAG_RERUNS_3G = ("gitleaks", "password")
+TAG_RERUNS_V2 = ("gitleaks", "password", "history", "content", "licenses")
+TAG_RERUNS_V2_PI_WORDS = ("2026-10-29", "All five at the tag commit — history, content, licenses, gitleaks, the "
+                                        "password search — as v1 did, raws committed after the tag; item 1 now is "
+                                        "the baseline.")
+RERUN_NAMES = {"gitleaks": "gitleaks (this script)", "password": "the password search",
+               "history": "the history script", "content": "the content screen", "licenses": "the licenses script"}
+assert set(TAG_RERUNS_3G) <= set(TAG_RERUNS_V2) <= set(RERUN_NAMES), TAG_RERUNS_V2
+# The origin-only ref the design seat's answers of 2026-10-28 name (their section 2): its id and commit are read from
+# that committed line at run time (located by content, parsed as the scrub generator parses it), for the write guard
+# only, and never printed.
+ANSWERS_V2 = ("908a659", "results/raw/2026-10-28_note-design-to-code_release-block-answers.md")
+RX_TELEPORT_LINE = re.compile(r"refs/claude-teleport/([0-9a-f]{8,})`\s*\S+\s*`([0-9a-f]{7,40})`")
+RX_HEX7 = re.compile(r"[0-9a-fA-F]{7,}")
 GITLEAKS_VERSION = "8.30.1"
 SUPPRESS_ENV = ("GITLEAKS_CONFIG", "GITLEAKS_CONFIG_TOML")
 # gitleaks' inline-allow literal, built from two pieces so that neither this script nor its raw contains it
@@ -74,14 +128,24 @@ SUPPRESS_ENV = ("GITLEAKS_CONFIG", "GITLEAKS_CONFIG_TOML")
 ALLOW_LIT = "gitleaks" ":allow"
 ALLOW_SHOWN = "`gitleaks` + `:allow`"
 
-# The five release files the tag commit holds (the PI's answer of 2026-10-12, question 5), with
-# the sha256 each must have. gitleaks dir scans .txt copies of them.
-RELEASE = [
+# v1's record, not checked by this run: the five release files the v1 tag commit holds (the PI's answer of 2026-10-12,
+# question 5), with the sha256 each had.
+RELEASE_V1 = [
     ("PREPRINT-v1_0-draft.md", "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6"),
     ("RESEARCH-NOTE-v0_6-draft.md", "2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb"),
     ("2026-10-10_F1a_headline-strip.svg", "6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6"),
     ("2026-10-10_F1b_five-link-panels.svg", "6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e"),
     ("2026-10-10_F2_macar-lineage-roc_post.svg", "81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e"),
+]
+# The five release files of the v2 release (tag note-2026-10-v2), with the sha256 each must have: the preprint, patch v8
+# under its status banner (32aefcc), note v0.8, the text as posted (0de15a1), and the three 2026-10-22 renders (0a3f925)
+# (the release block of 2026-10-27, section 0; the answers of 2026-10-28, section 1). gitleaks dir scans .txt copies of them.
+RELEASE = [
+    ("PREPRINT-v1_0-draft.md", "5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467"),
+    ("RESEARCH-NOTE-v0_8-draft.md", "6fcfbfd64784412d616d4de40d4a6a54596202a052cb3dd0d9d78a26cbe1198d"),
+    ("2026-10-22_F1a_headline-strip.svg", "f0c1cd73e474eff54f11dd677a9b8e385ebae1e63cd667babc88d83123985bfc"),
+    ("2026-10-22_F1b_five-link-panels.svg", "640c13e87b161dc8c14e2813acba1dc6a09b94d7beb5b9d1784cfe34371633af"),
+    ("2026-10-22_F2_macar-lineage-roc_post.svg", "0e0459cf628ee7adef2d8c462a1b6c854d3a87a9743baa4f18b44134fbf969bc"),
 ]
 
 # Code's triage, keyed by the gitleaks fingerprint (commit:file:rule:line). Each entry was read
@@ -123,20 +187,57 @@ TRIAGE = {
         "checkpoint identity at :692, equal to the value at the triaged G-CAL_completability_qwen.json:44. It is "
         "a content hash, not a credential."),
 }
+# The first six TRIAGE entries are v1's record: the PI's four (entered at e0fd85c, 2026-10-09) and the two added for
+# v1's release run (e8fb54d, 2026-10-12); their order is asserted below (after PI_FOUR). Entries for the v2 release run
+# are appended after them: each is a finding new since v1's release run, so each is a fresh STOP under the seat's item
+# A ("any new finding is a fresh STOP"; the PI answered it on 2026-10-28, "Yes to all") unless TRIAGE_V2_PI records the
+# PI's dated words resolving it.
+TRIAGE_V1_N = 6
+TRIAGE_V1_RELEASE_ADDED = (
+    "f23b44408daf516552c0d11414c646ea0dd6213f:data/m/gates/G-SHAPE-F0.json:generic-api-key:378",
+    "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55:data/m/ckpt/G-CAL_qwen.json:generic-api-key:1",
+)
+# fingerprint (an entry added after v1's six) -> ("YYYY-MM-DD", the PI's words, verbatim) resolving that new finding.
+# None at this commit.
+TRIAGE_V2_PI = {}
+assert set(TRIAGE_V2_PI) <= set(list(TRIAGE)[TRIAGE_V1_N:]), "a TRIAGE_V2_PI key is not an entry added for v2"
+assert all(isinstance(v_, tuple) and len(v_) == 2 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", v_[0]) and v_[1].strip()
+           for v_ in TRIAGE_V2_PI.values()), "a TRIAGE_V2_PI value is not (date, the PI's words)"
 # Paths in history whose diff/binary attributes are set (git check-attr), known at the release preparation.
 # They are read because the history scan passes --text. A path not listed here is a STOP: the --text scan reads
 # it too, but whether gitleaks may read a -diff path is a question for the PI and the seat, path by path.
-KNOWN_ATTR_PATHS = {"data/m/ckpt/G-CAL_qwen.json"}
+KNOWN_ATTR_PATHS_V1 = {"data/m/ckpt/G-CAL_qwen.json"}
+# Added for the v2 release run: the four Q-F0 checkpoint paths (git check-attr: diff unset), listed on the PI's word of
+# 2026-10-28 ("Yes to all", to the design seat's item C, answers section 0); the seat's words (section 5, 3b): "the
+# blinding reason, m:318 "before VERDICTS", expired at VERDICTS on 2026-10-19". m:318 itself bars reads "before that
+# unit's VERDICTS are computed"; Q-F0's VERDICTS were computed on 2026-10-19 (bfc179c).
+KNOWN_ATTR_PATHS_ADDED_V2 = {
+    "data/m/ckpt/Q-F0_time.json",
+    "data/m/ckpt/Q-F0_id.json",
+    "data/m/ckpt/Q-F0_qual.json",
+    "data/m/ckpt/Q-F0_campaign.json",
+}
+KNOWN_ATTR_PATHS = KNOWN_ATTR_PATHS_V1 | KNOWN_ATTR_PATHS_ADDED_V2
 # History paths gitleaks' default global path allowlist skips (measured by the probe), known at the release
 # preparation: the three 2026-10-10 renders (the .svg skip, the PI's answer of 2026-10-12, question 4) and the
 # .png added in ba67acb. Every historical version of a skipped path is scanned as a .txt copy; a skipped path
 # not listed here is a STOP.
-KNOWN_SKIP_PATHS = {
+KNOWN_SKIP_PATHS_V1 = {
     "2026-10-10_F1a_headline-strip.svg",
     "2026-10-10_F1b_five-link-panels.svg",
     "2026-10-10_F2_macar-lineage-roc_post.svg",
     "figures/fig1_inverted_u.png",
 }
+# Added for the v2 release run: the three 2026-10-22 renders (0a3f925), on the basis of the PI's answer of 2026-10-12,
+# question 4, carried by the answers of 2026-10-28 (section 5, 3b). The probe is the authority, and listing a path here
+# does not make gitleaks skip it: a skipped path not listed is a STOP, and a listed path the probe finds read is
+# printed in the raw (not a STOP: the history scan reads it).
+KNOWN_SKIP_PATHS_ADDED_V2 = {
+    "2026-10-22_F1a_headline-strip.svg",
+    "2026-10-22_F1b_five-link-panels.svg",
+    "2026-10-22_F2_macar-lineage-roc_post.svg",
+}
+KNOWN_SKIP_PATHS = KNOWN_SKIP_PATHS_V1 | KNOWN_SKIP_PATHS_ADDED_V2
 # Root names gitleaks dir reads as its own config or ignore file: never mirrored by the probe.
 GL_ROOT_NAMES = (".gitleaks.toml", ".gitleaksignore")
 # The PI's four (routing of 2026-10-09), by fingerprint.
@@ -146,6 +247,45 @@ PI_FOUR = (
     "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55:data/m/gates/G-CAL_completability_qwen.json:generic-api-key:44",
     "1bdf16c149698e3b1181f082b8c169727e9df3c8:data/e2d/closure_valuescheck.json:generic-api-key:46",
 )
+assert list(TRIAGE)[:TRIAGE_V1_N] == list(PI_FOUR) + list(TRIAGE_V1_RELEASE_ADDED), "TRIAGE's first six are not v1's"
+# The basis the pass line states for (i). v1's, its record (printed by v1's run in results/raw/2026-10-12_note-N12-gitleaks-release.md):
+BASIS_V1 = ("By the PI's answer of 2026-10-12 (question 3), ruling 4 (the PI's rulings of 2026-10-09, item 4) "
+            "covers the release run's (i) when this raw and results/raw/2026-10-12_note-N12-history-release.md both "
+            "show 0 true-secret candidates and 0 untriaged.")
+# The v2 run's, in the form the design seat's answers of 2026-10-28 give for the history script's (i) line
+# (results/raw/2026-10-28_note-design-to-code_release-block-answers.md, section 5, 3a): the first clause is the PI's
+# words; the rest is labelled the seat's item A, which the PI's answer covers.
+BASIS_V2 = ('PI (2026-10-28): "Yes to all". Referent, the design seat\'s item A as put: ruling 4 (the PI\'s rulings of '
+            '2026-10-09, item 4) carries to the v2 run\'s (i), conditional on 0 true-secret candidates and 0 untriaged on '
+            'the re-run; any new finding is a fresh STOP.')
+# BASIS_V2 is 3a's line, verbatim; its words after "as put:" are 3a's rendering of item A (section 0), not item A's own
+# text, so the raw names the line's source after it.
+BASIS_V2_SOURCE = "(The line as the answers of 2026-10-28, section 5, 3a, give it.)"
+# Item 4 of the PI's answer of 2026-10-12 (gitleaks' default .svg skip; trufflehog not run, for v1's run), by part, for
+# the v2 run. The .svg skip: that answer, carried to the three 2026-10-22 renders by the design seat's item C, which the
+# PI answered on 2026-10-28. trufflehog: run, on the PI's word of 2026-10-29 (TRUFFLEHOG_V2_PI_WORDS, below). The words below are the records', verbatim (PI_ANSWER_2026_10_12 as v1's record gives it,
+# the history script's constant of that name; the other three are the answers at 908a659, lines 7, 11 and 41).
+PI_ANSWER_2026_10_12 = "Yes to all five; tag it"
+PI_ANSWER_2026_10_28 = "Yes to all"
+ITEM_C_SVG_WORDS = "the three SVGs on the skip list"
+SEAT_3B_SVG_WORDS = ("Add the three 2026-10-22 SVGs to the skip list on the basis of the PI's 2026-10-12 answer to "
+                     "question 4.")
+# The seat's words on the four -diff paths (the answers at 908a659, line 41: 3b), printed as the seat's, not m:318's.
+SEAT_3B_BLIND_WORDS = 'the blinding reason, m:318 "before VERDICTS", expired at VERDICTS on 2026-10-19'
+# trufflehog for v2: the PI's word of 2026-10-29 (his answer to Code's question, item 2), verbatim. trufflehog runs over
+# all history in its own script (TRUFFLEHOG_SCRIPT), to its own dated raw, not in this one; the raw cites the words.
+TRUFFLEHOG_V2_PI_WORDS = ("2026-10-29", "Install and run trufflehog over all history for v2, verified-only mode, raw "
+                                        "committed; triage any finding as gitleaks’ were; TRUE-SECRET or UNTRIAGED "
+                                        "is a STOP")
+# and his answer the same day to Code's question on trufflehog's unknown results (verification errored or withheld)
+TRUFFLEHOG_UNKNOWN_PI_WORDS = ("2026-10-29", "Yes, show and triage")
+TRUFFLEHOG_SCRIPT = "scripts/audit_note_N12_trufflehog.py"
+TRUFFLEHOG_RAW = "results/raw/2026-10-29_note-N12-trufflehog-release.md"
+assert os.path.basename(TRUFFLEHOG_RAW)[:10] == os.path.basename(DEFAULT_OUT)[:10], "TRUFFLEHOG_RAW: another run date"
+assert TRUFFLEHOG_V2_PI_WORDS is None or (
+    isinstance(TRUFFLEHOG_V2_PI_WORDS, tuple) and len(TRUFFLEHOG_V2_PI_WORDS) == 2
+    and re.fullmatch(r"\d{4}-\d{2}-\d{2}", TRUFFLEHOG_V2_PI_WORDS[0]) and TRUFFLEHOG_V2_PI_WORDS[1].strip()), \
+    "TRUFFLEHOG_V2_PI_WORDS is not (date, the PI's words)"
 
 
 def git(*args, **kw):
@@ -257,6 +397,96 @@ def sha256(path):
     return h.hexdigest()
 
 
+def teleport_vals():
+    """The write guard's values, [(label, value)], for the origin-only ref the answers name: its id, and its commit (in
+    full where the local object store resolves it; `git rev-parse` only reads), parsed from their committed line
+    (ANSWERS_V2, located by content). None when that line cannot be read or parsed: the write is then refused."""
+    b = git("cat-file", "blob", "%s:%s" % ANSWERS_V2, text=True)
+    lines = [x for x in b.stdout.split("\n") if "claude-teleport/" in x] if b.returncode == 0 else []
+    m = RX_TELEPORT_LINE.search(lines[0]) if len(lines) == 1 else None
+    if not m:
+        return None
+    full = git("rev-parse", "--verify", "-q", m.group(2) + "^{commit}", text=True).stdout.strip()
+    return [("the origin-only ref's id", m.group(1)),
+            ("the origin-only ref's commit",
+             full if re.fullmatch(r"[0-9a-f]{40}", full) and full.startswith(m.group(2)) else m.group(2))]
+
+
+def guarded(text, vals):
+    """The guarded classes `text` carries, by label only (a value is never returned or printed): the origin-only ref's
+    namespace; a hex run of 7+ characters that is a prefix of a guarded value, or begins with one."""
+    bad = ["the origin-only ref's namespace"] if re.search(r"claude-teleport/", text, re.I) else []
+    runs = set(h.lower() for h in RX_HEX7.findall(text))
+    for lab, v in vals:
+        if any(v.startswith(h) or h.startswith(v) for h in runs):
+            bad.append(lab)
+    return bad
+
+
+def tag_commit(tag):
+    """The commit `tag` points at (peeled), or None when there is no such tag."""
+    r = git("rev-parse", "--verify", "-q", "refs/tags/%s^{commit}" % tag, text=True)
+    return r.stdout.strip() if r.returncode == 0 and r.stdout.strip() else None
+
+
+def and_list(xs):
+    """'a', 'a and b', 'a, b and c'."""
+    xs = list(xs)
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def tag_reruns_text():
+    """Release v2: the re-runs at the tag commit as TAG_RERUNS_V2 holds them, each part with its basis."""
+    named = [RERUN_NAMES[x] for x in TAG_RERUNS_V2 if x in TAG_RERUNS_3G]
+    extra = [RERUN_NAMES[x] for x in TAG_RERUNS_V2 if x not in TAG_RERUNS_3G]
+    return (and_list(named) + " (the design seat's answers of 2026-10-28, section 5, 3g)"
+            + ((", and " + and_list(extra) + " (beyond 3g's two, on the PI's word of %s, which also sets the re-runs' "
+                "form, verbatim: \"%s\")" % TAG_RERUNS_V2_PI_WORDS) if extra else ""))
+
+
+def coverage_v2(head, tag_c, rel_raw):
+    """Release v2: how far this run's coverage reaches, and what covers the commits after it (TAG_RERUNS_V2). `tag_c` is
+    the commit TAG_V2 points at (None before the tag); `rel_raw` says whether this output is the release raw."""
+    reruns = (("The re-runs at the tag commit, before the push, their raws committed after the tag: %s."
+               if set(TAG_RERUNS_V2) - set(TAG_RERUNS_3G) else
+               "The re-runs at the tag commit, before the push (outputs outside the repository, their counts in the "
+               "post-tag raw): %s.") % tag_reruns_text())
+    after_tag = "the commits after the tag commit (the post-tag raw's) are covered by no gitleaks run"
+    if tag_c == head:
+        return ("This run is at the tag commit (`%s` points at HEAD `%s`): it covers the history the tag holds, the "
+                "re-run's scope; %s. %s" % (TAG_V2, head[:10], after_tag, reruns))
+    if tag_c:
+        return ("This run covers the history at HEAD `%s`, after the tag commit (`%s` at `%s`): the release sequence "
+                "has no gitleaks run after the re-run at the tag commit. %s" % (head[:10], TAG_V2, tag_c[:10], reruns))
+    return ("This run covers the history at HEAD `%s`. The commits after it -- the commit that adds %s, block section 2 "
+            "items 2-7 (N1 round 11, the README regression count, N18, the README-NOTE re-point, the preflip script, "
+            "the tag commit) and any other commit made before the tag -- are covered for gitleaks only by its re-run at "
+            "the tag commit; %s. %s" % (
+                head[:10], "this raw" if rel_raw else "the release raw `%s`" % DEFAULT_OUT, after_tag, reruns))
+
+
+def item4_parts():
+    """Release v2: item 4's basis on this run, by part -- (the .svg skip, trufflehog)."""
+    svg = ("the .svg skip -- the PI's answer of 2026-10-12 to question 4 (verbatim: \"%s\"), for v1's release run, "
+           "extended to the three 2026-10-22 renders by the design seat's item C (as put: \"%s\"; its answers of "
+           "2026-10-28, section 5, 3b: \"%s\"), which the PI answered on 2026-10-28: \"%s\"" % (
+               PI_ANSWER_2026_10_12, ITEM_C_SVG_WORDS, SEAT_3B_SVG_WORDS, PI_ANSWER_2026_10_28))
+    if TRUFFLEHOG_V2_PI_WORDS is None:
+        th = ("trufflehog not run -- no v2 record names it (the release block of 2026-10-27, section 2 item 1, lists "
+              "gitleaks, not trufflehog); its only basis is the 2026-10-12 answer's item 4, given for v1's run")
+    else:
+        th = ("trufflehog -- run over all history in its own script (`%s`, raw `%s`), not in this one: the PI's words "
+              "of %s, verbatim: \"%s\"; and his answer the same day on its unknown results (verification errored or "
+              "withheld), verbatim: \"%s\" (verified and unknown results shown and triaged)" % (
+                  (TRUFFLEHOG_SCRIPT, TRUFFLEHOG_RAW) + TRUFFLEHOG_V2_PI_WORDS + (TRUFFLEHOG_UNKNOWN_PI_WORDS[1],)))
+    return svg, th
+
+
+def shown_path(outp, rel_out):
+    """An output path as stdout may print it: repository-relative inside the repository, else its basename only."""
+    return rel_out if not rel_out.startswith("..") else "<outside the repository>/" + os.path.basename(outp)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=DEFAULT_OUT)
@@ -278,8 +508,16 @@ def main():
     if tracked:
         print("refused: %s is tracked by git; a committed raw is never overwritten" % a.out)
         return 2
+    # the write guard's values (the origin-only ref the answers name), read before any scan; never printed
+    tvals = teleport_vals()
+    if tvals is None:
+        print("refused: the write guard's values (the origin-only ref the design seat's answers name, their section 2) "
+              "could not be read from %s:%s; nothing written" % ANSWERS_V2)
+        return 2
     ver = subprocess.run(["gitleaks", "version"], capture_output=True, text=True).stdout.strip()
     head = git("rev-parse", "HEAD", text=True).stdout.strip()
+    tag_c = tag_commit(TAG_V2)
+    rel_raw = rel_out == DEFAULT_OUT
     # Inputs that change gitleaks' rules or suppress its findings. Each present one is a STOP.
     suppress = []
     for label, path in ((".gitleaks.toml at the repo root", os.path.join(ROOT, ".gitleaks.toml")),
@@ -454,6 +692,16 @@ def main():
       "(`git log --all --name-only` through `git check-attr diff binary`; %d paths checked): %s%s." % (
           len(names), ", ".join("`%s`" % p for p in attr_paths) or "none",
           "" if attr_ok else " -- the attribute check did not complete (STOP)"))
+    attr_v1 = [p for p in attr_paths if p in KNOWN_ATTR_PATHS_V1]
+    attr_v2 = [p for p in attr_paths if p in KNOWN_ATTR_PATHS_ADDED_V2]
+    if attr_v1 or attr_v2:
+        w("- Of these, known at v1's release run (2026-10-12): %s; listed for the v2 release run on the PI's word of "
+          "2026-10-28 (\"%s\", to the design seat's item C: results/raw/2026-10-28_note-design-to-code_release-block-"
+          "answers.md, section 0; the seat's words, its section 5, 3b: \"%s\"; m:318's own words are those of the "
+          "bullet above, \"before that unit's VERDICTS are computed\", and Q-F0's VERDICTS were computed on 2026-10-19, "
+          "`bfc179c`): %s." % (
+              ", ".join("`%s`" % p for p in attr_v1) or "none", PI_ANSWER_2026_10_28, SEAT_3B_BLIND_WORDS,
+              ", ".join("`%s`" % p for p in attr_v2) or "none"))
     if new_attr:
         w("- Attribute path(s) not known at the release preparation -- STOP (whether gitleaks may read a -diff path "
           "is the PI's and the seat's question, path by path): %s." % ", ".join("`%s`" % p for p in new_attr))
@@ -527,8 +775,10 @@ def main():
     w("")
     dshown = " ".join(dcmd[:-1]).replace(drep, "<tmp>/dir_report.json")
     w("- gitleaks' default config skips `.svg` files by path (its global allowlist), so the history scan above does "
-      "not read the three renders; the PI accepted that skip (answer of 2026-10-12, question 4), and the next section "
-      "scans every version of every skipped path as a copy. As a check on the release files themselves the "
+      "not read the renders (the three 2026-10-22 release renders, and the three 2026-10-10 renders of v1's release); "
+      "the PI accepted that skip (answer of 2026-10-12, question 4), and the design seat's answers of 2026-10-28 "
+      "(section 5, 3b; the PI's \"Yes to all\") add the three 2026-10-22 renders to the skip list on that basis; the next "
+      "section scans every version of every skipped path as a copy. As a check on the release files themselves the "
       "five release files are read from HEAD's blobs (`git cat-file blob HEAD:<name>`), each blob's sha256 asserted "
       "and the working-tree file asserted equal, and the HEAD bytes written, each with `.txt` appended to its name, "
       "into a temporary directory and scanned there: `%s <tmp>/release`; exit code %d. Report file: %s." % (
@@ -568,6 +818,11 @@ def main():
           "" if p_ok else " The probe did not complete (a report absent or unparsable, or no \"scanned ~\" line) -- STOP."))
     if new_skip:
         w("- Skipped path(s) not known at the release preparation -- STOP: %s." % ", ".join("`%s`" % x for x in new_skip))
+    # Listed as skipped, but the probe found them read (not a STOP: the history scan reads them); shown, not assumed.
+    read_listed = sorted(set(probed) & found & KNOWN_SKIP_PATHS)
+    if read_listed:
+        w("- Listed as skipped (KNOWN_SKIP_PATHS) but read by the default config (the probe gave a finding there, so the "
+          "history scan reads them; not a STOP): %s." % ", ".join("`%s`" % x for x in read_listed))
     w("- Every historical version of each skipped path (`git log --all -m --no-renames -- <path>`, each commit's "
       "blob, deduplicated) is written as a `.txt` copy into a temporary directory and scanned: `%s <tmp>/skipped`; "
       "exit code %d. Versions per path: %s; distinct blobs copied: %d. Report file: %s." % (
@@ -601,18 +856,32 @@ def main():
         len(dfind), rel_bad))
     w("- Skipped history paths: %d (%s); their %d historical versions as copies: %d findings." % (
         len(skipped), ", ".join("`%s`" % x for x in skipped) or "none", sum(n for _p, n in skip_rows), len(sfind)))
-    w("- Of the triaged findings, two are in this audit's own triage table (`961e90a`); the others are a content hash "
-      "in a G-CAL gate artifact, a claim identifier in an e2d values-check record, and (added for the release run) a "
+    # release v2: each entry added after v1's six is a finding new since v1's release run, a fresh STOP under the seat's
+    # item A unless TRIAGE_V2_PI records the PI's dated words resolving it
+    added_v2 = list(TRIAGE)[TRIAGE_V1_N:]
+    added_v2_open = [k for k in added_v2 if k not in TRIAGE_V2_PI]
+    w("- Of the triaged findings, the %d entries of v1's release run (2026-10-12): two are in this audit's own triage "
+      "table (`961e90a`); the others are a content hash "
+      "in a G-CAL gate artifact, a claim identifier in an e2d values-check record, and (added for v1's release run) a "
       "source file's sha256 in the G-SHAPE-F0 gate's provenance (`f23b444`, dated 2026-10-10, after the PI's scan) "
       "and the same G-CAL key-set hash in the G-CAL checkpoint's identity (`cf8eb5b`, data/m/ckpt/, read only by the "
       "--text scan; verified 64-character lowercase hex equal to gcal.py's key_set_sha256 without reading the "
       "blinded file out). "
       "All are matched by the generic-api-key rule on a field, column or path word ('token', 'key', 'key_set_sha256', "
-      "'keys').")
+      "'keys'). TRIAGE entries added for the v2 release run (findings new since v1's release run): %d%s." % (
+          TRIAGE_V1_N, len(added_v2),
+          (" (" + "; ".join("`%s` %s, %s" % (
+              k, TRIAGE[k][0], ("the PI's words of %s: \"%s\"" % TRIAGE_V2_PI[k]) if k in TRIAGE_V2_PI
+              else "no PI ruling recorded -- a fresh STOP (the seat's item A)") for k in added_v2) + ")")
+          if added_v2 else ""))
+    th_path = shutil.which("trufflehog")
+    svg_b, th_b = item4_parts()
     w("- Block :77 makes any hit in history a STOP on the release that the PI resolves, and history rewriting is "
-      "the PI's decision. The PI's D1 routing (2026-10-09) is to leave history as is. trufflehog was not run (not "
-      "installed); the PI accepted that, and the .svg skip, in the answer of 2026-10-12 (question 4). The default "
-      "config also skips the .png listed above; its versions are scanned as copies in the section above.")
+      "the PI's decision. The PI's D1 routing (2026-10-09) is to leave history as is. trufflehog is not run by this "
+      "script (%s). Item 4's basis on this run, by part: %s; %s. The default config also skips the .png listed above; "
+      "its versions are scanned as copies in the section above." % (
+          "not installed: `shutil.which` finds no trufflehog" if not th_path
+          else "installed on this machine; it runs in its own script, `%s`" % TRUFFLEHOG_SCRIPT, svg_b, th_b))
     reasons = []
     if untriaged:
         reasons.append("%d untriaged finding(s)" % untriaged)
@@ -624,6 +893,10 @@ def main():
         reasons.append("%d release file(s) absent at HEAD or with a hash mismatch" % rel_bad)
     if missing:
         reasons.append("%d TRIAGE entr(ies) not re-found" % len(missing))
+    if added_v2_open:
+        reasons.append("%d finding(s) new since v1's release run with no PI ruling recorded (TRIAGE entries added for "
+                       "v2: %s) -- a fresh STOP under the design seat's item A (\"any new finding is a fresh STOP\"); "
+                       "the PI resolves it" % (len(added_v2_open), ", ".join("`%s`" % k for k in added_v2_open)))
     if loaded is None:
         reasons.append("the history report is absent or does not parse")
     if dloaded is None:
@@ -657,21 +930,37 @@ def main():
     if stop:
         w("- STOP: %s. The release waits on the PI." % "; ".join(reasons))
     else:
+        new_s = ("no finding new since v1's release run (TRIAGE entries added for v2: 0)" if not added_v2 else
+                 "%d finding(s) new since v1's release run, each resolved by the PI's dated words (TRIAGE_V2_PI): %s" % (
+                     len(added_v2), "; ".join("`%s` (the PI, %s: \"%s\")" % ((k,) + TRIAGE_V2_PI[k]) for k in added_v2)))
+        # release v2: the PI's basis is recorded in the release raw only; a rehearsal or a re-run says so instead
+        if rel_raw:
+            basis_s = ("%s %s This raw is gitleaks' part of that condition (0 true-secret candidates, 0 untriaged, and "
+                       "no finding new since v1's release run without the PI's word), %s is the history script's and %s "
+                       "trufflehog's (the PI's words of 2026-10-29); (i) carries only when all three pass their parts (0 "
+                       "true-secret candidates and 0 untriaged in each; the history raw's STOP set also holds any "
+                       "IDENTIFIER value with no entry)." % (BASIS_V2, BASIS_V2_SOURCE, HIST_RAW, TRUFFLEHOG_RAW))
+        else:
+            basis_s = ("(A rehearsal or a re-run: --out is not the release raw `%s`, which alone records the basis of "
+                       "(i).)" % DEFAULT_OUT)
         w("- gitleaks' part of (i): 0 TRUE-SECRET and 0 UNTRIAGED in history (every file rendered as text by git, "
           "the -diff path class included; gitleaks' default global path allowlist skips %d history paths, %s, and "
-          "every version of each is scanned as a copy with 0 findings), every TRIAGE entry re-found, every scan "
+          "every version of each is scanned as a copy with 0 findings), every TRIAGE entry re-found, %s, every scan "
           "completed on the default config (commits scanned = git rev-list --all --count less any listed "
           "deletion-only commits, 0 ERR lines); 0 findings on the release-file copies; the five release files at "
-          "HEAD match. By the PI's answer of 2026-10-12 (question 3), ruling 4 (the PI's rulings of 2026-10-09, item 4) "
-          "covers the release run's (i) when this raw and results/raw/2026-10-12_note-N12-history-release.md both "
-          "show 0 true-secret candidates and 0 untriaged." % (
-              len(skipped), ", ".join("`%s`" % x for x in skipped)))
+          "HEAD match. %s %s" % (
+              len(skipped), ", ".join("`%s`" % x for x in skipped), new_s, basis_s, coverage_v2(head, tag_c, rel_raw)))
     text = "\n".join(out) + "\n"
+    # the write guard: the origin-only ref the answers name is never written (its classes are named, never its values)
+    bad = guarded(text, tvals)
+    if bad:
+        print("refused: the raw would carry %s; nothing written" % "; ".join(bad))
+        return 2
     with open(outp, "w", encoding="utf-8") as fh:
         fh.write(text)
     print("wrote %s: %d history findings, %d untriaged, %d true-secret; release copies: %d findings, %d hash mismatches; "
-          "skipped paths %d, their copies %d findings" % (a.out, len(findings), untriaged, true_c, len(dfind), rel_bad,
-                                                          len(skipped), len(sfind)))
+          "skipped paths %d, their copies %d findings" % (shown_path(outp, rel_out), len(findings), untriaged, true_c,
+                                                          len(dfind), rel_bad, len(skipped), len(sfind)))
     return 1 if stop else 0
 
 

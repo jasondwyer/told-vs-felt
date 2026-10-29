@@ -99,9 +99,47 @@ the run records their count and names only. (d) On the release run only (both ou
 --pin), when TRUE-SECRET-CANDIDATE is 0 and UNTRIAGED is 0 in every table, the (i) line records the PI's answer to
 Code's item 3 (ruling 4 covers the release run's (i)) verbatim instead of 'STOP pending the PI'; otherwise (i) stays a
 STOP. (e) With gitleaks installed, (i-a) says that gitleaks runs in its own script, not in this one, and trufflehog is
-not run (item 4). (f) Release fix round 3: a SHAPE_TRIAGE16 entry for the final gitleaks script's probe template; the
-release run, made at R2 before the push, states what the origin/main ancestry check finds for refs that are ahead of
+not run (item 4; for v2, (i-a) says trufflehog runs in its own script, release v2 (g)). (f) Release fix round 3: a
+SHAPE_TRIAGE16 entry for the final gitleaks script's probe template; the release run, made at R2 before the push, states what the origin/main ancestry check finds for refs that are ahead of
 origin/main (not yet pushed) instead of saying their blobs are already in history GitHub accepted.
+
+Release v2 (2026-10-29; the second release, tag note-2026-10-v2; block section 2 item 1 of
+results/raw/2026-10-27_note-design-to-code_release-block.md at 2fb0cf0, with the design seat's answers of 2026-10-28 at
+908a659, which carry the PI's decisions of 2026-10-28, verbatim: "Yes to all"). (a) RELEASE_MD / RELEASE_JSON name the
+v2 run's two NEW dated raws (2026-10-29); v1's names stay as RELEASE_MD_V1 / RELEASE_JSON_V1 (the record), and v1's
+answer constants stay, keyed to v1's run. (b) The v2 release run's (i) line records I_BASIS_V2, verbatim (the answers,
+section 5, 3a): the PI's "Yes to all", with the design seat's item A labelled as its referent, under the same condition
+as v1 (TRUE-SECRET-CANDIDATE 0 and UNTRIAGED 0 in every table) and, by the PI's STOP set of 2026-10-29, no IDENTIFIER
+value with no entry ((g)); otherwise (i) stays a STOP. Item 4's basis on the v2
+run is ITEM4_BASIS_V2, by part: the .svg skip is the 2026-10-12 answer's item 4 (in Code's words), extended to the three
+2026-10-22 SVGs by the seat's item C; trufflehog is run over all history in its own script
+(scripts/audit_note_N12_trufflehog.py), not in this one, on the PI's word of 2026-10-29 (TRUFFLEHOG_V2_PI_WORDS, (g)).
+It is printed on the v2 release run (and its rehearsals) only. (c) The C2PA
+declaration is extended to the three filed 2026-10-22 renders on the PI's word (item C; the answers, section 5, 3c).
+(d) Code's triage of the values new since v1 (the commits after 98d07bc and the files not yet in history), each read in
+context: in TRIAGE16 (source TRIAGE16_V2_SOURCE), and the four new session URLs (IDENTIFIER) in MANUAL_TRIAGE
+(MANUAL_TRIAGE_V2), as v1's; both (i) lines count them from those entries over this run's tables. (e) The v2 run is
+block section 2 item 1, made before the later release commits (round 11, the README regression count, N18, the
+README-NOTE re-point, the preflip script, the tag); the texts that described v1's run at the tag commit say so, and
+V2_AFTER bounds it by TAG_RERUNS_V2 (the tag-commit re-runs: the answers' 3g's two, gitleaks and the password search,
+and the history, content and licenses scripts beside them on the PI's word of 2026-10-29, (g)). (f) Review fixes
+(2026-10-29): the unreachable commits are printed by count, committer time and guard form (`len10:` + sha8 of the 10-hex short id), never by id; the origin-only ref that the answers' section 2
+names is a guarded value (its id and commit are read at run time from the answers at 908a659, by content, as the scrub
+generator reads them, and are never printed; the commit is matched as the prefix of any hex run of 7+ characters); which
+unreachable commits were on GitHub is computed from the records in V2_RECORD_DOCS; --dump-untriaged also prints the
+id-shape sweep's unclassified tokens; V2_RUN_DATE (RELEASE_MD's date) is the one source of the run's printed date.
+(g) The PI's answers of 2026-10-29 to Code's four N12 questions (items 2-4 in PI_ANSWERS_2026_10_29, verbatim; item 1 is
+the licenses script's; the scrub index's section 14 records all four beside the answer of 2026-10-12) and his word the
+same day on item 4's reading
+(PI_RULE4_2026_10_29): trufflehog runs over all history in its own script (item 2; TRUFFLEHOG_V2_PI_WORDS); all five N12
+scans re-run at the tag commit, their raws committed after the tag, this run being the baseline (item 3; TAG_RERUNS_V2);
+the 23 v2 entries stand (item 4), and this run's STOP set is TRUE-SECRET-CANDIDATE, UNTRIAGED and any IDENTIFIER value
+with no entry (I_STOP_SET_V2_WORDS): a value whose IDENTIFIER verdict no explicit entry gives (triage_cf's session-link
+rule, the one rule that gives IDENTIFIER) holds (i) as a STOP. The session-URL fragments that rule classed take
+MANUAL_TRIAGE entries in their parent value's class (FRAGMENT_PARENTS_V2): the PI's four, and the fragment of v1's
+session URL, which his STOP set reaches too, on his answer the same day to Code's question on it (PI_FRAGMENT5_2026_10_29).
+The tag-commit re-run's output pair is added in Code's own commit before the second N18, on his word the same day
+(TAG_RUN_COMMIT_PI_WORDS); until then this script writes no tag-commit raw of record.
 
 --pin <commit>: scan the history as of <commit> (refs that descend from it are
 replaced by it; HEAD = <commit>; the fallback runs `git log -p <those refs>`).
@@ -131,10 +169,12 @@ TRIAGE16 / SHAPE_TRIAGE16, keyed by the first 16 hex -- never by the value itsel
     write nothing (exempt from the tracked-output refusal, so neither needs --in-place):
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --selftest
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --dump-untriaged [--dump-all]
-    release run (2026-10-12), at the release commit:
+    release run, v2 (2026-10-29; block section 2 item 1), at the release commit:
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py \
-        --out results/raw/2026-10-12_note-N12-history-release.md \
-        --json-out results/raw/2026-10-12_note-N12-history-release.json
+        --out results/raw/2026-10-29_note-N12-history-release.md \
+        --json-out results/raw/2026-10-29_note-N12-history-release.json
+    (v1's release run, 2026-10-12, at R2 = 98d07bc, wrote results/raw/2026-10-12_note-N12-history-release.md / .json;
+    committed at 11cc35b, they are never overwritten.)
 """
 import argparse
 import base64
@@ -161,8 +201,23 @@ DEFAULT_JSON = "results/raw/2026-10-08_note-N12-history.json"
 # Release (2026-10-12): the release run's two NEW dated raws. A committed raw is never overwritten silently: a
 # tracked output path is refused, except the two DEFAULT_* raws under --in-place (the documented in-place
 # regeneration of rounds 1-5); the release pair is never an overwrite target once it is committed.
-RELEASE_MD = "results/raw/2026-10-12_note-N12-history-release.md"
-RELEASE_JSON = "results/raw/2026-10-12_note-N12-history-release.json"
+# Release v2 (2026-10-29): RELEASE_* name the v2 release run's two NEW dated raws (block section 2 item 1 of
+# results/raw/2026-10-27_note-design-to-code_release-block.md; the tag note-2026-10-v2). The v1 release raws, committed
+# at 11cc35b, are the record of the first release run: their names are kept as RELEASE_MD_V1 / RELEASE_JSON_V1, and
+# an output at either is refused (not one of this part's own files; tracked).
+RELEASE_MD = "results/raw/2026-10-29_note-N12-history-release.md"
+RELEASE_JSON = "results/raw/2026-10-29_note-N12-history-release.json"
+RELEASE_MD_V1 = "results/raw/2026-10-12_note-N12-history-release.md"
+RELEASE_JSON_V1 = "results/raw/2026-10-12_note-N12-history-release.json"
+# Release v2 review fix (2026-10-29): the v2 run's date is RELEASE_MD's, the one source of every printed date of the run.
+# If the run slips past that date, RELEASE_MD / RELEASE_JSON are renamed together with the other N12 scripts' v2 names
+# (this script's TRUFFLEHOG_RAW_V2 and GL_RAW_V2; gitleaks DEFAULT_OUT / HIST_RAW / TRUFFLEHOG_RAW; the trufflehog
+# script's DEFAULT_OUT / GL_RAW / HIST_RAW and docstring command; the licenses outputs; the scrub's RELEASE2_RAWS), in one
+# edit before the scripts commit.
+V2_RUN_DATE = os.path.basename(RELEASE_MD)[:10]
+assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", V2_RUN_DATE) and os.path.basename(RELEASE_JSON)[:10] == V2_RUN_DATE
+# v1's release run: at R2, the commit the tag note-2026-10-v1 points to (its raws committed at 11cc35b)
+V1_RELEASE_COMMIT = "98d07bc"
 # Release (2026-10-12): the D4 patterns of Code's housekeeping (not objected by the PI). Every working-tree read of this script (the pending scan's
 # untracked and modified files, the jlens-qwen36 walk) withholds a file whose basename matches one of these
 # patterns, by name, never opened; the run records their count and names only.
@@ -176,15 +231,178 @@ PI_ANSWER_2026_10_12 = "Yes to all five; tag it"
 PI_ANSWER_ITEM3_CODE_WORDS = ("ruling 4 (the PI's rulings of 2026-10-09, item 4, which resolved N12 (i)) covers "
                               "the release run's (i) (0 true-secret candidates, 0 untriaged)")
 PI_ANSWER_ITEM4_CODE_WORDS = "gitleaks' default skip of .svg files and trufflehog not run are acceptable"
+# Release v2 (2026-10-29): the three constants above are v1's record, keyed to v1's run (RELEASE_MD_V1); the v2 release
+# run's (i) line carries I_BASIS_V2 instead. The PI's words of 2026-10-28 are "Yes to all" (to the design seat's items
+# A-G); the sentence they answer, item A, is the seat's. I_BASIS_V2 is the line the seat's answers of 2026-10-28 give
+# for the v2 run's (i), verbatim (results/raw/2026-10-28_note-design-to-code_release-block-answers.md, section 5, 3a,
+# at 908a659): its first clause is the PI's, the rest is labelled the seat's, as PI_ANSWER_ITEM3_CODE_WORDS labels
+# Code's. It is recorded on the (i) line of the v2 release run only (both outputs at the RELEASE_* names, no --pin) and
+# only when TRUE-SECRET-CANDIDATE is 0 and UNTRIAGED is 0 in every table and no IDENTIFIER value has no entry (the PI's
+# STOP set of 2026-10-29, I_STOP_SET_V2_WORDS); otherwise (i) stays a STOP.
+PI_ANSWER_2026_10_28 = "Yes to all"
+I_BASIS_V2 = ("PI (2026-10-28): \"Yes to all\". Referent, the design seat's item A as put: ruling 4 (the PI's rulings "
+              "of 2026-10-09, item 4) carries to the v2 run's (i), conditional on 0 true-secret candidates and 0 "
+              "untriaged on the re-run; any new finding is a fresh STOP.")
+assert I_BASIS_V2.startswith('PI (2026-10-28): "' + PI_ANSWER_2026_10_28 + '". ')
+# Release v2 review fix (2026-10-29): item A as the seat put it to the PI (the answers, section 0, :9), verbatim. I_BASIS_V2
+# is the seat's 3a rendering of it (section 5, :40), which 3a binds as the line to print; the JSON records both, so the
+# difference in wording is visible (routed to the seat). Both are asserted verbatim in the answers at run time.
+ITEM_A_AS_PUT = ("Ruling 4 (10-09, item 4) carries to the v2 run's N12 (i), conditional on 0 true-secret candidates and 0 "
+                 "untriaged on the re-run; any new finding is a fresh STOP. Code prints your answer verbatim on the (i) "
+                 "line, so it has to be your sentence, dated.")
+# Release v2 (2026-10-29), review fix (history-2): the basis of item 4 on the v2 run, by part. (1) The .svg skip: the
+# PI's answer of 2026-10-12, its item 4 (PI_ANSWER_ITEM4_CODE_WORDS: Code's words), extended to the three 2026-10-22 SVGs
+# by the design seat's item C (the seat's words; answers section 0 and section 5, 3b), which the PI answered on
+# 2026-10-28: "Yes to all". (2) trufflehog: run over all history in its own script (TRUFFLEHOG_SCRIPT), on the PI's word
+# of 2026-10-29, item 2 (TRUFFLEHOG_V2_PI_WORDS, below); before that word its only basis was the 2026-10-12 answer's item
+# 4, given for v1's run.
+# Release v2 (2026-10-29): the PI's answers of 2026-10-29 to Code's four N12 questions, in chat, verbatim (items 2-4 are
+# this script's; item 1, the licenses class of the PI's site, is the licenses script's), and his word the same day on
+# item 4's reading. The scrub index records them beside the PI's answer of 2026-10-12 (its section 14).
+PI_ANSWERS_2026_10_29 = {
+    2: ("Install and run trufflehog over all history for v2, verified-only mode, raw committed; triage any finding as "
+        "gitleaks’ were; TRUE-SECRET or UNTRIAGED is a STOP"),
+    3: ("All five at the tag commit — history, content, licenses, gitleaks, the password search — as v1 did, raws "
+        "committed after the tag; item 1 now is the baseline."),
+    4: ("The 23 stand. New values from the commits since v1 get their own entries; any value not cleared FALSE-POSITIVE, "
+        "LOCAL-PATH or PUBLIC by an explicit entry is UNTRIAGED and a STOP, per item A."),
+}
+PI_RULE4_2026_10_29 = ("v1 rules. The STOP set for the v2 history run is TRUE-SECRET-CANDIDATE, UNTRIAGED, and any "
+                       "IDENTIFIER value with no entry. Add entries for the four session-URL fragments now (the parent "
+                       "value’s class); SSH-SIGNATURE lines are mechanical. Then run the record.")
+# this run's (i) STOP set, the PI's sentence of it (asserted verbatim in PI_RULE4_2026_10_29)
+I_STOP_SET_V2_WORDS = ("The STOP set for the v2 history run is TRUE-SECRET-CANDIDATE, UNTRIAGED, and any IDENTIFIER "
+                       "value with no entry.")
+assert I_STOP_SET_V2_WORDS in PI_RULE4_2026_10_29
+# trufflehog's v2 part: its own script and dated raw (the raw's date is this run's, V2_RUN_DATE)
+TRUFFLEHOG_SCRIPT = "scripts/audit_note_N12_trufflehog.py"
+TRUFFLEHOG_RAW_V2 = "results/raw/2026-10-29_note-N12-trufflehog-release.md"
+assert os.path.basename(TRUFFLEHOG_RAW_V2)[:10] == V2_RUN_DATE, "TRUFFLEHOG_RAW_V2 and RELEASE_MD: two run dates"
+# The PI's word on trufflehog for the v2 run (his answer of 2026-10-29, item 2), verbatim: the trufflehog part cites it.
+TRUFFLEHOG_V2_PI_WORDS = ("2026-10-29", PI_ANSWERS_2026_10_29[2])
+# and his answer the same day to Code's question on trufflehog's `unknown` results (verification errored or withheld):
+# shown, redacted, and triaged like findings (the option he chose, verbatim; Code's "(Recommended)" marker left off)
+UNKNOWN_V2_PI_WORDS = ("2026-10-29", "Yes, show and triage")
+assert TRUFFLEHOG_V2_PI_WORDS is None or (
+    isinstance(TRUFFLEHOG_V2_PI_WORDS, tuple) and len(TRUFFLEHOG_V2_PI_WORDS) == 2
+    and isinstance(TRUFFLEHOG_V2_PI_WORDS[0], str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", TRUFFLEHOG_V2_PI_WORDS[0])
+    and isinstance(TRUFFLEHOG_V2_PI_WORDS[1], str) and TRUFFLEHOG_V2_PI_WORDS[1].strip()), \
+    "TRUFFLEHOG_V2_PI_WORDS: None, or (the date, the PI's words verbatim)"
+ITEM4_SVG_BASIS_V2 = (".svg skip: item 4 of the PI's answer of 2026-10-12 (verbatim: \"" + PI_ANSWER_2026_10_12
+                      + "\"), as Code put it (Code's words, not the PI's): " + PI_ANSWER_ITEM4_CODE_WORDS
+                      + " (for v2, its .svg half only: its trufflehog half is replaced by the PI's word of 2026-10-29, "
+                      "item 2)"
+                      + "; extended to the three 2026-10-22 SVGs by the design seat's item C (the seat's words, item C "
+                      "as put: \"the three SVGs on the skip list\"; its answers, section 5, 3b: \"Add the three "
+                      "2026-10-22 SVGs to the skip list on the basis of the PI's 2026-10-12 answer to question 4.\"), "
+                      "which the PI answered on 2026-10-28: \"" + PI_ANSWER_2026_10_28 + "\"")
+ITEM4_TRUFFLEHOG_BASIS_V2 = (
+    "trufflehog not run: no v2 record names it (block section 2 item 1 lists gitleaks, not trufflehog); its only basis "
+    "is the 2026-10-12 answer's item 4, given for v1's run" if TRUFFLEHOG_V2_PI_WORDS is None else
+    "trufflehog: run over all history in its own script (`" + TRUFFLEHOG_SCRIPT + "`, raw `" + TRUFFLEHOG_RAW_V2
+    + "`), not by this script -- the PI's word for the v2 run (" + TRUFFLEHOG_V2_PI_WORDS[0] + "), verbatim: \""
+    + TRUFFLEHOG_V2_PI_WORDS[1] + "\"; and his answer the same day on its `unknown` results (verification errored or "
+    "withheld), verbatim: \"" + UNKNOWN_V2_PI_WORDS[1] + "\" (the run shows verified and unknown results)")
+ITEM4_BASIS_V2 = ITEM4_SVG_BASIS_V2 + ". " + ITEM4_TRUFFLEHOG_BASIS_V2
+# Release v2 (2026-10-29): the v2 release run's place in the release sequence, printed on the release run and its
+# rehearsals. v1's release run was made at the tag commit (R2) before the push; the v2 run is block section 2 item 1,
+# made before items 2-7 (the design seat's answers of 2026-10-28, section 5, 3g, and section 10).
+V2_ROUTING = ("the v2 release run (" + V2_RUN_DATE + ") of block section 2 item 1 "
+              "(`results/raw/2026-10-27_note-design-to-code_release-block.md`, committed at `2fb0cf0`), with the design "
+              "seat's answers of 2026-10-28 (`results/raw/2026-10-28_note-design-to-code_release-block-answers.md`, "
+              "committed at `908a659`), which carry the PI's decisions of 2026-10-28, verbatim: \""
+              + PI_ANSWER_2026_10_28 + "\"")
+# Release v2 review fix (2026-10-29; history-8): the re-runs made at the tag commit, before the push. The design seat's
+# answers of 2026-10-28 (section 5, 3g) name two: gitleaks and the password search (TAG_RERUNS_3G).
+# The PI's answer of 2026-10-29, item 3 (TAG_RERUNS_V2_PI_WORDS): all five N12 scans re-run at the tag commit, as v1's
+# release run did, their raws committed after the tag; this run (item 1) is the baseline. Every 'after this run'
+# sentence follows the constant.
+TAG_RERUNS_3G = ("gitleaks", "password")
+TAG_RERUNS_V2 = ("gitleaks", "password", "history", "content", "licenses")
+TAG_RERUNS_V2_PI_WORDS = ("2026-10-29", PI_ANSWERS_2026_10_29[3])
+# The PI's answers of 2026-10-29 to two of Code's three follow-up questions (the third, on trufflehog's unknown results,
+# is UNKNOWN_V2_PI_WORDS, beside TRUFFLEHOG_V2_PI_WORDS above), each the option he chose,
+# verbatim (Code's "(Recommended)" marker left off): whether v1's URL's fragment (94ccd161) also takes an entry in its
+# parent's class, like his four; and when the tag-commit re-run's output pair is added (this script, as committed for
+# item 1, writes no tag-commit raw of record: its in-repo outputs are item 1's two names, committed by then).
+PI_FRAGMENT5_2026_10_29 = "Yes, like the four"
+TAG_RUN_COMMIT_PI_WORDS = ("2026-10-29", "Own commit before the tag")
+# the same run's gitleaks raw: (i) carries only when it, the trufflehog raw and this raw each pass their parts
+GL_RAW_V2 = "results/raw/2026-10-29_note-N12-gitleaks-release.md"
+assert os.path.basename(GL_RAW_V2)[:10] == V2_RUN_DATE, "GL_RAW_V2 and RELEASE_MD: two run dates"
+TAG_RERUN_NAMES = {"gitleaks": "gitleaks", "password": "the password search", "history": "this script",
+                   "content": "the content screen", "licenses": "the licenses sweep"}
+assert set(TAG_RERUNS_3G) <= set(TAG_RERUNS_V2) <= set(TAG_RERUN_NAMES) and len(set(TAG_RERUNS_V2)) == len(TAG_RERUNS_V2)
+
+
+def and_list(xs):
+    """'a', 'a and b', 'a, b and c'."""
+    xs = list(xs)
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def tag_reruns_text():
+    """Release v2 review fix: the tag-commit re-runs as TAG_RERUNS_V2 has them -- 3g's two cited to 3g, any other to the
+    PI's word (TAG_RERUNS_V2_PI_WORDS, which also sets their form: raws committed after the tag) -- for the 'after this
+    run' sentences."""
+    extra = [k_ for k_ in TAG_RERUNS_V2 if k_ not in TAG_RERUNS_3G]
+    if not extra:
+        return ("at the tag commit, before the push, " + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2)
+                + (" is" if len(TAG_RERUNS_V2) == 1 else " are") + " re-run, outputs outside the repository, their "
+                "counts in the post-tag raw (the design seat's answers of 2026-10-28, section 5, 3g: "
+                + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_3G) + ")")
+    return ("at the tag commit, before the push, " + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2)
+            + " are re-run, their raws committed after the tag, as v1's release run's were (the design seat's answers of "
+            "2026-10-28, section 5, 3g, name " + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_3G) + "; the PI's word "
+            "of " + TAG_RERUNS_V2_PI_WORDS[0] + " adds " + and_list(TAG_RERUN_NAMES[k_] for k_ in extra) + " and sets the "
+            "form, verbatim: \"" + TAG_RERUNS_V2_PI_WORDS[1] + "\")")
+
+
+V2_AFTER = ("the commits after it -- among them the commit that adds this raw, block section 2 items 2-7 (N1 round 11, "
+            "the README regression count, N18, the README-NOTE re-point, the preflip script, the tag commit), the design "
+            "seat's answer on the re-keyed rulings (the answers, section 6, 4f; section 10 item 3) and the post-tag raw "
+            "-- are not covered by it; " + tag_reruns_text() + "; "
+            + ("this script is among them, so its classes are re-run over the commits up to the tag before the push "
+               "(its output pair for that re-run is added in Code's own commit before the second N18, on the PI's word of "
+               + TAG_RUN_COMMIT_PI_WORDS[0] + ", verbatim: \"" + TAG_RUN_COMMIT_PI_WORDS[1] + "\"; as committed for item "
+               "1 it writes no tag-commit raw of record); the pre-flip read's interim scan (block section 2 item 6; "
+               "`scripts/audit_note_N12_preflip.py` runs this script there) runs them again after the push and before "
+               "the flip"
+               if "history" in TAG_RERUNS_V2 else
+               "this script is not among them, so its own classes run next over those commits in the pre-flip read's "
+               "interim scan (block section 2 item 6; `scripts/audit_note_N12_preflip.py` runs this script there), "
+               "after the push and before the flip"))
+# (v) step 1's precondition, as the tag-commit re-runs narrow it for the commits after block section 2 item 1
+V2_PRECONDITION_NOTE = (
+    "For the commits after block section 2 item 1, the design seat's answers of 2026-10-28 (section 5, 3g)"
+    + ("" if set(TAG_RERUNS_V2) == set(TAG_RERUNS_3G) else ", with the PI's word for the rest,")
+    + " narrow this precondition to the tag-commit re-runs (`TAG_RERUNS_V2`: "
+    + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2) + "): "
+    + ("this script is re-run at the tag commit, before the push." if "history" in TAG_RERUNS_V2 else
+       "this script is not re-run before the push."))
+# Release v2 review fix (2026-10-29; history-1): the records this run reads at run time, each at the commit that added it
+# (git show; never the working tree), each line located by content. The origin-only ref's id and commit (the answers,
+# section 2) go to the leak guard only and are never printed; item B's commit (the answers, section 0) and the
+# origin-branch commits the Q-F0 entry's values-check recorded (`origin/<b>` of the three wip branches) place the
+# unreachable commits that were on GitHub; the block's section 0 names the five branches deleted on origin.
+V2_RECORD_DOCS = {"answers": ("results/raw/2026-10-28_note-design-to-code_release-block-answers.md", "908a659"),
+                  "block": ("results/raw/2026-10-27_note-design-to-code_release-block.md", "2fb0cf0"),
+                  "branch_tips": ("results/raw/2026-10-19_m-campaign-qf0-entry_valuescheck.txt", "de6dfc5")}
+TP_LABELS = {"id": "the origin-only ref's id (the answers, section 2)",
+             "commit": "the origin-only ref's commit (the answers, section 2)"}
+TP_GUARD = {}             # label -> value: the origin-only ref's id and commit, set at run time (guard only; never printed)
+HEX_PREFIX_KNOWN = set()  # guarded values matched as the prefix of any hex run of 7+ characters (a short commit id)
 
 
 def gitleaks_script_note(which):
     """Release (2026-10-12): the scanners' state as this run sees it (`which`), for the (i-a) paragraph and the lines
-    that cite it; used only when gitleaks is found."""
+    that cite it; used only when gitleaks is found. Release v2 (2026-10-29): trufflehog runs in its own script, on the
+    PI's word of 2026-10-29 (TRUFFLEHOG_V2_PI_WORDS)."""
     return ("gitleaks is installed on this machine and runs in its own script (`scripts/audit_note_N12_gitleaks.py`, "
             "first raw `results/raw/2026-10-09_note-N12-gitleaks.md`, committed at e0fd85c), not in this one; "
-            + ("trufflehog is installed on this machine, and this script does not run it" if which.get("trufflehog")
-               else "trufflehog is not installed and has not been run"))
+            + (("trufflehog is installed on this machine and runs in its own script (`" + TRUFFLEHOG_SCRIPT + "`, the v2 "
+                "raw `" + TRUFFLEHOG_RAW_V2 + "`), not in this one") if which.get("trufflehog")
+               else "trufflehog is not installed, so its script (`" + TRUFFLEHOG_SCRIPT + "`) has not run here"))
 
 
 def not_ancestor_text(ancestry, ahead):
@@ -498,8 +716,20 @@ CODE_LOCATOR_NOTES = {
 # read-only: an Anthropic content-credentials JUMBF manifest (claim generator 'Anthropic Files', signed by an
 # 'Anthropic Claude Content Signing' certificate); no secret, no personal data. The decode is Code's, not the PI's.
 C2PA_PI_WORDS = "declare it ahead of the N12 pre-flip re-scan as a known high-entropy false positive"
-C2PA_REASON = ('the PI, 2026-10-10: "' + C2PA_PI_WORDS + '" (it: the C2PA content-credentials element of each filed '
-               "2026-10-10 render); Code's read-only decode, not the PI's words: a base64 JUMBF content-credentials "
+C2PA_REASON_V1 = ('the PI, 2026-10-10: "' + C2PA_PI_WORDS + '" (it: the C2PA content-credentials element of each filed '
+                  "2026-10-10 render); Code's read-only decode, not the PI's words: a base64 JUMBF content-credentials "
+                  "manifest, no secret")
+# Release v2 (2026-10-29): the declaration extended to the element of each of the three filed 2026-10-22 renders, on the
+# PI's word: the design seat's item C as put ("the C2PA declaration extended"; its answers, section 5, 3c, verbatim in
+# C2PA_EXTENSION_SEAT_WORDS), which the PI answered on 2026-10-28: "Yes to all". C2PA_REASON_V1 is v1's reason (the
+# record); C2PA_REASON adds the extension. Code decoded the three 2026-10-22 blobs read-only (2026-10-29): the same kind
+# of manifest (claim generator 'Anthropic Files', signed by an 'Anthropic Claude Content Signing' certificate); no
+# secret, no personal data. The decode is Code's, not the PI's or the seat's.
+C2PA_EXTENSION_SEAT_WORDS = ("Extend the C2PA declaration to the three 2026-10-22 renders (one `<c2pa:manifest>` "
+                             "each, 7,684 characters).")
+C2PA_REASON = (C2PA_REASON_V1 + "; extended to the element of each filed 2026-10-22 render by the design seat's item C "
+               "(\"the C2PA declaration extended\"), which the PI answered on 2026-10-28: \"" + PI_ANSWER_2026_10_28
+               + "\"; Code's read-only decode of those three, not the PI's or the seat's words: the same kind of "
                "manifest, no secret")
 C2PA_TRIAGE = ("FALSE-POSITIVE", C2PA_REASON, True)
 C2PA_ELEMENT_RE = re.compile(r"<c2pa:manifest>([A-Za-z0-9+/=]*)</c2pa:manifest>")
@@ -507,7 +737,15 @@ C2PA_MANIFESTS = {
     "2026-10-10_F1a_headline-strip.svg": (7684, "da236ea489a9226b5064a30c19e29c83345451a4e2728ef7641fc908fcba349f"),
     "2026-10-10_F1b_five-link-panels.svg": (7684, "ee0ea5730fa34810d240782be92da1a4977e41bcb1518c01d7e7a86281c581f5"),
     "2026-10-10_F2_macar-lineage-roc_post.svg": (7684, "f814df3b308262c8e137b825f3e822dbb5c68357eda406f1d7404bb5186c7c9b"),
+    # Release v2 (2026-10-29), on the PI's word (item C; answers section 5, 3c): the three filed 2026-10-22 renders
+    # (0a3f925), each blob at its own root path only; (length, sha256) of the element's text, by this table's rule
+    # (C2PA_ELEMENT_RE's group 1; sha256 of its UTF-8 bytes), computed by Code from the HEAD blob and the working tree
+    "2026-10-22_F1a_headline-strip.svg": (7684, "0c5404ad61a76fcb6a2b2d9c3960a8a91883539e8ba5a8f8ffa250115076f159"),
+    "2026-10-22_F1b_five-link-panels.svg": (7684, "92d028e1c3726a21d19eaba09db799217ff0eb4714ab21f1cdffc431320b4e6b"),
+    "2026-10-22_F2_macar-lineage-roc_post.svg": (7684, "ee2311b7812a340b765f962eea84bb4c56aaf015e120cf35b26b1fcad33bac00"),
 }
+C2PA_MANIFESTS_V1 = ("2026-10-10_F1a_headline-strip.svg", "2026-10-10_F1b_five-link-panels.svg",
+                     "2026-10-10_F2_macar-lineage-roc_post.svg")
 C2PA_STATS = collections.Counter()
 
 
@@ -614,6 +852,48 @@ MANUAL_TRIAGE = {
     # (ii) Claude session link
     "236329f4": ("IDENTIFIER", "a Claude Code session URL in a commit-message trailer (Claude-Session:); "
                          "viewing it requires the account owner's login; not a credential", True),
+    # Release v2 (2026-10-29): the session URLs new since v1 (98d07bc), each in Claude-Session: commit-message trailers
+    # only; IDENTIFIER, as 236329f4 (an IDENTIFIER verdict is kept here, not in TRIAGE16, whose values the round-5
+    # control (iv) requires the guard to exempt).
+    # claude_session_or_artifact_link `clau...[len 47]#f5e838c9`, Code's triage, read in context (2026-10-29): a
+    # Claude-Session trailer in 4 commit messages, first at 4f8f361f <commit message>:4
+    "f5e838c9": ("IDENTIFIER", "a Claude Code session URL in commit-message trailers (Claude-Session:); viewing it "
+                         "requires the account owner's login; not a credential", True),
+    # claude_session_or_artifact_link `clau...[len 47]#e8c8cf8c`, Code's triage, read in context (2026-10-29): a
+    # Claude-Session trailer in 4 design-seat commit messages, first at f5a580dc <commit message>:10
+    "e8c8cf8c": ("IDENTIFIER", "a Claude Code session URL in the design seat's commit-message trailers "
+                         "(Claude-Session:); viewing it requires the account owner's login; not a credential", True),
+    # claude_session_or_artifact_link `clau...[len 47]#43907fb0`, Code's triage, read in context (2026-10-29): a
+    # Claude-Session trailer in 1 design-seat commit message, at dc8c0288 <commit message>:8
+    "43907fb0": ("IDENTIFIER", "a Claude Code session URL in a design-seat commit-message trailer "
+                         "(Claude-Session:); viewing it requires the account owner's login; not a credential", True),
+    # claude_session_or_artifact_link `clau...[len 47]#985a006c`, Code's triage, read in context (2026-10-29): a
+    # Claude-Session trailer in 3 design-seat commit messages, first at 0de15a1a <commit message>:8
+    "985a006c": ("IDENTIFIER", "a Claude Code session URL in the design seat's commit-message trailers "
+                         "(Claude-Session:); viewing it requires the account owner's login; not a credential", True),
+    # Release v2 (2026-10-29), the PI's word of 2026-10-29 (PI_RULE4_2026_10_29: "Add entries for the four session-URL
+    # fragments now (the parent value’s class)"): the context-free run inside each session URL above (the run is split
+    # at the '.' of claude.ai), which triage_cf's session-link rule classes IDENTIFIER with no entry; each takes its
+    # parent value's class (FRAGMENT_PARENTS_V2; parent matched by the sha256 of the URL and of its fragment in the
+    # commit messages, 2026-10-29). The fifth, 94ccd161, is inside v1's 236329f4 (first in d4f21d15's message, before
+    # v1): the PI's four counted values first seen after v1, and his STOP set (any IDENTIFIER value with no entry)
+    # reaches it too; Code put it to the PI, who answered the same day, verbatim: "Yes, like the four"
+    # (PI_FRAGMENT5_2026_10_29).
+    "45629799": ("IDENTIFIER", "part of the Claude Code session URL of entry f5e838c9 (the context-free run is split at "
+                         "the '.' of claude.ai); its parent value's class, on the PI's word of 2026-10-29; not a "
+                         "credential", True),
+    "d43c154a": ("IDENTIFIER", "part of the Claude Code session URL of entry e8c8cf8c (the context-free run is split at "
+                         "the '.' of claude.ai); its parent value's class, on the PI's word of 2026-10-29; not a "
+                         "credential", True),
+    "91ac9abb": ("IDENTIFIER", "part of the Claude Code session URL of entry 43907fb0 (the context-free run is split at "
+                         "the '.' of claude.ai); its parent value's class, on the PI's word of 2026-10-29; not a "
+                         "credential", True),
+    "e8ed5b68": ("IDENTIFIER", "part of the Claude Code session URL of entry 985a006c (the context-free run is split at "
+                         "the '.' of claude.ai); its parent value's class, on the PI's word of 2026-10-29; not a "
+                         "credential", True),
+    "94ccd161": ("IDENTIFIER", "part of the Claude Code session URL of entry 236329f4 (v1's; the context-free run is "
+                         "split at the '.' of claude.ai); its parent value's class, on the PI's word of 2026-10-29 to "
+                         "Code's question on v1's URL's fragment (\"Yes, like the four\"); not a credential", True),
     # (i-b) context-free scan: values no mechanical rule clears, triaged in context
     "68042871": ("FALSE-POSITIVE", "a slash-separated list of verdict labels in a referent-check raw; not a "
                          "path and not a value", False),
@@ -743,7 +1023,125 @@ TRIAGE16 = {
     'f66375188136ef7f': ('FALSE-POSITIVE', "the same synthetic fixture, assembled, in that self-test's list of values "
                          "that must not appear in its output; a made-up placeholder, not a RunPod id", True,
                          'Code, round 5, read in context'),
+    # Release v2 (2026-10-29): Code's triage of the values new since v1's release run (98d07bc), each read in context.
+    # precise quoted_secretish_assignment `m-id...[len 16]#6da17314`, Code's triage, read in context (2026-10-29): a
+    # schedule-key template; first at 33cefe3f data/m/gates/Q-F0_G-ID.json:31
+    '6da173141174f744': ('FALSE-POSITIVE', "the schedule-key template of the Q-F0 G-ID gate artifact (its key_template "
+                         "field: a stage label, a configuration label, an arm label and a format placeholder joined by "
+                         "'|'); a label, not a credential", True, 'Code, release v2 (2026-10-29), read in context'),
+    # high_entropy `Auto...[len 32]#31563e33`, Code's triage, read in context (2026-10-29): a macOS preference name;
+    # first at 88b7165a results/raw/2026-10-13_m-gid-f0m_valuescheck.txt:3121
+    '31563e33ab92275f': ('FALSE-POSITIVE', "the name of a macOS software-update preference (CamelCase words), quoted in a "
+                         "values-check raw's evidence for an operations claim; a setting's name, not a credential", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # high_entropy `RC=/...[len 137]#db613fe2`, Code's triage, read in context (2026-10-29): a scratchpad path; first
+    # at ed8e8867 results/raw/2026-10-15_m-analyzer-round2-step15_review.txt:2816
+    'db613fe2c1dccaa0': ('LOCAL-PATH', "a shell variable assignment (RC=) of a Claude Code scratchpad directory under the "
+                         "local temporary directory (the project folder named after the laptop checkout path, a session "
+                         "UUID, a step-15 subfolder), quoted in a reviewer's evidence in a step-15 review raw; not a "
+                         "credential", True, 'Code, release v2 (2026-10-29), read in context'),
+    # high_entropy `S=/t...[len 59]#490935ca`, Code's triage, read in context (2026-10-29): a truncated scratchpad path;
+    # first at a6c81f20 results/raw/2026-10-18_m-campaign-driver_review.txt:4823
+    '490935cab2c0a6fa': ('LOCAL-PATH', "a shell variable assignment (S=) of a cloud session's Claude Code scratchpad path "
+                         "under /tmp, cut off mid-UUID by an ellipsis, in a workflow agent's one-line summary field of a "
+                         "campaign-driver review raw; not a credential", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # high_entropy `step...[len 47]#bab085fa`, Code's triage, read in context (2026-10-29): a workflow script's name;
+    # first at a6c81f20 results/raw/2026-10-18_m-campaign-driver_review.txt:7766
+    'bab085fa62b64969': ('FALSE-POSITIVE', "the file name of a local workflow script (a step-16 values-check pass label "
+                         "and a short run id), cited with a line number in a reviewer's evidence; a file name, not a "
+                         "credential", True, 'Code, release v2 (2026-10-29), read in context'),
+    # high_entropy `2026...[len 34]#f99f0efd`, Code's triage, read in context (2026-10-29): a dated file name; first at
+    # bfc179c4 results/raw/2026-10-19_m-verdicts-qf0.txt:848
+    'f99f0efd4d242eca': ('FALSE-POSITIVE', "the dated name of the design seat's step-17 block (a file at the repository "
+                         "root, untracked), in the verdicts raw's description of that file; a file name, not a "
+                         "credential", True, 'Code, release v2 (2026-10-29), read in context'),
+    # runpod_endpoint_or_template_id `entr...[len 8]#e2cfaba8`, Code's triage, read in context (2026-10-29): a scratch
+    # file's name after the word 'template'; first at e4f0da37
+    # results/raw/2026-10-14_m-analyzer-round-step15_valuescheck.txt:249
+    'e2cfaba82e3a6288': ('FALSE-POSITIVE', "the stem of a scratch file name (the step-15 RESULTS-entry template, a "
+                         "Markdown file), after the word 'template' in a values-check raw's evidence; not a RunPod "
+                         "template id", True, 'Code, release v2 (2026-10-29), read in context'),
+    # runpod_endpoint_or_template_id `entr...[len 8]#420de89c`, Code's triage, read in context (2026-10-29): the same
+    # kind; first at 2f46fa8a results/raw/2026-10-15_m-analyzer-round2-step15_valuescheck.txt:786
+    '420de89ca9d8db86': ('FALSE-POSITIVE', "the stem of a scratch file name (the second step-15 RESULTS-entry template, "
+                         "cited with a line number), after the word 'Template' in a values-check raw's evidence; not a "
+                         "RunPod template id", True, 'Code, release v2 (2026-10-29), read in context'),
+    # ssh_port `len5:8a25820b`, Code's triage, read in context (2026-10-29): a process id; first at 4630cfde
+    # results/raw/2026-10-13_m-gf0m-qwen-driver_review.txt:1277
+    '8a25820b35806986': ('FALSE-POSITIVE', "a local process id (pid) of a mutation batch, on a reviewer's line whose only "
+                         "ssh/port/alias match is the parallelism flag of an xargs command; a pid, not a port", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # ssh_port `len4:c7e92bac`, Code's triage, read in context (2026-10-29): a digest's tail; first at 0fa85399
+    # results/raw/2026-10-19_m-verdicts-qf0-entries_valuescheck.txt:1226
+    'c7e92bac8729cf4c': ('FALSE-POSITIVE', "the last four hex digits of an abbreviated sha256 (first eight, an ellipsis, "
+                         "last four) of a design addendum, on a values-check line that names the G-PORT gate (SSH_LINE_RE "
+                         "matches the word PORT in G-PORT); a digest fragment, not a port", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # ssh_port `len4:e4819f21`, Code's triage, read in context (2026-10-29): a line number; first at 0fa85399
+    # results/raw/2026-10-19_m-verdicts-qf0-entries_valuescheck.txt:1327
+    'e4819f21c5e21c3a': ('FALSE-POSITIVE', "a RESULTS.md line number (the start of the G-PORT A5 entry's line range) on a "
+                         "values-check line that names the G-PORT gate (SSH_LINE_RE matches the word PORT in G-PORT); a "
+                         "line number, not a port", True, 'Code, release v2 (2026-10-29), read in context'),
+    # ssh_port `len4:22492061`, Code's triage, read in context (2026-10-29): a source line number; first at 0fa85399
+    # results/raw/2026-10-19_m-verdicts-qf0-entries_valuescheck.txt:2024 (and :3188)
+    '22492061879a16b9': ('FALSE-POSITIVE', "a line number of the m package's stages module (a PIN site), cited in two "
+                         "reviewers' source lists on values-check lines that name the G-PORT gate (SSH_LINE_RE matches "
+                         "the word PORT in G-PORT); a line number, not a port", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `muta...[len 10]#1ae3f7f8`, Code's triage, read in context (2026-10-29): a mutation script's
+    # name; first at 8da32f2e results/raw/2026-10-13_m-gid-driver_review.txt:1043
+    '1ae3f7f8ef7323f8': ('FALSE-POSITIVE', "the stem of a reviewer's mutation script's file name (step 12, round 2), in "
+                         "a driver review raw's description of its mutation runs; a file name, not a RunPod id", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `muta...[len 10]#792a6e77`, Code's triage, read in context (2026-10-29): the same kind; first at
+    # 8da32f2e results/raw/2026-10-13_m-gid-driver_review.txt:1306
+    '792a6e7736806824': ('FALSE-POSITIVE', "the stem of a reviewer's mutation script's file name (step 12, round 3), in "
+                         "a driver review raw's list of its tooling; a file name, not a RunPod id", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `tota...[len 14]#c4d1cbe3`, Code's triage, read in context (2026-10-29): a made-up test string;
+    # first at a6c81f20 results/raw/2026-10-18_m-campaign-driver_review.txt:5195
+    'c4d1cbe3232636e7': ('FALSE-POSITIVE', "a made-up example string (a word glued to a millisecond figure and its unit), "
+                         "quoted in a reviewer's finding on a duration-matching regular expression; not a RunPod id", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `nmut...[len 10]#65b8dd87`, Code's triage, read in context (2026-10-29): an escape fused with a
+    # name; first at a6c81f20 results/raw/2026-10-18_m-campaign-driver_review.txt:5310
+    '65b8dd8763598318': ('FALSE-POSITIVE', "the letter of a JSON newline escape fused with the name of a reviewer's "
+                         "mutation script (step 16), in a campaign-driver review raw; not a RunPod id", True,
+                         'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `9876...[len 10]#64f4e710`, Code's triage, read in context (2026-10-29): a made-up test string;
+    # first at a6c81f20 results/raw/2026-10-18_m-campaign-driver_review.txt:6655
+    '64f4e710b84cd646': ('FALSE-POSITIVE', "a made-up example string (a millisecond figure, its unit and a trailing "
+                         "letter), quoted in a reviewer's finding on the same duration-matching regular expression; not a "
+                         "RunPod id", True, 'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `0xe0...[len 10]#5e1abb6e`, Code's triage, read in context (2026-10-29): a power adapter's family
+    # code; first at de6dfc54 results/raw/2026-10-18_m-campaign-qf0_launchchecks.txt:2105
+    '5e1abb6e7b1e01e6': ('FALSE-POSITIVE', "the family code of the laptop's power adapter model (a hexadecimal code that "
+                         "macOS prints for the adapter type, beside its wattage and model name; the adapter's serial "
+                         "string is masked in that raw), in a launch-checks raw; not a machine's identifier and not a "
+                         "RunPod id", True, 'Code, release v2 (2026-10-29), read in context'),
+    # id-shape sweep `prec...[len 10]#e6decf03`, Code's triage, read in context (2026-10-29): a check script's name;
+    # first at bfc179c4 results/raw/2026-10-19_m-verdicts-qf0.txt:5
+    'e6decf035bf9caf3': ('FALSE-POSITIVE', "the stem of Code's step-17 check script's file name, in the verdicts raw's "
+                         "header and in the values-check raw of the VERDICTS entries; a file name, not a RunPod id", True,
+                         'Code, release v2 (2026-10-29), read in context'),
 }
+# Release v2 review fix (2026-10-29; history-3): Code's triage of the values new since v1's release run, by source, so
+# that both (i) lines count it from the entries themselves over this run's tables (never a hard-coded number): the
+# TRIAGE16 entries whose source is TRIAGE16_V2_SOURCE, and the MANUAL_TRIAGE keys of the four session URLs new since v1.
+# Code put the list to the PI (Code's question 4 of 2026-10-29); his answer is verbatim in PI_ANSWERS_2026_10_29[4]
+# ("The 23 stand. ...").
+TRIAGE16_V2_SOURCE = "Code, release v2 (2026-10-29), read in context"
+MANUAL_TRIAGE_V2 = ("f5e838c9", "e8c8cf8c", "43907fb0", "985a006c")
+assert all(k_ in MANUAL_TRIAGE and MANUAL_TRIAGE[k_][0] == "IDENTIFIER" for k_ in MANUAL_TRIAGE_V2)
+# Release v2 (2026-10-29): the session-URL fragments' entries (fragment key -> its parent's key), each in its parent
+# value's class (PI_RULE4_2026_10_29); the first four are the PI's four, the fifth is v1's URL's fragment (the PI's word
+# the same day: PI_FRAGMENT5_2026_10_29).
+FRAGMENT_PARENTS_V2 = {"45629799": "f5e838c9", "d43c154a": "e8c8cf8c", "91ac9abb": "43907fb0", "e8ed5b68": "985a006c",
+                       "94ccd161": "236329f4"}
+assert all(f_ in MANUAL_TRIAGE and p_ in MANUAL_TRIAGE and MANUAL_TRIAGE[f_][0] == MANUAL_TRIAGE[p_][0]
+           for f_, p_ in FRAGMENT_PARENTS_V2.items())
+assert any(e_[3] == TRIAGE16_V2_SOURCE for e_ in TRIAGE16.values())
 # Round 5: the pre-flip raw's triage of the 128 credential-shaped fallback rows (its section 3(c)), keyed by
 # (path, key in lower case, the first 16 hex of sha256(value)); each entry: (verdict, reason). Code re-read
 # every row in context before carrying it (round 5) and agrees with each verdict.
@@ -884,6 +1282,11 @@ SHAPE_TRIAGE16 = {
         ('FALSE-POSITIVE', "a numeral token (a model-size label) in the N19 raw's per-numeral table, under its JSON field named 'token'; not a credential"),
     ('scripts/audit_note_N12_gitleaks.py', 'true-secret', 'efe824ab7c0ef93f'):  # round 9, Code's triage, read in context (len3:efe824ab)
         ('FALSE-POSITIVE', "a printf placeholder in the gitleaks script's outcome line (a count after the label TRUE-SECRET); not a value"),
+    # release v2 (2026-10-29), Code's triage, read in context (len3:efe824ab): the same placeholder in the trufflehog
+    # script's outcome line, which mirrors gitleaks'
+    ('scripts/audit_note_N12_trufflehog.py', 'true-secret', 'efe824ab7c0ef93f'):
+        ('FALSE-POSITIVE', "a printf placeholder in the trufflehog script's outcome line (a count after the label "
+                           "TRUE-SECRET); not a value"),
     ('scripts/audit_note_N12_gitleaks.py', 'api_key', 'f684c73cba75b2ba'):  # release fix round 3 (2026-10-12), Code's triage, read in context (len2:f684c73c)
         ('FALSE-POSITIVE', "a printf string placeholder in the template of the gitleaks script's skip-probe line; the "
                            "probe's 32-character value is drawn at run time (secrets.choice) and goes only into probe "
@@ -2170,10 +2573,80 @@ def scanner_availability():
     return out
 
 
-def reflog_evidence(unreach_commits):
+def commit_form(c):
+    """Release v2 review fix (2026-10-29): the guard form of a commit id -- 'len10:' + the first 8 hex of sha256 of its
+    10-hex short id. No character of the id is shown."""
+    return "len10:" + sha256_hex(c[:10].encode())[:8]
+
+
+def read_v2_record():
+    """Release v2 review fix (2026-10-29; history-1). Reads, from the records in V2_RECORD_DOCS at the commits that
+    added them, each line located by content: the answers' section 2 line naming the origin-only ref (its id and its
+    commit, as the scrub generator reads them); item B's commit (the answers, section 0); the block's section 0 row of
+    the five branches deleted on origin; and the `origin/<b>` commits of the three wip branches the Q-F0 entry's
+    values-check recorded (cross-checked: the wip/cloud-handoff-2026-10-15 one is item B's). Returns the values (the
+    caller keeps the origin-only ref's id and commit for the guard only) and the 1-based line of each. Any mismatch
+    stops the run: the guard must not run without its values."""
+    def doc(k_):
+        p_, c_ = V2_RECORD_DOCS[k_]
+        return git("show", f"{c_}:{p_}").decode("utf-8").split("\n")
+
+    def one(lines_, pred, what):
+        n_ = [i for i, s in enumerate(lines_) if pred(s)]
+        if len(n_) != 1:
+            raise SystemExit(f"release v2 record: {what}: {len(n_)} lines found, not 1")
+        return n_[0]
+    A_ = doc("answers")
+    tp_n = one(A_, lambda s: "claude-teleport/" in s, "the answers' origin-only ref line")
+    tp_m = re.search(r"refs/claude-teleport/([0-9a-f]{8,})`\s*\S+\s*`([0-9a-f]{7,40})`", A_[tp_n])
+    if not tp_m:
+        raise SystemExit("release v2 record: the answers' origin-only ref line does not give its name and commit in the "
+                         "expected form")
+    if A_.count("> **A.** " + ITEM_A_AS_PUT) != 1 or sum(s.count(I_BASIS_V2) for s in A_) != 1:
+        raise SystemExit("release v2 record: item A as put, or the 3a line (I_BASIS_V2), is not verbatim once in the answers")
+    ia_n = A_.index("> **A.** " + ITEM_A_AS_PUT)
+    i3a_n = one(A_, lambda s: I_BASIS_V2 in s, "the answers' 3a line")
+    ib_n = one(A_, lambda s: s.startswith("> **B.** "), "the answers' item B")
+    ib_c = re.findall(r"`([0-9a-f]{7,40})`", A_[ib_n])
+    if len(ib_c) != 1:
+        raise SystemExit("release v2 record: the answers' item B does not name exactly one commit")
+    B_ = doc("block")
+    bk_n = one(B_, lambda s: s.startswith("| (refs) |") and "deleted on origin" in s, "the block's section 0 refs row")
+    deleted = re.findall(r"`([^`]+)`", B_[bk_n].split("deleted on origin", 1)[1].split("`git ls-remote", 1)[0])
+    V_ = doc("branch_tips")
+    tip_n = one(V_, lambda s: "'git merge-base --is-ancestor origin/<b> HEAD' is false for each (" in s,
+                "the values-check line of the three origin-branch commits")
+    tip_m = re.search(r"is false for each \(([0-9a-f]{7,40}), ([0-9a-f]{7,40}), ([0-9a-f]{7,40})\)", V_[tip_n])
+    nm_n = [i for i in range(max(0, tip_n - 5), tip_n) if '"text": "The handoff branches on origin (' in V_[i]]
+    names = re.findall(r"`(wip/[^`]+)`", V_[nm_n[-1]]) if nm_n else []
+    if not tip_m or len(names) != 3 or len(deleted) != 5 or not set(names) <= set(deleted):
+        raise SystemExit("release v2 record: the origin-branch commits, their branch names, or the block's five deleted "
+                         "branches are not in the expected form")
+    tips = list(zip(names, tip_m.groups()))
+    b15 = dict(tips).get("wip/cloud-handoff-2026-10-15", "")
+    if not (b15.startswith(ib_c[0]) or ib_c[0].startswith(b15)):
+        raise SystemExit("release v2 record: item B's commit is not the recorded origin/wip/cloud-handoff-2026-10-15")
+    return {"tp_id": tp_m.group(1), "tp_commit": tp_m.group(2), "itemb_commit": ib_c[0], "tips": tips,
+            "deleted": deleted,
+            "lines": {"answers_tp": tp_n + 1, "answers_item_a": ia_n + 1, "answers_3a": i3a_n + 1,
+                      "answers_item_b": ib_n + 1, "block_deleted": bk_n + 1, "branch_tips": tip_n + 1,
+                      "branch_names": nm_n[-1] + 1}}
+
+
+def v2_loc(k_, line):
+    """`path@commit:line` for a V2_RECORD_DOCS record."""
+    p_, c_ = V2_RECORD_DOCS[k_]
+    return f"`{p_}@{c_}:{line}`"
+
+
+def reflog_evidence(unreach_commits, main_sha=None, rec=None):
     """(v) pre-flip, round 2: remote-tracking reflogs read as plain files (.git/logs/refs/remotes/**): every
     update a fast-forward, every recorded value an ancestor of the ref's last value; the first push; and the
-    unreachable local commit(s) placed against the first push. Emails in reflog lines are never read out."""
+    unreachable local commit(s) placed against the first push. Emails in reflog lines are never read out.
+    Release v2 review fix (2026-10-29): an unreachable commit is recorded by its guard form (commit_form), never by id,
+    with its parents (on `main`, unreachable, or none), and placed against the record (read_v2_record): the origin-only
+    ref's commit, a commit of a branch deleted on origin (a recorded `origin/<b>` commit or its unreachable ancestor),
+    local evidence only (a local reflog entry, or made before the first push), or unplaced."""
     out = {"remote": [], "unreachable_commits": []}
     base = os.path.join(ROOT, ".git", "logs", "refs", "remotes")
     seen_new_remote = set()
@@ -2208,12 +2681,28 @@ def reflog_evidence(unreach_commits):
         if os.path.exists(lf):
             for line in open(lf, encoding="utf-8", errors="replace"):
                 local_new.add(line.split(" ", 2)[1] if line.count(" ") >= 2 else "")
+    # release v2 review fix (2026-10-29): parents first, so the record's origin-branch commits can be followed down
+    unreach_set = set(unreach_commits)
+    hdrs = {}
     for c in unreach_commits:
         raw = git("cat-file", "commit", c).decode("utf-8", "replace")
         hdr_, _, msg = raw.partition("\n\n")
-        cm = re.search(r"(?m)^committer .* (\d+) ([+-]\d{4})$", hdr_)
-        parents = re.findall(r"(?m)^parent ([0-9a-f]{40})$", hdr_)
-        subj = msg.split("\n", 1)[0]
+        hdrs[c] = (re.search(r"(?m)^committer .* (\d+) ([+-]\d{4})$", hdr_),
+                   re.findall(r"(?m)^parent ([0-9a-f]{40})$", hdr_), msg.split("\n", 1)[0])
+    rec = rec or {}
+    on_branch = {}   # unreachable commit -> the deleted origin branch whose recorded commit it is, or an ancestor of
+    for b_, t_ in rec.get("tips", ()):
+        top = [c for c in unreach_commits if c.startswith(t_)]
+        stack = top[:1] if len(top) == 1 else []
+        while stack:
+            c = stack.pop()
+            if c in on_branch:
+                continue
+            on_branch[c] = b_
+            stack.extend(p_ for p_ in hdrs[c][1] if p_ in unreach_set)
+    rows_ = []
+    for c in unreach_commits:
+        cm, parents, subj = hdrs[c]
         ts = int(cm.group(1)) if cm else None
         twins = []
         if parents:
@@ -2227,11 +2716,38 @@ def reflog_evidence(unreach_commits):
                     if m2.split("\n", 1)[0] == subj:
                         twins.append({"commit": f_[0][:10], "seconds_after": (int(c2.group(1)) - ts)
                                       if (c2 and ts) else None})
-        out["unreachable_commits"].append({
-            "commit": c[:10], "committer_time": fmt_ts(ts, cm.group(2)) if cm else None,
-            "before_first_push": bool(first_push and ts is not None and ts < first_push[0]),
+        before_ = bool(first_push and ts is not None and ts < first_push[0])
+        if rec.get("tp_commit") and c.startswith(rec["tp_commit"]):
+            place = "origin-only ref"
+        elif c in on_branch:
+            place = "deleted origin branch"
+        elif c in local_new or before_:
+            place = "local evidence only"
+        else:
+            place = "unplaced"
+        rows_.append((ts or 0, commit_form(c), {
+            "commit_form": commit_form(c), "committer_time": fmt_ts(ts, cm.group(2)) if cm else None,
+            "parents": [("unreachable " + commit_form(p_)) if p_ in unreach_set else
+                        ("on main" if main_sha and is_ancestor(p_, main_sha) else "reachable, not on main")
+                        for p_ in parents],
+            "before_first_push": before_,
             "in_remote_reflogs": c in seen_new_remote, "in_local_reflogs": c in local_new,
-            "reachable_twin_same_parent_and_subject": twins})
+            "on_github_by_the_record": place in ("origin-only ref", "deleted origin branch"),
+            "place": place, "deleted_origin_branch": on_branch.get(c),
+            "reachable_twin_same_parent_and_subject": twins}))
+    out["unreachable_commits"] = [r_ for _, _, r_ in sorted(rows_, key=lambda x: (x[0], x[1]))]
+    pl_ = collections.Counter(u_["place"] for u_ in out["unreachable_commits"])
+    out["unreachable_record"] = {
+        "form": "len10: + the first 8 hex of sha256 of the commit's 10-hex short id (no character of an id printed)",
+        "on_github_by_the_record": pl_["origin-only ref"] + pl_["deleted origin branch"],
+        "origin_only_ref": pl_["origin-only ref"], "deleted_origin_branches": pl_["deleted origin branch"],
+        "local_evidence_only": pl_["local evidence only"], "unplaced": pl_["unplaced"],
+        "deleted_origin_branches_found": len(set(on_branch.values())),
+        "sources": ({"origin_only_ref": v2_loc("answers", rec["lines"]["answers_tp"]).strip("`"),
+                     "item_b": v2_loc("answers", rec["lines"]["answers_item_b"]).strip("`"),
+                     "deleted_on_origin": v2_loc("block", rec["lines"]["block_deleted"]).strip("`"),
+                     "origin_branch_commits": v2_loc("branch_tips", rec["lines"]["branch_tips"]).strip("`")}
+                    if rec.get("lines") else None)}
     return out
 
 
@@ -2503,12 +3019,19 @@ def known_matchers(known):
     is matched as a plain substring, case-insensitively, with each interior run of separators (`-`, `_`, space, `.`)
     matching any run of them, tabs included, or none (kind 'variant'); an all-digit value (an SSH port) digit-bounded (kind
     'digits'; km_count skips a match inside a run of 8+ hex characters, a digest); any other value word-bounded, as
-    round 4 matched (kind 'word')."""
+    round 4 matched (kind 'word'). Release v2 review fix (2026-10-29): a value in HEX_PREFIX_KNOWN (a short commit id)
+    is matched as the prefix of any hex run, in any case (kind 'hexprefix'), so its longer prints are found."""
     key = frozenset(known)
     if key not in _KM:
         out = []
         for v in sorted(key, key=lambda x: (-len(x), sha256_hex(x.encode()))):
-            if v.isdigit():
+            if v in HEX_PREFIX_KNOWN:
+                # release v2 review fix (2026-10-29): a short commit id (the origin-only ref's commit), matched as the
+                # prefix of any hex run of 7+ characters -- a longer print of the same commit -- in any case (kind
+                # 'hexprefix'); a 7-character value word-bounded would miss its 10-hex print
+                assert re.fullmatch(r"[0-9a-f]{7,40}", v)
+                out.append((v, "hexprefix", re.compile(r"(?<![0-9A-Fa-f])" + re.escape(v), re.I)))
+            elif v.isdigit():
                 out.append((v, "digits", re.compile(r"(?<![0-9])" + re.escape(v) + r"(?![0-9])")))
             elif len(v) >= KNOWN_MIN_SUBSTR:
                 # interior separator runs only: a leading or trailing one stays literal, so the pattern never
@@ -2536,7 +3059,7 @@ def in_digest(txt, s, e):
 def km_count(km, txt, first=False):
     """Matches of one known matcher in txt (a digit match inside a digest not counted); first=True stops at one."""
     v, kind, rx = km
-    if kind != "variant" and v not in txt:
+    if kind not in ("variant", "hexprefix") and v not in txt:
         return 0
     n = 0
     for m_ in rx.finditer(txt):
@@ -2567,12 +3090,19 @@ def guard_known(pend_known):
             ids_ = re.findall(r"[A-Za-z0-9]{8,}", v)
             if ids_:
                 out.add(ids_[-1])
+    # release v2 review fix (2026-10-29): the origin-only ref's id and commit, read at run time from the answers'
+    # section 2 (TP_GUARD; never printed); the commit is matched as a hex-run prefix (known_matchers)
+    out |= {v for v in TP_GUARD.values() if v}
     return out
 
 
 def guard_form(v):
     """Round 5: the form the guard's refusal message prints -- 'lenN:sha8' for a value of 4 characters or fewer or one
-    that opens with 4 digits (no character of it shown), else the generic redacted form; never registers the value."""
+    that opens with 4 digits (no character of it shown), else the generic redacted form; never registers the value.
+    Release v2 review fix: a TP_GUARD value is named by its label only (any form of a short hex id is recoverable)."""
+    for lab_, tv_ in TP_GUARD.items():
+        if v == tv_:
+            return lab_ + ", not shown"
     if len(v) <= 4 or re.match(r"\d{4}", v):
         return f"len{len(v)}:{sha256_hex(v.encode())[:8]}"
     return f"{v[:4]}...[len {len(v)}]#{sha256_hex(v.encode())[:8]}"
@@ -2813,6 +3343,28 @@ def guard_controls(R, known, redacted, outputs, pend_known):
             "session_word_and_id": injected_text("session_" + sid, [sid])["refused"],
             "id_upper_case": injected_text(sid.upper(), [sid])["refused"]}
     res["second_check"] = sc
+    # (xi) release v2 review fix (2026-10-29): the origin-only ref's id and commit (TP_GUARD, read at run time from the
+    # answers' section 2; never printed). The commit as a print of it can appear -- its short form, its 10- and 40-hex
+    # forms (from the store; a random hex tail where the store no longer holds it), upper case, glued to a word -- and
+    # the id, in both cases: each injected on its own line must be refused. Declared exception: the short form inside a
+    # longer hex run (a hex character before it) is not a print of the commit, and is not refused.
+    tid_, tc_ = TP_GUARD.get(TP_LABELS["id"]), TP_GUARD.get(TP_LABELS["commit"])
+    xi = {"values": sum(1 for v in (tid_, tc_) if v), "commit_in_store": False, "forms": 0, "refused": 0}
+    if tid_ and tc_:
+        full_ = sh(["git", "rev-parse", "--verify", "--quiet", tc_ + "^{commit}"], check=False).stdout.decode().strip()
+        xi["commit_in_store"] = bool(re.fullmatch(r"[0-9a-f]{40}", full_)) and full_.startswith(tc_)
+        hx_ = "0123456789abcdef"
+        f40_ = full_ if xi["commit_in_store"] else tc_ + rnd(40 - len(tc_), hx_)
+        forms_ = [(tc_, tc_), (f40_[:10], tc_), (f40_, tc_), (f40_[:10].upper(), tc_), ("commit" + f40_[:10], tc_),
+                  ("`" + f40_[:12] + "`", tc_), (tid_, tid_), (tid_.upper(), tid_)]
+        got_ = [injected_text(t_, [g_])["refused"] for t_, g_ in forms_]
+        xi.update({"forms": len(forms_), "refused": sum(got_)})
+        inner_ = rnd(1, "abcdef") + f40_[:10]
+        outs_i = [(l_, t_ + "\n" + inner_ + "\n") for l_, t_ in base_out]
+        xi["inner_hex_refused"] = any(v_ == tc_ for _, v_ in guard_scan(ref0, outs_i, known))
+    xi["all_pass"] = bool(xi["values"] == 2 and xi["forms"] and xi["refused"] == xi["forms"]
+                          and not xi.get("inner_hex_refused", True))
+    res["xi_origin_only_ref"] = xi
     c_a = guard_candidates_r5a(R, known, redacted)
     w_ = {v for v, recs in R.items() if any(x[2] not in GUARD_EXEMPT_VERDICTS or
                                             (x[1] in REDACTION_RULE_CLASSES and not x[3]) for x in recs)}
@@ -2865,7 +3417,8 @@ def guard_controls(R, known, redacted, outputs, pend_known):
                                                                               "iii_ssh_port"))
           and res["iv_generic_tokens"]["triage16_refused"] == 0 and res["iv_generic_tokens"]["shape16_refused"] == 0
           and res["v_without_round5_triage"]["all_round5_values"]
-          and res["vi_round4_rule"]["refused_now"] == 0)
+          and res["vi_round4_rule"]["refused_now"] == 0
+          and res["xi_origin_only_ref"]["all_pass"])   # release v2 review fix (2026-10-29)
     res["all_pass"] = bool(ok)
     return res, (candidates, ref0, why0, ex0, base)
 
@@ -3099,9 +3652,13 @@ def values_check(w, V):
     items.append(("Missed: remote-only refs (`git ls-remote origin` before the flip).",
                   "APPLIED as the PI pre-flip step 2 (see F8)."))
     un = V["unreach"]
+    ur_ = V["reflogs"].get("unreachable_record") or {}
+    # release v2 review fix (2026-10-29): a push sends none of them, but the record places some on GitHub (see (v))
     items.append(("Missed: local unreachable objects (checker: 16 blobs and 1 commit).",
                   "APPLIED. This run: " + (", ".join(f"{k} {n}" for k, n in sorted(un.items())) or "none")
-                  + f" ({V['unreach_bytes']:,} bytes) of {V['n_store']} objects in the store. They are not pushed."))
+                  + f" ({V['unreach_bytes']:,} bytes) of {V['n_store']} objects in the store. A push sends none of "
+                    f"them; of the unreachable commits, {ur_.get('on_github_by_the_record', 0)} were on GitHub by the "
+                    f"record (see (v))."))
     co = V["cont"]
     items.append(("Missed: 'continuity' over history (checker: 948 occurrences in 25 files; 'continuity password' 3 "
                   "times, no value follows).",
@@ -3202,7 +3759,8 @@ def values_check_r2(w, V):
                         "and that the fallback plus Code's blob-level scans stand in for them; PI pre-flip step 4 "
                         "gives the scanner commands.")
                      if not sa["which"].get("gitleaks") and sa["cache"] else
-                     (". Release (2026-10-12): "
+                     # release v2 (2026-10-29): the label names the version that prints this run's state
+                     (". Release v2 (" + V2_RUN_DATE + "): "
                       + (gitleaks_script_note(sa["which"]) if sa["which"].get("gitleaks") else "gitleaks is not found")
                       + ("; the Homebrew formula index is no longer cached, so the round-2 installability evidence is "
                          "not re-read" if not sa["cache"] else ""))
@@ -3271,9 +3829,11 @@ def values_check_r2(w, V):
                   + "; ".join(f"`{r_['ref']}` {r_['entries']} entries, all fast-forward: "
                               f"{'yes' if r_['all_fast_forward'] else 'NO'}" for r_ in rl["remote"])
                   + (f"; first push {rl['first_push']['time']} at `{rl['first_push']['commit']}`" if rl["first_push"] else "")
-                  + "; " + ("; ".join(f"unreachable commit `{u_['commit']}` at {u_['committer_time']}, before the first "
-                                     f"push: {'yes' if u_['before_first_push'] else 'NO'}, in a remote reflog: "
-                                     f"{'YES' if u_['in_remote_reflogs'] else 'no'}, replaced by "
+                  # release v2 review fix (2026-10-29): an unreachable commit by its guard form, never by id
+                  + "; " + ("; ".join(f"unreachable commit `{u_['commit_form']}` at {u_['committer_time']}, before the "
+                                     f"first push: {'yes' if u_['before_first_push'] else 'NO'}, in a remote reflog: "
+                                     f"{'YES' if u_['in_remote_reflogs'] else 'no'}, on GitHub by the record: "
+                                     f"{'YES' if u_['on_github_by_the_record'] else 'not in the record'}, replaced by "
                                      + (", ".join(f"`{t_['commit']}` {t_['seconds_after']} s later"
                                                   for t_ in u_["reachable_twin_same_parent_and_subject"]) or "-")
                                      for u_ in rl["unreachable_commits"]) or "no unreachable commit")
@@ -3330,7 +3890,9 @@ def values_check_r2(w, V):
     w("Second checker's verdict, unchanged by these fixes: no secret in the history; no pass or STOP line "
       "changes. (i) stays STOP pending the PI on the block's literal text, and now also records that the "
       "primary scanners were not run; (v) PASS; (iv)-mechanical passes and names the two JSON probe files."
-      + (" (Release, 2026-10-12, this run: the (i) line now records the PI's answer of 2026-10-12 to Code's item 3.)"
+      # release v2 (2026-10-29): this run's (i) basis is the PI's answer of 2026-10-28 (I_BASIS_V2)
+      + (" (Release v2, " + V2_RUN_DATE + ", this run: the (i) line now records the PI's answer of 2026-10-28, \""
+         + PI_ANSWER_2026_10_28 + "\", with the design seat's item A labelled as its referent.)"
          if V.get("i_resolved") else ""))
     values_check_r3(w, V)
 
@@ -3632,7 +4194,8 @@ def values_check_r3(w, V):
     for i, (claim, disp) in enumerate(items, 1):
         w(f"{i}. **{claim}** {disp}")
     w("")
-    st_i = ("the PI's answer of 2026-10-12 recorded (its item 3; see the (i) line)" if V.get("i_resolved") else
+    st_i = ("the PI's answer of 2026-10-28 recorded (\"" + PI_ANSWER_2026_10_28 + "\"; its referent, the design "
+            "seat's item A; see the (i) line)" if V.get("i_resolved") else   # release v2 (2026-10-29)
             "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
     st_v = "PASS" if V["max_blob"] <= 100 * MB else "STOP"
     w(f"Third checker's verdict, re-checked on this run: (i) {st_i}; (v) {st_v}; (iv)-mechanical: jlens paths ever "
@@ -3862,7 +4425,8 @@ def values_check_r4(w, V):
     for i, (claim, disp) in enumerate(items, 1):
         w(f"{i}. **{claim}** {disp}")
     w("")
-    st_i = ("the PI's answer of 2026-10-12 recorded (its item 3; see the (i) line)" if V.get("i_resolved") else
+    st_i = ("the PI's answer of 2026-10-28 recorded (\"" + PI_ANSWER_2026_10_28 + "\"; its referent, the design "
+            "seat's item A; see the (i) line)" if V.get("i_resolved") else   # release v2 (2026-10-29)
             "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
     st_v = "PASS" if V["max_blob"] <= 100 * MB else "STOP"
     w(f"Fourth checker's findings, re-checked on this run: (i) {st_i}; (v) {st_v}; TRUE-SECRET-CANDIDATE "
@@ -4083,6 +4647,18 @@ def values_check_r5(w, C, G):
     w(f"- (vi) The round-4 rule replayed: {vi_['entries']} entries, {vi_['distinct']} distinct values (above).")
     w(f"- (vii)-(x) The second check's gap cases: below, with the findings they answer (all pass: "
       f"{yn(ct_.get('second_check_all_pass'))}).")
+    xi_ = ct_.get("xi_origin_only_ref") or {}
+    # release v2 review fix (2026-10-29): the origin-only ref's values in the guard, and their control
+    w(f"- (xi) Release v2: the origin-only ref the design seat's answers of 2026-10-28 name (their section 2) -- its id "
+      f"and its commit, read at run time from that line of the answers (located by content, as the scrub generator "
+      f"reads it), held in memory and never printed -- are known values of the guard ({xi_.get('values', 0)} of 2); "
+      f"the commit, given there in short form, is matched as the prefix of any run of 7 or more hex characters, in "
+      f"any case, so a longer print of it is found (a short value word-bounded would miss its 10-hex print). "
+      f"Injected on its own line into a copy of each output -- the commit's short, 10- and 40-hex forms (from the "
+      f"store: {yn(xi_.get('commit_in_store'))}), upper case, glued to a word and backticked, and the id in both "
+      f"cases -- refused {xi_.get('refused', 0)} of {xi_.get('forms', 0)}; the short form inside a longer hex run "
+      f"(the declared exception: not a print of the commit) refused: {bad(xi_.get('inner_hex_refused', True))}; "
+      f"pass: {yn(xi_.get('all_pass'))}.")
     w("")
     w(f"Controls: {'ALL PASS' if ct_['all_pass'] else 'FAIL'}. A failing control, or any refused value found "
       "verbatim, stops the write.")
@@ -4097,10 +4673,11 @@ def values_check_r5(w, C, G):
     values_check_r5_second(w, G)
     w("")
     if C.get("release_run") and C.get("outputs_outside_repo"):   # release fix round: a scratch copy is labelled
-        w(f"This is a rehearsal (outputs outside the repository) at HEAD `{C['head'][:10]}`, with the 2026-10-12 "
-          "release names; it is not the release raw.")
+        # release v2 (2026-10-29): the label names the v2 run's release names
+        w(f"This is a rehearsal (outputs outside the repository) at HEAD `{C['head'][:10]}`, with the {V2_RUN_DATE} "
+          "release names (the v2 release run); it is not the release raw.")
     elif C.get("release_run"):   # release (2026-10-12)
-        w(f"This is the release run at HEAD `{C['head'][:10]}` (both outputs at the 2026-10-12 release names).")
+        w(f"This is the v2 release run at HEAD `{C['head'][:10]}` (both outputs at the {V2_RUN_DATE} release names).")
     else:
         w(f"This is an interim snapshot at HEAD `{C['head'][:10]}`; pre-flip step 3 still needs the clean run at the "
           "release commit.")
@@ -4252,6 +4829,15 @@ def main():
                        os.path.relpath(os.path.abspath(os.path.join(ROOT, a.json_out)), ROOT)) != (DEFAULT_MD,
                                                                                                    DEFAULT_JSON):
         raise SystemExit("refusing --in-place: it names the in-place regeneration of the two 2026-10-08 raws only")
+    # release v2 review fix (2026-10-29; history-1): the records read at run time (V2_RECORD_DOCS). The origin-only ref's
+    # id and commit become known values of the leak guard (never printed; the commit matched as a hex-run prefix);
+    # the origin-branch commits place the unreachable commits under (v)
+    v2rec = read_v2_record()
+    TP_GUARD.clear()
+    TP_GUARD.update({TP_LABELS["id"]: v2rec["tp_id"], TP_LABELS["commit"]: v2rec["tp_commit"]})
+    HEX_PREFIX_KNOWN.clear()
+    HEX_PREFIX_KNOWN.add(v2rec["tp_commit"])
+    _KM.clear()
 
     stamp = sh(["date", "-u"]).stdout.decode().strip()
     script_path = os.path.relpath(os.path.abspath(__file__), ROOT)
@@ -4465,7 +5051,8 @@ def main():
             unreach_bytes += int(z_)
             if t_ == "commit":
                 unreach_commits.append(s_)
-    reflogs = reflog_evidence(sorted(unreach_commits))
+    main_live = next((s_ for n_, s_, _ in refs_live if n_ == "refs/heads/main"), None)
+    reflogs = reflog_evidence(sorted(unreach_commits), main_sha=main_live, rec=v2rec)
     jv = json_vectors(m)
     hp_out = home_paths_outside_repo(m, users_at_head)
 
@@ -4588,14 +5175,18 @@ def main():
          "This run is at the base: no new-since columns."))
     w("- Referent note: the block names N12's output `results/raw/<stamp>_note-N12-scrub.md` (:84). The "
       "orchestrator split N12 across three raws -- `2026-10-08_note-N12-history` "
+      # release v2 (2026-10-29): this file is the v2 release run (v1's is RELEASE_MD_V1)
       + (f"(this part's earlier rounds; this file, `{os.path.splitext(os.path.basename(RELEASE_MD))[0]}`, is its "
-         f"release run at the release commit{rel_tag}: (i), (ii), (v) and (iv)'s mechanical checks)"
+         f"v2 release run at the release commit{rel_tag}: (i), (ii), (v) and (iv)'s mechanical checks; v1's release "
+         f"run is `{os.path.splitext(os.path.basename(RELEASE_MD_V1))[0]}`)"
          if rel_early else "(this file: (i), (ii), (v) and (iv)'s mechanical checks)")
       + ", `2026-10-08_note-N12-content` and `2026-10-08_note-N12-licenses` -- which the "
       "README and the ledger cite together as N12's output.")
     w(f"- Block: `{BLOCK}`, sha256 `{block_sha_wt}` (working tree) / `{block_sha_head}` (HEAD blob); "
       f"routed `{BLOCK_SHA[:8]}...{BLOCK_SHA[-4:]}`: "
       f"{'MATCH' if block_sha_wt == BLOCK_SHA == block_sha_head else 'MISMATCH'}")
+    if rel_early:   # release v2 (2026-10-29): the v2 run's routing
+        w(f"- Release v2: this is {V2_ROUTING}{rel_tag}.")
     w(f"- Item: N12 (block lines 72-85) parts (i), (ii), (v) and (iv)'s mechanical checks; "
       f"part id N12-history")
     w(f"- Script: `{script_path}`, sha256 `{script_sha}`")
@@ -4616,7 +5207,9 @@ def main():
       + ("(the concurrent PROPOSAL-m session's G-CAL commits: their subjects begin `m package` / `G-CAL`) "
          if from_m and new_commits else "(see the JSON, `since.new_commits`) ")
       + f"({', '.join('`' + c[:10] + '`' for c in new_commits) or 'none'}). "
-      + (f"This is the release run at the release commit (pre-flip step 1's re-run){rel_tag}." if rel_early else
+      # release v2 (2026-10-29): the v2 run is block section 2 item 1
+      + (f"This is the v2 release run ({V2_RUN_DATE}) at the release commit (block section 2 item 1; pre-flip step 1's "
+         f"re-run){rel_tag}." if rel_early else
          "It is still a snapshot: the final re-run at the release commit (PI pre-flip step 1, under (v)) is required."))
     w("- Redaction form: `xxxx...[len N]#hhhhhhhh` = first 4 characters, the value's length, the "
       "first 8 hex of sha256(value) (the routing's form -- first 4 + length + sha256[:8] -- with the "
@@ -4666,11 +5259,14 @@ def main():
     installable = len(sa["formulae"]) == 2 and all(d_["bottle_for_this_platform"] for d_ in sa["formulae"].values())
     if gl_found:
         # release (2026-10-12): the round-2 paragraph below assumed neither scanner was installed
-        w("**This script runs neither of the block's primary scanners.** Release (2026-10-12): "
+        # release v2 (2026-10-29): item 4's basis on the v2 run is ITEM4_BASIS_V2
+        # review fix (history-6): the v2 basis is printed on the v2 release run (and its rehearsals) only
+        w("**This script runs neither of the block's primary scanners.** Release v2 (" + V2_RUN_DATE + "): "
           + gitleaks_script_note(sa["which"]) + " (`which`: "
           + ", ".join(f"{t_} {'found' if p_ else 'not found'}" for t_, p_ in sa["which"].items())
-          + f"). The PI's answer of 2026-10-12, verbatim: \"{PI_ANSWER_2026_10_12}\"; its item 4, as Code put it "
-          f"(Code's words, not the PI's): {PI_ANSWER_ITEM4_CODE_WORDS}. The fallback below and Code's blob-level "
+          + "). The basis of that on this run: "
+          + (ITEM4_BASIS_V2 if rel_early else "no release-run basis applies to this run")
+          + ". The fallback below and Code's blob-level "
           "scans in (i-b) are this script's own scans; gitleaks' findings and their triage are in its own raws.")
     else:
         w("**The block's primary scanners have NOT been run over this history.** gitleaks and trufflehog are not "
@@ -4903,11 +5499,33 @@ def main():
     c2_explicit = collections.Counter(lab_ for lab_, v, e in c2_tabs if e.get("c2pa_only") and manual(v))
     c2_kept = collections.Counter(lab_ for lab_, v, e in c2_tabs if e.get("c2pa_occ") and not e.get("c2pa_only"))
     c2_b64 = sum(1 for x in hdr["b64stats"]["runs64_below"].values() if x.get("c2pa"))
+    # release v2 review fix (2026-10-29; history-9): the untracked .svg files at the root, which the declaration does not
+    # cover, by date prefix, with the <c2pa:manifest> elements each carries (read as plain files; D4 names withheld)
+    c2_undecl = collections.defaultdict(list)
+    for f_ in sorted(x_ for x_ in git("ls-files", "--others", "--exclude-standard", "-z").decode("utf-8", "replace")
+                     .split("\0") if x_.endswith(".svg") and "/" not in x_ and x_ not in C2PA_MANIFESTS
+                     and not d4_withheld(x_)):
+        fp_ = os.path.join(ROOT, f_)
+        if os.path.isfile(fp_) and not os.path.islink(fp_):
+            c2_undecl[f_[:10] if re.match(r"\d{4}-\d{2}-\d{2}_", f_) else "no date prefix"].append(
+                open(fp_, "rb").read().decode("utf-8", "replace").count("<c2pa:manifest>"))
+    c2_undecl_txt = ("; ".join(f"{len(ns_)} of {d_} ("
+                               + ("one element each" if all(x_ == 1 for x_ in ns_) and len(ns_) > 1 else
+                                  "one element" if ns_ == [1] else
+                                  "none carries one" if not any(ns_) else
+                                  "elements " + "/".join(str(x_) for x_ in ns_)) + ")"
+                               for d_, ns_ in sorted(c2_undecl.items()))
+                     or "none")
     w(f"**Round 9: the C2PA declaration.** The PI, 2026-10-10, verbatim: \"{C2PA_PI_WORDS}\" (it: the C2PA "
       f"content-credentials element each of the three filed 2026-10-10 renders carries; the 2026-10-09 renders they "
-      f"replace are not declared). Code's implementation, not the PI's words: a value lying wholly inside the text content of a declared "
+      f"replace are not declared). Release v2 ({V2_RUN_DATE}): extended to the element each of the three filed "
+      f"2026-10-22 renders carries, on the design seat's item C as put (\"the C2PA declaration extended\"; its answers, "
+      f"section 5, 3c, verbatim: \"{C2PA_EXTENSION_SEAT_WORDS}\"), which the PI answered on 2026-10-28: "
+      f"\"{PI_ANSWER_2026_10_28}\"; the untracked .svg files at the root are not declared, by date prefix: "
+      f"{c2_undecl_txt}. Code's implementation, not the PI's words: a value lying wholly inside the text content of a declared "
       f"`<c2pa:manifest>` element is FALSE-POSITIVE with the reason: {C2PA_REASON}. Declared: "
-      f"{len(C2PA_MANIFESTS)} blobs, each bound to its repository root path (every path at which the blob occurs in "
+      f"{len(C2PA_MANIFESTS)} blobs ({sum(1 for k_ in C2PA_MANIFESTS if k_ in C2PA_MANIFESTS_V1)} of 2026-10-10, "
+      f"{sum(1 for k_ in C2PA_MANIFESTS if k_ not in C2PA_MANIFESTS_V1)} of the v2 extension), each bound to its repository root path (every path at which the blob occurs in "
       f"history must be that path), the blob's length and its sha256 (`C2PA_MANIFESTS`); a value anywhere else keeps "
       f"its ordinary triage, and explicit triage (TRIAGE16 / MANUAL_TRIAGE) wins inside a declared blob too. In this "
       f"history: declared blob occurrences read {c2_hist.get('declared_blobs_seen', 0)}, undeclared "
@@ -5133,7 +5751,9 @@ def main():
             w(f"- `.local` {role} identity {red(em)} ({nm}): commits "
               + ", ".join(f"`{h[:10]}`" for h in hs))
     w("")
-    w("`jspace-lab.local` is a synthetic tool identity (the repository's own name + `.local`), not a "
+    # release v2 (2026-10-29): the repository was renamed `told-vs-felt` (release block, 2026-10-27)
+    w("`jspace-lab.local` is a synthetic tool identity (the repository's name before its rename to `told-vs-felt`, "
+      "+ `.local`), not a "
       "machine; the other `.local` domain is the author's laptop hostname and is redacted here, but "
       "it IS public in those two commits' author headers once the history is published (rewriting "
       "them is a history rewrite: the PI's decision).")
@@ -5239,7 +5859,8 @@ def main():
         elif e["paths"] <= {"paper_analysis.ipynb"}:
             sw_cls["a fragment of the notebook's embedded base64 PNG"] += 1
         elif e.get("c2pa_only") and not manual(v):
-            sw_cls["a fragment of a declared C2PA content-credentials manifest (round 9; the PI, 2026-10-10)"] += 1
+            sw_cls["a fragment of a declared C2PA content-credentials manifest (round 9; the PI, 2026-10-10; "
+                   "extended to the 2026-10-22 renders, the PI 2026-10-28)"] += 1
         else:
             sw_other.append((v, e))
     w(f"- Context-free id-shape sweep ({SWEEP_DESC}): {len(sweep)} distinct tokens: "
@@ -5488,20 +6109,51 @@ def main():
          f"reachable from `origin/main` are in history GitHub accepted on push; for the commits these refs add "
          f"beyond it, and any blob only they reach, this check shows no push: this run scans and size-checks them "
          f"with every other ref, and a push would send them to GitHub (public at the visibility flip). "
-         + (f"This is the release run{rel_tag}, made before the push: the release sequence pushes R1, R2 and the tag only "
-            "after the release scans pass, so refs ahead of `origin/main` are expected here. "
+         # release v2 (2026-10-29): the v2 sequence (block section 2 items 1-7) pushes after the tag; review fix
+         # (history-5): section 8 orders tag -> push; it does not say that nothing is pushed before (main has been)
+         + (f"This is the v2 release run{rel_tag}, made before the push: the design seat's answers of 2026-10-28 "
+            "(section 8) put the push after the tag on the final audit commit, so refs ahead of `origin/main` are "
+            "expected here. "
             if rel_early and all(e_.get("origin_main_is_its_ancestor") for e_ in ahead.values()) else ""))
       + f"Refs that exist only on GitHub "
       f"(branches pushed by other sessions and never fetched, `refs/pull/*`, remote-only tags) are not visible "
-      f"in this clone and were not scanned or size-checked; this audit uses no network.")
+      f"in this clone and were not scanned or size-checked; this audit uses no network."
+      # release v2 review fix (2026-10-29; history-1): one such ref is in the record, and its commit is in this store
+      + (" One is in the record: the origin-only ref the design seat's answers of 2026-10-28 name in their section 2, "
+         "whose commit is in this clone's object store, unreachable (below)."
+         if reflogs["unreachable_record"]["origin_only_ref"] else ""))
     w("")
+    rl = reflogs
+    ur = rl["unreachable_record"]
+    n_gh = ur["on_github_by_the_record"]
+    lns_ = v2rec["lines"]
     w(f"Local object store: {n_store} objects; reachable from no ref (the live refs at the run, not the pin): "
       + (", ".join(f"{k} {v}" for k, v in sorted(unreach.items())) or "none")
       + f" ({unreach_bytes:,} bytes); this audit opens none of their contents (for an unreachable commit it reads "
-        f"only the header's committer time and parent, below). A push sends only objects reachable from the "
-        f"pushed refs, so these are not published by a visibility change.")
+        f"only its header's committer time and parents, and its subject line to look for a reachable twin, below; "
+        f"none of them is printed). A push sends only objects reachable from the pushed refs. "
+      # release v2 review fix (2026-10-29; history-1): v1's 'so these are not published by a visibility change' is
+      # false in v2's state; which of them were on GitHub is computed from the record (read_v2_record)
+      + (f"{n_gh} of these commits were on GitHub: {ur['origin_only_ref']} under the origin-only ref the design seat's "
+         f"answers of 2026-10-28 name in their section 2 ({v2_loc('answers', lns_['answers_tp'])}; until the PI deletes "
+         f"it), and {ur['deleted_origin_branches']} on {ur['deleted_origin_branches_found']} of the branches deleted on "
+         f"origin per block section 0 ({v2_loc('block', lns_['block_deleted'])}), whose remote-tracking reflogs the "
+         f"prune removed -- each branch's recorded `origin/<branch>` commit (the three the Q-F0 entry's values-check "
+         f"recorded on 2026-10-19, {v2_loc('branch_tips', lns_['branch_tips'])}; the `wip/cloud-handoff-2026-10-15` "
+         f"one is item B's commit, {v2_loc('answers', lns_['answers_item_b'])}) with its unreachable ancestors. GitHub "
+         f"can keep such commits fetchable by id, so a visibility change of the existing repository can expose them; "
+         f"a push to a fresh repository sends none of them."
+         if n_gh else
+         "The record this run reads (the answers' section 2; the recorded `origin/<branch>` commits) places none of "
+         "them on GitHub; a push to a fresh repository sends none of them.")
+      + (f" The other {ur['local_evidence_only']} have local evidence only (an entry in the local HEAD/branch reflogs, "
+         f"or a committer time before the first push) and no remote-tracking reflog entry."
+         if ur["local_evidence_only"] else "")
+      + (f" {ur['unplaced']} are placed by neither the record nor local evidence." if ur["unplaced"] else ""))
     w("")
-    rl = reflogs
+    place_txt = {"origin-only ref": "yes, the origin-only ref's commit",
+                 "local evidence only": "not in the record (local evidence only)",
+                 "unplaced": "not in the record (and no local evidence)"}
     w("Push history visible locally (remote-tracking reflogs under `.git/logs/refs/remotes/`, read as plain "
       "files; the email field of each line is never read out): "
       + "; ".join(f"`{r_['ref']}`: {r_['entries']} entries ("
@@ -5512,17 +6164,37 @@ def main():
       + ". "
       + (f"First push recorded: {rl['first_push']['time']} (`{rl['first_push']['commit']}`). "
          if rl["first_push"] else "No push recorded. ")
-      + ("Unreachable commit(s): " + "; ".join(
-          f"`{u_['commit']}` (committer time {u_['committer_time']}; before the first push: "
-          f"{'yes' if u_['before_first_push'] else 'NO'}; in a remote-tracking reflog: "
-          f"{'YES' if u_['in_remote_reflogs'] else 'no'}; in the local HEAD/branch reflogs: "
-          f"{'yes' if u_['in_local_reflogs'] else 'no'}; reachable commit with the same parent and subject: "
-          + (", ".join(f"`{t_['commit']}` ({t_['seconds_after']} s later)"
-                       for t_ in u_["reachable_twin_same_parent_and_subject"]) or "none") + ")"
-          for u_ in rl["unreachable_commits"]) + "." if rl["unreachable_commits"] else "No unreachable commit.")
+      # release v2 review fix (2026-10-29; history-1): by count and guard form, never by id
+      + ((f"Unreachable commit(s): {len(rl['unreachable_commits'])}, each by its guard form (`len10:` + the first 8 hex "
+          "of sha256 of its 10-hex short id: no character of an id is printed; a 10-hex id has 2^40 possible values, "
+          "so the form lets a reader who holds an id match it and is no secret in itself), in committer-time order: "
+          + "; ".join(
+              f"`{u_['commit_form']}` (committer time {u_['committer_time']}; parent(s): "
+              + (", ".join(("an unreachable commit `" + p_.split(" ", 1)[1] + "`") if p_.startswith("unreachable ")
+                           else "on `main`" if p_ == "on main" else "reachable, not on `main`"
+                           for p_ in u_["parents"]) or "none (a root commit)")
+              + f"; before the first push: {'yes' if u_['before_first_push'] else 'NO'}; in a remote-tracking reflog: "
+              f"{'YES' if u_['in_remote_reflogs'] else 'no'}"
+              + (f" (none remains here for `origin/{u_['deleted_origin_branch']}`)"
+                 if u_["place"] == "deleted origin branch" and not u_["in_remote_reflogs"]
+                 and "refs/remotes/origin/" + u_["deleted_origin_branch"] not in {r_["ref"] for r_ in rl["remote"]}
+                 else "")
+              + f"; in the local HEAD/branch reflogs: {'yes' if u_['in_local_reflogs'] else 'no'}; on GitHub by the "
+                f"record: "
+              + (f"yes, on `{u_['deleted_origin_branch']}` (deleted on origin)" if u_["place"] == "deleted origin branch"
+                 else place_txt[u_["place"]])
+              + "; reachable commit with the same parent and subject: "
+              + (", ".join(f"`{t_['commit']}` ({t_['seconds_after']} s later)"
+                           for t_ in u_["reachable_twin_same_parent_and_subject"]) or "none") + ")"
+              for u_ in rl["unreachable_commits"]) + ".")
+         if rl["unreachable_commits"] else "No unreachable commit.")
       + (" So on local evidence no force-push was recorded"
          if all(r_["all_fast_forward"] for r_ in rl["remote"]) else " A NON-fast-forward update IS recorded")
-      + (" and no unreachable commit was pushed from this clone."
+      + ((f"; no remaining remote-tracking reflog holds an unreachable commit, which does not show that none was "
+          f"pushed: {n_gh} of them were on GitHub (above), and a remote-tracking reflog exists here only for "
+          + (and_list(f"`{r_['ref']}`" for r_ in rl["remote"]) if rl["remote"] else "no ref") + ".")
+         if n_gh and all(not u_["in_remote_reflogs"] for u_ in rl["unreachable_commits"]) else
+         " and no unreachable commit was pushed from this clone."
          if all(not u_["in_remote_reflogs"] for u_ in rl["unreachable_commits"])
          else "; an unreachable commit appears in a remote-tracking reflog (see the JSON, `reflogs`).")
       + " This cannot see pushes made from other machines between this clone's fetches (the "
@@ -5544,9 +6216,10 @@ def main():
       f"metadata (the identity emails and the laptop hostname, public in the commit headers) is listed there "
       f"for consistency with this raw's redaction and, as drafted (round 3), does not hold the tag; binding "
       f"either part is the PI's call. "
-      + (f"This raw is the release run at the release commit `{head[:10]}` (this run is that re-run){rel_tag}; "
-         f"commits landing after it -- the post-tag commit of the release raws (the commit that adds this raw) and the "
-         f"concurrent PROPOSAL-m session's -- are not covered by it."
+      # release v2 (2026-10-29): the v2 run is block section 2 item 1, made before items 2-7 (V2_AFTER); review fix
+      # (history-8): the tag-commit re-runs narrow this precondition for the commits after item 1 (V2_PRECONDITION_NOTE)
+      + (f"This raw is the v2 release run ({V2_RUN_DATE}) at the release commit `{head[:10]}` (block section 2 item 1; "
+         f"this run is that re-run){rel_tag}; {V2_AFTER}. {V2_PRECONDITION_NOTE}"
          if rel_early else
          f"This raw is a snapshot at `{head[:10]}`; commits landing later -- the "
          f"concurrent PROPOSAL-m session's, and the audit's own end commit -- are not covered by it.")
@@ -5570,8 +6243,10 @@ def main():
     w("4. The block's primary scanners, on the PI's word (installing them needs it): `brew install gitleaks "
       "trufflehog`, then `gitleaks detect --source . --log-opts=\"--all\"` and `trufflehog git file://.` over "
       "the repository at the release commit. Their findings supersede the fallback's for (i)."
-      + (" Release (2026-10-12), this run: " + gitleaks_script_note(scan_av["which"]) + f"; item 4 of the PI's answer of 2026-10-12, "
-         f"as Code put it: {PI_ANSWER_ITEM4_CODE_WORDS}." if gl_found else ""))
+      # release v2 (2026-10-29): item 4's basis on the v2 run is ITEM4_BASIS_V2; review fix (history-6): printed on the
+      # v2 release run (and its rehearsals) only
+      + (" Release v2 (" + V2_RUN_DATE + "), this run: " + gitleaks_script_note(scan_av["which"]) + "; the basis: "
+         + (ITEM4_BASIS_V2 if rel_early else "no release-run basis applies to this run") + "." if gl_found else ""))
     w("")
     w("**Pass/STOP line (v):** " + ("PASS -- nothing over 100 MB untreated (no tracked file at HEAD and no "
                                     "blob anywhere in history exceeds 100 MB or 100 MiB)."
@@ -5861,7 +6536,8 @@ def main():
               + (", ".join(f"{n_} `{red(v, sensitive=t_[2]) if len(v) > 4 else 'len' + str(len(v))}` {t_[0]}"
                            for n_, v, t_ in r_["precise"]) or "-") + " |")
         w("")
-    w("**Release (2026-10-12), the D4 files:** "
+    # release v2 (2026-10-29): the rule is the 2026-10-12 release's; the count and names are this run's
+    w("**The D4 files (the rule of the 2026-10-12 release; at this run):** "
       + (f"{len(D4_WITHHELD)} file(s) withheld from every working-tree read by name (patterns "
          + ", ".join(f"`{p_}`" for p_ in D4_EXCLUDE_PATTERNS) + "), never opened: "
          + ", ".join(f"`{f_}`" for f_ in sorted(D4_WITHHELD)) if D4_WITHHELD else
@@ -5911,9 +6587,9 @@ def main():
          "CLEAN for the audit's own pending files at this snapshot. Its coverage of third-party personal data is "
          "the email-address class only (round 4): a third party's name, postal address or phone number is not "
          "scanned for.")
-      + (" Files of the other groups matter only if they are committed before the flip. This release run covers "
-         "what the release commit holds; files committed after it (the post-tag raws) are covered by a re-run of "
-         "this script, outputs outside the repository, before their commit is pushed." if rel_early else
+      # release v2 (2026-10-29): what the v2 run (block section 2 item 1) covers, and what is re-run after it
+      + (" Files of the other groups matter only if they are committed before the flip. This v2 release run covers "
+         f"what the release commit holds (block section 2 item 1); {V2_AFTER}." if rel_early else
          " Files of the other groups matter only if they are committed before the flip; the history re-run at "
          "the release commit (pre-flip step 1) covers whatever is."))
     w("")
@@ -5948,12 +6624,73 @@ def main():
     release_run = (not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
                    and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON))
     i_resolved = release_run and not true_candidates and not any(untri_i.values())
-    i_answer = (f"the PI's answer of 2026-10-12, verbatim: \"{PI_ANSWER_2026_10_12}\" -- the answer to Code's five "
-                f"pre-flip questions; its item 3, as Code put it (Code's words, not the PI's): {PI_ANSWER_ITEM3_CODE_WORDS}")
+    # release v2 (2026-10-29): the v2 run's basis, verbatim (I_BASIS_V2; it ends with its own full stop). v1's line was
+    # the PI's answer of 2026-10-12 (PI_ANSWER_2026_10_12) with its item 3 in Code's words (PI_ANSWER_ITEM3_CODE_WORDS).
+    i_answer = I_BASIS_V2
+    # release v2 review fix (2026-10-29; history-3): the values Code triaged before this run as new since v1's release
+    # run, counted from the v2 entries over this run's value tables (TRIAGE16 by source; MANUAL_TRIAGE_V2), never
+    # hard-coded; each one's first locator is checked against v1's release commit. Both (i) lines carry the count.
+    v2_tabs = (list(precise.values()) + [he, cf, sweep] + list(ids.values()) + [hdr["cf"], binc["cf"]]
+               + list(hdr["precise"].values()) + list(binc["precise"].values())
+               + list(hdr["ids"].values()) + list(binc["ids"].values()))
+    v2_tri = {}
+    for tab_ in v2_tabs:
+        for v, e in tab_.items():
+            h16_ = sha256_hex(v.encode())[:16]
+            if h16_ in TRIAGE16:
+                if TRIAGE16[h16_][3] == TRIAGE16_V2_SOURCE:
+                    v2_tri.setdefault(v, ("TRIAGE16", e.get("first")))
+            elif h16_[:8] in MANUAL_TRIAGE_V2:
+                v2_tri.setdefault(v, ("MANUAL_TRIAGE", e.get("first")))
+    v1_c = sh(["git", "rev-parse", "--verify", "--quiet", V1_RELEASE_COMMIT + "^{commit}"],
+              check=False).stdout.decode().strip()
+    v2_after_v1 = sum(1 for _, f_ in v2_tri.values()
+                      if v1_c and re.fullmatch(r"[0-9a-f]{7,40}", (f_ or "").split(" ")[0])
+                      and not is_ancestor((f_ or "").split(" ")[0], v1_c))
+    v2_n16 = sum(1 for k_, _ in v2_tri.values() if k_ == "TRIAGE16")
+    v2_nmt = sum(1 for k_, _ in v2_tri.values() if k_ == "MANUAL_TRIAGE")
+    v2_def16 = sum(1 for e_ in TRIAGE16.values() if e_[3] == TRIAGE16_V2_SOURCE)
+    # release v2 (2026-10-29): the PI's STOP set for this run (I_STOP_SET_V2_WORDS): a value whose IDENTIFIER verdict no
+    # explicit entry gives (manual: TRIAGE16, MANUAL_TRIAGE) is a STOP, over every value table of this run and the
+    # pending files; the session-URL fragments' entries (FRAGMENT_PARENTS_V2) are counted as found over the same tables
+    id_no_entry = {}
+    frag_found = set()
+    for tab_ in v2_tabs:
+        for v, e in tab_.items():
+            # a table whose records carry no verdict (the id-shape sweep) is triaged by manual() or is UNTRIAGED, so an
+            # IDENTIFIER verdict there always has an entry
+            tri_ = e.get("triage") or ("",)
+            if tri_[0] == "IDENTIFIER" and (manual(v) or ("",))[0] != "IDENTIFIER":
+                id_no_entry.setdefault(v, e.get("first"))
+            if sha256_hex(v.encode())[:8] in FRAGMENT_PARENTS_V2:
+                frag_found.add(sha256_hex(v.encode())[:8])
+    for r_ in pend:
+        for _c, v, t_ in list(r_["new"]) + list(r_["precise"]):
+            if t_[0] == "IDENTIFIER" and (manual(v) or ("",))[0] != "IDENTIFIER":
+                id_no_entry.setdefault(v, "pending file " + r_["file"])
+    i_resolved = i_resolved and not id_no_entry
+    id_clause = (f"; IDENTIFIER with no entry {len(id_no_entry)} (the PI's word of 2026-10-29 on item 4's reading, "
+                 f"verbatim: \"{PI_RULE4_2026_10_29}\"; the session-URL fragments' entries in their parent value's "
+                 f"class, `FRAGMENT_PARENTS_V2`, found {len(frag_found)} of {len(FRAGMENT_PARENTS_V2)}: the PI's four, "
+                 f"and v1's URL's fragment on his answer the same day to Code's question on it, verbatim: "
+                 f"\"{PI_FRAGMENT5_2026_10_29}\")"
+                 + ("" if not id_no_entry else ": " + "; ".join(
+                     f"`{red(v)}` first at {md_escape(str(f_))}" for v, f_ in sorted(id_no_entry.items(),
+                                                                                  key=lambda x: str(x[1])))))
+    v2_clause = (f"; Code triaged {len(v2_tri)} value(s) before this run as new since v1's release run "
+                 f"(`{V1_RELEASE_COMMIT}`), each read in context (`TRIAGE16`, by source \"{TRIAGE16_V2_SOURCE}\": "
+                 f"{v2_n16} -- of its {v2_def16} entries -- listed in the round-5 table below; `MANUAL_TRIAGE` IDENTIFIER "
+                 f"session links (`MANUAL_TRIAGE_V2`): {v2_nmt} of {len(MANUAL_TRIAGE_V2)}, listed in (ii)'s identifier "
+                 f"table); first seen in a commit after `{V1_RELEASE_COMMIT}`: "
+                 + (f"{v2_after_v1} of {len(v2_tri)}" if v1_c else f"not checked (`{V1_RELEASE_COMMIT}` not found)")
+                 + f"; the PI's word on them (2026-10-29), verbatim: \"{PI_ANSWERS_2026_10_29[4]}\"" + id_clause
+                 + f"; this raw is the history script's part of (i), which carries only when the same run's gitleaks "
+                 f"raw (`{GL_RAW_V2}`) and trufflehog raw (`{TRUFFLEHOG_RAW_V2}`) also pass theirs")
     if i_resolved:
         L[i_line_idx] = (
-            f"**Pass/STOP line (i):** {i_answer}. This release run: TRUE-SECRET-CANDIDATE 0; UNTRIAGED 0 in every "
-            f"table (" + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + f"); the fallback returns {n_fb} hit "
+            f"**Pass/STOP line (i):** {i_answer} This release run{rel_tag}: TRUE-SECRET-CANDIDATE 0; UNTRIAGED 0 in "
+            f"every table (" + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + ")" + v2_clause
+            + f"; the fallback returns {n_fb} hit "
             f"lines (its credential-shaped rows: UNTRIAGED {untri_i['credential-shaped fallback rows']}); "
             f"{len(pp)} pass-phrase-shaped value(s) reported redacted (above).")
     # release fix round 2 (2026-10-12): a release run that does not resolve (i) says why on both (i) lines --
@@ -5961,18 +6698,24 @@ def main():
     i_cause = ""
     if release_run and not i_resolved:
         nz_ = [f"{k_} {n_}" for k_, n_ in untri_i.items() if n_]
-        i_cause = (f"Release run: the PI's answer of 2026-10-12 (its item 3) is not recorded on this line, because "
-                   f"this run has TRUE-SECRET-CANDIDATE {len(true_candidates)} and UNTRIAGED by table ("
+        # release v2 (2026-10-29): the v2 basis is the PI's answer of 2026-10-28 (I_BASIS_V2)
+        i_cause = (f"Release run (v2, {V2_RUN_DATE}){rel_tag}: the PI's answer of 2026-10-28 "
+                   f"(\"{PI_ANSWER_2026_10_28}\", to the design seat's item A) is not recorded on this line, because "
+                   f"this run has TRUE-SECRET-CANDIDATE {len(true_candidates)}, UNTRIAGED by table ("
                    + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + ")"
+                   + f" and IDENTIFIER with no entry {len(id_no_entry)}"
                    + (f"; not zero: {', '.join(nz_)}" if nz_ else "")
-                   + ("; TRUE-SECRET-CANDIDATE not zero" if true_candidates else "") + ".")
+                   + ("; TRUE-SECRET-CANDIDATE not zero" if true_candidates else "")
+                   + ("; IDENTIFIER with no entry not zero" if id_no_entry else "") + v2_clause + ".")
         L[i_line_idx] = L[i_line_idx] + " " + i_cause
     w("## Summary lines")
     w("")
-    w((f"- (i): {i_answer}; " if i_resolved else "- (i): STOP pending the PI's resolution (literal :77); ")
+    # release v2 (2026-10-29): I_BASIS_V2 ends with its own full stop; item 4's basis is ITEM4_BASIS_V2
+    w((f"- (i): {i_answer} This release run{rel_tag}: " if i_resolved else
+       "- (i): STOP pending the PI's resolution (literal :77); ")
       # release fix round: the scanner text follows `which` (gl_found) on every branch, resolved or not
       + (f"this script runs neither primary scanner: {gitleaks_script_note(scan_av['which'])}"
-         + (f" (item 4, as Code put it: {PI_ANSWER_ITEM4_CODE_WORDS})" if i_resolved else "")
+         + (f" (the basis: {ITEM4_BASIS_V2})" if i_resolved else "")
          if gl_found else
          "the block's primary scanners (gitleaks, trufflehog) not run by this script (`which`: gitleaks not found)"
          if i_resolved else
@@ -5990,7 +6733,9 @@ def main():
       f"blobs/messages, {len(hdr['cf'])} in headers, {len(binc['cf'])} in binary content; "
       f"TRUE-SECRET-CANDIDATE {len(true_candidates)}; "
       + (f"UNTRIAGED (precise and high-entropy, the script's own count) {len(untriaged_precise)}. {i_cause}"
-         if i_cause else f"UNTRIAGED {len(untriaged_precise)}."))
+         if i_cause else
+         # release v2 review fix (2026-10-29; history-3): the resolved (i) carries Code's v2 triage count
+         f"UNTRIAGED {len(untriaged_precise)}{v2_clause}." if i_resolved else f"UNTRIAGED {len(untriaged_precise)}."))
     w(f"- (ii): RunPod pod ids {len(ids['runpod_pod_id (context: pod)'])}, network volume ids "
       f"{len(ids['runpod_volume_id (context: volume)'])}, network volume names "
       f"{sum(1 for e in ids[VOLNAME_CLASS].values() if e['triage'][0] == 'IDENTIFIER')}, SSH ports "
@@ -6021,7 +6766,8 @@ def main():
       + f"; audit files carrying only the commit identities' own metadata (public in the commit headers; listed, "
         f"not a blocker as drafted) {len(audit_ident_only)}"
       + (" (" + ", ".join(f"`{r_['file']}`" for r_ in audit_ident_only) + ")" if audit_ident_only else "")
-      + (f"; this is the release run at the release commit (pre-flip step 1's re-run){rel_tag}." if rel_early
+      + (f"; this is the v2 release run ({V2_RUN_DATE}) at the release commit (block section 2 item 1; pre-flip step 1's "
+         f"re-run){rel_tag}." if rel_early   # release v2 (2026-10-29)
          else "; the end commit waits on a clean re-run (pre-flip step 1)."))
     w("")
     values_check(w, locals())
@@ -6102,15 +6848,58 @@ def main():
                                                              "binary_content": len(binc["precise"][n_])}
                                                         for n_ in sorted(KEY_MATERIAL_PATTERNS)}},
         "scanner_availability": scan_av,
-        "release_2026_10_12": {
+        # release v2 (2026-10-29): this run's release block (v1's raw holds it as `release_2026_10_12`)
+        "release_2026_10_29": {
             "d4_withheld": {"patterns": list(D4_EXCLUDE_PATTERNS), "count": len(D4_WITHHELD),
                             "names": sorted(D4_WITHHELD), "opened": False},
             "release_run": release_run,
             "outputs": [os.path.relpath(os.path.abspath(os.path.join(ROOT, o_)), ROOT)
                         if os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
                         else "(outside the repository) " + os.path.basename(o_) for o_ in (a.out, a.json_out)],
-            "i_line": {"resolved_by_pi_answer": i_resolved, "pi_answer_verbatim": PI_ANSWER_2026_10_12,
-                       "item3_code_words": PI_ANSWER_ITEM3_CODE_WORDS, "item4_code_words": PI_ANSWER_ITEM4_CODE_WORDS,
+            "i_line": {"resolved_by_pi_answer": i_resolved,
+                       # release v2 review fix (2026-10-29; history-6): what this run is, not a constant claim
+                       "run": (("the v2 release run (" + V2_RUN_DATE + "), block section 2 item 1"
+                                + (" -- a rehearsal (outputs outside the repository)" if rel_outside else ""))
+                               if release_run else "not a release run (outputs not at the RELEASE_* names, or --pin)"),
+                       "basis_verbatim": I_BASIS_V2, "pi_answer_verbatim": PI_ANSWER_2026_10_28,
+                       "pi_answer_date": "2026-10-28",
+                       # release v2 review fix (2026-10-29; history-4): item A as put, verbatim, beside the 3a line
+                       "item_a_as_put_verbatim": ITEM_A_AS_PUT,
+                       "referent": ("item A as put: " + V2_RECORD_DOCS["answers"][0] + "@" + V2_RECORD_DOCS["answers"][1]
+                                    + ":" + str(v2rec["lines"]["answers_item_a"]) + " (section 0); the (i) line's "
+                                    "wording is section 5, 3a (:" + str(v2rec["lines"]["answers_3a"]) + ")"),
+                       "item4_code_words": PI_ANSWER_ITEM4_CODE_WORDS, "item4_basis": ITEM4_BASIS_V2,
+                       # release v2 review fix (2026-10-29; history-2): the basis by part; trufflehog's on the PI's word
+                       # of 2026-10-29 (it runs in its own script)
+                       "item4_basis_by_part": {"svg_skip": ITEM4_SVG_BASIS_V2,
+                                               "trufflehog": ITEM4_TRUFFLEHOG_BASIS_V2,
+                                               "trufflehog_v2_pi_words": (list(TRUFFLEHOG_V2_PI_WORDS)
+                                                                          if TRUFFLEHOG_V2_PI_WORDS else None)},
+                       "printed_basis": "ITEM4_BASIS_V2" if rel_early else "none (not a release run)",
+                       # release v2 review fix (2026-10-29; history-3): Code's triage of the values new since v1
+                       "v2_triage_before_this_run": {"values": len(v2_tri), "triage16_source": TRIAGE16_V2_SOURCE,
+                                                     "triage16_found": v2_n16, "triage16_entries": v2_def16,
+                                                     "manual_triage_v2_found": v2_nmt,
+                                                     "manual_triage_v2_keys": len(MANUAL_TRIAGE_V2),
+                                                     "first_seen_after_v1_release_commit": (v2_after_v1 if v1_c
+                                                                                            else None),
+                                                     "v1_release_commit": V1_RELEASE_COMMIT},
+                       "tag_reruns_v2": list(TAG_RERUNS_V2), "tag_reruns_answers_3g": list(TAG_RERUNS_3G),
+                       # release v2 (2026-10-29): the PI's answers of 2026-10-29 (items 2-4) and his rule on item 4
+                       "pi_2026_10_29": {"answers_verbatim": {str(k_): v_ for k_, v_ in PI_ANSWERS_2026_10_29.items()},
+                                         "rule4_verbatim": PI_RULE4_2026_10_29, "stop_set": I_STOP_SET_V2_WORDS,
+                                         "identifier_no_entry": len(id_no_entry),
+                                         "identifier_no_entry_first": sorted(str(f_) for f_ in id_no_entry.values()),
+                                         "fragment_entries": sorted(FRAGMENT_PARENTS_V2),
+                                         "fragment_entries_found": sorted(frag_found),
+                                         "fragment5_pi_words": PI_FRAGMENT5_2026_10_29,
+                                         "tag_run_commit_pi_words": list(TAG_RUN_COMMIT_PI_WORDS),
+                                         "trufflehog_unknown_pi_words": list(UNKNOWN_V2_PI_WORDS),
+                                         "tag_reruns_pi_words": list(TAG_RERUNS_V2_PI_WORDS)},
+                       "v1_record": {"raw": RELEASE_MD_V1, "json": RELEASE_JSON_V1,
+                                     "pi_answer_2026_10_12_verbatim": PI_ANSWER_2026_10_12,
+                                     "item3_code_words": PI_ANSWER_ITEM3_CODE_WORDS,
+                                     "item4_code_words": PI_ANSWER_ITEM4_CODE_WORDS},
                        "true_secret_candidates": len(true_candidates), "untriaged_by_table": untri_i}},
         "fallback_logp": {"bytes": len(logp), "lines_newline_count": logp_nl, "ends_with_newline": logp_ends_nl},
         "reflogs": reflogs,
@@ -6174,8 +6963,20 @@ def main():
                   "clone_index": jidx},
         "gitignore_worktree_equals_head": gi_wt_ok, "npz": npz_rows, "weight_shaped_paths": weights,
         "true_secret_candidates": len(true_candidates), "untriaged": len(untriaged_precise),
-        "c2pa_declaration": {"reason": C2PA_REASON, "verdict": C2PA_TRIAGE[0], "declared_by": "the PI, 2026-10-10",
+        # release v2 review fix (2026-10-29; history-9): declared_by names both words, each with the renders it covers
+        "c2pa_declaration": {"reason": C2PA_REASON, "verdict": C2PA_TRIAGE[0],
+                             "declared_by": ("the PI, 2026-10-10 (the 2026-10-10 renders); the PI's answer of 2026-10-28 "
+                                             "to the design seat's item C (the 2026-10-22 renders)"),
                              "pi_words_verbatim": C2PA_PI_WORDS,
+                             # release v2 (2026-10-29): the extension to the three 2026-10-22 renders, and v1's reason
+                             "reason_v1": C2PA_REASON_V1, "manifests_v1": list(C2PA_MANIFESTS_V1),
+                             "untracked_root_svgs_not_declared": {d_: {"files": len(ns_), "elements": ns_}
+                                                                  for d_, ns_ in sorted(c2_undecl.items())},
+                             "extension_2026_10_28": {
+                                 "renders": [k_ for k_ in C2PA_MANIFESTS if k_ not in C2PA_MANIFESTS_V1],
+                                 "seat_words_item_c": "the C2PA declaration extended",
+                                 "seat_words_answers_3c_verbatim": C2PA_EXTENSION_SEAT_WORDS,
+                                 "pi_answer_2026_10_28_verbatim": PI_ANSWER_2026_10_28},
                              "implementation_by_code": (
                                  "a value lying wholly inside the text content of a <c2pa:manifest> element of an .svg "
                                  "whose repository root path (every path at which the blob occurs, in history) is a "
@@ -6213,6 +7014,11 @@ def main():
             dump("binary_precise:" + n, binc["precise"][n])
         for cls, tab in ids.items():
             dump("id:" + cls, tab)
+        # release v2 review fix (2026-10-29; history-10): the id-shape sweep's unclassified tokens (sw_other), which
+        # the dump omitted, in the same tab-separated row form (label 'id-shape sweep'); their triage is manual() or
+        # UNTRIAGED, as the sweep line and both (i) lines count them
+        dump("id-shape sweep", {v: dict(e, triage=(manual(v) or ("UNTRIAGED", "needs individual triage", True)))
+                                for v, e in sw_other})
         for r in shape_rows:
             if r["verdict"] == "UNTRIAGED":
                 print("shape", r)

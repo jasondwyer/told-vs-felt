@@ -82,6 +82,30 @@ narrow reading of the confirmed rules, flagged for the PI. Anything else
 stays UNCLASSIFIED, for the PI (no new rule). Section 2f projects the sweeps over the audit files
 untracked on disk at the run, and a closing self-check projects this run's own two outputs; the
 combined verdict is printed in 2f, section 7 item 8 and the round-4 values-check row.
+
+Release run v2 (the PI's word of 2026-10-28, "Yes to all": the design seat's item C, on Code's recommendation of
+2026-10-27, results/raw/2026-10-27_note-code-to-design_release-block-questions.md 3d; the seat's answers,
+results/raw/2026-10-28_note-design-to-code_release-block-answers.md 3d, which say that word covers the new rules this
+docstring reserves to the PI): four id entries in CLASS (CLASS_V2: this repository under its new name, the old entry
+kept; three Qwen ids, each classed by what its carrier line shows, read by Code in context) and one host rule (C1:
+claude.ai links outside this audit's own files pass only as the declared carrier's exact usage-page URLs,
+CLAUDE_USAGE_CARRIERS) are applied and listed apart from round 9's (`release_v2_rules_applied`); every v1 rule and
+entry is unchanged. Host entries given on a later word of the PI (AUDIT_HOSTS_V2, DOC_HOSTS_V2: jasondwyer.github.io,
+the PI's own site, on his word of 2026-10-29) are applied by Code only on that word, recorded per host in
+HOST_ENTRIES_V2_PI_WORDS (an entry without it refuses the run), and their rows are listed with the release-v2 rows
+(V2_HOSTS), not credited to round 9. The bound this run prints on its own coverage (the header, section 2f, section 7
+item 8) follows TAG_RERUNS_V2: the design seat's answers of 2026-10-28 (section 5, 3g) name gitleaks and the password
+search for the tag commit, and the PI's word of 2026-10-29 adds the history, content and licenses scripts, their raws
+committed after the tag, as v1's were (TAG_RERUNS_V2_PI_WORDS), so this script is re-run at the tag commit and sweeps
+the commits after this run's commit read up to it. Before
+the outputs are written, both are checked for the origin-only ref the answers name (their section 2, read from the
+committed line at run time, never printed): its namespace, or a hex run of 7+ characters that is a prefix of its id or
+its commit (or begins with one), refuses the write. Stdout names an output outside the repository by its basename
+only. The outputs are new dated raws (the run date is in their names: if the run of record falls on another PI-local
+date, every v2 name across the N12 scripts changes in one edit before the scripts commit):
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_licenses.py \
+        --out results/raw/2026-10-29_note-N12-licenses-release.md \
+        --json-out results/raw/2026-10-29_note-N12-licenses-release.json
 """
 from __future__ import annotations
 
@@ -112,6 +136,25 @@ OUT_MD, OUT_JSON = DEFAULT_MD, DEFAULT_JSON  # resolved from the arguments in ma
 # round-9 rules and by section 2f's projection (which before this read only scripts/audit_note_* and the
 # 2026-10-08 raws).
 RX_AUDIT_FILE = re.compile(r"^(?:scripts/audit_note_[^/]*\.py|results/raw/[^/]*_note-[^/]*)$")
+# Release v2: the scans the release sequence re-runs at the tag commit, before the push. TAG_RERUNS_3G is the record
+# (what the design seat's answers of 2026-10-28, section 5, 3g, name: outputs outside the repository, their counts in
+# the post-tag raw); TAG_RERUNS_V2 is the switch, extended on the PI's word of 2026-10-29 (his answer, item 3,
+# TAG_RERUNS_V2_PI_WORDS: all five, their raws committed after the tag, as v1's were; item 1 now is the baseline), and
+# the bound this script prints on its own coverage (the header, section 2f, section 7 item 8) follows it.
+TAG_RERUNS_3G = ("gitleaks", "password")
+TAG_RERUNS_V2 = ("gitleaks", "password", "history", "content", "licenses")
+TAG_RERUNS_V2_PI_WORDS = ("2026-10-29", "All five at the tag commit — history, content, licenses, gitleaks, the "
+                                        "password search — as v1 did, raws committed after the tag; item 1 now is "
+                                        "the baseline.")
+RERUN_NAMES = {"gitleaks": "gitleaks", "password": "the password search", "history": "the history script",
+               "content": "the content screen", "licenses": "this script"}
+assert set(TAG_RERUNS_3G) <= set(TAG_RERUNS_V2) <= set(RERUN_NAMES), TAG_RERUNS_V2
+# The origin-only ref the design seat's answers of 2026-10-28 name (their section 2): its id and commit are read from
+# that committed line at run time (located by content, parsed as the scrub generator parses it), for the write guard
+# only, and never printed.
+ANSWERS_V2 = ("908a659", "results/raw/2026-10-28_note-design-to-code_release-block-answers.md")
+RX_TELEPORT_LINE = re.compile(r"refs/claude-teleport/([0-9a-f]{8,})`\s*\S+\s*`([0-9a-f]{7,40})`")
+RX_HEX7 = re.compile(r"[0-9a-fA-F]{7,}")
 HF_CACHE_QWEN = os.path.expanduser(
     "~/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/refs/main")
 
@@ -525,6 +568,84 @@ def sha256(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
+def teleport_vals() -> list | None:
+    """Release v2: the write guard's values, [(label, value)], for the origin-only ref the answers name: its id, and its
+    commit (in full where the local object store resolves it; `git rev-parse` only reads), parsed from their committed
+    line (ANSWERS_V2, located by content). None when that line cannot be read or parsed: the write is then refused."""
+    try:
+        t_ = gtext("cat-file", "blob", "%s:%s" % ANSWERS_V2)
+    except subprocess.CalledProcessError:
+        return None
+    lines_ = [x for x in t_.split("\n") if "claude-teleport/" in x]
+    m_ = RX_TELEPORT_LINE.search(lines_[0]) if len(lines_) == 1 else None
+    if not m_:
+        return None
+    full_ = subprocess.run(["git", "-C", REPO, "rev-parse", "--verify", "-q", m_.group(2) + "^{commit}"],
+                           capture_output=True, text=True).stdout.strip()
+    return [("the origin-only ref's id", m_.group(1)),
+            ("the origin-only ref's commit",
+             full_ if re.fullmatch(r"[0-9a-f]{40}", full_) and full_.startswith(m_.group(2)) else m_.group(2))]
+
+
+def guarded(text: str, vals: list) -> list:
+    """Release v2: the guarded classes `text` carries, by label only (a value is never returned or printed): the
+    origin-only ref's namespace; a hex run of 7+ characters that is a prefix of a guarded value, or begins with one."""
+    bad = ["the origin-only ref's namespace"] if re.search(r"claude-teleport/", text, re.I) else []
+    runs = {h.lower() for h in RX_HEX7.findall(text)}
+    for lab, v in vals:
+        if any(v.startswith(h) or h.startswith(v) for h in runs):
+            bad.append(lab)
+    return bad
+
+
+def and_list(xs) -> str:
+    """'a', 'a and b', 'a, b and c'."""
+    xs = list(xs)
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def tag_reruns_text() -> str:
+    """Release v2: the re-runs at the tag commit as TAG_RERUNS_V2 holds them, each part with its basis."""
+    named = [RERUN_NAMES[x] for x in TAG_RERUNS_V2 if x in TAG_RERUNS_3G]
+    extra = [RERUN_NAMES[x] for x in TAG_RERUNS_V2 if x not in TAG_RERUNS_3G]
+    return (and_list(named) + " (the design seat's answers of 2026-10-28, section 5, 3g)"
+            + ((", and " + and_list(extra) + " (beyond 3g's two, on the PI's word of %s, which also sets the re-runs' "
+                "form, verbatim: \"%s\")" % TAG_RERUNS_V2_PI_WORDS) if extra else ""))
+
+
+def bound_v2() -> dict:
+    """Release v2: this script's bound on its own coverage (the header, section 2f, section 7 item 8 and their fills),
+    as TAG_RERUNS_V2 holds the re-runs at the tag commit. v1's text (a re-run at the final pre-flip commit, the post-tag
+    commit that added v1's release raws) is v1's raw's record."""
+    rerun = "licenses" in TAG_RERUNS_V2
+    if rerun:
+        head_ = ("In the v2 release sequence this script runs at block section 2 item 1 (the design seat's answers of "
+                 "2026-10-28, section 5, 3g: \"Run item 1 now\") and again at the tag commit, before the push (its raws "
+                 "committed after the tag, as v1's release run's were), which sweeps the commits after item 1's commit "
+                 "read up to the tag commit; the commits after the tag commit (the post-tag raw's) are swept by no run "
+                 "of this part. The re-runs at the tag commit: " + tag_reruns_text() + ".")
+    else:
+        head_ = ("In the v2 release sequence this script's run of record is block section 2 item 1's (the design seat's "
+                 "answers of 2026-10-28, section 5, 3g: \"Run item 1 now\"), and no later run of it is scheduled: the "
+                 "commits after that run's commit read -- the commit that adds item 1's raws, block section 2 items 2-7 "
+                 "(N1 round 11, the README regression count, N18, the README-NOTE re-point, the preflip script, the tag "
+                 "commit), any other commit made before the tag, and the post-tag raw's -- are swept by no run of this "
+                 "part. At the tag commit, before the push, the release sequence re-runs only " + tag_reruns_text()
+                 + ", outputs outside the repository, their counts in the post-tag raw.")
+    return {
+        "rerun": rerun, "header": head_,
+        "2f": ("this script's re-run at the tag commit (header) is their check, for those committed before it" if rerun
+               else "no later run of this script sweeps them (header)"),
+        "item8": ("this script is re-run at the tag commit, before the push (header). At that commit this audit's own "
+                  "files are tracked, and section 2f's projection finds" if rerun else
+                  "no later run of this script is scheduled in the v2 release sequence (header). Once this audit's own "
+                  "files are tracked, section 2f's projection finds"),
+        "item8_tail": ("the re-run's to check, for those committed before the tag commit" if rerun
+                       else "swept by no run of this script"),
+        "where": "at the tag-commit re-run" if rerun else "at a run over a commit that tracks them",
+    }
+
+
 # ---------------------------------------------------------------------------
 # The clone's git data read as FILES (no git process inside jlens-qwen36/)
 # ---------------------------------------------------------------------------
@@ -840,6 +961,12 @@ def main() -> int:
                               capture_output=True).returncode == 0:
                 ap.error(f"{rel_} is tracked by git; the release run writes new dated raws (pass --out and "
                          f"--json-out)")
+    # release v2: the write guard's values (the origin-only ref the answers name), read before any sweep; never printed
+    tvals = teleport_vals()
+    if tvals is None:
+        ap.error("the write guard's values (the origin-only ref the design seat's answers name, their section 2) could "
+                 "not be read from %s:%s; nothing written" % ANSWERS_V2)
+    BV2 = bound_v2()
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     head = gtext("rev-parse", "HEAD").strip()
     R: dict = {"part": "N12-licenses", "code_stamp_utc": stamp, "commit_read": head,
@@ -930,10 +1057,10 @@ def main() -> int:
       + f"; commits after it that touch this audit's files (`scripts/audit_note_*`, "
       f"`results/raw/<date>_note-*`, `AUDIT-note-*`, `README-NOTE.md`): {n_since_audit}. "
       "Every count below is bound to the commit read. HEAD moves while the audit runs, and "
-      "the release publishes whatever the refs hold when visibility changes, so this script is "
-      "to be re-run at the final pre-flip commit (the commit the flip publishes: in the release "
-      "sequence, the post-tag commit that adds the release raws, not the tag commit) and its "
-      "counts re-checked; the N12 scrub raw states that bound.")
+      "the release publishes whatever the refs hold when visibility changes. "
+      # release v2: v1's sentence here (a re-run at the final pre-flip commit, the post-tag commit that added v1's
+      # release raws; "the N12 scrub raw states that bound") is v1's raw's record; v2's bound follows TAG_RERUNS_V2
+      + BV2["header"])
     P(f"- Block: `{BLOCK}`, sha256 `{sha256(blk)}`, {len(blk_lines)} lines "
       f"(routed as 8cd8a9ac...3841, 141 lines: {'MATCH' if blk_ok and len(blk_lines) == 141 else 'MISMATCH'})")
     P(f"- Item: N12(iv), block lines 80 (procedure) and 85 (pass: \"(iv) licenses recorded\"); "
@@ -2480,9 +2607,27 @@ def main() -> int:
         "safety-research/introspection-": "row: Macar et al. (the same repository, a line-wrapped mention)",
         "WeZZard/jlens-qwen36": "row: jlens-qwen36 (and its release lenses)",
         "jasondwyer/jspace-lab": "this repository",
+        # release v2 (the PI's word of 2026-10-28, "Yes to all": the design seat's item C, on Code's recommendation of
+        # 2026-10-27, its questions raw 3d; the seat's answers raw 3d): the repository under its new name (the entry
+        # above stays: v1's raws carry it) and three Qwen ids, each classed by what its carrier line shows, read by
+        # Code in context (the 2026-10-29 rehearsal: no other carrier outside this audit's own files)
+        "jasondwyer/told-vs-felt": "this repository, renamed from jasondwyer/jspace-lab",
         "arvomm/cacophony-public-code": ("external code that block item N19 (Tier 2) will pin and run; "
                                          "not a material of the record"),
         "mlx-community/Qwen3.6-27B-4bit": "row: Qwen",
+        "mlx-community/Qwen": ("row: Qwen (`mlx-community/Qwen3.6-27B-4bit` cut short: a launch check prints the "
+                               "campaign raw's PROVENANCE line with its digits masked, so the model id reads "
+                               "`mlx-community/Qwen#.#-##B-#bit`, which the hub-id pattern ends at the first `#`; this "
+                               "audit's own raws cite that line)"),
+        "mlx-community/Qwen3.6-27B-8bit": ("a model id used only as a mutant's value: the value a refuter's mutant "
+                                           "gave the loader in "
+                                           "a clone, to show that the self-test never runs the loader's body (a "
+                                           "review record's finding; the record notes only the 4-bit model is "
+                                           "cached); not acquired, not loaded, not a material; no row"),
+        "models--mlx-community--Qwen3.6-27B-4bit/snapshots": ("row: Qwen (the `snapshots` folder of "
+                                                              "`mlx-community/Qwen3.6-27B-4bit` in the local Hugging "
+                                                              "Face hub cache, named as a path in a review record; a "
+                                                              "quoted path, not a hub id)"),
         "Qwen/Qwen3.6-27B": "row: Qwen (base model)",
         "allenai/Olmo-3-1125-32B": "row: OLMo", "allenai/Olmo-3.1-32B-Instruct-SFT": "row: OLMo",
         "allenai/Olmo-3.1-32B-Instruct-DPO": "row: OLMo", "allenai/Olmo-3.1-32B-Instruct": "row: OLMo",
@@ -2493,6 +2638,8 @@ def main() -> int:
         "Qwen/OLMo": "prose (\"Qwen/OLMo G-F0m stage\"), not a hub id",
         "Qwen/F3": "prose (\"Qwen/F3 only\"), not a hub id",
     }
+    CLASS_V2 = ("jasondwyer/told-vs-felt", "mlx-community/Qwen", "mlx-community/Qwen3.6-27B-8bit",
+                "models--mlx-community--Qwen3.6-27B-4bit/snapshots")   # the release-v2 entries of CLASS above
     CLASS_BY_SHA = {
         "fa35e0261838e4638214d5d40a61c738e6f76e8e076226bb8ea77558b12dedfa": (
             "a third-party Qwen3.6-27B SAE that the record's SAE inventory surveyed and did not "
@@ -2514,6 +2661,8 @@ def main() -> int:
     # recorded-read URLs; prefixes of this repository's id); every other id still needs a class.
     R9_IDS: dict = {}     # id key -> the round-9 rule that classified it (only where the earlier rules did not)
     R9_HOSTS: dict = {}   # host key -> the round-9 rule (H1-H4) that classified it
+    V2_HOSTS: dict = {}   # host key -> the release-v2 rule that classified it: C1 (the PI's word of 2026-10-28) or a
+    # release-v2 host entry's H rule (its own word, HOST_ENTRIES_V2_PI_WORDS)
     CLASS_R9 = {
         "allenai/": ("the owner prefix of the brace list `huggingface.co/allenai/{...}` in this part's OLMo row "
                      "(each id the list expands to is classified: row: OLMo)"),
@@ -2700,6 +2849,40 @@ def main() -> int:
         sum(1 for p_, t in text.items() if RX_CLAUDE_LINK.search(t) and not RX_AUDIT_FILE.match(p_))
         + sum(1 for b, t in hist_text.items() if RX_CLAUDE_LINK.search(t)
               and not all(RX_AUDIT_FILE.match(p_) for p_ in hist_blob_paths[b])))
+    # Release v2, rule C1 (the PI's word of 2026-10-28, "Yes to all": the design seat's item C, on Code's
+    # recommendation of 2026-10-27, its questions raw 3d; the seat's answers raw 3d): claude.ai links outside this
+    # audit's own files, stated narrowly and bound to the carrier Code read in context. A carrier counted above (a
+    # HEAD file, or a historical blob) passes only when every path it sits at outside the audit files is declared in
+    # CLAUDE_USAGE_CARRIERS, every claude.ai/ occurrence in its text (RX_CLAUDE_LINK, any case) is the exact URL
+    # CLAUDE_USAGE_URL ending where RX_HOSTPATH's path ends, and their number is the declared one. Any other claude.ai
+    # link outside the audit files -- another file, another or a longer path, another case or scheme, a changed
+    # count -- leaves the host UNCLASSIFIED, as before.
+    CLAUDE_USAGE_URL = "https://claude.ai/admin-settings/usage"
+    RX_CLAUDE_USAGE = re.compile(re.escape(CLAUDE_USAGE_URL) + r"(?![^\s)\]\"'`>,\\])")
+    CLAUDE_USAGE_CARRIERS = {   # path -> (claude.ai/ occurrences, what the lines show; read by Code, 2026-10-29)
+        "results/raw/2026-10-18_m-campaign-driver_review.txt": (8, (
+            "lines 4582-4585, 4806, 4827, 4846 and 4865: the spend-limit error that four review agents' runs returned, "
+            "which names the organization's admin usage page, recorded verbatim in the record of round 4's partial "
+            "return")),
+    }
+
+    def claude_usage_only(t: str, paths_) -> bool:
+        out_ = [p_ for p_ in paths_ if not RX_AUDIT_FILE.match(p_)]
+        n_ = len(RX_CLAUDE_LINK.findall(t))
+        return (bool(out_) and all(p_ in CLAUDE_USAGE_CARRIERS and CLAUDE_USAGE_CARRIERS[p_][0] == n_ for p_ in out_)
+                and len(RX_CLAUDE_USAGE.findall(t)) == n_)
+    claude_usage_head = sorted(p_ for p_, t in text.items() if RX_CLAUDE_LINK.search(t)
+                               and not RX_AUDIT_FILE.match(p_) and claude_usage_only(t, [p_]))
+    claude_usage_hist = sorted(b for b, t in hist_text.items() if RX_CLAUDE_LINK.search(t)
+                               and not all(RX_AUDIT_FILE.match(p_) for p_ in hist_blob_paths[b])
+                               and claude_usage_only(t, hist_blob_paths[b]))
+    claude_usage_paths = sorted(set(claude_usage_head) | {p_ for b in claude_usage_hist for p_ in hist_blob_paths[b]
+                                                          if not RX_AUDIT_FILE.match(p_)})
+    claude_links_outside_audit_other = claude_links_outside_audit - len(claude_usage_head) - len(claude_usage_hist)
+    R["claude_links_outside_audit_files"] = {
+        "carriers": claude_links_outside_audit, "rule_c1_url": CLAUDE_USAGE_URL,
+        "rule_c1_head_files": claude_usage_head, "rule_c1_history_blobs": len(claude_usage_hist),
+        "rule_c1_paths": claude_usage_paths, "other_carriers": claude_links_outside_audit_other}
     AUDIT_HOSTS = {   # host -> what this audit's own files use it for
         "%s": "a printf placeholder in a synthetic URL of the content script's self-test fixture",
         "[ip": "the content screen's own masked-host placeholder ([IP ...]) inside a URL it reports",
@@ -2769,6 +2952,53 @@ def main() -> int:
         ("creativecommons.org", "README-NOTE.md"): (("/licenses/by/4.0",),
                                                      "the CC BY 4.0 deed, the repository's document license"),
     }
+    # Release v2: host entries given on a word of the PI later than 2026-10-28. Code applies one only on the PI's own
+    # word for that host, and records the word in HOST_ENTRIES_V2_PI_WORDS (host -> ("YYYY-MM-DD", his words,
+    # verbatim)); an entry without it refuses the run. They join AUDIT_HOSTS / DOC_HOSTS (H3's tables), but a host
+    # classed through them is recorded in V2_HOSTS (the Release-v2 paragraph, with its word), not R9_HOSTS, so round 9's
+    # confirmation of 2026-10-12 is not credited with it.
+    # jasondwyer.github.io, on the PI's word of 2026-10-29 (his answer to Code's question, item 1): the PI's own site
+    # (GitHub Pages). Its carriers at the v2 run's preparation (git grep over every commit, 2026-10-29): README.md:3 (the
+    # note's posted URL, since f935864) and the design seat's answers of 2026-10-28 :22 (an audit raw, RX_AUDIT_FILE).
+    # The PI classes the host, so README.md's allowed path is the site's root: every path on the PI's own site.
+    AUDIT_HOSTS_V2: dict = {   # host -> what this audit's own files use it for
+        "jasondwyer.github.io": ("the PI's own site (GitHub Pages), the Research Note's canonical copy and the PI's "
+                                 "blog; the design seat's answers of 2026-10-28 name the note's posted URL there"),
+    }
+    DOC_HOSTS_V2: dict = {     # (host, carrier) -> (allowed paths, what the document names it for)
+        ("jasondwyer.github.io", "README.md"): (("/",), "the PI's own site (GitHub Pages), the Research Note's "
+                                                        "canonical copy and the PI's blog, by the PI; a link, no "
+                                                        "license recorded"),
+    }
+    HOST_ENTRIES_V2_PI_WORDS: dict = {
+        "jasondwyer.github.io": ("2026-10-29", "Classify jasondwyer.github.io as the PI’s own site (GitHub Pages): "
+                                               "the Research Note’s canonical copy and the PI’s blog, linked "
+                                               "from README.md; the PI is the author; a link, not a material; no "
+                                               "license recorded."),
+    }
+    HOSTS_V2 = set(AUDIT_HOSTS_V2) | {h_ for h_, _c in DOC_HOSTS_V2}
+    for h_ in sorted(HOSTS_V2):
+        w_ = HOST_ENTRIES_V2_PI_WORDS.get(h_)
+        if not (isinstance(w_, tuple) and len(w_) == 2 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(w_[0]))
+                and str(w_[1]).strip()):
+            raise SystemExit(f"release-v2 host entry for {h_}: no recorded PI word (HOST_ENTRIES_V2_PI_WORDS); "
+                             f"nothing written")
+    if (set(AUDIT_HOSTS_V2) & set(AUDIT_HOSTS) or set(DOC_HOSTS_V2) & set(DOC_HOSTS)
+            or set(HOST_ENTRIES_V2_PI_WORDS) - HOSTS_V2):
+        raise SystemExit("release-v2 host entries overlap v1's tables, or a recorded word names no v2 entry; "
+                         "nothing written")
+    AUDIT_HOSTS.update(AUDIT_HOSTS_V2)
+    DOC_HOSTS.update(DOC_HOSTS_V2)
+
+    def _r9_or_v2(k: tuple, rule: str) -> None:
+        """Release v2: record an H3 row for round 9's paragraph, or for the release-v2 one when the host -- or the
+        listed host it is a cut form of (cut_of) -- has release-v2 entries (HOSTS_V2), with the PI's word's date."""
+        hv_ = k[1] if k[1] in HOSTS_V2 else cut_of(k[1])
+        if hv_ in HOSTS_V2:
+            V2_HOSTS[k] = (rule.split(":", 1)[0] + f" (release-v2 host entries, the PI's word of "
+                           f"{HOST_ENTRIES_V2_PI_WORDS[hv_][0]}):" + rule.split(":", 1)[1])
+        else:
+            R9_HOSTS[k] = rule
 
     # release (L3): the full hosts whose cut-short forms H3 explains -- the listed hosts (AUDIT_HOSTS, SVG_HOSTS), the
     # Global Workspace hosts, the two repository hosts and the hosts of the recorded-read URLs
@@ -2822,9 +3052,10 @@ def main() -> int:
                 cuts_ = [x for x in paths if x and not any(x.startswith(a_) for a_ in DOC_HOSTS[(h, c)][0])
                          and not (h in SVG_HOSTS and x == "/ns#")]
                 if cuts_:
-                    R9_HOSTS[("host", h)] = ("H3 with cut paths (Code's narrow reading, for the PI): a path outside "
-                                             "a document's allowed ones is carried only by this audit's own files "
-                                             "and is a proper prefix of an allowed path")
+                    # release v2: a release-v2 host entry's row goes to V2_HOSTS (_r9_or_v2); any other is as before
+                    _r9_or_v2(("host", h), ("H3 with cut paths (Code's narrow reading, for the PI): a path outside "
+                                            "a document's allowed ones is carried only by this audit's own files "
+                                            "and is a proper prefix of an allowed path"))
                     r_ += (" (its allowed path also appears cut short by an excerpt window, only in this audit's "
                            "own scripts and raws)")
             else:
@@ -2834,8 +3065,9 @@ def main() -> int:
         return ("; ".join(why) + "; not a material") if why else None
     def _h3(k: tuple, c_: str | None) -> str | None:
         if c_:
-            R9_HOSTS[k] = "H3: a host whose every carrier is explained (audit files by the listed hosts; root "\
-                          "SVGs; a named document with allowed paths)"
+            # release v2: a release-v2 host entry's row goes to V2_HOSTS (_r9_or_v2); any other is as before
+            _r9_or_v2(k, "H3: a host whose every carrier is explained (audit files by the listed hosts; root "
+                         "SVGs; a named document with allowed paths)")
         return c_
 
     def host_class(k: tuple, carriers: set, paths: list, n_claude_links: int, cpaths=None) -> str:
@@ -2888,11 +3120,25 @@ def main() -> int:
                 R9_HOSTS[k] = "H1: claude.ai links counted only outside this audit's own files"
             # round 9 (H1; confirmed by the PI 2026-10-12): links counted outside this audit's own files, which carry only redacted echoes of
             # the session link (seven commit trailers, left in history by the PI's D3 routing) and pattern text
+            # release v2 (C1; the PI's word of 2026-10-28): the links counted outside this audit's own files are all
+            # the declared carrier's exact usage-page URLs (claude_usage_only above); anything else stays UNCLASSIFIED
+            if claude_links_outside_audit and not claude_links_outside_audit_other:
+                V2_HOSTS[k] = ("C1: claude.ai links outside this audit's own files, each the exact usage-page URL in "
+                               "a declared carrier")
             return ("the product name in prose (\"A Claude.ai project instance\"), not a link to "
                     "material" + ("; the only claude.ai links are in this audit's own scripts and raws (redacted "
                                   "echoes of the session link the PI's D3 routing left in the commit trailers, and "
                                   "scanner pattern text)" if n_claude_links else "")
                     if not claude_links_outside_audit else
+                    ("the product name in prose (\"A Claude.ai project instance\"), not a link to material; in the "
+                     "file text this sweep reads (HEAD files and history blobs; commit messages are not read here, "
+                     "and the history raw lists, redacted, the session links in their `Claude-Session:` trailers), "
+                     "every claude.ai link outside this audit's own files is the organization's admin usage page `"
+                     + CLAUDE_USAGE_URL + "` (release-v2 rule C1): " + "; ".join(
+                         f"`{p_}`, {CLAUDE_USAGE_CARRIERS[p_][0]} links, {CLAUDE_USAGE_CARRIERS[p_][1]}"
+                         for p_ in claude_usage_paths) + "; not a material; every other claude.ai link in that text "
+                     "is in this audit's own scripts and raws")
+                    if not claude_links_outside_audit_other else
                     "UNCLASSIFIED (a claude.ai link; Code to review)")
         if h in MODEL_OUT_HOSTS:
             if (carriers and all(c.startswith("data/olmo/") or RX_AUDIT_FILE.match(c) for c in carriers)
@@ -2937,6 +3183,19 @@ def main() -> int:
         "hosts": [{"kind": kh[0], "host": _hs_shown[kh], "rule": r_} for kh, r_ in sorted(R9_HOSTS.items())
                   if kh in _hs_shown and kh[0] != "ip"]}
     R["round9_rules_applied"] = R9_APPLIED
+    # release v2: the rows the PI's word of 2026-10-28 classifies (the CLASS_V2 entries; rule C1), listed apart from
+    # round 9's so that neither confirmation is credited with the other's rows
+    V2_APPLIED = {
+        "confirmed": ("the PI, 2026-10-28, \"Yes to all\" (the design seat's item C, on Code's recommendation of "
+                      "2026-10-27: results/raw/2026-10-27_note-code-to-design_release-block-questions.md, 3d; the "
+                      "seat's answers: results/raw/2026-10-28_note-design-to-code_release-block-answers.md, 3d)"),
+        "ids": [{"kind": s_["kind"], "id": s_["id"], "rule": "id entry (CLASS, release v2)"} for s_ in SW
+                if s_["kind"] == "repo" and s_["id"] in CLASS_V2],
+        "hosts": [{"kind": kh[0], "host": _hs_shown[kh], "rule": r_} for kh, r_ in sorted(V2_HOSTS.items())
+                  if kh in _hs_shown and kh[0] != "ip"],
+        # release v2: host entries on a later word of the PI (AUDIT_HOSTS_V2 / DOC_HOSTS_V2), each with that word
+        "host_entries_pi_words": {h_: list(HOST_ENTRIES_V2_PI_WORDS[h_]) for h_ in sorted(HOSTS_V2)}}
+    R["release_v2_rules_applied"] = V2_APPLIED
     n_host_uncl = sum(1 for s in HS if s["class"].startswith("UNCLASSIFIED"))
     ip_rows = [s for s in HS if s["kind"] == "ip"]
     dl_rows = [s for s in HS if s["kind"] == "dotless"]
@@ -2967,6 +3226,19 @@ def main() -> int:
       + "; ".join(f"{r_.split(':')[0]}: {sum(1 for x in R9_APPLIED['hosts'] if x['rule'] == r_)}"
                   for r_ in sorted({x['rule'] for x in R9_APPLIED['hosts']})) + "). Each row's class is "
       "printed in its table; the JSON `round9_rules_applied` lists them with the rule.")
+    P("")
+    P(f"**Release-v2 entries and rule** (confirmed by the PI on 2026-10-28: \"Yes to all\", the design seat's item "
+      f"C, on Code's recommendation of 2026-10-27, its questions raw 3d). Rows of the two tables above that they "
+      f"classify at this run: **{len(V2_APPLIED['ids'])}** id(s) (CLASS entries: "
+      + (", ".join(f"`{x['id']}`" for x in V2_APPLIED['ids']) or "none") + ") and "
+      f"**{len(V2_APPLIED['hosts'])}** host(s) ("
+      + ("; ".join(f"`{x['host']}`, {x['rule'].split(':')[0]}" for x in V2_APPLIED['hosts']) or "none")
+      + "). The JSON `release_v2_rules_applied` lists them with the entry or rule."
+      + ("" if not HOSTS_V2 else
+         " The release-v2 host entries (AUDIT_HOSTS_V2, DOC_HOSTS_V2) rest on a later word of the PI, not on the word "
+         "of 2026-10-28, per host: " + "; ".join(f"`{h_}`, the PI, {HOST_ENTRIES_V2_PI_WORDS[h_][0]}: "
+                                                 f"\"{HOST_ENTRIES_V2_PI_WORDS[h_][1]}\"" for h_ in sorted(HOSTS_V2))
+         + "."))
     P("")
     n_arxiv_host = sum(1 for s in HS if s["host"].endswith("arxiv.org"))
     P(f"Rows with an `arxiv.org` host: {n_arxiv_host}; the record's arXiv references are ids, "
@@ -3066,8 +3338,9 @@ def main() -> int:
       f"only). This run's own two outputs, not on disk while it runs, are projected by the closing "
       f"self-check (as `{OUT_MD_C}` and `{OUT_JSON_C}`): @@L3SELF@@ in them. Together: "
       f"@@L3COMB@@ unclassified@@L3VERDICT_2F@@. Audit raws written after this run (later steps of "
-      f"the release sequence) are in neither projection; the re-run over the commit that tracks them "
-      f"is their check"
+      f"the release sequence) are in neither projection; "
+      # release v2: v1's "the re-run over the commit that tracks them is their check" is v1's raw's record
+      + BV2["2f"]
       + ". From this part's own files: hosts "
       + (", ".join(f"`{x}`" for x in pj_mine_hosts) or "none")
       + " (its recorded-read URLs, and rows of the table above whose class holds only while "
@@ -3587,13 +3860,14 @@ def main() -> int:
       "read and the "
       "record was not compared with it [to confirm]; the cycle-1 raws carry an Apache-2.0 "
       "upstream script's outputs and one-line prompts (section 2e).")
+    # release v2: v1's "re-run this script at the final pre-flip commit (header)" and "Audit raws written after this run
+    # are the re-run's to check" are v1's raw's record; v2's bound follows TAG_RERUNS_V2 (bound_v2)
     P(f"8. **Moving HEAD.** These counts are bound to `{head[:7]}` (the record locators are "
-      f"pinned to `{LOC[:7]}`); re-run this script at the final pre-flip commit (header). At "
-      f"that commit this audit's own files are tracked, and section 2f's projection finds "
+      f"pinned to `{LOC[:7]}`); {BV2['item8']} "
       f"{len(pj_ids)} id(s) and {len(pj_hosts)} host(s) in the audit files on disk at this run, and "
       f"the closing self-check @@L3SELF@@ in this raw's own text (together @@L3COMB@@), that the "
-      f"sweeps would leave unclassified@@L3VERDICT_8@@ Audit raws written after this run are the "
-      f"re-run's to check.")
+      f"sweeps would leave unclassified@@L3VERDICT_8@@ Audit raws written after this run are "
+      f"{BV2['item8_tail']}.")
     P("")
     P(f"Redactions: **{len(REDACTIONS)} pattern redactions** (redact(): IPv4, tokens, keys)"
       + ("" if not REDACTIONS else " -- " + "; ".join(f"{r['where']} {r['category']} {r['redacted']}" for r in REDACTIONS))
@@ -3803,7 +4077,9 @@ def main() -> int:
          f"ACCEPTED, fixed. The round-2 fixer re-ran at `bab921c` (this run: `{head[:7]}`); the "
          f"header names the commit(s) after the block's commit ({len(since)} at this run) and "
          "requires a re-run at the final pre-flip commit; section 7 "
-         "item 8 repeats it. The round-2 re-run surfaced one new port-marker row from those commits, "
+         "item 8 repeats it [release v2: the header and item 8 state the v2 release sequence's bound in its place, "
+         "as TAG_RERUNS_V2 holds the re-runs at the tag commit]. The round-2 re-run surfaced one new port-marker row "
+         "from those commits, "
          "`valence_core/m/gcal.py:856` (\"not a port of it\"), now read in 2a's table (asserted: "
          + str(next((r["asserted"] for r in read_rows if r["loc"] == "valence_core/m/gcal.py:856"),
                     "[row absent]"))
@@ -4087,16 +4363,23 @@ def main() -> int:
             "fill": {
                 "@@L3SELF@@": f"{len(s_ids)} id(s) and {len(s_hosts)} host(s)",
                 "@@L3COMB@@": f"{len(u_ids)} id(s) and {len(u_hosts)} host(s)",
-                "@@L3VERDICT_2F@@": (f", so {gates_} of the pass line would fail at the pre-flip re-run until "
+                # release v2: "at the pre-flip re-run" (v1's) is BV2["where"]: the tag-commit re-run where TAG_RERUNS_V2
+                # holds one for this script, else a run over a commit that tracks them (none is scheduled)
+                "@@L3VERDICT_2F@@": (f", so {gates_} of the pass line would fail {BV2['where']} until "
                                      f"each is classified (for the PI where no confirmed rule covers it); the other "
                                      f"sweep gate would not fail on these files" if len(g_) == 1 else
-                                     f", so {gates_} of the pass line would fail at the pre-flip re-run until "
+                                     f", so {gates_} of the pass line would fail {BV2['where']} until "
                                      f"each is classified (for the PI where no confirmed rule covers it)" if comb else
-                                     ", so neither sweep gate would fail on these files at the pre-flip re-run"),
-                "@@L3VERDICT_8@@": (f", so {gates_} of the pass line {'fail' if len(g_) > 1 else 'fails'} there "
-                                    f"until each is classified (the PI's or the re-run's call; nothing is changed "
-                                    f"here)." if comb else
-                                    ", so neither sweep gate fails on them there (nothing is changed here)."),
+                                     f", so neither sweep gate would fail on these files {BV2['where']}"),
+                "@@L3VERDICT_8@@": ((f", so {gates_} of the pass line {'fail' if len(g_) > 1 else 'fails'} there "
+                                     f"until each is classified (the PI's or the re-run's call; nothing is changed "
+                                     f"here)." if comb else
+                                     ", so neither sweep gate fails on them there (nothing is changed here).")
+                                    if BV2["rerun"] else
+                                    (f", so {gates_} of the pass line would fail {BV2['where']}, until each is "
+                                     f"classified (the PI's call; nothing is changed here)." if comb else
+                                     f", so neither sweep gate would fail on them {BV2['where']} (nothing is changed "
+                                     f"here).")),
                 "@@L3VERDICT_VC@@": (f", so {gates_} would fail there until each is classified. " if comb else
                                      ", so neither gate would fail on them there. ")},
             "json": {
@@ -4162,14 +4445,25 @@ def main() -> int:
         raise SystemExit("self-check did not reach a fixed point in 6 renderings; nothing written")
     assert "@@L3" not in md_t and "@@L3" not in js_t
     R["self_check"] = sc["json"]
+    # release v2: the write guard -- the origin-only ref the answers name is never written (its classes are named in
+    # the refusal, never its values)
+    bad_ = sorted(set(guarded(md_t, tvals)) | set(guarded(js_t, tvals)))
+    if bad_:
+        raise SystemExit("refused: the outputs would carry " + "; ".join(bad_) + "; nothing written")
     os.makedirs(os.path.dirname(OUT_MD), exist_ok=True)
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
     with open(OUT_MD, "w") as f:
         f.write(md_t)
     with open(OUT_JSON, "w") as f:
         f.write(js_t)
-    print(f"wrote {os.path.relpath(OUT_MD, REPO)} ({n_lines} lines) and "
-          f"{os.path.relpath(OUT_JSON, REPO)}; pattern redactions {len(REDACTIONS)}, "
+
+    # release v2: stdout names an output inside the repository by its repository path, and one outside it by its
+    # basename only (raw stdout is committed; a scratch path would carry a session id)
+    def _shown(o_: str) -> str:
+        r_ = os.path.relpath(os.path.realpath(o_), os.path.realpath(REPO))
+        return r_ if not r_.startswith("..") else "<outside the repository>/" + os.path.basename(o_)
+    print(f"wrote {_shown(OUT_MD)} ({n_lines} lines) and "
+          f"{_shown(OUT_JSON)}; pattern redactions {len(REDACTIONS)}, "
           f"redacted ids {len(REDACTED_IDS)}; commit {head[:7]}; pass: {R['pass_line']}")
     return 0
 
