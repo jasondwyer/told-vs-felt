@@ -104,8 +104,8 @@ its commit (or begins with one), refuses the write. Stdout names an output outsi
 only. The outputs are new dated raws (the run date is in their names: if the run of record falls on another PI-local
 date, every v2 name across the N12 scripts changes in one edit before the scripts commit):
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_licenses.py \
-        --out results/raw/2026-10-29_note-N12-licenses-release.md \
-        --json-out results/raw/2026-10-29_note-N12-licenses-release.json
+        --out results/raw/2026-10-30_note-N12-licenses-release.md \
+        --json-out results/raw/2026-10-30_note-N12-licenses-release.json
 """
 from __future__ import annotations
 
@@ -1437,6 +1437,11 @@ def main() -> int:
     lind_hist = sorted({p for b, t in hist_text.items() if RX_LINDSEY.search(t)
                         for p in hist_blob_paths[b]})
     S1["lindsey_2025_cited_in_record"] = {"head_files": lind_head, "history_paths": lind_hist}
+    # release v2 (2026-10-30, the raw reads): the record's own citations of it, outside this audit's files
+    lind_doc = [p_ for p_ in lind_head if not RX_AUDIT_FILE.match(p_)]
+    S1["lindsey_2025_cited_in_record"]["head_files_outside_audit"] = lind_doc
+    lind_txt = (("The record cites Lindsey (2025) outside this audit's own files in " + ", ".join(f"`{p_}`" for p_ in lind_doc))
+                if lind_doc else "The record cites Lindsey (2025) nowhere")
     P(f"The paper, **[recorded WebFetch read]** `{WEB_READS['macar_paper_arxiv_abs']['url']}`: "
       f"\"{pa['title']}\" ({pa['citation']}, {pa['n_authors']} authors; v5 of "
       f"{pa['versions']['v5 (current)']}), license **{pa['license_label']}** "
@@ -1502,7 +1507,7 @@ def main() -> int:
       f"{tch['link_mentioning_license_copyright_terms_legal_or_reuse'] or 'none'}), so no license "
       f"is stated, and the Lindsey page's license is **[to confirm]**. The paper's author list "
       f"includes the author of Lindsey (2025): {pa['author_list_includes_the_lindsey_2025_author']}. "
-      f"The record cites Lindsey (2025) nowhere: tracked files at the commit matching "
+      f"{lind_txt}: tracked files at the commit matching "
       f"`{RX_LINDSEY.pattern}` (case-insensitive): **{len(lind_head)}**; paths in any commit: "
       f"**{len(lind_hist)}**. Reading: of the sources read, the prompt text was first published "
       f"on the Lindsey page, with no license stated; the {pa['license_label']} grant for it comes only from the later "
@@ -1644,7 +1649,9 @@ def main() -> int:
       f"introspection-mechanisms; third-party (WeZZard) if they mention WeZZard or a file named on "
       f"the port line (or the next line) resolves to an upstream jlens-qwen36 file; otherwise "
       f"lab-internal, split by whether the named file is a lab-added clone file, a tracked file, or "
-      f"none. Code read every row; see the note after the tables.")
+      f"none. Code's readings of the software-license-word and port-marker rows the rule leaves with no file named, "
+      f"and the rows those readings leave unread, are in the note after the tables; the third-party-reference rows so "
+      f"labelled are outside it.")
     P("")
     for c, title in (("third_party_ref", "Third-party references"),
                      ("software_license_word", "Software-license words"),
@@ -1669,7 +1676,7 @@ def main() -> int:
     R["marker_grep"]["port_refs_lab_added"] = lab_refs
     R["marker_grep"]["port_refs_tracked"] = tr_refs
     P(f"Note: port markers labelled third-party: {n_tp_port} ({n_tp_port - n_up_port} Macar: "
-      f"their paradigm and their text; {n_up_port} naming an upstream jlens-qwen36 file). Files "
+      f"their paradigm and their text; {n_up_port} mentioning WeZZard or naming an upstream jlens-qwen36 file). Files "
       f"named by the lab-internal port rows that resolve to lab-added clone files: "
       f"{', '.join(f'`{x}`' for x in lab_refs) or 'none'}; to tracked files: "
       f"{', '.join(f'`{x}`' for x in tr_refs) or 'none'}.")
@@ -1687,7 +1694,9 @@ def main() -> int:
          "the model copying a tag from a header: data, not code"),
         ("valence_core/m/readrule.py", 456, "the model copied from",
          "the model copying a tag: data, not code"),
-        ("valence_core/m/stages.py", 1940, "arguments taken from",
+        # release v2 (2026-10-30, the raw reads): the line moved :1940 -> :2011 (b8aa706) -> :2018 (b7737ef), both on
+        # 2026-10-10, before the v1 tag; v1's release raw (2026-10-12, :596) already read it False
+        ("valence_core/m/stages.py", 2018, "arguments taken from",
          "floors and launch counts taken from a lock: data, not code"),
         ("valence_core/m/verify.py", 28, "taken from the recorded round texts",
          "generations taken from recorded rounds: data, not code"),
@@ -1722,7 +1731,7 @@ def main() -> int:
     R["marker_grep"]["code_reads"] = read_rows
     R["marker_grep"]["no_file_rows"] = unresolved
     R["marker_grep"]["no_file_rows_uncovered"] = [u for u in unresolved if u not in covered]
-    P(f"Code's reading of the {len(unresolved)} rows labelled \"no file named\" (each line's text "
+    P(f"Code's reading of the {len(unresolved)} software-license-word and port-marker rows labelled \"no file named\" (each line's text "
       f"asserted at the commit read; uncovered rows: "
       f"{R['marker_grep']['no_file_rows_uncovered'] or 'none'}):")
     P("")
@@ -3379,12 +3388,17 @@ def main() -> int:
     q_files = sorted(p for p, t in text.items() if "mlx-community/Qwen3.6-27B-4bit" in t)
     q_pin_files = sorted(p for p, t in text.items() if q["sha"][:12] in t)
     local_ref = open(HF_CACHE_QWEN).read().strip() if os.path.isfile(HF_CACHE_QWEN) else None
+    # release v2 (2026-10-30, the raw reads): since 4630cfd (after v1) the record declares the revision: LOCK-m-F0.md as
+    # the weights of record, and scripts/m_sessions.py pins it in code (QWEN_REVISION); read at the commit
+    q_decl = [p_ for p_, k_ in (("LOCK-m-F0.md", "weights of record"), ("scripts/m_sessions.py", "QWEN_REVISION"))
+              if p_ in q_pin_files and k_ in text.get(p_, "")]
     M["qwen"] = {"id": "mlx-community/Qwen3.6-27B-4bit", "license": q["license"],
                  "base_model": q["base_model"], "base_license": qb["license"],
                  "hf_sha": q["sha"], "n_tracked_files_naming_id": len(q_files),
                  "tracked_files_pinning_hf_sha_prefix": q_pin_files,
                  "local_hf_cache_refs_main": local_ref}
-    P(f"| (Qwen oracle) | `mlx-community/Qwen3.6-27B-4bit` | none declared (see below) | `{q['sha'][:12]}...` | n/a | "
+    M["qwen"]["revision_declared_in"] = q_decl
+    P(f"| (Qwen oracle) | `mlx-community/Qwen3.6-27B-4bit` | {'declared (see below)' if q_decl else 'none declared (see below)'} | `{q['sha'][:12]}...` | n/a | "
       f"{q['license']} (license_link -> `{q['license_link']}`) | {q['gated']} | {q['base_model']} ({qb['license']}) | n/a |")
     P("")
     P(f"- Every manifest revision is a 12-hex prefix of the card's current sha: "
@@ -3407,8 +3421,15 @@ def main() -> int:
       f"{', '.join(f'`{x}`' for x in q_pin_lines)}); lines where it sits inside a local "
       f"HF-cache `snapshots/<sha>` path: {q_in_snap} of {len(q_pin_lines)}; in a "
       f"data/config/code file: "
-      f"{len(q_pin_cfg)}. So the record **declares** no Qwen weights revision (no manifest or "
-      f"config field), though its raw logs show which snapshot was read. This machine's HF cache "
+      f"{len(q_pin_cfg)}. "
+      + (f"So the record **declares** the Qwen weights revision `{q['sha'][:12]}`: "
+         + " and ".join({"LOCK-m-F0.md": "`LOCK-m-F0.md` as the weights of record",
+                         "scripts/m_sessions.py": "`scripts/m_sessions.py`, which pins it in code (`QWEN_REVISION`)"}[p_]
+                        for p_ in q_decl) + "; no manifest or config field carries it. "
+         if q_decl else
+         "So the record **declares** no Qwen weights revision (no manifest or config field), though its raw logs "
+         "show which snapshot was read. ")
+      + f"This machine's HF cache "
       f"`refs/main` (a local fact): `{local_ref}`, equal to the card's current sha: "
       f"{local_ref == q['sha']}. The README can state it as the revision the laptop runs.")
     WEXT = (".safetensors", ".gguf", ".bin", ".pt", ".pth", ".ckpt", ".h5", ".onnx", ".msgpack")
@@ -3708,7 +3729,7 @@ def main() -> int:
          f"`{MACAR_PIN}`; Lindsey page: no version pinned",
          f"**none** from the repository (no LICENSE at the pin or on main; API `license: null`; README: research-use statement); not covered by the paper's {plic} (not printed there); Lindsey (2025): no license statement on the page, nor a site-wide one on the site's home page (round-4 read) **[to confirm]**",
          "**not stated**: no grant found",
-         "Attribute to Macar et al. 2026 (repo + pinned sha; BibTeX key `macar2026mechanisms`) and to Lindsey (2025), *Emergent Introspective Awareness in Large Language Models* (the record cites it nowhere today); **the PI decides** whether to ship, ask the authors, or link instead"),
+         "Attribute to Macar et al. 2026 (repo + pinned sha; BibTeX key `macar2026mechanisms`) and to Lindsey (2025), *Emergent Introspective Awareness in Large Language Models* (the record cites it " + ("in " + ", ".join(f"`{p_}`" for p_ in lind_doc) if lind_doc else "nowhere today") + "); **the PI decides** whether to ship, ask the authors, or link instead"),
         ("Detection-behavioral harness (port of Macar's paradigm)",
          "`valence_core/detection.py`, `detection_v2.py`, `scripts/box_b2*.py`, `b2*_analyze.py`; also building Macar prompts at run time: "
          + (", ".join(f"`{p}`" for p in extra_builders) or "none") + " (section 1)",
@@ -3742,8 +3763,13 @@ def main() -> int:
          "List the four ids + revisions + Apache-2.0"),
         ("Qwen3.6-27B, 4-bit MLX",
          "not tracked (laptop HF cache)", "huggingface.co/mlx-community/Qwen3.6-27B-4bit (base Qwen/Qwen3.6-27B)",
-         f"**none declared**; `c000ac2c2057` appears in {len(q_pin_files)} raw logs' cache paths and is the laptop cache's `refs/main`", "Apache-2.0 (card; base card Apache-2.0)",
-         "yes; none redistributed", "Name id, base model, license; pin `c000ac2c2057...` as the revision run, if the PI accepts the local cache as the source"),
+         (f"**declared** in {', '.join(f'`{p_}`' for p_ in q_decl)}; " if q_decl else "**none declared**; ")
+         + f"`{q['sha'][:12]}` appears in {len(q_pin_files)} tracked files ({q_in_snap} of their {len(q_pin_lines)} lines "
+         "inside an HF-cache snapshot path) and is the laptop cache's `refs/main`", "Apache-2.0 (card; base card Apache-2.0)",
+         "yes; none redistributed",
+         (f"Name id, base model, license, and the revision of record `{q['sha'][:12]}...` as the record declares it"
+          if q_decl else "Name id, base model, license; pin `c000ac2c2057...` as the revision run, if the PI accepts the "
+          "local cache as the source")),
         ("Task corpora and stimulus files (e0 tasks, e2a tasks, e0 frames/probes, f pools, rosters, vignettes, neutral prompts, audit/ban lists)",
          "`data/corpus/*.jsonl`, `data/configs/*` except b2_concepts/b2_framing, `data/f/pools.json`, `data/format/neutral_label_selection.json`",
          f"lab-authored (Code-proposed / design-approved per their `_doc`/`_status` fields; e0/e2a corpora per archive/RESULTS-cycles3-4.md@{LOC[:7]}:1590-1599, :1294)",
@@ -3820,9 +3846,9 @@ def main() -> int:
       f"file with a pointer to the pinned sha and the Lindsey page; a pointer would leave the "
       f"approved eight in {len(wl_other8)} `data/olmo/` JSON artifacts and {len(wl_npz8)} `.npz` "
       f"member-name sets, and 1-7 of the 50 in {len(WL['files_with_1_to_7_of_50'])} files "
-      f"(section 1). (c) The record cites Lindsey "
-      f"(2025) nowhere ({len(lind_head)} tracked files, {len(lind_hist)} paths in any commit); "
-      f"the README should add it. Not a STOP: block line 85's pass is \"licenses recorded\". "
+      f"(section 1). (c) {lind_txt} (with this audit's own files, {len(lind_head)} tracked files match, "
+      f"{len(lind_hist)} paths in any commit)"
+      + ("" if lind_doc else "; the README should add it") + ". Not a STOP: block line 85's pass is \"licenses recorded\". "
       f"Whatever is chosen for HEAD, the framing has been in the history since "
       f"`{S1['framing_marker_first_commit']}` ({len(fr_hist)} paths ever carried it) and the "
       f"lists since `{S1['data/configs/b2_concepts.json']['first_added']}`, so only a history "
@@ -3842,8 +3868,11 @@ def main() -> int:
       "README can say the Qwen oracle path is not runnable from the public repo alone (N11 covers "
       "the model-free regression suite).")
     P("4. **All five models are Apache-2.0 on their cards**; no weights are tracked at HEAD (the "
-      "history check is the other part's). The record declares no Qwen revision; the laptop's "
-      "cache revision (also visible in raw-log cache paths) is available for the README.")
+      "history check is the other part's). "
+      + ("The record declares the Qwen revision (" + ", ".join(f"`{p_}`" for p_ in q_decl) + "); it is the laptop "
+         "cache's too (also visible in raw-log cache paths), for the README." if q_decl else
+         "The record declares no Qwen revision; the laptop's cache revision (also visible in raw-log cache paths) is "
+         "available for the README."))
     P(f"5. **The Jacobian lenses** (Neuronpedia n=1000, MIT; the jlens-qwen36 release lens) were "
       f"the primary Qwen lens through cycles 1-4 and are not tracked "
       f"({len(LN['lens_paths_any_commit'])} lens paths in any commit). Not a release blocker; the "

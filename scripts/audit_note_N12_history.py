@@ -106,7 +106,7 @@ origin/main (not yet pushed) instead of saying their blobs are already in histor
 Release v2 (2026-10-29; the second release, tag note-2026-10-v2; block section 2 item 1 of
 results/raw/2026-10-27_note-design-to-code_release-block.md at 2fb0cf0, with the design seat's answers of 2026-10-28 at
 908a659, which carry the PI's decisions of 2026-10-28, verbatim: "Yes to all"). (a) RELEASE_MD / RELEASE_JSON name the
-v2 run's two NEW dated raws (2026-10-29); v1's names stay as RELEASE_MD_V1 / RELEASE_JSON_V1 (the record), and v1's
+v2 run's two NEW dated raws (2026-10-30; the run of record moved from 2026-10-29, the raw reads); v1's names stay as RELEASE_MD_V1 / RELEASE_JSON_V1 (the record), and v1's
 answer constants stay, keyed to v1's run. (b) The v2 release run's (i) line records I_BASIS_V2, verbatim (the answers,
 section 5, 3a): the PI's "Yes to all", with the design seat's item A labelled as its referent, under the same condition
 as v1 (TRUE-SECRET-CANDIDATE 0 and UNTRIAGED 0 in every table) and, by the PI's STOP set of 2026-10-29, no IDENTIFIER
@@ -169,10 +169,10 @@ TRIAGE16 / SHAPE_TRIAGE16, keyed by the first 16 hex -- never by the value itsel
     write nothing (exempt from the tracked-output refusal, so neither needs --in-place):
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --selftest
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --dump-untriaged [--dump-all]
-    release run, v2 (2026-10-29; block section 2 item 1), at the release commit:
+    release run, v2 (RELEASE_MD's date; block section 2 item 1), at the release commit:
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py \
-        --out results/raw/2026-10-29_note-N12-history-release.md \
-        --json-out results/raw/2026-10-29_note-N12-history-release.json
+        --out results/raw/2026-10-30_note-N12-history-release.md \
+        --json-out results/raw/2026-10-30_note-N12-history-release.json
     (v1's release run, 2026-10-12, at R2 = 98d07bc, wrote results/raw/2026-10-12_note-N12-history-release.md / .json;
     committed at 11cc35b, they are never overwritten.)
 """
@@ -205,15 +205,16 @@ DEFAULT_JSON = "results/raw/2026-10-08_note-N12-history.json"
 # results/raw/2026-10-27_note-design-to-code_release-block.md; the tag note-2026-10-v2). The v1 release raws, committed
 # at 11cc35b, are the record of the first release run: their names are kept as RELEASE_MD_V1 / RELEASE_JSON_V1, and
 # an output at either is refused (not one of this part's own files; tracked).
-RELEASE_MD = "results/raw/2026-10-29_note-N12-history-release.md"
-RELEASE_JSON = "results/raw/2026-10-29_note-N12-history-release.json"
+RELEASE_MD = "results/raw/2026-10-30_note-N12-history-release.md"
+RELEASE_JSON = "results/raw/2026-10-30_note-N12-history-release.json"
 RELEASE_MD_V1 = "results/raw/2026-10-12_note-N12-history-release.md"
 RELEASE_JSON_V1 = "results/raw/2026-10-12_note-N12-history-release.json"
 # Release v2 review fix (2026-10-29): the v2 run's date is RELEASE_MD's, the one source of every printed date of the run.
 # If the run slips past that date, RELEASE_MD / RELEASE_JSON are renamed together with the other N12 scripts' v2 names
-# (this script's TRUFFLEHOG_RAW_V2 and GL_RAW_V2; gitleaks DEFAULT_OUT / HIST_RAW / TRUFFLEHOG_RAW; the trufflehog
-# script's DEFAULT_OUT / GL_RAW / HIST_RAW and docstring command; the licenses outputs; the scrub's RELEASE2_RAWS), in one
-# edit before the scripts commit.
+# (this script's TRUFFLEHOG_RAW_V2 and GL_RAW_V2 and its docstring's release-run command; gitleaks DEFAULT_OUT / HIST_RAW /
+# TRUFFLEHOG_RAW and its docstring's two names; the trufflehog script's DEFAULT_OUT / GL_RAW / HIST_RAW and
+# docstring command; the licenses outputs; the scrub's RELEASE2_RAWS), in one edit before the scripts commit: grep the
+# N12 scripts for the old date and change every raw name and run label found.
 V2_RUN_DATE = os.path.basename(RELEASE_MD)[:10]
 assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", V2_RUN_DATE) and os.path.basename(RELEASE_JSON)[:10] == V2_RUN_DATE
 # v1's release run: at R2, the commit the tag note-2026-10-v1 points to (its raws committed at 11cc35b)
@@ -276,7 +277,7 @@ I_STOP_SET_V2_WORDS = ("The STOP set for the v2 history run is TRUE-SECRET-CANDI
 assert I_STOP_SET_V2_WORDS in PI_RULE4_2026_10_29
 # trufflehog's v2 part: its own script and dated raw (the raw's date is this run's, V2_RUN_DATE)
 TRUFFLEHOG_SCRIPT = "scripts/audit_note_N12_trufflehog.py"
-TRUFFLEHOG_RAW_V2 = "results/raw/2026-10-29_note-N12-trufflehog-release.md"
+TRUFFLEHOG_RAW_V2 = "results/raw/2026-10-30_note-N12-trufflehog-release.md"
 assert os.path.basename(TRUFFLEHOG_RAW_V2)[:10] == V2_RUN_DATE, "TRUFFLEHOG_RAW_V2 and RELEASE_MD: two run dates"
 # The PI's word on trufflehog for the v2 run (his answer of 2026-10-29, item 2), verbatim: the trufflehog part cites it.
 TRUFFLEHOG_V2_PI_WORDS = ("2026-10-29", PI_ANSWERS_2026_10_29[2])
@@ -328,7 +329,7 @@ TAG_RERUNS_V2_PI_WORDS = ("2026-10-29", PI_ANSWERS_2026_10_29[3])
 PI_FRAGMENT5_2026_10_29 = "Yes, like the four"
 TAG_RUN_COMMIT_PI_WORDS = ("2026-10-29", "Own commit before the tag")
 # the same run's gitleaks raw: (i) carries only when it, the trufflehog raw and this raw each pass their parts
-GL_RAW_V2 = "results/raw/2026-10-29_note-N12-gitleaks-release.md"
+GL_RAW_V2 = "results/raw/2026-10-30_note-N12-gitleaks-release.md"
 assert os.path.basename(GL_RAW_V2)[:10] == V2_RUN_DATE, "GL_RAW_V2 and RELEASE_MD: two run dates"
 TAG_RERUN_NAMES = {"gitleaks": "gitleaks", "password": "the password search", "history": "this script",
                    "content": "the content screen", "licenses": "the licenses sweep"}
@@ -1142,6 +1143,9 @@ FRAGMENT_PARENTS_V2 = {"45629799": "f5e838c9", "d43c154a": "e8c8cf8c", "91ac9abb
 assert all(f_ in MANUAL_TRIAGE and p_ in MANUAL_TRIAGE and MANUAL_TRIAGE[f_][0] == MANUAL_TRIAGE[p_][0]
            for f_, p_ in FRAGMENT_PARENTS_V2.items())
 assert any(e_[3] == TRIAGE16_V2_SOURCE for e_ in TRIAGE16.values())
+# Release v2 (2026-10-30, the raw reads): of SHAPE_TRIAGE16's entries, those carried from the pre-flip raw's triage of
+# its 128 rows (commented 'at 6485da2'); the others were added later with Code's own reasons, each commented.
+SHAPE16_PREFLIP_N = 63
 # Round 5: the pre-flip raw's triage of the 128 credential-shaped fallback rows (its section 3(c)), keyed by
 # (path, key in lower case, the first 16 hex of sha256(value)); each entry: (verdict, reason). Code re-read
 # every row in context before carrying it (round 5) and agrees with each verdict.
@@ -2784,7 +2788,7 @@ def home_paths_outside_repo(m, users_at_head):
             elif "/Library/Jupyter/runtime/" in v:
                 k = "the Jupyter runtime directory (a kernel connection-file name)"
             elif "/miniconda3/envs/" in v:
-                k = "a conda environment named for another local project"
+                k = "a conda environment path (another local project's, or a synthetic name in a self-test's text)"
                 envs.add(v.split("/miniconda3/envs/", 1)[1].split("/", 1)[0])
             elif "/miniconda3/" in v:
                 k = "the conda base installation's interpreter"
@@ -2944,7 +2948,10 @@ def pending_scan(known, exclude):
 
 
 def pending_group(f):
-    if f.startswith("results/raw/2026-10-08_note-") or f.startswith("scripts/audit_note_") or \
+    # release v2 (2026-10-30, the raw reads): the 2026-10-08 raws and every dated N12 raw (this run's siblings, written
+    # before this script's snapshot, and the tag re-runs') are this audit's own outputs; the design seat's note raws are not
+    if f.startswith("results/raw/2026-10-08_note-") or re.match(r"results/raw/\d{4}-\d{2}-\d{2}_note-N12-", f) or \
+            f.startswith("scripts/audit_note_") or \
             f.startswith("README-NOTE"):
         return "audit outputs (this audit's end commit)"
     if f.startswith(("data/m/", "results/raw/2026-10-08_m-")):
@@ -3452,7 +3459,8 @@ def values_check(w, V):
     # round 5: attribute each commit by its subject, as the header's coverage line does (round 4 called every one of
     # them the PROPOSAL-m session's, which stopped being true when the audit's own commits landed)
     subj_ = {c: git("log", "-1", "--format=%s", c).decode("utf-8", "replace") for c in lnc}
-    lnc_m = [c for c in lnc if re.search(r"G-CAL|PROPOSAL-m|^m package", subj_[c])]
+    lnc_m = [c for c in lnc if not subj_[c].startswith("AUDIT-note-release")
+             and re.search(r"G-CAL|PROPOSAL-m|^m package", subj_[c])]
     lnc_a = [c for c in lnc if c not in lnc_m and subj_[c].startswith("AUDIT-note-release")]
     lnc_o = [c for c in lnc if c not in lnc_m and c not in lnc_a]
     w("The builder's raw (script sha256 `bd80512c...1a2d`, run at `bbc9ffe72f`) was checked by an adversarial "
@@ -3461,7 +3469,8 @@ def values_check(w, V):
       "Each disposition below carries this run's evidence. "
       + (f"{len(lnc)} commit(s) landed on top of the base after the builder's run: "
          + "; ".join(f"{lab_} ({', '.join('`' + c[:10] + '`' for c in cs_)})" for lab_, cs_ in (
-             ("from the concurrent PROPOSAL-m session (G-CAL, step 6; subjects beginning `m package` / `G-CAL`)", lnc_m),
+             ("from the concurrent PROPOSAL-m session (subjects naming G-CAL or PROPOSAL-m, or beginning "
+              "`m package`, other than the audit's own)", lnc_m),
              ("this audit's own (subjects beginning `AUDIT-note-release`)", lnc_a),
              ("other", lnc_o)) if cs_) + ". "
          if lnc else "")
@@ -3838,12 +3847,13 @@ def values_check_r2(w, V):
                                                   for t_ in u_["reachable_twin_same_parent_and_subject"]) or "-")
                                      for u_ in rl["unreachable_commits"]) or "no unreachable commit")
                   + ". The checker reported 249 entries, no force-push, first push 2026-07-18 00:17 (-0400) at "
-                    "dfe2503, and 2591567 replaced 14 s later by 8aa3ba1 before any push."))
+                    "dfe2503, and a commit no ref reaches (`len10:0c239a7f` above) replaced 14 s later by 8aa3ba1 "
+                    "before any push."))
     hp = V["hp_out"]
     items.append(("Missed (informational) -- `/Users/` paths at HEAD and the notebook's kernel display name "
                   "disclose another local project's conda env name and the Jupyter runtime directory.",
                   f"ADDED as one informational line in (ii): {sum(hp['kinds'].values())} outside-repository "
-                  f"`/Users/` occurrences by kind; the env name (redacted) in "
+                  f"`/Users/` occurrences by kind; the env names (redacted; one may be a self-test's synthetic name) in "
                   + "; ".join(f"{len(hp['env_files'].get(nm, {}))} HEAD files" for nm in hp["env_names"])
                   + ". Nothing to fix before release."))
     short = sorted(SHORT_SHOWN)
@@ -3893,7 +3903,9 @@ def values_check_r2(w, V):
       # release v2 (2026-10-29): this run's (i) basis is the PI's answer of 2026-10-28 (I_BASIS_V2)
       + (" (Release v2, " + V2_RUN_DATE + ", this run: the (i) line now records the PI's answer of 2026-10-28, \""
          + PI_ANSWER_2026_10_28 + "\", with the design seat's item A labelled as its referent.)"
-         if V.get("i_resolved") else ""))
+         if V.get("i_resolved") else "")
+      + ((" (Release v2, " + V2_RUN_DATE + ", this run's scanners: " + gitleaks_script_note(V["scan_av"]["which"]) + ".)")
+         if V["scan_av"]["which"].get("gitleaks") else ""))
     values_check_r3(w, V)
 
 
@@ -4175,7 +4187,7 @@ def values_check_r3(w, V):
                   "whose every ssh/port/alias match is the word 'port' in 'port of' is no longer read as a port line, "
                   "in the history scan and in the pending scan alike (pattern note under (ii)). History: "
                   f"{CODE_PORT_STATS['history_lines']} such line(s) carrying {CODE_PORT_STATS['history_numbers']} "
-                  "4-5 digit number(s) -- no history count changes. This snapshot's pending files: "
+                  "4-5 digit number(s), which the exception keeps out of the history counts. This snapshot's pending files: "
                   f"{CODE_PORT_STATS['pending_lines']} such line(s) carrying {CODE_PORT_STATS['pending_numbers']} "
                   f"number(s), now skipped; new port-line numbers in pending files still needing triage: {n_new_port}. "
                   "Residual risk: a network port written 'port of <host>' on a line with no 'ssh', 'alias' or '-p' "
@@ -4270,7 +4282,7 @@ def values_check_r4(w, V):
                   "holding any of the class's values, and the definition says so (value rows unchanged: each "
                   "value's own sources). Class rows whose two counts differ in this run: "
                   + ("; ".join(rows_) or "none") + ". The volume-name row: " f"{s_v} summed, {u_v} distinct; sources "
-                  f"holding both of its values: {len(both_)}. The checker's figures (volume name 147 / 84, held by "
+                  f"holding both of its values at the checker's snapshot: {len(both_)}. The checker's figures (volume name 147 / 84, held by "
                   f"both {C['volname_both']}; pod ids (context) 223 / 145; url_host 72 / 24; ipv4 14 / 14)"
                   + (f", against this run's counts restricted to the sources reachable from the checker's snapshot "
                      f"`{C['r3_head']}` ({'; '.join(snap_fig)}; held by both {len(both_)}; round 5: this run is at a "
@@ -4593,9 +4605,11 @@ def values_check_r5(w, C, G):
     w(f"In this run: {nt_} of {len(TRIAGE16)} values; their verdicts here equal the entries' verdicts: "
       + ("yes" if all(x["run_verdicts"] == [x["verdict"]] for x in G["triage16"] if x["in_this_run"]) else "NO") + ".")
     w("")
-    w(f"**Triage additions, `SHAPE_TRIAGE16`** ({len(SHAPE_TRIAGE16)} entries for the pre-flip raw's 128 "
-      "credential-shaped rows, `shape_rows_detail`; verdicts and reasons carried verbatim, three entries -- two "
-      "reasons -- with a bracketed referent). "
+    br_ = [e_[1] for e_ in SHAPE_TRIAGE16.values() if "[" in e_[1]]
+    w(f"**Triage additions, `SHAPE_TRIAGE16`** ({len(SHAPE_TRIAGE16)} entries: {SHAPE16_PREFLIP_N} for the pre-flip "
+      "raw's 128 credential-shaped rows, `shape_rows_detail`, their verdicts and reasons carried verbatim; the others "
+      f"added later with Code's own reasons, each commented in the script; {len(br_)} entries in all -- "
+      f"{len(set(br_))} reasons -- carry a bracketed referent). "
       f"Rows of this run matched by an entry: {G['shape16_rows_this_run']}. Grouped:")
     w("")
     w("| path | key | verdict | reason | entries | rows matched here |")
@@ -5299,7 +5313,7 @@ def main():
     w("| alternative | lines | occurrences |")
     w("|---|---|---|")
     for n, _ in FALLBACK_ALTS:
-        w(f"| `{n}` | {alt_lines[n]} | {alt_occ[n]} |")
+        w(f"| `{md_escape(n)}` | {alt_lines[n]} | {alt_occ[n]} |")
     w("")
     w("Coverage limits of the fallback. (1) `git log -p` prints `Binary files ... differ` for binary blobs "
       f"(the {stats['binary_blobs']} .npz/.png blobs), so their contents never reach the grep; (i-b)'s "
@@ -5327,7 +5341,8 @@ def main():
     w("")
     w("Locators in (i-a) are `<commit8> <path>:<side><line>`, mapped from the grep's line number in the "
       "`git log -p --all` stream: side `+` = an added line (line number in the new file), `-` = a removed "
-      "line (old file), ` ` = a context line, `m` = a commit-message line, `h` = a header line.")
+      "line (old file), ` ` = a context line, `m` = a commit-message line, `h` = a header line, `@` = a diff "
+      "hunk-header line (no line number).")
     w("")
     w("**Bulk triage by rule** (every occurrence assigned to exactly one rule; words are the "
       "maximal `[A-Za-z0-9_-]` run around the match):")
@@ -5336,7 +5351,7 @@ def main():
     w("|---|---|---|---|---|---|")
     for (n, rule), cnt in sorted(bulk.items(), key=lambda x: (x[0][0], -x[1])):
         words = ", ".join(f"{md_escape(wd)} ({k})" for wd, k in bulk_words[(n, rule)].most_common(8))
-        w(f"| `{n}` | {rule} | {cnt} | {bulk_reason[(n, rule)]} | {words} | {md_escape(bulk_first[(n, rule)])} |")
+        w(f"| `{md_escape(n)}` | {rule} | {cnt} | {bulk_reason[(n, rule)]} | {words} | {md_escape(bulk_first[(n, rule)])} |")
     w("")
     for (n, rule), locs in sorted(bulk_locs.items()):
         if rule.startswith(("T2", "T3", "P3", "K2", "X")):
@@ -5412,7 +5427,7 @@ def main():
         for v, e in sorted(precise[name].items(), key=lambda x: x[1]["first_order"] or 0):
             any_precise = True
             hp = ", ".join(sorted(e["head_paths"])[:3]) + (" ..." if len(e["head_paths"]) > 3 else "")
-            w(f"| {name} | `{red(v, sensitive=e['triage'][2])}` | {e['triage'][0]} | {md_escape(e['triage'][1])} | {e['n_occ']} | "
+            w(f"| {name} | `{md_escape(red(v, sensitive=e['triage'][2]))}` | {e['triage'][0]} | {md_escape(e['triage'][1])} | {e['n_occ']} | "
               f"{len(e['sources'])} | {e['n_occ_head']} ({md_escape(hp) or '-'}) | {md_escape(e['first'])} |")
     if not any_precise:
         w("| (none) | | | | | | | |")
@@ -5812,7 +5827,7 @@ def main():
               f"number pattern `{PORT_NUM_RE.pattern}`; round 3: except a line whose every match is the word "
               f"'port' in `{CODE_PORT_RE.pattern}` (the software sense: a port of code) -- in history "
               f"{CODE_PORT_STATS['history_lines']} such line(s), carrying {CODE_PORT_STATS['history_numbers']} "
-              f"4-5 digit number(s), so no history count changes")
+              f"4-5 digit number(s), which the exception keeps out of the class's counts")
         else:
             w(f"- {cls}: `{p}`")
     w("")
@@ -5886,7 +5901,8 @@ def main():
         f"headers embed {len(sig_groups)} SSH signing public key(s) (see (i-b) headers).")
     w("")
     w("**Identifiers present at HEAD** (every value whose verdict is IDENTIFIER and which occurs in a blob at "
-      "HEAD -- the ones a HEAD-only edit could remove; history keeps them either way, and rewriting history is "
+      "HEAD or at the base -- a value no longer at HEAD shows HEAD occurrences 0 and is listed again below, under "
+      "'in history but not at HEAD'; the ones at HEAD are those a HEAD-only edit could remove; history keeps them either way, and rewriting history is "
       "the PI's decision). Exact, word-bounded counts with every HEAD locator; `at base` = the same count at "
       f"the base `{since[:10]}`:")
     w("")
@@ -6042,9 +6058,10 @@ def main():
       + "; ".join(f"{k_} {n_} ({', '.join('`' + p_ + '`' for p_ in sorted(hp_out['kind_files'][k_]))})"
                   for k_, n_ in hk.most_common())
       + ". They disclose the author's local layout: the Jupyter runtime directory, the conda installation, and "
-        "the name of a conda environment belonging to another local project -- "
+        "the names in conda environment paths (another local project's environment, or a synthetic name in a "
+        "self-test's text) -- "
       + ("; ".join(env_s) or "none")
-      + " (the name is printed redacted here; it is public at HEAD in those files). Nothing to fix before "
+      + " (the names are printed redacted here; they are public at HEAD in those files). Nothing to fix before "
         "release; listed so the PI is not surprised.")
     w("")
     w("### Tracked files at HEAD containing `/workspace/` (box paths)")
@@ -6378,11 +6395,13 @@ def main():
          "`embed`: the mean-pooled, post-norm final-layer residual of a generated text. These are residual-space "
          "vectors, but neither model weights nor raw activation captures (mu and sd are statistics over the fit "
          "set). " if probe_fa else "")
-      + (f"Other float arrays: {len(other_fa)} (listed above; not read in context -- they need a reading before "
-         "the README's statement is final). " if other_fa else "No other float arrays of 256+ elements. ")
+      + (f"Other float arrays: {len(other_fa)} (listed above; not read in context here; README-NOTE.md reads the "
+         "N3c raw JSON's 99 as permutation nulls of a probe AUC, not residual values). " if other_fa else
+         "No other float arrays of 256+ elements. ")
       + "So (iv)'s clause, stated exactly: no model weights are tracked; and no residual arrays are tracked "
         "beyond the allowlisted `.npz` files"
-      + (" EXCEPT the probe vectors in JSON named here, which the README should name." if probe_fa else "."))
+      + (" EXCEPT the probe vectors in JSON named here, which README-NOTE.md names (its statement of this clause)."
+         if probe_fa else "."))
     w("")
     # ---- pre-release check (round 2)
     pend_known = collections.OrderedDict()
@@ -6758,7 +6777,8 @@ def main():
       f"{len(jm_code)} outside data/); clone-index non-empty blobs reachable in lab history "
       f"{len(jidx.get('nonempty_reachable_in_lab', [])) if jidx.get('present') else 'not read'} of "
       f"{jidx.get('nonempty_entries', '-')}; npz without an explicit line {len(no_line)}; weight-shaped paths "
-      f"{len(weights)}; residual-space float vectors in tracked JSON {len(fa)} array(s) in "
+      f"{len(weights)}; float arrays of 256+ elements in tracked JSON {len(fa)} array(s) (the residual-space probe "
+      f"vectors among them: {len(probe_fa)}) in "
       f"{len({x['blob'] for x in fa})} blob(s) ({', '.join('`' + p_ + '`' for p_ in sorted({p_ for x in fa for p_ in x['paths']}))}).")
     w(f"- Pre-release (files not yet in history, snapshot): {len(pend)} files scanned; audit files carrying a "
       f"redaction-rule value or an untriaged value {len(audit_hits)}"
@@ -6848,8 +6868,9 @@ def main():
                                                              "binary_content": len(binc["precise"][n_])}
                                                         for n_ in sorted(KEY_MATERIAL_PATTERNS)}},
         "scanner_availability": scan_av,
-        # release v2 (2026-10-29): this run's release block (v1's raw holds it as `release_2026_10_12`)
-        "release_2026_10_29": {
+        # release v2: this run's release block, keyed by the run's date (V2_RUN_DATE), as v1's raw keys its own
+        # `release_2026_10_12`
+        ("release_" + V2_RUN_DATE.replace("-", "_")): {
             "d4_withheld": {"patterns": list(D4_EXCLUDE_PATTERNS), "count": len(D4_WITHHELD),
                             "names": sorted(D4_WITHHELD), "opened": False},
             "release_run": release_run,
@@ -7091,7 +7112,7 @@ def main():
         values_check_r5(L5.append, C5, G)
         md = md_base + "\n".join(L5) + "\n"
         J["guard"] = G
-        J["untriaged_all_tables"] = untri_counts
+        J["untriaged_all_tables"] = {k_: v_ for k_, v_ in untri_counts.items() if k_ not in ("fallback", "true")}
         js = json.dumps(J, indent=1, default=lambda o: sorted(o) if isinstance(o, set) else str(o))
         res5, aux5 = guard_controls(R, known, set(REDACTED_SENSITIVE), {"md": md, "json": js + "\n"}, pend_known)
         Gn = guard_summary(R, res5, aux5, {"md": md, "json": js + "\n"}, known)

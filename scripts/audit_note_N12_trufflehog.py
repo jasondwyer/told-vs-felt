@@ -51,7 +51,7 @@ or commit). Its
 coverage bound: the history at this run's HEAD; the commits after it are covered by no trufflehog run, since the
 tag-commit re-runs (TAG_RERUNS_V2, the PI's word of 2026-10-29: the five N12 scans) do not include it.
 
-    python -B scripts/audit_note_N12_trufflehog.py [--out results/raw/2026-10-29_note-N12-trufflehog-release.md]
+    python -B scripts/audit_note_N12_trufflehog.py [--out results/raw/2026-10-30_note-N12-trufflehog-release.md]
 """
 import argparse
 import hashlib
@@ -68,10 +68,10 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLOCK = "AUDIT-note-release-v1_2.md"
-DEFAULT_OUT = "results/raw/2026-10-29_note-N12-trufflehog-release.md"   # the v2 release run (block section 2 item 1)
+DEFAULT_OUT = "results/raw/2026-10-30_note-N12-trufflehog-release.md"   # the v2 release run (block section 2 item 1)
 # The v2 run's companion raws (the same run date): gitleaks' and the history script's.
-GL_RAW = "results/raw/2026-10-29_note-N12-gitleaks-release.md"
-HIST_RAW = "results/raw/2026-10-29_note-N12-history-release.md"
+GL_RAW = "results/raw/2026-10-30_note-N12-gitleaks-release.md"
+HIST_RAW = "results/raw/2026-10-30_note-N12-history-release.md"
 assert os.path.basename(GL_RAW)[:10] == os.path.basename(DEFAULT_OUT)[:10] == os.path.basename(HIST_RAW)[:10], \
     "DEFAULT_OUT, GL_RAW and HIST_RAW: more than one run date"
 GL_SCRIPT = "scripts/audit_note_N12_gitleaks.py"

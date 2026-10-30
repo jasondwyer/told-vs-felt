@@ -15,7 +15,7 @@ preprint at patch v7, note v0.6, the three 2026-10-10 renders); DEFAULT_OUT_V1, 
 KNOWN_ATTR_PATHS_V1, KNOWN_SKIP_PATHS_V1 and BASIS_V1 keep that run's values as its record. v2 (tag
 note-2026-10-v2; the design seat's answers of 2026-10-28 with the PI's "Yes to all",
 results/raw/2026-10-28_note-design-to-code_release-block-answers.md, section 5, 3a-3b): the default
-output is the NEW dated raw results/raw/2026-10-29_note-N12-gitleaks-release.md, and the script
+output is the NEW dated raw results/raw/2026-10-30_note-N12-gitleaks-release.md, and the script
 refuses to write any path git already tracks, so a committed raw is never overwritten. It also runs
 `gitleaks dir` over .txt copies of the five release files (the preprint, patch v8 under its status
 banner; note v0.8; the three 2026-10-22 renders) as HEAD holds them: each is read from HEAD's blob
@@ -72,7 +72,7 @@ holding a random generic-api-key line is written at every history path in a temp
 and `gitleaks dir` is run over it; a path with no finding is skipped. Every historical version of
 every skipped path is then scanned as a .txt copy. A skipped path not in KNOWN_SKIP_PATHS is a STOP.
 
-    python -B scripts/audit_note_N12_gitleaks.py [--out results/raw/2026-10-29_note-N12-gitleaks-release.md]
+    python -B scripts/audit_note_N12_gitleaks.py [--out results/raw/2026-10-30_note-N12-gitleaks-release.md]
 """
 import argparse
 import hashlib
@@ -89,15 +89,17 @@ import tempfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLOCK = "AUDIT-note-release-v1_2.md"
 DEFAULT_OUT_V1 = "results/raw/2026-10-12_note-N12-gitleaks-release.md"   # v1's release run (2026-10-12): its record
-DEFAULT_OUT = "results/raw/2026-10-29_note-N12-gitleaks-release.md"   # the v2 release run (answers of 2026-10-28, section 5, 3b)
+DEFAULT_OUT = "results/raw/2026-10-30_note-N12-gitleaks-release.md"   # the v2 release run (answers of 2026-10-28, section 5, 3b)
 # The companion raws of the v2 run's (i): the history script's release raw of the same run (HIST_RAW), and trufflehog's
 # (TRUFFLEHOG_RAW, below; the PI's word of 2026-10-29).
-HIST_RAW = "results/raw/2026-10-29_note-N12-history-release.md"
+HIST_RAW = "results/raw/2026-10-30_note-N12-history-release.md"
 # The v2 run's date is in its raws' names, and these two must name the same one. The answers of 2026-10-28 (section 1)
 # run block section 2 item 1 over 2026-10-29 to 10-31: if the run of record falls on another PI-local date, every v2
-# name changes in one edit across the N12 scripts (here DEFAULT_OUT, HIST_RAW and TRUFFLEHOG_RAW; the history script's
-# RELEASE_MD, RELEASE_JSON and TRUFFLEHOG_RAW_V2; the trufflehog script's DEFAULT_OUT, GL_RAW, HIST_RAW and docstring
-# command; the licenses script's docstring command; the scrub generator's RELEASE2_RAWS) before the scripts commit.
+# name changes in one edit across the N12 scripts (here DEFAULT_OUT, HIST_RAW, TRUFFLEHOG_RAW and this docstring's two
+# names; the history script's RELEASE_MD, RELEASE_JSON, TRUFFLEHOG_RAW_V2, GL_RAW_V2 and its docstring's release-run
+# command; the trufflehog script's DEFAULT_OUT, GL_RAW, HIST_RAW and docstring command; the licenses script's docstring
+# command; the scrub generator's RELEASE2_RAWS) before the scripts commit: grep the N12 scripts for the old date and
+# change every raw name and run label found.
 assert os.path.basename(HIST_RAW)[:10] == os.path.basename(DEFAULT_OUT)[:10], "DEFAULT_OUT and HIST_RAW: two run dates"
 # The v2 tag (the release block of 2026-10-27, section 2 item 7; the answers of 2026-10-28, section 8: on the final
 # audit commit, before the push).
@@ -280,7 +282,7 @@ TRUFFLEHOG_V2_PI_WORDS = ("2026-10-29", "Install and run trufflehog over all his
 # and his answer the same day to Code's question on trufflehog's unknown results (verification errored or withheld)
 TRUFFLEHOG_UNKNOWN_PI_WORDS = ("2026-10-29", "Yes, show and triage")
 TRUFFLEHOG_SCRIPT = "scripts/audit_note_N12_trufflehog.py"
-TRUFFLEHOG_RAW = "results/raw/2026-10-29_note-N12-trufflehog-release.md"
+TRUFFLEHOG_RAW = "results/raw/2026-10-30_note-N12-trufflehog-release.md"
 assert os.path.basename(TRUFFLEHOG_RAW)[:10] == os.path.basename(DEFAULT_OUT)[:10], "TRUFFLEHOG_RAW: another run date"
 assert TRUFFLEHOG_V2_PI_WORDS is None or (
     isinstance(TRUFFLEHOG_V2_PI_WORDS, tuple) and len(TRUFFLEHOG_V2_PI_WORDS) == 2

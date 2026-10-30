@@ -343,13 +343,13 @@ BLOCK2_LINES = {
 }
 # the release run's new dated raws for v2 (the dated names the history, gitleaks, licenses and trufflehog scripts adopt,
 # and the content and password runs take by --json-out / --out); counted on disk and tracked at HEAD, never read here
-RELEASE2_RAWS = [('history', ['results/raw/2026-10-29_note-N12-history-release.md', 'results/raw/2026-10-29_note-N12-history-release.json']),
-                 ('content', ['results/raw/2026-10-29_note-N12-content-screen-release.json']),
-                 ('licenses', ['results/raw/2026-10-29_note-N12-licenses-release.md', 'results/raw/2026-10-29_note-N12-licenses-release.json']),
-                 ('gitleaks', ['results/raw/2026-10-29_note-N12-gitleaks-release.md']),
-                 ('password', ['results/raw/2026-10-29_note-N12-password-release.md']),
+RELEASE2_RAWS = [('history', ['results/raw/2026-10-30_note-N12-history-release.md', 'results/raw/2026-10-30_note-N12-history-release.json']),
+                 ('content', ['results/raw/2026-10-30_note-N12-content-screen-release.json']),
+                 ('licenses', ['results/raw/2026-10-30_note-N12-licenses-release.md', 'results/raw/2026-10-30_note-N12-licenses-release.json']),
+                 ('gitleaks', ['results/raw/2026-10-30_note-N12-gitleaks-release.md']),
+                 ('password', ['results/raw/2026-10-30_note-N12-password-release.md']),
                  # trufflehog, on the PI's word of 2026-10-29 (PI_ANSWERS3, item 2)
-                 ('trufflehog', ['results/raw/2026-10-29_note-N12-trufflehog-release.md'])]
+                 ('trufflehog', ['results/raw/2026-10-30_note-N12-trufflehog-release.md'])]
 RR2 = dict(RELEASE2_RAWS)
 RELEASE2_N = 8   # the v2 scan raws by file (asserted in main()): the five scans' seven and trufflehog's one
 # the v2 run's date, read from the names above (one edit renames all eight, with the history, gitleaks, licenses and
