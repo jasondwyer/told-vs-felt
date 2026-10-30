@@ -1411,6 +1411,28 @@ def md_escape(s):
     return s.replace("|", "\\|")
 
 
+def code_span(s):
+    """A Markdown code span holding s verbatim: a fence one backtick longer than the longest backtick run inside s,
+    padded with a space when s begins or ends with a backtick (release v2, 2026-10-30, the raw reads)."""
+    n_ = max([len(r_) for r_ in re.findall(r"`+", s)] or [0]) + 1
+    pad_ = " " if (s.startswith("`") or s.endswith("`")) else ""
+    return "`" * n_ + pad_ + s + pad_ + "`" * n_
+
+
+PLACEHOLDERS = ("<commit message>", "<commit header>", "<tag header>", "<tag message>", "<file>", "<name>", "<project>",
+                "<session-uuid>")
+
+
+def html_safe_placeholders(line):
+    """Release v2 (2026-10-30, the raw reads): the md's angle-bracket placeholders, outside code spans, as HTML entities,
+    so that GitHub's renderer does not take them for tags and drop them; code spans are left as they are."""
+    parts_ = re.split(r"(`+[^`]*?`+)", line)
+    for i_ in range(0, len(parts_), 2):
+        for ph_ in PLACEHOLDERS:
+            parts_[i_] = parts_[i_].replace(ph_, "&lt;" + ph_[1:-1] + "&gt;")
+    return "".join(parts_)
+
+
 class LineIndex:
     """Offset -> 1-based line number; the newline table is built on first use only."""
 
@@ -3505,7 +3527,7 @@ def values_check(w, V):
                   "APPLIED. Every SSH port whose individual triage is IDENTIFIER is now re-counted exactly (word-bounded: "
                   "no letter or digit on either side, so a run inside a hex hash or a longer number does not count). "
                   "The identifier table now has an `exact occ / HEAD / new` column for ports, and a new table lists every "
-                  "IDENTIFIER value present at HEAD with its locators, for the PI's decision. This run: "
+                  "IDENTIFIER value at HEAD or at the base with its locators, for the PI's decision. This run: "
                   + "; ".join(port_line(k) for k in CHECKER_PORTS) + "."))
     # F2
     items.append(("F2 (substantive) -- 'Coverage limits of the fallback, both closed by (i-b)'; '(i-b) covers "
@@ -3993,7 +4015,7 @@ def values_check_r3(w, V):
             + (f"; its locators at `{C['cf8']}` ({', '.join(C['volname_locs_cf8'])}; those files' blobs equal at "
                f"this HEAD and `{C['cf8']}`: {'yes' if loc_same_cf8 else 'NO'}): "
                f"{'AGREES' if agree_locs_cf8 else 'DIFFERS'}" if cf8_full else "")
-            + f". In the 'Identifiers present at HEAD' table: {'yes' if in_head_table else 'NO'}. In the pre-release "
+            + f". In the 'Identifiers at HEAD or at the base' table: {'yes' if in_head_table else 'NO'}. In the pre-release "
               f"sensitive set: {'yes' if v in V['pend_known'] else 'NO'}, with its stem: "
               f"{'yes' if v in V['vol_stems'].values() else 'NO'}; pending files carrying the name: "
               f"{len(pend_files)}, the stem alone: {len(stem_files)} (checker: 0 in the 60 then pending). In the leak "
@@ -5829,7 +5851,7 @@ def main():
               f"{CODE_PORT_STATS['history_lines']} such line(s), carrying {CODE_PORT_STATS['history_numbers']} "
               f"4-5 digit number(s), which the exception keeps out of the class's counts")
         else:
-            w(f"- {cls}: `{p}`")
+            w(f"- {cls}: {p if p.startswith('ANCHORED:') else code_span(p)}")
     w("")
     w("Every identifier value, individually (redacted; public website hosts verbatim):")
     w("")
@@ -5900,7 +5922,7 @@ def main():
       + f" distinct values respectively. Commit headers are a different source: {len(hdr['sigs'])} gpgsig "
         f"headers embed {len(sig_groups)} SSH signing public key(s) (see (i-b) headers).")
     w("")
-    w("**Identifiers present at HEAD** (every value whose verdict is IDENTIFIER and which occurs in a blob at "
+    w("**Identifiers at HEAD or at the base** (every value whose verdict is IDENTIFIER and which occurs in a blob at "
       "HEAD or at the base -- a value no longer at HEAD shows HEAD occurrences 0 and is listed again below, under "
       "'in history but not at HEAD'; the ones at HEAD are those a HEAD-only edit could remove; history keeps them either way, and rewriting history is "
       "the PI's decision). Exact, word-bounded counts with every HEAD locator; `at base` = the same count at "
@@ -5960,7 +5982,7 @@ def main():
         "data/ artifacts": "leave: provenance fields recorded by the run; parameterizing would rewrite a "
             "committed artifact",
         "code": "see per-file note: parameterize only if the path is used at run time",
-        "documents": "leave (the audit block quotes the pattern)",
+        "documents": "leave (the audit block quotes the pattern; other documents quote paths into this repository)",
     }
     for g_, lst in sorted(groups.items()):
         w(f"| {g_} | {len(lst)} | {sum(c for _, c in lst)} | {rec[g_]} |")
@@ -6791,7 +6813,7 @@ def main():
          else "; the end commit waits on a clean re-run (pre-flip step 1)."))
     w("")
     values_check(w, locals())
-    md = "\n".join(L) + "\n"
+    md = "\n".join(html_safe_placeholders(l_) for l_ in L) + "\n"
 
     # ------------------------------------------------------------ json
     def ser(tab, cls=None):

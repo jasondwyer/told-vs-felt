@@ -822,6 +822,9 @@ def screen_text(text, name_allow, path=None):
                         key = {"confidentiality": "word", "personal_life": "marker", "correspondence": "marker"}[cat]
                         hits[cat].append([ln, excerpt(joined, m.start(), name_allow),
                                           {key: sub, "spans_next_line": True}])
+                        # release v2 (2026-10-30, the raw reads): a phrase across a line end counts in its word forms too
+                        if cat in ("confidentiality", "personal_life"):
+                            forms[cat][m.group(0).lower()] += 1
     if n_c2_decl or n_c2_undecl:   # round 9: per-object record of the C2PA elements read
         hits["_c2pa_elements"].append({"declared": n_c2_decl, "undeclared": n_c2_undecl})
     names = {"tier_a_capitalised_pairs": tier_a,

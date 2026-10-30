@@ -1596,7 +1596,7 @@ def main() -> int:
             if RX_JLENS.search(line):
                 jlens_counts[p] += 1
                 if re.search(r"^\s*(from|import)\s+\S*jlens|sys\.path\.insert\(.*jlens|"
-                             r"importlib\.import_module\(.*jlens", line):
+                             r"importlib\.import_module\(.*jlens", line) and not re.match(r"""\s*\(?['"]""", line):
                     mm = re.search(r"jlens_qwen\.([a-z_0-9]+)", line)
                     cls = ""
                     if mm:
@@ -1641,8 +1641,8 @@ def main() -> int:
       f"{n_third_unb} lines, {n_extra} more, in each of which `Macar` occurs only inside a longer "
       f"word, i.e. an identifier "
       f"({', '.join(f'`{k}` x{v}' for k, v in sorted(unb_extra_ids.items(), key=lambda x: -x[1]))}; "
-      f"in {len(unb_extra_files)} files); software-license words (`Apache|copyright|open-source|third-party` "
-      f"case-insensitive, `MIT|SPDX|GPL|BSD` case-sensitive); port markers (`ported from|port of|"
+      f"in {len(unb_extra_files)} files); software-license words (`{RX_SWLIC.pattern}` as implemented; "
+      f"case-insensitive, with `MIT|SPDX|GPL|BSD` then kept case-sensitive); port markers (`ported from|port of|"
       f"adapted from|copied from|transcribed from|verbatim from|taken from|borrowed from|"
       f"recovered verbatim`, word-bounded). The `source` column applies a rule: third-party "
       f"(Macar) if the line or the two lines on either side mention Macar, safety-research or "
@@ -1677,7 +1677,7 @@ def main() -> int:
     R["marker_grep"]["port_refs_tracked"] = tr_refs
     P(f"Note: port markers labelled third-party: {n_tp_port} ({n_tp_port - n_up_port} Macar: "
       f"their paradigm and their text; {n_up_port} mentioning WeZZard or naming an upstream jlens-qwen36 file). Files "
-      f"named by the lab-internal port rows that resolve to lab-added clone files: "
+      f"named by the port rows (third-party and lab-internal alike) that resolve to lab-added clone files: "
       f"{', '.join(f'`{x}`' for x in lab_refs) or 'none'}; to tracked files: "
       f"{', '.join(f'`{x}`' for x in tr_refs) or 'none'}.")
     P("")
@@ -3419,9 +3419,9 @@ def main() -> int:
       f"artifacts' `model_id` fields and docs). The card's sha prefix `{q['sha'][:12]}` occurs "
       f"in {len(q_pin_files)} tracked files ({len(q_pin_lines)} lines: "
       f"{', '.join(f'`{x}`' for x in q_pin_lines)}); lines where it sits inside a local "
-      f"HF-cache `snapshots/<sha>` path: {q_in_snap} of {len(q_pin_lines)}; in a "
-      f"data/config/code file: "
-      f"{len(q_pin_cfg)}. "
+      f"HF-cache `snapshots/<sha>` path: {q_in_snap} of {len(q_pin_lines)}; files among the "
+      f"{len(q_pin_files)} that are data, code or JSON (by path: data/, valence_core/, scripts/, *.json; this "
+      f"audit's own JSON raws among them): {len(q_pin_cfg)}. "
       + (f"So the record **declares** the Qwen weights revision `{q['sha'][:12]}`: "
          + " and ".join({"LOCK-m-F0.md": "`LOCK-m-F0.md` as the weights of record",
                          "scripts/m_sessions.py": "`scripts/m_sessions.py`, which pins it in code (`QWEN_REVISION`)"}[p_]
@@ -3900,7 +3900,8 @@ def main() -> int:
     P("")
     P(f"Redactions: **{len(REDACTIONS)} pattern redactions** (redact(): IPv4, tokens, keys)"
       + ("" if not REDACTIONS else " -- " + "; ".join(f"{r['where']} {r['category']} {r['redacted']}" for r in REDACTIONS))
-      + f"; **{len(REDACTED_IDS)} third-party repository id(s) printed redacted** by rule"
+      + f"; **{len(REDACTED_IDS)} repository-shaped id(s) with no attribution row printed redacted** by rule (section "
+        f"2f classes each)"
       + ("" if not REDACTED_IDS else " (" + "; ".join(f"{r['where']}: `{r['redacted']}`" for r in REDACTED_IDS) + ")")
       + f"; IP-literal URL hosts counted and not printed: {len(ip_rows)}.")
     R["redactions"] = REDACTIONS + REDACTED_IDS

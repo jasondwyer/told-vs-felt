@@ -406,7 +406,8 @@ def main():
         w("- trufflehog's log has no `finished scanning` line -- STOP (the scan did not complete).")
     w("- Refs at this run (`git for-each-ref`): %d (listing sha256 `%s`); tags: %s; commits (`git rev-list --all "
       "--count`, GIT_NO_REPLACE_OBJECTS=1): %s. The clone holds what these refs reach, the history GitHub is to hold; "
-      "commits no ref reaches are not scanned (none is pushed)." % (
+      "commits no ref reaches are not scanned (the release goes to a fresh repository holding main and the tags, so "
+      "none is pushed)." % (
           len(refs), hashlib.sha256("\n".join(refs).encode()).hexdigest()[:16],
           ", ".join("`%s`" % x.split()[1][len("refs/tags/"):] for x in refs if x.split()[1].startswith("refs/tags/"))
           or "none", n_commits or "UNKNOWN"))
