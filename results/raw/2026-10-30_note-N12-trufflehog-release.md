@@ -1,0 +1,34 @@
+# AUDIT-note-release v1.2 -- N12(i): trufflehog over the entire history (verified-only, plus its unknown results)
+
+- Code stamp: 2026-10-30 05:01:49 UTC (date -u); HEAD `530aca4bdb7c9b1fac9d95455ce6aab97706343a`
+- Block `AUDIT-note-release-v1_2.md` sha256 `8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841`
+- Script `scripts/audit_note_N12_trufflehog.py` sha256 `7b59a9c660281f60d3767ce5e7d6e76846eaa6644c52989d0e367bdd6a6af02c`; interpreter /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9); gitleaks' script (loaded for its write guard and attribute list) `scripts/audit_note_N12_gitleaks.py` sha256 `94e98e9d70d9b8bdce16d244bfa753e4af33bd799e51f080c8e3c3ffd062d75e`
+- The PI's word (2026-10-29), verbatim: "Install and run trufflehog over all history for v2, verified-only mode, raw committed; triage any finding as gitleaks’ were; TRUE-SECRET or UNTRIAGED is a STOP". trufflehog installed by Code on that word from Homebrew's bottle; `trufflehog --version`: `trufflehog 3.99.7` (required: 3.99.7); the binary's sha256 `1ec3729813a207a743d72d56c9c5958bb2564e51026be8b8def18c2154463087`.
+- Command: `trufflehog git file://<repo> --results=verified,unknown --json --no-update --no-color --no-ignore-tag --fail-on-scan-errors`, run from the repository root. trufflehog's git source clones the repository into a temporary directory (every ref: branches, remote-tracking refs and tags) and reads every commit's patch, as trufflehog reads it (its own skips of binary blobs by extension or size are not measured here); every GIT_* variable of the environment removed, GIT_NO_REPLACE_OBJECTS=1. Verified-only (`--results=verified`, the PI's mode) outputs only candidates whose verification against their issuer succeeded; trufflehog sends a detected candidate to its issuer's API to verify it, except when more than one detector found it (verification is then withheld). Its `unknown` class (verification errored or withheld), which verified-only mode neither outputs nor counts, is added (`unknown` in `--results`) on the PI's word of 2026-10-29 to Code's question on it, verbatim: "Yes, show and triage"; each unknown result is shown redacted and triaged like a verified finding; candidates detected but not confirmed valid, with no verification error (the `unverified` class), are not output. The control's part (b) shows that verification of its GitHub-shaped probes reached GitHub's API at this run. The results are read from trufflehog's standard output (a pipe, held in memory only); no results file is written, and no matched value is written here. `--no-ignore-tag` makes inline ignore comments ineffective; 0 commits in history add or remove the inline-ignore literal (`trufflehog` + `:ignore`; `git log --all --text -S`), so `--no-ignore-tag` does not change this scan's result. Exit code: 0. Output lines: 0 result(s) (verified 0, unknown 0), 0 unparsed.
+- trufflehog's summary (its `finished scanning` log line): chunks 91842, bytes 1134718406, verified_secrets 0, unverified_secrets 0 (the control's part (b), whose three probes trufflehog detects and does not verify, records verified_secrets 0 and unverified_secrets 0 under `--results=verified,unknown`: in a verified mode the summary's counts are not a count of the candidates detected), scan duration 17.223058167s, version 3.99.7; verification (the history scan's own; a result is output when verified or unknown -- its verification errored or was withheld -- and not when unverified: detected, not confirmed valid, no verification error): cache misses 1 (attempts), hits 0, time spent 211 ms.
+- Refs at this run (`git for-each-ref`): 5 (listing sha256 `fdeed7fe2be92d24`); tags: `cycle-2-close`, `cycle-4-close`, `note-2026-10-v1`; commits (`git rev-list --all --count`, GIT_NO_REPLACE_OBJECTS=1): 385. The clone holds what these refs reach, the history GitHub is to hold; commits no ref reaches are not scanned (the release goes to a fresh repository holding main and the tags, so none is pushed).
+- Paths in history with a diff or binary attribute set (`git log --all --name-only` through `git check-attr diff binary`; 952 paths checked): `data/m/ckpt/G-CAL_qwen.json`, `data/m/ckpt/Q-F0_campaign.json`, `data/m/ckpt/Q-F0_id.json`, `data/m/ckpt/Q-F0_qual.json`, `data/m/ckpt/Q-F0_time.json`; trufflehog reads them (its git source scans a path git renders as binary from its blob, the control's part (a)), as gitleaks' `--text` scan does for gitleaks' list (`KNOWN_ATTR_PATHS` in `scripts/audit_note_N12_gitleaks.py`: the path known at v1's release run, 2026-10-12, and the four Q-F0 paths listed on the PI's word of 2026-10-28).
+- trufflehog error-level log lines: 0.
+
+## Positive control (a throwaway repository in a temporary directory; random probes, never written out)
+
+| part | check | expected | got | ok |
+|---|---|---|---|---|
+| (a) | probe in a commit only a remote-tracking ref reaches (`side.txt`), found at its path | yes | yes | yes |
+| (a) | probe in a `-diff` attribute path (`ckpt/x.json`), found at its path | yes | yes | yes |
+| (a) | probe in an .svg file (`fig.svg`), found at its path | yes | yes | yes |
+| (a) | exit code; unparsed output lines | 0; 0 | 0; 0 | yes |
+| (b) | results under `--results=verified,unknown` (the probes are not live tokens) | 0 | 0 | yes |
+| (b) | verification time in the summary (ms; > 0: verification reached the issuer) | > 0 | 335 | yes |
+| (b) | exit code; unparsed output lines | 0; 0 | 0; 0 | yes |
+
+## Findings (verified and unknown)
+
+None: trufflehog output no verified and no unknown result.
+
+## Outcome
+
+- Findings (verified and unknown): 0. TRUE-SECRET: 0. FALSE-POSITIVE: 0. UNTRIAGED: 0. TRIAGE entries re-found: 0 of 0.
+- TRIAGE entries with the PI's recorded word (TRIAGE_PI): 0 of 0.
+- trufflehog's part of (i): 0 TRUE-SECRET and 0 UNTRIAGED among the verified and unknown results over every ref's history as trufflehog reads it (the -diff path class and .svg files included, as the control shows; its own skips of binary blobs are not measured here), the scan completed (exit 0, a `finished scanning` line with chunks and bytes scanned, 0 error-level lines) on version 3.99.7, and the positive control passed. This run covers the history at HEAD `530aca4bdb`. The commits after it are covered by no trufflehog run: the re-runs at the tag commit are the five N12 scans (the PI's word of 2026-10-29, verbatim: "All five at the tag commit — history, content, licenses, gitleaks, the password search — as v1 did, raws committed after the tag; item 1 now is the baseline."), and trufflehog is not among them; gitleaks, also a secret scanner, is.
+- results/raw/2026-10-30_note-N12-gitleaks-release.md and results/raw/2026-10-30_note-N12-history-release.md are the same run's gitleaks and history raws; (i) carries only on all three.
