@@ -1,0 +1,180 @@
+{
+ "part": "N12-screen",
+ "item": "N12(vi) content review -- the finding retained in history (release v2, 2026-11-02; --retained-only)",
+ "block": {
+  "path": "AUDIT-note-release-v1_2.md",
+  "sha256_expected": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+  "sha256_at_rev": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+  "match": true
+ },
+ "stamp_utc": "2026-11-02T06:19:41Z",
+ "script": {
+  "path": "scripts/audit_note_N12_content.py",
+  "sha256": "31758bdbff0c6b5f65ee41ffc225f5d94ec99ae1b983def86940d595a8a2429c"
+ },
+ "python": "3.12.9",
+ "platform": "macOS-15.6.1-arm64-arm-64bit",
+ "git_version": "git version 2.39.5 (Apple Git-154)",
+ "rev": {
+  "requested": "HEAD",
+  "resolved": "b562977afb97cd9a654e6e882db5526dba3a2294"
+ },
+ "scope": {
+  "mode": "--retained-only: each RETAINED entry's versions are read and checked (retained_in_history); a full run's scope is read for the et-al allowlist only, and nothing in it is screened or reported",
+  "content_source": "git objects via git cat-file --batch and git show (committed bytes; working tree not read)",
+  "objects_read_for_the_allowlist": 873,
+  "objects_by_source": {
+   "head:results/raw": 463,
+   "history-only": 15,
+   "commit-message": 393,
+   "tag-message": 2
+  }
+ },
+ "method": {
+  "line_split": "on \\n; 'lines' = number of \\n-separated lines (a trailing newline does not add a line)",
+  "names": "tier_a: capitalised word pairs, neither word in the name allowlist (counts only); tier_b: tier_a pairs whose first word is in the embedded given-name list (381 names; counts and line numbers only, never the names)",
+  "name_allowlist_fixed": [
+   "Allen",
+   "Anthropic",
+   "Chua",
+   "Claude",
+   "Dwyer",
+   "Haiku",
+   "Macar",
+   "OLMo",
+   "Olmo",
+   "Opus",
+   "Qwen",
+   "Sonnet"
+  ],
+  "name_allowlist_et_al_detected": [
+   "Chandaria",
+   "Chua",
+   "Hinton",
+   "Ho",
+   "Hu",
+   "Keeling",
+   "Krishnamurthy",
+   "Macar",
+   "Sofroniew",
+   "Tagliabue"
+  ]
+ },
+ "patterns": {
+  "names": "\\b(?=([A-Z][a-z]+)[ \\t]+((?:Mc|Mac|O')?[A-Z][a-z]+(?:-[A-Z][a-z]+)?)\\b)"
+ },
+ "retained_in_history": {
+  "rule": "release v2 (2026-11-02): every run checks each entry against the git objects and exits without writing unless every check holds (checks); counts, line numbers and object ids only, never a name; each pair found joins the leak guard; nothing here is added to objects or totals",
+  "code_question": {
+   "date": "2026-11-01",
+   "words_verbatim": "Should a history rewrite remove the two names still in 908a659's blob?"
+  },
+  "pi_answer": {
+   "date": "2026-11-02",
+   "words_verbatim": "Keep history. Have the content screen’s raw record the finding exactly as it is — two third-party names in blob 908a659, removed from the tree at c2a6417, retained in history, with the reason (no private content; published co-authors of a cited paper) — so the scrub index carries the disposition rather than a reader discovering it."
+  },
+  "entries": [
+   {
+    "declared": {
+     "path": "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md",
+     "blob_at": "908a659",
+     "removed_at": "c2a6417",
+     "line": 5,
+     "tier_b_given_name_pairs": 2
+    },
+    "path": "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md",
+    "line": 5,
+    "blob_at": {
+     "commit": "908a65937e1a5197f047170ce9618af025d74809",
+     "blob": "47cfe741e16ee0c921134735687ac6e819accae5",
+     "lines": 47
+    },
+    "removed_at": {
+     "commit": "c2a6417aedb0ef861a2f82931f500702db603899",
+     "blob": "ad3c8f9e6b6401d59e16a3a9ddd2310215b8ff89",
+     "paths_changed": [
+      "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md"
+     ],
+     "hunk": "@@ -5 +5 @@"
+    },
+    "rev": {
+     "commit": "b562977afb97cd9a654e6e882db5526dba3a2294",
+     "blob": "ad3c8f9e6b6401d59e16a3a9ddd2310215b8ff89",
+     "same_blob_as_removed_at": true
+    },
+    "commits_touching_path": [
+     "c2a6417aedb0ef861a2f82931f500702db603899",
+     "908a65937e1a5197f047170ce9618af025d74809"
+    ],
+    "names": {
+     "blob_at": {
+      "tier_a_capitalised_pairs": 3,
+      "tier_b_given_name_pairs": 2,
+      "tier_b_distinct_pairs": 2,
+      "tier_b_lines": [
+       5,
+       5
+      ]
+     },
+     "removed_at": {
+      "tier_a_capitalised_pairs": 1,
+      "tier_b_given_name_pairs": 0,
+      "tier_b_distinct_pairs": 0,
+      "tier_b_lines": []
+     },
+     "rev": {
+      "tier_a_capitalised_pairs": 1,
+      "tier_b_given_name_pairs": 0,
+      "tier_b_distinct_pairs": 0,
+      "tier_b_lines": []
+     }
+    },
+    "other_categories": {
+     "blob_at": {
+      "confidentiality": 1
+     },
+     "removed_at": {
+      "confidentiality": 1
+     }
+    },
+    "elsewhere": {
+     "pickaxe_commits": [
+      "908a65937e1a5197f047170ce9618af025d74809",
+      "c2a6417aedb0ef861a2f82931f500702db603899"
+     ],
+     "commit_messages": 0,
+     "files_at_rev": 0,
+     "other_screened_objects": 0
+    },
+    "refs_reaching_blob_at": [
+     "refs/heads/main",
+     "refs/remotes/origin/main"
+    ],
+    "checks": {
+     "blob_at_added_the_path": true,
+     "removed_at_replaced_that_blob": true,
+     "removed_at_changed_this_path_only": true,
+     "removed_at_changed_this_line_only": true,
+     "pairs_at_blob_at_as_declared": true,
+     "no_pair_on_the_line_at_removed_at": true,
+     "path_at_rev_with_no_pair_on_the_line": true,
+     "other_categories_equal": true,
+     "blob_at_in_rev_history": true,
+     "removed_at_in_rev_history": true,
+     "pairs_in_no_other_commit_patch": true,
+     "pairs_in_no_commit_message": true,
+     "pairs_in_no_file_at_rev": true,
+     "pairs_in_no_other_screened_object": true
+    },
+    "finding": "2 given-name pairs (tier b, 2 distinct), all on line 5 of the blob at 908a659 (the version that commit added); removed from the tree at c2a6417, which changed that line only and left no pair on it (none at --rev either); retained in history: 908a659 is an ancestor of --rev",
+    "disposition": "RETAINED-IN-HISTORY",
+    "reason": "no private content; published co-authors of a cited paper",
+    "reason_from": "the PI's answer of 2026-11-02 (pi_answer), its parenthesis, verbatim"
+   }
+  ]
+ },
+ "leak_guard": {
+  "raw_values_checked": 5,
+  "rule": "a full run's rule: every collected raw value of length >= 5 -- here the non-allowlisted identity names and e-mails of the commit and tag headers, the pairs found in each RETAINED version and any other value the screen collects from the versions it reads for retained_in_history -- asserted absent from the JSON text and the stdout summary before either is written; exempt: the two allowlisted e-mails, the allowlisted identity names, and standard OpenSSH file names ['authorized_keys', 'config', 'environment', 'known_hosts', 'known_hosts.old', 'rc']; the JSON is checked with the 'patterns' block and every 'method' entry except ['name_allowlist_et_al_detected', 'hex_tokens_skipped'] blanked"
+ }
+}
