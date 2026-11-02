@@ -3169,11 +3169,11 @@ def main():
     # the entries the same commit gives the four values: TRIAGE16 by its source, and SHAPE16_TAG_KEYS
     tr_src16 = src_lit(tr_src, 'TRIAGE16_TAG_SOURCE')
     tr_n16 = sum(1 for e_ in (src_lit(tr_src, 'TRIAGE16') or {}).values() if tr_src16 and e_[3] == tr_src16)
-    tr_nsh = len(src_lit(tr_src, 'SHAPE16_TAG_KEYS') or ())
+    tr_shk = src_lit(tr_src, 'SHAPE16_TAG_KEYS') or ()
     tagrun_state = (('**COMMITTED** at `%s` (the history script at HEAD defines %s%s%s)' % (
         tr_add_commit[:7] or '?', ', '.join('`%s`' % x_ for x_ in tr_pair), ' and `TAG_RERUN_RAWS`' if tr_raws_head else '',
-        ('; the same commit gives the four values explicit entries, on the PI\'s answer of %s (above): `TRIAGE16` %d, by source "%s", and `SHAPE16_TAG_KEYS` %d' % (
-            PI_OWN3[1][0], tr_n16, tr_src16, tr_nsh)) if tr_src16 else ''))
+        ('; the same commit gives the four values explicit entries, on the PI\'s answer of %s (above): %d in `TRIAGE16`, by source "%s", and, for the backtick row, the %d keys of `SHAPE16_TAG_KEYS` (%s)' % (
+            PI_OWN3[1][0], tr_n16, tr_src16, len(tr_shk), ', '.join('`%s`' % k_[0] for k_ in tr_shk))) if tr_src16 else ''))
                     if tr_pair else '**REMAINS** (the history script at HEAD defines no such pair)')
     rk_paths = [p_ for p_ in git('ls-tree', '-r', '--name-only', head).split('\n')
                 if re.fullmatch(r'results/raw/[0-9]{4}-[0-9]{2}-[0-9]{2}_note-code-to-design_N1-r11-rulings\.md', p_)]
