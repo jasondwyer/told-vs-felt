@@ -373,6 +373,26 @@ TAG_RERUNS_V2 = ('gitleaks', 'password', 'history', 'content', 'licenses')
 TAG_RERUNS_3G = ('gitleaks', 'password')   # the two the answers' 3g names (fixed: the record's)
 SCAN_NAMES = {'history': 'the history script', 'content': 'the content screen', 'licenses': 'the licenses script',
               'gitleaks': 'gitleaks', 'password': 'the password search', 'trufflehog': 'trufflehog'}
+# Release v2 (2026-10-31): the five tag-commit re-runs' raw names, from Code's own commit before the tag (the PI's word of
+# 2026-10-29, "Own commit before the tag"); TAG_DATE_SLOT stands for each run's own date. The history script's
+# TAG_RERUN_RAWS at HEAD is asserted equal (section 12); section 14 counts the raws by these names, any date, on disk and
+# at HEAD.
+TAG_DATE_SLOT = 'YYYY-MM-DD'
+TAG_RERUN_RAWS = {'gitleaks': ('results/raw/YYYY-MM-DD_note-N12-gitleaks-tag.md',),
+                  'password': ('results/raw/YYYY-MM-DD_note-N12-password-tag.md',),
+                  'history': ('results/raw/YYYY-MM-DD_note-N12-history-tag.md',
+                              'results/raw/YYYY-MM-DD_note-N12-history-tag.json'),
+                  'content': ('results/raw/YYYY-MM-DD_note-N12-content-screen-tag.json',),
+                  'licenses': ('results/raw/YYYY-MM-DD_note-N12-licenses-tag.md',
+                               'results/raw/YYYY-MM-DD_note-N12-licenses-tag.json')}
+assert set(TAG_RERUN_RAWS) == set(TAG_RERUNS_V2)
+TAG_RERUN_RX = [re.compile(re.escape(p_).replace(re.escape(TAG_DATE_SLOT), r'[0-9]{4}-[0-9]{2}-[0-9]{2}'))
+                for k_ in TAG_RERUNS_V2 for p_ in TAG_RERUN_RAWS[k_]]
+# Release v2 (2026-10-31): Code's question of 2026-10-30 on the history script's own commit before the tag and the PI's
+# answer of 2026-10-31, each with its date, verbatim (the history script carries them as TAG_ENTRIES_PI_WORDS, asserted
+# equal in section 12; section 14 records them)
+PI_OWN3 = (('2026-10-30', "Shall I make the history script's own commit before the tag now, with entries for those four "
+                          "values?"), ('2026-10-31', 'Yes, do it now'))
 # ---------- the PI's answers of 2026-10-29 to Code's four N12 questions (in chat, to Code), verbatim ----------
 # Code's questions as put (quoted in substance), the PI's answer to each, verbatim, and the part script and constant that
 # carry it (each asserted equal at HEAD, by AST: script path, constant name, how the constant holds the words). The PI
@@ -1253,17 +1273,44 @@ def main():
             hs_wt_rule[k_] = n_[0]
         hs_n = [hs_wt_def[0][0], hs_wt_def[1][0], hs_wt_own[0]] + [hs_wt_rule[k_] for k_, _ in HS_WT_RULES]
         hs_v1_n = [x[0] for x in hs_wt_def_v1] if all(len(x) == 1 for x in hs_wt_def_v1) else []
+        # release v2 (2026-10-31): the version that wrote the v2 release raws of record, read from the history raw's header
+        rr2h_ = RR2['history'][0]
+        rr2h_txt = git('show', '%s:%s' % (head, rr2h_)) if git('ls-tree', '--name-only', head, '--', rr2h_).strip() else ''
+        rr2h_m = re.search(r'^- HEAD: `([0-9a-f]{40})`', rr2h_txt, re.M)
+        rr2h_sha = sha256b(git('show', '%s:%s' % (rr2h_m.group(1), HIST_SCRIPT), binary=True)) if rr2h_m else None
+        rr2h_txt2 = ('; the release run of record wrote them with the version at `%s` (sha256 `%s...`)' % (rr2h_m.group(1)[:7], rr2h_sha[:16])
+                     if rr2h_sha and rr2h_sha != hs_wt_sha else '')
+        rr2_all = all(git('ls-tree', '--name-only', head, '--', p_).strip() for _, ps_ in RELEASE2_RAWS for p_ in ps_)
         if hs_wt_committed:
             hs_l = ['`%s@%s:%d`' % (HIST_SCRIPT, head[:7], n_) for n_ in hs_n + hs_v1_n]
-            hs_tail = 'it is the version committed at HEAD'
+            hs_tail = 'it is the version committed at HEAD' + rr2h_txt2
         else:
             hs_l = ['working-tree line %d' % n_ for n_ in hs_n + hs_v1_n]
-            hs_tail = 'that version is to be committed by path before the v2 release runs, with the other N12 scripts (item 1 above), where its lines become citable'
+            hs_tail = (('that version is to be committed by path in Code\'s own commit before the tag, where its lines become citable' + rr2h_txt2)
+                       if rr2_all else
+                       'that version is to be committed by path before the v2 release runs, with the other N12 scripts (item 1 above), where its lines become citable')
         hs_v1_txt = (' v1\'s two release names are kept in it as `RELEASE_MD_V1` and `RELEASE_JSON_V1` (%s, %s), v1\'s record.' % (hs_l[8], hs_l[9])
                      if hs_v1_n else ' It does not define v1\'s two release names as `RELEASE_MD_V1` and `RELEASE_JSON_V1`.')
-        hist_route_txt = ('The history script on disk at this run (sha256 `%s...`; %s) accepts the v2 release basenames (`%s`, `%s`), under output rules that differ from `%s`\'s: it defines `RELEASE_MD` and `RELEASE_JSON` as those two paths (%s, %s), and its own outputs are exactly `DEFAULT_MD` or `RELEASE_MD` for `--out` and `DEFAULT_JSON` or `RELEASE_JSON` for `--json-out` (%s), so any other path inside the repository is refused, a subdirectory of `results/raw/` included (%s; outside `results/raw/` as before, %s); a tracked output path (committed at HEAD or staged) is refused (%s) unless `--in-place` is given for the two 2026-10-08 raws (%s), and `--in-place` names their in-place regeneration only (%s), so the release raws are never overwritten once committed. The release run writes them directly with `--out` and `--json-out`; %s.%s' % (
+        # release v2 (2026-10-31): the tag-commit re-run's pair (Code's own commit before the tag), located by content when
+        # the script defines it: its two names in this script's form (TAG_RERUN_RAWS['history']), the rule that accepts
+        # them, and the rule that dates them inside the repository with the run's own date
+        hs_tag_n = ([[i + 1 for i, ln in enumerate(hs_wt) if ln == '%s = "%s"' % (k_, v_)]
+                     for k_, v_ in (('TAG_RUN_MD', TAG_RERUN_RAWS['history'][0]), ('TAG_RUN_JSON', TAG_RERUN_RAWS['history'][1]))]
+                    + [[i + 1 for i, ln in enumerate(hs_wt) if sub_ in ln]
+                       for sub_ in ('tag_ok_ = (inside_repo and os.path.dirname(rel_) == os.path.dirname(tag_form[lab_])',
+                                    'raise SystemExit(f"refusing a tag-run name dated {tag_name_date(rel_, tag_form[lab_])}')])
+        if any(hs_tag_n) and not all(len(x_) == 1 for x_ in hs_tag_n):
+            raise SystemExit('history script on disk: partial tag-run pair (TAG_RUN_MD, TAG_RUN_JSON, its rule, its date rule: %r)' % hs_tag_n)
+        hs_tag_l = [('`%s@%s:%d`' % (HIST_SCRIPT, head[:7], x_[0])) if hs_wt_committed else ('working-tree line %d' % x_[0]) for x_ in hs_tag_n if x_]
+        hs_tag_c = ((git('log', '--format=%H', '--reverse', '-S', 'TAG_RUN_MD = ', head, '--', HIST_SCRIPT).split() or [''])[0]
+                    if hs_tag_l and hs_wt_committed else '')
+        hs_tag_txt = ((', or, %s, the tag-commit re-run\'s pair in the form `TAG_RUN_MD` and `TAG_RUN_JSON` define (%s, %s; accepted by %s), dated inside the repository with the run\'s own date (%s)' % (
+            (('since Code\'s own commit before the tag (`%s`)' % hs_tag_c[:7]) if hs_wt_committed else 'in this version, for Code\'s own commit before the tag'),
+            hs_tag_l[0], hs_tag_l[1], hs_tag_l[2], hs_tag_l[3]))
+                      if hs_tag_l else '')
+        hist_route_txt = ('The history script on disk at this run (sha256 `%s...`; %s) accepts the v2 release basenames (`%s`, `%s`), under output rules that differ from `%s`\'s: it defines `RELEASE_MD` and `RELEASE_JSON` as those two paths (%s, %s), and its own outputs are exactly `DEFAULT_MD` or `RELEASE_MD` for `--out` and `DEFAULT_JSON` or `RELEASE_JSON` for `--json-out` (%s)%s, so any other path inside the repository is refused, a subdirectory of `results/raw/` included (%s; outside `results/raw/` as before, %s); a tracked output path (committed at HEAD or staged) is refused (%s) unless `--in-place` is given for the two 2026-10-08 raws (%s), and `--in-place` names their in-place regeneration only (%s), so the release%s raws are never overwritten once committed. The release run writes them directly with `--out` and `--json-out`; %s.%s' % (
             hs_wt_sha[:16], 'equal to HEAD\'s' if hs_wt_committed else 'not yet committed', os.path.basename(RR2['history'][0]), os.path.basename(RR2['history'][1]),
-            Hs, hs_l[0], hs_l[1], hs_l[2], hs_l[3], hs_l[4], hs_l[5], hs_l[6], hs_l[7], hs_tail, hs_v1_txt))
+            Hs, hs_l[0], hs_l[1], hs_l[2], hs_tag_txt, hs_l[3], hs_l[4], hs_l[5], hs_l[6], hs_l[7], ' and tag-run' if hs_tag_l else '', hs_tail, hs_v1_txt))
     elif all(len(x) == 1 for x in hs_wt_def_old) and len(hs_wt_own) == 1 and not any(hs_wt_def):
         hist_route_txt = ('**REMAINS:** the history script on disk at this run (sha256 `%s...`; %s) still defines `RELEASE_MD` and `RELEASE_JSON` as v1\'s release raws (working-tree lines %d and %d), so it does not yet accept the v2 basenames (`%s`, `%s`); its v2 edit is not on disk.' % (
             hs_wt_sha[:16], 'equal to HEAD\'s' if hs_wt_committed else 'modified, not committed', hs_wt_def_old[0][0], hs_wt_def_old[1][0],
@@ -1436,7 +1483,8 @@ def main():
     # untracked files under results/raw/, the eight v2 scan raws of section 14 item 1 left out (they are counted there:
     # at the run of record they are written, then committed by path, before this index is regenerated)
     untr_raw_v2 = [p for p in untr_now if p in {p_ for _, ps_ in RELEASE2_RAWS for p_ in ps_}]
-    untr_raw = [p for p in untr_now if p.startswith('results/raw/') and p not in untr_raw_v2]
+    untr_raw = [p for p in untr_now if p.startswith('results/raw/') and p not in untr_raw_v2
+                and not any(rx_.fullmatch(p) for rx_ in TAG_RERUN_RX)]
 
     # ---------- provenance of the part raws ----------
     parts = []
@@ -1469,8 +1517,8 @@ def main():
     def xadd(what, md_val, js_val, md_loc, js_ptr):
         xc.append((what, md_val, js_val, md_loc, js_ptr, 'computed-new (agree)' if md_val == js_val else 'discrepant'))
 
-    m = re.search(r'fallback ([0-9]+) hit lines', H.line(h['s_i']))
-    xadd('(i) fallback hit lines', int(m.group(1)), hits_n, H.loc(h['s_i']), 'fallback.hit_lines')
+    m = re.search(r'fallback ([0-9][0-9,]*) hit lines', H.line(h['s_i']))
+    xadd('(i) fallback hit lines', int(m.group(1).replace(',', '')), hits_n, H.loc(h['s_i']), 'fallback.hit_lines')
     m = re.search(r'TRUE-SECRET-CANDIDATE ([0-9]+); UNTRIAGED ([0-9]+)', H.line(h['s_i']))
     xadd('(i) TRUE-SECRET-CANDIDATE', int(m.group(1)), tsc, H.loc(h['s_i']), 'true_secret_candidates')
     xadd('(i) UNTRIAGED', int(m.group(2)), untri, H.loc(h['s_i']), 'untriaged')
@@ -3098,9 +3146,35 @@ def main():
     # release v2: the answers' 3b line; the history script's tag-run output pair at HEAD (Code's own commit before the tag); the
     # one list of re-keyed rulings (item 2), by its committed name
     a2_3b = A2.find(lambda s_: 'Add the three 2026-10-22 SVGs to the skip list' in s_, "the answers' 3b")
-    tr_pair = re.findall(r'^([A-Z0-9_]*TAG[A-Z0-9_]*_(?:MD|JSON))[ \t]*=', git('show', '%s:scripts/audit_note_N12_history.py' % head), re.M)
-    tagrun_state = (('**COMMITTED** in the history script at HEAD (%s)' % ', '.join('`%s`' % x_ for x_ in tr_pair)) if tr_pair else
-                    '**REMAINS** (the history script at HEAD defines no such pair)')
+    tr_src = git('show', '%s:scripts/audit_note_N12_history.py' % head)
+    tr_pair = re.findall(r'^([A-Z0-9_]*TAG[A-Z0-9_]*_(?:MD|JSON))[ \t]*=', tr_src, re.M)
+    # release v2 (2026-10-31): the commit that added the pair, whether the history script also names the five re-runs'
+    # raws (TAG_RERUN_RAWS, asserted equal to this script's in section 12), and the raws by those names, any date
+    tr_raws_head = re.search(r'^TAG_RERUN_RAWS[ \t]*=', tr_src, re.M) is not None
+    tr_add_commit = ((git('log', '--format=%H', '--reverse', '-S', '%s = ' % tr_pair[0], head, '--',
+                          'scripts/audit_note_N12_history.py').split() or [''])[0] if tr_pair else '')
+    tr_names = [p_ for k_ in TAG_RERUNS_V2 for p_ in TAG_RERUN_RAWS[k_]]
+    tr_rx = TAG_RERUN_RX
+    tr_disk = sorted(f_ for f_ in os.listdir(os.path.join(REPO, 'results', 'raw'))
+                     if any(rx_.fullmatch('results/raw/' + f_) for rx_ in tr_rx))
+    tr_tracked = sorted(p_ for p_ in tree_head if any(rx_.fullmatch(p_) for rx_ in tr_rx))
+    tr_all_tracked = all(any(rx_.fullmatch(p_) for p_ in tree_head) for rx_ in tr_rx)
+
+    def src_lit(src_, name_):
+        # a module-level literal of a script's text, or None (section 12 asserts the PI's words with head_const)
+        for n_ in ast.walk(ast.parse(src_)):
+            if isinstance(n_, ast.Assign) and any(isinstance(x_, ast.Name) and x_.id == name_ for x_ in n_.targets):
+                return ast.literal_eval(n_.value)
+        return None
+    # the entries the same commit gives the four values: TRIAGE16 by its source, and SHAPE16_TAG_KEYS
+    tr_src16 = src_lit(tr_src, 'TRIAGE16_TAG_SOURCE')
+    tr_n16 = sum(1 for e_ in (src_lit(tr_src, 'TRIAGE16') or {}).values() if tr_src16 and e_[3] == tr_src16)
+    tr_nsh = len(src_lit(tr_src, 'SHAPE16_TAG_KEYS') or ())
+    tagrun_state = (('**COMMITTED** at `%s` (the history script at HEAD defines %s%s%s)' % (
+        tr_add_commit[:7] or '?', ', '.join('`%s`' % x_ for x_ in tr_pair), ' and `TAG_RERUN_RAWS`' if tr_raws_head else '',
+        ('; the same commit gives the four values explicit entries, on the PI\'s answer of %s (above): `TRIAGE16` %d, by source "%s", and `SHAPE16_TAG_KEYS` %d' % (
+            PI_OWN3[1][0], tr_n16, tr_src16, tr_nsh)) if tr_src16 else ''))
+                    if tr_pair else '**REMAINS** (the history script at HEAD defines no such pair)')
     rk_paths = [p_ for p_ in git('ls-tree', '-r', '--name-only', head).split('\n')
                 if re.fullmatch(r'results/raw/[0-9]{4}-[0-9]{2}-[0-9]{2}_note-code-to-design_N1-r11-rulings\.md', p_)]
     if rk_paths:
@@ -3136,7 +3210,10 @@ def main():
     rr_form = ('re-run, their raws committed after the tag, as v1\'s were' if rr_extra else
                're-run outside the repository, their counts recorded in the post-tag raw')
     # their sources: 3g for its two (and, without the PI's item 3, the form); the PI's item 3 for the rest and the form
-    rr_src = (('3g, %s, for the password search and gitleaks; %s, item 3, for the rest and the form; the history script\'s output pair for its re-run and the re-runs\' raw names come in Code\'s own commit before the second N18, on the PI\'s answer the same day, "%s"' % (al_(a2['3g']), ANSWER3, PI_FOLLOWUPS3[2][2]))
+    rr_src = (('3g, %s, for the password search and gitleaks; %s, item 3, for the rest and the form; the history script\'s output pair for its re-run and the re-runs\' raw names %s, on the PI\'s answer the same day, "%s"' % (
+        al_(a2['3g']), ANSWER3,
+        ('came in Code\'s own commit before the second N18 (`%s`; section 14, 3g)' % (tr_add_commit[:7] or '?')) if tr_pair else
+        'come in Code\'s own commit before the second N18', PI_FOLLOWUPS3[2][2]))
               if rr_extra else ('3g, %s' % al_(a2['3g'])))
     w14('## 14. Release v2 (%s)' % TAG2)
     w14('')
@@ -3161,6 +3238,8 @@ def main():
         ANSWER, ANSWER_TEXT, re.sub(r'^\(\d\) ', '', ANSWER_QS[3]), al_(a2_3b), ANSWER2))
     w14('- The release route: the PI\'s word of 2026-10-29, verbatim: "%s" (his whole message). Code\'s proposal, as put (quoted in substance): instead of changing the visibility of the existing repository, which GitHub lets serve by id commits no local ref reaches (the origin-only ref\'s commit, header and section 9, and any commits of the branches the block names as deleted on origin that no local ref reaches), the existing repository is renamed and kept private, and at the tag push `main` and the four tags go by URL to a new, empty private repository, which then takes the name `told-vs-felt`; Code then checks that those commits are not served there. **ROUTED** (these words); the push and that check **REMAINS** (item 7).' % PI_FRESH_REPO3)
     w14('- The PI\'s HOLD, of 2026-10-29, verbatim: "%s" Item 6, and item 7\'s second N18, tag and push, wait on it.' % PI_HOLD3)
+    w14('- Code\'s own commit before the tag: Code\'s question of %s, verbatim: "%s" (the four values the v2 history raw of record, `%s`, adds to the history the history script\'s tag-commit re-run reads); the PI\'s answer of %s, verbatim: "%s". **ROUTED** (3g).' % (
+        PI_OWN3[0][0], PI_OWN3[0][1], RR2['history'][0], PI_OWN3[1][0], PI_OWN3[1][1]))
     w14('- N12(vi), release v2 (section 9): whether history is rewritten for the two third-party names `%s` removed, which stay in `%s`\'s blob at `%s`, is the PI\'s: **open**; the push puts that blob in the new repository, which the PI\'s flip makes public, so his decision is needed before the push.' % (
         vi_c[:7], VI_V2_FILE, VI_V2_EARLIER))
     w14('')
@@ -3221,7 +3300,14 @@ def main():
         rr_not_txt = 'Every N12 scan is re-run at the tag commit.'
     w14('   - 3g (%s): item 1 runs now; its raws cover the history at their run and cannot cover the commits after it (the commit that adds them, the later commits of items 2-7 and the post-tag raw among them). Before the tag, Code\'s own commit adds the history script\'s output pair for its re-run there and the five re-runs\' raw names (%s, "%s"): %s. At the tag commit, before the push, %s %s %s (item 7). %s %s' % (
         al_(a2['3g']), "the PI's answer of 2026-10-29", PI_FOLLOWUPS3[2][2], tagrun_state, rr_txt, 'are' if len(rr_at) > 1 else 'is', rr_form, rr_not_txt,
-        ('**REMAINS** (the re-runs\' own raws, committed after the tag, are their record; none is named at HEAD at this run).' if rr_extra else
+        (('%s (the re-runs\' own raws, committed after the tag, are their record; their names, `%s` each run\'s date: %s; by those names, any date, on disk at this run: %d%s; tracked at HEAD: %d%s).' % (
+            ('**COMMITTED** at %s' % ', '.join('`%s`' % c_[:7] for c_ in sorted({(git('log', '--diff-filter=A', '--format=%H', head, '--', p_).split() or ['?'])[-1] for p_ in tr_tracked})))
+            if tr_all_tracked else '**REMAINS**',
+            TAG_DATE_SLOT, ', '.join('`%s`' % p_ for p_ in tr_names), len(tr_disk),
+            (' (%s)' % ', '.join('`%s`' % f_ for f_ in tr_disk)) if tr_disk else '', len(tr_tracked),
+            (' (%s)' % ', '.join('`%s`' % p_ for p_ in tr_tracked)) if tr_tracked else '')
+         if tr_raws_head else
+         '**REMAINS** (the re-runs\' own raws, committed after the tag, are their record; none is named at HEAD at this run).') if rr_extra else
          ('**COMMITTED** (computed-new: a post-tag raw is found at HEAD, %s; its counts are its own record, not read here).' % ', '.join('`%s`' % p_ for p_ in tagraw_v2))
          if tagraw_v2 else '**REMAINS.**')))
     w14('   - 3h (%s): this index, %s; v1\'s form stays at the v1 tag commit `%s` (section 12); the v2 checklist is this section, and the D4 census is section 9\'s, as 3e asks.' % (
@@ -3327,6 +3413,21 @@ def main():
              ', '.join(sorted(got_)), ', '.join(sorted(TAG_RERUNS_V2)), 'section 14, 3g', '(git show HEAD:%s, AST literal)' % path_)
         if set(got_) != set(TAG_RERUNS_V2):
             raise SystemExit('%s at HEAD: TAG_RERUNS_V2 %r is not this script\'s %r' % (path_, got_, TAG_RERUNS_V2))
+    # release v2 (2026-10-31): the five re-runs' raw names, the history script's at HEAD vs this script's (when it names them)
+    if tr_raws_head:
+        got_ = {k_: tuple(v_) for k_, v_ in head_const('scripts/audit_note_N12_history.py', 'TAG_RERUN_RAWS').items()}
+        xadd("release v2: the tag-commit re-runs' raw names (`TAG_RERUN_RAWS`) of `audit_note_N12_history.py` at HEAD vs this script's",
+             ', '.join('`%s`' % os.path.basename(p_) for k_ in sorted(got_) for p_ in got_[k_]),
+             ', '.join('`%s`' % os.path.basename(p_) for k_ in sorted(TAG_RERUN_RAWS) for p_ in TAG_RERUN_RAWS[k_]),
+             'section 14, 3g', '(git show HEAD:scripts/audit_note_N12_history.py, AST literal)')
+        if got_ != TAG_RERUN_RAWS:
+            raise SystemExit('scripts/audit_note_N12_history.py at HEAD: TAG_RERUN_RAWS is not this script\'s')
+    if re.search(r'^TAG_ENTRIES_PI_WORDS[ \t]*=', tr_src, re.M):
+        got_ = tuple(tuple(x_) for x_ in head_const('scripts/audit_note_N12_history.py', 'TAG_ENTRIES_PI_WORDS'))
+        xadd("Code's question of %s and the PI's answer of %s: carried verbatim by `audit_note_N12_history.py` `TAG_ENTRIES_PI_WORDS` at HEAD" % (
+            PI_OWN3[0][0], PI_OWN3[1][0]), 'yes', yn(got_ == PI_OWN3).lower(), 'section 14', '(git show HEAD:scripts/audit_note_N12_history.py, AST literal)')
+        if got_ != PI_OWN3:
+            raise SystemExit('scripts/audit_note_N12_history.py at HEAD: TAG_ENTRIES_PI_WORDS is not this script\'s record of the PI\'s words')
     a2_head = [ln for ln in o if ln.startswith('- %s, verbatim: "%s" (' % (ANSWER2[0].upper() + ANSWER2[1:], ANSWER2_TEXT))]
     if len(a2_head) != 1 or not all(frag_text(f_) in a2_head[0] for _, f_ in ANSWER2_ITEMS) or a2_sha not in a2_head[0] or b2_sha not in a2_head[0]:
         raise SystemExit("the PI's answer of 2026-10-28: not recorded once in the header with the seat's items A-G and both files' sha256")
@@ -3342,7 +3443,7 @@ def main():
          'yes', yn(fp_ok).lower(), 'section 2a', '(git show %s:%s, line %d; sha256 of %s at %s)' % (GL_FP[0][:10], GL_FP[1], GL_FP[2], GL_FP[3], GL_FP[0][:10]))
 
     # 12. cross-checks
-    w('## 12. Index cross-checks (computed-new: each part\'s md against its own JSON, a committed file, or a recount at the commit the part read; the last rows: %s, item 4, as this index records it, against the committed raws; then %s, as recorded here, against the v1 tag commit\'s blobs and the committed record; then release v2: the block\'s section 0 against the commits it names, the v2 release files on disk, section 14\'s raws, the PI\'s answers of 2026-10-29 against the part-script constants that carry them at HEAD, and the part scripts\' `TAG_RERUNS_V2` against this script\'s; then the release-run scan raws section 10 names against Code\'s release plan, and Code\'s housekeeping on the gitleaks hit of section 2a)' % (RULINGS, ANSWER))
+    w('## 12. Index cross-checks (computed-new: each part\'s md against its own JSON, a committed file, or a recount at the commit the part read; the last rows: %s, item 4, as this index records it, against the committed raws; then %s, as recorded here, against the v1 tag commit\'s blobs and the committed record; then release v2: the block\'s section 0 against the commits it names, the v2 release files on disk, section 14\'s raws, the PI\'s answers of 2026-10-29 against the part-script constants that carry them at HEAD, and the part scripts\' `TAG_RERUNS_V2` against this script\'s%s; then the release-run scan raws section 10 names against Code\'s release plan, and Code\'s housekeeping on the gitleaks hit of section 2a)' % (RULINGS, ANSWER, (', and the history script\'s `TAG_RERUN_RAWS` and its record of the PI\'s answer of %s against this script\'s' % PI_OWN3[1][0]) if tr_raws_head else ''))
     w('')
     w('| figure | md | JSON / committed / recount | md locator | JSON field or source | status |')
     w('|---|---|---|---|---|---|')

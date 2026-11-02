@@ -127,7 +127,8 @@ and the history, content and licenses scripts beside them on the PI's word of 20
 names is a guarded value (its id and commit are read at run time from the answers at 908a659, by content, as the scrub
 generator reads them, and are never printed; the commit is matched as the prefix of any hex run of 7+ characters); which
 unreachable commits were on GitHub is computed from the records in V2_RECORD_DOCS; --dump-untriaged also prints the
-id-shape sweep's unclassified tokens; V2_RUN_DATE (RELEASE_MD's date) is the one source of the run's printed date.
+id-shape sweep's unclassified tokens; V2_RUN_DATE (RELEASE_MD's date) is the one source of the v2 release run's printed
+date (the tag-commit re-run prints its own, RUN_DATE: (h)).
 (g) The PI's answers of 2026-10-29 to Code's four N12 questions (items 2-4 in PI_ANSWERS_2026_10_29, verbatim; item 1 is
 the licenses script's; the scrub index's section 14 records all four beside the answer of 2026-10-12) and his word the
 same day on item 4's reading
@@ -138,8 +139,19 @@ with no entry (I_STOP_SET_V2_WORDS): a value whose IDENTIFIER verdict no explici
 rule, the one rule that gives IDENTIFIER) holds (i) as a STOP. The session-URL fragments that rule classed take
 MANUAL_TRIAGE entries in their parent value's class (FRAGMENT_PARENTS_V2): the PI's four, and the fragment of v1's
 session URL, which his STOP set reaches too, on his answer the same day to Code's question on it (PI_FRAGMENT5_2026_10_29).
-The tag-commit re-run's output pair is added in Code's own commit before the second N18, on his word the same day
-(TAG_RUN_COMMIT_PI_WORDS); until then this script writes no tag-commit raw of record.
+The tag-commit re-run's output pair was added in Code's own commit before the second N18, on his word the same day
+(TAG_RUN_COMMIT_PI_WORDS). (h) That commit (2026-10-31): TAG_RUN_MD / TAG_RUN_JSON, each named with the run's own date in
+place of TAG_DATE_SLOT (the PI-local calendar date at the run's start), so they need no rename if the tag slips. A run
+whose two outputs carry that form with one date, with no --pin, is the v2 tag-commit re-run (block section 2 item 7 tags
+the final audit commit; the re-runs there are the design seat's answers' 3g and the PI's item 3): a release run for its
+texts and checks, with its own date (RUN_DATE), worded by where note-2026-10-v2 points (HEAD, another commit, or no
+tag); an in-repository tag-run pair is refused under --pin, split across the repository's edge, or when the tag points
+at another commit. It records no basis of (i): its (i) lines give this script's part of the re-runs, and the v2 release
+raw alone records the basis, as gitleaks' re-run raw says of its own. TAG_RERUN_RAWS names the five re-runs' raws in the
+same form, each with its own run's date. The same commit gives explicit FALSE-POSITIVE entries to the four values the v2
+release raw adds to the history the re-run reads (TRIAGE16_TAG_SOURCE, on the PI's answer TAG_ENTRIES_PI_WORDS; the
+backtick row, for the v2 release raw and for any tag-run md, SHAPE16_TAG_KEYS), and prints with thousands separators the
+counts on the (i) lines and on the (ii) summary line, so that a count beside the word SSH is not read as a port.
 
 --pin <commit>: scan the history as of <commit> (refs that descend from it are
 replaced by it; HEAD = <commit>; the fallback runs `git log -p <those refs>`).
@@ -175,11 +187,17 @@ TRIAGE16 / SHAPE_TRIAGE16, keyed by the first 16 hex -- never by the value itsel
         --json-out results/raw/2026-10-30_note-N12-history-release.json
     (v1's release run, 2026-10-12, at R2 = 98d07bc, wrote results/raw/2026-10-12_note-N12-history-release.md / .json;
     committed at 11cc35b, they are never overwritten.)
+    tag-commit re-run, v2 (at the tag commit, which block section 2 item 7 tags, before the push; YYYY-MM-DD the run's
+    date):
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py \
+        --out results/raw/YYYY-MM-DD_note-N12-history-tag.md \
+        --json-out results/raw/YYYY-MM-DD_note-N12-history-tag.json
 """
 import argparse
 import base64
 import bisect
 import collections
+import datetime
 import hashlib
 import io
 import json
@@ -209,7 +227,8 @@ RELEASE_MD = "results/raw/2026-10-30_note-N12-history-release.md"
 RELEASE_JSON = "results/raw/2026-10-30_note-N12-history-release.json"
 RELEASE_MD_V1 = "results/raw/2026-10-12_note-N12-history-release.md"
 RELEASE_JSON_V1 = "results/raw/2026-10-12_note-N12-history-release.json"
-# Release v2 review fix (2026-10-29): the v2 run's date is RELEASE_MD's, the one source of every printed date of the run.
+# Release v2 review fix (2026-10-29): the v2 run's date is RELEASE_MD's, the one source of every printed date of the run
+# (of the v2 release run; the tag-commit re-run prints its own, RUN_DATE, below).
 # If the run slips past that date, RELEASE_MD / RELEASE_JSON are renamed together with the other N12 scripts' v2 names
 # (this script's TRUFFLEHOG_RAW_V2 and GL_RAW_V2 and its docstring's release-run command; gitleaks DEFAULT_OUT / HIST_RAW /
 # TRUFFLEHOG_RAW and its docstring's two names; the trufflehog script's DEFAULT_OUT / GL_RAW / HIST_RAW and
@@ -217,6 +236,9 @@ RELEASE_JSON_V1 = "results/raw/2026-10-12_note-N12-history-release.json"
 # N12 scripts for the old date and change every raw name and run label found.
 V2_RUN_DATE = os.path.basename(RELEASE_MD)[:10]
 assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", V2_RUN_DATE) and os.path.basename(RELEASE_JSON)[:10] == V2_RUN_DATE
+# Release v2 (2026-10-31): the date a run prints as its own -- V2_RUN_DATE, except on the v2 tag-commit re-run, whose two
+# output names carry its date (TAG_RUN_MD); main() sets it before any text is written
+RUN_DATE = V2_RUN_DATE
 # v1's release run: at R2, the commit the tag note-2026-10-v1 points to (its raws committed at 11cc35b)
 V1_RELEASE_COMMIT = "98d07bc"
 # Release (2026-10-12): the D4 patterns of Code's housekeeping (not objected by the PI). Every working-tree read of this script (the pending scan's
@@ -324,8 +346,8 @@ TAG_RERUNS_V2_PI_WORDS = ("2026-10-29", PI_ANSWERS_2026_10_29[3])
 # The PI's answers of 2026-10-29 to two of Code's three follow-up questions (the third, on trufflehog's unknown results,
 # is UNKNOWN_V2_PI_WORDS, beside TRUFFLEHOG_V2_PI_WORDS above), each the option he chose,
 # verbatim (Code's "(Recommended)" marker left off): whether v1's URL's fragment (94ccd161) also takes an entry in its
-# parent's class, like his four; and when the tag-commit re-run's output pair is added (this script, as committed for
-# item 1, writes no tag-commit raw of record: its in-repo outputs are item 1's two names, committed by then).
+# parent's class, like his four; and when the tag-commit re-run's output pair is added (as committed for item 1, this
+# script wrote no tag-commit raw of record; Code's own commit before the tag adds TAG_RUN_MD / TAG_RUN_JSON, below).
 PI_FRAGMENT5_2026_10_29 = "Yes, like the four"
 TAG_RUN_COMMIT_PI_WORDS = ("2026-10-29", "Own commit before the tag")
 # the same run's gitleaks raw: (i) carries only when it, the trufflehog raw and this raw each pass their parts
@@ -334,6 +356,45 @@ assert os.path.basename(GL_RAW_V2)[:10] == V2_RUN_DATE, "GL_RAW_V2 and RELEASE_M
 TAG_RERUN_NAMES = {"gitleaks": "gitleaks", "password": "the password search", "history": "this script",
                    "content": "the content screen", "licenses": "the licenses sweep"}
 assert set(TAG_RERUNS_3G) <= set(TAG_RERUNS_V2) <= set(TAG_RERUN_NAMES) and len(set(TAG_RERUNS_V2)) == len(TAG_RERUNS_V2)
+# Release v2 (2026-10-31): Code's own commit before the tag, on the PI's word of 2026-10-29 (TAG_RUN_COMMIT_PI_WORDS). The
+# re-runs at the tag commit (TAG_RERUNS_V2; block section 2 item 7) write NEW raws named with the run's own date in place
+# of TAG_DATE_SLOT -- the PI-local calendar date at the run's start -- so the names need no rename if the tag slips; each
+# raw is committed after the tag, as v1's were. TAG_RUN_MD / TAG_RUN_JSON are this script's pair; TAG_RERUN_RAWS names
+# the five re-runs' raws (each script takes its name by its output flags: gitleaks and the password search --out, the
+# content screen --json-out, the licenses sweep --out and --json-out). The scrub index carries the same names and checks
+# them against this constant at HEAD.
+TAG_V2 = "note-2026-10-v2"
+TAG_DATE_SLOT = "YYYY-MM-DD"
+TAG_RUN_MD = "results/raw/YYYY-MM-DD_note-N12-history-tag.md"
+TAG_RUN_JSON = "results/raw/YYYY-MM-DD_note-N12-history-tag.json"
+TAG_RERUN_RAWS = {"gitleaks": ("results/raw/YYYY-MM-DD_note-N12-gitleaks-tag.md",),
+                  "password": ("results/raw/YYYY-MM-DD_note-N12-password-tag.md",),
+                  "history": ("results/raw/YYYY-MM-DD_note-N12-history-tag.md",
+                              "results/raw/YYYY-MM-DD_note-N12-history-tag.json"),
+                  "content": ("results/raw/YYYY-MM-DD_note-N12-content-screen-tag.json",),
+                  "licenses": ("results/raw/YYYY-MM-DD_note-N12-licenses-tag.md",
+                               "results/raw/YYYY-MM-DD_note-N12-licenses-tag.json")}
+assert set(TAG_RERUN_RAWS) == set(TAG_RERUNS_V2) and TAG_RERUN_RAWS["history"] == (TAG_RUN_MD, TAG_RUN_JSON)
+assert all(p_.startswith("results/raw/" + TAG_DATE_SLOT + "_note-N12-") for ps_ in TAG_RERUN_RAWS.values() for p_ in ps_)
+
+
+def tag_name_date(name, form):
+    """Release v2 (2026-10-31): the date a name's basename carries where `form` (a tag-run name) has TAG_DATE_SLOT, if it
+    has that form with a calendar date there; else None."""
+    rx_ = re.escape(os.path.basename(form)).replace(re.escape(TAG_DATE_SLOT), r"(\d{4}-\d{2}-\d{2})")
+    m_ = re.fullmatch(rx_, os.path.basename(name))
+    if not m_:
+        return None
+    try:
+        datetime.date.fromisoformat(m_.group(1))
+    except ValueError:
+        return None
+    return m_.group(1)
+
+
+def tag_name(form, date):
+    """Release v2 (2026-10-31): a tag-run name with its date filled in."""
+    return form.replace(TAG_DATE_SLOT, date)
 
 
 def and_list(xs):
@@ -364,9 +425,9 @@ V2_AFTER = ("the commits after it -- among them the commit that adds this raw, b
             "seat's answer on the re-keyed rulings (the answers, section 6, 4f; section 10 item 3) and the post-tag raw "
             "-- are not covered by it; " + tag_reruns_text() + "; "
             + ("this script is among them, so its classes are re-run over the commits up to the tag before the push "
-               "(its output pair for that re-run is added in Code's own commit before the second N18, on the PI's word of "
-               + TAG_RUN_COMMIT_PI_WORDS[0] + ", verbatim: \"" + TAG_RUN_COMMIT_PI_WORDS[1] + "\"; as committed for item "
-               "1 it writes no tag-commit raw of record); the pre-flip read's interim scan (block section 2 item 6; "
+               "(its output pair for that re-run, `TAG_RUN_MD` / `TAG_RUN_JSON` with the run's date, came in Code's own "
+               "commit before the second N18, on the PI's word of " + TAG_RUN_COMMIT_PI_WORDS[0] + ", verbatim: \""
+               + TAG_RUN_COMMIT_PI_WORDS[1] + "\"); the pre-flip read's interim scan (block section 2 item 6; "
                "`scripts/audit_note_N12_preflip.py` runs this script there) runs them again after the push and before "
                "the flip"
                if "history" in TAG_RERUNS_V2 else
@@ -381,6 +442,35 @@ V2_PRECONDITION_NOTE = (
     + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2) + "): "
     + ("this script is re-run at the tag commit, before the push." if "history" in TAG_RERUNS_V2 else
        "this script is not re-run before the push."))
+# Release v2 (2026-10-31): the tag-commit re-run's own texts, beside V2_ROUTING / V2_AFTER / V2_PRECONDITION_NOTE, which
+# describe the v2 release run (block section 2 item 1). tag_routing() is a function, since it reads RUN_DATE, set at run
+# time; TAG_AFTER and TAG_PRECONDITION_NOTE carry no date.
+TAG_AFTER = ("the commits after it -- among them the post-tag commit that adds the re-runs' raws and the post-tag raw, and "
+             "the pre-flip read's raw -- are not covered by it; the pre-flip read's interim scan (block section 2 item 6; "
+             "`scripts/audit_note_N12_preflip.py` runs this script there) runs its classes again after the push and "
+             "before the flip")
+
+
+def tag_routing():
+    """The v2 tag-commit re-run's place in the release sequence (the tag-run counterpart of V2_ROUTING)."""
+    return ("the v2 tag-commit re-run (" + RUN_DATE + "), one of the re-runs at the tag commit (`TAG_RERUNS_V2`: "
+            + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2) + "; block section 2 item 7 of "
+            "`results/raw/2026-10-27_note-design-to-code_release-block.md`, committed at `2fb0cf0`, tags the final audit "
+            "commit): the design seat's answers of 2026-10-28 (section 5, 3g) name "
+            + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2 if k_ in TAG_RERUNS_3G) + ", and the PI's answer of "
+            + TAG_RERUNS_V2_PI_WORDS[0] + ", item 3, verbatim: \"" + TAG_RERUNS_V2_PI_WORDS[1] + "\", adds "
+            + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2 if k_ not in TAG_RERUNS_3G) + "; its output pair came "
+            "in Code's own commit before the second N18, on his word the same day, verbatim: \"" + TAG_RUN_COMMIT_PI_WORDS[1]
+            + "\"; its baseline is the v2 release run of record (" + V2_RUN_DATE + ", `" + RELEASE_MD + "`), whose raw "
+            "alone records the basis of (i)")
+
+
+TAG_PRECONDITION_NOTE = (
+    "For the commits after block section 2 item 1, the design seat's answers of 2026-10-28 (section 5, 3g)"
+    + ("" if set(TAG_RERUNS_V2) == set(TAG_RERUNS_3G) else ", with the PI's word for the rest,")
+    + " narrow this precondition to the tag-commit re-runs (`TAG_RERUNS_V2`: "
+    + and_list(TAG_RERUN_NAMES[k_] for k_ in TAG_RERUNS_V2) + "): this run is this script's re-run, which the release "
+    "sequence makes at the tag commit, before the push.")
 # Release v2 review fix (2026-10-29; history-1): the records this run reads at run time, each at the commit that added it
 # (git show; never the working tree), each line located by content. The origin-only ref's id and commit (the answers,
 # section 2) go to the leak guard only and are never printed; item B's commit (the answers, section 0) and the
@@ -1126,6 +1216,26 @@ TRIAGE16 = {
     'e6decf035bf9caf3': ('FALSE-POSITIVE', "the stem of Code's step-17 check script's file name, in the verdicts raw's "
                          "header and in the values-check raw of the VERDICTS entries; a file name, not a RunPod id", True,
                          'Code, release v2 (2026-10-29), read in context'),
+    # ssh_identity_flag `&lt;...[len 13]#d8086615`, Code's own commit before the tag (2026-10-31), read in context: this
+    # class's label as the md writes it since 2026-10-30 (html_safe_placeholders); first at 2f2c8b55
+    # results/raw/2026-10-30_note-N12-history-release.md:793
+    'd80866154fa16a57': ('FALSE-POSITIVE', "the same placeholder [the angle-bracketed file placeholder of this class's "
+                         "label, with trailing punctuation], HTML-escaped by this script's md writer, from this class's "
+                         "label in the history raw's table", True, 'Code, release v2 (2026-10-31), before the tag, read in context'),
+    # ssh_identity_flag `&lt;...[len 14]#4c62c6d7`, the same commit and reading; first at 2f2c8b55
+    # results/raw/2026-10-30_note-N12-history-release.md:821
+    '4c62c6d729c2a96a': ('FALSE-POSITIVE', "the same placeholder [the angle-bracketed file placeholder of this class's "
+                         "label, with trailing punctuation and a colon], HTML-escaped by this script's md writer, from this "
+                         "class's label in the history raw's pattern list", True,
+                         'Code, release v2 (2026-10-31), before the tag, read in context'),
+    # ssh_port `len5:9ecc98e9`, the same commit and reading: the fallback's hit-line count on the v2 release raw's (i)
+    # lines, which quote the PI's rule of 2026-10-29 naming SSH-SIGNATURE lines; first at 2f2c8b55
+    # results/raw/2026-10-30_note-N12-history-release.md:745
+    '9ecc98e977487fb5': ('FALSE-POSITIVE', "the fallback's hit-line count printed on the v2 release raw's (i) lines, which "
+                         "the ssh/port line rule reaches because the same lines quote the PI's rule naming SSH-SIGNATURE "
+                         "lines; a count, not a port (this script now prints those counts with thousands separators); "
+                         "keyed by its value, as every TRIAGE16 entry is, so it clears this value wherever it occurs",
+                         True, 'Code, release v2 (2026-10-31), before the tag, read in context'),
 }
 # Release v2 review fix (2026-10-29; history-3): Code's triage of the values new since v1's release run, by source, so
 # that both (i) lines count it from the entries themselves over this run's tables (never a hard-coded number): the
@@ -1133,6 +1243,13 @@ TRIAGE16 = {
 # Code put the list to the PI (Code's question 4 of 2026-10-29); his answer is verbatim in PI_ANSWERS_2026_10_29[4]
 # ("The 23 stand. ...").
 TRIAGE16_V2_SOURCE = "Code, release v2 (2026-10-29), read in context"
+# Release v2 (2026-10-31): Code's own commit before the tag, on the PI's answer of 2026-10-31 to Code's question of
+# 2026-10-30 (TAG_ENTRIES_PI_WORDS: each with its date, verbatim; the scrub index records both, section 14). Their
+# TRIAGE16 source, apart from the 23 the PI's word of 2026-10-29 covers; both (i) lines count them over this run's tables
+TAG_ENTRIES_PI_WORDS = (("2026-10-30", "Shall I make the history script's own commit before the tag now, with entries "
+                         "for those four values?"), ("2026-10-31", "Yes, do it now"))
+TRIAGE16_TAG_SOURCE = "Code, release v2 (2026-10-31), before the tag, read in context"
+assert sum(1 for e_ in TRIAGE16.values() if e_[3] == TRIAGE16_TAG_SOURCE) == 3
 MANUAL_TRIAGE_V2 = ("f5e838c9", "e8c8cf8c", "43907fb0", "985a006c")
 assert all(k_ in MANUAL_TRIAGE and MANUAL_TRIAGE[k_][0] == "IDENTIFIER" for k_ in MANUAL_TRIAGE_V2)
 # Release v2 (2026-10-29): the session-URL fragments' entries (fragment key -> its parent's key), each in its parent
@@ -1268,6 +1385,10 @@ SHAPE_TRIAGE16 = {
         ('FALSE-POSITIVE', "prose ('Informational, not a secret' followed by a path prefix); no value"),
     ('results/raw/2026-10-12_note-N12-history-release.md', 'token', '8d33f520a3c4cef8'):  # release fix round 3 (2026-10-12), Code's triage, read in context (len1:8d33f520)
         ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in this script's release raw"),
+    ('results/raw/2026-10-30_note-N12-history-release.md', 'token', '8d33f520a3c4cef8'):  # Code's own commit before the tag (2026-10-31), read in context (len1:8d33f520)
+        ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in this script's v2 release raw"),
+    ('results/raw/YYYY-MM-DD_note-N12-history-tag.md', 'token', '8d33f520a3c4cef8'):  # the same commit: any tag-run md, by TAG_RUN_MD's form (shape_manual)
+        ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in this script's tag-run raw"),
     ('scripts/audit_note_N12_history.py', 'token', '8d33f520a3c4cef8'):  # 1 row(s) at 6485da2
         ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in the script that writes it"),
     ('scripts/audit_note_N13.py', 'cite_token', '97ba63ebc3d84b64'):  # 1 row(s) at 6485da2
@@ -1301,6 +1422,11 @@ SHAPE_TRIAGE16 = {
     ('scripts/audit_note_N2.py', 'max_tokens', 'ce7f5d9dffb4a889'):  # 1 row(s) at 6485da2
         ('FALSE-POSITIVE', 'source code (a keyword argument) inside a regular expression of a referent check'),
 }
+# Release v2 (2026-10-31): the SHAPE_TRIAGE16 rows Code's own commit before the tag adds -- the backtick row of the v2
+# release raw, and of any tag-run md, keyed by TAG_RUN_MD's form (shape_manual looks a dated tag-run md up by it)
+SHAPE16_TAG_KEYS = (("results/raw/2026-10-30_note-N12-history-release.md", "token", "8d33f520a3c4cef8"),
+                    ("results/raw/YYYY-MM-DD_note-N12-history-tag.md", "token", "8d33f520a3c4cef8"))
+assert all(k_ in SHAPE_TRIAGE16 for k_ in SHAPE16_TAG_KEYS) and SHAPE16_TAG_KEYS[1][0] == TAG_RUN_MD
 
 # Round 5: the leak guard's policy (guard_candidates, guard_decide). A value is exempt only if it is one of the two
 # values printed verbatim by policy (SAFE_VERBATIM), or: every verdict it receives in this run is one of
@@ -1839,9 +1965,19 @@ def manual(value):
     return (e[0], e[1], e[2] if len(e) > 2 else True)
 
 
+def shape_key(path, key, value):
+    """Release v2 (2026-10-31): the SHAPE_TRIAGE16 key a credential-shaped row is looked up by -- its own (path, key in
+    lower case, the first 16 hex of sha256(value)), or, for a tag-run md, whose name carries its run's date, TAG_RUN_MD's
+    form."""
+    k_ = (path, key.lower(), sha256_hex(value.encode())[:16])
+    if k_ not in SHAPE_TRIAGE16 and os.path.dirname(path) == os.path.dirname(TAG_RUN_MD) and tag_name_date(path, TAG_RUN_MD):
+        k_ = (TAG_RUN_MD, k_[1], k_[2])
+    return k_
+
+
 def shape_manual(path, key, value):
-    """Round 5: SHAPE_TRIAGE16 entry for a credential-shaped fallback row -> (verdict, reason), or None."""
-    return SHAPE_TRIAGE16.get((path, key.lower(), sha256_hex(value.encode())[:16]))
+    """Round 5: SHAPE_TRIAGE16 entry for a credential-shaped fallback row -> (verdict, reason), or None (by shape_key)."""
+    return SHAPE_TRIAGE16.get(shape_key(path, key, value))
 
 
 def triage_precise(name, value, line, path):
@@ -3633,7 +3769,7 @@ def values_check(w, V):
                   "visible refs. The PI pre-flip steps under (v) add a re-run at the release commit (step 1) and "
                   "`git ls-remote origin` (step 2). "
                   # release fix round 3 (2026-10-12): on the release run, step 1 is this run
-                  + (f"On this release run, step 1 is this run{V['rel_tag']}; step 2 is not run by this script "
+                  + (f"On this {V['run_kind']}, step 1 is this run{V['rel_tag']}; step 2 is not run by this script "
                      "(it needs the network)."
                      if V.get("rel_early") else "Not run: they need the final HEAD and the network.")))
     # F9
@@ -3791,7 +3927,7 @@ def values_check_r2(w, V):
                         "gives the scanner commands.")
                      if not sa["which"].get("gitleaks") and sa["cache"] else
                      # release v2 (2026-10-29): the label names the version that prints this run's state
-                     (". Release v2 (" + V2_RUN_DATE + "): "
+                     (". Release v2 (" + RUN_DATE + "): "
                       + (gitleaks_script_note(sa["which"]) if sa["which"].get("gitleaks") else "gitleaks is not found")
                       + ("; the Homebrew formula index is no longer cached, so the round-2 installability evidence is "
                          "not re-read" if not sa["cache"] else ""))
@@ -3890,7 +4026,8 @@ def values_check_r2(w, V):
                   "and 4 of 5 digits of a port.",
                   f"FIXED for ports, by the routing's direction: every one of the {n_port_vals} SSH-port-class values "
                   "(real ports, process ids, a token-window length, a local viewer port"
-                  + (f"; round 5: {n_port_r5} fallback-grep hit-line count(s)" if n_port_r5 else "") + ") now prints as "
+                  + (f"; with an explicit `TRIAGE16` entry: {n_port_r5} (fallback-grep hit-line counts, line numbers and "
+                     "other numbers, each with its reason in the round-5 table)" if n_port_r5 else "") + ") now prints as "
                   "`lenN:hhhhhhhh` -- no digit -- in the md and the JSON; old-form port strings left in the md "
                   f"before this section: {len(old_port_forms)}. DISCLOSED for the rest: values of 4 characters or "
                   f"fewer that the generic form prints in full: {len(short)} distinct. In the identifier tables: "
@@ -3910,7 +4047,8 @@ def values_check_r2(w, V):
                   f"`{since[:10]}`: " + (", ".join(f"`{c[:10]}`" for c in nc) or "none")
                   + ". Every table's `new since base` column counts them. "
                   # release fix round 3 (2026-10-12): on the release run, this run is the final re-run
-                  + (f"This run is that final re-run (pre-flip step 1, at the release commit){V['rel_tag']}"
+                  + (f"This run is that final re-run (pre-flip step 1, "
+                     f"{V['tag_at_txt'] if V.get('tag_run') else 'at the release commit'}){V['rel_tag']}"
                      # release fix round 3 (2026-10-12): the release run is made before the push
                      + ("; at this run not every ref is an ancestor of `origin/main` -- (v) names them and says "
                         "what that means for a run made before the push." if not all(V['ancestry'].values()) else ".")
@@ -3923,10 +4061,10 @@ def values_check_r2(w, V):
       "changes. (i) stays STOP pending the PI on the block's literal text, and now also records that the "
       "primary scanners were not run; (v) PASS; (iv)-mechanical passes and names the two JSON probe files."
       # release v2 (2026-10-29): this run's (i) basis is the PI's answer of 2026-10-28 (I_BASIS_V2)
-      + (" (Release v2, " + V2_RUN_DATE + ", this run: the (i) line now records the PI's answer of 2026-10-28, \""
+      + (" (Release v2, " + RUN_DATE + ", this run: the (i) line now records the PI's answer of 2026-10-28, \""
          + PI_ANSWER_2026_10_28 + "\", with the design seat's item A labelled as its referent.)"
          if V.get("i_resolved") else "")
-      + ((" (Release v2, " + V2_RUN_DATE + ", this run's scanners: " + gitleaks_script_note(V["scan_av"]["which"]) + ".)")
+      + ((" (Release v2, " + RUN_DATE + ", this run's scanners: " + gitleaks_script_note(V["scan_av"]["which"]) + ".)")
          if V["scan_av"]["which"].get("gitleaks") else ""))
     values_check_r3(w, V)
 
@@ -4230,7 +4368,9 @@ def values_check_r3(w, V):
     w("")
     st_i = ("the PI's answer of 2026-10-28 recorded (\"" + PI_ANSWER_2026_10_28 + "\"; its referent, the design "
             "seat's item A; see the (i) line)" if V.get("i_resolved") else   # release v2 (2026-10-29)
-            "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
+            # release v2 (2026-10-31): the tag-commit re-run records no basis
+            "this tag-commit re-run's part: clean (the v2 release raw alone records the basis of (i))" if V.get("tag_clean")
+            else "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
     st_v = "PASS" if V["max_blob"] <= 100 * MB else "STOP"
     w(f"Third checker's verdict, re-checked on this run: (i) {st_i}; (v) {st_v}; (iv)-mechanical: jlens paths ever "
       f"tracked {len(V['jlens_hist'])}, npz without an explicit line {len(V['no_line'])}, weight-shaped paths "
@@ -4461,7 +4601,9 @@ def values_check_r4(w, V):
     w("")
     st_i = ("the PI's answer of 2026-10-28 recorded (\"" + PI_ANSWER_2026_10_28 + "\"; its referent, the design "
             "seat's item A; see the (i) line)" if V.get("i_resolved") else   # release v2 (2026-10-29)
-            "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
+            # release v2 (2026-10-31): the tag-commit re-run records no basis
+            "this tag-commit re-run's part: clean (the v2 release raw alone records the basis of (i))" if V.get("tag_clean")
+            else "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
     st_v = "PASS" if V["max_blob"] <= 100 * MB else "STOP"
     w(f"Fourth checker's findings, re-checked on this run: (i) {st_i}; (v) {st_v}; TRUE-SECRET-CANDIDATE "
       f"{len(V['true_candidates'])}, UNTRIAGED {len(V['untriaged_precise'])}. No finding changes a pass or STOP "
@@ -4709,11 +4851,16 @@ def values_check_r5(w, C, G):
     values_check_r5_second(w, G)
     w("")
     if C.get("release_run") and C.get("outputs_outside_repo"):   # release fix round: a scratch copy is labelled
-        # release v2 (2026-10-29): the label names the v2 run's release names
-        w(f"This is a rehearsal (outputs outside the repository) at HEAD `{C['head'][:10]}`, with the {V2_RUN_DATE} "
-          "release names (the v2 release run); it is not the release raw.")
+        # release v2 (2026-10-29): the label names the v2 run's release names; 2026-10-31: or the tag-run names
+        w(f"This is a rehearsal (outputs outside the repository) at HEAD `{C['head'][:10]}`, with the "
+          + (f"{RUN_DATE} tag-run names (the v2 tag-commit re-run, {C['tag_at_txt']}); it is not the tag-run raw."
+             if C.get("tag_run") else
+             f"{V2_RUN_DATE} release names (the v2 release run); it is not the release raw."))
     elif C.get("release_run"):   # release (2026-10-12)
-        w(f"This is the v2 release run at HEAD `{C['head'][:10]}` (both outputs at the {V2_RUN_DATE} release names).")
+        w(f"This is the v2 tag-commit re-run at HEAD `{C['head'][:10]}`, {C['tag_at_txt']} (both outputs at the {RUN_DATE} "
+          "tag-run names)."
+          if C.get("tag_run") else
+          f"This is the v2 release run at HEAD `{C['head'][:10]}` (both outputs at the {V2_RUN_DATE} release names).")
     else:
         w(f"This is an interim snapshot at HEAD `{C['head'][:10]}`; pre-flip step 3 still needs the clean run at the "
           "release commit.")
@@ -4823,6 +4970,7 @@ def values_check_r5_second(w, G):
 
 
 def main():
+    global RUN_DATE
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=DEFAULT_MD)
     ap.add_argument("--json-out", default=DEFAULT_JSON)
@@ -4844,23 +4992,46 @@ def main():
                          "tracked output path is refused, and the release raws are never overwritten once committed")
     a = ap.parse_args()
     own = {"md": (DEFAULT_MD, RELEASE_MD), "json": (DEFAULT_JSON, RELEASE_JSON)}
+    # release v2 (2026-10-31): the tag-commit re-run's pair, by its form (TAG_RUN_MD / TAG_RUN_JSON, the run's date)
+    tag_form = {"md": TAG_RUN_MD, "json": TAG_RUN_JSON}
+    today = datetime.date.today().isoformat()
     for lab_, o in (("md", a.out), ("json", a.json_out)):
         ab = os.path.abspath(os.path.join(ROOT, o))
         inside_repo = ab.startswith(ROOT + os.sep)
         if inside_repo and not ab.startswith(os.path.join(ROOT, "results", "raw") + os.sep):
             raise SystemExit(f"refusing output inside the repository outside results/raw/: {o}")
         rel_ = os.path.relpath(ab, ROOT) if inside_repo else None
-        if inside_repo and rel_ not in own[lab_]:
+        tag_ok_ = (inside_repo and os.path.dirname(rel_) == os.path.dirname(tag_form[lab_])
+                   and tag_name_date(rel_, tag_form[lab_]) is not None)
+        if inside_repo and rel_ not in own[lab_] and not tag_ok_:
             raise SystemExit(f"refusing a results/raw/ output other than this part's own files "
-                             f"({', '.join(own[lab_])} for --{'out' if lab_ == 'md' else 'json-out'}): {o}")
+                             f"({', '.join(own[lab_] + (tag_form[lab_],))} for --{'out' if lab_ == 'md' else 'json-out'}"
+                             f", {TAG_DATE_SLOT} the run's date): {o}")
+        if tag_ok_ and tag_name_date(rel_, tag_form[lab_]) != today:
+            raise SystemExit(f"refusing a tag-run name dated {tag_name_date(rel_, tag_form[lab_])}: inside the repository "
+                             f"it carries the run's own date ({today}): {o}")
         if inside_repo and not (a.selftest or a.dump_untriaged):   # both write no file
             tracked_ = bool(git("ls-files", "-z", "--", rel_).strip()) or \
                 sh(["git", "cat-file", "-e", f"HEAD:{rel_}"], check=False).returncode == 0
             if tracked_ and not (a.in_place and rel_ in (DEFAULT_MD, DEFAULT_JSON)):
                 raise SystemExit(f"refusing to overwrite a tracked raw (committed at HEAD or staged): {o}"
-                                 + (" (the release raws are never overwritten once committed)" if rel_ in
-                                    (RELEASE_MD, RELEASE_JSON) else " (pass --in-place for the documented in-place "
-                                    "regeneration of the 2026-10-08 raws)"))
+                                 + (" (the release and tag-run raws are never overwritten once committed)" if
+                                    rel_ in (RELEASE_MD, RELEASE_JSON) or tag_ok_ else " (pass --in-place for the "
+                                    "documented in-place regeneration of the 2026-10-08 raws)"))
+    # release v2 (2026-10-31): the v2 tag-commit re-run is a run whose two outputs both carry the tag-run form with one
+    # date (by basename, so a rehearsal outside the repository is one too); a half pair is refused
+    tag_dates = (tag_name_date(a.out, TAG_RUN_MD), tag_name_date(a.json_out, TAG_RUN_JSON))
+    if any(tag_dates) and (not all(tag_dates) or tag_dates[0] != tag_dates[1]):
+        raise SystemExit("refusing a tag-run output pair whose two names do not carry one date in TAG_RUN_MD / "
+                         "TAG_RUN_JSON's form")
+    tag_in = [d_ is not None and os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
+              for d_, o_ in zip(tag_dates, (a.out, a.json_out))]
+    if any(tag_in) and not all(tag_in):
+        raise SystemExit("refusing a tag-run output pair split between the repository and outside it")
+    if any(tag_in) and a.pin:
+        raise SystemExit("refusing tag-run names inside the repository under --pin: the tag-commit re-run is never pinned")
+    tag_run = bool(tag_dates[0]) and not a.pin
+    RUN_DATE = tag_dates[0] if tag_run else V2_RUN_DATE
     if a.in_place and (os.path.relpath(os.path.abspath(os.path.join(ROOT, a.out)), ROOT),
                        os.path.relpath(os.path.abspath(os.path.join(ROOT, a.json_out)), ROOT)) != (DEFAULT_MD,
                                                                                                    DEFAULT_JSON):
@@ -4887,6 +5058,15 @@ def main():
         head = pin
     else:
         refs, head = refs_live, head_live
+    # release v2 (2026-10-31): where the tag points (None before the tag). A tag-run raw of record is written at the tag
+    # commit, so an in-repository tag-run pair is refused when the tag points at another commit; the texts say where it is
+    tag_c = sh(["git", "rev-parse", "--verify", "--quiet", "refs/tags/" + TAG_V2 + "^{commit}"],
+               check=False).stdout.decode().strip() or None
+    if tag_run and any(tag_in) and tag_c and tag_c != head:
+        raise SystemExit(f"refusing tag-run names inside the repository: {TAG_V2} points at {tag_c[:10]}, not HEAD")
+    tag_at_txt = (f"at the tag commit (`{TAG_V2}` points at HEAD)" if tag_c == head else
+                  f"before the tag `{TAG_V2}` exists" if not tag_c else
+                  f"not at the tag commit (`{TAG_V2}` points at `{tag_c[:10]}`)")
     block_sha_head = sha256_hex(git("show", f"{head}:{BLOCK}"))
     ref_shas = sorted({sha for _, sha, _ in refs} | {head})
     tag_objs = [sha for _, sha, typ in refs if typ == "tag"]
@@ -5189,11 +5369,16 @@ def main():
     # `release_run` below), so the header, the Coverage line, (v) step 1 and the pre-release summary line can say
     # that this is the release run at the release commit instead of an interim snapshot; any other run keeps the
     # interim wording
-    rel_early = (not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
-                 and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON))
+    # release v2 (2026-10-31): the tag-commit re-run (tag_run, set above) is a release run too, with its own texts
+    rel_early = ((not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
+                  and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON)) or tag_run)
     rel_outside = any(not os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
                       for o_ in (a.out, a.json_out))
     rel_tag = " (here a rehearsal: outputs outside the repository; see the closing line)" if rel_outside else ""
+    run_kind = "tag-commit re-run" if tag_run else "release run"
+    run_name = ((f"the v2 tag-commit re-run ({RUN_DATE}), {tag_at_txt} (pre-flip step 1's re-run)") if tag_run else
+                (f"the v2 release run ({V2_RUN_DATE}) at the release commit (block section 2 item 1; pre-flip step 1's "
+                 f"re-run)"))
     L = []
     w = L.append
     w("# AUDIT-note-release v1.2 -- N12-history: release scrub over the full history")
@@ -5212,7 +5397,11 @@ def main():
     w("- Referent note: the block names N12's output `results/raw/<stamp>_note-N12-scrub.md` (:84). The "
       "orchestrator split N12 across three raws -- `2026-10-08_note-N12-history` "
       # release v2 (2026-10-29): this file is the v2 release run (v1's is RELEASE_MD_V1)
-      + (f"(this part's earlier rounds; this file, `{os.path.splitext(os.path.basename(RELEASE_MD))[0]}`, is its "
+      + ((f"(this part's earlier rounds; this file, `{os.path.splitext(os.path.basename(a.out))[0]}`, is its v2 "
+          f"tag-commit re-run, {tag_at_txt}{rel_tag}: (i), (ii), (v) and (iv)'s mechanical checks; its v2 release run "
+          f"of record is `{os.path.splitext(os.path.basename(RELEASE_MD))[0]}` and v1's release run "
+          f"`{os.path.splitext(os.path.basename(RELEASE_MD_V1))[0]}`)") if tag_run else
+         f"(this part's earlier rounds; this file, `{os.path.splitext(os.path.basename(RELEASE_MD))[0]}`, is its "
          f"v2 release run at the release commit{rel_tag}: (i), (ii), (v) and (iv)'s mechanical checks; v1's release "
          f"run is `{os.path.splitext(os.path.basename(RELEASE_MD_V1))[0]}`)"
          if rel_early else "(this file: (i), (ii), (v) and (iv)'s mechanical checks)")
@@ -5221,8 +5410,8 @@ def main():
     w(f"- Block: `{BLOCK}`, sha256 `{block_sha_wt}` (working tree) / `{block_sha_head}` (HEAD blob); "
       f"routed `{BLOCK_SHA[:8]}...{BLOCK_SHA[-4:]}`: "
       f"{'MATCH' if block_sha_wt == BLOCK_SHA == block_sha_head else 'MISMATCH'}")
-    if rel_early:   # release v2 (2026-10-29): the v2 run's routing
-        w(f"- Release v2: this is {V2_ROUTING}{rel_tag}.")
+    if rel_early:   # release v2 (2026-10-29): the v2 run's routing; 2026-10-31: the tag-commit re-run's
+        w(f"- Release v2: this is {tag_routing() if tag_run else V2_ROUTING}{rel_tag}.")
     w(f"- Item: N12 (block lines 72-85) parts (i), (ii), (v) and (iv)'s mechanical checks; "
       f"part id N12-history")
     w(f"- Script: `{script_path}`, sha256 `{script_sha}`")
@@ -5244,8 +5433,7 @@ def main():
          if from_m and new_commits else "(see the JSON, `since.new_commits`) ")
       + f"({', '.join('`' + c[:10] + '`' for c in new_commits) or 'none'}). "
       # release v2 (2026-10-29): the v2 run is block section 2 item 1
-      + (f"This is the v2 release run ({V2_RUN_DATE}) at the release commit (block section 2 item 1; pre-flip step 1's "
-         f"re-run){rel_tag}." if rel_early else
+      + (f"This is {run_name}{rel_tag}." if rel_early else
          "It is still a snapshot: the final re-run at the release commit (PI pre-flip step 1, under (v)) is required."))
     w("- Redaction form: `xxxx...[len N]#hhhhhhhh` = first 4 characters, the value's length, the "
       "first 8 hex of sha256(value) (the routing's form -- first 4 + length + sha256[:8] -- with the "
@@ -5297,11 +5485,13 @@ def main():
         # release (2026-10-12): the round-2 paragraph below assumed neither scanner was installed
         # release v2 (2026-10-29): item 4's basis on the v2 run is ITEM4_BASIS_V2
         # review fix (history-6): the v2 basis is printed on the v2 release run (and its rehearsals) only
-        w("**This script runs neither of the block's primary scanners.** Release v2 (" + V2_RUN_DATE + "): "
+        w("**This script runs neither of the block's primary scanners.** Release v2 (" + RUN_DATE + "): "
           + gitleaks_script_note(sa["which"]) + " (`which`: "
           + ", ".join(f"{t_} {'found' if p_ else 'not found'}" for t_, p_ in sa["which"].items())
           + "). The basis of that on this run: "
-          + (ITEM4_BASIS_V2 if rel_early else "no release-run basis applies to this run")
+          + (ITEM4_BASIS_V2 if rel_early and not tag_run else
+             f"recorded by the v2 release raw `{RELEASE_MD}` alone (this run is a re-run)" if tag_run else
+             "no release-run basis applies to this run")
           + ". The fallback below and Code's blob-level "
           "scans in (i-b) are this script's own scans; gitleaks' findings and their triage are in its own raws.")
     else:
@@ -5741,7 +5931,7 @@ def main():
          f"the PI's decision)." if true_candidates else
          (f"PENDING -- {len(untriaged_precise)} value(s) UNTRIAGED." if untriaged_precise else
           f"STOP pending the PI's resolution, on the block's literal text (:77, 'Any hit in history is a "
-          f"STOP on the release') -- the fallback returns {n_fb} hit lines, so (i) is not 'no hits'. "
+          f"STOP on the release') -- the fallback returns {n_fb:,} hit lines, so (i) is not 'no hits'. "
           f"Code's triage: 0 TRUE-SECRET-CANDIDATE among the fallback's hits (every occurrence assigned "
           f"to a prose/identifier rule; every credential-shaped one inspected) and 0 among the "
           f"precise-pattern, in-context and context-free high-entropy hits over every text blob, message, "
@@ -6150,7 +6340,7 @@ def main():
          f"with every other ref, and a push would send them to GitHub (public at the visibility flip). "
          # release v2 (2026-10-29): the v2 sequence (block section 2 items 1-7) pushes after the tag; review fix
          # (history-5): section 8 orders tag -> push; it does not say that nothing is pushed before (main has been)
-         + (f"This is the v2 release run{rel_tag}, made before the push: the design seat's answers of 2026-10-28 "
+         + (f"This is the v2 {run_kind}{rel_tag}, made before the push: the design seat's answers of 2026-10-28 "
             "(section 8) put the push after the tag on the final audit commit, so refs ahead of `origin/main` are "
             "expected here. "
             if rel_early and all(e_.get("origin_main_is_its_ancestor") for e_ in ahead.values()) else ""))
@@ -6257,7 +6447,9 @@ def main():
       f"either part is the PI's call. "
       # release v2 (2026-10-29): the v2 run is block section 2 item 1, made before items 2-7 (V2_AFTER); review fix
       # (history-8): the tag-commit re-runs narrow this precondition for the commits after item 1 (V2_PRECONDITION_NOTE)
-      + (f"This raw is the v2 release run ({V2_RUN_DATE}) at the release commit `{head[:10]}` (block section 2 item 1; "
+      + ((f"This raw is the v2 tag-commit re-run ({RUN_DATE}) at HEAD `{head[:10]}`, {tag_at_txt} (this run is that "
+          f"re-run){rel_tag}; {TAG_AFTER}. {TAG_PRECONDITION_NOTE}") if tag_run else
+         f"This raw is the v2 release run ({V2_RUN_DATE}) at the release commit `{head[:10]}` (block section 2 item 1; "
          f"this run is that re-run){rel_tag}; {V2_AFTER}. {V2_PRECONDITION_NOTE}"
          if rel_early else
          f"This raw is a snapshot at `{head[:10]}`; commits landing later -- the "
@@ -6268,8 +6460,8 @@ def main():
          + ", ".join(f"`{p_}`" for p_ in ckpt_paths)
          + "), a `-diff` path whose content `git log -p` does not print, which turned coverage limit (2) under "
            "(i-a) from 'never applied' into 'applies'." if ckpt_after_r2 else "")
-      + (" This run is the re-run at the release commit; its summary lines state whether it is clean."
-         if rel_early else " The tag should wait on a clean run."))
+      + (f" This run is {('the tag-commit re-run, ' + tag_at_txt) if tag_run else 'the re-run at the release commit'}; its "
+         "summary lines state whether it is clean." if rel_early else " The tag should wait on a clean run."))
     w("2. `git ls-remote origin` and compare its refs with the refs table under Scope. Any extra branch or tag "
       "gets its own scan (re-run this script after fetching it) or is deleted before the visibility change. "
       "`refs/pull/*` refs cannot be deleted by the owner and become public with the repository.")
@@ -6284,8 +6476,10 @@ def main():
       "the repository at the release commit. Their findings supersede the fallback's for (i)."
       # release v2 (2026-10-29): item 4's basis on the v2 run is ITEM4_BASIS_V2; review fix (history-6): printed on the
       # v2 release run (and its rehearsals) only
-      + (" Release v2 (" + V2_RUN_DATE + "), this run: " + gitleaks_script_note(scan_av["which"]) + "; the basis: "
-         + (ITEM4_BASIS_V2 if rel_early else "no release-run basis applies to this run") + "." if gl_found else ""))
+      + (" Release v2 (" + RUN_DATE + "), this run: " + gitleaks_script_note(scan_av["which"]) + "; the basis: "
+         + (ITEM4_BASIS_V2 if rel_early and not tag_run else
+            f"recorded by the v2 release raw `{RELEASE_MD}` alone (this run is a re-run)" if tag_run else
+            "no release-run basis applies to this run") + "." if gl_found else ""))
     w("")
     w("**Pass/STOP line (v):** " + ("PASS -- nothing over 100 MB untreated (no tracked file at HEAD and no "
                                     "blob anywhere in history exceeds 100 MB or 100 MiB)."
@@ -6629,7 +6823,9 @@ def main():
          "the email-address class only (round 4): a third party's name, postal address or phone number is not "
          "scanned for.")
       # release v2 (2026-10-29): what the v2 run (block section 2 item 1) covers, and what is re-run after it
-      + (" Files of the other groups matter only if they are committed before the flip. This v2 release run covers "
+      + ((" Files of the other groups matter only if they are committed before the flip. This v2 tag-commit re-run "
+          f"covers what HEAD holds, {tag_at_txt}; {TAG_AFTER}.") if tag_run else
+         " Files of the other groups matter only if they are committed before the flip. This v2 release run covers "
          f"what the release commit holds (block section 2 item 1); {V2_AFTER}." if rel_early else
          " Files of the other groups matter only if they are committed before the flip; the history re-run at "
          "the release commit (pre-flip step 1) covers whatever is."))
@@ -6662,9 +6858,12 @@ def main():
                "credential-shaped fallback rows": sum(1 for r_ in shape_rows if r_["verdict"] == "UNTRIAGED"),
                "pending files": sum(1 for r_ in pend for _, _, t_ in list(r_["new"]) + list(r_["precise"])
                                     if t_[0] == "UNTRIAGED")}
-    release_run = (not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
-                   and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON))
-    i_resolved = release_run and not true_candidates and not any(untri_i.values())
+    release_run = ((not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
+                    and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON)) or tag_run)
+    # release v2 (2026-10-31): the tag-commit re-run records no basis of (i): i_resolved is the release run's alone, and the
+    # re-run's own part is tag_clean (below)
+    i_clean = not true_candidates and not any(untri_i.values())
+    i_resolved = release_run and not tag_run and i_clean
     # release v2 (2026-10-29): the v2 run's basis, verbatim (I_BASIS_V2; it ends with its own full stop). v1's line was
     # the PI's answer of 2026-10-12 (PI_ANSWER_2026_10_12) with its item 3 in Code's words (PI_ANSWER_ITEM3_CODE_WORDS).
     i_answer = I_BASIS_V2
@@ -6710,6 +6909,15 @@ def main():
             if t_[0] == "IDENTIFIER" and (manual(v) or ("",))[0] != "IDENTIFIER":
                 id_no_entry.setdefault(v, "pending file " + r_["file"])
     i_resolved = i_resolved and not id_no_entry
+    tag_clean = tag_run and i_clean and not id_no_entry
+    # release v2 (2026-10-31): the gitleaks re-run's raw at the tag commit, by its form with any date, as found on disk
+    gl_tag_found = sorted(f_ for f_ in os.listdir(os.path.join(ROOT, "results", "raw"))
+                          if tag_name_date(f_, TAG_RERUN_RAWS["gitleaks"][0]))
+    # release v2 (2026-10-31): the entries Code's own commit before the tag gives the values the v2 release raw adds
+    # (TRIAGE16 by source TRIAGE16_TAG_SOURCE), counted over this run's value tables, as the v2 entries are
+    tag16_def = sum(1 for e_ in TRIAGE16.values() if e_[3] == TRIAGE16_TAG_SOURCE)
+    tag16_found = {v for tab_ in v2_tabs for v in tab_
+                   if (TRIAGE16.get(sha256_hex(v.encode())[:16]) or (None,) * 4)[3] == TRIAGE16_TAG_SOURCE}
     id_clause = (f"; IDENTIFIER with no entry {len(id_no_entry)} (the PI's word of 2026-10-29 on item 4's reading, "
                  f"verbatim: \"{PI_RULE4_2026_10_29}\"; the session-URL fragments' entries in their parent value's "
                  f"class, `FRAGMENT_PARENTS_V2`, found {len(frag_found)} of {len(FRAGMENT_PARENTS_V2)}: the PI's four, "
@@ -6718,32 +6926,52 @@ def main():
                  + ("" if not id_no_entry else ": " + "; ".join(
                      f"`{red(v)}` first at {md_escape(str(f_))}" for v, f_ in sorted(id_no_entry.items(),
                                                                                   key=lambda x: str(x[1])))))
-    v2_clause = (f"; Code triaged {len(v2_tri)} value(s) before this run as new since v1's release run "
+    v2_clause = (f"; Code triaged {len(v2_tri)} value(s) before {'the v2 release run' if tag_run else 'this run'} as new "
+                 f"since v1's release run "
                  f"(`{V1_RELEASE_COMMIT}`), each read in context (`TRIAGE16`, by source \"{TRIAGE16_V2_SOURCE}\": "
                  f"{v2_n16} -- of its {v2_def16} entries -- listed in the round-5 table below; `MANUAL_TRIAGE` IDENTIFIER "
                  f"session links (`MANUAL_TRIAGE_V2`): {v2_nmt} of {len(MANUAL_TRIAGE_V2)}, listed in (ii)'s identifier "
                  f"table); first seen in a commit after `{V1_RELEASE_COMMIT}`: "
                  + (f"{v2_after_v1} of {len(v2_tri)}" if v1_c else f"not checked (`{V1_RELEASE_COMMIT}` not found)")
                  + f"; the PI's word on them (2026-10-29), verbatim: \"{PI_ANSWERS_2026_10_29[4]}\"" + id_clause
-                 + f"; this raw is the history script's part of (i), which carries only when the same run's gitleaks "
-                 f"raw (`{GL_RAW_V2}`) and trufflehog raw (`{TRUFFLEHOG_RAW_V2}`) also pass theirs")
+                 + f"; Code's own commit before the tag gave explicit entries to the values the v2 release raw adds "
+                 f"(`TRIAGE16`, by source \"{TRIAGE16_TAG_SOURCE}\": {len(tag16_found)} of its {tag16_def} entries found "
+                 f"here; `SHAPE_TRIAGE16`: the backtick row of the v2 release raw and of any tag-run md)"
+                 + (f"; this raw is the history script's part of the re-runs at the tag commit: gitleaks' part is its "
+                    f"re-run's raw there (`{TAG_RERUN_RAWS['gitleaks'][0]}`, `{TAG_DATE_SLOT}` that run's own date; by "
+                    f"that form in `results/raw/` at this run: "
+                    + (", ".join(f"`{f_}`" for f_ in gl_tag_found) or "none") + f"), and trufflehog's is its raw of record "
+                    f"(`{TRUFFLEHOG_RAW_V2}`; trufflehog is not among the re-runs at the tag commit); the v2 release raw "
+                    f"(`{RELEASE_MD}`) alone records the basis of (i)"
+                    if tag_run else
+                    f"; this raw is the history script's part of (i), which carries only when the same run's gitleaks "
+                    f"raw (`{GL_RAW_V2}`) and trufflehog raw (`{TRUFFLEHOG_RAW_V2}`) also pass theirs"))
     if i_resolved:
         L[i_line_idx] = (
-            f"**Pass/STOP line (i):** {i_answer} This release run{rel_tag}: TRUE-SECRET-CANDIDATE 0; UNTRIAGED 0 in "
-            f"every table (" + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + ")" + v2_clause
-            + f"; the fallback returns {n_fb} hit "
+            f"**Pass/STOP line (i):** {i_answer} This {run_kind}{rel_tag}: TRUE-SECRET-CANDIDATE 0; UNTRIAGED 0 in "
+            f"every table (" + ", ".join(f"{k_} {n_:,}" for k_, n_ in untri_i.items()) + ")" + v2_clause
+            + f"; the fallback returns {n_fb:,} hit "
             f"lines (its credential-shaped rows: UNTRIAGED {untri_i['credential-shaped fallback rows']}); "
             f"{len(pp)} pass-phrase-shaped value(s) reported redacted (above).")
+    elif tag_clean:   # release v2 (2026-10-31): the re-run's part, no basis
+        L[i_line_idx] = (
+            f"**Pass/STOP line (i):** This tag-commit re-run{rel_tag}, this script's part of (i): TRUE-SECRET-CANDIDATE 0; "
+            f"UNTRIAGED 0 in every table (" + ", ".join(f"{k_} {n_:,}" for k_, n_ in untri_i.items()) + ")" + v2_clause
+            + f"; the fallback returns {n_fb:,} hit lines (its credential-shaped rows: UNTRIAGED "
+            f"{untri_i['credential-shaped fallback rows']}); {len(pp)} pass-phrase-shaped value(s) reported redacted (above).")
     # release fix round 2 (2026-10-12): a release run that does not resolve (i) says why on both (i) lines --
     # which table, which count -- since the summary line's own UNTRIAGED count covers one table only
     i_cause = ""
-    if release_run and not i_resolved:
-        nz_ = [f"{k_} {n_}" for k_, n_ in untri_i.items() if n_]
+    if release_run and not i_resolved and not tag_clean:
+        nz_ = [f"{k_} {n_:,}" for k_, n_ in untri_i.items() if n_]
         # release v2 (2026-10-29): the v2 basis is the PI's answer of 2026-10-28 (I_BASIS_V2)
-        i_cause = (f"Release run (v2, {V2_RUN_DATE}){rel_tag}: the PI's answer of 2026-10-28 "
-                   f"(\"{PI_ANSWER_2026_10_28}\", to the design seat's item A) is not recorded on this line, because "
-                   f"this run has TRUE-SECRET-CANDIDATE {len(true_candidates)}, UNTRIAGED by table ("
-                   + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + ")"
+        i_cause = ((f"Tag-commit re-run (v2, {RUN_DATE}){rel_tag}: this script's part of the re-runs is not clean (the v2 "
+                    f"release raw `{RELEASE_MD}` alone records the basis of (i)): this run has ") if tag_run else
+                   (f"Release run (v2, {RUN_DATE}){rel_tag}: the PI's answer of 2026-10-28 "
+                    f"(\"{PI_ANSWER_2026_10_28}\", to the design seat's item A) is not recorded on this line, because "
+                    f"this run has "))
+        i_cause += (f"TRUE-SECRET-CANDIDATE {len(true_candidates)}, UNTRIAGED by table ("
+                   + ", ".join(f"{k_} {n_:,}" for k_, n_ in untri_i.items()) + ")"
                    + f" and IDENTIFIER with no entry {len(id_no_entry)}"
                    + (f"; not zero: {', '.join(nz_)}" if nz_ else "")
                    + ("; TRUE-SECRET-CANDIDATE not zero" if true_candidates else "")
@@ -6752,7 +6980,8 @@ def main():
     w("## Summary lines")
     w("")
     # release v2 (2026-10-29): I_BASIS_V2 ends with its own full stop; item 4's basis is ITEM4_BASIS_V2
-    w((f"- (i): {i_answer} This release run{rel_tag}: " if i_resolved else
+    w((f"- (i): {i_answer} This {run_kind}{rel_tag}: " if i_resolved else
+       f"- (i): this tag-commit re-run{rel_tag}, this script's part: clean; " if tag_clean else
        "- (i): STOP pending the PI's resolution (literal :77); ")
       # release fix round: the scanner text follows `which` (gl_found) on every branch, resolved or not
       + (f"this script runs neither primary scanner: {gitleaks_script_note(scan_av['which'])}"
@@ -6765,33 +6994,38 @@ def main():
          # release fix round 2 (2026-10-12): installability asserted only when `installable` established it
          "the block's primary scanners (gitleaks, trufflehog) NOT run (not installed; installability not "
          "established: no install without the PI's word; pre-flip step 4)")
-      + f"; fallback {len(grep_lines)} hit lines (token {alt_lines['token']}, sk- {alt_lines['sk-[A-Za-z0-9]']}, "
-      f"secret {alt_lines['secret']}, rp_ {alt_lines['rp_[A-Za-z0-9]']}, password {alt_lines['password']}, "
-      f"api_key {alt_lines['api[_-]?key']}, BEGIN {alt_lines['BEGIN (RSA|OPENSSH)']}, AKIA {alt_lines['AKIA[0-9A-Z]{16}']}); "
-      f"precise scan ({len(PRECISE)} patterns) {sum(len(t) for t in precise.values())} distinct values in "
-      f"blobs/messages, {sum(len(t) for t in hdr['precise'].values())} in headers, {bp_n} in binary string "
-      f"content; in-context high-entropy {len(he)} distinct; context-free high-entropy {len(cf)} distinct in "
-      f"blobs/messages, {len(hdr['cf'])} in headers, {len(binc['cf'])} in binary content; "
+      # release v2 (2026-10-31): the counts on this line take thousands separators (a 4-5 digit count beside the word SSH,
+      # which the PI's quoted rule puts on this line, would read as a port)
+      + f"; fallback {len(grep_lines):,} hit lines (token {alt_lines['token']:,}, sk- {alt_lines['sk-[A-Za-z0-9]']:,}, "
+      f"secret {alt_lines['secret']:,}, rp_ {alt_lines['rp_[A-Za-z0-9]']:,}, password {alt_lines['password']:,}, "
+      f"api_key {alt_lines['api[_-]?key']:,}, BEGIN {alt_lines['BEGIN (RSA|OPENSSH)']:,}, AKIA {alt_lines['AKIA[0-9A-Z]{16}']:,}); "
+      f"precise scan ({len(PRECISE)} patterns) {sum(len(t) for t in precise.values()):,} distinct values in "
+      f"blobs/messages, {sum(len(t) for t in hdr['precise'].values()):,} in headers, {bp_n:,} in binary string "
+      f"content; in-context high-entropy {len(he):,} distinct; context-free high-entropy {len(cf):,} distinct in "
+      f"blobs/messages, {len(hdr['cf']):,} in headers, {len(binc['cf']):,} in binary content; "
       f"TRUE-SECRET-CANDIDATE {len(true_candidates)}; "
       + (f"UNTRIAGED (precise and high-entropy, the script's own count) {len(untriaged_precise)}. {i_cause}"
          if i_cause else
          # release v2 review fix (2026-10-29; history-3): the resolved (i) carries Code's v2 triage count
-         f"UNTRIAGED {len(untriaged_precise)}{v2_clause}." if i_resolved else f"UNTRIAGED {len(untriaged_precise)}."))
-    w(f"- (ii): RunPod pod ids {len(ids['runpod_pod_id (context: pod)'])}, network volume ids "
-      f"{len(ids['runpod_volume_id (context: volume)'])}, network volume names "
-      f"{sum(1 for e in ids[VOLNAME_CLASS].values() if e['triage'][0] == 'IDENTIFIER')}, SSH ports "
-      f"{sum(1 for e in ids['ssh_port (number in an ssh/port/alias line)'].values() if e['triage'][0] == 'IDENTIFIER')}, "
-      f"container hostnames {len(ids['container_hostname (12 hex after host:/root@)'])}, Claude session links "
-      f"{len(ids['claude_session_or_artifact_link'])}, IP addresses identifying a machine "
-      f"{sum(1 for v in real_ips if ip_class(v) != 'loopback (127/8)')}; in blob/message content SSH key names / "
-      f"fingerprints / public keys {len(ids['ssh_key_name (id_*)'])} / {len(ids['ssh_fingerprint'])} / "
-      f"{len(ids['ssh_public_key'])}; in commit headers {len(sig_groups)} SSH signing public key(s) "
-      f"({', '.join(red(k[4]) for k in sig_groups if k[4]) or '-'}) in {len(hdr['sigs'])} gpgsig headers "
+         f"UNTRIAGED {len(untriaged_precise)}{v2_clause}." if (i_resolved or tag_clean) else
+         f"UNTRIAGED {len(untriaged_precise)}."))
+    # release v2 (2026-10-31): this line carries the word SSH, so its counts take thousands separators (a 4-5 digit count
+    # beside SSH would read as a port)
+    w(f"- (ii): RunPod pod ids {len(ids['runpod_pod_id (context: pod)']):,}, network volume ids "
+      f"{len(ids['runpod_volume_id (context: volume)']):,}, network volume names "
+      f"{sum(1 for e in ids[VOLNAME_CLASS].values() if e['triage'][0] == 'IDENTIFIER'):,}, SSH ports "
+      f"{sum(1 for e in ids['ssh_port (number in an ssh/port/alias line)'].values() if e['triage'][0] == 'IDENTIFIER'):,}, "
+      f"container hostnames {len(ids['container_hostname (12 hex after host:/root@)']):,}, Claude session links "
+      f"{len(ids['claude_session_or_artifact_link']):,}, IP addresses identifying a machine "
+      f"{sum(1 for v in real_ips if ip_class(v) != 'loopback (127/8)'):,}; in blob/message content SSH key names / "
+      f"fingerprints / public keys {len(ids['ssh_key_name (id_*)']):,} / {len(ids['ssh_fingerprint']):,} / "
+      f"{len(ids['ssh_public_key']):,}; in commit headers {len(sig_groups):,} SSH signing public key(s) "
+      f"({', '.join(red(k[4]) for k in sig_groups if k[4]) or '-'}) in {len(hdr['sigs']):,} gpgsig headers "
       f"(PUBLIC-KEY, not a credential); "
-      f"the author's laptop hostname in {laptop_commits} commits' author/committer emails (metadata); tagger "
-      f"identities {len(hdr['taggers'])}; local temp paths {len(ids['local_temp_path ((/private)/tmp, (/private)/var/folders)'])} "
-      f"distinct, ~/.claude/projects paths {len(ids['claude_projects_path (~/.claude/projects/...)'])} distinct; "
-      f"/Users/ in {len(users_at_head)} HEAD files, /workspace/ in {len(workspace_at_head)}. A list, no pass "
+      f"the author's laptop hostname in {laptop_commits:,} commits' author/committer emails (metadata); tagger "
+      f"identities {len(hdr['taggers']):,}; local temp paths {len(ids['local_temp_path ((/private)/tmp, (/private)/var/folders)']):,} "
+      f"distinct, ~/.claude/projects paths {len(ids['claude_projects_path (~/.claude/projects/...)']):,} distinct; "
+      f"/Users/ in {len(users_at_head):,} HEAD files, /workspace/ in {len(workspace_at_head):,}. A list, no pass "
       f"condition; none is a credential.")
     w(f"- (v): {'PASS' if max_blob <= 100 * MB else 'STOP'}; largest blob {max_blob:,} bytes; files at HEAD over 50 MB {n50}, over 50 MiB {n50i}, over 100 MB {n100}.")
     w(f"- (iv)-mechanical: jlens-qwen36 paths ever tracked {len(jlens_hist)}; jlens files byte-identical to a "
@@ -6808,8 +7042,7 @@ def main():
       + f"; audit files carrying only the commit identities' own metadata (public in the commit headers; listed, "
         f"not a blocker as drafted) {len(audit_ident_only)}"
       + (" (" + ", ".join(f"`{r_['file']}`" for r_ in audit_ident_only) + ")" if audit_ident_only else "")
-      + (f"; this is the v2 release run ({V2_RUN_DATE}) at the release commit (block section 2 item 1; pre-flip step 1's "
-         f"re-run){rel_tag}." if rel_early   # release v2 (2026-10-29)
+      + (f"; this is {run_name}{rel_tag}." if rel_early   # release v2 (2026-10-29; 2026-10-31: run_name)
          else "; the end commit waits on a clean re-run (pre-flip step 1)."))
     w("")
     values_check(w, locals())
@@ -6890,20 +7123,28 @@ def main():
                                                              "binary_content": len(binc["precise"][n_])}
                                                         for n_ in sorted(KEY_MATERIAL_PATTERNS)}},
         "scanner_availability": scan_av,
-        # release v2: this run's release block, keyed by the run's date (V2_RUN_DATE), as v1's raw keys its own
-        # `release_2026_10_12`
-        ("release_" + V2_RUN_DATE.replace("-", "_")): {
+        # release v2: this run's release block, keyed by the run's date (RUN_DATE: V2_RUN_DATE, or the tag-commit
+        # re-run's own), as v1's raw keys its own `release_2026_10_12`
+        ("release_" + RUN_DATE.replace("-", "_")): {
             "d4_withheld": {"patterns": list(D4_EXCLUDE_PATTERNS), "count": len(D4_WITHHELD),
                             "names": sorted(D4_WITHHELD), "opened": False},
             "release_run": release_run,
+            # release v2 (2026-10-31): the tag-commit re-run, its names and the entries given before the tag
+            "tag_run": tag_run, "tag_run_names": [TAG_RUN_MD, TAG_RUN_JSON],
+            "tag_rerun_raws": {k_: list(v_) for k_, v_ in TAG_RERUN_RAWS.items()},
+            "tag_triage16": {"source": TRIAGE16_TAG_SOURCE, "entries": tag16_def, "found": len(tag16_found)},
             "outputs": [os.path.relpath(os.path.abspath(os.path.join(ROOT, o_)), ROOT)
                         if os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
                         else "(outside the repository) " + os.path.basename(o_) for o_ in (a.out, a.json_out)],
             "i_line": {"resolved_by_pi_answer": i_resolved,
+                       # release v2 (2026-10-31): the tag-commit re-run's own part (it records no basis)
+                       "tag_run_part_clean": tag_clean, "tag_at": tag_at_txt if tag_run else None,
                        # release v2 review fix (2026-10-29; history-6): what this run is, not a constant claim
-                       "run": (("the v2 release run (" + V2_RUN_DATE + "), block section 2 item 1"
+                       "run": ((("the v2 tag-commit re-run (" + RUN_DATE + "), " + tag_at_txt if tag_run else
+                                 "the v2 release run (" + V2_RUN_DATE + "), block section 2 item 1")
                                 + (" -- a rehearsal (outputs outside the repository)" if rel_outside else ""))
-                               if release_run else "not a release run (outputs not at the RELEASE_* names, or --pin)"),
+                               if release_run else "not a release run (outputs not at the RELEASE_* names or the "
+                               "tag-run form, or --pin)"),
                        "basis_verbatim": I_BASIS_V2, "pi_answer_verbatim": PI_ANSWER_2026_10_28,
                        "pi_answer_date": "2026-10-28",
                        # release v2 review fix (2026-10-29; history-4): item A as put, verbatim, beside the 3a line
@@ -6918,7 +7159,9 @@ def main():
                                                "trufflehog": ITEM4_TRUFFLEHOG_BASIS_V2,
                                                "trufflehog_v2_pi_words": (list(TRUFFLEHOG_V2_PI_WORDS)
                                                                           if TRUFFLEHOG_V2_PI_WORDS else None)},
-                       "printed_basis": "ITEM4_BASIS_V2" if rel_early else "none (not a release run)",
+                       "printed_basis": ("ITEM4_BASIS_V2" if rel_early and not tag_run else
+                                         "none (the tag-commit re-run: the v2 release raw alone records the basis)"
+                                         if tag_run else "none (not a release run)"),
                        # release v2 review fix (2026-10-29; history-3): Code's triage of the values new since v1
                        "v2_triage_before_this_run": {"values": len(v2_tri), "triage16_source": TRIAGE16_V2_SOURCE,
                                                      "triage16_found": v2_n16, "triage16_entries": v2_def16,
@@ -7105,8 +7348,7 @@ def main():
         rec(v, "blob/message", SWEEP_CLASS, (manual(v) or ("UNTRIAGED",))[0])
     for (v, srcl), r_ in zip(shape_raw, shape_rows):
         rec(v, srcl, SHAPE_CLASS, r_["verdict"], explicit=srcl in ("shape16", "shape-manual"),
-            extra=(r_["locator"].split(" ", 1)[1].rsplit(":", 1)[0], r_["key"].lower(), sha256_hex(v.encode())[:16])
-            if srcl == "shape16" else None)
+            extra=shape_key(r_["locator"].split(" ", 1)[1].rsplit(":", 1)[0], r_["key"], v) if srcl == "shape16" else None)
     for r_ in pend:
         for c_, v, t_ in r_["new"]:
             rec(v, "pending file", c_, t_[0])
@@ -7124,6 +7366,7 @@ def main():
         "pending": sum(1 for r_ in pend for _, _, t_ in list(r_["new"]) + list(r_["precise"]) if t_[0] == "UNTRIAGED"),
         "fallback": len(grep_lines)}
     C5 = {"head": head, "untriaged": untri_counts, "code_users_kinds": dict(code_kinds), "release_run": release_run,
+          "tag_run": tag_run, "tag_at_txt": tag_at_txt,
           "code_users_files": len(code_users),
           "outputs_outside_repo": any(not os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
                                       for o_ in (a.out, a.json_out))}
