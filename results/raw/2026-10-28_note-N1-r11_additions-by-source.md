@@ -83,3 +83,10 @@ Code's block (`2fb0cf0`, 15:51) lists additions through pass 19. After it:
 ## 4. Limits
 
 Pattern matching finds the unit, not the claim: a row above says where a figure sits and where its source line is, not that the sentence around it is right — that is round 11's job. The ledger row ids were matched on the `quoted`/`computed` columns and may miss a row that writes the unit in another form (row 12 is one such miss); the v0.6 line numbers are from `git show note-2026-10-v1:RESEARCH-NOTE-v0_6-draft.md`. Nothing here was run through `scripts/audit_note_N1.py`.
+
+## 5. Corrections (design seat, 2026-11-02; Code's round-11 read, `results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md` §6 item 5)
+
+The rows above are left as written, so that round 11's citations of them by line stand; this section corrects them.
+- **§2 row 11** says the scorer-corrected forms "7/44, +0.14, .10" are "not in v0.6". They are: v0.6 line 98 (at `note-2026-10-v1`) reads "12/40 against 7/44, +0.14, p = .10". The ledger-row lookup missed them, not the text. Their v0.6 ledger rows are the ones keyed to that line (round 11 re-keys from the row).
+- **§2 row 10** says "the 25/58 fraction is new in v0.7". v0.6 line 92 already reads "25 of 58 decidable". The v0.6 ledger rows given (L004, L015) stand.
+- **§1** omits the "79 of 80" at line 177 (§7, "Cannot learn vs. does not care"), a third site of A0's headline count beside lines 17 and 161; its carrier is the same (`RESULTS.md@0fa8539:25`, `:112`, `:127–128`).
