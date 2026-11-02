@@ -452,6 +452,18 @@ PI_HOLD3 = ('HOLD: do not make the preflip-script commit, the second N18, the ta
 VI_V2_COMMIT, VI_V2_FILE, VI_V2_EARLIER = 'c2a6417', 'results/raw/2026-10-28_note-N1-r11_correspondence-figures.md', '908a659'
 VI_V2_MSG = ("on the PI's word of 2026-10-29 (N12(vi), third-party personal data, flagged by the v2 content screen's "
              "given-name pairs)", "The names remain in that file's blob at 908a659, in history.")
+# Release v2 (2026-11-02): Code's question of 2026-11-01 on those names and the PI's answer of 2026-11-02, each with its
+# date, verbatim (the content script carries them as RETAINED_QUESTION and RETAINED_PI_WORDS, asserted equal in section
+# 12); the answer's reason, its parenthesis; and the content screen's record of the finding, the content script's
+# --retained-only run, committed by path before this index reads it at HEAD
+PI_VI3 = (('2026-11-01', "Should a history rewrite remove the two names still in 908a659's blob?"),
+          ('2026-11-02', 'Keep history. Have the content screen’s raw record the finding exactly as it is — two '
+                         'third-party names in blob 908a659, removed from the tree at c2a6417, retained in history, with '
+                         'the reason (no private content; published co-authors of a cited paper) — so the scrub index '
+                         'carries the disposition rather than a reader discovering it.'))
+VI_V2_REASON = 'no private content; published co-authors of a cited paper'
+assert '(' + VI_V2_REASON + ')' in PI_VI3[1][1]
+VI_V2_RECORD = 'results/raw/2026-11-02_note-N12-content-screen-retained.json'
 # where each answer is carried at HEAD: (script, constant, a function of the constant's value -> the words it carries)
 PI_ANSWERS3_CARRIED = [
     (1, 'scripts/audit_note_N12_licenses.py', 'HOST_ENTRIES_V2_PI_WORDS', lambda v: v['jasondwyer.github.io']),
@@ -1873,10 +1885,28 @@ def main():
             not git_ok('merge-base', '--is-ancestor', VI_V2_EARLIER, vi_c) or \
             git('rev-parse', '%s:%s' % (VI_V2_EARLIER, VI_V2_FILE)).strip() == git('rev-parse', '%s:%s' % (vi_c, VI_V2_FILE)).strip():
         raise SystemExit('N12(vi), release v2: %s is not the commit its message and the history say it is' % VI_V2_COMMIT)
+    # the content screen's record of the finding (release v2, 2026-11-02), read from HEAD's blob and asserted against the
+    # commits it names, this script's record of the PI's words, and the content script committed at the record's run
+    if not tracked_at(head, VI_V2_RECORD):
+        raise SystemExit('N12(vi), release v2: %s is not tracked at HEAD' % VI_V2_RECORD)
+    vi_r = json.loads(git('show', '%s:%s' % (head, VI_V2_RECORD)))
+    vi_ri = vi_r['retained_in_history']
+    vi_e = vi_ri['entries'][0]
+    vi_run = vi_r['rev']['resolved']
+    vi_r_added = (git('log', '--diff-filter=A', '--format=%H', head, '--', VI_V2_RECORD).split() or [''])[-1]
+    if len(vi_ri['entries']) != 1 or vi_e['path'] != VI_V2_FILE or vi_e['removed_at']['commit'] != vi_c or \
+            vi_e['blob_at']['commit'] != git('rev-parse', VI_V2_EARLIER + '^{commit}').strip() or \
+            not vi_e['checks'] or not all(vi_e['checks'].values()) or vi_e['disposition'] != 'RETAINED-IN-HISTORY' or \
+            vi_e['reason'] != VI_V2_REASON or \
+            (vi_ri['code_question']['date'], vi_ri['code_question']['words_verbatim']) != PI_VI3[0] or \
+            (vi_ri['pi_answer']['date'], vi_ri['pi_answer']['words_verbatim']) != PI_VI3[1] or \
+            not git_ok('merge-base', '--is-ancestor', vi_run, head) or \
+            vi_r['script']['sha256'] != sha256b(git('show', '%s:%s' % (vi_run, CON_SCRIPT), binary=True)):
+        raise SystemExit('N12(vi), release v2: %s is not the record its run, the commits it names and the PI\'s words say it is' % VI_V2_RECORD)
     VI_V2_NOTE = ('[index note, release v2 (section 7): the content screen has since run in %s. On the PI\'s word of 2026-10-29, `%s` removed '
                   'two third-party names from `%s` (N12(vi), third-party personal data; its message records that it was on the PI\'s word of 2026-10-29), and they remain in that '
-                  'file\'s blob at `%s`, in history (section 7); whether history is rewritten for them is the PI\'s (section 9)]' % (
-                      runs_txt('content'), vi_c[:7], VI_V2_FILE, VI_V2_EARLIER))
+                  'file\'s blob at `%s`, in history, where the PI\'s answer of %s keeps them; the content screen\'s record of the finding, `%s`, records it with the answer\'s reason (sections 7 and 14)]' % (
+                      runs_txt('content'), vi_c[:7], VI_V2_FILE, VI_V2_EARLIER, PI_VI3[1][0], VI_V2_RECORD))
     # the commit the origin-only ref reaches: no N12 scan on record read its patch or any unreachable tree's or blob's content (the
     # v2 history run reads every unreachable object's type and size and each unreachable commit's object, as its raw states; the
     # other scans read, of the history, only what the local refs reach)
@@ -2309,8 +2339,8 @@ def main():
     w('| (iv) third-party materials and licenses | yes | licenses (+ history\'s mechanical checks) | %s [index note: at `%s`; the LICENSE files were added later, at `%s`, section 5] | %s; %s |' % (
         short['iv'], l_scan[:10], Rs, L.loc(lc['pass']), H.loc(h['s_iv'])))
     w('| (v) size | yes | history | %s | %s |' % (short['v'], H.loc(h['v_pass'])))
-    w('| (vi) content review | no | content | %s [index note, release v2: two third-party names removed at `%s` on the PI\'s word of 2026-10-29 remain in history at `%s`; section 7] | %s |' % (
-        short['vi'], vi_c[:7], VI_V2_EARLIER, C.loc(cc['pass'])))
+    w('| (vi) content review | no | content | %s [index note, release v2: two third-party names removed at `%s` on the PI\'s word of 2026-10-29 remain in history at `%s`, where the PI\'s answer of %s keeps them; the content screen\'s record of the finding: `%s`; section 7] | %s |' % (
+        short['vi'], vi_c[:7], VI_V2_EARLIER, PI_VI3[1][0], VI_V2_RECORD, C.loc(cc['pass'])))
     w('| (vii) README-for-readers | no | `README-NOTE.md` (the README part\'s file) | not a part raw: %s (section 8) | `%s@%s:%d`, `:%d-%d` |' % (
         rn_desc, BLOCK, P, b['vii'], b['s6'], b['s6_body']))
     w('')
@@ -2702,16 +2732,34 @@ def main():
     vi_hunks = re.findall(r'^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@', git('diff', '-U0', vi_c + '^', vi_c, '--', VI_V2_FILE), re.M)
     if len(vi_hunks) != 1 or vi_hunks[0][1] not in ('', '1') or vi_hunks[0][3] not in ('', '1') or vi_hunks[0][0] != vi_hunks[0][2]:
         raise SystemExit('N12(vi), release v2: %s does not change exactly one line of %s' % (VI_V2_COMMIT, VI_V2_FILE))
+    if vi_e['line'] != int(vi_hunks[0][0]):
+        raise SystemExit('N12(vi), release v2: %s records line %d, not the line %s changes' % (VI_V2_RECORD, vi_e['line'], VI_V2_COMMIT))
+    vi_n = vi_e['names']
+    # the record's own words for the finding, as section 7 restates them (computed-new: read from the record, which the
+    # content screen built from the git objects; asserted above against the commits it names)
+    vi_rec_txt = (
+        'The PI\'s answer of %s keeps history (section 14), and the content screen\'s record of the finding, `%s` (the content script\'s `--retained-only` run at HEAD `%s`, committed at `%s`; its `retained_in_history`), records the finding as the answer directs, from the git objects: '
+        '%d given-name pairs (the screen\'s tier b, %d distinct), all on line %d of the file\'s blob at `%s` (blob `%s`, the version that commit added); `%s` replaced that blob and changed that line only (`%s`), leaving no pair on it, and none is on it at the record\'s HEAD; '
+        'the screen\'s other categories count the same in both versions (%s); `%s` is an ancestor of the record\'s HEAD (local refs reaching it: %s), so the history the release publishes carries the blob; '
+        'the pairs are in no other commit\'s patch (the pickaxe over `--all` finds `%s` only), no commit message, no file in the tree at the record\'s HEAD and no other object the screen reads. Its %d checks all hold. '
+        'Disposition: %s; the reason, verbatim from the answer: "%s". The record writes no name (counts, line numbers and object ids only), and its leak guard asserts that neither the record nor its summary holds the pairs (%d of the %d values it checks). '
+        'The content script at HEAD carries the entry (`RETAINED`, section 12), so its tag-commit re-run records the finding again.' % (
+            PI_VI3[1][0], VI_V2_RECORD, vi_run[:7], vi_r_added[:7],
+            vi_n['blob_at']['tier_b_given_name_pairs'], vi_n['blob_at']['tier_b_distinct_pairs'], vi_e['line'], VI_V2_EARLIER, vi_e['blob_at']['blob'][:7], vi_c[:7], vi_e['removed_at']['hunk'],
+            ', '.join('%s %d' % (k_, v_) for k_, v_ in sorted(vi_e['other_categories']['blob_at'].items())) or 'none', VI_V2_EARLIER,
+            ', '.join('`%s`' % r_ for r_ in vi_e['refs_reaching_blob_at']),
+            '` and `'.join(c_[:7] for c_ in vi_e['elsewhere']['pickaxe_commits']), len(vi_e['checks']),
+            vi_e['disposition'], vi_e['reason'], vi_n['blob_at']['tier_b_given_name_pairs'], vi_r['leak_guard']['raw_values_checked']))
     c2_vr = None
     if REL2.get('content'):
         c2_sc = json.loads(git('show', '%s:%s' % (REL2['content']['added'], REL2['content']['path'])))['scope']
         c2_vr = c2_sc['history_only']['version_rule']
-    w('- Release v2, N12(vi) (computed-new; no name is written here): the content screen ran again in %s. On the PI\'s word of 2026-10-29, `%s` removed two third-party names from line %s of `%s`, changing that line only (its message: "%s"); the names remain in that file\'s blob at `%s`, in history ("%s", the same message). %s Whether history is rewritten for them is the PI\'s (section 9).' % (
+    w('- Release v2, N12(vi) (computed-new; no name is written here): the content screen ran again in %s. On the PI\'s word of 2026-10-29, `%s` removed two third-party names from line %s of `%s`, changing that line only (its message: "%s"); the names remain in that file\'s blob at `%s`, in history ("%s", the same message). %s %s' % (
         runs_txt('content'), vi_c[:7], vi_hunks[0][0], VI_V2_FILE, VI_V2_MSG[0], VI_V2_EARLIER, VI_V2_MSG[1],
         ('v2\'s run of record (at `%s`, after `%s`: %s) reads each `results/raw/` path (%s) and `HANDOFF-*.md` path (%s) in the tree at its run and, for each path a commit on `--all` deletes (%d), the version its JSON\'s `scope.history_only.version_rule` names ("%s"); this file is in the tree and no commit deletes it, so its earlier blob at `%s` is outside that run. The flag the message names came from a run of the v2 screen before `%s`.' % (
             REL2['content']['run'][:7], vi_c[:7], yn(git_ok('merge-base', '--is-ancestor', vi_c, REL2['content']['run'])).lower(),
             c2_sc.get('results_raw_at_rev'), c2_sc.get('handoff_md_at_rev'), len(c2_sc['history_only'].get('screened_paths', [])), c2_vr, VI_V2_EARLIER, vi_c[:7]))
-        if c2_vr else ''))
+        if c2_vr else '', vi_rec_txt))
     w('')
 
     # 8. (vii)
@@ -2905,10 +2953,10 @@ def main():
     w('- (ii): the stale statements that the repository is private (%s).' % C.loc(cc['stale']))
     w('- (iii): nothing open from the search at its ref `%s`: the password is in no commit reachable there, and the %d untracked files that hold it are on D4\'s do-not-commit list; the files committed after that ref are bounded in section 4 (time bound), and the release run repeats the search at the release commit (Code\'s own run, `%s`, committed after the tag). %s %s' % (
         pw_ref[:10], pw_with, RR['password'][0], cov_note('password', pw_ref, ''), ORIGIN_ONLY_UNSEARCHED))
-    w('- (vi), release v2 (from `%s`\'s message): the two third-party names it removed on the PI\'s word of 2026-10-29 remain in `%s`\'s blob at `%s`, %s (section 7); whether history is rewritten for them is the PI\'s: **open** (no name is written here).' % (
+    w('- (vi), release v2 (from `%s`\'s message): the two third-party names it removed on the PI\'s word of 2026-10-29 remain in `%s`\'s blob at `%s`, %s (section 7). The PI\'s answer of %s keeps history, for the reason it gives, verbatim: "%s"; the content screen\'s record of the finding, `%s`, records the finding and that disposition (section 7): **ROUTED** (section 14; no name is written here).' % (
         vi_c[:7], VI_V2_FILE, VI_V2_EARLIER,
         'an ancestor of HEAD, so the history the release publishes carries them' if git_ok('merge-base', '--is-ancestor', VI_V2_EARLIER, head)
-        else 'which is not an ancestor of HEAD'))
+        else 'which is not an ancestor of HEAD', PI_VI3[1][0], VI_V2_REASON, VI_V2_RECORD))
     w('')
 
     # 10. pre-flip
@@ -3240,8 +3288,8 @@ def main():
     w14('- The PI\'s HOLD, of 2026-10-29, verbatim: "%s" Item 6, and item 7\'s second N18, tag and push, wait on it.' % PI_HOLD3)
     w14('- Code\'s own commit before the tag: Code\'s question of %s, verbatim: "%s" (the four values the v2 history raw of record, `%s`, adds to the history the history script\'s tag-commit re-run reads); the PI\'s answer of %s, verbatim: "%s". **ROUTED** (3g).' % (
         PI_OWN3[0][0], PI_OWN3[0][1], RR2['history'][0], PI_OWN3[1][0], PI_OWN3[1][1]))
-    w14('- N12(vi), release v2 (section 9): whether history is rewritten for the two third-party names `%s` removed, which stay in `%s`\'s blob at `%s`, is the PI\'s: **open**; the push puts that blob in the new repository, which the PI\'s flip makes public, so his decision is needed before the push.' % (
-        vi_c[:7], VI_V2_FILE, VI_V2_EARLIER))
+    w14('- N12(vi), release v2 (sections 7 and 9), the two third-party names `%s` removed, which stay in `%s`\'s blob at `%s`: Code\'s question of %s, verbatim: "%s"; the PI\'s answer of %s, verbatim: "%s" **ROUTED**: history is not rewritten, so the push puts that blob in the new repository, which the PI\'s flip makes public; the content screen\'s record of the finding, `%s`, committed at `%s`, records it with the answer\'s reason (section 7), and the content script carries the entry, so its tag-commit re-run records it again.' % (
+        vi_c[:7], VI_V2_FILE, VI_V2_EARLIER, PI_VI3[0][0], PI_VI3[0][1], PI_VI3[1][0], PI_VI3[1][1], VI_V2_RECORD, vi_r_added[:7]))
     w14('')
     w14('**Done before the block** (the block\'s section 0, %s; verified here where a local read can, not redone; computed-new):' % bl_(b2['f5a'], b2['gh']))
     w14('')
@@ -3428,6 +3476,21 @@ def main():
             PI_OWN3[0][0], PI_OWN3[1][0]), 'yes', yn(got_ == PI_OWN3).lower(), 'section 14', '(git show HEAD:scripts/audit_note_N12_history.py, AST literal)')
         if got_ != PI_OWN3:
             raise SystemExit('scripts/audit_note_N12_history.py at HEAD: TAG_ENTRIES_PI_WORDS is not this script\'s record of the PI\'s words')
+    # release v2 (2026-11-02): N12(vi)'s retained finding -- the content script's record of the PI's words and its entry at
+    # HEAD against this script's and the record's, and the record's checks
+    got_ = (tuple(head_const(CON_SCRIPT, 'RETAINED_QUESTION')), tuple(head_const(CON_SCRIPT, 'RETAINED_PI_WORDS')))
+    xadd("Code's question of %s and the PI's answer of %s (N12(vi)): carried verbatim by `%s` `RETAINED_QUESTION` and `RETAINED_PI_WORDS` at HEAD" % (
+        PI_VI3[0][0], PI_VI3[1][0], os.path.basename(CON_SCRIPT)), 'yes', yn(got_ == PI_VI3).lower(), 'section 14', '(git show HEAD:%s, AST literal)' % CON_SCRIPT)
+    if got_ != PI_VI3:
+        raise SystemExit('%s at HEAD: RETAINED_QUESTION and RETAINED_PI_WORDS are not this script\'s record of the PI\'s words' % CON_SCRIPT)
+    got_ = head_const(CON_SCRIPT, 'RETAINED')
+    xadd("N12(vi): the content script's `RETAINED` at HEAD vs the entry its record `%s` declares" % os.path.basename(VI_V2_RECORD),
+         'yes', yn(got_ == [vi_e['declared']]).lower(), 'section 7',
+         '(git show HEAD:%s, AST literal; %s@%s, retained_in_history.entries[0].declared)' % (CON_SCRIPT, VI_V2_RECORD, vi_r_added[:7]))
+    if got_ != [vi_e['declared']]:
+        raise SystemExit('%s at HEAD: RETAINED is not the entry %s declares' % (CON_SCRIPT, VI_V2_RECORD))
+    xadd("N12(vi): the record's checks that hold vs its checks", sum(vi_e['checks'].values()), len(vi_e['checks']), 'section 7',
+         '(%s@%s, retained_in_history.entries[0].checks)' % (VI_V2_RECORD, vi_r_added[:7]))
     a2_head = [ln for ln in o if ln.startswith('- %s, verbatim: "%s" (' % (ANSWER2[0].upper() + ANSWER2[1:], ANSWER2_TEXT))]
     if len(a2_head) != 1 or not all(frag_text(f_) in a2_head[0] for _, f_ in ANSWER2_ITEMS) or a2_sha not in a2_head[0] or b2_sha not in a2_head[0]:
         raise SystemExit("the PI's answer of 2026-10-28: not recorded once in the header with the seat's items A-G and both files' sha256")
@@ -3443,7 +3506,7 @@ def main():
          'yes', yn(fp_ok).lower(), 'section 2a', '(git show %s:%s, line %d; sha256 of %s at %s)' % (GL_FP[0][:10], GL_FP[1], GL_FP[2], GL_FP[3], GL_FP[0][:10]))
 
     # 12. cross-checks
-    w('## 12. Index cross-checks (computed-new: each part\'s md against its own JSON, a committed file, or a recount at the commit the part read; the last rows: %s, item 4, as this index records it, against the committed raws; then %s, as recorded here, against the v1 tag commit\'s blobs and the committed record; then release v2: the block\'s section 0 against the commits it names, the v2 release files on disk, section 14\'s raws, the PI\'s answers of 2026-10-29 against the part-script constants that carry them at HEAD, and the part scripts\' `TAG_RERUNS_V2` against this script\'s%s; then the release-run scan raws section 10 names against Code\'s release plan, and Code\'s housekeeping on the gitleaks hit of section 2a)' % (RULINGS, ANSWER, (', and the history script\'s `TAG_RERUN_RAWS` and its record of the PI\'s answer of %s against this script\'s' % PI_OWN3[1][0]) if tr_raws_head else ''))
+    w('## 12. Index cross-checks (computed-new: each part\'s md against its own JSON, a committed file, or a recount at the commit the part read; the last rows: %s, item 4, as this index records it, against the committed raws; then %s, as recorded here, against the v1 tag commit\'s blobs and the committed record; then release v2: the block\'s section 0 against the commits it names, the v2 release files on disk, section 14\'s raws, the PI\'s answers of 2026-10-29 against the part-script constants that carry them at HEAD, and the part scripts\' `TAG_RERUNS_V2` against this script\'s%s; then N12(vi)\'s retained finding: the content script\'s record of the PI\'s answer of %s and its `RETAINED` against this script\'s and the content screen\'s record, and that record\'s checks; then the release-run scan raws section 10 names against Code\'s release plan, and Code\'s housekeeping on the gitleaks hit of section 2a)' % (RULINGS, ANSWER, (', and the history script\'s `TAG_RERUN_RAWS` and its record of the PI\'s answer of %s against this script\'s' % PI_OWN3[1][0]) if tr_raws_head else '', PI_VI3[1][0]))
     w('')
     w('| figure | md | JSON / committed / recount | md locator | JSON field or source | status |')
     w('|---|---|---|---|---|---|')

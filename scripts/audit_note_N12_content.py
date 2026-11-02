@@ -79,8 +79,31 @@ non-printable character is mapped to a space before masking rather than after,
 so the masks read the text the excerpt shows. Counts, verdicts, categories,
 locators, redacted values and the leak guard are unchanged.
 
+Release v2 (2026-11-02), N12(vi)'s retained finding: c2a6417 removed two
+third-party names from line 5 of a committed raw on the PI's word of
+2026-10-29. They remain in that file's blob at 908a659, the version that
+commit added, which no part of the scope above reads (the file is in the tree,
+and no commit deletes it). Code's question of 2026-11-01 and the PI's answer of
+2026-11-02 are verbatim in RETAINED_QUESTION and RETAINED_PI_WORDS: history is
+kept, and this screen's raw records the finding as it is, with the PI's reason
+(RETAINED_REASON, the answer's own parenthesis). Every run checks each RETAINED
+entry against the git objects and records it in the JSON's retained_in_history
+section: the blob's given-name pairs as this screen's name tiers count them
+(with the run's allowlist, et-al surnames included); the removing commit, which
+replaced that blob and changed that path and line only, leaving no pair on the
+line; no pair on it at --rev either; the other categories' counts equal in both
+versions; the blob in --rev's history; and the pairs in no other commit's patch
+(the pickaxe, over --all), no commit message, no file in the tree at --rev and
+no other object this screen reads. A mismatch exits without writing. The
+section holds counts, line numbers and object ids only. Each pair found joins
+the leak guard, so the guard asserts that the JSON and the summary hold none of
+them. The section adds nothing to the objects or the totals. With
+--retained-only, a run writes the header, the name tiers' method, that section
+and the leak guard only. It still reads the whole scope, for the et-al
+allowlist the tiers use.
+
     jlens-qwen36/.venv/bin/python scripts/audit_note_N12_content.py \
-        [--rev HEAD] [--json-out results/raw/2026-10-08_note-N12-content-screen.json]
+        [--rev HEAD] [--json-out results/raw/2026-10-08_note-N12-content-screen.json] [--retained-only]
 """
 import argparse
 import datetime
@@ -118,6 +141,20 @@ C2PA_MANIFESTS = {
     "2026-10-10_F1b_five-link-panels.svg": (7684, "ee0ea5730fa34810d240782be92da1a4977e41bcb1518c01d7e7a86281c581f5"),
     "2026-10-10_F2_macar-lineage-roc_post.svg": (7684, "f814df3b308262c8e137b825f3e822dbb5c68357eda406f1d7404bb5186c7c9b"),
 }
+
+# Release v2 (2026-11-02): N12(vi)'s retained finding (see the docstring). Code's question and the PI's answer, each with
+# its PI-local date, verbatim; the reason is the answer's own parenthesis, asserted to be in it. Each RETAINED entry: the
+# path, the commit whose version of it holds the names, the commit that removed them, the line, and the number of tier-b
+# given-name pairs that version holds (counts only; no name is written here).
+RETAINED_QUESTION = ("2026-11-01", "Should a history rewrite remove the two names still in 908a659's blob?")
+RETAINED_PI_WORDS = ("2026-11-02", "Keep history. Have the content screen’s raw record the finding exactly as it is — "
+                     "two third-party names in blob 908a659, removed from the tree at c2a6417, retained in history, with "
+                     "the reason (no private content; published co-authors of a cited paper) — so the scrub index carries "
+                     "the disposition rather than a reader discovering it.")
+RETAINED_REASON = "no private content; published co-authors of a cited paper"
+assert "(" + RETAINED_REASON + ")" in RETAINED_PI_WORDS[1]
+RETAINED = [{"path": "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md", "blob_at": "908a659",
+             "removed_at": "c2a6417", "line": 5, "tier_b_given_name_pairs": 2}]
 
 # E-mail addresses counted separately, never listed as hits (task text).
 EMAIL_ALLOW = {
@@ -834,6 +871,209 @@ def screen_text(text, name_allow, path=None):
     return hits, names, values, len(lines), forms
 
 
+# ---------------------------- release v2: the retained finding -------------
+
+# the 'method' entries a full run and a --retained-only run share (the latter's are these two only)
+METHOD_LINE_SPLIT = "on \\n; 'lines' = number of \\n-separated lines (a trailing newline does not add a line)"
+METHOD_NAMES = ("tier_a: capitalised word pairs, neither word in the name allowlist (counts only); tier_b: tier_a pairs "
+                "whose first word is in the embedded given-name list (%d names; counts and line numbers only, never the "
+                "names)")
+
+
+def tier_b_spans(line, name_allow):
+    """Release v2 (2026-11-02): one line's tier-b given-name pairs by screen_text's rule, each as the text it spans -- in
+    memory only, for the leak guard (retained_record asserts that their number is screen_text's count)."""
+    out = []
+    for m in NAME_PAIR_RX.finditer(line):
+        a, b = m.group(1), m.group(2)
+        if a in name_allow or b in name_allow or (a, b) in NAME_PAIR_ALLOW:
+            continue
+        if a in GIVEN_NAMES:
+            out.append(line[m.start(1):m.end(2)])
+    return out
+
+
+def retained_record(rev, name_allow, guard_values, items):
+    """Release v2 (2026-11-02): each RETAINED entry checked against the git objects and recorded (see the docstring):
+    counts, line numbers and object ids only. The pairs found, and any value the screen collects from the versions read
+    here, join guard_values. Exits without writing unless every check holds."""
+    def ok(*args):   # a git predicate: exit status 0
+        return subprocess.run(["git", "-C", ROOT] + list(args), stdout=subprocess.DEVNULL,
+                              stderr=subprocess.DEVNULL).returncode == 0
+
+    def oid(spec):
+        return git("rev-parse", "--verify", spec).decode().strip()
+
+    def read(spec, path):   # a version's text, its name tiers and its other categories' hit counts
+        text = git("show", spec).decode("utf-8", "replace")
+        hits, names, values, nlines, _forms = screen_text(text, name_allow, path)
+        guard_values.update(v for _c, _s, v, _l in values)
+        return text, names, {k: len(v) for k, v in sorted(hits.items()) if not k.startswith("_")}, nlines
+
+    refs = [r for r in git("for-each-ref", "--format=%(refname)").decode().split("\n") if r]
+    entries = []
+    for d in RETAINED:
+        p, ln = d["path"], d["line"]
+        b, c = oid(d["blob_at"] + "^{commit}"), oid(d["removed_at"] + "^{commit}")
+        b_blob, c_parent_blob, c_blob = oid(b + ":" + p), oid(c + "^1:" + p), oid(c + ":" + p)
+        r_blob = oid(rev + ":" + p) if ok("cat-file", "-e", rev + ":" + p) else None
+        b_text, b_names, b_cats, b_lines = read(b + ":" + p, p)
+        c_names, c_cats = read(c + ":" + p, p)[1:3]
+        r_names = read(rev + ":" + p, p)[1] if r_blob else None
+        spans = tier_b_spans(b_text.split("\n")[ln - 1], name_allow) if ln <= b_lines else []
+        guard_values.update(spans)
+        added = git("log", "--all", "--no-renames", "--diff-filter=A", "--format=%H", "--", p).decode().split()
+        touching = git("log", "--all", "--no-renames", "--format=%H", "--", p).decode().split()
+        changed = [x for x in git("diff-tree", "-z", "--no-commit-id", "--name-only", "-r", c)
+                   .decode("utf-8", "surrogateescape").split("\0") if x]
+        hunks = re.findall(r"^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@",
+                           git("diff", "-U0", c + "^1", c, "--", p).decode("utf-8", "replace"), re.M)
+        pickaxe = sorted({h for s_ in spans for h in git("log", "--all", "--format=%H", "-S" + s_).decode().split()})
+        in_msgs = sum(len(git("log", "--all", "--format=%H", "-F", "--grep=" + s_).decode().split()) for s_ in spans)
+        in_tree = sum(ok("grep", "-q", "-F", "-e", s_, rev) for s_ in spans)
+        in_objects = sum(1 for it in items for s_ in spans if s_ in it["text"])
+        checks = {
+            "blob_at_added_the_path": b in added,
+            "removed_at_replaced_that_blob": c_parent_blob == b_blob,
+            "removed_at_changed_this_path_only": changed == [p],
+            "removed_at_changed_this_line_only": (len(hunks) == 1 and hunks[0][0] == hunks[0][2] == str(ln)
+                                                  and hunks[0][1] in ("", "1") and hunks[0][3] in ("", "1")),
+            "pairs_at_blob_at_as_declared": (b_names["tier_b_given_name_pairs"] == d["tier_b_given_name_pairs"] == len(spans)
+                                             and set(b_names["tier_b_lines"]) == {ln}),
+            "no_pair_on_the_line_at_removed_at": ln not in c_names["tier_b_lines"],
+            "path_at_rev_with_no_pair_on_the_line": r_blob is not None and ln not in r_names["tier_b_lines"],
+            "other_categories_equal": b_cats == c_cats,
+            "blob_at_in_rev_history": ok("merge-base", "--is-ancestor", b, rev),
+            "removed_at_in_rev_history": ok("merge-base", "--is-ancestor", c, rev),
+            "pairs_in_no_other_commit_patch": pickaxe == sorted([b, c]),
+            "pairs_in_no_commit_message": in_msgs == 0,
+            "pairs_in_no_file_at_rev": in_tree == 0,
+            "pairs_in_no_other_screened_object": in_objects == 0,
+        }
+        bad = [k for k, v in checks.items() if not v]
+        if bad:
+            sys.exit("N12(vi) retained finding, %s: %s does not hold; nothing written" % (p, ", ".join(bad)))
+        h = hunks[0]
+        entries.append({
+            "declared": dict(d),
+            "path": p, "line": ln,
+            "blob_at": {"commit": b, "blob": b_blob, "lines": b_lines},
+            "removed_at": {"commit": c, "blob": c_blob, "paths_changed": changed,
+                           "hunk": "@@ -%s%s +%s%s @@" % (h[0], "," + h[1] if h[1] else "", h[2], "," + h[3] if h[3] else "")},
+            "rev": {"commit": rev, "blob": r_blob, "same_blob_as_removed_at": r_blob == c_blob},
+            "commits_touching_path": touching,
+            "names": {"blob_at": b_names, "removed_at": c_names, "rev": r_names},
+            "other_categories": {"blob_at": b_cats, "removed_at": c_cats},
+            "elsewhere": {"pickaxe_commits": pickaxe, "commit_messages": in_msgs, "files_at_rev": in_tree,
+                          "other_screened_objects": in_objects},
+            "refs_reaching_blob_at": [r for r in refs if ok("merge-base", "--is-ancestor", b, r)],
+            "checks": checks,
+            "finding": ("%d given-name pairs (tier b, %d distinct), all on line %d of the blob at %s (the version that "
+                        "commit added); removed from the tree at %s, which changed that line only and left no pair on "
+                        "it (none at --rev either); retained in history: %s is an ancestor of --rev"
+                        % (len(spans), b_names["tier_b_distinct_pairs"], ln, b[:7], c[:7], b[:7])),
+            "disposition": "RETAINED-IN-HISTORY",
+            "reason": RETAINED_REASON,
+            "reason_from": "the PI's answer of %s (pi_answer), its parenthesis, verbatim" % RETAINED_PI_WORDS[0],
+        })
+    return {
+        "rule": ("release v2 (2026-11-02): every run checks each entry against the git objects and exits without writing "
+                 "unless every check holds (checks); counts, line numbers and object ids only, never a name; each pair "
+                 "found joins the leak guard; nothing here is added to objects or totals"),
+        "code_question": {"date": RETAINED_QUESTION[0], "words_verbatim": RETAINED_QUESTION[1]},
+        "pi_answer": {"date": RETAINED_PI_WORDS[0], "words_verbatim": RETAINED_PI_WORDS[1]},
+        "entries": entries,
+    }
+
+
+def retained_lines(retained):
+    """Release v2 (2026-11-02): the stdout summary's lines for the retained_in_history section."""
+    out = ["retained in history (release v2; Code's question of %s, the PI's answer of %s): %d entr%s"
+           % (retained["code_question"]["date"], retained["pi_answer"]["date"], len(retained["entries"]),
+              "y" if len(retained["entries"]) == 1 else "ies")]
+    for e in retained["entries"]:
+        out.append("   %s line %d: tier-b pairs %d (%d distinct) in the blob at %s (%s); removed at %s (%s, %s); on the "
+                   "line at %s %d, at rev %d; other categories equal (%s); %s in rev's history (refs %s); elsewhere: "
+                   "pickaxe %s, messages %d, files at rev %d, other objects %d; checks %d/%d; %s: \"%s\""
+                   % (e["path"], e["line"], e["names"]["blob_at"]["tier_b_given_name_pairs"],
+                      e["names"]["blob_at"]["tier_b_distinct_pairs"], e["blob_at"]["commit"][:7], e["blob_at"]["blob"][:12],
+                      e["removed_at"]["commit"][:7], e["removed_at"]["hunk"], ", ".join(e["removed_at"]["paths_changed"]),
+                      e["removed_at"]["commit"][:7], e["names"]["removed_at"]["tier_b_lines"].count(e["line"]),
+                      e["names"]["rev"]["tier_b_lines"].count(e["line"]), e["other_categories"]["blob_at"],
+                      e["blob_at"]["commit"][:7], ", ".join(e["refs_reaching_blob_at"]),
+                      [x[:7] for x in e["elsewhere"]["pickaxe_commits"]], e["elsewhere"]["commit_messages"],
+                      e["elsewhere"]["files_at_rev"], e["elsewhere"]["other_screened_objects"],
+                      sum(e["checks"].values()), len(e["checks"]), e["disposition"], e["reason"]))
+    return out
+
+
+def write_retained_only(a, out, stamp, rev, script_sha, block_sha_at_rev, items, et_al, retained, guard_values):
+    """Release v2 (2026-11-02), --retained-only: the header, the name tiers' method and the retained_in_history section,
+    under a full run's leak guard (main()), applied to this JSON and summary."""
+    src_counts = Counter(it["source"] for it in items)
+    result = {
+        "part": PART,
+        "item": "N12(vi) content review -- the finding retained in history (release v2, 2026-11-02; --retained-only)",
+        "block": {"path": BLOCK, "sha256_expected": BLOCK_SHA, "sha256_at_rev": block_sha_at_rev,
+                  "match": block_sha_at_rev == BLOCK_SHA},
+        "stamp_utc": stamp,
+        "script": {"path": "scripts/audit_note_N12_content.py", "sha256": script_sha},
+        "python": sys.version.split()[0], "platform": platform.platform(),
+        "git_version": subprocess.run(["git", "--version"], stdout=subprocess.PIPE).stdout.decode().strip(),
+        "rev": {"requested": a.rev, "resolved": rev},
+        "scope": {
+            "mode": ("--retained-only: each RETAINED entry's versions are read and checked (retained_in_history); a "
+                     "full run's scope is read for the et-al allowlist only, and nothing in it is screened or reported"),
+            "content_source": "git objects via git cat-file --batch and git show (committed bytes; working tree not read)",
+            "objects_read_for_the_allowlist": len(items),
+            "objects_by_source": dict(src_counts),
+        },
+        "method": {
+            "line_split": METHOD_LINE_SPLIT,
+            "names": METHOD_NAMES % len(GIVEN_NAMES),
+            "name_allowlist_fixed": sorted(NAME_ALLOW),
+            "name_allowlist_et_al_detected": sorted(et_al),
+        },
+        "patterns": {"names": NAME_PAIR_RX.pattern},
+        "retained_in_history": retained,
+    }
+    allowed_verbatim = set(EMAIL_ALLOW) | IDENTITY_NAME_ALLOW
+    to_check = sorted(v for v in guard_values if len(v) >= 5 and v.lower() not in allowed_verbatim
+                      and v not in allowed_verbatim and v not in STANDARD_SSH_FILES)
+    result["leak_guard"] = {
+        "raw_values_checked": len(to_check),
+        "rule": ("a full run's rule: every collected raw value of length >= 5 -- here the non-allowlisted identity names "
+                 "and e-mails of the commit and tag headers, the pairs found in each RETAINED version and any other value "
+                 "the screen collects from the versions it reads for retained_in_history -- asserted absent from the "
+                 "JSON text and the stdout summary before either is written; exempt: the two allowlisted e-mails, the "
+                 "allowlisted identity names, and standard OpenSSH file names %s; the JSON is checked with the "
+                 "'patterns' block and every 'method' entry except %s blanked"
+                 % (sorted(STANDARD_SSH_FILES), list(CONTENT_DERIVED_METHOD_KEYS)))}
+    js = json.dumps(result, indent=1, ensure_ascii=False, sort_keys=False) + "\n"
+    js_chk = json.dumps(dict(result, patterns=None,
+                             method={k_: v_ for k_, v_ in result["method"].items() if k_ in CONTENT_DERIVED_METHOD_KEYS}),
+                        indent=1, ensure_ascii=False, sort_keys=False) + "\n"
+    summary = ["AUDIT-note-release v1.2 -- N12(vi) content pre-screen (%s), --retained-only" % PART,
+               "stamp_utc %s  rev %s  block sha256 at rev %s (%s)" % (stamp, rev, (block_sha_at_rev or "absent")[:16],
+                                                                    "match" if block_sha_at_rev == BLOCK_SHA else "MISMATCH"),
+               "script sha256 %s" % script_sha,
+               "scope read for the et-al allowlist: %d objects (%s); et-al surnames auto-allowlisted: %d"
+               % (len(items), dict(src_counts), len(et_al))]
+    summary += retained_lines(retained)
+    summary += ["leak guard: %d raw values checked against the JSON and this summary" % len(to_check),
+                "wrote %s" % os.path.relpath(out, ROOT)]
+    text_out = "\n".join(summary)
+    leaked = [v for v in to_check if v in js_chk or json.dumps(v, ensure_ascii=False)[1:-1] in js_chk or v in text_out]
+    if leaked:
+        sys.exit("LEAK GUARD FIRED: %d raw values would be written (redacted: %s); nothing written"
+                 % (len(leaked), [redact(v) for v in leaked[:10]]))
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "x", encoding="utf-8") as fh:
+        fh.write(js)
+    print(text_out)
+    return 0
+
+
 # ---------------------------- main ------------------------------------------
 
 def main():
@@ -841,6 +1081,8 @@ def main():
     ap.add_argument("--rev", default="HEAD")
     ap.add_argument("--json-out", default=DEFAULT_OUT)
     ap.add_argument("--selftest", action="store_true", help="run the masking self-test only; writes nothing")
+    ap.add_argument("--retained-only", action="store_true",
+                    help="release v2 (2026-11-02): write the header, the name method and retained_in_history only")
     a = ap.parse_args()
 
     if a.selftest:
@@ -977,6 +1219,11 @@ def main():
             et_al.add(m.group(1))
     name_allow |= et_al
 
+    # ---- release v2 (2026-11-02): N12(vi)'s retained finding, checked and recorded (see the docstring) ----
+    retained = retained_record(rev, name_allow, guard_values, items)
+    if a.retained_only:
+        return write_retained_only(a, out, stamp, rev, script_sha, block_sha_at_rev, items, et_al, retained, guard_values)
+
     # ---- second pass: screen ----
     files_out = []
     totals = defaultdict(lambda: {"hits": 0, "objects_with_hits": 0})
@@ -1079,15 +1326,15 @@ def main():
             "bytes_screened_total": sum(len(it["data"]) for it in items),
         },
         "method": {
-            "line_split": "on \\n; 'lines' = number of \\n-separated lines (a trailing newline does not add a line)",
-            "excerpt": "<= %d chars of the line after masking every [SCRATCH_PATH] [MACOS_TEMP_PATH] [LOCAL_HOME_PATH] [CLAUDE_AI_URL] [TRANSCRIPT_ID] (round 10: a whole path token, see excerpt_path_classes) [EMAIL] [PHONE] [ADDR] [IP] [CRED] [ID] [TOK] (alnum/_-+= run >= 20 with a letter and a digit) [NAME] (given-name list word or given-name pair) [W] (one to three words after Dear/Hi/Hello/From:/To:/Cc:/Subject:/Regards/Best,/Cheers,/Thanks, or before wrote:) span, and [ID_FLAG] (round 10, release: an identity-file flag with its argument, on a line naming ssh); window starts 10 chars before the hit, or at the hit's own token (see excerpt_release_rules); a cut part of a token at either end of the window is replaced by [CUT] unless it is a plain word, and at the right end a cut run of joined tokens up to its last reference-shaped token" % EXCERPT_MAX,
+            "line_split": METHOD_LINE_SPLIT,
+            "excerpt":"<= %d chars of the line after masking every [SCRATCH_PATH] [MACOS_TEMP_PATH] [LOCAL_HOME_PATH] [CLAUDE_AI_URL] [TRANSCRIPT_ID] (round 10: a whole path token, see excerpt_path_classes) [EMAIL] [PHONE] [ADDR] [IP] [CRED] [ID] [TOK] (alnum/_-+= run >= 20 with a letter and a digit) [NAME] (given-name list word or given-name pair) [W] (one to three words after Dear/Hi/Hello/From:/To:/Cc:/Subject:/Regards/Best,/Cheers,/Thanks, or before wrote:) span, and [ID_FLAG] (round 10, release: an identity-file flag with its argument, on a line naming ssh); window starts 10 chars before the hit, or at the hit's own token (see excerpt_release_rules); a cut part of a token at either end of the window is replaced by [CUT] unless it is a plain word, and at the right end a cut run of joined tokens up to its last reference-shaped token" % EXCERPT_MAX,
             "excerpt_path_classes": "round 10 (2026-10-12), excerpts only: a token holding a local scratch-path anchor (a path under the tmp directory, the per-uid scratch directory name, the per-user project-slug form) is masked whole as [SCRATCH_PATH]; a macOS per-user temp path under the folders directory as [MACOS_TEMP_PATH]; a local home-directory path as [LOCAL_HOME_PATH] (added because masking the longer scratch paths brought two home-directory paths into a 40-char window); a claude.ai session URL with its tail as [CLAUDE_AI_URL]; a uuid-shaped id as [TRANSCRIPT_ID]. The token is extended both ways to whitespace or a quote, backtick, bracket, brace, angle bracket, backslash, pipe, comma or semicolon; trailing '.' and ':' stay as punctuation. Where classes overlap, the order is SCRATCH_PATH, MACOS_TEMP_PATH, LOCAL_HOME_PATH, CLAUDE_AI_URL, TRANSCRIPT_ID, then the other placeholders. Counts, verdicts, categories, locators and redacted values do not read excerpts and are unchanged by it",
             "excerpt_release_rules": "round 10, release (2026-10-12), excerpts only, so that this JSON, screened in its turn by the history and licenses scans once committed, adds no value they read as new: (a) on a line that names ssh in any case, the identity-file flag (dash i, either case, at the line start or after whitespace) is masked together with its argument as one [ID_FLAG] span, which absorbs any placeholder inside it; (b) a token is a run of characters other than whitespace, a quote, backtick, bracket, brace, angle bracket, backslash, pipe, comma or semicolon; where the %d-char window cuts a token at either end (not inside a placeholder), the cut part is replaced by [CUT] unless it is ASCII letters only and the whole token has no reference shape (a scheme separator, a www label, a dotted name ending in two letters, a slash next to a name character, an at sign); where the hit lies in the token cut at the left and starts within %d chars of that token, the window starts at the token instead, so the hit stays visible where its token fits the window; where the right end cuts a run (characters other than whitespace, a quote, a backtick, a closing parenthesis or a closing bracket, so tokens joined by angle brackets, braces, opening parentheses or brackets, backslashes, pipes, commas or semicolons), the run's part in the window from its start, or the window's, to the end of its last token with a reference shape is replaced by [CUT] as well; so no excerpt starts or ends inside a token with a host, URL, path or id shape, and none ends inside such a joined run (one can start inside a joined run's later token); an excerpt can exceed the window by at most the placeholder's length at each end; (c) non-printable characters are mapped to spaces before masking, not after the cut. Counts, verdicts, categories, locators, redacted values and the leak guard do not read excerpts and are unchanged by it" % (EXCERPT_MAX, EXCERPT_LEFT_SHIFT_MAX),
             "redacted_form": "first 4 chars (fewer for a short value: at most half its length) + '...' + length + ':' + first 8 hex of sha256(value, utf-8)",
             "email_allowlist": "two addresses (the author's own; Anthropic's noreply) counted under email_allowlisted_counts, never listed as hits",
             "private_context": "confidentiality/private hits immediately preceded by '/' are tagged context=path (e.g. a /private/tmp path); reported, not discounted",
             "multiword_line_break": "multi-word phrases (do not share, not for publication, internal only, off the record, my wife/husband/partner/kid, Sent from) are also matched across a line end and tagged spans_next_line",
-            "names": "tier_a: capitalised word pairs, neither word in the name allowlist (counts only); tier_b: tier_a pairs whose first word is in the embedded given-name list (%d names; counts and line numbers only, never the names)" % len(GIVEN_NAMES),
+            "names": METHOD_NAMES % len(GIVEN_NAMES),
             "name_allowlist_fixed": sorted(NAME_ALLOW),
             "name_allowlist_et_al_detected": sorted(et_al),
             "generic_high_entropy": "alnum run >= 24 with a letter and a digit, not pure hex, Shannon entropy >= 3.5 bits/char; pure-hex runs >= 24 (hashes, shas) are skipped and only counted",
@@ -1145,6 +1392,7 @@ def main():
             "objects_with_c2pa_elements": dict(sorted(c2pa_objects.items())),
             "declared_hits_by_category": dict(sorted(c2pa_hits.items())),
         },
+        "retained_in_history": retained,
     }
     # ---- leak guard: no collected raw value (len >= 5; allowlisted identities excepted) may appear in the output ----
     allowed_verbatim = set(EMAIL_ALLOW) | IDENTITY_NAME_ALLOW
@@ -1196,6 +1444,8 @@ def main():
     P("C2PA declaration (round 9; the PI, 2026-10-10): objects with a <c2pa:manifest> element %d (%s); hits inside a "
       "declared blob, FALSE-POSITIVE: %s" % (len(c2pa_objects), dict(sorted(c2pa_objects.items())) or "none",
                                             dict(sorted(c2pa_hits.items())) or "none"))
+    for l_ in retained_lines(retained):
+        P(l_)
     P("leak guard: %d raw values checked against the JSON and this summary" % len(to_check))
     P("wrote %s" % os.path.relpath(out, ROOT))
     text_out = "\n".join(summary)
