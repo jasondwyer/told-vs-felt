@@ -170,6 +170,13 @@ Usage (from the repository root):
       --note RESEARCH-NOTE-v0_4-draft.md --note 2026-10-09_F1a_headline-strip.svg \
       --note 2026-10-09_F1b_five-link-panels.svg --note 2026-10-09_F2_macar-lineage-roc_post.svg \
       [--dev-report <scratch>/dev.json]
+  N1 round 11 for note v0.8 (profile v0_8; its default outputs are results/raw/<_V08_DATE>_note-N1-v0_8-claims-
+  ledger.md/.json; while the round-11 tables are unfrozen only --dev-report runs to the end):
+  jlens-qwen36/.venv/bin/python scripts/audit_note_N1.py \
+      --note-rows <rows.json> \
+      --note RESEARCH-NOTE-v0_8-draft.md --note 2026-10-22_F1a_headline-strip.svg \
+      --note 2026-10-22_F1b_five-link-panels.svg --note 2026-10-22_F2_macar-lineage-roc_post.svg \
+      [--dev-report <scratch>/dev.json]
 """
 
 from __future__ import annotations
@@ -1820,7 +1827,9 @@ def note_mode(paths, rows, lines_block, raws, watch):
             path = REPO / path
         raw, text = note_text(path)
         lines = text.split("\n")
-        res = dict(path=p, sha256=sha256(raw), n_lines=len(lines), numerals=[], watch_hits=[])
+        # round 11 (the read, H3): v0_8 counts a final newline as ending its line, not as one more line (wc -l)
+        res = dict(path=p, sha256=sha256(raw), n_lines=len(lines) - (1 if (NR_ROUND9 or {}).get("round11")
+                   and lines[-1] == "" else 0), numerals=[], watch_hits=[])
         for n, s in enumerate(lines, start=1):
             for u in units(s):
                 # round 3: context words only from the clause that holds the unit, and within 60 characters of it
@@ -2403,7 +2412,27 @@ def nr_check_ledger_bind(r, ledger):
 # mapping fields leaves the failure unexplained.
 NR_EXEMPTABLE = ("locator-value", "source-values", "ledger-status", "ledger-span", "unit-stated")
 NR_CORR_KINDS = ("wording", "precision", "scope")
-NR_ITEMRAW_RE = re.compile(r"^results/raw/2026-10-0[89]_note-N\d+[a-z]*-[A-Za-z0-9_.\-]+\.(?:md|txt)$")
+# round 11 (prep, 2026-10-29; the design seat's answers of 2026-10-28, 4b-4d, under the PI's 'Yes to all'): three
+# committed transcription raws, admitted as item raws by exact path and nothing wider: N2(vii)'s confirmations against
+# Macar et al. v5 (8d68b0b) and the design seat's two round-11 transcriptions (908a659: the figures the note cites to
+# the authors' correspondence of 2026-10-26, and the Chandaria et al. v2 lines). Their lines give no status: never a
+# status line (nr_status_lines) and never a status_basis (nr_check_status), so a row citing one maps audit-raw-new
+# and is computed-new by its mapping (ruling 5 passes it when the raw is committed); and they are audit paths, never
+# record lines (nr_is_audit_path). No row of v0.3-v0.6 can cite them (each postdates those notes' rows files)
+NR_TRANSCRIPTION_RAWS = frozenset({
+    "results/raw/2026-10-22_note-N2vii-macar-v5.md",
+    "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md",
+    "results/raw/2026-10-28_note-N1-r11_chandaria-v2-lines.md",
+    # round 11 (the design seat's answers of 2026-11-02, da50cd1, 2a and 2b): the seat's v1 transcription (2a (i)),
+    # Code's v5 transcription (2a (ii)) and Code's computation raw, the note's own arithmetic on committed inputs (2b;
+    # not a transcription, but in the same role: an item raw by exact path whose lines decide no status, so a row
+    # citing it is computed-new by its mapping)
+    "results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md",
+    "results/raw/2026-11-02_note-N1-r11_macar-v5-lines.md",
+    "results/raw/2026-11-02_note-N1-r11_computations.md",
+})
+NR_ITEMRAW_RE = re.compile(r"^results/raw/2026-10-0[89]_note-N\d+[a-z]*-[A-Za-z0-9_.\-]+\.(?:md|txt)$"
+                           + "|^(?:" + "|".join(re.escape(p) for p in sorted(NR_TRANSCRIPTION_RAWS)) + ")$")
 NR_RAW_MD = {v[0] for v in RAWS.values()}
 NR_SEP_RE = re.compile(r"^\|\s*:?-")
 # the matcher-unit -> kind assignment, frozen (finding 2): sha256 over one line per row, in file order,
@@ -2690,7 +2719,8 @@ def nr_status_lines(r, figidx):
     section) and decides nothing."""
     out = []
     for l in nr_parse_locs(r.get("locator")):
-        if not l["lines"] or not nr_is_item_raw(l["path"]):
+        # round 11 (prep): a committed transcription raw gives no status (NR_TRANSCRIPTION_RAWS)
+        if not l["lines"] or not nr_is_item_raw(l["path"]) or l["path"] in NR_TRANSCRIPTION_RAWS:
             continue
         for n in l["lines"]:
             s = nr_line_status(l["path"], l["rev"], n, figidx)
@@ -2737,6 +2767,10 @@ def nr_check_status(r, figidx):
             # round 8 fix (checker finding 1): N1's own earlier outcome decides no status
             return dict(result=f"FAIL: status_basis names {p}, an audit-outcome raw (N1's own earlier output), "
                                f"whose lines decide no status")
+        # round 11 (prep; the design seat's 4b-4d of 2026-10-28): a committed transcription raw decides no status
+        if p in NR_TRANSCRIPTION_RAWS:
+            return dict(result=f"FAIL: status_basis names {p}, a committed transcription raw (NR_TRANSCRIPTION_RAWS), "
+                               f"whose lines decide no status (a row citing it is computed-new by its mapping)")
         if not nr_is_item_raw(p):
             return dict(result=f"FAIL: status_basis names {p}, which is not an item raw (a record line gives no status)")
         line = nr_line(rv, p, n)
@@ -3452,10 +3486,13 @@ def nr_check_maps_to(r):
                 if any(nr_is_outcome_raw(l["path"]) for l in lls) else ""))
         return dict(result="pass")
     if mp == "record":
-        if not any(not nr_is_audit_path(l["path"]) and nr_full(l["rev"]) and at_or_before_pin(l["rev"])
+        # round 11 (prep; the design seat's 4a of 2026-10-28, route (a)): or a line of one of the profile's
+        # later-record carriers (NR_LATER_RECORD, exact path and revision; None in v0_3-v0_6)
+        if not any(not nr_is_audit_path(l["path"]) and nr_full(l["rev"]) and at_or_before_pin(l["rev"], l["path"])
                    and nr_lines_at(l["rev"], l["path"]) is not None for l in lls):
             return dict(result="FAIL: maps_to record but the locator cites no record line (a path outside the audit "
-                               "outputs, at or before the record pin)")
+                               "outputs, at or before the record pin" + (", or a later-record carrier at its "
+                                                                          "revision" if NR_LATER_RECORD else "") + ")")
         return dict(result="pass")
     return dict(result="n/a")
 
@@ -3832,16 +3869,39 @@ def earliest_h(cs):
 
 
 _ANC: dict = {}
+# round 11 (prep, 2026-10-29; the design seat's answers of 2026-10-28, 4a, route (a), under the PI's 'Yes to all'): the
+# profile's later-record carriers, record sources committed after the record pin and admitted as record by exact path
+# and revision only: ((label, (path, ...), (revision, ...)), ...). None in v0_3-v0_6, whose runs are unchanged; v0_8:
+# RESULTS.md's Q-F0 VERDICTS entry (0fa8539), the VERDICTS raw and JSON (bfc179c) and the reads' close line (79d462b).
+# Consulted by at_or_before_pin (with a path), nr_check_maps_to and nr_record_entry_from_locs; nowhere else (ruling 5's
+# audit test, nr_r9_is_audit, still reads a revision after the pin as an audit output's)
+NR_LATER_RECORD = None
 
 
-def at_or_before_pin(rev):
+def nr_later_record(path, rev):
+    """Round 11 (prep): (path, rev) is one of the active profile's later-record carriers (NR_LATER_RECORD: the exact
+    path at one of its exact revisions, compared as full shas); always False where the profile has none."""
+    if not NR_LATER_RECORD or not path or not rev:
+        return False
+    fr = nr_full(rev)
+    return fr is not None and any(path in paths and fr in {nr_full(x) for x in revs}
+                                  for _, paths, revs in NR_LATER_RECORD)
+
+
+def at_or_before_pin(rev, path=None):
+    """The revision is an ancestor of the record pin (or the pin). Round 11 (prep): with a path, also True where (path,
+    rev) is a later-record carrier of the active profile (nr_later_record; v0_3-v0_6: none, so unchanged)."""
+    if path is not None and nr_later_record(path, rev):
+        return True
     if rev not in _ANC:
         _ANC[rev] = subprocess.run(["git", "-C", str(REPO), "merge-base", "--is-ancestor", rev, PIN]).returncode == 0
     return _ANC[rev]
 
 
 def nr_is_audit_path(p):
-    return p.startswith("results/raw/2026-10-08_note-") or p.startswith("results/raw/2026-10-09_note-") or p == "README-NOTE.md"
+    # round 11 (prep): the committed transcription raws are audit outputs, never record lines (NR_TRANSCRIPTION_RAWS)
+    return (p.startswith("results/raw/2026-10-08_note-") or p.startswith("results/raw/2026-10-09_note-")
+            or p == "README-NOTE.md" or p in NR_TRANSCRIPTION_RAWS)
 
 
 # round 8: the words section 9g's entries give a figure whose only carrier is an audit raw committed after the audit
@@ -3856,7 +3916,9 @@ def nr_record_entry_from_locs(locs):
     the earliest (the provisional ledger's round-3 rule)."""
     carriers = []
     for l in locs:
-        if not l["lines"] or nr_is_audit_path(l["path"]) or not at_or_before_pin(l["rev"]):
+        # round 11 (prep): a later-record carrier (NR_LATER_RECORD) enters at its line's blamed commit, as a record
+        # locator at or before the pin does
+        if not l["lines"] or nr_is_audit_path(l["path"]) or not at_or_before_pin(l["rev"], l["path"]):
             continue
         if nr_lines_at(l["rev"], l["path"]) is None:
             continue
@@ -3963,8 +4025,10 @@ def nr_span_crosscheck(D):
 
 
 # round 9 integration: the change-record fields the history-schema check reads, where the profile's text freeze covers
-# them (v0_4: n1v4_round2 and round8; v0_5 adds round9 and D8's n1v5_round2)
-NR_HISTORY_FIELDS = ("n1v4_round2", "round8", "round9", "n1v5_round2", "round10", "n1v6_round2")
+# them (v0_4: n1v4_round2 and round8; v0_5 adds round9 and D8's n1v5_round2; v0_6 round10 and n1v6_round2; round 11,
+# v0_8: round11 and n1v8_round2, which only v0_8's text freeze covers)
+NR_HISTORY_FIELDS = ("n1v4_round2", "round8", "round9", "n1v5_round2", "round10", "n1v6_round2",
+                     "round11", "n1v8_round2")
 
 
 def nr_history_schema(rows):
@@ -4090,7 +4154,9 @@ def final_note_rows(path, ledger, raws, note_res, watch, D=None, raw_bytes=None,
                               failures=[f"round9-tables: {len(_r9p)} problem(s): {_r9p[:8]}"]))
         # round 10 (prep): the PI's rulings 11-13 of 2026-10-12, their tables against the file (v0_5: not run)
         if NR_ROUND9.get("round10"):
-            _r10p = nr_r10_run_checks(rows, texts)
+            # round 11: the design seat's answers of 2026-11-02, reported with round 10's (v0_5_r10, v0_6: not run)
+            _r10p = nr_r10_run_checks(rows, texts) + (nr_r11_run_checks(rows, texts) if NR_ROUND9.get("round11")
+                                                      else [])
             if _r10p:
                 fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
                                   failures=[f"round10-tables: {len(_r10p)} problem(s): {_r10p[:8]}"]))
@@ -7142,6 +7208,9 @@ def render_final(w, J, FN):
     w("'status' is the row's (carried from the item raw or the ledger row; 'pass check' differs only where the ledger "
       "row's item raw gives no status in N1's vocabulary, or where a discrepant row is corrected in the note"
       + ("; under the PI's rulings of 2026-10-10" + (" and 2026-10-12" if (NR_ROUND9 or {}).get("round10") else "")
+         # round 11 (the ledger read's M11): and the design seat's rulings 14 and 15 (v0_3-v0_6: as committed)
+         + (" and rulings 14 and 15 (the design seat's answers of 2026-11-02, routed by the PI)"
+            if (NR_ROUND9 or {}).get("round11") else "")
          + " it names the ruling a row passes under, or says the row is open, not passing (9d)"
          if FN["pass_check"].get("round9") else "") + "). 'corr.' "
       "names a correction recorded in 9i. 'source' is the row's first locator and its source value (cut here; whole "
@@ -7236,12 +7305,21 @@ def render_final(w, J, FN):
         _g2 = [x for x in FN["not_found"] if x["row"] in _na]
         _g3 = [x for x in FN["not_found"] if x["row"] not in _adm and x["row"] not in _na]
         w(f"**Not found** ({len(FN['not_found'])}; the status stays 'not found' on every row; the comment column carries "
-          "the row's own condition), by the PI's ruling 8 of 2026-10-10:")
+          "the row's own condition), by the PI's ruling 8 of 2026-10-10"
+          + (" and rulings 14 and 15 (the design seat's answers of 2026-11-02, routed by the PI)"
+             if (NR_ROUND9 or {}).get("round11") else "") + ":")
         _r11o = [x["row"] for x in _g1 if x["row"] in set(P["round9"].get("ruling11_occurrences") or ())]
+        _r14r, _r15r = list(P["round9"].get("ruling14_rows") or []), list(P["round9"].get("ruling15_rows") or [])
         _nf_groups = [
-            (f"Admitted under ruling 8 ({len(_g1)}): citations, not record figures; they pass (the Ruling 8 bullet above)"
+            (((f"Admitted under ruling 8 ({len(_g1)}): citations, not record figures; they pass (the Ruling 8 bullet "
+              f"above)") if not (NR_ROUND9 or {}).get("round11") else
+             (f"Admitted ({len(_g1)}): under ruling 8, {len([x for x in _g1 if x['row'] not in _r14r + _r15r])} "
+              f"citations; under ruling 14, {len([x for x in _g1 if x['row'] in _r14r])}, the scored audit table's "
+              f"count; under ruling 15, {len([x for x in _g1 if x['row'] in _r15r])}, readings of the source's plots; "
+              f"none a record figure; they pass (the Ruling 8, 14 and 15 bullets above)"))
              + (f"; {len(_r11o)} of them ({', '.join(_r11o)}) an occurrence ruling 11 of 2026-10-12 admits (the "
-                f"Ruling 11 bullet above)" if (NR_ROUND9 or {}).get("round10") else ""), _g1),
+                f"Ruling 11 bullet above)" if (NR_ROUND9 or {}).get("round10")
+                and (_r11o or not (NR_ROUND9 or {}).get("round11")) else ""), _g1),
             (f"Not admissible under ruling 8 ({len(_g2)}): F2's ~800/~80 is the Digest seat's, stated with the "
              f"eight-concept premise or cut", _g2),
             (f"The rest ({len(_g3)}): block :23: cut from the note", _g3)]
@@ -7362,12 +7440,24 @@ def render_final(w, J, FN):
         w(f"- Computed-new figures with no audit-raw line to blame ({', '.join(T['computed_without_audit'])}).")
     if T["unresolved_rows"]:
         ust = sorted({x["status"] for x in T["unresolved_rows"]})
+        # round 11 (the ledger read's M23): the record pin bounds these rows' entry; where it is an ancestor of both
+        # candidates (v0_8: the record-only candidate, 0fa8539, descends from it), the bound moves neither and the
+        # record-only candidate holds over these rows too. Read under a round-11 profile only; v0_3-v0_6, whose
+        # record-only candidate (05c4636) precedes the pin, keep the clause as committed
+        pin_below_ = bool((NR_ROUND9 or {}).get("round11")) and all(
+            c_ and full(c_) != full(PIN) and subprocess.run(
+                ["git", "-C", str(REPO), "merge-base", "--is-ancestor", PIN, c_]).returncode == 0
+            for c_ in (r1["commit"], r3["commit"]))
         w(f"- Figures whose record entry the rule does not resolve ({len(T['unresolved_rows'])}; statuses "
           f"{', '.join(ust)}: " + ", ".join(ref(x["row"]) for x in T["unresolved_rows"])
           + "). Each cites an item raw that reproduces or reads it from the record at the pin (or, for a discrepant "
-          "row, its reproduced value), so each entered at or before bbc9ffe. That bound is below the including-audit "
-          f"candidate, so it cannot move it; the record-only candidate (`{short(r1['commit'])}`) holds only if each "
-          "of these entered no later than that, which this rule does not establish.")
+          "row, its reproduced value), so each entered at or before bbc9ffe. "
+          + ((f"That bound is below both candidates ({PIN} is an ancestor of `{short(r1['commit'])}` and of "
+              f"`{short(r3['commit'])}`), so it moves neither: each of these entered no later than the record-only "
+              f"candidate (`{short(r1['commit'])}`).") if pin_below_ else
+             ("That bound is below the including-audit "
+              f"candidate, so it cannot move it; the record-only candidate (`{short(r1['commit'])}`) holds only if each "
+              "of these entered no later than that, which this rule does not establish.")))
     w("")
     # round 10 (prep): what sets the including-audit candidate, read from the entries (v0_3-v0_5: not reached)
     if (NR_ROUND9 or {}).get("round10"):
@@ -7759,6 +7849,11 @@ def render_selftest_only(w, FN, byk, fl, ref):
                          "with a reproduced item-raw figure row, and the status 'reproduced'",
              "family H": "the same rows given another ledger row whose item-raw rows are all reproduced, and the status "
                          "'reproduced'"}
+    # round 11 (the ledger read's M27): where no declaration carries ruling 11's reach (v0_8), family R11 is generated
+    # on ruling 11's not-figures only, and its description says so (_R11_FDESC_R11_NF; v0_6: as committed)
+    if (NR_ROUND9 or {}).get("round11") and not any(
+            (d_ or {}).get("reach") is not None for d_ in (NR_ROUND9.get("admitted") or {}).values()):
+        fdesc["family R11"] = _R11_FDESC_R11_NF
     for fname in sorted({x["origin"] for x in ms if x["origin"].startswith("family")}):
         xs = [x for x in ms if x["origin"] == fname]
         ck = {}
@@ -7836,6 +7931,8 @@ NR_PROFILE_KEYS = (
     "NR_SPAN_DISPOSITION", "NR_REQUIRE_SPAN_DISPOSITION",
     # round 9 (prep): the PI's rulings 5-8 of 2026-10-10 (v0_3, v0_4: None)
     "NR_ROUND9",
+    # round 11 (prep): the later-record carriers (the design seat's 4a of 2026-10-28; v0_3-v0_6: None)
+    "NR_LATER_RECORD",
 )
 PROFILES = {"v0_3": {k: globals()[k] for k in NR_PROFILE_KEYS}}
 
@@ -8080,6 +8177,7 @@ PROFILES["v0_4"] = dict(
     NR_SPAN_DISPOSITION=None,
     NR_REQUIRE_SPAN_DISPOSITION=True,
     NR_ROUND9=None,
+    NR_LATER_RECORD=None,
 )
 # ---- round 8 integration: the v0_4 tables (true of the v0.4 rows file; see the section-10 record of round 8)
 # V04_TABLES_BEGIN
@@ -9761,7 +9859,11 @@ _R9_STOP = {"the", "a", "an", "of", "on", "in", "at", "to", "and", "or", "by", "
             "as", "is", "are", "be", "its", "it", "over", "series"}
 _R9_MARK_RX = re.compile(r"(?i)\bcorrection\s*:|\bcorrect(?:ed)?\s+to\b|\bcorrected\s+value\s*:")
 _R9_SQ_RX = re.compile(r"(?<![A-Za-z0-9])'(.+?)'(?![A-Za-z0-9])")
-_R9_LAYER_RXS = (re.compile(r"\bL(\d+)(?:\s*-\s*L?(\d+))?\b"), re.compile(r"(?i)\blayers?\s+(\d+)(?:\s*-\s*(\d+))?"))
+# round 11 (the design seat's answer 1b item 4 of 2026-11-02, "Teach the reader "layers N through M" (and "N to M" in
+# the same step ...)"): a layer range written with 'through' or 'to' reads as one written with a hyphen. No audited
+# text of v0.3-v0.6 has either form (the regressions reproduce their committed ledgers); v0.8 :83 has the first
+_R9_LAYER_RXS = (re.compile(r"\bL(\d+)(?:\s*-\s*L?(\d+))?\b"),
+                 re.compile(r"(?i)\blayers?\s+(\d+)(?:(?:\s*-\s*|\s+(?:through|to)\s+)(\d+))?"))
 _R9_NUM_RX = re.compile(r"(?<![A-Za-z0-9.])(\d+(?:\.\d+)?|\.\d+)(?![A-Za-z0-9])")
 _R9_REL = "≈~≤≥<>±"
 
@@ -10202,7 +10304,8 @@ def nr_check_discharged(r, texts, figidx=None):
     ruling's words and the note_quote); the note_quote is verbatim on the row's note line and carries the row's unit. A
     declared row without the field, or the field on an undeclared row, fails. Fix round (checker finding 5): the row
     is W8's (it maps to W8's ledger row, NR_ROUND9['w8']['ledger_row'], and its locator cites W8's item raw);
-    the note_quote states the per-arm range, and, where the declaration says so (the clause at :111), the overall
+    the note_quote states the per-arm range, and, where the declaration says so (the clause at :111 in v0.4-v0.6;
+    in v0.8 both declarations, at :250), the overall
     rate (ruling 7's own words: 'the clause now states the overall rate and the per-arm range'); and the row's whole
     note line carries none of the discrepant wordings (NR_ROUND9['w8']['absent']: v0.3's 'uniformly across arms', the
     item raw's figure '≈ 1% of rounds by arm')."""
@@ -10252,19 +10355,43 @@ def nr_check_admitted(r, texts, figidx=None):
     on a line of the row's note file (fix round, checker finding 3: the field spec asks for 'verbatim note text naming
     that source', not the row's own line; the unit on the row's own line is the base validation's) and carries the
     row's unit. Fix round (checker finding 4): the row's (note line, unit) is the declaration's, and the declaration's
-    is one of the units ruling 8 names (NR_ROUND9['r8_units'], as the PI states them, per profile). A row the ruling
+    is one of the units ruling 8 names (NR_ROUND9['r8_units'], per profile: as the PI states them for v0.4; v0_8's
+    re-keyed in round 11, :195's two by Code under 4f and :202's and :200's by the design seat's answers 1b items 6 and
+    7). A row the ruling
     does not admit (F2's ~800/~80, NR_ROUND9['not_admissible'], or any row outside the note's spans) fails if it
     carries the field; a declared row without it fails. The status stays 'not found': an admitted citation, not a
-    record figure."""
+    record figure.
+    Round 11 (the design seat's answers of 2026-11-02, da50cd1; profiles whose NR_ROUND9 sets 'round11'): the row is
+    declared in exactly one admission table, ruling 8's (NR_ROUND9['admitted']), ruling 14's ('admitted_r14') or ruling
+    15's ('admitted_r15'), and the field carries that table's ruling; rulings 14 and 15 name their own units, not ruling
+    8's (NR_ROUND9['r8_units']). A declaration with a source line ('source_line'; answer 1b item 7's check change)
+    splits the citation: its note_quote names the cited source and is verbatim on that line, the field's unit_quote is
+    verbatim on the row's own line and carries the row's unit as a token, and the relation the declaration names
+    between the two lines holds (nr_r11_relation). Ruling 14's admission also needs its condition at its pin
+    (nr_r11_r14_table)."""
     key = f"{r.get('span')}#{r.get('seq')}"
-    a, decl = r.get("admitted_citation"), _r9_tab("admitted").get(key)
+    a = r.get("admitted_citation")
+    rr11 = bool(NR_ROUND9.get("round11"))
+    if rr11:
+        hits = [(t_, u_, _r9_tab(t_).get(key)) for t_, u_ in _R11_ADM_TABLES if _r9_tab(t_).get(key) is not None]
+        if len(hits) > 1:
+            return dict(result=f"FAIL: {key} is declared in more than one admission table "
+                               f"({', '.join(h_[0] for h_ in hits)})")
+        tab_, rul_, decl = hits[0] if hits else ("admitted", R9_RULING8, None)
+    else:
+        tab_, rul_, decl = "admitted", R9_RULING8, _r9_tab("admitted").get(key)
     if a is not None and (key in NR_ROUND9["not_admissible"] or r.get("span") not in NR_ROUND9["admit_spans"]):
         return dict(result="FAIL: admitted_citation on a row ruling 8 does not admit (F2's ~800/~80 is the Digest "
                            "seat's: stated with the eight-concept premise or cut; only note units are admitted)")
     if a is None:
+        if decl and rr11 and tab_ != "admitted":
+            return dict(result=f"FAIL: declared admitted ({rul_}) and the row carries no admitted_citation")
         return dict(result="FAIL: declared admitted (ruling 8) and the row carries no admitted_citation") if decl \
             else dict(result="n/a")
     if decl is None:
+        if rr11:
+            return dict(result="FAIL: admitted_citation on a row no admission table declares (NR_ROUND9['admitted'], "
+                               "['admitted_r14'], ['admitted_r15'])")
         return dict(result="FAIL: admitted_citation on a row ruling 8's table does not declare (NR_ROUND9['admitted'])")
     if r.get("kind") != "figure" or r.get("status") != "not found" or r.get("maps_to") != "none":
         return dict(result=f"FAIL: admitted_citation on a row that is not a 'not found' figure mapped to none "
@@ -10272,20 +10399,29 @@ def nr_check_admitted(r, texts, figidx=None):
     # round 10 (prep; the PI's ruling 11 of 2026-10-12): an occurrence of an admitted citation at a (line, unit) ruling
     # 8 does not name carries 'reach' (ruling 11's words) beside the three keys; no other row carries it
     r10 = bool(NR_ROUND9.get("round10"))
+    split = rr11 and decl.get("source_line") is not None
     ks_ = {"ruling", "cited_source", "note_quote"}
-    if not isinstance(a, dict) or not (set(a) == ks_ or (r10 and set(a) == ks_ | {"reach"})):
+    if split:
+        if not isinstance(a, dict) or set(a) != ks_ | {"unit_quote"}:
+            return dict(result="FAIL: a split admitted_citation must be {ruling, cited_source, note_quote, "
+                               "unit_quote}")
+    elif not isinstance(a, dict) or not (set(a) == ks_ or (r10 and tab_ == "admitted" and set(a) == ks_ | {"reach"})):
         return dict(result="FAIL: admitted_citation must be {ruling, cited_source, note_quote}"
                            + (" (and 'reach' on an occurrence ruling 11 admits)" if r10 else ""))
-    if a.get("ruling") != R9_RULING8 or a.get("ruling") != decl["ruling"]:
-        return dict(result=f"FAIL: admitted_citation's ruling {a.get('ruling')!r} is not {R9_RULING8!r}")
+    if a.get("ruling") != rul_ or a.get("ruling") != decl["ruling"]:
+        return dict(result=f"FAIL: admitted_citation's ruling {a.get('ruling')!r} is not {rul_!r}")
     if a.get("cited_source") != decl["cited_source"] or a.get("note_quote") != decl["note_quote"]:
         return dict(result="FAIL: admitted_citation's cited_source or note_quote is not the declared one")
+    if split and a.get("unit_quote") != decl.get("unit_quote"):
+        return dict(result="FAIL: admitted_citation's unit_quote is not the declared one")
     ru = (r.get("note_line"), nr_unit(r))
     if ru != (decl.get("note_line"), decl.get("unit")):
         return dict(result=f"FAIL: the row's note line and unit {ru} are not the declaration's "
                            f"{(decl.get('note_line'), decl.get('unit'))}")
     reach = None
-    if r10:
+    if tab_ != "admitted":
+        pass
+    elif r10:
         r11 = nr_r10_r11_occurrence(ru, a, decl)
         if r11["result"] != "pass":
             return r11
@@ -10295,6 +10431,26 @@ def nr_check_admitted(r, texts, figidx=None):
     if not a["cited_source"] or a["cited_source"] not in a["note_quote"]:
         return dict(result="FAIL: admitted_citation's note_quote does not name its cited source")
     ls_ = texts.get(r.get("note_file")) or []
+    if tab_ == "admitted_r14":
+        c14 = nr_r11_r14_table()
+        if c14["result"] != "pass":
+            return c14
+    if split:
+        sl = decl["source_line"]
+        if not (isinstance(sl, int) and 1 <= sl <= len(ls_)) or a["note_quote"] not in ls_[sl - 1]:
+            return dict(result=f"FAIL: admitted_citation's note_quote is not verbatim on its declared source line :{sl}")
+        nl = r.get("note_line")
+        own = ls_[nl - 1] if isinstance(nl, int) and 1 <= nl <= len(ls_) else ""
+        if not a.get("unit_quote") or a["unit_quote"] not in own:
+            return dict(result="FAIL: admitted_citation's unit_quote is not verbatim on the row's own line")
+        if not nr_r9_unit_count(a["unit_quote"], nr_unit(r)):
+            return dict(result=f"FAIL: admitted_citation's unit_quote does not carry the row's unit {nr_unit(r)!r} "
+                               f"as a token")
+        rel = nr_r11_relation(decl.get("relation"), ls_, sl, nl, a["unit_quote"])
+        if rel["result"] != "pass":
+            return rel
+        return dict(result="pass", ruling=rul_, cited_source=a["cited_source"], note_quote_lines=[sl],
+                    own_line=False, source_line=sl, relation=decl.get("relation"))
     on = [i + 1 for i, l_ in enumerate(ls_) if a["note_quote"] in l_]
     if not on:
         return dict(result="FAIL: admitted_citation's note_quote is not verbatim on any line of the row's note file")
@@ -10303,7 +10459,7 @@ def nr_check_admitted(r, texts, figidx=None):
     if reach is not None:
         return dict(result="pass", ruling=R9_RULING8, reached_by=R10_RULING11, occurrence_of=list(reach),
                     cited_source=a["cited_source"], note_quote_lines=on, own_line=r.get("note_line") in on)
-    return dict(result="pass", ruling=R9_RULING8, cited_source=a["cited_source"], note_quote_lines=on,
+    return dict(result="pass", ruling=rul_, cited_source=a["cited_source"], note_quote_lines=on,
                 own_line=r.get("note_line") in on)
 
 
@@ -10695,7 +10851,13 @@ def nr_r9_rule5_selftest(D0):
         return [dict(id="R5-00", origin="round 9 (ruling 5)", what="no computed-new row passes ruling 5 to mutate",
                      applied=False, caught=None, expected=True, by="not applicable")]
     k = f"{base['span']}#{base['seq']}"
-    l0 = next(l for l in nr_parse_locs(base.get("locator")) if nr_r9_is_audit(l["path"], l["rev"]))
+    # round 11 (integration): l0 is the locator that qualified the base (an audit raw with cited lines whose commit
+    # is not an ancestor of the audit pin), else the first audit locator as before. v0.8's base, S4#17, cites N3c at
+    # 09c3a8c before the provisional ledger at 6485da2, which qualified it; its first audit locator left R5-04 'not
+    # applicable for this row'. A base whose first audit locator qualifies gets the same l0 as before
+    l0 = next((l for l in nr_parse_locs(base.get("locator")) if nr_r9_is_audit(l["path"], l["rev"]) and l["lines"]
+               and nr_full(l["rev"]) and not _r9_is_ancestor(nr_full(l["rev"]), full(AUDIT))),
+              next(l for l in nr_parse_locs(base.get("locator")) if nr_r9_is_audit(l["path"], l["rev"])))
     raw0 = f"{l0['path']}@{l0['rev']}"
 
     def mut(fn):
@@ -11181,6 +11343,7 @@ PROFILES["v0_5"] = dict(
         admit_spans=tuple(f"S{i}" for i in range(1, 9)),
         keys_provisional=True,
     ),
+    NR_LATER_RECORD=None,
 )
 # V05_TABLES_BEGIN
 # ---- round 9 integration: the v0_5 tables (true of the v0.5 rows file; see the section-10 record of round 9)
@@ -12532,6 +12695,166 @@ R10_TXT = dict(
          "S11#18, S11#19)."),
     o8a_o11="O8(a) and O11 are resolved by wording in note v0.6, not by ruling.",
 )
+# ------------------------------------------------------- round 11 (the design seat's answers of 2026-11-02, da50cd1)
+# The design seat's answers to Code's round-11 list (results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md at
+# d5123bf), routed by the PI on 2026-11-02 with the PI's word on the items it marks: one table, each answer cell held
+# here verbatim with its line in the answers file at da50cd1, where a v0_8 run asserts it (nr_r11_run_checks). Two of
+# the answers are new rulings: ruling 14 (S8#3143's 'ten', the count of the scored audit table's published designs) and
+# ruling 15 (the source's curve readings, each admitted as a reading of the source's plot). Answer 1b item 7 extends
+# ruling 8 to a unit on a list item whose source is named on the list's lead-in line (a split source), and ruling 14 and
+# ruling 15's rows on :15 and :101 use the same mechanism (nr_check_admitted, nr_r11_relation). Only profiles whose
+# NR_ROUND9 sets 'round11' read any of this.
+R11_ANSWERS_PATH = "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md"
+R11_ANSWERS_REV = "da50cd1"
+R11_RULING14 = "ruling 14 (the design seat's answers of 2026-11-02, routed by the PI)"
+R11_RULING15 = "ruling 15 (the design seat's answers of 2026-11-02, routed by the PI)"
+R11_ANSWERS = {
+    "1b1": (9, "**Confirmed.** Nodes 17–19 are byte-identical across the two renders; ruling 13 reaches the 2026-10-22 "
+               "render."),
+    "1b2": (10, "**Re-key.** R1 declares no note text; the unit is the same quantity (instruct FPR, source v1 text "
+                "0.000) in the same role; only the clause moved."),
+    "1b3": (11, "**Yes.** Ruling 6 is the scope correction stated in the note's own wording; \".94–.995 over layers "
+                "50–63\" and \"0.81–0.96 … from layer 51 onward\" state the domains the routed corrections (N3 :370 "
+                "'L50-L63', :385 'from L51') require."),
+    "1b4": (12, "**(a).** Teach the reader \"layers N through M\" (and \"N to M\" in the same step, if it is the same "
+                "code path and the grep stays empty for v0.3–v0.6), and ruling 6 reaches :83 under item 3."),
+    "1b5a": (13, "**Yes.** The clause moved whole into the footnote; the W8 states both read true there. Restate "
+                 "NR_DISC_PATH's NT text for :250."),
+    "1b5b": (14, "**The first reading.** The ‖ at the end of that sentence points to ‖(c) on the same page, which "
+                 "states the overall rate, the by-arm range with the sham highest, and the test; ruling 7's discharge "
+                 "reaches :143 through that pointer. The wording is a correction-block item (R §5 #23) in N5 :122's "
+                 "form: \"with no detectable heterogeneity by arm (post-hoc exact test, *p* = .72)\". W8 does not "
+                 "reopen; :143's 1% stays S6#101, reproduced."),
+    "1b6": (15, "**The candidate.** cited_source \"Our next-experiments list\"; note_quote \"Our next-experiments list "
+                "specifies two arms on their released code\"; unit (202, 'two'). The record-line alternative is closed "
+                "by round 4's precedent, as Code says."),
+    "1b7": (16, "**(a).** Admit it with the source named on :195. The four numbered items at :197–:200 are the "
+                "continuation of :195's sentence (\"Four features of that design impact its reading\"); the check "
+                "change admits a unit on a list item whose source is named on the list's lead-in line."),
+    "1b8": (17, "**(a), narrowly.** A new ruling (ruling 14) admitting 'ten' as the count of designs in the scored "
+                "published-record table, cited_source \"the scored audit table\" (:214, \"the scored audit table with "
+                "per-study sources\")"),
+    "1b8cond": (17, "Code confirms the count at the pin it uses; if it is not ten there, this answer is withdrawn and "
+                    "the row stays not found."),
+    "1b9": (18, "**Re-key with the three changes** (note_line 258; '2026' occurrence 2; comment_quote 'the v2 posting "
+                "date 2026-09-25')."),
+    "1b10": (19, "**(a).** Re-key to the five 'fifty' rows, each keeping N2 5(b)'s label as its status basis; the two "
+                 "'50' rows rest on 4b. Whether S10#137 also cites N2(vii) :64 is Code's."),
+    "1b11": (20, "**Carries.** The differences are listed (‡(k) :246: the 60-token cap, the legacy scorer, \"other "
+                 "differences\"), the rescoring is labelled post hoc and approximate, and :118's inference is stated "
+                 "as \"indicates\", with the controlled greedy arm named as not yet pre-registered. O6 stays CLOSED."),
+    "1c": (21, "**Retire with v0.6 and its ledger at `note-2026-10-v1`**, as 4g did for ‖‖(c)."),
+    "2a_i": (22, "(i) Reading (5), §6's 10 injected / 10 control per concept: **transcribed from v1** in "
+                 "`results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md` (this commit; §1 of that file)"),
+    "2a_ii": (22, "(ii) Readings (3) and (4), Figure 20's layer and §3.3's sentence: **(b)** — Code acquires "
+                  "arXiv:2603.21396v5 on the laptop as N2(vii) did"),
+    "2a_iii": (22, "(iii) Readings (1) and (2), the curve readings: **(c)**, an admission ruling with its own table "
+                   "(ruling 15), cited_source \"v5 Figure 5\" / \"v5 Figure 22\" at :15, :101, :228 — a figure read by "
+                   "eye is admitted as what it is, a reading of the source's plot, and is labelled so in the ledger."),
+    "2b": (23, "**(a).** Admit the computation raw; Code regenerates it from its committed script and commits it with "
+               "its own pin class; the 24 rows map audit-raw-new, computed-new."),
+    "4a": (24, "**Not-figure**, a release commitment in prose, as rowed."),
+    "4b": (25, "Stands (record, log-only)."),
+    "4c_w5": (26, "Confirmed, Code's reading."),
+    "4c_zero": (27, "**DPO only**, as rowed."),
+    "4c_a0": (28, "**Sufficient as rowed; no change to 4a's scope.**"),
+    "4c_177": (29, "Covered by 4a (the additions raw's omission is corrected in its §5, this commit)."),
+    "4d": (30, "**Code's recommendation in every row**"),
+}
+# round 11 (the ledger read's shared findings M2 and M8): pointers that 9c's ruling-12 pass label and 9d's ruling
+# bullets give under a round-11 profile only (v0_5_r10, v0_6: their texts as committed). Round 10's Code's readings (a)
+# and (b) are recorded in N1's v0.6 ledger's 10e, while a round-11 ledger's own 10e is round 11's record; 4f of the
+# design seat's answers of 2026-10-28 is the answer under which Code re-keyed ruling 8 verbatim at :195 (edit E9)
+_R11_V06_10E = "N1's v0.6 ledger's 10e, results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2814"
+_R11_4F_AT = "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:56"
+# ruling 14's condition, read at the pin the answer names (PREPRINT-v1_0-draft.md at patch v8, 32aefcc): the scored
+# table's rows, ten published designs and 'This paper', and no Sofroniew et al. row. The answer places the table in
+# the preprint's section 8; at 32aefcc it is the abbreviated scored table of section 6 ('Reading the published record
+# against the framework'), the only table there that scores studies (section 8 is 'Pre-registered next experiments')
+R11_R14_TABLE = dict(path="PREPRINT-v1_0-draft.md", rev="32aefcc",
+                     section="## 6 Reading the published record against the framework",
+                     marker="[TAB 3: the full scored table. Abbreviated:]", header="Study", self_row="This paper",
+                     published=10, not_a_row="Sofroniew")
+
+
+def nr_r11_r14_table():
+    """Round 11 (ruling 14's condition, answer 1b item 8): the scored table at R11_R14_TABLE's pin, read from the git
+    object: its section, its rows (the first cell of each table line after the marker, the header and separator
+    left out), the published designs (every row but 'This paper'), and whether any row names Sofroniew et al. The
+    condition holds when the published designs number R11_R14_TABLE['published'], 'This paper' is one row, and no row
+    names Sofroniew et al."""
+    T = R11_R14_TABLE
+    ls_ = nr_lines_at(T["rev"], T["path"])
+    if ls_ is None:
+        return dict(result=f"FAIL: {T['path']}@{T['rev']} is not readable", rows=[])
+    if T["marker"] not in ls_ or T["section"] not in ls_:
+        return dict(result=f"FAIL: {T['path']}@{T['rev']} has no {T['marker']!r} under {T['section']!r}", rows=[])
+    i0, s0 = ls_.index(T["marker"]), ls_.index(T["section"])
+    nxt = [i for i, l_ in enumerate(ls_) if l_.startswith("## ") and i > s0]
+    if not s0 < i0 < (nxt[0] if nxt else len(ls_)):
+        return dict(result=f"FAIL: the scored table's marker is not in {T['section']!r} at {T['rev']}", rows=[])
+    rows, i = [], i0 + 1
+    while i < len(ls_) and not ls_[i].startswith("|"):
+        i += 1
+    while i < len(ls_) and ls_[i].startswith("|"):
+        c0 = ls_[i].split("|")[1].strip()
+        if c0 != T["header"] and not NR_SEP_RE.match(ls_[i]):
+            rows.append(c0)
+        i += 1
+    pub = [x for x in rows if x != T["self_row"]]
+    ok = (len(pub) == T["published"] and rows.count(T["self_row"]) == 1
+          and not any(T["not_a_row"] in x for x in rows))
+    return dict(result="pass" if ok else (f"FAIL: ruling 14's condition does not hold at {T['rev']}: {len(pub)} "
+                                          f"published designs, {rows.count(T['self_row'])} 'This paper' row(s), "
+                                          f"{sum(T['not_a_row'] in x for x in rows)} row(s) naming "
+                                          f"{T['not_a_row']}"),
+                rows=rows, published=pub, line=i0 + 1)
+
+
+_R11_ADM_TABLES = (("admitted", R9_RULING8), ("admitted_r14", R11_RULING14), ("admitted_r15", R11_RULING15))
+# 9d's ruling-11 bullet: the not-figure occurrence it names as its example (v0_6's, unless a profile restates it in
+# NR_ROUND9['r11_occ_example'], as v0_8 does)
+_R10_R11_OCC_EXAMPLE = "S7#89: the second 'two', the PI's 'its second'"
+
+
+def nr_r11_relation(rel, ls_, sl, nl, uq):
+    """Round 11 (answer 1b item 7's check change): the relation a split admission declares between the line naming its
+    source (sl) and the row's own line (nl), checked where it is mechanical. 'lead-in': the source line ends the list's
+    lead-in sentence with ':', every non-blank line after it up to the row's is an item of one numbered list (1., 2.,
+    ... in order), and the row's line is one of them. 'dagger': the row's line carries a ‡ after its unit_quote, and
+    the source line is inside the ‡ notes (after the '#### ‡' heading that precedes it, with no other note's opening
+    mark between). 'named': the ruling names the two lines itself; nothing further is checked."""
+    if rel == "named":
+        return dict(result="pass")
+    if rel == "lead-in":
+        if not ls_[sl - 1].rstrip().endswith(":"):
+            return dict(result=f"FAIL: the source line :{sl} does not end a list's lead-in (':')")
+        items = []
+        for i in range(sl + 1, nl + 1):
+            t_ = ls_[i - 1]
+            if not t_.strip():
+                continue
+            m_ = re.match(r"^(\d+)\. ", t_)
+            if not m_:
+                return dict(result=f"FAIL: :{i}, between the lead-in :{sl} and the row's line :{nl}, is not an item "
+                                   f"of a numbered list")
+            items.append(int(m_.group(1)))
+        if nl <= sl or not items or items != list(range(1, len(items) + 1)) or not re.match(r"^\d+\. ", ls_[nl - 1]):
+            return dict(result=f"FAIL: the row's line :{nl} is not an item of the numbered list :{sl}'s lead-in opens")
+        return dict(result="pass")
+    if rel == "dagger":
+        own = ls_[nl - 1]
+        p_ = own.find(uq)
+        if p_ < 0 or "‡" not in own[p_ + len(uq):]:
+            return dict(result=f"FAIL: the row's line :{nl} carries no ‡ after its unit_quote")
+        hd = [i for i in range(1, sl + 1) if ls_[i - 1].startswith("#### ")]
+        if not hd or "‡" not in ls_[hd[-1] - 1] or any(
+                ls_[i - 1].startswith(("¶", "‖", "‡‡")) for i in range(hd[-1] + 1, sl + 1)):
+            return dict(result=f"FAIL: the source line :{sl} is not inside the ‡ notes")
+        return dict(result="pass")
+    return dict(result=f"FAIL: unknown relation {rel!r} (lead-in, dagger or named)")
+
+
 NR_R10_FDESC = {
     "family R11": ("ruling 11 broken one way: an admitted occurrence's note_quote off every note line (declaration and "
                    "field), its cited source "
@@ -12549,6 +12872,16 @@ NR_R10_FDESC = {
                    "without the correction, the note_quote kept or following it), or the field put on a render row "
                    "that is not branch TS"),
 }
+# round 11 (the ledger read's shared finding M27): family R11 as a round-11 profile generates it where no declaration
+# carries ruling 11's reach (v0_8): its not-figure members only, since nr_r10_family_mutations builds the occurrence
+# members, and the one that gives a not-figure an admitted occurrence's admitted_citation, from an admitted occurrence
+# (10b reads this text in place of NR_R10_FDESC's under that condition; v0_6: NR_R10_FDESC's, as committed)
+_R11_FDESC_R11_NF = (
+    "ruling 11 broken one way, on the not-figures it reaches (no declaration carries ruling 11's reach, so the members "
+    "that need an admitted occurrence are not generated: 10d, the ruling-11 limit): a not-figure ruling 11 reaches "
+    "claimed as a figure, its context off its line, located at another occurrence of its unit (its context or its "
+    "declared ordinal), its comment_quote off its comment, its ruling text changed, its entry on another row, or a key "
+    "the file lacks")
 # self-test only: the run-level check a generated round-10 member must fire (filled by nr_r10_family_mutations)
 _R10_EXPECT_RUN: dict = {}
 # a text written at integration (v0_6): a final run stops while any NR_TXT value or NR_LIMITS entry still holds it
@@ -12746,6 +13079,51 @@ def nr_r10_run_checks(rows, texts=None):
     return out
 
 
+def nr_r11_run_checks(rows, texts=None):
+    """Round 11 (the design seat's answers of 2026-11-02; profiles whose NR_ROUND9 sets 'round11'), at run level and
+    reported with round 10's (the final run stops on any problem): every answer cell this script applies is verbatim
+    on its line of the answers file at da50cd1 (R11_ANSWERS); rulings 14 and 15's tables declare rows the file has, at
+    their note line and unit, each declaration carrying its table's ruling, a cited source its note_quote names and,
+    where it names a source line, a unit_quote and a relation; a row is declared in one admission table at most; and
+    ruling 14's condition holds at its pin (nr_r11_r14_table)."""
+    byk = {f"{r.get('span')}#{r.get('seq')}": r for r in rows}
+    out = []
+    al = nr_lines_at(R11_ANSWERS_REV, R11_ANSWERS_PATH)
+    for k, (n_, t_) in sorted(R11_ANSWERS.items()):
+        if al is None or not 1 <= n_ <= len(al) or t_ not in al[n_ - 1]:
+            out.append(f"round 11: answer {k}'s words are not verbatim on {R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{n_}")
+    seen = {}
+    for t_, ru_ in _R11_ADM_TABLES:
+        for k, d in sorted(_r9_tab(t_).items()):
+            seen.setdefault(k, []).append(t_)
+            if t_ == "admitted" and d.get("source_line") is None:
+                continue
+            r = byk.get(k)
+            if r is None:
+                out.append(f"round 11: NR_ROUND9[{t_!r}] names a row the file does not have: {k}")
+                continue
+            if d.get("ruling") != ru_:
+                out.append(f"round 11: {k}'s declaration in NR_ROUND9[{t_!r}] is not {ru_!r}")
+            if (r.get("note_line"), nr_unit(r)) != (d.get("note_line"), d.get("unit")):
+                out.append(f"round 11: {k}: the row's note line and unit {(r.get('note_line'), nr_unit(r))} are not "
+                           f"the declaration's {(d.get('note_line'), d.get('unit'))}")
+            if not d.get("cited_source") or d["cited_source"] not in (d.get("note_quote") or ""):
+                out.append(f"round 11: {k}'s declaration names a cited source its note_quote does not")
+            if d.get("source_line") is not None and not (
+                    d.get("unit_quote") and d.get("relation") in ("lead-in", "dagger", "named")):
+                out.append(f"round 11: {k}'s split declaration has no unit_quote or no relation")
+            if d.get("reach") is not None:
+                out.append(f"round 11: {k}'s declaration in NR_ROUND9[{t_!r}] carries ruling 11's reach")
+    for k, ts_ in sorted(seen.items()):
+        if len(ts_) > 1:
+            out.append(f"round 11: {k} is declared in more than one admission table: {ts_}")
+    if _r9_tab("admitted_r14"):
+        c14 = nr_r11_r14_table()
+        if c14["result"] != "pass":
+            out.append("round 11: " + c14["result"])
+    return out
+
+
 def nr_r10_pass(figs, byk, P9):
     """Round 10 (prep): the pass check's round-10 part, on round 9's (nr_r9_pass, whose out it labels): ruling 12's
     rows passing under ruling 5, ruling 13's render TS rows, ruling 11's admitted occurrences and its not-figures."""
@@ -12754,8 +13132,15 @@ def nr_r10_pass(figs, byk, P9):
     r12 = [k for k in P9["computed_new_committed"] if k in fifty]
     r12_bad = sorted(k for k in fifty if k not in P9["computed_new_committed"])
     for k in r12:
-        lab[k] = ("passes (ruling 5, ruling 12 its basis (Code's reading (b), 10e): 'fifty', the premise of N2 5(b)'s "
-                  "tabulated n, computed-new)")
+        # round 11 (the ledger read's M2): under a round-11 profile the label points to round 10's reading (b) where it
+        # is recorded, N1's v0.6 ledger's 10e, and names the design seat's re-key (answer 1b item 10); v0_5_r10, v0_6:
+        # the label as committed
+        lab[k] = (("passes (ruling 5, ruling 12 its basis (Code's reading (b) of round 10, in " + _R11_V06_10E
+                   + "; re-keyed to v0.8 by the design seat's answer 1b item 10, " + R11_ANSWERS_PATH + "@"
+                   + R11_ANSWERS_REV + ":" + str(R11_ANSWERS["1b10"][0]) + "): 'fifty', the premise of N2 5(b)'s "
+                   "tabulated n, computed-new)") if NR_ROUND9.get("round11") else
+                  ("passes (ruling 5, ruling 12 its basis (Code's reading (b), 10e): 'fifty', the premise of N2 5(b)'s "
+                   "tabulated n, computed-new)"))
     ts13 = [k for k in P9["scope_corrected_in_note"] if str(byk[k].get("note_file") or "").lower().endswith(".svg")]
     ts6 = [k for k in P9["scope_corrected_in_note"] if k not in ts13]
     for k in ts13:
@@ -12767,11 +13152,37 @@ def nr_r10_pass(figs, byk, P9):
     # round 10 integration: ruling 7's text as the profile restates it for its note (NR_ROUND9['r7_txt'])
     r7_ = NR_ROUND9.get("r7_txt")
     rul_ = [dict(x, text=r7_) if r7_ and x.get("id") == "ruling 7" else x for x in P9["rulings"]]
-    return dict(rulings=rul_ + [dict(id=f"ruling {i}", text=R10_TXT[f"r{i}"], whose="the PI's, 2026-10-12",
+    out10 = dict(rulings=rul_ + [dict(id=f"ruling {i}", text=R10_TXT[f"r{i}"], whose="the PI's, 2026-10-12",
                                               verbatim=True) for i in (11, 12, 13)],
-                resolved_by_wording=dict(text=R10_TXT["o8a_o11"], whose="the PI's, 2026-10-12", verbatim=True),
-                ruling6_note_rows=ts6, ruling13_render_rows=ts13, ruling11_occurrences=occ,
-                ruling11_not_figures=nf11, ruling12_fifty=r12, ruling12_not_passing=r12_bad)
+                 resolved_by_wording=dict(text=R10_TXT["o8a_o11"], whose="the PI's, 2026-10-12", verbatim=True),
+                 ruling6_note_rows=ts6, ruling13_render_rows=ts13, ruling11_occurrences=occ,
+                 ruling11_not_figures=nf11, ruling12_fifty=r12, ruling12_not_passing=r12_bad)
+    # round 11 (the design seat's answers of 2026-11-02, da50cd1): rulings 14 and 15's admissions and ruling 8's split
+    # one (answer 1b item 7), labelled by the ruling the row's admission check passed under; the two new rulings in
+    # the JSON's list in the seat's words (v0_5_r10, v0_6: not reached)
+    if NR_ROUND9.get("round11"):
+        def _ad(k):
+            return byk[k]["_validation"].get("admitted_citation") or {}
+        r14 = [k for k in P9["admitted_citation"] if _ad(k).get("ruling") == R11_RULING14]
+        r15 = [k for k in P9["admitted_citation"] if _ad(k).get("ruling") == R11_RULING15]
+        r8s = [k for k in P9["admitted_citation"] if _ad(k).get("ruling") == R9_RULING8 and _ad(k).get("source_line")]
+        for k in r14:
+            lab[k] = ("passes (ruling 14: the scored audit table's count of published designs, an admitted citation, not "
+                      "a record figure)")
+        for k in r15:
+            lab[k] = "passes (ruling 15: a reading of the source's plot, admitted as such, not a record figure)"
+        for k in r8s:
+            lab[k] = ("passes (ruling 8: admitted citation, its source named on the list's lead-in line (answer 1b item "
+                      "7), not a record figure)")
+        out10["rulings"] = out10["rulings"] + [
+            dict(id="ruling 14", text=R11_ANSWERS["1b8"][1] + " " + R11_ANSWERS["1b8cond"][1],
+                 whose="the design seat's, 2026-11-02 (routed by the PI)", verbatim=True,
+                 source=f"{R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{R11_ANSWERS['1b8'][0]}"),
+            dict(id="ruling 15", text=R11_ANSWERS["2a_iii"][1], whose="the design seat's, 2026-11-02 (routed by the PI)",
+                 verbatim=True, source=f"{R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{R11_ANSWERS['2a_iii'][0]}")]
+        out10.update(ruling14_rows=r14, ruling15_rows=r15, ruling8_split_rows=r8s,
+                     ruling14_table=nr_r11_r14_table())
+    return out10
 
 
 def nr_r10_render_9d(w, P, byk, fl, met, rl, pv, pe, ci):
@@ -12782,13 +13193,20 @@ def nr_r10_render_9d(w, P, byk, fl, met, rl, pv, pe, ci):
     def ks(xs):
         return ", ".join(xs) or "none"
     occ, ts13, ts6, r12 = R9["ruling11_occurrences"], R9["ruling13_render_rows"], R9["ruling6_note_rows"], R9["ruling12_fifty"]
-    adm8 = [k for k in R9["admitted_citation"] if k not in occ]
+    # round 11: rulings 14 and 15 admit rows of their own, reported in their own bullets below
+    r14r, r15r = R9.get("ruling14_rows") or [], R9.get("ruling15_rows") or []
+    adm8 = [k for k in R9["admitted_citation"] if k not in occ and k not in r14r and k not in r15r]
+    r11_ = bool(NR_ROUND9.get("round11"))
     w(f"**The pass condition is {'met' if met else 'NOT met'}.** {P['passing']} of {P['n_figures']} figures pass: "
       f"{len(rl)} reproduced or log-only, each with a locator ({len(pv)} pass the value check, {len(pe)} carry a "
       f"named exemption: {ks(pe)}); {len(ci)} discrepant rows corrected in the note ({ks(ci)}; branch C, the rule in "
       f"the v0.3 final ledger's 10b, and R1 of 2026-10-09 for W3); and, under the PI's rulings 5-8 of 2026-10-10 and "
       f"11-13 of 2026-10-12 (the PI's, applied here as routed; Code decides none of them; Code's readings of how "
-      f"a ruling applies are labelled as such):")
+      f"a ruling applies are labelled as such)"
+      + (", re-keyed to this note and extended by the design seat's answers of 2026-11-02, routed by the PI "
+         f"({R11_ANSWERS_PATH}@{R11_ANSWERS_REV}, its section 0, each answer this run applies asserted verbatim on its "
+         f"line), whose rulings 14 and 15 are new" if r11_ else "")
+      + ":")
     w("")
     w(f"- **Ruling 5** ({len(R9['computed_new_committed'])}, of which {len(r12)} rest on ruling 12, below): "
       f"{NR_R9_TXT['r5']}. Mechanised: every audit raw the row cites is committed (its revision an ancestor of HEAD at "
@@ -12811,19 +13229,37 @@ def nr_r10_render_9d(w, P, byk, fl, met, rl, pv, pe, ci):
       f"nodes, newline-joined as N1's extraction joins them (_r9_svg_join); the correction's numbers and layer labels "
       f"inside the unit's clause span; the discrepant figure not carried as the claim. The status stays 'discrepant'.")
     # round 10 integration: the profile may restate ruling 7's line list for its note (NR_ROUND9['r7_txt'])
+    # round 11 (the ledger read's M10): the rows whose declaration names the overall rate ('states'), named under a
+    # round-11 profile, whose clause is not v0.4-v0.6's :111 (v0_8: :250, NR_ROUND9['r7_line'])
+    r7o_ = [k_ for k_, d_ in sorted((NR_ROUND9.get("discharged") or {}).items())
+            if "overall" in (d_.get("states") or ())]
     w(f"- **Ruling 7** ({len(R9['discharged'])}: {ks(R9['discharged'])}): "
       f"{NR_ROUND9.get('r7_txt') or NR_R9_TXT['r7']}. Each row is declared "
       f"in ruling 7's table (NR_ROUND9['discharged']), is W8's (ledger row {NR_ROUND9['w8']['ledger_row']}, its item "
       f"raw cited) and carries 'discharged', whose note_quote, the reworded clause, is verbatim on its note line and "
-      f"states the per-arm range (and, for the clause at :111, the overall rate); the note line carries neither "
+      f"states the per-arm range "
+      + ((f"(and, where its declaration says so, the overall rate: at v0.8 :{NR_ROUND9.get('r7_line')}, "
+          + (f"the declarations of {' and '.join(r7o_)} say so)" if r7o_ else "no declaration says so)"))
+         if r11_ else "(and, for the clause at :111, the overall rate)")
+      + "; the note line carries neither "
       f"discrepant wording, each read as a class of wordings (Code's lexical set, NR_ROUND9['w8']['absent']: a "
       f"wording outside it is a known limit, not a pass the ruling makes). The status stays 'discrepant'.")
     w(f"- **Ruling 8** ({len(adm8)}: {ks(adm8)}): {NR_R9_TXT['r8']}. Each row is declared in ruling 8's table "
       f"(NR_ROUND9['admitted']) at a (note line, unit) that is one of the units the ruling names (NR_ROUND9['r8_units'], "
-      f"as the PI states them), and carries admitted_citation, whose note_quote names the cited source and is verbatim "
+      # round 11 (the ledger read's M8): v0_8's units are re-keys, named with who made each (v0_6: as committed)
+      + (("ruling 8's units as re-keyed to v0.8: :195's two by Code, verbatim, under 4f of the design seat's answers "
+          "of 2026-10-28 (" + _R11_4F_AT + "; the integration's edit E9, 10e), and :202's and :200's by the design "
+          "seat's answers 1b items 6 and 7 of 2026-11-02") if r11_ else "as the PI states them")
+      + f"), and carries admitted_citation, whose note_quote names the cited source and is verbatim "
       f"note text (on the row's own line or another line of the note); the unit itself is on the row's line, at least "
       f"as often as the file's rows claim it there (a run-level check): an admitted citation, not a record figure; "
-      f"the status stays 'not found'.")
+      f"the status stays 'not found'."
+      + ((" Round 11 (the design seat's answer 1b item 7: \"" + R11_ANSWERS["1b7"][1] + "\"): "
+          + (ks(R9.get("ruling8_split_rows") or []))
+          + " carries a split admission: the declaration names the source line, where the note_quote naming the "
+            "cited source is verbatim, and the field's unit_quote, verbatim on the row's own line, carries the unit "
+            "as a token; the source line ends the list's lead-in with ':', and every non-blank line from it to the "
+            "row's is an item of one numbered list, in order (nr_r11_relation, 'lead-in').") if r11_ else ""))
     nf11 = R9["ruling11_not_figures"]
     w(f"- **Ruling 11** ({len(occ)} figure{'s' if len(occ) != 1 else ''}: {ks(occ)}; and {len(nf11)} not-figures): "
       f"\"{R10_TXT['r11']}\" (the PI's words, 2026-10-12). A figure it reaches is an occurrence of an admitted "
@@ -12838,17 +13274,61 @@ def nr_r10_render_9d(w, P, byk, fl, met, rl, pv, pe, ci):
                   for k in nf11)
       + f") are declared in NR_ROUND9['r11_not_figures'] and asserted at this run each a not-figure on its line, its "
         f"unit verbatim inside the declared context, which is on the line once and locates the declared occurrence "
-        f"of the unit there (S7#89: the second 'two', the PI's 'its second'), and the entry quoting the row's own "
+        f"of the unit there ({NR_ROUND9.get('r11_occ_example') or _R10_R11_OCC_EXAMPLE}), and the entry quoting the row's own "
         f"comment: admitted by ruling 11, and outside the figure count "
         f"({P['n_figures']}), so they change no count above. Their kind is kept: no new source reclassifies them "
-        f"(Code's reading (a), round 10; 10e).")
+        # round 11 (the ledger read's M2): round 10's reading (a) where it is recorded, and the seat's re-key
+        + ((f"(Code's reading (a) of round 10, in {_R11_V06_10E}; the not-figures re-keyed to v0.8 by the design "
+            f"seat's answer 1b item 9, {R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{R11_ANSWERS['1b9'][0]}).") if r11_ else
+           "(Code's reading (a), round 10; 10e)."))
     w(f"- **Ruling 12** ({len(r12)}: {ks(r12)}): \"{R10_TXT['r12']}\" (the PI's words, 2026-10-12). Each row is "
       f"declared in NR_ROUND9['r12_fifty'] and asserted at this run a computed-new figure whose unit is 'fifty', its "
       f"status_basis quoting N2 5(b)'s heading ('computed-new') and its locator citing a 5(b) row that states the "
       f"premise ('50 concepts'); it is no longer held open (round 9's 9h O30) and passes as computed-new under ruling "
-      f"5, counted there, ruling 12 its basis (Code's reading (b), round 10; 10e); under the ruling's second reading it is a citation of the source under "
+      f"5, counted there, ruling 12 its basis "
+      # round 11 (the ledger read's M2): round 10's reading (b) where it is recorded, and the seat's re-key
+      + ((f"(Code's reading (b) of round 10, in {_R11_V06_10E}; re-keyed to v0.8's 'fifty' rows by the design seat's "
+          f"answer 1b item 10, {R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{R11_ANSWERS['1b10'][0]})") if r11_ else
+         "(Code's reading (b), round 10; 10e)")
+      + "; under the ruling's second reading it is a citation of the source under "
       f"ruling 8, and either reading passes it. The status stays 'computed-new', the item raw's label."
       + (f" Declared and not passing ruling 5: {ks(R9['ruling12_not_passing'])}." if R9["ruling12_not_passing"] else ""))
+    if r11_:
+        t14 = R9.get("ruling14_table") or {}
+        # round 11 (the ledger read's M7): the two lines each ruling-14 declaration names, the row's and its cited
+        # source's, stated with the relation 'named', which is Code's mechanisation (reading (d), 10e)
+        l14_ = "; ".join(f":{d_.get('note_line')} for {k_}, :{d_.get('source_line')} for its cited source"
+                         for k_, d_ in sorted((NR_ROUND9.get("admitted_r14") or {}).items()))
+        w(f"- **Ruling 14** ({len(r14r)}: {ks(r14r)}): \"{R11_ANSWERS['1b8'][1]}\" and \"{R11_ANSWERS['1b8cond'][1]}\" "
+          f"(the design seat's words, answer 1b item 8, {R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{R11_ANSWERS['1b8'][0]}). "
+          f"Each row is declared in ruling 14's table (NR_ROUND9['admitted_r14']) and carries admitted_citation as a split "
+          f"admission (answer 1b item 7's mechanism): the note_quote naming the cited source verbatim on the declared "
+          f"source line, the unit_quote carrying the unit on the row's own line, and the relation 'named', which the "
+          f"check reads no further (the answer's line names both lines: {l14_}; Code's mechanisation, reading (d), "
+          f"10e). The condition is read at this run from the git object "
+          f"{R11_R14_TABLE['path']}@{R11_R14_TABLE['rev']}: "
+          + (f"the scored table under {R11_R14_TABLE['marker']!r} (line {t14.get('line')}, in "
+             f"{R11_R14_TABLE['section'][3:]!r}) has {len(t14.get('rows') or [])} rows, "
+             f"{len(t14.get('published') or [])} published designs ({'; '.join(t14.get('published') or [])}) and "
+             f"'{R11_R14_TABLE['self_row']}', and no row names {R11_R14_TABLE['not_a_row']} et al.: "
+             + ("the condition holds" if t14.get("result") == "pass" else f"NOT met ({t14.get('result')})")
+             + f". The answer places the table in the preprint's section 8; at {R11_R14_TABLE['rev']} it sits in "
+               f"section 6, and section 8 is 'Pre-registered next experiments' (Code's reading (c), 10e: the table "
+               f"the answer "
+               f"counts, whose rows it names, is this one).")
+          + " An admitted citation, not a record figure; the status stays 'not found'.")
+        w(f"- **Ruling 15** ({len(r15r)}: {ks(r15r)}): \"{R11_ANSWERS['2a_iii'][1]}\" (the design seat's words, answer "
+          f"2a (iii), {R11_ANSWERS_PATH}@{R11_ANSWERS_REV}:{R11_ANSWERS['2a_iii'][0]}). Each row is declared in ruling "
+          f"15's table (NR_ROUND9['admitted_r15']) and carries admitted_citation. The cited source is the note's own naming "
+          f"of the two figures the answer names (\"v5 Figure 5\" / \"v5 Figure 22\"), verbatim on :228: "
+          f"\"{_R15_SRC}\" (Code's reading (d), 10e: the first two entries of :228's figure list). On :228 the "
+          f"note_quote names the cited "
+          f"source and carries the unit on the row's own line (ruling 8's one-line form); on :15 and :101 the citation "
+          f"is split, the note_quote naming the source verbatim on :228 and the unit_quote on the row's own line, the "
+          f"relation 'dagger' on :101 (its ‡ points to the ‡ notes, where :228 sits) and 'named' on :15 (the ruling "
+          f"names it; the TL;DR carries no pointer); the split form and the relations are Code's reading (d), 10e. "
+          f"Each is a reading of the source's plot, read by eye: admitted as "
+          f"such, not a value any committed file transcribes and not a record figure; the status stays 'not found'.")
     w(f"- **O8(a) and O11**: \"{R10_TXT['o8a_o11']}\" (the PI's words, 2026-10-12). "
       + (NR_ROUND9.get("o8a_o11_line") or ""))
     w("")
@@ -13375,6 +13855,7 @@ PROFILES["v0_6"] = dict(
                       "5 unless the integration holds it (NR_ROUND9['cn_held'])."),
         keys_provisional=True,
     ),
+    NR_LATER_RECORD=None,
 )
 # V06_TABLES_BEGIN
 # ---- round 10 integration: the v0_6 tables (true of the v0.6 rows file; see the section-10 record of round 10)
@@ -14546,10 +15027,2878 @@ PROFILES["v0_5_r10"] = _P5R10
 # the frozen text hash of the dry-run rows file (scratch only; S7#91's admitted_citation and round10 record are in its
 # text freeze); kind, clause and status freezes are v0_5's (the added fields enter none of them)
 _P5R10["NR_TEXT_SHA256"] = "4d984a46424ff6cadf20d1bdca01b1d191ca49e312681e987308c0d41cc13246"
+# ==================================================================== ROUND 11 (prep, 2026-10-29)
+# N1 round 11: note v0.8 (the text as posted on 2026-10-27; committed at 0de15a1) and the Digest seat's three
+# 2026-10-22 renders (filed at 0a3f925), under the design seat's answers of 2026-10-28 to Code's release-block
+# questions (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659, section 6, 4a-4g; the PI's
+# answer to the seat's items A-G, verbatim: "Yes to all"), routed by the PI on 2026-10-29. Mechanised here, each the
+# seat's under the PI's word (Code decides none of them):
+#   (4a) route (a), a later-record class (NR_LATER_RECORD): RESULTS.md at 0fa8539 (the Q-F0 VERDICTS entry, the only
+#        prose carrier of 81/2^80) and at 79d462b (the reads' close line), the VERDICTS raw and JSON at bfc179c and the
+#        design seat's VERDICTS read at 79d462b. A cited line of one of those exact (path, revision) pairs is a record
+#        line, so a row citing it maps 'record' and is log-only unless a cited item-raw line gives its status.
+#   (4b) N2(vii)'s raw (8d68b0b), pinned; its rows computed-new by mapping under ruling 5 (NR_TRANSCRIPTION_RAWS).
+#   (4c), (4d) the design seat's two transcriptions (908a659: the pass-12 author-correspondence figures; the Chandaria
+#        et al. v2 lines), pinned and admitted as N2(vii)'s is; a pass-12 row says 'source: author correspondence
+#        2026-10-26 (that raw); verification pending T+3' in its own text (the T+3 table check is a later round's).
+#   (4e) the additions-by-source raw (the two enumerations, the not-in-text list, passes 21-23) and the answers block
+#        itself (908a659): pinned, so a field may cite them; neither is an item raw nor a record line, so neither
+#        carries a figure by itself.
+#   (4f) rulings 7, 8, 11, 12 and R1: re-keyed to v0.8 where they apply verbatim, and each whose quoted text changed
+#        sent to the design seat through the PI with its old key and its v0.8 candidate, the seat answering in one
+#        block; nothing is assumed here. Their tables start empty (NR_ROUND9's discharged, admitted, r8_units,
+#        r11_units, r11_not_figures and r12_fifty; NR_RULED_CORRECTIONS), and NR_ROUND9['r11_rekey'] holds the
+#        round-11 sentinel until the re-keying is applied.
+#   (4g) the former ‖‖(c)'s rows retire with v0.6 and its ledger at note-2026-10-v1; v0.8's ‖‖(c) is the former (d).
+# v0.8 restates no N1 count (no '632', '1274' or round label: a grep at round-11 prep), so no class is added for N1's
+# v0.6 outputs (v0_6 added v0.5's because v0.6's line 3 restated round 9's counts). Every row-keyed table starts empty
+# and every frozen hash None, filled as the v0.8 rows are integrated (--dev-report); a final run stops on the profile
+# gates and on the round-11 sentinel (in NR_TXT, NR_LIMITS and NR_ROUND9) until each is written.
+_R11_AT_INTEGRATION = "<<ROUND 11: WRITTEN AT INTEGRATION>>"
+_V08_NOTE = "RESEARCH-NOTE-v0_8-draft.md"
+_V08_NOTE_SHA = "6fcfbfd64784412d616d4de40d4a6a54596202a052cb3dd0d9d78a26cbe1198d"
+# the three 2026-10-22 renders as filed at 0a3f925 (filed-copy sha256s, full); spans as in v0_5 and v0_6
+_V08_SVG_ROUTING = [
+    dict(short="F1a", span="S11", path="2026-10-22_F1a_headline-strip.svg",
+         sha256="f0c1cd73e474eff54f11dd677a9b8e385ebae1e63cd667babc88d83123985bfc"),
+    dict(short="F1b", span="S9", path="2026-10-22_F1b_five-link-panels.svg",
+         sha256="640c13e87b161dc8c14e2813acba1dc6a09b94d7beb5b9d1784cfe34371633af"),
+    dict(short="F2", span="S10", path="2026-10-22_F2_macar-lineage-roc_post.svg",
+         sha256="0e0459cf628ee7adef2d8c462a1b6c854d3a87a9743baa4f18b44134fbf969bc"),
+]
+_V08_FILES = [(_V08_NOTE, _V08_NOTE_SHA, "note")] + [(x["path"], x["sha256"], x["short"]) for x in _V08_SVG_ROUTING]
+# the note's spans by v0.8 line, aligned with v0.6's sections so that a v0.6 key S<n>#<seq> can be reused where the
+# same unit and claim recur in the same span: S1 the title, foreword and TL;DR; S2 §1-§3; S3 §4's head and links 1-2;
+# S4 link 3; S5 link 4; S6 link 5, §5 and §6; S7 §7 and §8; S8 §9 and the supplemental notes. A run-level gate reads
+# every note row's line against its span's range (NR_ROUND9['span_lines'], nr_profile_gates)
+_V08_SPAN_LINES = dict(S1=(1, 24), S2=(25, 60), S3=(61, 76), S4=(77, 90), S5=(91, 119), S6=(120, 172), S7=(173, 209),
+                       S8=(210, 258))
+# the outputs' date, one constant: Code sets it at the final run
+_V08_DATE = "2026-11-02"
+_V08_FINAL = (f"results/raw/{_V08_DATE}_note-N1-v0_8-claims-ledger.md",
+              f"results/raw/{_V08_DATE}_note-N1-v0_8-claims-ledger.json")
+_V08_ROWS = f"results/raw/{_V08_DATE}_note-N1-v0_8-note-rows.json"
+NR_ALL_ROWS_PATHS = NR_ALL_ROWS_PATHS + (_V08_ROWS,)
+_V06_OUTPUTS = (_V06_FINAL[0], _V06_FINAL[1], _V06_ROWS, "results/raw/2026-10-12_note-N1-v0_6_valuescheck.md")
+# the files of 908a659: the design seat's three round-11 raws and its answers block
+_V08_R11_RAWS = ("results/raw/2026-10-28_note-N1-r11_additions-by-source.md",
+                 "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md",
+                 "results/raw/2026-10-28_note-N1-r11_chandaria-v2-lines.md",
+                 "results/raw/2026-10-28_note-design-to-code_release-block-answers.md")
+# round 11, the design seat's answers of 2026-11-02 (da50cd1): the three raws its answers 2a and 2b admit, each pinned
+# at the commit that adds it (the v1 raw at da50cd1, the seat's own commit; Code's two at theirs)
+_V08_V1_RAW = "results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md"
+_V08_V5_RAW = "results/raw/2026-11-02_note-N1-r11_macar-v5-lines.md"
+_V08_COMP_RAW = "results/raw/2026-11-02_note-N1-r11_computations.md"
+_V08_V5_COMMIT = "633b6fd"
+_V08_COMP_COMMIT = "e6d3197"
+# 4a: the later-record carriers, exact paths at exact revisions
+_V08_LATER_RECORD = (
+    ("RESULTS.md's Q-F0 VERDICTS entry (0fa8539; the only prose carrier of 81/2^80)", ("RESULTS.md",), ("0fa8539",)),
+    ("the Q-F0 VERDICTS raw and JSON (bfc179c)",
+     ("results/raw/2026-10-19_m-verdicts-qf0.txt", "data/m/verdicts/Q-F0_VERDICTS.json"), ("bfc179c",)),
+    ("the VERDICTS reads' close line (79d462b): RESULTS.md and the design seat's VERDICTS read at that commit",
+     ("RESULTS.md", "results/raw/2026-10-19_m-design-to-code_VERDICTS_read.md"), ("79d462b",)),
+)
+_V08_PIN_RULES = _V06_PIN_RULES[:-2] + (
+    # 4a: RESULTS.md stays citable at the record pin and becomes citable at its two later-record revisions; each new
+    # rule sits before the generic rule its path would otherwise fall under (the record's, the last)
+    ("RESULTS.md: the record (bbc9ffe) and, later-record (4a), the Q-F0 VERDICTS entry (0fa8539) and the reads' close "
+     "line (79d462b)", _PinPaths("RESULTS.md"), ("bbc9ffe", "0fa8539", "79d462b")),
+    ("the Q-F0 VERDICTS raw and JSON (later-record, 4a; bfc179c)",
+     _PinPaths("results/raw/2026-10-19_m-verdicts-qf0.txt", "data/m/verdicts/Q-F0_VERDICTS.json"), ("bfc179c",)),
+    ("the design seat's VERDICTS read (later-record on Code's reading of 4a; 79d462b)",
+     _PinPaths("results/raw/2026-10-19_m-design-to-code_VERDICTS_read.md"), ("79d462b",)),
+    ("N2(vii)'s transcription raw (4b; 8d68b0b)", _PinPaths("results/raw/2026-10-22_note-N2vii-macar-v5.md"),
+     ("8d68b0b",)),
+    ("the round-11 raws (4c-4e) and the answers block (on Code's reading of 4c; 908a659)", _PinPaths(*_V08_R11_RAWS),
+     ("908a659",)),
+    # round 11, the design seat's answers of 2026-11-02 (da50cd1): each raw at the commit that adds it, its own class
+    ("the design seat's v1 transcription raw (answer 2a (i); da50cd1)", _PinPaths(_V08_V1_RAW), ("da50cd1",)),
+    (f"Code's v5 transcription raw (answer 2a (ii); {_V08_V5_COMMIT})", _PinPaths(_V08_V5_RAW), (_V08_V5_COMMIT,)),
+    (f"Code's computation raw (answer 2b; {_V08_COMP_COMMIT})", _PinPaths(_V08_COMP_RAW), (_V08_COMP_COMMIT,)),
+) + _V06_PIN_RULES[-2:]
+assert _V08_PIN_RULES[-1][0] == "the record" and _V08_PIN_RULES[-2][0].startswith("an audit raw of 2026-10-09")
+_V08_PIN_EXACT = tuple(dict.fromkeys(list(_V06_PIN_EXACT) + [
+    x for _, f, _ in _V08_PIN_RULES for x in getattr(f, "paths", ())]))
+# every later-record carrier is citable at its revision under an exact pin rule (else nr_check_pins would refuse it)
+for _lab8, _ps8, _rs8 in _V08_LATER_RECORD:
+    for _p8 in _ps8:
+        _rl8 = next(x for x in _V08_PIN_RULES if x[1](_p8))
+        if _rl8 is _V08_PIN_RULES[-1] or not set(_rs8) <= set(_rl8[2]):
+            raise SystemExit(f"profile v0_8: the later-record carrier {_p8}@{'/'.join(_rs8)} has no exact pin rule at "
+                             f"that revision")
+# the transcription raws are item raws under an exact pin rule; the other two 908a659 files are neither item raws
+# nor audit paths (4e)
+if not all(nr_is_item_raw(_p8) and next(x for x in _V08_PIN_RULES if x[1](_p8)) is not _V08_PIN_RULES[-1]
+           for _p8 in NR_TRANSCRIPTION_RAWS) or any(
+        nr_is_item_raw(_p8) or nr_is_audit_path(_p8) for _p8 in _V08_R11_RAWS if _p8 not in NR_TRANSCRIPTION_RAWS):
+    raise SystemExit("profile v0_8: the round-11 raws' classes are not as 4b-4e give them")
+_V08_GUARD_CASES = [
+    # v0_6's cases, relabelled to the files they write (the labels that named v0_6's own inputs now name them as
+    # v0_6's)
+    (w_.replace("(v0_6)", "(v0_8)").replace("the v0.6 paths", "the v0.8 paths")
+     .replace("--json-out = the routed v0.5 note", "--json-out = v0_5's routed note")
+     .replace("--out = this run's rows file (the v0.6 rows path)", "--out = the committed v0.6 rows file")
+     .replace("--json-out = a routed 2026-10-10 SVG (absolute)", "--json-out = a 2026-10-10 SVG (v0_6's routed file; "
+                                                                  "absolute)")
+     .replace("--json-out = the routed v0.6 note", "--json-out = v0_6's routed note (removed from the tree at dc8c028)")
+     .replace("--out = the patched preprint (patch v7)", "--out = the preprint (patch v8 under its status banner)"),
+     o_, j_, fm_, want_, *([_V08_ROWS] if rest_ else []))
+    for w_, o_, j_, fm_, want_, *rest_ in _V06_GUARD_CASES
+] + [
+    ("final (v0_8), --out = this run's rows file (the v0.8 rows path)", _V08_ROWS, None, True, "refuse", _V08_ROWS),
+    ("final (v0_8), --json-out = the routed v0.8 note", None, _V08_NOTE, True, "refuse", _V08_ROWS),
+    ("final (v0_8), --json-out = a routed 2026-10-22 SVG (absolute)", None,
+     str(REPO / "2026-10-22_F2_macar-lineage-roc_post.svg"), True, "refuse", _V08_ROWS),
+    ("final (v0_8), --out = the committed v0.6 final ledger", _V06_FINAL[0], None, True, "refuse", _V08_ROWS),
+    ("final (v0_8), --json-out = the committed v0.6 final JSON (absolute)", None, str(REPO / _V06_FINAL[1]), True,
+     "refuse", _V08_ROWS),
+    ("final (v0_8), --out = the committed v0.6 values check (c18854f)", _V06_OUTPUTS[3], None, True, "refuse",
+     _V08_ROWS),
+    ("final (v0_8), --out = N2(vii)'s raw (pinned at 8d68b0b)", "results/raw/2026-10-22_note-N2vii-macar-v5.md", None,
+     True, "refuse", _V08_ROWS),
+    ("final (v0_8), --json-out = the correspondence transcription (pinned at 908a659)", None, _V08_R11_RAWS[1], True,
+     "refuse", _V08_ROWS),
+    ("final (v0_8), --out = the answers block (pinned at 908a659 on Code's reading of 4c)", _V08_R11_RAWS[3], None,
+     True, "refuse", _V08_ROWS),
+    ("final (v0_8), --out = the Q-F0 VERDICTS raw (later-record, bfc179c)", "results/raw/2026-10-19_m-verdicts-qf0.txt",
+     None, True, "refuse", _V08_ROWS),
+    ("final (v0_8), --json-out = the Q-F0 VERDICTS JSON (later-record, bfc179c)", None,
+     "data/m/verdicts/Q-F0_VERDICTS.json", True, "refuse", _V08_ROWS),
+    ("final (v0_8), both outside the repository", "/dev/null/x.md", "/dev/null/x.json", True, "allow", _V08_ROWS),
+    # round 11: the three raws the design seat's answers of 2026-11-02 admit
+    ("final (v0_8), --out = the design seat's v1 transcription (pinned at da50cd1)", _V08_V1_RAW, None, True, "refuse",
+     _V08_ROWS),
+    ("final (v0_8), --json-out = Code's v5 transcription (pinned at its commit)", None, _V08_V5_RAW, True, "refuse",
+     _V08_ROWS),
+    ("final (v0_8), --out = Code's computation raw (pinned at its commit)", _V08_COMP_RAW, None, True, "refuse",
+     _V08_ROWS),
+]
+_V08_TXT = dict(_T6)
+_V08_TXT.update(
+    s9_title="## 9. Note v0.8 and SVG rows (N1 round 11)",
+    note8_1=("1. Basis (updated at N1 round 11). Sections 1-8 are built from the block's quotations of the note; the "
+             "note the block names (v0.2) was superseded by v0.3, v0.4, v0.5, v0.6 and, for round 11, v0.8 (the text "
+             "as posted on 2026-10-27), which section 9 maps unit by unit. A block-quoted figure the note no longer "
+             "carries stays in sections 2-5 as a row of the block's ledger; it binds nothing in the note. Section 9 "
+             "is the ledger of the note itself."),
+    final_intro=(
+        "**FINAL** for `{note}` (sha256 `{note_sha}`) and its {n_svgs} SVGs ({svgs}), all {n_files} hashed at this run "
+        "and equal to the routed values (the note's sha256 as committed at 0de15a1 and stated in the design seat's "
+        "answers of 2026-10-28; the SVGs' as filed at 0a3f925). It supersedes, for this note, N1's ledger for note "
+        "v0.6 (results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f), N1's ledger for note v0.5 "
+        "(results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md@fa1b41e), N1's ledger for note v0.4 "
+        "(results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md@fd2b136), N1's final ledger for note v0.3 "
+        "(results/raw/2026-10-09_note-N1-claims-ledger-final.md@ef5c446) and the provisional ledger "
+        "(results/raw/2026-10-08_note-N1-claims-ledger.md@6485da2); each stays as committed, and the v0.6 ledger "
+        "stays the record for the rows v0.8 retires (tag note-2026-10-v1). Sections 1-8 are the provisional round's "
+        "block-quotation ledger, re-run here by the same code at the same pins (record bbc9ffe, item raws 09c3a8c); "
+        "section 7 is a summary of the matcher over the {n_files} files. **Section 9: one row for every numeral unit "
+        "in the note and its {n_svgs} SVGs**, read from the verified mapping `{rows_file}` (sha256 `{rows_sha}`) and "
+        "validated mechanically at this run, with the PI's rulings of 2026-10-09 (R1-R4), 2026-10-10 (5-10) and "
+        "2026-10-12 (11-13), the design seat's answers of 2026-10-28 under the PI's \"Yes to all\" (4a-4g), and the "
+        "design seat's answers of 2026-11-02, routed by the PI (the re-keys of rulings 6-8, 11-13 and R1, and rulings "
+        "14 and 15), applied as theirs. 'FINAL' means the mapping is complete for this note sha; the block's pass condition "
+        "{pass_met} met (9d), and the open items in 9h are the PI's, the design seat's, the Digest seat's or Code's, "
+        "each item saying whose. Section 10 is the mutation self-test, the overwrite guard, what the validator still "
+        "does not catch, and the record of round 11."),
+    s9_intro=(
+        "Block :22 asks for one row per figure in the note and in the F1/F2 SVGs, with its source and a status, and "
+        "for the commit at which the last of the note's figures entered the record. Sections 1-8 answered that over "
+        "the block's quotations; this section answers it over the files routed for round 11 with their sha256s: note "
+        "v0.8 (the text as posted on 2026-10-27, committed at 0de15a1) and the Digest seat's 2026-10-22 F1a, F1b and "
+        "F2 (filed at 0a3f925). Line numbers are the note's lines; for an SVG, the text-node index under the "
+        "matcher's extraction (text, tspan, title and desc content, one node per line; each SVG's C2PA "
+        "content-credentials element is outside it, asserted at this run). Every revision a row cites is the pin of "
+        "its path class (NR_PIN_RULES, in order: {pins}), and every cited file and line exists. The validator's rules "
+        "are those of rounds 7-10, stated in N1's ledgers for note v0.3 "
+        "(results/raw/2026-10-09_note-N1-claims-ledger-final.md@ef5c446), note v0.4 "
+        "(results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md@fd2b136), note v0.5 "
+        "(results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md@fa1b41e) and note v0.6 "
+        "(results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f). Round 11 adds, under the design seat's "
+        "answers of 2026-10-28 (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659, section "
+        "6) and the PI's \"Yes to all\": a later-record class (4a, route (a); NR_LATER_RECORD): RESULTS.md at 0fa8539 "
+        "and 79d462b, the Q-F0 VERDICTS raw and JSON at bfc179c and the design seat's VERDICTS read at 79d462b, each "
+        "line of which is a record line at that exact revision (at_or_before_pin, nr_check_maps_to, "
+        "nr_record_entry_from_locs); three committed transcription raws admitted as item raws whose lines decide no "
+        "status, so that a row citing one is computed-new by its mapping (4b-4d; NR_TRANSCRIPTION_RAWS): N2(vii)'s at "
+        "8d68b0b, and the author-correspondence figures and the Chandaria et al. v2 lines at 908a659; and the "
+        "additions-by-source raw (4e) and, on Code's reading of 4c's 'A pin class for this commit' (908a659:53), the "
+        "answers block, both pinned at 908a659, carriers of no figure by themselves. "
+        + _R11_AT_INTEGRATION),
+    # written at integration from the v0.8 rows and the seat's re-keyed rulings (a final run stops while any NR_TXT
+    # value, NR_LIMITS entry or NR_ROUND9 value holds _R11_AT_INTEGRATION)
+    status_para=_R11_AT_INTEGRATION, s4e_after=_R11_AT_INTEGRATION, s9g_plain_nf=_R11_AT_INTEGRATION,
+    s9g_conditions=_R11_AT_INTEGRATION, s9a_history=_R11_AT_INTEGRATION, s9a_prov_after=_R11_AT_INTEGRATION,
+    s9f_intro=_R11_AT_INTEGRATION, s9h_intro=_R11_AT_INTEGRATION, s9h_crosscheck_intro=_R11_AT_INTEGRATION,
+    open_routings=(16, _R11_AT_INTEGRATION), round8_record=[_R11_AT_INTEGRATION],
+    # the row-specific mutations' expected checks, rebuilt with the mutations
+    mut_expect_check={}, mut_expect_run_check={},
+)
+PROFILES["v0_8"] = dict(
+    NOTE_ROUTED={p_: (h_, "") for p_, h_, _ in _V08_FILES},
+    FINAL_NOTE=_V08_NOTE,
+    NR_SHORT={p_: s_ for p_, _, s_ in _V08_FILES},
+    NR_SPAN_FILES=dict({f"S{i}": _V08_NOTE for i in range(1, 9)}, **{x["span"]: x["path"] for x in _V08_SVG_ROUTING}),
+    # every row-keyed table empty and every frozen hash None, filled as the v0.8 rows are integrated (--dev-report)
+    NR_DISC={},
+    # the branch texts (T, C, TS, NT) as v0_6 states them; the integration restates any whose ruling it re-keys
+    NR_DISC_PATH=dict(_P6["NR_DISC_PATH"]),
+    NR_WATCH=[], NR_WATCH_EXTRA=[], NR_T_ROWS=[], NR_NF_ROWS=[], NR_OPEN=[],
+    NR_KIND_SHA256=None, NR_CLAUSE_SHA256=None, NR_STATUS_SHA256=None, NR_TEXT_SHA256=None,
+    NR_EXEMPT_FP={}, NR_CORRECTIONS={}, NR_QUOTE_REVIEWED={},
+    NR_MUTATIONS=[], NR_LIMIT_MUTATIONS=[],
+    NR_LIMITS=[_R11_AT_INTEGRATION],
+    NR_PIN_RULES=_V08_PIN_RULES,
+    NR_PIN_EXACT=_V08_PIN_EXACT,
+    # v0_6's audit-outcome raws (N1's v0.3, v0.4 and v0.5 ledgers), unchanged: v0.8 restates no N1 count
+    NR_OUTCOME_RAWS=frozenset(_P6["NR_OUTCOME_RAWS"]),
+    NR_ITEMRAW_NEVER=tuple(_P6["NR_ITEMRAW_NEVER"]) + ("N1-v0_8-claims-ledger",),
+    NR_AUDIT_ONLY_WORDS=_P6["NR_AUDIT_ONLY_WORDS"],
+    NR_FINAL_PATHS=_V08_FINAL,
+    NR_FINAL_FORBIDDEN=tuple(_P6["NR_FINAL_FORBIDDEN"]) + tuple(_V06_FINAL),
+    NR_GUARD_CASES=_V08_GUARD_CASES,
+    NR_TXT=_V08_TXT,
+    NR_HISTORY_RENDER=render_selftest_only,
+    NR_ROUND5=[], NR_RULES=[], NR_ROUND6=[], NR_RULES6=[], NR_ROUND7=[], NR_RULES7=[],
+    NR_REQUIRE_ROUTED_SET=True,
+    NR_DECLARED_EMPTY={},
+    # round 11's history and provenance fields, frozen with the text (round11 and n1v8_round2 history-schema checked)
+    NR_TEXT_ROW_FIELDS=tuple(_P6["NR_TEXT_ROW_FIELDS"]) + ("n1v8_chain", "v0_6_row", "round11", "n1v8_round2"),
+    # R1 of 2026-10-09: declared per v0.8 row once it is re-keyed (4f)
+    NR_RULED_CORRECTIONS={},
+    NR_GUARD_FINAL_ONLY=True,
+    NR_SPAN_DISPOSITION=None,
+    NR_REQUIRE_SPAN_DISPOSITION=True,
+    NR_ROUND9=dict(
+        scratch_only=False, round10=True,
+        # 4f: every ruling table starts empty; each v0.6 entry is re-keyed to v0.8 where it applies verbatim, or goes
+        # to the design seat through the PI where its quoted text changed (or it is gone), and the integration fills
+        # the tables from that; nothing is carried by line number
+        discharged={}, w8=_R9_W8, admitted={}, r8_units=frozenset(),
+        r11_units={}, r11_not_figures={}, r12_fifty={}, r12_basis=dict(_R10_R12_BASIS),
+        cn_held={}, cn_held_locus=True, cn_held_note=None, ruled_unmet={},
+        not_admissible=(), admit_spans=tuple(f"S{i}" for i in range(1, 9)),
+        ts_note_spans=None,
+        # ruling 7's clause line in v0.8, which the load-time check of ruling 7's table reads (v0_6 and v0_5_r10: 111);
+        # None until ruling 7 is re-keyed
+        r7_line=None,
+        r7_txt=_R11_AT_INTEGRATION, o8a_o11_line=_R11_AT_INTEGRATION,
+        r11_rekey=(_R11_AT_INTEGRATION + " rulings 7, 8, 11, 12 and R1 re-keyed to v0.8: verbatim ones directly, "
+                                         "changed ones as the design seat answers (4f)"),
+        span_lines=dict(_V08_SPAN_LINES),
+        keys_provisional=True,
+    ),
+    NR_LATER_RECORD=_V08_LATER_RECORD,
+)
+# V08_TABLES_BEGIN
+# ==================================================================== ROUND 11 (integration, 2026-10-29): v0_8 tables
+# The integration of the twelve mapper chains' rows for note v0.8 and the three 2026-10-22 renders (Code's decision
+# sheet of round 11), with the design seat's answers of 2026-11-02 (da50cd1, routed by the PI) applied. These literals
+# are true of ONE rows file, the merged chain rows with the integration's row edits E1-E12 applied (E12: the answers
+# applied to the rows' fields, mappings and texts; the ledger prints the file's sha256 at its run): the
+# fingerprints in NR_EXEMPT_FP and NR_CORRECTIONS, every (row, status) pair in NR_WATCH and NR_OPEN, NR_NF_ROWS and
+# NR_SPAN_DISPOSITION's indices hold for it; another placement of the span notes or another edit text voids them (re-run
+# --dev-report and re-take the values it prints). Section 4 applies the verbatim re-keys 4f gives Code (R1 on F2's
+# S10#108 and S10#60; ruling 8 on :195's S7#19 and S7#20) and ruling 13's on F1a's S11#18 and S11#19, which the seat
+# confirmed (V08_RULING13_REKEY_SEAT_CONFIRMED); section 5 declares the tables the seat's answers need (R1 on S5#81
+# and S5#88; ruling 7 at :250; ruling 8 on S7#25 and S7#28; ruling 14 on S8#3143; ruling 11's not-figures; ruling 12;
+# ruling 15), the rows carrying the fields (ruling 6's on the note's ten TS rows among them; E12); and section 1's
+# NR_NF_ROWS, NR_WATCH, NR_OPEN and NR_SPAN_DISPOSITION state the answers (9h O39 records the correction block of their
+# section 2). The four frozen hashes stay None and the other round-11 sentinel texts (NR_TXT, NR_LIMITS, NR_ROUND9's
+# o8a_o11_line and r11_rekey) stay in place: both are set at the final integration.
+# Sections: 1. NR_DISC, NR_T_ROWS, NR_NF_ROWS, NR_EXEMPT_FP, NR_CORRECTIONS, NR_QUOTE_REVIEWED, NR_WATCH,
+# NR_WATCH_EXTRA, NR_OPEN (O1-O39), NR_SPAN_DISPOSITION (80 notes); 2. the ported mutations (NR_MUTATIONS, their
+# expected checks, NR_LIMIT_MUTATIONS); 3. NR_TXT['open_routings'] (9h O16); 4. the 4f re-keys; 5. the design seat's
+# answers of 2026-11-02.
+# ----------------------------------------------------------------------------------------------- 1. core tables
+_P8 = PROFILES["v0_8"]
+# the branches (19 discrepant rows): C (S5#38's non-ruling correction; R1 on S5#81, S5#88 (the seat's re-key) and on
+# S10#108, S10#60 (verbatim, Code's)); TS (ruling 6 in the note, the seat's re-key; ruling 13 on F1a, verbatim); NT
+# (ruling 7, the seat's re-key). The quote is v0.6's (_TS_Q1, _TS_Q4, _TS_QR and the R1 sentence), each in its cause
+_P8["NR_DISC"] = {
+    "S5#38": ("C", "the discrepancy is resolved in the note"),
+    **{k: ("C", "The PI's ruling of 2026-10-09 (R1) accepts Code's transcription reading")
+       for k in ("S5#81", "S5#88", "S10#108", "S10#60")},
+    **{k: ("TS", _TS_Q1) for k in ("S1#134", "S1#214", "S1#215", "S1#216")},
+    **{k: ("TS", _TS_Q4) for k in ("S4#4", "S4#5", "S4#38", "S4#39", "S4#10", "S4#11")},
+    **{k: ("TS", _TS_QR) for k in ("S11#18", "S11#19")},
+    "S8#3074": ("NT", "not transcription (item raw)"), "S8#3075": ("NT", "not transcription (item raw)"),
+}
+_P8["NR_T_ROWS"] = []
+# not found (12), each an admitted citation after the design seat's answers of 2026-11-02 (da50cd1): ruling 8's four
+# (S7#19, S7#20 re-keyed verbatim, Code's; S7#28 and S7#25, the seat's answer 1b items 6 and 7), ruling 14's S8#3143
+# (1b item 8) and ruling 15's seven (2a (iii)). The other 28 of the integration's 40 map computed-new on the seat's v1
+# raw, Code's v5 raw and Code's computation raw (2a (i)-(ii), 2b; 9h O34, O35)
+_P8["NR_NF_ROWS"] = ['S1#1012', 'S5#2028', 'S5#2029', 'S5#2030', 'S7#19', 'S7#20', 'S7#25', 'S7#28', 'S8#2009',
+                     'S8#2011', 'S8#2012', 'S8#3143']
+# every exempted v0.8 row, with its fingerprint (nr_fingerprint, over the rows file of record): v0.6's twelve carried
+# (note_file and note_line moved each), S1#118's narrowed locator (K1, round 5's S1#119 form), S4#19 and S8#1008 (v0.6's
+# exemptions restored at integration, E2-E3)
+_P8["NR_EXEMPT_FP"] = {'S1#118': '7e7857d048d706ba',
+ 'S1#119': 'b1e6e649365c473d',
+ 'S10#111': 'b2a5989c02eb6751',
+ 'S10#135': 'b1ae71f5929a5b15',
+ 'S4#19': '0586c8c6cf0415d4',
+ 'S5#47': 'b4b71cb060aae7e7',
+ 'S6#54': '2556cd6f36c743a8',
+ 'S7#12': '20ef925a3b8afd67',
+ 'S7#15': '105fa849165e693f',
+ 'S7#29': 'b4a48b6e8118b26f',
+ 'S7#33': 'b9f9732ebebab4aa',
+ 'S7#79': 'a429f502713016dd',
+ 'S8#1008': '033aeb74ce149600',
+ 'S9#108': 'e0f62093570a02c6'}
+# N1's one correction, v0.6 S6#26's, carried to its successor S8#3056 and restated for v0.8 :248 (E8; 9h O31)
+_P8["NR_CORRECTIONS"] = {'S8#3056': ('wording', 'N1', '10fec1a30cd7b2bc')}
+_P8["NR_QUOTE_REVIEWED"] = {'70e315fab4e693dd': "S10#1005-S10#1007's texts quote the 2026-10-22 F2's own caption node 98 (the source's "
+                     "versions); 'Macar et al.' and 'Appendix C' name the source, and nothing in it quotes the "
+                     'source',
+ '80b9105080fa2c4e': "S7#16's source value quotes N14 @09c3a8c:459, a table row of the item raw between quotation "
+                     "marks; 'preprint §5.6' is a citation inside the row, and nothing in it quotes the preprint "
+                     '(as in v0.3-v0.6)',
+ '9c0809ef27de27f6': "S10#129's text quotes the 2026-10-22 F2's own caption node 96 (reworded from 2026-10-10: "
+                     "'false-positive'); 'Macar et al.' names the source, and nothing in it quotes the source",
+ 'a3dc8e59e857d16e': "S10#98's, S10#130-S10#132's and S10#1010's texts quote the 2026-10-22 F2's own caption node "
+                     "100 (the n premises); 'Macar et al.' names the source, and nothing in it quotes the source",
+ 'ca0d0f5ae930e5c6': "S10#100-S10#103's and S10#144-S10#148's texts quote the 2026-10-22 F2's own caption node 102 "
+                     "(the injected arms against the source's rates); 'Macar et al.' names the source, and nothing "
+                     'in it quotes the source',
+ 'e6a66b56525f7d66': "S10#61's and S10#62's texts quote the 2026-10-22 F2's own text node 91 (the criterion-arm "
+                     "legend), whose words include 'Macar et al.'; nothing in it quotes the source",
+ 'f0569fc08011f4b3': "S10#97's, S10#1008's and S10#1009's texts quote the 2026-10-22 F2's own caption node 99 (the "
+                     "pooled rates' n); 'et al.' and 'v5' name the source, and nothing in it quotes the source",
+ 'f7c3c6cfbe193377': "S10#129's round11 record keeps, as its text's previous value, the 2026-10-10 F2's caption "
+                     "node 96 (v0.6 declared the same span on that row's text): the render's own words, whose "
+                     "'Macar et al.' names the source; nothing in it quotes the source"}
+_P8["NR_WATCH"] = [{'id': 'W1',
+  'rows': [],
+  'outcome': 'not carried: no unit or text match in note v0.8 or any of the three 2026-10-22 SVGs'},
+ {'id': 'W2',
+  'rows': [],
+  'outcome': 'not carried: no unit or text match in note v0.8 or any of the three 2026-10-22 SVGs'},
+ {'id': 'W3',
+  'rows': [('S5#81', 'discrepant'),
+           ('S5#88', 'discrepant'),
+           ('S10#108', 'discrepant'),
+           ('S10#60', 'discrepant'),
+           ('S8#2098', 'computed-new'),
+           ('S5#2017', 'computed-new')],
+  'note': ('S10', "WATCH LIST (for the integration's NR_WATCH). W3: t"),
+  'outcome': "SETTLED by the PI's ruling R1 of 2026-10-09 (not a STOP), re-keyed to all four of v0.8's R1 units. "
+             "The note carries the corrected value at :93 ('0.000 and 0.000 in the published work', S5#81) and :99 "
+             "('0%', S5#88): both keep N2vi row 8's status (discrepant) with a branch-C cause; their clauses "
+             "changed against the v0.6 rows' clauses, and the design seat's answer 1b item 2 of 2026-11-02 re-keys "
+             "R1 to them, 'R1 declares no note text; the unit is the same quantity (instruct FPR, source v1 text "
+             "0.000) in the same role; only the clause moved' "
+             '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:10), so each carries '
+             "corrected_in_note, declared in NR_RULED_CORRECTIONS (9h O3). The 2026-10-22 F2 keeps R1's point "
+             "verbatim and aligned (node 54 '(0.000, 0.009)', node 90 '0.000'; S10#108, S10#60), which Code "
+             "re-keyed directly (4f; NR_RULED_CORRECTIONS; 9h O18). v0.6 :208's S8#119 is gone with the PI section "
+             "and retires with v0.6 and its ledger at note-2026-10-v1 (the seat's answer 1c, da50cd1:21), and no "
+             "line or node carries 0.003 as the source's rate; the one matcher hit, ‡ (f) :236's '.003' (S8#2098), "
+             "is a p-value, the fifth premise's DPO test, computed-new on Code's computation raw "
+             '(results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197:179; 9h O35), a value collision. That '
+             "premise's instruct test (S8#2100, '.17') is computed at the v1 text's 0.000, R1's reading (the "
+             "computation raw :173; at the record's 0.003 the p would not print .17, the computation raw :236). No "
+             "TPR − FPR from the source's pooled v1 rates is carried, so the +0.9 pp does not arise: the TPR − FPR "
+             "values :101 carries are v5 Table 3's at L = 25 and α = 4 (S5#2013-S5#2020, computed-new on N2(vii), "
+             "results/raw/2026-10-22_note-N2vii-macar-v5.md@8d68b0b:29, :31, :32, :36), and its '+0.6 ± 2.8' "
+             "(S5#2017, the shuffled-pairs LoRA-DPO control) is a value collision with the watched +0.6 pp (N2vi "
+             "@09c3a8c:28), which W3's keys and quotes do not reach (no unit follows the numeral); the instruct half "
+             "of :101's significance claim "
+             "rests on R1's reading (S5#122; 9h O3)"},
+ {'id': 'W4',
+  'rows': [('S6#47', 'reproduced'), ('S10#31', 'log-only')],
+  'outcome': "not carried: the two hits are value collisions (f1 SOLV +.020 at :136, the table row; the source's "
+             "base hit rate 0.001 in F2 node 45), not the retired criterion's power"},
+ {'id': 'W5',
+  'rows': [('S5#91', 'log-only'),
+           ('S5#2004', 'log-only'),
+           ('S8#2062', 'log-only'),
+           ('S8#2084', 'log-only'),
+           ('S10#114', 'log-only'),
+           ('S10#130', 'log-only'),
+           ('S1#1016', 'log-only'),
+           ('S6#1017', 'log-only'),
+           ('S6#1019', 'log-only'),
+           ('S7#1002', 'log-only'),
+           ('S11#1003', 'log-only'),
+           ('S5#59', 'computed-new'),
+           ('S5#60', 'computed-new'),
+           ('S5#61', 'computed-new'),
+           ('S5#113', 'computed-new'),
+           ('S5#117', 'computed-new'),
+           ('S5#122', 'computed-new'),
+           ('S5#124', 'computed-new'),
+           ('S5#2000', 'computed-new'),
+           ('S5#2005', 'computed-new'),
+           ('S8#2083', 'computed-new'),
+           ('S8#2085', 'computed-new'),
+           ('S8#2086', 'computed-new'),
+           ('S8#2087', 'computed-new'),
+           ('S5#63', 'computed-new'),
+           ('S5#64', 'computed-new'),
+           ('S5#2063', 'computed-new'),
+           ('S5#76', 'computed-new'),
+           ('S10#76', 'computed-new'),
+           ('S10#77', 'computed-new'),
+           ('S10#78', 'computed-new'),
+           ('S10#79', 'computed-new'),
+           ('S10#80', 'computed-new'),
+           ('S10#82', 'computed-new'),
+           ('S10#83', 'computed-new'),
+           ('S10#85', 'computed-new'),
+           ('S10#112', 'computed-new'),
+           ('S10#113', 'computed-new')],
+  'note': ('S10', "WATCH LIST (for the integration's NR_WATCH). W3: t"),
+  'outcome': "RESTATED WITH ITS PREMISE in the note and in F2 (condition 4's restate branch, N2vi @09c3a8c:620; "
+             "L032's related row, N2vi row 12, log-only). The matcher's 800/80 hits: :101's two (S5#91 states the "
+             "premise, 'from one configuration at our eight-concept registration (800/80)'; S5#2004, 'At 800/80 "
+             "the DPO difference is not statistically significant', refers back to it), ‡ (f) :236's two (S8#2062, "
+             "'800/80 is one configuration at our eight-concept registration (a floor premise since the pooled "
+             "rates sum twenty such configurations)'; S8#2084 in the criterion clause, referring back), and F2's "
+             "nodes 58 and 100 (S10#114, S10#130), the premise on nodes 100-101. The other '80' hits are value "
+             "collisions, the told control's 80 sessions (:17 S1#1016, :161 S6#1017 and S6#1019, :177 S7#1002, F1a "
+             "node 41 S11#1003; record, log-only, 4a). Condition 4's second part ('Any figure derived from it is cut "
+             "likewise, or stated with its premise and unit'), each figure read at the precision written (Code's G1 "
+             "of fix round 8, results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md@fd2b136:2716; the values at N2vi "
+             "@09c3a8c:531-550): ‡ (f) states the criterion at each premise ('*c* ≈ 2.2 at 800/80 and 2.5–2.9 at the "
+             "three larger premises'; S8#2083, S8#2085-S8#2087), met as written under G1, DPO's c being +2.196, "
+             "+2.493, +2.658 and +2.893, which read 2.2, 2.5, 2.7 and 2.9 (:533, :538, :543, :548); :101's d′ list "
+             "'0.6, 1.2, 1.5 and 2.0 across the four premises', its '*c* ≈ 2.2–2.9', its 'four' and 'three' "
+             "(S5#59-S5#61, S5#113, S5#117, S5#122, S5#124, S5#2000, S5#2005) name the four premises by their ends "
+             "on the line and point by the paragraph's ‡ marks (four; the first two after '(100,000/10,000).' and '(≈ −2 and −0.3).') to "
+             "the ‡ section (:224), whose (f) at :236 states the middle two: met under Code's reading, round 11 (as "
+             "round 10's reading (d) took a reference by line), which the design seat's answer 4c of 2026-11-02 "
+             "confirms, 'Confirmed, Code's reading.' "
+             "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:26; 9h O11), so the alternative "
+             "reading (a footnote marker is not a statement of the premise) does not apply; :101's base and SFT "
+             "'negative *d*′ (≈ −2 and −0.3)' (S5#63, S5#64) hold at every premise at the precision written (base "
+             "−1.931, −2.086, −2.103 and −2.111; SFT −0.296, −0.290, −0.286 and −0.285); and :112's '*d*′ ≈ 1.2–2.0 "
+             "at DPO on the source-consistent premises' (S5#2063, S5#76) points by its ‡ to the ‡ section (:224), whose (f) at :236 names them ('The two at "
+             "fifty concepts are the premises consistent with the source.'), and holds there (+1.197 and "
+             "+1.995, which read 1.2 and 2.0; :538, :548). In F2, the brackets 'd′ −1.9 to −2.1', 'd′ +0.6 to +2.0' "
+             "and 'd′ +0.15 to +1.5' (nodes 46, 52 and 55; S10#76, S10#77, S10#79, S10#80, S10#82, S10#83) are "
+             "ranges over the four n the caption names (node 56, 'four', S10#85; nodes 100-101), each premise's "
+             "value lying within its bracket at the precision of the bracket's ends (instruct's at the v1 text's "
+             "FPR, R1's reading; 9e W3); their near ends, which exist only at 800/80, are referred by node 56 to the "
+             "caption, which states 800/80 with its eight-concept premise (its per-configuration unit only implied, "
+             "a wording residue, 9h O26); node 49's 'd′ ≈ −0.3' (S10#78) holds at every premise at one decimal; and "
+             "node 58's 'p = .11 and .51 at 800/80' (S10#112, S10#113; 0.1085 and 0.5119, :533, :534) states its "
+             "premise. Nothing is held. '~33×' and 'n in the thousands' are not carried"},
+ {'id': 'W6',
+  'rows': [('S8#1008', 'reproduced')],
+  'outcome': "corrected: §9 :214 carries 154/154 ('prints 154/154 from a fresh clone at the tag'), not 103/103 "
+             '(S8#1008, reproduced, N11 @02b6a61:742; L088 named for the referent it replaces, the ledger-status '
+             "exemption declared); N11's PASS is provisional (pre-tag, local clone), and the release-commit count "
+             'is a condition on the tag (9g; 9h O38)'},
+ {'id': 'W7',
+  'rows': [('S8#100', 'n/a'), ('S6#5', 'reproduced')],
+  'outcome': "not triggered: :125 carries 54/101 as the correction of record (S6#5, reproduced, N4 :362; N4's "
+             "correction raw at e60b633), not the not-found quotation '54 of 101 valid sessions'; the matcher's "
+             "one hit, :214's '54', is inside the commit hash c54c4e0 (S8#100, a not-figure). F1a's and F1b's "
+             '54/101 are the correction of record too'},
+ {'id': 'W8',
+  'rows': [('S6#101', 'reproduced'),
+           ('S8#3073', 'reproduced'),
+           ('S8#3074', 'discrepant'),
+           ('S8#3075', 'discrepant'),
+           ('S8#3076', 'computed-new')],
+  'note': ('S6', 'W8 AND RULING 7 (for the seat; no ruling field is '),
+  'outcome': "DISCHARGED in round 11 by the PI's ruling 7 of 2026-10-10, re-keyed to v0.8 by the design seat's "
+             'answer 1b item 5 of 2026-11-02 '
+             "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:13-14; 9h O2). (a) 'The clause "
+             "moved whole into the footnote; the W8 states both read true there.' (da50cd1:13): ‖ (c) :250 carries "
+             "the reworded clause, 'Session-termination attempts occur at about 1% of rounds overall (0.8–2.0% by "
+             "arm, the sham arm highest, with no detectable heterogeneity on a post-hoc exact test, *p* = .72)' "
+             "(S8#3073, the overall 1%, reproduced; S8#3074, S8#3075, the per-arm range, L102's status, "
+             "discrepant, not transcription, branch NT, each carrying 'discharged' with that clause as its "
+             'note_quote, verified, and passing (9d); S8#3076, the post-hoc p, computed-new). (b) §4 :143, '
+             "'Session-termination attempts were rare (about 1% of rounds) and did not differ by arm' (S6#101, the "
+             "overall rate, reproduced, the matcher's other hit): the seat takes the first reading, 'ruling 7's "
+             "discharge reaches :143 through that pointer': the ‖ on :143, which closes that line's next sentence "
+             "('Menu behavior was exploration-dominant in every arm.'), points to ‖ (c) :250; and 'W8 does not "
+             "reopen; :143's 1% stays S6#101, reproduced.' (da50cd1:14). W8's lexical set "
+             "(NR_ROUND9['w8']['absent']) does not fire on :143, and neither W8 state reads true there (Code's "
+             "probe, in Code's round-11 list, "
+             "results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:94, §1b item 5; 'R' below). The "
+             "wording goes to the correction block as R §5 #23 (d5123bf:380), in N5 :122's form, 'with no "
+             "detectable heterogeneity by arm (post-hoc exact test, *p* = .72)' (da50cd1:14; 9h O39)"},
+ {'id': 'W9',
+  'rows': [('S2#102', 'log-only')],
+  'outcome': 'not carried: the one matcher hit is a value collision, the 33 tail-PCA directions at :41 (N10), not '
+             "f1's '33 attempts'"},
+ {'id': 'W10', 'rows': [], 'outcome': "not carried (no '+.094' in note v0.8 or any of the three 2026-10-22 SVGs)"}]
+_P8["NR_WATCH_EXTRA"] = [{'id': "d′ 'roughly 1–1.5 at DPO' (block watch item; no matcher key)",
+  'what': 'the d′ wording the item raws tie to N2(v)/(vi); no matcher key, searched as text',
+  'rows': [('S5#59', 'computed-new'),
+           ('S5#113', 'computed-new'),
+           ('S5#76', 'computed-new'),
+           ('S5#2063', 'computed-new')],
+  'text': '1–1.5',
+  'outcome': "not carried: no '1–1.5' in note v0.8 or any SVG. v0.8 states the DPO d′ at each tabulated premise "
+             "(:101, '0.6, 1.2, 1.5 and 2.0 across the four premises') and as 1.2–2.0 on the source-consistent "
+             "premises (:112); the rows carry their mappings' status, computed-new (9h O4)"},
+ {'id': "'n in the thousands' (4g C8; no matcher key)",
+  'rows': [],
+  'text': 'n in the thousands',
+  'what': "Instruct power 'n in the thousands per cell' (N2vi; held only at the transcribed 0.3%, which R1 "
+          'retires)',
+  'outcome': 'not carried'}]
+_P8["NR_OPEN"] = [{'id': 'O1',
+  'what': "TL;DR :27 'five natural-reinforcer contrasts inside the sham envelope' (v0.3)",
+  'rows': [('S6#1042', 'reproduced')],
+  'notes': [],
+  'text': "CLOSED by v0.4's text (v0.6 :27: 'five natural-reinforcer contrasts, none passing its screen'). Round "
+          "11 (v0.8): the TL;DR no longer counts the contrasts; §5 :165 carries 'none of the five "
+          "natural-reinforcer contrasts passed its screen' (S6#1042, reproduced, N5's DIFF row; it restates v0.6's "
+          'S1#219 under a new S6 key), with no correction.',
+  'corrections': []},
+ {'id': 'O2',
+  'what': "link 5 f1: termination by arm (W8, L102): ruling 7's clause, now at ‖ (c) :250, and :143's new 'did not "
+          "differ by arm'",
+  'rows': [('S6#101', 'reproduced'),
+           ('S8#3073', 'reproduced'),
+           ('S8#3074', 'discrepant'),
+           ('S8#3075', 'discrepant'),
+           ('S8#3076', 'computed-new')],
+  'notes': [('S6', 'W8 AND RULING 7 (for the seat; no ruling field is '),
+            ('S6', 'MACHINERY (S6). NR_EXEMPT_FP: S6#54 (ledger-span, '),
+            ('S8', 'SCOPE (K10, S8 part 3). Chain K10 maps lines 238-2')],
+  'text': "CLOSED in round 11 by the PI's ruling 7 of 2026-10-10, re-keyed to v0.8 by the design seat's answer 1b "
+          'item 5 of 2026-11-02 (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:13-14); not '
+          "a STOP. v0.6 closed it by ruling 7 (the rewording at :111 discharged block :23's STOP). v0.8 moves the "
+          "clause into ‖ (c) :250, 'Session-termination attempts occur at about 1% of rounds overall (0.8–2.0% by "
+          "arm, the sham arm highest, with no detectable heterogeneity on a post-hoc exact test, *p* = .72)', "
+          "which differs from ruling 7's v0.6 note_quote by the capital S and the italic *p*. (a) 'The clause "
+          "moved whole into the footnote; the W8 states both read true there.' (da50cd1:13): the two range rows "
+          "(S8#3074, S8#3075; L102's status, discrepant, not transcription, branch NT) carry 'discharged' with "
+          ":250's clause as note_quote (NR_ROUND9['discharged']), verified (nr_check_discharged), and pass (9d); "
+          "NR_DISC_PATH's NT text names :250. (b) v0.8 also adds a body sentence at §4 :143, 'Session-termination "
+          "attempts were rare (about 1% of rounds) and did not differ by arm' (S6#101, the overall 1%, "
+          "reproduced). The seat takes the first reading, 'ruling 7's discharge reaches :143 through that "
+          "pointer': the ‖ on :143, which closes that line's next sentence ('Menu behavior was "
+          "exploration-dominant in every arm.'), points to ‖ (c) :250; and 'W8 does not reopen; :143's 1% stays "
+          "S6#101, reproduced.' (da50cd1:14). W8's lexical set (NR_ROUND9['w8']['absent']) does not fire on :143, "
+          "and neither W8 state reads true there (Code's probe, in Code's round-11 list, "
+          "results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:94, §1b item 5; 'R' below). The "
+          "wording goes to the correction block as R §5 #23 (d5123bf:380), in N5 :122's form, 'with no detectable "
+          "heterogeneity by arm (post-hoc exact test, *p* = .72)' (da50cd1:14; O39).",
+  'corrections': []},
+ {'id': 'O3',
+  'what': "the source's instruct false-positive rate in the note (W3): :93 and :99 (v0.6 :92, :98, :208)",
+  'rows': [('S5#81', 'discrepant'),
+           ('S5#88', 'discrepant'),
+           ('S5#122', 'computed-new'),
+           ('S8#2100', 'computed-new')],
+  'notes': [('S5', 'K4 SCOPE, S5 part 1: note v0.8 lines 91-100 (round'),
+            ('S5', 'SCOPE (K5, N1 round 11, mapper round 1, checked in'),
+            ('S5', 'REVISION r2 (K5 adversarial checker). All 100 rows')],
+  'text': "CLOSED in round 11 by the PI's ruling R1 of 2026-10-09, re-keyed to v0.8 by the design seat's answer 1b "
+          "item 2 of 2026-11-02: 'R1 declares no note text; the unit is the same quantity (instruct FPR, source v1 "
+          "text 0.000) in the same role; only the clause moved.' "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:10). The note carries R1's "
+          "corrected value: v0.8 :93 '0.000 and 0.000 in the published work' (S5#81, the published instruct rate) "
+          "and :99 '0%' (S5#88), each keeping N2vi row 8's status (discrepant) with a branch-C cause; both carry "
+          'corrected_in_note as v0.6 had it, declared in NR_RULED_CORRECTIONS and verified (nr_check_ruled), and '
+          "pass (9d). v0.6 :208's S8#119 is gone with the PI section and retires with v0.6 and its ledger at "
+          "note-2026-10-v1 (answer 1c, da50cd1:21). The render's two R1 units (S10#108, S10#60) are verbatim, and "
+          "Code re-keyed them directly (O18). Dependencies with no field: the instruct half of :101's 'at the "
+          "three larger premises the DPO and instruct differences are' significant holds at the v1 text's 0% and "
+          "not at the record's 0.003 (N2vi @09c3a8c:539-540; S5#122, a count, so no R1 field attaches; K5's round "
+          "2); and ‡ (f) :236's instruct p ≈ .17 at the fifth premise is computed at the v1 text's 0.000 (S8#2100; "
+          "Code's computation raw, results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197:173, :236). No TPR − "
+          "FPR from the source's pooled v1 rates is carried, so the +0.9 pp does not arise: the TPR − FPR values "
+          ":101 carries are v5 Table 3's (S5#2013-S5#2020, computed-new), and its '+0.6 ± 2.8' (S5#2017) is a value "
+          "collision with W3's +0.6 pp (9e W3).",
+  'corrections': []},
+ {'id': 'O4',
+  'what': "the lineage d′ wording and its scope residues (v0.3's 'roughly 1–1.5 at DPO')",
+  'rows': [('S5#59', 'computed-new'),
+           ('S5#60', 'computed-new'),
+           ('S5#113', 'computed-new'),
+           ('S5#76', 'computed-new'),
+           ('S5#2063', 'computed-new')],
+  'notes': [],
+  'text': "CLOSED by v0.5's text, and v0.8 keeps the form: :101 gives the corrected d′ at DPO as '0.6, 1.2, 1.5 "
+          "and 2.0 across the four premises' (each a point at its premise, N2 @09c3a8c:344, :382, :386, :390; the "
+          "premises named on :101 by their ends and in full at ‡ (f) :236), and :112 'd′ ≈ 1.2–2.0 at DPO on the "
+          "source-consistent premises' (the two at fifty concepts, :236). v0.6's :100 and :164 sentences are gone "
+          "(S5#75 retires). No '1–1.5' is in the note or any render (9e, the extra watch item).",
+  'corrections': []},
+ {'id': 'O5',
+  'what': 'the π̂ gloss (N6; ledger 4g C13), v0.6 :58 and :170',
+  'rows': [('S8#3081', 'reproduced'), ('S8#3084', 'reproduced')],
+  'notes': [],
+  'text': "CLOSED in the note. v0.8 moves the leakage figures from v0.6 :58 to ‡‡ :254, 'The leakage certification "
+          "measured pick discordance π̂ = 0.0172 (11 of 640 paired reads) vs. the 0.0735 bar' (S8#3081-S8#3084, "
+          "reproduced, L110, L111), N6's short form kept; v0.6 :170's gloss is gone with §9's objections. N6's own "
+          "gloss row concerns the preprint's sentence (O29).",
+  'corrections': []},
+ {'id': 'O6',
+  'what': "the N2(ii) STOP on link 4's ROC paragraph",
+  'rows': [],
+  'notes': [],
+  'text': "CLOSED by the PI's ruling R3 of 2026-10-09. Round 11 (v0.8): Link 4 is rewritten; it states the earlier "
+          'temperature-0 protocol and its post-hoc approximate rescoring as such (:118; ‡ (k) :246) and offers no '
+          "greedy arm before posting ('The properly-controlled greedy arm is on our list of next experiments (not "
+          "yet pre-registered)', :118). The design seat's answer 1b item 11 of 2026-11-02 confirms the carry: 'The "
+          'differences are listed (‡(k) :246: the 60-token cap, the legacy scorer, "other differences"), the '
+          'rescoring is labelled post hoc and approximate, and :118\'s inference is stated as "indicates", with '
+          "the controlled greedy arm named as not yet pre-registered. O6 stays CLOSED.' "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:20).',
+  'corrections': []},
+ {'id': 'O7',
+  'what': "F2's annotations (block :34) against the note's description of F2",
+  'rows': [],
+  'notes': [('S10', "CARRIED OPEN ITEMS (the Digest seat's; unchanged i")],
+  'text': "PARTLY CLOSED. The note side retires with v0.6's text: v0.8 has no line describing the renders (v0.6 "
+          ":13's figures line is gone; S1 note 1). The render side stands on the 2026-10-22 F2, whose ROC points "
+          "carry d′ and p as in 2026-10-10: STILL OPEN, the Digest seat's at the PI's routing, criterion c is on "
+          'no point although N2 gives it for every one (N2 @09c3a8c:339-350) and block :34 asks for it (finding A; '
+          'S10 note 8).',
+  'corrections': []},
+ {'id': 'O8',
+  'what': "not found: ruling 8's admitted citations (re-keyed: 4f; the design seat's answers of 2026-11-02, 1b "
+          "items 6-7) and ruling 11's former occurrence, admitted under ruling 14 (1b item 8); ruling 11's "
+          'not-figures (1b item 9)',
+  'rows': [('S7#19', 'not found'),
+           ('S7#20', 'not found'),
+           ('S7#25', 'not found'),
+           ('S7#28', 'not found'),
+           ('S8#3143', 'not found')],
+  'notes': [('S3', "Watch list and rulings. v0_8's NR_WATCH is empty a"),
+            ('S7', 'RULINGS TO RE-KEY on these lines (4f; no ruling fi'),
+            ('S7', 'S7#28 (two arms; ruling 8): the carrier question r'),
+            ('S8', 'SCOPE (K10, S8 part 3). Chain K10 maps lines 238-2')],
+  'text': "CLOSED in round 11, by Code's verbatim re-keys (4f) and the design seat's answers of 2026-11-02, 1b "
+          'items 6-9 and 1c (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:15-18, :21). '
+          "Ruling 8 (the PI's of 2026-10-10), v0.6's six admitted citations: S7#19 '57.7%' and S7#20 '79.7%' recur "
+          'on v0.8 :195 with the declared note_quote verbatim (it names Tagliabue et al. and carries both units), '
+          "so Code re-keyed them directly at :195 (NR_ROUND9['admitted'] and r8_units); S7#28 'two' (:202) takes "
+          "the candidate, cited_source 'Our next-experiments list' and note_quote 'Our next-experiments list "
+          "specifies two arms on their released code' (answer 1b item 6, da50cd1:15), the record-line carrier "
+          "'closed by round 4's precedent, as Code says' (v0.4 rows S1#172, the C1 checker's finding 4; S7 note "
+          "3); S7#25 'three' (:200, '4. The label-free evidence is limited to the 32B of the three sizes tested') "
+          "is admitted 'with the source named on :195' (answer 1b item 7, da50cd1:16): the four numbered items at "
+          ":197-:200 continue :195's sentence, so the admission is split, its note_quote on :195 naming Tagliabue "
+          "et al. and its unit_quote on :200, the list's lead-in relation checked at the run (nr_r11_relation). "
+          "S3#129 ('25 open-weight models') and S7#82 ('the ten published designs (table in the preprint') have no "
+          "v0.8 successor and retire with v0.6 and its ledger at note-2026-10-v1 (answer 1c). Ruling 11 (the PI's "
+          "of 2026-10-12): its occurrence S7#91 'separately from the ten' recurs at ‖‖ (b) :258 as S8#3143, whose "
+          "antecedent (S7#82) is gone; answer 1b item 8 admits it under a new ruling, ruling 14: 'ten' as the "
+          "count of designs in the scored published-record table, cited_source 'the scored audit table', named on "
+          ":214 ('the scored audit table with per-study sources'), the unit on :258 (da50cd1:17). Its condition, "
+          "'Code confirms the count at the pin it uses' (da50cd1:17), holds: at PREPRINT-v1_0-draft.md@32aefcc the "
+          "scored table, the abbreviated one under the marker '[TAB 3: the full scored table. Abbreviated:]' "
+          "(32aefcc:208), has eleven rows, ten published designs (32aefcc:212-221) and 'This paper' (32aefcc:222), "
+          'and no Sofroniew et al. row (asserted at the run, nr_r11_r14_table). The answer places the table in the '
+          "preprint's §8; at 32aefcc it is in section 6, 'Reading the published record against the framework' "
+          "(32aefcc:204), the only table there that scores studies (Code's reading of the pin, R11_R14_TABLE). "
+          "Ruling 11's not-figures move with the v2 date to :258 (S8#3100-S8#3102) and are re-keyed 'with the "
+          "three changes' (answer 1b item 9, da50cd1:18: note_line 258, '2026' occurrence 2, comment_quote 'the v2 "
+          "posting date 2026-09-25'); S7#89's context is gone (answer 1c). Every not-found figure in v0.8 is now "
+          "an admitted citation: ruling 8's four, ruling 14's one and ruling 15's seven (O34; 9d). The note's 'the ten' still "
+          "has no antecedent in v0.8: R §5 #34 (Code's round-11 list, "
+          'results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:391), which the answers decide for '
+          "the correction block, 'separately from the ten published designs in the scored table' (da50cd1:17; "
+          'O39).',
+  'corrections': []},
+ {'id': 'O9',
+  'what': 'N19 at :204 and ‖‖ (c) :258 (v0.6 :144, :210, TL;DR :29)',
+  'rows': [('S7#29', 'reproduced'), ('S7#33', 'reproduced'), ('S7#79', 'computed-new')],
+  'notes': [('S7', "CROSS-REFERENCES for S8's mapper: (a) the publishe"),
+            ('S7', 'WORDING RESIDUES FOR THE SEAT (checker round 2; no')],
+  'text': "PARTLY CLOSED. v0.8 :204 carries N19's figures (0.394; the 0.70 rate; the strike's change below 10⁻⁴) "
+          "and the post-hoc label '(on a post-hoc check)' on the saturation reason; v0.6's TL;DR strike sentence "
+          "(:29, S1#390) and :210's e0fd85c pin are gone. STILL OPEN: the label now sits on the third sentence "
+          "only, while 'The reason is not that the indicator is undemanding' and the diagnostic's result ('leaves "
+          "the strike inert'), N19's post-hoc section 5 (N19 @e0fd85c:87, :93-95, :122), stand in sentences "
+          "without it (S7 note 7 (b); v0.6 carried it in the same sentence), the design seat's wording; ‖‖ (c) "
+          ":258 'The port reproduces every output stored in the notebook' still drops N19's 'printed' ('every "
+          "stored printed output', N19 :34; S7 note 5), the design seat's; and whether N19's row :122 should read "
+          "discrepant stays the PI's (N19 :122). The design seat's answers of 2026-11-02 put none of it before the "
+          "tag, 'None before the tag' (§3 item 8, "
+          "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:55); ‖‖ (c)'s 'printed' is R §5 "
+          "#35 (Code's round-11 list, results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:392), a "
+          "tier (ii) candidate of the correction block (§2, da50cd1:44; O39): whether it goes in is the PI's at "
+          "the flip (tier (ii) items 'go in as a short list if the PI wants the block complete, or are held for "
+          "the preprint').",
+  'corrections': []},
+ {'id': 'O10',
+  'what': "link 3 'with the re-derived diagnostic pre-registered as the next step' (v0.3)",
+  'rows': [],
+  'notes': [],
+  'text': "CLOSED by v0.4's text, and v0.8's Link 3 has no such sentence (the re-derived diagnostic is not "
+          'mentioned).',
+  'corrections': []},
+ {'id': 'O11',
+  'what': 'W5 and the figures derived at an assumed n (:101, :112, ‡ (f) :236, F2)',
+  'rows': [('S5#91', 'log-only'),
+           ('S5#2004', 'log-only'),
+           ('S8#2062', 'log-only'),
+           ('S8#2084', 'log-only'),
+           ('S10#114', 'log-only'),
+           ('S10#130', 'log-only'),
+           ('S5#59', 'computed-new'),
+           ('S5#60', 'computed-new'),
+           ('S5#61', 'computed-new'),
+           ('S5#113', 'computed-new'),
+           ('S5#117', 'computed-new'),
+           ('S5#122', 'computed-new'),
+           ('S5#124', 'computed-new'),
+           ('S5#2000', 'computed-new'),
+           ('S5#2005', 'computed-new'),
+           ('S8#2083', 'computed-new'),
+           ('S8#2085', 'computed-new'),
+           ('S8#2086', 'computed-new'),
+           ('S8#2087', 'computed-new'),
+           ('S5#63', 'computed-new'),
+           ('S5#64', 'computed-new'),
+           ('S5#2063', 'computed-new'),
+           ('S5#76', 'computed-new'),
+           ('S10#76', 'computed-new'),
+           ('S10#77', 'computed-new'),
+           ('S10#78', 'computed-new'),
+           ('S10#79', 'computed-new'),
+           ('S10#80', 'computed-new'),
+           ('S10#82', 'computed-new'),
+           ('S10#83', 'computed-new'),
+           ('S10#85', 'computed-new'),
+           ('S10#112', 'computed-new'),
+           ('S10#113', 'computed-new')],
+  'notes': [('S5', 'SCOPE (K5, N1 round 11, mapper round 1, checked in'),
+            ('S5', 'REVISION r2 (K5 adversarial checker). All 100 rows')],
+  'text': "CLOSED in round 11 under Code's reading, which the design seat's answer 4c of 2026-11-02 confirms: "
+          "'Confirmed, Code's reading.' (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:26). "
+          "W5's condition 4 (N2vi @09c3a8c:620): 800/80 is stated with its premise wherever v0.8 states it, ‡ (f) "
+          ":236 ('one configuration at our eight-concept registration (a floor premise since the pooled rates sum "
+          "twenty such configurations)'; S8#2062, S8#2084), :101 ('from one configuration at our eight-concept "
+          "registration (800/80)'; S5#91, S5#2004) and F2's nodes 58 and 100 with the premise on nodes 100-101 "
+          "(S10#114, S10#130), each log-only, condition 4's restate branch (L032's related row, N2vi row 12). The "
+          "derived figures, each read at the precision written (Code's G1 of fix round 8; 9e W5): ‡ (f) states the "
+          "criterion at each premise ('*c* ≈ 2.2 at 800/80 and 2.5–2.9 at the three larger premises'; S8#2083, "
+          "S8#2085-S8#2087), met as written under G1 (DPO c +2.196, +2.493, +2.658 and +2.893 read 2.2, 2.5, 2.7 and "
+          "2.9; N2vi @09c3a8c:533, :538, :543, :548); :101's 'The corrected *d*′ at DPO measures 0.6, 1.2, 1.5 and "
+          "2.0 across the four premises' and '*c* ≈ 2.2–2.9' (S5#59-S5#61, S5#113, S5#117, S5#124), with its 'four' "
+          "and 'three' (S5#2000, S5#2005, S5#122), name the four premises by their two ends on the line and point by "
+          "the paragraph's ‡ marks (four; the first two after '(100,000/10,000).' and '(≈ −2 and −0.3).') to the ‡ section (:224), whose "
+          "(f) at :236 states the middle two (5,000/500, 16,000/1,600) with their units. Code's reading, round 11, "
+          "is that this pointer meets condition 4 for :101's units, as round 10's reading (d) took a reference to "
+          "the stating line; Code's round-11 list "
+          "(results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:321-322) gives S5#113, S5#2000, "
+          "S5#2005 and S5#122 as the rows that 'name a premise that :101 does not spell out'. With the seat's "
+          "confirmation the alternative reading (that a footnote marker is not a statement of the premise) is not "
+          "applied. :101's base and SFT 'negative *d*′ (≈ −2 and −0.3)' (S5#63, S5#64) hold at every premise at the "
+          "precision written; :112's '*d*′ ≈ 1.2–2.0 at DPO on the source-consistent premises' (S5#2063, S5#76) "
+          "points by its ‡ to the ‡ section (:224), whose (f) at :236 names those two premises, and holds there (+1.197 and +1.995); and F2's "
+          "brackets (nodes 46, 52, 55), node 49's −0.3, node 56's 'four' and node 58's p values at 800/80 meet "
+          "condition 4 as 9e W5 states (S10#76-S10#80, S10#82, S10#83, S10#85, S10#112, S10#113). Nothing is held "
+          "(cn_held is empty). '~33×' and 'n in the thousands' are not carried.",
+  'corrections': []},
+ {'id': 'O12',
+  'what': "the published e2a pair led the TL;DR and F1b's link-5 bar (v0.3)",
+  'rows': [('S6#5', 'reproduced'), ('S8#3041', 'reproduced'), ('S8#3042', 'reproduced')],
+  'notes': [],
+  'text': "CLOSED (v0.4's text). v0.8 :125 leads with the correction of record (Δ = +0.035, 54/101 sessions; "
+          'S6#5), ¶ (a) :248 gives the verdict as first published (55 of 102, +0.039, p = .244; S8#3041-S8#3044) '
+          'as the reading a later audit corrected, and the 2026-10-22 F1a and F1b print 54/101.',
+  'corrections': []},
+ {'id': 'O13',
+  'what': "transcription corrections, branch TS (rulings 6 and 13), re-keyed to v0.8 by the design seat's answers "
+          'of 2026-11-02 (1b items 1, 3 and 4)',
+  'rows': [('S1#134', 'discrepant'),
+           ('S1#214', 'discrepant'),
+           ('S1#215', 'discrepant'),
+           ('S1#216', 'discrepant'),
+           ('S4#4', 'discrepant'),
+           ('S4#5', 'discrepant'),
+           ('S4#38', 'discrepant'),
+           ('S4#39', 'discrepant'),
+           ('S4#10', 'discrepant'),
+           ('S4#11', 'discrepant'),
+           ('S11#18', 'discrepant'),
+           ('S11#19', 'discrepant'),
+           ('S4#9', 'reproduced')],
+  'notes': [('S1', 'OPEN (ruling 6, to the seat for re-keying): S1#134'),
+            ('S4', 'RULINGS TO RE-KEY (round 11 sets no ruling field).'),
+            ('S11', 'CARRIED FROM v0.6 AND RULINGS (round 11 sets no ru')],
+  'text': "CLOSED in round 11 by the design seat's answers of 2026-11-02, routed by the PI, 1b items 1, 3 and 4 "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:9, :11-12): the PI's ruling 6 of "
+          "2026-10-10 is re-keyed to v0.8's wording on the ten note rows, and the PI's ruling 13 of 2026-10-12 to "
+          "the 2026-10-22 F1a. Every TS row keeps its item raw's status (discrepant), its cause saying the note "
+          "(or render) now carries the raw's correction (NR_DISC TS), carries scope_corrected_in_note with v0.6's "
+          "locator and quote and a note_quote verbatim on its line (v0.8's wording on the note's rows; v0.6's, "
+          "unchanged, over F1a's nodes 17-19), verified (nr_check_scope_corrected), and passes as corrected (9d). "
+          "(a) :14 (S1#134, S1#214-S1#216): '.94–.995 over layers 50–63', answer 1b item 3, 'Ruling 6 is the scope "
+          "correction stated in the note's own wording' (da50cd1:11), the routing line unchanged (N3 "
+          "@09c3a8c:370). (b) :83 (S4#4, S4#5, S4#38, S4#39): 'AUC of 0.94 to 0.995 across layers 50 through 63', "
+          "answer 1b item 4, option (a): the term reader reads 'layers N through M' and 'layers N to M' as a layer "
+          "range (_R9_LAYER_RXS), so the domain L50-L63 is read on :83, 'and ruling 6 reaches :83 under item 3' "
+          "(da50cd1:12). (c) :85 (S4#10, S4#11): '0.81–0.96 at the second, consistently from layer 51 onward', "
+          "answer 1b item 3 (N3 @09c3a8c:385, 'from L51'). (d) F1a (S11#18, S11#19), ruling 13: nodes 17-19 are "
+          'verbatim and aligned in the 2026-10-22 render, so Code re-keyed their scope_corrected_in_note unchanged '
+          "(4f's verbatim rule), and the seat confirms it: 'Nodes 17–19 are byte-identical across the two renders; "
+          "ruling 13 reaches the 2026-10-22 render.' (answer 1b item 1, da50cd1:9; "
+          "V08_RULING13_REKEY_SEAT_CONFIRMED). v0.6's :86 TS rows (S4#31-S4#33, the leakage bullet) have no v0.8 "
+          "unit and retire with v0.6 and its ledger at note-2026-10-v1 (answer 1c, da50cd1:21). S4#9 ('51', both "
+          'labels) stays reproduced.',
+  'corrections': []},
+ {'id': 'O14',
+  'what': "block :10's downgrade of log-only figures, and §9's pointers (v0.6's epistemic status, :20)",
+  'rows': [],
+  'notes': [('S5', 'K4 SCOPE, S5 part 1: note v0.8 lines 91-100 (round'),
+            ('S5', 'REVISION r2 (K5 adversarial checker). All 100 rows')],
+  'text': "STILL OPEN, the PI's: (e) stays the PI's reading. v0.8 has no epistemic-status line: v0.6 :20's "
+          "rescoped sentence and its weight sentence, through which block :10's downgrade of log-only figures was "
+          "PARTLY APPLIED, are gone, and no v0.8 sentence downgrades a log-only figure; §9 :214 points to 'the "
+          "claims ledger that maps all figures in this post to their sources' (S5 notes 0-2: the 21 log-only rows "
+          'on :101-:118 and the log-only rows on :91-:100). Block :10 (AUDIT-note-release-v1_2.md@bbc9ffe:10) asks '
+          "that 'the note's sentence that carries it is downgraded': NOT APPLIED as written; whether :214's pointer to the "
+          "claims ledger discharges it is (e), the PI's reading (as v0.6's (e) asked of the blanket sentence, "
+          "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2146). The design seat has "
+          'answered with a recommendation, not a ruling (its answers of 2026-11-02, §3 item 1, '
+          "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:48): 'one sentence in the "
+          "correction block, not a ruling', 'Figures the claims ledger marks log-only are taken from the dated log "
+          "and are not reproduced from committed artifacts; the ledger lists them.', and 'O14 (e) stays the PI's "
+          "reading'; 'If the PI prefers to rule that :214's pointer discharges AUDIT :10, that is a one-line "
+          'ruling for the ledger instead.\' The answers\' preamble reads \'The PI\'s word on the items marked "PI" '
+          "is given with the routing of this block unless the routing says otherwise.' (da50cd1:3), and §3 item 1 "
+          "is marked 'PI'. On Code's reading of :3 (no committed file records a routing that says otherwise, and "
+          "no ruling on :214's pointer is recorded), the seat's recommendation stands: the sentence goes in the "
+          "correction block at the flip (§4 item 3, 'At the flip: the correction block (§2 and §3 item 1)', "
+          "da50cd1:61; O39), and (e) stays the PI's reading; nothing on O14 waits on the seat. v0.6's residues: "
+          "(a) the gloss of the sources cited and (c) :20's ledger claim retire with it; (b) :212 'A public ledger "
+          "in the repository records every design error by seat and name' and :214's pointer to 'the ledger of "
+          "errors' rest on README-NOTE and a file no item raw checks (O25); (d) :214's 'maps all figures ... to "
+          "their sources' now holds for the 40 units not found at integration: twelve are admitted citations (O8, "
+          "O34; 9d), four map to the design seat's v1 raw and Code's v5 raw (O34), and twenty-four to Code's "
+          'computation raw (O35).',
+  'corrections': []},
+ {'id': 'O15',
+  'what': "'committed before data' (:59, :212) and the run order (:145), and N13's readings behind them",
+  'rows': [],
+  'notes': [('S6', 'PASS 15 (the Q3 bullet in plain words), read again')],
+  'text': "STILL OPEN, re-read on v0.8 (Code's reading; the wording the design seat's, N13's readings the PI's). "
+          "v0.5-v0.6 scoped 'committed before data' to the verdict tier (:60, :166, :179). v0.8 states it twice: "
+          "§3 :59 'All criteria, stop rules, and outcomes were collected with pre-registrations committed before "
+          "data collection', with no tier scope and no pointer, and §9 :212 'Every verdict-tier gate, criterion "
+          'and outcome wording was committed before its data; the provenance table says where the order holds less '
+          "cleanly', which keeps the scope; :59 is wider than :212 and than N13's verdict-tier finding (N13 "
+          "@09c3a8c:28). §4 :145 adds 'The order of the runs was fixed in advance, and no stage's result could "
+          "change what ran next', supported within each stage (LOCK-g.md@bbc9ffe:143-145; "
+          'RESULTS.md@bbc9ffe:8315-8320) and not, in the lines K6 read, as a cross-stage order fixed in advance '
+          "(S6 note 7). The design seat's answers of 2026-11-02, §3 item 8 "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:55): for O28, O15 and O9, 'None "
+          "before the tag'; on :59's point the seat 'agrees it is a scope item and adds it to the correction "
+          'block\'s tier (i) as #38: ":59 states the verdict-tier rule; screen-tier and descriptive cells are '
+          'scoped at :212."\' (O39). :145\'s cross-stage order is R §5 #25 (Code\'s round-11 list, '
+          'results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:382), also in tier (i) (§2, '
+          "da50cd1:44). Behind the claim, N13's order-test domain, its verdict-cell definition and its tier calls "
+          "(:976, :1014-1015) stay the PI's. v0.6's :60 timing clause and its :166 and :179 sentences are gone "
+          '(O32).',
+  'corrections': []},
+ {'id': 'O17',
+  'what': "precision corrections: double rounding (the rule in the v0.3 final ledger's 10b)",
+  'rows': [('S3#114', 'reproduced'),
+           ('S3#64', 'reproduced'),
+           ('S4#19', 'computed-new'),
+           ('S9#108', 'computed-new')],
+  'notes': [('S3', "Watch list and rulings. v0_8's NR_WATCH is empty a"),
+            ('S3', "Link 2 (:73, :75) against v0.6's N8 items. C23 (N8")],
+  'text': "CLOSED by the PI's ruling 10 of 2026-10-10. v0.8 keeps the direct roundings: '≈ 0.50-0.55' at :65 "
+          "(S3#114, 0.5046 at L52), '0.83–0.87' at :75 (S3#64, 0.8747 at L48), and '.59' at :87 (S4#19) and in F1b "
+          'node 214 (S9#108); no precision correction is carried.',
+  'corrections': []},
+ {'id': 'O18',
+  'what': "F2's R1 point and W5's form (v0.6: closed by the 2026-10-10 render)",
+  'rows': [('S10#108', 'discrepant'), ('S10#60', 'discrepant'), ('S10#114', 'log-only'), ('S10#130', 'log-only'),
+           ('S10#78', 'computed-new'), ('S10#76', 'computed-new'), ('S10#79', 'computed-new'),
+           ('S10#82', 'computed-new')],
+  'notes': [],
+  'text': "CLOSED by the Digest seat's 2026-10-10 render, and the 2026-10-22 F2 keeps it: R1's instruct point "
+          "'(0.000, 0.009)' at node 54 and the strip's '0.000' at node 90 are verbatim and aligned (index shift "
+          '0), so Code re-keys R1 on both directly (4f; NR_RULED_CORRECTIONS, corrected_in_note restored as v0.6 '
+          "had it), branch C; the 800/80 premise is stated (nodes 58, 100-101; O11); the bracket near ends are "
+          "referred to the caption's n (node 56), O18's own remedy; and the source's SFT, printed 'd′ ≈ −0.3' (node "
+          "49), holds at every premise at one decimal (S10#78; 9e W5). Its other wording items are O26's and O7's.",
+  'corrections': []},
+ {'id': 'O19',
+  'what': "line 3's 'Previous:' text is edited though labelled as an earlier version's",
+  'rows': [],
+  'notes': [],
+  'text': "CLOSED by v0.5's text, and v0.8 has no change log: line 3 is the Foreword, so no restated 'Previous' "
+          'text exists to be edited.',
+  'corrections': []},
+ {'id': 'O20',
+  'what': "note :13's dating of the placed renders and its FIGURE-REVIEW pointer",
+  'rows': [],
+  'notes': [],
+  'text': "CLOSED by v0.8's text: v0.8 has no sentence dating the placed renders and no pointer to "
+          "FIGURE-REVIEW-2026-10-10.md (v0.6 :13's figures line retires; S1 note 1).",
+  'corrections': []},
+ {'id': 'O21',
+  'what': "line 3's v0.6 change log (and its restated v0.5 log) against the body",
+  'rows': [],
+  'notes': [],
+  'text': "CLOSED by v0.8's text: v0.8 carries no change log, so v0.6's line 3, its restated v0.5 log and residues "
+          '(a)-(f) retire with it (S1 note 1).',
+  'corrections': []},
+ {'id': 'O22',
+  'what': 'the PI section and the disclosure against the rulings and the tag (now §9, :212-:216)',
+  'rows': [],
+  'notes': [],
+  'text': 'PARTLY CLOSED. v0.8 drops the PI section; §9 (:212-:216) takes the disclosure and the fallback '
+          "paragraph. Closed: :215's fallback (R4) is resolved in fact, the note having posted on 2026-10-27 under "
+          "it (answers block @908a659, §1); :211's watch-list clause and :209's offer are gone. STILL OPEN: :214's "
+          "'the scored audit table with per-study sources' (the preprint's table, at the release; the PI's), which "
+          "the design seat's answer 1b item 8 of 2026-11-02 names as 'the table the release carries in "
+          "`PREPRINT-v1_0-draft.md` §8 at patch v8 (`32aefcc`)' "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:17), the table ruling 14 reads '
+          "(at that pin it is the abbreviated table of the file's section 6, "
+          "PREPRINT-v1_0-draft.md@32aefcc:204-222, Code's reading of the pin; O8); and, the design seat's, :214's "
+          "'at the tag `note-2026-10-v2`, whose commit backs all figures': twelve of the figures are admitted "
+          "citations, held only as cited text (ruling 15's seven as readings of the source's plot, the design seat's "
+          "answers of 2026-11-02, results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:22), not as "
+          "record figures (ruling 8's four, ruling 14's one and ruling 15's seven; 9d), as v0.6's O22 put it for "
+          "ruling 8's "
+          "(results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2154), and the clause is not among R §5's "
+          "thirty-seven candidates (Code's round-11 list, "
+          "results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:358-394). The tag itself is O38's.",
+  'corrections': []},
+ {'id': 'O23',
+  'what': 'F1a (2026-10-22): link quantities, labels and tags',
+  'rows': [('S11#13', 'reproduced'),
+           ('S11#14', 'reproduced'),
+           ('S11#15', 'reproduced'),
+           ('S11#17', 'reproduced'),
+           ('S11#22', 'computed-new'),
+           ('S11#23', 'computed-new'),
+           ('S11#36', 'n/a'),
+           ('S11#39', 'n/a')],
+  'notes': [('S11', 'CARRIED FROM v0.6 AND RULINGS (round 11 sets no ru'),
+            ('S11', 'K3 CHECK (round 2; HEAD f935864; script d5a26dcf…0')],
+  'text': 'STILL OPEN on the 2026-10-22 F1a, each item as its span note says whose (none a figure error). Nodes '
+          "1-39 are the 2026-10-10 nodes (shift 0; text changed only at nodes 25 and 30), so v0.6's residues stand "
+          "(v0.6's O23, results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2155): link 1's pair names no "
+          "quantity (no 'G_c'), link 2's pair names neither Δ nor σ_q (nodes 10-11) and link 3 names no AUC (the "
+          "Digest seat's); link 4's '0.200 → 0.000' (node 24) names no stages and has no FLAG-3 0.176 beside the SFT "
+          "0.200 (the PI's); the random comparator and the leave-one-out disclosure are not on the strip (the design "
+          "seat's); link 3 is still tagged [DESCRIPTIVE] against 'Links 1–4 are asserted' (the design seat's, as "
+          "v0.6's O23 has it; K3's check calls it cosmetic, S11 note 3); the k/n key's 'first picks' against 'First "
+          "free choice'. (j), "
+          "carried and widened: the label (nodes 42-43) still names 'the OLMo dose escalation' as link 2's "
+          "'concluded, not answered' cell, which in the record is Qwen's e2d (N8 @09c3a8c:161), and two of the "
+          "label's five cells (that one and 'the first echo confirmatory stage') have no counterpart in note v0.8, "
+          "which mentions neither: the Digest seat's, through the PI ('the Qwen dose escalation' or 'the e2d dose "
+          "escalation', or dropping the two cells; S11 note 3). Link 5's tag [VERDICT] now matches the label. The "
+          "footer's tag is O38's. The design seat's answers of 2026-11-02, §3 item 2 "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:49): (j), with O24's four F1b "
+          "items, goes to the Digest seat through the PI 'After the flip, as a new dated set', 'Not before the "
+          "tag; the renders posted as filed.'; the strip's other items are not in that set.",
+  'corrections': []},
+ {'id': 'O24',
+  'what': 'F1b (2026-10-22): render wording items',
+  'rows': [('S9#108', 'computed-new'), ('S9#1004', 'log-only')],
+  'notes': [('S9', "OPEN OBSERVATIONS CARRIED (the Digest seat's, word")],
+  'text': "STILL OPEN on the 2026-10-22 F1b, the Digest seat's at the PI's routing (none a figure error; re-keyed "
+          "by K11's check): the link-5 MDE caption still has no line drawn (item 9); the link-5 axis title and k/n "
+          "key say 'first picks' without N4's 'free'; the link-3 note says 'every RBF fit' where 'every observed "
+          "fit' would be exact, and drops the MLP's 'specification-dependent' caveat, which N3c attaches to the "
+          "figure's status (N3c @09c3a8c:313; S9#108). New, minor: the link-5 note calls the told control's E a "
+          "'sham envelope' where note v0.8 :161 says 'sham bounds' (S9#1004); both name the record's E = |P_sham − "
+          ".5| (S9 note 6). The design seat's answers of 2026-11-02, §3 item 2 "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:49): O24's four F1b items (the "
+          "MDE line, 'first picks' without 'free', 'every RBF fit' and the MLP's caveat; "
+          'results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:405) go to the Digest seat through '
+          "the PI 'After the flip, as a new dated set', 'Not before the tag; the renders posted as filed.'; the "
+          "'sham envelope' item is not among the four.",
+  'corrections': []},
+ {'id': 'O25',
+  'what': "README-NOTE.md against v0.8 and this ledger (the release's re-point; N18)",
+  'rows': [],
+  'notes': [],
+  'text': "STILL OPEN, Code's, at the release (answers block @908a659 §10 item 5: README-NOTE's re-point from v0.6 "
+          "to v0.8, round 11's ledger, the repository name and the tag URL; N18 before the tag and again as the "
+          "last commit before it). README-NOTE.md (last changed at 98d07bc, so the same at e6d3197) summarises "
+          "N1's v0.6 ledger (round 10), so its "
+          "statements of round 10's findings are stale against note v0.8, the three 2026-10-22 renders and this "
+          "ledger; its §4 and the release manifest are regenerated from this ledger at N18's re-run, and the lines "
+          "outside §4 are Code's to re-sync then, the ledger-of-errors link :214 names included (O14 (b)). The "
+          "design seat's answers of 2026-11-02, §4 item 2 "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60), give the order after this '
+          "ledger's commit: N18, then 'README-NOTE re-point (v0.8; round 11's ledger; Tier 1 on patch v7; the "
+          "`jlens-qwen36` pointer sentence)', then the PI's README.md pass if not yet done ('none is on `main` at "
+          "`15b9f23`'), the preflip-script commit, N18 again and the tag, then push, the pre-flip read, the "
+          "post-tag scans (all five) and 'ready to flip'.",
+  'corrections': []},
+ {'id': 'O26',
+  'what': 'F2 (2026-10-22): render wording items beyond R1 and W5',
+  'rows': [('S10#1007', 'computed-new')],
+  'notes': [('S10', "WORDING ITEM (Code's reading, for the design seat;"),
+            ('S10', "CARRIED OPEN ITEMS (the Digest seat's; unchanged i")],
+  'text': "STILL OPEN on the 2026-10-22 F2, the Digest seat's at the PI's routing (none a figure error or a STOP). "
+          "The render keeps v0.6's residues (S10 note 8): the strip's key (node 91) names no scorer; finding H "
+          "(the greedy cells' injected decidable counts, 19, 19, 17 and 4, and the register arm's 4 "
+          "first-version-scorer claims at SFT are not given); finding E's first part (which n gives which bracket "
+          "end); node 102 calls .066 and .080 'the 95% upper bounds' though one is one-sided and one two-sided (N2 "
+          "@09c3a8c:399); node 56 calls SFT's single value a range; finding J, no node names the test behind its p "
+          "values (each a one-sided Fisher exact test, N2 :331; block section 0 rule 4); and, carried from v0.6's "
+          "O26 (results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2158) though S10 note 8 does not list "
+          "it, 800/80's per-configuration unit is only implied (nodes 100-101, with the words of the 2026-10-10 "
+          "nodes 97-98), by the parallel with 5,000/500's '(one fifty-concept configuration)' on Code's reading in "
+          "v0.6's S10 span note 4 (the same ledger, @c18854f:2066). New in round 11: node 98's 'presented in figures "
+          "at one configuration' (S10#1007), inexact on Code's reading (S10 note 3) by the caption's own use of "
+          "'configuration', layer by strength (node 99): the carriers give the main-text figure at one layer, L = "
+          "25, over four strengths, and Appendix D.1's at L = 19 and 22 (N2vi @09c3a8c:401-404; N2(vii) "
+          "@8d68b0b:64-65); note v0.8's ‡ (e) :234 carries the same clause (S8#2049; O16). Both are R §5 #30 of "
+          "Code's round-11 list (results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:387), which "
+          "proposes 'in figures at *L* = 25 in the main text (Figure 5, α ∈ {1, 2, 4, 8}; Appendix D.1 adds *L* = 19 "
+          "and 22)', "
+          "a tier (ii) candidate of the dated correction block whose candidate set the design seat's answers of "
+          '2026-11-02 accept (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:44; O39): '
+          "whether it goes in is the PI's at the flip (tier (ii) items 'go in as a short list if the PI wants the "
+          "block complete, or are held for the preprint').",
+  'corrections': []},
+ {'id': 'O27',
+  'what': "the FLAG-3 exploration point without N2's post-hoc label (rule 11)",
+  'rows': [('S8#2041', 'reproduced'),
+           ('S8#2042', 'computed-new'),
+           ('S8#2043', 'computed-new'),
+           ('S8#2044', 'computed-new')],
+  'notes': [],
+  'text': "CLOSED: v0.8 moves the FLAG-3 point to ‡ (d) :232, headed 'Scorer correction, post hoc', '12/40 vs. "
+          "7/44 (+0.14, p = .10)' (S8#2041-S8#2044, restating v0.6's S5#84-S5#87), so N2's post-hoc label is "
+          "carried. A wording residue, the design seat's: the p names no test (N2 @09c3a8c:80's one-sided Fisher "
+          "exact; block :12 rule 4), as on :230 and :236 (O16); with theirs it is R §5 #29 of Code's round-11 list "
+          '(results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:386), a tier (ii) candidate of '
+          "the dated correction block whose candidate set the design seat's answers of 2026-11-02 accept "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:44; O39): whether it goes in is '
+          "the PI's at the flip (tier (ii) items 'go in as a short list if the PI wants the block complete, or are "
+          "held for the preprint').",
+  'corrections': []},
+ {'id': 'O28',
+  'what': "the open S1#59 question (L089's status outside N1's vocabulary): the Q1-bet date",
+  'rows': [('S8#111', 'n/a'), ('S8#112', 'n/a'), ('S8#113', 'n/a')],
+  'notes': [('S3', 'C17 (N7 note 9, :291), C19 (N7 note 11, :293), N7 ')],
+  'text': "STILL OPEN, the PI's. The Q1-bet date (2026-08-20) recurs at v0.8 :214, 'PROPOSAL-g and the Q1 bet "
+          "`72b09a9` (2026-08-20)', rowed as not-figures (the commit pointer's date; S8#111-S8#113, as in v0.6); "
+          "no v0.8 row cites L089, so 9d's 'open, not ruled' lists none. If the PI rules on how that date is "
+          'classed or statused, those rows are re-checked against the ruling (S3 note 3 and its annotation). The '
+          "design seat's answers of 2026-11-02: 'None before the tag' (§3 item 8, "
+          'results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:55).',
+  'corrections': []},
+ {'id': 'O29',
+  'what': 'findings on the preprint (ruling 9), for the design seat',
+  'rows': [],
+  'notes': [],
+  'text': "STILL OPEN, the design seat's, for preprint v1 after the flip (answers block @908a659 §7, §10). Round "
+          '11 audits no preprint sentence: Tier 1 (N4-N8, N17) reads patch v7 at note-2026-10-v1, the six scripts '
+          'are not re-pointed and nothing is re-run (§7), and v0.8 names the preprint only as to come (:3, :214, '
+          ":216). The findings round 10 recorded on patch v7 (N4's PF-1 to PF-4, N5's P10-1 to P10-5, N6's "
+          "PRE.111, and the chains' items at the preprint's :41, :131, :135, :137, :158, :262, :264 and :266) stay "
+          "findings on that text, v1's record at note-2026-10-v1.",
+  'corrections': []},
+ {'id': 'O30',
+  'what': "the status reading of 'fifty' (ruling 12), re-keyed to v0.8 (4f)",
+  'rows': [('S5#2003', 'computed-new'),
+           ('S8#2070', 'computed-new'),
+           ('S8#2079', 'computed-new'),
+           ('S8#2082', 'computed-new'),
+           ('S8#2052', 'computed-new'),
+           ('S10#137', 'computed-new'),
+           ('S10#1009', 'computed-new')],
+  'notes': [('S5', 'SCOPE (K5, N1 round 11, mapper round 1, checked in'),
+            ('S8', 'SCOPE (K9, N1 round 11, mapper round 1). Note v0.8'),
+            ('S10', 'RULINGS (re-key candidates; no ruling field is set')],
+  'text': "CLOSED in round 11 by the PI's ruling 12 of 2026-10-12, re-keyed to v0.8 by the design seat's answer 1b "
+          'item 10 of 2026-11-02: "Re-key to the five \'fifty\' rows, each keeping N2 5(b)\'s label as its status '
+          'basis; the two \'50\' rows rest on 4b." '
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:19). v0.8 names fifty as the '
+          "source's count (4b: v5 states 50 concepts for its OLMo figures, Figure 5): :101 'the twenty "
+          "configurations at the source's fifty concepts' (S5#2003), ‡ (f) :236's three 'fifty' (S8#2070, S8#2079, "
+          "S8#2082) and F2 node 101 '(one fifty-concept configuration)' (S10#137, a verbatim phrase on a changed "
+          "node) are declared under ruling 12 (NR_ROUND9['r12_fifty'], asserted at the run), each computed-new "
+          "with N2 5(b)'s heading as its status_basis (S5#106's form), and pass under ruling 5 (9d); 'v5 states 50 "
+          "concepts' (S8#2052) and node 99's 'v5 gives 50 concepts' (S10#1009, the seat's 4f flag) rest on 4b "
+          "(N2(vii) @8d68b0b:63-65), computed-new. The same answer gives Code the call 'Whether S10#137 also cites "
+          "N2(vii) :64' (da50cd1:19). Code's call: it does not. Its locator cites N2 alone (5(b)'s 5,000/500 rows, "
+          '@09c3a8c:380-383, with 1(c) :136 as the competing label), because its ruling-12 basis is N2 5(b): '
+          "ruling 12's run check reads its source there (a 5(b) row that states '50 concepts', with 5(b)'s heading "
+          "as status_basis); v5's 50 concepts is what the two '50' rows state, on 4b. The four note rows also cite "
+          "N2(vii) :63-64, as rowed. No row is held. v0.6's S7#97 (:164) is gone and retires with v0.6 and its "
+          'ledger at note-2026-10-v1 (answer 1c, da50cd1:21).',
+  'corrections': []},
+ {'id': 'O31',
+  'what': "¶ (c)'s MDE sentence names the conjunct whose reading matters (v0.6 :108)",
+  'rows': [('S8#3056', 'computed-new')],
+  'notes': [('S8', 'SCOPE (K10, S8 part 3). Chain K10 maps lines 238-2')],
+  'text': "STILL OPEN, the design seat's wording (N1's reading; N4's PI item 5 asks which reading the note uses, "
+          "N4 @09c3a8c:420). v0.8 ¶ (c) :248 keeps the sentence, 'The full pass rule needs approximately +0.16 to "
+          "+0.19, depending on how its map-consistency conjunct is read' (S8#3056, restating v0.6's S6#26), which "
+          "names conjunct (2); N4's two joint figures differ only in the reading of conjunct (1), the sham "
+          "envelope, signed (+0.1645) or absolute (+0.1919) (N4 :238, :255, :257, :260). N1's wording correction "
+          "is carried to S8#3056, restated for v0.8's words (9i; NR_CORRECTIONS). Values and statuses are "
+          "unchanged. The wording is R §5 #32 (Code's round-11 list, "
+          'results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:389), among the thirty-seven '
+          "candidates the design seat's answers of 2026-11-02 accept as the dated correction block's candidate "
+          'set, in tier (ii) (§2, results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:44; O39): '
+          "whether it goes in is the PI's at the flip (tier (ii) items 'go in as a short list if the PI wants the "
+          "block complete, or are held for the preprint'); it changes no status.",
+  'corrections': ['S8#3056']},
+ {'id': 'O32',
+  'what': ":60's timing clause and line 3's 'the shortest verdict-tier gap' (v0.6)",
+  'rows': [],
+  'notes': [],
+  'text': "CLOSED by v0.8's text: :60's timing clause ('the shortest, the e0 B2c-a cell, is 0.0309 days') and line "
+          "3's restatement are gone (S2 note 1; v0.8 carries no 0.0309), so neither the wording residues nor the "
+          "domain question arises; N13's tier calls stay the PI's under O15.",
+  'corrections': []},
+ {'id': 'O33',
+  'what': 'the corruptor clause: a post-pin path named as its referent, and the corruptor named as the gate',
+  'rows': [('S8#3072', 'log-only'), ('S6#112', 'log-only')],
+  'notes': [('S6', 'CARRIED OBSERVATIONS (v0.6 S6 notes 17-19), on v0.'),
+            ('S8', 'ROUND 2 (K10 checker, 2026-10-29). Every row re-ve')],
+  'text': "PARTLY CLOSED. (a) Closed by v0.8's text: no clause names the post-pin G-CAL path; ‖ (b) :250 reads "
+          "'The told control's corruptor (G-CAL) changes at least three letters of every item, so no render is "
+          "clean' (S8#3072, log-only on PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:176 and :48, restating v0.6's "
+          "S6#112), and §5 :159 'every corrupted item changes at least three letters' (S6#112, the same pinned "
+          "carrier); G-CAL's measured 16/16 (RESULTS.md@0fa8539:4553-4556, outside the VERDICTS entry) is named in "
+          "S8#3072's comment as corroboration, not in its locator: the design seat's answer 4c of 2026-11-02 keeps "
+          "4a's scope ('Sufficient as rowed; no change to 4a's scope.') and says 'S8#3072's 16/16 may cite the "
+          "G-CAL entry (`RESULTS.md@0fa8539:4553–4556`) in its comment, as it does' "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:28). (b) STILL OPEN, the design '
+          "seat's wording: '(G-CAL)' still names the calibration gate as the corruptor, which is corrupt_m "
+          "(PROPOSAL-m@bbc9ffe:176; v0.6 G3's finding 8, verbatim again; S8 note 4); one form: 'The told control's "
+          "corruptor (corrupt_m; calibrated at G-CAL)'. It is R §5 #13 (Code's round-11 list, "
+          'results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:370), a tier (ii) candidate of the '
+          "correction block (§2, da50cd1:44; O39): whether it goes in is the PI's at the flip (tier (ii) items 'go "
+          "in as a short list if the PI wants the block complete, or are held for the preprint').",
+  'corrections': []},
+ {'id': 'O34',
+  'what': 'not found at integration: readings of the cited source with no committed transcription (Macar et al. '
+          "v5's figures and §3.3; §6)",
+  'rows': [('S1#1012', 'not found'),
+           ('S5#2028', 'not found'),
+           ('S5#2029', 'not found'),
+           ('S5#2030', 'not found'),
+           ('S5#2048', 'computed-new'),
+           ('S8#2009', 'not found'),
+           ('S8#2011', 'not found'),
+           ('S8#2012', 'not found'),
+           ('S8#2020', 'computed-new'),
+           ('S8#2057', 'computed-new'),
+           ('S8#2058', 'computed-new')],
+  'notes': [('S1', "OPEN (the design seat's): S1#1012 'zero' (:15, the"),
+            ('S5', 'SCOPE (K5, N1 round 11, mapper round 1, checked in'),
+            ('S5', 'REVISION r2 (K5 adversarial checker). All 100 rows'),
+            ('S8', 'SCOPE (K9, N1 round 11, mapper round 1). Note v0.8')],
+  'text': "CLOSED in round 11 (new in this round) by the design seat's answers of 2026-11-02, answer 2a, 'Split by "
+          "what each is' (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:22). Eleven units "
+          'read figures or text of Macar et al. that no committed file transcribed at integration '
+          "(results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:184-226). (i) Reading (5), §6's "
+          "10 injected and 10 control per concept as the learned vector's training set (‡ (f) :236; S8#2057, "
+          "S8#2058): 'transcribed from v1' by the design seat, v1 §6, p. 12, '400 concepts (8,000 samples; 10 "
+          "injected/control per concept)' (results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md@da50cd1:12; the "
+          "seat's reading of the slash, the v1 raw :14; 'its §6' read as v1's, the v1 raw :16); both map "
+          "audit-raw-new, computed-new, on that raw under its pin class. (ii) Readings (3) and (4), by Code's "
+          'transcription of arXiv:2603.21396v5 (results/raw/2026-11-02_note-N1-r11_macar-v5-lines.md@633b6fd), the '
+          "PDF acquired with the PI's approval given with the routing and identified by N2(vii)'s sha256 (the v5 "
+          "raw :7): v5 §3.3 carries the quoted sentence verbatim, 'DPO is the first stage to achieve ∼0% FPR with "
+          "moderate true detection' (the v5 raw :19), so S5#2048 (:110) maps audit-raw-new, computed-new, on that "
+          "raw. The v5 raw records §3.3's prose '∼0%' and does not decide whether it is the 'numeric per-stage "
+          "TPR/FPR in text' that N2vi read v5 as lacking (the v5 raw :25; "
+          "results/raw/2026-10-08_note-N2vi-source.md@09c3a8c:404); Code's reading: N2vi's phrase concerns a "
+          "per-stage rate stated as a number, and '∼0%' is an approximate prose figure; not a status question, the "
+          "row being computed-new on the v5 raw. Figure 20 labels the fifth panel of its OLMo-3.1-32B row 'L=45', "
+          'with the baseline among the three series plotted in that panel (the v5 raw :39, :43; a raster label, '
+          "read by eye on the renders, :34); that this panel is the caption's depth fraction 0.7 is Code's reading "
+          "of the caption's order, not the figure's (the v5 raw :41, :43). S8#2020 (:228, 'Figure 20's baseline at "
+          "*L* = 45') maps audit-raw-new, computed-new, on the label. (iii) Readings (1) and (2), the unpooled "
+          "curves near zero at α = 1 at DPO and instruct and rising at α ≥ 2–4: admitted under ruling 15, 'a "
+          "figure read by eye is admitted as what it is, a reading of the source's plot, and is labelled so in the "
+          "ledger' (da50cd1:22), with ‡ (b) :228's 'v5 Figure 5 at *L* = 25; Figure 22 at *L* = 19 and 22' as the "
+          'cited source, Code\'s mechanization of the answer\'s cited_source ("v5 Figure 5" / "v5 Figure 22"): '
+          ":228's own words, which name both figures; S8#2009, S8#2011 and S8#2012 on :228 itself, S5#2028-S5#2030 "
+          "on :101, whose ‡ points to the ‡ notes, and S1#1012 on :15, a line the ruling names; each stays 'not "
+          "found', carries admitted_citation, and passes (9d).",
+  'corrections': []},
+ {'id': 'O35',
+  'what': 'not found at integration: computations on committed inputs that no committed carrier printed (the '
+          "release block's pass 3-11 additions, a listing by source)",
+  'rows': [('S5#2055', 'computed-new'),
+           ('S5#2056', 'computed-new'),
+           ('S5#2057', 'computed-new'),
+           ('S5#2059', 'computed-new'),
+           ('S5#2060', 'computed-new'),
+           ('S8#3019', 'computed-new'),
+           ('S8#3022', 'computed-new'),
+           ('S8#3024', 'computed-new'),
+           ('S8#3026', 'computed-new'),
+           ('S8#3027', 'computed-new'),
+           ('S8#2032', 'computed-new'),
+           ('S8#2033', 'computed-new'),
+           ('S8#2034', 'computed-new'),
+           ('S8#2035', 'computed-new'),
+           ('S8#2036', 'computed-new'),
+           ('S8#2037', 'computed-new'),
+           ('S8#2038', 'computed-new'),
+           ('S8#2039', 'computed-new'),
+           ('S8#2040', 'computed-new'),
+           ('S8#2095', 'computed-new'),
+           ('S8#2097', 'computed-new'),
+           ('S8#2098', 'computed-new'),
+           ('S8#2099', 'computed-new'),
+           ('S8#2100', 'computed-new')],
+  'notes': [('S5', 'SCOPE (K5, N1 round 11, mapper round 1, checked in'),
+            ('S8', 'SCOPE (K9, N1 round 11, mapper round 1). Note v0.8'),
+            ('S8', 'SCOPE (K10, S8 part 3). Chain K10 maps lines 238-2')],
+  'text': "CLOSED in round 11 (new in this round) by the design seat's answer 2b of 2026-11-02: 'Admit the "
+          'computation raw; Code regenerates it from its committed script and commits it with its own pin class; '
+          "the 24 rows map audit-raw-new, computed-new.' "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:23). Twenty-four units are '
+          "arithmetic on committed inputs that no committed carrier printed before Code's computation raw: the "
+          "Gemma ablation's criterion and imputed pre-ablation d′ (c ≈ 2.2–2.5 to ≈ 0.55; d′ 1.85 and 2.48), at "
+          ':110 (S5#2055-S5#2057, S5#2059, S5#2060) and ‡ (i) :242 (S8#3019, S8#3022, S8#3024, S8#3026, S8#3027); '
+          "‡ (c) :230's source-convention rates over the 96 trials run (17/96 = 0.177, 0/96, 25/96 = 0.260) and "
+          'the SFT injected arm over all 48 trials (12/48 vs. 9/48, +0.06, p = .31) (S8#2032-S8#2040); and ‡ (f) '
+          ":236's fifth premise, 10,000/200, with its tests (DPO p ≈ .003, d′ ≈ 0.9; instruct p ≈ .17) (S8#2095, "
+          "S8#2097-S8#2100). The release block's pass 3-11 list prints every one of them, as a listing by source, "
+          "not a carrier (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:32; Code's round-11 "
+          "list, results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:230, §2b). Code's "
+          'computation raw (results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197) computes each from its '
+          "committed inputs, read at their revisions: '24 of 24 agree with the note as printed; 0 disagree' (the "
+          'computation raw :17); the 24 rows map audit-raw-new, computed-new, on it under its pin class and pass '
+          "under ruling 5 (9d). Two of its readings are Code's, as the answer records: 'The log-linear reading of "
+          '"half-count" and the one-sided Fisher are recorded as Code\'s readings, as the raw states them\' '
+          "(da50cd1:23; the computation raw :18-19). ‡ (c)'s premise is now carried: 'v1's Table 4 grades a "
+          "non-answering or incoherent response NO (the v1 raw, §2)' (da50cd1:23; "
+          "results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md@da50cd1:22-27); 'What is not settled is whether a "
+          "later pipeline step excludes them; the note's convention rests on the judge prompt, and the raw says "
+          "so.' (§3 item 3, da50cd1:50; the v1 raw :29): left open by the answers, a known limit; no status rests "
+          'on it, the nine ‡ (c) rows computing on the convention as the note states it, which the judge prompt '
+          'carries.',
+  'corrections': []},
+ {'id': 'O36',
+  'what': "'seven days': units sourced only to the answers block (their kind)",
+  'rows': [('S1#1000', 'n/a'), ('S1#1020', 'n/a'), ('S8#1002', 'n/a')],
+  'notes': [('S1', "OPEN (the design seat's, through the PI; the contr"),
+            ('S8', 'SCOPE (K8, N1 round 11, mapper round 1; note v0.8 ')],
+  'text': "CLOSED in round 11 (new in this round) by the design seat's answer 4a of 2026-11-02: a not-figure, 'a "
+          "release commitment in prose, as rowed' "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:24). 'within seven days of this "
+          "post' (:3, :23, :214; the fallback paragraph's release commitment, pass 23, the PI's N of 2026-10-27) "
+          'is sourced only to the answers block and the additions raw (@908a659 :22, :55; :80), which are pinned '
+          '(the answers block on Code\'s reading of 4c) '
+          'and carry no figure (4e). The three rows (S1#1000, S1#1020, S8#1002) keep the kind they were rowed '
+          "with, not-figure, as answer 4a rules, with one reason text, grouped as prose with the note's "
+          'descriptions of itself (S2#42 and S8#1001); the kind hash (NR_KIND_SHA256) freezes with them as '
+          "not-figures, as it does on answer 4d's kind calls ('The kind hash freezes on these.', da50cd1:30).",
+  'corrections': []},
+ {'id': 'O37',
+  'what': 'the pass-12 author-correspondence figures: verification pending T+3',
+  'rows': [('S7#1015', 'computed-new'),
+           ('S7#1016', 'computed-new'),
+           ('S8#3121', 'computed-new'),
+           ('S8#3122', 'computed-new'),
+           ('S8#3125', 'computed-new')],
+  'notes': [],
+  'text': "NEW in round 11; STILL OPEN until T+3, the PI's and the design seat's, after the flip (block §3; "
+          "answers block @908a659 §6 4c, §8). The figures the authors reported on 2026-10-26 (:202's 48.9 and 15.0 "
+          "points; ‖‖ (a) :258's counts and v2 rates, the transcription's rows 1-16) map audit-raw-new on the "
+          "design seat's transcription (results/raw/2026-10-28_note-N1-r11_correspondence-figures.md@908a659), "
+          "computed-new, each row's comment saying 'source: author correspondence 2026-10-26 (that raw); "
+          "verification pending T+3', and pass under ruling 5; none is held: the design seat's answers of "
+          '2026-11-02, §3 item 6, \'Hold none; "verification pending T+3" stands in their comments.\' '
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:53). The T+3 table check '
+          "re-sources them to the authors' v2 tables or corrects them by a dated block on the post, a later round. "
+          'Recorded for it: 80.2 − 31.2 = 49.0 from the rounded rates, against the stated 48.9 (S7#1015, S8#3125; '
+          "the transcription raw's :42 leaves it to the table check); it is R §5 #37 (Code's round-11 list, "
+          "results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:394), in the correction block's "
+          "tier (i), '#37 (48.9 vs 49.0, pending T+3)', one of the three the answers decide (§2, da50cd1:44; O39).",
+  'corrections': []},
+ {'id': 'O38',
+  'what': "the tag the note and the renders name (note-2026-10-v2), and '154/154 from a fresh clone at the tag'",
+  'rows': [('S8#1008', 'reproduced'), ('S8#1003', 'n/a'), ('S8#1004', 'n/a'), ('S8#1005', 'n/a')],
+  'notes': [('S8', 'SCOPE (K8, N1 round 11, mapper round 1; note v0.8 '),
+            ('S9', "OPEN OBSERVATIONS CARRIED (the Digest seat's, word"),
+            ('S10', 'FOOTER. Node 103 names the tag note-2026-10-v2, wh'),
+            ('S11', 'K3 CHECK (round 2; HEAD f935864; script d5a26dcf…0')],
+  'text': "NEW in round 11, Code's, at the release (no figure depends on it). §9 :214 names the tag "
+          "`note-2026-10-v2` ('whose commit backs all figures'; S8#1003-S8#1005), and the three renders' footers "
+          'name it too (F1a node 45, F1b node 222, F2 node 103; S11#1007-S11#1009, S9#1011-S9#1013, '
+          "S10#1011-S10#1013); no such tag exists yet (git tag -l with HEAD at e6d3197: cycle-2-close, "
+          "cycle-4-close, note-2026-10-v1), and the answers block puts it on the final audit commit (@908a659 §8), "
+          "so each holds once the tag is cut there (9g's conditions). :214's '154/154 from a fresh clone at the "
+          "tag' (S8#1008, reproduced) rests on N11 @02b6a61, a fresh clone at 6485da2 taken before any tag; the "
+          'release-commit count is owed (the release block @2fb0cf0:39 item 3; the answers block §10 item 4) and '
+          "becomes a correction only if that run prints otherwise (W6). The design seat's answers of 2026-11-02, "
+          "§3 item 4: the tag 'must be `note-2026-10-v2` exactly; the fresh-clone 154/154 at the tag is the "
+          "release-commit run owed under answers §10 item 4' "
+          '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51).',
+  'corrections': []},
+ {'id': 'O39',
+  'what': "the dated correction block on the post (the design seat's answers of 2026-11-02, §2): the candidates of "
+          "Code's round-11 list (its §5), their two tiers and the three decided",
+  'rows': [('S6#101', 'reproduced'),
+           ('S8#3143', 'not found'),
+           ('S7#1015', 'computed-new'),
+           ('S8#3125', 'computed-new')],
+  'notes': [('S6', 'W8 AND RULING 7 (for the seat; no ruling field is '),
+            ('S8', 'SCOPE (K10, S8 part 3). Chain K10 maps lines 238-2')],
+  'text': "NEW in round 11; STILL OPEN until the flip, the PI's at the flip, the design seat's wording; not a STOP "
+          "N1 raises, and no ledger status rests on it. Code's round-11 list "
+          "(results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf; 'R' in the answers), its §5 "
+          "(d5123bf:352-394), gives thirty-seven correction candidates on note v0.8, each Code's reading of its "
+          "carrier, or a chain's where marked (d5123bf:354). The design seat's answers of 2026-11-02, §2 "
+          "(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:44): 'The 37 candidates are "
+          "accepted as the candidate set for the dated correction block on the post.' The seat triages them at the "
+          "flip in two tiers: '(i) corrections of meaning', which go in, #2, #3, #4, #5, #8, #9, #10, #19, #23, "
+          "#24, #25, #27, #31, #33, #34 and #37; and '(ii) precision and labels', the rest, 'which go in as a "
+          "short list if the PI wants the block complete, or are held for the preprint'. 'Three of them are "
+          "already decided by this block: #23, #34 and #37': #23, :143's 'did not differ by arm' in N5 :122's "
+          "form, 'with no detectable heterogeneity by arm (post-hoc exact test, *p* = .72)' (answer 1b item 5 (b), "
+          "da50cd1:14; S6#101; O2); #34, the antecedent of ‖‖ (b) :258's 'the ten', 'separately from the ten "
+          "published designs in the scored table' (answer 1b item 8, da50cd1:17; S8#3143; O8); #37, :202's and ‖‖ "
+          "(a) :258's 48.9 against 49.0 from the rounded rates, 'pending T+3' (S7#1015, S8#3125; O37). The seat "
+          "adds #38 to tier (i), ':59 states the verdict-tier rule; screen-tier and descriptive cells are scoped "
+          "at :212.' (§3 item 8, da50cd1:55; O15). The block also carries O14's sentence, the seat's "
+          "recommendation (§3 item 1, da50cd1:48), on Code's reading of the answers' :3 (O14): §4 item 3 reads 'At "
+          "the flip: the correction block (§2 and §3 item 1)' (da50cd1:61). 'The wording is written at the flip, "
+          "not here; none changes a ledger status.' (da50cd1:44). N1's own correction (S8#3056, 9i) is R §5 #32 "
+          "(O31), and the residues O16 carries are R §5's candidates where R §5 lists them.",
+  'corrections': []}]
+# SPAN_DISP8_BEGIN (80 span notes, placed as E1 places them: S1/S2 K1's span_notes_r2.json; S5 K4's map note, K5's
+# two; S8 K8's two, K9's map note, K10's two)
+_P8["NR_SPAN_DISPOSITION"] = {
+    'S1:0': ('SCOPE (K1, N1 round 11, mapper round 1, note v0.8 ', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (its integration requests, NR_DISC's four TS rows and NR_NF_ROWS, the v0_8 tables apply)"),
+    'S1:1': ("v0.6's S1 had 274 rows; 16 have successors here an", 'closed', (), "no finding: v0.6 rows retired with v0.6's text (none restated elsewhere but those named)"),
+    'S1:2': ("OPEN (the design seat's, through the PI; the contr", 'closed', ('O36',), "'seven days' (S1#1000, S1#1020): a not-figure, 'a release commitment in prose, as rowed', the design seat's answer 4a of 2026-11-02 (O36)"),
+    'S1:3': ("OPEN (the design seat's): S1#1012 'zero' (:15, the", 'closed', ('O34',), "S1#1012 admitted under ruling 15, a reading of the source's plot whose figures ‡ (b) :228 names (the design seat's answer 2a (iii) of 2026-11-02; O34)"),
+    'S1:4': ('OPEN (ruling 6, to the seat for re-keying): S1#134', 'closed', ('O13',), "ruling 6 re-keyed to :14's wording by the design seat's answer 1b item 3 of 2026-11-02; S1#134 and S1#214-S1#216 carry scope_corrected_in_note and pass (O13)"),
+    'S1:5': ('Exemptions for Code to declare (NR_EXEMPT_FP): S1#', 'closed', (), 'an integration request the v0_8 profile applies (NR_EXEMPT_FP: S1#118 7e7857d048d706ba, S1#119 b1e6e649365c473d)'),
+    'S1:6': ("OPEN (wording, the design seat's; not figure error", 'carried', ('O16',), "(a) :14's MLP peak quoted without N3c :207's caveat, and the parity reading without 'post hoc'; (b) :17's 'two truthful banner lines' (the design seat's wording)"),
+    'S1:7': ('CHECK (K1 round 2, independent of the mapper; rows', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (its cross-chain request, the duplicated v0_6_row pointers, the integration accepts: one key, several pointers, 9a)"),
+    'S2:0': ('SCOPE (K1, N1 round 11, mapper round 1, note v0.8 ', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S2:1': ("v0.6's S2 had 58 rows; 29 have successors here and", 'closed', (), "no finding: v0.6 rows retired with v0.6's text"),
+    'S2:2': ("OPEN (wording, the design seat's): :41's R² parent", 'carried', ('O16',), ":41's R² parenthetical drops N10 note (a)'s 'in cycle 2'; note (b)'s rename not applied (the design seat's)"),
+    'S2:3': ("Value checks, disclosed (Code's call whether eithe", 'closed', (), "Code's reading: S2#124 and S2#24 pass on their own carrier lines, which state the values ('4bit'; :77's 'two labels'); disclosed in the rows, no exemption"),
+    'S2:4': ("The release block's ledger additions by source nam", 'closed', (), 'no finding: citation years, not-figures'),
+    'S2:5': ('CHECK (K1 round 2; rows_r2.json sha256 e893f98737f', 'carried', ('O16',), "S2#1009's 83.4% now in §3 for all sessions; e2a's figure (the design seat's scope wording)"),
+    'S3:0': ('SCOPE (K2, N1 round 11 mapper round 1; note v0.8 l', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S3:1': ("Watch list and rulings. v0_8's NR_WATCH is empty a", 'closed', ('O8', 'O17'), "ruling 8's S3#129 has no v0.8 successor and retires with v0.6 and its ledger at note-2026-10-v1 (the design seat's answer 1c of 2026-11-02; O8); ruling 10's two rows are unchanged direct roundings (O17)"),
+    'S3:2': ('C16 (N7 note 7, @09c3a8c:289). v0.6: APPLIED. v0.8', 'carried', ('O16',), "C16 PARTLY APPLIED: :69 drops G_c's pooled-SD unit and the tail-level qualifier"),
+    'S3:3': ('C17 (N7 note 9, :291), C19 (N7 note 11, :293), N7 ', 'carried', ('O28',), "C17, C19 and N7 note 8 lapse with their sentences; the Q1-bet date recurs at :214 (annotated by the K2 check), O28's open question, the PI's"),
+    'S3:4': ("Wording items new in v0.8 (Code's reading; for the", 'carried', ('O16',), "(i) :69's 'attenuating step-wise growth'; (ii) :65's 'Paraphrasing' for the frame conditions (the design seat's wording)"),
+    'S3:5': ('N7 note 14 (N7 @09c3a8c:296, flagged for N8, never', 'carried', ('O16',), "N7 note 14 NOT APPLIED: :73's Δs name no readout or unit"),
+    'S3:6': ("Link 2 (:73, :75) against v0.6's N8 items. C23 (N8", 'closed', ('O17',), "applied in v0.8's text (C23, C26), or lapsed with the sentence; C27's 0.87 kept under ruling 10 (O17)"),
+    'S3:7': ('Locator convention and status discipline stand: N8', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (matcher corrections; level-A coincidences disclosed in the rows, annotated)"),
+    'S3:8': ('K2 CHECK (round 2; N1 round 11; the adversarial ch', 'carried', ('O16',), "the restored Δ+ = +0.285 without v0.6's per-probe honesty note (leave-one-out 0.085; the design seat's disclosure)"),
+    'S4:0': ('K3 SCOPE, note v0.8 lines 77-90 (Link 3), mapper r', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (S4#19's ledger-span failure: the integration restores v0.6's exemption and declares it, NR_EXEMPT_FP)"),
+    'S4:1': ('RULINGS TO RE-KEY (round 11 sets no ruling field).', 'closed', ('O13',), "ruling 6 re-keyed to :83 and :85 by the design seat's answers 1b items 3 and 4 of 2026-11-02, the term reader reading 'layers N through M' as a layer range; the six rows carry scope_corrected_in_note and pass (O13)"),
+    'S4:2': ('WORDING (for the design seat; no figure changes, e', 'carried', ('O16',), "(1) the RBF and MLP caveats dropped; (2) 'no linear probe ... through 63' (N3 :443's flag); (3) the random-direction comparison dropped; (4) C6 (the design seat's)"),
+    'S4:3': ('K3 CHECK (round 2; the adversarial checker, indepe', 'carried', ('O16',), "(5) the computed-new label PARTLY APPLIED; (6) N3c :207's advice NOT APPLIED (S4#20); S4#19's exemption now restored by the integration (annotated)"),
+    'S5:0': ('K4 SCOPE, S5 part 1: note v0.8 lines 91-100 (round', 'carried', ('O3', 'O14', 'O16'), "item 2, R1 re-keyed on :93/:99 by the design seat's answer 1b item 2 of 2026-11-02 (O3, closed); item 4, block :10 NOT APPLIED, a correction-block sentence the seat recommends, (e) the PI's (O14); items 3 and 5, 'two arms per stage' and the bounds' family (O16); item 6, the additions raw's §2 row 10, corrected in that raw's §5 at da50cd1 (the design seat's answers of 2026-11-02, §3 item 5); item 1 closed by NR_EXEMPT_FP; the counts restated after K4's round 2 (annotated)"),
+    'S5:1': ('SCOPE (K5, N1 round 11, mapper round 1, checked in', 'carried', ('O3', 'O11', 'O16', 'O30', 'O34', 'O35'), "the nine not-found rows: S5#2028-S5#2030 admitted under ruling 15 and S5#2048 computed-new on Code's v5 raw, N2vi :404's question answered by Code's reading (O34, closed), the five ablation values computed-new on Code's computation raw (O35, closed); ruling 12 re-keyed on S5#2003 (O30, closed); W5 under Code's reading, confirmed by the design seat's answer 4c of 2026-11-02 (O11); S5#122's R1 dependency (O3, closed); S5#30's scope and S5#79's 'classifies' (O16)"),
+    'S5:2': ('REVISION r2 (K5 adversarial checker). All 100 rows', 'carried', ('O3', 'O11', 'O14', 'O16', 'O34'), "(1) S5#122's R1 dependency (no field; R1 re-keyed on S5#81 and S5#88; O3, closed); (2) block :10 (O14); (3) S5#30's scope (O16); (4) the curve reading's source, admitted under ruling 15 (O34, closed); (5) the W5 pointer, Code's reading confirmed by the design seat's answer 4c of 2026-11-02 (O11); (6) S5#68's comment corrected (closed); (7) S5#2061's 1.79-1.81, which the computation raw prints at higher precision (results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197:241-242; round 8's D5 (a))"),
+    'S6:0': ('SCOPE (K6, S6). Chain K6 maps note v0.8 (RESEARCH-', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S6:1': ('CARRY-OVER. 48 rows reuse a v0.6 key (results/raw/', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (its lineage convention the integration applies: lineage with the key, v0_6_row on second statements, 9a)"),
+    'S6:2': ('RETIRING from S6 (63 v0.6 S6 rows have no successo', 'closed', (), 'no finding: v0.6 rows retired or moved, each named'),
+    'S6:3': ('W8 AND RULING 7 (for the seat; no ruling field is ', 'carried', ('O2', 'O39'), "ruling 7 re-keyed to :250 and its discharge read as reaching :143 through the ‖ pointer, the design seat's answer 1b item 5 of 2026-11-02 (O2, closed); :143's 'did not differ by arm' goes to the correction block as R §5 #23 of Code's round-11 list (results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:380), a tier (i) item the answers decide (O39)"),
+    'S6:4': ('THE TOLD CONTROL (A0). The figures on :161 (94, 80', 'closed', (), 'no finding: the A0 figures map to the later record under 4a'),
+    'S6:5': ('KIND CALLS (for the checker). Not-figures as count', 'closed', (), "Code's kind calls, frozen at integration with the kind hash (counts of the note's own parts; S2#29, S8#29, S2#27): the design seat's answer 4d of 2026-11-02 keeps the S6 ordinals among them (S6#1000, S6#1005, S6#1006, S6#1007, S6#1028) as rowed ('the S6 ordinals as rowed'); the note's other calls (the test names, the procedure parameter, the A0 figures and :129's '8') were not put to the seat and stay Code's"),
+    'S6:6': ("BEYOND THE MATCHER. Rowed: '½' (:125, S6#3) and 't", 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (rows beyond the matcher)"),
+    'S6:7': ('PASS 15 (the Q3 bullet in plain words), read again', 'carried', ('O15', 'O16'), "':145's stop rule' is a PAUSE to disposition (O16); 'the order of the runs was fixed in advance' holds within stage only (O15)"),
+    'S6:8': ('CARRIED OBSERVATIONS (v0.6 S6 notes 17-19), on v0.', 'carried', ('O16', 'O33'), "(a) the marker-arm scope NOT APPLIED (O16); (b) :147's counterfactual PARTLY APPLIED (S6#86), which no R §5 item cites, carried by O16 until the seat or the PI routes it; (f) O33's G-CAL wording now on :250"),
+    'S6:9': ("CHECKER TOKENS (Code's reading, recorded so that n", 'closed', (), "Code's reading of the checker's tokens, recorded; no pass rests on a coincidental token alone"),
+    'S6:10': ('MACHINERY (S6). NR_EXEMPT_FP: S6#54 (ledger-span, ', 'closed', ('O2',), "an integration request the v0_8 profile applies (NR_EXEMPT_FP S6#54 2556cd6f36c743a8); its ruling-7 candidate is S6 note 3's (O2)"),
+    'S6:11': ('HARNESS (K6). Command: cd ', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S6:12': ('CHECK (K6, round 2). Every row re-verified: covera', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (the kind calls it kept for the seat, :122 'three', :145 'Two', :151 'three' and :145 'one', are S6 ordinals of the kind calls in Code's round-11 list (results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:349), which the design seat's answer 4d of 2026-11-02 keeps as rowed; the S6#54 exemption is Code's, declared in NR_EXEMPT_FP)"),
+    'S7:0': ('S7: RESEARCH-NOTE-v0_8-draft.md lines 173-209 (sec', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S7:1': ('v0.6 S7 ROWS WITH NO SUCCESSOR ON THESE LINES (v0.', 'closed', (), 'no finding: v0.6 rows retired or moved, each named'),
+    'S7:2': ('RULINGS TO RE-KEY on these lines (4f; no ruling fi', 'closed', ('O8',), "ruling 8 re-keyed on these lines: S7#19 and S7#20 verbatim (Code's, 4f), S7#28 and S7#25 by the design seat's answers 1b items 6 and 7 of 2026-11-02 (O8)"),
+    'S7:3': ('S7#28 (two arms; ruling 8): the carrier question r', 'closed', ('O8',), "S7#28: the record-line carrier closed by round 4's precedent, as the design seat's answer 1b item 6 of 2026-11-02 says; admitted under ruling 8 with the candidate (O8)"),
+    'S7:4': ("OUTSIDE-MATCHER HINTS (the inventory's nine): 'fir", 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (outside-matcher hints)"),
+    'S7:5': ("CROSS-REFERENCES for S8's mapper: (a) the publishe", 'carried', ('O9',), "(a) ‖‖ (c)'s 'every output stored' drops N19's 'printed' (O9); (b) informational"),
+    'S7:6': ('CHECKER ROUND 2 (K7, 2026-10-29): eight rows chang', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (S7#1021's kind, not-figure: Code's recommendation, which the design seat's answer 4d of 2026-11-02 takes, 'S7#1021 not-figure'; frozen with the kind hash)"),
+    'S7:7': ('WORDING RESIDUES FOR THE SEAT (checker round 2; no', 'carried', ('O9', 'O16'), "(a) :177's nonlinear step without the post-hoc label and (c) S7#15's 'A second' (O16); (b) :204's post-hoc label (O9); (d) the additions raw's omission, corrected in its §5 at da50cd1 (the design seat's answers of 2026-11-02, 4c and §3 item 5)"),
+    'S8:0': ('SCOPE (K8, N1 round 11, mapper round 1; note v0.8 ', 'carried', ('O36', 'O38'), "(2) 'seven', a not-figure by the design seat's answer 4a of 2026-11-02 (O36, closed); (3) '154/154 ... at the tag' and the tag (O38); (1) closed by NR_EXEMPT_FP (S8#1008, annotated); (4) Code keeps S8#1025's change"),
+    'S8:1': ('K8 CHECK (round 2; adversarial, independent of the', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (its remaining item, S8#1008's exemption, the integration declares; the 'seven' reasons aligned)"),
+    'S8:2': ('SCOPE (K9, N1 round 11, mapper round 1). Note v0.8', 'carried', ('O16', 'O30', 'O34', 'O35'), "the 20 not-found rows: fourteen computed-new on Code's computation raw (O35, closed), S8#2057 and S8#2058 on the design seat's v1 raw and S8#2020 on Code's v5 raw (O34, closed), S8#2009, S8#2011 and S8#2012 admitted under ruling 15 (O34); ruling 12 re-keyed on S8#2070, S8#2079 and S8#2082 (O30, closed); six correction candidates (R §5 #6-#8, #29-#31; O16); the counts restated (annotated)"),
+    'S8:3': ('SCOPE (K10, S8 part 3). Chain K10 maps lines 238-2', 'carried', ('O2', 'O8', 'O16', 'O31', 'O35', 'O39'), "6 not-found: five computed-new on Code's computation raw (O35, closed) and S8#3143 admitted under ruling 14 (O8, closed); ruling 7 re-keyed at :250 (O2, closed) and ruling 11's not-figures re-keyed at :258 (O8); S8#3056's conjunct (O31); 'Fourteen' and others (O16); the antecedent of 'the ten', R §5 #34 of Code's round-11 list (results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:391), decided for the correction block (O39)"),
+    'S8:4': ('ROUND 2 (K10 checker, 2026-10-29). Every row re-ve', 'carried', ('O16', 'O33'), "S8#3085, S8#3025, S8#3008, S8#3061 (O16); S8#3072's '(G-CAL)' (O33); the duplicate lineage the integration decides (annotated)"),
+    'S9:0': ('SCOPE (K11, N1 round 11, mapper round 1; S9 = 2026', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S9:1': ("WHAT CHANGED in the render (K11's scratch diff of ", 'closed', (), "no finding: the render's changes, each named"),
+    'S9:2': ('NEW FIGURES: the four A0 figures of the link-5 not', 'closed', (), 'no finding: the A0 figures map to the later record under 4a'),
+    'S9:3': ('CARRIED FIGURES: every cited line of the 50 carrie', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (S9#108's exemption the integration declares)"),
+    'S9:4': ("NOT COUNTED (as v0.6): the ordinals 'first' and 's", 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (outside-matcher words)"),
+    'S9:5': ('RULINGS AND CORRECTIONS: none reaches S9. R1 (no s', 'closed', (), "no ruling reaches S9; S9#108's exemption declared (NR_EXEMPT_FP e0f62093570a02c6)"),
+    'S9:6': ("OPEN OBSERVATIONS CARRIED (the Digest seat's, word", 'carried', ('O24', 'O38'), "the Digest seat's carried items and 'sham envelope' (O24); the footer's tag (O38)"),
+    'S9:7': ('CHECK r2 (K11 round 2, the adversarial check of ro', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S10:0': ('S10: 2026-10-22_F2_macar-lineage-roc_post.svg (sha', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S10:1': ('THE RENDER. The 2026-10-22 render is the 2026-10-1', 'closed', (), "no finding: the render's changes, each named (the geometry re-read by the K12 check, annotated)"),
+    'S10:2': ('NEW CAPTION UNITS (11 new rows). Node 97 restates ', 'closed', (), 'no finding: the new caption units, mapped'),
+    'S10:3': ("WORDING ITEM (Code's reading, for the design seat;", 'carried', ('O26',), "node 98's 'at one configuration' (the Digest seat's wording, O26)"),
+    'S10:4': ('RULINGS (re-key candidates; no ruling field is set', 'closed', ('O30',), "R1 re-keyed verbatim by Code (4f; O18, closed); ruling 12 re-keyed to S10#137 by the design seat's answer 1b item 10 of 2026-11-02, its locator citing N2 alone (5(b), with 1(c) :136 as the competing label), not N2(vii) :64, Code's call (O30)"),
+    'S10:5': ("WATCH LIST (for the integration's NR_WATCH). W3: t", 'closed', (), 'an integration request the v0_8 profile applies (NR_WATCH W3-W5)'),
+    'S10:6': ('HARNESS (the v0_8 dev report on rows_r1). F2 cover', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (the exemptions and quote hits the integration declares)"),
+    'S10:7': ("SPLIT COMMA GROUPS. As in v0.6's S10, each '000/50", 'closed', (), "Code's convention: both split-comma-group forms stand as v0.6 had them (F2's here, the note's at :236)"),
+    'S10:8': ("CARRIED OPEN ITEMS (the Digest seat's; unchanged i", 'carried', ('O7', 'O26'), "the Digest seat's carried F2 items (finding A, O7; J, H, E, the key, .066/.080, node 56, O26)"),
+    'S10:9': ('FOOTER. Node 103 names the tag note-2026-10-v2, wh', 'carried', ('O38',), "the footer's tag, not cut at HEAD (O38); S10#149-S10#151 re-keyed by the integration (annotated)"),
+    'S10:10': ('PROVENANCE. K12 read via git show at the pins: N2 ', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S10:11': ('K12 CHECK (round 2, adversarial, independent of th', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding (its cross-chain items the integration decides, 9a)"),
+    'S11:0': ('K3 SCOPE, 2026-10-22_F1a_headline-strip.svg (sha25', 'closed', (), "a chain's process record (scope, coverage, provenance, harness, revision, redaction or matcher corrections); no open finding"),
+    'S11:1': ('A0 FIGURES (nodes 41-42; the 4a recipe). Each maps', 'closed', (), 'no finding: the A0 figures map to the later record under 4a'),
+    'S11:2': ('CARRIED FROM v0.6 AND RULINGS (round 11 sets no ru', 'carried', ('O13', 'O23'), "ruling 13 re-keyed to the 2026-10-22 F1a, Code's verbatim re-key confirmed by the design seat's answer 1b item 1 of 2026-11-02 (O13, closed); the strip's NOT APPLIED wording items (O23)"),
+    'S11:3': ('K3 CHECK (round 2; HEAD f935864; script d5a26dcf…0', 'carried', ('O23', 'O38'), "O23 (j) and the strip's other open items (O23); the footer's tag (O38)"),
+}
+# SPAN_DISP8_END
+
+# ------------------------------------------------------------------------------------------- 2. the mutations
+# ---- the row-specific mutations, ported to v0.8 (round 11). v0_6's list in order: a mutation whose row and property
+# v0.8 keeps applies unchanged (88); one whose v0.6 row v0.8 retires is re-keyed, under its own id, to a v0.8 row with
+# the same property and says so (_M8_REKEY); the rest are dropped with the reason (_M8_DROP; 10e lists them). The ones
+# held for the design seat's re-keys (4f) are re-ported to v0.8's lines since its answers of 2026-11-02 (_M8_REKEY's
+# round-11 update below), all but RP17, dropped with its reason. Round 11's own (X16f, X16g, Y01-Y11) follow.
+_F1A8 = "2026-10-22_F1a_headline-strip.svg"
+_N2_ = "results/raw/2026-10-08_note-N2-introspection.md"
+_SV60 = "record A 0.003 / record B 0.003; source v1 text "
+_R8Q = ("The nearest is the unlabeled-button condition of Tagliabue et al., where the 32B model re-presses an "
+        "undescribed relief button less often when it worked (57.7%) than when it was fake (79.7%; v1, §4.3)")
+
+
+def _m8_corr(**kv):
+    def f(D):
+        r = _nr_row(D, "S8#3056")
+        c = dict(r["correction"])
+        for k, v in kv.items():
+            c[k] = v
+        r["correction"] = c
+    return f
+
+
+_M8_REKEY = {m[0]: m for m in [
+    ("M07", "checker", "S8#3143 (not found; admitted under ruling 14, the design seat's answer 1b item 8 of 2026-11-02, "
+                       "since v0.8's ruling-11 antecedent is gone) status -> reproduced (re-keyed from S7#91, which "
+                       "v0.8 restates as S8#3143)",
+     _m_set("S8#3143", status="reproduced")),
+    ("M09", "checker", "S8#3043 source_value '+0.0392' -> '+0.0492' (re-keyed from S1#137, which v0.8 retires; S8#3043 "
+                       "states the same published e2a Δ)", _m_sub("S8#3043", "source_value", "+0.0392", "+0.0492")),
+    ("M10", "checker", "S8#3081 source_value '0.0171875' -> '0.0271875' (re-keyed from S2#37, whose π̂ v0.8 states as "
+                       "S8#3081)", _m_sub("S8#3081", "source_value", "0.0171875", "0.0271875")),
+    ("M11", "checker", "S8#3043 locator ':355' -> ':300' (re-keyed from S1#137)", _m_sub("S8#3043", "locator", ":355",
+                                                                                      ":300")),
+    ("M15", "checker", "S8#3043 ledger_row -> L999 (re-keyed from S1#137)", _m_set("S8#3043", ledger_row="L999")),
+    ("M19", "checker", "S1#1009 (computed-new, the TL;DR) kind -> not-figure (re-keyed from S1#303, which v0.8 retires)",
+     _m_kind_nf("S1#1009")),
+    ("M22", "checker", "S7#12 (locator-value exempt) locator ':45-50' -> ':5' (re-keyed from S3#11, which v0.8 retires)",
+     _m_sub("S7#12", "locator", "CLAUDE.md@bbc9ffe:45-50", "CLAUDE.md@bbc9ffe:5")),
+    ("M24", "checker", "S1#132 (ledger-row L044, reproduced) status -> log-only (re-keyed from S1#320, an item-raw "
+                       "row, which v0.8 retires; here the ledger-status check catches it, where v0.6's status check "
+                       "caught it on S1#320)",
+     _m_set("S1#132", status="log-only")),
+    ("M25", "checker", "S1#132 (ledger-row L044, reproduced) status -> computed-new (re-keyed from S1#320; as "
+                       "M24)",
+     _m_set("S1#132", status="computed-new")),
+    ("M27", "checker", "S5#122 (item-raw, computed-new) status -> reproduced (re-keyed from S2#36, which v0.8 retires)",
+     _m_set("S5#122", status="reproduced")),
+    ("M29", "checker", "S1#132 kind -> not-figure (re-keyed from S1#320)", _m_kind_nf("S1#132")),
+    ("R01", "round 5", "S1#1009 status -> discrepant (re-keyed from S1#303)", _m_set("S1#1009", status="discrepant")),
+    ("R02", "round 5", "S6#1042 status -> discrepant (re-keyed from S1#219, which v0.8 restates as S6#1042)",
+     _m_set("S6#1042", status="discrepant")),
+    ("R08", "round 5", "S5#2013 (audit-raw-new on N2(vii), a transcription raw) status -> reproduced (re-keyed from "
+                       "S1#236, which v0.8 retires)", _m_set("S5#2013", status="reproduced")),
+    ("R11", "round 5", "S8#2070 (status_basis computed-new) status -> reproduced (re-keyed from S5#106, which v0.8 "
+                       "restates as S8#2070)", _m_set("S8#2070", status="reproduced")),
+    ("R12", "round 5", "S6#1042 status_basis replaced by a quote of N2 :136, a line it does not cite (re-keyed from "
+                       "S1#219)", _m_set("S6#1042", status_basis=dict(locator=f"{_N2_}@09c3a8c:136",
+                                                                     quote="[reproduced: artifact `n`, trial rows]"))),
+    ("R17", "round 5", "S7#33 (exempted from ledger-status) status -> log-only (re-keyed from S8#84, which v0.8 retires)",
+     _m_set("S7#33", status="log-only")),
+    ("R18", "round 5", "S7#12 (exempted from locator-value) status -> reproduced (re-keyed from S3#11)",
+     _m_set("S7#12", status="reproduced")),
+    ("R19", "round 5", "S1#118 validation_quote altered (re-keyed from S6#84, which v0.8 retires)",
+     _m_set("S1#118", validation_quote="Qwen3.6-27B shows the analogous signature, twice")),
+    ("R21", "round 5", "S8#3043 ledger_row -> L090 (same status; re-keyed from S1#137)",
+     _m_set("S8#3043", ledger_row="L090")),
+    ("R23", "round 5", "S7#15 (the ordinal row) kind -> not-figure (re-keyed from S2#43, which v0.8 retires)",
+     _m_kind_nf("S7#15")),
+    ("R26", "round 5", "S8#3056 correction kind -> 'opinion' (re-keyed from S6#26, which v0.8 restates as S8#3056)",
+     _m_set("S8#3056", correction=dict(kind="opinion", text="x", whose="x"))),
+    ("E01", "checker 2", "S7#12 (locator-value exempt) source_value fabricated (re-keyed from S3#11)",
+     _m_set("S7#12", source_value="NVIDIA H100-SXM5-80GB, eight GPUs")),
+    ("E03", "checker 2", "S10#111 (locator-value exempt) source_value fabricated (re-keyed from S9#85, which v0.8 "
+                         "retires)", _m_set("S10#111", source_value="three label-artifact classes across four captures")),
+    ("E06", "checker 2", "S6#54 (ledger-span exempt) status -> log-only (re-keyed from S6#80, which v0.8 retires)",
+     _m_set("S6#54", status="log-only")),
+    ("C02", "checker 2", "S8#3057 (computed-new) -> maps_to record, log-only (re-keyed from S6#27, which v0.8 restates "
+                         "as S8#3057)", _m_set("S8#3057", maps_to="record", status="log-only")),
+    ("C03", "checker 2", "S4#17 (ledger-row L062, computed-new) -> maps_to record, log-only (re-keyed from S1#133, which "
+                         "v0.8 retires)", _m_set("S4#17", maps_to="record", status="log-only")),
+    ("C06", "checker 2", "S8#3074 (W8, not transcription) given a corrected_in_note quoting its own cited line (re-keyed "
+                         "from S6#102, which v0.8 restates as S8#3074)",
+     _m_set("S8#3074", corrected_in_note=dict(locator="results/raw/2026-10-08_note-N5-f1.md@09c3a8c:217",
+                                              quote="termination attempts ≈ 1% of rounds by arm"))),
+    ("C08", "checker 2", "S8#3056 correction removed (re-keyed from S6#26; S8#3056 carries N1's one correction)",
+     _m_set("S8#3056", correction=None)),
+    ("C11", "checker 2", "S8#3075 given back an undeclared wording correction (N5's; re-keyed from S6#103, which v0.8 "
+                         "restates as S8#3075)",
+     _m_set("S8#3075", correction=dict(kind="wording", text="x", whose="N5 (item raw)", basis=None))),
+    ("C12", "checker 2", "S8#3059 source_value 'floor 48' -> 'floor 49' (an integer unit misstated; re-keyed from S6#104, "
+                         "which v0.8 restates as S8#3059)", _m_sub("S8#3059", "source_value", "floor 48", "floor 49")),
+    ("C13", "checker 2", "S8#3066 source_value '40/306' -> '40/307' (an integer unit misstated; re-keyed from S1#326, "
+                         "which v0.8 retires)", _m_sub("S8#3066", "source_value", "40/306", "40/307")),
+    ("C14", "checker 2", "S8#3084 source_value '0.5 ×' -> '1.5 ×' (a one-place decimal; re-keyed from S2#38, which v0.8 "
+                         "restates as S8#3084)", _m_sub("S8#3084", "source_value", "0.5 ×", "1.5 ×")),
+    ("C21", "checker 2", "S8#3056 correction 'whose' -> 'N5 (item raw)' (a misattribution; re-keyed from S6#26)",
+     _m8_corr(whose="N5 (item raw)")),
+    ("S05", "round 6", "S8#3056 correction 'whose' -> 'N4 (item raw)' (the declared reading is N1's; re-keyed from "
+                       "S6#26)", _m8_corr(whose="N4 (item raw)")),
+    ("S06", "round 6", "S8#3056 correction basis -> N3's raw (re-keyed from S6#26)",
+     _m8_corr(basis="results/raw/2026-10-08_note-N3-echo-robustness.md@09c3a8c:370")),
+    ("S10", "round 6", "S5#2005 (item-raw, computed-new) -> maps_to record, log-only (re-keyed from S8#122, which v0.8 "
+                       "retires)", _m_set("S5#2005", maps_to="record", status="log-only")),
+    ("S11", "round 6", "S6#1042 status_basis locator moved to N5 :78 with the same quote (not on that line; re-keyed "
+                       "from S1#219)", _m_set("S6#1042", status_basis=dict(
+                           locator="results/raw/2026-10-08_note-N5-f1.md@09c3a8c:78", quote="| DIFF −.096 p = .24 |"))),
+    ("N06", "checker 3", "S5#2002 (ledger-row, log-only) -> reproduced, ledger_row L041 -> L008 (re-keyed from S1#143, "
+                         "which v0.8 retires)", _m_set("S5#2002", status="reproduced", ledger_row="L008")),
+    ("N08", "checker 3", "S8#2087 (item-raw, computed-new) status -> reproduced, one field (re-keyed from S4#23, which "
+                         "v0.8 retires)", _m_set("S8#2087", status="reproduced")),
+    ("N09", "checker 3", "S8#2042 (ledger-row L020 related row, computed-new) status -> reproduced, one field (re-keyed "
+                         "from S5#20, which v0.8 restates as S8#1019; S8#2042 has the same property)",
+     _m_set("S8#2042", status="reproduced")),
+    ("N10", "checker 3", "S5#2000 (item-raw, computed-new) status -> reproduced, one field (re-keyed from S1#323, which "
+                         "v0.8 retires)", _m_set("S5#2000", status="reproduced")),
+    ("N11", "checker 3", "S8#2043 (ledger-row L020 related row, computed-new) status -> reproduced, one field (re-keyed "
+                         "from S5#23)", _m_set("S8#2043", status="reproduced")),
+    ("N12", "checker 3", "S8#3058 (audit-raw-new, computed-new) -> reproduced, locator prefixed with an unrelated "
+                         "reproduced N4 row (:353; re-keyed from S6#28, which v0.8 restates as S8#3058)",
+     lambda D: _nr_row(D, "S8#3058").update(status="reproduced", locator="results/raw/2026-10-08_note-N4-e2a.md@09c3a8c:353; "
+                                            + _nr_row(D, "S8#3058")["locator"])),
+    ("N13", "checker 3", "S8#3052 (ledger-row L082, computed-new) -> reproduced, ledger_row -> L097 (re-keyed from S6#22, "
+                         "which v0.8 restates as S8#3052)", _m_set("S8#3052", status="reproduced", ledger_row="L097")),
+    ("N14", "checker 3", "S8#2081 (item-raw, computed-new) -> reproduced, locator prefixed with an unrelated reproduced "
+                         "N2 row (:24; re-keyed from S5#35, which v0.8 restates as S8#3040)",
+     lambda D: _nr_row(D, "S8#2081").update(status="reproduced", locator=f"{_N2_}@09c3a8c:24; "
+                                            + _nr_row(D, "S8#2081")["locator"])),
+    ("N16", "checker 3", "S7#25 (not found) given a fabricated record locator (a real, unrelated RESULTS.md line; "
+                         "re-keyed from S3#129, which v0.8 retires)", _m_set("S7#25", locator="RESULTS.md@bbc9ffe:41")),
+    ("N17", "checker 3", "S8#3143 (not found) given a fabricated locator to a nonexistent record line and file (re-keyed "
+                         "from S7#82, which v0.8 retires)",
+     _m_set("S8#3143", locator="results/raw/2026-10-08_note-N99-none.md@09c3a8c:99999")),
+    ("N20", "checker 3", "S8#3074 (NT) cause rewritten as a transcription, keeping the asserted quote (re-keyed from "
+                         "S6#102)", _m_set("S8#3074", cause=("transcription per the item raw: correct to ≈ 1.3% overall "
+                                                             "(an earlier mapping read it as not transcription (item "
+                                                             "raw); superseded)"))),
+    ("N27", "checker 3", "S8#3056 correction basis -> an unrelated record line (RESULTS.md :41; re-keyed from S6#26)",
+     _m8_corr(basis="RESULTS.md@bbc9ffe:41")),
+    ("N29", "checker 3", "S7 span note 7: 'STOP' -> 'pass' (a span note no open item asserts; re-keyed from note 1, which "
+                         "v0.8's S7 notes do not hold)", _m_span_note("S7", 7, "STOP", "pass")),
+    ("N30", "checker 3", "S8#1008 (exempted) comment rewritten (outside the fingerprint; re-keyed from S7#73, which v0.8 "
+                         "restates as S8#1008)",
+     _m_set("S8#1008", comment="Fabricated comment: the block's 103/103 is the count of record.")),
+    ("N32", "checker 3", "S8#2044 (ledger-row L020 related row, computed-new) status -> reproduced, one field (re-keyed "
+                         "from S5#22)", _m_set("S8#2044", status="reproduced")),
+    ("T02", "round 7", "S8#2042 ledger_row 'related row' field states the primary row's status, and the row carries it "
+                       "(re-keyed from S5#20)", _m_set("S8#2042", status="reproduced",
+                                                       ledger_row="L020 (related row: N2 row 57, reproduced)")),
+    ("T04", "round 7", "S8#2042 ledger_row -> 'L019 (related row: N2 row 57, computed-new)' (its locator names L020; "
+                       "re-keyed from S2#34, which v0.8 retires)",
+     _m_set("S8#2042", ledger_row="L019 (related row: N2 row 57, computed-new)")),
+    ("T05", "round 7", "S4#17 locator -> the bare 'stageC_analysis.json@bbc9ffe' (no such file at that revision; "
+                       "re-keyed from S4#28, which v0.8 retires)", _m_set("S4#17", locator="stageC_analysis.json@bbc9ffe")),
+    ("T08", "round 7", "S8#3056 correction text edited (an N1-own wording correction; re-keyed from S6#26)",
+     _m8_corr(text="An edited correction text.")),
+    ("X02", "round 8", "S10#60 corrected_in_note ruling 'R1' -> 'R2' (a ruling not declared for the row; re-keyed from "
+                       "S5#81, whose R1 the seat re-keys)", _m_r9("S10#60", "corrected_in_note", ruling="R2")),
+    ("X03", "round 8", "S10#60 corrected_in_note locator :619 -> :618, quote kept (re-keyed from S8#119, which v0.8 "
+                       "retires)", _m_r9("S10#60", "corrected_in_note",
+                                         locator="results/raw/2026-10-08_note-N2vi-source.md@09c3a8c:618")),
+    ("X07", "round 8", "S10#60 locator without the W3 fork's :619 (the condition line not cited; re-keyed from S8#119)",
+     _m_set("S10#60", locator="results/raw/2026-10-08_note-N2vi-source.md@09c3a8c:26 (row 8, JSON figures[7])")),
+    ("X13", "round 8 fix round 3", "S10#60 source_value -> '... 0.003; layer 0 [discrepant]' (the source's clause dropped; "
+                                   "a bare 0 left; re-keyed from S8#119)",
+     _m_set("S10#60", source_value="record A 0.003 / record B 0.003; layer 0 [discrepant]")),
+    ("X16", "round 8 fix round 3", "S1#134 round9 changed[0] without its 'previous' (a malformed history record; re-keyed "
+                                   "from S1#112, which v0.8 retires)",
+     lambda D: _nr_row(D, "S1#134")["round9"]["changed"][0].pop("previous")),
+    ("X24", "round 8 fix round 5", "S10#60 source_value's clause -> 'source v1 text 0.000,3' (re-keyed from S8#119)",
+     _m_set("S10#60", source_value=_SV60 + "0.000,3 [discrepant]")),
+    ("X37", "round 8 fix round 6", "S10#60 source_value's clause -> 'source v1 text 0.000 to 0.003' (a worded range; "
+                                   "re-keyed from S8#119)", _m_set("S10#60", source_value=_SV60 + "0.000 to 0.003 [discrepant]")),
+    ("X53", "round 8 fix round 7", "S10#60 source_value's clause -> 'source v1 text 0.000, −0.003' (a minus sign, U+2212; "
+                                   "re-keyed from S8#119)", _m_set("S10#60", source_value=_SV60 + "0.000, −0.003 [discrepant]")),
+    ("X56", "round 8 fix round 7", "S10#60 source_value's clause -> 'source v1 text 0.000)0.003' (a ')' that closes no "
+                                   "'('; re-keyed from S8#119)", _m_set("S10#60", source_value=_SV60 + "0.000)0.003 [discrepant]")),
+    ("X59", "round 8 fix round 7", "S10#60 source_value's clause -> 'source v1 text 0.000, ³' (a superscript digit, U+00B3; "
+                                   "re-keyed from S8#119)", _m_set("S10#60", source_value=_SV60 + "0.000, ³ [discrepant]")),
+    ("X66", "round 8 fix round 8", "S10#60 source_value's clause -> 'source v1 text 0.000, ʹ0.003' (a modifier letter, "
+                                   "U+02B9; re-keyed from S8#119)", _m_set("S10#60", source_value=_SV60 + "0.000, ʹ0.003 [discrepant]")),
+    ("RP6", "round 9", "note :195 patched in memory so that it no longer names the source ('condition of Tagliabue et "
+                       "al.,' -> 'condition of others,'), S7#19's declared note_quote kept (re-keyed from :70's S3#129, "
+                       "which v0.8 retires; ruling 8 re-keyed verbatim at :195)",
+     _m_note_patch(_V08_NOTE, 195, "condition of Tagliabue et al.,", "condition of others,",
+                   lambda D: _nr_row(D, "S7#19").update(_r9_touch=1))),
+    ("RP30", "round 9", "2026-10-22 F1a node 19 patched in memory without the scope ('from L51.' -> '.'); S11#18 "
+                        "unchanged (its joined nodes no longer hold its note_quote; re-pointed from the 2026-10-10 F1a)",
+     _m_note_patch(_F1A8, 19, "from L51.", ".", lambda D: _nr_row(D, "S11#18").update(_r9_touch=1))),
+    ("RP31", "round 9", "2026-10-22 F1a node 19 patched in memory to the discrepant scope ('from L51.' -> 'from L48.'), "
+                        "S11#18's note_quote following it across nodes 17-19 (re-pointed from the 2026-10-10 F1a)",
+     _m_note_patch(_F1A8, 19, "from L51.", "from L48.",
+                   _m_r9("S11#18", "scope_corrected_in_note", note_quote="≈1.0 · .81–.96\nat first and second label,\nfrom L48."))),
+    ("RP32", "round 9", "a reproduced row (S6#47) declared held in NR_ROUND9['cn_held'] (a held row must be a computed-new "
+                        "figure; re-keyed from S1#320, which v0.8 retires)", _m_decl_patch("cn_held", "S6#47", why="x", item="y")),
+    ("RP33", "round 9", "a held row's item names no 9h item (S5#2005 held under '9h O99, nobody's'; re-keyed from S8#136, "
+                        "which v0.8 restates as S5#2005)",
+     _m_decl_patch("cn_held", "S5#2005", why="x", item="9h O99, nobody's", note_file=_V08_NOTE, note_line=101,
+                   unit="four")),
+    ("RP34", "round 9", "a computed-new row (S5#2013, '9.8') held under O11, whose rows do not include it, its locus "
+                        "declared correctly (re-keyed from S1#236, which v0.8 retires)",
+     _m_decl_patch("cn_held", "S5#2013", why="x", item="9h O11, the design seat's", note_file=_V08_NOTE, note_line=101,
+                   unit="9.8")),
+    ("RP35", "round 9", "a held row's declared locus not the row's (S5#2005 declared at :101 '1.2', S5#59's unit), as "
+                        "after a re-key that moved the key onto another computed-new row (re-keyed from S8#136)",
+     _m_decl_patch("cn_held", "S5#2005", why="x", item="9h O11, the design seat's", note_file=_V08_NOTE, note_line=101,
+                   unit="1.2")),
+    ("X16c", "round 10", "S5#36 round10 changed[0] without its 'previous' (a carried round-10 record; re-keyed from "
+                         "S7#91, which v0.8 restates as S8#3143, a new key with no round10 record)",
+     lambda D: _nr_row(D, "S5#36")["round10"]["changed"][0].pop("previous")),
+    ("X16e", "round 10", "S5#37 round10 changed[0] without its 'previous' (a carried round-10 record; re-keyed from "
+                         "S1#428, which v0.8 retires)", lambda D: _nr_row(D, "S5#37")["round10"]["changed"][0].pop("previous")),
+]}
+_TAGS = ("X10", "X14", "X15", "X18", "X19", "X20", "X25", "X26", "X27", "X28", "X29", "X30", "X31", "X32", "X33", "X39",
+         "X40", "X41", "X42", "X43", "X44", "X45", "X46", "X47", "X48", "X49", "X50", "X51", "X60", "X61", "X62")
+_M8_DROP = dict(
+    {m: "no v0.8 row cites an audit-outcome raw (rows_citing_an_outcome_raw 0), so the strict-tag family has no row to act "
+        "on; nr_check_pins keeps the rule and a row that cites one brings the family back" for m in _TAGS},
+    E02="no v0.8 row carries two exemptions (v0.6's S6#84 retires)",
+    E05b="S4#34 retires with v0.6's link 3; E05 (S6#47) tests the same forged-exemption case",
+    T07="no v0.8 computed-new row carries a status_basis on a line with several status terms whose other cited lines give "
+        "none (v0.6's S4#23 retires); L04 drops for the same reason",
+    X04="no v0.8 line that carries an R1 unit also carries the record's 0.003 (v0.6 :208 retires with the PI section), so "
+        "'the note's value equal to the record's 0.003' cannot be built on a row",
+    **{m: "v0.6 :86's leakage bullet (S4#31-S4#33) has no v0.8 unit" for m in ("RP2", "RP3", "RP8", "RP9", "RP13", "RP14",
+                                                                             "RP19", "RP20")},
+    # round 11: the members held for the design seat's re-keys are re-ported below (_M8_REKEY), the seat having answered
+    # on 2026-11-02, all but RP17
+    RP17=("v0.8 has no occurrence ruling 11 admits: :258's 'ten' (S8#3143) is admitted by ruling 14 (the design seat's "
+          "answer 1b item 8 of 2026-11-02), and Y07 and Y11 test that admission"),
+)
+# round 11: the members held for the design seat's re-keys of rulings 6, 7 and 8 (4f), re-ported to v0.8's lines now
+# that the seat has answered (2026-11-02, da50cd1: 1b items 3-6); each keeps its v0.6 id and property, and its expected
+# check (mut_expect_check / mut_expect_run_check, v0_6's)
+_P250_8 = ("Session-termination attempts occur at about 1% of rounds overall (0.8–2.0% by arm, the sham arm highest, with "
+           "no detectable heterogeneity on a post-hoc exact test, *p* = .72)")
+_RP8 = "round 9 (re-ported to v0.8, round 11)"
+_M8_REKEY.update({m[0]: m for m in [
+    ("RP1", _RP8, "note :83 patched in memory to the uncorrected scope ('across layers 50 through 63' -> 'across every "
+                  "layer above 48'), S4#4's note_quote quoting it",
+     _m_note_patch(_V08_NOTE, 83, "across layers 50 through 63", "across every layer above 48",
+                   _m_r9("S4#4", "scope_corrected_in_note",
+                         note_quote="AUC of 0.94 to 0.995 across every layer above 48"))),
+    ("RP4", _RP8, "note :85 patched in memory without the layer scope (', consistently from layer 51 onward' cut), "
+                  "S4#10's note_quote quoting it",
+     _m_note_patch(_V08_NOTE, 85, "0.81–0.96 at the second, consistently from layer 51 onward", "0.81–0.96 at the second",
+                   _m_r9("S4#10", "scope_corrected_in_note", note_quote="0.81–0.96 at the second"))),
+    ("RP5", _RP8, "note :250 patched in memory back to the STOP-triggering form ('0.8–2.0% by arm, the sham arm "
+                  "highest' -> 'uniformly across arms including sham'), S8#3074's declared note_quote kept",
+     _m_note_patch(_V08_NOTE, 250, "0.8–2.0% by arm, the sham arm highest", "uniformly across arms including sham",
+                   lambda D: _nr_row(D, "S8#3074").update(_r9_touch=1))),
+    ("RP7", _RP8, "note :83 patched in memory to carry the correction and the replaced scope ('across layers 50 through "
+                  "63' -> 'across layers 50 through 63 (every layer above 48)'), S4#4's note_quote quoting it",
+     _m_note_patch(_V08_NOTE, 83, "across layers 50 through 63", "across layers 50 through 63 (every layer above 48)",
+                   _m_r9("S4#4", "scope_corrected_in_note",
+                         note_quote="AUC of 0.94 to 0.995 across layers 50 through 63 (every layer above 48)"))),
+    ("RP10", _RP8, "note :85 patched in memory to v0.3's scoping ('the first label; 0.81–0.96 at the second, "
+                   "consistently from layer 51 onward' -> 'the first label from layer 51 onward; 0.81–0.96 at the "
+                   "second'), S4#10's note_quote straddling the scope",
+     _m_note_patch(_V08_NOTE, 85, "the first label; 0.81–0.96 at the second, consistently from layer 51 onward",
+                   "the first label from layer 51 onward; 0.81–0.96 at the second",
+                   _m_r9("S4#10", "scope_corrected_in_note", note_quote="from layer 51 onward; 0.81–0.96 at the second"))),
+    ("RP11", _RP8, "note :85 patched in memory to v0.3's scoping (as RP10), S4#11's note_quote straddling the scope",
+     _m_note_patch(_V08_NOTE, 85, "the first label; 0.81–0.96 at the second, consistently from layer 51 onward",
+                   "the first label from layer 51 onward; 0.81–0.96 at the second",
+                   _m_r9("S4#11", "scope_corrected_in_note",
+                         note_quote="AUC ≈ 1.0 at the first label from layer 51 onward; 0.81–0.96 at the second"))),
+    ("RP12", _RP8, "note :83 patched in memory without a layer scope ('(AUC of 0.94 to 0.995 across layers 50 through "
+                   "63)' -> '(AUC of 0.94 to 0.995)', v0.3's form), S4#4's note_quote quoting it",
+     _m_note_patch(_V08_NOTE, 83, "(AUC of 0.94 to 0.995 across layers 50 through 63)", "(AUC of 0.94 to 0.995)",
+                   _m_r9("S4#4", "scope_corrected_in_note", note_quote="AUC of 0.94 to 0.995"))),
+    ("RP15", _RP8, "note :14 patched in memory to v0.3's wording ('(.94–.995 over layers 50–63)' -> '(at .94 and up)'), "
+                   "S1#134's note_quote quoting it",
+     _m_note_patch(_V08_NOTE, 14, "(.94–.995 over layers 50–63)", "(at .94 and up)",
+                   _m_r9("S1#134", "scope_corrected_in_note", note_quote="at .94 and up"))),
+    ("RP16", _RP8, "note :250 patched in memory to carry v0.3's STOP wording beside ruling 7's clause (', uniformly "
+                   "across arms including sham' after it), S8#3074's declared note_quote kept",
+     _m_note_patch(_V08_NOTE, 250, "post-hoc exact test, *p* = .72)",
+                   "post-hoc exact test, *p* = .72), uniformly across arms including sham",
+                   lambda D: _nr_row(D, "S8#3074").update(_r9_touch=1))),
+    ("RP18", _RP8, "note :83 patched in memory to carry the replaced scope after the correction ('across layers 50 "
+                   "through 63)' -> 'across layers 50 through 63, every layer above 48)'); S4#4 unchanged (its "
+                   "note_quote stops short of it)",
+     _m_note_patch(_V08_NOTE, 83, "across layers 50 through 63)", "across layers 50 through 63, every layer above 48)",
+                   lambda D: _nr_row(D, "S4#4").update(_r9_touch=1))),
+    ("RP21", _RP8, "note :14 patched in memory to carry the replaced scope ('over layers 50–63)' -> 'over layers 50–63, "
+                   "every layer above 48)'); S1#134 unchanged",
+     _m_note_patch(_V08_NOTE, 14, "over layers 50–63)", "over layers 50–63, every layer above 48)",
+                   lambda D: _nr_row(D, "S1#134").update(_r9_touch=1))),
+    ("RP22", _RP8, "note :83 patched in memory to carry the replaced scope in an earlier clause of the unit's sentence "
+                   "('decodable at the first free choice' -> 'decodable, over every layer above 48, at the first free "
+                   "choice'); S4#4 unchanged",
+     _m_note_patch(_V08_NOTE, 83, "decodable at the first free choice",
+                   "decodable, over every layer above 48, at the first free choice",
+                   lambda D: _nr_row(D, "S4#4").update(_r9_touch=1))),
+    ("RP23", _RP8, "note :85 patched in memory so that the scope follows the unit in another figure's clause ('0.81–0.96 "
+                   "at the second label, and ≈ 1.0 at the first consistently from layer 51 onward'), S4#10 quoting it",
+     _m_note_patch(_V08_NOTE, 85, "AUC ≈ 1.0 at the first label; 0.81–0.96 at the second, consistently from layer 51 "
+                                  "onward",
+                   "AUC 0.81–0.96 at the second label, and ≈ 1.0 at the first consistently from layer 51 onward",
+                   _m_r9("S4#10", "scope_corrected_in_note",
+                         note_quote="0.81–0.96 at the second label, and ≈ 1.0 at the first consistently from layer 51 "
+                                    "onward"))),
+] + [
+    (mid, _RP8, f"note :250 patched in memory to add {add_!r} after ruling 7's clause; S8#3074 unchanged",
+     _m_note_patch(_V08_NOTE, 250, _P250_8, _P250_8 + add_, lambda D: _nr_row(D, "S8#3074").update(_r9_touch=1)))
+    for mid, add_ in (("RP24", ", that is, uniform across arms"), ("RP25", ", roughly 1% of rounds in each arm"),
+                      ("RP26", ", ≈ 1% per arm"), ("RP27", ", i.e. uniformly across the arms"))
+] + [
+    # X05 keeps its row and property; its description names v0.8's line (the row moved from v0.6 :92 to v0.8 :93)
+    ("X05", "round 8", "S5#81 unit '0.000' -> '0.200' (on line 93 of note v0.8; the note's value not 0)",
+     _m_set("S5#81", text="0.200")),
+    ("RP28", _RP8, "note :202 patched in memory to cut its 'two' ('specifies two arms' -> 'specifies arms'), so that "
+                   "S7#28's ruled 'two' has no occurrence on its line where one row claims it; S7#28 unchanged",
+     _m_note_patch(_V08_NOTE, 202, "specifies two arms", "specifies arms",
+                   lambda D: _nr_row(D, "S7#28").update(_r9_touch=1))),
+]})
+assert not set(_M8_DROP) & set(_M8_REKEY)
+_P8["NR_MUTATIONS"] = [_M8_REKEY.get(m[0], m) for m in _P6["NR_MUTATIONS"] if m[0] not in _M8_DROP] + [
+    # round 11's own: the history-schema check on round 11's records, and the round-11 classes (4a-4e)
+    ("X16f", "round 11", "S8#1008 round11 changed[0] without its 'previous' (a chain's round-11 record)",
+     lambda D: _nr_row(D, "S8#1008")["round11"]["changed"][0].pop("previous")),
+    ("X16g", "round 11", "S5#1001 n1v8_round2 changed[0] without its 'previous' (K4's round-2 record)",
+     lambda D: _nr_row(D, "S5#1001")["n1v8_round2"]["changed"][0].pop("previous")),
+    ("Y01", "round 11", "S6#1017 (A0, later-record 4a) RESULTS.md@0fa8539 -> @de6dfc5 (a revision outside the 4a class)",
+     _m_sub("S6#1017", "locator", "RESULTS.md@0fa8539", "RESULTS.md@de6dfc5")),
+    ("Y02", "round 11", "S5#2013 (computed-new on N2(vii), a transcription raw) given a status_basis on N2(vii) :8 "
+                        "('reproduced in §4'), which a transcription raw cannot give",
+     _m_set("S5#2013", status_basis=dict(locator="results/raw/2026-10-22_note-N2vii-macar-v5.md@8d68b0b:8",
+                                         quote="reproduced in §4"))),
+    ("Y03", "round 11", "S7#1015 (computed-new on the correspondence transcription) locator -> the additions raw "
+                        "@908a659:14 only (pinned, never a carrier, 4e)",
+     _m_set("S7#1015", locator="results/raw/2026-10-28_note-N1-r11_additions-by-source.md@908a659:14")),
+    ("Y04", "round 11", "S7#1015 maps_to audit-raw-new -> item-raw (a transcription raw decides no status, 4c)",
+     _m_set("S7#1015", maps_to="item-raw")),
+    # round 11, the design seat's answers of 2026-11-02 (da50cd1): the split admission (1b item 7), ruling 14 (1b item 8)
+    # and ruling 15 (2a (iii)), each broken one way
+    ("Y05", "round 11", "S7#25's declared source line -> :196 (the blank line after the lead-in; its note_quote is not "
+                        "there)", _m_decl_patch("admitted", "S7#25", source_line=196)),
+    ("Y06", "round 11", "note :195 patched in memory so that it no longer ends the list's lead-in ('under the rubric's "
+                        "criteria:' -> 'under the rubric's criteria.'); S7#25 unchanged (the relation 'lead-in' fails)",
+     _m_note_patch(_V08_NOTE, 195, "under the rubric's criteria:", "under the rubric's criteria.",
+                   lambda D: _nr_row(D, "S7#25").update(_r9_touch=1))),
+    ("Y07", "round 11", "S8#3143's unit_quote -> 'separately from the eleven' (declaration and field; off its line)",
+     _m_decl_patch("admitted_r14", "S8#3143", then=_m_r9("S8#3143", "admitted_citation",
+                                                       unit_quote="separately from the eleven"),
+                   unit_quote="separately from the eleven")),
+    ("Y08", "round 11", "S8#3143's admitted_citation given ruling 8's words (ruling 14's table declares it)",
+     _m_r9("S8#3143", "admitted_citation", ruling=R9_RULING8)),
+    ("Y09", "round 11", "note :101 patched in memory without the ‡ after S5#2028's unit_quote ('shortfall alone.‡' -> "
+                        "'shortfall alone.'); S5#2028 unchanged (the relation 'dagger' fails)",
+     _m_note_patch(_V08_NOTE, 101, "shortfall alone.‡", "shortfall alone.",
+                   lambda D: _nr_row(D, "S5#2028").update(_r9_touch=1))),
+    ("Y10", "round 11", "S1#1012's unit_quote -> 'the source's own curves also show zero detection' (declaration and "
+                        "field; off its line)",
+     _m_decl_patch("admitted_r15", "S1#1012", then=_m_r9("S1#1012", "admitted_citation",
+                                                       unit_quote="the source's own curves also show zero detection"),
+                   unit_quote="the source's own curves also show zero detection")),
+    ("Y11", "round 11", "S8#3143 also declared in ruling 8's table (one row, two admission tables)",
+     _m_decl_patch("admitted", "S8#3143", ruling=R9_RULING8, cited_source="the scored audit table", note_line=258,
+                   unit="ten", note_quote="the scored audit table with per-study sources")),
+]
+_M8_IDS = {m[0] for m in _P8["NR_MUTATIONS"]}
+_P8["NR_TXT"]["mut_expect_check"] = dict({k: v for k, v in _T6["mut_expect_check"].items() if k in _M8_IDS},
+                                         **{k: "admitted-citation" for k in ("Y06", "Y07", "Y08", "Y09", "Y10")})
+assert {"Y05", "Y11", "RP1", "RP28"} <= _M8_IDS and "RP17" not in _M8_IDS
+# Y05 and Y11 change a declaration and no row, so the row-level re-check sees nothing; the check must fire at run level
+# (as round 10's R11d, a declaration on a wrong line)
+_P8["NR_TXT"]["mut_expect_run_check"] = dict({k: v for k, v in _T6["mut_expect_run_check"].items() if k in _M8_IDS},
+                                             X16f="history-schema", X16g="history-schema",
+                                             Y05="admitted-citation", Y11="admitted-citation")
+_P8["NR_LIMIT_MUTATIONS"] = [
+    ("L01", "row", "S10#137 status computed-new -> reproduced, its status_basis moved to another line of the same item "
+                   "raw that gives 'reproduced' (N2 :136; re-keyed from S5#106, which v0.8 restates as S8#2070, whose "
+                   "locator does not cite :136)",
+     _m_set("S10#137", status="reproduced", status_basis=dict(
+         locator="results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:136",
+         quote="[reproduced: artifact `n`, trial rows]"))),
+    ("L02", "full", "S2#24 (a word unit that passes at level A on the word) source_value replaced by a text with no "
+                    "number (re-keyed from S1#143, which v0.8 retires)",
+     _m_set("S2#24", source_value="(no number: a fabricated source text)")),
+    ("L03", "full", "S6#101 source_value '344 sessions' -> '345 sessions' (an integer that is neither the unit nor in a "
+                    "fraction; re-keyed from S2#33, which v0.8 retires)",
+     _m_sub("S6#101", "source_value", "344 sessions", "345 sessions")),
+    ("L05", "row", "S8#2042 status computed-new -> reproduced, its ledger_row 'L020 (related row: N2 row 57, "
+                   "computed-new)' cut to 'L020' (L020's primary row is reproduced and the locator names it; re-keyed "
+                   "from S5#20, which v0.8 restates as S8#1019)",
+     _m_set("S8#2042", status="reproduced", ledger_row="L020")),
+]
+# L04 is dropped: no v0.8 computed-new row carries a status_basis on a several-term status line whose other cited lines
+# give no status (v0.6's S4#23 retires); its 10d statement stands without a v0.8 instance (T07, the same)
+
+# ------------------------------------------------------------------------------------- 3. 9h O16 (open_routings)
+# ---- 9h's generated item O16 (NR_TXT['open_routings']), written for v0.8: the wording, scope and disclosure residues the
+# span notes carry by their dispositions (NR_SPAN_DISPOSITION names O16), formatted at the run
+_P8["NR_TXT"]["open_routings"] = (16, (
+    "- **O16. Wording, scope and disclosure residues for the design seat (v0.3's to v0.6's O16), and the span notes' "
+    'other residues.** STILL OPEN; none is a figure error or a STOP, and the note is frozen (a correction goes by the '
+    "dated correction block on the post at the flip, the PI's with the design seat's wording, or by a ruling in this "
+    "ledger). The design seat's answers of 2026-11-02 "
+    '(results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:44) accept the thirty-seven candidates of R '
+    "§5, Code's round-11 list (results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf:352-394), as the "
+    "block's candidate set, in two tiers, and add #38 (da50cd1:55; O39); every residue listed below but link 3's "
+    "dropped random-direction comparison (R §6 item 7, d5123bf:416, which the seat notes, da50cd1:54) and :147's "
+    "counterfactual (S6 note 8 (b), which no R §5 item cites) is one of R §5's "
+    'candidates. {nap} span notes in 9f carry one of the open markers (NOT APPLIED, PARTLY APPLIED, PARTLY, NOT '
+    'CARRIED, CHOICE NOT MADE, OPEN, OPEN CONDITIONAL STOP, ACTIVE or POSSIBLE STOP, FIRES), some only for an item '
+    'another 9h item carries; read the note. Which notes stay open is not left to the markers: the cross-check at the '
+    "end of this section gives every span note's disposition, and {n_carried} notes are carried here, by O16: "
+    "{carried}. Among them: the TL;DR's MLP peak quoted without N3c :207's caveat and its parity reading without 'post "
+    "hoc', and :17's 'two truthful banner lines' (S1 note 6); :41's R² parenthetical without N10 note (a)'s 'in cycle "
+    "2', note (b)'s rename not applied (S2 note 2), and :49's first-pick habit 83.4%, e2a's figure, now stated for all "
+    "sessions (S2 note 5); C16 partly applied at :69 (the pooled-SD unit and the tail-level qualifier), 'attenuating "
+    "step-wise growth' (Code's reading of its steps withdrawn, round 8's D5 (c); kept as a pointer to R §5 #18, "
+    "d5123bf:375, a correction-block candidate in tier (ii), the PI's at the flip), 'Paraphrasing' for the seven frame "
+    "conditions, N7 note 14 not applied at :73, and the restored Δ+ = +0.285 without v0.6's per-probe honesty note (S3 "
+    "notes 2, 4, 5, 8); link 3's dropped RBF and MLP caveats, 'no linear probe ... at any layer through 63' (N3 :443's "
+    "flag), the random-direction comparison dropped, C6 and the computed-new label (S4 notes 2, 3); :93's 'two arms "
+    "per stage' (base ran the criterion arm only) and :99's bounds without their family, level or sidedness (S5 note "
+    "0); :118's 'no detection claims at any stage' without the fidelity-arm scope and :114's 'classifies' for an A/B "
+    "judge (S5 notes 1, 2); :145's stop rule, which is a PAUSE to disposition, 'One stage, DPO' without the "
+    "marker-arm scope, and :147's counterfactual, 'would have risked reporting', partly applied (S6#86), which no "
+    "R §5 item cites, so the block's candidate set does not hold it (S6 notes 7, 8); :177's nonlinear step without "
+    "the post-hoc label and :191's 'A second' (S7 note "
+    "7); ‡ (b)'s 'across stages' and 'rounding 64 × 0.7 = 44.8', ‡ (e)'s 'at one configuration', ‡ (d), (c) and (f)'s "
+    "p values naming no test, ‡ (f)'s 'in every premise' code defaults, and :228's next rung incoherent at instruct "
+    "too (S8 note 2); ¶¶ (b)'s 'none touching the read', ‡ (i)'s ten control trials per concept as a premise, ‡ (h)'s "
+    "two LoRA-DPO rows as 'the paper's own test', and ‖ (a)'s two 56s (S8 notes 3, 4). Who decides each is as its span "
+    "note says; all are the design seat's wording unless the note names the PI. F2's render items are O26, F1b's O24 "
+    "and F1a's O23; ¶ (c)'s conjunct is O31; the corruptor-as-gate wording O33 (b); N19's labels and 'printed' O9; the "
+    "'committed before data' scope O15; the correction block itself O39."))
+
+# ------------------------------------------------------------------------------ 4. the 4f re-keys (Code's: verbatim)
+# ---- the verbatim re-keys 4f gives Code, applied (the rows carry the restored fields, E9): R1 on F2's two units (nodes
+# 54 and 90, verbatim and aligned, index shift 0) and ruling 8 on :195's two (its declared note_quote verbatim there,
+# naming the source and carrying both units)
+_P8["NR_RULED_CORRECTIONS"] = {k: dict(_R1) for k in ("S10#108", "S10#60")}
+_R8_195 = ("The nearest is the unlabeled-button condition of Tagliabue et al., where the 32B model re-presses an "
+           "undescribed relief button less often when it worked (57.7%) than when it was fake (79.7%; v1, §4.3)")
+_P8["NR_ROUND9"] = dict(
+    _P8["NR_ROUND9"],
+    admitted={k: dict(ruling=R9_RULING8, cited_source="Tagliabue et al.", note_line=195, unit=u, note_quote=_R8_195)
+              for k, u in (("S7#19", "57.7%"), ("S7#20", "79.7%"))},
+    r8_units=frozenset({(195, "57.7%"), (195, "79.7%")}))
+
+# ---- ruling 13 on the 2026-10-22 F1a (S11#18, S11#19): confirmed by the design seat's answer 1b item 1 of 2026-11-02
+# (the constant is True); the False branch below is the held state as drafted before the answers. Nodes 17-19 are
+# verbatim and aligned in the 2026-10-22 render, so the rows carry scope_corrected_in_note restored as v0.6 had it (E9)
+# and NR_DISC declares them branch TS; 4f names rulings 7, 8, 11, 12 and R1, not 13, so the re-key waited for the seat's
+# confirmation (9h O13). As drafted before the answers, the False branch named the note's spans (ts_note_spans) and
+# reported the two rows, whose check passes, open, not passing (nr_r9_pass; 9d 'Open, not ruled'), as round 9's
+# integration held them before ruling 13; its replacements were written against O13's and S11:2's pre-answer texts, so
+# set False now it stops at its first assertion. With it True, as now, ts_note_spans stays None (ruling 13 reaches the
+# renders) and the two pass as v0.6's did.
+# Round 11, the design seat's answers of 2026-11-02 (da50cd1), answer 1b item 1: "Confirmed." (R11_ANSWERS['1b1'])
+V08_RULING13_REKEY_SEAT_CONFIRMED = True
+if not V08_RULING13_REKEY_SEAT_CONFIRMED:
+    _P8["NR_ROUND9"] = dict(
+        _P8["NR_ROUND9"], ts_note_spans=tuple(f"S{i}" for i in range(1, 9)),
+        ts_open_why=("open: branch TS on a render; its scope_corrected_in_note check passes (nodes 17-19 joined, "
+                     "verbatim in the 2026-10-22 F1a), but re-keying the PI's ruling 13 of 2026-10-12 to this render "
+                     "is Code's verbatim reading, which 4f does not name: held for the design seat's confirmation "
+                     "(9h O13)"))
+    _o13 = next(o for o in _P8["NR_OPEN"] if o["id"] == "O13")
+    for _a13, _b13 in (
+            ("Code re-keys F1a's verbatim pair.", "F1a's verbatim pair is prepared and held for the seat's confirmation."),
+            ("so Code re-keys their scope_corrected_in_note unchanged (4f names rulings 7, 8, 11, 12 and R1; Code "
+             "applies its verbatim rule to ruling 13 the same way and lists it in the block for the seat to confirm).",
+             "so their scope_corrected_in_note is restored unchanged and its check passes; but 4f names rulings 7, 8, "
+             "11, 12 and R1, not 13, so the re-key is held until the seat confirms it "
+             "(V08_RULING13_REKEY_SEAT_CONFIRMED; ts_note_spans names the note's spans), and the two are reported open, "
+             "not passing (9d 'Open, not ruled')."),
+            ("Until the seat answers, the ten note rows are discrepant, branch TS, and do not pass (9d).",
+             "Until the seat answers, the ten note rows are discrepant, branch TS, and do not pass, and F1a's two are "
+             "open, not passing (9d)."),
+    ):
+        assert _o13["text"].count(_a13) == 1, _a13
+        _o13["text"] = _o13["text"].replace(_a13, _b13)
+    _o13["notes"] = _o13["notes"] + [("S11", "CARRIED FROM v0.6 AND RULINGS (round 11 sets no ru")]
+    _sd13 = _P8["NR_SPAN_DISPOSITION"]["S11:2"]
+    assert _sd13[1:3] == ("carried", ("O23",)), _sd13
+    _P8["NR_SPAN_DISPOSITION"]["S11:2"] = (
+        _sd13[0], "carried", ("O13", "O23"),
+        "ruling 13's verbatim re-key on S11#18 and S11#19, prepared and held for the seat's confirmation (O13); the "
+        "strip's NOT APPLIED wording items (O23)")
+assert (_P8["NR_ROUND9"]["ts_note_spans"] is None) is V08_RULING13_REKEY_SEAT_CONFIRMED
+
+# ---------------------------------------------- 5. the design seat's answers of 2026-11-02 (da50cd1), routed by the PI
+# Each declaration below applies one answer of the seat's one block (R11_ANSWERS, its words asserted verbatim on their
+# lines at da50cd1 at every v0_8 run): R1 re-keyed to :93's and :99's units (1b item 2); ruling 7 re-keyed to ‖ (c)
+# :250, its NT text restated for that line (1b item 5 (a)); ruling 8 on :202's 'two' (1b item 6) and, as a split
+# admission, on :200's 'three' with its source on the list's lead-in line :195 (1b item 7); ruling 14 on :258's 'ten'
+# (1b item 8); ruling 11's three not-figures on :258 with the three changes (1b item 9); ruling 12 on the five 'fifty'
+# rows (1b item 10); ruling 15 on the seven curve readings (2a (iii)). The fields the rows carry for these answers, and
+# the rows' new mappings (2a (i)-(ii), 2b), are in the rows file, each recorded in the row's round11 record.
+_P8["NR_RULED_CORRECTIONS"].update({k: dict(_R1) for k in ("S5#81", "S5#88")})
+_R7_250 = ("Session-termination attempts occur at about 1% of rounds overall (0.8–2.0% by arm, the sham arm highest, "
+           "with no detectable heterogeneity on a post-hoc exact test, *p* = .72)")
+_R15_228 = ("The source's unpooled OLMo curves show detection near zero at α = 1 at DPO and instruct, rising at α ≥ 2–4 "
+            "(v5 Figure 5 at *L* = 25; Figure 22 at *L* = 19 and 22")
+_R15_SRC = "v5 Figure 5 at *L* = 25; Figure 22 at *L* = 19 and 22"
+_R15_101 = "the source's own unpooled OLMo curves also put detection near zero at DPO and instruct, rising at α ≥ 2–4"
+_R15_15 = "the source's own curves also show near-zero detection"
+_P8["NR_ROUND9"] = dict(
+    _P8["NR_ROUND9"], round11=True,
+    discharged={k: dict(ruling=R9_RULING7, note_quote=_R7_250, states=("overall", "per_arm"))
+                for k in ("S8#3074", "S8#3075")},
+    r7_line=250,
+    r7_txt=NR_R9_TXT["r7"].replace(
+        "v0.5 :111)", "v0.5 :111; v0.6 :111; v0.8 :250, the clause moved whole into ‖ (c) and re-keyed by the design "
+                      "seat's answer 1b item 5 (a) of 2026-11-02, whose (b) reads :143's 'did not differ by arm' as "
+                      "reached through its ‖ pointer to ‖ (c))"),
+    admitted=dict(_P8["NR_ROUND9"]["admitted"], **{
+        "S7#28": dict(ruling=R9_RULING8, cited_source="Our next-experiments list", note_line=202, unit="two",
+                      note_quote="Our next-experiments list specifies two arms on their released code"),
+        "S7#25": dict(ruling=R9_RULING8, cited_source="Tagliabue et al.", note_line=200, unit="three",
+                      note_quote=_R8_195, source_line=195, relation="lead-in",
+                      unit_quote="The label-free evidence is limited to the 32B of the three sizes tested")}),
+    r8_units=frozenset({(195, "57.7%"), (195, "79.7%"), (202, "two"), (200, "three")}),
+    admitted_r14={"S8#3143": dict(ruling=R11_RULING14, cited_source="the scored audit table", note_line=258,
+                                unit="ten", note_quote="the scored audit table with per-study sources",
+                                source_line=214, relation="named", unit_quote="separately from the ten")},
+    admitted_r15=dict(
+        {k: dict(ruling=R11_RULING15, cited_source=_R15_SRC, note_line=228, unit=u, note_quote=_R15_228)
+         for k, u in (("S8#2009", "zero"), ("S8#2011", "2"), ("S8#2012", "4"))},
+        **{k: dict(ruling=R11_RULING15, cited_source=_R15_SRC, note_line=101, unit=u, note_quote=_R15_228,
+                   source_line=228, relation="dagger", unit_quote=_R15_101)
+           for k, u in (("S5#2028", "zero"), ("S5#2029", "2"), ("S5#2030", "4"))},
+        **{"S1#1012": dict(ruling=R11_RULING15, cited_source=_R15_SRC, note_line=15, unit="zero",
+                           note_quote=_R15_228, source_line=228, relation="named", unit_quote=_R15_15)}),
+    r11_not_figures={k: dict(ruling=R10_RULING11, note_line=258, unit=u, context="2026-09-25", occurrence=o,
+                             comment_quote="the v2 posting date 2026-09-25")
+                     for k, u, o in (("S8#3100", "2026", 2), ("S8#3101", "09", 1), ("S8#3102", "25", 1))},
+    r12_fifty={k: dict(ruling=R10_RULING12, note_file=f, note_line=n_, unit="fifty")
+               for k, f, n_ in (("S5#2003", _V08_NOTE, 101), ("S8#2070", _V08_NOTE, 236), ("S8#2079", _V08_NOTE, 236),
+                                ("S8#2082", _V08_NOTE, 236),
+                                ("S10#137", "2026-10-22_F2_macar-lineage-roc_post.svg", 101))},
+    r11_occ_example=("S8#3100: the second '2026' on :258, in the v2 posting date (re-keyed by the design seat's "
+                     "answer 1b item 9 of 2026-11-02)"),
+)
+_P8["NR_DISC_PATH"]["NT"] = _P8["NR_DISC_PATH"]["NT"].replace(
+    "the rewording at :111 discharges the STOP",
+    "the rewording discharges the STOP, at v0.8 :250 (‖ (c); the design seat's answer 1b item 5 (a) of 2026-11-02 "
+    "re-keys the ruling there, and its (b) reads :143 as reached through the ‖ pointer to ‖ (c))")
+assert ":250" in _P8["NR_DISC_PATH"]["NT"] and ":111" not in _P8["NR_DISC_PATH"]["NT"]
+# ----------------------------------------------------- 6. the round-11 texts, written at integration (E12)
+# The texts the v0_8 profile held as _R11_AT_INTEGRATION: NR_TXT (status_para, s4e_after, s9_intro's tail, s9a_history,
+# s9a_prov_after, s9f_intro, s9g_plain_nf, s9g_conditions, s9h_intro, s9h_crosscheck_intro, round8_record), NR_LIMITS
+# and NR_ROUND9 (o8a_o11_line, r11_rekey). Each is modelled on v0_6's text of the same key and keeps exactly the
+# placeholders its renderer fills (s9_intro: pins; s9a_history: n_rec, n_rows, n_ch; s9h_crosscheck_intro: n, n_carried,
+# n_closed; NR_LIMITS: nb, g, ng, h, nh). What the v0_8 tables decide is read from them where this block runs (the
+# mutation ids from NR_MUTATIONS, _M8_REKEY and _M8_DROP; the open items from NR_OPEN; the tables' sizes), and what a
+# text states about a table it does not generate is asserted against it, so the texts follow the tables. A count that
+# depends on the final rows file, and every result of the runs, is written in from them by Code (from the final rows
+# file before the final run; from the runs before the ledger commits). No renderer reads NR_ROUND9['r11_rekey'] on
+# its own: 10e prints it as its re-key bullet.
+assert (_V08_V5_COMMIT, _V08_COMP_COMMIT) == ("633b6fd", "e6d3197"), (_V08_V5_COMMIT, _V08_COMP_COMMIT)
+_R11_ANS_AT = f"{R11_ANSWERS_PATH}@{R11_ANSWERS_REV}"
+assert _R11_ANS_AT == "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1"
+_R11_R_AT = "results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md@d5123bf"
+_R11_R_NAMED = f"Code's round-11 list ({_R11_R_AT})"
+_R11_R_C = f"Code's round-11 list, {_R11_R_AT}"
+_R11_ANS1028_AT = "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659"
+_R11_V5_AT = "results/raw/2026-11-02_note-N1-r11_macar-v5-lines.md@633b6fd"
+_R11_COMP_AT = "results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197"
+_R11_V1_AT = "results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md@da50cd1"
+_R11_MIDS = {m_[0] for m_ in _P8["NR_MUTATIONS"]}
+
+
+def _r11_esc(s):
+    """A text inserted into a template the renderer formats (s9_intro, NR_LIMITS): its braces doubled."""
+    return s.replace("{", "{{").replace("}", "}}")
+
+
+def _r11_span(p, a, b, w=0):
+    """Mutation ids p<a>..p<b> (w: zero-padded width, as the X series is written)."""
+    return [f"{p}{i:0{w}d}" for i in range(a, b + 1)]
+
+
+def _r11_compress(ids):
+    """Ids in the given order, a run of three or more consecutive ids of one series written as a range (X34-X38)."""
+    def k_(i):
+        m_ = re.match(r"^([A-Z]+)(\d+)$", i)
+        return (m_.group(1), int(m_.group(2))) if m_ else None
+    runs = []
+    for i in ids:
+        a_, b_ = k_(i), (k_(runs[-1][-1]) if runs else None)
+        if a_ and b_ and a_[0] == b_[0] and a_[1] == b_[1] + 1:
+            runs[-1].append(i)
+        else:
+            runs.append([i])
+    return ", ".join(r_[0] + "-" + r_[-1] if len(r_) >= 3 else ", ".join(r_) for r_ in runs)
+
+
+def _r11_ids(ids):
+    """The mutation ids a 10d statement named in v0.6, kept where round 11's list runs them (never empty here: a
+    statement whose every id is gone needs its own text)."""
+    kept = [i for i in ids if i in _R11_MIDS]
+    assert kept, ids
+    return _r11_compress(kept)
+
+
+def _r11_piece(k, i):
+    """A verbatim excerpt of answer cell k (R11_ANSWERS, asserted on its line at every v0_8 run), its bold markers left
+    out: the i-th of the pieces the markers separate, stripped of a leading ', ', so a substring of the line."""
+    p_ = R11_ANSWERS[k][1].split("**")[i].strip()
+    p_ = p_[2:] if p_.startswith(", ") else p_
+    assert p_ and "**" not in p_ and p_ in R11_ANSWERS[k][1], (k, i)
+    return p_
+
+
+# the not-found figures, each admitted (s9g_plain_nf and 10e state these sets; asserted against the tables)
+assert set(_P8["NR_ROUND9"]["admitted"]) == {"S7#19", "S7#20", "S7#25", "S7#28"}
+assert set(_P8["NR_ROUND9"]["admitted_r14"]) == {"S8#3143"}
+assert set(_P8["NR_ROUND9"]["admitted_r15"]) == {"S1#1012", "S5#2028", "S5#2029", "S5#2030", "S8#2009", "S8#2011",
+                                                "S8#2012"}
+assert set(_P8["NR_ROUND9"]["discharged"]) == {"S8#3074", "S8#3075"}
+assert set(_P8["NR_ROUND9"]["r11_not_figures"]) == {"S8#3100", "S8#3101", "S8#3102"}
+assert set(_P8["NR_ROUND9"]["r12_fifty"]) == {"S5#2003", "S8#2070", "S8#2079", "S8#2082", "S10#137"}
+assert not _P8["NR_ROUND9"]["r11_units"] and not _P8["NR_ROUND9"]["cn_held"] and not _P8["NR_T_ROWS"]
+assert set(_P8["NR_RULED_CORRECTIONS"]) == {"S10#108", "S10#60", "S5#81", "S5#88"}
+assert set(_P8["NR_CORRECTIONS"]) == {"S8#3056"} and {"S4#19", "S8#1008"} <= set(_P8["NR_EXEMPT_FP"])
+# the open items: v0.6's O1-O33 (O16 generated), and the items new in round 11 (O34 on), read from NR_OPEN; the dated
+# correction block's item where NR_OPEN has one (its 'what' names it)
+_R11_OPEN_IDS = [o_["id"] for o_ in _P8["NR_OPEN"]]
+_R11_OPEN_NEW = [i for i in _R11_OPEN_IDS if int(i[1:]) >= 34]
+assert {"O37", "O38"} <= set(_R11_OPEN_NEW) and "O16" not in _R11_OPEN_IDS, _R11_OPEN_IDS
+_R11_CB = next((o_["id"] for o_ in _P8["NR_OPEN"] if "correction block" in (o_.get("what") or "")), None)
+_R11_OPEN_LEFT = [o_["id"] for o_ in _P8["NR_OPEN"] if not o_["text"].startswith("CLOSED")]
+
+# ---------------------------------------------------------------------------------------------- the status paragraph
+_P8["NR_TXT"]["status_para"] = (
+    "Section 9 (N1 round 11): every row's status is its item raw's (or its ledger row's), carried exactly, and the "
+    "validator checks each against what the item raw gives (9a). N1 assigns no status of its own; what N1 reads in a "
+    "sentence is recorded separately as a wording, precision or scope correction (9i), never as a status. Where an item "
+    "raw itself classifies a discrepancy (N2vi row 8 for W3, N5's L102 for W8, N3's transcription rows), the row "
+    "carries that. A raw of the transcription class decides no status, so a row citing one is computed-new by its "
+    "mapping: N2(vii)'s (4b), the design seat's correspondence figures and Chandaria et al. v2 lines (4c, 4d), and, "
+    "under the design seat's answers of 2026-11-02, the seat's v1 transcription, Code's v5 transcription and Code's "
+    "computation raw (answers 2a (i), 2a (ii) and 2b; the computation raw is not a transcription but holds the same "
+    "role). The PI's rulings are applied as the PI's: R1 (the W3 fork; ruled corrections, branch C), R3 and R4 "
+    "(section 4e's closing paragraph); in the pass check (9d), rulings 5-8 of 2026-10-10 (as stated in N1's v0.5 "
+    "ledger) and 11-13 of 2026-10-12 (quoted verbatim in 9d). The rulings whose fields or tables name rows (R1, 6, 7, "
+    "8, 11, 12 and 13) are re-keyed to note v0.8 and the 2026-10-22 renders by Code where the quoted text is verbatim "
+    "there and by the design seat's answers of 2026-11-02 where it changed (4f; " + _R11_ANS_AT + ", section 0, "
+    "routed by the PI), except ruling 11's occurrence 'the ten', which ruling 14 admits instead; rulings 5, 9 and 10, "
+    "R2 and R4 are not keyed (" + _R11_R_C + ", section 1d). The design seat's two new rulings of 2026-11-02 are "
+    "applied as the seat's and quoted verbatim in 9d: ruling 14 admits :258's 'ten' as the count of the scored audit "
+    "table's published designs, and ruling 15 admits the source's curve readings as readings of its plots. Rulings 9 "
+    "and 10 bear on the rows' sources and roundings (9a, 9h).")
+
+# ------------------------------------------------------------------------------------------------ 4e's closing words
+_P8["NR_TXT"]["s4e_after"] = (
+    "Resolved since, by the PI's rulings and the design seat's answers (the table above is the item raws' as "
+    "committed): N2's active STOP on link 4's ROC paragraph (block :36) by R3 of 2026-10-09, resolved by rewording, "
+    "which carries to v0.8's rewritten paragraph (:118; ‡ (k) :246) by the design seat's answer 1b item 11 of "
+    f"2026-11-02 (\"{_r11_piece('1b11', 1)}\", {_R11_ANS_AT}:{R11_ANSWERS['1b11'][0]}: \"the rescoring is labelled "
+    "post hoc and approximate, and :118's inference is stated as \"indicates\", with the controlled greedy arm named "
+    "as not yet pre-registered\"); the N2vi :619 fork (W3) by R1, Code's transcription reading accepted, not a STOP, "
+    "re-keyed to v0.8 :93 and :99 by the design seat's answer 1b item 2 and to F2's unchanged nodes 54 and 90 by Code "
+    "(4f); N3's reading of its transcription-class discrepancies as corrections under :23 (N3 @09c3a8c:406; the "
+    "table's N3 row ends 'the design seat decides') by the PI's ruling 6 of 2026-10-10 (branch TS, 9d), "
+    "re-keyed to v0.8's ten TS rows at :14, :83 and :85 by the design seat's answers 1b items 3 and 4, and to the "
+    "2026-10-22 F1a's S11#18 and S11#19 by the PI's ruling 13 of 2026-10-12, Code's verbatim re-key, which the "
+    "design seat's answer 1b item 1 confirms (\"" + _r11_piece("1b1", 1) + "\"); N12(i)'s literal-grep STOP "
+    "by R4; and the conditional STOP on W8 (N5's L102, not transcription) by ruling 7 "
+    "of 2026-10-10, the rewording discharging it, re-keyed to ‖ (c) v0.8 :250 by the design seat's answer 1b item 5 "
+    "(a), whose (b) reads :143's 'did not differ by arm' as reached through its ‖ pointer and sends its wording to the "
+    "correction block (" + _R11_R_C + ", section 5 #23). N2vi :620 (W5): \"" + R10_TXT["o8a_o11"] + "\" (the "
+    "PI, 2026-10-12) is a statement about v0.6; v0.8 states the premises at :101 and ‡ (f) :236, and W5's condition 4 "
+    "on :101 is met through its ‡ pointer, Code's reading, which the design seat's answer 4c confirms "
+    f"(\"{R11_ANSWERS['4c_w5'][1]}\", da50cd1:{R11_ANSWERS['4c_w5'][0]}); whether each figure at an assumed n carries "
+    "its premise is read row by row in 9e W5.")
+assert "the rescoring is labelled post hoc and approximate, and :118's inference is stated as \"indicates\", with the " \
+       "controlled greedy arm named as not yet pre-registered" in R11_ANSWERS["1b11"][1]
+
+# ---------------------------------------------------------------------------------------------- section 9's intro, tail
+assert _P8["NR_TXT"]["s9_intro"].count(_R11_AT_INTEGRATION) == 1
+_P8["NR_TXT"]["s9_intro"] = _P8["NR_TXT"]["s9_intro"].replace(_R11_AT_INTEGRATION, _r11_esc(
+    "Round 11 adds too, under the design seat's answers of 2026-11-02 to " + _R11_R_NAMED + ", routed by the PI on "
+    "2026-11-02 with the PI's approval for the v5 download (" + _R11_ANS_AT + ", section 0): three more raws in the "
+    "transcription raws' role, each pinned at the commit that adds it, the design seat's v1 transcription at da50cd1 "
+    "(answer 2a (i)), Code's v5 transcription at 633b6fd (answer 2a (ii)) and Code's computation raw at e6d3197 "
+    "(answer 2b; the note's own arithmetic on committed inputs, not a transcription, in the same role); a split "
+    "admission, its source named on a declared line other than the unit's (answer 1b item 7; nr_check_admitted with "
+    "a source line, a unit_quote and a relation, nr_r11_relation); the design seat's rulings 14 and 15 as admission "
+    "tables beside ruling 8's (NR_ROUND9['admitted_r14'] and ['admitted_r15']), ruling 14's condition read from the git "
+    "object PREPRINT-v1_0-draft.md@32aefcc (nr_r11_r14_table); the term reader's 'layers N through M' and 'layers N to "
+    "M' (answer 1b item 4; _R9_LAYER_RXS); and a verbatim excerpt of each answer cell this script applies, held with "
+    "its line and asserted at every run (R11_ANSWERS, nr_r11_run_checks). The rulings, as routed to Code and applied "
+    "as their authors': the PI's of 2026-10-09 (R1-R4), 2026-10-10 (5-10, as stated in N1's v0.5 ledger, section 9) "
+    "and 2026-10-12 (11-13, verbatim in N1's v0.6 ledger and in 9d), the ones whose fields or tables name rows "
+    "re-keyed to v0.8 by Code where the quoted text is verbatim and by the design seat's answers where it changed (4f; "
+    "10e); and the design seat's of 2026-11-02, in the seat's words (each quotation a substring of its line, the "
+    "answers' bold markers left out): (14) \"" + _r11_piece("1b8", 2) + "\" and \"" + R11_ANSWERS["1b8cond"][1]
+    + "\" (da50cd1:" + str(R11_ANSWERS["1b8"][0]) + "); (15) \"" + _r11_piece("2a_iii", 2) + "\" (da50cd1:"
+    + str(R11_ANSWERS["2a_iii"][0]) + "). Tier 1 re-reads no preprint text in round 11 (it reads patch v7 at "
+    "note-2026-10-v1, " + _R11_ANS1028_AT + ":61); the only preprint text this script reads in round 11 is the scored "
+    "table at 32aefcc, its rows' first column (ruling 14's condition)."))
+# round-11 read (M14): the design seat's VERDICTS read joins 4a's later-record class on Code's reading of 4a's
+# "79d462b (the close line)" (908a659:51), which names no file; section 9's intro says so (v0_8's text only)
+_R11_VR_OLD = "bfc179c and the design seat's VERDICTS read at 79d462b, each line"
+assert _P8["NR_TXT"]["s9_intro"].count(_R11_VR_OLD) == 1
+_P8["NR_TXT"]["s9_intro"] = _P8["NR_TXT"]["s9_intro"].replace(_R11_VR_OLD, (
+    "bfc179c and, on Code's reading of 4a's '`79d462b` (the close line)', the design seat's VERDICTS read at "
+    "79d462b, each line"))
+
+# --------------------------------------------------------------------------------------------------------------- 9a
+_P8["NR_TXT"]["s9a_prov_after"] = (
+    "The table gives the provenance entries the rows file carries (its 'provenance' field), one per chain. Round 11 "
+    "carries no row unchanged from v0.6: every row is a round-11 chain's (n1v8_chain, K1-K12), each chain's set mapped "
+    "(round 1), checked adversarially and revised by its checker (round 2; 117 rows carry an n1v8_round2 record of the "
+    "round-1 values), and the twelve sets merged (sha256 ce71f7a6…ee1b; " + _R11_R_C + ":3). A row that restates "
+    "a v0.6 row names it (v0_6_row, 703 rows; results/raw/2026-10-12_note-N1-v0_6-note-rows.json@c18854f), and a v0.6 "
+    "row's same-span successor keeps the v0.6 key (607 rows). Each chain's lines, rows and checker findings are in "
+    "10e. The integration's edits are recorded as 10e says: each row edit in its row's 'round11' record, each "
+    "annotation in its span note's annotations.")
+_R11_X16 = ["X16", "X16b", "X16c", "X16d", "X16e", "X16f", "X16g"]
+assert set(_R11_X16) <= _R11_MIDS
+_P8["NR_TXT"]["s9a_history"] = (
+    "- **history-schema** (round 8 fix round; a run-level check, in the dev report too; round 9: the round9 and "
+    "n1v5_round2 records too; round 10: the round10 and n1v6_round2 records too; round 11: the round11 and n1v8_round2 "
+    "records too): every change record names each changed field and its previous value, and no field is changed twice "
+    "from one previous value: {n_rec} records on {n_rows} rows, {n_ch} entries, 0 malformed (X16, X16b, X16c-X16g).")
+
+# --------------------------------------------------------------------------------------------------------------- 9f
+_P8["NR_TXT"]["s9f_intro"] = (
+    "Every span note, verbatim, by span. 'markers' lists, in order, the upper-case status markers the mapper wrote in "
+    "the note (NOT APPLIED, PARTLY APPLIED, NOT CARRIED, CHOICE NOT MADE, OPEN, APPLIED, CORRECTED, FIRES, ...; "
+    "`NR_NOTE_MARK_RE`). It is mechanical: a note can say 'not done' or 'not applied' in lower case and carry no "
+    "marker, so read the note. 'STOP' marks a note that uses the word, whatever it says about it. Round 11 re-mapped "
+    "every span, so every note is a round-11 chain's, written by its mapper (round 1) or its adversarial checker (round "
+    "2) and keyed to the final row keys: S1 and S2 chain K1's; S3 K2's; S4 and S11 K3's; S5 K4's (note 0) and K5's "
+    "(notes 1-2); S6 K6's; S7 K7's; S8 K8's (notes 0-1), K9's (note 2) and K10's (notes 3-4); S9 K11's; S10 K12's. No "
+    "v0.6 note is carried; v0.6's notes are in the v0.6 rows file "
+    "(results/raw/2026-10-12_note-N1-v0_6-note-rows.json@c18854f), referenced. The chains wrote before the design "
+    "seat's answers of 2026-11-02, and round 11 changes a chain's note only as 10e records: in place on "
+    "2 notes (S3 note 4, S5 note 0), each change marked in the note "
+    "(⟨…⟩), and otherwise by annotation. Where a note says that a ruling field is not set, that a re-key is the seat's "
+    "or that a unit is not found, the answers have since ruled (10e), and 9d, 9h and the rows' round11 records give "
+    "the state at this run. Where a note leaves a declaration or a cross-chain reading to the integration, or says "
+    "that the v0_8 profile declares none, round 11 has made it; these include every exemption fingerprint a "
+    "note leaves to Code, each now in NR_EXEMPT_FP (S1 notes 0, 5 and 7's S1#118 and S1#119, S4 notes 0 and 3's "
+    "S4#19, S5 note 0's S5#47, S6 notes 10-12's S6#54, S8 notes 0-1's S8#1008, S9 notes 3 and 5's S9#108, S10 note "
+    "6's S10#111 and S10#135), branch C in NR_DISC (S5 note 0's S5#38 and R1 rows S5#81 and S5#88, S10 note 6's R1 "
+    "rows S10#108 and S10#60), and S8 note 1's cross-chain 48s, S5#1001 and S5#1002 now item-raw and reproduced (K4's check, round 2: their n1v8_round2 records; S5 "
+    "note 0's annotation); 9h's cross-check gives each note's disposition. The annotations follow the note they "
+    "qualify: the chains' own (K2's and K12's checks) and "
+    "the integration's, marked 'N1 round 11 (integration, Code)' (14: the keys and "
+    "lineage the rows take, the exemptions restored and declared, and which of two forms stands) or 'N1 round 11 "
+    "(integration, Code; the design seat's answers of 2026-11-02)' (52: what the design "
+    "seat's answers settle, and Code's edits before the ledger commit); where an annotation supersedes the note, the "
+    "annotation holds. Which span notes stay open is the cross-check at the end of 9h.")
+
+# --------------------------------------------------------------------------------------------------------------- 9g
+_P8["NR_TXT"]["s9g_plain_nf"] = (
+    "(the not-found figures are not record figures: in v0.8 each is admitted, one of ruling 8's four citations (S7#19, "
+    "S7#20, S7#25, S7#28), ruling 14's count of the scored audit table's published designs (S8#3143) or one of ruling "
+    "15's seven readings of the source's plots (S1#1012, S5#2028-S5#2030, S8#2009, S8#2011, S8#2012), 9d)")
+_P8["NR_TXT"]["s9g_conditions"] = (
+    "The design seat's answers of 2026-10-28, under the PI's \"Yes to all\", place the tag note-2026-10-v2 on the final "
+    "audit commit, which is N18's second run, the last commit before the tag (" + _R11_ANS1028_AT + ":14, :65-66), "
+    "and its answers of 2026-11-02 say that the tag \"must be `note-2026-10-v2` exactly\" (" + _R11_ANS_AT + ":51); "
+    "that commit descends from this run's HEAD, so the tag holds every figure that entered at or before the commit "
+    "stated above, and under the PI's ruling 5 every computed-new figure passes block :23 once its audit raws are "
+    "committed at or before it (9d says which pass; none is held in round 11: cn_held, Code's table, is empty, and the "
+    "design seat's answer on the pass-12 rows is \"Hold none\", da50cd1:53). The conditions on that statement, each "
+    "with whose it is: (1) the PI's: the tag commit also contains the note and the three 2026-10-22 SVGs (committed at "
+    "0de15a1 and 0a3f925; the file table at the head of section 9 gives their tracking at this run; N18 hashes them) "
+    "and the preprint at patch v8 under its status banner, which is not a text of record (908a659:61); (2) Code's: the "
+    "154/154 the note carries at :214 (S8#1008) rests on N11's provisional, pre-tag PASS from a local clone (W6; "
+    "results/raw/2026-10-08_note-N11-smoke.txt@02b6a61:742, :745), and the fresh-clone 154/154 at the tag \"is the "
+    "release-commit run owed under answers §10 item 4\" (the design seat's words, da50cd1:51), a run the answers of "
+    "2026-10-28 list among what Code owes (908a659:87); it becomes a correction only if that run prints something "
+    "else; (3) the PI's: the note is frozen as posted (908a659:23) and the renders are posted as filed (da50cd1:49): "
+    "if either is edited or re-rendered after this run, its sha256 changes and this section covers the edited file "
+    "only after a re-run against it; and (4), a limit of the statement: a figure entering with an audit raw committed "
+    "after this run is not in the commit stated above: the line above names the figures that set the including-audit "
+    "candidate, read at this run (round 11's 28 rows remapped under the design seat's answers 2a and 2b enter with "
+    "the raws they cite: the seat's v1 transcription at da50cd1, Code's v5 transcription at 633b6fd and Code's "
+    "computation raw at e6d3197).")
+
+# --------------------------------------------------------------------------------------------------------------- 9h
+_P8["NR_TXT"]["s9h_intro"] = (
+    "Each item names the rows it rests on (status asserted at this run), the corrections it rests on (each asserted to "
+    "be on its row and declared in NR_CORRECTIONS) and the span notes it summarises (quote asserted, unique in its "
+    "span; every span note whose disposition names the item). v0.6's O1-O33 are carried with their v0.8 disposition, "
+    "read on v0.8's text (O16 is generated from the span notes); " + _r11_compress(_R11_OPEN_NEW) + " are new in round "
+    "11. An item's span-note numbers are v0.8's (9f), and its line numbers are v0.8's unless it says 'v0.6 :N'. The "
+    "cross-check after the items gives every span note's disposition, so a note whose finding is still open names the "
+    "item that carries it. N1 declares no STOP of its own, and no item here is a STOP. In round 11 the design seat's "
+    "answers of 2026-11-02 (" + _R11_ANS_AT + ", routed by the PI) rule what the items held for the seat: the re-keys "
+    "of R1 and of rulings 6, 7, 8, 11, 12 and 13 to v0.8 (O2, O3, O8, O13, O30; the new ruling 14 for O8's 'the ten'), "
+    "R3's carry to v0.8's Link 4 (O6), the not-found routes (O34: the v1 and v5 transcriptions and the new ruling 15; "
+    "O35: the computation raw), the kind of 'seven days' (O36: a not-figure) and the pass-12 rows (O37: \"Hold none\", "
+    "the design seat's words, da50cd1:53; \"verification pending T+3\" stands in their comments)"
+    + (f"; their section 2 sets the dated correction block's candidates and tiers ({_R11_CB})" if _R11_CB else "")
+    + "; 10e lists each answer. The note is frozen (" + _R11_ANS1028_AT + ":23), so a wording or scope item on it goes "
+    "to the dated correction block on the post, \"the PI's at the flip, the seat's wording\" (the heading of the "
+    "answers' section 2, da50cd1:42; the seat triages the candidates at the flip, da50cd1:44"
+    + (f"; {_R11_CB}" if _R11_CB else "") + "), or to a ruling. Each item says whose call it is: the PI's, the design "
+    "seat's (the note's wording), the Digest seat's (a render, at the PI's routing; the design seat's answer puts F1a "
+    "nodes 42-43 and O24's four F1b items after the flip, as a new dated set, da50cd1:49) or Code's (README-NOTE and "
+    "N18 at the release; the tag).")
+_P8["NR_TXT"]["s9h_crosscheck_intro"] = (
+    "**Span-note cross-check (Code's D4, round 8; rebuilt for v0.5's notes in round 9, for v0.6's in round 10 and for "
+    "v0.8's in round 11).** Every span note in 9f ({n}), with its disposition. 'carried' names the 9h items that carry "
+    "the note's open finding; 'closed' says what closed it (a chain's process record with no finding, the item applied "
+    "in the note's text or a render, a ruling, the PI's statement or the design seat's answers, or an integration "
+    "request the script now applies) and may name the items that record the closure. The table is the profile's "
+    "(NR_SPAN_DISPOSITION), asserted at this run: every span note has exactly one declaration, whose quote is in the "
+    "note; every item it names is in 9h; every span note that an item above cites names that item; and a 'carried' "
+    "note names at least one item that is not CLOSED. {n_carried} carried, {n_closed} closed.")
+
+# --------------------------------------------------------------------------------------- 9d's O8(a)/O11 line; the re-keys
+_P8["NR_ROUND9"]["o8a_o11_line"] = (
+    "The statement is the PI's about note v0.6, whose wording it settled; v0.8 rewrites those lines. O8(a)'s subject, "
+    "v0.6 :60's verdict-tier gap (RESEARCH-NOTE-v0_6-draft.md@note-2026-10-v1:60; v0.5's S1#260 and S2#130, v0.6's "
+    "S2#134), is gone from v0.8 with v0.6 :60's timing clause and v0.6 line 3's change log (9h O32). O11's figures are "
+    "stated in v0.8 at :101 and ‡ (f) :236: 800/80 with its premise wherever v0.8 states it (:101; ‡ (f) :236; F2 "
+    "nodes 58 and 100-101), and :101's corrected d′, c range and premise counts naming the four premises by their two "
+    "ends, the paragraph's ‡ marks (four; the first two after '(100,000/10,000).' and '(≈ −2 and −0.3).') pointing to the ‡ section, "
+    "whose (f) at :236 states each premise with its unit. W5's condition 4 "
+    "(N2vi @09c3a8c:620) is met on :101 through that pointer, Code's reading, as round 10's reading (d) took a "
+    "reference to the stating line; the design seat's answer 4c confirms it "
+    f"(\"{R11_ANSWERS['4c_w5'][1]}\", {_R11_ANS_AT}:{R11_ANSWERS['4c_w5'][0]}). No ruling of 2026-10-12 is applied to "
+    "them; each carries its own status at this run, and none is held (NR_ROUND9['cn_held'] is empty; 9e W5, 9h O11).")
+_P8["NR_ROUND9"]["r11_rekey"] = (
+    "4f of the design seat's answers of 2026-10-28 reads: \"Code re-keys rulings 7, 8, 11, 12 and R1 where they apply "
+    "verbatim in v0.8; each one whose quoted text changed comes to the seat through the PI with the old key and the "
+    "v0.8 candidate, and the seat answers in one block\" (" + _R11_ANS1028_AT + ":56). Code's, verbatim (the "
+    "integration's edit E9): R1 on F2's S10#108 and S10#60 (nodes 54 and 90, unchanged), ruling 8 on :195's S7#19 and "
+    "S7#20 (the declared note_quote verbatim there, naming the source and carrying both units), and ruling 13 on F1a's "
+    "S11#18 and S11#19 (nodes 17-19 unchanged), which 4f does not name, so Code applied the same rule and held the "
+    "result for the seat, which confirmed it (answer 1b item 1, \"" + _r11_piece("1b1", 1) + "\"). The seat's, in its "
+    "answers of 2026-11-02 (" + _R11_ANS_AT + ", section 0; R11_ANSWERS holds a verbatim excerpt of each answer cell "
+    "applied, with its line): R1 on :93's S5#81 and :99's S5#88, only the clause around the unit having moved (1b item "
+    "2); ruling 6 on the ten TS rows at :14, :83 and :85, v0.6's locator and quote kept with v0.8's note_quote (1b "
+    "items 3 and 4, the second with the term reader's 'layers N through M'); ruling 7 to ‖ (c) :250 (S8#3074, S8#3075; "
+    "1b item 5 (a)), :143 reached through its ‖ pointer (1b item 5 (b)); ruling 8 on :202's S7#28 with its reworded "
+    "source (1b item 6) and on :200's S7#25 as a split admission, its source on the list's lead-in line :195 (1b item "
+    "7); ruling 11's occurrence 'the ten' (v0.6 S7#91, v0.8 S8#3143), whose antecedent is gone, admitted instead by "
+    "the new ruling 14 (1b item 8), and ruling 11's three not-figures re-keyed to :258 (S8#3100-S8#3102: note_line 258, "
+    "'2026' its second occurrence there, comment_quote 'the v2 posting date 2026-09-25'; 1b item 9); ruling 12 on the "
+    "five 'fifty' rows (S5#2003, S8#2070, S8#2079, S8#2082, S10#137; 1b item 10). R3's closure carries to v0.8's "
+    "rewritten Link 4 paragraph (1b item 11). The v0.6 keys that " + _R11_R_NAMED + " gives as gone (its section 1c: "
+    "S4#31-S4#33, S3#129, S7#82, S7#89, S7#97, S8#119) retire with v0.6 and its ledger at note-2026-10-v1 (answer 1c).")
+assert _r11_piece("1b1", 1) == "Confirmed."
+
+# -------------------------------------------------------------------------------------------- 10d: the known limits
+_L6 = PROFILES["v0_6"]["NR_LIMITS"]
+assert len(_L6) == 21
+assert set(_TAGS) <= set(_M8_DROP) and not set(_TAGS) & _R11_MIDS, sorted(set(_TAGS) & _R11_MIDS)
+assert {"Y05", "Y06", "Y07", "Y08", "Y09", "Y10", "Y11", "Y01", "Y02", "Y03", "Y04", "RP6", "RP28"} <= _R11_MIDS
+assert "RP17" in _M8_DROP and "RP17" not in _R11_MIDS
+_R11_LIMITS = [
+    "Split admissions (round 11; the design seat's answer 1b item 7 of 2026-11-02, \""
+    + _r11_esc(_r11_piece("1b7", 2)) + "\", " + _R11_ANS_AT + ":" + str(R11_ANSWERS["1b7"][0]) + "). "
+    "nr_check_admitted reads a declaration with a source line as a split "
+    "citation: the note_quote naming the cited source verbatim on the declared source line, the field's unit_quote "
+    "verbatim on the row's own line and carrying the row's unit as a token, and the declared relation between the two "
+    "lines (nr_r11_relation): 'lead-in', the source line ending with ':' and every non-blank line after it, up to and "
+    "including the row's, an item of one numbered list numbered from 1 in order (S7#25, :195 to :200; Y05 declares "
+    "the blank line after the lead-in as the source line, Y06 ends the lead-in with '.'); 'dagger', the row's line "
+    "carrying a ‡ after its unit_quote and the source line inside the ‡ notes, after the '#### ‡' heading with no "
+    "other note's opening mark between (ruling 15's rows on :101; Y09 removes the ‡); 'named', two lines a ruling "
+    "names, of which nothing further is checked (ruling 14's S8#3143, ruling 15's S1#1012; Y07 and Y10 move a "
+    "unit_quote off its line, which the unit_quote check catches, not the relation). The relation is read from the "
+    "layout, not the sense: that :200's three sizes are Tagliabue et al.'s, that :258's 'the ten' counts the scored "
+    "table's designs, or that :15's near-zero detection is what the figures :228 names show, is the design seat's "
+    "reading in its answers, not the check's.",
+    "Ruling 14 (round 11; the design seat's ruling of 2026-11-02, answer 1b item 8). nr_r11_r14_table reads its "
+    "condition from the git object PREPRINT-v1_0-draft.md@32aefcc: the first table after the marker '[TAB 3: the full "
+    "scored table. Abbreviated:]' inside the section headed '## 6 Reading the published record against the "
+    "framework', each row's first cell, the header and separator left out; the condition holds when the rows other "
+    "than 'This paper' number ten, 'This paper' is one row, and no row names Sofroniew. It reads the first column at "
+    "that pin only, not what each row scores. The answer places the table in the preprint's section 8; the check reads "
+    "the scored table of section 6, where 32aefcc has it (section 8 there is 'Pre-registered next experiments'; Code's "
+    "reading, 9d). If the condition fails, S8#3143's admission check fails and nr_r11_run_checks reports it "
+    "(round10-tables), so a final run stops. The answer's words for that case are \""
+    + _r11_esc(R11_ANSWERS["1b8cond"][1]) + "\" (" + _R11_ANS_AT + ":" + str(R11_ANSWERS["1b8cond"][0]) + "), and a "
+    "failing conditional cell \"is recorded as such in the ledger and goes to the correction block, and the tag does "
+    "not wait on it\" (da50cd1:32): recording it takes removing ruling 14's declaration and the row's "
+    "admitted_citation (Code's), after which the run lists the row as not found. Y07, Y08 and Y11 break the admission "
+    "(a unit_quote off its line, ruling 8's words in the row's field, the row also declared in ruling 8's table); no "
+    "fixed mutation alters the condition's reading, which reads a git object at a fixed pin.",
+    "Ruling 15 (round 11; the design seat's ruling of 2026-11-02, answer 2a (iii)). nr_check_admitted admits each "
+    "curve reading against ruling 15's table (NR_ROUND9['admitted_r15']): on :228 in ruling 8's one-line form (the "
+    "note_quote naming the cited source and carrying the unit on the row's own line), on :101 and :15 as split "
+    "citations whose source line is :228 (relations 'dagger' and 'named'; Y09 and Y10 break them). The cited source "
+    "is the first two entries of :228's figure list, 'v5 Figure 5 at *L* = 25; Figure 22 at *L* = 19 and 22', which "
+    "carries the answer's \"v5 Figure 5\" and, as \"Figure 22\", its \"v5 Figure 22\"; the list's third entry, "
+    "'Figure 20's baseline at *L* = 45', is S8#2020's, mapped on Code's v5 transcription (Code's reading of how the "
+    "ruling applies; the check needs the source verbatim in the note_quote). No check reads the source's figures: "
+    "each unit is admitted as the ruling says, \"a figure read by eye is admitted as what it is, a reading of the "
+    "source's plot\" (" + _R11_ANS_AT + ":" + str(R11_ANSWERS["2a_iii"][0]) + "), and no committed file transcribes "
+    "a value for it; Code's v5 transcription reads no curve value (" + _R11_V5_AT + ":47).",
+    "The design seat's answers in this script (round 11). R11_ANSWERS holds a verbatim excerpt of each answer cell the "
+    "script applies, with its line in " + _R11_ANS_AT + "; nr_r11_run_checks asserts each on its line at every v0_8 "
+    "run, with the admission tables' form (a row declared in one admission table at most, at its note line and unit, "
+    "under its table's ruling, its cited source named by its note_quote; a split declaration with a unit_quote and a "
+    "relation) and ruling 14's condition; a problem stops a final run (round10-tables). It asserts the words, not "
+    "their application: that each declaration in the v0_8 tables applies its answer as the seat meant it is Code's "
+    "reading, and 10e records each. Y11 declares one row in two admission tables; no fixed mutation alters an "
+    "answer's words.",
+    "The round-11 source classes (4a-4e; the design seat's answers 2a and 2b of 2026-11-02). A line of RESULTS.md at "
+    "0fa8539 or 79d462b, of the Q-F0 VERDICTS raw or JSON at bfc179c, or of the design seat's VERDICTS read at 79d462b "
+    "(this file on Code's reading of 4a's '`79d462b` (the close line)', 10e) "
+    "is a record line at that exact revision (NR_LATER_RECORD), path-and-revision wide: the check does not read whether "
+    "a cited line lies in the VERDICTS entry, and the design seat's answer 4c keeps 4a's scope (Y01). The "
+    "transcription-class raws (NR_TRANSCRIPTION_RAWS: N2(vii)'s at 8d68b0b, the design seat's two at 908a659, the "
+    "seat's v1 transcription at da50cd1, Code's v5 transcription at 633b6fd and Code's computation raw at e6d3197) "
+    "are item raws by exact path whose lines decide no status, so a row citing one is computed-new by its mapping "
+    "(Y02, Y04); the additions raw (4e) and, on Code's reading of 4c's 'A pin class for this commit' (908a659:53), "
+    "the answers block are pinned at 908a659 and carry no figure (Y03). No check "
+    "re-reads a source those raws transcribe: the v1 readings rest on the design seat's copy of the PDF (sha256 "
+    "202bf0f7…e15a, not in the repository), the v5 readings on Code's copy (identified by the sha256 N2(vii) records, "
+    "90c0af74…0f92; not committed), and Figure 20's panel label 'L=45' is a raster label read by eye, its panel the "
+    "caption's depth fraction 0.7 on Code's reading of the caption's order (the v5 raw, " + _R11_V5_AT + ":41, :43); "
+    "the computation raw's values are Code's arithmetic on committed inputs, regenerated from its committed script, "
+    "and its readings of 'half-count' and of the three p values the note names no test for are Code's (answer 2b).",
+]
+_P8["NR_LIMITS"] = [_L6[0], _r10_sub(_L6[1], "S7#12 and S7#15 carry a locator-value exemption",
+                                     "S1#118, S1#119, S7#12 and S7#15 carry a locator-value exemption"),
+                    _r10_sub(_L6[2], "(L01, L04)", "(L01; v0.6's L04 has no v0.8 instance and is not run, 10e)"),
+                    _L6[3], _L6[4],
+                    _r10_sub(_r10_sub(_r10_sub(
+                        _L6[5], "round 9's round9 and n1v5_round2, and round 10's round10 and n1v6_round2,",
+                        "round 9's round9 and n1v5_round2, round 10's round10 and n1v6_round2, and round 11's round11 "
+                        "and n1v8_round2,"),
+                        "n1v6_chain and v0_5_row,", "n1v6_chain, v0_5_row, n1v8_chain and v0_6_row,"),
+                        "admitted_citation, with ruling 11's reach)",
+                        "admitted_citation, with ruling 11's reach and, since round 11, a split admission's "
+                        "unit_quote)"),
+                    _L6[6], _L6[7], _L6[8],
+                    _r10_sub(_L6[9], "(X01-X09, X11-X13, X17, X22-X24, X34-X38, X52-X59, X63-X67; re-keyed in round 9 "
+                                     "where the row is cut, 10a)",
+                             "(" + _r11_ids(_r11_span("X", 1, 9, 2) + _r11_span("X", 11, 13, 2) + ["X17"]
+                                            + _r11_span("X", 22, 24, 2) + _r11_span("X", 34, 38, 2)
+                                            + _r11_span("X", 52, 59, 2) + _r11_span("X", 63, 67, 2))
+                             + "; re-keyed in rounds 9 and 11 where the row is cut, 10a)"),
+                    "Row tags (round 8 fix round, extended in fix rounds 3-8). A row tag on a line of an audit-outcome "
+                    "raw binds only in the strict form 'path@rev:n (Sx#n)', through the locator parser, in each of the "
+                    "five fields pins reads, which must then be printable ASCII with the escapes of '#' refused; every "
+                    "other occurrence of a row key in those fields fails, and the free-text fields, which pins does "
+                    "not read, are frozen by NR_TEXT_SHA256 only. The rule and the forms tested in rounds 8-10 are "
+                    "stated in full in N1's v0.6 ledger's 10d "
+                    "(results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2785). No v0.8 row cites an "
+                    "audit-outcome raw (v0.8 restates no N1 count; the dev report's rows_citing_an_outcome_raw is 0), "
+                    "so the strict-tag mutations (" + _r11_compress(list(_TAGS)) + ") have no row to act on and are "
+                    "not in round 11's list (10e); nr_check_pins keeps the rule, and a row that cites such a raw "
+                    "brings the family back.",
+                    _r10_sub(_r10_sub(_r10_sub(_r10_sub(
+                        _L6[11], "extended in fix round 3 and in rounds 9 and 10",
+                        "extended in fix round 3 and in rounds 9, 10 and 11"),
+                        "(v0_6: n1v4_round2, round8, round9, n1v5_round2, round10 and n1v6_round2; NR_HISTORY_FIELDS), "
+                        "and mutations (X16 on a round9 record, X16b on a round8 record, X16c-X16e on round-10 records)",
+                        "(v0_8: n1v4_round2, round8, round9, n1v5_round2, round10, n1v6_round2, round11 and "
+                        "n1v8_round2; NR_HISTORY_FIELDS), and mutations (X16 on a round9 record, X16b on a round8 "
+                        "record, X16c-X16e on round-10 records, X16f and X16g on round-11 records)"),
+                        "(v0.4's, as its how_built states; round 9's integration edits on S1#260, S1#236 and S1#237 and "
+                        "its fix round 1's on S11#22, S1#390 and S1#112, how_built (4); in place, S11#22's and S11#23's "
+                        "round9 'why')",
+                        "(in the history fields a row keeps with its v0.6 key, among them S11#22's and S11#23's round9 "
+                        "records, as N1's v0.6 ledger's 10d states them, "
+                        "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2786; in round-11 records whose "
+                        "previous value is a v0.6 text that carried one; and in round 11's withdrawals in round 8's D5 "
+                        "(c) form, the integration's edit E11 on five K5 comments (S5#2055-S5#2057, S5#2059, S5#2060) "
+                        "and Code's edits before the ledger commit on S1#1019, S3#31 and S8#1023 (" + _R11_R_C
+                        + ", section 0; 10e), 8 rows)"),
+                        "(the chains' checkers compared every 'previous' with the v0.5 value; this script does not).",
+                        "(the chains' checkers compared every 'previous' with the v0.5 value; this script does not). "
+                        "Round 11 keeps v0.6's history fields as they stand on every row that keeps a v0.6 key and "
+                        "drops them from a row under a new key, each dropped field recorded in its round11 record (the "
+                        "integration's edit E5); each chain's round11 record lists every field that differs from the "
+                        "v0.6 row its v0_6_row names (previous: the v0.6 value, null if absent), built against the "
+                        "v0.6 rows file at c18854f, and the integration's row edits (10e) are recorded in the same "
+                        "field under their own findings; this script checks the records' form, not their content."),
+                    _L6[12],
+                    _r10_sub(_r10_sub(
+                        _L6[13], "(RP1-RP4, RP7-RP15, RP18-RP23, RP29-RP31; RP19, retargeted at fix round 1, patches "
+                                 "the line past the row's note_quote, so it reaches the unit's-sentence branch; RP31 "
+                                 "keeps a consistent note_quote across a render's joined nodes while the scope changes)",
+                        "(" + _r11_ids(_r11_span("RP", 1, 4) + _r11_span("RP", 7, 15) + _r11_span("RP", 18, 23)
+                                       + _r11_span("RP", 29, 31))
+                        + ("; RP31 keeps a consistent note_quote across a render's joined nodes while the scope changes"
+                           if "RP31" in _R11_MIDS else "") + ")"),
+                        "Since round 10 the PI's ruling 13 of 2026-10-12 says that ruling 6 reaches the three renders, "
+                        "so F1a's two TS rows pass as the note's do, under the same check (ts_note_spans is None).",
+                        "Since round 10 the PI's ruling 13 of 2026-10-12 says that ruling 6 reaches the three renders, "
+                        "so F1a's two TS rows pass as the note's do, under the same check (ts_note_spans is None). "
+                        "Round 11 re-keys ruling 6 to v0.8's wording at :14, :83 and :85 (the design seat's answers 1b "
+                        "items 3 and 4 of 2026-11-02; the note's ruling-6 mutations above re-ported to those lines; RP29-RP31 act on the 2026-10-22 "
+                        "F1a, ruling 13's reach), and the "
+                        "term reader reads 'layers N through M' and 'layers N to M' as the range N-M, as it reads "
+                        "'layers N-M' (answer 1b item 4; _R9_LAYER_RXS); a range written in another form, such as 'L50 "
+                        "through L63' or 'layers 50 until 63', is not read as a range. Code's grep finds neither form "
+                        "in any text audited in rounds 7-10 (" + _R11_R_C + ", section 1b item 4), so v0.3-v0.6 "
+                        "are read as before."),
+                    _r10_sub(_r10_sub(
+                        _L6[14], "; RP5, RP16, RP24-RP27)",
+                        "; " + _r11_ids(["RP5", "RP16"] + _r11_span("RP", 24, 27)) + ")"),
+                        "A discrepant wording outside that set is a known limit, not a pass the ruling makes.",
+                        "A discrepant wording outside that set is a known limit, not a pass the ruling makes. Round 11 "
+                        "re-keys ruling 7 to ‖ (c) v0.8 :250 (the design seat's answer 1b item 5 (a) of 2026-11-02; the "
+                        "ruling-7 mutations above re-ported to that line). :143's 'did not differ by arm' is outside "
+                        "the lexical set; the answer's (b) reads it as reached through its ‖ pointer to ‖ (c), and no "
+                        "check reads that pointer: :143 carries no ruling field, its 1% is S6#101 (reproduced), and its "
+                        "wording is a correction-block item (" + _R11_R_C + ", section 5 #23)."),
+                    _r10_sub(_r10_sub(
+                        _L6[15], "(RP6, RP17, RP28)", "(" + _r11_ids(["RP6", "RP17", "RP28"]) + ")"),
+                        "the citations are the PI's admission, not record figures.",
+                        "the citations are the PI's admission, not record figures. Round 11 re-keys it to v0.8: S7#19 "
+                        "and S7#20 at :195 by Code, verbatim (4f; RP6 patches :195), and S7#28 at :202 and S7#25 at "
+                        ":200 by the design seat's answers 1b items 6 and 7 of 2026-11-02 (RP28 patches :202; S7#25 "
+                        "split, the 'Split admissions' bullet below); NR_ROUND9['r8_units'] holds the four units as "
+                        "re-keyed. RP17, v0.6's mutation of ruling 11's admitted occurrence, is dropped: v0.8 has no "
+                        "such occurrence (10e)."),
+                    _r10_sub(_r10_sub(
+                        _L6[16], "(9d; in v0.6 the table is empty: O8(a) and O11 are resolved by v0.6's wording, and "
+                                 "ruling 12 passes the three 'fifty' rows)",
+                        "(9d; in v0.8 the table is empty: W5's condition 4 is met on :101 through its ‡ pointer, "
+                        "Code's reading, which the design seat's answer 4c confirms; ruling 12 passes the five 'fifty' "
+                        "rows; and none of the pass-12 rows is held, the design seat's answer being \"Hold none\")"),
+                        "and no check finds a row that should be held and is not.",
+                        "and no check finds a row that should be held and is not. A row on a transcription-class raw "
+                        "(4b-4d; the design seat's answers 2a and 2b) is computed-new by its mapping and passes once "
+                        "the raw is committed: ruling 5 reads the commit, not what the raw transcribes or computes."),
+                    _L6[17],
+                    "Ruling 11 (round 10; the PI's ruling 11 of 2026-10-12). nr_r10_r11_occurrence and ruling 11's "
+                    "run-level checks are as N1's v0.6 ledger's 10d states them "
+                    "(results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2793), with the same narrowing "
+                    "(Code's: the occurrence on another line than the admitted citation's, one declaration per (line, "
+                    "unit)). In v0.8 the ruling reaches no figure (NR_ROUND9['r11_units'] is empty): the occurrence it "
+                    "admitted in v0.6, 'the ten' (v0.6 S7#91, v0.8 S8#3143), lost its antecedent with v0.6 :172, and "
+                    "the design seat's ruling 14 admits it instead (answer 1b item 8); so the generated family R11's "
+                    "occurrence members are not generated (no declaration carries ruling 11's reach), and RP17, "
+                    "v0.6's fixed mutation of that occurrence, is dropped (10e). Its not-figures, re-keyed to ‖‖ (a) "
+                    ":258 by the design seat's answer 1b item 9 (S8#3100-S8#3102: note_line 258, '2026' its second "
+                    "occurrence there, comment_quote 'the v2 posting date 2026-09-25'), are bound to their line, unit, "
+                    "a verbatim context that is on the line once and holds the unit once, the declared occurrence of "
+                    "the unit on the line that the context locates, and a quote of the row's own comment (family "
+                    "R11's not-figure members, 10b); a not-figure the ruling reaches that is not declared is not found "
+                    "by any check.",
+                    _L6[19] + " Round 11 re-keys it to v0.8's five 'fifty' rows (S5#2003, S8#2070, S8#2079, S8#2082, "
+                              "S10#137; the design seat's answer 1b item 10), each keeping N2 5(b)'s label as its "
+                              "status basis; the two '50' rows (S8#2052, S10#1009) rest on 4b (N2(vii), computed-new "
+                              "by mapping), not on this table; S10#137's locator stays on N2, Code's call (10e).",
+                    _L6[20] + " Round 11 re-keys it verbatim to the 2026-10-22 F1a, whose nodes 17-19 are "
+                              "byte-identical to the 2026-10-10 render's (the design seat's answer 1b item 1, \""
+                              + _r11_esc(_r11_piece("1b1", 1)) + "\"; V08_RULING13_REKEY_SEAT_CONFIRMED)."] + _R11_LIMITS
+assert len(_P8["NR_LIMITS"]) == len(_L6) + len(_R11_LIMITS)
+# round-11 read (M28): 10d's pointers to Code's probes of fix rounds 7 and 8 name the ledger that records them (N1's
+# v0.4 ledger's 10e at fd2b136), not this ledger's 10e; v0_8's copy only (v0_4-v0_6 keep their text)
+assert _P8["NR_LIMITS"][9].startswith("Ruled corrections (round 8)") and _P8["NR_LIMITS"][9] != _L6[9]
+_P8["NR_LIMITS"][9] = _r10_sub(_r10_sub(
+    _P8["NR_LIMITS"][9], "(Code's probes of fix rounds 7 and 8, 10e)",
+    "(Code's probes of fix rounds 7 and 8, recorded in N1's v0.4 ledger's 10e, "
+    "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md@fd2b136:2711, :2718)"),
+    "Code's probe of fix round 8, 10e)",
+    "Code's probe of fix round 8, results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md@fd2b136:2718)")
+assert _L6[18].startswith("Ruling 11 (round 10") and _L6[10].startswith("Row tags")
+assert not any(_R11_AT_INTEGRATION in x for x in _P8["NR_LIMITS"])
+
+# ----------------------------------------------------------------------------------------- 10e: the record of round 11
+# v0_6's mutations by what round 11 did with each (generated from the lists; the descriptions are asserted to say so)
+_r11_v6m = [m_[0] for m_ in PROFILES["v0_6"]["NR_MUTATIONS"]]
+_r11_rp = [i for i in _r11_v6m if i in _M8_REKEY and _M8_REKEY[i][1] == _RP8]
+_r11_redesc = [i for i in _r11_v6m if i in _M8_REKEY and i not in _r11_rp
+               and not re.search(r"\bre-(?:keyed|pointed) from\b", _M8_REKEY[i][2])]
+_r11_rk = [i for i in _r11_v6m if i in _M8_REKEY and i not in _r11_rp and i not in _r11_redesc]
+_r11_same = [i for i in _r11_v6m if i in _R11_MIDS and (i not in _M8_REKEY or i in _r11_redesc)]
+_r11_drop = [i for i in _r11_v6m if i not in _R11_MIDS]
+_r11_own = [m_[0] for m_ in _P8["NR_MUTATIONS"] if m_[0] not in set(_r11_v6m)]
+assert _r11_redesc == ["X05"] and ":93" not in _M8_REKEY["X05"][2] and "line 93" in _M8_REKEY["X05"][2]
+assert len(_r11_same) + len(_r11_rk) + len(_r11_rp) + len(_r11_own) == len(_P8["NR_MUTATIONS"])
+assert set(_r11_drop) == set(_M8_DROP) and len(_r11_same) == 88, (len(_r11_same), sorted(set(_r11_drop) ^ set(_M8_DROP)))
+_R11_RK_OTHER = ["M24", "M25"]
+assert set(_R11_RK_OTHER) <= set(_r11_rk) and all("(ledger-row L044, reproduced)" in _M8_REKEY[i_][2]
+                                                  for i_ in _R11_RK_OTHER)
+_R11_OWN_TXT = (
+    "X16f and X16g, the history-schema check on round-11 records (a chain's round11 record on S8#1008; K4's "
+    "n1v8_round2 on S5#1001); Y01-Y04, the source classes of the answers of 2026-10-28 (Y01 a revision outside 4a's "
+    "later-record class; Y02 a status_basis on a transcription raw, 4b; Y03 a locator on the additions raw alone, 4e; "
+    "Y04 a transcription-raw row mapped item-raw, 4c); and Y05-Y11, the answers of 2026-11-02 (the split admission, "
+    "answer 1b item 7: Y05 a declared source line its note_quote is not on, Y06 the list's lead-in broken; ruling 14, "
+    "1b item 8: Y07 a unit_quote off its line, Y08 ruling 8's words in the row's field, Y11 the row also declared in "
+    "ruling 8's table; ruling 15, 2a (iii): Y09 the ‡ removed from :101, Y10 a unit_quote off its line)")
+assert set(_r11_own) == {"X16f", "X16g"} | {f"Y{i:02d}" for i in range(1, 12)}, _r11_own
+_r11_why = {}
+for _i11 in _r11_drop:
+    _r11_why.setdefault(_M8_DROP[_i11], []).append(_i11)
+_R11_MUT_TXT = (
+    f"- **Mutations** ({len(_P8['NR_MUTATIONS'])} fixed). v0_6's list in order: {len(_r11_same)} apply to their v0.6 "
+    f"row and property ({', '.join(_r11_redesc)} with its description restated for v0.8's line 93); "
+    f"{len(_r11_rk) - len(_R11_RK_OTHER)} are re-keyed under their own ids to a v0.8 row with the same property, "
+    "each saying so in its 10a description (_M8_REKEY), and " + " and ".join(_R11_RK_OTHER) + " to S1#132, which "
+    "maps its ledger row (L044, reproduced) where v0.6's S1#320 was item-raw, so the ledger-status check catches "
+    "them where v0.6's status check did (that check stays exercised on an item-raw row by M18, on S6#5); of the 75, N14 and R23, which v0.6's row checks let through to its freezes, are now caught by a row check, and M09, E03, N06, T04 and T05 fire a different set of row checks than in v0.6 (results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f:2466, :2509, :2515, :2553, :2561, :2574, :2575); "
+    f"{len(_r11_rp)}, held at the integration for the design seat's re-keys of rulings 6, 7 and 8, are "
+    "re-ported to v0.8's lines now that the seat has answered (1b items 3-6), each with its v0.6 id, property and "
+    f"expected check (origin '{_RP8}' in 10a: {_r11_compress(_r11_rp)}); and {len(_r11_drop)} are dropped, each with "
+    "its reason (_M8_DROP): "
+    + "; ".join(f"({n_}) {_r11_compress(v_)}: {k_}" for n_, (k_, v_) in enumerate(_r11_why.items(), 1))
+    + f". Round 11's own ({len(_r11_own)}): {_R11_OWN_TXT}. Limit mutations: "
+      f"{_r11_compress([m_[0] for m_ in _P8['NR_LIMIT_MUTATIONS']])} (L02 and L03 re-keyed where v0.8 retires their "
+      "rows, S1#143 and S2#33; L01 from S5#106, which v0.8 restates as S8#2070, to S10#137, whose locator cites N2 "
+      ":136 as S5#106's did and S8#2070's does not; L05 from S5#20, which v0.8 restates as S8#1019, to S8#2042, "
+      "a row of L05's form (a related-row ledger_row, L020's, whose primary row is reproduced and which the "
+      "locator names); v0.6's "
+      "L04 is not run, for T07's reason above).")
+_R11_LEFT_TXT = (
+    "- **Left open by this round** (not resolved by Code; each in 9h with whose it is): the items 9h does not mark "
+    f"CLOSED ({_r11_compress(_R11_OPEN_LEFT)}) and the generated O16. Among them: the correction block at the flip "
+    + (f"({_R11_CB}; " if _R11_CB else "(") + "the PI's, the seat's wording; its triage the seat's, tier (ii)'s "
+    "inclusion the PI's), the T+3 table check for the pass-12 rows (O37) and the tag with its release-commit 154/154 "
+    "run (O38, Code's). 9d states the pass at this run: 695 of 695 figures pass, the pass condition "
+    "met.")
+_P8["NR_TXT"]["round8_record"] = [
+    "### 10e. Round 11 (N1 for note v0.8 and the Digest seat's 2026-10-22 renders): the record",
+    "",
+    "Later rounds append their checks here. Round 11 built the v0.8 rows file and integrated it into this script's v0_8 "
+    "profile, under the PI's rulings of 2026-10-09 (R1-R4), 2026-10-10 (5-10) and 2026-10-12 (11-13), applied as the "
+    "PI's, and the design seat's answers of 2026-10-28 (4a-4g, under the PI's \"Yes to all\") and of 2026-11-02 "
+    "(rulings 14 and 15 new), applied as the seat's; Code's own readings and decisions are labelled as Code's. Round "
+    "10's record is the v0.6 ledger's 10e (results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md@c18854f); its values "
+    "check is results/raw/2026-10-12_note-N1-v0_6_valuescheck.md@c18854f.",
+    "",
+    "- **Routing.** Note v0.8 is the text as posted on 2026-10-27, committed at 0de15a1, sha256 6fcfbfd6…1198d "
+    f"({_R11_ANS1028_AT}:21), frozen as posted (:23 there); the Digest seat's three 2026-10-22 renders are verified by "
+    "their filed-copy sha256s at 0a3f925 (9's file table; each matches at this run). Round 11 runs on them under the "
+    f"design seat's answers of 2026-10-28, whose items A-G the PI answered \"Yes to all\" ({_R11_ANS1028_AT}:7). The C2PA "
+    "assertion is round 9's (nr_r9_c2pa_excluded): each 2026-10-22 render's manifest is outside the extraction.",
+    "- **The answers of 2026-10-28 (4a-4g)**, mechanised at round 11's prep, each the seat's under the PI's word: (4a) "
+    "a later-record class (NR_LATER_RECORD): RESULTS.md at 0fa8539 and 79d462b, the Q-F0 VERDICTS raw and JSON at "
+    "bfc179c and, on Code's reading of 4a's '`79d462b` (the close line)', the design seat's VERDICTS read at "
+    "79d462b; (4b) N2(vii)'s transcription raw pinned at 8d68b0b; (4c, "
+    "4d) the seat's correspondence-figures and Chandaria et al. v2 transcriptions pinned at 908a659; (4e) the "
+    "additions-by-source raw pinned at 908a659 and, on Code's reading of 4c's 'A pin class for this commit' "
+    "(908a659:53), the answers block there, carriers of no figure; (4f) the re-keys (below); "
+    "(4g) the former ‖‖ (c)'s rows retire with v0.6 and its ledger at note-2026-10-v1.",
+    "- **Twelve chains** (K1 S1-S2, note lines 1-60; K2 S3, 61-76; K3 S4, 77-90, and S11, the F1a render; K4 S5, "
+    "91-100; K5 S5, 101-119; K6 S6, 120-172; K7 S7, 173-209; K8 S8, 210-227; K9 S8, 228-237; K10 S8, 238-258; K11 S9, "
+    "the F1b render; K12 S10, the F2 render): each a mapper's set (round 1) and one adversarial check that re-verified "
+    "every row and revised the set (round 2; each changed row's n1v8_round2 record, 117 rows). Checker findings "
+    "(substantive): K1 10 (0), K2 12 (0), K3 10 (1), K4 7 (2), K5 8 (4), K6 6 (2), K7 11 (1), K8 7 (0), K9 6 (2), K10 13 "
+    "(2), K11 2 (0), K12 11 (0); each check's verdict PASS-WITH-FIXES. Rows after the checks: K1 81, K2 61, K3 73, K4 "
+    "51, K5 100, K6 94, K7 62, K8 81, K9 102, K10 144, K11 125, K12 154. The chains' questions and remaining failures "
+    "went to Code's decision sheet (scratch), and the items only the seat could rule to " + _R11_R_NAMED + " ('R' "
+    "below).",
+    "- **This integration** (Code, 2026-10-29), on the chains' merged rows (sha256 ce71f7a6…ee1b):",
+    "  - Rows: 1128; 695 figures and 433 not-figures. Keys: a v0.6 row's same-span successor keeps its key (607 rows; "
+    "where two v0.8 rows restate one v0.6 row in its span, one is the key's successor and the other takes a new key: "
+    "S6#1009 (:155; S6#100 at :171 keeps the key), S6#1037 and S6#1041 (:165; S6#53 and S6#4 keep theirs)); "
+    "every other row takes a new key, from 1000 in its span (K5 from S5#2000, K9 from S8#2000, K10 from S8#3000; 521 "
+    "rows); v0_6_row names the restated v0.6 row on 703 rows (results/raw/2026-10-12_note-N1-v0_6-note-rows."
+    "json@c18854f); the 667 v0.6 keys with no v0.8 row retire with v0.6's text and its ledger at note-2026-10-v1.",
+    "  - The integration's edits E1-E11, as R records them (R :3): E1 placed sixteen chain span notes, K1's fourteen for S1 and S2 and K4's and K9's map notes, which the "
+    "chains' merged rows did not hold, bringing the file to 80 (\"E1's "
+    "placement of sixteen chain span notes has no record in the file\"); the row "
+    "edits E2-E9 and E11, each in the row's 'round11' record with the previous value under the finding 'round-11 "
+    "integration (Code)', on 123 rows: E2 and E3 restored v0.6's exemptions on S4#19 (ledger-span, '.59') and S8#1008 "
+    "(v0.6 S7#73's, ledger-status, '154/154'); E4 and E5 restored the lineage fields on 45 key-reusing rows (K8's) and "
+    "dropped them from 59 new-key rows (K5's S5#2005 and K10's 58), each dropped field recorded; E6 gave S8#1002 K1's "
+    "not-figure reason, so the three 'seven days' rows group as prose; E7 re-keyed the footers' tag fields (S9#125, "
+    "S9#126 to S9#1012, S9#1013; S10#149-S10#151 to S10#1011-S10#1013), the tag note-2026-10-v2 being a new referent "
+    "(round 10's 'same position, a different referent'); E8 carried N1's one correction (v0.6 S6#26's) to S8#3056, "
+    "restated for :248; E9 applied the verbatim re-keys of 4f (below); E11 withdrew the scratch values in five K5 "
+    "comments (S5#2055-S5#2057, S5#2059, S5#2060) in round 8's D5 (c) form (scripts/audit_note_N1.py@f935864:9241), "
+    "each round11 record carrying a marker in place of the withdrawn clause (R section 0); and E10 added fourteen "
+    "annotations to the span notes, marked 'N1 round 11 (integration, Code)'.",
+    "  - Script (the integration's, before the answers): the generated ruling-5 family takes as its base locator the "
+    "one that qualified the base row, so R5-04 reaches v0.8's base, S4#17, whose first audit locator had left it not "
+    "applicable; a base whose first audit locator qualifies keeps the locator it had, and the v0_3-v0_6 regressions "
+    "test that (Runs, below).",
+    "- **The seat list** (Code, 2026-10-29): R, Code's round-11 list to the design seat: each ruling whose quoted text "
+    "changed in v0.8, with its v0.6 key and its v0.8 candidate; the not-found figures by cause; the discrepant figures; "
+    "the readings and kind calls; 37 correction candidates; and the pass arithmetic (637 passing with the v0_8 ruling "
+    "tables empty, 641 after Code's verbatim re-keys, 695 of 695 if every item closed by a passing route; R sections 0 "
+    "and 7). A values check in three parts read its draft against the repository and the round's scratch files, a "
+    "second in two parts read the revision, and a third in three parts read the text written for the second round's "
+    "findings; every finding of the three was applied, and Code checked the text written for the third round's "
+    "findings against the lines it cites (R :3).",
+    f"- **The design seat's answers of 2026-11-02** ({_R11_ANS_AT}, section 0; routed by the PI on 2026-11-02, with the "
+    "PI's approval for the v5 download), applied by Code as the integration's edit E12 (the design seat's answers of "
+    "2026-11-02): each row change in the row's round11 record under the finding 'round-11 integration (Code): the "
+    "design seat's answers of 2026-11-02 (da50cd1), routed by the PI', on 87 rows: the "
+    "ruling fields on 24 (the rows of 1b items 2-8 and of 2a (iii)) and the new mappings on 28 (2a (i) and (ii): "
+    "S8#2057, S8#2058, S5#2048, S8#2020; 2b: the 24), with any comment or cause of theirs that the answers made "
+    "stale restated, and on 35 more rows a comment or cause the answers made stale, "
+    "restated; each table entry in section 5 of the v0_8 tables; R11_ANSWERS holds a "
+    "verbatim excerpt of each answer cell applied, asserted on its line at every run:",
+    "  - 1b item 1 (\"Confirmed.\"): V08_RULING13_REKEY_SEAT_CONFIRMED set True; ruling 13 reaches the 2026-10-22 F1a, "
+    "and S11#18 and S11#19 pass. 1b item 2 (\"Re-key.\"): R1 on S5#81 and S5#88, v0.6's corrected_in_note restored, "
+    "both declared in NR_RULED_CORRECTIONS. 1b items 3 and 4: ruling 6 on the ten TS rows (S1#134, S1#214-S1#216 at "
+    ":14; S4#4, S4#5, S4#38, S4#39 at :83; S4#10, S4#11 at :85), v0.6's locator and quote kept with v0.8's note_quote; "
+    "for :83 the term reader reads 'layers N through M' (and 'N to M') as a layer range (_R9_LAYER_RXS).",
+    "  - 1b item 5: (a) ruling 7 re-keyed to ‖ (c) :250 (S8#3074, S8#3075; NR_ROUND9['discharged'], r7_line 250, "
+    "r7_txt), NR_DISC_PATH's NT text restated for :250; (b) :143's 'did not differ by arm' is reached through its ‖ "
+    "pointer, W8 does not reopen, :143's 1% stays S6#101, reproduced, and the wording goes to the correction block (R "
+    "section 5 #23). 1b item 6 (\"The candidate.\"): ruling 8 on :202's S7#28 'two', cited_source 'Our "
+    "next-experiments list'. 1b item 7 (\"(a).\"): ruling 8 on :200's S7#25 'three' as a split admission, its source "
+    "named on the list's lead-in line :195 (the check change in nr_check_admitted: a declared source line, a "
+    "unit_quote on the row's own line, the relation 'lead-in'; nr_r11_relation).",
+    "  - 1b item 8 (\"(a), narrowly.\"): ruling 14 admits :258's S8#3143 'ten' as the count of the scored audit table's "
+    "published designs, cited_source 'the scored audit table' (:214; a split admission, relation 'named'), under its "
+    "condition, which this script reads from PREPRINT-v1_0-draft.md@32aefcc (nr_r11_r14_table): eleven rows, ten "
+    "published designs and 'This paper', no Sofroniew et al. row, so the condition holds and the answer stands. The "
+    "table sits in the preprint's section 6 at 32aefcc ('Reading the published record against the framework'; its "
+    "marker at :208); the answer names section 8, which at 32aefcc is 'Pre-registered next experiments' (Code's "
+    "reading (c), below). The missing antecedent is correction-block item #34. 1b item 9: ruling 11's not-figures "
+    "re-keyed to :258 with the three changes. 1b item 10 (\"(a).\"): ruling 12 on the five 'fifty' rows, each keeping "
+    "N2 5(b)'s label as its status basis, the two '50' rows resting on 4b; the answer leaves to Code \"Whether S10#137 "
+    "also cites N2(vii) :64\", and Code's call is that it does not: the row's ruling-12 basis is N2 5(b), whose source "
+    "check ruling 12 runs (nr_r10_r12_source), so its locator stays on N2 (5(b), with 1(c) :136 as the competing "
+    "label). 1b item 11 (\"Carries.\"): R3 carries to v0.8's Link 4 paragraph; O6 stays CLOSED. 1c: the v0.6 keys R "
+    "section 1c lists as gone retire with v0.6 and its ledger at note-2026-10-v1.",
+    "  - 2a (i): reading (5), v1 §6's '10 injected/control per concept', transcribed by the design seat "
+    f"({_R11_V1_AT}, its section 1; from the seat's copy of the v1 PDF, sha256 202bf0f7…e15a, not in the "
+    "repository); S8#2057 and S8#2058 map computed-new on it. 2a (ii): readings (3) and (4) by Code's v5 transcription "
+    f"({_R11_V5_AT}): Code acquired arXiv:2603.21396v5 on 2026-11-02 under the PI's approval, its sha256 equal to "
+    "N2(vii)'s (90c0af74…0f92; 633b6fd:7). §3.3 carries the quoted sentence (633b6fd:19), so S5#2048 maps computed-new "
+    "and the answer's discrepant branch does not arise; the raw records §3.3's prose \"∼0%\" for DPO's false-positive "
+    "rate and does not decide whether that is the \"numeric per-stage TPR/FPR in text\" that N2vi read v5 as lacking "
+    "(633b6fd:25; results/raw/2026-10-08_note-N2vi-source.md@09c3a8c:404), Code's reading (g) below. Figure 20 labels "
+    "the fifth panel of its OLMo-3.1-32B row \"L=45\", a raster label read by eye on the render (633b6fd:34, :39, :43); "
+    "that this panel is the caption's depth fraction 0.7 is Code's reading of the caption's column order (633b6fd:41, "
+    ":43; reading (f) below); S8#2020 maps computed-new on the raw. 2a (iii): ruling 15 admits the seven curve readings "
+    "(S1#1012 at :15; S5#2028-S5#2030 at :101; S8#2009, S8#2011, S8#2012 at :228) as readings of the source's plots "
+    "(\"a figure read by eye is admitted as what it is, a reading of the source's plot\", da50cd1:22), cited_source "
+    "the first two entries of :228's figure list (reading (d) below), one-line on :228 and split on :101 (relation "
+    "'dagger') and :15 ('named').",
+    f"  - 2b (\"(a).\"): Code's computation raw ({_R11_COMP_AT}), regenerated from its committed script, "
+    "scripts/audit_note_N1_r11_compute.py (added at 633b6fd), with its own pin class: the 24 rows map audit-raw-new, "
+    "computed-new, and the raw finds 24 of 24 agreeing with the note as printed (e6d3197:17). \"The ‡(c) premise is "
+    "now carried: v1's Table 4 grades a non-answering or incoherent response NO (the v1 raw, §2)\" "
+    "(the design seat's words, da50cd1:23); whether a later step of the source's pipeline excludes such trials is not "
+    f"settled (da50cd1:50; the v1 raw, {_R11_V1_AT}:29). The log-linear reading of 'half-count' and the one-sided "
+    "Fisher test are Code's readings, as the raw states them (e6d3197:18-19). 4a-4d: 'seven days' a not-figure "
+    "(S1#1000, S1#1020, S8#1002); the 4/48 and 2/48 at :114 stand (record, log-only); W5's condition 4 through the ‡ "
+    "pointer confirmed as Code's reading; S5#2034 DPO only; the A0 carriers sufficient as rowed, 4a's scope unchanged; "
+    ":177's '79 of 80' covered by 4a; every kind call as Code recommended (the kind hash freezes on them).",
+    "  - The two conditional cells hold (the closing paragraph of the answers' section 0, da50cd1:32): the scored table "
+    "counts ten published designs at 32aefcc (ruling 14's condition, read at every run, 9d), and v5 §3.3 carries the "
+    "quoted sentence (633b6fd:19); the order of sacrifice (da50cd1:63) was not used. The pass arithmetic: 637 with the "
+    "v0_8 ruling tables empty; +4 (Code's verbatim re-keys, E9); +2 ruling 13; +2 R1; +6 and +4 ruling 6; +2 ruling 7; "
+    "+1 S7#28; +1 S7#25; +1 ruling 14; +11 (2a: four computed-new, seven under ruling 15); +24 (2b): 695 of 695 on "
+    "paper (R section 7; the answers' \"643 + 2 + 6 + 4 + 2 + 1 + 1 + 1 + 11 + 24\", da50cd1:32); the run's count is "
+    "9d's (Runs, below).",
+    "  - Pin classes (NR_PIN_RULES): the v1 raw at da50cd1, the v5 raw at 633b6fd and the computation raw at e6d3197, "
+    "each its own class; all three join NR_TRANSCRIPTION_RAWS (item raws by exact path whose lines decide no status), "
+    "and the overwrite guard refuses each as an output (three cases, 64 in all).",
+    "  - Machinery (this script, at E12): R11_ANSWERS, R11_RULING14, R11_RULING15 and nr_r11_run_checks (a verbatim "
+    "excerpt of each answer cell applied, asserted on its line at da50cd1; the admission tables' form; ruling 14's "
+    "condition), reported with round 10's run-level problems; the split admission and the three admission tables in "
+    "nr_check_admitted (NR_ROUND9['admitted'], ['admitted_r14'], ['admitted_r15']; nr_r11_relation); nr_r11_r14_table; "
+    "the term reader's 'through' and 'to' (_R9_LAYER_RXS); the three raws' pin classes and guard cases; 9d's not-found "
+    "list grouped by rulings 8, 14 and 15, its bullets for rulings 14 and 15, its ruling-8 bullet's split sentence and "
+    "its ruling-11 example read from the profile (NR_ROUND9['r11_occ_example']); the final ledger's opening paragraph "
+    "naming the answers of 2026-11-02; the JSON's ruling list with rulings 14 and 15 in the seat's words; and the "
+    "mutations (below). Each is read only under a profile whose NR_ROUND9 sets 'round11' (v0_8), except the term "
+    "reader and the transcription class, which every profile reads: Code's grep finds 'layers N through M' or 'N to "
+    "M' in no text audited in rounds 7-10 (R section 1b item 4), and no row of v0.3-v0.6 cites the three new raws, so "
+    "the v0_3-v0_6 regressions test both (Runs, below).",
+    "- **Code's edits before the ledger commit** (R section 0, d5123bf:23-33, and Code's read of this round's first "
+    "ledger run; made by Code after the answers of 2026-11-02, before the ledger "
+    "commit; none moves a "
+    "status). Each row edit is in its row's round11 record with its previous value, under the finding 'round-11 "
+    "integration (Code)' (139 rows carry that finding in all, the 123 of E2-E9 and E11 "
+    "among them), or under E12's where an answer of 2026-11-02 made the text stale; each span-note change is an "
+    "annotation unless it is marked in place (9f):",
+    "  - The withdrawal class (d5123bf:26-27). R section 0 found E11's class in six more rows and three span notes; "
+    "Code applied round 8's D5 (scripts/audit_note_N1.py@f935864:9241) by its letter to each (Code's decisions). Under "
+    "(c), these are withdrawn in place, each with a marker in E11's form (in the round11 record's previous value; for a "
+    "span note, in the note itself), together with any conclusion that rests only on them: S1#1019's ratio of the note's bound to the record's p "
+    "(the p, 6.70 × 10^-23, stays, as RESULTS.md@0fa8539:122 prints it); S8#1023's five-place quotient of 15/85, which "
+    "N2 prints at four (results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:58); and S3#31's and S3 note 4's three "
+    "successive differences of N7's printed G_c values with the reading stated on them, S3#31 keeping a pointer to R "
+    "section 5 #18 (d5123bf:375), a tier (ii) candidate of the correction block (the PI's at the flip), as a pointer, "
+    "not a finding. Under (a), kept, each now citing the committed file that prints the value at that precision or "
+    "higher: S6#1024's, S6#1025's and S6 note 4's five-decimal Clopper–Pearson interval on 79/80, [0.93231, 0.99968], "
+    "a rounding of results/raw/2026-10-19_m-verdicts-qf0-entries_valuescheck.txt@0fa8539:302 (\"[0.932312, "
+    "0.999684]\"); and S5#2061's and S5 note 2's post-ablation d′ of 1.79-1.81 under the half-count correction (read "
+    "as N2's log-linear rule, Code's reading (e) below, and as covering the post-ablation values, the computation "
+    "raw's :240), a "
+    f"rounding of the computation raw's printed values ({_R11_COMP_AT}:241-242). R section 0 listed the (a) group as "
+    "withdrawal-class; Code revised that on these carriers. 8 rows now carry a "
+    "round-11 withdrawal marker (E11's five and the three above).",
+    "  - S5 note 0's scratch path, removed in place (d5123bf:29); S5#81's and S5#88's comments, restated to answer 1b "
+    "item 2's routing (:30); the rows file's how_built, restated where chain K1's text says no ruling field is set "
+    "(:31); the comments of S7#19, S7#20, S10#108 and S10#60, and S8#3056's, restated, and span notes S7 2, S10 4, "
+    "S11 2 and S8 3, annotated, where they said a ruling field is not set, or that S6#26's correction was dropped or "
+    "is not carried (:32); S5 note 1's "
+    "pointer to the five E11 comments, annotated (:26); and W8's NR_WATCH outcome on :143, restated for the probe and "
+    "answer 1b item 5 (:33).",
+    "  - After Code's read of this round's first ledger run, on the read's findings: S6#1017's, S6#1021's, S6#1024's "
+    "and S6#1025's locators drop PROPOSAL-m section 4's definition lines "
+    "(PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:308, :310), which carry none of their values, so each enters at "
+    "bfc179c (9c), its comment naming the line instead; the comments of S5#59, S5#113, S5#122 and S5#2005 (:101's "
+    "‡ marks), S5#2061 (the two readings its range rests on), S8#3085 (R section 5 #10, tier (i)), S10#111 and "
+    "S10#135 (their declared fingerprints), and S8#2049 and S10#1007 (the carriers' layers), restated; six span-note annotations "
+    "extended (S1 note 3, S5 notes 1 and 2, S6 note 8, S8 notes 2 and 3) and three added (S5 note 2, :101's ‡ "
+    "marks; S8 note 3, chain K10's lines; S10 note 3, the carriers' layers); the S8 header's chain-K10 line range "
+    "corrected to "
+    "238-258; and the rows file's how_built (the merged file described after chain K1's text), its provenance "
+    "entries (round and integration note; chain K10's lines) and its schema's round-11 entry (the twelve chains and "
+    "the round's later edits), restated.",
+    "- **The full read** (Code, after this round's first run of record; the read-everything clause): ten readers, "
+    "each a part, read that run's ledger (sha256 15a08360…906f; not committed, this run replaces it), and a "
+    "collation re-checked every finding against it, its JSON, the rows file and the cited sources at their "
+    "revisions: 104 findings, merged to 88 kept (6 high, 28 medium, 54 low) and one refuted. The first high was the "
+    "process: the script in the tree was not the script that wrote that ledger, since the ruling-14 and ruling-15 "
+    "admission tables' keys were renamed after the run (admitted_r14, admitted_r15), so that no key has the "
+    "identifier shape the N12 history sweep stops on; this run and the four regressions (Runs, below) are re-made "
+    "with the script as committed, the regressions first. The other five high (one in part: its S7#15 half is "
+    "carried open, below) and the 28 medium were applied, each by the code or file that produces it, in three "
+    "groups, each followed by an adversarial verification and a repair on its findings: the v0.8 tables and texts "
+    "(17 findings; among them NR_WATCH, NR_OPEN, NR_SPAN_DISPOSITION, _M8_REKEY, _V08_SPAN_LINES, v0_8's limits "
+    "and the round-11 texts); code and texts the other profiles share, each change conditioned on round 11 or made "
+    "in v0_8's own copies (9 findings; among them the pass check's labels in 9c and 9d, 9c's lead-in, 9g's "
+    "unresolved-rows clause and 10b's family R11 description); and the rows file (11 findings; Code's edits, "
+    "above); four of the 33 went to two groups, so the three counts sum to 37. The verifications' own findings "
+    "were applied with them, among them the note's line count, which v0_8 now gives as 258 in the JSON's "
+    "note_mode (a final newline ends the last line, as wc -l counts; the other profiles keep their count). A check "
+    "of a run made with those fixes read every line that changed from the first run, confirmed each applied finding "
+    "against it and re-checked each low one; what it found was applied too (among it the leftovers of three medium "
+    "findings, M6, M14 and M26, on lines outside their listed ones), but for two low items, recorded in the values "
+    "check with their reasons; a last check read every line those edits changed, and its findings were applied. None moves a status, a value, a branch or the pass, and no 9g candidate moves. Carried "
+    "open, in this round's values check (results/raw/2026-11-02_note-N1-v0_8_valuescheck.md, committed with this "
+    "ledger): the 54 low findings, one of which the restated provenance integration notes mend (9a) and three of "
+    "which are mended in part, each so marked there; and S7#15's entry in 9c, 0551224, carried unchanged from v0.6: "
+    "the commit of the earliest record line the row cites, LOCK-g's extension of the first pre-commitment "
+    "(LOCK-g.md@bbc9ffe:167-171; the pre-commitment itself, PROPOSAL-h section 5, entered at 34eb7ee and is cited "
+    "only through N13's row 18), where the clause that makes the count 'a second' "
+    "(PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:345) entered at 05c4636.",
+    "- **The re-keys (4f).** " + _P8["NR_ROUND9"]["r11_rekey"],
+    f"- **Tables (profile v0_8)**: NR_DISC ({len(_P8['NR_DISC'])}: "
+    + ", ".join(f"{sum(1 for v_ in _P8['NR_DISC'].values() if v_[0] == b_)} {b_}" for b_ in ("C", "TS", "NT"))
+    + "), NR_RULED_CORRECTIONS (R1 on S5#81, S5#88, S10#108, S10#60), NR_ROUND9 (ruling 7's two rows at :250; ruling "
+    "8's four, S7#19 and S7#20 at :195, S7#28 at :202, S7#25 split from :195 to :200; ruling 14's S8#3143; ruling 15's "
+    "seven; ruling 11's three not-figures, r11_units empty; ruling 12's five 'fifty' rows; cn_held empty, nothing "
+    f"held), NR_T_ROWS empty, NR_NF_ROWS ({len(_P8['NR_NF_ROWS'])}), NR_WATCH "
+    f"({_r11_compress([(w_.get('id') if isinstance(w_, dict) else w_[0]) for w_ in _P8['NR_WATCH']])}) and "
+    f"NR_WATCH_EXTRA ({len(_P8['NR_WATCH_EXTRA'])}), NR_CORRECTIONS (S8#3056), NR_EXEMPT_FP "
+    f"({len(_P8['NR_EXEMPT_FP'])}: {len(_P8['NR_EXEMPT_FP']) - 2} carried or new, S4#19's and S8#1008's restored), "
+    f"NR_QUOTE_REVIEWED ({len(_P8['NR_QUOTE_REVIEWED'])}), NR_OPEN (v0.6's O1-O33 with their v0.8 disposition, O16 "
+    f"generated; {_r11_compress(_R11_OPEN_NEW)} new), NR_SPAN_DISPOSITION ({len(_P8['NR_SPAN_DISPOSITION'])} notes), "
+    "the mutations, NR_LIMITS, the texts, and the four frozen hashes, set last. NR_DECLARED_EMPTY declares nothing.",
+    _R11_MUT_TXT,
+    "- **Code's readings for this round** (Code's, not the PI's or the seat's; the seat's answers confirm (a), take "
+    "(b) as Code recommended, and record (e) as Code's): (a) W5's condition 4 on :101 is met through the paragraph's ‡ "
+    "marks (four; the first two after '(100,000/10,000).' and '(≈ −2 and −0.3).'), pointing to the ‡ section, whose (f) at :236 states "
+    "each premise with its unit, as round 10's reading (d) took a "
+    f"reference to the stating line (answer 4c: \"{R11_ANSWERS['4c_w5'][1]}\"); (b) the kind calls as rowed (answer "
+    "4d); (c) ruling 14's table is the scored table of the preprint's section 6 at 32aefcc, where the answer names "
+    "section 8 (the rows the answer names are that table's first column); (d) rulings 14 and 15 mechanised as "
+    "admission tables beside ruling 8's, ruling 14's row and ruling 15's rows on :101 and :15 as split admissions "
+    "(relations 'named', 'dagger' and 'named'), and ruling 15's cited source as the first two entries of :228's figure "
+    "list, 'v5 Figure 5 at *L* = 25; Figure 22 at *L* = 19 and 22', which carries the answer's \"v5 Figure 5\" and, as "
+    "\"Figure 22\", its \"v5 Figure 22\" (the third entry, Figure 20's baseline, is S8#2020's); (e) the computation "
+    "raw's log-linear 'half-count' and one-sided Fisher test (answer 2b records them as Code's); (f) that the fifth "
+    "panel of Figure 20's OLMo-3.1-32B row, which the figure labels 'L=45', is the caption's depth fraction 0.7: the "
+    "caption gives the columns' fractions as a set, and read left to right the fifth is 0.7 (633b6fd:41, :43); (g) "
+    "N2vi's \"no numeric per-stage TPR/FPR in text\" (results/raw/2026-10-08_note-N2vi-source.md@09c3a8c:404) "
+    "concerns a per-stage rate stated as a number, and §3.3's \"∼0%\" is an approximate prose figure (the v5 raw records "
+    "it and leaves that question undecided, 633b6fd:25); it is not a status question, since S5#2048 is computed-new on the v5 raw.",
+    "- **The correction block** (the answers' section 2, \"the PI's at the flip, the seat's wording\", da50cd1:42"
+    + (f"; 9h {_R11_CB}" if _R11_CB else "") + "): the 37 candidates of R section 5 \"are accepted as the candidate "
+    "set for the dated correction block on the post\"; \"The seat triages them at the flip, in two tiers\": (i) "
+    "corrections of meaning, which go in (#2, #3, #4, #5, #8, #9, #10, #19, #23, #24, #25, #27, #31, #33, #34, #37, "
+    "and #38, which the answers' section 3 item 8 adds for :59's scope), and (ii) precision and labels, the rest, which "
+    "\"go in as a short list if the PI wants the block complete, or are held for the preprint\"; #23, #34 and #37 are "
+    "decided by the answers. \"The wording is written at the flip, not here; none changes a ledger status.\" "
+    "(da50cd1:44). For O14 and block :10 the seat's answer is a recommendation, one sentence in that block (\"Figures "
+    "the claims ledger marks log-only are taken from the dated log and are not reproduced from committed artifacts; "
+    "the ledger lists them.\"), and O14 (e) stays the PI's reading; a ruling that :214's pointer discharges block :10 "
+    "is the PI's alternative (da50cd1:48).",
+    "- **The answers' other sections** (da50cd1:34-63): section 1, the files of da50cd1: the v1 raw, and the "
+    "additions raw's appended section 5, the three corrections R section 6 item 5 found, \"the rows above it unchanged "
+    "so round 11's line citations stand\" (da50cd1:39; the rows cite it at 908a659). Section 3: item 2, the render "
+    "items after the flip, as a new dated set, F1a nodes 42-43 and O24's four F1b items, \"Not before the tag; the "
+    "renders posted as filed\" (:49; O23, O24); item 3, ‡ (c)'s grading premise, settled by the v1 raw's section 2, "
+    "and \"What is not settled is whether a later pipeline step excludes them\" (:50); item 4, the tag's exact name "
+    "and the release-commit run (:51; 9g, O38); item 5, the additions raw corrected in its section 5 (:52); item 6, "
+    "the pass-12 rows, \"Hold none\" (:53; O37); item 7, on link 3, \"Noted.\" (:54); item 8, O28, O15 and O9, \"None "
+    "before the tag\", and #38 added to tier (i) (:55; O15). Section 4: item 1 is this integration; item 2 the order "
+    "to the tag (below); item 3 the flip's order: \"the correction block (§2 and §3 item 1), the Zenodo DOI, the T+0 "
+    "follow-up to the four author groups, then T+3\" (:61).",
+    "- **Runs** (after E12, Code's edits before the ledger commit and the full read's fixes, above): --dev-report "
+    "until it reported nothing missing "
+    "(206 fixed mutations applied, all as expected; 64 guard cases; "
+    "round9_table_problems and round10_table_problems empty); the final run (self-test 4996/4996 as "
+    "expected, four family-B members not applicable (S1#215, S1#216, S4#38 and S4#39; family B had four in round 10 too), two known limits uncaught; guard cases 64/64; 9d: 695 of 695 figures pass, the pass "
+    "condition met; 9g: the including-audit candidate e6d3197 (the computation raw's commit), set by its 24 figures; the record-only candidate 0fa8539); and the v0_3, v0_4, v0_5 and v0_6 regressions, run "
+    "with this script against their committed ledgers (ef5c446, fd2b136, fa1b41e, c18854f) after the script changes "
+    "(rule 26, as the answers' preamble asks, da50cd1:3): each reproduces its tables, counts, self-test "
+    "(2687/2687, 3634/3634, 4231/4231 and 4419/4419 as expected) and guard cases (8/8, 35/35, 40/40 and 49/49); the lines that differ are "
+    "the run's identity lines (the stamp, HEAD, the script's path and sha256, the command) and repository-state facts read at the run (the tracking of paths tracked since each ledger was committed: PREPRINT-v1_0-draft.md, the archive pre-patch copies and the 2026-10-10 renders; working-tree equality, the runs being in a clone), the same lines in which the round-11 script before E12 (sha256 fd361e5d…cd1f5) differs from them.",
+    "- **The tag.** note-2026-10-v2 is cut after this ledger commits, on the final audit commit, in the order the "
+    f"design seat's answers give ({_R11_ANS_AT}:60): N18 (item 4), the README-NOTE re-point, the PI's README.md pass "
+    "if not yet done, the preflip-script commit, N18 again, the tag, the push, the pre-flip read, the five post-tag "
+    "scans, and 'ready to flip'. The fresh-clone 154/154 at the tag is the release-commit run owed (da50cd1:51; 9g's "
+    "condition (2), Code's; 9h O38).",
+    _R11_LEFT_TXT,
+]
+assert not any(_R11_AT_INTEGRATION in str(x) for x in _P8["NR_TXT"]["round8_record"])
+# the tokens Code fills before the final run (counts from the final rows file; results of the runs): while any is
+# left, a final run stops at the round-11 profile gate (the dev report lists it)
+_R11_TOK_LEFT = sorted({t_ for x_ in (_P8["NR_TXT"], _P8["NR_LIMITS"], _P8["NR_ROUND9"])
+                        for t_ in re.findall(r"⟪[A-Z]+:[a-z0-9_]+⟫", str(x_))})
+if _R11_TOK_LEFT:
+    _P8["NR_TXT"]["r11_tokens_to_fill"] = _R11_AT_INTEGRATION + " " + ", ".join(_R11_TOK_LEFT)
+# ------------------------------- the ledger read of round 11, shared findings M8, M9 and M15 (v0_8's own copies only)
+# M9: the TS branch text v0_8 inherits from v0_6 names S4#32/S4#33, v0.6 :86's leakage rows, which the design seat's
+# answer 1c retires with v0.6 (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:21); v0.8 has no
+# such row, so v0_8's copy drops the parenthetical (v0_6's text is unchanged)
+_P8["NR_DISC_PATH"]["TS"] = _r10_sub(_P8["NR_DISC_PATH"]["TS"],
+                                     " (S4#32/S4#33's mask domain is Code's reading of 'scope')", "")
+# M15: the strict-tag mutations the 9a pins bullet names are not in round 11's list (10d's row-tags limit; 10e)
+_P8["NR_TXT"]["s9a_pins_round8"] = _r10_sub(
+    _P8["NR_TXT"]["s9a_pins_round8"], "X39-X51, X60-X62; since fix round 6",
+    "X39-X51, X60-X62, none of them run in round 11, since no v0.8 row cites an audit-outcome raw: 10d, 10e; since "
+    "fix round 6")
+# M8: 10d's ruling-8 limit names the units as round 11 re-keys them, not as the PI names them (the bullet's end says
+# by whom: Code at :195 under 4f, the design seat's answers 1b items 6 and 7 at :202 and :200)
+assert sum(x_.startswith("Ruling 8 (round 9).") for x_ in _P8["NR_LIMITS"]) == 1
+_P8["NR_LIMITS"] = [_r10_sub(x_, "a (note line, unit) the PI names (NR_ROUND9['r8_units'])",
+                             "a (note line, unit) ruling 8 names, as round 11 re-keys it (NR_ROUND9['r8_units'])")
+                    if x_.startswith("Ruling 8 (round 9).") else x_ for x_ in _P8["NR_LIMITS"]]
+# ---------------------------------------- 7. the four frozen hashes, set last (over the integration's final rows)
+_P8["NR_KIND_SHA256"] = "5baa1beb09e4fae1de2cf3e47bcb7a1df1dd05fec7eb8ea6122cb107a093f8ff"
+_P8["NR_CLAUSE_SHA256"] = "3d48d1a7781decb96711cbb01b40f95d18bb67492f33c7757beddd4bdcbb2f72"
+_P8["NR_STATUS_SHA256"] = "007278bb4a311b54babb9c36d966ef6c6e39e5ba70f713bceb499f426517864a"
+_P8["NR_TEXT_SHA256"] = "374c68be396e16ac39355af95cb81122cc8e98fc36c23ff298311699e1c2f3fc"
+# V08_TABLES_END
 # the round-10 ruling tables' note quotes, units and contexts, asserted against the note at load (the file is the PI's,
-# at its routed sha; skipped when the file is absent or at another sha)
+# at its routed sha; skipped when the file is absent or at another sha). Round 11 (prep): v0_8 too, with ruling 7's
+# clause line read from the profile (NR_ROUND9['r7_line']; 111 where a profile names none, as v0_6 and v0_5_r10), and
+# ruling 8's named units asserted as tokens on their lines (true of v0.5 and v0.6 as declared; v0_8's set is empty
+# until ruling 8 is re-keyed)
 for _k10, _P10, _np10, _sha10 in (("v0_6", PROFILES["v0_6"], _V06_NOTE, _V06_NOTE_SHA),
-                                  ("v0_5_r10", _P5R10, _V05_NOTE, _V05_NOTE_SHA)):
+                                  ("v0_5_r10", _P5R10, _V05_NOTE, _V05_NOTE_SHA),
+                                  ("v0_8", PROFILES["v0_8"], _V08_NOTE, _V08_NOTE_SHA)):
     _p10 = REPO / _np10
     if not (_p10.exists() and sha256(_p10.read_bytes()) == _sha10):
         continue
@@ -14560,9 +17909,14 @@ for _k10, _P10, _np10, _sha10 in (("v0_6", PROFILES["v0_6"], _V06_NOTE, _V06_NOT
             raise SystemExit(f"profile {_k10}: NR_ROUND9['admitted'][{_kk!r}]'s note_quote is on no line of {_np10}")
         if not re.search(r"(?<![0-9A-Za-z.])" + re.escape(_dd["unit"]) + r"(?![0-9A-Za-z])", _t10[_dd["note_line"] - 1]):
             raise SystemExit(f"profile {_k10}: NR_ROUND9['admitted'][{_kk!r}]'s unit is not on {_np10}:{_dd['note_line']}")
+    for _ln10, _u10 in sorted(_R10_["r8_units"]):
+        if not (isinstance(_ln10, int) and 1 <= _ln10 <= len(_t10) and re.search(
+                r"(?<![0-9A-Za-z.])" + re.escape(_u10) + r"(?![0-9A-Za-z])", _t10[_ln10 - 1])):
+            raise SystemExit(f"profile {_k10}: ruling 8's unit {_u10!r} is not on {_np10}:{_ln10}")
+    _r7l = _R10_.get("r7_line", 111)
     for _kk, _dd in _R10_["discharged"].items():
-        if not any(_dd["note_quote"] in _l for _l in _t10[110:111]):
-            raise SystemExit(f"profile {_k10}: NR_ROUND9['discharged'][{_kk!r}]'s note_quote is not on {_np10}:111")
+        if not isinstance(_r7l, int) or not any(_dd["note_quote"] in _l for _l in _t10[_r7l - 1:_r7l]):
+            raise SystemExit(f"profile {_k10}: NR_ROUND9['discharged'][{_kk!r}]'s note_quote is not on {_np10}:{_r7l}")
     for _kk, _dd in _R10_["r11_not_figures"].items():
         if _dd["context"] not in _t10[_dd["note_line"] - 1]:
             raise SystemExit(f"profile {_k10}: ruling 11's context for {_kk} is not on {_np10}:{_dd['note_line']}")
@@ -14590,7 +17944,11 @@ for _k10, _P10 in PROFILES.items():
     if any(v.get("ruling") != R10_RULING12 or v.get("unit") != "fifty" for v in _R10_["r12_fifty"].values()) \
             or set(_R10_["r12_fifty"]) & set(_R10_.get("cn_held") or {}):
         raise SystemExit(f"profile {_k10}: a ruling-12 entry not ruling 12's, not 'fifty', or held")
-    if _R10_.get("ts_note_spans") is not None:
+    # round 11 (integration): v0_8 alone may name the note's spans, and only while ruling 13's re-key to the
+    # 2026-10-22 F1a is held for the design seat's confirmation (V08_RULING13_REKEY_SEAT_CONFIRMED False; 9h O13)
+    if _R10_.get("ts_note_spans") is not None and not (
+            _k10 == "v0_8" and not V08_RULING13_REKEY_SEAT_CONFIRMED and _R10_.get("ts_open_why")
+            and tuple(_R10_["ts_note_spans"]) == tuple(f"S{i}" for i in range(1, 9))):
         raise SystemExit(f"profile {_k10}: ruling 13 reaches the renders; ts_note_spans must be None")
 
 for _k9, _P9 in PROFILES.items():
@@ -14714,6 +18072,26 @@ def nr_profile_gates(rows_path, watch, D=None):
         if _ti or any(_R10_AT_INTEGRATION in str(x) for x in NR_LIMITS):
             out.append(f"texts still to be written at integration ({_R10_AT_INTEGRATION}): NR_TXT {_ti}"
                        + (" and NR_LIMITS" if any(_R10_AT_INTEGRATION in str(x) for x in NR_LIMITS) else ""))
+    # round 11 (prep): a text, limit or ruling-table entry the profile writes at integration (v0_8: _R11_AT_INTEGRATION
+    # in NR_TXT, NR_LIMITS or NR_ROUND9, whose ruling tables are re-keyed to v0.8, 4f) stops a final run until it is written;
+    # the dev report lists it among the gates and runs to the end (v0_3-v0_6 hold no such text)
+    _t11 = sorted(k for k, v in NR_TXT.items() if _R11_AT_INTEGRATION in str(v))
+    _l11 = any(_R11_AT_INTEGRATION in str(x) for x in NR_LIMITS)
+    _r11 = sorted(k for k, v in (NR_ROUND9 or {}).items() if _R11_AT_INTEGRATION in str(v))
+    if _t11 or _l11 or _r11:
+        out.append(f"round 11: still to be written at integration ({_R11_AT_INTEGRATION}): NR_TXT {_t11}"
+                   + (", NR_LIMITS" if _l11 else "") + (f", NR_ROUND9 {_r11}" if _r11 else ""))
+    # round 11 (prep): where the profile declares its note spans' line ranges (v0_8: NR_ROUND9['span_lines']), every row
+    # of a note span lies inside its span's lines (v0_3-v0_6 declare none)
+    _sl = (NR_ROUND9 or {}).get("span_lines")
+    if _sl:
+        _bl = [f"{r.get('span')}#{r.get('seq')} (line {r.get('note_line')}; {r.get('span')} is "
+               f"{_sl[r.get('span')][0]}-{_sl[r.get('span')][1]})" for r in D.get("rows", [])
+               if r.get("span") in _sl and not (isinstance(r.get("note_line"), int) and not isinstance(
+                   r.get("note_line"), bool) and _sl[r["span"]][0] <= r["note_line"] <= _sl[r["span"]][1])]
+        if _bl:
+            out.append(f"{len(_bl)} note row(s) outside their span's lines (NR_ROUND9['span_lines']): {_bl[:20]}"
+                       f"{' ...' if len(_bl) > 20 else ''}")
     if NR_REQUIRE_SPAN_DISPOSITION and NR_SPAN_DISPOSITION is None:
         out.append("the profile requires the span-note disposition table (NR_REQUIRE_SPAN_DISPOSITION) and has none "
                    "(NR_SPAN_DISPOSITION is None)")
@@ -14947,6 +18325,9 @@ def nr_dev_report(path, ledger, raws, note_res, watch, note_args, n_unassigned):
     r9_tab = nr_r9_run_checks(rows, texts) if NR_ROUND9 is not None else []
     # round 10 (prep): the round-10 tables against the file (v0_3-v0_5: not run), a conjunct like round 9's
     r10_tab = nr_r10_run_checks(rows, texts) if (NR_ROUND9 or {}).get("round10") else []
+    # round 11: the design seat's answers of 2026-11-02, reported with round 10's (v0_3-v0_6: not run)
+    if (NR_ROUND9 or {}).get("round11"):
+        r10_tab = r10_tab + nr_r11_run_checks(rows, texts)
     # round 10 fix round 1 (script checker's minor finding 2): r9_tab stays round 9's only (round9_table_problems);
     # round 10's problems are their own field and their own conjunct of nothing_missing_in_this_report
     # round 8 fix round 3 (script checker round 2, finding 3; Code's D4): the history-schema check and the span-note
