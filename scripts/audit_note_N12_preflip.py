@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """AUDIT-note-release v1.2 -- N12 pre-flip reads (the scrub index's pre-flip checklist, section 10).
 
+Release v2 (2026-11-03): run without --v1, this script makes release v2's pre-flip read (main_v2, below): the
+release block's item 6 (`git ls-remote origin` = `main` + the four tags; the GitHub-side surfaces; a STOP on any
+`wip/*`, `main-*` or `claude/*` head), the release route's check that the commits no local ref reaches are not served
+by the new repository, and the history script run again with its outputs outside the repository (the interim scan).
+It writes results/raw/<run date>_note-N12-preflip.md and .json. With --v1 it makes release v1's read, described
+below, unchanged; its comparisons are with the 2026-10-08 history raw and v1's baselines, which do not hold at v2.
+
 Read-only. Three reads, then pass/flag lines and the list of what remains for the PI:
 
   (1) `git ls-remote --symref origin`: every server-side ref, compared with the local refs and with
@@ -69,10 +76,10 @@ import time
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
-OWNER, NAME = "jasondwyer", "jspace-lab"
+OWNER, NAME = "jasondwyer", "told-vs-felt"   # release v2: the block, item 1.2
 SLUG = f"{OWNER}/{NAME}"
 HIST_SCRIPT = "scripts/audit_note_N12_history.py"
-HIST_SCRIPT_SHA = "097de969dff2e4cf5c8c083ed6f4b120ef5629613e7fb250f85a70de17b0ef18"   # history raw, header
+HIST_SCRIPT_SHA = "918dae5a735240c379e679c61f20816775c10918736715f6e1ec0c6ae3cabaa8"   # the history script at bec62e3
 SCRUB_SCRIPT = "scripts/audit_note_N12_scrub.py"
 HIST_MD = "results/raw/2026-10-08_note-N12-history.md"
 HIST_JSON = "results/raw/2026-10-08_note-N12-history.json"
@@ -459,6 +466,323 @@ def precheck_bad(c):
             or (k.startswith(("high_entropy ", "context_free ")) and k.split(" ", 1)[1] not in PUBLIC_VERDICTS)}
 
 
+# ---------------------------------------------------------------- release v2 (2026-11-03): the pre-flip read
+# The release block of 2026-10-27, item 6 (V2_BLOCK at V2_BLOCK_LINE, asserted at every run) names the read:
+# V2_BLOCK_TEXT below, verbatim. Under the release route (the PI's word of 2026-10-29, "fresh repository at the tag
+# push, as proposed"; the scrub index, section 14), it reads the new repository, and Code checks there too that the
+# commits no local ref reaches are not served (the history script's read_v2_record gives them, in memory only). The
+# v1 read (main(), run with --v1) compares against the 2026-10-08 history raw and v1's baselines, which do not hold at
+# v2; v2's read is main_v2: the block's checks, that check, and the history script run again with its outputs outside
+# the repository (the pre-flip read's interim scan, as the history script's texts name it). It prints ref names,
+# flags, counts and HTTP statuses only: no GitHub-side text, no unexpected ref by name, no commit id of the four.
+V2_BLOCK = ("results/raw/2026-10-27_note-design-to-code_release-block.md", "2fb0cf0")
+V2_BLOCK_LINE = 46
+V2_BLOCK_TEXT = ("`git ls-remote origin` = `main` + tags only (`cycle-2-close`, `cycle-4-close`, `note-2026-10-v1`, "
+                 "`note-2026-10-v2`); the GitHub-side surfaces (PRs, issues, Actions, wiki, Pages, deploy keys, webhooks, "
+                 "force-pushes). Any remaining `wip/*`, `main-*` or `claude/*` head: STOP and report.")
+V2_EXPECTED_REFS = ("refs/heads/main", "refs/tags/cycle-2-close", "refs/tags/cycle-4-close",
+                    "refs/tags/note-2026-10-v1", "refs/tags/note-2026-10-v2")
+V2_STOP_HEAD_RE = re.compile(r"refs/heads/(?:wip/|main-|claude/)")
+V2_DATE_SLOT = "YYYY-MM-DD"
+V2_MD = "results/raw/YYYY-MM-DD_note-N12-preflip.md"      # the run's PI-local date fills the slot
+V2_JSON = "results/raw/YYYY-MM-DD_note-N12-preflip.json"
+V2_HIST_SUMMARY_RE = re.compile(
+    r"true-secret candidates (\d+); untriaged (\d+) \(all tables: ids (\d+), sweep (\d+), shape rows (\d+); pending "
+    r"files (\d+)\);.*found verbatim (\d+); controls (ALL PASS|[A-Z ]+?);")
+
+
+def v2_count(r):
+    """A count from a gh read: the list's length (paginated pages flattened), or None when the read failed."""
+    if r["rc"] != 0:
+        return None
+    d = r["data"]
+    if isinstance(d, dict) and "total_count" in d:
+        return d["total_count"]
+    return len(flat_pages(d)) if isinstance(d, list) else None
+
+
+def main_v2(a, hist_dir):
+    today = datetime.date.today().isoformat()
+    md_out = V2_MD.replace(V2_DATE_SLOT, today)
+    js_out = V2_JSON.replace(V2_DATE_SLOT, today)
+    for o, want in ((a.out, md_out), (a.json_out, js_out)):
+        if o is not None and os.path.normpath(o) != want:
+            raise SystemExit(f"refusing an output other than this read's own two files ({md_out}, {js_out}): {o}")
+    for o in (md_out, js_out):
+        if git("ls-files", "--", o).strip() or run(["git", "cat-file", "-e", f"HEAD:{o}"]).returncode == 0:
+            raise SystemExit(f"refusing to overwrite a tracked raw: {o}")
+    stamp = run(["date", "-u"]).stdout.decode().strip()
+    head, _refs0 = snapshot()
+    me_rel = os.path.relpath(os.path.abspath(__file__), REPO)
+    me_sha = sha256_hex(open(os.path.abspath(__file__), "rb").read())
+    blk = git("show", f"{V2_BLOCK[1]}:{V2_BLOCK[0]}").split("\n")
+    if V2_BLOCK_TEXT not in blk[V2_BLOCK_LINE - 1]:
+        raise SystemExit(f"the block's item 6 is not on {V2_BLOCK[0]}@{V2_BLOCK[1]}:{V2_BLOCK_LINE} as quoted; nothing "
+                         f"written")
+    hs_wt = sha256_hex(open(os.path.join(REPO, HIST_SCRIPT), "rb").read())
+    hs_head = sha256_hex(git("show", f"HEAD:{HIST_SCRIPT}", binary=True))
+    J = {"item": "N12 pre-flip read (release v2)", "block": BLOCK, "code_stamp_utc": stamp, "head": head,
+         "script": {"path": me_rel, "sha256": me_sha},
+         "history_script": {"path": HIST_SCRIPT, "sha256_worktree": hs_wt, "sha256_head": hs_head,
+                            "pinned": HIST_SCRIPT_SHA, "equal": hs_wt == hs_head == HIST_SCRIPT_SHA},
+         "read": {"source": f"{V2_BLOCK[0]}@{V2_BLOCK[1]}:{V2_BLOCK_LINE}", "text": V2_BLOCK_TEXT},
+         "repository": SLUG}
+    h = load_module("n12_history_v2", HIST_SCRIPT)
+    rec = h.read_v2_record()
+    unserved = [rec["tp_commit"]] + [c for _n, c in rec["tips"]]
+    hidden = [rec["tp_id"]] + [c[:7] for c in unserved]
+
+    # ======================================================== (1) server refs
+    url = git("remote", "get-url", "origin").strip()
+    url_shown = re.sub(r"//[^/@]*@", "//", url)
+    lr = run(["git", "ls-remote", "--symref", "origin"])
+    server, peeled, symrefs = {}, {}, {}
+    for ln in lr.stdout.decode().splitlines():
+        if ln.startswith("ref: "):
+            tgt, _t, name = ln[5:].partition("\t")
+            symrefs[name] = tgt
+            continue
+        sha, _t, name = ln.partition("\t")
+        if name.endswith("^{}"):
+            peeled[name[:-3]] = sha
+        elif name:
+            server[name] = sha
+    rows = []
+    for ref in V2_EXPECTED_REFS:
+        loc = run(["git", "rev-parse", "--verify", "-q", ref]).stdout.decode().strip() or None
+        srv = server.get(ref)
+        rows.append({"ref": ref, "server": srv, "local": loc, "equal": srv is not None and srv == loc,
+                     "object_local": bool(srv) and obj_local(srv),
+                     "peeled_commit": peeled.get(ref) or (peel_commit(srv) if srv and obj_local(srv) else None)})
+    unexpected = [n for n in server if n not in V2_EXPECTED_REFS and n != "HEAD"]
+    ns = collections.Counter("/".join(n.split("/")[:2]) for n in unexpected)
+    stop_heads = [n for n in unexpected if V2_STOP_HEAD_RE.match(n)]
+    refs_pass = (lr.returncode == 0 and not unexpected and all(r["equal"] and r["object_local"] for r in rows)
+                 and symrefs.get("HEAD") == "refs/heads/main")
+    J["refs"] = {"origin_url": url_shown, "rc": lr.returncode, "symrefs": symrefs, "expected": rows,
+                 "unexpected_by_namespace": dict(ns), "unexpected": len(unexpected),
+                 "stop_heads": len(stop_heads), "pass": refs_pass}
+
+    # ======================================================== (2) GitHub-side surfaces
+    G = collections.OrderedDict()
+    G["repo_api"] = gh(["api", f"repos/{SLUG}"])
+    G["pull_requests"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/pulls?state=all&per_page=100"])
+    G["issues"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/issues?state=all&per_page=100"])
+    G["issue_comments"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/issues/comments?per_page=100"])
+    G["review_comments"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/pulls/comments?per_page=100"])
+    G["commit_comments"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/comments?per_page=100"])
+    G["releases"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/releases?per_page=100"])
+    G["workflows"] = gh(["api", f"repos/{SLUG}/actions/workflows"])
+    G["runs"] = gh(["api", f"repos/{SLUG}/actions/runs?per_page=1"])
+    G["artifacts"] = gh(["api", f"repos/{SLUG}/actions/artifacts?per_page=1"])
+    G["deploy_keys"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/keys?per_page=100"])
+    G["webhooks"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/hooks?per_page=100"])
+    G["milestones"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/milestones?state=all&per_page=100"])
+    G["forks"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/forks?per_page=100"])
+    G["pages"] = gh(["api", f"repos/{SLUG}/pages"])
+    G["activity"] = gh(["api", "--paginate", "--slurp", f"repos/{SLUG}/activity?per_page=100"])
+    G["graphql_counts"] = gh(["api", "graphql", "-f",
+                              "query=query{repository(owner:\"%s\",name:\"%s\"){discussions(first:1){totalCount} "
+                              "deployments(first:1){totalCount} environments(first:1){totalCount}}}" % (OWNER, NAME)])
+    # Projects (v2) need a token scope the v1 read found missing (its raw: Projects NOT READ); read, and reported apart
+    G["graphql_projects_v2"] = gh(["api", "graphql", "-f",
+                                   "query=query{repository(owner:\"%s\",name:\"%s\"){projectsV2(first:1)"
+                                   "{totalCount}}}" % (OWNER, NAME)])
+    wk = run(["git", "ls-remote", f"https://github.com/{SLUG}.wiki.git"])
+    wiki_refs = len([x for x in wk.stdout.decode().splitlines() if x.strip()])
+    ra = G["repo_api"]["data"] if isinstance(G["repo_api"]["data"], dict) else {}
+    issues_only = [x for x in flat_pages(G["issues"]["data"]) if isinstance(x, dict) and "pull_request" not in x]
+    gq = (((G["graphql_counts"]["data"] or {}).get("data") or {}).get("repository") or {})
+    act = flat_pages(G["activity"]["data"])
+    act_types = collections.Counter(x.get("activity_type") for x in act)
+    act_refs = collections.Counter(x.get("ref") if x.get("ref") in V2_EXPECTED_REFS else "<other>" for x in act)
+    surf = collections.OrderedDict()
+    for k in ("pull_requests", "issue_comments", "review_comments", "commit_comments", "releases", "deploy_keys",
+              "webhooks", "milestones", "forks"):
+        surf[k] = v2_count(G[k])
+    surf["issues"] = len(issues_only) if G["issues"]["rc"] == 0 else None
+    surf["workflows"] = v2_count(G["workflows"])
+    surf["actions_runs"] = v2_count(G["runs"])
+    surf["artifacts"] = v2_count(G["artifacts"])
+    for k in ("discussions", "deployments", "environments"):
+        surf[k] = (gq.get(k) or {}).get("totalCount") if gq else None
+    gp = (((G["graphql_projects_v2"]["data"] or {}).get("data") or {}).get("repository") or {})
+    projects_v2 = (gp.get("projectsV2") or {}).get("totalCount") if gp else None
+    surf["wiki_refs"] = wiki_refs
+    zero_ok = all(v == 0 for v in surf.values())
+    pages_ok = G["pages"]["status"] == "404"
+    act_ok = (G["activity"]["rc"] == 0 and act_types.get("force_push", 0) == 0
+              and act_types.get("branch_deletion", 0) == 0 and act_refs.get("<other>", 0) == 0)
+    repo_ok = ra.get("full_name") == SLUG and ra.get("fork") is False
+    settings = {k: ra.get(k) for k in ("full_name", "id", "created_at", "private", "visibility", "default_branch",
+                                       "fork", "archived", "disabled", "has_issues", "has_projects", "has_wiki",
+                                       "has_pages", "has_discussions", "has_downloads", "allow_forking",
+                                       "forks_count", "open_issues_count")}
+    settings["description_chars"] = len(ra.get("description") or "")
+    settings["homepage_chars"] = len(ra.get("homepage") or "")
+    settings["topics"] = len(ra.get("topics") or [])
+    surf_pass = zero_ok and pages_ok and act_ok and repo_ok
+    J["surfaces"] = {"counts": surf, "projects_v2": projects_v2, "pages_status": G["pages"]["status"],
+                     "activity_records": len(act),
+                     "activity_by_type": dict(act_types), "activity_by_ref": dict(act_refs), "settings": settings,
+                     "reads": {k: {"cmd": v["cmd"], "rc": v["rc"], "status": v["status"]} for k, v in G.items()},
+                     "wiki_cmd": f"git ls-remote https://github.com/{SLUG}.wiki.git", "wiki_rc": wk.returncode,
+                     "pass": surf_pass}
+
+    # ======================================================== (3) the commits no local ref reaches
+    us = []
+    for i, c in enumerate(unserved, 1):
+        r = gh(["api", f"repos/{SLUG}/commits/{c}"])
+        us.append({"commit": f"{i} of {len(unserved)}", "rc": r["rc"],
+                   "status": "200" if r["rc"] == 0 else r["status"], "served": r["rc"] == 0})
+    unserved_pass = len(us) == 4 and all(not x["served"] and x["status"] in ("404", "422") for x in us)
+    J["unserved"] = {"source": "the history script's read_v2_record (the origin-only ref's commit and the three wip "
+                               "branches' origin commits), held in memory", "checks": us, "pass": unserved_pass}
+
+    # ======================================================== (4) the interim history scan
+    hmd, hjs = os.path.join(hist_dir, "history_interim.md"), os.path.join(hist_dir, "history_interim.json")
+    t0 = time.time()
+    hp = run([sys.executable, HIST_SCRIPT, "--out", hmd, "--json-out", hjs])
+    hout = (hp.stdout.decode("utf-8", "replace") + "\n" + hp.stderr.decode("utf-8", "replace"))
+    m = V2_HIST_SUMMARY_RE.search(hout)
+    refused = re.search(r"REFUSING TO WRITE: (\d+) guarded value", hout)
+    hs = {"cmd": f"{os.path.relpath(sys.executable, REPO) if sys.executable.startswith(REPO) else 'python'} "
+                 f"{HIST_SCRIPT} --out <outside>/history_interim.md --json-out <outside>/history_interim.json",
+          "rc": hp.returncode, "secs": round(time.time() - t0, 1),
+          "refused_guarded_values": int(refused.group(1)) if refused else 0}
+    if m:
+        hs.update({"true_secret_candidates": int(m.group(1)), "untriaged": int(m.group(2)), "ids": int(m.group(3)),
+                   "sweep": int(m.group(4)), "shape_rows": int(m.group(5)), "pending_files": int(m.group(6)),
+                   "found_verbatim": int(m.group(7)), "controls": m.group(8)})
+    hist_pass = (hp.returncode == 0 and m is not None and hs["true_secret_candidates"] == 0 and hs["untriaged"] == 0
+                 and hs["found_verbatim"] == 0 and hs["controls"] == "ALL PASS")
+    hs["pass"] = hist_pass
+    J["history_scan"] = hs
+
+    all_pass = refs_pass and surf_pass and unserved_pass and hist_pass and J["history_script"]["equal"]
+    J["pass"] = all_pass
+    J["stop"] = bool(stop_heads)
+
+    # ======================================================== write
+    out = []
+    w = out.append
+    w("# AUDIT-note-release v1.2 -- N12 pre-flip read (release v2)")
+    w("")
+    w(f"- Code stamp: {stamp} (date -u); HEAD `{head}`; repository `{SLUG}` (origin `{url_shown}`).")
+    w(f"- Script: `{me_rel}` sha256 `{me_sha}`; the history script `{HIST_SCRIPT}` sha256 `{hs_head}` at HEAD, "
+      f"{'equal to' if J['history_script']['equal'] else 'NOT equal to'} the pinned `{HIST_SCRIPT_SHA}` "
+      f"(working tree: {'equal' if hs_wt == hs_head else 'NOT equal'}).")
+    w(f"- The read, as the release block names it (`{V2_BLOCK[0]}@{V2_BLOCK[1]}:{V2_BLOCK_LINE}`, item 6, asserted "
+      f"verbatim at this run): \"{V2_BLOCK_TEXT}\" Under the release route (the PI's word of 2026-10-29, \"fresh "
+      f"repository at the tag push, as proposed\"), this read is of the new repository, and it checks there that the "
+      f"commits no local ref reaches are not served.")
+    w("- Read-only: `git ls-remote`, `git rev-parse`, `git cat-file`, `git remote get-url` and `gh api` GET reads; "
+      "nothing fetched, pushed or written but this file and its JSON (and the history script's outputs, outside the "
+      "repository). It prints ref names, flags, counts and HTTP statuses: no GitHub-side text, no unexpected ref by "
+      "name, no commit id of the four in section 3.")
+    w("")
+    w("## 1. Server refs (`git ls-remote --symref origin`)")
+    w("")
+    w("| ref | on the server | local | equal | object local | its commit |")
+    w("|---|---|---|---|---|---|")
+    for r in rows:
+        w(f"| `{r['ref']}` | `{r['server'] or '-'}` | `{r['local'] or '-'}` | {'yes' if r['equal'] else 'NO'} | "
+          f"{'yes' if r['object_local'] else 'NO'} | `{r['peeled_commit'] or '-'}` |")
+    w("")
+    w(f"- HEAD on the server points at `{symrefs.get('HEAD', '-')}`.")
+    w(f"- Refs on the server beyond these five: {len(unexpected)}"
+      + (" (by namespace: " + ", ".join(f"`{k}` {v}" for k, v in sorted(ns.items())) + ")" if unexpected else "")
+      + f"; `wip/*`, `main-*` or `claude/*` heads: {len(stop_heads)}.")
+    w("")
+    bad1 = [r["ref"] for r in rows if not (r["equal"] and r["object_local"])]
+    w(f"**Pass/STOP line (1):** {'PASS' if refs_pass else ('STOP' if stop_heads else 'FLAG')} -- the server "
+      + ("holds `main` and the four tags only, each equal to the local ref, and HEAD points at `main`." if refs_pass
+         else "does not hold exactly `main` and the four tags, each equal to the local ref, with HEAD at `main`: "
+         + "; ".join(x for x in ((("not on the server, or not equal to the local ref: "
+                                   + ", ".join(f"`{b}`" for b in bad1))
+                                  if bad1 else ""),
+                                 (f"{len(unexpected)} other ref(s)" if unexpected else ""),
+                                 ("HEAD not at `main`" if symrefs.get("HEAD") != "refs/heads/main" else ""),
+                                 (f"ls-remote exit {lr.returncode}" if lr.returncode else "")) if x) + "."))
+    w("")
+    w("## 2. GitHub-side surfaces (read-only `gh api`)")
+    w("")
+    w("| surface | count |")
+    w("|---|---|")
+    for k, v in surf.items():
+        w(f"| {k.replace('_', ' ')} | {'read failed' if v is None else v} |")
+    w(f"| Pages (`repos/{SLUG}/pages`) | HTTP {G['pages']['status'] or G['pages']['rc']} |")
+    w(f"| Projects (v2), not in the block's list | {'not read (the token lacks the scope)' if projects_v2 is None else projects_v2} |")
+    w("")
+    w(f"- Activity record: {len(act)} record(s), by type "
+      + (", ".join(f"{k} {v}" for k, v in sorted(act_types.items(), key=lambda x: str(x[0]))) or "none")
+      + "; by ref " + (", ".join(f"`{k}` {v}" for k, v in sorted(act_refs.items(), key=lambda x: str(x[0])))
+                       or "none") + ".")
+    w(f"- Repository: `{settings['full_name']}`, created {settings['created_at']}, private {settings['private']}, "
+      f"visibility {settings['visibility']}, default branch `{settings['default_branch']}`, fork {settings['fork']}, "
+      f"archived {settings['archived']}; has_issues {settings['has_issues']}, has_projects "
+      f"{settings['has_projects']}, has_wiki {settings['has_wiki']}, has_pages {settings['has_pages']}, "
+      f"has_discussions {settings['has_discussions']}, allow_forking {settings['allow_forking']}; description "
+      f"{settings['description_chars']} characters, homepage {settings['homepage_chars']} characters, topics "
+      f"{settings['topics']} (texts not printed).")
+    w("")
+    w(f"**Pass line (2):** {'PASS' if surf_pass else 'FLAG'} -- every surface above is empty (Pages 404, the wiki "
+      "with no refs), the activity record has no force push, no branch deletion and no ref beyond the five, and the "
+      "repository read is the one named here, not a fork." if surf_pass else
+      "**Pass line (2):** FLAG -- " + "; ".join(x for x in (
+          ("not empty or not read: " + ", ".join(f"{k.replace('_', ' ')} {v}" for k, v in surf.items() if v != 0))
+          if not zero_ok else "",
+          f"Pages HTTP {G['pages']['status'] or G['pages']['rc']}" if not pages_ok else "",
+          (f"activity record: force push {act_types.get('force_push', 0)}, branch deletion "
+           f"{act_types.get('branch_deletion', 0)}, records on other refs {act_refs.get('<other>', 0)}, read exit "
+           f"{G['activity']['rc']}") if not act_ok else "",
+          f"repository read: `{ra.get('full_name')}`, fork {ra.get('fork')}" if not repo_ok else "") if x) + ".")
+    w("")
+    w("## 3. The commits no local ref reaches (the release route's check)")
+    w("")
+    w("The origin-only ref's commit and the three wip branches' origin commits, read from the release-v2 records by the "
+      "history script's `read_v2_record`, held in memory and never printed; each asked of this repository with "
+      f"`gh api repos/{SLUG}/commits/<commit>`.")
+    w("")
+    for x in us:
+        w(f"- commit {x['commit']}: HTTP {x['status'] or x['rc']}, {'served' if x['served'] else 'not served'}")
+    w("")
+    w(f"**Pass line (3):** {'PASS -- none of the four is served.' if unserved_pass else 'FLAG -- see above.'}")
+    w("")
+    w("## 4. The interim history scan")
+    w("")
+    w(f"`{hs['cmd']}` (outputs outside the repository; exit {hs['rc']}; {hs['secs']} s): "
+      + (f"true-secret candidates {hs['true_secret_candidates']}; untriaged {hs['untriaged']} (ids {hs['ids']}, sweep "
+         f"{hs['sweep']}, shape rows {hs['shape_rows']}; pending files {hs['pending_files']}); found verbatim "
+         f"{hs['found_verbatim']}; controls {hs['controls']}." if m else
+         f"no summary line (refused guarded values: {hs['refused_guarded_values']})."))
+    w("")
+    w(f"**Pass line (4):** {'PASS' if hist_pass else 'FLAG'}")
+    w("")
+    w("## 5. For the PI")
+    w("")
+    w(("- All four parts pass: on this read, the repository is ready for the visibility flip, which is the PI's."
+       if all_pass else "- Not all parts pass (above): not ready for the flip."))
+    w("- After the flip, the PI's own steps from the release route: re-adding the repository to the Claude GitHub app "
+      "and to Zenodo.")
+    md = "\n".join(out) + "\n"
+    js = json.dumps(J, indent=1, ensure_ascii=False)
+    for t_ in (md, js):
+        for v in hidden:
+            if v and v in t_:
+                raise SystemExit("REFUSING TO WRITE: a held value appears in an output; nothing written")
+        for n in unexpected:
+            if n in t_:
+                raise SystemExit("REFUSING TO WRITE: an unexpected ref's name appears in an output; nothing written")
+    with open(os.path.join(REPO, md_out), "w", encoding="utf-8") as f:
+        f.write(md)
+    with open(os.path.join(REPO, js_out), "w", encoding="utf-8") as f:
+        f.write(js + "\n")
+    print(f"wrote {md_out} and {js_out}; HEAD {head[:10]}; refs {'PASS' if refs_pass else 'FLAG'}; surfaces "
+          f"{'PASS' if surf_pass else 'FLAG'}; unserved {'PASS' if unserved_pass else 'FLAG'}; history scan "
+          f"{'PASS' if hist_pass else 'FLAG'}; STOP heads {len(stop_heads)}")
+
+
 # ---------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
@@ -466,13 +790,18 @@ def main():
                     help="directory OUTSIDE the repository for the history script's outputs")
     ap.add_argument("--rec", default="6485da2", help="commit whose committed history JSON / scrub index is compared")
     ap.add_argument("--base", default="bbc9ffe", help="the block's commit (the history script's default --since)")
-    ap.add_argument("--out", default=DEFAULT_MD)
-    ap.add_argument("--json-out", default=DEFAULT_JSON)
+    ap.add_argument("--out", default=None)
+    ap.add_argument("--json-out", default=None)
+    ap.add_argument("--v1", action="store_true", help="release v1's read (default: release v2's, main_v2)")
     a = ap.parse_args()
     hist_dir = os.path.abspath(a.history_dir)
     if hist_dir == REPO or hist_dir.startswith(REPO + os.sep):
         raise SystemExit("--history-dir must lie outside the repository")
     os.makedirs(hist_dir, exist_ok=True)
+    if not a.v1:
+        return main_v2(a, hist_dir)
+    a.out = a.out or DEFAULT_MD
+    a.json_out = a.json_out or DEFAULT_JSON
     for o in (a.out, a.json_out):
         ab = os.path.abspath(os.path.join(REPO, o))
         if not ab.startswith(os.path.join(REPO, "results", "raw") + os.sep):
