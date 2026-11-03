@@ -1,8 +1,9 @@
 {
  "item": "N18",
  "title": "release manifest (hashes for the note)",
- "code_stamp_utc": "2026-10-12 22:08:53 UTC",
- "head_at_run": "e8fb54dc90bd0766f1686c41b7c2497a79fa5391",
+ "round": "5 (2026-11-03, N1 round 11; release v2)",
+ "code_stamp_utc": "2026-11-03 09:50:26 UTC",
+ "head_at_run": "979700f84e54bc387f29b4242bfee7a527ac33b4",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -14,106 +15,335 @@
   133
  ],
  "script": "scripts/audit_note_N18.py",
- "script_sha256": "d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7",
+ "script_sha256": "7dc4cea59e0140ebcd661b510a842ba29638e7f01decb3ce142ec323e2650adb",
+ "root_from": "the directory two levels above the script (its parent's parent), as in rounds 1-4",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
- "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N18.py --preprint-pi-confirmed d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N18.py --preprint-pi-confirmed 5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467",
+ "sources": {
+  "rule": "every line this script cites for a round-5 constant or text, read at the commit that added it (an ancestor of HEAD), with the words it quotes or relies on; each is asserted present in its line at this run",
+  "lines": [
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:1",
+    "words": [
+     "Design → Code — the release block, posting day (note arc; 2026-10-27, routed by the PI)"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:9",
+    "words": [
+     "`f5a580d`",
+     "new `README.md` (pointer to README-NOTE and the tag"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:10",
+    "words": [
+     "`32aefcc`",
+     "`PREPRINT-v1_0-draft.md` status banner. Patch v8 text unchanged beneath it",
+     "pre-banner sha256 `45b67246…7a41`",
+     "post-banner `5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467`",
+     "N18 reads the new sha256."
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:11",
+    "words": [
+     "`0a3f925`",
+     "The three 2026-10-22 SVGs at the root beside the 2026-10-10 set.",
+     "F1a `f0c1cd73…5bfc`",
+     "F1b `640c13e8…33af`",
+     "F2 `0e0459cf…69bc`"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:23",
+    "words": [
+     "The note's repository link is the tag URL: `https://github.com/jasondwyer/told-vs-felt/tree/note-2026-10-v2`"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:40",
+    "words": [
+     "**N18** release manifest after the v0.8 commit, with `--preprint-pi-confirmed 5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467`"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:47",
+    "words": [
+     "**Tag `note-2026-10-v2`** on the final audit commit"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:1",
+    "words": [
+     "Design → Code — answers to the release-block questions (note arc; 2026-10-28, routed by the PI)"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:7",
+    "words": [
+     "**The PI's answer, verbatim: \"Yes to all\".**"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:21",
+    "words": [
+     "`scripts/audit_note_N18.py:93` `NOTE = \"RESEARCH-NOTE-v0_6-draft.md\"` moves to v0.8 with the README-NOTE re-point",
+     "`dc8c028` (the scratch notebook and the v0.6 note text removed from the tree",
+     "`0de15a1` (`RESEARCH-NOTE-v0_8-draft.md` at the root, sha256 `6fcfbfd64784412d616d4de40d4a6a54596202a052cb3dd0d9d78a26cbe1198d`"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:23",
+    "words": [
+     "v0.8 does not change again before the tag"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46",
+    "words": [
+     "At the tag commit, before the push, re-run the password search and gitleaks",
+     "record their counts in the post-tag raw"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:61",
+    "words": [
+     "reads patch v7, `d9635ca2…1fe6`, which `note-2026-10-v1` holds",
+     "the file at the tag is patch v8 under a status banner (`5d677a72…4467`, N18) and is not a text of record"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:65",
+    "words": [
+     "**N18** at item 4 as the block orders, and **again as the last commit before the tag**"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66",
+    "words": [
+     "The tag commit is the last audit commit, which is the second N18."
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68",
+    "words": [
+     "its refresh (the v0.8 sha256, the tag commit, the tag URL; the pinned-comment text) is the seat's, after the tag"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:1",
+    "words": [
+     "Design → Code — N1 round 11: the seat's answers in one block (note arc; 2026-11-02, routed by the PI)"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:49",
+    "words": [
+     "the renders posted as filed"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51",
+    "words": [
+     "must be `note-2026-10-v2` exactly"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60",
+    "words": [
+     "N18 (item 4) → README-NOTE re-point",
+     "**the PI's README.md pass, if not yet done**",
+     "the preflip-script commit → N18 again → tag → push"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-12_note-release-tag.md@11cc35b:5",
+    "words": [
+     "- **The tag commit (R2): `"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-10-12_note-release-tag.md@11cc35b:21",
+    "words": [
+     "| `results/raw/2026-10-09_note-release-manifest.json` | `"
+    ],
+    "present": true
+   }
+  ]
+ },
  "tag": {
-  "name": "note-2026-10-v1",
-  "source": "the PI's routing of 2026-10-09, item (7), as routed to Code: tag name note-2026-10-v1, placed on the final audit commit after N1 and N18; the block leaves the name to the PI and suggests it at AUDIT-note-release-v1_2.md@bbc9ffe:14",
+  "name": "note-2026-10-v2",
+  "source": "the release block of 2026-10-27 (the design seat's, routed by the PI): its item 7 places the tag note-2026-10-v2 on the final audit commit (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:47), and the note's repository link is the tag URL that ends in that name (:23); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:7): \"The tag commit is the last audit commit, which is the second N18.\" (:66); and the design seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51)",
   "state_at_run": {
    "exists_at_run": false,
    "points_to": null
   },
   "commit": null,
-  "commit_statement": "The tag is placed on the commit that adds this manifest. A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in the note's footer (block :133; the footer is the design seat's) and in a post-tag raw (the procedure routed to Code for this part; neither the block nor the PI's routing names that raw).",
-  "expected_parent_note": "HEAD at this run is e8fb54dc90bd0766f1686c41b7c2497a79fa5391; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
+  "commit_statement": "The tag goes on the final audit commit, the commit of N18's second run: \"The tag commit is the last audit commit, which is the second N18.\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66). A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was (Code's procedure; results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name \"the post-tag raw\" for the counts of the password search and gitleaks re-run at the tag commit, results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46), and in POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design seat's, after the tag (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68).",
+  "expected_parent_note": "HEAD at this run is 979700f84e54bc387f29b4242bfee7a527ac33b4; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
+  "previous": {
+   "name": "note-2026-10-v1",
+   "exists_at_run": true,
+   "points_to": "98d07bc3c5735a7ca31d01ee458b400d07ff4b48",
+   "manifest": "results/raw/2026-10-09_note-release-manifest.json",
+   "manifest_sha256_at_that_commit": "9a5cc889ac3abbf061a4d9f9a577decf21b9d75f3a0a2dad9a3b47caf99f7d2b",
+   "post_tag_raw": "results/raw/2026-10-12_note-release-tag.md@11cc35b",
+   "post_tag_raw_line_5_records_this_commit": true,
+   "post_tag_raw_line_21_records_this_sha256": true,
+   "statement": "Release v1's manifest is this script's default output as committed at the commit of note-2026-10-v1; a run at the default output regenerates that file in place, and v1's manifest stays readable at that commit (v1's post-tag raw, results/raw/2026-10-12_note-release-tag.md@11cc35b, records the commit at :5 and the file's sha256 at :21)."
+  }
  },
  "note": {
-  "path": "RESEARCH-NOTE-v0_6-draft.md",
+  "path": "RESEARCH-NOTE-v0_8-draft.md",
   "category": "note",
-  "sha256": "2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb",
-  "bytes": 63410,
-  "tracked_at_head": false,
-  "equal_to_head": null,
-  "expected": "2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb",
-  "expected_source": "the PI's message of 2026-10-12 routing round 10's inputs, which gives the full sha256",
-  "assert": "PASS"
+  "sha256": "6fcfbfd64784412d616d4de40d4a6a54596202a052cb3dd0d9d78a26cbe1198d",
+  "bytes": 63299,
+  "tracked_at_head": true,
+  "equal_to_head": true,
+  "expected": "6fcfbfd64784412d616d4de40d4a6a54596202a052cb3dd0d9d78a26cbe1198d",
+  "expected_source": "the design seat's answers of 2026-10-28, which give the full sha256 (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:21)",
+  "assert": "PASS",
+  "filed_at": "0de15a1",
+  "equal_to_filed_blob": true
  },
  "svgs": [
   {
-   "path": "2026-10-10_F1a_headline-strip.svg",
+   "path": "2026-10-22_F1a_headline-strip.svg",
    "category": "svg",
-   "sha256": "6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6",
-   "bytes": 19062,
-   "tracked_at_head": false,
-   "equal_to_head": null,
-   "expected": "6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6",
-   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)",
-   "assert": "PASS"
+   "sha256": "f0c1cd73e474eff54f11dd677a9b8e385ebae1e63cd667babc88d83123985bfc",
+   "bytes": 19545,
+   "tracked_at_head": true,
+   "equal_to_head": true,
+   "expected": "f0c1cd73...5bfc",
+   "expected_source": "the release block of 2026-10-27, which gives the filed copy's sha256 abbreviated (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:11)",
+   "assert": "PASS",
+   "filed_at": "0a3f925",
+   "equal_to_filed_blob": true
   },
   {
-   "path": "2026-10-10_F1b_five-link-panels.svg",
+   "path": "2026-10-22_F1b_five-link-panels.svg",
    "category": "svg",
-   "sha256": "6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e",
-   "bytes": 93477,
-   "tracked_at_head": false,
-   "equal_to_head": null,
-   "expected": "6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e",
-   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)",
-   "assert": "PASS"
+   "sha256": "640c13e87b161dc8c14e2813acba1dc6a09b94d7beb5b9d1784cfe34371633af",
+   "bytes": 93722,
+   "tracked_at_head": true,
+   "equal_to_head": true,
+   "expected": "640c13e8...33af",
+   "expected_source": "the release block of 2026-10-27, which gives the filed copy's sha256 abbreviated (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:11)",
+   "assert": "PASS",
+   "filed_at": "0a3f925",
+   "equal_to_filed_blob": true
   },
   {
-   "path": "2026-10-10_F2_macar-lineage-roc_post.svg",
+   "path": "2026-10-22_F2_macar-lineage-roc_post.svg",
    "category": "svg",
-   "sha256": "81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e",
-   "bytes": 65809,
-   "tracked_at_head": false,
-   "equal_to_head": null,
-   "expected": "81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e",
-   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)",
-   "assert": "PASS"
+   "sha256": "0e0459cf628ee7adef2d8c462a1b6c854d3a87a9743baa4f18b44134fbf969bc",
+   "bytes": 66733,
+   "tracked_at_head": true,
+   "equal_to_head": true,
+   "expected": "0e0459cf...69bc",
+   "expected_source": "the release block of 2026-10-27, which gives the filed copy's sha256 abbreviated (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:11)",
+   "assert": "PASS",
+   "filed_at": "0a3f925",
+   "equal_to_filed_blob": true
   }
  ],
- "rerun_rule": "This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last.",
+ "rerun_rule": "This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last. The order runs N18 twice: \"N18 (item 4) → README-NOTE re-point\", then the PI's README.md pass (if not yet done) and \"the preflip-script commit → N18 again → tag → push\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60; results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:65-66). The README-NOTE re-point and the preflip-script commit each change a listed file (trigger 3), as does the PI's README.md pass (README.md is a named file); the second run regenerates this manifest in place, and its manifest is the one the tag commit holds.",
  "rerun_triggers": [
   {
-   "trigger": "the note or any SVG changes (including the [REPO LINK] replacement or a footer added to the file)",
+   "trigger": "the note or any SVG changes (the note: \"v0.8 does not change again before the tag\", results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:23; the renders: \"the renders posted as filed\", results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:49)",
    "rerun": "N1, then N18"
   },
   {
-   "trigger": "PREPRINT-v1_0-draft.md changes (the PI's routing of 2026-10-09, item (5), as routed to Code, commits the preprint at the tag; its text of record is patch v7, the PI's routing of 2026-10-12; this manifest records the file as found at this run)",
-   "rerun": "N18 (with --preprint-pi-confirmed once the PI routes the new text's sha256)"
+   "trigger": "PREPRINT-v1_0-draft.md changes (the tag is to hold patch v8 under its status banner, sha256 5d677a72…4467, the release block's value, results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:10, :40; this manifest records the file as found at this run)",
+   "rerun": "N18, with the new file's routed sha256 and its source in PREPRINT_ROUTED, passed as --preprint-pi-confirmed"
   },
   {
-   "trigger": "any file in files.list changes, is added under results/raw/*_note-* or scripts/audit_note_*.py, or is removed (for example README-NOTE.md when a placeholder is filled, or the N1 final ledger when N1 is re-run)",
+   "trigger": "any file in files.list changes, is added under results/raw/*_note-* or scripts/audit_note_*.py, or is removed (in the order of results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60: README-NOTE.md at its re-point, README.md at the PI's pass, scripts/audit_note_N12_preflip.py at the preflip-script commit; or the N1 final ledger when N1 is re-run)",
    "rerun": "N18"
   }
  ],
- "footer_note": "The block puts the note's sha256 in the note's footer (:133). A footer inside the hashed file changes that file's sha256, so the footer cannot state the hash of the file that contains it; how the footer and the repository copy relate is the design seat's to settle.",
+ "footer_note": "The block puts the note's sha256 in the note's footer (:133). A footer inside the hashed file changes that file's sha256, so the footer cannot state the hash of the file that contains it. At v2 the note carries no footer: it is frozen as posted (\"v0.8 does not change again before the tag\", results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:23), and the v0.8 sha256 and the tag commit go to POST-note, the design seat's, after the tag (:68 of the same file).",
  "n1": {
-  "ledger_json": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json",
-  "ledger_md": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md",
-  "ledger_head_at_run": "d6bb7905855021432cc59e1538e3599a1c8d5d2a",
-  "ledger_code_stamp_utc": "Mon Oct 12 10:32:53 UTC 2026",
+  "ledger_json": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json",
+  "ledger_md": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.md",
+  "ledger_head_at_run": "e6d31974bd5f103430b30b19aa4a54ac7c8a8a25",
+  "ledger_code_stamp_utc": "Tue Nov  3 08:07:11 UTC 2026",
   "provisional": false,
   "covers_note_sha256_of_this_run": true,
   "covers_svg_sha256s_of_this_run": true,
-  "note_rows_file": "results/raw/2026-10-12_note-N1-v0_6-note-rows.json",
-  "note_rows_file_sha256": "deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b",
-  "figures_commit": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5",
-  "figures_commit_date": "2026-10-11T06:22:45-04:00",
+  "note_rows_file": "results/raw/2026-11-02_note-N1-v0_8-note-rows.json",
+  "note_rows_file_sha256": "920afc20b2d9573288de379bac651ca6ab95baf791e69e60f96bf921a6f7a892",
+  "figures_commit": "e6d31974bd5f103430b30b19aa4a54ac7c8a8a25",
+  "figures_commit_date": "2026-11-02T20:25:55-05:00",
   "figures_commit_set_by_rows": [
-   "S1#407",
-   "S1#408"
+   "S5#2055",
+   "S5#2056",
+   "S5#2057",
+   "S5#2059",
+   "S5#2060",
+   "S8#2032",
+   "S8#2033",
+   "S8#2034",
+   "S8#2035",
+   "S8#2036",
+   "S8#2037",
+   "S8#2038",
+   "S8#2039",
+   "S8#2040",
+   "S8#2095",
+   "S8#2097",
+   "S8#2098",
+   "S8#2099",
+   "S8#2100",
+   "S8#3019",
+   "S8#3022",
+   "S8#3024",
+   "S8#3026",
+   "S8#3027"
   ],
-  "figures_commit_basis": "N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md:2127 (the file as read at this run)",
-  "record_sources_only_candidate": "05c4636d0e3f7a177f3a894e0eccdb61623eff71",
-  "record_sources_only_candidate_date": "2026-10-06T00:42:09-04:00",
+  "figures_commit_basis": "N1 final, note_rows_final.tag.including_audit_raws (N1's rule, its section 9g: over the note's figures, the latest entry, a computed-new figure entering with the audit raw it cites and a figure whose only carrier is an audit raw committed after the audit pin with that raw); the figures that set it enter with results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197, by N1's entries; the figures that are not computed-new and whose only carrier is an audit raw committed after the audit pin, by N1's .tag.audit_only_rows: S7#29 (results/raw/2026-10-09_note-N19-cacophony.md@e0fd85c:119), S7#33 (results/raw/2026-10-09_note-N19-cacophony.md@e0fd85c:120); stated plainly at results/raw/2026-11-02_note-N1-v0_8-claims-ledger.md:2024 (the file as read at this run)",
+  "figures_commit_audit_raws": [
+   "results/raw/2026-11-02_note-N1-r11_computations.md@e6d3197"
+  ],
+  "audit_only_rows": [
+   {
+    "row": "S7#29",
+    "locator": "results/raw/2026-10-09_note-N19-cacophony.md@e0fd85c:119"
+   },
+   {
+    "row": "S7#33",
+    "locator": "results/raw/2026-10-09_note-N19-cacophony.md@e0fd85c:120"
+   }
+  ],
+  "record_sources_only_candidate": "0fa853999b76b30ba66ae69ad9ca0b0d0e0494fb",
+  "record_sources_only_candidate_date": "2026-10-19T18:10:19-04:00",
   "figures_commit_is_ancestor_of_head_at_this_run": true,
-  "n1_script": "/Users/jasondwyer/Documents/code/jspace-lab/scripts/audit_note_N1.py",
-  "n1_script_sha256_in_ledger": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
-  "n1_script_sha256_now": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
+  "n1_script": "scripts/audit_note_N1.py",
+  "n1_script_sha256_in_ledger": "156f8107b68749fc7a205b70b5b65a8a1fc7026414596a0c06ef4b355eed37e9",
+  "n1_script_sha256_now": "156f8107b68749fc7a205b70b5b65a8a1fc7026414596a0c06ef4b355eed37e9",
   "n1_script_unchanged_since_ledger": true
  },
  "n13": {
@@ -494,44 +724,71 @@
  },
  "preprint": {
   "path": "PREPRINT-v1_0-draft.md",
-  "status": "the preprint of record, patch v7, as routed by the PI on 2026-10-12 (the routed sha256 supplied to this run with --preprint-pi-confirmed; see pi_confirmation)",
-  "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+  "status": "patch v8 under its status banner (committed at 32aefcc): the file the tag is to hold, which is not a text of record; its sha256 is the release block's, supplied to this run with --preprint-pi-confirmed (see pi_confirmation)",
+  "sha256": "5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467",
   "on_disk_matches_block_reference": false,
   "block_reference": "d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21",
-  "pi_confirmation": "the full sha256 was supplied on the command line as the PI's confirmation that this file is the preprint of record (patch v7); the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`)",
-  "tracked_at_head": false,
-  "routing": "the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied; the text of record is patch v7 (the PI's routing of 2026-10-12, which gives its full sha256)",
-  "rerun_trigger": "If the file changes after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the preprint of record (patch v7, the PI's routing of 2026-10-12)."
+  "pi_confirmation": "the full sha256 was supplied on the command line with --preprint-pi-confirmed; the script asserted that it equals the value the release block of 2026-10-27 gives for the file the tag is to hold (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:10, :40), the file on disk and the file's blob at 32aefcc. It records that routed value, not a confirmation of a text of record (the command is recorded in `command`)",
+  "tracked_at_head": true,
+  "equal_to_banner_commit_blob": true,
+  "banner": {
+   "commit": "32aefcc",
+   "sha256_at_commit": "5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467",
+   "parent_sha256": "45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41",
+   "parent_matches_block_pre_banner": true,
+   "block_pre_banner": "45b67246…7a41",
+   "text_below_banner_equals_parent": true,
+   "banner_bytes": 599,
+   "source": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:10"
+  },
+  "routing": "the release block of 2026-10-27 (the design seat's, routed by the PI) gives the sha256 of the file the tag is to hold, patch v8 under the status banner committed at 32aefcc (\"Patch v8 text unchanged beneath it\"; \"N18 reads the new sha256.\", results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:10), and runs N18 \"with `--preprint-pi-confirmed 5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467`\" (:40); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\": \"the file at the tag is patch v8 under a status banner (`5d677a72…4467`, N18) and is not a text of record\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:61); patch v7, round 4's preprint of record, is the file the tag note-2026-10-v1 holds, where Tier 1 reads it (the same line)",
+  "rerun_trigger": "If the file changes after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold patch v8 under its status banner, sha256 5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467 (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:10, :40), which is not a text of record (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:61)."
  },
  "wait_check": [
   {
    "path": "README-NOTE.md",
    "mtime_utc": "2026-10-12T19:26:40Z",
    "mtime_local_date": "2026-10-12",
-   "local_date_at_run": "2026-10-12",
-   "modified_today": true,
-   "reading": "modified today; hashed as it stood at this run"
+   "local_date_at_run": "2026-11-03",
+   "modified_today": false,
+   "reading": "not modified today; read as found"
+  },
+  {
+   "path": "README.md",
+   "mtime_utc": "2026-10-29T06:13:22Z",
+   "mtime_local_date": "2026-10-29",
+   "local_date_at_run": "2026-11-03",
+   "modified_today": false,
+   "reading": "not modified today; read as found"
+  },
+  {
+   "path": "scripts/audit_note_N12_preflip.py",
+   "mtime_utc": "2026-10-09T05:06:50Z",
+   "mtime_local_date": "2026-10-09",
+   "local_date_at_run": "2026-11-03",
+   "modified_today": false,
+   "reading": "not modified today; read as found"
   },
   {
    "path": "results/raw/2026-10-08_note-N12-scrub.md",
-   "mtime_utc": "2026-10-12T22:08:47Z",
-   "mtime_local_date": "2026-10-12",
-   "local_date_at_run": "2026-10-12",
-   "modified_today": true,
-   "reading": "modified today; hashed as it stood at this run"
+   "mtime_utc": "2026-11-02T06:27:05Z",
+   "mtime_local_date": "2026-11-02",
+   "local_date_at_run": "2026-11-03",
+   "modified_today": false,
+   "reading": "not modified today; read as found"
   }
  ],
  "files": {
-  "rule": "README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.",
+  "rule": "README-NOTE.md, README.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.",
   "excluded_self": [
    "results/raw/2026-10-09_note-release-manifest.json",
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
-  "n_files": 98,
-  "sha256sum_list_sha256": "6ef60fd8330414a838da569ebf7a0ac3515fec8192d13b41808cfdb1dd447ca2",
+  "n_files": 136,
+  "sha256sum_list_sha256": "a8d0684c752d69e45472b1fecfa8812481e93a7879dbb67174c40c92f764a838",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
-  "n_tracked_at_head": 98,
-  "n_equal_to_head": 96,
+  "n_tracked_at_head": 136,
+  "n_equal_to_head": 135,
   "list": [
    {
     "path": "LICENSE",
@@ -563,7 +820,15 @@
     "sha256": "e03da42ae4813baa7ef911fb3e533b47285bd1e9844d83135b3cd4400d307050",
     "bytes": 130956,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
+   },
+   {
+    "path": "README.md",
+    "category": "named",
+    "sha256": "0bb797fbb48308e7787dc841b4be673aaf68ad60597593b09f42541c5682b21a",
+    "bytes": 6183,
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "data/e2a/analysis.correction-of-record.json",
@@ -672,10 +937,10 @@
    {
     "path": "results/raw/2026-10-08_note-N12-scrub.md",
     "category": "audit raw",
-    "sha256": "10b6dbd64f42c75f63acf62173307bb3d1851a4b9feb0d6ba17cb945b1c0c2a2",
-    "bytes": 117000,
+    "sha256": "75e684854d25a99cac55df9b180d48bb4f114abba3eabcd0e4a2f7c92435b83f",
+    "bytes": 223935,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N13-provenance.json",
@@ -1063,7 +1328,7 @@
    },
    {
     "path": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json",
-    "category": "N1 final ledger",
+    "category": "audit raw",
     "sha256": "e746ecd8aa87c8270a2856139c68b2b5aac4bfcd7010c7cc84de61cc41094b5c",
     "bytes": 7361975,
     "tracked_at_head": true,
@@ -1071,7 +1336,7 @@
    },
    {
     "path": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md",
-    "category": "N1 final ledger",
+    "category": "audit raw",
     "sha256": "460c6f71e4dbbc1cd671c4b72b8bb308f7854cb4b5384aa6002de386f0b2da81",
     "bytes": 1059027,
     "tracked_at_head": true,
@@ -1094,10 +1359,290 @@
     "equal_to_head": true
    },
    {
+    "path": "results/raw/2026-10-12_note-N11-smoke-tag.txt",
+    "category": "audit raw",
+    "sha256": "3e20048d10d8957a4b5330ff33178edf189417102c6a73791a6b9a30ecd54c48",
+    "bytes": 240705,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-content-screen-release.json",
+    "category": "audit raw",
+    "sha256": "5ef8e2830efdd93cc54f3338a4844f557c989c6f862aa13eb7bb5131bc409407",
+    "bytes": 667591,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-gitleaks-release-run1.md",
+    "category": "audit raw",
+    "sha256": "18c11e80602572d7903838de4b90fda2a5c664c1ae083681a703a9a348380aec",
+    "bytes": 150454,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-gitleaks-release.md",
+    "category": "audit raw",
+    "sha256": "a6b30a53186c01c413ec6607ef7242b68be0693ba81907a029267153eddf15ed",
+    "bytes": 12181,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-history-release.json",
+    "category": "audit raw",
+    "sha256": "55bbac682831492d89f191a20b5a1ddd9e0b65ba376ef4686acf2acba21d875d",
+    "bytes": 1564590,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-history-release.md",
+    "category": "audit raw",
+    "sha256": "05915036bbf71bee775920e113f34e7acdeccebcc681ab6d8495751e3a500872",
+    "bytes": 400317,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-licenses-release.json",
+    "category": "audit raw",
+    "sha256": "94810ea689da7b4ee27a0407bd7c09149a2f025893d640bc1b9173747375c91a",
+    "bytes": 384605,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-licenses-release.md",
+    "category": "audit raw",
+    "sha256": "bd471766e7d297b31028080786b6eccb8dedb7f81e9fd60174f58e0399598b80",
+    "bytes": 242290,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N12-password-release.md",
+    "category": "audit raw",
+    "sha256": "01d8430996a16394bfdd183f0c9a3ee4c211c90bf2cc2e1c3bbf641a88cc2126",
+    "bytes": 1846,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-release-tag.md",
+    "category": "audit raw",
+    "sha256": "1df6be362c63bf9b504b54e27317ed573c0b2c0b4321fe0ac2d2db81f3a586a9",
+    "bytes": 5522,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-22_note-N2vii-macar-v5.md",
+    "category": "audit raw",
+    "sha256": "4aa83e0d36323dd0204e3041d8bcd2d7ce64da61e61aaf3cc1d0f0b93a3b8fdb",
+    "bytes": 12831,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-27_note-code-to-design_release-block-questions.md",
+    "category": "audit raw",
+    "sha256": "1ff783f0f13e4ce1101cbeb68681fcc8645ef4bd89dc50b4fe495d91686c90e9",
+    "bytes": 16135,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-27_note-design-to-code_release-block.md",
+    "category": "audit raw",
+    "sha256": "8366007ea99f226537219d21fe9f7b0ec2e42c2f905d3cc35c8ce083bacb64cf",
+    "bytes": 8879,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-28_note-N1-r11_additions-by-source.md",
+    "category": "audit raw",
+    "sha256": "2eb5690f8382be644a64988887a8ce58820bf200422fc55203e3c78bc9fc0497",
+    "bytes": 16453,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-28_note-N1-r11_chandaria-v2-lines.md",
+    "category": "audit raw",
+    "sha256": "8fb11030c54a4574765433a980b1d274c1747a063ba101fcb802d13cad2442a2",
+    "bytes": 9681,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-28_note-N1-r11_correspondence-figures.md",
+    "category": "audit raw",
+    "sha256": "f594ea11e3842d05529165f71f3c493e68920d4ab8e155f13bb40fb6d7a98793",
+    "bytes": 7076,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-28_note-design-to-code_release-block-answers.md",
+    "category": "audit raw",
+    "sha256": "9e12efe95e74fd6dc5f30825c3a22b0d1712117dcb82541251d078979833b5dd",
+    "bytes": 18436,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-29_note-code-to-design_N1-r11-rulings.md",
+    "category": "audit raw",
+    "sha256": "86a21ef224c4a6c0f59ba594d87db59e379b6f5a010c91b4bb8d2d644184209f",
+    "bytes": 68102,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-content-screen-release.json",
+    "category": "audit raw",
+    "sha256": "123b3ed69558ff696bb292181f45b785aee3350c4c443fdba1e420a4afac5dee",
+    "bytes": 1768213,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-gitleaks-release.md",
+    "category": "audit raw",
+    "sha256": "074c8811b7a3b4bd3fcb85c302ce948437359cd85d109bc3f9b00ae07b0d86bb",
+    "bytes": 16494,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-history-release.json",
+    "category": "audit raw",
+    "sha256": "b458ef38014db61185e4524358c4b31fcfbc82e1d3429ca20e7ea4b959050972",
+    "bytes": 2398852,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-history-release.md",
+    "category": "audit raw",
+    "sha256": "7cb1a0e638036f7c9f59b10e27d984650e6cff3a15f4257f6fa6ea458bff141f",
+    "bytes": 529464,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-licenses-release.json",
+    "category": "audit raw",
+    "sha256": "e273b30b6684172fed029154af3a0d7707c908ea0819b3176f488fcb2ac2833a",
+    "bytes": 415438,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-licenses-release.md",
+    "category": "audit raw",
+    "sha256": "c373af432d22275ed4730d8c340ef1f12a02a3e5a9259a705fa5b0d21c65965a",
+    "bytes": 264367,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-password-release.md",
+    "category": "audit raw",
+    "sha256": "5ff44b373bd275b363907db43a935abbcf3f8bfee418b59e1661e5b9af9f4321",
+    "bytes": 1846,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-30_note-N12-trufflehog-release.md",
+    "category": "audit raw",
+    "sha256": "be43c81785f204949192535baa388a557d3111e87d7a2140e39c9b6c649b9395",
+    "bytes": 6825,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-r11_computations.md",
+    "category": "audit raw",
+    "sha256": "d9cb283b00380870ca5e14963a6d5783f8520bb11d0d880c620177b85acb8f67",
+    "bytes": 56532,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-r11_macar-v1-lines.md",
+    "category": "audit raw",
+    "sha256": "1467325a8d8516e749db05b6c7bd73c5cb66c66580dcbabe8210c250ee38e636",
+    "bytes": 4705,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-r11_macar-v5-lines.md",
+    "category": "audit raw",
+    "sha256": "fd73d0e435f2f076c670594037479f3705071d51053023ec915557167cf09c36",
+    "bytes": 9291,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json",
+    "category": "N1 final ledger",
+    "sha256": "9fca2fda2a7f2a2c12b22b7bb3d5fc419b9dce53a8d223f31bc99ecd67852e2d",
+    "bytes": 8284397,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.md",
+    "category": "N1 final ledger",
+    "sha256": "b43d4e2ada7c23a722790ad537360c9f85c0466ff71758ab772b5d89428c6440",
+    "bytes": 1030031,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-v0_8-note-rows.json",
+    "category": "audit raw",
+    "sha256": "920afc20b2d9573288de379bac651ca6ab95baf791e69e60f96bf921a6f7a892",
+    "bytes": 3029053,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N1-v0_8_valuescheck.md",
+    "category": "audit raw",
+    "sha256": "e7898ad5697c2145777665a2a9d7332e9113352b49a34dd1083a872700e1dd34",
+    "bytes": 42540,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-N12-content-screen-retained.json",
+    "category": "audit raw",
+    "sha256": "a5b1240962d417f062927bd26adcbcf2c575cb617575c4bf365eb9c8f9ea8ecc",
+    "bytes": 6911,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md",
+    "category": "audit raw",
+    "sha256": "4a53b5087dea5b5e5fd044e6e0ae88a9102d3c71ee37225359a5290b482e10a7",
+    "bytes": 13571,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
     "path": "scripts/audit_note_N1.py",
     "category": "audit script",
-    "sha256": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
-    "bytes": 1336597,
+    "sha256": "156f8107b68749fc7a205b70b5b65a8a1fc7026414596a0c06ef4b355eed37e9",
+    "bytes": 1646238,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1112,40 +1657,40 @@
    {
     "path": "scripts/audit_note_N11.py",
     "category": "audit script",
-    "sha256": "e302275e3ed2856deaeaffb92cc6952b4fc46db89da9154043b65c6e3b237ecf",
-    "bytes": 187829,
+    "sha256": "189699782f96497151bc5ad9904d12e7f9561cd11e3111ac7b4ad72355c1ab38",
+    "bytes": 189735,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_content.py",
     "category": "audit script",
-    "sha256": "0447c86b65dee3bdd514f3ca87b1f5ba669b5c1343c4addbdd3bd210a06d2356",
-    "bytes": 76338,
+    "sha256": "31758bdbff0c6b5f65ee41ffc225f5d94ec99ae1b983def86940d595a8a2429c",
+    "bytes": 94287,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_gitleaks.py",
     "category": "audit script",
-    "sha256": "b73be5dfb474f03ad8e946de5f862bba9a15eb8e05532b3affd7bef32ee27ec2",
-    "bytes": 42517,
+    "sha256": "94e98e9d70d9b8bdce16d244bfa753e4af33bd799e51f080c8e3c3ffd062d75e",
+    "bytes": 65372,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_history.py",
     "category": "audit script",
-    "sha256": "613598bae666cdbc273a07b8d9261abd9ea5d301fe5c1e95fa3892a13f4f0d4c",
-    "bytes": 432542,
+    "sha256": "918dae5a735240c379e679c61f20816775c10918736715f6e1ec0c6ae3cabaa8",
+    "bytes": 529902,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_licenses.py",
     "category": "audit script",
-    "sha256": "c7c0d40fd7643847454510e04a51694355a2b16048c3c0d0fe3ae8af73b7188d",
-    "bytes": 278410,
+    "sha256": "5429303b139d3228634a176562e192fc492d3e1a91b1f47cfd455294cdb23cad",
+    "bytes": 305138,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1168,8 +1713,16 @@
    {
     "path": "scripts/audit_note_N12_scrub.py",
     "category": "audit script",
-    "sha256": "2f436c1c8b78d3778195ecdef228699be47b9e18db715c07734dd3883fef539a",
-    "bytes": 195306,
+    "sha256": "1b2432fabe6f9a6a34a8f542a6d530f120c0533afcffcc0cc1f9866a7620c966",
+    "bytes": 356734,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "scripts/audit_note_N12_trufflehog.py",
+    "category": "audit script",
+    "sha256": "7b59a9c660281f60d3767ce5e7d6e76846eaa6644c52989d0e367bdd6a6af02c",
+    "bytes": 33123,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1208,16 +1761,24 @@
    {
     "path": "scripts/audit_note_N18.py",
     "category": "audit script",
-    "sha256": "d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7",
-    "bytes": 37064,
+    "sha256": "7dc4cea59e0140ebcd661b510a842ba29638e7f01decb3ce142ec323e2650adb",
+    "bytes": 60388,
     "tracked_at_head": true,
-    "equal_to_head": true
+    "equal_to_head": false
    },
    {
     "path": "scripts/audit_note_N19.py",
     "category": "audit script",
     "sha256": "e1adafcad81c1578b0d2560fdbe9e0dd2ed576f43b22399d60d3724400786d69",
     "bytes": 73886,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "scripts/audit_note_N1_r11_compute.py",
+    "category": "audit script",
+    "sha256": "c24a4ecc1083f36c647e120ffc6b2c3fe2788267b57317bce5dac799b5da0973",
+    "bytes": 80086,
     "tracked_at_head": true,
     "equal_to_head": true
    },
