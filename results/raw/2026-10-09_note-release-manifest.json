@@ -2,8 +2,8 @@
  "item": "N18",
  "title": "release manifest (hashes for the note)",
  "round": "5 (2026-11-03, N1 round 11; release v2)",
- "code_stamp_utc": "2026-11-03 09:50:26 UTC",
- "head_at_run": "979700f84e54bc387f29b4242bfee7a527ac33b4",
+ "code_stamp_utc": "2026-11-03 18:24:17 UTC",
+ "head_at_run": "c514caaac2ac2bc5708bc0240a868b687471e6cd",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -15,7 +15,7 @@
   133
  ],
  "script": "scripts/audit_note_N18.py",
- "script_sha256": "7dc4cea59e0140ebcd661b510a842ba29638e7f01decb3ce142ec323e2650adb",
+ "script_sha256": "cbbb9d5319c1af2d005ea3223033f0f0788af70ca65a5b01843a1bf492dee87b",
  "root_from": "the directory two levels above the script (its parent's parent), as in rounds 1-4",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
@@ -203,7 +203,7 @@
   },
   "commit": null,
   "commit_statement": "The tag goes on the final audit commit, the commit of N18's second run: \"The tag commit is the last audit commit, which is the second N18.\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66). A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was (Code's procedure; results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name \"the post-tag raw\" for the counts of the password search and gitleaks re-run at the tag commit, results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46), and in POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design seat's, after the tag (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68).",
-  "expected_parent_note": "HEAD at this run is 979700f84e54bc387f29b4242bfee7a527ac33b4; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
+  "expected_parent_note": "HEAD at this run is c514caaac2ac2bc5708bc0240a868b687471e6cd; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
   "previous": {
    "name": "note-2026-10-v1",
    "exists_at_run": true,
@@ -289,8 +289,8 @@
  "n1": {
   "ledger_json": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json",
   "ledger_md": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.md",
-  "ledger_head_at_run": "e6d31974bd5f103430b30b19aa4a54ac7c8a8a25",
-  "ledger_code_stamp_utc": "Tue Nov  3 08:07:11 UTC 2026",
+  "ledger_head_at_run": "71bba9a5e98ac41e26a21edd6209c8ac9c80eeda",
+  "ledger_code_stamp_utc": "Tue Nov  3 17:52:14 UTC 2026",
   "provisional": false,
   "covers_note_sha256_of_this_run": true,
   "covers_svg_sha256s_of_this_run": true,
@@ -342,8 +342,8 @@
   "record_sources_only_candidate_date": "2026-10-19T18:10:19-04:00",
   "figures_commit_is_ancestor_of_head_at_this_run": true,
   "n1_script": "scripts/audit_note_N1.py",
-  "n1_script_sha256_in_ledger": "156f8107b68749fc7a205b70b5b65a8a1fc7026414596a0c06ef4b355eed37e9",
-  "n1_script_sha256_now": "156f8107b68749fc7a205b70b5b65a8a1fc7026414596a0c06ef4b355eed37e9",
+  "n1_script_sha256_in_ledger": "5cbddd54e904b1880697206162933ffff8ee7a4d338201fbbada404c20c8ca17",
+  "n1_script_sha256_now": "5cbddd54e904b1880697206162933ffff8ee7a4d338201fbbada404c20c8ca17",
   "n1_script_unchanged_since_ledger": true
  },
  "n13": {
@@ -747,27 +747,27 @@
  "wait_check": [
   {
    "path": "README-NOTE.md",
-   "mtime_utc": "2026-10-12T19:26:40Z",
-   "mtime_local_date": "2026-10-12",
+   "mtime_utc": "2026-11-03T18:01:34Z",
+   "mtime_local_date": "2026-11-03",
    "local_date_at_run": "2026-11-03",
-   "modified_today": false,
-   "reading": "not modified today; read as found"
+   "modified_today": true,
+   "reading": "modified today; hashed as it stood at this run"
   },
   {
    "path": "README.md",
-   "mtime_utc": "2026-10-29T06:13:22Z",
-   "mtime_local_date": "2026-10-29",
+   "mtime_utc": "2026-11-03T17:36:43Z",
+   "mtime_local_date": "2026-11-03",
    "local_date_at_run": "2026-11-03",
-   "modified_today": false,
-   "reading": "not modified today; read as found"
+   "modified_today": true,
+   "reading": "modified today; hashed as it stood at this run"
   },
   {
    "path": "scripts/audit_note_N12_preflip.py",
-   "mtime_utc": "2026-10-09T05:06:50Z",
-   "mtime_local_date": "2026-10-09",
+   "mtime_utc": "2026-11-03T18:23:11Z",
+   "mtime_local_date": "2026-11-03",
    "local_date_at_run": "2026-11-03",
-   "modified_today": false,
-   "reading": "not modified today; read as found"
+   "modified_today": true,
+   "reading": "modified today; hashed as it stood at this run"
   },
   {
    "path": "results/raw/2026-10-08_note-N12-scrub.md",
@@ -785,10 +785,10 @@
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
   "n_files": 136,
-  "sha256sum_list_sha256": "a8d0684c752d69e45472b1fecfa8812481e93a7879dbb67174c40c92f764a838",
+  "sha256sum_list_sha256": "75b3f09eb017785295e5c0a0c498251e5c969342955794cc5a2403d55531ab12",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
   "n_tracked_at_head": 136,
-  "n_equal_to_head": 135,
+  "n_equal_to_head": 136,
   "list": [
    {
     "path": "LICENSE",
@@ -817,16 +817,16 @@
    {
     "path": "README-NOTE.md",
     "category": "named",
-    "sha256": "e03da42ae4813baa7ef911fb3e533b47285bd1e9844d83135b3cd4400d307050",
-    "bytes": 130956,
+    "sha256": "178b53b9a5e11fbf02f1110f7821ec8a142e3334df4a9d633cd710ead0a75731",
+    "bytes": 200316,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "README.md",
     "category": "named",
-    "sha256": "0bb797fbb48308e7787dc841b4be673aaf68ad60597593b09f42541c5682b21a",
-    "bytes": 6183,
+    "sha256": "7967d33aff7795e3132c2f17059290065c69e7b929ba3f49cec34886d82354da",
+    "bytes": 6323,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1593,16 +1593,16 @@
    {
     "path": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json",
     "category": "N1 final ledger",
-    "sha256": "9fca2fda2a7f2a2c12b22b7bb3d5fc419b9dce53a8d223f31bc99ecd67852e2d",
-    "bytes": 8284397,
+    "sha256": "db54575552aaf2d97d0dab8997d059e6b311aa10d94f5df90f080602b635ef43",
+    "bytes": 8285023,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.md",
     "category": "N1 final ledger",
-    "sha256": "b43d4e2ada7c23a722790ad537360c9f85c0466ff71758ab772b5d89428c6440",
-    "bytes": 1030031,
+    "sha256": "3e9a6169d5cf9a1a701aa541a8e485335b188cd8bec0b910b8e0b45dcd326a81",
+    "bytes": 1031676,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1617,8 +1617,8 @@
    {
     "path": "results/raw/2026-11-02_note-N1-v0_8_valuescheck.md",
     "category": "audit raw",
-    "sha256": "e7898ad5697c2145777665a2a9d7332e9113352b49a34dd1083a872700e1dd34",
-    "bytes": 42540,
+    "sha256": "2e4c2239326ffd5cd56cfa1ec7c6234a8c9cdb8dec149b429cab1f85ba11c16d",
+    "bytes": 48308,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1641,8 +1641,8 @@
    {
     "path": "scripts/audit_note_N1.py",
     "category": "audit script",
-    "sha256": "156f8107b68749fc7a205b70b5b65a8a1fc7026414596a0c06ef4b355eed37e9",
-    "bytes": 1646238,
+    "sha256": "5cbddd54e904b1880697206162933ffff8ee7a4d338201fbbada404c20c8ca17",
+    "bytes": 1648061,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1705,8 +1705,8 @@
    {
     "path": "scripts/audit_note_N12_preflip.py",
     "category": "audit script",
-    "sha256": "9a4a5cbe85c761df9e6262cd34b36959914472b2e94b606ac68f4b0f86074a5f",
-    "bytes": 127125,
+    "sha256": "ac442fa3fcd10a2602aba6c24731d78af371f12f8685b0561a3061f2fe4f8f34",
+    "bytes": 149899,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1761,10 +1761,10 @@
    {
     "path": "scripts/audit_note_N18.py",
     "category": "audit script",
-    "sha256": "7dc4cea59e0140ebcd661b510a842ba29638e7f01decb3ce142ec323e2650adb",
-    "bytes": 60388,
+    "sha256": "cbbb9d5319c1af2d005ea3223033f0f0788af70ca65a5b01843a1bf492dee87b",
+    "bytes": 60431,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N19.py",
