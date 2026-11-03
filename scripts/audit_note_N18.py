@@ -57,23 +57,23 @@ line). The figures are the three 2026-10-22 renders, filed at 0a3f925, whose sha
 ROUTED holds them; each of the four files is asserted equal to its blob at the commit that filed it
 (FILED). The 2026-10-10 renders stay in the tree beside them (the same line) and are not hashed here. The
 N1 ledger read is round 11's (results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json, committed at
-979700f). The preprint is patch v8 under the status banner committed at 32aefcc, which the answers call
-"not a text of record" (908a659:61); its sha256 is the release block's (2fb0cf0:10, :40), passed as
---preprint-pi-confirmed and asserted equal to PREPRINT_ROUTED, to the file on disk and to the file's blob
-at 32aefcc, whose parent's blob matches the block's pre-banner sha256 and is the text below the banner.
-The preprint's status texts, the tag's commit statement, the footer note and the re-run triggers are
-restated for v2 (round 1's 'pending patch v6' status for the block's post-patch-v4 copy now says that
-copy is not the file the tag is to hold). The figures commit's basis is read from N1's entries
-(note_rows_final.entries, .tag.audit_only_rows) in place of the fixed wording of rounds 1-4 (round 2's
-"N19's, N2 round 6's", which replaced round 1's "N19's raw"), and three lines of the .md are corrected:
-the N1 coverage line counts the SVGs (round 1's "these three sha256s" predates F1a, added in round 2),
-the files table shows the note-rows file the N1 ledger read (rounds 2-4 matched only round 1's by
-name), and the tracking line's "is that" becomes "includes that" (N1's first condition on the tag also
-names the preprint, as round 4's did). README.md (in the tree since dae2edc; edited at f5a580d, which
-the release block lists as "new `README.md` (pointer to README-NOTE and the tag" (2fb0cf0:9), and again
-at f935864) is a named file from this round, and it and the preflip script join the wait check: Code's
-additions, since the order edits both before N18's second run. N18 runs twice (908a659:65-66; the
-design seat's answers of 2026-11-02,
+979700f; its W3/O3 sentence corrected at 87cbd82). The preprint is patch v8 under the status banner
+committed at 32aefcc, which the answers call "not a text of record" (908a659:61); its sha256 is the
+release block's (2fb0cf0:10, :40), passed as --preprint-pi-confirmed and asserted equal to
+PREPRINT_ROUTED, to the file on disk and to the file's blob at 32aefcc, whose parent's blob matches the
+block's pre-banner sha256 and is the text below the banner. The preprint's status texts, the tag's commit
+statement, the footer note and the re-run triggers are restated for v2 (round 1's 'pending patch v6'
+status for the block's post-patch-v4 copy now says that copy is not the file the tag is to hold). The
+figures commit's basis is read from N1's entries (note_rows_final.entries, .tag.audit_only_rows) in place
+of the fixed wording of rounds 1-4 (round 2's "N19's, N2 round 6's", which replaced round 1's "N19's
+raw"), and three lines of the .md are corrected: the N1 coverage line counts the SVGs (round 1's "these
+three sha256s" predates F1a, added in round 2), the files table shows the note-rows file the N1 ledger
+read (rounds 2-4 matched only round 1's by name), and the tracking line's "is that" becomes "includes
+that" (N1's first condition on the tag also names the preprint, as round 4's did). README.md (in the tree
+since dae2edc; edited at f5a580d, which the release block lists as "new `README.md` (pointer to
+README-NOTE and the tag" (2fb0cf0:9), and again at f935864) is a named file from this round, and it and
+the preflip script join the wait check: Code's additions, since the order edits both before N18's second
+run. N18 runs twice (908a659:65-66; the design seat's answers of 2026-11-02,
 results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60): at item 4, after the round-11
 ledger commit, and again as the last commit before the tag, after the README-NOTE re-point, the PI's
 README.md pass (if not yet done) and the preflip-script commit, each of which changes a listed file; the
@@ -187,7 +187,7 @@ ROUTED = {
 # The commit that filed each file at the root (round 5): the note at 0de15a1 (908a659:21), the SVGs at 0a3f925
 # (2fb0cf0:11). Each file on disk is asserted equal to its blob there, and that blob to the routed value.
 FILED = {NOTE: "0de15a1", SVGS[0]: "0a3f925", SVGS[1]: "0a3f925", SVGS[2]: "0a3f925"}
-LEDGER = "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json"   # round 5: N1 round 11's, committed at 979700f
+LEDGER = "results/raw/2026-11-02_note-N1-v0_8-claims-ledger.json"   # round 5: N1 round 11's, at 979700f and 87cbd82
 N13_JSON = "results/raw/2026-10-08_note-N13-provenance.json"
 PREPRINT = "PREPRINT-v1_0-draft.md"
 PREPRINT_REF = ("d6431e97", "222b8")  # block :21, "post-patch-v4 copy, sha `d6431e97…222b8`"
