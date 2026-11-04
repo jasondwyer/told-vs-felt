@@ -1,6 +1,6 @@
 # told-vs-felt
 
-**Companion to the Research Note of 2026-10-27** (posted at https://jasondwyer.github.io/2026-10-27-told-vs-felt-porting-behavioral-pharmacology/; a LessWrong copy is under that site's review). Start at [`README-NOTE.md`](./README-NOTE.md): it maps every figure and claim in the note to the committed file that carries it. The note links this repository at the tag `note-2026-10-v2`; `main` keeps moving and nothing points a reader at it.
+**Companion to the Research Note of 2026-10-27** (posted at https://jasondwyer.github.io/2026-10-27-told-vs-felt-porting-behavioral-pharmacology/). Start at [`README-NOTE.md`](./README-NOTE.md): it maps every figure and claim in the note to the committed file that carries it. The note links this repository at the tag `note-2026-10-v2`; `main` keeps moving and nothing points a reader at it.
 
 The canonical copy of the Research Note is posted at https://jasondwyer.github.io/2026-10-27-told-vs-felt-porting-behavioral-pharmacology.
 
