@@ -2,8 +2,8 @@
  "item": "N18",
  "title": "release manifest (hashes for the note)",
  "round": "5 (2026-11-03, N1 round 11; release v2)",
- "code_stamp_utc": "2026-11-03 18:24:17 UTC",
- "head_at_run": "c514caaac2ac2bc5708bc0240a868b687471e6cd",
+ "code_stamp_utc": "2026-11-04 13:42:15 UTC",
+ "head_at_run": "b4c92147c5362fe4c547e08e46ae3d7e51fed76f",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -15,7 +15,7 @@
   133
  ],
  "script": "scripts/audit_note_N18.py",
- "script_sha256": "cbbb9d5319c1af2d005ea3223033f0f0788af70ca65a5b01843a1bf492dee87b",
+ "script_sha256": "ccc4e568cb14f830898008c07009c7ffef20bdc5d37677932bf77cb032918ece",
  "root_from": "the directory two levels above the script (its parent's parent), as in rounds 1-4",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
@@ -191,19 +191,49 @@
      "| `results/raw/2026-10-09_note-release-manifest.json` | `"
     ],
     "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:1",
+    "words": [
+     "Design → Code — moving tag `note-2026-10-v2` before the flip (note arc; 2026-11-03, routed by the PI)"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:3",
+    "words": [
+     "Amends one line of `results/raw/2026-10-28_note-design-to-code_release-block-answers.md` §8 (\"The tag commit is the last audit commit, which is the second N18.\")"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:12",
+    "words": [
+     "**README.md path commit**",
+     "from line 3"
+    ],
+    "present": true
+   },
+   {
+    "locator": "results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:13",
+    "words": [
+     "**N18, third run**",
+     "Ruling amended: *the tag commit is the last audit commit, which is the third N18.*"
+    ],
+    "present": true
    }
   ]
  },
  "tag": {
   "name": "note-2026-10-v2",
-  "source": "the release block of 2026-10-27 (the design seat's, routed by the PI): its item 7 places the tag note-2026-10-v2 on the final audit commit (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:47), and the note's repository link is the tag URL that ends in that name (:23); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:7): \"The tag commit is the last audit commit, which is the second N18.\" (:66); and the design seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51)",
+  "source": "the release block of 2026-10-27 (the design seat's, routed by the PI): its item 7 places the tag note-2026-10-v2 on the final audit commit (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:47), and the note's repository link is the tag URL that ends in that name (:23); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:7): \"The tag commit is the last audit commit, which is the second N18.\" (:66); the design seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51); and the design seat's tag-move block of 2026-11-03, which amends that line of the answers of 2026-10-28 (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:3) and gives the ruling as amended: \"the tag commit is the last audit commit, which is the third N18.\" (:13)",
   "state_at_run": {
    "exists_at_run": false,
    "points_to": null
   },
   "commit": null,
-  "commit_statement": "The tag goes on the final audit commit, the commit of N18's second run: \"The tag commit is the last audit commit, which is the second N18.\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66). A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was (Code's procedure; results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name \"the post-tag raw\" for the counts of the password search and gitleaks re-run at the tag commit, results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46), and in POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design seat's, after the tag (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68).",
-  "expected_parent_note": "HEAD at this run is c514caaac2ac2bc5708bc0240a868b687471e6cd; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
+  "commit_statement": "The tag goes on the final audit commit, the commit of N18's third run: \"the tag commit is the last audit commit, which is the third N18.\" (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:13, the ruling as the design seat's tag-move block of 2026-11-03 amends \"The tag commit is the last audit commit, which is the second N18.\", results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66). A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was (Code's procedure; results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name \"the post-tag raw\" for the counts of the password search and gitleaks re-run at the tag commit, results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46), and in POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design seat's, after the tag (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68).",
+  "expected_parent_note": "HEAD at this run is b4c92147c5362fe4c547e08e46ae3d7e51fed76f; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
   "previous": {
    "name": "note-2026-10-v1",
    "exists_at_run": true,
@@ -270,7 +300,7 @@
    "equal_to_filed_blob": true
   }
  ],
- "rerun_rule": "This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last. The order runs N18 twice: \"N18 (item 4) → README-NOTE re-point\", then the PI's README.md pass (if not yet done) and \"the preflip-script commit → N18 again → tag → push\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60; results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:65-66). The README-NOTE re-point and the preflip-script commit each change a listed file (trigger 3), as does the PI's README.md pass (README.md is a named file); the second run regenerates this manifest in place, and its manifest is the one the tag commit holds.",
+ "rerun_rule": "This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last. The order ran N18 twice: \"N18 (item 4) → README-NOTE re-point\", then the PI's README.md pass (if not yet done) and \"the preflip-script commit → N18 again → tag → push\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60; results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:65-66); the design seat's tag-move block of 2026-11-03 adds a third run after a README.md path commit (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:12-13). The README-NOTE re-point, the preflip-script commit and the README.md path commit each change a listed file (trigger 3), as does the PI's README.md pass (README.md is a named file); the third run regenerates this manifest in place, and its manifest is the one the tag commit holds.",
  "rerun_triggers": [
   {
    "trigger": "the note or any SVG changes (the note: \"v0.8 does not change again before the tag\", results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:23; the renders: \"the renders posted as filed\", results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:49)",
@@ -747,17 +777,17 @@
  "wait_check": [
   {
    "path": "README-NOTE.md",
-   "mtime_utc": "2026-11-03T18:01:34Z",
-   "mtime_local_date": "2026-11-03",
-   "local_date_at_run": "2026-11-03",
+   "mtime_utc": "2026-11-04T13:34:22Z",
+   "mtime_local_date": "2026-11-04",
+   "local_date_at_run": "2026-11-04",
    "modified_today": true,
    "reading": "modified today; hashed as it stood at this run"
   },
   {
    "path": "README.md",
-   "mtime_utc": "2026-11-03T17:36:43Z",
-   "mtime_local_date": "2026-11-03",
-   "local_date_at_run": "2026-11-03",
+   "mtime_utc": "2026-11-04T13:34:22Z",
+   "mtime_local_date": "2026-11-04",
+   "local_date_at_run": "2026-11-04",
    "modified_today": true,
    "reading": "modified today; hashed as it stood at this run"
   },
@@ -765,15 +795,15 @@
    "path": "scripts/audit_note_N12_preflip.py",
    "mtime_utc": "2026-11-03T18:23:11Z",
    "mtime_local_date": "2026-11-03",
-   "local_date_at_run": "2026-11-03",
-   "modified_today": true,
-   "reading": "modified today; hashed as it stood at this run"
+   "local_date_at_run": "2026-11-04",
+   "modified_today": false,
+   "reading": "not modified today; read as found"
   },
   {
    "path": "results/raw/2026-10-08_note-N12-scrub.md",
    "mtime_utc": "2026-11-02T06:27:05Z",
    "mtime_local_date": "2026-11-02",
-   "local_date_at_run": "2026-11-03",
+   "local_date_at_run": "2026-11-04",
    "modified_today": false,
    "reading": "not modified today; read as found"
   }
@@ -784,11 +814,11 @@
    "results/raw/2026-10-09_note-release-manifest.json",
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
-  "n_files": 136,
-  "sha256sum_list_sha256": "75b3f09eb017785295e5c0a0c498251e5c969342955794cc5a2403d55531ab12",
+  "n_files": 148,
+  "sha256sum_list_sha256": "fff54b4c9d78695d032e3a37a77cf4a8fe7695419ee884963df50fed43ac7590",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
-  "n_tracked_at_head": 136,
-  "n_equal_to_head": 136,
+  "n_tracked_at_head": 148,
+  "n_equal_to_head": 148,
   "list": [
    {
     "path": "LICENSE",
@@ -817,16 +847,16 @@
    {
     "path": "README-NOTE.md",
     "category": "named",
-    "sha256": "178b53b9a5e11fbf02f1110f7821ec8a142e3334df4a9d633cd710ead0a75731",
-    "bytes": 200316,
+    "sha256": "31a817f766dadbb0cda467760f15aea27e3af34e43cc268be3da9ddaf1568832",
+    "bytes": 200918,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "README.md",
     "category": "named",
-    "sha256": "7967d33aff7795e3132c2f17059290065c69e7b929ba3f49cec34886d82354da",
-    "bytes": 6323,
+    "sha256": "7880548da13d5f23579733ebd6a7ae94b7308a30d4b8099450ef5373fe1e2999",
+    "bytes": 6277,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1639,6 +1669,102 @@
     "equal_to_head": true
    },
    {
+    "path": "results/raw/2026-11-03_note-N11-smoke-tag.txt",
+    "category": "audit raw",
+    "sha256": "a989d9fec949616981183c60bb5181ed367431fb39e8ac65a5896498bfebe177",
+    "bytes": 405253,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-content-screen-tag.json",
+    "category": "audit raw",
+    "sha256": "47b5271a6ea89e3050c928b8200006dfbf99493b353714d262266212d4dbd913",
+    "bytes": 5152698,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-gitleaks-tag.md",
+    "category": "audit raw",
+    "sha256": "3e24dd95fa371797a9e7c14c4d27f171aa850844aa4addc86fad0f767aea979d",
+    "bytes": 15626,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-history-tag.json",
+    "category": "audit raw",
+    "sha256": "b20805d16cc1d1739fe6e836ff09a32c7fc93663be3040565b40d7cda30079e4",
+    "bytes": 2549702,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-history-tag.md",
+    "category": "audit raw",
+    "sha256": "a6f4515fe43f1809e8fb734bca702d4c47a135e2b61d2edc1a4615612724d79d",
+    "bytes": 603742,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-licenses-tag.json",
+    "category": "audit raw",
+    "sha256": "8afac9b5428e4449eafe739cda82d8f61f2b8f08f10775f64b3ac60fff055a8b",
+    "bytes": 438528,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-licenses-tag.md",
+    "category": "audit raw",
+    "sha256": "fa21ba69f12d6cb8a601f7b0597e97607f17f1547badac1c59f95bf87be19559",
+    "bytes": 278853,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-password-tag.md",
+    "category": "audit raw",
+    "sha256": "b916fd48720b738568d2f10970084269112fc362af7b3f0c5938ff6004a97ead",
+    "bytes": 1846,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-preflip.json",
+    "category": "audit raw",
+    "sha256": "e759948df64acd82db90477c30c6c8eabe7a10101c87cabae93dd890664c4947",
+    "bytes": 7720,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-N12-preflip.md",
+    "category": "audit raw",
+    "sha256": "39605d2ffee5e5824847e802d16b3bc45248a99775e5afe9dc2efa7736e8c6ab",
+    "bytes": 5375,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-design-to-code_tag-move.md",
+    "category": "audit raw",
+    "sha256": "7ec1b53bf93636ce36e40ef703f40b5ec1fc46ad08cd97049dabd0470c6f171e",
+    "bytes": 3927,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-11-03_note-release-tag.md",
+    "category": "audit raw",
+    "sha256": "92a09116fdcb759d517530cfe692407cf8342ecb65ba7d93e6ac91b6f34bb034",
+    "bytes": 10177,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
     "path": "scripts/audit_note_N1.py",
     "category": "audit script",
     "sha256": "5cbddd54e904b1880697206162933ffff8ee7a4d338201fbbada404c20c8ca17",
@@ -1761,8 +1887,8 @@
    {
     "path": "scripts/audit_note_N18.py",
     "category": "audit script",
-    "sha256": "cbbb9d5319c1af2d005ea3223033f0f0788af70ca65a5b01843a1bf492dee87b",
-    "bytes": 60431,
+    "sha256": "ccc4e568cb14f830898008c07009c7ffef20bdc5d37677932bf77cb032918ece",
+    "bytes": 62192,
     "tracked_at_head": true,
     "equal_to_head": true
    },
