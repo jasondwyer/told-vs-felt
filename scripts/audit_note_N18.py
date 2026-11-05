@@ -75,12 +75,14 @@ README-NOTE and the tag" (2fb0cf0:9), and again at f935864) is a named file from
 the preflip script join the wait check: Code's additions, since the order edits both before N18's second
 run. N18 ran twice (908a659:65-66; the design seat's answers of 2026-11-02,
 results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60): at item 4, after the round-11
-ledger commit, and again as the last commit before the tag, after the README-NOTE re-point, the PI's
+ledger commit, and again as the last commit before the first tag (fee3706), after the README-NOTE re-point, the PI's
 README.md pass (if not yet done) and the preflip-script commit, each of which changes a listed file. The
 design seat's tag-move block of 2026-11-03 (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425,
 :12-13) adds a third run after a README.md path commit (line 3) and amends the ruling to "the tag commit is
-the last audit commit, which is the third N18"; the tag moves to the third run's commit. The default run
-regenerates this manifest in place, and the tag commit holds the third run's. The note is
+the last audit commit, which is the third N18"; the tag moved to the third run's commit (33c0d53). On the
+PI's answer of 2026-11-04, in chat, to Code's question ("Fourth N18 on top"), a fourth run follows
+README-NOTE.md's re-point (its section 8, :4 and :200), and the tag moves to the fourth run's commit. The
+default run regenerates this manifest in place, and the tag commit holds the fourth run's. The note is
 frozen as posted (908a659:23), so no footer carries the hashes; the tag commit is to be recorded after
 tagging in a post-tag raw, as v1's was (Code's procedure;
 results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name "the post-tag raw" for the counts
@@ -163,18 +165,20 @@ TAGRAW_V1 = ("results/raw/2026-10-12_note-release-tag.md", "11cc35b")           
 # Round 5, third run: the design seat's tag-move block (titled "routed by the PI"), read at the commit that added it
 MOVE = ("results/raw/2026-11-03_note-design-to-code_tag-move.md", "4358425")         # the tag-move block, 2026-11-03
 TAG = "note-2026-10-v2"
-# Round 5: the release block's item 7 and tag URL, the answers of 2026-10-28 and the seat's answers of 2026-11-02, each
-# line asserted at the run (SOURCES). Round 1's source, replaced: "the PI's routing of 2026-10-09, item (7), as routed
+# Round 5: the release block's item 7 and tag URL, the answers of 2026-10-28, the seat's answers of 2026-11-02 and the
+# tag-move block of 2026-11-03, each line asserted at the run (SOURCES); the PI's answer of 2026-11-04 ("Fourth N18 on
+# top"), given in chat, is named, not asserted. Round 1's source, replaced: "the PI's routing of 2026-10-09, item (7), as routed
 # to Code: tag name note-2026-10-v1, placed on the final audit commit after N1 and N18; the block leaves the name to
 # the PI and suggests it at AUDIT-note-release-v1_2.md@bbc9ffe:14".
 TAG_SOURCE = ("the release block of 2026-10-27 (the design seat's, routed by the PI): its item 7 places the tag "
               "note-2026-10-v2 on the final audit commit (%s@%s:47), and the note's repository link is the tag URL "
               "that ends in that name (:23); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\" "
               "(%s@%s:7): \"The tag commit is the last audit commit, which is the second N18.\" (:66); the design "
-              "seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (%s@%s:51); and the design "
+              "seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (%s@%s:51); the design "
               "seat's tag-move block of 2026-11-03, which amends that line of the answers of 2026-10-28 (%s@%s:3) and "
               "gives the ruling as amended: \"the tag commit is the last audit commit, which is the third N18.\" "
-              "(:13)" % (RB + ANS + SEAT + MOVE))
+              "(:13); and the PI's answer of 2026-11-04, in chat, to Code's question, \"Fourth N18 on top\", puts the tag "
+              "on N18's fourth run, after README-NOTE.md's re-point (its section 8, :4 and :200)" % (RB + ANS + SEAT + MOVE))
 TAG_V1 = "note-2026-10-v1"   # release v1's tag (rounds 1-4): the pointer to v1's manifest is read at its commit
 NOTE = "RESEARCH-NOTE-v0_8-draft.md"
 SVGS = ["2026-10-22_F1a_headline-strip.svg", "2026-10-22_F1b_five-link-panels.svg",
@@ -670,16 +674,18 @@ def build(a, stamp):
         "tag": {
             "name": TAG, "source": TAG_SOURCE, "state_at_run": tag_state,
             "commit": None,
-            "commit_statement": ("The tag goes on the final audit commit, the commit of N18's third run: \"the tag commit is "
-                                 "the last audit commit, which is the third N18.\" (%s@%s:13, the ruling as the design "
-                                 "seat's tag-move block of 2026-11-03 amends \"The tag commit is the last audit commit, "
-                                 "which is the second N18.\", %s@%s:66). A commit's hash is "
+            "commit_statement": ("The tag goes on the final audit commit, the commit of N18's fourth run: the design seat's "
+                                 "tag-move block of 2026-11-03 amends \"The tag commit is the last audit commit, which is "
+                                 "the second N18.\" (%s@%s:66) to \"the tag commit is the last audit commit, which is "
+                                 "the third N18.\" (%s@%s:13), and the PI's answer of 2026-11-04, in chat, to Code's "
+                                 "question, \"Fourth N18 on top\", moves the tag to the fourth run, after README-NOTE.md's "
+                                 "re-point (its section 8, :4 and :200). A commit's hash is "
                                  "computed over a tree that contains this file, so the hash cannot be written inside it "
                                  "(self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was "
                                  "(Code's procedure; %s@%s:5; the answers name \"the post-tag raw\" for the counts of "
                                  "the password search and gitleaks re-run at the tag commit, %s@%s:46), and in "
                                  "POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design "
-                                 "seat's, after the tag (%s@%s:68)." % (MOVE + ANS + TAGRAW_V1 + ANS + ANS)),
+                                 "seat's, after the tag (%s@%s:68)." % (ANS + MOVE + TAGRAW_V1 + ANS + ANS)),
             "expected_parent_note": ("HEAD at this run is %s; the tag commit descends from it if the manifest is "
                                      "committed on top of it, which this script does not check." % head),
             "previous": previous,
@@ -691,10 +697,13 @@ def build(a, stamp):
                        "tag commit, the named items must be re-run, N18 last. The order ran N18 twice: \"N18 (item 4) "
                        "→ README-NOTE re-point\", then the PI's README.md pass (if not yet done) and \"the "
                        "preflip-script commit → N18 again → tag → push\" (%s@%s:60; %s@%s:65-66); the design seat's "
-                       "tag-move block of 2026-11-03 adds a third run after a README.md path commit (%s@%s:12-13). The "
-                       "README-NOTE re-point, the preflip-script commit and the README.md path commit each change a "
-                       "listed file (trigger 3)%s; the third run regenerates this manifest in place, and its manifest "
-                       "is the one the tag commit holds." % (SEAT + ANS + MOVE + (readme_clause,))),
+                       "tag-move block of 2026-11-03 adds a third run after a README.md path commit (%s@%s:12-13), and the "
+                       "PI's answer of 2026-11-04, in chat, to Code's question (\"Fourth N18 on top\") a fourth, after "
+                       "README-NOTE.md's re-point (its section 8, :4 and :200). The README-NOTE re-points, the "
+                       "preflip-script commit and the README.md path commit each change a listed file (trigger 3)%s; "
+                       "the fourth run regenerates this manifest in place, and its manifest is the one the tag commit "
+                       "holds." % (
+                           SEAT + ANS + MOVE + (readme_clause,))),
         "rerun_triggers": [
             {"trigger": ("the note or any SVG changes (the note: \"v0.8 does not change again before the tag\", "
                          "%s@%s:23; the renders: \"the renders posted as filed\", %s@%s:49)" % (ANS + SEAT)),
