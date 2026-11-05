@@ -956,6 +956,9 @@ def main(argv=None):
     ap.add_argument("--keep", action="store_true",
                     help="keep the clone (debugging only)")
     a = ap.parse_args(argv)
+    # Post-release (2026-11-04): a --source that is a network URL (the published remote) is named as such in
+    # (3) item 2 and in the verdict line; the file:// wording, written before the repository was public, is kept.
+    remote_src = a.source.startswith(("https://", "http://", "ssh://", "git://", "git@"))
 
     if not a.out:
         sys.exit("refusing: --out must be a file path")
@@ -2462,7 +2465,12 @@ def main(argv=None):
          "%s@%s:%s" % (PREFLIGHT, PIN, "-".join(str(i) for i, _ in
                                                   (pfl[:1] + pfl[-1:])))
          if pfl else "?", lin_sent))
-    if ref_is_tag:
+    if ref_is_tag and remote_src:
+        o("2. The block says 'clone the tag'. This run clones the release tag "
+          "%s (the PI's name; it resolves to %s) from the published remote, "
+          "%s, so the remote form is exercised; the clone's tags are %s."
+          % (a.ref, h, a.source, sorted(tags)))
+    elif ref_is_tag:
         o("2. The block says 'clone the tag'. This run clones the release tag "
           "%s (the PI's name; it resolves to %s), from %s; the clone's tags are "
           "%s. Once the repository is published, a re-run with --source "
@@ -2789,7 +2797,17 @@ def main(argv=None):
     allok = all(ok for _, ok in pass_conj)
     fixes = [n for n, ok in fix_items if not ok]
     o()
-    if allok and ref_is_tag:
+    if allok and ref_is_tag and remote_src:
+        o("N11: PASS at the release tag %s (%s); cloned from the published "
+          "remote, %s; and resting on the design seat and the PI accepting N/N "
+          "(here %d/%d) in place of the block's 103/103 (note 1), which is "
+          "Code's reading, not a ruling. The suite prints %d/%d from the fresh "
+          "clone with no read outside the clone apart from the interpreter's "
+          "own installation and its own temp files.%s"
+          % (a.ref, h, a.source, sp[0], sp[1], sp[0], sp[1],
+             "" if not fixes else " README fix required: %s." %
+             "; ".join(fixes)))
+    elif allok and ref_is_tag:
         o("N11: PASS at the release tag %s (%s); cloned from %s, not from the "
           "published remote (the repository is not public at this run); and "
           "resting on the design seat and the PI accepting N/N (here %d/%d) in "

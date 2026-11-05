@@ -106,6 +106,13 @@ date, every v2 name across the N12 scripts changes in one edit before the script
     jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_licenses.py \
         --out results/raw/2026-10-30_note-N12-licenses-release.md \
         --json-out results/raw/2026-10-30_note-N12-licenses-release.json
+
+After the flip (the PI's ruling of 2026-11-04, in chat, "Rule it covered", on Code's question after the licenses
+re-run at 33c0d53 left one repository id unclassified; recorded at
+results/raw/2026-11-04_note-release-tag.md@9edbc77:68): one id entry, CLASS_POSTFLIP, for this repository's wiki
+under its new name (jasondwyer/told-vs-felt.wiki, from the ls-remote probe of the first v2 tag's pre-flip read,
+results/raw/2026-11-03_note-N12-preflip.json@881bd61:220-221), added on main after the flip and listed apart from
+round 9's and release v2's (`postflip_entries_applied`). Every earlier rule and entry is unchanged.
 """
 from __future__ import annotations
 
@@ -2678,6 +2685,16 @@ def main() -> int:
         "jasondwyer/jspace-lab.wiki": ("this repository's wiki (the pre-flip raw's `git ls-remote` probe; not "
                                        "found); not a material"),
     }
+    # After the flip (the PI's ruling of 2026-11-04, in chat, "Rule it covered";
+    # results/raw/2026-11-04_note-release-tag.md@9edbc77:68): this repository's wiki under its new name, which the
+    # `git ls-remote` probe of the first v2 tag's pre-flip read recorded, exit 128
+    # (results/raw/2026-11-03_note-N12-preflip.json@881bd61:220-221). Listed apart from round 9's and release v2's
+    # entries, so that no confirmation is credited with another's rows.
+    CLASS_POSTFLIP = {
+        "jasondwyer/told-vs-felt.wiki": ("this repository's wiki under its new name (the `git ls-remote` probe of "
+                                         "the first v2 tag's pre-flip read; not found); not a material"),
+    }
+    POSTFLIP_IDS: dict = {}   # id key -> the post-flip entry that classified it
     WR_IDS = ids_in(json.dumps(WEB_READS))   # the ids the URL patterns parse out of this part's recorded reads
     THIS_REPO = "jasondwyer/jspace-lab"
     THIS_OWNER = THIS_REPO.split("/")[0] + "/"
@@ -2717,6 +2734,9 @@ def main() -> int:
         if CLASS_R9.get(v):
             R9_IDS[k] = "id entry (CLASS_R9)"
             return CLASS_R9[v]
+        if CLASS_POSTFLIP.get(v):
+            POSTFLIP_IDS[k] = "id entry (CLASS_POSTFLIP)"
+            return CLASS_POSTFLIP[v]
         if kind == "repo" and k in WR_IDS:
             R9_IDS[k] = "id rule: a fragment of a recorded-read URL (WEB_READS)"
             return ("a path fragment of a URL this part read (WEB_READS), which the URL pattern parses as an "
@@ -3205,6 +3225,14 @@ def main() -> int:
         # release v2: host entries on a later word of the PI (AUDIT_HOSTS_V2 / DOC_HOSTS_V2), each with that word
         "host_entries_pi_words": {h_: list(HOST_ENTRIES_V2_PI_WORDS[h_]) for h_ in sorted(HOSTS_V2)}}
     R["release_v2_rules_applied"] = V2_APPLIED
+    # after the flip: the rows the PI's ruling of 2026-11-04 classifies (CLASS_POSTFLIP), listed apart from round 9's
+    # and release v2's
+    PF_APPLIED = {
+        "confirmed": ("the PI, 2026-11-04, in chat, \"Rule it covered\" (results/raw/2026-11-04_note-release-tag.md, "
+                      "the licenses re-run's line)"),
+        "ids": [{"kind": kk[0], "id": _sw_shown[kk], "rule": r_} for kk, r_ in sorted(POSTFLIP_IDS.items())
+                if kk in _sw_shown]}
+    R["postflip_entries_applied"] = PF_APPLIED
     n_host_uncl = sum(1 for s in HS if s["class"].startswith("UNCLASSIFIED"))
     ip_rows = [s for s in HS if s["kind"] == "ip"]
     dl_rows = [s for s in HS if s["kind"] == "dotless"]
@@ -3248,6 +3276,11 @@ def main() -> int:
          "of 2026-10-28, per host: " + "; ".join(f"`{h_}`, the PI, {HOST_ENTRIES_V2_PI_WORDS[h_][0]}: "
                                                  f"\"{HOST_ENTRIES_V2_PI_WORDS[h_][1]}\"" for h_ in sorted(HOSTS_V2))
          + "."))
+    P("")
+    P(f"**Post-flip entry** (the PI's ruling of 2026-11-04, in chat: \"Rule it covered\"). Rows of the id table "
+      f"above that it classifies at this run: **{len(PF_APPLIED['ids'])}** id(s) ("
+      + (", ".join(f"`{x['id']}`" for x in PF_APPLIED['ids']) or "none")
+      + "). The JSON `postflip_entries_applied` lists them with the entry.")
     P("")
     n_arxiv_host = sum(1 for s in HS if s["host"].endswith("arxiv.org"))
     P(f"Rows with an `arxiv.org` host: {n_arxiv_host}; the record's arXiv references are ids, "
