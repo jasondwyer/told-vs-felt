@@ -9,6 +9,8 @@ type: software
 authors:
   - family-names: Dwyer
     given-names: Jason
+    orcid: "https://orcid.org/0009-0006-7648-9086"
+    affiliation: Sentieum Lab
 abstract: >-
   Companion to the Research Note of 2026-10-27 (posted at
   https://jasondwyer.github.io/2026-10-27-told-vs-felt-porting-behavioral-pharmacology/).

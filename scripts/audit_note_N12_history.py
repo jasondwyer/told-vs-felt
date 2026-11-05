@@ -794,6 +794,10 @@ PUBLIC_HOSTS = {
     # XML namespace hosts of the figure SVGs' headers and metadata (xmlns:c2pa, xmlns:dc and dc:type), which are
     # in history only if the SVGs are committed
     "www.apache.org", "c2pa.org", "purl.org",
+    # after the flip (the PI's word of 2026-11-05, in chat, "Yes, add it", to Code's question "Add orcid.org to the
+    # history scan's public hosts so the ORCID can go in CITATION.cff?"): the ORCID registry's host, which
+    # CITATION.cff's author entry carries in the URL form the CFF 1.2.0 schema requires for an orcid
+    "orcid.org",
 }
 # What an IDENTIFIER value is doing in a tracked code file at HEAD (read in context by Code).
 CODE_LOCATOR_NOTES = {

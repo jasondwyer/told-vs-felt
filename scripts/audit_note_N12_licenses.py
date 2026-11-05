@@ -2946,7 +2946,10 @@ def main() -> int:
             # release (L3): three more entries of the same allowlist, which the Global Workspace row classifies
             # where the record carries them; listed so that an audit file's echo of them (cut short by an excerpt
             # window) is explained by H3 carrier by carrier -- members of the same class, no new rule
-            "www.anthropic.com", "anthropic.com", "transformer-circuits.pub")},
+            "www.anthropic.com", "anthropic.com", "transformer-circuits.pub",
+            # after the flip (the PI's word of 2026-11-05, "Yes, add it"): the host the history script's
+            # PUBLIC_HOSTS gains for CITATION.cff's ORCID URL -- a member of this same class, no new rule
+            "orcid.org")},
     }
     # release (L3): every host listed above as "an entry of the history script's public-host allowlist" is checked
     # against that allowlist as the history script holds it at the commit read (its PUBLIC_HOSTS set literal, read by
