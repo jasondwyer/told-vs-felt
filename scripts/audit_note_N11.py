@@ -53,11 +53,15 @@ the interpreter of the gitignored jlens-qwen36/ clone.
 Writes only --out (default results/raw/2026-10-08_note-N11-smoke.txt). For a
 fixed --ref commit, interpreter and machine state, the raw regenerates
 byte-for-byte apart from the header lines its own header names.
-No model is loaded; nothing is installed or downloaded.
+No model is loaded and nothing is installed; with a network --source, the clones download the repository.
 
 Release (2026-10-12): when --ref names a tag present in the fresh clone that resolves to the
 checked-out commit (the release run, --ref note-2026-10-v1), note 2, the run-identity line and the
 verdict say so instead of 'provisional -- pre-tag'; every other run keeps the earlier wording.
+
+Post-release (2026-11-04): at such a tag, a run whose --source has the scheme https, http, ssh or
+git, or the scp-like git@ form, names that source as the published remote in note 2 and in the
+verdict line; every file:// run, and a run at a non-tag --ref, keeps the earlier wording.
 """
 
 from __future__ import annotations
@@ -956,8 +960,9 @@ def main(argv=None):
     ap.add_argument("--keep", action="store_true",
                     help="keep the clone (debugging only)")
     a = ap.parse_args(argv)
-    # Post-release (2026-11-04): a --source that is a network URL (the published remote) is named as such in
-    # (3) item 2 and in the verdict line; the file:// wording, written before the repository was public, is kept.
+    # Post-release (2026-11-04): at a release tag, a run whose --source is a network URL (these prefixes) names
+    # it as the published remote in referent note 2 and in the verdict line. Every file:// run, and a run at a
+    # non-tag --ref, keeps the earlier wording.
     remote_src = a.source.startswith(("https://", "http://", "ssh://", "git://", "git@"))
 
     if not a.out:
