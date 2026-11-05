@@ -2,8 +2,8 @@
  "item": "N18",
  "title": "release manifest (hashes for the note)",
  "round": "5 (2026-11-03, N1 round 11; release v2)",
- "code_stamp_utc": "2026-11-04 13:42:15 UTC",
- "head_at_run": "b4c92147c5362fe4c547e08e46ae3d7e51fed76f",
+ "code_stamp_utc": "2026-11-05 01:09:59 UTC",
+ "head_at_run": "dba52b477998b151c1164b16da67d3d5758fda41",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -15,7 +15,7 @@
   133
  ],
  "script": "scripts/audit_note_N18.py",
- "script_sha256": "ccc4e568cb14f830898008c07009c7ffef20bdc5d37677932bf77cb032918ece",
+ "script_sha256": "561659f411aa950f88afec537825be91b0516b396884c0c97788d2d4c9a35bef",
  "root_from": "the directory two levels above the script (its parent's parent), as in rounds 1-4",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
@@ -226,14 +226,14 @@
  },
  "tag": {
   "name": "note-2026-10-v2",
-  "source": "the release block of 2026-10-27 (the design seat's, routed by the PI): its item 7 places the tag note-2026-10-v2 on the final audit commit (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:47), and the note's repository link is the tag URL that ends in that name (:23); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:7): \"The tag commit is the last audit commit, which is the second N18.\" (:66); the design seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51); and the design seat's tag-move block of 2026-11-03, which amends that line of the answers of 2026-10-28 (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:3) and gives the ruling as amended: \"the tag commit is the last audit commit, which is the third N18.\" (:13)",
+  "source": "the release block of 2026-10-27 (the design seat's, routed by the PI): its item 7 places the tag note-2026-10-v2 on the final audit commit (results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:47), and the note's repository link is the tag URL that ends in that name (:23); the design seat's answers of 2026-10-28, under the PI's \"Yes to all\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:7): \"The tag commit is the last audit commit, which is the second N18.\" (:66); the design seat's answers of 2026-11-02: the tag \"must be `note-2026-10-v2` exactly\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:51); the design seat's tag-move block of 2026-11-03, which amends that line of the answers of 2026-10-28 (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:3) and gives the ruling as amended: \"the tag commit is the last audit commit, which is the third N18.\" (:13); and the PI's answer of 2026-11-04, in chat, to Code's question, \"Fourth N18 on top\", puts the tag on N18's fourth run, after README-NOTE.md's re-point (its section 8, :4 and :200)",
   "state_at_run": {
    "exists_at_run": false,
    "points_to": null
   },
   "commit": null,
-  "commit_statement": "The tag goes on the final audit commit, the commit of N18's third run: \"the tag commit is the last audit commit, which is the third N18.\" (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:13, the ruling as the design seat's tag-move block of 2026-11-03 amends \"The tag commit is the last audit commit, which is the second N18.\", results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66). A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was (Code's procedure; results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name \"the post-tag raw\" for the counts of the password search and gitleaks re-run at the tag commit, results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46), and in POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design seat's, after the tag (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68).",
-  "expected_parent_note": "HEAD at this run is b4c92147c5362fe4c547e08e46ae3d7e51fed76f; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
+  "commit_statement": "The tag goes on the final audit commit, the commit of N18's fourth run: the design seat's tag-move block of 2026-11-03 amends \"The tag commit is the last audit commit, which is the second N18.\" (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:66) to \"the tag commit is the last audit commit, which is the third N18.\" (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:13), and the PI's answer of 2026-11-04, in chat, to Code's question, \"Fourth N18 on top\", moves the tag to the fourth run, after README-NOTE.md's re-point (its section 8, :4 and :200). A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in a post-tag raw, as v1's was (Code's procedure; results/raw/2026-10-12_note-release-tag.md@11cc35b:5; the answers name \"the post-tag raw\" for the counts of the password search and gitleaks re-run at the tag commit, results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:46), and in POST-note, whose refresh (the v0.8 sha256, the tag commit, the tag URL) is the design seat's, after the tag (results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:68).",
+  "expected_parent_note": "HEAD at this run is dba52b477998b151c1164b16da67d3d5758fda41; the tag commit descends from it if the manifest is committed on top of it, which this script does not check.",
   "previous": {
    "name": "note-2026-10-v1",
    "exists_at_run": true,
@@ -300,7 +300,7 @@
    "equal_to_filed_blob": true
   }
  ],
- "rerun_rule": "This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last. The order ran N18 twice: \"N18 (item 4) → README-NOTE re-point\", then the PI's README.md pass (if not yet done) and \"the preflip-script commit → N18 again → tag → push\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60; results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:65-66); the design seat's tag-move block of 2026-11-03 adds a third run after a README.md path commit (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:12-13). The README-NOTE re-point, the preflip-script commit and the README.md path commit each change a listed file (trigger 3), as does the PI's README.md pass (README.md is a named file); the third run regenerates this manifest in place, and its manifest is the one the tag commit holds.",
+ "rerun_rule": "This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last. The order ran N18 twice: \"N18 (item 4) → README-NOTE re-point\", then the PI's README.md pass (if not yet done) and \"the preflip-script commit → N18 again → tag → push\" (results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:60; results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:65-66); the design seat's tag-move block of 2026-11-03 adds a third run after a README.md path commit (results/raw/2026-11-03_note-design-to-code_tag-move.md@4358425:12-13), and the PI's answer of 2026-11-04, in chat, to Code's question (\"Fourth N18 on top\") a fourth, after README-NOTE.md's re-point (its section 8, :4 and :200). The README-NOTE re-points, the preflip-script commit and the README.md path commit each change a listed file (trigger 3), as does the PI's README.md pass (README.md is a named file); the fourth run regenerates this manifest in place, and its manifest is the one the tag commit holds.",
  "rerun_triggers": [
   {
    "trigger": "the note or any SVG changes (the note: \"v0.8 does not change again before the tag\", results/raw/2026-10-28_note-design-to-code_release-block-answers.md@908a659:23; the renders: \"the renders posted as filed\", results/raw/2026-11-02_note-design-to-code_N1-r11-answers.md@da50cd1:49)",
@@ -777,7 +777,7 @@
  "wait_check": [
   {
    "path": "README-NOTE.md",
-   "mtime_utc": "2026-11-04T13:34:22Z",
+   "mtime_utc": "2026-11-05T01:08:55Z",
    "mtime_local_date": "2026-11-04",
    "local_date_at_run": "2026-11-04",
    "modified_today": true,
@@ -815,7 +815,7 @@
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
   "n_files": 148,
-  "sha256sum_list_sha256": "fff54b4c9d78695d032e3a37a77cf4a8fe7695419ee884963df50fed43ac7590",
+  "sha256sum_list_sha256": "d9a309f92252ef200f9ffe2499559a45ed52c8c01b4cd1838a99dc100d889b69",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
   "n_tracked_at_head": 148,
   "n_equal_to_head": 148,
@@ -847,8 +847,8 @@
    {
     "path": "README-NOTE.md",
     "category": "named",
-    "sha256": "31a817f766dadbb0cda467760f15aea27e3af34e43cc268be3da9ddaf1568832",
-    "bytes": 200918,
+    "sha256": "de4fffa266c78e38eb6862318b594f08f10aab6e0752493586ceaf27bb08d785",
+    "bytes": 208362,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1887,8 +1887,8 @@
    {
     "path": "scripts/audit_note_N18.py",
     "category": "audit script",
-    "sha256": "ccc4e568cb14f830898008c07009c7ffef20bdc5d37677932bf77cb032918ece",
-    "bytes": 62192,
+    "sha256": "561659f411aa950f88afec537825be91b0516b396884c0c97788d2d4c9a35bef",
+    "bytes": 63236,
     "tracked_at_head": true,
     "equal_to_head": true
    },
