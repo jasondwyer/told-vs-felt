@@ -1,0 +1,273 @@
+{
+ "item": "N12 pre-flip read (release v2)",
+ "block": "AUDIT-note-release-v1_2.md",
+ "code_stamp_utc": "Thu Nov  5 01:35:25 UTC 2026",
+ "head": "9edbc77002aaca5e22f0a13cfce7c44dc1316174",
+ "script": {
+  "path": "scripts/audit_note_N12_preflip.py",
+  "sha256": "ac442fa3fcd10a2602aba6c24731d78af371f12f8685b0561a3061f2fe4f8f34"
+ },
+ "history_script": {
+  "path": "scripts/audit_note_N12_history.py",
+  "sha256_worktree": "918dae5a735240c379e679c61f20816775c10918736715f6e1ec0c6ae3cabaa8",
+  "sha256_head": "918dae5a735240c379e679c61f20816775c10918736715f6e1ec0c6ae3cabaa8",
+  "pinned": "918dae5a735240c379e679c61f20816775c10918736715f6e1ec0c6ae3cabaa8",
+  "equal": true
+ },
+ "read": {
+  "source": "results/raw/2026-10-27_note-design-to-code_release-block.md@2fb0cf0:46",
+  "text": "`git ls-remote origin` = `main` + tags only (`cycle-2-close`, `cycle-4-close`, `note-2026-10-v1`, `note-2026-10-v2`); the GitHub-side surfaces (PRs, issues, Actions, wiki, Pages, deploy keys, webhooks, force-pushes). Any remaining `wip/*`, `main-*` or `claude/*` head: STOP and report."
+ },
+ "repository": "jasondwyer/told-vs-felt",
+ "refs": {
+  "origin_url": "https://github.com/jasondwyer/told-vs-felt.git",
+  "rc": 0,
+  "symrefs": {
+   "HEAD": "refs/heads/main"
+  },
+  "expected": [
+   {
+    "ref": "refs/heads/main",
+    "server": "9edbc77002aaca5e22f0a13cfce7c44dc1316174",
+    "local": "9edbc77002aaca5e22f0a13cfce7c44dc1316174",
+    "equal": true,
+    "object_local": true,
+    "peeled_commit": "9edbc77002aaca5e22f0a13cfce7c44dc1316174"
+   },
+   {
+    "ref": "refs/tags/cycle-2-close",
+    "server": "f597ea7961a6d750600593ed4d770078e926adc8",
+    "local": "f597ea7961a6d750600593ed4d770078e926adc8",
+    "equal": true,
+    "object_local": true,
+    "peeled_commit": "f597ea7961a6d750600593ed4d770078e926adc8"
+   },
+   {
+    "ref": "refs/tags/cycle-4-close",
+    "server": "2390272650dd1270bc4c465e3f521f92d10ed6f1",
+    "local": "2390272650dd1270bc4c465e3f521f92d10ed6f1",
+    "equal": true,
+    "object_local": true,
+    "peeled_commit": "50906bfef778dc1e4d8c311b304185db15a745c7"
+   },
+   {
+    "ref": "refs/tags/note-2026-10-v1",
+    "server": "60b7516eaef1e672d2ca88b31562c4eedeee3227",
+    "local": "60b7516eaef1e672d2ca88b31562c4eedeee3227",
+    "equal": true,
+    "object_local": true,
+    "peeled_commit": "98d07bc3c5735a7ca31d01ee458b400d07ff4b48"
+   },
+   {
+    "ref": "refs/tags/note-2026-10-v2",
+    "server": "e6049b7b05f9dda30f0858eb0ca5bc4c567e8f07",
+    "local": "e6049b7b05f9dda30f0858eb0ca5bc4c567e8f07",
+    "equal": true,
+    "object_local": true,
+    "peeled_commit": "6d8c237bfc6d85fc340917aa1a1c2daa136ddce5"
+   }
+  ],
+  "unexpected_by_namespace": {},
+  "unexpected": 0,
+  "stop_heads": 0,
+  "pass": true
+ },
+ "surfaces": {
+  "counts": {
+   "pull_requests": 0,
+   "issue_comments": 0,
+   "review_comments": 0,
+   "commit_comments": 0,
+   "releases": 0,
+   "deploy_keys": 0,
+   "webhooks": 0,
+   "milestones": 0,
+   "forks": 0,
+   "issues": 0,
+   "workflows": 0,
+   "actions_runs": 0,
+   "artifacts": 0,
+   "discussions": 0,
+   "deployments": 0,
+   "environments": 0,
+   "wiki_refs": 0
+  },
+  "projects_v2": null,
+  "pages_status": "404",
+  "activity_records": 8,
+  "activity_by_type": {
+   "push": 5,
+   "branch_deletion": 2,
+   "branch_creation": 1
+  },
+  "activity_by_ref": {
+   "refs/heads/main": 6,
+   "refs/tags/note-2026-10-v2": 2
+  },
+  "settings": {
+   "full_name": "jasondwyer/told-vs-felt",
+   "id": 1444998581,
+   "created_at": "2026-11-04T00:50:14Z",
+   "private": true,
+   "visibility": "private",
+   "default_branch": "main",
+   "fork": false,
+   "archived": false,
+   "disabled": false,
+   "has_issues": true,
+   "has_projects": true,
+   "has_wiki": false,
+   "has_pages": false,
+   "has_discussions": false,
+   "has_downloads": false,
+   "allow_forking": true,
+   "forks_count": 0,
+   "open_issues_count": 0,
+   "description_chars": 73,
+   "homepage_chars": 0,
+   "topics": 0
+  },
+  "reads": {
+   "repo_api": {
+    "cmd": "gh api repos/jasondwyer/told-vs-felt",
+    "rc": 0,
+    "status": null
+   },
+   "pull_requests": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/pulls?state=all&per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "issues": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/issues?state=all&per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "issue_comments": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/issues/comments?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "review_comments": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/pulls/comments?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "commit_comments": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/comments?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "releases": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/releases?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "workflows": {
+    "cmd": "gh api repos/jasondwyer/told-vs-felt/actions/workflows",
+    "rc": 0,
+    "status": null
+   },
+   "runs": {
+    "cmd": "gh api repos/jasondwyer/told-vs-felt/actions/runs?per_page=1",
+    "rc": 0,
+    "status": null
+   },
+   "artifacts": {
+    "cmd": "gh api repos/jasondwyer/told-vs-felt/actions/artifacts?per_page=1",
+    "rc": 0,
+    "status": null
+   },
+   "deploy_keys": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/keys?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "webhooks": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/hooks?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "milestones": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/milestones?state=all&per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "forks": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/forks?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "pages": {
+    "cmd": "gh api repos/jasondwyer/told-vs-felt/pages",
+    "rc": 1,
+    "status": "404"
+   },
+   "activity": {
+    "cmd": "gh api --paginate --slurp repos/jasondwyer/told-vs-felt/activity?per_page=100",
+    "rc": 0,
+    "status": null
+   },
+   "graphql_counts": {
+    "cmd": "gh api graphql -f query=query{repository(owner:\"jasondwyer\",name:\"told-vs-felt\"){discussions(first:1){totalCount} deployments(first:1){totalCount} environments(first:1){totalCount}}}",
+    "rc": 0,
+    "status": null
+   },
+   "graphql_projects_v2": {
+    "cmd": "gh api graphql -f query=query{repository(owner:\"jasondwyer\",name:\"told-vs-felt\"){projectsV2(first:1){totalCount}}}",
+    "rc": 1,
+    "status": null
+   }
+  },
+  "wiki_cmd": "git ls-remote https://github.com/jasondwyer/told-vs-felt.wiki.git",
+  "wiki_rc": 128,
+  "pass": false
+ },
+ "unserved": {
+  "source": "the history script's read_v2_record (the origin-only ref's commit and the three wip branches' origin commits), held in memory",
+  "checks": [
+   {
+    "commit": "1 of 4",
+    "rc": 1,
+    "status": "422",
+    "served": false
+   },
+   {
+    "commit": "2 of 4",
+    "rc": 1,
+    "status": "422",
+    "served": false
+   },
+   {
+    "commit": "3 of 4",
+    "rc": 1,
+    "status": "422",
+    "served": false
+   },
+   {
+    "commit": "4 of 4",
+    "rc": 1,
+    "status": "422",
+    "served": false
+   }
+  ],
+  "pass": true
+ },
+ "history_scan": {
+  "cmd": "jlens-qwen36/.venv/bin/python scripts/audit_note_N12_history.py --out <outside>/history_interim.md --json-out <outside>/history_interim.json",
+  "rc": 0,
+  "secs": 377.2,
+  "refused_guarded_values": 0,
+  "true_secret_candidates": 0,
+  "untriaged": 0,
+  "ids": 0,
+  "sweep": 0,
+  "shape_rows": 0,
+  "pending_files": 0,
+  "found_verbatim": 0,
+  "controls": "ALL PASS",
+  "pass": true
+ },
+ "pass": false,
+ "stop": false
+}
