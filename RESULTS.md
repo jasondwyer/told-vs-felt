@@ -21,6 +21,85 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **PROPOSAL-n v0.1 (routed by the PI, PI date 2026-11-05): §8 step 2 STOPS the commit on one routing
+  item and five substantive design items.
+  Step 1: HEAD is `f26bc59` (ADDENDUM-m1's commit, the entry below), equal to origin; the document is untracked at
+  root with the routed sha256 `9248d06c0837bd7bd0e9ffee2c88a135b2a129d9906b244c85657ac0200fb6a6`; no n artifact
+  exists. Step 2 checked every referent of §9 against this repository, BK's PDF (v2, sha256 `e92c69cb…fa49`) and
+  BK-repo at `7631f8a`, which was read as data, and reproduced the [S] figures §9 lists [C]. Steps 1–2 are reading
+  only. They ran beside ADDENDUM-m1's step 2, before its commit, although the routing orders this §8 after it, and
+  step 1 was re-run after that commit.
+  Why it stops: (A1) the routing's negative-pole line carries all three of §0.4's options, with none chosen. (B1) BK's
+  fixed-text OLMo results — Panel D's +1.09, Fig. A8's slope and the 160 neutral sessions — belong to
+  OLMo-2-0325-32B-Instruct (`table1_banks.csv` maps `olmo_32b` to Instruct, and so does `analysis.json`'s `hf_id`),
+  not to the DPO checkpoint v0.1 acquires as "their model". (B2) BK's own records exceed the 0.05-nat fidelity hair
+  trigger on 573 of the 2,400 OLMo neutral reads that carry a fidelity value (23.9%), including two of the three
+  checks in the B.2 session v0.1 cites, which runs against rule 21. (B3) Rule 5(f)'s readability and leakage gates
+  are named for no axis or dose, and N2-E reads `span_reward` at d = ±1 (f = 0.30·R/R_ℓ, above 0.20 unless
+  R_ℓ > 1.5 R) with no 5(d) gate. (B4) §0.4's exposure statement leaves out G-VEC's generations at −ρ. (B5) N4's TOLD
+  line asserts what §2.4's own premise ("no zone is better by construction") makes false (rule 19), and N4's CI level
+  and E's referent are not stated.
+  Sixteen minor notes (C1–C16) are for v0.2. The STOP and this entry were values-checked before commit.
+  Not done: v0.1 is not committed and stays untracked at root; no BK file is copied into this repository; G-DATA and
+  every later step have not run; nothing is built; no pod has started. ADDENDUM-m1's commit and its tracks are
+  unaffected.** (Stamp verified at write time: `date -u` → **Fri Nov  6 02:16:29 UTC 2026**.)
+
+  - **The routing, the PI's word.** Below are its header, the pod-order line (decision (6), which sits in the
+    routing's ADDENDUM-m1 block; "…" marks the lines left out), its PROPOSAL-n lines and its run lines, all verbatim.
+    The full block is quoted in ADDENDUM-m1's entry below.
+
+    > Routing — ADDENDUM-m1 v0.1 and PROPOSAL-n v0.1 — PI date 2026-11-05 (I confirm the date).
+    >
+    > …
+    >
+    > ADDENDUM-m1:
+    >   …
+    >   Pod order: [OLMo units first, then PROPOSAL-n's N-pod].
+    > PROPOSAL-n:
+    >   Letter: n (the state-present told control takes o). Route A request: [not sent].
+    >   Negative pole: [as written / struck beyond d = −1 / struck]. Units: N-pod now; N-lap [after Q-F3's campaign].
+    >   D_n = [2026-12-15]; D_n-lap = [2027-01-15]. N-pod budget: [8 h].
+    >
+    > Run ADDENDUM-m1 §4 from step 1, then PROPOSAL-n §8 from step 1 (expected HEAD 18c32df or later).
+    > STOP on anything unresolved; minor residues as dated notes (the e9b5022 precedent). No pod start without my go.
+
+  - **§0.9's decisions as routed.** Five of the six are routed, and decision (3) is open.
+    1. The letter: n, confirmed. The state-present told control takes o.
+    2. Route A's request is not sent, so N1 runs on Route B alone, which the lock states (§0.8).
+    3. The negative pole: open (A1).
+    4. The units: N-pod now, N-lap after Q-F3's campaign.
+    5. D_n = 2026-12-15, D_n-lap = 2027-01-15, and the N-pod budget is 8 h.
+    6. The pod order: ADDENDUM-m1's OLMo units first, then the N-pod.
+    They are quoted here. They become step 3's record only when step 3 runs.
+  - **The STOP block**, `results/raw/2026-11-06_n-v0_1_code-to-design_STOP.md`, has each item with its evidence:
+    - Part A: A1 above; A2, a confirmation the PI owes on §0.7's rule-13 departure, which the routing does not name
+      (not a stop).
+    - Part B:
+      - B1: the checkpoint. DPO appears in BK's results only as a lineage stage: Fig. 4 and Fig. A12 (generation
+        design, N = 80), with Fig. 2's panel 8 and Table A3. N1's 0.545 bar and §2.5's sizing rest on Instruct's
+        reads.
+      - B2: fidelity. BK adjudicated the cache check by a scale-relative TAU (0.0179 of scale, about 0.20 nats at
+        their mean scale), "never by a fixed nat threshold". At a fixed 0.05 nats, 54 of the 160 neutral sessions
+        keep every check [C]. At the measured per-read rate (0.239), the chance of no fire in 160 reads is
+        1.1e−19 [C].
+      - B3: 5(f)(ii) and (iv), and 5(a)'s leakage gate.
+      - B4: G-VEC's arrival batch at −ρ comes before G-CAL-n, which defines R. BK's arrival hurdle reuses the
+        coherence batch. N-lap's ρ_Q scan is not counted.
+      - B5: rule 19's tension in N4's TOLD line, and N4's α .01 against an unstated CI level and E's "first-named
+        zone".
+    - Part C, C1–C16, among them:
+      - C1: Fig. A8's 616.9 tokens are the S whole-turn spans, not the `s_spans`.
+      - C2: BK read the 24 random directions on one shared set of 40 sessions.
+      - C5: at d = −1, 154 of 160 sessions move negative.
+      - C7: the fidelity re-computation count is 8,000 under §2.1's rule, against §2.7's 2,400.
+      - C15: §2.7's hours do not follow from its own counts: 11,040 forwards at 0.3–0.6 s is 0.92–1.84 h [C].
+    - What resolves: every other referent of §9 resolves, and the [S] figures §9 lists reproduce. The SDs are
+      population SDs (C6).
+  - **For the seat.** Everything in Part B is the seat's to re-specify, in v0.2 or by ruling, and the A1 choice is
+    the PI's. Code waits. Nothing of v0.1 runs, and no BK file enters the repository before step 3.
+  - **Committed by path:** this entry; the STOP raw; the values-check raw
+    `results/raw/2026-11-06_n-v0_1_stop_valuescheck.md`.
+
 - 2026-11-06 — **ADDENDUM-m1 v0.1 COMMITTED (routed by the PI, PI date 2026-11-05) at its §4 step 3, its minor
   residues carried as dated notes under the routing's process line.
   The addendum to PROPOSAL-m v1.11 is now tracked at root as
