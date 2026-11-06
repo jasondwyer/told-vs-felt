@@ -21,6 +21,106 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **m package — BUILD (F3): Q-F3's own package, `valence_core/mf3/`, and driver, `scripts/mf3_sessions.py`,
+  under the seat's prebuild answers of 2026-11-06 (Q1 (C2), Q5, Q6, Q8), the first node of ADDENDUM-m1 §4 step 5
+  (m:361).
+  It builds Q-F3's keys, the six F3 banners and the reasoning block, the schedules (20 files and their own manifest under
+  `data/mf3/schedules/`), the scaffold (F2 block order; the reasoning-line seed before each menu order, m:159), the
+  runner with the reasoning block and the reasoning-line classes (m:174, m:265), G-VER for F3, the read rules, the bar
+  table, the stage drivers (G-TIME-F3, G-ID-F3, G-F3 and the campaign, stub-tested and not wired), the resume identity
+  with the reasoning-line cap and the weights binding (m:267; Q6), the cached-path source guard, and G-SHAPE-F3.
+  `mf3`'s production code imports ten `valence_core.m` modules unchanged and reaches neither `stages` nor `gshape` (nor
+  `gcal`, either runner, `verify` or `testing`); only its self-test double, `testing.py`, imports m's `testing`.
+  Nothing in `valence_core/m/`, `scripts/m_sessions.py`, `scripts/m_analyze.py` or `data/m/` changes, and m's
+  `package_sha256` stays the OLMo build's `60199b36…feec`.
+  The self-test of record is 136/136, and the site check passes its ten suites. A blind code review found 12 items (1
+  MAJOR, 5 MINOR, 6 NIT, no blocker): 10 applied (finding 5 in part, its rest disclosed under F-2; finding 9 as a
+  descriptive field, its binding flagged F-7), 2 disclosed. A blind values-check ran before commit (93 items: 71
+  confirmed, 3 FAIL, 19 IMPRECISE). Each item was re-checked at source and applied or disclosed, and the self-test and
+  site check were re-run on the final bytes.
+  Not done: G-SHAPE-F3's canonical run follows in its own commit; G-ANL-F3, m:361's node after G-SHAPE-F3, is not built
+  (its commit lands under Q3's rule); no lock is written; the four stage subcommands are refused until their steps.**
+  (Stamp verified at write time: `date -u` → **Fri Nov  6 23:42:50 UTC 2026**.)
+
+  - **The design raw:** `results/raw/2026-11-06_mf3-build_design.md`. It holds the placement and licence, the
+    readiness table per stage (ledger (55)), the files, the PIN register F1–F60, the B items disposed, Q3's calendar
+    fact and riding texts, G-SHAPE-F3's composition, Q6's carry-overs, the hashes and seven flags for the seat.
+  - **Files added and edited** (Q2's statement: no file a lock names is edited):
+    - `valence_core/mf3/` (15 files): `__init__`, `keys`, `banner`, `schedule`, `lines`, `scaffold`, `runner`,
+      `verify`, `readrule`, `bars`, `guard`, `resume`, `stages`, `gshape` and the self-test double `testing`;
+    - `scripts/mf3_sessions.py`;
+    - `data/mf3/schedules/` (20 files + `manifest.json`, sha256 `c7b5df44…3314`);
+    - a commented `data/mf3/` block at the end of `.gitignore`, and `/data/mf3/ckpt/** -diff` in `.gitattributes`.
+  - **The licence (Q1 (C2)), as LOCK-m-F3 v0.1 will name it** (`python scripts/mf3_sessions.py hashes` on the
+    committed tree). The import set is m's ten modules: Q1's list plus `guard`, `resume`, `scaffold` and `readrule`,
+    reused rather than copied (flag F-4).
+    - (a) mf3's `package_sha256` `44110d15941465c59ad01860b6027b98677aac361e76f0fd9185f392813a3842` (15 files;
+      `valence_core.m.resume.package_sha256_of`, imported).
+    - (b) The file sha256 of the ten imported `valence_core.m` modules and of the package's own `__init__.py`, which
+      every m import executes (the review's finding 7): `audit` `16d0abb9…50f6`, `banner` `730442ca…170c`, `bars`
+      `e7f028d8…1d6c`, `corr` `74818109…7fce`, `guard` `6aa5ac2d…8b87`, `keys` `a7d5ee3a…3beb`, `readrule`
+      `fca9e732…7a9e`, `resume` `78f2fc8e…8fb7`, `scaffold` `39d8b32f…21d5`, `schedule` `f262f9e0…2d0d`, `__init__`
+      `b5175bcb…35c4` (in full in the site-check raw's `hashes` section).
+    - The checks: every non-stub stage checks, at start, (a), (b), the analyzer's hash and the lock's text, and the
+      weights binding (Q6). The lock's text must name each hash, each m file by its path and sha256 on one line
+      (finding 8). For the weights, `HF_HUB_OFFLINE` must be "1" and the hub cache's `refs/main` must name the bound
+      revision (finding 5).
+  - **Q2's commit order:** the OLMo build's edits (`gcal.py`, `resume.py`, `scripts/m_sessions.py`) landed at `71cc23c`,
+    before this build; `mf3` imports `resume.py` at that commit's bytes (`78f2fc8e…8fb7`), so the shared-module edit
+    Q2 names precedes LOCK-m-F3 v0.1.
+  - **Readiness (ledger (55)):** G-SHAPE-F3 built and wired; G-TIME-F3, G-ID-F3, G-F3 and the campaign built and
+    stub-tested, their subcommands refused until their steps; G-ANL-F3 and G-PWR for Q-F3 not built.
+  - **Q3's calendar fact at this commit:** no `LOCK-m-OLMo-*.md` exists at root (checked at this commit), no OLMo
+    stage has run and G-ANL-F3 is not built, so neither of Q3's orders is fixed yet. The seat recommends (b) if the pod
+    is up before G-ANL-F3 is built. **The texts that ride in G-ANL-F3's round**, by record anchor, for the seat to
+    confirm: A-m1 §2.5's three items; the VERDICTS read §4 item 2's quirk
+    (`results/raw/2026-10-19_m-design-to-code_VERDICTS_read.md:83`); and round 2's standing rule on misparaphrases in
+    the analyzer's PIN texts (`results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1_round2.md:19`). The design raw §6
+    gives each.
+  - **Q5 and Q8, as built:** the cap trigger counts cap-reach over all six G-TIME-F3 sessions' lines and its report
+    carries the contrast sessions' per-line cap booleans; the cap it fixes (m:294) is applied from G-ID-F3 on, which
+    re-computes it from G-TIME-F3's checkpoint and refuses any other (m:295; finding 4); a scaffold string on a
+    reasoning line is an exclusion event that ends the session (pre-pick on line 1, m:308's domain); the
+    reasoning-line echo is containment over m:258's eight strings as rendered for the session; G-ID-F3's index rule is
+    G-ID-F0m's per template; rule 28(d)(a) is asserted at every generation by token comparison and by character offset
+    (N6).
+  - **What the code review changed** (`…_mf3-build_review.md` §2):
+    - The cached-path source guard is now `valence_core.m.guard`'s hardened scanner, imported and subclassed: the
+      scanner is inherited, and six methods are overridden with Q-F3's names, making mf3's guard the one licence, so
+      Q-F0's licenses nothing for F3 (m:267). m's whole checker battery reproduces through the subclass (finding 1,
+      MAJOR).
+    - G-TIME-F3 prints a contrast reasoning-line exclusion as `excluded@free`, with no class (ruling (h); finding 3).
+    - A gate-stage bar at realised n = 0 is reported, not fired, and no longer pauses: Code's B30, revised by analogy
+      with m:271's Qwen rule ("reported, not fired", said of G-TIME-F0's realised n of 2–4; "on Qwen no such pause
+      exists", said of OLMo's G-TIME pause) (finding 6).
+    - G-F3 reports the contrast sessions' first reasoning lines beside their forced rounds; later lines are withheld
+      (m:297, m:271; finding 12).
+    - Each G-ID-F3 pair reports whether its generations' token counts, cap flags and stop reasons agree. This is
+      descriptive beside m:281's criterion (finding 9).
+    - The self-tests now script the production empty line, `""` at the cap (finding 10).
+    - Two findings are disclosed: the per-line cap list's length (finding 2; flag F-6), and Layer R's scope (finding
+      11).
+  - **G-SHAPE-F3** (m:290) is built as G-SHAPE-F0's layers carried to the F3 templates: 5,632 render placements over
+    A1, A2 and A3 with the `reasoning+seg+gold` control at the free phase, the reasoning line's own placements (Layer
+    R), the runner's static scope (Layer S), and Code's declared check for the build hazard on the Qwen tokenizer of
+    record (Layer T; no model). Its working-tree trial passes; the canonical run follows in its own commit.
+  - **Q6's carry-overs:** the sealed totals line is m's, imported; the weights binding is in `mf3`'s identity
+    (revision `c000ac2c…3282`, weights_sha256 `03922eed…1e26`); the campaign's ruling handling (O4-1 and O1-3,
+    refusals; RM4-1, the RULING-line note), its help and docstring sentences (VC4-1, VC4-2) and the rest of m's
+    pre-load check arrive with the stage subcommands' wiring (flag F-2); O2-3's listing forms go into Q-F3's launch
+    checklist.
+  - **For the seat (the design raw §10).** Each PIN of F1–F60 is strikable until LOCK-m-F3 v1.0. The flags:
+    - F-1: does the step-10 read's Q2 clearance carry to `scripts/mf3_sessions.py`?
+    - F-2: the campaign's Q6 forms and m's pre-load check arrive at their wiring.
+    - F-3: G-SHAPE-F3's Layers R and T.
+    - F-4: the four modules beyond Q1's list.
+    - F-5: G-PWR for Q-F3, owed before LOCK-m-F3 v1.0.
+    - F-6: Q5's per-line cap booleans locate an exclusion's free-round index, which m:263 never prints.
+    - F-7: bind G-ID-F3's `meta_identical`?
+  - **Records:** the self-test of record, `results/raw/2026-11-06_mf3-build_selftest.txt`; the site check,
+    `…_mf3-build_sitecheck.txt`; the code review with Code's dispositions, `…_mf3-build_review.md`; the values-check,
+    `…_mf3-build_valuescheck.md`. Local absolute paths, truncated ones included, are scrubbed in the committed copies.
+
 - 2026-11-06 — **G-DATA (n) — PROPOSAL-n v0.2 §3's first node, model-free: complete, with no STOP. Every [S] figure
   of §0.1 and §2.5 reproduces from the committed copies. BK's rendering is recovered and pinned: the OLMo-2 chat
   template, no system turn, with the generation prompt, and `ids_sha` is the first 16 hex of the sha256 of the JSON id

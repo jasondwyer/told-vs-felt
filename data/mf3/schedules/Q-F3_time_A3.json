@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "granite", "Q": "plaza", "clause": null, "map": 0, "pair": ["granite", "plaza"], "pair_index": 0, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "m-sched|Q-F3|time|A3|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [0, 3, 1, 2],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-time|A3|{s}", "items": "m-f3-items-time|{s}"},
+ "sha256_of_cells": "930cd4f9c3012582c31ab6f5f792e955c2e7fac4da6e87b33876c555477304c6",
+ "table": "m:161-170",
+ "template": "A3",
+ "unit": "Q-F3"
+}

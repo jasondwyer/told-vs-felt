@@ -1,0 +1,31 @@
+{
+ "cells": [
+  {"P": "prism", "Q": "slate", "clause": null, "map": 0, "pair": ["prism", "slate"], "pair_index": 1, "start": 0},
+  {"P": "plaza", "Q": "granite", "clause": null, "map": 1, "pair": ["granite", "plaza"], "pair_index": 0, "start": 0},
+  {"P": "velvet", "Q": "walnut", "clause": null, "map": 0, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 1},
+  {"P": "saddle", "Q": "ridge", "clause": null, "map": 1, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 1},
+  {"P": "slate", "Q": "prism", "clause": null, "map": 1, "pair": ["prism", "slate"], "pair_index": 1, "start": 1},
+  {"P": "granite", "Q": "plaza", "clause": null, "map": 0, "pair": ["granite", "plaza"], "pair_index": 0, "start": 1},
+  {"P": "walnut", "Q": "velvet", "clause": null, "map": 1, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 0},
+  {"P": "ridge", "Q": "saddle", "clause": null, "map": 0, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 0},
+  {"P": "slate", "Q": "prism", "clause": null, "map": 1, "pair": ["prism", "slate"], "pair_index": 1, "start": 0},
+  {"P": "granite", "Q": "plaza", "clause": null, "map": 0, "pair": ["granite", "plaza"], "pair_index": 0, "start": 0},
+  {"P": "walnut", "Q": "velvet", "clause": null, "map": 1, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 1},
+  {"P": "ridge", "Q": "saddle", "clause": null, "map": 0, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 1},
+  {"P": "prism", "Q": "slate", "clause": null, "map": 0, "pair": ["prism", "slate"], "pair_index": 1, "start": 1},
+  {"P": "plaza", "Q": "granite", "clause": null, "map": 1, "pair": ["granite", "plaza"], "pair_index": 0, "start": 1},
+  {"P": "velvet", "Q": "walnut", "clause": null, "map": 0, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 0},
+  {"P": "saddle", "Q": "ridge", "clause": null, "map": 1, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 0}
+ ],
+ "gate": "id",
+ "key_template": "m-sched|Q-F3|id|A2s|0",
+ "kind": "gate",
+ "n": 16,
+ "pi": [1, 0, 2, 3],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-id|F3|A2s|{s}", "items": "m-f3-items-id|{s}"},
+ "sha256_of_cells": "68c5f2316ac076f406128cfd1f7f9d14df248513f578782001947e9da87f5c8a",
+ "table": "m:161-170",
+ "template": "A2s",
+ "unit": "Q-F3"
+}

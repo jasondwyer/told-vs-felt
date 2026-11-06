@@ -262,3 +262,24 @@ __pycache__/
 !/data/n/
 /data/n/*
 !/data/n/bk/
+
+# Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
+# prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
+# G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s
+# layout under their own root -- data/m/ and its manifest are untouched. Only files under ckpt/ carry
+# a contrast pick (the checkpoints, their set-asides and the adjudication excerpts); all of ckpt/ is
+# marked -diff in .gitattributes (m:318). Atomic-write temporaries (*.tmp) stay local.
+!/data/mf3/
+/data/mf3/*
+!/data/mf3/schedules/
+/data/mf3/schedules/*
+!/data/mf3/schedules/*.json
+!/data/mf3/gates/
+/data/mf3/gates/*
+!/data/mf3/gates/*.json
+!/data/mf3/reports/
+/data/mf3/reports/*
+!/data/mf3/reports/*.json
+!/data/mf3/ckpt/
+/data/mf3/ckpt/*
+!/data/mf3/ckpt/*.json

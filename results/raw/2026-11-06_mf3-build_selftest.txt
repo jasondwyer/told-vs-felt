@@ -1,0 +1,144 @@
+# m package — BUILD (F3): the mf3 self-test of record on the final build (valence_core/mf3 package_sha256 44110d15…3842, scripts/mf3_sessions.py sha256 48008a53…64cf, as committed with this raw), on the laptop (Python 3.12.9, the jlens venv), with no model and no pod: the scripted test double drives every session, and G-SHAPE-F3's checks read the Qwen tokenizer of record's tokenizer.json offline. Run after the last edit (the values-check's dispositions). Code stamp: 2026-11-06 23:34 UTC (date -u, after the run); HEAD 1d51673 plus the build's working tree; valence_core/m's package_sha256 60199b36…feec, unchanged. Local absolute paths scrubbed for the public origin: the repository's prefix shown as <repo>, the home directory as <home>, temp and scratch roots as <tmp> -- including roots cut by the self-tests' truncations, whose '...' markers and path tails are kept; nothing else changed. Tally: '136/136 mf3 selftest checks pass'.
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py --selftest
+  [PASS] mf3.keys: stream is valence_core.m.keys.stream (imported, the one key-to-generator function)
+  [PASS] mf3.keys: item keys -- campaign m-f3-items|{s}; gates m-f3-items-{time|id|qual}|{s} (m:159)
+  [PASS] mf3.keys: arm keys -- campaign m|{arm}|{s}, time m-time|{arm}|{s}, id m-id|F3|{t}|{s}, qual m-f3|{t}|{s} (m:159, m:295, m:297)
+  [PASS] mf3.keys: schedule keys m-sched|Q-F3|{arm}|{b} and m-sched|Q-F3|{gate}|{template}|0
+  [PASS] mf3.keys: refusals (G-ID on A2, A1s; id schedule on A3; a Q-F0 template; a gate word 'campaign'; an unknown stage; A0s schedule; A0's role; a sham's sham) [True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.keys: contrast / sham / matched pairs / clause factor (m:159, m:184-186, m:310)
+  [PASS] mf3.keys: no Q-F3 key string equals a Q-F0 or OLMo key string (disjoint streams) []
+  [PASS] mf3.keys: key templates render literal {s}/{b} fields
+  [PASS] mf3.banner: bytes exact for A1 x clause, A1s x clause, A2 (TOLD-OBJ), A3 (COMMON only), P = maple, Q = cedar (m:253-257) []
+  [PASS] mf3.banner: A2s = A2 and A3s = A3 byte for byte (one banner per tier, m:185-186); note lines: two Note lines except A3/A3s (COMMON alone)
+  [PASS] mf3.banner: the reasoning block is m:174's two lines, newline-terminated, n by str(n)
+  [PASS] mf3.banner: refuses a clause missing or a bool on A1, a clause on A2/A3s, A0, P == Q, bad labels, and a reasoning n outside 5..10 or not an int [True, True, True, True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.banner: spec_problems is clean on the proposal of record (six templates, both clauses, the reasoning block at n = 5..10, §2.4's banner column) []
+  [PASS] mf3.banner: spec_problems fires on a mutated TOLD-OBJ / COMMON / reasoning line, an A3 banner with a TOLD line, a mutated arms table or m:174 label, and an absent proposal []
+  [PASS] mf3.banner: re.escape sanity -- every built banner is ASCII, newline-terminated, no blank line
+  [PASS] mf3.schedule: Q-F3's roster is Qwen's of record (e2d.config.ROSTER, via m.schedule)
+  [PASS] mf3.schedule: the exact-recurrence launch rule equals m.schedule._n90_launch on six cases (Q-F0's n_q 24 and Q-F3's 40) [((96, 24, 24, 32), (128, 128)), ((32, 12, 24, 32), (96, 96)), ((144, 35, 40, 16), (176, 176)), ((56, 30, 40, 16), (96, 96)), ((96, 31, 40, 32), (160, 160)), ((...
+  [PASS] mf3.schedule: the launch rule reproduces m:218-228 (cached) and m:232-243 (uncached) row totals, k = 1 included (24,000 / 23,328) {}
+  [PASS] mf3.schedule: k = 1 materialization (the PIN) -- A1 4352 (136 units; uncached 3680 a prefix), A1s 1600 (50), A2 = A3 6384 (399), A2s = A3s 2640 (165)
+  [PASS] mf3.schedule: A3's balance unit is 16 clause-free cells, A1's 32 with clause; each unit balanced; a prefix is a prefix of whole units (extending changes no earlier cell)
+  [PASS] mf3.schedule: a campaign unit = cells[k] for k in stream('m-sched|Q-F3|{arm}|{b}').permutation, recomputed independently
+  [PASS] mf3.schedule: every gate template's sixteen rows meet m:172's balance claims (clause-free form for A2-A3s) {}
+  [PASS] mf3.schedule: gate cells -- clause None where the TOLD line names no labels, the table's clause on A1/A1s; G-TIME-F3 = row j = 0
+  [PASS] mf3.schedule: the clause-free balance check fires on a flipped start and on mixed clauses
+  [PASS] mf3.schedule: G-F3's launch order -- strict rotation in table order, a template leaving at its count (40 launches)
+  [PASS] mf3.schedule: refusals (order out of table order; m > 16; a two-arm interleave; resume counts inconsistent with a rotation; G-ID on A2; zero units) [True, True, True, True, True, True]
+  [PASS] mf3.schedule: the six-arm rotation from zero, arms leaving at their floors; a resume continues where the rotation stopped (['A1', 'A1s', 'A2', 'A2s', 'A3', 'A3s', 'A1', 'A2', 'A3', 'A1'], ['A2s', 'A3', 'A3s', 'A1', 'A1s'])
+  [PASS] mf3.schedule: 20 schedule files + manifest; verify clean, fires on a changed file and an unlisted one; the writer refuses to overwrite a differing file (21, [], ['Q-F3_time_A3.json differs from the regeneration'], ['unlisted file extra.json'])
+  [PASS] mf3.schedule: file objects -- campaign n = the k = 1 row; G-TIME n 1 x 6; G-ID A2s/A3s n 16; G-F3 4/8/4/8/8/8 (m:293-297)
+  [PASS] mf3.schedule: GATE_TABLE is m's, which equals the spec's sixteen rows (m:161-170)
+  [PASS] mf3.lines: the echo set -- m:258's eight strings as rendered for the session plus the headers written so far (N4)
+  [PASS] mf3.lines: clean lines carry no class and no scaffold hit
+  [PASS] mf3.lines: empty = whitespace-only after ws_norm (with the cap reached it is also cap_no_newline)
+  [PASS] mf3.lines: cap_no_newline = stopped on the cap (n_tok == cap); a newline as the cap-th sampled token is a newline stop, not cap-reach; also at cap 120
+  [PASS] mf3.lines: echo fires on COMMON, a TOLD line as rendered, TOLD-OBJ, the label, a header written so far, and a prefixed reproduction (containment, the seat's Q8) {'COMMON': ('echo',), 'told': ('echo',), 'obj': ('echo',), 'label': ('echo',), 'header5': ('echo',), 'prefixed': ('echo',)}
+  [PASS] mf3.lines: no echo for a header not yet written, a case change, a line without its final period, another pair's labels, the label without its colon (complete-line, case-sensitive) {'later header': (), 'lower case': (), 'no period': (), 'other labels': (), 'label without colon': ()}
+  [PASS] mf3.lines: scaffold hits are the Qwen scaffold set's case-sensitive substrings (no class)
+  [PASS] mf3.lines: classes are a set in declared order; the defect is their union once per line
+  [PASS] mf3.lines: refuses inconsistent cap fields, an unknown stop, n out of 5..10, malformed audits [True, True, True, True, True, True, True, True]
+  [PASS] mf3.lines: the Q4 review counter tabulates the three strings per template and kind
+  [PASS] mf3.scaffold: F2 block order -- start 1 gives Q Q P P (m:174), start 0 P P Q Q
+  [PASS] mf3.scaffold: arm-rng draw order (m:159) -- 4 forced seeds, then per choice the reasoning seed, the menu order, the chosen seed; recomputed independently from the key
+  [PASS] mf3.scaffold: the reasoning block at the menu's n (5, then 6), cap carried; the chosen round shares n with its menu
+  [PASS] mf3.scaffold: out-of-order calls refused (reasoning before the forced rounds; a menu before its reasoning seed; a skipped index; a reasoning seed drawn twice) [True, True, True, True]
+  [PASS] mf3.scaffold: f3_config refuses G-TIME cached or at cap 120, a cap outside 60/120, G-ID on A2, a clause on A2 or none on A1, a P off the map [True, True, True, True, True, True, True]
+  [PASS] mf3.scaffold: keys and meta -- campaign m|A3s|5 / m-f3-items|5, j None, format F3, unit Q-F3
+  [PASS] mf3.scaffold: contrast Q rounds deliver the corrupt_m render and P rounds clean text; the sham's are all clean; both templates draw from m-f3-items-qual|1's [:8] P / [8:] Q split in order
+  [PASS] mf3.scaffold: an empty record (no forced round) is out of the domain and records without error
+  [PASS] mf3.scaffold: pre-pick = forced, or reasoning line 1 (the seat's Q8)
+  [PASS] mf3.guard: insulation, the read, label ids and the laptop checklist are valence_core.m.guard's
+  [PASS] mf3.guard: the licence's module set -- the static closure of mf3's production imports is exactly M_MODULES, no stages/gshape/gcal/runner/verify/testing reached, and a fresh interpreter loads none beyond M_MODULES (N1) []
+  [PASS] mf3.guard: the static scan catches a module-level stages import and a lazy runner import (with their closures), and ignores a _selftest-only import
+  [PASS] mf3.guard: m_module_sha256s hashes each licensed module's file and the package's __init__.py (11); package_sha256 is m's formula over valence_core/mf3
+  [PASS] mf3.guard: cached_path_admitted -- PASS on this backend at this cap only; absent, another cap, another backend, FAIL, Q-F0's artifact, one pair and G-TIME-F3 all give uncached {'absent': False, 'pass': True, 'other cap': False, 'other backend': False, 'fail': False, "Q-F0's": False, 'one pair': False, 'time': False}
+  [PASS] mf3.guard: G-ID-F3 never asks for the licence it is the gate of; gid_paths is (False, True)
+  [PASS] mf3.guard: the call-site scanner is valence_core.m.guard's _CallSiteScan, subclassed; six methods are overridden -- the four that bind m's guard module or file (__init__, _flag_licensed_bindings, _is_guard_alias, _licensed), in_gid (m's G-ID function name) and flag (m's names in every inherited message) ['__init__', '_flag_licensed_bindings', '_is_guard_alias', '_licensed', 'flag', 'in_gid']
+  [PASS] mf3.guard: m's checker battery reproduces through the subclass under the name map -- _CLEAN_SRC silent, every one of m's 17 smuggles fires with its needle, and m's 6 gap groups (75 must-fire, 11 must-not-fire) hold {'clean': [], 'smuggles': [], 'missed': [], 'noisy': []}
+  [PASS] mf3.guard: check_call_sites is clean on Q-F3's licensed shapes (a keyword-only path_cached threaded from mf3's cached_path_admitted, by alias or by name; gid_paths inside run_gid_pair_f3; a literal False) []
+  [PASS] mf3.guard: check_call_sites fires on every Q-F3 smuggle (33: Q-F0's licence in three binding forms and m's gid_paths among them) and on an unparsable file (fails closed) []
+  [PASS] mf3.guard: the forbidden-literal scan fires on m's literals, clean otherwise
+  [PASS] mf3.runner: startup -- the e2a ban list (12 strings, ids), audit v2 sha16 pinned, termination patterns, TEMP 0.7, read window 8192
+  [PASS] mf3.runner: 20 scripted F3 sessions reach their declared outcomes (clean x12 over six templates and both starts; forced v2 ends; reasoning-line scaffold on line 1 (pre-pick) and line 3; line classes recorded without an end; free lexical ends; free v2 continues; task-round scaffold stops) []
+  [PASS] mf3.runner: clean sessions -- 4 forced, 6 reasoning lines, 6 reads, 6 chosen rounds; valid, complete, domain, first pick on P
+  [PASS] mf3.runner: a scaffold string on reasoning line 1 ends the session before any read -- excluded at reasoning (ci 0), out of the domain; on line 3 it ends after two reads, the domain kept (the seat's Q8)
+  [PASS] mf3.runner: reasoning-line classes are recorded and end nothing; the production empty line (text "" at the cap) writes "Reasoning (one line):\n\n" into the transcript; a line naming a label is not lexical-claimed and never enters earlier (m:265) [['empty', 'cap_no_newline'], ['cap_no_newline'], ['echo'], [], [], ['empty', 'cap_no_newline']]
+  [PASS] mf3.runner: the adapter saw injections=(), cached=False, TEMP 0.7 and the ban ids on every call; reasoning lines at the reasoning cap, task rounds at STOP_CAP 60
+  [PASS] mf3.runner: at reasoning cap 120 the lines are generated at 120 and the record carries the cap
+  [PASS] mf3.runner: pieces tile the transcript; each menu and reasoning line sits at its piece
+  [PASS] mf3.runner: rule 28(d)(a) halts before any generation on a collapsed token boundary and on a character-offset mismatch (both forms, the seat's Q8 / N6) [True, True]
+  [PASS] mf3.runner: a licensed cached path passes cached=True through on every call, reasoning lines included (m:267); the bytes are the uncached run's on the stub; without the G-ID-F3 PASS on disk the cached session is refused at the runner
+  [PASS] mf3.verify: every scripted F3 record (20) verifies -- clean, excluded, line-ended, hair-stopped {}
+  [PASS] mf3.verify: G-VER fires on a tampered line text, harness byte, line seed, line class, menu order, a contrast record relabelled sham on its shared banner, the cap, a line exclusion's ci, a dropped line {'line text': True, 'harness bytes': True, 'line seed': True, 'line classes': True, 'menu order': True, 'role on a shared banner': True, 'cap': True, 'line-1 ex...
+  [PASS] mf3.verify: a cell other than the committed one is schedule_mismatch, at once
+  [PASS] mf3.verify: a malformed record is template_breakage, never a traceback
+  [PASS] mf3.verify: verify_and_mark sets verified exactly True on a clean record
+  [PASS] mf3.readrule: every scripted F3 record passes the piece check (F3's group order; the reasoning-only last group where a line ended the session)
+  [PASS] mf3.readrule: stripped contrast reads carry the banner and forced rounds only -- no reasoning line, menu, pick or free round
+  [PASS] mf3.readrule: redacted sham reads -- menus gone, chosen tags [config], no label in any free piece or reasoning line; reasoning lines kept
+  [PASS] mf3.readrule: printed reasons -- a contrast line-1 scaffold prints scaffold@reasoning, and excluded@free at G-TIME-F3 (no class, ruling (h)); a contrast later line prints excluded@free at every stage; a sham line prints scaffold@reasoning; a sham free lexical prints lexical@free
+  [PASS] mf3.readrule: session lines are declared forms and carry no label, pick or free index ['qual A1 s=0 valid', 'qual A1 s=2 valid', 'qual A1s s=0 valid']
+  [PASS] mf3.readrule: the stage report covers the six templates; sham blocks carry reasoning-line counts by class; contrast blocks are forced-round counts and line 1's classes and exclusions (pre-pick), free rounds and later lines withheld; no label anywhere
+  [PASS] mf3.readrule: at G-TIME-F3 a contrast block is ruling (h)'s counts plus the per-line cap booleans (Q5)
+  [PASS] mf3.readrule: the G-TIME-F3 strip keeps {phase, ri, n, text} per forced round and the cap booleans
+  [PASS] mf3.readrule: refuses a sham to strip, a contrast to redact, a non-scaffold reasoning class, a line exclusion without ci, an empty report, a record missing a reasoning piece [True, True, True, True, True, True]
+  [PASS] mf3.bars: every declared Q-F3 bar (13) fires and stays silent on its cases (rule 21); m's mandatory and spec-count tables pass on m's arithmetic
+  [PASS] mf3.bars: the four planned critical counts are m:271's (G-TIME-F3 5 and 5; G-F3 19 and 22) {'round_degeneracy@G-TIME-F3': (30, 5, '0.05'), 'reasoning_line_defect@G-TIME-F3': (18, 5, '0.10'), 'round_degeneracy@G-F3': (240, 19, '0.05'), 'reasoning_line_...
+  [PASS] mf3.bars: refuses a Q-F0 scope, a float p0, a justification-less hair trigger, a wrong planned critical count, the lexical bar on A1s, a sham bar on a contrast template, the guard on a sham [True, True, True, True, True, True, True]
+  [PASS] mf3.bars: counts over the sham domain -- lines with any class over lines generated; v2/echo rounds over rounds; lexical rounds over A2s + A3s rounds (4, 49, 1, 86, 1, 54, True)
+  [PASS] mf3.bars: a stage-end bar at realised n = 0 is no test (B30), never a fire
+  [PASS] mf3.bars: declaration rows carry class, unit, p0, alpha, domain (with its text) and cadence (m:292)
+  [PASS] mf3.resume: the identity -- Q-F0's keys plus reasoning_cap, m_module_sha256 and the weights binding; templates in table order; mf3's own package hash
+  [PASS] mf3.resume: refuses a cap outside 60/120, G-TIME at 120 or cached, G-ID without both templates, a pre-lock hash, a malformed weights binding, a pod id, a campaign without its hour cap, a Q-F0 template, a task-round cap other than 60 [True, True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.resume: m's checkpoint machinery on a Q-F3 identity -- a verified F3 record recorded and re-read skip-only; an existing checkpoint refused without --resume; a resume across a cap change or an m module change refused
+  [PASS] mf3.resume: the weights binding is the snapshot's revision and the sha256 of its load files' content addresses; a weight file re-pointed at another blob moves it; a link to an absent blob is refused
+  [PASS] mf3.resume: a stub run is refused under data/mf3 (and m's canonical roots)
+  [PASS] mf3.stages: G-TIME-F3 on the stub -- six sessions, PASS; the cap trigger counts cap-reach over all six sessions' lines (4 contrast + 1 sham = 5 of 36 -> 120); contrast blocks are ruling (h)'s counts plus the per-line cap booleans; the stopped/ended checkpoint persists PASS (None, {'cap_reached': 5, 'fixed_cap': 120, 'lines': 36, 'max_lines': 36, 'rule': "m:174: >= 3 of the reasoning lines G-TIME-F3 generates (<= 36) reach the cap ...
+  [PASS] mf3.stages: G-TIME-F3's stdout, report and reads name no label in a pick-free form; session lines are the declared forms PROVENANCE: {"record":{"D":32,"WARNING":"synthetic apparatus; no OLMo weights were loaded and no result from it is a measurement","adapter":"SELFTEST-STUB -- NO...
+  [PASS] mf3.stages: G-TIME-F3 STOPs when its sham reasoning-line bar fires (6 echo lines of 18 >= 5); the excerpt holds the sham lines; the cap-trigger count is still reported (None, 'STOP')
+  [PASS] mf3.stages: every sham session excluded at its fourth forced round leaves 0 sham lines -- the line bar is reported as no test and not fired, and the stage ends on its other bars (B30, by analogy with m:271's 'reported, not fired') (None, 'PASS')
+  [PASS] mf3.stages: G-TIME-F3 refuses a cached lock, a cap of 120, a pre-lock hash, renders other than the renders of record, a prior stage, and a re-run of its ended checkpoint [True, True, True, True, True, True]
+  [PASS] mf3.stages: a G-TIME-F3 whose lines reach the cap twice (2 of 36 < 3) leaves the cap at 60 (None, {'cap_reached': 2, 'fixed_cap': 60, 'lines': 36, 'max_lines': 36, 'rule': "m:174: >= 3 of the reasoning lines G-TIME-F3 generates (<= 36) reach the cap w...
+  [PASS] mf3.stages: G-ID-F3 runs only at the cap G-TIME-F3's trigger fixes, re-computed from its checkpoint (60 refused where the lines fix 120, 120 where they fix 60; m:294-295); no artifact is written ("NOT THE FIXED CAP: G-ID-F3 would run at reasoning cap 60; G-TIME-F3's lines at <tmp>", "NOT THE FIXED CAP: G-ID-F3 would run at reasoning cap 120; G-TIM...
+  [PASS] mf3.stages: G-ID-F3 -- A2s then A3s, uncached then cached at j = 0 each; 2/2 identical -> PASS; the artifact carries the cap, the backend and both templates' key templates (None, 'PASS')
+  [PASS] mf3.stages: the G-ID-F3 PASS licenses the cached path at its cap only
+  [PASS] mf3.stages: a G-ID-F3 artifact is never overwritten
+  [PASS] mf3.stages: G-ID-F3 reports, beside m:281's criterion, whether the pair's generations agree in token count, cap flag and stop reason -- a transcript-identical pair whose cached line reached the cap is PASS with meta_identical false (descriptive, finding 9); the clean pairs are meta-identical (None, [{'complete': True, 'complete_cached': True, 'complete_uncached': True, 'identical': True, 'j': 0, 'meta_identical': False, 'template': 'A2s'}, {'complet...
+  [PASS] mf3.stages: G-ID-F3 FAILs on a divergent pair (A3s); an incomplete identical A2s pair advances A2s's index to j = 1 before A3s runs (m:281's rule, the seat's Q8) (None, None, [{'template': 'A2s', 'j': 0, 'complete': False, 'identical': True, 'complete_uncached': False, 'complete_cached': False, 'meta_identical': True}, {...
+  [PASS] mf3.stages: G-F3 on the cached path the G-ID-F3 PASS licenses -- 40 sessions, PASS, both bars silent, the contrast arms' first-read flags reported, no label in the report
+  [PASS] mf3.stages: G-F3 refuses a lock fixing uncached where the licence gives cached, a cap other than the one G-TIME-F3's trigger fixes, and (at the fixed cap) a G-ID-F3 artifact at another cap ('PATH MISMATCH (G-F3): the lock fixes the uncached path; the G-ID-F3 licence on t', 'G-ID ARTIFACT AT ANOTHER CAP: <tmp>...
+  [PASS] mf3.stages: the campaign refuses a cap other than G-F3's NOT THE FIXED CAP: the campaign would run at reasoning cap 120; G-F3 at <tmp>
+  [PASS] mf3.stages: a campaign on the stub runs the six-arm rotation to every floor (12 launches) -> COMPLETE with an end look; the report is pick-free (no reads file, no first-pick share) (None, 'COMPLETE')
+  [PASS] mf3.stages: a look evaluates round_degeneracy and reasoning-line defects over the three shams, the pooled lexical bar over A2s + A3s, and both guards per contrast arm (9 results)
+  [PASS] mf3.stages: a scaffold string on a contrast session's third reasoning line STOPs the campaign, announced by phase alone (class withheld, m:318 exception (1)); the stop block keeps the class (None, '<tmp>/mf3/ckpt/camp-stop.json\nREPORT <tmp>/mf3/...
+  [PASS] mf3.stages: a crash mid-session keeps what was written (the interrupted session is not recorded); a --resume skips every finished session and completes (True, 2, None)
+  [PASS] mf3.stages: a PI stop ends a launched campaign terminal (PI-STOP), its text in the checkpoint only (None, 'PI-STOP')
+  [PASS] mf3.stages: the licence (C2) is clean when the committed lock names the analyzer's and mf3's hashes, each m file (the ten modules and __init__.py) by name with its sha256 on one line, and the weights, they hold now, the load is offline and refs/main names the bound revision []
+  [PASS] mf3.stages: the licence refuses each of 10 departures (another package, a moved, absent or unlisted m file, other weights, a lock not naming them, naming the m hashes without their files or under swapped names, an online load), a refs/main moved to another revision or not the raw revision, and an uncommitted proposal edit ([], ["weights: the hub cache's refs/main for mlx-community/Qwen3.6-27B-4bit is 'dddddddddddddddddddddddddddddddddddddddd', not the bound revision (raw text) --...
+  [PASS] mf3.stages: guard.check_call_sites is clean over mf3 (the path threads from cached_path_admitted and gid_paths) []
+  [PASS] mf3.gshape: G-SHAPE-F3 on the working tree -- PASS: Layer A 5,632 placements (A1 2,816; A2 and A3 1,408) none fired, coverage exact; seg+gold and reasoning+seg+gold fire 100%; Layer R none fired, its control 100%; Layer S clean; Layer T every join holds on the tokenizer of record []
+  [PASS] mf3.gshape: STOPs on a fired placement, a coverage gap, a runner scoring its segment, and a reasoning line reaching earlier {'a fired placement': 'STOP', 'a dropped placement': 'STOP', 'a runner scoring the segment': 'STOP', 'a line entering earlier': 'STOP'}
+  [PASS] mf3.gshape: Layer T fires on a tokenizer whose joint encode collapses the boundary 640
+  [PASS] mf3.gshape: the artifact is write-once (identical accepted, different refused); a seamed run never writes the canonical path
+  [PASS] mf3.gshape: the tokenizer of record is read from the snapshot of record only (an absent file refuses)
+  [PASS] mf3.gshape: Layer S's dynamic evidence names runner self-test checks that exist (by their chk names) []
+  [PASS] mf3_sessions: MODULES lists every mf3 module but the package marker and the test double []
+  [PASS] mf3_sessions: --build-schedules writes 21 files that verify clean, re-runs identically, and refuses a differing existing file (exit 2) (0, 0, 2)
+  [PASS] mf3_sessions: data/mf3/schedules equals a fresh regeneration byte for byte, manifest included (20 + 1) []
+  [PASS] mf3_sessions: gshape --out runs G-SHAPE-F3 as a test run -- PASS; stdout is INVOCATION then the summary lines (counts and hashes, no label) G-SHAPE-F3 Layer R: 8448 line placements, 0 fired, coverage exact True; control 8448/8448
+G-SHAPE-F3 Layer S: 0 problems; Layer T: 640 joins, 0 failed (tokenize...
+  [PASS] mf3_sessions: time, id, qual and campaign are refused at the F3 build (exit 2), each named {'time': 2, 'id': 2, 'qual': 2, 'campaign': 2}
+  [PASS] mf3_sessions: no action is refused (exit 2) and INVOCATION is the first line
+  [PASS] mf3_sessions: hashes prints mf3's package sha256, the eleven m files' (the ten modules and __init__.py) and the weights binding of record 8c854f45c65211f2b2e9c138d43fdacd2a3314
+WEIGHTS mlx-community/Qwen3.6-27B-4bit revision c000ac2c2057d94be3fa931000c31723aac53282 sha256 03922eed43c73bf4af06cf4c5...
+  [PASS] mf3_sessions: the cached-path source guard is clean over mf3 and this driver, and fires on a planted cached=True []
+  [PASS] mf3_sessions: no forbidden literal in mf3 or this driver []
+  [PASS] mf3_sessions: the licence's import set holds (static closure and a fresh interpreter, N1) []
+  [PASS] mf3_sessions: the quarantined state-present module is not loaded after the self-test
+  [PASS] mf3_sessions: the F3 build changes nothing in valence_core/m -- its package hash is the OLMo build's 60199b36...feec
+  136/136 mf3 selftest checks pass
+real 36.05
+user 34.60
+sys 1.27

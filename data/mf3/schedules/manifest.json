@@ -1,0 +1,26 @@
+{
+ "construction": "PROPOSAL-m v1.11 m:159-172 (Q-F3)",
+ "files": {
+  "Q-F3_campaign_A1.json": "cfc8df1a11214061206ee4d28a800ef14201c0d7e0aa70b8cb123d75c8846eeb",
+  "Q-F3_campaign_A1s.json": "f3a0682bf1fead75712f2118f6b21c6ec83d10e2df36222be85528df490caee2",
+  "Q-F3_campaign_A2.json": "a33df12c2dd1f534a4fff818f329cca5b43304c0fcf6547c7d057c1b31af02cb",
+  "Q-F3_campaign_A2s.json": "319180e54c7f6e225a88b38186e14b887ed53c92fe5cea8f2baedb91615b4d17",
+  "Q-F3_campaign_A3.json": "13bd869785f81c7527851bc84fc1226ad3b2fa79e22da54af171cf4e89aee059",
+  "Q-F3_campaign_A3s.json": "de0826c8b643de64550a57bcaaa0fd1a302f22644ca4b3a6693dcd93035814e2",
+  "Q-F3_id_A2s.json": "aac9cddf059c8334f9854a41876feda1bf1e860f5d6c7c0be94cda97c0af1740",
+  "Q-F3_id_A3s.json": "ad5671cb5f1fc685ed992dfd2508afe154a1b48c501836a0a9462879b6fe2fad",
+  "Q-F3_qual_A1.json": "8e023de668481f1450ea647f62f13c3c3cd08d5e553c410b8ece686c23f9dea0",
+  "Q-F3_qual_A1s.json": "67acb9581556ba78c28c09e278596807fe89952ad76184aa205e68be0bbdc07b",
+  "Q-F3_qual_A2.json": "38bcc425d568fcb18f1bc3bb789da35d94163544f81faba58b33d53062555223",
+  "Q-F3_qual_A2s.json": "a0199a2cac2729b1d36950a303cb39182b64fb1e868d0052aafb88c186560500",
+  "Q-F3_qual_A3.json": "a07b9a859036d94c956b5a00fca90d473cab5c4a80b9dd1535e80d72170b5eb2",
+  "Q-F3_qual_A3s.json": "001cef2c96e6924402dd332ae685259e460157dfc7c08579c125655cd69909df",
+  "Q-F3_time_A1.json": "493e3ae7969f9b9569b59af76976d73593dd3525b75416e1c6b364fb6423c6da",
+  "Q-F3_time_A1s.json": "0a374318e7083233fa6068b4864de6e3e07f42d151bab2d6d4a3e98d94d7949f",
+  "Q-F3_time_A2.json": "f857324bbd9d28a15b1364576fde052a2d506a60d7c40a5f0411c7271bad45fe",
+  "Q-F3_time_A2s.json": "27abc7b2972c265fb79925d086e6573c5521d7b4fbf933124927117c18d50753",
+  "Q-F3_time_A3.json": "13b1f9d65778cd0ba2626ea5ec50055f607e7d0c41dc826a946888be5979a98d",
+  "Q-F3_time_A3s.json": "cdd9af288ba07633a2193b49d1e19bc2a7c1dea346e6f5bd64c5b1a5a45fdebe"
+ },
+ "schema": "m-schedules-manifest-v1"
+}

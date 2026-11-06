@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "prism", "Q": "slate", "clause": null, "map": 0, "pair": ["prism", "slate"], "pair_index": 1, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "m-sched|Q-F3|time|A2s|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [1, 2, 3, 0],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-time|A2s|{s}", "items": "m-f3-items-time|{s}"},
+ "sha256_of_cells": "8fd4cfee752b50eb264688104a9cec9470855d3248bb41793c809c74fba1aa89",
+ "table": "m:161-170",
+ "template": "A2s",
+ "unit": "Q-F3"
+}
