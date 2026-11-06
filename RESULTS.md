@@ -21,6 +21,108 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **PROPOSAL-n v0.2 COMMITTED (routed by the PI, PI date 2026-11-06) at its §8 step 3, its minor
+  residues carried as dated notes under the routing's process line.
+  The reconciliation unit's pre-registration is now tracked at root as `PROPOSAL-n-bk-reconciliation-v0_2.md`, sha256
+  `30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4`. It asks, one factor at a time, five things
+  (§1): whether Berg & Kaiser's fixed-text hidden-state effect on OLMo-2-32B Instruct replicates in this program's
+  hands; whether it is present at this program's dose; whether this program's evaluative axis moves their apparatus;
+  whether their apparatus registers an instructed preference; and whether their design moves choice on Qwen3.6-27B.
+  v0.1 (`9248d06c…b6a6`) moves to `archive/`, uncommitted, and BK's G-DATA (ii) files are copied into `data/n/bk/`
+  with their shas and the attribution line.
+  Step 1: HEAD is `db97d8e`, three local commits ahead of origin's `9cbacdb`, and no n artifact exists. Step 2: every
+  referent of §9 resolves and every [S] figure reproduces. Nothing is substantive; there are five minor notes,
+  N1–N5. N1 identifies BK's per-read fidelity scale by reproduction, because no released file states it.
+  Each unit's state at this commit: N-pod *registered under PROPOSAL-n v0.2; D_n = 2026-12-15; unlocked*; N-lap
+  *registered under PROPOSAL-n v0.2; D_n-lap = 2027-01-15; unlocked; after Q-F3's campaign*.
+  Not done: G-DATA (step 4) waits for the OLMo-2 Instruct tokenizer, which this machine does not have; nothing of the
+  unit is built; and no pod has started for it.** (Stamp verified at write time: `date -u` →
+  **Fri Nov  6 17:56:21 UTC 2026**.)
+
+  - **The routing, the PI's word, quoted verbatim so the record carries it.** It is quoted as the F3 STOP entry's
+    close line (`dc1ffe1`) quotes it, and it is the record of §0.9's decisions.
+
+    > Routing — PROPOSAL-n v0.2 and the Q-F3 prebuild answers — PI date 2026-11-06 (I confirm the date).
+    >
+    > Files on the laptop, untracked, committed by Code at their steps:
+    >   PROPOSAL-n-bk-reconciliation-v0_2.md
+    >     sha256 30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4  (supersedes v0.1; v0.1 to archive/ at step 3)
+    >   results/raw/2026-11-06_f3-build_design-to-code_prebuild-answers.md
+    >     sha256 aec58440c8b1774bef1277bd29865b72cd1cc385e6c507e159ab82814fb64df3
+    >
+    > PROPOSAL-n: A1 negative pole: [struck beyond d = −1]. A2 §0.7's rule-13 departure: [confirmed].
+    >   Route A request: [not sent]. Everything else as the 11-05 routing had it.
+    > Q-F3 (Q7): LOCK-m-F3 v1.0 carries "preprint of record pending"; v2's sentence table is built at the
+    >   Q-F3 VERDICTS session against the posted v1: [confirmed].
+    >
+    > Run the prebuild answers as written, then PROPOSAL-n v0.2 §8 from step 1. STOP on anything unresolved;
+    > minor residues as dated notes (the e9b5022 precedent). No pod start without my go.
+
+  - **§0.9's decisions, as the routing gives them.** "Everything else as the 11-05 routing had it" carries the 11-05
+    block's PROPOSAL-n lines and its pod-order line (one of the block's ADDENDUM-m1 lines). The ADDENDUM-m1 entry
+    below quotes that block. The letter is n, and the state-present told control takes o.
+    1. The date: 2026-11-06, confirmed.
+    2. A2, §0.7's rule-13 departure: confirmed.
+    3. A1, the negative pole: struck beyond d = −1. These are the counts the document is written on (§0.4).
+    4. Route A's request: not sent. So the direction of record is Route B's reconstruction alone, as LOCK-n v0.1
+       will state (§0.8).
+    5. The units of record: N-pod now; N-lap after Q-F3's campaign.
+    6. The Clock and the budget:
+       - D_n = 2026-12-15 and D_n-lap = 2027-01-15, each the day inclusive to 23:59:59 UTC, committer date of the
+         unit's LOCK v1.0 (§7.4);
+       - the N-pod budget is 8 h, the cap set by the PI at LOCK-n v1.0 (§2.7).
+    7. The order on the pod: A-m1's OLMo units first, then N-pod.
+  - **Step 1, the delta read.**
+    - v0.2 hashes to the routing's sha256, and v0.1 to the sha256 v0.2's header names.
+    - The untracked root holds the same 28 entries as at the session's start, and the routing names only v0.2 among
+      them.
+    - No `data/n/`, `valence_core/n/`, `scripts/n_*` or `LOCK-n*` exists, and git has no history for them.
+  - **Step 2, the referent check** (`results/raw/2026-11-06_n-v0_2_referent-check.md`).
+    - Every referent of §9 resolves: in this repository, in BK's PDF and in BK-repo at `7631f8a`. The referents
+      carried from v0.1's check are re-confirmed against sources that are byte-unchanged since `24ebeae`.
+    - Every [S] figure reproduces (the raw §2.4). The statistical ones come from `reduced.json`'s 160 neutral
+      sessions, the counts and 0.916/3 from v0.2's own arithmetic, and the ladder's 0.1222 from `figureA10.csv`.
+    - The five dated notes:
+      - **N1**: BK's per-read fidelity scale.
+        - §2.1 and §9 locate its definition in `analysis.json`'s `prereg.precondition_cache`. That field names TAU as
+          scale-relative and defines no scale, and no released file or the paper defines it.
+        - max(|log p(S)|, |log p(U)|) reproduces BK's `mean_scale_nats` 11.153449684153905 exactly over their 2,640
+          adjudicable reads. It also reproduces their session-level retention at ×0.25, ×0.5, ×0.75 and ×1.0 of TAU
+          (93, 233, 240 and 240 of 240), and 0.20 divided by the mean scale gives their
+          `absolute_tolerance_as_fraction_of_scale` exactly.
+        - G-DATA (vi) records it as the definition of record, by reproduction (C13's form), unless the seat rules
+          otherwise.
+        - Under it, BK's per-read rate at TAU is 0 of 2,400, so p0 = 0 and §2.1's binomial is a hair trigger in rule
+          21's zero-base-rate form. G-DATA (vi) computes and records this.
+      - **N2**: §2.1's rule re-computes every read at d ∈ {0, ±1}, including N4's 320 reads at d = 0, which §2.4's
+        list omits. The totals come to 3,472 re-computations (the 10% sample is 432) and 10,832 forwards, against the
+        document's ≈ 3,140 and ≈ 10,500. These are planning values.
+      - **N3**: §7.4's "no recourse" beside decision (16). Code reads the parenthetical as governing: one
+        re-registration under (16) for a unit with no session.
+      - **N4**: ledger (55)'s anchors resolve at `9cbacdb`; `71cc23c` has since built both.
+      - **N5**: BK's files are copied at step 3, as §8 orders. G-DATA (ii) re-verifies them. `data/n/` is
+        gitignored, so the commit adds a per-directory `.gitignore` exception for `data/n/bk/` alone.
+  - **BK's files** (`data/n/bk/`, 35 MB, `reduced.json` 28 MB of it).
+    - **Contents.** The G-DATA (ii) set:
+      - the 14 skeleton files holding the 160 neutral OLMo-2-32B Instruct session records;
+      - `figure3.csv`, `figure4.csv`, `figureA8.csv`, `figureA10.csv` and `table1_banks.csv`;
+      - `neutral_passages/{reduced,prereg,analysis,spec}.json` and `strength_ladder/{analysis,spans}.json`.
+    - **Code's addition**: BK's `LICENSE` notice (N5).
+    - **Copies.** 26 files, each byte-identical to the clone at BK's own path. `SHA256SUMS` checks 26 of 26, and the
+      skeleton concatenation hashes to `be50011a…`, as v0.1's STOP raw §6 records.
+    - **The attribution line**, as `data/n/bk/SOURCE.md` has it: "Berg, C. & Kaiser, C. (2026). *Language Models Act
+      on Hidden Valence*. arXiv:2609.35591 v2. Replication files from the authors' repository,
+      github.com/camberg23/act-on-valence, at commit `7631f8a06cdeffaf8b7a89212e5ccbe55a657732` (tree
+      `d6f1d50525874355d1ea992f8f652358742ae282`, committed 2026-10-05), licensed CC BY 4.0."
+  - **The blind values-check** (`results/raw/2026-11-06_n-v0_2_entry_valuescheck.md`): 188 items, 172 PASS, 0 FAIL,
+    16 IMPRECISE. Each item was re-checked at source and applied, and the raw records the dispositions. One item
+    changed a figure: N2's count, 3,184 before, 3,472 now. One added a file to this commit: `.gitignore`.
+  - **Committed by path:** the proposal; `.gitignore`; `data/n/bk/` (the 26 files, `SHA256SUMS`, `SOURCE.md`); the
+    referent-check raw; the values-check raw; this entry.
+  - **Not pushed.** The origin is public, and a push waits for the PI's word. At that push, the URL-host screen will
+    find one host that is not on N12's `PUBLIC_HOSTS`: `creativecommons.org`, in BK's `LICENSE` notice and in the
+    values-check raw's verbatim quote of it.
+
 - 2026-11-06 — **G-SHAPE-F0 — the canonical re-run after the OLMo build (`71cc23c`), before the first LOCK-m-OLMo
   v0.1: PASS.
   The OLMo build edited `scripts/m_sessions.py`, a TOOLING_FILES entry of PIN-S10's map, beyond subcommand wiring. So

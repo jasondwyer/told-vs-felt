@@ -251,3 +251,14 @@ __pycache__/
 # The seat's legibility read of record (markdown, design -> Code via the PI; m:176 condition (3),
 # carried into LOCK-m-F0 v0.1).
 !/data/m/gates/G-CAL_seat_read_of_record.md
+
+# PROPOSAL-n's BK inputs (v0.2 §8 step 3; G-DATA (ii)): Berg & Kaiser's
+# replication files, byte-for-byte copies from their repository at 7631f8a
+# (CC BY 4.0), with SHA256SUMS and SOURCE.md. The unit's [S] figures, its
+# rendering check and its fidelity p0 are computed from them, so they are
+# record, not cache (ledger 27). Admitted as one fixed folder whose every
+# file SHA256SUMS lists; nothing else under data/n/ is admitted, and any
+# later n artifact (captures, checkpoints, reads) needs its own line.
+!/data/n/
+/data/n/*
+!/data/n/bk/
