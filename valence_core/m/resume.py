@@ -94,6 +94,38 @@ IDENTITY_KEYS = ("unit", "stage", "template_set", "lock_sha256", "schedule_sha25
                  "stop_cap", "hour_cap", "n", "key_templates", "audit_v2_sha16", "ban_sha",
                  "backend_identifier", "pod_id", "proposal_sha256", "package_sha256",
                  "pool_sha16", "renders_sha16")
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the weights snapshot bound in the OLMo
+# identity -- the seat's prebuild answers of 2026-11-06, Q6: "The weights-snapshot binding in
+# the identity goes into each unit's identity at its own build: ... the OLMo identity at the
+# wiring build", carrying the step-10 read's Q5 ("a later unit may add it at its step 4"). An
+# OLMo identity carries one more key, weights_sha256 = data/olmo/manifest.json's
+# files_aggregate_sha256 for the unit's checkpoint (the manifest the respawn protocol's step (i)
+# re-hashes the volume against), read from the working tree, which the driver requires committed
+# (stage_identity_extra's weights check reads the committed blob); Q-F0's key set is unchanged, so
+# every Q-F0 record reads as before.
+IDENTITY_KEYS_OLMO = IDENTITY_KEYS + ("weights_sha256",)
+MANIFEST_PATH = REPO / "data" / "olmo" / "manifest.json"
+TOTALS_SEALED = ("hour_cap_ms_used and the sessions' total differ (neither figure printed: the step-14 read, "
+                 "Q3; the checkpoint holds both)")
+
+
+def identity_keys(unit: Any) -> tuple[str, ...]:
+    """The identity's key set for ``unit``: IDENTITY_KEYS_OLMO on an OLMo unit, else IDENTITY_KEYS."""
+    return IDENTITY_KEYS_OLMO if isinstance(unit, str) and unit.startswith("OLMo-") else IDENTITY_KEYS
+
+
+def weights_sha256_of_record(ckpt: str, path: str | os.PathLike | None = None) -> str:
+    """data/olmo/manifest.json's files_aggregate_sha256 for ``ckpt`` (64 lower-case hex), read
+    from the working tree; the driver refuses an uncommitted manifest before a non-stub load."""
+    p = Path(MANIFEST_PATH if path is None else path)
+    try:
+        v = json.loads(p.read_text(encoding="utf-8"))[ckpt]["files_aggregate_sha256"]
+    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError) as e:
+        raise ValueError(f"weights of record: {p} has no files_aggregate_sha256 for {ckpt!r} "
+                         f"({type(e).__name__})") from None
+    if type(v) is not str or not _HEX64.match(v):
+        raise ValueError(f"weights of record: {p}[{ckpt}].files_aggregate_sha256 is not 64 lower-case hex")
+    return v
 # PIN (Code, declared at LOCK v0.1): the statuses a gate stage's persisted end may
 # carry (stage_end.status); G-ID's verdicts are its PASS / FAIL / NOT-DETERMINED.
 STAGE_END_STATUSES = ("PASS", "STOP", "PAUSE", "FAIL", "NOT-DETERMINED")
@@ -372,7 +404,7 @@ def Identity(*, unit: str, stage: str, template_set, lock_sha256: str, schedule_
              backend_identifier: str, proposal_sha256: str, stop_cap: int = STOP_CAP,
              key_templates: Mapping | None = None, pod_id: Any = _AUTO,
              package_sha256: Any = _AUTO, pool_sha16: Any = _AUTO,
-             renders_sha16: Any = _AUTO) -> dict:
+             renders_sha16: Any = _AUTO, weights_sha256: Any = _AUTO) -> dict:
     """Build and validate a resume identity (DESIGN §1.9's keys, m:267's contents).
 
     Returns a plain JSON-native dict, so a recorded identity and a rebuilt one compare
@@ -381,6 +413,8 @@ def Identity(*, unit: str, stage: str, template_set, lock_sha256: str, schedule_
     campaign (required there) and to None everywhere else (forbidden there).
     ``package_sha256`` / ``pool_sha16`` / ``renders_sha16`` default to this process's
     package and the pool and renders of record (a stage passes the values it serves).
+    ``weights_sha256`` (OLMo only; IDENTITY_KEYS_OLMO) defaults to the manifest's weights of
+    record for the unit's checkpoint; a Qwen identity carries none and refuses a value.
     """
     tpls = keys.templates(unit)                  # ValueError unknown, NotImplementedError Q-F3
     sub = "qwen" if unit == "Q-F0" else "olmo"
@@ -454,13 +488,22 @@ def Identity(*, unit: str, stage: str, template_set, lock_sha256: str, schedule_
              "backend_identifier": backend_identifier, "pod_id": pod_id,
              "proposal_sha256": proposal_sha256, "package_sha256": package_sha256,
              "pool_sha16": pool_sha16, "renders_sha16": renders_sha16}
+    if sub == "olmo":
+        if weights_sha256 is _AUTO:
+            weights_sha256 = weights_sha256_of_record(unit[len("OLMo-"):])
+        if type(weights_sha256) is not str or not _HEX64.match(weights_sha256):
+            raise ValueError("weights_sha256 must be a sha256 hex digest (the manifest's weights of record)")
+        ident["weights_sha256"] = weights_sha256
+    elif weights_sha256 is not _AUTO:
+        raise ValueError("only an OLMo identity carries weights_sha256 (Q-F0's key set is unchanged)")
     return json.loads(_canon(ident))
 
 
 def _validated(identity: Mapping) -> dict:
-    if not isinstance(identity, Mapping) or tuple(sorted(identity)) != tuple(sorted(IDENTITY_KEYS)):
+    want = identity_keys(identity.get("unit")) if isinstance(identity, Mapping) else IDENTITY_KEYS
+    if not isinstance(identity, Mapping) or tuple(sorted(identity)) != tuple(sorted(want)):
         got = sorted(identity) if isinstance(identity, Mapping) else type(identity).__name__
-        raise ValueError(f"identity keys must be exactly {IDENTITY_KEYS}; got {got}")
+        raise ValueError(f"identity keys must be exactly {want}; got {got}")
     rebuilt = Identity(**dict(identity))
     if _canon(rebuilt) != _canon(dict(identity)):
         raise ValueError("identity is not in Identity()'s canonical form (template order, "
@@ -546,8 +589,14 @@ def _check_state(ck: Mapping, where: str = "checkpoint") -> None:
             bad(f"session {i} lies outside the identity's templates or n (an orphan)")
         if rec.get("verified") is not True:
             bad(f"session {i} is not a verified record (G-VER runs before a record is written, m:284)")
+    # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the step-14 read's Q3 -- "a CHECKPOINT
+    # STATE INCONSISTENT line ... goes to the seat in a sealed form ... No package revision for
+    # Q-F0; the message is flagged for the next unit's step 4, where the package moves anyway" --
+    # and the prebuild answers' Q6 ("the next unit" is the OLMo wiring build): the line names
+    # the inconsistency and prints neither total (a contrast arm's time is in the sum); the
+    # checkpoint on disk holds both. TOTALS_SEALED is its text.
     if ms != st["hour_cap_ms_used"]:
-        bad(f"hour_cap_ms_used {st['hour_cap_ms_used']} != the sessions' {ms} ms")
+        bad(TOTALS_SEALED)
     if "provenance" in ck:
         prov = ck["provenance"]
         if type(prov) is not list or not all(
@@ -1172,6 +1221,40 @@ def _selftest(chk) -> None:
                 if not refuses(fn, exc=exc):
                     accepted.append(nm)
         chk(f"resume: Identity refuses each malformed identity ({len(bad_ids)})", not accepted, accepted)
+        # the weights snapshot in the OLMo identity (the prebuild answers' Q6; IDENTITY_KEYS_OLMO)
+        man = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        with env_pod("podA"):
+            io_w = olmo_campaign()
+            io_x = olmo_campaign(weights_sha256="ab" * 32)
+            bad_w = [refuses(lambda: olmo_campaign(weights_sha256=v), exc=ValueError)
+                     for v in ("ab" * 8, "AB" * 32, None, 7)]
+        with tempfile.TemporaryDirectory() as tmw:
+            mw = Path(tmw) / "manifest.json"
+            mw.write_text(json.dumps({"dpo": {"files_aggregate_sha256": "zz"}}), encoding="utf-8")
+            w_bad_file = refuses(lambda: weights_sha256_of_record("dpo", mw), exc=ValueError, needle="64 lower-case hex")
+            w_missing = refuses(lambda: weights_sha256_of_record("sft", mw), exc=ValueError, needle="no files_aggregate")
+        chk("resume: an OLMo identity carries weights_sha256, the committed manifest's files_aggregate_sha256 for its "
+            "checkpoint (IDENTITY_KEYS_OLMO); a Qwen identity keeps IDENTITY_KEYS and refuses a value; a malformed "
+            "value or manifest entry is refused",
+            tuple(sorted(io_w)) == tuple(sorted(IDENTITY_KEYS_OLMO))
+            and io_w["weights_sha256"] == man["dpo"]["files_aggregate_sha256"]
+            and identity_keys("OLMo-dpo") == IDENTITY_KEYS_OLMO and identity_keys("Q-F0") == IDENTITY_KEYS
+            and identity_keys(None) == IDENTITY_KEYS and io_x["weights_sha256"] == "ab" * 32 and all(bad_w)
+            and refuses(lambda: qf0(weights_sha256="ab" * 32), exc=ValueError, needle="only an OLMo identity")
+            and "weights_sha256" not in i0 and w_bad_file and w_missing, (sorted(io_w), bad_w))
+        with env_pod("podA"):
+            cw = td / "weights_ckpt.json"
+            write_checkpoint(cw, load_or_init(cw, io_w, False))
+            w_same = load_or_init(cw, io_w, True)["identity"] == io_w
+            w_other = refuses(lambda: load_or_init(cw, io_x, True), needle="weights_sha256")
+            w_absent = refuses(lambda: load_or_init(td / "w2.json", {k: v for k, v in io_w.items()
+                                                                     if k != "weights_sha256"}, False), exc=ValueError)
+            w_qwen = refuses(lambda: load_or_init(td / "w3.json", {**i0, "weights_sha256": "ab" * 32}, False),
+                             exc=ValueError)
+        chk("resume: a resume of an OLMo checkpoint under other weights of record is refused naming weights_sha256; "
+            "an OLMo identity without the key, or a Qwen one with it, is refused before any write",
+            w_same and w_other and w_absent and w_qwen and not (td / "w2.json").exists()
+            and not (td / "w3.json").exists())
         chk("resume: load_or_init refuses a hand-built identity with an extra or missing key",
             refuses(lambda: load_or_init(td / "x.json", {**i0, "seed": 1}, False), exc=ValueError)
             and refuses(lambda: load_or_init(td / "x.json", {k: v for k, v in i0.items()
@@ -1431,9 +1514,21 @@ def _selftest(chk) -> None:
             atomic_write_json(td / "hours_t.json", tampered)
             reset = refuses(lambda: load_or_init(td / "hours_t.json", ih, resume=True),
                             needle="hour_cap_ms_used")
+            tampered["state"]["hour_cap_ms_used"] = 7654321
+            atomic_write_json(td / "hours_s.json", tampered)
+            try:
+                load_or_init(td / "hours_s.json", ih, resume=True)
+                sealed_msg = ""
+            except SystemExit as e:
+                sealed_msg = str(e)
         chk("resume: hour cap accumulates across resumes; silent below, fires at the cap (>=)",
             under is False and at is True and hk["state"]["hour_cap_ms_used"] == 3600, (under, at))
         chk("resume: hour cap refuses an override and a reset counter on disk", over_ride and reset)
+        chk("resume: the inconsistent-totals line is sealed at the package (the step-14 read's Q3, carried to the OLMo "
+            "build by the prebuild answers' Q6) -- it names the inconsistency and prints neither the state's figure nor "
+            "the sessions' sum",
+            "CHECKPOINT STATE INCONSISTENT" in sealed_msg and TOTALS_SEALED in sealed_msg
+            and "7654321" not in sealed_msg and "3600" not in sealed_msg, sealed_msg)
         with env_pod(None):
             chk("resume: a stage with no cap is never capped",
                 hour_cap_exceeded(ck2, None) is False)

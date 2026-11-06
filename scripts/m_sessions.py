@@ -59,7 +59,7 @@
                       G-CAL_seat_read_request.md (for a blind read: the recording instruction,
                       then the renders alone, then the key); never overwrites a differing file.
                       Exit 0 written or identical, 2 refused, 4 STOP. --out DIR as gport's.
-  gcal completability --proposal-file F [--resume] [--out DIR]
+  gcal completability --proposal-file F [--resume] [--out DIR] [--unit U]
                       condition (4) on Qwen, loaded only via qwen_or_explain: 128 uncached
                       generations under f0's procedure (m:176), graded by f0's grader ported
                       verbatim; checkpoint data/m/ckpt/G-CAL_qwen.json (skip-only resume),
@@ -67,7 +67,13 @@
                       computed from its committed blob. Every refusal that needs no model
                       (proposal, checkpoint, model-free artifact, laptop preflight, gate line)
                       runs before the load. Exit 0 PASS, 4 FAIL or STOP, 2 refusal. --out is the
-                      selftest's (a scripted stub) and is refused on the Qwen path.
+                      selftest's (a scripted stub) and is refused on the Qwen path. With
+                      --unit OLMo-{ckpt}: G-CAL-OLMo-{ckpt} (m:176, m:302) on the box -- the same
+                      128 generations under b3's banner and generation path, the files
+                      G-CAL_completability_olmo-{ckpt}.json and G-CAL_olmo-{ckpt}.json, the pod
+                      id, the driver and the weights of record checked before the load (the
+                      DRIVER and WEIGHTS lines), a resume refused on another pod, and a FAIL
+                      marking that checkpoint NOT-RUN ("dose not completable").
                       Both gcal commands map any other SystemExit (a corr STOP, the insulation
                       guard's, the loader's) to 4 with its message.
   gshape [--out DIR]  G-SHAPE-F0 (§8 step 7, m:277), model-free: the 16 renders of record (read
@@ -86,7 +92,8 @@
                       precondition STOP with no artifact). --out DIR as gport's.
   time|id|qual|campaign --unit Q-F0 --proposal-file F --lock-file L --analyzer-sha256 H
        --package-sha256 H --renders-sha16 H [--resume]
-       (campaign also: [--adjudication-file A] [--pi-stop-file P])
+       (campaign also: [--adjudication-file A] [--pi-stop-file P];
+        qual on an OLMo unit also: [--prior-adjudication-file A])
                       time: G-TIME-F0 (§8 step 10, m:280; wired at step 10 on the PI's word): one
                       uncached session per Q-F0 arm, A0 then A0s, on Qwen through
                       stages.run_gate_stage. id: G-ID-F0m (§8 step 12, m:281; wired at step 12 on
@@ -114,33 +121,54 @@
                       PI's stop where it is that pause's ruling (offered without the seat's
                       adjudication) -- the same digest, and a later NO PAUSE TO
                       ADJUDICATE refusal names it; the PI's stop's digest where the stage records it
-                      as the campaign's stop only, and a ruling offered beside an end pending that
-                      the checkpoint does not record (NOT APPLIED), stand on the RULING line
-                      alone). A campaign's exit 3 is one of three pauses: a look's, resumed only with
+                      as the campaign's stop only, and, where no precheck runs, a ruling offered
+                      beside an end pending that the checkpoint does not record (NOT APPLIED),
+                      stand on the RULING line alone; on the Qwen and box paths such a ruling is
+                      refused before the load and before any RULING line, O4-1). A campaign's exit 3 is one of three pauses: a look's, resumed only with
                       --resume and the seat's adjudication, or ended by the PI's stop (with --resume);
                       an exhausted schedule's, which only the PI's stop ends; or an end look's beside a
                       terminal end (COMPLETE, CAP, PI-STOP), never resumed -- its ruling enters VERDICTS
                       as the analyzer's declared --adjudication file (the seat's C9(i)). After an
-                      interrupted run that offered the seat's adjudication alone, re-run with --resume
-                      alone: a recorded adjudication resumes the campaign, or re-finishes an end its
-                      finish left pending; an unrecorded one shows the pause again. After one that
-                      offered the PI's stop, re-run with --resume and the same ruling files (where its
-                      RULING line said it was beside an end pending, with the PI's stop alone): a
-                      recorded stop is accepted again and the campaign ends PI-STOP, an unrecorded one
-                      is applied (beside the seat's adjudication, the pause records the seat's text, as
-                      at the first try), save that an end left pending is re-finished first and, if
-                      terminal or a STOP, stands; should NO PAUSE TO ADJUDICATE then refuse the
-                      adjudication, it was recorded -- drop --adjudication-file. An adjudication is
-                      offered only for the pause it rules on, which the shown pause and the RULING line
-                      name (its kind and launch count). Beside an end pending (a finish interrupted; the
-                      RULING line of an invocation that finds one says "beside an end pending") the end
-                      is re-finished first, and a ruling offered with it -- the seat's adjudication, or
-                      a PI stop the checkpoint does not record -- is NOT APPLIED (exit 4); so beside one
-                      no adjudication is offered, and the PI's stop, if offered, alone (a stop recorded
-                      with that end re-finishes with no refusal). An adjudication offered beside one is
+                      interrupted run that offered the seat's adjudication alone, re-run with
+                      --resume alone: a recorded adjudication resumes the campaign, or
+                      re-finishes an end its finish left pending; an unrecorded one
+                      shows the pause again; and where that finish completed before the
+                      kill, the re-run shows the new pause, or is refused as ended (the
+                      campaign driver review's missed item, "a finish completed before the
+                      kill"). After one that offered the PI's stop, re-run with
+                      --resume and the same ruling files: a recorded stop is accepted
+                      again and the campaign ends PI-STOP, an unrecorded one is applied
+                      (beside the seat's adjudication, the pause records the seat's
+                      text, as at the first try), save where an end is left pending: a
+                      stop the checkpoint records re-finishes with it, and a terminal
+                      end or a STOP stands; a ruling the stage would not apply beside it
+                      (the seat's adjudication, or a PI stop the checkpoint does not
+                      record) is refused before the load (RULING BESIDE AN END PENDING),
+                      the re-run drops the flags that refusal names, and where the end
+                      is a look's or an exhausted schedule's pause a stop so refused is
+                      offered again once the re-finish has shown it (VC4-1); should NO
+                      PAUSE TO ADJUDICATE then refuse an adjudication offered with the
+                      stop, it was recorded -- drop --adjudication-file. An adjudication
+                      is offered only for the pause it rules on, which the shown pause
+                      and the RULING line name (its kind and launch count); one whose
+                      text is a ruling the checkpoint records for an earlier pause is
+                      refused before the load (RULING REUSED: the carry-over O1-3); an
+                      adjudication the checkpoint already records is named as such on the
+                      RULING line (RM4-1) where one prints, and otherwise by the pre-load
+                      refusal that meets it first. Beside an end pending (a finish interrupted; the
+                      RULING line of an invocation that finds one says "beside an end
+                      pending") the end is re-finished first, and a ruling the stage
+                      would not apply with it -- the seat's adjudication, or a PI stop
+                      the checkpoint does not record -- is refused before the load (the
+                      carry-over O4-1; where no precheck runs, the stage re-finishes the
+                      end and then refuses it, NOT APPLIED, exit 4); so beside one no
+                      adjudication is offered, and the PI's stop only where the
+                      checkpoint records it (a stop recorded with that end re-finishes
+                      with no refusal). An adjudication offered beside one is
                       never offered again, whatever NOT APPLIED's "offer it again" says (it holds for
-                      the PI's stop alone): it rules on no pause the end re-finishes -- it is the
-                      previous pause's ruling, already recorded, or a ruling on a pause not yet shown. A
+                      the PI's stop alone): it rules on no pause shown when it was offered -- it is
+                      the previous pause's ruling, already recorded, or one written before the pause
+                      it would rule on was shown (VC4-2; the seat rules on a pause once shown). A
                       re-finished pause that leaves the campaign open is then shown and takes the seat's
                       own ruling on it (a look's; an exhausted schedule's only beside the PI's stop), or
                       the PI's stop offered again. After a terminal end or a STOP that end stands: a
@@ -185,11 +213,19 @@
                       message); 2 refused before the load; every STOP and REFUSED line with a
                       checkpoint's two time totals redacted (the step-14 read, Q3); any other
                       exception is uncaught
-                      (a traceback; exit 1, or 130 from a shell on Ctrl-C). For an OLMo unit, time,
-                      qual and campaign refuse (exit 2) with the OLMo track's words and id with its
-                      own ("no G-ID on OLMo"); for Q-F3 every stage gives step 19's.
+                      (a traceback; exit 1, or 130 from a shell on Ctrl-C). For an OLMo unit (the
+                      OLMo track's build): time and qual run G-TIME-OLMo-{ckpt} and
+                      G-F0m-OLMo-{ckpt} (m:302) on the box under LOCK-m-OLMo-{ckpt}.md, whose
+                      committed text names the proposal's and the weights of record's sha256 (and,
+                      for qual, v0.2's acceptance line); the pod id, the driver and weights checks
+                      (and, for time, G-CAL-OLMo's PASS) before the load, then the DRIVER and
+                      WEIGHTS lines; qual takes the seat's adjudication of a G-TIME-OLMo PAUSE by
+                      --prior-adjudication-file; the campaign refuses (exit 2) until that
+                      checkpoint's LOCK v1.0, and id with its own words ("no G-ID on OLMo"); for
+                      Q-F3 every stage gives step 19's.
 
-No stage runs on a model at step 4; the stages run at their own steps on the PI's word.
+No stage runs on a model at step 4; the stages run at their own steps on the PI's word (the OLMo
+stages on the box, from the OLMo track's build on, at the PI's go).
 """
 from __future__ import annotations
 
@@ -241,6 +277,14 @@ def refusal(cmd: str, unit: str) -> str:
     if unit != "Q-F0":
         if cmd == "id":
             return f"refused: no G-ID on OLMo (uncached path, m:267); {unit} has no id stage"
+        # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): time and qual are wired for the OLMo units at the OLMo
+        # track's build (_run_stage_olmo) and are no refusal; the campaign is refused until that checkpoint's v1.0
+        if cmd == "campaign" and unit in ("OLMo-sft", "OLMo-dpo", "OLMo-instruct"):
+            ck = unit[len("OLMo-"):]
+            return (f"not licensed until LOCK-m-OLMo-{ck} v1.0: {OLMO_CAMPAIGN_WORDS.format(ckpt=ck)} -- "
+                    f"§8: \"{OLMO_WORDS}\"")
+        if cmd in ("time", "qual") and unit in ("OLMo-sft", "OLMo-dpo", "OLMo-instruct"):
+            raise ValueError(f"refusal: {cmd} is wired for {unit} (_run_stage_olmo), not refused")
         return (f"not licensed until step 9: §3.3 track (from step 9, a box and the PI's go) -- "
                 f"§8: \"{OLMO_WORDS}\"")
     n, words = STEP_WORDS[cmd]
@@ -403,14 +447,25 @@ def run_gcal_model_free(out: Path | None = None) -> int:
 
 
 def run_gcal_completability(out: Path | None, resume_run: bool, proposal_file: str, *,
-                            adapter_factory=None) -> int:
+                            adapter_factory=None, unit: str = "Q-F0") -> int:
     """G-CAL's condition (4) on Qwen (m:176). The proposal's sha256 is computed here from its
     COMMITTED blob; every refusal that needs no model runs before the model loads.
 
     PIN (Code, declared at LOCK v0.1): ``adapter_factory`` is the selftest's seam (a scripted
     stub); without it the adapter is Qwen through qwen_or_explain, which writes the canonical
-    paths only, so ``--out`` (a test directory) is refused on that path before any load."""
+    paths only, so ``--out`` (a test directory) is refused on that path before any load.
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): with ``unit`` OLMo-{ckpt} it is
+    G-CAL-OLMo-{ckpt} (m:176, m:302): the same refusals, then, without the factory, gcal's
+    precheck for that unit (the pod id among them), the weights check (``olmo_weights_problems``)
+    and the driver check (``driver_problems``), refused together before the load; the DRIVER and
+    WEIGHTS lines; the OLMo adapter at the checked path (``_load_olmo``). Exit: 0 PASS; 4 FAIL -- that checkpoint
+    NOT-RUN, "dose not completable" (gcal's line says so), escalated -- or STOP; 2 refused."""
     from valence_core.m import gcal, resume, stages
+    if unit != "Q-F0" and unit not in OLMO_UNITS:
+        print(f"REFUSED: gcal completability --unit {unit}: Q-F0 or an OLMo unit {OLMO_UNITS} (Q-F3 does not "
+              f"recalibrate, m:176)", file=sys.stderr, flush=True)
+        return 2
     p = Path(proposal_file)
     p = p if p.is_absolute() else REPO / p
     try:
@@ -426,24 +481,43 @@ def run_gcal_completability(out: Path | None, resume_run: bool, proposal_file: s
         return 2
     sha = hashlib.sha256(data).hexdigest()
     if out is not None and adapter_factory is None:
-        print("REFUSED: gcal completability --out names a test directory; the Qwen run writes "
+        who = "the Qwen run" if unit == "Q-F0" else f"the box run ({gcal.stage_label(unit)})"
+        print(f"REFUSED: gcal completability --out names a test directory; {who} writes "
               "data/m/gates and data/m/ckpt only (nothing loaded)", file=sys.stderr, flush=True)
         return 2
     out_path = None
     if out is not None:
         try:
-            out_path = resume.refuse_canonical_out(out) / gcal.COMPLETABILITY_NAME
+            out_path = resume.refuse_canonical_out(out) / gcal._names(unit)[0]
         except SystemExit as e:
             print(f"REFUSED: {e}", file=sys.stderr, flush=True)
             return 2
     try:
-        if adapter_factory is None:
+        if adapter_factory is None and unit == "Q-F0":
             gcal.precheck(out_path=None, resume=resume_run, proposal_file=rel, proposal_sha256=sha,
                           stub=False)
             adapter_factory = _load_qwen
+        elif adapter_factory is None:
+            ck = olmo_ckpt(unit)
+            gprobs: list[str] = []
+            try:
+                gcal.precheck(out_path=None, resume=resume_run, proposal_file=rel, proposal_sha256=sha,
+                              stub=False, unit=unit)
+            except gcal.GcalRefusal as e:
+                gprobs.append(str(e))
+            wprobs, w = olmo_weights_problems(ck)
+            dprobs, dsha = driver_problems()
+            if gprobs or wprobs or dprobs:
+                print(f"REFUSED: {gcal.stage_label(unit)}: {gprobs + [f'weights: {p}' for p in wprobs]}"
+                      f"{[f'driver: {p}' for p in dprobs] if dprobs else ''}; nothing loaded", file=sys.stderr, flush=True)
+                return 2
+            print(f"DRIVER {DRIVER_REL} {dsha}: committed at HEAD {stages._git_head()}, working tree identical",
+                  flush=True)
+            print(weights_line(ck, w), flush=True)
+            adapter_factory = lambda: _load_olmo(ck, w["path"])       # noqa: E731 (the checked path)
         adapter = adapter_factory()
         res = gcal.run_completability(adapter, out_path=out_path, resume=resume_run, proposal_file=rel,
-                                      proposal_sha256=sha)
+                                      proposal_sha256=sha, unit=unit)
     except gcal.GcalRefusal as e:
         print(f"REFUSED: {e}", file=sys.stderr, flush=True)
         return 2
@@ -488,8 +562,9 @@ def run_gshape(out: Path | None = None) -> int:
 # does not re-run G-SHAPE-F0". The `id` subcommand is wired for Q-F0 at §8 step 12, on the PI's
 # word of 2026-10-13 ("Q2 licenses the id wiring without a G-SHAPE-F0 re-run"), under the seat's
 # step-10 read (`results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md`, Q2: "the `time`
-# answer extends to `id`, `qual` and `campaign`. Yes."). The OLMo units keep the step-9 track's
-# refusal (and `id` its "no G-ID on OLMo") and Q-F3 step 19's (``refusal``). The stages are
+# answer extends to `id`, `qual` and `campaign`. Yes."). The OLMo units' time and qual are wired by the OLMo
+# track's build (_run_stage_olmo); their campaign keeps a refusal until each checkpoint's LOCK v1.0, `id` its
+# "no G-ID on OLMo", and Q-F3 step 19's (``refusal``). The stages are
 # stages.run_gate_stage and stages.run_gid_pair, unchanged. This driver builds their
 # identity_extra in lock §0's form and, before the Qwen load, runs ``stage_precheck``'s
 # refusals, its own driver check and the snapshot check, as G-CAL completability runs its
@@ -584,6 +659,163 @@ def campaign_floors() -> dict[str, int]:
     return {t: (v[CAMPAIGN_LOCKED_PATH] if isinstance(v, dict) else v) for t, v in fl.items()}
 
 
+# --- the OLMo units (m:302): the OLMo track's wiring build -----------------------------------------------------------
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the seat's prebuild answers of 2026-11-06, §0 ("The OLMo track's
+# first node is therefore its own build -- G-CAL-OLMo (b3's banner and generation path) and the OLMo stage wiring --
+# before BACKEND -- characterization") and Q2 (it "lands in valence_core/m and scripts/m_sessions.py ... before
+# LOCK-m-OLMo-{ckpt} v0.1"). Wired here: `gcal completability --unit OLMo-{ckpt}` (G-CAL-OLMo-{ckpt}), `time`
+# (G-TIME-OLMo-{ckpt}) and `qual` (G-F0m-OLMo-{ckpt}, taking the seat's adjudication of a G-TIME-OLMo PAUSE through
+# --prior-adjudication-file, stages.prior_gate's one route). Not wired: `campaign`, whose launch counts and the PI's
+# cap share are each checkpoint's LOCK v1.0 values (m:302) -- Q-F0's precedent wired them after its v1.0, as a driver
+# edit of the step-10 read's Q2 kind -- and `id` (no G-ID on OLMo, m:267). Each OLMo stage runs on the box: the
+# respawn protocol, the pod id, the weights of record checked before the load, the OLMo adapter at the manifest's
+# path with runner_olmo's declared read window; uncached by spec (m:267).
+OLMO_UNITS = ("OLMo-sft", "OLMo-dpo", "OLMo-instruct")
+OLMO_DRIVER_STAGES = ("time", "qual")
+OLMO_LOCKED_PATH = "uncached"
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1; the build's review, finding 2): the line LOCK-m-OLMo-{ckpt} v0.2
+# carries and v0.1 does not (m:302: "port acceptance recorded at v0.2) -> LOCK-m-OLMo-{ckpt} v0.2 (acceptance;
+# projections) -> G-F0m-OLMo-{ckpt}"), which G-F0m-OLMo requires in its governing lock's committed text, as G-F0m-Qwen
+# required QUAL_LOCK_PATH_TEXT of LOCK-m-F0 v0.2.
+OLMO_QUAL_LOCK_LINE = "G-TIME-OLMo-{ckpt} port acceptance recorded"
+OLMO_CAMPAIGN_WORDS = ("the OLMo campaign is wired after that checkpoint's LOCK-m-OLMo-{ckpt} v1.0, whose launch counts "
+                       "and the PI's cap share it carries (m:302), as Q-F0's campaign was wired after LOCK-m-F0 v1.0 "
+                       "(a driver edit of the step-10 read's Q2 kind)")
+
+
+def olmo_ckpt(unit: str) -> str:
+    """The checkpoint of an OLMo unit (ValueError otherwise)."""
+    if unit not in OLMO_UNITS:
+        raise ValueError(f"{unit!r} is not an OLMo unit {OLMO_UNITS}")
+    return unit[len("OLMo-"):]
+
+
+def olmo_lock_file(unit: str) -> str:
+    """The governing lock of an OLMo unit's stages, at the repository root (m:302's LOCK-m-OLMo-{ckpt})."""
+    return f"LOCK-m-OLMo-{olmo_ckpt(unit)}.md"
+
+
+def olmo_counts(unit: str, stage: str) -> tuple[tuple[str, int], ...]:
+    """m:302's session counts, in §2.4's table order (contrast first): G-TIME-OLMo "two sessions, one per arm";
+    G-F0m-OLMo "24 sessions ... 16 A0s-OLMo-{ckpt} ... and 8 A0-OLMo-{ckpt} contrast". run_gate_stage refuses
+    counts that are not the committed gate files' n."""
+    c = olmo_ckpt(unit)
+    return {"time": ((f"A0-OLMo-{c}", 1), (f"A0s-OLMo-{c}", 1)),
+            "qual": ((f"A0-OLMo-{c}", 8), (f"A0s-OLMo-{c}", 16))}[stage]
+
+
+def olmo_weights_problems(ckpt: str, *, models_root: str | os.PathLike | None = None) -> tuple[list[str], dict | None]:
+    """(problems, weights) of the weights of record on this box, before any load: the committed manifest's entry
+    (gcal.weights_of_record), its path a directory, and every file the entry lists present as a regular file with
+    the entry's byte count; [] and {repo, revision, sha256, path, n_files} when clear.
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): a size check, not a re-hash -- the respawn protocol's step (i)
+    re-hashes every file under /workspace/models against the manifest once per box (scripts/box_respawn_check.py),
+    recorded in that box's BACKEND entry; this check refuses a load from a path the protocol did not vouch for in
+    shape (a missing, truncated or extra-listed file). ``models_root`` is the selftest's seam (the entry's path's
+    parent, replaced)."""
+    from valence_core.m import gcal, stages
+    probs, w = gcal.weights_of_record(ckpt)
+    if probs or w is None:
+        return probs or ["the manifest's entry is unreadable"], None
+    # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1; the build's review, finding 8): a malformed files block is a
+    # problem, not a traceback; a listed file that is a symlink is refused (a regular file only); a file in the
+    # directory the manifest does not list is refused, as box_respawn_check refuses EXTRA files (from_pretrained
+    # could read one, an adapter_config.json among them)
+    _cp, data = stages._committed(gcal.MANIFEST_REL)
+    try:
+        files = json.loads(data.decode("utf-8"))[ckpt]["files"]
+        sizes = {str(k): v["bytes"] for k, v in files.items()}
+        if any(type(v) is not int or v < 0 for v in sizes.values()):
+            raise TypeError("a byte count that is not a non-negative int")
+    except (ValueError, UnicodeDecodeError, KeyError, TypeError, AttributeError) as e:
+        return [f"{gcal.MANIFEST_REL}[{ckpt}].files: malformed ({type(e).__name__}: {e})"], None
+    root = Path(w["path"]) if models_root is None else Path(models_root) / ckpt
+    if len(sizes) != w["n_files"]:
+        return [f"{gcal.MANIFEST_REL}[{ckpt}]: files lists {len(sizes)} entries, n_files {w['n_files']}"], None
+    if root.is_symlink() or not root.is_dir():
+        return [f"weights path {root}: not a directory on this box (the manifest's {ckpt} entry)"], None
+    out = []
+    try:
+        extra = sorted(set(os.listdir(root)) - set(sizes))
+    except OSError as e:
+        return [f"weights path {root}: unreadable ({type(e).__name__})"], None
+    if extra:
+        out.append(f"{root}: files the manifest does not list: {extra[:5]}{' ...' if len(extra) > 5 else ''} "
+                   f"(box_respawn_check refuses EXTRA files)")
+    for name in sorted(sizes):
+        p = root / name
+        try:
+            if p.is_symlink():
+                out.append(f"{p}: a symlink, not a regular file")
+                continue
+            if not p.is_file():
+                out.append(f"{p}: absent or not a regular file")
+                continue
+            n = p.stat().st_size
+        except OSError as e:
+            out.append(f"{p}: unreadable ({type(e).__name__})")
+            continue
+        if n != sizes[name]:
+            out.append(f"{p}: {n} bytes, the manifest's {sizes[name]}")
+    return out, (None if out else {**w, "path": str(root)})
+
+
+def olmo_gcal_problems(ckpt: str) -> list[str]:
+    """G-CAL-OLMo-{ckpt}'s artifact, before G-TIME-OLMo's load: on disk, PASS, on the weights of record.
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1; the build's review, finding 9): m:176 -- condition (4) per
+    checkpoint, "before that checkpoint's G-TIME-OLMo; failure -> that checkpoint NOT-RUN" -- made a refusal of
+    G-TIME-OLMo's box path (the lock's existence carried it before): the artifact at guard.GATES_DIR (read at call
+    time) must be readable, its verdict PASS, and its identity's weights_sha256 the weights of record."""
+    from valence_core.m import gcal, guard
+    path = Path(guard.GATES_DIR) / gcal.COMPLETABILITY_NAME_OLMO.format(ckpt=ckpt)
+    try:
+        art = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, ValueError):
+        return [f"G-CAL-OLMo-{ckpt}'s artifact {path} is absent or unreadable (m:176: condition (4) per checkpoint, "
+                f"before that checkpoint's G-TIME-OLMo)"]
+    if not isinstance(art, dict):
+        return [f"G-CAL-OLMo-{ckpt}'s artifact {path} is not a JSON object"]
+    probs = []
+    if art.get("verdict") != "PASS":
+        probs.append(f"G-CAL-OLMo-{ckpt}'s verdict is {art.get('verdict')!r}, not PASS: that checkpoint is NOT-RUN, "
+                     f"\"dose not completable\" (m:176, m:302)")
+    wp, w = gcal.weights_of_record(ckpt)
+    got = (art.get("identity") or {}).get("weights_sha256") if isinstance(art.get("identity"), dict) else None
+    if w is None or got != w["sha256"]:
+        probs.append(f"G-CAL-OLMo-{ckpt}'s identity weights_sha256 {str(got)[:16]}... is not the weights of record "
+                     f"{'' if w is None else w['sha256'][:16]}... {wp or ''}")
+    return probs
+
+
+def weights_line(ckpt: str, w: dict) -> str:
+    """The WEIGHTS line an OLMo stage prints before its load (pick-free)."""
+    return (f"WEIGHTS {ckpt}: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; "
+            f"{w['n_files']} files at {w['path']}, each at the manifest's byte count (the full re-hash is the "
+            f"respawn protocol's step (i), in this box's BACKEND entry)")
+
+
+def _load_olmo(ckpt: str, path: str | None = None):
+    """The OLMo adapter for one m checkpoint: the manifest's path (or ``path``, already checked), runner_olmo's
+    declared read window (CHOICE_WINDOW, which assert_olmo_adapter requires), the adapter's deterministic default."""
+    from valence_core.adapters.olmo_hf import OLMoHFAdapter
+    from valence_core.m import gcal, runner_olmo
+    if path is None:
+        probs, w = gcal.weights_of_record(ckpt)
+        if probs or w is None:
+            raise SystemExit(f"WEIGHTS OF RECORD ({ckpt}): {probs}")
+        path = w["path"]
+    return OLMoHFAdapter(path, choice_window=runner_olmo.CHOICE_WINDOW)
+
+
+def prior_adjudication_text(path: str | None) -> tuple[str | None, list[str]]:
+    """The seat's adjudication of a G-TIME-OLMo PAUSE, read from --prior-adjudication-file under ruling_texts' rule
+    (a regular file, UTF-8, not blank; its text stands in no command line or raw)."""
+    texts, probs = ruling_texts(path, None)
+    return texts["adjudication"], [p.replace("--adjudication-file", "--prior-adjudication-file") for p in probs]
+
+
 # PIN (Code, declared at the campaign wiring): the step-14 read's Q3, the driver-only redaction "scheduled
 # with the campaign wiring": resume._check_state's "hour_cap_ms_used X != the sessions' Y ms" (its CHECKPOINT
 # STATE INCONSISTENT line, which "is not quoted or computed against before VERDICTS and goes to the seat in a
@@ -601,6 +833,10 @@ def campaign_floors() -> dict[str, int]:
 # on a value that is not a non-negative int, and a session's malformed seconds only on one that is not a
 # non-negative number, neither of them a total the package wrote.
 # No package revision for Q-F0 (Q3); nothing under valence_core/m changes.
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the OLMo build seals the line at its source -- resume._check_state
+# prints resume.TOTALS_SEALED, naming the inconsistency and neither total (Q3's "flagged for the next unit's step 4,
+# where the package moves anyway"; the prebuild answers' Q6) -- so on a live line TOTALS_RX finds no figure; the
+# redaction stays as it was built, a guard on the old form, and every REFUSED and STOP line still passes through it.
 TOTALS_RX = re.compile(r"hour_cap_ms_used \S+ != the sessions\\*' \S+ ms")
 TOTALS_REDACTED = ("hour_cap_ms_used and the sessions' total differ (both figures redacted at the driver's "
                    "print: the step-14 read, Q3)")
@@ -617,7 +853,8 @@ def _say(line: str) -> None:
 
 
 def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, analyzer_sha256: str,
-                         package_sha256: str, renders_sha16: str) -> tuple[dict | None, list[str]]:
+                         package_sha256: str, renders_sha16: str,
+                         unit: str = TIME_UNIT) -> tuple[dict | None, list[str]]:
     """A driver stage's identity_extra and the problems that stop it being built ((None,
     problems)).
 
@@ -634,10 +871,24 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
     are checked against: the licence checks the first two at stage start ((d)-(f)) and
     _renders_of_record the third. G-TIME-F0 carries locked_path TIME_LOCKED_PATH; G-ID-F0m
     carries none (m:282: the path is locked at v0.2, after G-ID). prior_proposal_sha256s is
-    omitted (none under LOCK v0.1, lock §0)."""
+    omitted (none under LOCK v0.1, lock §0).
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): on an OLMo unit (``unit``; Q-F0 by default,
+    its branch unchanged) the lock is that checkpoint's LOCK-m-OLMo-{ckpt}.md, committed, whose
+    text names the proposal's sha256 in full, as Q-F0's does, and the weights of record's
+    files_aggregate_sha256 in full -- the value the OLMo identity binds as weights_sha256
+    (resume.IDENTITY_KEYS_OLMO), read from the committed manifest -- as LOCK-m-F0 v0.2 named
+    Q-F0's revision of record; time and qual carry locked_path OLMO_LOCKED_PATH ("uncached" by
+    spec, m:267); prior_proposal_sha256s is omitted."""
     from valence_core.m import stages
     if stage not in DRIVER_STAGES:
         raise ValueError(f"stage_identity_extra: {stage!r} is not one of {DRIVER_STAGES}")
+    olmo = unit in OLMO_UNITS
+    if olmo and stage not in OLMO_DRIVER_STAGES:
+        raise ValueError(f"stage_identity_extra: {stage!r} is not wired for {unit} ({OLMO_DRIVER_STAGES})")
+    if not olmo and unit != TIME_UNIT:
+        raise ValueError(f"stage_identity_extra: {unit!r} is neither {TIME_UNIT} nor an OLMo unit")
+    want_lock = olmo_lock_file(unit) if olmo else TIME_LOCK_FILE
     probs: list[str] = []
     extra: dict = {}
     lock_text = ""
@@ -649,8 +900,8 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
         except (ValueError, OSError, RuntimeError):
             probs.append(f"--{key}-file {given}: lies outside the repository (or does not resolve)")
             continue
-        if key == "lock" and rel != TIME_LOCK_FILE:
-            probs.append(f"--lock-file {rel}: {stages.stage_name(TIME_UNIT, stage)} cites {TIME_LOCK_FILE} "
+        if key == "lock" and rel != want_lock:
+            probs.append(f"--lock-file {rel}: {stages.stage_name(unit, stage)} cites {want_lock} "
                          f"(lock §0)")
             continue
         cp, data = stages._committed(rel)
@@ -665,10 +916,30 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
         return None, probs
     if extra["proposal_sha256"] not in lock_text:
         return None, [f"--proposal-file {extra['proposal_file']}: its sha256 "
-                      f"{extra['proposal_sha256'][:16]}... is not named in full in {TIME_LOCK_FILE}'s "
+                      f"{extra['proposal_sha256'][:16]}... is not named in full in {want_lock}'s "
                       f"committed text (lock §1 binds the proposal of record)"]
     extra.update(analyzer_sha256=analyzer_sha256, package_sha256=package_sha256,
                  renders_sha16=renders_sha16)
+    if olmo:
+        from valence_core.m import gcal
+        wprobs, w = gcal.weights_of_record(olmo_ckpt(unit))
+        if wprobs or w is None:
+            return None, [f"weights of record: {wprobs}"]
+        if w["sha256"] not in lock_text:
+            return None, [f"--lock-file {want_lock}: its committed text does not name the weights of record "
+                          f"{w['sha256']} ({gcal.MANIFEST_REL}'s files_aggregate_sha256 for {olmo_ckpt(unit)}, "
+                          f"which the OLMo identity binds as weights_sha256)"]
+        qline = OLMO_QUAL_LOCK_LINE.format(ckpt=olmo_ckpt(unit))
+        if stage == "qual" and qline not in lock_text:
+            return None, [f"--lock-file {want_lock}: its committed text does not carry v0.2's line '{qline}' (m:302: "
+                          f"G-F0m-OLMo runs under LOCK-m-OLMo-{olmo_ckpt(unit)} v0.2, which records G-TIME-OLMo's port "
+                          f"acceptance; v0.1's blob is refused here)"]
+        extra["locked_path"] = OLMO_LOCKED_PATH
+        try:
+            stages._extra(extra, stage=stage, sub="olmo", stub=False)
+        except ValueError as e:
+            return None, [str(e)]
+        return extra, []
     if stage == "time":
         extra["locked_path"] = TIME_LOCKED_PATH
     # PIN (Code, declared at LOCK v1.0): G-F0m-Qwen runs under LOCK-m-F0 v0.2 (stages.py:976-980,
@@ -827,12 +1098,14 @@ def _campaign_state(cpath: Path) -> tuple[str, dict]:
     RULING line read (round 2's B2-1: the checkpoint never leaves this function), free of any recorded
     text (round 3's B3-5): {"launched": a session is recorded, "pi_stop_sha256": the recorded PI stop's
     sha256 or None, "last": None or the last pause's {"kind", "at_launches", "arm", "adjudicated",
-    "adjudication_sha16"} -- the digest the report gives a pause}; {} when unreadable."""
+    "adjudication_sha16"} -- the digest the report gives a pause, "ruling_sha16s": the sha16 of every
+    pause's recorded ruling, in pause order (the carry-overs O1-3 and RM4-1, the OLMo wiring build)};
+    {} when unreadable."""
     from valence_core.m import resume, stages
     p = Path(cpath)
     try:
         if not (p.exists() or p.is_symlink()):
-            return "absent", {"launched": False, "pi_stop_sha256": None, "last": None}
+            return "absent", {"launched": False, "pi_stop_sha256": None, "last": None, "ruling_sha16s": []}
         if not p.is_file():
             return "unreadable", {}
     except OSError:
@@ -864,7 +1137,9 @@ def _campaign_state(cpath: Path) -> tuple[str, dict]:
                        "kind": last["kind"], "at_launches": last["at_launches"], "arm": last.get("arm"),
                        "adjudicated": last["adjudication"] is not None,
                        "adjudication_sha16": (stages._sha16_text(last["adjudication"])
-                                              if type(last["adjudication"]) is str else None)}}
+                                              if type(last["adjudication"]) is str else None)},
+                   "ruling_sha16s": [stages._sha16_text(x["adjudication"]) for x in pauses
+                                     if type(x["adjudication"]) is str]}
     except UnicodeEncodeError:
         return "unreadable", {}
     if resume.pending_end(ck) is not None:
@@ -877,7 +1152,9 @@ def _campaign_state(cpath: Path) -> tuple[str, dict]:
 def campaign_ruling_problems(cpath: Path, adjudication: str | None, pi_stop: str | None) -> list[str]:
     """The refusals stages.run_campaign makes, after the load and before its first write, of a ruling
     that does not fit the campaign's state -- made here before the load, from ``_campaign_state``'s
-    summary; [] when none applies.
+    summary -- and two the stage does not make (the carry-overs O4-1 and O1-3, the OLMo wiring build:
+    RULING BESIDE AN END PENDING, where the stage would re-finish the end and then refuse the ruling,
+    NOT APPLIED; RULING REUSED, where it would apply it); [] when none applies.
 
     PIN (Code, declared at the campaign wiring; round 1's O1-1 and its refuter's mirror table): mirrors
     run_campaign's order (stages.py:2094-2131) over the states the stage writes: a PI stop text other than
@@ -901,6 +1178,7 @@ def campaign_ruling_problems(cpath: Path, adjudication: str | None, pi_stop: str
     PI-STOP on it, and an empty pauses block that is not a list ({}, "", 0) reads as no pause (round 2's
     O2-2; round 3's F3-1 and its refuter's RF3-1, O3-5; round 4's F4-2) -- which the self-test's stub
     path, where no precheck runs, shows."""
+    from valence_core.m import stages
     if adjudication is None and pi_stop is None:
         return []
     state, sm = _campaign_state(cpath)
@@ -912,6 +1190,31 @@ def campaign_ruling_problems(cpath: Path, adjudication: str | None, pi_stop: str
         return [f"CHECKPOINT MISMATCH: {cpath} records the PI's stop; this run offers a different text -- "
                 f"refusing (the stage makes this refusal after the load)"]
     if state == "pending":
+        # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the carry-over O4-1 -- "the operations refuter's
+        # alternative to O4-1, a refusal before the load of a ruling offered beside an end pending (it would save
+        # the 27B load; the next invocation re-finishes either way)" (the campaign driver's review raw of
+        # 2026-10-18), assigned to the OLMo wiring build by the seat's prebuild answers of 2026-11-06, Q6. The
+        # rulings refused are exactly the ones the stage would not apply there (stages._refinish_campaign's
+        # NOT APPLIED): the seat's adjudication, and a PI stop the checkpoint does not record (a stop it records,
+        # passed by run_campaign as None, re-finishes with no refusal). The stage, reached with no precheck, still
+        # re-finishes and then refuses them (NOT APPLIED, exit 4). An adjudication the checkpoint already records is
+        # named as such and needs nothing (RM4-1's information where no RULING line prints: the build's review,
+        # finding 3). On a pending checkpoint whose design, licence, prior or floors differ the stage never
+        # re-finishes -- it STOPs after the load (CHECKPOINT MISMATCH), whatever the ruling -- so there this refusal
+        # stands where the stage would have refused otherwise (finding 7).
+        a16_ = stages._sha16_text(adjudication.strip()) if adjudication is not None else None
+        adj_w_ = "the seat's adjudication" + (
+            f", which the checkpoint already records as a pause's ruling (sha16 {a16_}) and which needs nothing"
+            if a16_ is not None and a16_ in sm.get("ruling_sha16s", []) else "")
+        skip_ = [(w_, f_) for w_, f_, v_ in ((adj_w_, "--adjudication-file", adjudication),
+                                             ("the PI's stop, which the checkpoint does not record", "--pi-stop-file",
+                                              pi_stop if rec_pi is None else None)) if v_ is not None]
+        if skip_:
+            return [f"RULING BESIDE AN END PENDING at {cpath}: the checkpoint carries an end pending, which the "
+                    f"stage re-finishes before it applies any ruling, and it would not apply "
+                    f"{' and '.join(w_ for w_, _f in skip_)} (NOT APPLIED, after the load) -- refused before the "
+                    f"load: re-run without {' and '.join(f_ for _w, f_ in skip_)}, with --resume, which re-finishes "
+                    f"the end; then offer a ruling for the pause the re-finish shows, if it leaves the campaign open"]
         return []
     pi = pi_stop is not None or rec_pi is not None
     if pi and not sm["launched"]:
@@ -922,6 +1225,18 @@ def campaign_ruling_problems(cpath: Path, adjudication: str | None, pi_stop: str
     if open_pause and last["kind"] == "schedule_exhausted" and not pi and adjudication is not None:
         return [f"SCHEDULE EXHAUSTED at {cpath}: {last['arm']} has no committed cell left below its floor; "
                 f"only the PI's stop (pi_stop) ends this campaign (m:192, m:247)"]
+    # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the carry-over O1-3 -- "a refusal before the load of a
+    # ruling whose stripped text's sha16 equals an earlier pause's recorded one" (round 1's option; the campaign
+    # driver's review raw of 2026-10-18), assigned to the OLMo wiring build by the seat's prebuild answers of
+    # 2026-11-06, Q6: an adjudication offered for an open pause whose text is a ruling the checkpoint already
+    # records for an earlier pause is refused here; the stage itself has no such rule and would apply it.
+    if adjudication is not None and open_pause:
+        a16_ = stages._sha16_text(adjudication.strip())
+        if a16_ in sm.get("ruling_sha16s", []):
+            return [f"RULING REUSED at {cpath}: the seat's adjudication offered (sha16 {a16_}) is the text the "
+                    f"checkpoint records as an earlier pause's ruling; an adjudication is offered only for the pause "
+                    f"it rules on (this campaign's open pause, at {last['at_launches']} launches, {last['kind']}) -- "
+                    f"refused before the load"]
     if adjudication is not None and not open_pause:
         how = ("drop --adjudication-file: resume with --resume and the PI's stop alone" if pi_stop is not None
                else "resume with --resume alone")
@@ -935,11 +1250,12 @@ def campaign_ruling_problems(cpath: Path, adjudication: str | None, pi_stop: str
 def ruling_line(name: str, cpath: Path, rulings: dict) -> str | None:
     """The RULING line a campaign invocation offering a ruling prints before the load (round 1's O1-3):
     pick-free -- each text's sha16, of the stripped text (the report gives a pause's adjudication the same
-    digest; the PI's stop's, where the stage records it only as the campaign's stop, and a ruling offered
-    beside an end pending that the checkpoint does not record, which the stage does not apply there (NOT
-    APPLIED), stand here alone: round 2's B2-3, round 3's F3-7, round 4's RM4-1), and the pause it is
-    offered for (its kind and launch count, as the shown pause's line prints them) or the checkpoint's
-    state, from ``_campaign_state``'s summary; None when no ruling is offered."""
+    digest; the PI's stop's, where the stage records it only as the campaign's stop, and, where no
+    precheck runs, a ruling offered beside an end pending that the checkpoint does not record, which the
+    stage does not apply there (NOT APPLIED), stand here alone: round 2's B2-3, round 3's F3-7, round 4's
+    RM4-1; on the Qwen and box paths such a ruling is refused before the load and before this line, O4-1),
+    and the pause it is offered for (its kind and launch count, as the shown pause's line prints them) or
+    the checkpoint's state, from ``_campaign_state``'s summary; None when no ruling is offered."""
     from valence_core.m import stages
     parts = [f"{who} (sha16 {stages._sha16_text(rulings[k].strip())})"
              for k, who in (("adjudication", "the seat's adjudication"), ("pi_stop", "the PI's stop"))
@@ -954,16 +1270,28 @@ def ruling_line(name: str, cpath: Path, rulings: dict) -> str | None:
         where = {"absent": "with no checkpoint on disk", "pending": "beside an end pending",
                  "ended": "on an ended campaign", "unreadable": "on an unreadable checkpoint"}.get(
             state, "with no pause unadjudicated")
-    return f"RULING {name}: {' and '.join(parts)} offered {where}"
+    # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the carry-over RM4-1 -- "a RULING-line note when an offered
+    # adjudication equals the one the checkpoint records" (the campaign driver's review raw of 2026-10-18),
+    # assigned to the OLMo wiring build by the seat's prebuild answers of 2026-11-06, Q6: the note names that the
+    # checkpoint already records the text as a pause's ruling (by digest; pick-free, text-free)
+    note = ""
+    if rulings.get("adjudication") is not None and stages._sha16_text(rulings["adjudication"].strip()) in (
+            sm.get("ruling_sha16s") or []):
+        note = "; the checkpoint already records this adjudication as a pause's ruling"
+    return f"RULING {name}: {' and '.join(parts)} offered {where}{note}"
 
 
 def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
-                   rulings: dict | None = None) -> list[str]:
+                   rulings: dict | None = None, unit: str = TIME_UNIT,
+                   prior_adjudication: str | None = None) -> list[str]:
     """Refusals of a driver stage's start that need no model, made before the Qwen load; [] =
     none fired. The stage (stages.run_gate_stage / run_gid_pair) makes each of them again after
-    the load, except two that only this precheck makes: on Python 3.13+, a looping link at the
-    checkpoint path (see the comment below); and, on every version, a link at the G-ID artifact
-    path that does not resolve, dangling or looping (the stage tests exists() alone).
+    the load, except those only this precheck makes: on Python 3.13+, a looping link at the
+    checkpoint path (see the comment below); on every version, a link at the G-ID artifact path
+    that does not resolve, dangling or looping (the stage tests exists() alone); and, since the
+    OLMo wiring build, the campaign's RULING BESIDE AN END PENDING and RULING REUSED (the
+    carry-overs O4-1 and O1-3, campaign_ruling_problems) and G-TIME-OLMo's need for
+    G-CAL-OLMo's PASS (``olmo_gcal_problems``).
 
     PIN (Code, declared at LOCK v0.2): the licence by file ((a)-(f)); the run-time known
     answers on the proposal the identity names; the renders of record; the committed schedule
@@ -991,8 +1319,9 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
     G-ID-F0m's artifact if on disk (stages.gid_artifact_problems, as run_campaign re-checks it); a
     paused campaign offered no ruling (``rulings`` None, or both texts None) not refused as
     existing; and a ruling's fit to the campaign's state (``campaign_ruling_problems``: NO PAUSE TO
-    ADJUDICATE, PI STOP REFUSED, SCHEDULE EXHAUSTED, a PI stop text other than the one recorded),
-    the stage making each again after the load; and a campaign checkpoint path that exists and that the
+    ADJUDICATE, PI STOP REFUSED, SCHEDULE EXHAUSTED, a PI stop text other than the one recorded,
+    the stage making each again after the load; and RULING BESIDE AN END PENDING and RULING REUSED,
+    which it does not); and a campaign checkpoint path that exists and that the
     driver cannot read as a campaign checkpoint (``_campaign_state``'s "unreadable": not a regular file --
     a FIFO, a device, a directory -- not a JSON object, nested past the recursion limit, a shape or value
     no write of the package makes, a recorded text that cannot be encoded), which only this precheck
@@ -1003,15 +1332,32 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
     the path the G-ID licence gives on
     the loaded backend (PATH MISMATCH); the floors and the launch-count projection a checkpoint
     records; and NOT APPLIED -- the seat's adjudication, or a PI stop the checkpoint does not
-    record, offered beside an end pending: the stage re-finishes that end and then refuses (exit 4);
-    a PI stop equal to the recorded one re-finishes with no refusal, and a different one is CHECKPOINT
-    MISMATCH, refused before any re-finish (and here). A pending end re-finishes at any invocation,
-    so the precheck lets it through. Every problem returned passes through ``redact_totals`` (the step-14
-    read's Q3), so a direct caller (the laptop's dry precheck) sees no totals either."""
+    record, offered beside an end pending: the stage re-finishes that end and then refuses (exit 4)
+    -- refused here instead, before the load, since the OLMo wiring build (RULING BESIDE AN END
+    PENDING, the carry-over O4-1, through campaign_ruling_problems); a PI stop equal to the recorded
+    one re-finishes with no refusal, and a different one is CHECKPOINT MISMATCH, refused before any
+    re-finish (and here). A pending end offered no ruling re-finishes at any invocation, so the
+    precheck lets it through. Every problem returned passes through ``redact_totals`` (the step-14
+    read's Q3), so a direct caller (the laptop's dry precheck) sees no totals either.
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): on an OLMo unit (``unit``; Q-F0 by default, its
+    branch unchanged) the same checks run for that unit's stage, name, out paths and committed gate
+    schedules (olmo_counts); at G-F0m-OLMo the prior is G-TIME-OLMo's checkpoint at this out root,
+    read by stages.prior_gate with ``prior_adjudication`` (the seat's adjudication of a G-TIME-OLMo
+    PAUSE, stages.prior_gate's one route); m:267's LAPTOP checklist is not run -- the box's respawn
+    protocol governs there (stages._laptop_preflight's scope) -- and the pod instance id is required
+    instead (stages._require_pod's rule, made here before the load); there is no G-ID artifact."""
     from valence_core.m import guard, resume, stages
     if stage not in DRIVER_STAGES:
         raise ValueError(f"stage_precheck: {stage!r} is not one of {DRIVER_STAGES}")
-    name = stages.stage_name(TIME_UNIT, stage)
+    olmo = unit in OLMO_UNITS
+    if olmo and stage not in OLMO_DRIVER_STAGES:
+        raise ValueError(f"stage_precheck: {stage!r} is not wired for {unit} ({OLMO_DRIVER_STAGES})")
+    if not olmo and unit != TIME_UNIT:
+        raise ValueError(f"stage_precheck: {unit!r} is neither {TIME_UNIT} nor an OLMo unit")
+    if prior_adjudication is not None and not (olmo and stage == "qual"):
+        raise ValueError("stage_precheck: only an OLMo qualification takes a prior adjudication (stages.prior_gate)")
+    name = stages.stage_name(unit, stage)
     probs = [f"licence: {p}" for p in stages.licence_problems(extra)]
     proposal = stages._proposal_path(extra)
     probs += [f"startup: {p}" for p in stages.startup_problems(proposal)]
@@ -1019,12 +1365,15 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
         stages._renders_of_record(extra, name)
     except SystemExit as e:
         probs.append(f"renders: {e}")
-    paths = stages.out_paths(TIME_UNIT, stage, out_root)
-    wanted = {"time": [("time", t) for t, _ in TIME_COUNTS], "id": [("id", ID_TEMPLATE)],
-              "qual": [("qual", t) for t, _ in QUAL_COUNTS],
-              "campaign": [("campaign", t) for t, _ in CAMPAIGN_LAUNCH_COUNTS]}[stage]
+    paths = stages.out_paths(unit, stage, out_root)
+    if olmo:
+        wanted = [(stage, t) for t, _ in olmo_counts(unit, stage)]
+    else:
+        wanted = {"time": [("time", t) for t, _ in TIME_COUNTS], "id": [("id", ID_TEMPLATE)],
+                  "qual": [("qual", t) for t, _ in QUAL_COUNTS],
+                  "campaign": [("campaign", t) for t, _ in CAMPAIGN_LAUNCH_COUNTS]}[stage]
     try:
-        stages.load_committed(TIME_UNIT, wanted, paths["schedules"])
+        stages.load_committed(unit, wanted, paths["schedules"])
     except SystemExit as e:
         probs.append(f"schedules: {e}")
     cpath = None
@@ -1063,9 +1412,9 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
     # stages.py:2053-2062: under this run's proposal, not written on the stub; absent gives the uncached path
     # and has nothing to check). The precheck makes both refusals before the load; the stage makes them again.
     if stage in ("id", "qual", "campaign"):
-        prior = stages.out_paths(TIME_UNIT, stages.PRIOR_STAGE[stage], out_root)["ckpt"]
+        prior = stages.out_paths(unit, stages.PRIOR_STAGE[stage], out_root)["ckpt"]
         try:
-            stages.prior_gate(TIME_UNIT, stage, prior, proposal_sha256=extra["proposal_sha256"],
+            stages.prior_gate(unit, stage, prior, prior_adjudication, proposal_sha256=extra["proposal_sha256"],
                               prior_proposal_sha256s=extra.get("prior_proposal_sha256s") or [],
                               require_real=True)
         except SystemExit as e:
@@ -1094,7 +1443,14 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
         pending = cpath is not None and resume.pending_at(cpath)
         if (gid_path.exists() or gid_path.is_symlink()) and not pending:
             probs.append(f"artifact: G-ID ARTIFACT EXISTS at {gid_path}; it is never overwritten")
-    probs += [f"preflight: {p}" for p in guard.preflight_laptop()]
+    if olmo and stage == "time":
+        probs += [f"gcal: {p}" for p in olmo_gcal_problems(olmo_ckpt(unit))]
+    if olmo:
+        if resume.pod_id() is None:
+            probs.append(f"pod: POD ID ABSENT: an OLMo stage of {unit} starts or resumes only with its pod instance id "
+                         f"(${resume.POD_ENV}; stages._require_pod) -- refused before the load")
+    else:
+        probs += [f"preflight: {p}" for p in guard.preflight_laptop()]
     probs += [f"gate line: {p}" for p in stages.gate_line(name, proposal)[1]]
     for what, path in (("CLAUDE.md", stages.CLAUDE_MD_PATH), ("analyzer", stages.ANALYZER_PATH)):
         rel = stages._repo_rel(path)
@@ -1147,7 +1503,8 @@ def ruling_texts(adjudication_file: str | None, pi_stop_file: str | None) -> tup
 def _run_stage(stage: str, unit: str, *, proposal_file: str | None, lock_file: str | None,
                analyzer_sha256: str | None, package_sha256: str | None, renders_sha16: str | None,
                resume_run: bool, adapter_factory=None, out_root: Path | None = None,
-               adjudication_file: str | None = None, pi_stop_file: str | None = None) -> int:
+               adjudication_file: str | None = None, pi_stop_file: str | None = None,
+               prior_adjudication_file: str | None = None) -> int:
     """G-TIME-F0 (m:280) and G-F0m-Qwen (m:283) through stages.run_gate_stage, G-ID-F0m
     (m:281) through stages.run_gid_pair, or the Q-F0 campaign (m:358 step 16) through
     stages.run_campaign. Exit: stages.EXIT_CODES for the stage's status -- 0 PASS (at the
@@ -1183,7 +1540,9 @@ def _run_stage(stage: str, unit: str, *, proposal_file: str | None, lock_file: s
     PI's stop; an end look's pause beside a terminal end is never resumed, its ruling entering
     VERDICTS as the analyzer's declared --adjudication file (the seat's C9(i)). A STOP naming NOT
     APPLIED is the stage declining a ruling offered beside an end pending, after re-finishing that
-    end (stages.py:2503-2520); an adjudication offered there is never offered again, whatever the
+    end (stages.py:2503-2520) -- met only where no precheck runs: on the Qwen path the precheck refuses
+    such a ruling before the load (RULING BESIDE AN END PENDING, campaign_ruling_problems; the carry-over
+    O4-1); an adjudication offered there is never offered again, whatever the
     message's "offer it again" says (it holds for the PI's stop alone): a re-finished pause that
     leaves the campaign open is then shown and takes the seat's own ruling on it (a look's; an
     exhausted schedule's only beside the PI's stop) or the PI's stop again, and an end that leaves
@@ -1194,8 +1553,23 @@ def _run_stage(stage: str, unit: str, *, proposal_file: str | None, lock_file: s
         raise ValueError(f"_run_stage: {stage!r} is not one of {DRIVER_STAGES}")
     if stage != "campaign" and (adjudication_file is not None or pi_stop_file is not None):
         raise ValueError(f"_run_stage: {stage!r} takes no adjudication or PI-stop file (the campaign's alone)")
+    if stage != "qual" and prior_adjudication_file is not None:
+        raise ValueError(f"_run_stage: {stage!r} takes no prior adjudication file (an OLMo qualification's alone)")
+    # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the OLMo units' stages run in _run_stage_olmo (the OLMo
+    # track's wiring build); Q-F0's path below is unchanged, and refuses the seat's adjudication of a prior stage's
+    # pause (only an OLMo qualification after a G-TIME-OLMo PAUSE takes one, stages.prior_gate)
+    if unit in OLMO_UNITS:
+        return _run_stage_olmo(stage, unit, proposal_file=proposal_file, lock_file=lock_file,
+                               analyzer_sha256=analyzer_sha256, package_sha256=package_sha256,
+                               renders_sha16=renders_sha16, resume_run=resume_run, adapter_factory=adapter_factory,
+                               out_root=out_root, adjudication_file=adjudication_file, pi_stop_file=pi_stop_file,
+                               prior_adjudication_file=prior_adjudication_file)
     if unit != TIME_UNIT:
         print(refusal(stage, unit), file=sys.stderr, flush=True)
+        return 2
+    if prior_adjudication_file is not None:
+        _say(f"REFUSED: {stage} --unit {TIME_UNIT} takes no --prior-adjudication-file: only an OLMo qualification "
+             f"after a G-TIME-OLMo PAUSE takes the seat's adjudication of its prior (stages.prior_gate); nothing loaded")
         return 2
     given = {"proposal_file": proposal_file, "lock_file": lock_file, "analyzer_sha256": analyzer_sha256,
              "package_sha256": package_sha256, "renders_sha16": renders_sha16}
@@ -1296,6 +1670,90 @@ def _run_stage(stage: str, unit: str, *, proposal_file: str | None, lock_file: s
                                       identity_extra=extra,
                                       prior_ckpt=stages.out_paths(TIME_UNIT, "time", root)["ckpt"],
                                       out_root=root)
+    except SystemExit as e:
+        _say(f"STOP: {e}")
+        return 4
+    return stages.EXIT_CODES[res["status"]]
+
+
+def _run_stage_olmo(stage: str, unit: str, *, proposal_file: str | None, lock_file: str | None,
+                    analyzer_sha256: str | None, package_sha256: str | None, renders_sha16: str | None,
+                    resume_run: bool, adapter_factory=None, out_root: Path | None = None,
+                    adjudication_file: str | None = None, pi_stop_file: str | None = None,
+                    prior_adjudication_file: str | None = None) -> int:
+    """G-TIME-OLMo-{ckpt} and G-F0m-OLMo-{ckpt} (m:302) through stages.run_gate_stage, on the box. Exit:
+    stages.EXIT_CODES for the stage's status (0 PASS, 3 PAUSE); 4 STOP (the stage's, any SystemExit from the loader
+    or the stage, or the driver's post-load weights-path check: "STOP: " and its message); 2 refused before the load
+    (nothing loaded or written); `id` and `campaign` refused (exit 2) with ``refusal``'s words.
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): Q-F0's form (``_run_stage``) on the OLMo units. The flags are
+    TIME_FLAGS, the lock's values; ``stage_identity_extra`` with ``unit`` (LOCK-m-OLMo-{ckpt}.md, naming the
+    proposal and the weights of record); the seat's adjudication of a G-TIME-OLMo PAUSE is G-F0m-OLMo's
+    --prior-adjudication-file (``prior_adjudication_text``), passed to stages.run_gate_stage as prior_adjudication;
+    ``adapter_factory`` and ``out_root`` are the selftest's seam as on Q-F0. Without the factory, before the load and
+    refused together: ``stage_precheck`` with ``unit`` (the pod id among its checks), the driver check (one
+    driver_problems call) and the weights check (``olmo_weights_problems``); then the DRIVER and WEIGHTS lines; the
+    load (``_load_olmo`` at the checked path); after it, the adapter's weights path compared with the manifest's
+    (WEIGHTS PATH STOPs before a session). The prior of G-F0m-OLMo is G-TIME-OLMo's checkpoint at the same out root.
+    A STOP, a PAUSE and any exit other than 0 or 2 are escalated to the seat; Code never self-adjudicates."""
+    from valence_core.m import stages
+    if stage not in OLMO_DRIVER_STAGES:
+        print(refusal(stage, unit), file=sys.stderr, flush=True)
+        return 2
+    if adjudication_file is not None or pi_stop_file is not None:
+        raise ValueError(f"_run_stage_olmo: {stage!r} takes no adjudication or PI-stop file (the campaign's alone)")
+    if stage != "qual" and prior_adjudication_file is not None:
+        raise ValueError(f"_run_stage_olmo: {stage!r} takes no prior adjudication file (the qualification's alone)")
+    ckpt = olmo_ckpt(unit)
+    lock_name = olmo_lock_file(unit)
+    given = {"proposal_file": proposal_file, "lock_file": lock_file, "analyzer_sha256": analyzer_sha256,
+             "package_sha256": package_sha256, "renders_sha16": renders_sha16}
+    missing = ["--" + k.replace("_", "-") for k in TIME_FLAGS if given[k] is None]
+    if missing:
+        _say(f"REFUSED: {stage} --unit {unit} needs {missing}: the lock's values ({lock_name}); nothing loaded")
+        return 2
+    if out_root is not None and adapter_factory is None:
+        _say(f"REFUSED: {stage}: an out root names a test directory; the box run writes data/m only (nothing loaded)")
+        return 2
+    name = stages.stage_name(unit, stage)
+    extra, probs = stage_identity_extra(stage, proposal_file, lock_file, analyzer_sha256=analyzer_sha256,
+                                        package_sha256=package_sha256, renders_sha16=renders_sha16, unit=unit)
+    if probs:
+        _say(f"REFUSED: {name}: {probs}; nothing loaded")
+        return 2
+    padj, aprobs = prior_adjudication_text(prior_adjudication_file)
+    if aprobs:
+        _say(f"REFUSED: {name}: {aprobs}; nothing loaded")
+        return 2
+    root = Path(stages.DEFAULT_OUT if out_root is None else out_root)
+    try:
+        if adapter_factory is None:
+            pre = stage_precheck(stage, extra, resume_run=resume_run, out_root=root, unit=unit,
+                                 prior_adjudication=padj)
+            dprobs, dsha = driver_problems()
+            wprobs, w = olmo_weights_problems(ckpt)
+            pre += [f"driver: {p}" for p in dprobs] + [f"weights: {p}" for p in wprobs]
+            if pre:
+                _say(f"REFUSED: {name}: {pre}; nothing loaded")
+                return 2
+            print(f"DRIVER {DRIVER_REL} {dsha}: committed at HEAD {stages._git_head()}, working tree "
+                  f"identical", flush=True)
+            print(weights_line(ckpt, w), flush=True)
+            adapter = _load_olmo(ckpt, w["path"])
+            got = str(getattr(adapter, "path", "")).rstrip("/")
+            if got != str(w["path"]).rstrip("/"):
+                raise SystemExit(f"WEIGHTS PATH ({name}): the adapter loaded {got!r}, the weights of record are at "
+                                 f"{w['path']!r} -- no session runs")
+        else:
+            adapter = adapter_factory()
+        if stage == "time":
+            res = stages.run_gate_stage(adapter, unit=unit, gate="time", templates_counts=list(olmo_counts(unit, "time")),
+                                        resume=resume_run, identity_extra=extra, substrate="olmo", out_root=root)
+        else:
+            res = stages.run_gate_stage(adapter, unit=unit, gate="qual", templates_counts=list(olmo_counts(unit, "qual")),
+                                        resume=resume_run, identity_extra=extra, substrate="olmo", out_root=root,
+                                        prior_ckpt=stages.out_paths(unit, "time", root)["ckpt"],
+                                        prior_adjudication=padj)
     except SystemExit as e:
         _say(f"STOP: {e}")
         return 4
@@ -3489,12 +3947,16 @@ def _selftest(chk) -> None:
             ok &= ("not licensed until" not in e_ and "nothing loaded" in e_ and f"REFUSED: {c} --unit Q-F0" in e_
                    and all(f in e_ for f in ("--proposal-file", "--lock-file", "--analyzer-sha256",
                                              "--package-sha256", "--renders-sha16")))
-        ok &= all("not licensed until step 9" in got[(c, u)][1] for c in ("time", "qual", "campaign")
-                  for u in UNITS[1:4])
+        # the OLMo units' time and qual are wired (the OLMo track's build): given only --unit they refuse naming the
+        # five flags and the checkpoint's lock; the campaign names that checkpoint's v1.0; id stays refused
+        ok &= all(f"REFUSED: {c} --unit {u} needs" in got[(c, u)][1] and f"LOCK-m-OLMo-{u[5:]}.md" in got[(c, u)][1]
+                  and "nothing loaded" in got[(c, u)][1] for c in ("time", "qual") for u in UNITS[1:4])
+        ok &= all(f"not licensed until LOCK-m-OLMo-{u[5:]} v1.0" in got[("campaign", u)][1] for u in UNITS[1:4])
         ok &= all("no G-ID on OLMo" in got[("id", u)][1] for u in UNITS[1:4])
         ok &= all("not licensed until step 19" in got[(c, "Q-F3")][1] for c in STAGE_CMDS)
         chk("m_sessions: every stage subcommand given only --unit refuses with exit 2 -- Q-F0 time, id, qual and "
-            "campaign naming their five missing flags, OLMo the step-9 track (no id), Q-F3 step 19",
+            "campaign naming their five missing flags; OLMo time and qual naming the five and LOCK-m-OLMo-{ckpt}.md, "
+            "the OLMo campaign that checkpoint's v1.0, no id on OLMo; Q-F3 step 19",
             ok, t_err.strip()[:90])
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
@@ -3818,8 +4280,8 @@ def _selftest(chk) -> None:
             "PASS, exit 0; the identity's lock and proposal sha256 their committed blobs'; the licence block "
             "the two files (repo-relative, also when the flags give absolute paths) and the analyzer and "
             "package hashes, with no prior proposals; a fired sham bar exits 4; a SystemExit from the loader "
-            "exits 4 ('STOP: ' and its message); an out root without the factory, an OLMo unit and Q-F3 "
-            "exit 2",
+            "exits 4 ('STOP: ' and its message); an out root without the factory, Q-F3 and an OLMo unit "
+            "exit 2 (the OLMo units' time is wired: Q-F0's lock is not the LOCK-m-OLMo-{ckpt}.md it cites)",
             rc_t == 0 and ex_t is None and [r["template"] for r in ck_t["sessions"]] == ["A0", "A0s"]
             and all(r["path"] == "uncached" and r["verified"] for r in ck_t["sessions"])
             and ck_t["identity"]["lock_sha256"] == sha_of(TIME_LOCK_FILE)
@@ -3829,7 +4291,8 @@ def _selftest(chk) -> None:
             and "STAGE G-TIME-F0 PASS path=uncached" in txt_t
             and rc_t3 == 4 and rc_tx == 4 and "STOP: qwen_or_explain (selftest): no MLX" in err_t.getvalue()
             and rc_to == 2 and "an out root names a test directory" in err_t.getvalue()
-            and rc_tu == [2, 2, 2, 2] and err_t.getvalue().count("not licensed until step 9") == 3
+            and rc_tu == [2, 2, 2, 2] and all(f"G-TIME-OLMo-{c_} cites LOCK-m-OLMo-{c_}.md" in err_t.getvalue()
+                                              for c_ in ("sft", "dpo", "instruct"))
             and "not licensed until step 19" in err_t.getvalue(),
             (rc_t, rc_ta, rc_t3, rc_tx, rc_to, rc_tu))
 
@@ -4434,8 +4897,9 @@ def _selftest(chk) -> None:
             "recorded as this root's G-TIME-F0 checkpoint; the identity's "
             "lock and proposal sha256 their committed blobs'; the licence block the two files and hashes, no prior "
             "proposals; after a PASSing G-ID (the licence gives cached; the lock fixes uncached) the stage refuses "
-            "(exit 4, 'STOP: PATH MISMATCH'); with no G-ID artifact (exit 4, 'STOP: G-ID ARTIFACT ABSENT'); an OLMo "
-            "unit (the step-9 track) and Q-F3 (step 19) exit 2",
+            "(exit 4, 'STOP: PATH MISMATCH'); with no G-ID artifact (exit 4, 'STOP: G-ID ARTIFACT ABSENT'); Q-F3 "
+            "(step 19) and an OLMo unit exit 2 (the OLMo units' qual is wired: Q-F0's lock is not the "
+            "LOCK-m-OLMo-{ckpt}.md it cites)",
             rc_q == 0 and ex_q is None and ck_q["stage_end"]["status"] == "PASS" and len(ck_q["sessions"]) == 24
             and qtpl.count("A0") == 8 and qtpl.count("A0s") == 16
             and ck_q["identity"]["path"] == "uncached" and ck_q["identity"]["lock_sha256"] == sha_of(TIME_LOCK_FILE)
@@ -4446,7 +4910,8 @@ def _selftest(chk) -> None:
                                                            stages.REPO)
             and rc_qp == 4 and "STOP: PATH MISMATCH" in err_qp.getvalue()
             and rc_qn == 4 and "STOP: G-ID ARTIFACT ABSENT" in err_qn.getvalue()
-            and rc_qu == [2, 2, 2, 2] and err_qn.getvalue().count("not licensed until step 9") == 3
+            and rc_qu == [2, 2, 2, 2] and all(f"G-F0m-OLMo-{c_} cites LOCK-m-OLMo-{c_}.md" in err_qn.getvalue()
+                                              for c_ in ("sft", "dpo", "instruct"))
             and "not licensed until step 19" in err_qn.getvalue(),
             (rc_q, ck_q["stage_end"]["status"], len(ck_q["sessions"]), rc_qp, rc_qn, rc_qu))
 
@@ -4788,7 +5253,8 @@ def _selftest(chk) -> None:
         m2_line = [l_ for l_ in m2_multi[2].splitlines() if l_.startswith(f"REFUSED: {qname}:")]
         m2_help = re.sub(r"-\s+", "-", hflat)
         m2_qh = ("G-F0m-Qwen (step 14, m:283): 8 A0 and 16 A0s sessions, uncached, on Qwen under LOCK-m-F0 v0.2, "
-                 "on the snapshot of record; the OLMo units and Q-F3 are refused")
+                 "on the snapshot of record; or G-F0m-OLMo-{ckpt} (m:302): 8 contrast and 16 sham sessions, "
+                 "uncached, on the box under LOCK-m-OLMo-{ckpt}.md")
         chk("m_sessions: qual's revision refusal joins the licence, the prior gate's (PRIOR STAGE ABSENT), the preflight "
             "and the driver problems in one REFUSED line; stage_identity_extra('qual') refuses v0.1's lock text itself; "
             "qual's --help names its counts, its path and its lock",
@@ -4918,7 +5384,7 @@ def _selftest(chk) -> None:
             "{A0 128, A0s 64}; the identity's hour cap 40, its lock and proposal sha256 their committed blobs'; the "
             "licence block the two files and hashes, no prior proposals; the prior recorded as this root's G-F0m-Qwen "
             "checkpoint; with no G-F0m-Qwen checkpoint the stage refuses (exit 4, 'STOP: PRIOR STAGE ABSENT'); an OLMo "
-            "unit (the step-9 track) and Q-F3 (step 19) exit 2",
+            "unit (its campaign not licensed until that checkpoint's LOCK v1.0) and Q-F3 (step 19) exit 2",
             rc_c1 == 0 and ex_c1 is None and ck_c1["campaign"]["terminal"]["status"] == "COMPLETE"
             and len(ck_c1["sessions"]) == 112 and ctpl == ["A0", "A0s"] * 32 + ["A0"] * 48
             and cdom == campaign_floors() == {"A0": 80, "A0s": 32}
@@ -4933,7 +5399,7 @@ def _selftest(chk) -> None:
                                                             stages.REPO)
             and f"STAGE {cname} COMPLETE path=uncached" in txt_c1
             and rc_cn == 4 and "STOP: PRIOR STAGE ABSENT" in e_c.getvalue()
-            and rc_cu == [2, 2, 2, 2] and e_c.getvalue().count("not licensed until step 9") == 3
+            and rc_cu == [2, 2, 2, 2] and e_c.getvalue().count("not licensed until LOCK-m-OLMo-") == 3
             and "not licensed until step 19" in e_c.getvalue(),
             (rc_c1, (ck_c1["campaign"]["terminal"] or {}).get("status"), len(ck_c1["sessions"]), cdom, rc_cn, rc_cu))
 
@@ -5099,9 +5565,12 @@ def _selftest(chk) -> None:
             return ms_ + TAMPER_MS, ms_
 
         def totals_hidden(err: str, xy: tuple[int, int]) -> bool:
-            # the driver's sentence present, and neither figure anywhere as a bare number (round 1's RB-2); a sum of 0
-            # (no session) is not a figure to look for
-            return (TOTALS_REDACTED in err and "CHECKPOINT STATE INCONSISTENT" in err and "hour_cap_ms_used and" in err
+            # the sealed sentence present, and neither figure anywhere as a bare number (round 1's RB-2); a sum of 0
+            # (no session) is not a figure to look for. Since the OLMo build the package seals the line at its source
+            # (resume.TOTALS_SEALED; the step-14 read's Q3, carried by the prebuild answers' Q6), so the live line
+            # carries the package's sentence and the driver's TOTALS_RX finds no figure to redact
+            return (resume.TOTALS_SEALED in err and "CHECKPOINT STATE INCONSISTENT" in err
+                    and "hour_cap_ms_used and" in err
                     and not any(re.search(rf"(?<![0-9]){x_}(?![0-9])", err) for x_ in xy if x_))
         # STOP: the factory path, a tampered G-F0m-Qwen prior (read by the stage's prior gate) and a tampered campaign
         # checkpoint resumed (read by the stage's load); REFUSED: the Qwen path, the real prior gate over the tampered
@@ -5130,7 +5599,7 @@ def _selftest(chk) -> None:
             xy_c.append(tamper_totals(root / "ckpt" / "Q-F0_qual.json"))
         a_3c = time_qwen("q3_refused", lic=[], cmd="campaign", snap=qs_, setup=q3_setup)
         chk("m_sessions: the step-14 read's Q3 at the driver's prints -- a CHECKPOINT STATE INCONSISTENT whose two "
-            "totals differ prints the driver's sentence, neither figure: at STOP from a tampered G-F0m-Qwen prior "
+            "totals differ prints the package's sealed sentence, neither figure: at STOP from a tampered G-F0m-Qwen prior "
             "(exit 4), from a tampered campaign checkpoint resumed (exit 4) and from qual's tampered G-TIME prior "
             "(exit 4); and inside the REFUSED line of the Qwen path's precheck (exit 2, nothing loaded)",
             rc_3a == 4 and "STOP: CHECKPOINT STATE INCONSISTENT" in err_3a and totals_hidden(err_3a, xy_a)
@@ -5167,7 +5636,7 @@ def _selftest(chk) -> None:
         a_3i = time_qwen("q3_refused_id", lic=[], cmd="id", setup=q3_id_root)
         chk("m_sessions: the step-14 read's Q3 at G-ID-F0m's and G-TIME-F0's prints -- G-ID-F0m over a tampered G-TIME "
             "prior STOPs (exit 4) and its Qwen-path precheck REFUSES (exit 2, nothing loaded), G-TIME-F0 resumed over its "
-            "own tampered checkpoint STOPs (exit 4), each with the driver's sentence and neither figure",
+            "own tampered checkpoint STOPs (exit 4), each with the package's sealed sentence and neither figure",
             rc_3i == 4 and "STOP: CHECKPOINT STATE INCONSISTENT" in e_3i.getvalue()
             and totals_hidden(e_3i.getvalue(), xy_i[0])
             and rc_3t == 4 and "STOP: CHECKPOINT STATE INCONSISTENT" in e_3t.getvalue()
@@ -5534,12 +6003,23 @@ def _selftest(chk) -> None:
                 refused = rc_m_ == 4 and ex_m_ is None and after_ == before_
                 key_ = mirror[0].split(":")[0].split(" at ")[0] if mirror else None
                 stops_ = [l_[len("STOP: "):] for l_ in e_m.getvalue().splitlines() if l_.startswith("STOP: ")]
+                # RM4-1's note where the adjudication offered is a ruling the state records (read from the state's
+                # bytes here, independently of _campaign_state)
+                rec16_ = []
+                if st_b is not None:
+                    ck0_ = json.loads(st_b)
+                    rec16_ = [stages._sha16_text(x_["adjudication"])
+                              for x_ in ((ck0_.get("campaign") or {}).get("pauses") or [])
+                              if isinstance(x_, dict) and type(x_.get("adjudication")) is str]
+                note_ = ("; the checkpoint already records this adjudication as a pause's ruling"
+                         if texts_.get("adjudication") is not None
+                         and stages._sha16_text(texts_["adjudication"].strip()) in rec16_ else "")
                 rl_want_ = (f"RULING {cname}: "
                             + " and ".join(f"{who_} (sha16 {stages._sha16_text(texts_[k_].strip())})"
                                            for k_, who_ in (("adjudication", "the seat's adjudication"),
                                                             ("pi_stop", "the PI's stop"))
                                            if texts_.get(k_) is not None)
-                            + f" offered {m_where.get(st_nm, 'with no pause unadjudicated')}")
+                            + f" offered {m_where.get(st_nm, 'with no pause unadjudicated')}" + note_)
                 rl_got_ = [l_ for l_ in out_m_.splitlines() if l_.startswith("RULING ")]
                 m_seen[(st_nm, ru_nm)] = (bool(mirror), refused, key_, mirror[:1], stops_)
                 sfx_ok_ = not mirror or (
@@ -5549,8 +6029,16 @@ def _selftest(chk) -> None:
                     and (key_ != "NO PAUSE TO ADJUDICATE" or m_kind_want[st_nm][3] is None
                          or mirror[0].endswith("; drop --adjudication-file: resume with --resume and the PI's stop "
                                                "alone" if "pi" in ru else "; resume with --resume alone")))
-                if (bool(mirror) != refused or (mirror and stops_ != [m_sfx_rx.sub("", mirror[0])])
-                        or rl_got_ != [rl_want_] or not sfx_ok_):
+                # the two pre-load refusals Code declares at the OLMo wiring build, which the stage does not make before
+                # its first write: O4-1's, where the stage re-finishes the end pending and then refuses the ruling (NOT
+                # APPLIED); O1-3's, where the stage would apply it
+                if key_ == "RULING BESIDE AN END PENDING":
+                    fit_ = not refused and len(stops_) == 1 and stops_[0].startswith(f"NOT APPLIED ({cname})")
+                elif key_ == "RULING REUSED":
+                    fit_ = not refused
+                else:
+                    fit_ = not (bool(mirror) != refused or (mirror and stops_ != [m_sfx_rx.sub("", mirror[0])]))
+                if not fit_ or rl_got_ != [rl_want_] or not sfx_ok_:
                     m_bad.append((st_nm, ru_nm, mirror[:1], rc_m_, type(ex_m_).__name__, refused, stops_[:1],
                                   rl_got_, e_m.getvalue()[-160:]))
         m_refusals = sorted({v_[2] for v_ in m_seen.values() if v_[2]})
@@ -5568,21 +6056,27 @@ def _selftest(chk) -> None:
             "stop recorded and one without; each state read as named) by five rulings (adjudication, PI "
             "stop, both, another PI stop, the recorded PI stop re-offered padded with CRLF), with --resume: "
             "campaign_ruling_problems refuses exactly where the stage refuses before its first write, its message the "
-            "stage's STOP message but for the two declared suffixes, each present exactly where declared "
+            "stage's STOP message but for the two declared suffixes, each present exactly where declared -- save the "
+            "two pre-load refusals of the carry-overs (the OLMo wiring build): RULING BESIDE AN END PENDING (O4-1), "
+            "where the stage re-finishes the end and then refuses NOT APPLIED, and RULING REUSED (O1-3), where the "
+            "stage would apply the ruling "
             "(CHECKPOINT MISMATCH's; NO PAUSE TO ADJUDICATE's "
             "naming an adjudicated last pause, its ruling's sha16 and the re-run: '--resume alone', or, the PI's stop "
             "offered too, '--resume and the PI's stop alone', that form exact at every state with a last pause; at "
             "two pauses both adjudicated, the last pause and its "
             "ruling's digest; at the pause the PI's stop ended, the PI's digest and '--resume alone', the stop being "
             "recorded; at the exhausted second pause, its arm); every run's RULING line names the state's "
-            "pause or state; all four mirrored refusals occur (CHECKPOINT MISMATCH, NO PAUSE TO ADJUDICATE, PI STOP "
-            "REFUSED, SCHEDULE EXHAUSTED); beside an end pending with no PI stop recorded the mirror passes every "
-            "ruling and the stage re-finishes, then refuses NOT APPLIED",
+            "pause or state, with RM4-1's note exactly where the adjudication offered is a recorded ruling; all six "
+            "refusals occur (CHECKPOINT MISMATCH, NO PAUSE TO ADJUDICATE, PI STOP REFUSED, SCHEDULE EXHAUSTED, and "
+            "RULING BESIDE AN END PENDING and RULING REUSED); beside an end pending with no PI stop recorded the mirror "
+            "refuses every ruling (O4-1) and the stage, reached with no precheck, re-finishes, then refuses NOT "
+            "APPLIED",
             not m_bad and len(m_seen) == 70 and m_kind == m_kind_want
             and m_sfx_ps[:1] and m_sfx_ps[0].endswith(
                 f" -- its last pause (look, at 40 launches) already carries a ruling (sha16 "
                 f"{stages._sha16_text(pi_txt.strip())}); resume with --resume alone")
-            and m_refusals == ["CHECKPOINT MISMATCH", "NO PAUSE TO ADJUDICATE", "PI STOP REFUSED", "SCHEDULE EXHAUSTED"]
+            and m_refusals == ["CHECKPOINT MISMATCH", "NO PAUSE TO ADJUDICATE", "PI STOP REFUSED",
+                               "RULING BESIDE AN END PENDING", "RULING REUSED", "SCHEDULE EXHAUSTED"]
             and m_sfx[:1] and m_sfx[0].endswith(f" -- its last pause (look, at 40 launches) already carries a ruling "
                                                 f"(sha16 {stages._sha16_text(adj_txt.strip())}); resume with --resume "
                                                 f"alone")
@@ -5595,7 +6089,7 @@ def _selftest(chk) -> None:
                 f" -- its last pause (look, at 40 launches) already carries a ruling (sha16 "
                 f"{stages._sha16_text(adj_txt.strip())}); drop --adjudication-file: resume with --resume and the PI's "
                 f"stop alone")
-            and all(not mb_ and len(st_) == 1 and st_[0].startswith(f"NOT APPLIED ({cname})") for mb_, st_ in m_pend),
+            and all(mb_ and len(st_) == 1 and st_[0].startswith(f"NOT APPLIED ({cname})") for mb_, st_ in m_pend),
             (m_bad[:3], {k_: v_ for k_, v_ in m_kind.items() if v_ != m_kind_want.get(k_)}, m_refusals, m_sfx,
              m_sfx_pi, m_pend))
         # the mirror on the Qwen path: refused before the load (exit 2, 'ruling: ...'), nothing created, removed or
@@ -5611,6 +6105,13 @@ def _selftest(chk) -> None:
                 "ruling: SCHEDULE EXHAUSTED"),
             "another PI stop beside a recorded one": (time_qwen("cm_pio", {"pi_stop_file": pio_f}, lic=[],
                 more=no_prior, setup=c_pending, cmd="campaign", snap=qs_), "ruling: CHECKPOINT MISMATCH"),
+            # the carry-overs O4-1 and O1-3 (the OLMo wiring build; the review's finding 5)
+            "an adjudication beside an end pending": (time_qwen("cm_o41", {"adjudication_file": adj_f}, lic=[],
+                more=no_prior, setup=c_pending, cmd="campaign", snap=qs_, resume_flag=True),
+                "ruling: RULING BESIDE AN END PENDING"),
+            "an earlier pause's ruling re-offered for the open pause": (time_qwen("cm_o13", {"adjudication_file": adj_f},
+                lic=[], more=no_prior, setup=c_bytes(b_2p), cmd="campaign", snap=qs_, resume_flag=True),
+                "ruling: RULING REUSED"),
         }
         bad_mq = {k_: (v[0][0], v[0][3], v[0][4], v[0][2][-160:]) for k_, v in mq.items() if not q_ref_ok(*v)}
         # an unreadable checkpoint, and (round 2's M2-10, O2-2; round 3's F3-5, O3-4, O3-5) parseable ones the
@@ -5722,7 +6223,9 @@ def _selftest(chk) -> None:
         bad_mr.update(mr_raised)
         chk("m_sessions: the ruling-fit mirror on the Qwen path refuses before the loader (exit 2, 'ruling: ...', "
             "nothing written) an adjudication on an interrupted campaign, a PI stop before any launch, an adjudication "
-            "on an exhausted schedule and another PI stop beside a recorded one; an unreadable checkpoint and sixteen "
+            "on an exhausted schedule, another PI stop beside a recorded one, an adjudication beside an end pending "
+            "(RULING BESIDE AN END PENDING, O4-1) and an earlier pause's ruling re-offered (RULING REUSED, O1-3); an "
+            "unreadable checkpoint and sixteen "
             "parseable ones the screen reads as unreadable (a JSON array, pauses [1], a pauses block that is not a "
             "list, the campaign a list, the sessions a dict, a pause without its kind, its launch count or its "
             "adjudication, a pause of a kind no write gives, a launch count that is not an int or is a boolean, an arm "
@@ -5763,12 +6266,13 @@ def _selftest(chk) -> None:
             rc_el, _, txt_el = camp_run(eroot_r, resume_run=True, adj=adj_f)
         chk("m_sessions: an ended campaign offered the seat's adjudication -- on the Qwen path refused before the "
             "loader as ended ('checkpoint: CAMPAIGN ENDED', exit 2) with no 'ruling:' problem; on the stub path, its "
-            "last pause an end look's unadjudicated beside COMPLETE, the RULING line says 'on an ended campaign' and the "
-            "stage refuses it (exit 4, 'STOP: CAMPAIGN ENDED')",
+            "last pause an end look's unadjudicated beside COMPLETE, the RULING line says 'on an ended campaign', with "
+            "RM4-1's note (the text offered is the ruling the campaign records for its look at 40), and the stage "
+            "refuses it (exit 4, 'STOP: CAMPAIGN ENDED')",
             q_ref_ok(mq_end, "checkpoint: CAMPAIGN ENDED") and "ruling:" not in mq_end[2]
             and [l_ for l_ in txt_el.splitlines() if l_.startswith("RULING ")]
             == [f"RULING {cname}: the seat's adjudication (sha16 {stages._sha16_text(adj_txt.strip())}) offered on an "
-                f"ended campaign"]
+                f"ended campaign; the checkpoint already records this adjudication as a pause's ruling"]
             and rc_el == 4 and "STOP: CAMPAIGN ENDED" in e_el.getvalue(),
             (mq_end[0], mq_end[2][-160:], txt_el.splitlines()[:1], rc_el, e_el.getvalue()[-120:]))
         # a FIFO at the campaign checkpoint path (round 3's O3-3), in a daemon thread joined with a timeout (a
@@ -5893,7 +6397,7 @@ def _selftest(chk) -> None:
             pre_l = stage_precheck("campaign", c_extra_pre, resume_run=False, out_root=r_pre)
         pre_txt = "\n".join(pre_l)
         chk("m_sessions: stage_precheck's returned problems are redacted at their source -- the campaign's precheck over "
-            "a tampered G-F0m-Qwen prior returns the prior's CHECKPOINT STATE INCONSISTENT with the driver's sentence, "
+            "a tampered G-F0m-Qwen prior returns the prior's CHECKPOINT STATE INCONSISTENT with the package's sealed sentence, "
             "neither figure",
             any(x.startswith("prior: CHECKPOINT STATE INCONSISTENT") for x in pre_l) and totals_hidden(pre_txt, xy_pre),
             pre_l[:2])
@@ -6002,27 +6506,39 @@ def _selftest(chk) -> None:
         c_pauses_more = ("its ruling enters VERDICTS as the analyzer's declared --adjudication file (C9(i))",
                          "After an interrupted run that offered the seat's adjudication alone, re-run with --resume "
                          "alone: recorded, it resumes the campaign or re-finishes an end its finish left pending; "
-                         "unrecorded, the pause is shown again",
-                         "After one that offered the PI's stop, re-run with --resume and the same ruling files (where "
-                         "its RULING line said it was beside an end pending, with the PI's stop alone): recorded or "
-                         "not, the campaign ends PI-STOP, save that an end left pending is re-finished first and, if "
-                         "terminal or a STOP, stands (should NO PAUSE TO ADJUDICATE refuse an adjudication offered "
-                         "beside it, that adjudication was recorded: drop --adjudication-file)",
+                         "unrecorded, the pause is shown again; and where that finish completed before the kill, the"
+                         " re-run shows the new pause, or is refused as ended",
+                         "After one that offered the PI's stop, re-run with --resume and the same ruling files: "
+                         "recorded or not, the campaign ends PI-STOP, save where an end is left pending -- a stop "
+                         "the checkpoint records re-finishes with it, and a terminal end or a STOP stands; a ruling "
+                         "the stage would not apply beside it (the seat's adjudication, or a PI stop the checkpoint "
+                         "does not record) is refused before the load (RULING BESIDE AN END PENDING), the re-run "
+                         "drops the flags that refusal names, and where the end is a look's or an exhausted "
+                         "schedule's pause a stop so refused is offered again once the re-finish has shown it "
+                         "(should NO PAUSE TO ADJUDICATE refuse an adjudication offered with the stop, it was "
+                         "recorded: drop --adjudication-file)",
                          "An adjudication is offered only for the pause it rules on, which the shown pause and the "
-                         "RULING line name",
-                         "Beside an end pending (the RULING line of an invocation that finds one says so) the end is "
-                         "re-finished first and a ruling offered with it (the seat's adjudication, or a PI stop not "
-                         "recorded with it) is NOT APPLIED (exit 4), so beside one no adjudication is offered, and the "
-                         "PI's stop, if offered, alone; an adjudication offered beside one is never offered again (NOT "
-                         "APPLIED's 'offer it again' holds for the PI's stop alone): a re-finished pause that leaves "
-                         "the campaign open is then shown and takes the seat's own ruling on it (a look's; an "
-                         "exhausted schedule's only beside the PI's stop) or the PI's stop again; after a terminal end "
-                         "or a STOP that end stands (a pause it carries takes the seat's own ruling on it, once shown, "
-                         "through VERDICTS as the declared --adjudication file; a PI's stop on a hair trigger, the "
-                         "declared --pi-stop record), and an adjudication the checkpoint already records needs nothing")
+                         "RULING line name; one whose text is a ruling the checkpoint records for an earlier pause "
+                         "is refused before the load (RULING REUSED); an adjudication the checkpoint already records"
+                         " is named as such on the RULING line where one prints, and otherwise by the pre-load "
+                         "refusal that meets it first (RULING REUSED, RULING BESIDE AN END PENDING, or NO PAUSE TO "
+                         "ADJUDICATE by the last pause's ruling digest)",
+                         "Beside an end pending (the RULING line of an invocation that finds one says so) the end is"
+                         " re-finished first, and a ruling the stage would not apply with it (the seat's "
+                         "adjudication, or a PI stop not recorded with it) is refused before the load (RULING BESIDE"
+                         " AN END PENDING, exit 2; where no precheck runs the stage re-finishes the end and then "
+                         "refuses it, NOT APPLIED, exit 4), so beside one no adjudication is offered, and the PI's "
+                         "stop only where the checkpoint records it; an adjudication refused there is never offered "
+                         "again (NOT APPLIED's 'offer it again' holds for the PI's stop alone): a re-finished pause "
+                         "that leaves the campaign open is then shown and takes the seat's own ruling on it (a "
+                         "look's; an exhausted schedule's only beside the PI's stop) or the PI's stop again; after a"
+                         " terminal end or a STOP that end stands (a pause it carries takes the seat's own ruling on"
+                         " it, once shown, through VERDICTS as the declared --adjudication file; a PI's stop on a "
+                         "hair trigger, the declared --pi-stop record), and an adjudication the checkpoint already "
+                         "records needs nothing")
         c_flags = ("after an interrupted run that offered it alone, re-run with --resume alone",
                    "after an interrupted run that offered it, re-run with --resume and the same ruling files "
-                   "(beside an end pending, with the PI's stop alone;",
+                   "(beside an end pending, without the flags a RULING BESIDE AN END PENDING refusal names;",
                    "the RULING line carries its sha16, and, where it is recorded as the pause's ruling, the report")
         hnorm = lambda x_: re.sub(r"-\s+", "-", x_)
         c_pauses = ("exit 3 is one of three pauses: a fired look's, resumed with --resume and the seat's adjudication "
@@ -6142,10 +6658,276 @@ def _selftest(chk) -> None:
             dc_a == dc_b and dc_clock and dc_a.count("\n") >= 60 and "STOP: CHECKPOINT EXISTS" in dc_a
             and "is paused" in dc_a and "REFUSED: campaign-Q-F0" in dc_a and "STOP: NO PAUSE TO ADJUDICATE" in dc_a
             and "ruling: NO PAUSE TO ADJUDICATE" in dc_a and "\nRULING campaign-Q-F0: " in dc_a
-            and f"STAGE {cname} PI-STOP path=uncached" in dc_a and TOTALS_REDACTED in dc_a,
+            and f"STAGE {cname} PI-STOP path=uncached" in dc_a and resume.TOTALS_SEALED in dc_a,
             (dc_diff, dc_clock, ds_a[:2], ds_b[:2], dp_a[:1], dp_b[:1], dc_a.count("\n")))
         canary_cm.close()
         n_outs_c_end = len(outs)
+        # (the OLMo block runs here, after the campaign's runs and before the scans below, so the line-form whitelist,
+        # the no-clock check, the ruling-texts check and the stdout scans cover its outputs: the build's review, finding 4)
+        # --- the OLMo units: the OLMo track's wiring build (the prebuild answers §0, Q2) -------------------------------
+        me_o = sys.modules[__name__]
+
+        def refuses_v(fn) -> bool:
+            # True iff fn raises ValueError (a programming refusal, not a printed one)
+            try:
+                fn()
+            except ValueError:
+                return True
+            return False
+
+        def o_flags(unit: str = "OLMo-sft") -> dict:
+            return {"proposal_file": prel_t, "lock_file": olmo_lock_file(unit), "analyzer_sha256": an_sha,
+                    "package_sha256": pk_sha, "renders_sha16": rsha}
+
+        @contextlib.contextmanager
+        def olmo_lock(unit: str = "OLMo-sft", *, weights: bool = True, proposal: bool = True, manifest=None,
+                      v02: bool = True):
+            # LOCK-m-OLMo-{ckpt}.md is not yet written: stages._committed answers its path with planted bytes (and,
+            # given, the manifest's with a planted manifest); every other path as committed
+            real_c = stages._committed
+            ck_ = olmo_ckpt(unit)
+            w_ = resume.weights_sha256_of_record(ck_)
+            body = ("# LOCK-m-OLMo-" + ck_ + " (selftest plant)\n" + (f"proposal {sha_of(prel_t)}\n" if proposal else "")
+                    + (f"weights of record {w_}\n" if weights else "")
+                    + (OLMO_QUAL_LOCK_LINE.format(ckpt=ck_) + "\n" if v02 else "")).encode()
+
+            def fake(rel, *a, **kw):
+                if str(rel) == olmo_lock_file(unit):
+                    return [], body
+                if manifest is not None and str(rel) == "data/olmo/manifest.json":
+                    return [], json.dumps(manifest).encode()
+                return real_c(rel, *a, **kw)
+            with patched(stages, "_committed", fake):
+                yield body
+
+        # the refusals: no G-ID on OLMo; the campaign until that checkpoint's v1.0; time and qual are no refusal
+        e_o = io.StringIO()
+        with contextlib.redirect_stderr(e_o):
+            rc_oid = capture(_run_stage, "id", "OLMo-sft", resume_run=False, **o_flags())[0]
+            rc_ocamp = capture(_run_stage, "campaign", "OLMo-dpo", resume_run=False, **o_flags("OLMo-dpo"))[0]
+        chk("m_sessions-olmo: id on an OLMo unit is refused (no G-ID on OLMo) and the OLMo campaign is refused until "
+            "that checkpoint's LOCK v1.0 (exit 2, nothing loaded); refusal() raises on time and qual, which are wired",
+            rc_oid == 2 and rc_ocamp == 2 and "no G-ID on OLMo" in e_o.getvalue()
+            and "not licensed until LOCK-m-OLMo-dpo v1.0" in e_o.getvalue()
+            and all(refuses_v(lambda c_=c_: refusal(c_, "OLMo-sft")) for c_ in ("time", "qual"))
+            and OLMO_UNITS == tuple(f"OLMo-{c_}" for c_ in keys.CKPTS) and set(OLMO_UNITS) <= set(UNITS),
+            e_o.getvalue()[-300:])
+        # the identity: LOCK-m-OLMo-{ckpt}.md, naming the proposal and the weights of record
+        with olmo_lock():
+            ox, op = stage_identity_extra("time", prel_t, olmo_lock_file("OLMo-sft"), analyzer_sha256=an_sha,
+                                          package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+            ox_q, op_q = stage_identity_extra("qual", prel_t, olmo_lock_file("OLMo-sft"), analyzer_sha256=an_sha,
+                                              package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+            _x, op_name = stage_identity_extra("time", prel_t, TIME_LOCK_FILE, analyzer_sha256=an_sha,
+                                               package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+        with olmo_lock(weights=False):
+            _x, op_nw = stage_identity_extra("time", prel_t, olmo_lock_file("OLMo-sft"), analyzer_sha256=an_sha,
+                                             package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+        with olmo_lock(proposal=False):
+            _x, op_np = stage_identity_extra("qual", prel_t, olmo_lock_file("OLMo-sft"), analyzer_sha256=an_sha,
+                                             package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+        with olmo_lock(v02=False):
+            ox_t1, op_t1 = stage_identity_extra("time", prel_t, olmo_lock_file("OLMo-sft"), analyzer_sha256=an_sha,
+                                                package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+            _x, op_q1 = stage_identity_extra("qual", prel_t, olmo_lock_file("OLMo-sft"), analyzer_sha256=an_sha,
+                                             package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")
+        chk("m_sessions-olmo: an OLMo stage's identity_extra cites LOCK-m-OLMo-{ckpt}.md, committed, whose text names the "
+            "proposal's sha256 and the weights of record's files_aggregate_sha256; time and qual carry locked_path "
+            "uncached; another lock file, a lock without the weights or without the proposal is refused; G-TIME-OLMo "
+            "runs under v0.1 and G-F0m-OLMo refuses v0.1's blob (v0.2's acceptance line, m:302; the review's finding 2)",
+            op == [] and op_q == [] and ox["lock_file"] == "LOCK-m-OLMo-sft.md" and ox["locked_path"] == "uncached"
+            and ox_q["locked_path"] == "uncached" and ox["proposal_sha256"] == sha_of(prel_t)
+            and any("cites LOCK-m-OLMo-sft.md" in x for x in op_name)
+            and any("does not name the weights of record" in x for x in op_nw)
+            and any("is not named in full in LOCK-m-OLMo-sft.md" in x for x in op_np)
+            and op_t1 == [] and ox_t1 is not None
+            and any("does not carry v0.2's line 'G-TIME-OLMo-sft port acceptance recorded'" in x for x in op_q1)
+            and refuses_v(lambda: stage_identity_extra("campaign", prel_t, "LOCK-m-OLMo-sft.md", analyzer_sha256=an_sha,
+                                                       package_sha256=pk_sha, renders_sha16=rsha, unit="OLMo-sft")),
+            (op, op_name, op_nw, op_np))
+        # G-TIME-OLMo-sft then G-F0m-OLMo-sft through the driver on the scripted stub (the box's pod id set)
+        o_root = fresh("olmo_driver")
+        with olmo_lock(), olmo_stub_startup(), env_pod("pod-selftest-olmo"):
+            rc_ot, _e1, out_ot = capture(_run_stage, "time", "OLMo-sft", resume_run=False, out_root=o_root,
+                                         adapter_factory=lambda: adapter_for("OLMo-sft", "time", OT), **o_flags())
+            rc_oq, _e2, out_oq = capture(_run_stage, "qual", "OLMo-sft", resume_run=False, out_root=o_root,
+                                         adapter_factory=lambda: adapter_for("OLMo-sft", "qual", OQ), **o_flags())
+        ck_ot = json.loads((o_root / "ckpt" / "OLMo-sft_time.json").read_text(encoding="utf-8")) \
+            if (o_root / "ckpt" / "OLMo-sft_time.json").is_file() else {}
+        ck_oq = json.loads((o_root / "ckpt" / "OLMo-sft_qual.json").read_text(encoding="utf-8")) \
+            if (o_root / "ckpt" / "OLMo-sft_qual.json").is_file() else {}
+        w_sft = resume.weights_sha256_of_record("sft")
+        chk("m_sessions-olmo: G-TIME-OLMo-sft (2 sessions) and then G-F0m-OLMo-sft (24) run through _run_stage on the "
+            "stub and PASS (exit 0); each checkpoint's identity binds the weights of record (weights_sha256) and is "
+            "uncached",
+            rc_ot == 0 and rc_oq == 0 and len(ck_ot.get("sessions", [])) == 2 and len(ck_oq.get("sessions", [])) == 24
+            and ck_ot.get("identity", {}).get("weights_sha256") == w_sft
+            and ck_oq.get("identity", {}).get("weights_sha256") == w_sft
+            and ck_ot.get("identity", {}).get("path") == "uncached",
+            (rc_ot, rc_oq, len(ck_ot.get("sessions", [])), len(ck_oq.get("sessions", []))))
+        # --prior-adjudication-file: OLMo qual alone, passed as prior_adjudication; Q-F0 refuses it; blank refused
+        pa_f = base / "prior_adj.txt"
+        pa_f.write_text("The seat's adjudication of the G-TIME-OLMo pause (selftest) zq7prioradjtokenq9.\n",
+                        encoding="utf-8")
+        pa_blank = base / "prior_adj_blank.txt"
+        pa_blank.write_text(" \n​\n", encoding="utf-8")
+        seen_pa: list = []
+
+        def rec_gate(adapter, **kw):
+            seen_pa.append((kw.get("gate"), kw.get("prior_adjudication"), kw.get("prior_ckpt")))
+            return {"status": "PASS"}
+        e_pa = io.StringIO()
+        with olmo_lock(), olmo_stub_startup(), env_pod("pod-selftest-olmo"), patched(stages, "run_gate_stage", rec_gate), \
+                contextlib.redirect_stderr(e_pa):
+            rc_pa = capture(_run_stage, "qual", "OLMo-sft", resume_run=False, out_root=o_root,
+                            adapter_factory=lambda: adapter_for("OLMo-sft", "qual", OQ), prior_adjudication_file=str(pa_f),
+                            **o_flags())[0]
+            rc_pab = capture(_run_stage, "qual", "OLMo-sft", resume_run=False, out_root=o_root,
+                             adapter_factory=lambda: adapter_for("OLMo-sft", "qual", OQ),
+                             prior_adjudication_file=str(pa_blank), **o_flags())[0]
+        e_qf = io.StringIO()
+        with contextlib.redirect_stderr(e_qf):
+            rc_qpa = capture(main, ["qual", "--unit", "Q-F0", "--prior-adjudication-file", str(pa_f)]
+                             + [x for k, v in tflags.items() for x in ("--" + k.replace("_", "-"), v)])[0]
+        try:
+            with contextlib.redirect_stderr(io.StringIO()), contextlib.redirect_stdout(io.StringIO()):
+                main(["time", "--unit", "OLMo-sft", "--prior-adjudication-file", str(pa_f)])
+            ap_time = False
+        except SystemExit as ex_t:
+            ap_time = ex_t.code == 2
+        chk("m_sessions-olmo: G-F0m-OLMo's --prior-adjudication-file reaches stages.run_gate_stage as prior_adjudication "
+            "(the text as read) with G-TIME-OLMo's checkpoint as the prior; a blank one is refused (exit 2); Q-F0's qual "
+            "refuses the flag (exit 2, nothing loaded); time has no such flag (argparse, exit 2); _run_stage raises on it "
+            "at time",
+            rc_pa == 0 and len(seen_pa) >= 1 and seen_pa[0][:2] == (
+                "qual", "The seat's adjudication of the G-TIME-OLMo pause (selftest) zq7prioradjtokenq9.\n")
+            and Path(seen_pa[0][2]).resolve() == (o_root / "ckpt" / "OLMo-sft_time.json").resolve()
+            and rc_pab == 2 and "--prior-adjudication-file" in e_pa.getvalue() and "blank" in e_pa.getvalue()
+            and rc_qpa == 2 and "takes no --prior-adjudication-file" in e_qf.getvalue() and ap_time
+            and refuses_v(lambda: _run_stage("time", "OLMo-sft", resume_run=False, prior_adjudication_file=str(pa_f),
+                                             **o_flags())),
+            (rc_pa, seen_pa[:1], rc_pab, rc_qpa, e_qf.getvalue()[-160:]))
+        # the box path (no factory): the pod id and the weights check before the load; DRIVER and WEIGHTS lines; the
+        # adapter's weights path compared after it
+        o_loads: list = []
+        good_w = {"repo": "allenai/selftest", "revision": "0" * 12, "sha256": w_sft, "path": "/workspace/models/sft",
+                  "n_files": 7}
+
+        def o_loader(path_ok: bool = True):
+            def f(ckpt, path=None):
+                o_loads.append((ckpt, path))
+                ad_ = adapter_for("OLMo-sft", "time", OT)
+                ad_.path = (path if path_ok else "/workspace/models/dpo")
+                return ad_
+            return f
+
+        def olmo_box(nm: str, *, pod="pod-selftest-olmo", wprobs=(), path_ok=True, gcal_art="PASS"):
+            root = fresh(f"olmo_box_{nm}")
+            (root / "gates").mkdir(parents=True, exist_ok=True)
+            if gcal_art is not None:
+                (root / "gates" / "G-CAL_completability_olmo-sft.json").write_text(json.dumps(
+                    {"verdict": gcal_art, "identity": {"weights_sha256": w_sft}}), encoding="utf-8")
+            e = io.StringIO()
+            n0 = len(o_loads)
+            with contextlib.ExitStack() as st:
+                st.enter_context(olmo_lock())
+                st.enter_context(olmo_stub_startup())
+                st.enter_context(env_pod(pod))
+                st.enter_context(patched(stages, "DEFAULT_OUT", root))
+                st.enter_context(gates_at(root / "gates"))
+                st.enter_context(patched(stages, "licence_problems", lambda extra, **kw: []))
+                st.enter_context(patched(me_o, "driver_problems", lambda: ([], "d" * 64)))
+                st.enter_context(patched(me_o, "olmo_weights_problems",
+                                         lambda ckpt, **kw: (list(wprobs), None if wprobs else dict(good_w))))
+                st.enter_context(patched(me_o, "_load_olmo", o_loader(path_ok)))
+                st.enter_context(contextlib.redirect_stderr(e))
+                rc_, _ex, out_ = capture(main, ["time", "--unit", "OLMo-sft"]
+                                         + [x for k, v in o_flags().items() for x in ("--" + k.replace("_", "-"), v)])
+            return rc_, e.getvalue(), out_, len(o_loads) - n0
+        b_nopod = olmo_box("nopod", pod=None)
+        b_w = olmo_box("weights", wprobs=("/workspace/models/sft/config.json: absent or not a regular file",))
+        b_ok = olmo_box("ok")
+        b_path = olmo_box("path", path_ok=False)
+        b_nogcal = olmo_box("nogcal", gcal_art=None)
+        b_gfail = olmo_box("gcalfail", gcal_art="FAIL")
+        chk("m_sessions-olmo: the box path refuses before the load without the pod id (POD ID ABSENT) or on a weights "
+            "problem (exit 2, nothing loaded); clean, it prints the DRIVER then the WEIGHTS line before the load, loads "
+            "once at the checked path and PASSes; an adapter loaded at another path STOPs (WEIGHTS PATH, exit 4); "
+            "G-TIME-OLMo refuses before the load without G-CAL-OLMo's artifact or on a FAIL one (m:176; the review's "
+            "finding 9)",
+            b_nopod[0] == 2 and "POD ID ABSENT" in b_nopod[1] and b_nopod[3] == 0
+            and b_w[0] == 2 and "weights: /workspace/models/sft/config.json" in b_w[1] and b_w[3] == 0
+            and b_ok[0] == 0 and b_ok[3] == 1 and "DRIVER " in b_ok[2] and "WEIGHTS sft: " in b_ok[2]
+            and b_ok[2].index("DRIVER ") < b_ok[2].index("WEIGHTS sft: ")
+            and o_loads[-2] == ("sft", "/workspace/models/sft")
+            and b_path[0] == 4 and "STOP: WEIGHTS PATH" in b_path[1] and b_path[3] == 1
+            and b_nogcal[0] == 2 and "gcal: G-CAL-OLMo-sft's artifact" in b_nogcal[1] and b_nogcal[3] == 0
+            and b_gfail[0] == 2 and "not PASS" in b_gfail[1] and b_gfail[3] == 0,
+            (b_nopod[0], b_nopod[1][-120:], b_w[0], b_ok[0], b_ok[3], b_path[0], b_path[1][-120:]))
+        # the weights check on a planted manifest and a temp models root
+        man_p = {"sft": {"repo": "allenai/selftest", "revision": "a" * 12, "files_aggregate_sha256": w_sft,
+                         "path": "/workspace/models/sft", "n_files": 2,
+                         "files": {"config.json": {"sha256": "c" * 64, "bytes": 3},
+                                   "model.safetensors": {"sha256": "e" * 64, "bytes": 5}}}}
+        mroot = base / "models_root"
+        (mroot / "sft").mkdir(parents=True)
+        (mroot / "sft" / "config.json").write_bytes(b"abc")
+        (mroot / "sft" / "model.safetensors").write_bytes(b"12345")
+        with olmo_lock(manifest=man_p):
+            wp_ok, ww = olmo_weights_problems("sft", models_root=mroot)
+            (mroot / "sft" / "model.safetensors").write_bytes(b"1234")
+            wp_short, _ = olmo_weights_problems("sft", models_root=mroot)
+            (mroot / "sft" / "model.safetensors").write_bytes(b"12345")
+            (mroot / "sft" / "adapter_config.json").write_text("{}", encoding="utf-8")
+            wp_extra, _ = olmo_weights_problems("sft", models_root=mroot)
+            (mroot / "sft" / "adapter_config.json").unlink()
+            (mroot / "sft" / "config.json").rename(mroot / "config.real")
+            (mroot / "sft" / "config.json").symlink_to(mroot / "config.real")
+            wp_link, _ = olmo_weights_problems("sft", models_root=mroot)
+            (mroot / "sft" / "config.json").unlink()
+            wp_gone, _ = olmo_weights_problems("sft", models_root=mroot)
+            wp_dir, _ = olmo_weights_problems("sft", models_root=base / "no_models_here")
+        chk("m_sessions-olmo: olmo_weights_problems -- clean when every listed file is a regular file at the manifest's "
+            "byte count; a short file, an unlisted file (box_respawn_check's EXTRA), a listed file that is a symlink, a "
+            "missing file and a missing directory are problems (the review's finding 8)",
+            wp_ok == [] and ww is not None and ww["path"] == str(mroot / "sft")
+            and any("4 bytes, the manifest's 5" in x for x in wp_short)
+            and any("config.json: absent" in x for x in wp_gone) and any("not a directory" in x for x in wp_dir)
+            and any("does not list: ['adapter_config.json']" in x for x in wp_extra)
+            and any("config.json: a symlink" in x for x in wp_link),
+            (wp_ok, wp_short, wp_extra, wp_link, wp_gone, wp_dir))
+        # gcal completability --unit OLMo-sft: the stub path end to end, and the box path's refusals
+        go_dir = base / "gcal_olmo"
+        go_dir.mkdir()
+        gcal_mod = __import__("valence_core.m.gcal", fromlist=["gcal"])
+        gcal_mod.write_json_once(go_dir / gcal_mod.MODEL_FREE_NAME, gcal_mod.model_free_artifact())
+
+        def g_stub():
+            ad_ = testing.OLMoScriptedAdapter("m-gcal-olmo-driver")
+            ad_.load(lambda call: {"text": "Zqxj unknown.", "n_tok": 2})
+            return ad_
+        # (a G-CAL run, not a stage-wiring run: its output stays out of outs / errs, whose line forms the check below
+        # declares for the stage subcommands)
+        e_g, o_g = io.StringIO(), io.StringIO()
+        with patched(gcal_mod, "olmo_startup", lambda a, c: runner_olmo.OLMoSetup(
+                audit=testing.olmo_kit()["audit"], ban_ids=testing.olmo_kit()["ban_ids"],
+                ban_strings=testing.olmo_kit()["ban_strings"], term_rx=testing.olmo_kit()["term_rx"],
+                audit_sha16=runner_olmo.olmo_audit_sha16())), contextlib.redirect_stderr(e_g), \
+                contextlib.redirect_stdout(o_g):
+            rc_g = run_gcal_completability(go_dir, False, prel_t, adapter_factory=g_stub, unit="OLMo-sft")
+        out_g = o_g.getvalue()
+        with env_pod(None):
+            e_gb = io.StringIO()
+            with contextlib.redirect_stderr(e_gb), contextlib.redirect_stdout(io.StringIO()):
+                rc_gb = run_gcal_completability(None, False, prel_t, unit="OLMo-instruct")
+        chk("m_sessions-olmo: gcal completability --unit OLMo-sft on the stub writes G-CAL_completability_olmo-sft.json "
+            "(a FAIL on an all-miss script: exit 4, the NOT-RUN line); on the box path without the pod id or the weights "
+            "it is refused before any load (exit 2) naming both",
+            rc_g == 4 and (go_dir / "G-CAL_completability_olmo-sft.json").is_file()
+            and "G-CAL-OLMo-sft completability: FAIL -- that checkpoint NOT-RUN" in out_g
+            and rc_gb == 2 and "POD ID ABSENT" in e_gb.getvalue() and "weights:" in e_gb.getvalue(),
+            (rc_g, out_g[-200:], rc_gb, e_gb.getvalue()[-200:]))
+
 
         probs_t = [x for o in outs[n_outs_t:] for x in stdout_problems(o)]
         chk(f"m_sessions: stdout of the {len(outs) - n_outs_t} time-, id-, qual- and campaign-wiring runs carries no "
@@ -6192,14 +6974,25 @@ def _selftest(chk) -> None:
             r"\(m:192, m:247\)",
             r"RE-FINISH campaign-Q-F0: Q-F0_campaign\.json carries an end pending \((?:COMPLETE|CAP|PI-STOP|PAUSE|STOP)\); "
             r"nothing launches -- the outputs are re-derived from the checkpoint and the end persisted \(m:267, m:271\)",
+            # the OLMo track's build: G-TIME-OLMo-{ckpt} and G-F0m-OLMo-{ckpt} (their bars -- the G-TIME pause bar
+            # carries no counts -- and stage lines) and the box path's WEIGHTS line
+            r"BAR \w+@(?:G-TIME-OLMo|G-F0m-OLMo)-(?:sft|dpo|instruct) (?:silent|FIRED) "
+            r"template=A0s?-OLMo-(?:sft|dpo|instruct)(?: \d+/\d+ exact one-sided P=\d\.\d{4} (?:>|<=) alpha 0\.05 vs p0 "
+            r"0\.02; critical \d+ at n=\d+)?",
+            r"STAGE (?:G-TIME-OLMo|G-F0m-OLMo)-(?:sft|dpo|instruct) (?:PASS|FAIL|STOP|PAUSE) path=uncached",
+            r"WEIGHTS (?:sft|dpo|instruct): \S+ revision [0-9a-f]{12,40}, files_aggregate_sha256 [0-9a-f]{64}; \d+ "
+            r"files at \S+, each at the manifest's byte count \(the full re-hash is the respawn protocol's step \(i\), "
+            r"in this box's BACKEND entry\)",
             r"RULING campaign-Q-F0: (?:the seat's adjudication \(sha16 [0-9a-f]{16}\)(?: and the PI's stop \(sha16 "
             r"[0-9a-f]{16}\))?|the PI's stop \(sha16 [0-9a-f]{16}\)) offered (?:for the pause at \d+ launches "
             r"\((?:look|schedule_exhausted|end_look)\)|with no checkpoint on disk|beside an end pending|on an ended "
-            r"campaign|on an unreadable checkpoint|with no pause unadjudicated)")]
+            r"campaign|on an unreadable checkpoint|with no pause unadjudicated)"
+            r"(?:; the checkpoint already records this adjudication as a pause's ruling)?")]
         free_out = [re.compile(x) for x in (r"INVOCATION: .*",
                                             r"(?:CHECKPOINT|REPORT|READS|ADJUDICATION|G-ID ARTIFACT) /\S+\.json")]
         free_err = [re.compile(x) for x in (r"REFUSED: .*", r"STOP: .*", r"refused: .*",
-                                            r"not licensed until step \d+: .*")]
+                                            r"not licensed until step \d+: .*",
+                                            r"not licensed until LOCK-m-OLMo-(?:sft|dpo|instruct) v1\.0: .*")]
         # (round 3's S3-1 and its refuter: digit lookarounds where a letter may abut -- the package's own
         # resume.utc_stamp 2026-10-13T14:32:01Z and resume._set_aside's 20261013T143201Z; the compact form ends at
         # a 'Z' or a non-alphanumeric, so a hex token beginning '20' and ten digits is not read as one; the epoch
@@ -6397,7 +7190,7 @@ def _selftest(chk) -> None:
         # (the stub runs and the Qwen-path runs, refused or run) is free of either ruling's text and of the tokens the
         # self-test's ruling files carry
         rul_tok = (adj_txt.strip(), pi_txt.strip(), adj_ws.strip(), "zq7adjtokenq9", "zq7pitokenq9",
-                   "zq7piothertokenq9", "zq7adjwstokenq9")
+                   "zq7piothertokenq9", "zq7adjwstokenq9", "zq7prioradjtokenq9")
         lines_rt = [ln for o_, e_ in zip(outs[n_outs_t:], errs[n_outs_t:]) for tx in (o_, e_) for ln in tx.splitlines()]
         hits_r = [ln[:120] for ln in lines_rt if any(t_ in ln for t_ in rul_tok)]
         chk(f"m_sessions: the ruling texts are printed nowhere -- none of the {len(lines_rt)} stdout and stderr lines of "
@@ -6495,10 +7288,12 @@ def _selftest(chk) -> None:
             "no 'state', 'sessions', 'seconds' or 'hour_cap_ms_used' key, _campaign_state excepted for 'sessions' and "
             "pending_end; it prints nothing, and its summary has exactly the declared keys, free of any time and of any "
             "recorded text (an absent checkpoint's, and the adjudicated campaign's, ended COMPLETE: its last pause the "
-            "look at 40, adjudicated, the ruling's sha16; round 3's B3-5)",
+            "look at 40, adjudicated, the ruling's sha16; round 3's B3-5), the recorded rulings' sha16s among them "
+            "(none, and that ruling's: the carry-overs O1-3 and RM4-1)",
             not scan_k and not ex_print and n_ex == 1
             and [x_[0] for x_ in sm_keys] == ["absent", "ended"]
-            and all(sorted(x_[1]) == ["last", "launched", "pi_stop_sha256"] for x_ in sm_keys)
+            and all(sorted(x_[1]) == ["last", "launched", "pi_stop_sha256", "ruling_sha16s"] for x_ in sm_keys)
+            and sm_keys[0][1]["ruling_sha16s"] == [] and sm_keys[1][1]["ruling_sha16s"] == [stages._sha16_text(adj_txt.strip())]
             and sm_keys[0][1]["pi_stop_sha256"] is None and sm_keys[1][1]["pi_stop_sha256"] is None
             and sorted(sm_last) == ["adjudicated", "adjudication_sha16", "arm", "at_launches", "kind"]
             and (sm_last["kind"], sm_last["at_launches"], sm_last["adjudicated"], sm_last["adjudication_sha16"])
@@ -6585,7 +7380,8 @@ def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
     ap = argparse.ArgumentParser(description="PROPOSAL-m driver (self-test, schedules, G-PORT, G-CAL, "
-                                             "G-SHAPE-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen, the Q-F0 campaign)")
+                                             "G-SHAPE-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen, the Q-F0 campaign; "
+                                             "G-CAL-OLMo, G-TIME-OLMo and G-F0m-OLMo)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of the m package")
     ap.add_argument("--build-schedules", action="store_true",
                     help="write the schedule files + manifest (default data/m/schedules)")
@@ -6594,7 +7390,8 @@ def main(argv: list[str] | None = None) -> int:
     for c in STAGE_CMDS:
         if c == "time":
             p = sub.add_parser(c, help="G-TIME-F0 (step 10, m:280): one uncached session per Q-F0 arm, on "
-                                       "Qwen; the OLMo units and Q-F3 are refused")
+                                       "Qwen; or G-TIME-OLMo-{ckpt} (m:302): one uncached session per arm, on the "
+                                       "box under LOCK-m-OLMo-{ckpt}.md; Q-F3 is refused")
         elif c == "id":
             p = sub.add_parser(c, help="G-ID-F0m (step 12, m:281): the A0s template uncached then cached per "
                                        "index until two complete identical pairs (PASS), a divergence (FAIL) "
@@ -6602,33 +7399,56 @@ def main(argv: list[str] | None = None) -> int:
                                        "Q-F3 are refused")
         elif c == "qual":
             p = sub.add_parser(c, help="G-F0m-Qwen (step 14, m:283): 8 A0 and 16 A0s sessions, uncached, on "
-                                       "Qwen under LOCK-m-F0 v0.2, on the snapshot of record; the OLMo units "
-                                       "and Q-F3 are refused")
+                                       "Qwen under LOCK-m-F0 v0.2, on the snapshot of record; or G-F0m-OLMo-{ckpt} "
+                                       "(m:302): 8 contrast and 16 sham sessions, uncached, on the box under "
+                                       "LOCK-m-OLMo-{ckpt}.md, after G-TIME-OLMo's PASS or, after its PAUSE, with "
+                                       "the seat's adjudication (--prior-adjudication-file); Q-F3 is refused")
+            p.add_argument("--prior-adjudication-file", dest="prior_adjudication_file", default=None,
+                           help="an OLMo qualification only: a file holding the seat's adjudication of the "
+                                "G-TIME-OLMo PAUSE it follows (a regular UTF-8 file, not blank; its text stands in "
+                                "no command line or raw); refused on Q-F0")
         else:
+            # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the re-run guidance corrected by the carry-over
+            # VC4-1 (the PI's-stop re-run sentence) and the campaign driver review's missed item (a finish
+            # completed before the kill), and rewritten for O1-3, RM4-1 and O4-1 (the seat's prebuild answers of
+            # 2026-11-06, Q6: the OLMo wiring build is the driver's next edit); VC4-2 is the module docstring's
+            # reason sentence
             camp_pauses = ("exit 3 is one of three pauses: a fired look's, resumed with --resume and the seat's "
                            "adjudication (--adjudication-file) or ended by the PI's stop (--pi-stop-file, with "
-                           "--resume); an exhausted schedule's, which only the PI's stop ends; an end look's beside a "
-                           "terminal end (COMPLETE, CAP, PI-STOP), never resumed -- its ruling enters VERDICTS as the "
-                           "analyzer's declared --adjudication file (C9(i)). After an interrupted run that offered the "
-                           "seat's adjudication alone, re-run with --resume alone: recorded, it resumes the campaign "
-                           "or re-finishes an end its finish left pending; unrecorded, the pause is shown again. After "
-                           "one that offered the PI's stop, re-run with --resume and the same ruling files (where its "
-                           "RULING line said it was beside an end pending, with the PI's stop alone): recorded or not, "
-                           "the campaign ends PI-STOP, save that an end left pending is re-finished first and, if "
-                           "terminal or a STOP, stands (should NO PAUSE TO ADJUDICATE refuse an adjudication offered "
-                           "beside it, that adjudication was recorded: drop --adjudication-file). An adjudication is "
-                           "offered only for the pause it rules on, which the shown pause and the RULING line name. "
-                           "Beside an end pending (the RULING line of an invocation that finds one says so) the end is "
-                           "re-finished first and a ruling offered with it (the seat's adjudication, or a PI stop not "
-                           "recorded with it) is NOT APPLIED (exit 4), so beside one no adjudication is offered, and "
-                           "the PI's stop, if offered, alone; an adjudication offered beside one is never offered "
-                           "again (NOT APPLIED's 'offer it again' holds for the PI's stop alone): a re-finished pause "
-                           "that leaves the campaign open is then shown and takes the seat's own ruling on it (a "
-                           "look's; an exhausted schedule's only beside the PI's stop) or the PI's stop again; after a "
-                           "terminal end or a STOP that end stands (a pause it carries takes the seat's own ruling on "
-                           "it, once shown, through VERDICTS as the declared --adjudication file; a PI's stop on a "
-                           "hair trigger, the declared --pi-stop record), and an adjudication the checkpoint already "
-                           "records needs nothing")
+                           "--resume); an exhausted schedule's, which only the PI's stop ends; an end look's beside "
+                           "a terminal end (COMPLETE, CAP, PI-STOP), never resumed -- its ruling enters VERDICTS as "
+                           "the analyzer's declared --adjudication file (C9(i)). After an interrupted run that "
+                           "offered the seat's adjudication alone, re-run with --resume alone: recorded, it resumes "
+                           "the campaign or re-finishes an end its finish left pending; unrecorded, the pause is "
+                           "shown again; and where that finish completed before the kill, the re-run shows the new "
+                           "pause, or is refused as ended. After one that offered the PI's stop, re-run with "
+                           "--resume and the same ruling files: recorded or not, the campaign ends PI-STOP, save "
+                           "where an end is left pending -- a stop the checkpoint records re-finishes with it, and a"
+                           " terminal end or a STOP stands; a ruling the stage would not apply beside it (the seat's"
+                           " adjudication, or a PI stop the checkpoint does not record) is refused before the load "
+                           "(RULING BESIDE AN END PENDING), the re-run drops the flags that refusal names, and where"
+                           " the end is a look's or an exhausted schedule's pause a stop so refused is offered again"
+                           " once the re-finish has shown it (should NO PAUSE TO ADJUDICATE refuse an adjudication "
+                           "offered with the stop, it was recorded: drop --adjudication-file). An adjudication is "
+                           "offered only for the pause it rules on, which the shown pause and the RULING line name; "
+                           "one whose text is a ruling the checkpoint records for an earlier pause is refused before"
+                           " the load (RULING REUSED); an adjudication the checkpoint already records is named as "
+                           "such on the RULING line where one prints, and otherwise by the pre-load refusal that "
+                           "meets it first (RULING REUSED, RULING BESIDE AN END PENDING, or NO PAUSE TO ADJUDICATE "
+                           "by the last pause's ruling digest). Beside an end pending (the RULING line of an "
+                           "invocation that finds one says so) the end is re-finished first, and a ruling the stage "
+                           "would not apply with it (the seat's adjudication, or a PI stop not recorded with it) is "
+                           "refused before the load (RULING BESIDE AN END PENDING, exit 2; where no precheck runs "
+                           "the stage re-finishes the end and then refuses it, NOT APPLIED, exit 4), so beside one "
+                           "no adjudication is offered, and the PI's stop only where the checkpoint records it; an "
+                           "adjudication refused there is never offered again (NOT APPLIED's 'offer it again' holds "
+                           "for the PI's stop alone): a re-finished pause that leaves the campaign open is then "
+                           "shown and takes the seat's own ruling on it (a look's; an exhausted schedule's only "
+                           "beside the PI's stop) or the PI's stop again; after a terminal end or a STOP that end "
+                           "stands (a pause it carries takes the seat's own ruling on it, once shown, through "
+                           "VERDICTS as the declared --adjudication file; a PI's stop on a hair trigger, the "
+                           "declared --pi-stop record), and an adjudication the checkpoint already records needs "
+                           "nothing")
             p = sub.add_parser(c, help="the Q-F0 campaign (step 16, m:358): A0 and A0s interleaved by §2.1's "
                                        "rule, uncached, until each arm's domain count reaches its floor (A0 80, "
                                        "A0s 32), the hour cap (40 h) or the PI's stop, on Qwen under LOCK-m-F0 "
@@ -6648,8 +7468,9 @@ def main(argv: list[str] | None = None) -> int:
                            help="a UTF-8 text file, named for nothing it says (its path is printed): the "
                                 "PI's stop -- terminal, analyzed as obtained; it ends a look's pause, and alone ends "
                                 "an exhausted schedule's; after an interrupted run that offered it, re-run with "
-                                "--resume and the same ruling files (beside an end pending, with the PI's stop "
-                                "alone; its text recorded in the checkpoint only, never "
+                                "--resume and the same ruling files (beside an end pending, without the flags a "
+                                "RULING BESIDE AN END PENDING refusal names; its text recorded in the checkpoint "
+                                "only, never "
                                 "printed; "
                                 "the RULING line carries its sha16, and where its text is the pause's ruling (it "
                                 "ends a pause offered without --adjudication-file) the report (that pause's "
@@ -6678,7 +7499,11 @@ def main(argv: list[str] | None = None) -> int:
                                             "assertion, and the seat read request (no model)")
     gmf.add_argument("--out", dest="gcal_out", default=None,
                      help="a test directory (refused under data/m); default data/m/gates")
-    gcp = gcs.add_parser("completability", help="condition (4) on Qwen: 128 uncached generations")
+    gcp = gcs.add_parser("completability", help="condition (4): 128 uncached generations, on Qwen (G-CAL) "
+                                                 "or, with --unit OLMo-{ckpt}, on that checkpoint on the box "
+                                                 "(G-CAL-OLMo-{ckpt}, m:302)")
+    gcp.add_argument("--unit", dest="gcal_unit", default="Q-F0", choices=("Q-F0",) + OLMO_UNITS,
+                     help="Q-F0 (Qwen, the default) or an OLMo unit (G-CAL-OLMo-{ckpt})")
     gcp.add_argument("--out", dest="gcal_out", default=None,
                      help="test directories only (refused on the Qwen path); default data/m/gates")
     gcp.add_argument("--resume", action="store_true", help="continue the checkpoint (skip-only)")
@@ -6710,7 +7535,7 @@ def main(argv: list[str] | None = None) -> int:
         gout = Path(args.gcal_out) if args.gcal_out is not None else None
         if args.gcal_cmd == "model-free":
             return run_gcal_model_free(gout)
-        return run_gcal_completability(gout, args.resume, args.proposal_file)
+        return run_gcal_completability(gout, args.resume, args.proposal_file, unit=args.gcal_unit)
     if args.cmd == "gport":
         if args.selftest or args.build_schedules or args.out is not None:
             print("refused: gport takes no --selftest / --build-schedules / top-level --out "
@@ -6730,7 +7555,8 @@ def main(argv: list[str] | None = None) -> int:
                           analyzer_sha256=args.analyzer_sha256, package_sha256=args.package_sha256,
                           renders_sha16=args.renders_sha16, resume_run=args.resume,
                           adjudication_file=getattr(args, "adjudication_file", None),
-                          pi_stop_file=getattr(args, "pi_stop_file", None))
+                          pi_stop_file=getattr(args, "pi_stop_file", None),
+                          prior_adjudication_file=getattr(args, "prior_adjudication_file", None))
     if args.cmd is not None:
         if args.selftest or args.build_schedules:
             print("refused: a stage subcommand takes no --selftest / --build-schedules", file=sys.stderr)

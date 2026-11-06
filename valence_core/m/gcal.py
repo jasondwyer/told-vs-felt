@@ -36,8 +36,27 @@ m's key; a direct seed, not a stream) with ``{pool}`` in {CORR_clean, CORR_corru
 (f0's literals, :184-186); f0's ``normalize`` / ``grade`` ported verbatim (:56-66); 128
 generations. PASS iff the corrupted pool's accuracy is >= 7/10 AND >= 3/4 x the clean
 pool's, both exact Fractions; covariate = clean minus corrupted (f0's sign); FAIL ->
-"STOP and re-specify" (m:176). G-CAL-OLMo (per checkpoint, b3's banner and generation
-path) is the OLMo track's and is not built here.
+"STOP and re-specify" (m:176).
+
+G-CAL-OLMo-{ckpt} (m:176: "condition (4) per checkpoint (128 generations), before that
+checkpoint's G-TIME-OLMo; failure -> that checkpoint NOT-RUN with reason 'dose not
+completable'"; m:302; built by the OLMo track's build, the seat's prebuild answers §0,
+2026-11-06) -- ``run_completability(..., unit="OLMo-{ckpt}")``: "on OLMo the same prompt form
+under b3's banner and b3's generation path" (m:176). b3's banner is ``SESSION_BANNER``
+itself (banner.py's docstring: session_e2a's constant, "which b3 imports on OLMo, so one
+constant serves both substrates"), so the prompt bytes are Qwen's; the generation path is the
+F0m-OLMo runner's (``runner_olmo.olmo_startup``: insulation, base and cross-checkpoint
+refusal, the 8192 read window, b3's ban list asserted against data/olmo/scaffold_{ckpt}.json
+and b3's ids sha16; the runner's ``adapter.generate`` call: injections=(), TEMP 0.7,
+``STOP_CAP = 60``, newline stop, uncached). The same 128 keys and seeds (m:176's key carries
+no checkpoint field), grader, bars and covariate. The identity adds the unit, the scaffold
+file's and the ban ids' hashes and the weights of record (data/olmo/manifest.json's entry for
+the checkpoint: repo, revision, files_aggregate_sha256 -- the prebuild answers' Q6: "the OLMo
+identity at the wiring build"). FAIL -> that checkpoint NOT-RUN, "dose not completable",
+never "STOP and re-specify". R1 A6's four descriptive tallies (count-only, no bar) are printed
+for the G-CAL-OLMo-{ckpt} entry and written to no artifact ("They go in the entries, not in
+any lock or analyzer"): (iii) and (iv) are computed (``olmo_tallies``), (i) and (ii) are
+Code's read, their candidate keys printed.
 
 IDENTITY AND RESUME (m:267: "G-CAL's identity is its key set and this document's hash";
 "skip-only"; atomic checkpoints). The identity binds the 128 (pool, i, s, seed) tuples'
@@ -67,9 +86,15 @@ from ..session_e2a import SESSION_BANNER
 from . import audit as _audit
 from . import corr, guard, keys
 from . import resume as _resume
+from . import runner_olmo as _ro
 from . import runner_qwen as _rq
 from . import scaffold as _sc
 from . import stages as _stages
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): G-CAL-OLMo's startup is the F0m-OLMo
+# runner's own, called through this module-level name (stages.py's form) so the self-test can
+# substitute testing.olmo_kit's setup for the stub, whose ban ids cannot match b3's; production
+# code has no seam.
+from .runner_olmo import olmo_startup
 
 REPO = Path(__file__).resolve().parents[2]
 GATES_DIR = guard.GATES_DIR                      # data/m/gates (beside G-PORT's artifact)
@@ -117,6 +142,27 @@ IDENTITY_KEYS = ("stage", "substrate", "n", "key_set_sha256", "proposal_sha256",
                  "temp", "stop_cap", "path", "pool_sha16", "banner_sha256", "segment_form")
 RECORD_KEYS = ("pool", "i", "seed_index", "seed", "task", "text", "n_tok", "cap_hit",
                "stop_reason", "hit")
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): G-CAL-OLMo-{ckpt}'s files sit beside
+# Qwen's under the same two directories, one pair per checkpoint; the identity is Qwen's keys
+# plus the unit, the ban ids' sha16 (stages' form, which olmo_startup has asserted equal to
+# b3's) and the weights of record from the committed manifest. ``ban_sha256`` on OLMo is the
+# committed data/olmo/scaffold_{ckpt}.json's sha256, the file the scaffold set is asserted
+# against (Qwen's is the e2a ban list file's).
+OLMO_UNITS = tuple(f"OLMo-{c}" for c in keys.CKPTS)
+COMPLETABILITY_NAME_OLMO = "G-CAL_completability_olmo-{ckpt}.json"
+CKPT_NAME_OLMO = "G-CAL_olmo-{ckpt}.json"
+MANIFEST_REL = "data/olmo/manifest.json"
+SCAFFOLD_REL = "data/olmo/scaffold_{ckpt}.json"
+IDENTITY_KEYS_OLMO = IDENTITY_KEYS + ("unit", "ban_ids_sha16", "weights_repo", "weights_revision",
+                                      "weights_sha256")
+ON_FAIL = {"qwen": "STOP and re-specify (m:176)",
+           "olmo": "that checkpoint NOT-RUN with reason \"dose not completable\" (m:176, m:302; §5)"}
+# PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1; "For the box", RESULTS.md@9cbacdb:5680-5685):
+# a tokenizer that APPENDS a token under the adapter's default encode collapses rule
+# 28(d)(a)'s boundary on every join, a false halt; G-CAL-OLMo, the first stage on each
+# checkpoint, probes it before any generation -- two texts ending in different words must not
+# encode to the same last id -- and refuses with this name.
+TOKENIZER_PROBE = ("x", "x y")
 
 
 # PIN (Code, declared at LOCK v0.1): a refusal is anything decided before a generation it
@@ -267,6 +313,8 @@ def canonical_files() -> dict[str, Path]:
     g, c = Path(GATES_DIR), Path(CKPT_DIR)
     out = {f"gates/{n}": g / n for n in (MODEL_FREE_NAME, SEAT_READ_NAME, COMPLETABILITY_NAME)}
     out[f"ckpt/{CKPT_NAME}"] = c / CKPT_NAME
+    # G-CAL-OLMo-{ckpt}'s pairs are G-CAL* names: the glob below snapshots each one that exists,
+    # so a file appearing under a canonical OLMo name is a change like any other.
     for tag, d in (("gates", g), ("ckpt", c)):
         if d.is_dir():
             out.update({f"{tag}/{p.name}": p for p in d.glob("G-CAL*")})
@@ -549,9 +597,11 @@ def condition_4(hits_clean: int, hits_corrupted: int, n: int = N_PER_POOL) -> di
 
 
 def gate_line(proposal_file: str, proposal_sha256: str, *, repo: str | os.PathLike | None = None,
-              analyzer_path: str | os.PathLike | None = None) -> tuple[dict, list[str]]:
+              analyzer_path: str | os.PathLike | None = None,
+              stage: str = "G-CAL") -> tuple[dict, list[str]]:
     """m:267's gate line for G-CAL: proposal (committed at HEAD, sha256 as named), CLAUDE.md
-    (committed), HEAD, and the analyzer's absence; (record, problems)."""
+    (committed), HEAD, and the analyzer's absence; (record, problems). ``stage`` names the
+    line's stage: "G-CAL" (Qwen, the default, its bytes unchanged) or "G-CAL-OLMo-{ckpt}"."""
     rp = Path(REPO if repo is None else repo)
     ana = Path(_stages.ANALYZER_PATH if analyzer_path is None else analyzer_path)
     probs: list[str] = []
@@ -569,19 +619,44 @@ def gate_line(proposal_file: str, proposal_sha256: str, *, repo: str | os.PathLi
     csha = _sha256_bytes(cdata) if cdata is not None else None
     asha = _stages._sha16_file(ana)
     analyzer = ANALYZER_ABSENT if asha is None else f"present {asha} -- not read by G-CAL"
-    line = (f"GATE G-CAL: proposal {proposal_file} {(psha or 'ABSENT')[:16]}, CLAUDE.md "
+    line = (f"GATE {stage}: proposal {proposal_file} {(psha or 'ABSENT')[:16]}, CLAUDE.md "
             f"{(csha or 'ABSENT')[:16]}, analyzer {analyzer}, HEAD {head}")
     rec = {"line": line, "proposal_file": proposal_file, "proposal_sha256": psha,
            "claude_md_sha256": csha, "analyzer": analyzer, "head": head}
     return rec, probs
 
 
-def _canonical() -> dict[str, Path]:
-    return {"out": Path(GATES_DIR) / COMPLETABILITY_NAME, "ckpt": Path(CKPT_DIR) / CKPT_NAME,
+def unit_ckpt(unit: str) -> str | None:
+    """None for Q-F0 (Qwen's G-CAL); the checkpoint for an OLMo unit; GcalRefusal otherwise."""
+    if unit == "Q-F0":
+        return None
+    if unit in OLMO_UNITS:
+        return unit[len("OLMo-"):]
+    raise GcalRefusal(f"G-CAL REFUSED: unit {unit!r} is neither Q-F0 nor an OLMo unit {OLMO_UNITS} "
+                      f"(base is never an m unit, decision (7'); Q-F3 does not recalibrate, m:176)")
+
+
+def _names(unit: str) -> tuple[str, str]:
+    """(artifact name, checkpoint name) of the unit's completability run."""
+    ck = unit_ckpt(unit)
+    if ck is None:
+        return COMPLETABILITY_NAME, CKPT_NAME
+    return COMPLETABILITY_NAME_OLMO.format(ckpt=ck), CKPT_NAME_OLMO.format(ckpt=ck)
+
+
+def stage_label(unit: str) -> str:
+    """"G-CAL" (Qwen) or "G-CAL-OLMo-{ckpt}" (m:302's name)."""
+    ck = unit_ckpt(unit)
+    return "G-CAL" if ck is None else f"G-CAL-OLMo-{ck}"
+
+
+def _canonical(unit: str = "Q-F0") -> dict[str, Path]:
+    out_name, ck_name = _names(unit)
+    return {"out": Path(GATES_DIR) / out_name, "ckpt": Path(CKPT_DIR) / ck_name,
             "model_free": Path(GATES_DIR) / MODEL_FREE_NAME}
 
 
-def _paths(out_path: str | os.PathLike | None, stub: bool) -> dict[str, Path]:
+def _paths(out_path: str | os.PathLike | None, stub: bool, unit: str = "Q-F0") -> dict[str, Path]:
     """The completability run's three paths: artifact, checkpoint, model-free artifact (each
     resolved), and ``out_link``, the artifact's path as named, its leaf NOT resolved.
 
@@ -590,9 +665,12 @@ def _paths(out_path: str | os.PathLike | None, stub: bool) -> dict[str, Path]:
     canonical model-free artifact; a stub run's checkpoint is <out dir>/ckpt/G-CAL_qwen.json
     and its model-free artifact <out dir>/G-CAL_model-free.json, each through
     resume.refuse_canonical_out. ``out_link`` exists so precheck sees a symlink AT the
-    artifact's path (resolving follows it, dangling or not, to its target)."""
-    canon = {k: v.resolve() for k, v in _canonical().items()}
-    canon["out_link"] = Path(os.path.abspath(_canonical()["out"]))
+    artifact's path (resolving follows it, dangling or not, to its target). An OLMo unit's
+    names are G-CAL_completability_olmo-{ckpt}.json and G-CAL_olmo-{ckpt}.json, by the same
+    rule."""
+    canon = {k: v.resolve() for k, v in _canonical(unit).items()}
+    canon["out_link"] = Path(os.path.abspath(_canonical(unit)["out"]))
+    ck_name = _names(unit)[1]
     if out_path is None or str(out_path).strip() == "":
         if stub:
             raise GcalRefusal("G-CAL REFUSED: a stub run needs a scratch out path")
@@ -605,7 +683,7 @@ def _paths(out_path: str | os.PathLike | None, stub: bool) -> dict[str, Path]:
     try:
         out = _resume.refuse_canonical_out(out_path)
         d = out.parent
-        return {"out": out, "ckpt": _resume.refuse_canonical_out(d / "ckpt" / CKPT_NAME),
+        return {"out": out, "ckpt": _resume.refuse_canonical_out(d / "ckpt" / ck_name),
                 "model_free": _resume.refuse_canonical_out(d / MODEL_FREE_NAME),
                 "out_link": Path(os.path.abspath(Path(out_path).expanduser()))}
     except GcalRefusal:
@@ -634,8 +712,42 @@ def _model_free_check(path: Path, renders_sha256: str, proposal_sha256: str) -> 
     return probs
 
 
+def weights_of_record(ckpt: str, *, repo: str | os.PathLike | None = None) -> tuple[list[str], dict | None]:
+    """(problems, weights) for an OLMo checkpoint: the committed data/olmo/manifest.json's entry
+    -- {repo, revision, files_aggregate_sha256, path, n_files} -- read from its committed blob.
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the weights of record are the manifest
+    entry the respawn protocol's step (i) re-hashes the volume against (CLAUDE.md's Respawn
+    protocol; scripts/box_respawn_check.py); the identity binds its repo, revision and
+    files_aggregate_sha256, and a non-stub run also requires the adapter's weights path to be
+    the entry's path. The full re-hash of the bytes is step (i)'s, once per box, recorded in that
+    box's BACKEND entry; nothing here re-hashes 64 GB."""
+    rp = Path(REPO if repo is None else repo)
+    cp, data = _stages._committed(MANIFEST_REL, rp)
+    if cp or data is None:
+        return [f"{MANIFEST_REL}: {x}" for x in (cp or ["unreadable"])], None
+    try:
+        man = json.loads(data.decode("utf-8"))
+        e = man[ckpt]
+        w = {"repo": e["repo"], "revision": e["revision"], "sha256": e["files_aggregate_sha256"],
+             "path": e["path"], "n_files": e["n_files"]}
+    except (ValueError, UnicodeDecodeError, KeyError, TypeError) as ex:
+        return [f"{MANIFEST_REL}: no well-formed entry for {ckpt!r} ({type(ex).__name__}: {ex})"], None
+    probs = []
+    if type(w["repo"]) is not str or not w["repo"]:
+        probs.append(f"{MANIFEST_REL}[{ckpt}].repo is not a non-empty string")
+    if type(w["revision"]) is not str or not re.fullmatch(r"[0-9a-f]{12,40}", w["revision"]):
+        probs.append(f"{MANIFEST_REL}[{ckpt}].revision is not 12-40 lower-case hex")
+    if type(w["sha256"]) is not str or not re.fullmatch(r"[0-9a-f]{64}", w["sha256"]):
+        probs.append(f"{MANIFEST_REL}[{ckpt}].files_aggregate_sha256 is not 64 lower-case hex")
+    if type(w["path"]) is not str or os.path.basename(w["path"].rstrip("/")) != ckpt:
+        probs.append(f"{MANIFEST_REL}[{ckpt}].path {w['path']!r} does not end in {ckpt!r}")
+    return probs, (None if probs else w)
+
+
 def precheck(*, out_path: str | os.PathLike | None, resume: bool, proposal_file: str,
-             proposal_sha256: str, stub: bool, pool: Sequence[dict] | None = None) -> dict:
+             proposal_sha256: str, stub: bool, pool: Sequence[dict] | None = None,
+             unit: str = "Q-F0") -> dict:
     """Every refusal that needs no adapter, in order; GcalRefusal on the first set of problems.
 
     The driver runs it before the model loads; ``run_completability`` runs it again.
@@ -650,10 +762,19 @@ def precheck(*, out_path: str | os.PathLike | None, resume: bool, proposal_file:
     PIN (Code, declared at LOCK v0.1): with NO checkpoint on disk, a completability artifact
     already at the out path (or a symlink there, dangling included) is refused here, before
     any load or generation, with --resume or without: the artifact is never overwritten,
-    and only its own complete checkpoint re-derives it (a --resume that generates nothing)."""
+    and only its own complete checkpoint re-derives it (a --resume that generates nothing).
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): on an OLMo unit the same refusals run in
+    the same order, then the weights of record are read from the committed manifest (every
+    run, stub included, so the identity is built from them); on a non-stub OLMo run m:267's
+    LAPTOP checklist is not run -- the box's respawn protocol governs there, as for every OLMo
+    stage (stages._laptop_preflight's scope) -- and the pod instance id is required instead
+    (stages._require_pod's rule: "an OLMo stage needs its pod id"); the gate line names the
+    stage G-CAL-OLMo-{ckpt}."""
+    ckpt = unit_ckpt(unit)
     if pool is not None and not stub:
         raise GcalRefusal("G-CAL REFUSED: a non-stub run serves the pool of record only (pool=None)")
-    paths = _paths(out_path, stub)
+    paths = _paths(out_path, stub, unit)
     pf = REPO / proposal_file
     try:
         got = _sha256_bytes(pf.read_bytes())
@@ -674,14 +795,25 @@ def precheck(*, out_path: str | os.PathLike | None, resume: bool, proposal_file:
     renders = corr.renders_m(served, corr.ROSTERS_OF_RECORD)
     rsha = _sha256_text("\n".join(renders))
     probs = _model_free_check(paths["model_free"], rsha, proposal_sha256)
+    weights = None
+    if ckpt is not None:
+        wp, weights = weights_of_record(ckpt)
+        probs += [f"weights of record: {p}" for p in wp]
     gate = None
     if not stub:
-        probs += [f"preflight: {p}" for p in guard.preflight_laptop()]
-        gate, gp = gate_line(proposal_file, proposal_sha256)
+        if ckpt is None:
+            probs += [f"preflight: {p}" for p in guard.preflight_laptop()]
+        elif _resume.pod_id() is None:
+            probs.append(f"POD ID ABSENT: {stage_label(unit)} runs on the box only with its pod instance "
+                         f"id (${_resume.POD_ENV}), as every OLMo stage (stages._require_pod)")
+        gate, gp = gate_line(proposal_file, proposal_sha256, stage=stage_label(unit))
         probs += [f"gate line: {p}" for p in gp]
     if probs:
         raise GcalRefusal(f"G-CAL REFUSED: {probs}")
-    return {"paths": paths, "pool": served, "renders": renders, "renders_sha256": rsha, "gate": gate}
+    out = {"paths": paths, "pool": served, "renders": renders, "renders_sha256": rsha, "gate": gate}
+    if ckpt is not None:
+        out.update(unit=unit, ckpt=ckpt, weights=weights)
+    return out
 
 
 def _identity(*, ks, proposal_sha256: str, renders_sha256: str, backend_id: str, pool) -> dict:
@@ -695,6 +827,67 @@ def _identity(*, ks, proposal_sha256: str, renders_sha256: str, backend_id: str,
             "backend_identifier": backend_id, "temp": repr(_rq.TEMP), "stop_cap": _rq.STOP_CAP,
             "path": "uncached", "pool_sha16": _resume.pool_sha16(pool),
             "banner_sha256": _sha256_text(SESSION_BANNER), "segment_form": SEGMENT_FORM}
+
+
+def ban_ids_sha16(ban_ids: Sequence[int]) -> str:
+    """stages._startup's form: sha16 of json.dumps(sorted ban ids) (on OLMo, b3's 2dd86a453a2275ef)."""
+    return hashlib.sha256(json.dumps(sorted(int(i) for i in ban_ids)).encode()).hexdigest()[:16]
+
+
+def _identity_olmo(*, ks, unit: str, proposal_sha256: str, renders_sha256: str, backend_id: str, pool,
+                   ban_ids: Sequence[int], weights: Mapping[str, Any]) -> dict:
+    # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): G-CAL-OLMo-{ckpt}'s identity is Qwen
+    # G-CAL's keys under the same rule (m:267's key set and proposal hash, then the renders,
+    # ban list, package, backend, temp, cap, path, pool, banner and segment form) plus
+    # IDENTITY_KEYS_OLMO's five: a resume on another checkpoint, another scaffold set or other
+    # weights of record is refused like any other identity difference.
+    ckpt = unit_ckpt(unit)
+    cp, sdata = _stages._committed(SCAFFOLD_REL.format(ckpt=ckpt))
+    if cp or sdata is None:
+        raise GcalRefusal(f"G-CAL REFUSED: {SCAFFOLD_REL.format(ckpt=ckpt)}: {cp or 'unreadable'} (the "
+                          f"identity hashes the scaffold set's committed file)")
+    return {"stage": "G-CAL-OLMo", "substrate": "olmo", "n": len(ks), "key_set_sha256": key_set_sha256(ks),
+            "proposal_sha256": proposal_sha256, "renders_sha256": renders_sha256,
+            "ban_sha256": _sha256_bytes(sdata), "package_sha256": _resume.package_sha256(),
+            "backend_identifier": backend_id, "temp": repr(_ro.OLMO_TEMP), "stop_cap": _ro.STOP_CAP,
+            "path": "uncached", "pool_sha16": _resume.pool_sha16(pool),
+            "banner_sha256": _sha256_text(SESSION_BANNER), "segment_form": SEGMENT_FORM,
+            "unit": unit, "ban_ids_sha16": ban_ids_sha16(ban_ids), "weights_repo": weights["repo"],
+            "weights_revision": weights["revision"], "weights_sha256": weights["sha256"]}
+
+
+def tokenizer_appends(adapter) -> bool:
+    """True iff the adapter's default encode ends two texts that end in different words with
+    the same id: an appended token (EOS or another), the boundary hazard TOKENIZER_PROBE names."""
+    a, b = (adapter.encode(t) for t in TOKENIZER_PROBE)
+    return bool(a) and bool(b) and int(a[-1]) == int(b[-1])
+
+
+def _startup_olmo(adapter, ckpt: str, weights: Mapping[str, Any], stub: bool) -> list[int]:
+    """runner_olmo.olmo_startup (insulation; base and cross-checkpoint refusal; the 8192
+    window; b3's ban list asserted against the scaffold file and b3's ids sha16), then the
+    weights path (non-stub), TEMP and cap, and the tokenizer probe; a refusal before any
+    generation."""
+    try:
+        guard.assert_insulated()
+        st = olmo_startup(adapter, ckpt)
+    except GcalRefusal:
+        raise
+    except (SystemExit, AssertionError) as e:
+        raise GcalRefusal(f"G-CAL REFUSED at startup: {e}") from None
+    if Fraction(repr(_ro.OLMO_TEMP)) != Fraction(7, 10) or _ro.STOP_CAP != 60:
+        raise GcalRefusal("G-CAL REFUSED: TEMP must be 0.7 and STOP_CAP 60 (m:176)")
+    if not stub:
+        path = getattr(adapter, "path", None)
+        if path is None or str(path).rstrip("/") != str(weights["path"]).rstrip("/"):
+            raise GcalRefusal(f"G-CAL REFUSED: the adapter's weights path {path!r} is not the manifest's "
+                              f"{ckpt} entry {weights['path']!r} (the weights of record)")
+    if tokenizer_appends(adapter):
+        raise GcalRefusal(f"G-CAL REFUSED: TOKENIZER APPENDS A TOKEN -- {TOKENIZER_PROBE!r} encode to the "
+                          f"same last id under the adapter's default (add_special_tokens=True); rule "
+                          f"28(d)(a)'s boundary would collapse on every join (For the box, "
+                          f"RESULTS.md@9cbacdb:5680-5685). Escalate; nothing generated.")
+    return list(st.ban_ids)
 
 
 def _task_of(key: Mapping[str, Any], pool: Sequence[dict], renders: Sequence[str]) -> str:
@@ -799,6 +992,26 @@ def completability_artifact(ck: Mapping[str, Any]) -> dict:
     # invocations that generated at least one record, so a finish-only re-invocation
     # re-derives identical bytes (resume.report_provenance's rule).
     prov = [e for e in ck["provenance"] if e["launched"] > 0]
+    if ck["identity"].get("substrate") == "olmo":
+        # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): the OLMo artifact is Qwen's form with
+        # the unit named, the procedure stated for b3's banner and generation path, and the
+        # OLMo failure consequence (m:176, m:302).
+        return {"schema": ART_SCHEMA, "stage": "G-CAL-OLMo", "substrate": "olmo",
+                "unit": ck["identity"]["unit"],
+                "condition": "(4) completability per checkpoint (m:176, m:302)", "identity": ck["identity"],
+                "procedure": {"prompt": "SESSION_BANNER (b3's banner) + 'Task: {task}\\nResponse:', no round "
+                                        "header (f0_calibrate.py:141-143; m:176 'the same prompt form under "
+                                        "b3's banner')",
+                              "generation": (f"b3's generation path as the F0m-OLMo runner calls it: uncached "
+                                             f"(cached=False), injections=(), newline stop, b3's ban list "
+                                             f"({SCAFFOLD_REL.format(ckpt=unit_ckpt(ck['identity']['unit']))}, "
+                                             f"ids sha16 {ck['identity']['ban_ids_sha16']}), STOP_CAP 60, TEMP 0.7"),
+                              "seeds": "crc32('m-cal|{pool}|{i}|{seed}') % 2**31, seed 0..3 (m:176)",
+                              "grader": "f0's normalize / grade, ported verbatim (f0_calibrate.py:56-66)",
+                              "boundary": "rule 28(d)(a) asserted before every generation (f0 had none); "
+                                          "the appended-token probe before the first"},
+                "provenance": prov, "records": recs, "accuracy": acc, "condition_4": c4,
+                "covariate": c4["covariate"], "verdict": c4["verdict"], "on_fail": ON_FAIL["olmo"]}
     return {"schema": ART_SCHEMA, "stage": "G-CAL", "substrate": "qwen",
             "condition": "(4) completability (m:176)", "identity": ck["identity"],
             "procedure": {"prompt": "SESSION_BANNER + 'Task: {task}\\nResponse:', no round header "
@@ -810,18 +1023,85 @@ def completability_artifact(ck: Mapping[str, Any]) -> dict:
                           "boundary": "rule 28(d)(a) asserted before every generation (f0 had none)"},
             "provenance": prov, "records": recs, "accuracy": acc, "condition_4": c4,
             "covariate": c4["covariate"], "verdict": c4["verdict"],
-            "on_fail": "STOP and re-specify (m:176)"}
+            "on_fail": ON_FAIL["qwen"]}
+
+
+def corrupted_words(item: Mapping[str, Any]) -> list[str]:
+    """The corrupted words of a render of record: each maximal [A-Za-z]+ run of the render that
+    holds at least one of the model-free artifact's changed positions, in render order."""
+    pos = set(item["changed_positions"])
+    return [m.group(0) for m in re.finditer(r"[A-Za-z]+", item["render"])
+            if any(p in pos for p in range(m.start(), m.end()))]
+
+
+def mirrors(text: str, words: Sequence[str]) -> bool:
+    """True iff ``text`` contains one of ``words`` as a whole word (letter boundaries), case as written."""
+    return any(re.search(r"(?<![A-Za-z])" + re.escape(w) + r"(?![A-Za-z])", text) for w in words)
+
+
+def olmo_tallies(records: Sequence[Mapping[str, Any]], items: Sequence[Mapping[str, Any]],
+                 term_rx: Sequence[str]) -> dict:
+    """R1 A6's four descriptive tallies for a G-CAL-OLMo-{ckpt} entry: count-only, no bar, no
+    effect on condition (4), written to no artifact ("They go in the entries, not in any lock
+    or analyzer"; RESULTS.md@9cbacdb:4104-4114).
+
+    PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): (iii) = the records whose text matches f's
+    descriptive termination patterns as the runners test them (scaffold.termination); (iv) =
+    the corrupted-pool records whose text contains, as a whole word and case as written, a
+    corrupted word of their item's render (``corrupted_words``). Both definitions reproduce
+    Code's Qwen observations of record exactly -- one termination echo (corrupted item 6, seed
+    1) and 11 restatements of a corrupted word, 9 of them graded hits
+    (RESULTS.md@9cbacdb:5032-5041) -- which the self-test checks on the committed Qwen artifact.
+    (i) and (ii) are "by Code's read": the helper lists their candidates by key only -- the
+    hits on items 7 and 9 (whether the text states the answer is the read), and the misses on
+    item 15 (whether each is "close" is the read). (iv)'s limit (the build's review, finding 10):
+    a corrupted word that is itself an English word ("on" in item 15's render, "thy" in item 2's)
+    counts wherever an answer uses it in its own sense; the keys are printed so the entry can say
+    which restatements are such."""
+    by = {int(it["i"]): it for it in items}
+    def key(r):
+        return f"{r['pool']} i={r['i']} s={r['seed_index']}"
+    term = [r for r in records if _sc.termination(r["text"], term_rx)]
+    mirr = [r for r in records if r["pool"] == "CORR_corrupted"
+            and mirrors(r["text"], corrupted_words(by[int(r["i"])]))]
+    i_cand = [r for r in records if r["i"] in (7, 9) and r["hit"] is True]
+    ii_cand = [r for r in records if r["i"] == 15 and r["hit"] is False]
+    return {"iii_termination": {"n": len(term), "keys": [key(r) for r in term]},
+            "iv_mirroring": {"n": len(mirr), "hits": sum(1 for r in mirr if r["hit"] is True),
+                             "keys": [key(r) for r in mirr]},
+            "i_candidates": {"n": len(i_cand), "keys": [key(r) for r in i_cand]},
+            "ii_candidates": {"n": len(ii_cand), "keys": [key(r) for r in ii_cand]}}
+
+
+def tally_lines(t: Mapping[str, Any]) -> list[str]:
+    """The tallies as stdout lines: counts and keys, never a response's text."""
+    return [f"gcal tally (iii) lines matching f's descriptive termination patterns: {t['iii_termination']['n']} "
+            f"{t['iii_termination']['keys']}",
+            f"gcal tally (iv) corrupted-pool answers restating a corrupted word of their render: "
+            f"{t['iv_mirroring']['n']}, of them graded hits {t['iv_mirroring']['hits']} {t['iv_mirroring']['keys']}",
+            f"gcal tally (i) for Code's read -- hits on items 7 and 9: {t['i_candidates']['n']} "
+            f"{t['i_candidates']['keys']}",
+            f"gcal tally (ii) for Code's read -- misses on item 15: {t['ii_candidates']['n']} "
+            f"{t['ii_candidates']['keys']}"]
 
 
 def run_completability(adapter, *, out_path: str | os.PathLike | None, resume: bool,
                        proposal_file: str, proposal_sha256: str,
-                       pool: Sequence[dict] | None = None) -> dict:
-    """Condition (4) on Qwen: 128 uncached generations, graded by f0's grader (m:176)."""
+                       pool: Sequence[dict] | None = None, unit: str = "Q-F0") -> dict:
+    """Condition (4): 128 uncached generations, graded by f0's grader (m:176) -- on Qwen
+    (unit Q-F0, G-CAL) or on one OLMo checkpoint (unit OLMo-{ckpt}, G-CAL-OLMo-{ckpt}, m:302)."""
+    ckpt = unit_ckpt(unit)
+    lab = stage_label(unit)
     stub = _stages._is_stub(adapter)
     pre = precheck(out_path=out_path, resume=resume, proposal_file=proposal_file,
-                   proposal_sha256=proposal_sha256, stub=stub, pool=pool)
+                   proposal_sha256=proposal_sha256, stub=stub, pool=pool, unit=unit)
     paths, served, renders = pre["paths"], pre["pool"], pre["renders"]
-    ban_ids = _startup(adapter)
+    if ckpt is None:
+        ban_ids = _startup(adapter)
+        temp, cap = _rq.TEMP, _rq.STOP_CAP
+    else:
+        ban_ids = _startup_olmo(adapter, ckpt, pre["weights"], stub)
+        temp, cap = _ro.OLMO_TEMP, _ro.STOP_CAP
     hon = _grader_honesty(served)
     if hon:
         raise GcalRefusal(f"G-CAL REFUSED: f0's grader-honesty asserts fail: {hon}")
@@ -831,12 +1111,35 @@ def run_completability(adapter, *, out_path: str | os.PathLike | None, resume: b
         backend_id = _resume.backend_identifier(adapter.provenance())
     except (TypeError, ValueError) as e:
         raise GcalRefusal(f"G-CAL REFUSED: provenance: {e}") from None
-    ident = _identity(ks=ks, proposal_sha256=proposal_sha256, renders_sha256=pre["renders_sha256"],
-                      backend_id=backend_id, pool=served)
+    if ckpt is None:
+        ident = _identity(ks=ks, proposal_sha256=proposal_sha256, renders_sha256=pre["renders_sha256"],
+                          backend_id=backend_id, pool=served)
+    else:
+        ident = _identity_olmo(ks=ks, unit=unit, proposal_sha256=proposal_sha256,
+                               renders_sha256=pre["renders_sha256"], backend_id=backend_id, pool=served,
+                               ban_ids=ban_ids, weights=pre["weights"])
     ck = _load_ckpt(paths["ckpt"], ident, resume, ks, served, renders)
+    if ckpt is not None and len(ck["records"]) < len(ks):
+        # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1; the build's review, finding 1): m:267 -- "the backend
+        # identifier cannot tell two boxes of one class apart ... a gate stage carries no pod id: interrupted by a pod
+        # change, it restarts from its first session on the new box" -- applied to G-CAL-OLMo: a resume that would
+        # generate on a pod other than the one(s) its recorded generations came from is refused (move the checkpoint
+        # aside by hand and run again); a complete checkpoint re-derives its artifact anywhere (it generates nothing)
+        seen = sorted({str(e.get("pod_id")) for e in ck["provenance"] if e.get("launched", 0) > 0})
+        now = str(_resume.pod_id())
+        if seen and seen != [now]:
+            raise GcalRefusal(f"G-CAL REFUSED: POD CHANGED -- {paths['ckpt']} holds generations from pod(s) {seen}; "
+                              f"this run is on {now}: {lab} restarts from its first generation on the new box (m:267); "
+                              f"a resume never splices two boxes -- move the checkpoint aside by hand and run again "
+                              f"without --resume")
     if pre["gate"] is not None:
         print(pre["gate"]["line"], flush=True)
     entry = {"stamp": _resume.utc_stamp(), "record": prov_rec, "launched": 0, "gate": pre["gate"]}
+    if ckpt is not None:
+        # PIN (Code, declared at LOCK-m-OLMo-{ckpt} v0.1): an OLMo invocation also records its
+        # pod instance id (ledger 27); it is provenance, not identity (only an OLMo campaign's
+        # identity carries a pod id, resume.Identity).
+        entry["pod_id"] = _resume.pod_id()
     ck["provenance"].append(entry)
     print("PROVENANCE: " + json.dumps({"record": prov_rec, "stamp": entry["stamp"]}, sort_keys=True,
                                       separators=(",", ":"), ensure_ascii=False), flush=True)
@@ -857,9 +1160,9 @@ def run_completability(adapter, *, out_path: str | os.PathLike | None, resume: b
         try:
             _sc.assert_boundary(adapter, SESSION_BANNER, seg)
         except SystemExit as e:
-            raise GcalStop(f"G-CAL STOP: {e}") from None
-        g = adapter.generate(SESSION_BANNER, seg, injections=(), seed=k["seed"], temp=_rq.TEMP,
-                             max_tokens=_rq.STOP_CAP, ban_ids=ban_ids, cached=False)
+            raise GcalStop(f"{lab} STOP: {e}") from None
+        g = adapter.generate(SESSION_BANNER, seg, injections=(), seed=k["seed"], temp=temp,
+                             max_tokens=cap, ban_ids=ban_ids, cached=False)
         text = str(g.text)
         hit = grade(text, served[k["i"]]["gold"])
         rec = {"pool": k["pool"], "i": k["i"], "seed_index": k["s"], "seed": k["seed"], "task": task,
@@ -880,15 +1183,31 @@ def run_completability(adapter, *, out_path: str | os.PathLike | None, resume: b
           f"{'yes' if c4['abs_pass'] else 'no'}; >= {c4['rel_factor']} x clean = {c4['rel_bar']}: "
           f"{'yes' if c4['rel_pass'] else 'no'}", flush=True)
     cv = art["covariate"]
-    print(f"gcal covariate (clean minus corrupted, f0's sign): {cv['fraction']} = {cv['decimal_4dp']} "
-          f"(f1's 0.12 figure of record {F0_COVARIATE_012_QUOTED})", flush=True)
+    if ckpt is None:
+        print(f"gcal covariate (clean minus corrupted, f0's sign): {cv['fraction']} = {cv['decimal_4dp']} "
+              f"(f1's 0.12 figure of record {F0_COVARIATE_012_QUOTED})", flush=True)
+    else:
+        print(f"gcal covariate (clean minus corrupted, f0's sign): {cv['fraction']} = {cv['decimal_4dp']} "
+              f"(LOCK-m-OLMo-{ckpt} v0.1 carries it, m:176)", flush=True)
     how = _write_artifact(paths, art)
-    tail = "" if art["verdict"] == "PASS" else " -- STOP and re-specify (m:176)"
-    print(f"G-CAL completability (Qwen): {art['verdict']}{tail}; artifact {paths['out']} ({how})",
-          flush=True)
-    return {"verdict": art["verdict"], "artifact": str(paths["out"]), "artifact_write": how,
-            "checkpoint": str(paths["ckpt"]), "accuracy": art["accuracy"], "condition_4": c4,
-            "generated": entry["launched"]}
+    if ckpt is None:
+        tail = "" if art["verdict"] == "PASS" else " -- STOP and re-specify (m:176)"
+        print(f"G-CAL completability (Qwen): {art['verdict']}{tail}; artifact {paths['out']} ({how})",
+              flush=True)
+        tallies = None
+    else:
+        items = json.loads(Path(paths["model_free"]).read_text(encoding="utf-8"))["renders_of_record"]["items"]
+        tallies = olmo_tallies(art["records"], items, _sc.load_term_rx())
+        for ln in tally_lines(tallies):
+            print(ln, flush=True)
+        tail = "" if art["verdict"] == "PASS" else f" -- {ON_FAIL['olmo']}"
+        print(f"{lab} completability: {art['verdict']}{tail}; artifact {paths['out']} ({how})", flush=True)
+    out = {"verdict": art["verdict"], "artifact": str(paths["out"]), "artifact_write": how,
+           "checkpoint": str(paths["ckpt"]), "accuracy": art["accuracy"], "condition_4": c4,
+           "generated": entry["launched"]}
+    if tallies is not None:
+        out.update(unit=unit, tallies=tallies)
+    return out
 
 
 def write_model_free(out_dir: str | os.PathLike | None = None) -> dict:
@@ -1890,6 +2209,220 @@ def _selftest(chk) -> None:
         and edited == ["gates/" + SEAT_READ_NAME] and removed == ["ckpt/" + CKPT_NAME, "gates/" + SEAT_READ_NAME]
         and stray == sorted(["ckpt/" + CKPT_NAME, "gates/G-CAL_stray.json.tmp", "gates/" + SEAT_READ_NAME]),
         (empty_same, appeared, full_same, edited, removed, stray))
+    # --- G-CAL-OLMo-{ckpt} (m:176, m:302; the OLMo track's build, the prebuild answers §0) ------
+    o_mf = model_free_artifact()
+    o_ks = key_set()
+    o_kit = testing.olmo_kit()
+    o_setup = _ro.OLMoSetup(audit=o_kit["audit"], ban_ids=tuple(o_kit["ban_ids"]),
+                            ban_strings=tuple(o_kit["ban_strings"]), term_rx=tuple(o_kit["term_rx"]),
+                            audit_sha16=_ro.olmo_audit_sha16())
+    o_seg_key = {(f"Task: {_task_of(k, pool, renders)}\nResponse:", k["seed"]): k for k in o_ks}
+
+    def o_plan(h_clean: int, h_corr: int):
+        def f(call):
+            k = o_seg_key[(call["segment"], call["seed"])]
+            h = h_clean if k["pool"] == "CORR_clean" else h_corr
+            if k["i"] * 4 + k["s"] < h:
+                return {"text": f"Verily {pool[k['i']]['gold'][0]}.", "n_tok": 3}
+            return {"text": "Zqxj unknown.", "n_tok": 2}
+        return f
+
+    def o_stub(h_clean=64, h_corr=64):
+        ad = testing.OLMoScriptedAdapter("m-gcal-olmo-stub")
+        ad.load(o_plan(h_clean, h_corr))
+        return ad
+
+    def o_run(ad, out, *, unit="OLMo-sft", resume=False):
+        buf = io.StringIO()
+        res = exc = None
+        with contextlib.redirect_stdout(buf), mock.patch(f"{__name__}.olmo_startup", lambda a, c: o_setup):
+            try:
+                res = run_completability(ad, out_path=out, resume=resume, proposal_file=PROP_REL,
+                                         proposal_sha256=PROP_SHA, unit=unit)
+            except (SystemExit, KeyboardInterrupt) as e:
+                exc = e
+        return res, exc, buf.getvalue()
+
+    def o_scratch(td: str, name: str, ckpt: str = "sft") -> Path:
+        d = Path(td) / name
+        d.mkdir()
+        write_json_once(d / MODEL_FREE_NAME, o_mf)
+        return d / COMPLETABILITY_NAME_OLMO.format(ckpt=ckpt)
+
+    class AppendingOLMo(testing.OLMoScriptedAdapter):
+        """A tokenizer that appends one id under the default encode (the For-the-box hazard)."""
+        def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
+            ids = super().encode(text, add_special_tokens)
+            return ids + [0] if add_special_tokens else ids
+
+    chk("gcal-olmo: unit names -- Q-F0 is G-CAL with Qwen's files; each OLMo unit is G-CAL-OLMo-{ckpt} with "
+        "G-CAL_completability_olmo-{ckpt}.json and G-CAL_olmo-{ckpt}.json; base, Q-F3 and an unknown unit refused",
+        unit_ckpt("Q-F0") is None and _names("Q-F0") == (COMPLETABILITY_NAME, CKPT_NAME)
+        and stage_label("Q-F0") == "G-CAL" and OLMO_UNITS == ("OLMo-sft", "OLMo-dpo", "OLMo-instruct")
+        and [unit_ckpt(u) for u in OLMO_UNITS] == ["sft", "dpo", "instruct"]
+        and stage_label("OLMo-instruct") == "G-CAL-OLMo-instruct"
+        and _names("OLMo-dpo") == ("G-CAL_completability_olmo-dpo.json", "G-CAL_olmo-dpo.json")
+        and all(refuses(lambda u=u: unit_ckpt(u), GcalRefusal, "neither Q-F0 nor an OLMo unit")
+                for u in ("OLMo-base", "Q-F3", "OLMo-SFT", "")))
+    wp_ok = {c: weights_of_record(c) for c in keys.CKPTS}
+    man = json.loads((REPO / MANIFEST_REL).read_text(encoding="utf-8"))
+    with mock.patch.object(_stages, "_committed", lambda rel, rp=None: ([], b"{}")):
+        bad_man = weights_of_record("sft")
+    with mock.patch.object(_stages, "_committed", lambda rel, rp=None: (["not committed at HEAD"], None)):
+        unc_man = weights_of_record("dpo")
+    with mock.patch.object(_stages, "_committed", lambda rel, rp=None: (
+            [], json.dumps({"sft": {**man["sft"], "path": "/workspace/models/dpo"}}).encode())):
+        leaf_man = weights_of_record("sft")
+    chk("gcal-olmo: the weights of record are the committed manifest's entry per checkpoint (repo, revision, "
+        "files_aggregate_sha256, path ending in the checkpoint); a malformed or uncommitted manifest, or an "
+        "entry whose path names another checkpoint, is a problem",
+        all(p == [] and w == {"repo": man[c]["repo"], "revision": man[c]["revision"],
+                              "sha256": man[c]["files_aggregate_sha256"], "path": man[c]["path"],
+                              "n_files": man[c]["n_files"]} for c, (p, w) in wp_ok.items())
+        and bad_man[1] is None and bad_man[0] != []
+        and unc_man[1] is None and any("not committed" in x for x in unc_man[0])
+        and leaf_man[1] is None and any("does not end in 'sft'" in x for x in leaf_man[0]),
+        ({c: p for c, (p, w) in wp_ok.items()}, bad_man[0], unc_man[0], leaf_man[0]))
+    with tempfile.TemporaryDirectory() as td:
+        o_outs = {}
+        for nm, (hc, hx) in {"pass70": (52, 45), "fail70": (52, 44)}.items():
+            ad = o_stub(hc, hx)
+            o_outs[nm] = (ad,) + o_run(ad, o_scratch(td, nm))
+        o_art = (json.loads(Path(o_outs["pass70"][1]["artifact"]).read_text(encoding="utf-8"))
+                 if o_outs["pass70"][1] else {})
+        o_fail = (json.loads(Path(o_outs["fail70"][1]["artifact"]).read_text(encoding="utf-8"))
+                  if o_outs["fail70"][1] else {})
+        oid = o_art.get("identity", {})
+        sc_sha = _sha256_bytes((REPO / SCAFFOLD_REL.format(ckpt="sft")).read_bytes())
+        chk("gcal-olmo: two scripted 128-generation G-CAL-OLMo-sft runs end at condition (4)'s .70 boundary "
+            "(45/64 PASS, 44/64 FAIL); the FAIL artifact's consequence is NOT-RUN 'dose not completable', never "
+            "'STOP and re-specify'; stage, substrate and unit are named",
+            (o_outs["pass70"][1] or {}).get("verdict") == "PASS" and (o_outs["fail70"][1] or {}).get("verdict") == "FAIL"
+            and o_art.get("stage") == "G-CAL-OLMo" and o_art.get("substrate") == "olmo"
+            and o_art.get("unit") == "OLMo-sft" and o_fail.get("on_fail") == ON_FAIL["olmo"]
+            and "dose not completable" in ON_FAIL["olmo"] and "re-specify" not in ON_FAIL["olmo"]
+            and o_art.get("covariate", {}).get("fraction") == "7/64",
+            [(o[1] or {}).get("verdict") for o in o_outs.values()] + [str(o[2])[:120] for o in o_outs.values()])
+        chk("gcal-olmo: the identity is Qwen's keys plus the unit, the ban ids' sha16, and the weights of record "
+            "(repo, revision, files_aggregate_sha256); ban_sha256 is the committed scaffold_sft.json's sha256; "
+            "TEMP 0.7, cap 60, uncached",
+            tuple(sorted(oid)) == tuple(sorted(IDENTITY_KEYS_OLMO)) and oid.get("stage") == "G-CAL-OLMo"
+            and oid.get("substrate") == "olmo" and oid.get("unit") == "OLMo-sft"
+            and oid.get("ban_ids_sha16") == ban_ids_sha16(o_kit["ban_ids"]) and oid.get("ban_sha256") == sc_sha
+            and oid.get("weights_repo") == man["sft"]["repo"] and oid.get("weights_revision") == man["sft"]["revision"]
+            and oid.get("weights_sha256") == man["sft"]["files_aggregate_sha256"]
+            and oid.get("temp") == "0.7" and oid.get("stop_cap") == 60 and oid.get("path") == "uncached"
+            and oid.get("key_set_sha256") == key_set_sha256(o_ks), sorted(oid))
+        oad = o_outs["pass70"][0]
+        chk("gcal-olmo: every generation is SESSION_BANNER (b3's banner) + 'Task: {task}\\nResponse:', "
+            "injections=(), cached=False, TEMP 0.7, STOP_CAP 60, newline stop, the OLMo kit's ban ids (the "
+            "startup's), the key's seed, in key order -- Qwen's 128 keys",
+            len(oad.calls) == 128 and all(
+                c["prefix"] == SESSION_BANNER and c["injections"] == () and c["cached"] is False
+                and c["temp"] == 0.7 and c["max_tokens"] == 60 and c["stop_newline"] is True
+                and c["ban_ids"] == tuple(o_kit["ban_ids"]) for c in oad.calls)
+            and [(c["segment"], c["seed"]) for c in oad.calls] == [
+                (f"Task: {_task_of(k, pool, renders)}\nResponse:", k["seed"]) for k in o_ks])
+        o_lines = o_outs["pass70"][3].splitlines()
+        f_lines = o_outs["fail70"][3].splitlines()
+        chk("gcal-olmo: stdout -- no response text; the four tally lines precede the last line, which names "
+            "G-CAL-OLMo-sft and, on FAIL, the NOT-RUN consequence; the covariate line names LOCK-m-OLMo-sft v0.1",
+            "Verily" not in o_outs["pass70"][3] and "Zqxj" not in o_outs["pass70"][3]
+            and (o_lines or [""])[-1].startswith("G-CAL-OLMo-sft completability: PASS; artifact ")
+            and (f_lines or [""])[-1].startswith('G-CAL-OLMo-sft completability: FAIL -- that checkpoint NOT-RUN '
+                                                'with reason "dose not completable" (m:176, m:302; §5); artifact ')
+            and [ln.split(" ")[2] for ln in o_lines[-5:-1]] == ["(iii)", "(iv)", "(i)", "(ii)"]
+            and any("(LOCK-m-OLMo-sft v0.1 carries it, m:176)" in ln for ln in o_lines),
+            o_lines[-6:])
+        # a resume under another checkpoint's identity: the sft checkpoint placed at dpo's name
+        dsrc = Path(o_outs["pass70"][1]["checkpoint"]) if o_outs["pass70"][1] else Path(td) / "none"
+        dd = Path(td) / "cross"
+        dd.mkdir()
+        write_json_once(dd / MODEL_FREE_NAME, o_mf)
+        (dd / "ckpt").mkdir()
+        if dsrc.is_file():
+            (dd / "ckpt" / CKPT_NAME_OLMO.format(ckpt="dpo")).write_bytes(dsrc.read_bytes())
+        ad_x = o_stub()
+        _r, exc_x, _o = o_run(ad_x, dd / COMPLETABILITY_NAME_OLMO.format(ckpt="dpo"), unit="OLMo-dpo", resume=True)
+        chk("gcal-olmo: an sft checkpoint resumed as OLMo-dpo is refused as a CHECKPOINT MISMATCH naming the "
+            "unit, the scaffold set and the weights of record; nothing generated",
+            isinstance(exc_x, GcalRefusal) and "CHECKPOINT MISMATCH" in str(exc_x)
+            and all(k in str(exc_x) for k in ("'unit'", "'ban_sha256'", "'weights_sha256'"))
+            and len(ad_x.calls) == 0, str(exc_x)[:240])
+        # a pod change mid-run: the checkpoint's generations came from pod A; a resume on pod B is refused (m:267)
+        pc_out = o_scratch(td, "podchange")
+        killer = {"n": 0}
+
+        def boom(call):
+            killer["n"] += 1
+            if killer["n"] == 50:
+                raise KeyboardInterrupt("selftest: pod A pre-empted mid-run")
+            return o_plan(64, 64)(call)
+        ad_a = testing.OLMoScriptedAdapter("m-gcal-olmo-stub")      # one backend identifier on both pods
+        ad_a.load(boom)
+        with mock.patch.dict(os.environ, {_resume.POD_ENV: "podA"}):
+            _r, exc_a, _o = o_run(ad_a, pc_out)
+        ck_pa = json.loads((pc_out.parent / "ckpt" / CKPT_NAME_OLMO.format(ckpt="sft")).read_text(encoding="utf-8"))
+        ad_b = o_stub()
+        with mock.patch.dict(os.environ, {_resume.POD_ENV: "podB"}):
+            _r, exc_b, _o = o_run(ad_b, pc_out, resume=True)
+        ad_a2 = o_stub()
+        with mock.patch.dict(os.environ, {_resume.POD_ENV: "podA"}):
+            res_a2, exc_a2, _o = o_run(ad_a2, pc_out, resume=True)
+        ad_b2 = o_stub()
+        with mock.patch.dict(os.environ, {_resume.POD_ENV: "podB"}):
+            res_b2, exc_b2, _o = o_run(ad_b2, pc_out, resume=True)
+        chk("gcal-olmo: a resume never splices two pods (m:267; the build's review, finding 1) -- 49 generations on pod A "
+            "then a resume on pod B is refused (POD CHANGED, nothing generated); on pod A it completes the 128; the "
+            "complete checkpoint then re-derives its artifact on pod B (nothing generated)",
+            isinstance(exc_a, KeyboardInterrupt) and len(ck_pa["records"]) == 49
+            and [e_["pod_id"] for e_ in ck_pa["provenance"]] == ["podA"]
+            and isinstance(exc_b, GcalRefusal) and "POD CHANGED" in str(exc_b) and len(ad_b.calls) == 0
+            and exc_a2 is None and (res_a2 or {}).get("generated") == 79 and len(ad_a2.calls) == 79
+            and exc_b2 is None and (res_b2 or {}).get("generated") == 0 and len(ad_b2.calls) == 0
+            and (res_b2 or {}).get("artifact_write") == "identical",
+            (type(exc_a).__name__, len(ck_pa.get("records", [])), str(exc_b)[:120], (res_a2 or {}).get("generated"),
+             str(exc_b2)[:120], (res_b2 or {}).get("artifact_write")))
+        ad_ap = AppendingOLMo("m-gcal-olmo-appending")
+        ad_ap.load(o_plan(64, 64))
+        _r, exc_ap, _o = o_run(ad_ap, o_scratch(td, "appending"))
+        chk("gcal-olmo: a tokenizer that appends a token under the default encode is refused before any "
+            "generation (TOKENIZER APPENDS A TOKEN); the stub's own tokenizer passes the probe",
+            isinstance(exc_ap, GcalRefusal) and "TOKENIZER APPENDS A TOKEN" in str(exc_ap)
+            and len(ad_ap.calls) == 0 and tokenizer_appends(testing.OLMoScriptedAdapter()) is False
+            and tokenizer_appends(AppendingOLMo()) is True, str(exc_ap)[:160])
+        # non-stub refusals: the pod id (precheck) and the weights path (startup)
+        env_no_pod = {k: v for k, v in os.environ.items() if k != _resume.POD_ENV}
+        with mock.patch.dict(os.environ, env_no_pod, clear=True):
+            no_pod = refuses(lambda: precheck(out_path=None, resume=False, proposal_file=PROP_REL,
+                                              proposal_sha256=PROP_SHA, stub=False, unit="OLMo-sft"),
+                             GcalRefusal, "POD ID ABSENT")
+        w_sft = wp_ok["sft"][1]
+        wrong = testing.OLMoScriptedAdapter()
+        wrong.path = "/workspace/models/dpo"
+        right = testing.OLMoScriptedAdapter()
+        right.path = w_sft["path"] + "/"
+        with mock.patch(f"{__name__}.olmo_startup", lambda a, c: o_setup):
+            wrong_ref = refuses(lambda: _startup_olmo(wrong, "sft", w_sft, False), GcalRefusal,
+                                "is not the manifest's sft entry")
+            right_ids = _startup_olmo(right, "sft", w_sft, False)
+            nopath_ref = refuses(lambda: _startup_olmo(testing.OLMoScriptedAdapter(), "sft", w_sft, False),
+                                 GcalRefusal, "is not the manifest's")
+        chk("gcal-olmo: a non-stub precheck without the pod id is refused (POD ID ABSENT, no laptop checklist on "
+            "OLMo); a non-stub startup refuses an adapter whose weights path is not the manifest entry's, or has none",
+            no_pod and wrong_ref and nopath_ref and right_ids == list(o_kit["ban_ids"]))
+    # R1 A6's tallies, on the committed Qwen artifact: Code's Qwen observations of record reproduced
+    q_art = json.loads((Path(GATES_DIR) / COMPLETABILITY_NAME).read_text(encoding="utf-8"))
+    q_t = olmo_tallies(q_art["records"], o_mf["renders_of_record"]["items"], _sc.load_term_rx())
+    chk("gcal-olmo: R1 A6's (iii) and (iv) reproduce Code's Qwen observations of record on the committed "
+        "G-CAL artifact -- one termination echo (corrupted item 6, seed 1); 11 restatements of a corrupted word, "
+        "9 of them hits (RESULTS.md@9cbacdb:5032-5041); the tally lines carry counts and keys, no response text",
+        q_t["iii_termination"] == {"n": 1, "keys": ["CORR_corrupted i=6 s=1"]}
+        and q_t["iv_mirroring"]["n"] == 11 and q_t["iv_mirroring"]["hits"] == 9
+        and corrupted_words({"render": "Clopuie 31 + 46.", "changed_positions": [1, 2, 5]}) == ["Clopuie"]
+        and mirrors("It is Clopuie.", ["Clopuie"]) and not mirrors("Clopuies", ["Clopuie"])
+        and not any(r["text"] in ln for ln in tally_lines(q_t) for r in q_art["records"] if len(r["text"]) > 8),
+        q_t)
     chk("gcal: the selftest left every canonical G-CAL path under data/m as it found it (a snapshot of each "
         "path's bytes, or its absence, taken before the runs, compared after; existing artifacts allowed)",
         snapshot_changes(snap0, canonical_snapshot()) == [] and set(names4) <= set(snap0),

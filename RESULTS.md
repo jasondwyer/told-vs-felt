@@ -21,6 +21,85 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **m package — BUILD (OLMo): the OLMo track's own build, under the seat's prebuild answers of
+  2026-11-06 (§0, Q2, Q6), the first node of ADDENDUM-m1 §4 step 4.
+  It builds G-CAL-OLMo-{ckpt}, wires `time` and `qual` for the three OLMo units, and binds the weights of record in
+  the OLMo identity. It seals the CHECKPOINT STATE INCONSISTENT totals line at the package. It also builds the
+  carry-overs the Q-F0 record addressed to "the next unit" (O4-1, O1-3, RM4-1, VC4-1 and VC4-2, with the campaign
+  driver review's missed item), and declares O2-3's listing forms for the OLMo checklists. The OLMo campaign stays refused until each checkpoint's LOCK v1.0.
+  The self-test of record is 846/846 and the site check passes all seven suites. A blind code review ran first; all
+  14 findings are applied or disclosed, among them two spec departures it caught. A blind values-check ran before
+  commit (4 FAIL and 25 IMPRECISE, each re-checked at source and applied, VC4-2's build among them), and the self-test
+  and site check were then re-run on the final bytes. `package_sha256` moves off LOCK-m-F0 v1.0's `5f646db6…` to `60199b36…feec`; the analyzer is unchanged
+  (`655e0f7f…`).
+  Not done: no pod has started and no OLMo stage has run; no OLMo lock is written; G-PWR for OLMo is not built;
+  G-SHAPE-F0's re-run follows in its own entry.** (Stamp verified at write time: `date -u` → **Fri Nov  6 09:04:03
+  UTC 2026**.)
+
+  - **The design raw:** `results/raw/2026-11-06_m-olmo-build_design.md`. It holds the readiness table per stage
+    (ledger (55)), the changes file by file, the PIN register O1–O28, the carry-overs as built, the self-test changes
+    and the hashes.
+  - **Files edited (Q2's statement):** `valence_core/m/gcal.py` (sha256 `d60b78e5…02fe`), `valence_core/m/resume.py`
+    (`78f2fc8e…8fb7`) and `scripts/m_sessions.py` (`f0e9d5c4…8403`), nothing else.
+    - No SCORING_STACK_FILES entry is edited.
+    - `scripts/m_sessions.py` is a TOOLING_FILES entry, and its edits go beyond subcommand wiring (the carry-overs and
+      the self-test's pins). So G-SHAPE-F0 re-runs before the first LOCK-m-OLMo v0.1: the referent check's N5, with
+      the supersession under PIN-S9 on Q2's word. A model-free trial to a scratch directory passes.
+  - **Readiness (ledger (55)):**
+    - built: G-CAL-OLMo-{ckpt};
+    - wired: G-TIME-OLMo-{ckpt}, whose box path needs G-CAL-OLMo's PASS on the weights of record, and
+      G-F0m-OLMo-{ckpt}, which needs the lock's v0.2 line and takes the seat's adjudication of a G-TIME-OLMo PAUSE
+      by `--prior-adjudication-file`;
+    - not built: G-PWR for OLMo (`scripts/m_gpwr.py` is Q-F0's), owed before each OLMo v1.0;
+    - refused: the OLMo campaign, until each v1.0, wired then as a driver edit of the step-10 read's Q2 kind.
+    BACKEND's tooling and the F0m-OLMo verifier predate this build.
+  - **What each OLMo stage now requires before any load:**
+    - Every OLMo stage, G-CAL-OLMo included:
+      - the pod id;
+      - the driver committed;
+      - the weights of record: the committed `data/olmo/manifest.json` entry, with every listed file a regular file
+        at its byte count and no unlisted file (the full re-hash is respawn (i)'s).
+    - `time` and `qual` only: a committed `LOCK-m-OLMo-{ckpt}.md` at root, whose text names in full the proposal's
+      sha256, the weights' `files_aggregate_sha256`, and, by the licence's check (f), the analyzer's and package's
+      sha256. G-CAL-OLMo precedes the lock (m:302).
+    - `time` only: G-CAL-OLMo's artifact on disk, PASS, on the weights of record.
+    - `qual` only: v0.2's line `G-TIME-OLMo-{ckpt} port acceptance recorded` in the lock (Code's form for v0.2 to
+      carry).
+    A G-CAL-OLMo resume that would generate on another pod is refused (m:267).
+  - **For the seat:** the build reads §0's "OLMo stage wiring" as `time` and `qual` and leaves the campaign for a
+    driver edit after each v1.0 (the code review's finding 14). PIN O12 is strikable until LOCK v1.0.
+  - **Q-F0 behaviour changes** (the review's list; each traced to Q6's carry-overs, to the package moving or, for
+    the qual flag, to the OLMo wiring):
+    - On the Q-F0 campaign path, two rulings are refused before the load: a ruling the stage would not apply beside
+      an end pending (O4-1), and an earlier pause's ruling re-offered (O1-3). A PI stop the checkpoint records still
+      passes.
+    - The RULING line can carry RM4-1's note (on the stub path only, since every state it marks is refused first on
+      the Qwen path).
+    - STOP and REFUSED lines, and the analyzer's refusal text through `read_checkpoint`, carry the package's sealed
+      sentence.
+    - `qual --unit Q-F0 --prior-adjudication-file` is refused by the driver; argparse refused it at HEAD.
+    - A Q-F0 stage resume or re-finish is now refused on `package_sha256`. `gcal --resume` was already refused at
+      HEAD, because its checkpoint records package `4b496587…`. Q-F0's campaign has ended and its record stands on its
+      own lock.
+  - **Q3's calendar fact, as at this commit:** neither a LOCK-m-OLMo v0.1 nor G-ANL-F3 exists. Whichever is committed
+    first fixes the order: (a) G-ANL-F3 first, or (b) the OLMo track through its VERDICTS first. The seat recommends
+    (b) if the pod is up before G-ANL-F3 is built.
+  - **Q2's commit order:** Q2 requires any edit of a shared module `mf3` imports to land before LOCK-m-F3 v0.1.
+    This build's edits (`gcal.py` and `resume.py`, neither on Q1's import list) land before that and, by Code's own
+    order, before the F3 build too.
+  - **Records:**
+    - the self-test of record, `results/raw/2026-11-06_m-olmo-build_selftest.txt`;
+    - the site check, `…_m-olmo-build_sitecheck.txt`;
+    - the code review with Code's dispositions, `…_m-olmo-build_review.md`;
+    - the values-check, `…_m-olmo-build_valuescheck.md`.
+    Local absolute paths are scrubbed in the committed copies, as each header says.
+  - **Forward:**
+    - PIN-14 now refuses a re-run of Q-F0's `verdicts` on the moved package; G-ANL-F3's regression (A-m1 §2.5 (3))
+      meets this.
+    - G-PWR for OLMo.
+    - The OLMo campaign wiring, after each v1.0.
+    - O2-3's text in each OLMo launch checklist.
+
 - 2026-11-06 — **m package — BUILD (F3) (ADDENDUM-m1 §4 step 5, on the PI's word "Yes, start here"): STOPS before the
   first package edit, on a placement question and seven others for the seat.
   The build's inputs are mapped, read-only, in Code's scratch: the F3 spec, the package and its hash bindings, and the

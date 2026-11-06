@@ -1,0 +1,412 @@
+# m package — BUILD (OLMo): the post-build site check on the final build, the seven model-free suites run from the repository root with the jlens venv (python -m valence_core.regression.analysis; scripts/format_recon.py, k1_stage1.py, k1_analyze.py, e2d_d2_analyze.py, recon_echo.py and e2d_closure_verify3.py --selftest), and a model-free G-SHAPE-F0 trial to a scratch directory. Code stamp: 2026-11-06 09:04 UTC. Tallies: 154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24, every exit 0; the G-SHAPE-F0 trial PASS (its tail appended). Local absolute paths scrubbed as in the self-test raw.
+=== -m valence_core.regression.analysis
+==============================================================================
+LEDGER 26 -- analysis-tier regression (no model)
+==============================================================================
+  [PASS] e0 axes sha                                                  expected d4791bdc4877da3d got d4791bdc4877da3d   (e2a.AXES_SHA)
+  [PASS] e0 random-dirs sha                                           expected b6bd2f5f580ee13e got b6bd2f5f580ee13e   (e2a.RAND_SHA)
+  [PASS] workspace layers                                             expected [40, 44, 48, 52, 56, 60] got [40, 44, 48, 52, 56, 60]   (workspace_layers.WORKSPACE_LAYERS)
+  [PASS] L40 cos reward.sentiment                                     expected        0.436 got        0.436   (e0_axes.meta.json report)
+  [PASS] L40 cos reward.character                                     expected        0.835 got        0.835   (e0_axes.meta.json report)
+  [PASS] L40 V2 self-residual                                         expected        0.550 got        0.550   (e0_axes.meta.json report)
+  [PASS] L40 V3 eval-residual                                         expected        0.900 got        0.900   (e0_axes.meta.json report)
+  [PASS] L44 cos reward.sentiment                                     expected        0.488 got        0.488   (e0_axes.meta.json report)
+  [PASS] L44 cos reward.character                                     expected        0.847 got        0.847   (e0_axes.meta.json report)
+  [PASS] L44 V2 self-residual                                         expected        0.532 got        0.532   (e0_axes.meta.json report)
+  [PASS] L44 V3 eval-residual                                         expected        0.873 got        0.873   (e0_axes.meta.json report)
+  [PASS] L48 cos reward.sentiment                                     expected        0.522 got        0.522   (e0_axes.meta.json report)
+  [PASS] L48 cos reward.character                                     expected        0.861 got        0.861   (e0_axes.meta.json report)
+  [PASS] L48 V2 self-residual                                         expected        0.509 got        0.509   (e0_axes.meta.json report)
+  [PASS] L48 V3 eval-residual                                         expected        0.853 got        0.853   (e0_axes.meta.json report)
+  [PASS] L52 cos reward.sentiment                                     expected        0.448 got        0.448   (e0_axes.meta.json report)
+  [PASS] L52 cos reward.character                                     expected        0.863 got        0.863   (e0_axes.meta.json report)
+  [PASS] L52 V2 self-residual                                         expected        0.505 got        0.505   (e0_axes.meta.json report)
+  [PASS] L52 V3 eval-residual                                         expected        0.894 got        0.894   (e0_axes.meta.json report)
+  [PASS] L56 cos reward.sentiment                                     expected        0.407 got        0.407   (e0_axes.meta.json report)
+  [PASS] L56 cos reward.character                                     expected        0.857 got        0.857   (e0_axes.meta.json report)
+  [PASS] L56 V2 self-residual                                         expected        0.516 got        0.516   (e0_axes.meta.json report)
+  [PASS] L56 V3 eval-residual                                         expected        0.913 got        0.913   (e0_axes.meta.json report)
+  [PASS] L60 cos reward.sentiment                                     expected        0.369 got        0.369   (e0_axes.meta.json report)
+  [PASS] L60 cos reward.character                                     expected        0.857 got        0.857   (e0_axes.meta.json report)
+  [PASS] L60 V2 self-residual                                         expected        0.516 got        0.516   (e0_axes.meta.json report)
+  [PASS] L60 V3 eval-residual                                         expected        0.930 got        0.930   (e0_axes.meta.json report)
+  [PASS] screen p [SOLV] 26/50                                        expected      0.44386 got      0.44386   (FINDINGS-4 summary ledger)
+  [PASS] screen p [DIFF] 19/47                                        expected      0.24296 got      0.24296   (FINDINGS-4 summary ledger)
+  [PASS] screen p [NOV] 23/53                                         expected      0.86416 got      0.86416   (FINDINGS-4 summary ledger)
+  [PASS] screen p [CORR] 28/56                                        expected      0.55307 got      0.55307   (FINDINGS-4 summary ledger)
+  [PASS] screen p [FDBK] 23/44                                        expected      0.44020 got      0.44020   (FINDINGS-4 summary ledger)
+  [PASS] CORR exclusion asymmetry (post-hoc, weightless)              expected        0.035 got        0.035   (FINDINGS-4 §7)
+  [PASS] brevity-tracking pooled 128/257                              expected          1.0 got       1.0000   (FINDINGS-4 §6)
+  [PASS] FDBK first-choice 23/44 = .523                               expected         n.s. got      p=0.880   (FINDINGS-4 §3)
+  [PASS] c1r3 control pairs                                           expected           28 got           28   (rule 9 (28 standard))
+  [PASS] c1r3 z (descriptive)                                         expected          1.6 got          1.6   (FINDINGS-2 finding 3 (28 said 1.6))
+  [PASS] c1r3 verdict                                                 expected         FAIL got         FAIL   (r3 confirmatory FAIL)
+  [PASS] bar firing behavior (6 cases)                                expected  no failures got  no failures   (f_sessions.unit_check_bars)
+  [PASS] hair-trigger needs justification                             expected      refused got      refused   (rule 21)
+  [PASS] degen-round feature undefined post-exclusion                 expected 0 decidable of 283 got 0 decidable of 283   (FINDINGS-4 §6 / methodological 5)
+  [PASS] preamble-trunc feature below share floor                     expected 5 decidable, flagged got 5 decidable, flagged   (FINDINGS-4 §6 ("uninformative"))
+  [PASS] shorter-rounds feature usable                                expected 257 decidable, clean got 257 decidable, clean   (FINDINGS-4 §6 (pooled 128/257))
+  [PASS] over-window read is an incident                              expected       raises got       raises   (PROPOSAL-g window clause)
+  [PASS] undeclared window refuses the read                           expected       raises got       raises   (PROPOSAL-g window clause)
+  [PASS] decompose: pure identity bias                                expected identity 0.800 / position 0.500 got identity 0.800 / position 0.500   (tagscreen fixture)
+  [PASS] decompose: pure position bias                                expected identity 0.500 / position 0.700 got identity 0.500 / position 0.700   (tagscreen fixture)
+  [PASS] decompose: balanced pair                                     expected identity 0.500 / position 0.500 got identity 0.500 / position 0.500   (tagscreen fixture)
+  [PASS] probe counterbalancing swaps menu                            expected both orders present got          yes   (tagscreen)
+  [PASS] probe formats differ                                         expected scaffold != bare got       differ   (tagscreen (28c variant))
+  [PASS] rank_by_balance orders correctly                             expected    c/d first got            c   (tagscreen)
+  [PASS] label_mass_min is the worst probe                            expected   min < mean got min 0.091 < mean 0.545   (adjudication 2026-08-20 (A1))
+  [PASS] decompose reproduces logged base split                       expected identity 0.786 got identity 0.786   (RESULTS 2026-08-19 (prism .786 / position ~.45))
+  [PASS] position component near neutral on real data                 expected |pos-0.5| < 0.06 got        0.053   (RESULTS 2026-08-19)
+  [PASS] A1: one bad stage fails the pair                             expected  P2 excluded got     excluded   (PROPOSAL-g §A1 ("ALL FOUR"))
+  [PASS] A1: worst stage is the one reported                          expected  dpo / 0.250 got  dpo / 0.250   (PROPOSAL-g §A1)
+  [PASS] A1: ranked by worst stage, most balanced first               expected     P1 first got           P1   (PROPOSAL-g §A1)
+  [PASS] A1: selects exactly four                                     expected  P1,P3,P4,P5 got  P1,P3,P4,P5   (PROPOSAL-g §A1 (roster of four))
+  [PASS] A1: sufficient roster needs no iteration                     expected        False got        False   (PROPOSAL-g §A1)
+  [PASS] A1: selection never claims to be the lock                    expected         True got         True   (PROPOSAL-g §4 / handoff §1)
+  [PASS] A1: thin roster triggers the replacement iteration           expected required / 1 clears got required / 1 clears   (PROPOSAL-g §A1)
+  [PASS] A1: committed roster passes its own gate                     expected      16 tags got      16 tags   (data/configs/a1_roster_candidates.json)
+  [PASS] A1: drifted token id is a hard stop                          expected       raises got       raises   (roster verified 2026-08-20)
+  [PASS] A1: multi-token tag refused                                  expected       raises got       raises   (restricted-choice read)
+  [PASS] A1: partial stages refused                                   expected       raises got       raises   (PROPOSAL-g §A1 conjunction)
+  [PASS] A1: a pair missing from one stage refused                    expected       raises got       raises   (roster identity across stages)
+  [PASS] S2: the panel is all three neighbours                        expected sentiment+character+vignette got sentiment+character+vignette   (adjudication 2026-08-20)
+  [PASS] S2: two neighbours need no new extraction                    expected sentiment+character got sentiment+character   (e0 2026-08-08 V2/V3 guards)
+  [PASS] S2: the vignette is the one that must be built               expected     vignette got     vignette   (no extracted history)
+  [PASS] S2: vignette is grounded by adjudication                     expected         True got         True   (design-instance adjudication 2026-08-20)
+  [PASS] S2: construct name of record carries 'Ho-style' retired      expected circumstantial-affect got      present   (adjudication 2026-08-20)
+  [PASS] S2: persona slot settled on the character reading            expected character reading got      settled   (adjudication 2026-08-20)
+  [PASS] S2: neighbour axes are the published guards                  expected cos 0.522/0.861 got cos 0.522/0.861   (e0_axes.meta.json L48)
+  [PASS] S2: every axis carries one dose                              expected      1 alpha got      1 alpha   (rule 4 / 'matched norm fraction')
+  [PASS] S2: dose is frac x R_layer                                   expected      10.3010 got      10.3010   (rule 1)
+  [PASS] S2: a differently-dosed axis is refused                      expected       raises got       raises   (rule 4)
+  [PASS] S2: an unextracted axis is an error, not a null              expected       raises got       raises   (discriminant table completeness)
+  [PASS] S2: proposed vignette frames are pool-clean                  expected     accepted got     accepted   (rule 18)
+  [PASS] S2: committed frames match the module constant               expected    identical got    identical   (one stimulus, two homes)
+  [PASS] S2: vignette poles are index-matched                         expected          4/4 got          4/4   (e0 frame battery shape)
+  [PASS] S2: potency reported in G units                              expected        1.901 got        1.901   (PROPOSAL-g §S2)
+  [PASS] S2: V1 rule applied unchanged per axis                       expected  reward PASS got         PASS   (V1 (0.5G / 2x random))
+  [PASS] S2: a weaker neighbour can still clear V1                    expected PASS at 0.20 sigma got PASS at 0.20 sigma   (V1 (0.5G = 0.158); potency != specificity)
+  [PASS] S2: a sub-0.5G neighbour fails V1                            expected fail at 0.12 sigma got fail at 0.12 sigma   (V1 (0.5G = 0.158))
+  [PASS] S2: specificity branch on a dominant reference               expected specificity / 2.00x got specificity / 2.00x   (PROPOSAL-g §S2 registered readings)
+  [PASS] S2: generic-valence branch when a neighbour wins             expected      generic got      generic   (PROPOSAL-g §S2 registered readings)
+  [PASS] S2: an unadjudicated axis cannot decide the reading          expected excluded / specificity got excluded / specificity   (rule 6)
+  [PASS] S2: the approved vignette DOES decide the reading            expected vignette / generic got vignette / generic   (adjudication 2026-08-20)
+  [PASS] S2: battery is the published val half                        expected         1152 got         1152   (B2b (24x4x12))
+  [PASS] S2: battery context template unchanged                       expected Task:/Response:/Task:/Response: got        match   (B2b template)
+  [PASS] S2: full stratification is the exact battery                 expected    1152 / 96 got    1152 / 96   (no subsampling noise)
+  [PASS] e2b: quarantined primitive refuses import here               expected       raises got       raises   (rule 5(e) / PROPOSAL-h §0.1)
+  [PASS] e2b: no standard harness names the primitive                 expected  0 offenders got  0 offenders   (structural quarantine)
+  [PASS] e2b: choice_read still cannot inject                         expected     accepted got     accepted   (rule 5(e) final clause)
+  [PASS] e2b: choice_read signature unchanged                         expected no injection param got        clean   (readout.choice_read)
+  [PASS] e2b: complete provenance is admissible                       expected     accepted got     accepted   (rule 5(e))
+  [PASS] e2b: provenance without direction_sha is refused             expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  [PASS] e2b: provenance without r_layer is refused                   expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  [PASS] e2b: provenance without frac is refused                      expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  [PASS] e2b: a null-dose 'state-present' read is refused             expected       raises got       raises   (a read with no state is a shadow read)
+  [PASS] e2b: a state-present read without its shadow is refused      expected       raises got       raises   (PROPOSAL-h §0.2)
+  [PASS] e2b: a steered 'shadow' is refused                           expected       raises got       raises   (the shadow must be state-free)
+  [PASS] e2b: per-read leak is state-present minus shadow             expected d_p_a +0.120 got d_p_a +0.120   (PROPOSAL-h §0.2 (i))
+  [PASS] e2b: leak reports label-mass displacement too                expected       -0.020 got       -0.020   (horn (a) degrades before it biases)
+  [PASS] e2b: a flipped pick is recorded                              expected         True got         True   (coarse leak measure)
+  [PASS] e2b: common-mode leak reads as common mode                   expected reversing 0.000 / common +0.100 got reversing +0.000 / common +0.100   (the counterbalance absorbs it)
+  [PASS] e2b: state-reversing leak survives the split                 expected reversing +0.100 / common 0.000 got reversing +0.100 / common +0.000   (the leak a counterbalance cannot absorb)
+  [PASS] e2b: pooling would have hidden it                            expected pooled mean 0.000 got       +0.000   (why the split exists)
+  [PASS] e2a template: every archived scaffolding rebuilt             expected      200/200 got      200/200   (Route 3 acceptance)
+  [PASS] e2a template: RNG stream in step (recorded seeds)            expected      200/200 got      200/200   (session_rng draw order)
+  [PASS] e2a template: index keyed on SESSION, not round              expected session-keyed got session-keyed   (archive reward s1 (s%4 != 0))
+  [PASS] e2a template: coincidence guard is discriminating            expected       differ got       differ   (s1: session-rule vs round-rule headers)
+  [PASS] e2a template: 4 round + 4 menu paraphrases                   expected          4/4 got          4/4   (template family)
+  [PASS] g1: a complete per-stage split is admissible                 expected     accepted got     accepted   (ADDENDUM-g1 probe anchor)
+  [PASS] g1: artifact without stage is refused                        expected       raises got       raises   (ADDENDUM-g1)
+  [PASS] g1: artifact without fit_ids is refused                      expected       raises got       raises   (ADDENDUM-g1)
+  [PASS] g1: artifact without val_ids is refused                      expected       raises got       raises   (ADDENDUM-g1)
+  [PASS] g1: fit/val overlap is refused                               expected       raises got       raises   (rule 18 both directions)
+  [PASS] detection prompt is completion-style                         expected no chat markers got        clean   (rule 13)
+  [PASS] framing precedes the steered span                            expected prefix ends before 'Trial 3' got          yes   (their geometry)
+  [PASS] trial plan is exactly 50/50                                  expected 8/16 injected got         8/16   (signal-detection design)
+  [PASS] control trials carry no concept                              expected         none got         none   (detection harness)
+  [PASS] odd n_trials refused                                         expected       raises got       raises   (exact-split guarantee)
+  [PASS] scorer: affirmative                                          expected         True got         True   (detection scoring)
+  [PASS] scorer: denial                                               expected        False got        False   (detection scoring)
+  [PASS] scorer: undecidable stays None                               expected         None got         None   (rule-28a habit)
+  [PASS] identification is None on controls                           expected         None got         None   (detection harness)
+  [PASS] metrics refuse hit-rate-without-controls                     expected       raises got       raises   (signal detection)
+  [PASS] metrics: perfect discrimination                              expected hit 1.0 fa 0.0 sens 1.0 got hit 1.0 fa 0.0 sens 1.0   (signal detection)
+  [PASS] always-yes scores zero sensitivity                           expected sensitivity 0.0 got          0.0   (the whole point)
+  [PASS] softmax normalizes                                           expected          1.0 got 1.000000000000   (readout)
+  [PASS] symmetric KL(p,p) = 0                                        expected          0.0 got     0.00e+00   (g3' verify identity)
+  [PASS] AUC all-ties = 0.5                                           expected          0.5 got        0.500   (discrim tie handling)
+  [PASS] AUC separable = 1.0                                          expected          1.0 got        1.000   (discrim)
+  [PASS] logistic fit deterministic                                   expected     1.000000 got     1.000000   (discrim (seeded GD))
+  [PASS] adapters: qwen helper has exactly one definition             expected 0 local, 1 definition got 0 local, 1 definition(s)   (LOCK-h §7 consolidation, 2026-08-22)
+  [PASS] detection: segmentation opt-in, default byte-preserving      expected default off, no-op, cuts got default False, no-op True, cuts True   (acceptance event 2026-08-23)
+  [PASS] e2d: statepresent absent, and asserted, not assumed          expected absent + declared forbidden got absent True, 0 imports, forbidden ('valence_core.e2b.statepresent',)   (PROPOSAL-j §3 / rule 5(a))
+  [PASS] e2d: roster of record is the h-roster, unforked              expected h-roster == e2b's got        match   (PROPOSAL-j AMENDMENT 1 (i))
+  [PASS] e2d: roster tags collide with no pool or wrapper text        expected 0 collisions got 0 collisions   (rule 18 + rule 28(c))
+  [PASS] e2d: cells are M 16 / S 8 / R 8                              expected {'M': 16, 'S': 8, 'R': 8} got {'M': 16, 'S': 8, 'R': 8}   (PROPOSAL-j §3 + AMENDMENT 1 (i))
+  [PASS] e2d: M's 16 cells are 4 pairs x 2 maps x 2 forced-end        expected 4x2x2 distinct got     distinct   (PROPOSAL-j §3)
+  [PASS] e2d: discrim constants imported, not re-declared             expected hyperparams+bar from discrim got hyperparams True, bar True, redeclared []   (PROPOSAL-j §2 D1 frozen-successor rule)
+  [PASS] e2d: stored classifier round-trips (fit->store->load)        expected identical AUC after reload got   1.0 vs 1.0   (PROPOSAL-j §3 transfer figure)
+  [PASS] e2d Q1: p0 = 0.15, and 9/32 is the stated reach              expected 0.15 / fires at 9 got 0.15 / fires at 9   (PROPOSAL-j §2 Q1)
+  [PASS] e2d Q2: the g2r pattern fails, median near .60               expected fails, median~.60 got passes=False, median=0.6035   (PROPOSAL-j §2 Q2 / §0.4)
+  [PASS] e2d Q3: bar 0.5*G = 0.1578, sign flip fails the rung         expected 0.1578 / flip fails got 0.1578 / flip passes=False   (PROPOSAL-j §2 Q3 (one-pole variant))
+  [PASS] e2d run-dose rule: 0.20 on pass, scoped stop on any fail     expected 0.2 / STOP, SCOPED got 0.2 / STOP, SCOPED   (PROPOSAL-j §2 run-dose rule)
+  [PASS] oracle: a subset run cannot write the rule-26 record         expected refused; other paths, --check all and no --out allowed got refused_canonical=True, allows_other_path=True, allows_full_run=True, allows_no_out=True   (incident 2026-09-01 (--check e2d clobbered it))
+  [PASS] e2d (v): habit identity reproduces e2a's primary             expected      +0.0392 got      +0.0392   (PROPOSAL-j AMENDMENT 2 (v))
+  [PASS] e2d (v): balanced form differs at e2a's actual imbalance     expected differs by ~0.0135 got +0.0135 at 53/49   (AMENDMENT 2 (v), exact-balance caveat)
+  [PASS] e2d (iii): read-marks refuse an unknown content class        expected 4 classes, refuses a 5th got 4 classes, refused True   (AMENDMENT 2 (iii))
+  [PASS] e2d (i): g1 gate reads as first-token-only                   expected not a T-step licence got T-step=False   (AMENDMENT 2 (i) conditional)
+  [PASS] e2d: resume reproduces the run and refuses a different one   expected identical transcripts + refusal got identical True, reads True, refused True   (incident 2026-09-02 (D2 died at 9/64 with nothing on disk))
+------------------------------------------------------------------------------
+  154/154 reproduced through valence_core
+EXIT=0
+=== scripts/format_recon.py --selftest
+  [PASS] F0 = A B A B                                                     ['slate', 'prism', 'slate', 'prism']  
+  [PASS] F1 = N N A B                                                     ['timber', 'timber', 'slate', 'prism']  
+  [PASS] F2 = A A B B                                                     ['slate', 'slate', 'prism', 'prism']  
+  [PASS] swapped cell mirrors every format                                {'F0': ['prism', 'slate', 'prism', 'slate'], 'F1': ['timber', 'timber', 'prism', 'slate'], 'F2': ['prism', 'prism', 'slate', 'slate']}  
+  [PASS] every format's LAST forced label is tag_minus (uniform break definition)   
+  [PASS] every format has 4 forced rounds and the neutral appears only in F1   
+  [PASS] F1/F2: 24 = 8 cells x 3, exactly; F0: 8 = 1 block                {(('prism', 'slate'), 'prism'): 3, (('ridge', 'saddle'), 'ridge'): 3, (('prism', 'slate'), 'slate'): 3, (('velvet', 'walnut'), 'walnut'): 3, (('ridge', 'saddle'), 'saddle'): 3, (('granite', 'plaza'), 'plaza'): 3, (('granite', 'plaza'), 'granite'): 3, (('velvet', 'walnut'), 'velvet'): 3}  
+  [PASS] the 8-schedule is the prefix of the 24-schedule (reallocation changes how many, never which)   
+  [PASS] every block of 8 is a permutation of the cells (balanced at every prefix)   
+  [PASS] schedule deterministic under the draw seed                         
+  [PASS] each pair starts on each label 3 times                             
+  [PASS] neutral label `timber`: selection artifact agrees (id 43299), first passing candidate in the declared order {'label': 'timber', 'token_id': 43299}  
+  [PASS] neutral label absent from EVERY roster and H3's sixteen (5 rosters); `cedar` would have failed {'e2d_roster_of_record': 8, 'H3_sixteen': 16, 'h3_candidates': 16, 'a1_candidates': 16, 'e2a_archive_pairs': 8}  
+  [PASS] rule 18 + 28c: 9 tags absent from all 64 paraphrases and from the wrapper 64  
+  [PASS] neutral label absent from every data/corpus pool and the e0/s2/b2 stimulus files (selection artifact)   
+  [PASS] e2a walk reconstructs 12/12 synthetic sessions (3 formats x 4 idx), seeds match 12/12 ok, 12 seed streams  
+  [PASS] a corrupted scaffold FAILS the walk (both directions, trap 5)      
+  [PASS] verify_format_walk reports walked beside passed                    
+  [PASS] as_e2a_row arm == rng key                                          
+  [PASS] synthetic sessions are sham, uncached, unsteered on every round    
+  [PASS] record carries the retention interval per forced round and prefix tokens per read   
+  [PASS] follows_habit == not first_pick_is_last_forced_label (follow script)   
+  [PASS] strictly_alternates True on the alternating script                 
+  [PASS] break script: first pick = last forced label -> break True, habit False, not alternating   
+  [PASS] empty -> audit:empty (v2 first)                                  audit:empty  
+  [PASS] '* * *' -> content:null_response (exclusion-bearing)             content:null_response  
+  [PASS] verbatim instruction -> task_echo ADVISORY, no exclusion         (None, ['content:task_echo'])  
+  [PASS] frame fragment claims first; lexical suppressed (rule 28b)       ('audit:frame:Config evaluation session', None)  
+  [PASS] a plain answer: nothing                                          (None, [], None)  
+  [PASS] own tag in a response -> lexical hit                             slate  
+  [PASS] F1's neutral label in the lexical set                            timber  
+  [PASS] repeat of an earlier response -> content:stuck_attractor         content:stuck_attractor  
+  [PASS] lenient: content exclusion on a FORCED round excludes; on a free round it does not   
+  [PASS] strict: excludes on any round; lexical excludes under both         
+  [PASS] a null response on free0 -> lenient keeps the session, strict recovers the exclusion (False, 'content:null_response@free0')  
+  [PASS] a null response on forced0 -> excluded at forced0, no reads, break undecidable   
+  [PASS] counters tabulate over all sessions incl. excluded (rule 23)     {'total': 2, 'by_key': {'null_response': 2}}  
+  [PASS] analyze_format: break rate k/n over all-with-a-pick and valid; alternation; share ({'k': 1, 'n': 6, 'rate': 0.16666666666666666}, 1, 2)  
+  [PASS] anchors: e2a pooled strict alternation 157/187 and break 32/188 reproduce   
+  [PASS] gate 8 h under the allocation (8/24/24 = 56 sessions): 3 x 300 s -> 4.67 h GO; 3 x 600 s -> 9.33 h STOP   
+  [PASS] the EXISTING timing artifact projects GO under the raised gate (design patch §2: ~6.95 h) 6.955 h  
+  [PASS] assert_gate_admits: refuses without artifact, refuses STOP, admits GO   
+  [PASS] projection refuses an incomplete timing set (a skipped format is not a pass)   
+  [PASS] run_format --limit 1 runs exactly one session and checkpoints it   
+  [PASS] an existing checkpoint without --resume is refused (trap 22)       
+  [PASS] --resume --limit 1 with one on disk runs NOTHING (limit counts on-disk, trap 36)   
+  [PASS] --resume --limit 3 completes to 3 on disk, indices 0,1,2 (skip-only)   
+  [PASS] reallocation: 24 -> 8 resumes 3 on-disk sessions; 24 -> 2 (orphaning s2) refused; a foreign schedule prefix refused   
+  [PASS] neutral label pinned in F1's identity only: F0 resumes under a different recorded neutral; F1 refuses   
+  [PASS] load_checkpoint refuses a foreign seed / scope / format / temp / audit sha   
+  [PASS] recon.py's code names no injection / axis / quarantine / cached-path symbol []  
+  [PASS] quarantined primitive absent from sys.modules                      
+  [PASS] e2d's three declared bars fire and stay silent (7 cases, both directions)   
+  [PASS] audit of record composes v2 + content-class v4; the v2 sha16 is RECOMPUTED and matches the declared 7aa235d25eeb66dc  
+  [PASS] a tampered audit body no longer matches its declared sha16         
+  [PASS] override guard: clean on this file, fires on a copy that smuggles the override into a stage   
+  [PASS] a truncated timed session is NOT complete; a full one is           
+  [PASS] projection uses COMPLETE sessions only (a 23 s truncated session is set aside)   
+  [PASS] projection refuses a format with no complete timed session         
+  [PASS] gate refuses a FAILED timed-session acceptance and a missing acceptance; admits PASS   
+  [PASS] resume refuses temp / audit-sha / scope drift and admits the identical identity   
+  [PASS] record's steered / round_path_cached are derived from the generate call (all False)   
+  [PASS] a partial run cannot overwrite a complete artifact; complete-over-complete and partial-over-partial allowed   
+  [PASS] analysis on one truncated session: rates None, features BELOW FLOOR with diagnosis, no crash   
+  [PASS] rule 28(a) floors declared per format (ceil 2/3 n: F0 6, F1/F2 16) and reported with domain + decidable n   
+  [PASS] refusal counts per round position: a declining predicate with content counts as predicate-only; the '* * *' null counts as null_response {'n': 2, 'null_response': 1, 'declining_predicate_any': 1}  
+  [PASS] anchors carry both domains: e2a all 157/187 & 32/188; valid 154/184 & 30/184   
+------------------------------------------------------------------------------
+  67/67 selftest checks pass
+EXIT=0
+=== scripts/k1_stage1.py --selftest
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/k1_stage1.py --selftest
+  [PASS] schedule: 48 = 8 cells (pair x start) x 6, exactly balanced; 12 per pair {'per_pair': {'granite/plaza': 12, 'prism/slate': 12, 'velvet/walnut': 12, 'ridge/saddle': 12}, 'per_cell_min': 6, 'per_cell_max': 6, 'exactly_balanced': True}
+  [PASS] k1 rng key differs from the format recon's (new text, same format)       
+  [PASS] format of record is F2 and the neutral label is not used                 
+  [PASS] e2a walk reconstructs 4/4 synthetic k1 sessions under the k1 rng key, seeds match 
+  [PASS] records carry campaign 'k1' and rng_key 'k1-F2'; sham, uncached, unsteered 
+  [PASS] the same index under the format recon's key draws DIFFERENT tasks/seeds (new sessions) 
+  [PASS] audit: payload echo -> ADVISORY content:payload_echo (v5); '* * *' -> exclusion null_response (v3) ({'exclusion': None, 'advisory': ['content:payload_echo'], 'content_label': 'payload_echo'}, 'content:null_response')
+  [PASS] audit: the format recon's wrong_task false positive does NOT fire under the by-task-id pool {'exclusion': None, 'advisory': [], 'content_label': None}
+  [PASS] audit v2 sha16 recomputed and matches                                    7aa235d25eeb66dc
+  [PASS] F2 block spans: two rounds per label, block order, first label = forced0's tag 
+  [PASS] masks: M+A/R+A cover A's two spans, M+B/R+B B's, M++/R++ all four; every sign + 
+  [PASS] label positions: both labels' last tokens after the last forced span (the menu line), before the read 
+  [PASS] capture set: the six workspace layers with L49-L63 = 18 distinct layers (52/56/60 lie in the band); masks exactly six + shadow 
+  [PASS] sham source guard: the session module and the sessions stage CALL no Injection / at_frac / load_axis and never pass cached=True 
+  [PASS] the read module does no logit arithmetic at all (prohibition, §1.4 G4: nothing signed on M+A / M+B) 
+  [PASS] declared bars (e2d's) fire and stay silent                               
+  [PASS] structural gate: refuses while the proposal / analyzer / 5(f) / welfare quote are not committed and clean; reports every problem ok=True problems=[]
+  [PASS] gate on a temp repo: passes when all tracked+clean+5(f)+welfare; refuses a dirty proposal; refuses CLAUDE.md without 5(f) 
+  [PASS] sentences of record: all six (ABSENT, PRESENT, INDETERMINATE, G3_FAIL, G1_FAIL, STOP) verbatim against §1.5 of v1.1 (whitespace-normalised; the file hard-wraps) 
+  [PASS] every sentence's provenance is 'verbatim §1.5' (v1.1 authored PRESENT and INDETERMINATE in full; nothing composed) 
+  [PASS] startup hygiene (rule 18 / 28c) runs on the roster vs the 64 paraphrases and the wrapper 
+------------------------------------------------------------------------------
+  21/21 Stage 1 selftest checks pass
+EXIT=0
+=== scripts/k1_analyze.py --selftest
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/k1_analyze.py --selftest
+  [PASS] battery ABSENT -> ABSENT                                               got ABSENT; G1 PASS G2 ABSENT G3 PASS
+  [PASS] ABSENT: G1 medians at bar (A >= .90, B >= .75), every band layer above null 
+  [PASS] ABSENT: G2 no layer above null in L49-L63                              
+  [PASS] ABSENT: G3 median >= .90 over L51-L62                                  
+  [PASS] G4 computed on exactly R+A, R+B, M++, R++ (prohibition asserted)       
+  [PASS] G4 signed shift exists on R masks only                                 
+  [PASS] G5 per-pair shares with exact intervals; alternation and stay rates over all sessions 
+  [PASS] the battery probes the four gate families only; the real run probes all twelve (comparators, beside, text-only) 
+  [PASS] sentence of record selected verbatim from §1.5                         
+  [PASS] battery PRESENT -> PRESENT                                             got PRESENT; G1 PASS G2 PRESENT G3 PASS
+  [PASS] battery INDETERMINATE -> INDETERMINATE                                 got INDETERMINATE; G1 PASS G2 INDETERMINATE G3 PASS
+  [PASS] INDETERMINATE: exactly 2 G2 layers above null                          [55, 59]
+  [PASS] battery G1_FAIL -> G1_FAIL                                             got G1_FAIL; G1 FAIL G2 ABSENT G3 PASS
+  [PASS] battery G3_FAIL -> G3_FAIL                                             got G3_FAIL; G1 PASS G2 ABSENT G3 FAIL
+  [PASS] battery STOP: identity failure -> STOP without evaluating gates        STOP
+  [PASS] Clopper-Pearson: 0/48 -> [0, .074]; 3/102 -> [.006, .083]              0.0740 0.0061 0.0836
+  [PASS] bars are the proposal's: G1 .90/.75 over L51-L61; G2 L49-L63 with >= 3 for PRESENT; G3 .90 over L51-L62; 200 shuffles 
+  [PASS] a missing mask is an assertion failure -> STOP before any probe        
+  [PASS] domain: 'valid' drops an excluded session, 'all' keeps it; both declared in the output 
+  [PASS] select_sentence is disjunction-complete: G3 FAIL dominates, then G1 FAIL, then G2's three 
+------------------------------------------------------------------------------
+  20/20 analyzer battery checks pass (13s)
+EXIT=0
+=== scripts/e2d_d2_analyze.py --selftest
+==============================================================================
+e2d D2 ANALYZER -- stub smoke (no model, no data)
+==============================================================================
+  [PASS] Q1 clean 3/32 passes                                       got               True  want True
+  [PASS] Q1 fires at 9/32 (§2's stated reach)                       got              False  want False
+  [PASS] Q1 8/32 still passes (the reach is 9, not 8)               got               True  want True
+  [PASS] Q1 empty arm fails                                         got              False  want False
+  [PASS] Q1 e2a's own rate under the e2a scope passes               got               True  want True
+  [PASS] Q1 e2a's strict-scope rate does NOT reject at n = 112      got               True  want True
+  [PASS] Q1 the same rate is only 0.4149 from significance there    got             0.4149  want 0.4149
+  [PASS] Q1 9/32 is the reach the proposal states                   got             0.0413  want 0.0413
+  [PASS] Q2 all .80 passes                                          got               True  want True
+  [PASS] Q2 g2r pattern (.448/.759) FAILS                           got              False  want False
+  [PASS] Q2 g2r median lands near .60                               got               True  want True
+  [PASS] Q2 high median, 4/20 low tail FAILS on the 10th pct        got              False  want False
+  [PASS] Q2 high median, 2/20 low tail still PASSES (p10 = .886)    got               True  want True
+  [PASS] Q2 no resamples fails                                      got              False  want False
+  [PASS] Q2 median exactly at the bar passes                        got               True  want True
+  [PASS] Q3 clean pass                                              got               True  want True
+  [PASS] Q3 below 0.5*G fails                                       got              False  want False
+  [PASS] Q3 SIGN FLIP fails (overdose signature)                    got              False  want False
+  [PASS] Q3 sign flip is reported as such                           got               True  want True
+  [PASS] Q3 displacement-matched (Delta_R ~ Delta+) fails 2x rule   got              False  want False
+  [PASS] Q3 missing Delta_R fails                                   got              False  want False
+  [PASS] Q3 missing Delta+ fails                                    got              False  want False
+  [PASS] Q3 bar is 0.158 at the registered G                        got             0.1578  want 0.1578
+  [PASS] run-dose PROCEED when all three pass                       got                0.2  want 0.2
+  [PASS] run-dose STOP when all three fail                          got     'STOP, SCOPED'  want 'STOP, SCOPED'
+  [PASS] run-dose names every failing criterion                     got ['Q1', 'Q2', 'Q3']  want ['Q1', 'Q2', 'Q3']
+  [PASS] run-dose carries the failing figure                        got               True  want True
+  [PASS] run-dose STOPs on a single failure                         got     'STOP, SCOPED'  want 'STOP, SCOPED'
+  [PASS] run-dose single failure names only it                      got             ['Q3']  want ['Q3']
+  [PASS] run-dose offers no fallback rung                           got               True  want True
+  [PASS] end-to-end PROCEEDs on a clean synthetic pair              got                0.2  want 0.2
+  [PASS] Q3 uses the PAIRED estimator (AMENDMENT 2 iv)              got               True  want True
+  [PASS] Q3 carries the paired sign test                            got              0.004  want 0.004
+  [PASS] Q3 keeps the across-arm figure beside it                   got                1.1  want 1.1
+  [PASS] Q2 uses the v2-AND-read-clean set (AMENDMENT 2 iii)        got 'v2_and_read_clean'  want 'v2_and_read_clean'
+  [PASS] Q2 raises no warning when the set of record is present     got              False  want False
+  [PASS] Q2 keeps v2-clean-only beside it                           got               0.75  want 0.75
+  [PASS] Q1 names the forced scope of record                        got               True  want True
+  [PASS] alternation secondary is carried and flagged non-verdict   got              False  want False
+  [PASS] Q2 WARNS when the read-marks are missing                   got               True  want True
+  [PASS] Q2 still reports the figure it did compute                 got    'v2_clean_only'  want 'v2_clean_only'
+  [PASS] Q1 WARNS when the sessions ran the strict scope            got               True  want True
+  [PASS] Q3 WARNS when no paired estimator is present               got               True  want True
+  [PASS] Q3 names the pooled shape when it falls back               got               True  want True
+  [PASS] a D1-shaped sign flip still STOPs                          got     'STOP, SCOPED'  want 'STOP, SCOPED'
+  [PASS] empty inputs STOP rather than passing vacuously            got     'STOP, SCOPED'  want 'STOP, SCOPED'
+------------------------------------------------------------------------------
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+EXIT=0
+=== scripts/recon_echo.py --selftest
+  [PASS] guard: bare import refused  rc=1
+  [PASS] statepresent absent from sys.modules  
+  [PASS] mask: two spans, 6 steered, signs  
+  [PASS] mask refuses reaches read position  
+  [PASS] mask refuses overlap  
+  [PASS] mask refuses empty  
+  [PASS] prohibition: M1 signed shift refused  
+  [PASS] prohibition: M3 signed shift allowed  
+  [PASS] probe: separable -> AUC > .95  1.000
+  [PASS] probe: random -> AUC within null  0.611 null [0.34,0.60]
+  [PASS] probe: surviving fraction ~1, cosine ~1  1.046 / 0.929
+  [PASS] spans: 4 forced rounds inside the first-choice prefix  [(6, 61), (62, 109), (110, 142), (143, 179)]
+  [PASS] spans: every span ends before the read position  n=201
+  [PASS] spans: poles match the archive  
+  [PASS] spans: 10 rounds in the full transcript  
+  [PASS] mask from spans: steered count = sum of span lengths  
+  [PASS] M2 flips every sign of M1  
+  [PASS] stage A roster: 24 sessions, 12/12 by map  first 24 were 14/10; took the first 12 of each map
+
+  18/18 selftest checks pass
+EXIT=0
+=== scripts/e2d_closure_verify3.py --selftest
+R14 (strip of R7): z-form 95% CI on the clean-set paired change, at the printed precision
+  PASS  R14 clean set = 20 shared indices                                  got 20                           want 20  
+  PASS  R14 z CI lower bound -.156                                         got -0.156                       want -0.156  raw -0.156494
+  PASS  R14 z CI upper bound +.132                                         got 0.132                        want 0.132  raw 0.132391
+  PASS  R14 the text names the form (z) and the set (clean-set) and makes no bar claim got True                         want True  
+    beside: all-rounds pairing (n 24) z CI [-0.218, +0.247] -- contains a bar-sized change both ways; no longer claimed either way
+R8  one-sided .011 (attribution dropped; the figure)
+  PASS  R8 read .10->.20 one-sided Fisher .011                             got 0.011                        want 0.011  0.01119
+R9  59% of the marks (40/68 on the 24 shared indices)
+  PASS  R9 24 shared indices                                               got 24                           want 24  
+  PASS  R9 marks on the 24 shared indices = 68                             got 68                           want 68  
+  PASS  R9 idx 1 + 5 carry 40 (10/10 at both doses each)                   got (40, (10, 10), (10, 10), (10, 10), (10, 10)) want (40, (10, 10), (10, 10), (10, 10), (10, 10))  
+  PASS  R9 40/68 rounds to 59%                                             got 59                           want 59  58.82%
+R10 the 0.10 anchor's pooled within-M delta
+  PASS  R10 -.239 over 20/20 generations                                   got (-0.239, 20, 20)             want (-0.239, 20, 20)  -0.239374
+R11 four to five times below e2a's .17
+  PASS  R11 e2a break 32/188 all sessions                                  got (32, 188)                    want (32, 188)  
+  PASS  R11 .17                                                            got 0.17                         want 0.17  0.1702
+  PASS  R11 5.1x D2's 1/30                                                 got 5.1                          want 5.1  
+  PASS  R11 3.9x D3's 1/23                                                 got 3.9                          want 3.9  
+  PASS  R11 4.5x pooled 2/53                                               got 4.5                          want 4.5  
+  PASS  R11 'four to five times' holds at integer precision (each ratio rounds to 4 or 5) got [4, 5]                       want [4, 5]  one-decimal range 3.9-5.1; the exact figures follow in the text
+R12 the composition artifact, both orders
+  PASS  R12 idx 12 is the one session decidable at 0.20 only inside D3's roster got [12]                         want [12]  
+  PASS  R12 D3 ran 24 M sessions to D2's 32                                got (24, 32)                     want (24, 32)  
+  PASS  R15 (strip of R12): the text prints NO split percentages           got False                        want False  
+  PASS  R15 the two sources exist: idx 12 (+idx12 moves the mean) and the six never-run (truncation moves it) got (True, True, 6)              want (True, True, 6)  A 0.1532 B 0.1220 Bt 0.1262 C 0.1030
+    beside (artifact, not text): splits 62/38 with idx 12 added first to the paired base, 46/54 with truncation added first; C - A = -0.0502 either way
+R13 slip 10: defined only in the untracked design handoff
+  PASS  R13 no committed definition of slip (10) in the record docs        got ''                           want ''  
+  PASS  R13 defined in the untracked HANDOFF-2026-09-04-design.md §2       got True                         want True  
+  PASS  R13 'with coherence' is the quoted failure mode there              got True                         want True  
+provenance: the eight passages replaced exactly once (R7-R13), then R7 and R12 stripped to bare figures (R14, R15)
+  PASS  R7-R15 no old or struck clause survives in the quoted text         got []                           want []  
+----------------------------------------------------------------------------------------------------
+  24/24 third-pass checks pass
+EXIT=0
+=== m_sessions.py gshape --out <tmp> (trial; the canonical re-run follows the commit)
+G-SHAPE-F0 provenance: package sha256 60199b36557ac283771b83dcb4be101b5c56880dceacdecd05cce5a578e7feec; sources digest ddbf93a8c11ebbf725bc3027718fa814d76ca6c3a33dd9c8690b7fd8b9fe557b (28 files); import closure digest 23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4 (14 files outside valence_core/m); sources committed at HEAD: not checked (--out test directory)
+G-SHAPE-F0 grid Q-F0: 2816 placements, 0 fired
+G-SHAPE-F0 controls Q-F0: render-as-response 256/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-sft: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-sft: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-dpo: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-dpo: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-instruct: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-instruct: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 OLMo grids identical across the three checkpoints: yes
+G-SHAPE-F0 template shape: clean; runner scope (static): clean
+G-SHAPE-F0 verdict PASS
+G-SHAPE-F0 artifact: <tmp> (written)
+EXIT=0
