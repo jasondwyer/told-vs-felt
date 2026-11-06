@@ -21,6 +21,128 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **ADDENDUM-m1 v0.1 COMMITTED (routed by the PI, PI date 2026-11-05) at its §4 step 3, its minor
+  residues carried as dated notes under the routing's process line.
+  The addendum to PROPOSAL-m v1.11 is now tracked at root as
+  `ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md`, sha256
+  `ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001`. Decision (16) re-registers the three OLMo
+  told-control units, whose Clock date passed with no lock and no session, under D_O′ = 2026-11-30, their design
+  otherwise unchanged. Decision (10′) starts Q-F3's track at this commit and holds Q-F3's VERDICTS session for
+  `POSTING v1`. D2 stays at 2026-12-22, and the analyzer's hash-moving round goes to G-ANL-F3 with three declared
+  items. PROPOSAL-m v1.11 stays the proposal of record, and its step-3 marks (m:356) are untouched.
+  Step 1: HEAD is `18c32df`, equal to origin; no OLMo m-unit artifact exists, and nothing of Q-F3 exists beyond the
+  shared modules. Step 2: every referent of §5 within Code's reach resolves, and BK's `figure4.csv` reproduces §0.4's
+  and §1.5's figures; nothing is substantive under Code's grading, and there are eleven minor notes.
+  Each unit's state at this commit: *re-registered under ADDENDUM-m1; D_O′ = 2026-11-30; unlocked*.
+  Not done: no pod has started, because step 4 waits for the runpod MCP to be re-authorised and the routing's go
+  applies after that; nothing of Q-F3 is built yet (step 5).** (Stamp verified at write time: `date -u` →
+  **Fri Nov  6 01:39:35 UTC 2026**.)
+
+  - **The routing, the PI's word, quoted verbatim so the record carries it.** It is the record of (16), (10′), D_O′,
+    D2, the pod budget, the base decision and §2.4's two declared texts. Its PROPOSAL-n lines are recorded here as
+    part of the same block; PROPOSAL-n's own §8 has its own entry.
+
+    > Routing — ADDENDUM-m1 v0.1 and PROPOSAL-n v0.1 — PI date 2026-11-05 (I confirm the date).
+    >
+    > Files at root, untracked, committed by path with this block:
+    >   ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md
+    >     sha256 ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001
+    >   PROPOSAL-n-bk-reconciliation-v0_1.md
+    >     sha256 9248d06c0837bd7bd0e9ffee2c88a135b2a129d9906b244c85657ac0200fb6a6
+    >
+    > ADDENDUM-m1:
+    >   (16) re-registration rule: [adopted]. D_O′ = [2026-11-30]. Pod budget: [12 h; caps at G-PWR].
+    >   Pod start: [go, after runpod MCP re-auth]. Base checkpoint: [not reopened].
+    >   (10′) Q-F3 starts at the addendum's commit; its VERDICTS session waits for POSTING v1: [adopted].
+    >   D2: [stands at 2026-12-22]. §2.4's two declared texts: [accepted].
+    >   Analyzer round at G-ANL-F3 (§2.5): [accepted].
+    >   Pod order: [OLMo units first, then PROPOSAL-n's N-pod].
+    > PROPOSAL-n:
+    >   Letter: n (the state-present told control takes o). Route A request: [not sent].
+    >   Negative pole: [as written / struck beyond d = −1 / struck]. Units: N-pod now; N-lap [after Q-F3's campaign].
+    >   D_n = [2026-12-15]; D_n-lap = [2027-01-15]. N-pod budget: [8 h].
+    >
+    > Run ADDENDUM-m1 §4 from step 1, then PROPOSAL-n §8 from step 1 (expected HEAD 18c32df or later).
+    > STOP on anything unresolved; minor residues as dated notes (the e9b5022 precedent). No pod start without my go.
+
+  - **The record of the miss, as §4 step 3 asks: §0.1–§0.2 verbatim.**
+
+    > **0.1 The record.** Q-F0's VERDICTS entry of 2026-10-19 (RESULTS.md@18c32df:24–405) declared each OLMo checkpoint `PENDING`, substate `unlocked-before-D_O`, `clock_passed` false, against D_O = 2026-10-30, the day inclusive to 23:59:59 UTC (RESULTS.md@18c32df:72–73; `data/m/verdicts/Q-F0_olmo-states.json`, schema `m-olmo-states-v1`), and closed with "The OLMo track is unchanged: each checkpoint is PENDING, D_O 2026-10-30, and a pod starts only on the PI's go, with the runpod MCP re-authorised first" (RESULTS.md@18c32df:380). No pod was started. Between 2026-10-19 and this addendum the laptop and both seats ran the research note's release block (N1 round 11, N12, N18, the tag `note-2026-10-v2`, the flip on 2026-11-04, the Zenodo record on 2026-11-05 — the entries and raws of 2026-10-27 through 2026-11-05). As a result, at `18c32df`: no `BACKEND — characterization` entry after 2026-10-05, no `G-CAL-OLMo-{ckpt}` entry, no `LOCK-m-OLMo-{ckpt}` at any version, no G-TIME-OLMo or G-F0m-OLMo session, no OLMo campaign session — nothing of the OLMo track ran (Code confirms at §4 step 1). The F0m-OLMo runner (`valence_core/m/runner_olmo.py`), the F0m-OLMo verifier, the CORR delivery module, the OLMo schedules and gate files were built at §8 step 4 (entry `m package — BUILD (Q-F0 subset)`); the units are build-complete.
+    >
+    > **0.2 The consequence under v1.11 as written.** m:324: a unit is NOT-RUN iff "its LOCK v1.0 is not committed by its Clock date (no box; …)". m:347: "A checkpoint not locked by D_O is NOT-RUN; its row and the abstract clause change, not the title." The three OLMo units therefore reached the NOT-RUN condition at 00:00:00 UTC on 2026-10-31, reason `clock:no-box` in the analyzer's vocabulary (m_analyze.py:384, "units: olmo"). No `PROPOSAL-m OLMo-{ckpt} — NOT-RUN` entry is owed by §8 step 17's rule (m:358: a NOT-RUN record is written for "a unit that reaches NOT-RUN after any gate-stage session ran"; none ran, nothing is withheld, nothing is released), and no posting has occurred at which the state would be declared (m:324's PENDING/NOT-RUN partition is evaluated "at a posting"; m:349). **The miss is a fact of the record; this addendum records it (§4 step 3's entry quotes this paragraph) and does not erase it.**
+
+  - **The decisions as routed, against the addendum's §3 list.** All five items are present.
+    1. The date is 2026-11-05, confirmed. (16) is adopted. D_O′ = 2026-11-30, confirmed as proposed. The pod budget is
+       12 h for the three units, and each checkpoint's cap share is set at its G-PWR (m:302). Pod start: go, after the
+       runpod MCP is re-authorised (m:358's standing line). The base checkpoint is not reopened, so decision (14)
+       stands and the base row keeps m:338's label.
+    2. (10′) is adopted. D2 stands at 2026-12-22.
+    3. §2.4's two declared texts are accepted. They are values-checked at each `POSTING` entry.
+    4. The analyzer round of §2.5 is accepted at G-ANL-F3, with its three items, among them the regression in (3).
+    5. Pod order: the OLMo units first, then PROPOSAL-n's N-pod.
+  - **Step 1, the delta read** ([raw](results/raw/2026-11-06_m1-v0_1_referent-check.md) §1).
+    - HEAD is `18c32dff190c530ce1b5679dc3e7277be90a05c9`, equal to `origin/main`. Both routed files are untracked at
+      root with the routed sha256 values. 26 other untracked paths, which predate this session, are not touched.
+    - No OLMo m-unit artifact exists:
+      - no `BACKEND — characterization` entry after 2026-10-05, and no box entry or box raw after 2026-08-25 (B2-r);
+      - no `G-CAL-OLMo`, `LOCK-m-OLMo`, `G-TIME-OLMo`, `G-F0m-OLMo` or campaign entry;
+      - no OLMo checkpoint or report under `data/m/`. The 18 OLMo schedule files are the step-4 build's (`5f7b968`),
+        and no prefix of them has been consumed.
+    - Every raw after 2026-10-19 is a research-note raw: 51 are the release block's and one is the N2(vii) item's.
+    - The m package still refuses Q-F3 (`keys.py:66–67`, `resume.py:385`, `:1158`), and `audit.py:87–90` defers
+      Q-F3's counter to step 19.
+  - **Step 2, the referent check** (raw §2). These all resolve. The project-memory and thread records §5 lists for
+    §2.2's decisions are outside Code's reach and were not checked (N11).
+    - every `m:N` of §5, checked against v1.11 with its sha256 verified in full;
+    - every `RESULTS.md@18c32df:N`;
+    - `m_analyze.py:98`, `:384`, `:494–526` (at sha256 `655e0f7f…c16f`) and `:392` (N4);
+    - `Q-F0_olmo-states.json`, `runner_olmo.py` and `data/olmo/manifest.json`, with its four entries;
+    - the four sha256 quotations. Code reads them as two distinct values quoted twice each, and all four match;
+    - Berg & Kaiser. The source is github.com/camberg23/act-on-valence at
+      `7631f8a06cdeffaf8b7a89212e5ccbe55a657732` (CC BY 4.0), read as data. In `figure4.csv` (sha256
+      `c8f8dbe831ad18bb6709c609f00d97c4c9ebc9d331cb3dbe5e4640425509e638`) the hidden-state slope is 0.036585
+      [0.015345, 0.057939] at base and 0.978440 [0.781640, 1.173429] at DPO, N = 80 per stage. So §1.5's "0.037
+      [0.015, 0.058] against 0.978" and §5's figures reproduce. §0.4's reading matches the Fig. 4 caption ("close to
+      their final magnitudes after DPO"). arXiv gives v1 on 2026-09-28 and v2 on 2026-10-04.
+  - **Each unit's state at this commit.** OLMo-sft, OLMo-dpo and OLMo-instruct are each *re-registered under
+    ADDENDUM-m1; D_O′ = 2026-11-30; unlocked*. Their design is v1.11's, unchanged (§1.2). Nothing was drawn, so no key
+    or schedule is re-derived. `data/m/verdicts/Q-F0_olmo-states.json` remains the 2026-10-19 declaration and is not
+    edited.
+  - **Taken with Q-F0's outcome known (m:318).** (16) is a decision about the OLMo units, taken after Q-F0's VERDICTS
+    (A0 PASS, 2026-10-19). RESULTS.md@18c32df:382–383 already says so for any OLMo decision taken now, and §4 step 4
+    has each OLMo unit's VERDICTS entry record it (N6).
+  - **Dated notes, all minor under Code's grading.** The texts are in the raw, §3.
+    - N1: §0.4's 1.0–1.4 h per checkpoint holds at 160/192 launches; at 224 a checkpoint takes 1.4–1.6 h (m:211).
+    - N2: §2.4 (a)'s quotation of m:343 drops the quote marks around "open".
+    - N3: :380–381 is the second of the entry's three "What follows" items, not its close.
+    - N4: §5 lists m_analyze.py:392 (`clock:not-locked`), which the body does not cite; §0.2's cause is
+      `clock:no-box`.
+    - N5: BK's Fig. 4 is the OLMo-2-0325-32B lineage in their generation design, while m's units run OLMo-3.1-32B in
+      m's apparatus. The "published comparison" crosses a model generation and a design.
+    - N6: the m:318 record above.
+    - N7: no RESULTS.md entry exists after 2026-10-19; the release block's record is its 51 raws (2026-10-27 through
+      2026-11-05) and `AUDIT-note-release-v1_2.md`.
+    - N8, for G-ANL-F3: `Q-F0_VERDICTS.json` embeds the OLMo declarations with `unlocked-before-D_O` and holds no
+      Clock date, so §2.5 (3)'s byte-for-byte regression constrains how §2.5 (2) renames that substate.
+    - N9: §1.4 and §0.4 count the 26 gate-stage sessions on top of m:205's hours, which already include them. That is
+      a double count of 0.141 h per checkpoint at instruct and 0.164 h at SFT/DPO [C].
+    - N10: §1.3, §1.4 and §3 item 5 name PROPOSAL-n's pod unit "N1"; its unit of record is the N-pod, as the
+      routing's pod-order line has it.
+    - N11: §5's project-memory and thread records for §2.2's decisions are outside the repository; the routing is
+      the record of (10′).
+  - **What follows.**
+    - Step 4, the OLMo track: m:302's chain per checkpoint, starting with the respawn protocol and a
+      `BACKEND — characterization` entry, on the routing's go once the runpod MCP is re-authorised. The pod budget is
+      12 h. The OLMo units run before PROPOSAL-n's N-pod.
+    - Step 5, Q-F3 from m:361's first node under (10′): `m package — BUILD (F3)`, then G-SHAPE-F3, then G-ANL-F3 with
+      §2.5's three items. None of it was begun in this session.
+    - Step 6, `POSTING v1`, after which Q-F3's VERDICTS session runs on the PI's word (§4 step 6).
+    - PROPOSAL-n §8. The routing orders it after this addendum, but its read-only steps 1 and 2 ran beside this
+      addendum's step 2, before this commit. Nothing in its check depends on this commit, and its step-1 delta read
+      is repeated after it. Its outcome is its own entry.
+  - **Committed by path:** the addendum; this entry; `results/raw/2026-11-06_m1-v0_1_referent-check.md`; the
+    values-check raw `results/raw/2026-11-06_m1-v0_1_entry_valuescheck.md`.
+
 - 2026-10-19 — **PROPOSAL-m Q-F0 — VERDICTS (v1.11 §8 step 17, m:358; LOCK-m-F0 v1.0; the PI's word of 2026-10-19 with
   the seat's step-17 block, v1.1, and its addendum): A0 PASS. P = 79/80, Δ_c = +0.4875 (two-sided Clopper–Pearson 95% CI
   [+0.4323, +0.4997]) against E = 0.0625 from A0s; exact one-sided p toward clean = 81/2^80. L0 holds, so e2a and f1 are
