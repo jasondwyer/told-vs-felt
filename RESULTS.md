@@ -21,6 +21,86 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-DATA (n) — PROPOSAL-n v0.2 §3's first node, model-free: complete, with no STOP. Every [S] figure
+  of §0.1 and §2.5 reproduces from the committed copies. BK's rendering is recovered and pinned: the OLMo-2 chat
+  template, no system turn, with the generation prompt, and `ids_sha` is the first 16 hex of the sha256 of the JSON id
+  list. All 160 sessions' exact token ids are reproduced, 158 directly and 2 through one recovered non-canonical split
+  each. The steered-span convention and the strength ladder's basis are identified, BK's fidelity scale and TAU are
+  extracted, and p0 = 0 / 2,400. Four dated notes go to LOCK-n v0.1. Nothing of the unit is built, and no pod has
+  started for it.** (Stamp verified at write time: `date -u` → **Fri Nov  6 19:29:10 UTC 2026**.)
+  - **Inputs** (raw `results/raw/2026-11-06_n-gdata.md`).
+    - The copies in `data/n/bk/` at `5916097`.
+    - A fresh clone of BK-repo at `7631f8a` (tree `d6f1d505…e282`, clean). `SHA256SUMS` checks 26 of 26 against it:
+      parts (i) and (ii).
+    - The `allenai/OLMo-2-0325-32B-Instruct` tokenizer at revision `b96024342a77a69aa0dda815c3454a671f477463`.
+      - Three files were downloaded on the PI's word in chat ("Yes, download"): `tokenizer.json`,
+        `tokenizer_config.json` and `special_tokens_map.json`.
+      - Each matches the hub's size and git blob id for that revision.
+      - They were loaded from local files only, with no remote code, under transformers 5.5.0 and tokenizers 0.22.2.
+  - **(iii) The [S] figures** reproduce from `data/n/bk/`'s `reduced.json`:
+    - Panel D means 1.0900 / 0.5072 / −0.7554;
+    - SDs 0.6233 / 0.3703 / 0.4546 (ddof 0);
+    - slope 0.9164, SD 0.4466;
+    - random slopes −0.2880 to +0.3641;
+    - minimum +0.1250 at +1; 154 of 160 negative at −1, maximum +0.4062; SE 0.049;
+    - the ladder's 0.149297 / 0.061758 / 0.011510 / 0.425078 from `figureA10.csv`.
+  - **(iv) The rendering.**
+    - Candidate A, the chat template with no system turn, gives `seq_len` on 160 / 160 and `ids_sha` on 158 / 160.
+      Candidates B (an empty system turn) and C (plain `User:`/`Assistant:` text) give 0 / 160. The other five
+      declared serializations reproduce none.
+    - **The two remaining sessions** carry BK's emitted ids, " Birdsong" as `ĠBirds` (57628) + `ong` (647), where
+      the canonical tokenization is `ĠBird` (24214) + `song` (32851):
+      - `neu_b1` run 62, at tokens 482–483 (passage 5);
+      - `neu_b3` run 113, at tokens 1203–1204 (passage 12).
+    - That split was found post hoc by a single-pair re-split search. In each session exactly one re-split
+      reproduces the 64-bit `ids_sha`.
+    - BK's `passage_spans`, `s_spans`, `u_spans` and `n_pre` (the 12th passage's end) reproduce on 160 / 160.
+    - The fallback, `seq_len` plus the transcript's count, is not needed.
+  - **(v) The spans and the ladder.**
+    - **The S whole-turn spans.** BK's `turn_spans` tile tokens [0, `n_pre`) on 160 / 160: each turn after the first
+      starts where the previous passage ends. The last 39 tokens of every session lie in no turn. An S whole-turn
+      span carries:
+      - the previous turn's closing `<|endoftext|>` and newline (2 tokens; none when the S turn is turn 1, as in 76 of
+        160 sessions);
+      - the `<|user|>` block with the zone prompt;
+      - the `<|assistant|>` opening;
+      - the passage.
+
+      The six S spans total 616.919 tokens per session on average, Fig. A8's 616.91875. One span averages 102.82.
+    - **The strength ladder.**
+      - Its k is a per-position strength at six sightings. Each sighting is injected on that turn's rendered delta, 23
+        tokens, so 138 per session, behind a 31-token priming exchange, with 320 sessions per arm.
+      - That shares the dose unit of Panel D's d. In its other respects the basis is not Panel D's (about 138 steered
+        tokens against about 617).
+      - The full-strength slopes, 0.425 against 0.916, are each on their own basis. The files attribute the
+        difference to no single factor: BK's bare-label condition, steered on about 137 tokens, gives 0.588.
+      - §2.5's ≈ 0.12 at k = 1/3 (§9's 0.1222) is a linear interpolation between the ladder's 1/6 and 1/√6 rungs.
+      - The panel's figures are both runs' `primary.differenced_margin_slope_full_n` (320 sessions).
+  - **(vi) Fidelity.**
+    - TAU = 0.017883544377937845.
+    - The scale is max(|log p(S)|, |log p(U)|), identified by reproduction (the step-2 referent check's N1). It
+      reproduces BK's mean scale, their retention at four multiples of TAU and their absolute tolerance.
+    - **p0 = 0 / 2,400** on the 160 sessions. The largest |cached − fresh| / scale is 0.012143.
+    - At TAU/4, 570 of the 2,400 reads exceed.
+  - **(vii)** §0.4's "struck beyond d = −1" totals recompute from the gate list: 48 / 320 / 960. The "as written" and
+    "struck" rows are as the table gives them.
+  - **Dated notes for LOCK-n v0.1:**
+    - **G-1**: the renderer of record (§8 step 6, unbuilt) has to reproduce BK's ids for all 160 sessions, the two
+      recorded splits included, and G-VER asserts `ids_sha` on all 160. The lock names how the two splits are carried.
+    - **G-2**: the steered spans are BK's `turn_spans` as recorded, as §2.1 says. §2.1's gloss "the user prompt and
+      the passage" leaves out the 2 boundary tokens of every S turn except turn 1, and the `<|assistant|>` opening
+      unless "the user prompt" includes it.
+    - **G-3**: candidate B's system turn was an empty message, because the template has no default text. It matched
+      none.
+    - **G-4**: p0 = 0, so the fidelity class is a hair trigger at TAU, in rule 21's zero-base-rate form.
+  - **The blind values-check** (`results/raw/2026-11-06_n-gdata_valuescheck.md`): 128 items, 105 PASS, 1 FAIL, 22
+    IMPRECISE. Every item was re-checked at source and applied, and the raw records the dispositions.
+    - The FAIL was the raw's account of the ladder's `primary` block: the CSV's figures are its full-n slopes.
+    - No figure, hash or count changed.
+  - **Committed by path:** the G-DATA raw; the values-check raw; this entry. Not pushed. Next in §8 is step 5, pod
+    work (G-ACQ, the respawn protocol, `BACKEND — characterization`), in the routed order behind A-m1's OLMo units and
+    on the PI's go.
+
 - 2026-11-06 — **PROPOSAL-n v0.2 COMMITTED (routed by the PI, PI date 2026-11-06) at its §8 step 3, its minor
   residues carried as dated notes under the routing's process line.
   The reconciliation unit's pre-registration is now tracked at root as `PROPOSAL-n-bk-reconciliation-v0_2.md`, sha256
