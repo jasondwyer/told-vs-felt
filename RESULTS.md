@@ -21,6 +21,38 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-SHAPE-F3 — Q-F3's plumbing gate (m:290), the canonical run on the BUILD (F3) commit (`cd9756e`):
+  PASS.
+  "As G-SHAPE-F0 for the F3 templates, the reasoning header included" (m:290), read as the build design §7 composes it
+  (PIN F56; flag F-3). Model-free: no model, no generation, no pod. Layer T reads the Qwen tokenizer of record's
+  tokenizer.json offline.** (Stamp verified at write time: `date -u` → **Fri Nov  6 23:59:07 UTC 2026**.)
+
+  - **The run** (`python scripts/mf3_sessions.py gshape` on HEAD `cd9756e`, every source, tooling and package file
+    committed):
+    - Layer A (the renders inside each contrast template's round templates, golds as responses): A1 2,816, A2 1,408,
+      A3 1,408 placements (5,632), 0 fired, coverage exact. The required controls fire on every placement:
+      seg+gold 2,816/2,816, 1,408/1,408 and 1,408/1,408; reasoning+seg+gold at the free phase 1,408/1,408, 704/704 and
+      704/704. Render-as-response, reported and not required, fires 256/2,816, 128/1,408 and 128/1,408.
+    - Layer R (the reasoning line's own placements, every F3 template's banners × n 5–10 × every gold): 8,448
+      placements, 0 fired, coverage exact. Each gold is placed as a line ended by its newline, so the structural
+      classes (empty, cap reached) cannot fire there; echo and scaffold are its test (the artifact's `scope`; the
+      build review's finding 11). Its required control (the reasoning block written into the line): 8,448/8,448.
+    - Layer S (the runner's static scope): 0 problems. Layer T (the build hazard on the tokenizer of record, rule
+      28(d)(a) in its token, offset and decode forms): 640 joins, 0 failed.
+    - Provenance: mf3 package `44110d15…3842`; sources digest `8bbfe59f…5756` (38 files); import-closure digest
+      `23abe773…eec4`; committed at HEAD: true.
+    - The artifact is [`data/mf3/gates/G-SHAPE-F3.json`](data/mf3/gates/G-SHAPE-F3.json), sha256
+      `0f9b7bb962b7f0bd0bf0dffc7d7d06b65fbe62ca28a632c1f86789344eb36e9c`.
+    - The raw is [`_mf3-gshape-f3`](results/raw/2026-11-06_mf3-gshape-f3.txt), with its local paths scrubbed.
+    - A blind values-check of this entry and the raw found 46 items: 44 confirmed, 0 FAIL, 2 IMPRECISE, both applied.
+      Its report and Code's dispositions are
+      [`_mf3-gshape-f3_valuescheck`](results/raw/2026-11-06_mf3-gshape-f3_valuescheck.md). No code changed after
+      `cd9756e`, whose own code review covered it.
+  - **What follows:** LOCK-m-F3 v0.1 names this artifact (m:292), with mf3's package and the m files' hashes (the BUILD
+    entry) and G-ANL-F3's analyzer and lexicons once G-ANL-F3 is built. G-ANL-F3 lands only while no OLMo unit is open
+    (Q3's rule). No `LOCK-m-OLMo-*.md` exists at this commit and G-ANL-F3 is not built, so neither of Q3's two orders
+    — (a) G-ANL-F3 before any LOCK-m-OLMo v0.1, (b) the OLMo track through its VERDICTS first — is fixed yet.
+
 - 2026-11-06 — **m package — BUILD (F3): Q-F3's own package, `valence_core/mf3/`, and driver, `scripts/mf3_sessions.py`,
   under the seat's prebuild answers of 2026-11-06 (Q1 (C2), Q5, Q6, Q8), the first node of ADDENDUM-m1 §4 step 5
   (m:361).
