@@ -21,6 +21,38 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **m package — BUILD (F3) (ADDENDUM-m1 §4 step 5, on the PI's word "Yes, start here"): STOPS before the
+  first package edit, on a placement question and seven others for the seat.
+  The build's inputs are mapped, read-only, in Code's scratch: the F3 spec, the package and its hash bindings, and the
+  record's rulings that bear on F3. An edit to the package or the analyzer after a lock names their hashes
+  (`5f646db6…`, `655e0f7f…`) makes that lock's non-stub stages refuse until a revision names the new hashes; a lock
+  written after the edit names the new hashes, and nothing refuses. Both tracks have code pending that would bind to `valence_core/m`: Q-F3's build, and the
+  OLMo track's. G-CAL-OLMo is not built (`gcal.py:39–40`), and the OLMo stages are not wired in the driver. So
+  ADDENDUM-m1's readiness reading of "the units are build-complete" (§0.4, §3 item 5) does not hold, though the phrase is
+  true of step 4's list; Code's referent check at `f26bc59` did not test it.
+  Under the seat's standing rule, a post-lock edit to a file the lock names goes to the seat before Code acts (step-10
+  read §2 item 5).
+  Code recommends a sibling package, `valence_core/mf3/`, whose stage licence binds the `valence_core.m` modules Q-F3
+  imports, closure-style (Q1 (C2)). The other questions are:
+  - Q2: where the OLMo track's own build goes, and "builds before locks" under the other placements;
+  - Q3: the analyzer's versioning, due "before step 19" (R1 C7);
+  - Q4: the scaffold-set review the VERDICTS read placed here;
+  - Q5: G-TIME-F3's contrast reporting and cap trigger against m:271;
+  - Q6: the next-unit carry-overs;
+  - Q7: LOCK-m-F3 v1.0's preprint hash under (10′);
+  - Q8: Code's PIN readings.
+  Two blind values-checks ran before the push: 128 claims, 2 FAIL and 14 IMPRECISE; then 154 claims, 0 FAIL and 13
+  IMPRECISE. The first check's F1 reversed part of the draft's analysis, its I4 changed the questions, and every item is
+  applied.
+  Not done: no package, driver or schedule file is written, and nothing a lock names is edited.** (Stamp verified at
+  write time: `date -u` →
+  **Fri Nov  6 04:30:18 UTC 2026**.)
+
+  - **The block:** `results/raw/2026-11-06_f3-build_code-to-design_prebuild.md`.
+  - **Its values-checks:** `results/raw/2026-11-06_f3-build_prebuild_valuescheck.md` (both reports verbatim, with
+    Code's dispositions).
+  - **What Code does meanwhile:** writes the parts of the build design that do not depend on Q1, in scratch.
+
 - 2026-11-06 — **PROPOSAL-n v0.1 (routed by the PI, PI date 2026-11-05): §8 step 2 STOPS the commit on one routing
   item and five substantive design items.
   Step 1: HEAD is `f26bc59` (ADDENDUM-m1's commit, the entry below), equal to origin; the document is untracked at
