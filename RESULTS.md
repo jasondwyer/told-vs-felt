@@ -21,6 +21,35 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-SHAPE-F0 — the canonical re-run after the OLMo build (`71cc23c`), before the first LOCK-m-OLMo
+  v0.1: PASS.
+  The OLMo build edited `scripts/m_sessions.py`, a TOOLING_FILES entry of PIN-S10's map, beyond subcommand wiring. So
+  G-SHAPE-F0 re-runs on the seat's Q2 ("G-SHAPE-F0 re-runs iff one of them is in PIN-S10's map"; the referent check's
+  N5), and the old artifact is superseded by hand under PIN-S9 on that word.
+  Model-free: no model, no tokenizer, no pod.** (Stamp verified at write time: `date -u` → **Fri Nov  6 09:05:32 UTC
+  2026**.)
+
+  - **The supersession:** the artifact of record (sha256 `086d812f…8556`, committed at `f23b444`) was moved by hand
+    with `git mv` to
+    [`G-SHAPE-F0.superseded-2026-11-06.json`](data/m/gates/G-SHAPE-F0.superseded-2026-11-06.json), committed with this
+    entry. Q-F0's stages ran after it, and their record stands on it (LOCK-m-F0 records how PIN-S10 is read, not the
+    artifact's hash).
+  - **The re-run** (`python scripts/m_sessions.py gshape` on HEAD `71cc23c`, every scoring-stack, tooling, package and
+    closure file committed):
+    - PASS. Each of the four grids (Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct) has 2,816 placements, with 0 fired.
+    - The required control (seg+gold) fires 2,816/2,816 on each. The reported render-as-response is 256/2,816 on
+      Q-F0 and 0 on OLMo.
+    - The three OLMo grids are identical; the template shape and the runner scope (static) are clean.
+    - Provenance: package `60199b36…feec`; sources digest `ddbf93a8…557b` (28 files); import-closure digest
+      `23abe773…eec4`.
+    - The new artifact is
+      [`data/m/gates/G-SHAPE-F0.json`](data/m/gates/G-SHAPE-F0.json), sha256
+      `9e0b28fe35d466cf267f73f30743dd42c446afb65cbc67acea1201170c70a979`.
+    - The raw is [`_m-gshape-f0-rerun`](results/raw/2026-11-06_m-gshape-f0-rerun.txt), with its local paths scrubbed.
+  - **What follows:** each LOCK-m-OLMo-{ckpt} v0.1 names this artifact, the package `60199b36…` and the analyzer
+    `655e0f7f…`. The OLMo track's next node is `BACKEND — characterization` on the PI's go, with the runpod
+    re-authorisation first.
+
 - 2026-11-06 — **m package — BUILD (OLMo): the OLMo track's own build, under the seat's prebuild answers of
   2026-11-06 (§0, Q2, Q6), the first node of ADDENDUM-m1 §4 step 4.
   It builds G-CAL-OLMo-{ckpt}, wires `time` and `qual` for the three OLMo units, and binds the weights of record in

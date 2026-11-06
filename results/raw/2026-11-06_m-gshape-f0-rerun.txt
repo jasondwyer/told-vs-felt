@@ -1,0 +1,17 @@
+# G-SHAPE-F0 -- the canonical re-run after the OLMo build (71cc23c), on Q2's word under PIN-S9 (the referent check's N5): `python scripts/m_sessions.py gshape` (no --out; model-free; the jlens venv) on HEAD 71cc23c, every scoring-stack, tooling, package and closure file committed. Before the run the artifact of record (sha256 086d812fdce08f15e9661ad86852ec24582f2618679b990d825bd14e36318556, committed at f23b444) was moved by hand with git mv to data/m/gates/G-SHAPE-F0.superseded-2026-11-06.json. Code stamp: 2026-11-06 09:05 UTC (date -u, after the run). New artifact sha256 9e0b28fe35d466cf267f73f30743dd42c446afb65cbc67acea1201170c70a979. Local absolute paths scrubbed (the repository's prefix shown as <repo>, the home directory as <home>); nothing else changed.
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gshape
+G-SHAPE-F0 inputs: renders sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372; G-CAL model-free sha256 aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af; proposal sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b
+G-SHAPE-F0 provenance: package sha256 60199b36557ac283771b83dcb4be101b5c56880dceacdecd05cce5a578e7feec; sources digest ddbf93a8c11ebbf725bc3027718fa814d76ca6c3a33dd9c8690b7fd8b9fe557b (28 files); import closure digest 23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4 (14 files outside valence_core/m); sources committed at HEAD: yes (checked with every m package file and the import closure: canonical run, before scoring and again before the write)
+G-SHAPE-F0 grid Q-F0: 2816 placements, 0 fired
+G-SHAPE-F0 controls Q-F0: render-as-response 256/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-sft: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-sft: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-dpo: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-dpo: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-instruct: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-instruct: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 OLMo grids identical across the three checkpoints: yes
+G-SHAPE-F0 template shape: clean; runner scope (static): clean
+G-SHAPE-F0 verdict PASS
+G-SHAPE-F0 artifact: <repo>/data/m/gates/G-SHAPE-F0.json (written)
+EXIT=0

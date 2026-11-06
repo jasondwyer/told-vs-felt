@@ -1,0 +1,512 @@
+{
+ "controls": {
+  "OLMo-dpo": {
+   "render-as-response": {
+    "advisories": [],
+    "fired_fields": [],
+    "fired_items": [],
+    "n": 2816,
+    "n_fired": 0,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  },
+  "OLMo-instruct": {
+   "render-as-response": {
+    "advisories": [],
+    "fired_fields": [],
+    "fired_items": [],
+    "n": 2816,
+    "n_fired": 0,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  },
+  "OLMo-sft": {
+   "render-as-response": {
+    "advisories": [],
+    "fired_fields": [],
+    "fired_items": [],
+    "n": 2816,
+    "n_fired": 0,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  },
+  "Q-F0": {
+   "render-as-response": {
+    "advisories": [
+     "content:task_echo"
+    ],
+    "fired_fields": [
+     "advisory",
+     "v3.content_label",
+     "v3.advisory"
+    ],
+    "fired_items": [
+     2,
+     8
+    ],
+    "n": 2816,
+    "n_fired": 256,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "v3.exclusion",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  }
+ },
+ "criterion": "Model-free: every corrupted render placed inside each F0m and F0m-OLMo round template beside its bracketed header, a clean gold as the response, run through the full scoring stack of both substrates; asserts that no class fires on harness bytes or the render itself. It tests scoring scope, nothing else.",
+ "fire_predicate": {
+  "round": [
+   "claim",
+   "advisory",
+   "v3.exclusion",
+   "v3.content_label",
+   "v3.advisory",
+   "echo_line",
+   "lexical_raw",
+   "scaffold",
+   "degeneracy",
+   "ends",
+   "strict",
+   "termination"
+  ],
+  "rule": "a placement fires iff any field fires (PIN-S3); any fire is a STOP"
+ },
+ "grid": {
+  "OLMo-dpo": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "2fec663fc9c3f6f4c8b3ed70f88301c282c9c274acc39668dd34695caa876189",
+   "rows_sha256": "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6",
+   "substrate": "olmo",
+   "template": "A0-OLMo-dpo"
+  },
+  "OLMo-instruct": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "f7f90e860ad47dade7d587691ef5b2f2d1689cca77c0d799ffde5c9a170be3a7",
+   "rows_sha256": "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6",
+   "substrate": "olmo",
+   "template": "A0-OLMo-instruct"
+  },
+  "OLMo-sft": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "be6ddba6b21d78a3b139fb5da86eed7e990e4a2e488fc7089a5175145d3454fd",
+   "rows_sha256": "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6",
+   "substrate": "olmo",
+   "template": "A0-OLMo-sft"
+  },
+  "Q-F0": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "0e69451378151831c5362a35b993bca2457758660e8d4f537aff8fa8bbccfa82",
+   "rows_sha256": "5753aaa0b052c00260c347823424c9f86012f92453de8deba5ecbf0cdbbfcfca",
+   "substrate": "qwen",
+   "template": "A0"
+  }
+ },
+ "grid_total": 11264,
+ "inputs": {
+  "gcal_completability": {
+   "path": "data/m/gates/G-CAL_completability_qwen.json",
+   "sha256": "46afd36488e5d9d51e3fe922de941e7bd363a735953fd4e85d9b85d21195c15b",
+   "verdict": "PASS"
+  },
+  "gcal_model_free": {
+   "path": "data/m/gates/G-CAL_model-free.json",
+   "sha256": "aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af"
+  },
+  "golds": {
+   "n_items": 16,
+   "n_variants": 22,
+   "sha256": "ecebca75ed51e28644fee5558d509ed9904ef0b93cf379d155d0520174820902"
+  },
+  "harness_strings_sha256": "d1856e3caeeb5fa3f16b2f15b968d70af7719186b164236ac224fedc476bc2f5",
+  "n_renders": 16,
+  "olmo_round_templates": "valence_core.session_e2a.ROUND_TEMPLATES (b3 imports it; m's scaffold._round formats it on both substrates)",
+  "pool_sha16": "711deec1c2645194",
+  "pools_file": "data/f/pools.json",
+  "pools_file_sha256": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+  "pools_file_sha256_gcal_provenance": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+  "renders_sha256": "a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372",
+  "renders_source": "data/m/gates/G-CAL_model-free.json renders_of_record.items[i].render, asserted equal to scaffold.pool_and_renders() and to the pinned sha256; never computed as G-SHAPE-F0's own (RESULTS.md@e60b633:919-920)",
+  "roster_sha256": {
+   "OLMo": "fbc52072132c923edaa714c892691af137f9ebeb3f651a0676594f6c6cd98010",
+   "Q-F0": "01ba67d68d3ed6c5762d0ebbb4b40930c4c815a16442a115df0f8d5e0c1066eb"
+  },
+  "round_templates_sha256": "df6e7ddd0056f8a7fb4517fd492defd0d5a9e6aa42a4a29ca2767de04bc1a5a5",
+  "seat_read": {
+   "path": "data/m/gates/G-CAL_seat_read_of_record.md",
+   "renders_sha256_cited": "a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372",
+   "sha256": "39990bae8481ee313274e3b37ed6332026d936f2f4db55454c62a5d67fea878a"
+  },
+  "session_banner_sha256": "6124c724758f61109af42141cd2dd576e2fb4e4b9c781e5a22af8be16a6a30ae"
+ },
+ "layer_s": {
+  "files": {
+   "valence_core/m/runner_olmo.py": "95ebd48f3aa347bfdc9e125b49f244fb2ea2584322c891100b515794d499f317",
+   "valence_core/m/runner_qwen.py": "68bf4be75a99bce26c36e5dfc2edf7ff21caa5d3cf728bc8b16bcf16386e806c",
+   "valence_core/m/scaffold.py": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5"
+  },
+  "problems": [],
+  "r8_scope": "17 files of valence_core/m/*.py (gshape.py exempt; _selftest bodies exempt)",
+  "rules": [
+   "R1",
+   "R2",
+   "R3",
+   "R4",
+   "R5",
+   "R6",
+   "R7",
+   "R8"
+  ]
+ },
+ "olmo_grids_identical": true,
+ "olmo_rows_sha256": [
+  "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6"
+ ],
+ "provenance": {
+  "import_closure": {
+   "valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604",
+   "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a",
+   "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf",
+   "valence_core/e2d/__init__.py": "3269faeccf97f55c104e1485ecb9d3d5079d3d5b4ea6c9abda8e761e636a6213",
+   "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
+   "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
+   "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70",
+   "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae",
+   "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598",
+   "valence_core/e2d/runner.py": "e784da8593cab45b2d77e9967f2f7ed0c8595c5ddc0d456f4fd591dd3083c2ed",
+   "valence_core/readout.py": "774e5ca359c5671cafd6f7a2d645d040d8eecb9e67944964c0ba074c22483136",
+   "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71",
+   "valence_core/stats.py": "956a650c603b0772ad85db8a3f82c310b9a67bba2e4440ab128ec9ee1e396d8f"
+  },
+  "import_closure_digest": "23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4",
+  "import_closure_scope": "the sha256 of __file__ of every loaded valence_core.* module outside valence_core/m (sys.modules read after the imports; the m package is package_sha256's)",
+  "numpy": "2.5.1",
+  "numpy_stream_known_answer": "clean (f|CORR|0 permutation)",
+  "package_sha256": "06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8",
+  "proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "sources": {
+   "data/configs/e2a_ban_list.json": "9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4",
+   "data/configs/e2b_audit_v2.json": "e89e4cd0cae31671a872f36d0cd0c34bcfc63b2d78cce366f172a8fabb453da2",
+   "data/configs/f_termination_patterns.json": "014b3940d62401b0b698e803145362b56c0b74de7d9f087a4fce0ecb111c2f46",
+   "data/f/pools.json": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+   "data/olmo/a1_repair_roster.json": "c82c6653e4f48375bac0beec124a0774d0a5fe353f2612ada339d9fecde3cfdc",
+   "data/olmo/b3_screen_dpo.json": "e900b67606c4a3c113689e8a4d402705de6d51b1e749abd3710e90f2f26d1067",
+   "data/olmo/b3_screen_instruct.json": "9ba4b64d95b26e1cd720902d569a0ed6179d67b6ea5aa344614b546cfc32bd24",
+   "data/olmo/b3_screen_sft.json": "015aed2bf5fb730f5509c5793a91b195ccce5ec4b6d2966215faa7360ff71e66",
+   "data/olmo/scaffold_dpo.json": "0c39ce9675f8db7aa35e0ea3a97ac29c3debd714fae6a7d98fd9c4ab1eb6574a",
+   "data/olmo/scaffold_instruct.json": "21110cea5331675daf538a42ae482a76c24965375c0dfe94ae72fc19bf2fd9cf",
+   "data/olmo/scaffold_sft.json": "0c3592ad0bb2cb1d359c14eca1603317ce39e412eab33dc747dd959c5fdcb5a8",
+   "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
+   "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
+   "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70",
+   "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae",
+   "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598",
+   "valence_core/m/audit.py": "16d0abb91444af1b86dcdabdca919f8e61ce371055fe9581a96d02eb950e50f6",
+   "valence_core/m/banner.py": "730442ca354d8d92fe52135d42506cd83cef2d10deb7dfc23d0a1c204a6d170c",
+   "valence_core/m/corr.py": "74818109a284d203177bae82170cbfa1f2cec8cbd85dfa2f7db018530eb27fce",
+   "valence_core/m/keys.py": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+   "valence_core/m/runner_olmo.py": "95ebd48f3aa347bfdc9e125b49f244fb2ea2584322c891100b515794d499f317",
+   "valence_core/m/runner_qwen.py": "68bf4be75a99bce26c36e5dfc2edf7ff21caa5d3cf728bc8b16bcf16386e806c",
+   "valence_core/m/scaffold.py": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5",
+   "valence_core/m/schedule.py": "f262f9e0120bcf6e694c0850b56dc3a19ab3c931b28ba92d47009f9f49a72d0d",
+   "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
+  },
+  "sources_digest": "ee16e16b203a4c2da78696908a98aa61af0f08439549a20d607c05b5fa8b316b",
+  "tooling": {
+   "scripts/m_sessions.py": "54fc8a07be13faa0704e65e453eac42293435be862a1a985f73a32ee9355059f",
+   "valence_core/m/gshape.py": "257e02f43bfe8bb67156129cfb2c270f594ab48b62bd555c627eb2f0b66ca13c"
+  }
+ },
+ "runner_dynamic_evidence": {
+  "existing_checks": [
+   {
+    "check": "runner_qwen: {} scripted sessions reach their declared outcomes (clean x8; forced v2/echo/content/lexical end; free v2/echo/content continue; free lexical ends; scaffold stops)",
+    "evidences": "classify outcomes",
+    "module": "runner_qwen"
+   },
+   {
+    "check": "runner_qwen: clean sessions -- 6 reads, valid, complete, domain, first pick coded on P",
+    "evidences": "classify outcomes",
+    "module": "runner_qwen"
+   },
+   {
+    "check": "runner_qwen: contrast Q rounds deliver the corrupt_m render ('corrupted'); sham and P clean",
+    "evidences": "render placed in situ",
+    "module": "runner_qwen"
+   },
+   {
+    "check": "runner_olmo: {} scripted sessions reach their declared outcomes (clean x8; forced AuditSpec/echo/lexical end; '* * *' continues; free echo/AuditSpec/lexical end; scaffold stops)",
+    "evidences": "classify outcomes",
+    "module": "runner_olmo"
+   },
+   {
+    "check": "runner_olmo: clean sessions -- 6 reads, valid, complete, over contrast/sham x both start orders x both clauses",
+    "evidences": "classify outcomes",
+    "module": "runner_olmo"
+   },
+   {
+    "check": "runner_olmo: items from the item key's [:8]/[8:] split; contrast Q delivers the render",
+    "evidences": "render placed in situ",
+    "module": "runner_olmo"
+   }
+  ],
+  "gshape_check": "gshape: the runners hand classify the generation's text, never the segment, banner or render -- every scripted runner case on both substrates through the real run_session_qwen / run_session_olmo with recording audits: the scored text is the adapter's emitted text and the record's; Qwen's render is the segment's Task line and the record's task_text; item, earlier, own_pair, echo_lines and phase are the round's; six mutated runner copies (segment, transcript or render scored; clean text as render; OLMo segment or render scored) are each caught",
+  "where": "the m self-test (scripts/m_sessions.py --selftest) at this package_sha256; testing's doubles, never on a run path (PIN-S5)"
+ },
+ "schema": "m-gshape-f0-v1",
+ "spec": "PROPOSAL-m v1.11 §3.1 G-SHAPE-F0 (m:277); §8 step 7 (m:358)",
+ "stacks": {
+  "olmo": {
+   "audit_sha16": "dd3fe09bed429e54",
+   "ban_ids": {
+    "dpo": {
+     "n_ids": 9,
+     "sha16": "2dd86a453a2275ef"
+    },
+    "instruct": {
+     "n_ids": 9,
+     "sha16": "2dd86a453a2275ef"
+    },
+    "sft": {
+     "n_ids": 9,
+     "sha16": "2dd86a453a2275ef"
+    }
+   },
+   "ban_ids_note": "generation-side (m:262 'asserted at startup'); olmo_startup asserts it on the box before any OLMo session (LOCK-m-OLMo-{ckpt} v0.1, m:302); not exercised by G-SHAPE-F0",
+   "claim_order": [
+    "audit",
+    "echo",
+    "lexical"
+   ],
+   "echo_set": "the banner's Note lines (audit.olmo_echo_lines)",
+   "end_rule": "olmo_ends (the first claim in any round)",
+   "scaffold_strings": [
+    "</think>",
+    "<think>",
+    "<|endoftext|>",
+    "<|im_end|>",
+    "<|im_start|>",
+    "<|pad|>"
+   ],
+   "scaffold_strings_checked": {
+    "scaffold_dpo.json": "equal",
+    "scaffold_instruct.json": "equal",
+    "scaffold_sft.json": "equal"
+   },
+   "term_sha16": "014b3940d62401b0"
+  },
+  "qwen": {
+   "audit_v2_sha16": "7aa235d25eeb66dc",
+   "audit_version": "audit-v3 = e2b_audit_v2 + content-class-v4 exclusion-bearing (null/stuck/preamble) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- DESIGN BLOCK v1.1 2026-09-17",
+   "claim_order": [
+    "v2",
+    "echo",
+    "content",
+    "lexical"
+   ],
+   "content_others": "the other 15 items' clean text (audit.corr_others)",
+   "e2a_ban_list_sha256": "9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4",
+   "echo_set": "the banner's Note lines + 'Reasoning (one line):' (audit.qwen_echo_lines)",
+   "end_rule": "qwen_ends (lenient scope); strict_excludes beside",
+   "n_scaffold_strings": 12,
+   "scaffold_assertion": {
+    "ban_list_sha256": "9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4",
+    "n_ids": 12,
+    "n_strings": 12
+   },
+   "term_sha16": "014b3940d62401b0"
+  }
+ },
+ "stage": "G-SHAPE-F0",
+ "stop_reason_forms": [
+  "shape",
+  "fire:<unit>",
+  "coverage:<unit>",
+  "control-silent:<unit>:<control>",
+  "olmo-grids-differ",
+  "scope-static"
+ ],
+ "stop_reasons": [],
+ "template_shape": {
+  "n_labels": 12,
+  "n_problems": 0,
+  "n_range": [
+   1,
+   10
+  ],
+  "problems": []
+ },
+ "verdict": "PASS"
+}
