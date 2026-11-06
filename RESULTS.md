@@ -52,6 +52,67 @@ applied to CLAUDE.md.
   - **Its values-checks:** `results/raw/2026-11-06_f3-build_prebuild_valuescheck.md` (both reports verbatim, with
     Code's dispositions).
   - **What Code does meanwhile:** writes the parts of the build design that do not depend on Q1, in scratch.
+  - **The STOP's close (2026-11-06; the seat's answers, routed by the PI).** The seat's answers are committed by path
+    in the commit that adds this line. That commit is their first commit, so
+    `git log --diff-filter=A -- results/raw/2026-11-06_f3-build_design-to-code_prebuild-answers.md` names it:
+    [`_design-to-code_prebuild-answers`](results/raw/2026-11-06_f3-build_design-to-code_prebuild-answers.md), sha256
+    `aec58440c8b1774bef1277bd29865b72cd1cc385e6c507e159ab82814fb64df3`, as routed. A commit cannot name its own hash;
+    the next RESULTS entry names it in full.
+    - **The routing, the PI's word, verbatim.** Its header and PROPOSAL-n lines are the record of PROPOSAL-n
+      v0.2's §0.9 decisions, and that document's commit entry quotes them again (v0.2 §8 step 3).
+
+      > Routing — PROPOSAL-n v0.2 and the Q-F3 prebuild answers — PI date 2026-11-06 (I confirm the date).
+      >
+      > Files on the laptop, untracked, committed by Code at their steps:
+      >   PROPOSAL-n-bk-reconciliation-v0_2.md
+      >     sha256 30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4  (supersedes v0.1; v0.1 to archive/ at step 3)
+      >   results/raw/2026-11-06_f3-build_design-to-code_prebuild-answers.md
+      >     sha256 aec58440c8b1774bef1277bd29865b72cd1cc385e6c507e159ab82814fb64df3
+      >
+      > PROPOSAL-n: A1 negative pole: [struck beyond d = −1]. A2 §0.7's rule-13 departure: [confirmed].
+      >   Route A request: [not sent]. Everything else as the 11-05 routing had it.
+      > Q-F3 (Q7): LOCK-m-F3 v1.0 carries "preprint of record pending"; v2's sentence table is built at the
+      >   Q-F3 VERDICTS session against the posted v1: [confirmed].
+      >
+      > Run the prebuild answers as written, then PROPOSAL-n v0.2 §8 from step 1. STOP on anything unresolved;
+      > minor residues as dated notes (the e9b5022 precedent). No pod start without my go.
+
+    - **What the answers rule.** This list is Code's summary, as a finding aid; the answers are the record.
+      - Q1: (C2). Q-F3's code goes in a sibling package, `valence_core/mf3/`, with a new driver,
+        `scripts/mf3_sessions.py`. Its licence is `mf3`'s own package hash plus the file sha256 of each `valence_core.m`
+        module it imports. It imports neither `stages` nor `gshape`, and at VERDICTS PIN-14 still binds
+        `valence_core.m`'s whole hash.
+      - §0 and Q2: the OLMo track's first node is its own build, G-CAL-OLMo and the OLMo stage wiring, in
+        `valence_core/m` and `scripts/m_sessions.py`, before any LOCK-m-OLMo v0.1. On both tracks, builds land before
+        locks.
+      - Q3: G-ANL-F3 extends `m_analyze.py` in place and lands only while no OLMo unit is open, either (a) before any
+        OLMo LOCK v0.1 or (b) after the OLMo VERDICTS. The BUILD entry records which order obtains. It also lists, by
+        anchor, the texts that ride in the round, for the seat to confirm before LOCK-m-F3 v0.1.
+      - Q4 adopts Code's proposal: the three strings become a rule-23 descriptive counter.
+      - Q5: the cap trigger counts cap-reach over the reasoning lines of all six sessions (≤ 36). The contrast
+        sessions report their forced rounds and per-line cap booleans, with no free-round text and no pick.
+        Counter (c)'s blind read follows the analyzer's output (#10).
+      - Q6: "the next unit" for a driver edit is the OLMo wiring build. `scripts/mf3_sessions.py` uses the same
+        forms from the start, and each unit's identity takes the weights-snapshot binding at its own build.
+      - Q7 is the PI's, confirmed above.
+      - Q8 rules the seven items Code named. The other twenty-four readings, and the build hazard's declared
+        check, stay Code's PINs.
+    - **Code's referent check:**
+      [`_prebuild-answers_referent-check`](results/raw/2026-11-06_f3-build_prebuild-answers_referent-check.md). It
+      finds no unresolved item, and makes six dated notes:
+      - N1: `corrupt_m` is a function in `corr`, and `readout` lies outside the package.
+      - N2: G-ID-F0m's index rule is at m:281.
+      - N3: on the gloss of "by property", Code builds to "as Q-F0 ran them".
+      - N4: the eight strings already include the reasoning-block lines.
+      - N5: with Q6's driver edits, the OLMo build re-runs G-SHAPE-F0, model-free, before the first OLMo LOCK v0.1.
+      - N6: "by character offset" is rule 28(d)'s class sentence; standing form (a) asserts the prefix token
+        count. Code builds both.
+      The check and this close were values-checked blind before commit: 97 items, 2 FAIL and 10 IMPRECISE, each
+      re-checked at source and applied.
+    - **What follows (Code's order; the answers run the two builds in parallel):** the OLMo build first, then
+      the F3 build and G-SHAPE-F3, with G-ANL-F3 and the lock chain under Q3's rule. PROPOSAL-n v0.2's §8 runs from
+      step 1, and whether its model-free steps come before or after the F3 build is put to the PI at the OLMo
+      build's entry. Nothing in this close moves a hash, edits a package file, or starts a pod.
 
 - 2026-11-06 — **PROPOSAL-n v0.1 (routed by the PI, PI date 2026-11-05): §8 step 2 STOPS the commit on one routing
   item and five substantive design items.
