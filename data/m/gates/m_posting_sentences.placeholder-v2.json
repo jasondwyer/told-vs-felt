@@ -1,0 +1,534 @@
+{
+ "cells": [
+  "e2a",
+  "f1",
+  "e2b",
+  "weight",
+  "S1",
+  "olmo-base",
+  "olmo-sft",
+  "olmo-dpo",
+  "olmo-instruct",
+  "A2",
+  "A3"
+ ],
+ "kind": "placeholder",
+ "kinds_vocabulary": [
+  "abstract-fifth-stage",
+  "abstract-olmo-clause",
+  "subtitle-clause-2",
+  "contribution-2v",
+  "s5.5-label:e2a",
+  "s5.5-label:e2b",
+  "s5.5-label:f1",
+  "s5.5-q3",
+  "s5.5-summary",
+  "s6-this-paper-row",
+  "s7.1-title",
+  "s7.2-sceptic",
+  "s7.4-last",
+  "s7.5-first",
+  "s7.7-penultimate",
+  "f1-corr-line",
+  "dose-note",
+  "s8.1-status",
+  "s8.1-a1-a3",
+  "tab2-row",
+  "pi-edit",
+  "s5.7-text",
+  "s8.2-status",
+  "v1-note"
+ ],
+ "posting": "v2",
+ "preprint": null,
+ "rows": [
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P01",
+   "kinds": [],
+   "loc": {
+    "line": 1,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "[placeholder P01] A synthetic sentence that asserts no null.",
+   "text_sha256": "6a1900237add7cf9084230affaa600816df4b1826468a31d5bef4eaaf30e24f7",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P02",
+   "kinds": [
+    "s5.5-label:e2a"
+   ],
+   "loc": {
+    "line": 2,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a"
+   ],
+   "text": "[placeholder P02] A synthetic sentence that asserts a null on e2a.",
+   "text_sha256": "7da8e049ccd5e87cd1327054d573b249b9be3bf1db6165591eee6abd4fcf0199",
+   "thesis": null
+  },
+  {
+   "dose_note": true,
+   "dose_note_span": "synthetic dose note P03",
+   "id": "P03",
+   "kinds": [
+    "f1-corr-line",
+    "dose-note",
+    "s5.5-label:f1"
+   ],
+   "loc": {
+    "line": 3,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "f1"
+   ],
+   "text": "[placeholder P03] A synthetic sentence that asserts a null on f1; synthetic dose note P03.",
+   "text_sha256": "cdcd73096a4d05c8490b8d9d1e89d28ab2ec1e58d6c96162d260358412ba73fc",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P04",
+   "kinds": [
+    "s5.5-label:e2b"
+   ],
+   "loc": {
+    "line": 4,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2b"
+   ],
+   "text": "[placeholder P04] A synthetic sentence that asserts a null on e2b.",
+   "text_sha256": "ed8e9ef6b61b639ce20b91478a0630f7549b847743bc3277ae3b8931b1ea236c",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P05",
+   "kinds": [],
+   "loc": {
+    "line": 5,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "weight"
+   ],
+   "text": "[placeholder P05] A synthetic sentence that asserts a null on weight.",
+   "text_sha256": "c37b1544e96c1b452e0638f309e7e5ae3bbd2d59206bfa2c2717c988b4aa6417",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P06",
+   "kinds": [
+    "tab2-row"
+   ],
+   "loc": {
+    "line": 6,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "olmo-base"
+   ],
+   "text": "[placeholder P06] A synthetic sentence that asserts a null on olmo-base.",
+   "text_sha256": "78ef2d76757fa9a3aa0178d34dc334749bdf3a7abc37ee1eff49dde5e9ff39f6",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P07",
+   "kinds": [
+    "tab2-row"
+   ],
+   "loc": {
+    "line": 7,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "olmo-sft"
+   ],
+   "text": "[placeholder P07] A synthetic sentence that asserts a null on olmo-sft.",
+   "text_sha256": "c3a21dff64bb0eabe8f039bf56c2d089a63d2790b478f259b857d65910d90e98",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P08",
+   "kinds": [
+    "tab2-row"
+   ],
+   "loc": {
+    "line": 8,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "olmo-dpo"
+   ],
+   "text": "[placeholder P08] A synthetic sentence that asserts a null on olmo-dpo.",
+   "text_sha256": "cddd0c151e3fc120239268fbdb486c73ffb8a9538f34fbb650d0a252424d655a",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P09",
+   "kinds": [
+    "tab2-row"
+   ],
+   "loc": {
+    "line": 9,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "olmo-instruct"
+   ],
+   "text": "[placeholder P09] A synthetic sentence that asserts a null on olmo-instruct.",
+   "text_sha256": "4dbc0965308e28a9ddabf2e5e022b606ab9bce78e674bf87fdf961ef438eb663",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P10",
+   "kinds": [],
+   "loc": {
+    "line": 10,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "S1"
+   ],
+   "text": "[placeholder P10] A synthetic sentence that asserts a null on S1.",
+   "text_sha256": "d6076cec49a22a7903471f2dc9f0b45fa7ad6fb27123b50ee97f8f2bf0c083a9",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P11",
+   "kinds": [
+    "s5.5-summary"
+   ],
+   "loc": {
+    "line": 11,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b"
+   ],
+   "text": "[placeholder P11] A synthetic sentence that asserts a null on e2a, f1, e2b.",
+   "text_sha256": "773fef8540f7b8a480b5763eac5b8c906f955783955adc8810625a9f64c0e75b",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P12",
+   "kinds": [
+    "abstract-olmo-clause",
+    "s5.5-q3"
+   ],
+   "loc": {
+    "line": 12,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "[placeholder P12] A synthetic sentence that asserts a null on olmo-sft, olmo-dpo, olmo-instruct.",
+   "text_sha256": "b332c2489f4e6ec991cc760cb7e2505ea9abc5b0eb6164d9cc1361a48edb3028",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P13",
+   "kinds": [
+    "contribution-2v"
+   ],
+   "loc": {
+    "line": 13,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "olmo-sft"
+   ],
+   "text": "[placeholder P13] A synthetic sentence that asserts a null on e2a, olmo-sft.",
+   "text_sha256": "84efae3193888174e0001c6a78dffc379a27ab6ffa1c9246601506d9534afeae",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P14",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 14,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "[placeholder P14] A synthetic sentence that asserts no null and states the main thesis.",
+   "text_sha256": "22591223c6fb1edb49f927c956fbabb66e09549d161b37b3d044b054f1a5ac35",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P15",
+   "kinds": [
+    "s7.2-sceptic"
+   ],
+   "loc": {
+    "line": 15,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "[placeholder P15] A synthetic sentence that asserts no null and states the fallback-1 thesis.",
+   "text_sha256": "209a8658d1a74a70fc3437bf7b9d12351eaa075648b3f68cf7174cdb4eef88e2",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P16",
+   "kinds": [
+    "subtitle-clause-2"
+   ],
+   "loc": {
+    "line": 16,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "[placeholder P16] A synthetic sentence that asserts no null and states the fallback-2 thesis.",
+   "text_sha256": "4c02bcec54e0d5ee952e64d9b6aa8084f4184151b590c310390a9c08164d521a",
+   "thesis": "fallback-2"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P17",
+   "kinds": [
+    "s7.7-penultimate"
+   ],
+   "loc": {
+    "line": 17,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a"
+   ],
+   "text": "[placeholder P17] A synthetic sentence that asserts a null on e2a and states the fallback-1 thesis.",
+   "text_sha256": "e0221ed4a54c5fd770b1998074d26abed91ee3bb7e417122a0f74aacaece1f37",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": true,
+   "dose_note_span": "synthetic dose note P18",
+   "id": "P18",
+   "kinds": [
+    "dose-note"
+   ],
+   "loc": {
+    "line": 18,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "[placeholder P18] A synthetic sentence that asserts no null; synthetic dose note P18.",
+   "text_sha256": "c4acddc03a69423b1f4f26aec61a5bce2bca85f5c7deb1a3ec32d8c1ba99c2f7",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P19",
+   "kinds": [
+    "abstract-fifth-stage"
+   ],
+   "loc": {
+    "line": 19,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1"
+   ],
+   "text": "[placeholder P19] A synthetic sentence that asserts a null on e2a, f1.",
+   "text_sha256": "702c4b336d91d4f5fb602a34269cda466a7d357bdf1e8c04449eb5f3c5830df9",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P20",
+   "kinds": [
+    "s8.1-status"
+   ],
+   "loc": {
+    "line": 20,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "[placeholder P20] A synthetic sentence that asserts no null.",
+   "text_sha256": "ecceba9a7202936297ce53505004c53a8e299009ba847c266336322c7f327b33",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P21",
+   "kinds": [
+    "s7.4-last"
+   ],
+   "loc": {
+    "line": 20,
+    "section": "placeholder",
+    "sentence": 2
+   },
+   "null_cells": [
+    "olmo-dpo"
+   ],
+   "text": "[placeholder P21] A synthetic sentence that asserts a null on olmo-dpo and states the fallback-1 thesis.",
+   "text_sha256": "406c76ad82727ce6a390d1d65460585383a651f962b81a5a49ec867049eae733",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P22",
+   "kinds": [
+    "s8.1-a1-a3"
+   ],
+   "loc": {
+    "line": 22,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "A2"
+   ],
+   "text": "[placeholder P22] A synthetic sentence that asserts a null on A2.",
+   "text_sha256": "5ef190c33ba488a83ce63b79da7be4f75e09614e3364e2c2f9e70a68102c5347",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P23",
+   "kinds": [
+    "s8.2-status"
+   ],
+   "loc": {
+    "line": 23,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "A3"
+   ],
+   "text": "[placeholder P23] A synthetic sentence that asserts a null on A3.",
+   "text_sha256": "9886db547108ee21832389f596d39d910c78180ec8e69e6e815073687354653e",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P24",
+   "kinds": [
+    "s5.7-text"
+   ],
+   "loc": {
+    "line": 24,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "A2",
+    "A3"
+   ],
+   "text": "[placeholder P24] A synthetic sentence that asserts a null on e2a, A2, A3.",
+   "text_sha256": "f65e4f8e79062245c945dee3f00577bb22d56b5ddfc73b5ad62904f58d01be5b",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P25",
+   "kinds": [
+    "s5.7-text"
+   ],
+   "loc": {
+    "line": 25,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "A3"
+   ],
+   "text": "[placeholder P25] A synthetic sentence that asserts a null on A3 and states the main thesis.",
+   "text_sha256": "8783a78a0e3a2c1e91ed13dbab0be49454e7a1801ee34c3d9e090fa12f6c1e12",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "P26",
+   "kinds": [
+    "v1-note"
+   ],
+   "loc": {
+    "line": 26,
+    "section": "placeholder",
+    "sentence": 1
+   },
+   "null_cells": [
+    "A2"
+   ],
+   "text": "[placeholder P26] A synthetic sentence that asserts a null on A2 and states the fallback-1 thesis.",
+   "text_sha256": "b33b348170bcc3f6e04c39bc3bca98dc61758042df6928d0e0945de4ca14d372",
+   "thesis": "fallback-1"
+  }
+ ],
+ "schema": "m-posting-sentences-v2"
+}

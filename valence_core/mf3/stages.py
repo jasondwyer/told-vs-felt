@@ -5,7 +5,8 @@ seat's prebuild answers of 2026-11-06, Q1 and Q5).
 THE STAGES. ``run_gate_stage`` runs G-TIME-F3 (m:293: one session per arm, uncached, the reasoning
 lines at 60, the cap trigger counted over all six) and G-F3 (m:297: 40 sessions); ``run_gid_pair_f3``
 runs G-ID-F3 (m:295: A2s then A3s, uncached then cached at each index, indices advancing per template
-as G-ID-F0m's, m:281, until a complete pair exists; 2/2 byte-identical); ``run_campaign`` runs the
+as G-ID-F0m's, m:281, until a complete pair exists; 2/2 byte-identical transcripts and, per reasoning line, an
+identical (n_tok, cap_hit, stop_reason) triple: the seat's F-7); ``run_campaign`` runs the
 campaign (m:192, m:247, m:330: the six-arm strict-rotation interleave, per-arm stop at floor on DOMAIN
 sessions, looks every 40 launches and at the end, the hour cap and a PI stop terminal). Every stage is
 built and self-tested on the scripted stub; none is wired in the driver at the build (each subcommand
@@ -28,8 +29,9 @@ blinded messages, the stage's end line (a gate stage STOP or PASS; G-ID-F3 also 
 the campaign COMPLETE, CAP, PI-STOP, PAUSE or STOP) and file paths. A hair trigger in a contrast
 session's free phase -- a reasoning line after its first pick included -- is announced by phase alone.
 Reports carry no contrast pick and no contrast session's time; G-TIME-F3's contrast block is ruling
-(h)'s counts plus the per-line cap booleans (the seat's Q5); the cap-trigger count is reported over all
-six sessions (m:293: "cap-reach counted over all six"; the seat's Q5).
+(h)'s counts with no per-line list, the per-line booleans and realised totals to the checkpoint (the seat's
+F-6, superseding Q5's per-line list); the cap-trigger count is reported over all six sessions as "k of <= 36"
+(m:293: "cap-reach counted over all six"; Q5's counting rule; the seat's F-6).
 """
 from __future__ import annotations
 
@@ -986,12 +988,15 @@ def cap_trigger(records: Sequence[Mapping]) -> dict:
     # generated, contrast sessions included; ">= 3" gives the pre-declared 120, else 60 stays. Reported as
     # counts only. The cap so fixed (m:294) is applied from G-ID-F3 on, which prior_gate checks against this
     # function on G-TIME-F3's checkpoint (m:295), and LOCK-m-F3 v0.2 records it (m:296).
+    # PIN (the seat's F-6, 2026-11-06): what is reported is the count k against the declared maximum ("k of
+    # <= 36"), never the realised line total; the per-line booleans and the realised totals stay in the
+    # checkpoint's records (m:271), from which this function re-derives them.
     ls = [x for r in records for x in r.get("reasoning") or []]
     k = sum(bool(x["cap_hit"]) for x in ls)
-    return {"cap_reached": k, "lines": len(ls), "threshold": CAP_TRIGGER, "max_lines": 36,
+    return {"cap_reached": k, "threshold": CAP_TRIGGER, "max_lines": 36,
             "fixed_cap": CAP_AFTER_TRIGGER if k >= CAP_TRIGGER else sc_mod.REASONING_CAPS[0],
             "rule": "m:174: >= 3 of the reasoning lines G-TIME-F3 generates (<= 36) reach the cap without a newline "
-                    "-> 120; counted over all six sessions (m:293; the seat's Q5)"}
+                    "-> 120; counted over all six sessions (m:293; the seat's Q5); reported as k of <= 36 (F-6)"}
 
 
 def _contrast_first_reads(records: Sequence[Mapping]) -> dict:
@@ -1025,8 +1030,7 @@ def _assert_time_form(report: Mapping, reads: Mapping) -> None:
                 continue
             per = blk.get("per_session")
             if (tuple(blk) != readrule.TIME_CONTRAST_KEYS or not isinstance(per, list)
-                    or any(tuple(p) != readrule.TIME_SESSION_KEYS
-                           or not all(type(x) is bool for x in p["reasoning_cap_reached"]) for p in per)):
+                    or any(tuple(p) != readrule.TIME_SESSION_KEYS for p in per)):
                 raise ValueError(f"{c}: the G-TIME-F3 contrast block is not its declared form; refused before any write")
     for r in reads.get("sessions") or []:
         if not r.get("contrast"):
@@ -1086,8 +1090,9 @@ def _finish_gate(gate: str, name: str, ckpt: dict, cpath: Path, paths: Mapping, 
         print(ln, flush=True)
     if gate == "time":
         ct = report["cap_trigger"]
-        print(f"CAP TRIGGER {name}: {ct['cap_reached']} of {ct['lines']} reasoning lines reached the cap (threshold "
-              f"{CAP_TRIGGER}); the fixed cap would be {ct['fixed_cap']} (recorded at LOCK-m-F3 v0.2, m:294)", flush=True)
+        print(f"CAP TRIGGER {name}: {ct['cap_reached']} of <= {ct['max_lines']} reasoning lines reached the cap "
+              f"(threshold {CAP_TRIGGER}); the cap fixed is {ct['fixed_cap']} (m:294), applied from G-ID-F3 on (m:295) "
+              f"and recorded at LOCK-m-F3 v0.2 (m:296)", flush=True)
     print(_stage_line(name, status, ident["path"]), flush=True)
     for k, p in [("CHECKPOINT", cpath), ("REPORT", paths["report"]), ("READS", paths["reads"])] + (
             [("ADJUDICATION", apath)] if events else []):
@@ -1126,21 +1131,22 @@ def gid_decide(pairs: Sequence[Mapping[str, Any]]) -> dict:
     return {"verdict": "PASS", "n_pairs": 2, "pairs_identical": decided, "at": None}
 
 
-def _gen_meta(rec: Mapping) -> list[tuple]:
-    """(kind, n_tok, cap_hit, stop_reason) of every generation a record holds: its rounds, then its lines."""
-    return ([("round", int(r["n_tok"]), bool(r["cap_hit"]), str(r["stop_reason"])) for r in rec.get("rounds") or []]
-            + [("line", int(x["n_tok"]), bool(x["cap_hit"]), str(x["stop_reason"])) for x in rec.get("reasoning") or []])
+def _line_triples(rec: Mapping) -> list[tuple]:
+    """(n_tok, cap_hit, stop_reason) of each reasoning line a record holds, in line order."""
+    return [(int(x["n_tok"]), bool(x["cap_hit"]), str(x["stop_reason"])) for x in rec.get("reasoning") or []]
 
 
 def _gid_pair(t: str, j: int, u: Mapping, c: Mapping) -> dict:
-    # PIN (Code, declared at LOCK-m-F3 v0.1; m:281 / m:295's criterion; the build review's finding 9): the pair's
-    # verdict is m:281's -- byte-identical transcripts. Beside it, descriptive only, each pair reports whether
-    # every generation's token count, cap flag and stop reason agree as well ("meta_identical"): the adapter
-    # strips a generation's text, so two paths can write one transcript with different cap-reach (the
-    # cap_no_newline class; the cap trigger). Binding it would change the criterion, which is the seat's (F-7).
-    return {"template": t, "j": j, "complete": bool(u["complete"] and c["complete"]),
-            "identical": u["transcript"] == c["transcript"], "complete_uncached": bool(u["complete"]),
-            "complete_cached": bool(c["complete"]), "meta_identical": _gen_meta(u) == _gen_meta(c)}
+    # PIN (the seat's F-7, 2026-11-06; a seat PIN at LOCK-m-F3 v0.1, set before G-ID-F3 has run): a pair is
+    # identical iff m:281's byte-identical transcripts AND, per reasoning line, an identical (n_tok, cap_hit,
+    # stop_reason) triple -- the cap machinery is what the two paths must agree on for F3, since the trigger
+    # fixes the campaign's cap. A transcript-identical pair with a differing triple is a G-ID fire with m:281's
+    # consequence (Q-F3 goes uncached, its floors to the uncached column). Both components are reported.
+    tr = u["transcript"] == c["transcript"]
+    lt = _line_triples(u) == _line_triples(c)
+    return {"template": t, "j": j, "complete": bool(u["complete"] and c["complete"]), "identical": tr and lt,
+            "transcript_identical": tr, "line_triples_identical": lt, "complete_uncached": bool(u["complete"]),
+            "complete_cached": bool(c["complete"])}
 
 
 def gid_pairs(records: Sequence[Mapping], upto: tuple[str, int] | None = None) -> tuple[list[dict], dict]:
@@ -1824,14 +1830,18 @@ def _selftest(chk) -> None:
             ck_time = root / "ckpt" / "Q-F3_time.json"
             rep = json.loads((root / "reports" / "Q-F3_time_report.json").read_text())
             reads = json.loads((root / "reports" / "Q-F3_time_reads.json").read_text())
+            ck_t = rs.read_checkpoint(ck_time)
             chk("mf3.stages: G-TIME-F3 on the stub -- six sessions, PASS; the cap trigger counts cap-reach over all six "
-                "sessions' lines (4 contrast + 1 sham = 5 of 36 -> 120); contrast blocks are ruling (h)'s counts plus "
-                "the per-line cap booleans; the stopped/ended checkpoint persists PASS",
+                "sessions' lines (4 contrast + 1 sham = 5 -> 120), printed and reported as '5 of <= 36' with no realised "
+                "total; contrast blocks are ruling (h)'s counts with no per-line list, the booleans in the checkpoint "
+                "(the seat's F-6); the stopped/ended checkpoint persists PASS",
                 err is None and res["status"] == "PASS" and rep["cap_trigger"]["cap_reached"] == 5
-                and rep["cap_trigger"]["lines"] == 36 and rep["cap_trigger"]["fixed_cap"] == 120
+                and "lines" not in rep["cap_trigger"] and rep["cap_trigger"]["max_lines"] == 36
+                and rep["cap_trigger"]["fixed_cap"] == 120 and "5 of <= 36 reasoning lines" in out
                 and set(rep["stage_report"]["templates"]["A1"]) == set(readrule.TIME_CONTRAST_KEYS)
-                and rep["stage_report"]["templates"]["A1"]["per_session"][0]["reasoning_cap_reached"][:2] == [True, True]
-                and rs.read_checkpoint(ck_time)["stage_end"]["status"] == "PASS"
+                and "reasoning_cap_reached" not in json.dumps(rep) and "reasoning_cap_reached" not in json.dumps(reads)
+                and [x["cap_hit"] for r in ck_t["sessions"] if r["template"] == "A1" for x in r["reasoning"]][:2] == [True, True]
+                and ck_t["stage_end"]["status"] == "PASS"
                 and all("reasoning" not in r for r in reads["sessions"] if r["contrast"]), (err, rep.get("cap_trigger")))
             labels = {w for p in schedule.roster() for w in p}
             chk("mf3.stages: G-TIME-F3's stdout, report and reads name no label in a pick-free form; session lines are "
@@ -1957,12 +1967,14 @@ def _selftest(chk) -> None:
                     res_m, _, err_m = quiet(run_gid_pair_f3, adapter("id", meta_diverge), identity_extra=ex60,
                                             prior_ckpt=ck_time60, out_root=root, ckpt_path=root / "ckpt" / "gid-meta.json")
                     mart = json.loads(guard.gid_artifact_path().read_text())
-            chk("mf3.stages: G-ID-F3 reports, beside m:281's criterion, whether the pair's generations agree in token "
-                "count, cap flag and stop reason -- a transcript-identical pair whose cached line reached the cap is "
-                "PASS with meta_identical false (descriptive, finding 9); the clean pairs are meta-identical",
-                err_m is None and res_m["status"] == "PASS" and mart["pairs_identical"] == [True, True]
-                and [p["meta_identical"] for p in mart["indices"]] == [False, True]
-                and all(p["meta_identical"] for p in art["indices"]), (err_m, mart.get("indices")))
+            chk("mf3.stages: G-ID-F3's criterion binds each reasoning line's (n_tok, cap_hit, stop_reason) triple (the "
+                "seat's F-7) -- a transcript-identical pair whose cached line reached the cap FAILs (a G-ID fire); the "
+                "clean pairs' triples agree",
+                err_m is None and res_m["status"] == "FAIL" and mart["verdict"] == "FAIL"
+                and mart["pairs_identical"][:1] == [False] and mart["criterion"] == guard.GID_CRITERION
+                and mart["indices"][0]["transcript_identical"] is True
+                and mart["indices"][0]["line_triples_identical"] is False
+                and all(p["line_triples_identical"] for p in art["indices"]), (err_m, mart.get("indices")))
             chk("mf3.stages: G-ID-F3 FAILs on a divergent pair (A3s); an incomplete identical A2s pair advances A2s's "
                 "index to j = 1 before A3s runs (m:281's rule, the seat's Q8)",
                 err6 is None and res6["status"] == "FAIL" and fart["verdict"] == "FAIL"

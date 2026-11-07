@@ -1,5 +1,6 @@
 """Q-F3's pre-VERDICTS read rule, printed reasons and pick-free stage report (PROPOSAL-m v1.11 §2.6
-m:263; §3 m:271; §3.2 m:293, m:297; §4 m:318; the design seat's prebuild answers of 2026-11-06, Q5).
+m:263; §3 m:271; §3.2 m:293, m:297; §4 m:318; the design seat's prebuild answers of 2026-11-06, Q5, and
+its G-ANL-F3 answers of 2026-11-06, F-6).
 
 The blinding semantics are ``valence_core.m.readrule``'s, imported unchanged (the printed classes and
 forms, the withheld-field sets, the label scan, the header redaction, the round counts); m's record
@@ -7,7 +8,7 @@ checks refuse Q-F3 (``keys.templates``) and know no reasoning piece, so the F3 f
 
 - ``strip_contrast`` (m:271): banner + forced rounds and responses only; every reasoning line goes with
   the free phase (they are not "the banner, the forced rounds and their responses"). At G-TIME-F3 the
-  ruling-(h) form (m's TIME_ROUND_KEEP) plus, per the seat's Q5, the per-line cap booleans.
+  ruling-(h) form (m's TIME_ROUND_KEEP), with no per-line list (the seat's F-6).
 - ``redact_sham`` (m:271): menus removed, the chosen tag ``[config]`` in free headers, and -- m's PIN
   for free responses, carried -- both own-pair labels redacted in free responses and in every
   reasoning line.
@@ -19,12 +20,13 @@ checks refuse Q-F3 (``keys.templates``) and know no reasoning piece, so the F3 f
   would name it).
 - ``stage_report`` (m:271, m:293, m:297): sham templates in full, with their reasoning lines by class;
   contrast templates by forced-round counts and their first reasoning lines (pre-pick) by class, later
-  lines withheld with the free rounds; at G-TIME-F3 ruling (h)'s counts plus the per-line cap booleans
-  (Q5: "What m:271 withholds is content, not counts").
+  lines withheld with the free rounds; at G-TIME-F3 ruling (h)'s counts only (the seat's F-6: a contrast
+  session's lines enter the CAP TRIGGER count, and their per-line booleans stay in the checkpoint).
 """
 from __future__ import annotations
 
 import copy
+import json
 import re
 from fractions import Fraction
 from typing import Any, Iterable, Mapping
@@ -172,13 +174,9 @@ def _check_record(rec: Any) -> None:
 
 
 # --- blinded forms ---------------------------------------------------------------------------
-def _line_caps(rec: Mapping) -> list[bool]:
-    return [bool(x["cap_hit"]) for x in rec.get("reasoning") or []]
-
-
 def strip_contrast(rec: Mapping) -> dict:
     """m:271: a contrast session as banner + forced rounds and responses only (at G-TIME-F3, ruling
-    (h)'s form plus the per-line cap booleans of the seat's Q5)."""
+    (h)'s form, with no per-line list: the seat's F-6)."""
     _check_record(rec)
     if not rec["contrast"]:
         raise ValueError("strip_contrast is the contrast-template read; a sham session is read through redact_sham")
@@ -193,13 +191,11 @@ def strip_contrast(rec: Mapping) -> dict:
         tout["transcript"] = rec["transcript"][:cut]
         tout["n_forced_rounds"] = len(forced)
         tout["excluded_at_forced"] = bool(exc) and exc.get("phase") == "forced"
-        # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's Q5): the contrast session's per-line cap
-        # booleans, in line order -- no line text, class or pick. Disclosed, as ruling (h)'s two counts
-        # were: the list's length is the number of reasoning lines generated, which locates where a
-        # free-phase end fell (Q5: "What m:271 withholds is content, not counts").
-        tout["reasoning_cap_reached"] = _line_caps(rec)
+        # PIN (the seat's F-6, 2026-11-06; superseding the per-line-list part of Q5): a contrast session's
+        # per-line cap booleans are neither printed nor reported before VERDICTS -- the list's length would
+        # locate where a free-phase end fell (m:263). They stay in the checkpoint's records (m:271).
         tout["blinding"] = ("contrast-stripped at G-TIME-F3: banner + forced-round bytes, {phase, ri, n, text} per "
-                            "round, per-line cap booleans, no class field (m:271; ruling (h); the seat's Q5)")
+                            "round, no class field, no per-line list (m:271; ruling (h); the seat's F-6)")
         m_rr._assert_withheld(tout, _FREE_ONLY_KEYS | {"ci"} | m_rr.TIME_WITHHELD, True, "strip_contrast")
         return tout
     out: dict = {k: copy.deepcopy(rec.get(k)) for k in _STRIP_TOP}
@@ -443,7 +439,7 @@ def _contrast_block(rs: list[Mapping]) -> dict:
     # -- generated before any menu, so pick-free (m:308's domain reaches "up to and including the first
     # reasoning line"; Q8 puts a line's scaffold fire in the guard's pre-pick count) -- by class, with
     # line-1 exclusions (scaffold@reasoning) and hair triggers; every later line is a free-phase event, withheld
-    # to VERDICTS with the free rounds (m:271). G-TIME-F3 keeps the seat's Q5 form (_contrast_block_time).
+    # to VERDICTS with the free rounds (m:271). G-TIME-F3 has its own form (_contrast_block_time; F-6).
     forced = [r for rec in rs for r in rec["rounds"] if r["phase"] == "forced"]
     excl = {f"{m_rr.PRINT_CLASS[c]}@forced": 0 for c in m_rr.CLAIMS["qwen"]}
     excl_l1 = 0
@@ -469,21 +465,21 @@ def _contrast_block(rs: list[Mapping]) -> dict:
 
 
 TIME_CONTRAST_KEYS = ("contrast", "sessions", "per_session", "free_rounds")
-TIME_SESSION_KEYS = ("s", "forced_rounds_generated", "excluded_at_forced", "reasoning_cap_reached")
+TIME_SESSION_KEYS = ("s", "forced_rounds_generated", "excluded_at_forced")
 
 
 def _contrast_block_time(rs: list[Mapping]) -> dict:
-    # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's ruling (h) carried, and Q5): at G-TIME-F3 a
-    # contrast session is reported as {s, forced rounds generated, excluded at forced yes/no, its per-line
-    # cap booleans}; no class, no claim count, no line text, no pick; its free-round events withheld.
+    # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's ruling (h) carried, and its F-6 of 2026-11-06): at
+    # G-TIME-F3 a contrast session is reported as {s, forced rounds generated, excluded at forced yes/no}; no
+    # per-line list, no class, no claim count, no line text, no pick; its free-round events withheld. Its lines
+    # enter the CAP TRIGGER count only; their booleans and the realised totals stay in the checkpoint.
     per = []
     for rec in rs:
         _domain(rec)
         e = rec.get("exclusion")
         per.append({"s": rec["s"],
                     "forced_rounds_generated": sum(1 for r in rec["rounds"] if r["phase"] == "forced"),
-                    "excluded_at_forced": bool(e) and e.get("phase") == "forced",
-                    "reasoning_cap_reached": _line_caps(rec)})
+                    "excluded_at_forced": bool(e) and e.get("phase") == "forced"})
     out = {"contrast": True, "sessions": len(rs), "per_session": per, "free_rounds": WITHHELD}
     if tuple(out) != TIME_CONTRAST_KEYS or any(tuple(p) != TIME_SESSION_KEYS for p in per):
         raise AssertionError("stage_report: the G-TIME-F3 contrast block is not its declared form")
@@ -592,12 +588,13 @@ def _selftest(chk) -> None:
     trec = list({r["template"]: r for r in trec}.values())
     trep = stage_report(trec)
     blk = trep["templates"]["A2"]
-    chk("mf3.readrule: at G-TIME-F3 a contrast block is ruling (h)'s counts plus the per-line cap booleans (Q5)",
+    chk("mf3.readrule: at G-TIME-F3 a contrast block is ruling (h)'s counts with no per-line list (the seat's F-6)",
         tuple(blk) == TIME_CONTRAST_KEYS and tuple(blk["per_session"][0]) == TIME_SESSION_KEYS
-        and blk["per_session"][0]["reasoning_cap_reached"] == [False] * 6)
+        and "reasoning_cap_reached" not in json.dumps(blk))
     ts = strip_contrast(next(r for r in trec if r["template"] == "A3"))
-    chk("mf3.readrule: the G-TIME-F3 strip keeps {phase, ri, n, text} per forced round and the cap booleans",
-        all(set(x) <= {"phase", "ri", "n", "text"} for x in ts["rounds"]) and ts["reasoning_cap_reached"] == [False] * 6)
+    chk("mf3.readrule: the G-TIME-F3 strip keeps {phase, ri, n, text} per forced round and no per-line list (F-6)",
+        all(set(x) <= {"phase", "ri", "n", "text"} for x in ts["rounds"]) and "reasoning_cap_reached" not in ts
+        and "reasoning" not in ts)
     refused = []
     for fn in (lambda: strip_contrast(sham[0]), lambda: redact_sham(con[0]),
                lambda: printed_reason({"class": "lexical", "phase": "reasoning", "ci": 0}, False),

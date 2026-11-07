@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
-"""PROPOSAL-m analyzer -- G-ANL-F0 (v1.11 §3.1 m:278; §8 step 8, m:358). Committed BEFORE any
+"""PROPOSAL-m analyzer -- G-ANL-F0 (v1.11 §3.1 m:278; §8 step 8, m:358), extended in place at G-ANL-F3
+(m:291; ADDENDUM-m1 §2.5; the design seat's answers of 2026-11-06, A1-A5). Committed BEFORE any
 Q-F0 or OLMo campaign session: "VERDICTS are computed by the pre-committed analyzer before any
 of 'the reads'" (m:318). MODEL-FREE BY DESIGN: no model library, no *_sessions.py, nothing
 generates.
+
+G-ANL-F3 adds: Q-F3's per-arm outcomes (A1, A2, A3; A3*), the v2 outputs (Steps 1-7) and their
+section 7.5 enumeration over a v2 sentence table, the 481 x 5 x 216 = 519,480 v2 tuples in the battery
+(a PENDING checkpoint asserts the refusal: the seat's A2), `verdicts --unit Q-F3` over mf3's checkpoints
+(counter (c)'s scorer and lexicons, the blind-read draw), `not-run` for Q-F3 and the v2 closure,
+`posting --posting v2`; and A-m1 section 2.5's riding items -- the CLI-path reading, the Clock dates D1,
+D_O' and D2 as verified constants, and the byte-for-byte regression of Q-F0's VERDICTS (the seat's A1).
 
   --selftest        the synthetic battery of m:278 -- (i) every per-arm outcome of §5 for A0 and
                     A0-OLMo-{ckpt} (NOT-RUN by each listed cause, INDETERMINATE-by-no-domain, the
@@ -13,19 +21,21 @@ generates.
                     "  [PASS|FAIL] name got" per check and ends "  N/N m_analyze battery checks
                     pass"; exit 0 iff every check passes, N == EXPECTED_CHECKS and every
                     coverage id is reached (m:278: "a skipped assertion is a failure").
-  ganl [--out DIR]  the battery, then the write-once artifact data/m/gates/G-ANL-F0.json
+  ganl [--out DIR]  the battery, then the write-once artifact data/m/gates/G-ANL-F3.json (G-ANL-F0.json untouched)
                     (--out DIR: a non-canonical test directory). Exit 0 written or identical,
                     2 refused, 4 STOP (the battery failed; nothing written).
   verdicts --unit U --lock PATH --decisions PATH [--campaign P] [--time P] [--qual P]
            [--adjudication P] [--pi-stop P] [--olmo-states P] [--sentences P]
-           [--flag-source P] [--out DIR]
+           [--flag-source P] [--out DIR] [--adjudication-reads P] [--v1-dir D]
+                    (U = Q-F3: mf3's checkpoints under data/mf3/ckpt, the adjudication-reads file
+                    required, outputs Q-F3_VERDICTS / _secondary / _blind-read.json in data/mf3/verdicts)
                     one unit's VERDICTS (step 17; each OLMo checkpoint as it ends):
                     {U}_VERDICTS.json and {U}_secondary.json, or {U}_NOT-RUN.json when §5's
                     no-first-read cause holds.
-  not-run --unit U --record PATH [--time P] [--qual P] [--out DIR]
+  not-run --unit U --record PATH [--time P] [--qual P] [--out DIR] [--v2-closure --campaign P|none]
                     a unit NOT-RUN by its Clock or by "dose not completable" -> {U}_NOT-RUN.json.
-  posting --posting v1 --tuple PATH --sentences PATH [--rewrites PATH] [--flag-source P]
-          [--verdicts-dir D] [--out DIR]
+  posting --posting v1|v2 --tuple PATH --sentences PATH [--rewrites PATH] [--flag-source P]
+          [--verdicts-dir D] [--f3-verdicts-dir D] [--out DIR]   (v2: POSTING-v2_outputs.*.json)
                     §7's v1 outputs under a declared tuple -> POSTING-v1_outputs.{of-record,
                     posted}.json (one per table kind). On the posted text, C7's posting bar
                     (PIN-44): PASS / FAIL, and the comparison with the VERDICTS enumeration
@@ -41,7 +51,8 @@ m_sessions.py's gcal drivers map theirs).
 
 At step 8 no lock exists, so verdicts / not-run / posting refuse on real data; the battery runs
 them in temp directories only, and reads nothing under data/m/ckpt, data/m/reports,
-data/m/verdicts or results/raw (PIN-29).
+data/m/verdicts, results/raw or data/mf3/{ckpt,reports,verdicts} (PIN-29), save Q-F0's seven
+released files, admitted by blob for the regression (the seat's A1).
 """
 from __future__ import annotations
 
@@ -60,6 +71,8 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
+import types
 from dataclasses import dataclass, field
 from fractions import Fraction
 from math import comb
@@ -94,8 +107,39 @@ FLAG_INTRODUCED_AT = "bab921c"
 GANL_REL = "data/m/gates/G-ANL-F0.json"
 VERDICTS_REL = "data/m/verdicts"
 CKPT_REL = "data/m/ckpt"
-BLOCKED_REL = ("data/m/ckpt", "data/m/reports", "data/m/verdicts", "results/raw")
+BLOCKED_REL = ("data/m/ckpt", "data/m/reports", "data/m/verdicts", "results/raw",
+               "data/mf3/ckpt", "data/mf3/reports", "data/mf3/verdicts")   # mf3's three: the seat's A1 (m:318)
+# PIN (the seat's A1, 2026-11-06; acknowledged by the PI): PIN-29's exception, by blob -- the battery's open hook
+# admits exactly these seven Q-F0 files, released at Q-F0's VERDICTS of 2026-10-19 (m:271, m:318), each by path and
+# by its committed blob's sha256 pinned here, and nothing else under the roots (for A1's regression).
+PIN29_RELEASED = {
+    "data/m/ckpt/Q-F0_campaign.json": "dd389eca073ae099e3d3e4dfe917ff2972b75a1500c3f173b2def15f6d5f1b00",
+    "data/m/ckpt/Q-F0_time.json": "483f32ea240014404b885cc39a04027b2a31bb16ebc3c9434791769f58e2557a",
+    "data/m/ckpt/Q-F0_qual.json": "9a187fbc4654aae1801ca9b53e261401d12799d85719c7a3e1d32c3d43ed5148",
+    "data/m/verdicts/Q-F0_decisions.json": "93cf496407e630dfce62cf1fcf6f0434a92b53d733691ca61f8ca8c163b44ab2",
+    "data/m/verdicts/Q-F0_olmo-states.json": "c8320eff71e74f4f521ba69088d37e2457cf97faa4f929913ce6c4290c41489b",
+    "data/m/verdicts/Q-F0_VERDICTS.json": "ec7d208203ad3192ac623a4cf47feacd2a8f1f6c237f900097db223b5c8e35ea",
+    "data/m/verdicts/Q-F0_secondary.json": "dcaaaac3e9e3603e6e9c81af679e1687300957a38b809c80fb5d7ec6e3d6e9b7",
+}
+# The identity of record (the seat's A1): Q-F0's VERDICTS ran on the analyzer blob of ed8e886, bound by
+# LOCK-m-F0.md:147-149 to these three shas; the regression binds its run to them.
+RECORD_ANALYZER_COMMIT = "ed8e886"
+RECORD_ANALYZER_SHA256 = "655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f"
+RECORD_PACKAGE_SHA256 = "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771"
+RECORD_CLOSURE_SHA256 = "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b"
 CLOCK_DATE = "2026-10-30"          # D1 = D_O (m:16 (11)); verified against the proposal
+# PIN (Code, declared at LOCK-m-F3 v0.1; A-m1 §2.5 (2); the seat's A5 item 9 (2)): PIN-V2-9 -- three declared dates,
+# each verified against the proposal (D1, m:16) and ADDENDUM-m1 (pinned by sha256; D_O′ at A-m1:28, D2 at A-m1:40)
+# at every run (clock_problems). CLOCK_DATE keeps its name and value (D1, Q-F0's): a D_O-era declaration keeps its
+# substate name and is read against D1 (N8). The Clock of record is D1 for Q-F0, D_O′ for each re-registered OLMo
+# checkpoint (A-m1 decision (16)) and D2 for Q-F3.
+ADDENDUM_M1_REL = "ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md"
+ADDENDUM_M1_SHA256 = "ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001"
+D1 = CLOCK_DATE
+D_O_PRIME = "2026-11-30"
+D2 = "2026-12-22"
+ADDENDUM_M1_DATE = "2026-11-05"    # A-m1's commit day (f26bc59; the PI's routing date): N8's era boundary
+PENDING_UNLOCKED = {"D_O": "unlocked-before-D_O", "D_O′": "unlocked-before-D_O′"}
 LAZY_VERDICT_MODULES = ("valence_core.m.stages",)
 MODULE_LEVEL_IMPORTS = ("valence_core.session", "valence_core.e2d.habit", "valence_core.m.audit",
                         "valence_core.m.bars", "valence_core.m.keys", "valence_core.m.readrule",
@@ -427,6 +471,8 @@ def gate_stop_stages(unit: str) -> tuple[str, ...]:
     m:267); G-PORT passed before the OLMo track and is Q-F0's."""
     if unit == "Q-F0":
         return ("G-PORT", "G-CAL", "G-SHAPE-F0", "G-ANL-F0", "G-TIME-F0", "G-ID-F0m", "G-F0m-Qwen")
+    if unit == UNIT_F3:                      # PIN-V2-19: Q-F3's STOPping gates (m:290-297), G-CAL as for every unit
+        return F3_GATE_STOP_STAGES
     c = _ckpt(unit)
     return ("G-CAL", "G-SHAPE-F0", "G-ANL-F0", f"G-TIME-OLMo-{c}", f"G-F0m-OLMo-{c}")
 
@@ -480,9 +526,13 @@ def not_run_reason(unit: str, code: str, date: str | None = None) -> str:
     """The reason phrase of a cause for a unit; ValueError where the cause is not the unit's."""
     base, param = parse_cause(code)
     spec = NOT_RUN_CAUSES[base]
-    if spec["units"] == "olmo" and _sub(unit) != "olmo":
+    # PIN (Code, declared at LOCK-m-F3 v0.1; m:324, m:347): PIN-V2-19 -- Q-F3 takes the causes both substrates
+    # share (clock:gate-stopped / not-locked over F3_GATE_STOP_STAGES, pi-declined, k-zero, the three
+    # no-first-read causes) with D2 as its Clock; the OLMo-only causes (no box, dose, pending-closed-at-v2)
+    # are refused for it.
+    sub = "q-f3" if unit == UNIT_F3 else _sub(unit)
+    if spec["units"] == "olmo" and sub != "olmo":
         raise ValueError(f"cause {code!r} applies to OLMo checkpoints only (m:324), not {unit}")
-    _sub(unit)
     if base in PARAM_CAUSES and param not in gate_stop_stages(unit):
         raise ValueError(f"stage {param!r} is not a STOPping gate of {unit} ({gate_stop_stages(unit)})")
     if "{date}" in spec["phrase"]:
@@ -493,6 +543,44 @@ def not_run_reason(unit: str, code: str, date: str | None = None) -> str:
 
 PENDING_SUBSTATES = ("unlocked-before-D_O", "locked-running", "restarting-after-box-change",
                      "awaiting-verdicts-session")
+
+
+def clock_of_record(unit: str) -> str:
+    """The unit's Clock date of record (A-m1 §2.5 (2)): D1 for Q-F0; D_O′ for each OLMo checkpoint,
+    re-registered under A-m1 decision (16); D2 for Q-F3."""
+    if unit == "Q-F0":
+        return D1
+    if unit == UNIT_F3:
+        return D2
+    _ckpt(unit)
+    return D_O_PRIME
+
+
+def clock_problems(addendum: bytes | None) -> list[str]:
+    """PIN-V2-9: the three Clock dates verified at the run -- D1 and D2 on m:16 (the proposal is
+    sha256-pinned, PIN-31), D_O′ on A-m1:28 and D2 on A-m1:40, ADDENDUM-m1 pinned by sha256."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; A-m1 §2.5 (2); the seat's A5 item 9 (2)): PIN-V2-9 -- the
+    # three dates are declared constants (D1 = CLOCK_DATE, Q-F0's, unchanged; D_O′; D2), each verified
+    # at every run of verdicts, not-run and posting against the proposal and ADDENDUM-m1 (its sha256
+    # pinned): any difference refuses (exit 2) before an input is read. The Clock of record is D1 for
+    # Q-F0, D_O′ for each OLMo checkpoint and D2 for Q-F3 (clock_of_record); a PENDING declaration's
+    # clock_passed is read against its era's Clock (pending_state, N8).
+    if addendum is None:
+        return ["ADDENDUM-m1 unreadable"]
+    if hashlib.sha256(addendum).hexdigest() != ADDENDUM_M1_SHA256:
+        return ["ADDENDUM-m1's sha256 is not the pinned v0.1's"]
+    al = addendum.decode("utf-8").split("\n")
+    out = []
+    for n, c in ((28, f"Proposed **{D_O_PRIME}**"), (40, f"**D2 stands at {D2}**")):
+        if n > len(al) or c not in al[n - 1]:
+            out.append(f"A-m1:{n}: {c!r}")
+    return out
+
+
+def pending_era(date: str) -> str:
+    """N8's era of a PENDING declaration by its declared date: 'D_O' before ADDENDUM-m1's commit day
+    (read against D1, its substate keeping its name), 'D_O′' from that day on (read against D_O′)."""
+    return "D_O" if date < ADDENDUM_M1_DATE else "D_O′"
 
 
 def pending_state(unit: str, decl: Mapping, *, verdicts_exists: bool, notrun_exists: bool) -> str:
@@ -515,14 +603,25 @@ def pending_state(unit: str, decl: Mapping, *, verdicts_exists: bool, notrun_exi
         raise ValueError(f"a PENDING declaration has exactly state, substate, clock_passed, date: "
                          f"{sorted(decl)}")
     sub = decl["substate"]
-    if sub not in PENDING_SUBSTATES:
-        raise ValueError(f"PENDING sub-state {sub!r} not in {PENDING_SUBSTATES}")
+    if sub not in PENDING_SUBSTATES and sub != PENDING_UNLOCKED["D_O′"]:
+        raise ValueError(f"PENDING sub-state {sub!r} not in {PENDING_SUBSTATES + (PENDING_UNLOCKED['D_O′'],)}")
     if type(decl["clock_passed"]) is not bool:
         raise ValueError("clock_passed must be a bool (declared, recorded as given)")
     if not _iso_date(decl["date"]):
         raise ValueError(f"the Clock comparison's date must be YYYY-MM-DD (declared, recorded as given): "
                          f"{decl['date']!r}")
-    if sub == "unlocked-before-D_O" and decl["clock_passed"]:
+    # PIN (Code, declared at LOCK-m-F3 v0.1; A-m1 §2.5 (2); the seat's A5 item 9 (2); N8): PIN-V2-10 -- the
+    # unlocked substate names the Clock of record. A declaration dated before ADDENDUM-m1's commit day
+    # (2026-11-05) is D_O-era: it keeps the name unlocked-before-D_O and is read against D1 (Q-F0's
+    # VERDICTS of 2026-10-19 embeds three, left as they were); one dated from that day on names D_O′,
+    # unlocked-before-D_O′, read against D_O′. A name of the other era is refused. The Clock comparison
+    # stays declared and recorded as given (PIN-6, C7).
+    era = pending_era(decl["date"])
+    if sub in PENDING_UNLOCKED.values() and sub != PENDING_UNLOCKED[era]:
+        raise ValueError(f"the unlocked sub-state names the Clock of record: {PENDING_UNLOCKED[era]!r} for a "
+                         f"declaration dated {decl['date']} ({'D_O-era, read against D1' if era == 'D_O' else 'read against D_O′'}; "
+                         f"ADDENDUM-m1's commit day {ADDENDUM_M1_DATE}; A-m1 §2.5 (2), N8)")
+    if sub in PENDING_UNLOCKED.values() and decl["clock_passed"]:
         raise ValueError("unlocked with D_O passed is NOT-RUN by its Clock, never PENDING (m:324)")
     if verdicts_exists or notrun_exists:
         raise ValueError(f"{unit} has a {'VERDICTS' if verdicts_exists else 'NOT-RUN'} output; PENDING "
@@ -568,8 +667,8 @@ OTHER_UNITS = UNITS + ("Q-F3",)
 QF3_WORDS = {"A1": ("PASS", "REVERSE", "DEAD", "INDETERMINATE"),                       # m:326 controls
              "A2": ("PASS", "REVERSE", "FAIL", "INDETERMINATE"),                       # m:326 "FAIL for DEAD"
              "A3": ("NO-READ", "REVERSE", "POSITIVE", "NULL-x↑", "NULL-x↓", "NULL"),   # m:326 A3's order
-             "A3*": ("NO-READ", "REVERSE", "POSITIVE", "NULL-x↑", "NULL-x↓", "NULL", "CONFIRMED",
-                     "DISCORDANT", "UNLICENSED")}                                    # m:340 Step 4
+             "A3*": ("NO-READ", "NULL-x↑", "NULL-x↓", "NULL", "CONFIRMED", "DISCORDANT",
+                     "UNLICENSED")}                                    # m:340 Step 4: never POSITIVE / REVERSE
 
 
 def other_state_problem(other_unit: str, st: Any) -> str | None:
@@ -1465,8 +1564,9 @@ def _ws(s: str) -> str:
     return re.sub(r"\s+", " ", s or "").strip()
 
 
-def table_problems(tab: Any, *, read_repo_file: Callable[[str], bytes | None] | None = None) -> list[str]:
-    """Every reason the declared sentence table is refused; [] = accepted."""
+def table_problems(tab: Any, *, read_repo_file: Callable[[str], bytes | None] | None = None,
+                   posting: str = "v1") -> list[str]:
+    """Every reason the declared sentence table is refused; [] = accepted (posting 'v2': PIN-V2-4's table)."""
     # PIN (Code, declared at LOCK v0.1): PIN-20 -- schema m-posting-sentences-v1; `kind` (placeholder |
     # of-record | posted) is authoritative; paths data/m/gates/m_posting_sentences.placeholder.json
     # (LOCK v0.1 hashes it), .../m_posting_sentences.json (the table of record, LOCK v1.0) and
@@ -1474,20 +1574,25 @@ def table_problems(tab: Any, *, read_repo_file: Callable[[str], bytes | None] | 
     # word refusal is dropped: a table carries no pick). The table of record's classification is
     # Code's, outcome-blind at LOCK v1.0, values-checked.
     p: list[str] = []
+    if posting not in ("v1", "v2"):
+        raise ValueError(f"posting {posting!r}")
+    schema_, cells_, kv_ = ((TABLE_SCHEMA, CELLS, KINDS_VOCAB) if posting == "v1"
+                            else (TABLE_SCHEMA_V2, V2_CELLS, KINDS_VOCAB_V2))
     if not isinstance(tab, Mapping):
         return ["the table is not a JSON object"]
     want = ["cells", "kind", "kinds_vocabulary", "posting", "preprint", "rows", "schema"]
     if sorted(tab) != want:
         return [f"table keys {sorted(tab)} != {want}"]
-    if tab["schema"] != TABLE_SCHEMA:
+    if tab["schema"] != schema_:
         p.append(f"schema {tab['schema']!r}")
     if tab["kind"] not in TABLE_KINDS:
         p.append(f"kind {tab['kind']!r} not in {TABLE_KINDS}")
-    if tab["posting"] != "v1":
-        p.append(f"posting {tab['posting']!r} (v1 only; v2 is G-ANL-F3's)")
-    if list(tab["cells"]) != list(CELLS):
-        p.append(f"cells {tab['cells']!r} != {list(CELLS)}")
-    if list(tab["kinds_vocabulary"]) != list(KINDS_VOCAB):
+    if tab["posting"] != posting:
+        p.append(f"posting {tab['posting']!r} (v1 only; v2 is G-ANL-F3's)" if posting == "v1"
+                 else f"posting {tab['posting']!r} (the v2 check reads a v2 table only)")
+    if list(tab["cells"]) != list(cells_):
+        p.append(f"cells {tab['cells']!r} != {list(cells_)}")
+    if list(tab["kinds_vocabulary"]) != list(kv_):
         p.append("kinds_vocabulary differs from the declared vocabulary")
     rows = tab["rows"]
     if not isinstance(rows, list) or not rows:
@@ -1512,8 +1617,8 @@ def table_problems(tab: Any, *, read_repo_file: Callable[[str], bytes | None] | 
             continue
         if r["text_sha256"] != hashlib.sha256(r["text"].encode("utf-8")).hexdigest():
             p.append(f"{rid}: text_sha256 is not sha256(text)")
-        if not isinstance(r["null_cells"], list) or any(c not in CELLS for c in r["null_cells"]):
-            p.append(f"{rid}: null_cells outside the cells {list(CELLS)}")
+        if not isinstance(r["null_cells"], list) or any(c not in cells_ for c in r["null_cells"]):
+            p.append(f"{rid}: null_cells outside the cells {list(cells_)}")
         if r["thesis"] not in THESES:
             p.append(f"{rid}: thesis {r['thesis']!r} not in {THESES}")
         if type(r["dose_note"]) is not bool:
@@ -1524,7 +1629,7 @@ def table_problems(tab: Any, *, read_repo_file: Callable[[str], bytes | None] | 
                 p.append(f"{rid}: a dose-note row needs a non-empty span that is a substring of its text")
         elif r["dose_note_span"] is not None:
             p.append(f"{rid}: a span on a row whose dose_note is false")
-        if not isinstance(r["kinds"], list) or any(k not in KINDS_VOCAB for k in r["kinds"]):
+        if not isinstance(r["kinds"], list) or any(k not in kv_ for k in r["kinds"]):
             p.append(f"{rid}: a kind outside the vocabulary")
         for f in _forbidden():
             if f in r["text"]:
@@ -1720,15 +1825,17 @@ print(json.dumps({"modules": mods, "data": data}, sort_keys=True))
 '''
 
 
-def closure(analyzer: Path | None = None) -> dict:
-    """The verdict path's import closure outside valence_core/m, computed in a fresh interpreter."""
+def closure(analyzer: Path | None = None, lazies: Sequence[str] | None = None) -> dict:
+    """The verdict path's import closure outside valence_core/m, computed in a fresh interpreter (lazies: the
+    lazily imported modules, LAZY_VERDICT_MODULES by default; Q-F3's adds LAZY_F3_MODULES, PIN-V2-12)."""
     # PIN (Code, declared at LOCK v0.1): PIN-1 -- a fresh `python -I -B` imports this file and
     # LAZY_VERDICT_MODULES; the closure is {modules: sha256 of __file__ of every loaded valence_core.*
     # module outside valence_core/m, data: sha256 of every repository non-.py file opened during
     # those imports}; its sha256 is over the compact sort-keyed JSON.
     a = Path(analyzer or Path(__file__).resolve())
     r = subprocess.run([sys.executable, "-I", "-B", "-c", _CLOSURE_CODE, str(REPO), str(a),
-                        *LAZY_VERDICT_MODULES], capture_output=True, text=True, cwd=str(REPO))
+                        *(LAZY_VERDICT_MODULES if lazies is None else lazies)], capture_output=True, text=True,
+                       cwd=str(REPO))
     if r.returncode != 0:
         raise AnlStop(f"STOP: the closure could not be computed: {(r.stderr or '').strip()[-300:]}")
     return json.loads(r.stdout)
@@ -1763,12 +1870,20 @@ class Env:
     gate_line: Callable[[str], tuple[str, list[str]]]
     read_repo_file: Callable[[str], bytes | None]
     say: Callable[[str], None] = field(default=lambda line: print(line, flush=True))
+    addendum_path: Path = field(default_factory=lambda: REPO / ADDENDUM_M1_REL)
+    head_has: Callable[[str], bool] = field(default=lambda rel: False)   # HEAD's tree has the path (PIN-V2-20)
 
 
 def _prod_committed(p: Path) -> tuple[list[str], bytes | None]:
+    # PIN (Code, declared at LOCK-m-F3 v0.1; A-m1 §2.5 (1); the VERDICTS read §4 item 2): PIN-V2-8 --
+    # "outside the repository" is decided by the resolved path, never by comparing the repository-
+    # relative form with the given text (the old `rel == str(p)` read a repository-relative path as
+    # outside); the committed-blob check (stages._committed) is unchanged. The CLI resolves every path
+    # argument against the repository root (main), so a relative --flag-source no longer reads FALSE.
     from valence_core.m import stages
-    rel = _repo_rel(p)
-    if rel == str(p):
+    try:
+        rel = Path(p).resolve().relative_to(REPO.resolve()).as_posix()
+    except (ValueError, OSError):
         return [f"{p}: outside the repository"], None
     return stages._committed(rel)
 
@@ -1780,12 +1895,20 @@ def _prod_read(rel: str) -> bytes | None:
     return q.read_bytes()
 
 
-def production_env() -> Env:
+def _prod_head_has(rel: str) -> bool:
+    """Whether HEAD's tree has the repository-relative path (`git cat-file -e HEAD:<rel>`; PIN-V2-20)."""
     from valence_core.m import stages
+    return stages._git("cat-file", "-e", f"HEAD:{rel}").returncode == 0
+
+
+def production_env(unit: str | None = None) -> Env:
+    from valence_core.m import stages
+    lz = LAZY_VERDICT_MODULES + LAZY_F3_MODULES if unit == UNIT_F3 else None
     return Env(proposal_path=REPO / PROPOSAL_REL, committed=_prod_committed,
                analyzer_path=Path(__file__).resolve(), package_sha256=resume.package_sha256(),
-               closure_sha256=closure_sha256(closure()), allow_stub=False,
-               gate_line=lambda name: stages.gate_line(name, REPO / PROPOSAL_REL), read_repo_file=_prod_read)
+               closure_sha256=closure_sha256(closure(lazies=lz)), allow_stub=False,
+               gate_line=lambda name: stages.gate_line(name, REPO / PROPOSAL_REL), read_repo_file=_prod_read,
+               head_has=_prod_head_has)
 
 
 def write_texts_once(pairs: Sequence[tuple[Path, Any]]) -> str:
@@ -1867,6 +1990,8 @@ class VerdictInputs:
     olmo_states: Path | None = None
     sentences: Path | None = None
     flag_source: Path | None = None
+    adj_reads: Path | None = None          # Q-F3 only: the sessions read during any adjudication (PIN-V2-14)
+    v1_dir: Path | None = None             # Q-F3 only: where the v1 posting's output is (PIN-V2-12)
 
 
 def _read_bytes(p: Path, what: str) -> bytes:
@@ -1874,6 +1999,17 @@ def _read_bytes(p: Path, what: str) -> bytes:
         return Path(p).read_bytes()
     except OSError as e:
         raise AnlRefusal(f"REFUSED: {what} unreadable ({type(e).__name__})")
+
+
+def _clock_refusal(env: Env) -> None:
+    """PIN-V2-9 at the run: refuses (exit 2) unless the three Clock dates verify against ADDENDUM-m1."""
+    try:
+        ab = Path(env.addendum_path).read_bytes()
+    except OSError:
+        ab = None
+    cp = clock_problems(ab)
+    if cp:
+        raise AnlRefusal(f"REFUSED: the Clock dates do not verify against ADDENDUM-m1: {cp} (PIN-V2-9; A-m1 §2.5 (2))")
 
 
 def _validate_olmo_states(doc: Any, out_dir: Path) -> tuple[dict, dict, dict]:
@@ -1904,99 +2040,21 @@ def _validate_olmo_states(doc: Any, out_dir: Path) -> tuple[dict, dict, dict]:
     return coords, reasons, {u: dict(st[u]) for u in UNITS[1:]}
 
 
-def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Path]]:
-    """V0-V11. Returns (status, stdout lines, written paths); raises AnlRefusal / AnlStop."""
-    # PIN (Code, declared at LOCK v0.1): PIN-7 -- one unit per invocation; refusals decided before any
-    # pick is interpreted (V1), then on structure (V2); readrule.release_full names the release (V3);
-    # V4's content assertions STOP; outputs are written once, and stdout is printed after writing. A
-    # unit NOT-RUN by §5's no-first-read cause gets {U}_NOT-RUN.json from this command.
-    U = inp.unit
-    lines: list[str] = []
-    # V0 -- the gate line is printed first (m:267), before any refusal
-    gl, gprobs = env.gate_line(f"VERDICTS {U}")
-    env.say(gl)
-    if gprobs:
-        raise AnlRefusal(f"REFUSED: the gate line cannot be logged in full: {gprobs}")
-    # V1 -- refusals decided before any pick-bearing byte is interpreted
-    if U not in keys.UNITS_BUILT or U not in UNITS:
-        raise AnlRefusal(f"REFUSED: unit {U!r} is not a built unit {UNITS}")
-    pbytes = _read_bytes(env.proposal_path, "the proposal")
-    if _sha256_bytes(pbytes) != PROPOSAL_SHA256:
-        raise AnlRefusal("REFUSED: the proposal's sha256 is not the pinned v1.11's (PIN-31)")
-    aprobs, abytes = env.committed(env.analyzer_path)
-    if aprobs or abytes is None:
-        raise AnlRefusal(f"REFUSED: the analyzer is not committed at HEAD: {aprobs}")
-    lprobs, lbytes = env.committed(inp.lock)
-    if lprobs or lbytes is None:
-        raise AnlRefusal(f"REFUSED: the lock is not committed at HEAD: {lprobs}")
-    ltext = lbytes.decode("utf-8", "replace")
-    a_sha = _sha256_bytes(abytes)
-    for what, val in (("analyzer sha256", a_sha), ("package_sha256", env.package_sha256),
-                      ("closure sha256", env.closure_sha256)):
-        # PIN (Code, declared at LOCK v0.1): PIN-14 -- the analyzer of record for a unit is the blob
-        # its LOCK v1.0 hashes: the lock text names the analyzer's sha256, package_sha256 and the
-        # closure sha256 (PIN-1), each asserted here. When HEAD's three equal the lock's, VERDICTS
-        # runs at HEAD with no worktree; otherwise from a worktree of the lock commit with every data
-        # input and output passed as an absolute path into the main tree, on the PI's word for the
-        # worktree (git writes; not implemented at step 8). G-ANL-F3's versioning (m:291) is deferred
-        # by the seat to before step 19 (C7, 2026-10-10).
-        if val not in ltext:
-            raise AnlRefusal(f"REFUSED: the lock does not name this run's {what} (PIN-14, PIN-1)")
-    try:
-        decisions = decisions_file(_load_json(inp.decisions, "the decisions input"), U)
-    except ValueError as e:
-        raise AnlRefusal(f"REFUSED: decisions input: {e}")
-    dbytes = _read_bytes(inp.decisions, "the decisions input")
-    outs = {"verdicts": inp.out / f"{U}_VERDICTS.json", "secondary": inp.out / f"{U}_secondary.json",
-            "not_run": inp.out / f"{U}_NOT-RUN.json"}
-    inputs: dict = {"lock": _file_rec(inp.lock, lbytes), "decisions": _file_rec(inp.decisions, dbytes)}
-    table = coords = reasons = flag = states_decl = None
-    if U == "Q-F0":
-        if inp.sentences is None or inp.olmo_states is None:
-            raise AnlRefusal("REFUSED: Q-F0's VERDICTS needs --sentences (the table of record) and "
-                             "--olmo-states (V10)")
-        sprobs, sbytes = env.committed(inp.sentences)
-        if sprobs or sbytes is None:
-            raise AnlRefusal(f"REFUSED: the sentence table is not committed at HEAD: {sprobs}")
-        table = _load_json(inp.sentences, "the sentence table")
-        tp = table_problems(table, read_repo_file=env.read_repo_file)
-        if tp or table.get("kind") != "of-record":
-            raise AnlRefusal(f"REFUSED: the sentence table is not an accepted table of record: "
-                             f"{tp or ['kind ' + repr(table.get('kind'))]}")
-        # PIN (Code, declared at LOCK v0.1): PIN-40 -- LOCK-m-F0 v1.0 hashes the sentence table of
-        # record and the preprint of record (m:286: "values-checked and hashed here, so that the
-        # VERDICTS entry (step 17) enumerates over it"): Q-F0's VERDICTS refuses unless the lock
-        # text names both the table's sha256 and its preprint's sha256 (the table's own record of
-        # it, verified against the file by table_problems). The posting's of-record table, when a
-        # Q-F0 output of this command records one (its VERDICTS, or a locked unit's no-first-read
-        # NOT-RUN), must be that table (and so the lock's); on Q-F0's Clock NOT-RUN path the table
-        # of record is built at the posting (m:278, m:286) and no lock binds it; a posted-kind table
-        # is the re-run on the posted text, which no lock hashes.
-        for what, val in (("sentence table of record's sha256", _sha256_bytes(sbytes)),
-                          ("preprint of record's sha256", (table.get("preprint") or {}).get("sha256"))):
-            if not (isinstance(val, str) and val and val in ltext):
-                raise AnlRefusal(f"REFUSED: the lock does not name the {what} (m:286; PIN-40)")
-        try:
-            coords, reasons, states_decl = _validate_olmo_states(_load_json(inp.olmo_states,
-                                                                            "the OLMo states"), inp.out)
-        except ValueError as e:
-            raise AnlRefusal(f"REFUSED: --olmo-states: {e}")
-        inputs["sentences"] = _file_rec(inp.sentences, sbytes)
-        inputs["olmo_states"] = _file_rec(inp.olmo_states, _read_bytes(inp.olmo_states, "the OLMo states"))
-        flag = flag_of_record(inp.flag_source or REPO / FLAG_SOURCE_REL, env.committed)
-    adj_doc = adj_bytes = pis_doc = pis_bytes = None
-    if inp.adjudication is not None:
-        adj_bytes = _read_bytes(inp.adjudication, "the adjudication")
-        adj_doc = _load_json(inp.adjudication, "the adjudication")
-    if inp.pi_stop is not None:
-        pis_bytes = _read_bytes(inp.pi_stop, "the PI-stop record")
-        pis_doc = _load_json(inp.pi_stop, "the PI-stop record")
+def _campaign_structure(U: str, campaign: Path, lbytes: bytes, adj_doc: Any, adj_bytes: bytes | None,
+                        pis_doc: Any, pis_bytes: bytes | None, adjudication: Path | None, pi_stop: Path | None,
+                        allow_stub: bool, olmo: bool) -> dict:
+    """V2's refusals on the campaign checkpoint's structure, shared by both readers (Q-F0 / OLMo and Q-F3):
+    run_verdicts' V2 block of record, unchanged, factored out at G-ANL-F3 (PIN-V2-15)."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; m:271, m:308; PIN-7, PIN-34 carried): PIN-V2-15 -- the V2 block is
+    # factored out unchanged (the regression and the reader battery guard it) and serves Q-F3 with the pod check
+    # off; Q-F3's V4 is PIN-34's with mf3's templates and F3's domain (m:308: the forced rounds pass and no hair
+    # trigger up to and including the first reasoning line), mf3's pre-pick (forced or reasoning line 1).
     # V2 -- refusals on checkpoint structure
     try:
-        ck = resume.read_checkpoint(inp.campaign)
+        ck = resume.read_checkpoint(campaign)
     except SystemExit as e:
         raise AnlRefusal(f"REFUSED: the campaign checkpoint: {e}")
-    cbytes = _read_bytes(inp.campaign, "the campaign checkpoint")
+    cbytes = _read_bytes(campaign, "the campaign checkpoint")
     csha = _sha256_bytes(cbytes)
     ident = ck["identity"]
     if ident.get("unit") != U or ident.get("stage") != "campaign":
@@ -2135,7 +2193,7 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         if not ok:
             raise AnlRefusal("REFUSED: the campaign's last pause is unadjudicated; the seat's adjudication "
                              "enters as a declared --adjudication file (PIN-9)")
-        used_adj = _file_rec(inp.adjudication, adj_bytes)
+        used_adj = _file_rec(adjudication, adj_bytes)
     elif adj_doc is not None:
         raise AnlRefusal("REFUSED: --adjudication given but the last pause is adjudicated (or none exists)")
     stop = ck.get("stop") or None
@@ -2155,7 +2213,7 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         if not ok:
             raise AnlRefusal("REFUSED: the campaign ended on a scaffold_absorption hair-trigger STOP; it is "
                              "analyzed only on a declared PI-stop record naming it (--pi-stop; PIN-8)")
-        used_pis = _file_rec(inp.pi_stop, pis_bytes)
+        used_pis = _file_rec(pi_stop, pis_bytes)
     elif pis_doc is not None:
         raise AnlRefusal("REFUSED: --pi-stop given but the campaign did not end on a hair-trigger STOP")
     if ended == "STOP" and stop_bar not in GVER_BARS and stop_bar != HAIR_BAR:
@@ -2165,12 +2223,113 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         if resume.backend_identifier(e["record"]) != ident.get("backend_identifier"):
             raise AnlRefusal("REFUSED: a launching invocation's backend identifier is not the identity's "
                              "(no splicing, m:251)")
-        if STUB_MARK in json.dumps(e["record"]) and not env.allow_stub:
+        if STUB_MARK in json.dumps(e["record"]) and not allow_stub:
             # PIN (Code, declared at LOCK v0.1): PIN-30 -- STUB_MARK provenance is accepted only by
             # the battery's internal path; the CLI refuses it.
             raise AnlRefusal("REFUSED: the campaign was written by the self-test stub (STUB_MARK)")
-    if _sub(U) == "olmo" and not (isinstance(ident.get("pod_id"), str) and ident["pod_id"]):
+    if olmo and not (isinstance(ident.get("pod_id"), str) and ident["pod_id"]):
         raise AnlRefusal("REFUSED: an OLMo campaign identity carries no pod id (m:267; never spliced)")
+    return {"ck": ck, "csha": csha, "ident": ident, "ended": ended, "camp": camp, "pauses": pauses,
+            "stop": stop, "stop_bar": stop_bar, "used_adj": used_adj, "used_pis": used_pis}
+
+
+def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Path]]:
+    """V0-V11. Returns (status, stdout lines, written paths); raises AnlRefusal / AnlStop."""
+    # PIN (Code, declared at LOCK v0.1): PIN-7 -- one unit per invocation; refusals decided before any
+    # pick is interpreted (V1), then on structure (V2); readrule.release_full names the release (V3);
+    # V4's content assertions STOP; outputs are written once, and stdout is printed after writing. A
+    # unit NOT-RUN by §5's no-first-read cause gets {U}_NOT-RUN.json from this command.
+    U = inp.unit
+    lines: list[str] = []
+    # V0 -- the gate line is printed first (m:267), before any refusal
+    gl, gprobs = env.gate_line(f"VERDICTS {U}")
+    env.say(gl)
+    if gprobs:
+        raise AnlRefusal(f"REFUSED: the gate line cannot be logged in full: {gprobs}")
+    if U == UNIT_F3:                         # the seat's A3: Q-F3's own reader (PIN-V2-12)
+        return run_verdicts_f3(inp, env)
+    if inp.adj_reads is not None or inp.v1_dir is not None:
+        raise AnlRefusal("REFUSED: --adjudication-reads and --v1-dir are Q-F3's VERDICTS inputs only")
+    # V1 -- refusals decided before any pick-bearing byte is interpreted
+    if U not in keys.UNITS_BUILT or U not in UNITS:
+        raise AnlRefusal(f"REFUSED: unit {U!r} is not a built unit {UNITS}")
+    pbytes = _read_bytes(env.proposal_path, "the proposal")
+    if _sha256_bytes(pbytes) != PROPOSAL_SHA256:
+        raise AnlRefusal("REFUSED: the proposal's sha256 is not the pinned v1.11's (PIN-31)")
+    _clock_refusal(env)
+    aprobs, abytes = env.committed(env.analyzer_path)
+    if aprobs or abytes is None:
+        raise AnlRefusal(f"REFUSED: the analyzer is not committed at HEAD: {aprobs}")
+    lprobs, lbytes = env.committed(inp.lock)
+    if lprobs or lbytes is None:
+        raise AnlRefusal(f"REFUSED: the lock is not committed at HEAD: {lprobs}")
+    ltext = lbytes.decode("utf-8", "replace")
+    a_sha = _sha256_bytes(abytes)
+    for what, val in (("analyzer sha256", a_sha), ("package_sha256", env.package_sha256),
+                      ("closure sha256", env.closure_sha256)):
+        # PIN (Code, declared at LOCK v0.1): PIN-14 -- the analyzer of record for a unit is the blob
+        # its LOCK v1.0 hashes: the lock text names the analyzer's sha256, package_sha256 and the
+        # closure sha256 (PIN-1), each asserted here. When HEAD's three equal the lock's, VERDICTS
+        # runs at HEAD with no worktree; otherwise from a worktree of the lock commit with every data
+        # input and output passed as an absolute path into the main tree, on the PI's word for the
+        # worktree (git writes; not implemented at step 8). G-ANL-F3's versioning (m:291) is deferred
+        # by the seat to before step 19 (C7, 2026-10-10).
+        if val not in ltext:
+            raise AnlRefusal(f"REFUSED: the lock does not name this run's {what} (PIN-14, PIN-1)")
+    try:
+        decisions = decisions_file(_load_json(inp.decisions, "the decisions input"), U)
+    except ValueError as e:
+        raise AnlRefusal(f"REFUSED: decisions input: {e}")
+    dbytes = _read_bytes(inp.decisions, "the decisions input")
+    outs = {"verdicts": inp.out / f"{U}_VERDICTS.json", "secondary": inp.out / f"{U}_secondary.json",
+            "not_run": inp.out / f"{U}_NOT-RUN.json"}
+    inputs: dict = {"lock": _file_rec(inp.lock, lbytes), "decisions": _file_rec(inp.decisions, dbytes)}
+    table = coords = reasons = flag = states_decl = None
+    if U == "Q-F0":
+        if inp.sentences is None or inp.olmo_states is None:
+            raise AnlRefusal("REFUSED: Q-F0's VERDICTS needs --sentences (the table of record) and "
+                             "--olmo-states (V10)")
+        sprobs, sbytes = env.committed(inp.sentences)
+        if sprobs or sbytes is None:
+            raise AnlRefusal(f"REFUSED: the sentence table is not committed at HEAD: {sprobs}")
+        table = _load_json(inp.sentences, "the sentence table")
+        tp = table_problems(table, read_repo_file=env.read_repo_file)
+        if tp or table.get("kind") != "of-record":
+            raise AnlRefusal(f"REFUSED: the sentence table is not an accepted table of record: "
+                             f"{tp or ['kind ' + repr(table.get('kind'))]}")
+        # PIN (Code, declared at LOCK v0.1): PIN-40 -- LOCK-m-F0 v1.0 hashes the sentence table of
+        # record and the preprint of record (m:286: "values-checked and hashed here, so that the
+        # VERDICTS entry (step 17) enumerates over it"): Q-F0's VERDICTS refuses unless the lock
+        # text names both the table's sha256 and its preprint's sha256 (the table's own record of
+        # it, verified against the file by table_problems). The posting's of-record table, when a
+        # Q-F0 output of this command records one (its VERDICTS, or a locked unit's no-first-read
+        # NOT-RUN), must be that table (and so the lock's); on Q-F0's Clock NOT-RUN path the table
+        # of record is built at the posting (m:278, m:286) and no lock binds it; a posted-kind table
+        # is the re-run on the posted text, which no lock hashes.
+        for what, val in (("sentence table of record's sha256", _sha256_bytes(sbytes)),
+                          ("preprint of record's sha256", (table.get("preprint") or {}).get("sha256"))):
+            if not (isinstance(val, str) and val and val in ltext):
+                raise AnlRefusal(f"REFUSED: the lock does not name the {what} (m:286; PIN-40)")
+        try:
+            coords, reasons, states_decl = _validate_olmo_states(_load_json(inp.olmo_states,
+                                                                            "the OLMo states"), inp.out)
+        except ValueError as e:
+            raise AnlRefusal(f"REFUSED: --olmo-states: {e}")
+        inputs["sentences"] = _file_rec(inp.sentences, sbytes)
+        inputs["olmo_states"] = _file_rec(inp.olmo_states, _read_bytes(inp.olmo_states, "the OLMo states"))
+        flag = flag_of_record(inp.flag_source or REPO / FLAG_SOURCE_REL, env.committed)
+    adj_doc = adj_bytes = pis_doc = pis_bytes = None
+    if inp.adjudication is not None:
+        adj_bytes = _read_bytes(inp.adjudication, "the adjudication")
+        adj_doc = _load_json(inp.adjudication, "the adjudication")
+    if inp.pi_stop is not None:
+        pis_bytes = _read_bytes(inp.pi_stop, "the PI-stop record")
+        pis_doc = _load_json(inp.pi_stop, "the PI-stop record")
+    # V2 -- refusals on checkpoint structure (the shared helper, PIN-V2-15)
+    cs = _campaign_structure(U, inp.campaign, lbytes, adj_doc, adj_bytes, pis_doc, pis_bytes, inp.adjudication,
+                             inp.pi_stop, env.allow_stub, _sub(U) == "olmo")
+    ck, csha, ident, ended, camp, pauses, stop, stop_bar, used_adj, used_pis = (
+        cs[k_] for k_ in ("ck", "csha", "ident", "ended", "camp", "pauses", "stop", "stop_bar", "used_adj", "used_pis"))
     c_arm, s_arm = keys.templates(U)
     floors = camp.get("floors") or {}
     if sorted(floors) != sorted((c_arm, s_arm)) or any(type(v) is not int or v < 0 for v in floors.values()):
@@ -2380,6 +2539,7 @@ def analyzer_binding(env: Env) -> dict:
     pbytes = _read_bytes(env.proposal_path, "the proposal")
     if _sha256_bytes(pbytes) != PROPOSAL_SHA256:
         raise AnlRefusal("REFUSED: the proposal's sha256 is not the pinned v1.11's (PIN-31)")
+    _clock_refusal(env)
     aprobs, abytes = env.committed(env.analyzer_path)
     if aprobs or abytes is None:
         raise AnlRefusal(f"REFUSED: the analyzer is not committed at HEAD: {aprobs} (PIN-42)")
@@ -2388,14 +2548,24 @@ def analyzer_binding(env: Env) -> dict:
 
 
 def run_not_run(unit: str, record: Path, time_p: Path | None, qual_p: Path | None, out: Path,
-                env: Env) -> tuple[str, list[str], list[Path]]:
+                env: Env, v2_closure: bool = False, campaign_p: Path | None = None,
+                ckpt_dir: Path | None = None) -> tuple[str, list[str], list[Path]]:
     """A Clock / dose NOT-RUN (PIN-38): validates the record, releases any gate stages, writes once."""
     # PIN (Code, declared at LOCK v0.1): PIN-38 -- `not-run` takes the Clock causes and "dose not
     # completable"; the no-first-read causes are detected from the campaign checkpoint by `verdicts`
     # (which writes {U}_NOT-RUN.json), and pending-closed-at-v2 is v2's (G-ANL-F3). Every refusal
     # (the gate stages' identity, end and stub provenance included) is decided before any gate
     # record is released (V3) or read (V4).
-    if unit not in UNITS:
+    # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's A2 and A3; m:324): PIN-V2-20 -- `not-run` also takes
+    # Q-F3 (its record causes, D2 its Clock, mf3's gate checkpoints, output in data/mf3/verdicts) and, with
+    # --v2-closure, the v2 closure of an OLMo checkpoint still PENDING with no session: cause
+    # pending-closed-at-v2 and only that cause, declared before the v2 posting command runs (the seat's A2), and
+    # only for a checkpoint whose campaign recorded no session (m:324: one with sessions is PI-stopped and
+    # analyzed as obtained) -- --campaign is required with --v2-closure: the unit's campaign checkpoint, committed
+    # at HEAD and read once, for its identity and session count alone, before any gate record is released; or
+    # 'none', a declaration that the unit has no campaign checkpoint, refused while data/m/ckpt/{U}_campaign.json
+    # exists in the tree or at HEAD (recorded in the output, so an absent file is never read as no session).
+    if unit not in UNITS + (UNIT_F3,):
         raise AnlRefusal(f"REFUSED: unit {unit!r} is not a built unit")
     binding = analyzer_binding(env)
     rbytes = _read_bytes(record, "the NOT-RUN record")
@@ -2404,7 +2574,45 @@ def run_not_run(unit: str, record: Path, time_p: Path | None, qual_p: Path | Non
     except ValueError as e:
         raise AnlRefusal(f"REFUSED: NOT-RUN record: {e}")
     base, _ = parse_cause(rec["cause"])
-    if base not in NOT_RUN_FROM_RECORD:
+    if v2_closure:
+        if base != "pending-closed-at-v2":
+            raise AnlRefusal("REFUSED: --v2-closure takes cause pending-closed-at-v2 only (m:324; the seat's A2)")
+        if campaign_p is None:
+            raise AnlRefusal("REFUSED: --v2-closure needs --campaign: the unit's campaign checkpoint (its session count "
+                             "is read) or 'none', declaring that the unit has no campaign checkpoint (m:324; PIN-V2-20)")
+        canon_ = Path(ckpt_dir or REPO / CKPT_REL) / f"{unit}_campaign.json"
+        if str(campaign_p) == "none":
+            rel_ = _repo_rel(canon_)
+            if canon_.exists() or canon_.is_symlink() or env.head_has(rel_):
+                raise AnlRefusal(f"REFUSED: --campaign none, but {unit}'s campaign checkpoint exists ({rel_}, in the "
+                                 f"tree or at HEAD): pass it, so that its session count is read (m:324; PIN-V2-20)")
+            camp_rec = "declared none"
+        else:
+            cp_ = Path(campaign_p)
+            cb_ = _read_bytes(cp_, "the campaign checkpoint")    # read once: checked, parsed and hashed from these bytes
+            probs_, blob_ = env.committed(cp_)
+            if probs_ or blob_ != cb_:
+                why_ = "; ".join(probs_)[:160] if probs_ else "its bytes are not HEAD's blob"
+                raise AnlRefusal(f"REFUSED: the campaign checkpoint is not committed at HEAD as read ({why_}); a v2 "
+                                 f"closure reads the committed record (rule 27; PIN-V2-20)")
+            try:
+                ck_ = json.loads(cb_.decode("utf-8"))
+            except (UnicodeDecodeError, ValueError) as e:
+                raise AnlRefusal(f"REFUSED: the campaign checkpoint unreadable ({type(e).__name__}); a v2 closure needs "
+                                 f"its session count (m:324)")
+            idt_ = ck_.get("identity") if isinstance(ck_, Mapping) else None
+            ses_ = ck_.get("sessions") if isinstance(ck_, Mapping) else None
+            if not (isinstance(idt_, Mapping) and idt_.get("unit") == unit and idt_.get("stage") == "campaign"
+                    and isinstance(ses_, list)):
+                raise AnlRefusal(f"REFUSED: --campaign is not {unit}'s campaign checkpoint (identity unit and stage "
+                                 f"campaign, a sessions list) (PIN-V2-20)")
+            if ses_:
+                raise AnlRefusal(f"REFUSED: {unit}'s campaign records sessions, so at v2 it is PI-stopped and analyzed "
+                                 f"as obtained, not NOT-RUN (m:324; the seat's A2)")
+            camp_rec = _file_rec(cp_, cb_)
+    elif campaign_p is not None:
+        raise AnlRefusal("REFUSED: --campaign is the v2 closure's input only (--v2-closure)")
+    elif base not in NOT_RUN_FROM_RECORD:
         raise AnlRefusal(f"REFUSED: cause {rec['cause']!r} is not a record cause (no-first-read: from the "
                          f"campaign by `verdicts`; pending-closed-at-v2: v2)")
     gates = {}
@@ -2427,31 +2635,37 @@ def run_not_run(unit: str, record: Path, time_p: Path | None, qual_p: Path | Non
     for stg, g in gates.items():
         recs = readrule.release_full(g["sessions"])
         for r in recs:
-            pr = record_problems(r, unit, stg)
+            pr = _f3_check_record(r, stg) if unit == UNIT_F3 else record_problems(r, unit, stg)
             if pr:
                 raise AnlStop(f"STOP: a {stg} record fails V4 ({pr[0]})")
-        rel[stg] = gate_release(g, unit, stg)
+        rel[stg] = f3_gate_release(g, stg) if unit == UNIT_F3 else gate_release(g, unit, stg)
     doc = {"schema": NOT_RUN_OUT_SCHEMA, "unit": unit, "state": "NOT-RUN", "cause": rec["cause"],
            "also": rec["also"], "reason": rec["reason"], "date": rec["date"],
-           "date_is_clock_of_record": rec["date"] == CLOCK_DATE, "detail": rec["detail"],
-           "record": _file_rec(record, rbytes), "rows": unit_rows(unit, ("NOT-RUN", rec["reason"])),
+           "date_is_clock_of_record": rec["date"] == clock_of_record(unit), "detail": rec["detail"],
+           "record": _file_rec(record, rbytes),
+           "rows": unit_rows_f3(None, rec["reason"]) if unit == UNIT_F3 else unit_rows(unit, ("NOT-RUN", rec["reason"])),
            "gate_release": rel or None,
            "release": "readrule.release_full (m:271, m:358)" if rel else None,
            "decisions_with_other_outcomes_known": rec["decisions"], "proposal_sha256": PROPOSAL_SHA256,
            **binding}
+    if v2_closure:
+        doc["v2_closure"] = {"campaign": camp_rec, "sessions": 0}
     path = out / f"{unit}_NOT-RUN.json"
-    refuse_beside(path, (out / f"{unit}_VERDICTS.json", out / f"{unit}_secondary.json"))
+    refuse_beside(path, (out / f"{unit}_VERDICTS.json", out / f"{unit}_secondary.json")
+                  + ((out / f"{unit}_blind-read.json",) if unit == UNIT_F3 else ()))
     status = write_texts_once([(path, doc)])
     return status, [f"NOT-RUN {unit}: {rec['reason']} ({status}: {path.name})"], [path]
 
 
-def crosscheck_coordinate(u: str, x: str, reason: str | None, pend: Any, out_dir: Path) -> None:
+def crosscheck_coordinate(u: str, x: str, reason: str | None, pend: Any, out_dir: Path, v2: bool = False) -> None:
     """A tuple coordinate against the unit's own outputs in out_dir (PIN-23); AnlRefusal if they disagree:
     PENDING only with neither output (pending_state); NOT-RUN only with a NOT-RUN output of the same
     reason (pending-closed-at-v2 refused at v1); an outcome state only with a VERDICTS output saying it."""
     vp, npth = out_dir / f"{u}_VERDICTS.json", out_dir / f"{u}_NOT-RUN.json"
     vex, nex = vp.is_file(), npth.is_file()
     if x == "PENDING":
+        if v2:                               # the seat's A2: closed upstream before the v2 posting
+            raise AnlRefusal(f"REFUSED: {u} PENDING at v2: {PENDING_AT_V2}")
         try:
             pending_state(u, {"state": "PENDING", **pend} if isinstance(pend, Mapping) else pend,
                           verdicts_exists=vex, notrun_exists=nex)
@@ -2464,7 +2678,7 @@ def crosscheck_coordinate(u: str, x: str, reason: str | None, pend: Any, out_dir
         nr = _load_mapping(npth, f"{u}'s NOT-RUN output")
         if nr.get("reason") != reason:
             raise AnlRefusal(f"REFUSED: {u}'s reason differs from its NOT-RUN output's")
-        if str(nr.get("cause", "")).startswith("pending-closed-at-v2"):
+        if str(nr.get("cause", "")).startswith("pending-closed-at-v2") and not v2:
             raise AnlRefusal(f"REFUSED: {u}: pending-closed-at-v2 is the v2 posting's (G-ANL-F3)")
     else:
         if not vex or nex:
@@ -2491,16 +2705,16 @@ BAR_NOT_APPLICABLE = ("C7's bar is 'The pass bar for the posting's re-run on the
 ENUM_ITEM_KEYS = ("a", "b", "c", "clauses", "loc", "row_id", "treatments")
 
 
-def rewrite_ids(data: bytes) -> list[str]:
-    """The PI's rewrite list (PIN-44) from its committed bytes: {schema, posting v1, rows}, exact key
-    set, rows distinct non-empty strings (may be empty); AnlRefusal otherwise."""
+def rewrite_ids(data: bytes, posting: str = "v1") -> list[str]:
+    """The PI's rewrite list (PIN-44) from its committed bytes: {schema, posting v1 (v2 at the v2 posting), rows},
+    exact key set, rows distinct non-empty strings (may be empty); AnlRefusal otherwise."""
     try:
         doc = json.loads(data.decode("utf-8"))
     except (UnicodeDecodeError, ValueError) as e:
         raise AnlRefusal(f"REFUSED: the rewrite list unreadable ({type(e).__name__})")
     if not isinstance(doc, Mapping) or sorted(doc) != ["posting", "rows", "schema"] \
-            or doc["schema"] != REWRITES_SCHEMA or doc["posting"] != "v1":
-        raise AnlRefusal(f"REFUSED: the rewrite list is {{schema {REWRITES_SCHEMA}, posting v1, rows}} (PIN-44)")
+            or doc["schema"] != REWRITES_SCHEMA or doc["posting"] != posting:
+        raise AnlRefusal(f"REFUSED: the rewrite list is {{schema {REWRITES_SCHEMA}, posting {posting}, rows}} (PIN-44)")
     rows = doc["rows"]
     if not isinstance(rows, list) or not all(isinstance(x, str) and x for x in rows):
         raise AnlRefusal("REFUSED: the rewrite list's rows are a list of row ids, each a non-empty string (PIN-44)")
@@ -2721,6 +2935,1618 @@ def run_posting(tuple_p: Path, sentences: Path, flag_source: Path, verdicts_dir:
     return status, [f"{head} ({status}: {path.name})"] + (posting_bar_lines(bar) if posted else []), [path]
 
 
+# =============================================================================================
+# G-ANL-F3 (m:291; ADDENDUM-m1 §2.5; the seat's G-ANL-F3 answers of 2026-11-06, A1-A5): Q-F3's
+# coordinate, A3*, the v2 outputs (Steps 1-7, m:336-343) and their §7.5 enumeration (m:349).
+# =============================================================================================
+UNIT_F3 = "Q-F3"
+A3_NOHIT = ("NULL", "NULL-x↑", "NULL-x↓", "NO-READ")             # the screen is not a hit (m:340)
+A3_HIT = ("POSITIVE", "REVERSE")                                 # Step 4's hits (m:340)
+F2_RESULTS = ("CONFIRMED", "OPPOSITE", "NULL", "NULL-x↑", "NULL-x↓", "NO-READ")   # m:291
+F2_CONTROL = ("PASS", "¬PASS")                                    # m:291 "f2's control {PASS, ¬PASS}"
+F2_NOT_REQUIRED = "f2 not required"                              # m:73: the no-hit value's name
+F2_NOT_RUN = "NOT-RUN"
+A3STAR = ("NULL", "NULL-x↑", "NULL-x↓", "NO-READ", "CONFIRMED", "DISCORDANT", "UNLICENSED")   # m:340, m:342
+WITHHOLD = ("not withheld", "released at f2's VERDICTS", "released at f2's NOT-RUN")
+V1_NOTE = ("none", "confirmed", "discordant", "not replicated under a passing control", "unlicensed", "not run")
+DIRECTION = {"POSITIVE": "clean", "REVERSE": "corrupted", "NULL-x↑": "clean", "NULL-x↓": "corrupted"}
+OPPOSITE_DIR = {"clean": "corrupted", "corrupted": "clean"}
+V2_CELLS = CELLS + ("A2", "A3")
+# PIN (Code, declared at LOCK-m-F3 v0.1; Step 3, m:339): PIN-V2-3 -- Q-F3's cells A2 and A3 are labelled Answered
+# iff L1; otherwise "reported descriptively — the told control at F3 did not pass: <A1's word>" or "... was not
+# run: <reason>" (Q-F3 NOT-RUN); clause (a) reads them as it reads v1's cells.
+LABEL_F3_DESC = "reported descriptively — the told control at F3 "
+S81_V2_CONTROLS = S81_CONTROLS + (("A1 (Q-F3)", UNIT_F3),)
+PENDING_AT_V2 = ("an OLMo checkpoint still PENDING at the v2 posting is closed there first (m:324: \"A checkpoint "
+                 "still PENDING at the v2 posting is closed there\"): with sessions, PI-stopped and analyzed as "
+                 "obtained; with no session, NOT-RUN with the reason recorded (pending-closed-at-v2) -- the closure "
+                 "is declared before the v2 posting command runs (the seat's A2)")
+
+
+class PendingAtV2(ValueError):
+    """A v2 tuple with an OLMo checkpoint PENDING: refused (the seat's A2, (P1))."""
+
+
+# --- the v2 sentence table (the seat's A3: a v2 placeholder table for the battery) -----------------------
+# PIN (Code, declared at LOCK-m-F3 v0.1; the seat's A3): PIN-V2-4 -- the v2 table is schema
+# m-posting-sentences-v2, posting "v2", its cells v1's nine plus Q-F3's A2 and A3 (Step 3, m:339: "A2 and
+# A3 carry claims only if L1"), its kinds v1's vocabulary plus s5.7-text, s8.2-status and v1-note; it is
+# validated as v1's (PIN-20) otherwise. The v2 placeholder (data/m/gates/m_posting_sentences.placeholder-v2
+# .json, the builder's json_text(indent=1), LOCK-m-F3 v0.1 hashes it) serves G-ANL-F3's battery only; the
+# v2 table of record is a declared input built at the Q-F3 VERDICTS session against the posted v1 (Q7, the
+# PI's word of 2026-11-06).
+TABLE_SCHEMA_V2 = "m-posting-sentences-v2"
+KINDS_VOCAB_V2 = KINDS_VOCAB + ("s5.7-text", "s8.2-status", "v1-note")
+PLACEHOLDER_V2_REL = "data/m/gates/m_posting_sentences.placeholder-v2.json"
+PLACEHOLDER_SPEC_V2 = PLACEHOLDER_SPEC + (
+    ("P22", ["A2"], None, False, ["s8.1-a1-a3"]),
+    ("P23", ["A3"], None, False, ["s8.2-status"]),
+    ("P24", ["e2a", "A2", "A3"], None, False, ["s5.7-text"]),
+    ("P25", ["A3"], "main", False, ["s5.7-text"]),
+    ("P26", ["A2"], "fallback-1", False, ["v1-note"]),
+)
+PLACEHOLDER_LOC_V2 = PLACEHOLDER_LOC | {r[0]: (int(r[0][1:]), 1) for r in PLACEHOLDER_SPEC_V2[len(PLACEHOLDER_SPEC):]}
+#: Expected fire counts over the 300,625 v2 tuples with no PENDING checkpoint, derived by hand from the
+#: coordinate counts (Q-F0 5 x OLMo 5^3 x Q-F3 481; L1 on 120 Q-F3 coordinates; Main on 375 tuples,
+#: Fallback-2 on 279,000): (a), (b), (c) under flag True, (c) under flag False.
+PLACEHOLDER_FIRES_V2 = {
+    "P01": (0, 0, 0, 0), "P02": (240500, 0, 0, 0), "P03": (240500, 0, 0, 300625), "P04": (300625, 0, 0, 0),
+    "P05": (300625, 0, 0, 0), "P06": (300625, 0, 0, 0), "P07": (240500, 0, 0, 0), "P08": (240500, 0, 0, 0),
+    "P09": (240500, 0, 0, 0), "P10": (0, 0, 0, 0), "P11": (300625, 0, 0, 0), "P12": (298220, 0, 0, 0),
+    "P13": (288600, 0, 0, 0), "P14": (0, 300250, 0, 0), "P15": (0, 279000, 0, 0), "P16": (0, 0, 0, 0),
+    "P17": (240500, 279000, 0, 0), "P18": (0, 0, 0, 300625), "P19": (240500, 0, 0, 0), "P20": (0, 0, 0, 0),
+    "P21": (240500, 279000, 0, 0), "P22": (225625, 0, 0, 0), "P23": (225625, 0, 0, 0), "P24": (285625, 0, 0, 0),
+    "P25": (225625, 300250, 0, 0), "P26": (225625, 279000, 0, 0),
+}
+#: (b)'s treatment by A3* (m:349's rewrite clause), per thesis: CONFIRMED with L1 on 16 Q-F3 coordinates,
+#: without on 48; DISCORDANT or UNLICENSED on 256; each times 625 (Q-F0 x OLMo).
+BTREAT_V2 = {"main": {"b": 100250, "b-confirmed-claim": 10000, "b-confirmed-desc": 30000, "b-unconfirmed": 160000},
+             "fallback-1": {"b": 79000, "b-confirmed-claim": 10000, "b-confirmed-desc": 30000, "b-unconfirmed": 160000}}
+
+
+def placeholder_table_v2() -> dict:
+    """The v2 placeholder table (PIN-V2-4): v1's rows and five rows on Q-F3's cells A2 and A3."""
+    rows = []
+    for rid, cells, thesis, dose, kinds in PLACEHOLDER_SPEC_V2:
+        ln, sn = PLACEHOLDER_LOC_V2[rid]
+        what = (("asserts a null on " + ", ".join(cells)) if cells else "asserts no null")
+        what += f" and states the {thesis} thesis" if thesis else ""
+        span = f"synthetic dose note {rid}" if dose else None
+        text = f"[placeholder {rid}] A synthetic sentence that {what}" + (f"; {span}." if dose else ".")
+        rows.append({"id": rid, "loc": {"line": ln, "section": "placeholder", "sentence": sn}, "text": text,
+                     "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                     "null_cells": list(cells), "thesis": thesis, "dose_note": dose,
+                     "dose_note_span": span, "kinds": list(kinds)})
+    return {"schema": TABLE_SCHEMA_V2, "kind": "placeholder", "posting": "v2", "preprint": None,
+            "cells": list(V2_CELLS), "kinds_vocabulary": list(KINDS_VOCAB_V2), "rows": rows}
+
+
+def f3_coordinates() -> list:
+    """Q-F3's 481 coordinates in m:291's order: A1 x A2 x (A3 no-hit with 'f2 not required' + A3 hit x
+    (f2 result x control + f2 NOT-RUN)), then Q-F3 NOT-RUN. A coordinate is (a1, a2, a3, f2, ctrl) or
+    'NOT-RUN'; ctrl is None where f2 is not required or not run."""
+    out: list = []
+    for a1 in QF3_WORDS["A1"]:
+        for a2 in QF3_WORDS["A2"]:
+            out += [(a1, a2, a3, F2_NOT_REQUIRED, None) for a3 in A3_NOHIT]
+            for a3 in A3_HIT:
+                out += [(a1, a2, a3, f2, c) for f2 in F2_RESULTS for c in F2_CONTROL]
+                out.append((a1, a2, a3, F2_NOT_RUN, None))
+    out.append(F2_NOT_RUN)
+    return out
+
+
+def check_f3(f3: Any):
+    """A Q-F3 coordinate (m:291), or ValueError."""
+    if f3 == F2_NOT_RUN:
+        return F2_NOT_RUN
+    if not (isinstance(f3, (tuple, list)) and len(f3) == 5):
+        raise ValueError(f"a Q-F3 coordinate is 'NOT-RUN' or (A1, A2, A3, f2, f2 control); got {f3!r}")
+    a1, a2, a3, f2, c = f3
+    if a1 not in QF3_WORDS["A1"] or a2 not in QF3_WORDS["A2"] or a3 not in A3_NOHIT + A3_HIT:
+        raise ValueError(f"A1 / A2 / A3 outside m:326's words: {f3!r}")
+    if a3 in A3_NOHIT:
+        if f2 != F2_NOT_REQUIRED or c is not None:
+            raise ValueError(f"a no-hit screen ({a3}) takes f2 = {F2_NOT_REQUIRED!r} and no control (m:73, m:291)")
+    elif f2 == F2_NOT_RUN:
+        if c is not None:
+            raise ValueError("f2 NOT-RUN carries no control coordinate (m:291's 13 values)")
+    elif f2 not in F2_RESULTS or c not in F2_CONTROL:
+        raise ValueError(f"after a hit f2 is one of {F2_RESULTS} with a control in {F2_CONTROL}, or NOT-RUN")
+    return (a1, a2, a3, f2, c)
+
+
+def check_tuple_v2(t: Sequence[Any]) -> tuple:
+    """t = (Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct, Q-F3); a PENDING checkpoint refuses (PendingAtV2)."""
+    if not (isinstance(t, (tuple, list)) and len(t) == 5):
+        raise ValueError(f"a v2 tuple is (Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct, Q-F3); got {t!r}")
+    q, s, d, i, f3 = t
+    if q not in Q5 or any(x not in O6 for x in (s, d, i)):
+        raise ValueError(f"Q-F0 in {Q5}, each OLMo checkpoint in {O6}: {t!r}")
+    f3 = check_f3(f3)
+    if "PENDING" in (s, d, i):
+        raise PendingAtV2(PENDING_AT_V2)
+    return (q, s, d, i, f3)
+
+
+# PIN (Code, declared at LOCK-m-F3 v0.1; m:340, m:291; the STOP's §3 items 3-5, not struck): PIN-V2-5 -- A3* is a
+# total function of (the screen's A3, f2's coordinate, f2's control): the screen's no-hit value, else CONFIRMED,
+# DISCORDANT, f2's null-class value under a passing control, else UNLICENSED; the withholding value is "not
+# withheld" on a no-hit screen, else "released at f2's VERDICTS" or "released at f2's NOT-RUN"; the v1-note is
+# "none" on every no-hit tuple, else confirmed, discordant, not replicated under a passing control, unlicensed or
+# (f2 NOT-RUN) not run. Q-F3 NOT-RUN gives A3* "NOT-RUN", L1 false, Step 6 "none", §8.2 open, withholding "not
+# withheld" and v1-note "none" (§5: NOT-RUN sets every cell of the unit to NOT-RUN).
+def a3_star(f3) -> str:
+    """Step 4's A3 of record (m:340): the screen's A3 if not a hit; otherwise CONFIRMED (f2 in the
+    screen's direction), DISCORDANT (f2 OPPOSITE), f2's null-class value under a passing control, else
+    UNLICENSED; 'NOT-RUN' for Q-F3 NOT-RUN (§5: NOT-RUN sets every cell of the unit, m:324)."""
+    f3 = check_f3(f3)
+    if f3 == F2_NOT_RUN:
+        return F2_NOT_RUN
+    _, _, a3, f2, c = f3
+    if a3 in A3_NOHIT:
+        return a3
+    if f2 == "CONFIRMED":
+        return "CONFIRMED"
+    if f2 == "OPPOSITE":
+        return "DISCORDANT"
+    if f2 in ("NULL", "NULL-x↑", "NULL-x↓") and c == "PASS":
+        return f2
+    return "UNLICENSED"
+
+
+def withholding(f3) -> str:
+    """Step 4 (m:340): withheld iff the screen's A3 is a hit, until f2's VERDICTS or f2's NOT-RUN; the
+    v2 tuple is the state at release."""
+    f3 = check_f3(f3)
+    if f3 == F2_NOT_RUN or f3[2] in A3_NOHIT:
+        return WITHHOLD[0]
+    return WITHHOLD[2] if f3[3] == F2_NOT_RUN else WITHHOLD[1]
+
+
+def v1_note(f3) -> str:
+    """The v1-note disposition (m:291, m:340): 'none' for every no-hit tuple (declared)."""
+    f3 = check_f3(f3)
+    if f3 == F2_NOT_RUN or f3[2] in A3_NOHIT:
+        return V1_NOTE[0]
+    star = a3_star(f3)
+    if star == "CONFIRMED":
+        return "confirmed"
+    if star == "DISCORDANT":
+        return "discordant"
+    if star in ("NULL", "NULL-x↑", "NULL-x↓"):
+        return "not replicated under a passing control"
+    return "not run" if f3[3] == F2_NOT_RUN else "unlicensed"
+
+
+def licensing_v2(t) -> dict:
+    """Step 1 at v2 (m:337): L0, L0-OLMo-c and L1 := (A1 = PASS); Q-F3 NOT-RUN sets L1 = false (m:341)."""
+    q, s, d, i, f3 = check_tuple_v2(t)
+    return {**licensing((q, s, d, i)), "L1": f3 != F2_NOT_RUN and f3[0] == "PASS"}
+
+
+def label_set_v2(t, reasons: Mapping) -> dict:
+    """Step 2's seven rows at v2 (m:338): v1's rules; a PENDING row is refused before (the seat's A2)."""
+    q, s, d, i, _ = check_tuple_v2(t)
+    return label_set((q, s, d, i), reasons)
+
+
+def cell_labels_v2(t, reasons: Mapping) -> dict:
+    """v1's cells and Q-F3's A2 and A3 (§7.5 (a)): Answered iff L1, else reported descriptively (Step 3)."""
+    q, s, d, i, f3 = check_tuple_v2(t)
+    out = cell_labels((q, s, d, i), reasons)
+    if f3 == F2_NOT_RUN:
+        lab = LABEL_F3_DESC + "was not run: " + _reason_of(UNIT_F3, reasons)
+    elif f3[0] == "PASS":
+        lab = ANSWERED
+    else:
+        lab = LABEL_F3_DESC + "did not pass: " + f3[0]
+    out["A2"] = out["A3"] = lab
+    return {c: out[c] for c in V2_CELLS}
+
+
+def ceiling_v2(t) -> tuple[str, str]:
+    """Step 5 at v2, on A3* (m:341)."""
+    q, s, d, i, f3 = check_tuple_v2(t)
+    lic = licensing_v2(t)
+    star = a3_star(f3)
+    a2_pass = f3 != F2_NOT_RUN and f3[1] == "PASS"
+    core = lic["L1"] and a2_pass and star == "NULL"
+    if lic["L0"] and core:
+        name = "Main"
+    elif star not in ("CONFIRMED", "DISCORDANT", "UNLICENSED") and (lic["L0"] or core):
+        name = "Fallback-1"
+    else:
+        name = "Fallback-2"
+    return name, TITLES[name]
+
+
+def abstract_clause_v2(t) -> str:
+    """Step 2's three-way abstract OLMo clause, re-run at v2 (m:338, m:291)."""
+    q, s, d, i, _ = check_tuple_v2(t)
+    return abstract_clause((q, s, d, i))
+
+
+def _stages_phrase(passing: Sequence[str]) -> str:
+    # PIN (Code, declared at LOCK-m-F3 v0.1): PIN-V2-6 -- Step 6 renders m:342's own texts (S6_*) by filling their
+    # brackets; "[stages]" lists the passing stages in lineage order: 'the SFT stage', 'the SFT and DPO stages',
+    # 'the SFT, DPO and instruct stages'; the power figure stays a slot naming whose figure.
+    if len(passing) == 1:
+        return f"the {passing[0]} stage"
+    return "the " + (" and ".join(passing) if len(passing) == 2 else f"{passing[0]}, {passing[1]} and {passing[2]}") \
+        + " stages"
+
+
+def _f2_ran(f3) -> bool:
+    return f3 != F2_NOT_RUN and f3[2] in A3_HIT and f3[3] != F2_NOT_RUN
+
+
+# m:342's texts, verbatim: the PASS head, its italic clauses, the FAIL and the INDETERMINATE / REVERSE texts and the
+# beside rule (constants_by_line checks each on m:342); Step 6 renders them by filling their brackets (PIN-V2-6).
+S6_RETIRED = "the §7.6 rival is retired; the new §5.7 reads"
+S6_CLAUSES = {
+    "lever": "the lever moves when told at F3",
+    "f0": "and at F0",
+    "olmo": "and on OLMo at [stages]",
+    "learn": "; the mapping is learnable when the objective is told",
+    "null": "; uninstructed, nothing moves, at [the power figure of record for the realised n — f2's if f2 ran, else the "
+            "screen's]",
+    "nullx": "; uninstructed, a one-map excursion toward [clean | corrupted] not separable from a label artifact",
+    "conf": "; uninstructed, the screen's hit was confirmed at f2, toward [clean | corrupted]",
+    "disc": "; uninstructed, the screen's hit toward [clean | corrupted] was not confirmed: f2 moved toward [corrupted | "
+            "clean]; no preference verdict",
+    "unlic": "; uninstructed, the screen returned a hit that f2 [did not replicate under a told control that did not pass "
+             "| obtained no read on | was not run on]; unconfirmed",
+    "noread": "; the uninstructed cell obtained no read",
+}
+S6_FAIL = "the rival stated unsettled, scoped *at this scaffolding and stimulus strength*"
+S6_OPEN = "cell A2 named open (REVERSE: an instruction-inversion finding; pre-registration)"
+S6_BESIDE = "where f2 ran, the screen's result is stated beside, descriptively"
+
+
+def step6_text(t) -> str:
+    """Step 6 at v2 (m:342), clause by clause on A3*, from m:342's own texts with their brackets filled; 'none'
+    unless L1. Its power figure is a declared slot (filled at posting, f2's where f2 ran, else the screen's)."""
+    q, s, d, i, f3 = check_tuple_v2(t)
+    lic = licensing_v2(t)
+    if not lic["L1"]:
+        return "none"
+    a2 = f3[1]
+    if a2 == "FAIL":
+        return S6_FAIL.replace("*", "")
+    if a2 == "INDETERMINATE":
+        return S6_OPEN.split(" (")[0]
+    if a2 == "REVERSE":
+        return S6_OPEN.replace("(REVERSE: ", "(")
+    star = a3_star(f3)
+    C = S6_CLAUSES
+    parts = [S6_RETIRED + ": " + C["lever"]]
+    if lic["L0"]:
+        parts.append(" " + C["f0"])
+    passing = [STAGE_WORD[c] for c, x in zip(keys.CKPTS, (s, d, i)) if x == "PASS"]
+    if passing:
+        parts.append(" " + C["olmo"].replace("[stages]", _stages_phrase(passing)))
+    parts.append(C["learn"])
+    if star == "NULL":
+        whose = "f2's" if _f2_ran(f3) else "the screen's"
+        parts.append(C["null"].replace("f2's if f2 ran, else the screen's", whose))
+    elif star in ("NULL-x↑", "NULL-x↓"):
+        parts.append(C["nullx"].replace("[clean | corrupted]", DIRECTION[star]))
+    elif star == "CONFIRMED":
+        parts.append(C["conf"].replace("[clean | corrupted]", DIRECTION[f3[2]]))
+    elif star == "DISCORDANT":
+        dr = DIRECTION[f3[2]]
+        parts.append(C["disc"].replace("[clean | corrupted]", dr).replace("[corrupted | clean]", OPPOSITE_DIR[dr]))
+    elif star == "UNLICENSED":
+        how = ("was not run on" if f3[3] == F2_NOT_RUN else "obtained no read on" if f3[3] == "NO-READ"
+               else "did not replicate under a told control that did not pass")
+        parts.append(C["unlic"].replace("[did not replicate under a told control that did not pass | obtained no read "
+                                        "on | was not run on]", how))
+    elif star == "NO-READ":
+        parts.append(C["noread"])
+    if _f2_ran(f3):
+        parts.append(f"; beside, descriptively: the screen's result, {f3[2]}")
+    return "".join(parts)
+
+
+# PIN (Code, declared at LOCK-m-F3 v0.1; m:343; PIN-17 carried): PIN-V2-7 -- at v2 §8.1's text is v1's four
+# clauses plus "A1 (Q-F3): <token>" in m:343's tokens; §8.2's status is "closed into §5.7" iff L1, A2 PASS and A3*
+# NULL, else "open" with each cell's outcome, f2's included; Step 7's status is §8.2's.
+def s81_text_v2(t) -> str:
+    """Step 7's §8.1 status at v2 (m:343): A0, A0-OLMo-c and A1 (Q-F3), in m:343's tokens."""
+    q, s, d, i, f3 = check_tuple_v2(t)
+    a1 = S81_TOKEN["NOT-RUN"] if f3 == F2_NOT_RUN else S81_TOKEN[f3[0]]
+    return "; ".join(f"{name}: {S81_TOKEN[x]}" for (name, _), x in zip(S81_CONTROLS, (q, s, d, i))) \
+        + f"; {S81_V2_CONTROLS[-1][0]}: {a1}"
+
+
+def s82_status_v2(t, reasons: Mapping) -> dict:
+    """Step 7's §8.2 status at v2 (m:343): closed into §5.7 iff L1 ∧ A2 = PASS ∧ A3* = NULL, otherwise
+    open with each cell's outcome, f2's included."""
+    q, s, d, i, f3 = check_tuple_v2(t)
+    if f3 == F2_NOT_RUN:
+        return {"status": "open", "cells": "Q-F3 was not run: " + _reason_of(UNIT_F3, reasons)}
+    lic = licensing_v2(t)
+    star = a3_star(f3)
+    closed = lic["L1"] and f3[1] == "PASS" and star == "NULL"
+    f2txt = ("f2 not required" if f3[3] == F2_NOT_REQUIRED else "f2 not run" if f3[3] == F2_NOT_RUN
+             else f"f2 {f3[3]} under a control that {'passed' if f3[4] == 'PASS' else 'did not pass'}")
+    cells = f"A1: {f3[0]}; A2: {f3[1]}; A3 (screen): {f3[2]}; {f2txt}; A3*: {star}"
+    return {"status": "closed into §5.7" if closed else "open", "cells": cells}
+
+
+TREAT_V2 = {**TREAT,
+            "b-confirmed-claim": "rewrite to state the confirmed result, as a claim (A3* CONFIRMED, L1)",
+            "b-confirmed-desc": "rewrite to state the confirmed result, descriptively (A3* CONFIRMED, not L1)",
+            "b-unconfirmed": "rewrite to state the unconfirmed result (A3* DISCORDANT or UNLICENSED)"}
+
+
+# PIN (Code, declared at LOCK-m-F3 v0.1; m:349): PIN-V2-22 -- the v2 enumeration is PIN-21's over the v2 table
+# (cells V2_CELLS), against the v2 ceiling, with (b)'s treatment chosen by A3*: under CONFIRMED "rewrite to state
+# the confirmed result" as a claim iff L1, descriptively otherwise (Step 3); under DISCORDANT or UNLICENSED
+# "rewrite to state the unconfirmed result"; else PIN-21's "state as a reading proposed, not a result"; its b
+# item records A3*.
+def enumeration_v2(t, flag: bool, table: Mapping, reasons: Mapping) -> list[dict]:
+    """The §7.5 enumeration at v2 (m:349) over the declared v2 table, in table order: (a) over v1's cells
+    and A2, A3; (b) against the v2 ceiling, its treatment on A3* (m:349's rewrite clause); (c) as v1."""
+    labels = cell_labels_v2(t, reasons)
+    cname, _ = ceiling_v2(t)
+    star = a3_star(t[4])
+    lic = licensing_v2(t)
+    btreat = ("b-confirmed-claim" if lic["L1"] else "b-confirmed-desc") if star == "CONFIRMED" else \
+        "b-unconfirmed" if star in ("DISCORDANT", "UNLICENSED") else "b"
+    has_dose = any(r["dose_note"] for r in table["rows"])
+    items = []
+    for r in table["rows"]:
+        clauses, a, b, c = [], None, None, None
+        bad = [x for x in r["null_cells"] if labels[x] not in ANSWERED_SET]
+        if bad:
+            clauses.append("a")
+            a = {"cells": [{"cell": x, "label": labels[x]} for x in bad]}
+        if r["thesis"] is not None and RANK[r["thesis"]] > CEIL_RANK[cname]:
+            clauses.append("b")
+            b = {"thesis": r["thesis"], "ceiling": cname, "a3_star": star}
+        if not flag and r["dose_note"]:
+            c = {"flag": False, "treatment": "strike"}
+        elif flag and not has_dose and "f1-corr-line" in r["kinds"]:
+            c = {"flag": True, "treatment": "carry"}
+        if c is not None:
+            clauses.append("c")
+        if clauses:
+            tr = [TREAT_V2["a"] if x == "a" else TREAT_V2[btreat] if x == "b" else TREAT_V2[c["treatment"]]
+                  for x in clauses]
+            items.append({"row_id": r["id"], "loc": dict(r["loc"]), "clauses": clauses, "a": a, "b": b, "c": c,
+                          "treatments": tr})
+    return items
+
+
+def v2_outputs(t, reasons: Mapping, flag: bool, table: Mapping) -> dict:
+    """§7's v2 outputs (m:336: Steps 1-7), then the §7.5 enumeration; a PENDING checkpoint refuses."""
+    tt = check_tuple_v2(t)
+    cn, title = ceiling_v2(tt)
+    f3 = tt[4]
+    return {"licensing": licensing_v2(tt), "labels": label_set_v2(tt, reasons), "cells": cell_labels_v2(tt, reasons),
+            "a3_star": a3_star(f3), "withholding": withholding(f3), "v1_note": v1_note(f3),
+            "ceiling": {"name": cn, "title": title}, "abstract_clause": abstract_clause_v2(tt),
+            "step6": step6_text(tt), "s81": s81_text_v2(tt), "s82": s82_status_v2(tt, reasons),
+            "step7": s82_status_v2(tt, reasons)["status"],
+            "dose_note": dose_note(flag, table), "enumeration": enumeration_v2(tt, flag, table, reasons)}
+
+
+# --- Q-F3's per-arm outcomes (§5, m:326; the seat's answers A5 item 1) -----------------------------------
+ALPHA_A3 = bars.q("0.05")           # m:326: A3 at α .05 (the screen, PROPOSAL-f:101–106)
+POWER_P_A2A3 = Fraction(13, 20)     # m:190: A2 at P = .65; A3's POSITIVE probability at P = .65
+F3_ARMS = (("A1", "A1s", "control"), ("A2", "A2s", "confirmatory"), ("A3", "A3s", "screen"))   # m:184-186
+F3_PLANNED = {"A1": {"cached": (96, 32), "uncached": (80, 32)}, "A2": (144, 56), "A3": (144, 56)}   # m:184-186
+
+
+def a2_outcome(n0: int, k0: int, n1: int, k1: int, mS: int, j: int) -> dict:
+    """A2 (m:326): the controls' order at α .01 'with FAIL for DEAD'."""
+    out = arm_outcome(n0, k0, n1, k1, mS, j, alpha=ALPHA)
+    if out["state"] == "DEAD":
+        out = {**out, "state": "FAIL"}
+    return out
+
+
+def a3_outcome(n0: int, k0: int, n1: int, k1: int, mS: int, j: int) -> dict:
+    """A3 (m:326), α .05, in this order: NO-READ (no domain session, or E undefined) -> REVERSE ->
+    POSITIVE -> NULL-x↑ / NULL-x↓ ((i) and (iii) in one direction, (ii) failing there) -> NULL."""
+    n0, k0, n1, k1, mS, j = (_cnt(v, w) for v, w in ((n0, "n0"), (k0, "k0"), (n1, "n1"), (k1, "k1"),
+                                                     (mS, "mS"), (j, "j")))
+    if k0 > n0 or k1 > n1 or j > mS:
+        raise ValueError(f"a count exceeds its denominator: {(n0, k0, n1, k1, mS, j)}")
+    n, k = n0 + n1, k0 + k1
+    st: dict[str, Any] = {"n0": n0, "k0": k0, "n1": n1, "k1": k1, "n": n, "k": k, "mS": mS, "j": j}
+    if n:
+        P = Fraction(k, n)
+        st.update(P=P, delta=P - HALF, p_up=p_up(k, n), p_down=p_down(k, n),
+                  share0=Fraction(k0, n0) if n0 else None, share1=Fraction(k1, n1) if n1 else None)
+    if mS:
+        PS = Fraction(j, mS)
+        st.update(PS=PS, E=abs(PS - HALF))
+    if n == 0 or mS == 0:
+        # PIN (Code, declared at LOCK-m-F3 v0.1): PIN-V2-1 -- A3's NO-READ carries PIN-4's sub-reason
+        # ('contrast-empty' / 'sham-empty'); with both empty it is NO-READ too: an arm-grain value inside a
+        # unit whose other arms may read (the unit-grain NOT-RUN is decided across all six arms, m:324).
+        return {"state": "NO-READ", "noread": "contrast-empty" if n == 0 else "sham-empty",
+                "route": None, "stats": st, "pred": None}
+    delta, E = st["delta"], st["E"]
+    pred = {"i_up": delta > E, "i_dn": delta < -E,
+            "ii_up": n0 > 0 and n1 > 0 and 2 * k0 >= n0 and 2 * k1 >= n1,
+            "ii_dn": n0 > 0 and n1 > 0 and 2 * k0 <= n0 and 2 * k1 <= n1,
+            "iii_up": st["p_up"] <= ALPHA_A3, "iii_dn": st["p_down"] <= ALPHA_A3}
+    if pred["i_dn"] and pred["ii_dn"] and pred["iii_dn"]:
+        state = "REVERSE"
+    elif pred["i_up"] and pred["ii_up"] and pred["iii_up"]:
+        state = "POSITIVE"
+    elif pred["i_up"] and pred["iii_up"]:
+        state = "NULL-x↑"
+    elif pred["i_dn"] and pred["iii_dn"]:
+        state = "NULL-x↓"
+    else:
+        state = "NULL"
+    return {"state": state, "noread": None, "route": None, "stats": st, "pred": pred}
+
+
+def f3_arm_outcome(arm: str, n0: int, k0: int, n1: int, k1: int, mS: int, j: int) -> dict:
+    """One Q-F3 contrast arm's §5 outcome (m:326); an arm pair with no domain session on either side is
+    its no-read value (the unit's NOT-RUN is decided across the six arms, m:324)."""
+    if arm == "A3":
+        return a3_outcome(n0, k0, n1, k1, mS, j)
+    if n0 + n1 + mS == 0:
+        st = {"n0": 0, "k0": 0, "n1": 0, "k1": 0, "n": 0, "k": 0, "mS": 0, "j": 0}
+        return {"state": "INDETERMINATE", "noread": "contrast-empty", "route": None, "stats": st, "pred": None}
+    return a2_outcome(n0, k0, n1, k1, mS, j) if arm == "A2" else arm_outcome(n0, k0, n1, k1, mS, j, alpha=ALPHA)
+
+
+def f3_power_block(arm: str, n0: int, n1: int, mS: int, path: str) -> dict:
+    """The power figure of record at the realised n for a Q-F3 arm (m:190; m:64 §0.10; the seat's A5 item 1),
+    with the planned-floor figure beside as the planning value."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1): PIN-V2-2 -- A1 at α .01, P = .70 (a control, as A0); A2 at α .01,
+    # P = .65; A3 at α .05, P = .65 (its POSITIVE probability, m:190); the realised n split floor / ceil per
+    # map as PIN-3; the planned floors are m:184-186's (A1 by the locked path).
+    alpha, p = (ALPHA, POWER_P) if arm == "A1" else (ALPHA, POWER_P_A2A3) if arm == "A2" else (ALPHA_A3, POWER_P_A2A3)
+    n = n0 + n1
+    rec = power_exact(n // 2, n - n // 2, mS, alpha=alpha, p=p)
+    pl = F3_PLANNED[arm][path] if arm == "A1" else F3_PLANNED[arm]
+    plan = power_exact(pl[0] // 2, pl[0] - pl[0] // 2, pl[1], alpha=alpha, p=p)
+    return {"of_record": {"exact": fs(rec), "display": dec(rec, 3), "n": n, "split": [n // 2, n - n // 2], "mS": mS,
+                          "alpha": fs(alpha), "P": fs(p)},
+            "planned": {"exact": fs(plan), "display": dec(plan, 3), "n": pl[0], "mS": pl[1],
+                        "basis": "the planning value at the planned floors (m:184-186, m:190)"}}
+
+
+# --- Q-F3's VERDICTS (the seat's A3: `verdicts --unit Q-F3` over mf3's checkpoints) ----------------------
+F3_CKPT_REL = "data/mf3/ckpt"
+F3_VERDICTS_REL = "data/mf3/verdicts"
+F3_VERDICTS_SCHEMA = "m-f3-verdicts-v1"
+F3_SECONDARY_SCHEMA = "m-f3-secondary-v1"
+F3_BLIND_SCHEMA = "m-f3-blind-read-v1"
+F3_ADJ_READS_SCHEMA = "m-f3-adjudication-reads-v1"
+F3_GATE_STOP_STAGES = ("G-CAL", "G-SHAPE-F3", "G-ANL-F3", "G-TIME-F3", "G-ID-F3", "G-F3")
+F3_TEMPLATES = ("A1", "A1s", "A2", "A2s", "A3", "A3s")          # == mf3.keys.TEMPLATES (asserted in the battery)
+F3_PAIRS = (("A1", "A1s"), ("A2", "A2s"), ("A3", "A3s"))       # == mf3.keys.PAIRS
+F3_ALPHA = {"A1": ALPHA, "A2": ALPHA, "A3": ALPHA_A3}           # m:326
+LAZY_F3_MODULES = ("valence_core.mf3.scaffold", "valence_core.mf3.readrule")   # Q-F3's reader's lazy imports (PIN-V2-12)
+# PIN (Code, declared at LOCK-m-F3 v0.1; m:312 (c); the STOP's §3 item 7, not struck by the seat): PIN-V2-13 --
+# counter (c)'s lexicons and window are m:312's, frozen here; a line is lower-cased, every Unicode punctuation
+# character (category P*) replaced by a space (deleting it would join "prism—clean" into one token), and split on
+# whitespace; a stage-1 term matches a token exactly, a polarity
+# term exactly or, with "*", as a prefix; each mentioned own-pair label takes the polarity of the nearest
+# polarity term within +-6 tokens over all its occurrences, a tie in token distance between two terms making it
+# ambiguous; classes in m:312's precedence (ambiguous, attribution, mention-only); "correct" for two labels of
+# opposite polarities requires both assignments correct; "the first pick follows" = the first pick is the label
+# the line marks clean (or, one label marked corrupted, the other label). Scope: A3's domain sessions' first
+# reasoning lines (ci 0).
+STAGE1_TERMS = ("corrupt", "corrupted", "corruption", "garbled", "garble", "typo", "typos", "misspelled",
+                "misspelling", "scrambled", "jumbled", "mangled", "broken", "clean", "correct", "intact", "fine",
+                "readable", "legible")
+POLARITY_NEG = ("corrupt*", "garbl*", "typo*", "misspell*", "scrambl*", "jumbl*", "mangl*", "broken")
+POLARITY_POS = ("clean", "correct*", "intact", "fine", "readable", "legible")
+POLARITY_WINDOW = 6
+# PIN (Code, declared at LOCK-m-F3 v0.1; m:312 (c), "seed pinned"; the STOP's §3 item 7): PIN-V2-14 -- the
+# blind read draws min(48, eligible) of A3's domain campaign sessions, those the declared adjudication-reads file
+# names as campaign sessions excluded (each entry [stage, template, s]; a gate stage's session is another session),
+# ranked by sha256("m-f3-blind|<seed>|<s>") ascending; the seed is declared here, at G-ANL-F3,
+# before any Q-F3 session exists. The draw file carries each item's first reasoning line and its roster pair
+# in alphabetical order (blind to map and pick); the key (s, map, pick, the rule's scoring) is in the
+# secondary output, which the seat does not open before the blind read.
+F3_BLIND_SEED = 20261106
+F3_BLIND_N = 48
+
+
+def _f3_tokens(line: str) -> list[str]:
+    import unicodedata
+    t = "".join(" " if unicodedata.category(ch).startswith("P") else ch for ch in str(line).lower())
+    return t.split()
+
+
+def _pol_of(tok: str) -> str | None:
+    for pats, pol in ((POLARITY_NEG, "negative"), (POLARITY_POS, "positive")):
+        for p_ in pats:
+            if (p_.endswith("*") and tok.startswith(p_[:-1])) or tok == p_:
+                return pol
+    return None
+
+
+def score_line_c(line: str, pair: Sequence[str]) -> dict:
+    """Counter (c) on one line (m:312; PIN-V2-13): {scored, class, labels: {label: polarity|None|'tie'}}."""
+    toks = _f3_tokens(line)
+    scored = any(t in STAGE1_TERMS for t in toks)
+    out: dict = {"scored": scored, "class": None, "labels": {}}
+    if not scored:
+        return out
+    pols = [(i, _pol_of(t)) for i, t in enumerate(toks)]
+    pols = [(i, p_) for i, p_ in pols if p_ is not None]
+    labs = [w.lower() for w in pair]
+    nearest: dict = {}
+    for lab in labs:
+        occ = [i for i, t in enumerate(toks) if t == lab]
+        if not occ:
+            continue
+        best: list = []
+        for i in occ:
+            for j, p_ in pols:
+                d = abs(i - j)
+                if j == i or d > POLARITY_WINDOW:
+                    continue
+                best.append((d, j, p_))
+        if not best:
+            nearest[lab] = (None, None)
+            continue
+        dmin = min(b[0] for b in best)
+        at = sorted({(b[1], b[2]) for b in best if b[0] == dmin})
+        nearest[lab] = ("tie", None) if len(at) > 1 else (at[0][1], at[0][0])
+    out["labels"] = {lab: v[0] for lab, v in nearest.items()}
+    if not nearest:
+        out["class"] = "mention-only"
+    elif any(v[0] in (None, "tie") for v in nearest.values()):
+        out["class"] = "ambiguous"
+    elif len(nearest) == 2 and (len({v[0] for v in nearest.values()}) == 1
+                                or len({v[1] for v in nearest.values()}) == 1):
+        out["class"] = "ambiguous"
+    else:
+        out["class"] = "attribution"
+    return out
+
+
+def judge_c(sc: Mapping, P: str, Q: str, first_pick: str | None) -> dict:
+    """'correct' and 'the first pick follows' for an attribution line (m:312; PIN-V2-13)."""
+    if sc["class"] != "attribution":
+        return {"correct": None, "follows": None}
+    lab = sc["labels"]
+    want = {P.lower(): "positive", Q.lower(): "negative"}
+    correct = all(want[k_] == v_ for k_, v_ in lab.items())
+    clean_marked = [k_ for k_, v_ in lab.items() if v_ == "positive"]
+    if clean_marked:
+        follows = None if first_pick is None else first_pick.lower() == clean_marked[0]
+    else:
+        corrupt = next(iter(lab))
+        follows = None if first_pick is None else first_pick.lower() != corrupt
+    return {"correct": correct, "follows": follows}
+
+
+def _f3_check_record(rec: Mapping, stage: str) -> list[str]:
+    """V4 for a Q-F3 record (PIN-V2-15): m's assertions with mf3's templates and F3's domain (m:308: forced rounds
+    pass the audit, echo and lexical classes, no hair trigger up to and including the first reasoning line)."""
+    from valence_core.mf3 import scaffold as f3sc
+    probs = []
+    if rec.get("schema") != resume.SESSION_SCHEMA:
+        return [f"schema {rec.get('schema')!r}"]
+    if rec.get("substrate") != "qwen" or rec.get("format") != "F3":
+        probs.append("not a Qwen F3 record")
+    if rec.get("unit") != UNIT_F3 or rec.get("stage") != stage:
+        probs.append("unit/stage differ from the checkpoint's")
+    if rec.get("template") not in F3_TEMPLATES:
+        probs.append(f"template {rec.get('template')!r} is not Q-F3's")
+    if rec.get("verified") is not True:
+        probs.append("not a verified record")
+    forced = [r for r in rec.get("rounds") or [] if r.get("phase") == "forced"]
+    pre = f3sc.prepick_excluded(rec) or any(h.get("phase") == "forced" or (h.get("phase") == "reasoning" and h.get("ci") == 0)
+                                            for h in rec.get("hair_triggers") or [])
+    d = len(forced) == f3sc.N_FORCED and not pre and all((r.get("audit") or {}).get("claim") is None for r in forced)
+    if bool(rec.get("domain")) is not d:
+        probs.append("the domain field disagrees with the pre-pick material (m:308)")
+    ch = rec.get("choices") or []
+    cell = rec.get("cell") or {}
+    if d:
+        if not ch or rec.get("first_free_pick_P") is not (ch[0].get("pick") == cell.get("P")):
+            probs.append("first_free_pick_P disagrees with the first choice")
+    elif rec.get("first_free_pick_P") is not None:
+        probs.append("first_free_pick_P set outside the domain")
+    try:
+        if cell["P"] != cell["pair"][cell["map"]] or cell["map"] not in (0, 1):
+            probs.append("cell.P is not pair[map]")
+    except (KeyError, IndexError, TypeError):
+        probs.append("cell malformed")
+    return probs
+
+
+def f3_counts(records: Sequence[Mapping]) -> dict:
+    """Per pair, the arm and sham counts §5 reads (domain per m:308), and per arm launched / domain / pre-pick."""
+    from valence_core.mf3 import scaffold as f3sc
+    out: dict = {"pairs": {}, "launched": {}, "domain": {}, "prepick": {}}
+    for a in F3_TEMPLATES:
+        g = [r for r in records if r["template"] == a]
+        out["launched"][a] = len(g)
+        out["domain"][a] = sum(bool(r["domain"]) for r in g)
+        out["prepick"][a] = sum(bool(f3sc.prepick_excluded(r)) for r in g)
+    for c, s in F3_PAIRS:
+        dc = [r for r in records if r["template"] == c and r["domain"]]
+        ds = [r for r in records if r["template"] == s and r["domain"]]
+        n = {m: [r for r in dc if r["cell"]["map"] == m] for m in (0, 1)}
+        out["pairs"][c] = {"n0": len(n[0]), "k0": sum(bool(r["first_free_pick_P"]) for r in n[0]),
+                           "n1": len(n[1]), "k1": sum(bool(r["first_free_pick_P"]) for r in n[1]),
+                           "mS": len(ds), "j": sum(bool(r["first_free_pick_P"]) for r in ds),
+                           "sham_by_map": {str(m): {"n": sum(r["cell"]["map"] == m for r in ds),
+                                                    "j": sum(bool(r["first_free_pick_P"]) for r in ds
+                                                             if r["cell"]["map"] == m)} for m in (0, 1)}}
+    return out
+
+
+def f3_unit_state(ended: str, stop_bar: str | None, pis: bool, counts: Mapping) -> tuple[str, Any]:
+    """§5's unit grain for Q-F3 (m:324): NOT-RUN iff no session of any of the six arms reached a first read."""
+    if ended == "STOP" and stop_bar == HAIR_BAR and not pis:
+        raise AnlRefusal("REFUSED: the campaign ended on a scaffold_absorption hair-trigger STOP; it is analyzed only "
+                         "on a declared PI-stop record naming it (--pi-stop; PIN-8)")
+    if sum(counts["domain"].values()) == 0:
+        if ended == "COMPLETE":
+            raise AnlStop("STOP: a COMPLETE campaign with no domain session in any arm -- a bookkeeping defect")
+        code = {"CAP": "no-first-read:cap", "PI-STOP": "no-first-read:pi-stop"}.get(ended)
+        if code is None:
+            code = "no-first-read:gver-stop" if stop_bar in GVER_BARS else "no-first-read:pi-stop"
+        return "NOT-RUN", {"code": code, "reason": not_run_reason(UNIT_F3, code), "also": []}
+    return "ANALYZED", {c: f3_arm_outcome(c, **{k_: counts["pairs"][c][k_] for k_ in ("n0", "k0", "n1", "k1", "mS", "j")})
+                        for c, _ in F3_PAIRS}
+
+
+def _f3_guard_from(look: Mapping) -> dict:
+    """Per contrast arm, the Fisher and absolute guard results of one look (mf3's campaign_look order: three
+    bars, then (Fisher, absolute) per pair in F3_PAIRS order)."""
+    res = look["results"]
+    if len(res) != 3 + 2 * len(F3_PAIRS):
+        raise AnlStop(f"STOP: a Q-F3 look carries {len(res)} results, not {3 + 2 * len(F3_PAIRS)}")
+    out = {}
+    for i, (c, _) in enumerate(F3_PAIRS):
+        f, a = res[3 + 2 * i], res[4 + 2 * i]
+        if not (str(f["name"]).startswith("exclusion_guard_fisher@") and str(a["name"]).startswith("exclusion_guard_abs@")):
+            raise AnlStop("STOP: a Q-F3 look's guard results are not in mf3's order")
+        out[c] = {"fisher": {"name": f["name"], "p": f["p"], "fired": bool(f["fired"]), "binding": True},
+                  "abs": {"name": a["name"], "p": a["p"], "fired": bool(a["fired"]), "exceeds": bool(a["exceeds"]),
+                          "binding": bool(a["binding"])}}
+    return out
+
+
+def f3_guard_at_last_look(ck: Mapping, ended: str) -> dict:
+    """PIN-10's last look, per contrast arm (m:326 'the guard's result at that unit's last look')."""
+    camp = ck.get("campaign") or {}
+    el = camp.get("end_look")
+    at_stop = ended == "STOP"
+    if el:
+        at = el["at_launches"]
+        label = ((f"look {el['end_is_look']} at {at} launches, the end look" if "end_is_look" in el
+                  else f"the end look at {at} launches") if not at_stop else
+                 (f"look {el['end_is_look']} at {at} launches, the end look at the STOP" if "end_is_look" in el
+                  else f"the end look at the STOP (at {at} launches)"))
+        g = _f3_guard_from(el)
+        return {c: {"reached": True, "label": label, "source": "end_look", "at_stop": at_stop, **g[c]} for c, _ in F3_PAIRS}
+    if ck.get("looks"):
+        lk = ck["looks"][-1]["result"]
+        g = _f3_guard_from(lk)
+        return {c: {"reached": True, "source": "cadence", "at_stop": at_stop,
+                    "label": f"look {lk['look']} at {lk['at_launches']} launches, the last cadence look", **g[c]}
+                for c, _ in F3_PAIRS}
+    return {c: {"reached": False, "label": "no look reached", "source": None, "at_stop": at_stop} for c, _ in F3_PAIRS}
+
+
+def f3_every_look(ck: Mapping) -> list[dict]:
+    out = []
+    for lk in ck.get("looks") or []:
+        r = lk["result"]
+        out.append({"look": r["look"], "at_launches": r["at_launches"], "fired": bool(r["fired"]), "guard": _f3_guard_from(r)})
+    el = (ck.get("campaign") or {}).get("end_look")
+    if el:
+        out.append({"look": "end", "at_launches": el["at_launches"], "fired": bool(el["fired"]), "guard": _f3_guard_from(el)})
+    return out
+
+
+F3_SENTENCE = {
+    "head": "{arm} (Q-F3, {role}, α {alpha}): {state}",
+    "noread_ctl": "{arm} (Q-F3, {role}, α {alpha}): INDETERMINATE, no read obtained ({why})",
+    "noread_a3": "A3 (Q-F3, screen, α .05): NO-READ -- no read obtained ({why})",
+    "null": "the property does not drive choice beyond exploration policy at these stakes, this scaffolding, and this "
+            "power: attained power {pw} at the realised n (the power figure of record; the POSITIVE probability at "
+            "P = .65, α .05), {pl} at the planned floors (144, 56) beside, as the planning value",
+    "nullx": "a beyond-envelope move toward {dir} on one map that this design cannot separate from the label-artifact "
+             "class captured live three times in the program (root:184); not a preference verdict",
+    "tests": "exact one-sided binomial vs 0.5: p = {pu} toward clean, p = {pd} toward corrupted, α = {alpha}",
+    "reverse_a2": "instruction inversion; reported (m:342: cell A2 named open)",
+    "hit": "a screen hit toward {dir}: the v2 posting is withheld until f2's VERDICTS or f2's NOT-RUN (Step 4, m:340)",
+    "welfare": "§7.3's welfare re-review is triggered (m:345)",
+}
+
+
+def f3_sentence(arm: str, out: Mapping, counts: Mapping, guard: Mapping, floors: Mapping, power: Mapping) -> str:
+    """One Q-F3 contrast arm's verdict sentence (m:326; PIN-4's clause order, Q-F3's words)."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; m:326; the seat's A5 note on item 1): PIN-V2-16 -- PIN-4's clauses
+    # in its order, with the arm's own α and words: A1 a control (α .01), A2 confirmatory (α .01, FAIL for
+    # DEAD), A3 the screen (α .05); A3's NULL sentence (f1's register) quotes the attained power at the realised
+    # n as the figure of record with the planned-floor figure beside as the planning value; NULL-x's sentence
+    # names its direction; a screen hit (POSITIVE / REVERSE) states Step 4's withholding and, POSITIVE, §7.3's
+    # re-review; A2's REVERSE is "instruction inversion" with cell A2 named open (A2 licenses nothing); the guard
+    # per contrast arm, the absolute bar binding (Qwen, m:316).
+    T, TV = F3_SENTENCE, SENTENCE_TEMPLATES
+    sham = dict(F3_PAIRS)[arm]
+    role = {"A1": "control", "A2": "confirmatory", "A3": "screen"}[arm]
+    al = ".05" if arm == "A3" else ".01"
+    st = out["stats"]
+    parts = []
+    if out["noread"]:
+        why = TV["noread_contrast"] if out["noread"] == "contrast-empty" else TV["noread_sham"].format(sham=sham)
+        parts.append(T["noread_a3"].format(why=why) if arm == "A3" else
+                     T["noread_ctl"].format(arm=arm, role=role, alpha=al, why=why))
+    else:
+        parts.append(T["head"].format(arm=arm, role=role, alpha=al, state=out["state"]))
+    parts.append(TV["counts"].format(n=st["n"], launched=counts["launched"][arm], k0=st["k0"], n0=st["n0"],
+                                     k1=st["k1"], n1=st["n1"]))
+    if st["n"]:
+        lo, hi = cp_interval(st["k"], st["n"])
+        parts.append(TV["P"].format(k=st["k"], n=st["n"], P=dec(st["P"]), delta=sdec(st["delta"]),
+                                    lo=sdec(lo - HALF), hi=sdec(hi - HALF)))
+    if st["mS"]:
+        diff = sdec(st["P"] - st["PS"]) if st["n"] else "undefined (no arm domain session)"
+        parts.append(TV["E"].format(E=dec(st["E"]), sham=sham, j=st["j"], mS=st["mS"], PS=dec(st["PS"]), diff=diff))
+    if st["n"]:
+        parts.append(T["tests"].format(pu=dec(st["p_up"]), pd=dec(st["p_down"]), alpha=al))
+    if out["state"] == "REVERSE" and arm == "A1":
+        parts.append(TV["reverse"])
+    if out["state"] == "REVERSE" and arm == "A2":
+        parts.append(T["reverse_a2"])
+    if arm == "A3" and out["state"] in A3_HIT:
+        parts.append(T["hit"].format(dir=DIRECTION[out["state"]]))
+        if out["state"] == "POSITIVE":
+            parts.append(T["welfare"])
+    if arm == "A3" and out["state"] == "NULL":
+        parts.append(T["null"].format(pw=power["of_record"]["display"], pl=power["planned"]["display"]))
+    if arm == "A3" and out["state"] in ("NULL-x↑", "NULL-x↓"):
+        parts.append(T["nullx"].format(dir=DIRECTION[out["state"]]))
+    a, A = counts["prepick"][arm], counts["launched"][arm]
+    b, B = counts["prepick"][sham], counts["launched"][sham]
+    parts.append(TV["prepick"].format(a=a, A=A, r=_rate_text(a, A), sham=sham, b=b, B=B, rs=_rate_text(b, B)))
+    g = guard[arm]
+    if g["reached"]:
+        f, ab = g["fisher"], g["abs"]
+        parts.append(TV["guard"].format(label=g["label"], sham=sham, pf=dec(Fraction(f["p"])),
+                                        ff="fired" if f["fired"] else "not fired", pa=dec(Fraction(ab["p"])),
+                                        fa="fired" if ab["fired"] else "not fired", ab="binding"))
+    else:
+        parts.append(TV["noguard"])
+    fc, fsh = floors[arm], floors[sham]
+    if st["n"] < fc or st["mS"] < fsh:
+        parts.append(f"below floor: {arm} {st['n']}/{fc}, shortfall {max(0, fc - st['n'])}; {sham} {st['mS']}/{fsh}, "
+                     f"shortfall {max(0, fsh - st['mS'])}; attained power {power['of_record']['display']} at the "
+                     f"realised n (m:190's base case at α {al})")
+    return "; ".join(parts) + "."
+
+
+def _f3_excl_ci(rec: Mapping) -> tuple[str, int] | None:
+    """The phase and choice index of a record's exclusion: a reasoning line's ci from the exclusion, a task
+    round's from its excluding round (excluding_round, as v1's valid_through)."""
+    exc = rec.get("exclusion")
+    if not exc:
+        return None
+    if exc.get("phase") == "reasoning":
+        return "reasoning", int(exc["ci"])
+    xr = excluding_round(rec)
+    return str(xr["phase"]), (int(xr["ci"]) if xr["phase"] == "free" else -1)
+
+
+# PIN (Code, declared at LOCK-m-F3 v0.1; m:308, m:312; PIN-13 carried): PIN-V2-17 -- "valid through position p" at
+# F3: the choice at p was made and no exclusion-bearing event preceded it; a reasoning line at ci k precedes
+# choice k + 1 (the line comes before its menu), a free round at ci k precedes choices after k + 1; Q-F3's
+# secondaries (a)-(f) are m:312's on mf3's records, (d) without the habit identity (F0m's and F0m-OLMo's), (f)
+# over every reasoning line generated per arm.
+def f3_valid_through(rec: Mapping, p: int) -> bool:
+    """'Valid through position p' for F3 (m:308; PIN-V2-17): the choice at p was made and no exclusion-bearing
+    event preceded it -- a free round at ci k precedes choices after k + 1, a reasoning line at ci k precedes
+    choice k + 1 itself (the line comes before its menu)."""
+    ch = rec.get("choices") or []
+    if p > len(ch):
+        return False
+    ex = _f3_excl_ci(rec)
+    if ex is None:
+        return True
+    ph, k = ex
+    if ph == "free":
+        return k + 1 >= p
+    if ph == "reasoning":
+        return k >= p
+    return False
+
+
+def f3_beside_blocks(records: Sequence[Mapping]) -> dict:
+    """Reported beside per Q-F3 arm, not rule-23 counters (m:308 whole-session validity; m:330's reported items):
+    v1's beside block with F3's pre-pick and the reasoning phase among the hair-trigger phases."""
+    from valence_core.mf3 import scaffold as f3sc
+    out: dict = {}
+    for arm in F3_TEMPLATES:
+        g = [r for r in records if r["template"] == arm]
+        deg = {}
+        for ph in ("forced", "free"):
+            rs_ = [x for r in g for x in r["rounds"] if x["phase"] == ph]
+            deg[ph] = {"num": sum((x["audit"] or {}).get("claim") in bars.DEGEN_CLAIMS["qwen"] for x in rs_),
+                       "den": len(rs_), "domain": f"{arm} {ph} rounds generated (contrast free rounds released at VERDICTS)"}
+        lenient = [r for r in g if r["complete"] and r["exclusion"] is None and not r["hair_triggers"]]
+        strict = [r for r in lenient if r.get("strict_exclusion") is None]
+        hair = {ph: sum(any(h.get("name") == HAIR_BAR and h.get("phase") == ph for h in r["hair_triggers"]) for r in g)
+                for ph in ("forced", "free", "reasoning")}
+        allr = [c for r in g for c in (r.get("choices") or [])]
+        first = [r["choices"][0] for r in g if r["domain"] and r.get("choices")]
+        out[arm] = {"round_degeneracy": deg,
+                    "whole_session_validity": {"launched": len(g), "valid_lenient": len(lenient), "valid_strict": len(strict)},
+                    "scaffold_absorption_sessions": hair,
+                    "read_flags": {"all_reads": {"reads": len(allr),
+                                                 "low_label_mass": sum(bool(c.get("low_label_mass")) for c in allr),
+                                                 "top1_not_label": sum(bool(c.get("top1_not_label")) for c in allr)},
+                                   "first_reads_of_domain_sessions": {
+                                       "reads": len(first), "low_label_mass": sum(bool(c.get("low_label_mass")) for c in first),
+                                       "top1_not_label": sum(bool(c.get("top1_not_label")) for c in first)}},
+                    "prepick_pooled": {"num": sum(bool(f3sc.prepick_excluded(r)) for r in g), "den": len(g),
+                                       "domain": f"{arm} campaign sessions launched"}}
+    return out
+
+
+def f3_tabulate(records: Sequence[Mapping]) -> tuple[_session.DescriptiveCounters, dict]:
+    """The rule-23 counters (m:314's Qwen list with Q-F3's reasoning-line defects by class) over ALL Q-F3
+    campaign records, keyed by property, with the denominators beside."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; m:314): PIN-V2-18 -- Q-F3 tabulates the Qwen counters as Q-F0 does,
+    # adds reasoning_line_defect keyed (arm, class, line position) over every reasoning line generated
+    # (mf3.lines' classes: empty, cap_no_newline, echo), and keys pre_pick_exclusion on the excluding forced
+    # round's property, or "reasoning line 1" for an exclusion at the first reasoning line (mf3's pre-pick).
+    from valence_core.mf3 import scaffold as f3sc
+    dc = _session.DescriptiveCounters(declared=tabulated_names("qwen") + ("reasoning_line_defect",))
+    den = {"rounds": {}, "free_rounds": {}, "reads": {}, "sessions": {}, "lines": {}}
+
+    def bump(d: dict, key: str) -> None:
+        d[key] = d.get(key, 0) + 1
+    for rec in records:
+        tpl = str(rec["template"])
+        ex = bool(rec["excluded"])
+        dc.n_sessions += 1
+        bump(den["sessions"], tpl)
+        for r in rec["rounds"]:
+            ra = audit._ra(r["audit"])
+            ph, prop = ra.phase, str(r["property"])
+            bump(den["rounds"], f"{tpl}|{ph}|{prop}")
+            if ph == "free":
+                bump(den["free_rounds"], f"{tpl}|{prop}")
+            if ra.claim == "v2":
+                dc.note("audit_degenerate", tpl, ph, audit._category(ra.detail), prop, excluded=ex)
+            elif ra.claim == "echo":
+                dc.note("harness_echo", tpl, ph, prop, excluded=ex)
+            elif ra.claim == "content":
+                dc.note("content_exclusion", tpl, ph, ra.detail.split(":", 1)[1], prop, excluded=ex)
+            elif ra.claim == "lexical":
+                dc.note("lexical", tpl, ph, prop, excluded=ex)
+            for a in ra.advisory:
+                dc.note("content_advisory", tpl, ph, a.split(":", 1)[1], prop, excluded=ex)
+            if ph == "free" and ra.claim in ("v2", "echo", "content"):
+                dc.note("post_choice_degeneracy", tpl, ra.claim, prop, excluded=ex)
+            if r.get("cap_hit"):
+                dc.note("cap_hit", tpl, ph, prop, excluded=ex)
+            if r.get("termination"):
+                dc.note("termination", tpl, ph, prop, excluded=ex)
+        for i, c in enumerate(rec.get("choices") or ()):
+            bump(den["reads"], f"{tpl}|{i + 1}")
+            if c.get("low_label_mass"):
+                dc.note("low_label_mass", tpl, i + 1, excluded=ex)
+            if c.get("top1_not_label"):
+                dc.note("top1_not_label", tpl, i + 1, excluded=ex)
+        for x in rec.get("reasoning") or ():
+            pos = int(x["ci"]) + 1
+            bump(den["lines"], f"{tpl}|{pos}")
+            for cl in (x.get("audit") or {}).get("classes") or ():
+                dc.note("reasoning_line_defect", tpl, str(cl), pos, excluded=ex)
+        if f3sc.prepick_excluded(rec):
+            exc = rec["exclusion"]
+            if exc.get("phase") == "forced":
+                xr = excluding_round(rec)
+                dc.note("pre_pick_exclusion", tpl, str(xr["property"]), excluded=ex)
+            else:
+                dc.note("pre_pick_exclusion", tpl, "reasoning line 1", excluded=ex)
+    return dc, den
+
+
+def f3_counters_json(dc: _session.DescriptiveCounters, den: Mapping) -> dict:
+    rep = dc.report()
+    return {"report": rep, "denominators": {k_: dict(sorted(v.items())) for k_, v in den.items()},
+            "scope": SCOPE_ALL, "reasoning_line_defect_keys": ["arm", "class", "line position"]}
+
+
+def f3_per_property_table(records: Sequence[Mapping]) -> dict:
+    """m:314's per-property exclusion table per Q-F3 arm x property; a reasoning-line exclusion is beside."""
+    from valence_core.mf3 import scaffold as f3sc
+    classes = audit.QWEN_CLAIMS
+    tab: dict = {a: {p: {"rounds_generated": 0, "rounds_claimed_by_class": {c: 0 for c in classes},
+                         "rounds_excluding_by_class": {c: 0 for c in classes},
+                         "sessions_excluded_prepick": 0, "sessions_excluded_any_phase": 0}
+                     for p in ("clean", "corrupted")} for a in F3_TEMPLATES}
+    lines_excl = {a: {"prepick_line_1": 0, "after_first_pick": 0} for a in F3_TEMPLATES}
+    for rec in records:
+        t = tab[rec["template"]]
+        for r in rec["rounds"]:
+            row = t[r["property"]]
+            row["rounds_generated"] += 1
+            cl = (r["audit"] or {}).get("claim")
+            if cl is not None:
+                row["rounds_claimed_by_class"][cl] += 1
+        exc = rec.get("exclusion")
+        if exc and exc.get("phase") == "reasoning":
+            lines_excl[rec["template"]]["prepick_line_1" if f3sc.prepick_excluded(rec) else "after_first_pick"] += 1
+            continue
+        xr = excluding_round(rec)
+        if xr is not None:
+            row = t[xr["property"]]
+            row["rounds_excluding_by_class"][xr["audit"]["claim"]] += 1
+            row["sessions_excluded_any_phase"] += 1
+            if f3sc.prepick_excluded(rec):
+                row["sessions_excluded_prepick"] += 1
+    for s in ("A1s", "A2s", "A3s"):
+        if tab[s]["corrupted"]["rounds_generated"]:
+            raise AnlStop("STOP: a sham arm carries corrupted rounds (sham rounds are clean)")
+    return {"by_arm": tab, "reasoning_line_exclusions": lines_excl, "reference": PER_PROPERTY_REFERENCE}
+
+
+def f3_secondaries(records: Sequence[Mapping], adj_reads: Sequence[Sequence]) -> tuple[dict, dict]:
+    """m:312's secondaries (a)-(f) on Q-F3's records, and the blind-read draw (PIN-V2-14). (secondary, draw)."""
+    out: dict = {"schema": F3_SECONDARY_SCHEMA, "unit": UNIT_F3, "claim": "none -- secondary DVs issue no claim (m:358)",
+                 "floor_events": FLOOR_EVENTS, "a": {}, "b": {}, "c": {}, "d": {}, "e": {}, "f": {},
+                 "f1_crossing_note": F1_CROSSING,
+                 "d_habit": "e2d/habit.py's within-arm identity is F0m's and F0m-OLMo's (m:312), not computed at F3"}
+    for arm in F3_TEMPLATES:
+        g = [r for r in records if r["template"] == arm]
+        out["a"][arm] = {str(p): rate(sum(r["choices"][p - 1]["picked_role"] == "P" for r in g if f3_valid_through(r, p)),
+                                      sum(f3_valid_through(r, p) for r in g),
+                                      f"{arm} sessions valid through position {p}") for p in range(1, 7)}
+        dom = [r for r in g if r["domain"]]
+        pairs = sorted({r["cell"]["pair_index"] for r in dom})
+        out["d"][arm] = {"per_pair": {str(pi): rate(sum(bool(r["first_free_pick_P"]) for r in dom if r["cell"]["pair_index"] == pi),
+                                                    sum(r["cell"]["pair_index"] == pi for r in dom),
+                                                    f"{arm} domain sessions of pair {pi}, pooled over maps")
+                                      for pi in pairs},
+                         "per_pair_start": {f"{pi}|{st}": rate(
+                             sum(bool(r["first_free_pick_P"]) for r in dom if r["cell"]["pair_index"] == pi and r["cell"]["start"] == st),
+                             sum(r["cell"]["pair_index"] == pi and r["cell"]["start"] == st for r in dom),
+                             f"{arm} domain sessions of pair {pi}, start order {st}") for pi in pairs for st in (0, 1)},
+                         "sham_count_only": arm.endswith("s")}
+        out["e"][arm] = {ph: rate(sum(bool(x.get("termination")) for r in g for x in r["rounds"] if x["phase"] == ph),
+                                  sum(x["phase"] == ph for r in g for x in r["rounds"]), f"{arm} {ph} rounds generated")
+                         for ph in ("forced", "free")}
+        lines_ = [x for r in g for x in r.get("reasoning") or ()]
+        ntok = sorted(int(x["n_tok"]) for x in lines_)
+        cls: dict = {}
+        for x in lines_:
+            for c_ in (x.get("audit") or {}).get("classes") or ():
+                cls[c_] = cls.get(c_, 0) + 1
+        out["f"][arm] = {"lines": len(lines_),
+                         "length_tokens": {"n": len(ntok), "sum": sum(ntok), "min": ntok[0] if ntok else None,
+                                           "max": ntok[-1] if ntok else None,
+                                           "mean": fs(Fraction(sum(ntok), len(ntok))) if ntok else None,
+                                           "median": (fs(Fraction(ntok[(len(ntok) - 1) // 2] + ntok[len(ntok) // 2], 2))
+                                                      if ntok else None)},
+                         "cap_hits": rate(sum(bool(x.get("cap_hit")) for x in lines_), len(lines_), f"{arm} reasoning lines generated"),
+                         "defects_by_class": {c_: rate(cls.get(c_, 0), len(lines_), f"{arm} reasoning lines generated")
+                                              for c_ in ("empty", "cap_no_newline", "echo")},
+                         "stage1_mention": rate(sum(any(t in STAGE1_TERMS for t in _f3_tokens(x["text"])) for x in lines_),
+                                                len(lines_), f"{arm} reasoning lines generated")}
+    for c_arm, _ in F3_PAIRS:
+        ev = {"corrupted": [0, 0], "clean": [0, 0]}
+        for r in (x for x in records if x["template"] == c_arm):
+            for p in range(1, 6):
+                if not f3_valid_through(r, p + 1):
+                    continue
+                prev = [x for x in r["rounds"] if x["phase"] == "free" and x["ci"] == p - 1]
+                if len(prev) != 1:
+                    raise AnlStop("STOP: a session valid through a choice lacks its previous chosen round")
+                switch = r["choices"][p]["pick"] != r["choices"][p - 1]["pick"]
+                e = ev[prev[0]["property"]]
+                e[0] += int(switch)
+                e[1] += 1
+        out["b"][c_arm] = {cond: rate(v[0], v[1], f"{c_arm} transitions after a chosen {cond} round by sessions valid "
+                                                  f"through the next choice") for cond, v in ev.items()}
+    out["b"]["scope"] = "contrast arms only (m:312)"
+    # (c) on A3's domain sessions' first reasoning lines
+    a3 = [r for r in records if r["template"] == "A3" and r["domain"]]
+    joint = {"correct_follows": 0, "correct_not_follows": 0, "incorrect_follows": 0, "incorrect_not_follows": 0}
+    klass = {"not scored": 0, "ambiguous": 0, "attribution": 0, "mention-only": 0}
+    key_items = {}
+    for r in a3:
+        line = (r.get("reasoning") or [{}])[0]
+        if line.get("ci") != 0:
+            raise AnlStop("STOP: an A3 domain session without its first reasoning line")
+        sc = score_line_c(line["text"], r["cell"]["pair"])
+        j_ = judge_c(sc, r["cell"]["P"], r["cell"]["Q"], (r.get("choices") or [{}])[0].get("pick"))
+        klass[sc["class"] or "not scored"] += 1
+        if sc["class"] == "attribution":
+            joint[f"{'correct' if j_['correct'] else 'incorrect'}_{'follows' if j_['follows'] else 'not_follows'}"] += 1
+        key_items[r["s"]] = {"scored": sc["scored"], "class": sc["class"], "labels": sc["labels"], **j_}
+    out["c"] = {"domain": "A3 domain sessions' first reasoning lines (m:312 (c))", "lines": len(a3), "classes": klass,
+                "joint": {k_: rate(v_, klass["attribution"], "A3 first lines classed attribution") for k_, v_ in joint.items()},
+                "decides": "nothing (m:312)", "lexicons": {"stage1": list(STAGE1_TERMS), "negative": list(POLARITY_NEG),
+                                                           "positive": list(POLARITY_POS), "window": POLARITY_WINDOW}}
+    excl = {(str(t), int(s)) for st_, t, s in adj_reads if st_ == "campaign"}     # gate sessions are not in the draw
+    elig = sorted(r["s"] for r in a3 if ("A3", int(r["s"])) not in excl)
+    rank = sorted(elig, key=lambda s: hashlib.sha256(f"m-f3-blind|{F3_BLIND_SEED}|{s}".encode("utf-8")).hexdigest())
+    drawn = rank[:F3_BLIND_N]
+    by_s = {r["s"]: r for r in a3}
+    draw = {"schema": F3_BLIND_SCHEMA, "unit": UNIT_F3, "seed": F3_BLIND_SEED, "eligible": len(elig),
+            "excluded_as_read_in_adjudication": sorted(s for t, s in excl if t == "A3"), "n": len(drawn),
+            "scoring_unit": "(label, polarity) per mentioned own-pair label (m:312)",
+            "items": [{"item": i + 1, "line": by_s[s]["reasoning"][0]["text"],
+                       "roster_pair": sorted(by_s[s]["cell"]["pair"])} for i, s in enumerate(drawn)]}
+    out["c"]["blind_read_key"] = [{"item": i + 1, "s": s, "map": by_s[s]["cell"]["map"], "P": by_s[s]["cell"]["P"],
+                                   "first_pick": (by_s[s].get("choices") or [{}])[0].get("pick"), "rule": key_items[s]}
+                                  for i, s in enumerate(drawn)]
+    return out, draw
+
+
+def f3_rates_and_tests(arm: str, out: Mapping, counts: Mapping, guard: Mapping) -> tuple[list[dict], dict]:
+    """One Q-F3 contrast arm's rates (each with its domain) and p's (each with its test), m:358."""
+    sham = dict(F3_PAIRS)[arm]
+    st = out["stats"]
+    al = ".05" if arm == "A3" else ".01"
+    rates = [{"rate": "P", "num": st["k"], "den": st["n"], "domain": f"{arm} domain sessions (m:308), coded on the "
+              f"P-role label at the first free choice (m:306)"},
+             {"rate": "P_sham", "num": st["j"], "den": st["mS"], "domain": f"{sham} domain sessions (m:308)"},
+             {"rate": "share_map0", "num": st["k0"], "den": st["n0"], "domain": f"{arm} domain sessions on map 0"},
+             {"rate": "share_map1", "num": st["k1"], "den": st["n1"], "domain": f"{arm} domain sessions on map 1"}]
+    for a in (arm, sham):
+        rates.append({"rate": f"prepick_{a}", "num": counts["prepick"][a], "den": counts["launched"][a],
+                      "domain": f"{a} campaign session records (launched); numerator excluded at a forced round or at "
+                                f"reasoning line 1 (mf3.scaffold.prepick_excluded)"})
+    tests: dict = {}
+    if st["n"]:
+        tests["p_up"] = {"p": fs(st["p_up"]), "display": dec(st["p_up"]),
+                         "test": f"exact one-sided binomial vs 0.5 toward clean, P(X >= k), X ~ Bin(n, 1/2); (iii) at "
+                                 f"alpha {al}"}
+        tests["p_down"] = {"p": fs(st["p_down"]), "display": dec(st["p_down"]),
+                           "test": f"exact one-sided binomial vs 0.5 toward corrupted, P(X <= k), X ~ Bin(n, 1/2); (iii) "
+                                   f"for REVERSE at alpha {al}"}
+        if arm != "A3":
+            tests["dead_tail"] = {"p": fs(st["dead_tail"]), "display": dec(st["dead_tail"]),
+                                  "test": "P(X <= k), X ~ Bin(n, 13/20): " + ("FAIL" if arm == "A2" else "DEAD")
+                                          + " iff < 1/40 and k < n (the two-sided Clopper-Pearson 95% upper bound on "
+                                            "Delta_c < +0.15)"}
+    g = guard[arm]
+    if g.get("reached"):
+        tests["guard_fisher"] = {"p": g["fisher"]["p"], "test": f"one-sided Fisher exact, {arm}'s pre-pick exclusions vs "
+                                 f"{sham}'s, alpha .05, at the unit's last look (m:316)"}
+        tests["guard_abs"] = {"p": g["abs"]["p"], "test": f"exact one-sided binomial of {arm}'s pre-pick exclusions vs "
+                              f".20, alpha .05, at the unit's last look (m:316; binding on Qwen)"}
+    return rates, tests
+
+
+def f3_counter_rates(dc: _session.DescriptiveCounters, den: Mapping) -> list[dict]:
+    """Every tabulated Q-F3 counter cell as {num, den, domain} (m:358); reasoning lines by arm and position."""
+    out = []
+    for k_, v in sorted(dc.counts.items(), key=lambda kv: [str(x) for x in kv[0]]):
+        name, key = k_[0], list(k_[1:])
+        arm = key[0]
+        if name == "reasoning_line_defect":
+            which, dk, dom = "lines", f"{arm}|{key[2]}", f"{arm} reasoning lines generated at position {key[2]}"
+        elif name in ("low_label_mass", "top1_not_label"):
+            which, dk, dom = "reads", f"{arm}|{key[1]}", f"{arm} reads taken at position {key[1]}"
+        elif name == "pre_pick_exclusion":
+            which, dk, dom = "sessions", arm, f"{arm} sessions launched (numerator keyed by {key[-1]})"
+        elif name == "post_choice_degeneracy":
+            which, dk, dom = "free_rounds", f"{arm}|{key[-1]}", f"{arm} free rounds generated, property {key[-1]}"
+        else:
+            which, dk, dom = "rounds", f"{arm}|{key[1]}|{key[-1]}", f"{arm} {key[1]} rounds generated, property {key[-1]}"
+        out.append({"counter": name, "key": "|".join(map(str, key)), "num": v, "den": den[which][dk],
+                    "domain": dom + "; " + SCOPE_ALL})
+    return out
+
+
+def f3_gate_release(g: Mapping, stage: str) -> dict:
+    """A Q-F3 gate stage's release at VERDICTS / NOT-RUN (m:271; PIN-32 at F3): per contrast arm the first picks
+    by role, the released free-phase events (free rounds' claims; reasoning lines after the first pick, by class)
+    and free-phase exclusions; counters beside, never merged into those of record."""
+    picks, events = [], []
+    for r in g["sessions"]:
+        if r["template"] not in ("A1", "A2", "A3"):
+            continue
+        picks.append({"template": r["template"], "s": r["s"], "domain": bool(r["domain"]),
+                      "first_pick_role": r["choices"][0]["picked_role"] if r["domain"] and r.get("choices") else None,
+                      "first_free_pick_P": r["first_free_pick_P"]})
+        for x in r["rounds"]:
+            if x["phase"] == "free" and (x["audit"] or {}).get("claim") is not None:
+                events.append({"template": r["template"], "s": r["s"], "ci": x["ci"], "claim": x["audit"]["claim"],
+                               "property": x["property"]})
+        for x in r.get("reasoning") or ():
+            cls = (x.get("audit") or {}).get("classes") or []
+            if int(x["ci"]) >= 1 and cls:
+                events.append({"template": r["template"], "s": r["s"], "ci": x["ci"], "reasoning_line_classes": list(cls)})
+        exc = r.get("exclusion")
+        if exc and (exc.get("phase") == "free" or (exc.get("phase") == "reasoning" and int(exc.get("ci") or 0) >= 1)):
+            events.append({"template": r["template"], "s": r["s"], "exclusion": exc.get("class"), "phase": exc.get("phase"),
+                           "ci": exc.get("ci")})
+    dc, den = f3_tabulate(g["sessions"])
+    return {"stage": stage, "stage_end": dict(g["stage_end"]), "contrast_first_picks": picks,
+            "released_free_phase_events": events, "counters_beside": f3_counters_json(dc, den)}
+
+
+def unit_rows_f3(state: Mapping | None, reason: str | None) -> dict:
+    """The rows Q-F3's own output records: A2 and A3, Answered iff L1 (A1 PASS), else reported descriptively."""
+    if state is None:
+        lab = LABEL_F3_DESC + "was not run: " + str(reason)
+        return {"A2": lab, "A3": lab, "A1": "NOT-RUN"}
+    a1 = state["A1"]["state"]
+    lab = ANSWERED if a1 == "PASS" else LABEL_F3_DESC + "did not pass: " + a1
+    return {"A2": lab, "A3": lab, "A1": a1}
+
+
+def _f3_adj_reads(p: Path | None) -> tuple[list, bytes]:
+    if p is None:
+        raise AnlRefusal("REFUSED: Q-F3's VERDICTS needs --adjudication-reads, the sessions read during any adjudication "
+                         "(m:312 (c): excluded from the blind read's draw; an empty list when none)")
+    b = _read_bytes(p, "the adjudication-reads file")
+    d = _load_json(p, "the adjudication-reads file")
+    ok = (isinstance(d, Mapping) and sorted(d) == ["schema", "sessions", "unit"] and d["schema"] == F3_ADJ_READS_SCHEMA
+          and d["unit"] == UNIT_F3 and isinstance(d["sessions"], list)
+          and all(isinstance(x, list) and len(x) == 3 and x[0] in ("time", "id", "qual", "campaign")
+                  and x[1] in F3_TEMPLATES and type(x[2]) is int and x[2] >= 0 for x in d["sessions"]))
+    if not ok:
+        raise AnlRefusal(f"REFUSED: the adjudication-reads file is {{schema {F3_ADJ_READS_SCHEMA}, unit Q-F3, sessions: "
+                         f"[[stage, template, s], ...]}} (stage time, id, qual or campaign)")
+    return [list(x) for x in d["sessions"]], b
+
+
+def run_verdicts_f3(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Path]]:
+    """Q-F3's VERDICTS (the seat's A3; m:291): V1-V7 over mf3's campaign, time and qual checkpoints."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's A3; m:271, m:318, m:324, m:326, m:358): PIN-V2-12 -- Q-F3's
+    # reader is v1's in form: V1 refusals before any pick-bearing byte (the pinned proposal, the Clock dates,
+    # the committed analyzer and lock, the lock naming this run's analyzer sha256, m's package_sha256 and the
+    # Q-F3 closure sha256 -- the base closure plus LAZY_F3_MODULES, so a Q-F3 lock binds mf3's bytes and an OLMo
+    # lock does not -- the v1 posting's re-run on the posted text committed and PASSing C7's bar, as decision
+    # (10') orders the Q-F3 VERDICTS session after `POSTING v1`, the v2 table of record declared and committed
+    # (PIN-V2-24), and the declared adjudication-reads file); V2 the shared structure refusals (PIN-V2-15) and
+    # six-arm floors; V3 mf3.readrule.release_full names the release; V4 STOPs on any record defect; outputs
+    # Q-F3_VERDICTS.json, Q-F3_secondary.json and Q-F3_blind-read.json, write-once, in data/mf3/verdicts; a unit
+    # with no first read gets Q-F3_NOT-RUN.json.
+    from valence_core.mf3 import readrule as f3rr
+    U = UNIT_F3
+    lines: list[str] = []
+    pbytes = _read_bytes(env.proposal_path, "the proposal")
+    if _sha256_bytes(pbytes) != PROPOSAL_SHA256:
+        raise AnlRefusal("REFUSED: the proposal's sha256 is not the pinned v1.11's (PIN-31)")
+    _clock_refusal(env)
+    aprobs, abytes = env.committed(env.analyzer_path)
+    if aprobs or abytes is None:
+        raise AnlRefusal(f"REFUSED: the analyzer is not committed at HEAD: {aprobs}")
+    lprobs, lbytes = env.committed(inp.lock)
+    if lprobs or lbytes is None:
+        raise AnlRefusal(f"REFUSED: the lock is not committed at HEAD: {lprobs}")
+    ltext = lbytes.decode("utf-8", "replace")
+    a_sha = _sha256_bytes(abytes)
+    for what, val in (("analyzer sha256", a_sha), ("package_sha256", env.package_sha256),
+                      ("Q-F3 closure sha256", env.closure_sha256)):
+        if val not in ltext:
+            raise AnlRefusal(f"REFUSED: the lock does not name this run's {what} (PIN-14, PIN-V2-12)")
+    v1_out = (inp.v1_dir or REPO / VERDICTS_REL) / posting_out_name("posted")
+    vprobs, vbytes = env.committed(v1_out)
+    try:
+        vdoc = json.loads(vbytes.decode("utf-8")) if vbytes is not None else None
+    except (UnicodeDecodeError, ValueError):
+        vdoc = None
+    if vprobs or not (isinstance(vdoc, Mapping) and vdoc.get("schema") == POSTING_OUT_SCHEMA
+                      and vdoc.get("posting") == "v1" and vdoc.get("table_kind") == "posted"
+                      and isinstance(vdoc.get("bar"), Mapping) and vdoc["bar"].get("verdict") == "PASS"):
+        raise AnlRefusal(f"REFUSED: no committed v1 posting on the posted text that PASSed C7's bar ({v1_out.name}); "
+                         f"the Q-F3 VERDICTS session runs only after `POSTING v1` (A-m1 decision (10'); PIN-V2-12)")
+    if inp.olmo_states is not None or inp.flag_source is not None:
+        raise AnlRefusal("REFUSED: --olmo-states and --flag-source are Q-F0's VERDICTS inputs, not Q-F3's")
+    # PIN (Code, declared at LOCK-m-F3 v0.1; Q7, the PI's word of 2026-11-06; PIN-40 carried): PIN-V2-24 -- the
+    # v2 sentence table of record is a required, committed input of Q-F3's VERDICTS (built at that session against
+    # the posted v1, so before the outcome is computed); this output records its path and sha256, and the v2
+    # posting refuses an of-record table other than the one Q-F3's VERDICTS (or its no-first-read NOT-RUN) read.
+    if inp.sentences is None:
+        raise AnlRefusal("REFUSED: Q-F3's VERDICTS needs --sentences, the v2 sentence table of record, committed "
+                         "(Q7; PIN-V2-24)")
+    sprobs, sbytes = env.committed(inp.sentences)
+    if sprobs or sbytes is None:
+        raise AnlRefusal(f"REFUSED: the v2 sentence table is not committed at HEAD: {sprobs}")
+    vtab = _load_json(inp.sentences, "the v2 sentence table")
+    vtp = table_problems(vtab, read_repo_file=env.read_repo_file, posting="v2")
+    if vtp or vtab.get("kind") != "of-record":
+        raise AnlRefusal(f"REFUSED: the v2 sentence table is not an accepted v2 table of record: "
+                         f"{vtp or ['kind ' + repr(vtab.get('kind'))]} (PIN-V2-24)")
+    try:
+        decisions = decisions_file(_load_json(inp.decisions, "the decisions input"), U)
+    except ValueError as e:
+        raise AnlRefusal(f"REFUSED: decisions input: {e}")
+    dbytes = _read_bytes(inp.decisions, "the decisions input")
+    adj_reads, arb = _f3_adj_reads(inp.adj_reads)
+    outs = {"verdicts": inp.out / f"{U}_VERDICTS.json", "secondary": inp.out / f"{U}_secondary.json",
+            "blind": inp.out / f"{U}_blind-read.json", "not_run": inp.out / f"{U}_NOT-RUN.json"}
+    inputs: dict = {"lock": _file_rec(inp.lock, lbytes), "decisions": _file_rec(inp.decisions, dbytes),
+                    "adjudication_reads": _file_rec(inp.adj_reads, arb), "v1_posting_output": _file_rec(v1_out, vbytes),
+                    "sentences": _file_rec(inp.sentences, sbytes)}
+    adj_doc = adj_bytes = pis_doc = pis_bytes = None
+    if inp.adjudication is not None:
+        adj_bytes = _read_bytes(inp.adjudication, "the adjudication")
+        adj_doc = _load_json(inp.adjudication, "the adjudication")
+    if inp.pi_stop is not None:
+        pis_bytes = _read_bytes(inp.pi_stop, "the PI-stop record")
+        pis_doc = _load_json(inp.pi_stop, "the PI-stop record")
+    cs = _campaign_structure(U, inp.campaign, lbytes, adj_doc, adj_bytes, pis_doc, pis_bytes, inp.adjudication,
+                             inp.pi_stop, env.allow_stub, False)
+    ck, csha, ident, ended, camp, pauses, stop, stop_bar, used_adj, used_pis = (
+        cs[k_] for k_ in ("ck", "csha", "ident", "ended", "camp", "pauses", "stop", "stop_bar", "used_adj", "used_pis"))
+    floors = camp.get("floors") or {}
+    if sorted(floors) != sorted(F3_TEMPLATES) or any(type(v) is not int or v < 0 for v in floors.values()):
+        raise AnlRefusal("REFUSED: the campaign records no floors for Q-F3's six arms (campaign.floors)")
+    gates = {}
+    for stg, path in (("time", inp.time), ("qual", inp.qual)):
+        try:
+            g = resume.read_checkpoint(path)
+        except SystemExit as e:
+            raise AnlRefusal(f"REFUSED: the {stg} checkpoint: {e}")
+        gi = g["identity"]
+        if gi.get("unit") != U or gi.get("stage") != stg or not isinstance(g.get("stage_end"), Mapping):
+            raise AnlRefusal(f"REFUSED: the {stg} checkpoint is not an ended {U}/{stg} gate stage")
+        for e in resume.report_provenance(g):
+            if STUB_MARK in json.dumps(e["record"]) and not env.allow_stub:
+                raise AnlRefusal(f"REFUSED: the {stg} checkpoint was written by the self-test stub")
+        gates[stg] = g
+        inputs[stg] = _file_rec(path, _read_bytes(path, f"the {stg} checkpoint"))
+    inputs["campaign"] = {"path": _repo_rel(inp.campaign), "sha256": csha}
+    # V3 -- the act of release is named (m:271)
+    records = f3rr.release_full(ck["sessions"])
+    grecs = {stg: f3rr.release_full(g["sessions"]) for stg, g in gates.items()}
+    # V4 -- STOP on any content defect
+    for stg, rs_ in (("campaign", records), *grecs.items()):
+        for rec in rs_:
+            pr = _f3_check_record(rec, stg)
+            if pr:
+                raise AnlStop(f"STOP: a {stg} record fails V4 ({pr[0]})")
+    counts = f3_counts(records)
+    if ended == "COMPLETE" and any(counts["domain"][a] < floors[a] for a in F3_TEMPLATES):
+        raise AnlStop("STOP: COMPLETE with an arm below its floor -- a bookkeeping defect")
+    state = f3_unit_state(ended, stop_bar, used_pis is not None, counts)
+    quarantined = []
+    if isinstance(stop, Mapping) and stop_bar in GVER_BARS and isinstance(stop.get("record"), Mapping):
+        qr = stop["record"]
+        quarantined.append({"template": qr.get("template"), "s": qr.get("s"), "bar": stop_bar,
+                            "reached_first_read": bool(qr.get("choices")), "counted": False})
+    dc, den = f3_tabulate(records)
+    common = {"unit": U, "proposal_sha256": PROPOSAL_SHA256, "analyzer_sha256": a_sha,
+              "package_sha256": env.package_sha256, "closure_sha256": env.closure_sha256, "clock_of_record": D2,
+              "inputs": inputs, "adjudication": used_adj, "pi_stop_record": used_pis,
+              "release": "mf3.readrule.release_full: the contrast picks are reported and the withheld free-phase events "
+                         "(free rounds and the reasoning lines after the first pick) are released (m:271)",
+              "ended": ended, "stop_bar": stop_bar,
+              "pauses": [{"kind": p.get("kind"), "at_launches": p.get("at_launches"),
+                          "adjudicated": p.get("adjudication") is not None} for p in pauses],
+              "counters": f3_counters_json(dc, den), "per_property_table": f3_per_property_table(records),
+              "gate_release": {stg: f3_gate_release(g, stg) for stg, g in gates.items()},
+              "quarantined": quarantined, "decisions_with_other_outcomes_known": decisions}
+    if state[0] == "NOT-RUN":
+        doc = {"schema": NOT_RUN_OUT_SCHEMA, "state": "NOT-RUN", "cause": state[1]["code"], "also": [],
+               "reason": state[1]["reason"], "rows": unit_rows_f3(None, state[1]["reason"]),
+               "source": "verdicts: §5's no-first-read cause, detected from the campaign checkpoint", **common}
+        refuse_beside(outs["not_run"], (outs["verdicts"], outs["secondary"], outs["blind"]))
+        status = write_texts_once([(outs["not_run"], doc)])
+        lines.append(f"NOT-RUN {U}: {state[1]['reason']} ({status}: {outs['not_run'].name})")
+        return status, lines, [outs["not_run"]]
+    arms_out = state[1]
+    guard = f3_guard_at_last_look(ck, ended)
+    path = ident.get("path") if ident.get("path") in ("cached", "uncached") else "uncached"
+    arms: dict = {}
+    for c, s_ in F3_PAIRS:
+        out = arms_out[c]
+        st = out["stats"]
+        power = f3_power_block(c, st["n0"], st["n1"], st["mS"], path)
+        sentence = f3_sentence(c, out, counts, guard, floors, power)
+        rates, tests = f3_rates_and_tests(c, out, counts, guard)
+        pc = counts["pairs"][c]
+        arms[c] = {"template": c, "role": {"A1": "control", "A2": "confirmatory", "A3": "screen"}[c],
+                   "alpha": fs(F3_ALPHA[c]), **outcome_json(out),
+                   "sham": {"template": s_, "domain": pc["mS"], "j": pc["j"], "by_map": pc["sham_by_map"],
+                            "role": "E only (tier sham, m:182-183)"},
+                   "power": power, "sentence": sentence, "rates": rates, "tests": tests, "guard_last_look": guard[c]}
+    coordinate = {c: arms[c]["state"] for c, _ in F3_PAIRS}
+    sec, draw = f3_secondaries(records, adj_reads)
+    doc = {"schema": F3_VERDICTS_SCHEMA, **common, "unit_state": "ANALYZED", "arms": arms,
+           "coordinate": {**coordinate, "note": "Q-F3's run states; the v2 coordinate adds f2's outcome and its control "
+                                                "where the screen's A3 is a hit (m:291, m:340)"},
+           "counter_rates": f3_counter_rates(dc, den),
+           "counts": {"launched": counts["launched"], "domain": counts["domain"], "prepick": counts["prepick"]},
+           "floors": dict(floors), "path": path, "looks": f3_every_look(ck), "beside": f3_beside_blocks(records),
+           "withholding": ("withheld until f2's VERDICTS or f2's NOT-RUN (m:340)" if coordinate["A3"] in A3_HIT
+                           else "not withheld (the screen is not a hit)"),
+           "s7_3_trigger": ("A3 = POSITIVE at the screen: §7.3's welfare re-review is triggered (m:345)"
+                            if coordinate["A3"] == "POSITIVE" else "not triggered (A3 is not POSITIVE at the screen, m:345)"),
+           "rows": unit_rows_f3(arms_out, None)}
+    refuse_beside(outs["verdicts"], (outs["not_run"],))
+    status = write_texts_once([(outs["verdicts"], doc), (outs["secondary"], sec), (outs["blind"], draw)])
+    for c, _ in F3_PAIRS:
+        lines.append(f"VERDICTS {U} {c}: {arms[c]['sentence']}")
+    lines.append(f"VERDICTS {U}: {status}: {outs['verdicts'].name}, {outs['secondary'].name}, {outs['blind'].name}")
+    return status, lines, [outs["verdicts"], outs["secondary"], outs["blind"]]
+
+
+# --- the v2 posting (the seat's A3: `posting --posting v2` under a declared v2 tuple) ----------------------
+TUPLE_SCHEMA_V2 = "m-posting-tuple-v2"
+POSTING_OUT_SCHEMA_V2 = "m-posting-v2-outputs-v1"
+F3_COORD_KEYS = ["A1", "A2", "A3", "f2", "f2_control"]
+
+
+def posting_out_name_v2(kind: str) -> str:
+    if kind not in ("of-record", "posted"):
+        raise ValueError(f"no posting output for a {kind!r} table")
+    return f"POSTING-v2_outputs.{kind}.json"
+
+
+def _f3_coord_from(doc_f3: Any):
+    """A declared Q-F3 coordinate: 'NOT-RUN' or {A1, A2, A3, f2, f2_control} (f2 'f2 not required' with control
+    null on a no-hit screen; f2 NOT-RUN with control null), as a tuple for check_f3."""
+    if doc_f3 == F2_NOT_RUN:
+        return F2_NOT_RUN
+    if not (isinstance(doc_f3, Mapping) and sorted(doc_f3) == sorted(F3_COORD_KEYS)):
+        raise ValueError(f"Q-F3's coordinate is 'NOT-RUN' or {{{', '.join(F3_COORD_KEYS)}}}")
+    return check_f3(tuple(doc_f3[k_] for k_ in F3_COORD_KEYS))
+
+
+def crosscheck_f3(f3: Any, reason: str | None, f3_dir: Path) -> None:
+    """Q-F3's coordinate against its own outputs in f3_dir (PIN-23 at v2): NOT-RUN only with a NOT-RUN output of
+    the same reason and no VERDICTS; a run coordinate only with a VERDICTS output whose A1, A2 and A3 are it."""
+    vp, npth = f3_dir / f"{UNIT_F3}_VERDICTS.json", f3_dir / f"{UNIT_F3}_NOT-RUN.json"
+    vex, nex = vp.is_file(), npth.is_file()
+    if f3 == F2_NOT_RUN:
+        if not nex or vex:
+            raise AnlRefusal("REFUSED: Q-F3 is NOT-RUN in the tuple but has no NOT-RUN output (or has a VERDICTS output)")
+        if _load_mapping(npth, "Q-F3's NOT-RUN output").get("reason") != reason:
+            raise AnlRefusal("REFUSED: Q-F3's reason differs from its NOT-RUN output's")
+        return
+    if not vex or nex:
+        raise AnlRefusal("REFUSED: Q-F3 has a run coordinate in the tuple but no VERDICTS output (or has a NOT-RUN)")
+    co = _load_mapping(vp, "Q-F3's VERDICTS").get("coordinate") or {}
+    if [co.get(k_) for k_ in ("A1", "A2", "A3")] != list(f3[:3]):
+        raise AnlRefusal(f"REFUSED: Q-F3's A1, A2, A3 in the tuple {list(f3[:3])} are not its VERDICTS' "
+                         f"{[co.get(k_) for k_ in ('A1', 'A2', 'A3')]}")
+
+
+def posting_comparator_v2(out: Path) -> tuple[dict, list[dict]]:
+    """The v2 posted text's comparator (PIN-44 at v2): the v2 posting's own of-record output -- no unit output
+    stores a v2 enumeration; absent -> refused."""
+    op = out / posting_out_name_v2("of-record")
+    if not op.is_file():
+        raise AnlRefusal("REFUSED: the v2 posted text's re-run has nothing to compare with -- no v2 of-record output (out; "
+                         "PIN-44 at v2)")
+    data = _read_bytes(op, "the v2 of-record output")
+    try:
+        doc = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError) as e:
+        raise AnlRefusal(f"REFUSED: the v2 of-record output unreadable ({type(e).__name__})")
+    if not (isinstance(doc, Mapping) and doc.get("schema") == POSTING_OUT_SCHEMA_V2 and doc.get("table_kind") == "of-record"):
+        raise AnlRefusal("REFUSED: the v2 of-record output is not what it is taken for (PIN-44 at v2)")
+    en = (doc.get("outputs") or {}).get("enumeration")
+    if not (isinstance(en, list) and all(isinstance(it, Mapping) and sorted(it) == list(ENUM_ITEM_KEYS)
+                                         and isinstance(it.get("row_id"), str) for it in en)):
+        raise AnlRefusal("REFUSED: the v2 of-record output records no enumeration to compare with (PIN-44 at v2)")
+    if len({it["row_id"] for it in en}) != len(en):
+        raise AnlRefusal("REFUSED: the v2 of-record output names a row id more than once (PIN-44 at v2)")
+    tup = doc.get("tuple")
+    return ({"kind": "posting-of-record", "path": _repo_rel(op), "sha256": _sha256_bytes(data),
+             "tuple": dict(tup) if isinstance(tup, Mapping) else None}, [dict(it) for it in en])
+
+
+def run_posting_v2(tuple_p: Path, sentences: Path, flag_source: Path, verdicts_dir: Path, f3_dir: Path, out: Path,
+                   env: Env, rewrites: Path | None = None) -> tuple[str, list[str], list[Path]]:
+    """§7's v2 outputs (Steps 1-7) under the declared v2 tuple, cross-checked against the units' outputs (PIN-23);
+    a PENDING checkpoint is refused (the seat's A2); C7's bar on the posted text's re-run (PIN-44 at v2)."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's A2 and A3; m:336-343, m:349): PIN-V2-21 -- the v2
+    # posting reads {schema m-posting-tuple-v2, posting v2, tuple {Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct,
+    # Q-F3}, reasons} with Q-F3's coordinate 'NOT-RUN' or {A1, A2, A3, f2, f2_control}, f2's outcome a declared
+    # input recorded as given; every v1 coordinate is cross-checked as at v1 with pending-closed-at-v2
+    # admitted (the closure declared upstream), PENDING refused before any output; Q-F3's against its own
+    # VERDICTS or NOT-RUN; the table is a v2 table (PIN-V2-4) of kind of-record or posted; outputs
+    # POSTING-v2_outputs.{of-record,posted}.json, write-once; the posted re-run takes --rewrites and C7's bar
+    # with the v2 of-record output as its comparator.
+    binding = analyzer_binding(env)
+    tb = _read_bytes(tuple_p, "the tuple")
+    doc = _load_json(tuple_p, "the tuple")
+    if not isinstance(doc, Mapping) or sorted(doc) != ["posting", "reasons", "schema", "tuple"] \
+            or doc["schema"] != TUPLE_SCHEMA_V2 or doc["posting"] != "v2":
+        raise AnlRefusal(f"REFUSED: the v2 tuple is {{schema {TUPLE_SCHEMA_V2}, posting v2, tuple, reasons}}")
+    tt = doc["tuple"]
+    names = list(UNITS) + [UNIT_F3]
+    if not isinstance(tt, Mapping) or sorted(tt) != sorted(names):
+        raise AnlRefusal(f"REFUSED: the v2 tuple names exactly {names}")
+    try:
+        f3 = _f3_coord_from(tt[UNIT_F3])
+        t = check_tuple_v2(tuple(tt[u] for u in UNITS) + (f3,))
+    except PendingAtV2 as e:
+        raise AnlRefusal(f"REFUSED: {e}")
+    except ValueError as e:
+        raise AnlRefusal(f"REFUSED: {e}")
+    reasons = doc["reasons"]
+    nr_units = [u for u, x in zip(UNITS, t[:4]) if x == "NOT-RUN"] + ([UNIT_F3] if f3 == F2_NOT_RUN else [])
+    if not isinstance(reasons, Mapping) or sorted(reasons) != sorted(nr_units):
+        raise AnlRefusal("REFUSED: reasons name exactly the NOT-RUN units (Q-F3 included)")
+    for u, x in zip(UNITS, t[:4]):
+        crosscheck_coordinate(u, x, reasons.get(u), None, verdicts_dir, v2=True)
+    crosscheck_f3(f3, reasons.get(UNIT_F3), f3_dir)
+    sp, sbytes = env.committed(sentences)
+    if sp or sbytes is None:
+        raise AnlRefusal(f"REFUSED: the v2 sentence table is not committed at HEAD: {sp}")
+    table = _load_json(sentences, "the v2 sentence table")
+    tp = table_problems(table, read_repo_file=env.read_repo_file, posting="v2")
+    if tp or table.get("kind") not in ("of-record", "posted"):
+        raise AnlRefusal(f"REFUSED: the v2 sentence table is refused: {tp or ['a placeholder serves G-ANL-F3 only']}")
+    for qv in (f3_dir / f"{UNIT_F3}_VERDICTS.json", f3_dir / f"{UNIT_F3}_NOT-RUN.json"):
+        # PIN-V2-24: the of-record v2 table is the one Q-F3's VERDICTS (or its no-first-read NOT-RUN) read; a Clock
+        # NOT-RUN record carries none (the table is then built at the posting)
+        if table["kind"] != "of-record" or not qv.is_file():
+            continue
+        rec_sha = ((_load_mapping(qv, f"Q-F3's {qv.stem[5:]} output").get("inputs") or {}).get("sentences")
+                   or {}).get("sha256")
+        if (rec_sha is not None or qv.name.endswith("_VERDICTS.json")) and rec_sha != _sha256_bytes(sbytes):
+            raise AnlRefusal(f"REFUSED: the v2 table of record is not the one Q-F3's {qv.stem[5:]} output read "
+                             f"(PIN-V2-24; PIN-40 carried)")
+    inputs = {"tuple": _file_rec(tuple_p, tb), "sentences": _file_rec(sentences, sbytes)}
+    posted = table["kind"] == "posted"
+    rw_ids: list[str] = []
+    comp_rec = comp_rows = None
+    if not posted:
+        if rewrites is not None:
+            raise AnlRefusal("REFUSED: --rewrites is the posted text's input (C7's bar, PIN-44); the run over the "
+                             "table of record takes none")
+    else:
+        if rewrites is None:
+            raise AnlRefusal("REFUSED: the re-run on the posted text needs --rewrites, the PI's rewrite list by row id "
+                             "(C7's bar, PIN-44)")
+        if Path(rewrites).is_dir():
+            raise AnlRefusal(f"REFUSED: the rewrite list unreadable (the path {str(rewrites)!r} names a directory, not a "
+                             f"file; an empty --rewrites is read as '.') (PIN-44)")
+        rwp, rwb = env.committed(rewrites)
+        if rwp or rwb is None:
+            raise AnlRefusal(f"REFUSED: the rewrite list is not committed at HEAD: {rwp} (PIN-44)")
+        rw_ids = rewrite_ids(rwb, posting="v2")
+        inputs["rewrites"] = _file_rec(rewrites, rwb)
+        comp_rec, comp_rows = posting_comparator_v2(out)
+    flag = flag_of_record(flag_source, env.committed)
+    outputs = v2_outputs(t, reasons, bool(flag["value"]), table)
+    trec = {**{u: x for u, x in zip(UNITS, t[:4])}, UNIT_F3: tt[UNIT_F3]}
+    bar = (posting_bar(outputs, bool(flag["value"]), table, comp_rec, comp_rows, rw_ids, trec)
+           if posted else {"applies": False, "reason": BAR_NOT_APPLICABLE})
+    doc_out = {"schema": POSTING_OUT_SCHEMA_V2, "posting": "v2", "tuple": trec, "reasons": dict(reasons),
+               "f2": ("declared input, recorded as given (the seat's A3)" if f3 != F2_NOT_RUN and f3[2] in A3_HIT
+                      else "not required (the screen is not a hit) or Q-F3 NOT-RUN"),
+               "flag": flag, "inputs": inputs, "table_kind": table["kind"], "outputs": outputs, "bar": bar,
+               "proposal_sha256": PROPOSAL_SHA256, **binding}
+    head = (f"POSTING v2: tuple {list(trec.values())}; A3* {outputs['a3_star']}; ceiling {outputs['ceiling']['name']}; "
+            f"{len(outputs['enumeration'])} enumerated rows")
+    if posted and bar["verdict"] == "FAIL":
+        v2l = lambda ls: [ln.replace("POSTING v1:", "POSTING v2:", 1) for ln in ls]
+        raise AnlPostingFail([head + " on the posted text"] + v2l(posting_bar_lines(bar))
+                             + v2l(posting_fail_lines(bar, outputs["enumeration"], comp_rows, inputs, flag, binding,
+                                                      {k_: doc_out[k_] for k_ in ("tuple", "reasons")})), bar)
+    path = out / posting_out_name_v2(table["kind"])
+    status = write_texts_once([(path, doc_out)])
+    return status, [f"{head} ({status}: {path.name})"] + (
+        [ln.replace("POSTING v1:", "POSTING v2:", 1) for ln in posting_bar_lines(bar)] if posted else []), [path]
+
+
+# --- G-ANL-F3's PIN register (Code's readings, declared at LOCK-m-F3 v0.1; strikable by the seat until LOCK-m-F3 v1.0) --
+GANL_F3_REL = "data/m/gates/G-ANL-F3.json"
+GANL_F3_SCHEMA = "m-ganl-f3-v1"
+PINS_F3 = {
+    "PIN-V2-1": "A3's NO-READ carries PIN-4's sub-reason (contrast-empty / sham-empty); both empty is NO-READ too, an "
+                "arm-grain value: the unit's NOT-RUN is decided across all six arms (m:324).",
+    "PIN-V2-2": "The power figure of record at the realised n: A1 at alpha .01, P = .70 (a control); A2 at alpha .01, "
+                "P = .65; A3 at alpha .05, P = .65 (its POSITIVE probability, m:190); the realised n split floor / ceil "
+                "per map as PIN-3; the planned floors m:184-186's, A1's by the campaign's path.",
+    "PIN-V2-3": "Q-F3's cells A2 and A3 are Answered iff L1; otherwise 'reported descriptively -- the told control at F3 "
+                "did not pass: <A1's word>' or '... was not run: <reason>'; clause (a) reads them as v1's cells "
+                "(Step 3, m:339).",
+    "PIN-V2-4": "The v2 sentence table: schema m-posting-sentences-v2, posting v2, cells v1's nine plus A2 and A3, "
+                "kinds v1's plus s5.7-text, s8.2-status and v1-note, otherwise validated as PIN-20; the v2 "
+                "placeholder serves G-ANL-F3's battery only; the v2 table of record is a declared input built at the "
+                "Q-F3 VERDICTS session against the posted v1 (Q7).",
+    "PIN-V2-5": "A3* is a total function of the screen's A3, f2's coordinate and f2's control (m:340); the withholding "
+                "value and the v1-note disposition follow it (m:291: 'none' on every no-hit tuple); Q-F3 NOT-RUN gives "
+                "A3* NOT-RUN, L1 false, Step 6 'none', Section 8.2 open, 'not withheld' and 'none'.",
+    "PIN-V2-6": "Step 6 renders m:342's own texts (S6_*, each checked on m:342) by filling their brackets: '[stages]' "
+                "lists the passing OLMo stages in lineage order ('the SFT stage', 'the SFT and DPO stages', 'the SFT, "
+                "DPO and instruct stages'); the power figure stays a declared slot, filled at posting from the "
+                "VERDICTS data, naming f2's where f2 ran, else the screen's; INDETERMINATE gives 'cell A2 named open', "
+                "REVERSE adds m:342's parenthesis without its 'REVERSE:' label.",
+    "PIN-V2-7": "At v2 Section 8.1's text is v1's four clauses plus 'A1 (Q-F3): <token>' in m:343's tokens; Section "
+                "8.2's status is 'closed into Section 5.7' iff L1, A2 PASS and A3* NULL, else 'open' with each cell's "
+                "outcome, f2's included; Step 7's status is Section 8.2's.",
+    "PIN-V2-8": "A-m1 Section 2.5 (1): 'outside the repository' is decided by the resolved path, not by comparing the "
+                "repository-relative form with the given text; the CLI resolves every path argument against the "
+                "repository root (ganl's --out included; an empty argument as before), '~' expanded first and a "
+                "'~name' that names no user refused (exit 2); the committed-blob check is unchanged.",
+    "PIN-V2-9": "A-m1 Section 2.5 (2): D1 (2026-10-30), D_O' (2026-11-30) and D2 (2026-12-22) are declared constants, "
+                "verified at every verdicts / not-run / posting run against m:16 and ADDENDUM-m1 (sha256-pinned; :28, "
+                ":40); the Clock of record is D1 for Q-F0, D_O' for each OLMo checkpoint, D2 for Q-F3.",
+    "PIN-V2-10": "N8's era: a PENDING declaration dated before ADDENDUM-m1's commit day (2026-11-05) keeps "
+                 "unlocked-before-D_O and is read against D1; one dated from that day names D_O' "
+                 "(unlocked-before-D_O'); the other era's name is refused; Q-F0's VERDICTS of 2026-10-19 is left as it was.",
+    "PIN-V2-11": "A1's regression: the identity of record is ed8e886's analyzer blob (asserted 655e0f7f...) with "
+                 "LOCK-m-F0.md:147-149's package and closure; the preprint of record is served by its committed blob "
+                 "(1523cce, the table of record's 45b67246..., since the file at HEAD carries the status banner of "
+                 "32aefcc); every other input is read from the tree, the seven released files through PIN-29's "
+                 "exception by blob.",
+    "PIN-V2-12": "Q-F3's reader (`verdicts --unit Q-F3`): v1's in form; V1 refuses unless the lock names the analyzer, "
+                 "m's package and the Q-F3 closure (the base closure plus LAZY_F3_MODULES, so an OLMo lock binds no "
+                 "mf3 byte), the v1 posting on the posted text is committed and PASSed C7's bar (decision (10')), the "
+                 "v2 table of record and the adjudication-reads file are declared, and Q-F0's inputs are refused; "
+                 "outputs Q-F3_VERDICTS / _secondary / _blind-read.json (or _NOT-RUN.json) in data/mf3/verdicts.",
+    "PIN-V2-13": "Counter (c): m:312's lexicons and window frozen; a line lower-cased, Unicode punctuation replaced by a space, "
+                 "split on whitespace; stage-1 terms exact, polarity terms exact or prefix ('*'); a label's polarity "
+                 "is the nearest term within +-6 tokens over its occurrences, a distance tie ambiguous; m:312's "
+                 "precedence; two labels correct only if both are; 'follows' = the first pick is the label marked "
+                 "clean (or not the one marked corrupted); scope A3's domain first lines.",
+    "PIN-V2-14": "The blind read: min(48, eligible) A3 domain campaign sessions, those the declared adjudication-reads "
+                 "file names as campaign sessions excluded (entries [stage, template, s]), ranked by "
+                 "sha256('m-f3-blind|20261106|<s>'); the draw file carries the line and the roster pair (alphabetical) "
+                 "only; the key is in the secondary output.",
+    "PIN-V2-15": "run_verdicts' V2 block is factored out unchanged and serves Q-F3 with the pod check off; Q-F3's V4 is "
+                 "PIN-34's with mf3's templates and F3's domain (m:308), mf3's pre-pick.",
+    "PIN-V2-16": "A Q-F3 arm's sentence: PIN-4's clauses in order with the arm's own alpha and words; A3's NULL quotes "
+                 "the attained power at the realised n as the figure of record with the planned-floor figure beside "
+                 "(the seat's A5 note); NULL-x names its direction; a screen hit states Step 4's withholding and, "
+                 "POSITIVE, Section 7.3's re-review; A2's REVERSE names cell A2 open; the guard per contrast arm, binding.",
+    "PIN-V2-17": "'Valid through position p' at F3: a reasoning line at ci k precedes choice k + 1, a free round at ci k "
+                 "the choices after k + 1; secondaries (a)-(f) on mf3's records, (d) without the habit identity, (f) "
+                 "over every reasoning line per arm.",
+    "PIN-V2-18": "Q-F3's counters: the Qwen list as Q-F0's plus reasoning_line_defect keyed (arm, class, line "
+                 "position) over every line generated; pre_pick_exclusion keyed on the excluding forced round's "
+                 "property or 'reasoning line 1'.",
+    "PIN-V2-19": "Q-F3's NOT-RUN causes: the shared Clock causes over G-CAL, G-SHAPE-F3, G-ANL-F3, G-TIME-F3, G-ID-F3 "
+                 "and G-F3, pi-declined, k-zero and the three no-first-read causes, D2 its Clock; the OLMo-only causes "
+                 "refused.",
+    "PIN-V2-20": "`not-run` takes Q-F3 (output in data/mf3/verdicts) and, with --v2-closure, an OLMo checkpoint PENDING "
+                 "at v2 whose campaign recorded no session: --campaign is required, the unit's campaign checkpoint "
+                 "(committed at HEAD and read once; identity unit and stage checked; read for its session count "
+                 "alone) or 'none' (declared, recorded in the output, refused while data/m/ckpt/{U}_campaign.json "
+                 "exists in the tree or at HEAD); cause pending-closed-at-v2 only, declared before the v2 posting (the "
+                 "seat's A2; m:324).",
+    "PIN-V2-21": "`posting --posting v2`: a v2 tuple {Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct, Q-F3} with Q-F3's "
+                 "coordinate NOT-RUN or {A1, A2, A3, f2, f2_control}, f2 a declared input recorded as given; the v1 "
+                 "coordinates cross-checked as at v1 with pending-closed-at-v2 admitted and PENDING refused; Q-F3's "
+                 "against its own outputs; POSTING-v2_outputs.{of-record,posted}.json; the posted re-run under C7's "
+                 "bar with the v2 of-record output as its comparator; its binding records the base closure, which is "
+                 "what the command imports.",
+    "PIN-V2-22": "The v2 enumeration is PIN-21's over the v2 table against the v2 ceiling, (b)'s treatment chosen by "
+                 "A3* (m:349): CONFIRMED -> the confirmed result, a claim iff L1; DISCORDANT / UNLICENSED -> the "
+                 "unconfirmed one; else a reading proposed.",
+    "PIN-V2-23": "`ganl` writes data/m/gates/G-ANL-F3.json, write-once, against committed blobs (PIN-39 widened to the "
+                 "v2 placeholder, ADDENDUM-m1, valence_core/mf3/*.py and the Q-F3 closure); G-ANL-F0.json is "
+                 "untouched; the manifest is G-ANL-F0's form with stage G-ANL-F3 and a g_anl_f3 block.",
+    "PIN-V2-24": "The v2 sentence table of record is a required, committed input of Q-F3's VERDICTS (built at that "
+                 "session against the posted v1, so before the outcome is computed: Q7), recorded in its output; the v2 "
+                 "posting refuses an of-record table other than the one Q-F3's VERDICTS or no-first-read NOT-RUN read "
+                 "(PIN-40 carried).",
+}
+SEAT_RULED_F3 = {
+    "A1": "(R1): the regression as a battery case with the identity from the record; PIN-29's exception by blob for "
+          "Q-F0's seven released files; data/mf3/{ckpt,reports,verdicts} refused roots; acknowledged by the PI.",
+    "A2": "(P1): a PENDING OLMo coordinate at v2 asserts exactly one output, the refusal naming m:324's closure and its "
+          "two branches; 218,855 refusal tuples and 300,625 full.",
+    "A3": "All three now: verdicts --unit Q-F3, posting --posting v2, a v2 placeholder table; no in-place analyzer "
+          "commit while an OLMo unit is open.",
+    "A4": "The riding texts confirmed by anchor: A-m1 Section 2.5 (1)-(3); the VERDICTS read's _prod_committed quirk "
+          "and flag_of_record's silent FALSE; round 2's misparaphrase rule.",
+    "A5": "Code's eleven PIN readings not struck (strikable until LOCK-m-F3 v1.0); A3's NULL sentence quotes the "
+          "attained power at the realised n with the planned figure beside; the dates verified by sha256 at every "
+          "run; a D_O-era PENDING keeps its name and is read against D1 (N8).",
+}
+
+
 # --- the PIN register (repeated in the G-ANL-F0 entry) --------------------------------------------
 PINS = {
     "PIN-1": "The analyzer of m:278 is the single file scripts/m_analyze.py: every outcome, unit-state, "
@@ -2897,7 +4723,10 @@ PINS = {
     "PIN-29": "During --selftest and ganl, an open hook (builtins.open, io.open, Path.open/read_bytes/"
               "read_text) refuses any path under data/m/ckpt, data/m/reports, data/m/verdicts or "
               "results/raw; the no-canonical-write snapshot hashes data/m files outside those directories "
-              "and takes only os.stat of files inside them (never their bytes).",
+              "and takes only os.stat of files inside them (never their bytes). At G-ANL-F3 (the seat's A1, "
+              "2026-11-06): the hook admits PIN29_RELEASED's seven released Q-F0 files by blob, each only while its "
+              "bytes hash to its pin, and refuses data/mf3/ckpt, data/mf3/reports and data/mf3/verdicts too; the "
+              "snapshot covers data/mf3.",
     "PIN-30": "STUB_MARK provenance is accepted only by the battery's internal path. The CLI refuses it.",
     "PIN-31": "The proposal sha256 is pinned in the analyzer. Every m-verbatim constant is verified against "
               "the proposal file at run time.",
@@ -3071,7 +4900,7 @@ SEAT_ROUTED = {"PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10
 # =============================================================================================
 # THE BATTERY (m:278). Selftest-only helpers carry the `_bt` prefix.
 # =============================================================================================
-EXPECTED_CHECKS = 448        # the battery's fixed check list (any skip or addition changes it)
+EXPECTED_CHECKS = 525        # the battery's fixed check list (any skip or addition changes it; 448 at G-ANL-F0)
 
 # PIN (Code, declared at LOCK v0.1): PIN-24 -- the battery reaches every per-arm outcome per unit, the
 # full 5 x 6^3 product under both flag values (the flag an input, not a coordinate; 'clock:pi-declined'
@@ -3174,6 +5003,18 @@ _REQUIRED += ["STR-PROPOSAL-SHA", "STR-CONSTANTS", "STR-CONSTANTS-MUTANT", "STR-
               "STR-STDOUT-HYGIENE", "STR-GANL-COMMITTED", "STR-GANL-EXIT", "STR-GANL-ARTIFACT",
               "STR-GANL-SHA16", "STR-GANL-FLAG", "STR-GANL-REGISTER", "STR-GANL-PLACEHOLDER",
               "STR-GANL-BATTERY-BLOCK", "STR-GANL-CONTENT-EXIT", "STR-PIN-V10-TEXTS"]
+# G-ANL-F3 (m:291; the seat's answers of 2026-11-06): the riding items (A1, A4; A-m1 §2.5 (1)-(3))
+_REQUIRED += ["F3R-PIN29-BLOBS", "F3R-RECORD-IDENTITY", "F3R-PREPRINT-OF-RECORD", "F3R-REGRESSION", "F3R-HOOK-ADMITTED",
+              "F3R-HOOK-REFUSES", "F3R-CLI-PATHS", "F3R-CLOCK-DATES", "F3R-CLOCK-REFUSAL", "F3R-PENDING-ERA",
+              "F3R-PENDING-RECORD", "F3R-V1-UNCHANGED", "F3R-PIN-REGISTER"]
+_REQUIRED += ["F3V-PLACEHOLDER-FILE", "F3V-SPACE", "F3V-DETERMINISM"]
+_REQUIRED += [f"F3V-{k_}-{f}" for k_ in ("PENDING", "TALLIES", "FIRES", "BTREAT") + tuple(f"V{i}" for i in range(1, 13))
+              for f in ("T", "F")]
+_REQUIRED += ["F3O-ARMS", "F3O-A1", "F3O-A2", "F3O-A3", "F3O-NOREAD", "F3O-POWER", "F3O-A3STAR", "F3O-SENTENCES",
+              "F3C-SCORER", "F3C-JOINT", "F3C-LEXICONS", "F3C-DRAW", "F3C-DRAW-EXCL", "F3C-DRAW-FEW", "F3C-SECONDARY",
+              "F3C-VALID-THROUGH", "F3N-CAUSES", "F3N-CMD", "F3N-V2-CLOSURE", "F3R-CLOSURE", "F3R-READER-COMPLETE",
+              "F3R-READER-IDENTICAL", "F3R-READER-RATES", "F3R-READER-REFUSALS", "F3R-READER-NOTRUN",
+              "F3R-READER-HAIR", "F3P-OF-RECORD", "F3P-REFUSALS", "F3P-POSTED-BAR"]
 REQUIRED_COVERAGE = frozenset(_REQUIRED)
 del _u, _c
 
@@ -3232,10 +5073,26 @@ class _OpenHook:
     # PIN (Code, declared at LOCK v0.1): PIN-29 -- during --selftest and ganl, builtins.open, io.open
     # and Path.open/read_bytes/read_text refuse any path under data/m/ckpt, data/m/reports,
     # data/m/verdicts or results/raw; the no-canonical-write snapshot takes only os.stat there.
-    def __init__(self) -> None:
+    # PIN (the seat's A1, 2026-11-06; acknowledged by the PI): PIN-29's exception is by blob, not by
+    # path -- the hook admits exactly PIN29_RELEASED's seven Q-F0 files, each only while its bytes hash
+    # to the sha256 pinned there (read through the saved builtins.open), and nothing else under the
+    # roots; data/mf3/ckpt, data/mf3/reports and data/mf3/verdicts are refused roots (m:318 covers
+    # Q-F3's picks until its VERDICTS session). The regression asserts that each pin is HEAD's blob.
+    def __init__(self, released: Mapping[str, str] | None = None) -> None:
         self.blocked = [(REPO / r).resolve() for r in BLOCKED_REL]
+        self.released = {(REPO / r).resolve(): sha for r, sha in
+                         (PIN29_RELEASED if released is None else released).items()}
         self.saved: tuple = ()
         self.caught: list[str] = []
+        self.admitted: list[str] = []
+
+    def _blob_ok(self, p: Path, want: str) -> bool:
+        opener = self.saved[0] if self.saved else builtins.open
+        try:
+            with opener(p, "rb") as fh:
+                return hashlib.sha256(fh.read()).hexdigest() == want
+        except OSError:
+            return False
 
     def _check(self, f: Any) -> None:
         if isinstance(f, int):
@@ -3246,6 +5103,10 @@ class _OpenHook:
             return
         for b in self.blocked:
             if p == b or b in p.parents:
+                want = self.released.get(p)
+                if want is not None and self._blob_ok(p, want):
+                    self.admitted.append(_repo_rel(p))
+                    return
                 self.caught.append(_repo_rel(p))
                 raise PermissionError(f"PIN-29: the analyzer's battery never reads {_repo_rel(p)} "
                                       f"(pick-bearing or derived; m:318)")
@@ -3286,11 +5147,12 @@ class _OpenHook:
 
 
 def _bt_snapshot() -> dict:
-    """data/m's state: sha256 of files outside the blocked dirs, os.stat only inside them (PIN-29)."""
-    root = REPO / "data" / "m"
+    """data/m's and data/mf3's state: sha256 of files outside the blocked dirs, os.stat only inside them
+    (PIN-29; data/mf3 added at G-ANL-F3, the seat's A1)."""
     out = {}
     blocked = [(REPO / r).resolve() for r in BLOCKED_REL]
-    for p in sorted(root.rglob("*")) if root.is_dir() else []:
+    files = [p for root in (REPO / "data" / "m", REPO / "data" / "mf3") if root.is_dir() for p in root.rglob("*")]
+    for p in sorted(files):
         if not p.is_file():
             continue
         rp = p.resolve()
@@ -3309,7 +5171,7 @@ def constants_by_line() -> dict[int, list[str]]:
     return {
         14: ["*Answered, as recognition*", "the weight channel (*concluded, not answered*)",
              "*" + LABEL_BASE + "*", LABEL_E2B],
-        16: [f"D1 (Q-F0) **{CLOCK_DATE}**", f"D_O (each OLMo checkpoint) **{CLOCK_DATE}**"],
+        16: [f"D1 (Q-F0) **{CLOCK_DATE}**", f"D_O (each OLMo checkpoint) **{CLOCK_DATE}**", f"D2 (Q-F3) **{D2}**"],
         190: [".916 at P = .70; (80, 32): .878", "96 at .01 → 60; 80 at .01 → 51",
               "each arm split n/2 per map at clean share P in both maps, its sham split m/2 per map at .5",
               "Attained power at the realised n is reported in VERDICTS, descriptively, and is the power "
@@ -3344,6 +5206,7 @@ def constants_by_line() -> dict[int, list[str]]:
               "NULL-x↑ toward clean, NULL-x↓ toward corrupted** → NULL"],
         340: ["**CONFIRMED** (in the screen's direction)", "**DISCORDANT** if f2's (i)–(iii) hold in the "
               "other direction", "**UNLICENSED** otherwise"],
+        342: [S6_RETIRED, S6_FAIL, S6_OPEN, S6_BESIDE] + ["*" + c_ + "*" for c_ in S6_CLAUSES.values()],
         334: ["Main: *" + TITLES["Main"] + "*", "Fallback-1: *" + TITLES["Fallback-1"] + "*",
               "Fallback-2: *" + TITLES["Fallback-2"] + "*"],
         337: ["L0 := (A0 = PASS); L0-OLMo-c := (A0-OLMo-c = PASS) for c ∈ {sft, dpo, instruct}"],
@@ -7474,7 +9337,7 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
     src = me.read_text(encoding="utf-8")
     probs = constant_problems(lines)
     B.chk("proposal constants: every m-verbatim constant appears on its cited line (m:14, :16, :190, :192, :247, "
-          ":306, :310, :312, :314, :316, :324, :326, :334, :337, :338, :340, :341, :343, :349)", probs == [], probs[:2],
+          ":306, :310, :312, :314, :316, :324, :326, :334, :337, :338, :340, :341, :342, :343, :349)", probs == [], probs[:2],
           cover=["STR-CONSTANTS"])
     mutant = list(lines)
     mutant[337] = mutant[337].replace("did not pass: outcome", "did not pass: verdict")
@@ -7608,7 +9471,7 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
     preg = {"pin-dropped": only({**art, "pins": {k_: v_ for k_, v_ in PINS.items() if k_ != "PIN-1"}}),
             "pin-edited": only({**art, "pins": {**PINS, "PIN-8": PINS["PIN-8"] + " (edited)"}}),
             "seat-routed": only({**art, "seat_routed": {**SEAT_ROUTED, "PIN-8": "ruled (battery)"}}),
-            "schema": only({**art, "schema": "m-ganl-f0-v0"})}
+            "schema": only({**art, "schema": "m-ganl-f0-v1"})}
     B.chk("G-ANL-F0 manifest: the PIN register, the seat-routed list and the schema are this file's -- a dropped and "
           "an edited PIN, an edited seat-routed entry and another schema are each caught as exactly 'pins / "
           "seat_routed / schema'", a_probs == [] and all(v_ == ["pins / seat_routed / schema"] for v_ in preg.values()),
@@ -7645,8 +9508,8 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
             outs_g[tag] = (rc_, "fails its own content check" in err_.getvalue(),
                            sorted(x.name for x in d_.iterdir()) if d_.is_dir() else [])
     B.chk("exit codes (PIN-26): a ganl whose manifest fails its own content check (a planted HEAD key) returns 4 (STOP) "
-          "and writes nothing; the same battery double with the true manifest writes G-ANL-F0.json (0)",
-          outs_g.get("planted-head") == (4, True, []) and outs_g.get("true") == (0, False, [Path(GANL_REL).name]),
+          "and writes nothing; the same battery double with the true manifest writes G-ANL-F3.json (0)",
+          outs_g.get("planted-head") == (4, True, []) and outs_g.get("true") == (0, False, [Path(GANL_F3_REL).name]),
           outs_g, cover=["STR-GANL-CONTENT-EXIT"])
     # PIN sites, exactly (FA-1, FID2-2): the register is the literal set PIN-1 to PIN-46; PIN-1 to PIN-43 (LOCK v0.1's
     # 43-entry register) carry the v0.1 marker and PIN-44 to PIN-46 (declared at LOCK v1.0: their text begins so)
@@ -7968,9 +9831,15 @@ def lazy_import_problems(tree: ast.Module) -> list[tuple[str, list[str]]]:
             continue
         if fn.startswith("_bt") or fn in ("_Camp", "_Battery", "_OpenHook"):
             continue
-        if not all(n in LAZY_VERDICT_MODULES for n in vc):
+        # PIN-V2-12: Q-F3's reader functions (f3_*, _f3_*, run_verdicts_f3) may also import LAZY_F3_MODULES
+        allowed = LAZY_VERDICT_MODULES + (LAZY_F3_MODULES if _is_f3_fn(fn) else ())
+        if not all(n in allowed for n in vc):
             bad.append((fn, vc))
     return bad
+
+
+def _is_f3_fn(fn: str) -> bool:
+    return fn.startswith(("f3_", "_f3_")) or fn in ("run_verdicts_f3", "score_line_c", "judge_c")
 
 
 def _enclosing(tree: ast.Module, target: ast.AST) -> str:
@@ -7979,6 +9848,1148 @@ def _enclosing(tree: ast.Module, target: ast.AST) -> str:
         if isinstance(node, (ast.FunctionDef, ast.ClassDef)) and any(sub is target for sub in ast.walk(node)):
             return node.name
     return ""
+
+
+# --- battery: G-ANL-F3's riding items (the seat's A1 and A4; ADDENDUM-m1 §2.5 (1)-(3)) ---------------------
+REGRESSION_PREPRINT_COMMIT = "1523cce"   # the preprint of record's commit (PIN-40; the table of record's sha)
+REGRESSION_OUTPUTS = ("data/m/verdicts/Q-F0_VERDICTS.json", "data/m/verdicts/Q-F0_secondary.json")
+
+
+def _bt_git_blob(spec: str) -> bytes | None:
+    r = subprocess.run(["git", "-C", str(REPO), "cat-file", "blob", spec], capture_output=True)
+    return r.stdout if r.returncode == 0 else None
+
+
+def _bt_qf0_regression() -> dict:
+    """A1 (the seat's (R1); A-m1 §2.5 (3), rule 26's form): Q-F0's VERDICTS and secondary-DV computations,
+    run in-process by this analyzer on Q-F0's committed inputs of 2026-10-19 with the identity fields
+    supplied from the record, compared byte for byte with the two committed outputs."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's A1; a dated note in the G-ANL-F3 entry): PIN-V2-11 --
+    # the identity of record is the analyzer blob of ed8e886 (read with git
+    # cat-file, asserted to hash to 655e0f7f...) with the package and closure shas LOCK-m-F0.md:147-149
+    # names; PIN-14's check runs inside run_verdicts against those three. The table of record binds its
+    # preprint by sha256 (PIN-40, LOCK-m-F0 names it), and PREPRINT-v1_0-draft.md at HEAD carries the
+    # note release's status banner since 32aefcc ("not a text of record"), so the preprint of record is
+    # served by its committed blob (1523cce, asserted to the table's sha256): no blob but that one can
+    # satisfy the table's binding, as no analyzer blob but 655e0f7f... can satisfy the lock's. Every other
+    # input is read from the tree: the seven released files through PIN-29's exception by blob, each pin
+    # asserted equal to HEAD's blob here.
+    out: dict = {"pins": {}, "identity": {}, "preprint": {}, "outputs": {}, "status": None, "error": None}
+    for rel, sha in PIN29_RELEASED.items():
+        hb = _bt_git_blob(f"HEAD:{rel}")
+        out["pins"][rel] = hb is not None and _sha256_bytes(hb) == sha
+    ablob = _bt_git_blob(f"{RECORD_ANALYZER_COMMIT}:{ANALYZER_REL}")
+    out["identity"] = {"analyzer_commit": RECORD_ANALYZER_COMMIT,
+                       "analyzer_sha256": _sha256_bytes(ablob) if ablob is not None else None,
+                       "package_sha256": RECORD_PACKAGE_SHA256, "closure_sha256": RECORD_CLOSURE_SHA256}
+    lock = REPO / "LOCK-m-F0.md"
+    ltext = lock.read_text(encoding="utf-8")
+    out["identity"]["lock_names_all_three"] = all(x in ltext for x in (
+        RECORD_ANALYZER_SHA256, RECORD_PACKAGE_SHA256, RECORD_CLOSURE_SHA256))
+    tab_p = REPO / "data" / "m" / "gates" / "m_posting_sentences.json"
+    pre = json.loads(tab_p.read_text(encoding="utf-8"))["preprint"]
+    pblob = _bt_git_blob(f"{REGRESSION_PREPRINT_COMMIT}:{pre['path']}")
+    head_pre = REPO / pre["path"]
+    out["preprint"] = {"path": pre["path"], "table_sha256": pre["sha256"], "commit": REGRESSION_PREPRINT_COMMIT,
+                       "blob_sha256": _sha256_bytes(pblob) if pblob is not None else None,
+                       "head_file_sha256": _sha256_bytes(head_pre.read_bytes()) if head_pre.is_file() else None}
+    if ablob is None or out["identity"]["analyzer_sha256"] != RECORD_ANALYZER_SHA256 or pblob is None \
+            or out["preprint"]["blob_sha256"] != pre["sha256"]:
+        out["error"] = "the record's analyzer blob or preprint blob is not the pinned one"
+        return out
+    apath = Path(__file__).resolve()
+
+    def committed(q: Path) -> tuple[list[str], bytes | None]:
+        return ([], ablob) if Path(q).resolve() == apath else _prod_committed(Path(q))
+
+    def read_repo_file(rel: str) -> bytes | None:
+        return pblob if rel == pre["path"] else _prod_read(rel)
+    said: list[str] = []
+    env = Env(proposal_path=REPO / PROPOSAL_REL, committed=committed, analyzer_path=apath,
+              package_sha256=RECORD_PACKAGE_SHA256, closure_sha256=RECORD_CLOSURE_SHA256, allow_stub=False,
+              gate_line=lambda name: (f"GATE {name} (the G-ANL-F3 regression; not logged)", []),
+              read_repo_file=read_repo_file, say=said.append)
+    with tempfile.TemporaryDirectory(prefix="m_analyze_regression_") as td:
+        ck, vd = REPO / CKPT_REL, REPO / VERDICTS_REL
+        inp = VerdictInputs(unit="Q-F0", lock=lock, decisions=vd / "Q-F0_decisions.json",
+                            campaign=ck / "Q-F0_campaign.json", time=ck / "Q-F0_time.json", qual=ck / "Q-F0_qual.json",
+                            out=Path(td), olmo_states=vd / "Q-F0_olmo-states.json", sentences=tab_p,
+                            flag_source=REPO / FLAG_SOURCE_REL)
+        try:
+            st, _, _ = run_verdicts(inp, env)
+        except (AnlRefusal, AnlStop) as e:
+            out["error"] = f"{type(e).__name__}: {e}"
+            return out
+        out["status"] = st
+        for rel in REGRESSION_OUTPUTS:
+            got = (Path(td) / Path(rel).name).read_bytes()
+            rec = (REPO / rel).read_bytes()
+            out["outputs"][rel] = {"identical": got == rec, "sha256": _sha256_bytes(got), "bytes": len(got),
+                                   "record_sha256": _sha256_bytes(rec)}
+    return out
+
+
+def _bt_v1_unchanged(table: Mapping) -> dict:
+    """answers:26 (a), as the seat's A1 reads it: the 1,080 v1 tuples' outputs of G-ANL-F0's battery,
+    reproduced by this analyzer value for value under both flag values -- the analyzer of record's
+    v1_outputs (the blob of ed8e886, executed in-process) against this file's."""
+    blob = _bt_git_blob(f"{RECORD_ANALYZER_COMMIT}:{ANALYZER_REL}")
+    res = {"blob_sha256": _sha256_bytes(blob) if blob is not None else None, "tables_equal": False,
+           "evaluations": 0, "equal": 0, "distinct_reason_equal": 0, "first_diff": None}
+    if blob is None or res["blob_sha256"] != RECORD_ANALYZER_SHA256:
+        return res
+    name = "m_analyze_of_record_" + RECORD_ANALYZER_COMMIT
+    mod = types.ModuleType(name)
+    mod.__file__ = str(Path(__file__).resolve())
+    sys.modules[name] = mod
+    try:
+        exec(compile(blob, f"{RECORD_ANALYZER_COMMIT}:{ANALYZER_REL}", "exec"), mod.__dict__)
+        rec_table = mod.placeholder_table()
+        res["tables_equal"] = rec_table == placeholder_table() == table
+        reasons_all = {u: not_run_reason(u, "clock:pi-declined", CLOCK_DATE) for u in UNITS}
+        whys = {"Q-F0": not_run_reason("Q-F0", "clock:k-zero", CLOCK_DATE),
+                "OLMo-sft": not_run_reason("OLMo-sft", "clock:no-box", CLOCK_DATE),
+                "OLMo-dpo": not_run_reason("OLMo-dpo", "dose-not-completable"),
+                "OLMo-instruct": not_run_reason("OLMo-instruct", "clock:gate-stopped:G-TIME-OLMo-instruct", CLOCK_DATE)}
+        for flag in (True, False):
+            for t in itertools.product(Q5, O6, O6, O6):
+                rs = {u: reasons_all[u] for u, x in zip(UNITS, t) if x == "NOT-RUN"}
+                a, b = v1_outputs(t, rs, flag, table), mod.v1_outputs(t, rs, flag, rec_table)
+                res["evaluations"] += 1
+                if a == b:
+                    res["equal"] += 1
+                elif res["first_diff"] is None:
+                    res["first_diff"] = [list(t), flag]
+                ws = {u: whys[u] for u, x in zip(UNITS, t) if x == "NOT-RUN"}
+                res["distinct_reason_equal"] += v1_outputs(t, ws, flag, table) == mod.v1_outputs(t, ws, flag, rec_table)
+    finally:
+        sys.modules.pop(name, None)
+    return res
+
+
+def _bt_riding(B: _Battery, hook: _OpenHook, table: Mapping) -> None:
+    # (3) the regression (A1)
+    reg = _bt_qf0_regression()
+    B.extra["regression"] = reg
+    pins_ok = len(reg["pins"]) == 7 and all(reg["pins"].values())
+    B.chk("regression (A1): each of PIN-29's seven released files is pinned by its HEAD blob's sha256 (the exception "
+          "is by blob)", pins_ok, sorted(k_ for k_, v_ in reg["pins"].items() if not v_), cover=["F3R-PIN29-BLOBS"])
+    idt = reg["identity"]
+    B.chk("regression (A1): the identity of record -- ed8e886's analyzer blob hashes to 655e0f7f..., and LOCK-m-F0.md "
+          "names it with package 5f646db6... and closure a3bc7bb9... (LOCK-m-F0.md:147-149)",
+          idt.get("analyzer_sha256") == RECORD_ANALYZER_SHA256 and idt.get("lock_names_all_three") is True,
+          (str(idt.get("analyzer_sha256"))[:16], idt.get("lock_names_all_three")), cover=["F3R-RECORD-IDENTITY"])
+    pp = reg["preprint"]
+    B.chk("regression (A1): the preprint of record is served by its committed blob (1523cce, the table of record's "
+          "sha256 45b67246...); the bannered file at HEAD differs (32aefcc; its sha256 reported)",
+          pp.get("blob_sha256") == pp.get("table_sha256") and pp.get("head_file_sha256") not in (None, pp.get("table_sha256")),
+          (str(pp.get("blob_sha256"))[:16], str(pp.get("head_file_sha256"))[:16]), cover=["F3R-PREPRINT-OF-RECORD"])
+    outs = reg["outputs"]
+    same = [rel for rel, v_ in outs.items() if v_["identical"]]
+    B.chk("regression (A1; A-m1 §2.5 (3)): the extended analyzer, on the moved package, recomputes Q-F0's VERDICTS and "
+          "secondary outputs from the committed inputs with the identity of record, byte for byte "
+          "(a difference is a STOP)", reg["error"] is None and reg["status"] == "written" and len(same) == 2,
+          reg["error"] or [(Path(r_).name, v_["identical"], v_["sha256"][:12]) for r_, v_ in outs.items()],
+          cover=["F3R-REGRESSION"])
+    adm = sorted(set(hook.admitted))
+    B.chk("PIN-29's exception admitted exactly the regression's released files (the campaign, time and qual "
+          "checkpoints, the decisions, the OLMo states and the two outputs), each by blob", adm == sorted(PIN29_RELEASED),
+          [a_ for a_ in adm if a_ not in PIN29_RELEASED] or sorted(set(PIN29_RELEASED) - set(adm)),
+          cover=["F3R-HOOK-ADMITTED"])
+    # the hook's exception refuses everything else under the roots, and a released path whose bytes moved
+    caught = []
+    for rel in ("data/m/ckpt/Q-F0_id.json", "data/m/verdicts/Q-F0_VERDICTS.json.bak", "data/mf3/ckpt/Q-F3_campaign.json",
+                "data/mf3/reports/G-TIME-F3.json", "data/mf3/verdicts/Q-F3_VERDICTS.json"):
+        try:
+            (REPO / rel).read_bytes()
+            caught.append(False)
+        except PermissionError:
+            caught.append(True)
+        except OSError:
+            caught.append(False)
+    moved = _OpenHook(released={"data/m/verdicts/Q-F0_VERDICTS.json": "0" * 64})
+    try:
+        moved._check(REPO / "data/m/verdicts/Q-F0_VERDICTS.json")
+        moved_refused = False
+    except PermissionError:
+        moved_refused = True
+    B.chk("PIN-29's exception, both directions: another file under data/m's roots and every file under data/mf3/ckpt, "
+          "reports and verdicts are refused before they are touched; a released path whose bytes do not hash to its pin "
+          "is refused", all(caught) and len(caught) == 5 and moved_refused, (caught, moved_refused),
+          cover=["F3R-HOOK-REFUSES"])
+    # (1) the CLI-path reading
+    rel_flag = Path(FLAG_SOURCE_REL)
+    pc_rel = _prod_committed(_cli_path(str(rel_flag)))
+    fl_cli = flag_of_record(_cli_path(str(rel_flag)), _prod_committed)
+    outside = _prod_committed(Path("/") / "outside-the-repository.json")
+    try:
+        _cli_path("~nosuchuser_zz9_m/x")
+        tilde_ = "no refusal"
+    except AnlRefusal as e:
+        tilde_ = str(e)
+    rc_tilde = {}
+    for argv_ in (["ganl", "--out", "~nosuchuser_zz9_m/x"],
+                  ["not-run", "--unit", "OLMo-dpo", "--record", "~nosuchuser_zz9_m/r.json"]):
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            try:
+                rc_tilde[argv_[0]] = main(argv_)
+            except BaseException as e:          # a traceback here is the defect this check guards against
+                rc_tilde[argv_[0]] = ("raised", type(e).__name__)
+    B.chk("CLI paths (A-m1 §2.5 (1); PIN-V2-8): a repository-relative --flag-source resolves against the root and reads "
+          "the committed flag (TRUE, as its absolute form); a path outside the repository is still refused; a '~name' "
+          "naming no user is refused, exit 2 from ganl and not-run alike (no traceback); the committed-blob check is "
+          "unchanged", pc_rel[0] == [] and fl_cli["value"] is True and outside[0] != []
+          and tilde_.startswith("REFUSED:") and "names no user" in tilde_ and rc_tilde == {"ganl": 2, "not-run": 2}
+          and _cli_path(str(rel_flag)) == REPO / rel_flag and _cli_path("/abs/x") == Path("/abs/x")
+          and _cli_path(None) is None and _cli_path("") is None and _cli_path("", True) == Path(""),
+          (fl_cli["value"], outside[0][:1], tilde_[:60], rc_tilde), cover=["F3R-CLI-PATHS"])
+    # (2) the Clock dates
+    ab = (REPO / ADDENDUM_M1_REL).read_bytes()
+    mut = ab.replace(f"**D2 stands at {D2}**".encode("utf-8"), b"**D2 stands at 2026-12-23**")
+    B.chk("Clock dates (A-m1 §2.5 (2); PIN-V2-9): D1 2026-10-30 and D2 2026-12-22 on m:16, D_O' 2026-11-30 on A-m1:28 "
+          "and D2 on A-m1:40, ADDENDUM-m1 pinned by sha256; a moved date is refused; Clock of record D1 / D_O' / D2",
+          clock_problems(ab) == [] and clock_problems(mut) != [] and clock_problems(None) != []
+          and _sha256_bytes(ab) == ADDENDUM_M1_SHA256
+          and [clock_of_record(u) for u in UNITS + (UNIT_F3,)] == [D1, D_O_PRIME, D_O_PRIME, D_O_PRIME, D2],
+          (clock_problems(ab), clock_problems(mut)[:1]), cover=["F3R-CLOCK-DATES"])
+    env_bad = _bt_env_clock(Path(tempfile.gettempdir()) / "no-such-addendum.md")
+    try:
+        _clock_refusal(env_bad)
+        cr = None
+    except AnlRefusal as e:
+        cr = str(e)
+    B.chk("Clock dates at the run: an unreadable or moved ADDENDUM-m1 refuses verdicts, not-run and posting before "
+          "an input is read (exit 2)", cr is not None and "PIN-V2-9" in cr, B.short(cr or ""), cover=["F3R-CLOCK-REFUSAL"])
+    # N8's era rule
+    def ps(sub, date, cp=False):
+        try:
+            return pending_state("OLMo-sft", {"state": "PENDING", "substate": sub, "clock_passed": cp, "date": date},
+                                 verdicts_exists=False, notrun_exists=False)
+        except ValueError as e:
+            return "refused: " + str(e)
+    era = [ps("unlocked-before-D_O", "2026-10-19"), ps("unlocked-before-D_O", "2026-11-04"),
+           ps("unlocked-before-D_O", "2026-11-05"), ps("unlocked-before-D_O′", "2026-11-05"),
+           ps("unlocked-before-D_O′", "2026-11-04"), ps("unlocked-before-D_O′", "2026-11-20", True),
+           ps("locked-running", "2026-11-20"), ps("awaiting-verdicts-session", "2026-10-19")]
+    want = ["unlocked-before-D_O", "unlocked-before-D_O", "refused", "unlocked-before-D_O′", "refused", "refused",
+            "locked-running", "awaiting-verdicts-session"]
+    B.chk("PENDING's era (N8; PIN-V2-10): a declaration dated before ADDENDUM-m1's commit day keeps "
+          "unlocked-before-D_O (read against D1); from that day it names D_O' (unlocked-before-D_O'); the other era's "
+          "name is refused, as is the D_O' name with the Clock passed; the other sub-states take either era",
+          [e_.split(":")[0] for e_ in era] == want, [e_[:30] for e_ in era], cover=["F3R-PENDING-ERA"])
+    rec_states = json.loads((REPO / VERDICTS_REL / "Q-F0_VERDICTS.json").read_text(encoding="utf-8"))["olmo_states_declared"]
+    B.chk("PENDING's era: the three D_O-era declarations Q-F0's VERDICTS embeds (2026-10-19) still validate under their "
+          "own names (N8: the output is left as it was)",
+          all(pending_state(u, d, verdicts_exists=False, notrun_exists=False) == d["substate"]
+              for u, d in rec_states.items()), sorted({d["substate"] for d in rec_states.values()}),
+          cover=["F3R-PENDING-RECORD"])
+    # G-ANL-F3's PIN register: every Code PIN declared at LOCK-m-F3 v0.1 has its site and every site its entry
+    src_ = Path(__file__).read_text(encoding="utf-8")
+    rx_ = r"# PIN \(Code, declared at LOCK-m-F3 v0\.1[^\n]*?\): (PIN-V2-\d+) --"
+    sites_ = set(re.findall(rx_, src_))
+    planted_ = set(re.findall(rx_, src_ + "\n# PIN (Code" + ", declared at LOCK-m-F3 v0.1): PIN-V2-99 -- battery\n"))
+    B.chk("G-ANL-F3's PIN register (PINS_F3): the Code PINs declared at LOCK-m-F3 v0.1 are exactly the register's ids "
+          "(PIN-V2-1 to PIN-V2-24), each with at least one site; a planted site is caught; the seat's rulings A1-A5 are "
+          "recorded beside (SEAT_RULED_F3)", sites_ == set(PINS_F3) == {f"PIN-V2-{i_}" for i_ in range(1, 25)}
+          and planted_ != set(PINS_F3) and sorted(SEAT_RULED_F3) == ["A1", "A2", "A3", "A4", "A5"],
+          sorted(sites_ ^ set(PINS_F3)), cover=["F3R-PIN-REGISTER"])
+    # answers:26 (a): the OLMo v1 outputs unchanged
+    v1u = _bt_v1_unchanged(table)
+    B.extra["v1_unchanged"] = {k_: v1u[k_] for k_ in ("evaluations", "equal", "distinct_reason_equal", "tables_equal")}
+    B.chk("v1 unchanged (answers:26 (a), the seat's A1): the analyzer of record (ed8e886's blob, executed in-process) and "
+          "this file give the same v1 outputs for all 1,080 tuples under both flag values, value for value (2,160 "
+          "evaluations), with one NOT-RUN phrase and with a distinct reason per unit; the placeholder tables are equal",
+          v1u["tables_equal"] and v1u["evaluations"] == 2160 and v1u["equal"] == 2160
+          and v1u["distinct_reason_equal"] == 2160, (v1u["equal"], v1u["distinct_reason_equal"], v1u["first_diff"]),
+          cover=["F3R-V1-UNCHANGED"])
+
+
+def _bt_env_clock(addendum: Path) -> Env:
+    return Env(proposal_path=REPO / PROPOSAL_REL, committed=_prod_committed, analyzer_path=Path(__file__).resolve(),
+               package_sha256="0" * 64, closure_sha256="0" * 64, allow_stub=True,
+               gate_line=lambda name: ("", []), read_repo_file=_prod_read, say=lambda line: None, addendum_path=addendum)
+
+
+# --- battery: the v2 outcome space (m:291 (ii); the seat's A2) ----------------------------------------------
+_F3_REASON = "the PI declined to commit its LOCK v1.0 by its Clock date (2026-12-22)"
+
+
+def _bt_m342() -> dict:
+    """m:342 read from the proposal at run time, for the v2 oracle: its italic clauses in order, the PASS head, the
+    FAIL head and the INDETERMINATE / REVERSE texts (the oracle's texts come from the proposal, not this file)."""
+    if "m342" not in _BT_STATE:
+        line = (REPO / PROPOSAL_REL).read_text(encoding="utf-8").split("\n")[341]
+        clean = line.replace("\\*", "")
+        its = re.findall(r"(?<!\*)\*(?!\*)([^*]+?)(?<!\*)\*(?!\*)", clean)
+        head = re.search(r"PASS: (.+?) \*the lever", line).group(1)
+        fail_head = re.search(r"FAIL: (.+?) \*at this", line).group(1)
+        om = re.search(r"INDETERMINATE / REVERSE: (cell A2 named open) \(REVERSE: ([^)]*)\)", line)
+        _BT_STATE["m342"] = {"it": its, "head": head, "fail_head": fail_head, "open": om.group(1), "reverse": om.group(2)}
+    return _BT_STATE["m342"]
+
+
+def _bt_oracle_v2(t: tuple, flag: bool, table: Mapping, whys: Mapping) -> dict:
+    """An independent second implementation of the v2 outputs, transcribed from m:337-343 and m:349."""
+    q, s, d, i, f3 = t
+    v1o = _bt_oracle((q, s, d, i), flag, {"rows": []}, whys)
+    nr = f3 == "NOT-RUN"
+    a1, a2, a3, f2, ctl = (None, None, None, None, None) if nr else f3
+    hit = a3 in ("POSITIVE", "REVERSE")
+    nulls = ("NULL", "NULL-x↑", "NULL-x↓")
+    if nr:
+        star = "NOT-RUN"
+    elif not hit:
+        star = a3
+    elif f2 == "CONFIRMED":
+        star = "CONFIRMED"
+    elif f2 == "OPPOSITE":
+        star = "DISCORDANT"
+    elif f2 in nulls and ctl == "PASS":
+        star = f2
+    else:
+        star = "UNLICENSED"
+    L1 = a1 == "PASS"
+    lic = dict(v1o["licensing"], L1=L1)
+    L0 = lic["L0"]
+    a2p = a2 == "PASS"
+    if L0 and L1 and a2p and star == "NULL":
+        cname = "Main"
+    elif star in ("CONFIRMED", "DISCORDANT", "UNLICENSED"):
+        cname = "Fallback-2"
+    elif L0 or (L1 and a2p and star == "NULL"):
+        cname = "Fallback-1"
+    else:
+        cname = "Fallback-2"
+    wh = ("not withheld" if not hit else "released at f2's NOT-RUN" if f2 == "NOT-RUN"
+          else "released at f2's VERDICTS")
+    note = ("none" if not hit else "confirmed" if star == "CONFIRMED" else "discordant" if star == "DISCORDANT"
+            else "not run" if f2 == "NOT-RUN" else "unlicensed" if star == "UNLICENSED"
+            else "not replicated under a passing control")
+    toward = {"POSITIVE": "clean", "NULL-x↑": "clean", "REVERSE": "corrupted", "NULL-x↓": "corrupted"}
+    m6 = _bt_m342()
+    alt = lambda seg, k: re.sub(r"\[[^\]]*\|[^\]]*\]", lambda mo: [x.strip() for x in mo.group(0)[1:-1].split("|")][k], seg, count=1)
+    if not L1:
+        s6 = "none"
+    elif a2 == "FAIL":
+        s6 = m6["fail_head"] + " " + m6["it"][10]
+    elif a2 == "INDETERMINATE":
+        s6 = m6["open"]
+    elif a2 == "REVERSE":
+        s6 = m6["open"] + " (" + m6["reverse"] + ")"
+    else:
+        it = m6["it"]
+        stg = [w for w, x in zip(("SFT", "DPO", "instruct"), (s, d, i)) if x == "PASS"]
+        stage_txt = {1: "the {0} stage", 2: "the {0} and {1} stages", 3: "the {0}, {1} and {2} stages"}
+        s6 = m6["head"] + ": " + it[0] + (" " + it[1] if L0 else "") + (
+            " " + it[2].replace("[stages]", stage_txt[len(stg)].format(*stg)) if stg else "") + it[3]
+        f2ran = hit and f2 != "NOT-RUN"
+        if star == "NULL":
+            s6 += it[4].replace("f2's if f2 ran, else the screen's", "f2's" if f2ran else "the screen's")
+        elif star in ("NULL-x↑", "NULL-x↓"):
+            s6 += alt(it[5], 0 if star == "NULL-x↑" else 1)
+        elif star == "CONFIRMED":
+            s6 += alt(it[6], 0 if a3 == "POSITIVE" else 1)
+        elif star == "DISCORDANT":
+            k_ = 0 if a3 == "POSITIVE" else 1
+            s6 += alt(alt(it[7], k_), k_)
+        elif star == "UNLICENSED":
+            s6 += alt(it[8], 2 if f2 == "NOT-RUN" else 1 if f2 == "NO-READ" else 0)
+        elif star == "NO-READ":
+            s6 += it[9]
+        if f2ran:
+            s6 += f"; beside, descriptively: the screen's result, {a3}"
+    closed = L1 and a2p and star == "NULL"
+    tok = lambda x: {"NOT-RUN": "not run"}.get(x, x)
+    s81 = v1o["s81"] + "; A1 (Q-F3): " + ("not run" if nr else tok(a1))
+    if nr:
+        s82 = {"status": "open", "cells": "Q-F3 was not run: " + whys["Q-F3"]}
+    else:
+        f2t = ("f2 not required" if not hit else "f2 not run" if f2 == "NOT-RUN"
+               else f"f2 {f2} under a control that " + ("passed" if ctl == "PASS" else "did not pass"))
+        s82 = {"status": "closed into §5.7" if closed else "open",
+               "cells": f"A1: {a1}; A2: {a2}; A3 (screen): {a3}; {f2t}; A3*: {star}"}
+    f3lab = ("Answered" if L1 else "reported descriptively — the told control at F3 "
+             + ("was not run: " + whys["Q-F3"] if nr else "did not pass: " + str(a1)))
+    cl = dict(v1o["labels"], weight="concluded, not answered", S1="Answered, as recognition", A2=f3lab, A3=f3lab)
+    cells = {c: cl[c] for c in ("e2a", "f1", "e2b", "weight", "S1", "olmo-base", "olmo-sft", "olmo-dpo",
+                                "olmo-instruct", "A2", "A3")}
+    spans = [r["dose_note_span"] for r in table["rows"] if r["dose_note"]]
+    dn = ({"status": "carried", "text": " | ".join(spans)} if flag and spans else
+          {"status": "to be carried; absent from the table (§7.5(c))", "text": None} if flag else
+          {"status": "none (struck, §7.5(c))", "text": None})
+    crank = {"Main": 3, "Fallback-1": 2, "Fallback-2": 1}[cname]
+    if star == "CONFIRMED":
+        btr = ("rewrite to state the confirmed result, as a claim (A3* CONFIRMED, L1)" if L1 else
+               "rewrite to state the confirmed result, descriptively (A3* CONFIRMED, not L1)")
+    elif star in ("DISCORDANT", "UNLICENSED"):
+        btr = "rewrite to state the unconfirmed result (A3* DISCORDANT or UNLICENSED)"
+    else:
+        btr = "state as a reading proposed, not a result"
+    items = []
+    for r in table["rows"]:
+        a_cells = [c for c in r["null_cells"] if not cl[c].startswith("Answered")]
+        fire_b = r["thesis"] is not None and {"main": 3, "fallback-1": 2, "fallback-2": 1}[r["thesis"]] > crank
+        c_t = ("carry" if (not spans and "f1-corr-line" in r["kinds"]) else None) if flag else \
+            ("strike" if r["dose_note"] else None)
+        cls = [x for x, on in (("a", a_cells), ("b", fire_b), ("c", c_t)) if on]
+        if not cls:
+            continue
+        items.append({"row_id": r["id"], "loc": dict(r["loc"]), "clauses": cls,
+                      "a": {"cells": [{"cell": c, "label": cl[c]} for c in a_cells]} if a_cells else None,
+                      "b": {"thesis": r["thesis"], "ceiling": cname, "a3_star": star} if fire_b else None,
+                      "c": {"flag": flag, "treatment": c_t} if c_t else None,
+                      "treatments": [{"a": "assert no null on these cells", "b": btr}.get(x) or f"{c_t} the dose note"
+                                     for x in cls]})
+    return {"licensing": lic, "labels": v1o["labels"], "cells": cells, "a3_star": star, "withholding": wh,
+            "v1_note": note, "ceiling": {"name": cname, "title": TITLES[cname]}, "abstract_clause": v1o["abstract_clause"],
+            "step6": s6, "s81": s81, "s82": s82, "step7": s82["status"], "dose_note": dn, "enumeration": items}
+
+
+_V2_CHECKS = {"V1": "exactly one A3* (seven values, or NOT-RUN), equal to the oracle",
+              "V2": "one licensing state (L0, L0-OLMo-c, L1), equal to the oracle; Q-F3 NOT-RUN sets L1 false",
+              "V3": "one label set (the seven rows) and the eleven cells, equal to the oracle",
+              "V4": "one abstract OLMo clause (Step 2's three-way, re-run at v2), equal to the oracle",
+              "V5": "one dose-note text, equal to the oracle, invariant over the tuple",
+              "V6": "one ceiling in {Main, Fallback-1, Fallback-2}, equal to the oracle",
+              "V7": "one withholding value, equal to the oracle",
+              "V8": "one v1-note disposition of the six, 'none' on every no-hit tuple, equal to the oracle",
+              "V9": "one Step-6 text ('none' iff not L1), equal to the oracle",
+              "V10": "one Step-7 status ('closed into §5.7' iff L1, A2 PASS and A3* NULL; else 'open')",
+              "V11": "one §8.1 text (A0, A0-OLMo-c and A1) and one §8.2 status text, equal to the oracle",
+              "V12": "one §7.5 enumeration over the declared v2 table, equal to the oracle; no empty item; table order"}
+
+
+def _bt_v2_pass(table: Mapping, oracle: bool = True) -> dict:
+    """Every v2 (t, flag): a PENDING tuple asserts the refusal; any other the outputs against the oracle
+    (oracle=False: the outputs and their canonical-JSON sha only, for the determinism pass)."""
+    whys = {u: not_run_reason(u, "clock:pi-declined", CLOCK_DATE) for u in UNITS}
+    whys["Q-F3"] = _F3_REASON
+    coords = f3_coordinates()
+    res: dict = {"coords": len(coords), "refused": {True: 0, False: 0}, "refused_ok": {True: 0, False: 0},
+                 "full": {True: 0, False: 0}, "checks": {k_: {True: 0, False: 0} for k_ in _V2_CHECKS},
+                 "fails": {}, "by_flag": {}}
+    h = hashlib.sha256()
+    for flag in (True, False):
+        tf = {"a3_star": {}, "ceiling": {}, "withholding": {}, "v1_note": {}, "L1": 0, "closed": 0, "step6_none": 0,
+              "fires": {}, "btreat": {}}
+        res["by_flag"][flag] = tf
+        dn_first = None
+        for q, s, d, i in itertools.product(Q5, O6, O6, O6):
+            pend = "PENDING" in (s, d, i)
+            reasons = {u: whys[u] for u, x in zip(UNITS, (q, s, d, i)) if x == "NOT-RUN"}
+            for f3 in coords:
+                t = (q, s, d, i, f3)
+                rs = dict(reasons, **({"Q-F3": whys["Q-F3"]} if f3 == "NOT-RUN" else {}))
+                if pend:
+                    res["refused"][flag] += 1
+                    try:
+                        v2_outputs(t, rs, flag, table)
+                        ok = False
+                    except PendingAtV2 as e:
+                        ok = str(e) == PENDING_AT_V2
+                    res["refused_ok"][flag] += ok
+                    continue
+                res["full"][flag] += 1
+                out = v2_outputs(t, rs, flag, table)
+                h.update((json.dumps({"t": [q, s, d, i, list(f3) if f3 != "NOT-RUN" else f3], "flag": flag,
+                                      "outputs": out}, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                          + "\n").encode("utf-8"))
+                if not oracle:
+                    continue
+                orc = _bt_oracle_v2(t, flag, table, whys)
+                star = out["a3_star"]
+                if dn_first is None:
+                    dn_first = out["dose_note"]
+                r_ = {"V1": star == orc["a3_star"] and star in A3STAR + (F2_NOT_RUN,),
+                      "V2": out["licensing"] == orc["licensing"] and (f3 != "NOT-RUN" or not out["licensing"]["L1"]),
+                      "V3": out["labels"] == orc["labels"] and out["cells"] == orc["cells"]
+                            and list(out["cells"]) == list(V2_CELLS),
+                      "V4": out["abstract_clause"] == orc["abstract_clause"],
+                      "V5": out["dose_note"] == orc["dose_note"] == dn_first,
+                      "V6": out["ceiling"] == orc["ceiling"] and out["ceiling"]["name"] in CEIL_RANK,
+                      "V7": out["withholding"] == orc["withholding"] and out["withholding"] in WITHHOLD,
+                      "V8": out["v1_note"] == orc["v1_note"] and out["v1_note"] in V1_NOTE
+                            and (out["v1_note"] == "none" or (f3 != "NOT-RUN" and f3[2] in A3_HIT)),
+                      "V9": out["step6"] == orc["step6"] and ((out["step6"] == "none") == (not out["licensing"]["L1"])),
+                      "V10": out["step7"] == orc["step7"] and out["step7"] in ("closed into §5.7", "open"),
+                      "V11": out["s81"] == orc["s81"] and out["s82"] == orc["s82"],
+                      "V12": out["enumeration"] == orc["enumeration"] and all(it["clauses"] for it in out["enumeration"])
+                             and [it["row_id"] for it in out["enumeration"]] == [r["id"] for r in table["rows"]
+                                                                                 if r["id"] in {it["row_id"] for it in out["enumeration"]}]}
+                for k_, ok in r_.items():
+                    res["checks"][k_][flag] += ok
+                    if not ok and k_ not in res["fails"]:
+                        res["fails"][k_] = [q, s, d, i, f3 if f3 == "NOT-RUN" else list(f3), flag]
+                for key, val in (("a3_star", star), ("ceiling", out["ceiling"]["name"]),
+                                 ("withholding", out["withholding"]), ("v1_note", out["v1_note"])):
+                    tf[key][val] = tf[key].get(val, 0) + 1
+                tf["L1"] += out["licensing"]["L1"]
+                tf["closed"] += out["step7"] == "closed into §5.7"
+                tf["step6_none"] += out["step6"] == "none"
+                for it in out["enumeration"]:
+                    for cl_ in it["clauses"]:
+                        kk = (it["row_id"], cl_)
+                        tf["fires"][kk] = tf["fires"].get(kk, 0) + 1
+                    if "b" in it["clauses"]:
+                        bt = (it["b"]["thesis"], it["treatments"][it["clauses"].index("b")])
+                        tf["btreat"][bt] = tf["btreat"].get(bt, 0) + 1
+    res["outputs_sha256"] = h.hexdigest()
+    return res
+
+
+def _bt_v2_tuples(B: _Battery, table: Mapping) -> None:
+    p = REPO / PLACEHOLDER_V2_REL
+    data = p.read_bytes() if p.is_file() else b""
+    B.chk("the v2 placeholder file is the builder's json_text(indent=1) byte for byte and validates as a v2 table "
+          "(PIN-V2-4); the v1 check refuses it, and the v2 check refuses the v1 placeholder",
+          data == resume.json_text(table, indent=1).encode("utf-8") and table_problems(table, posting="v2") == []
+          and table_problems(table) != [] and table_problems(placeholder_table(), posting="v2") != [],
+          (_sha256_bytes(data)[:16], table_problems(table, posting="v2")[:1]), cover=["F3V-PLACEHOLDER-FILE"])
+    res = _bt_v2_pass(table)
+    B.extra["v2_outputs_sha256"] = res["outputs_sha256"]
+    tT = res["by_flag"][True]
+    B.extra["v2_tallies"] = {"a3_star": tT["a3_star"], "ceiling": tT["ceiling"], "withholding": tT["withholding"],
+                             "v1_note": tT["v1_note"], "L1": tT["L1"], "s82_closed": tT["closed"],
+                             "step6_none": tT["step6_none"],
+                             "fires_flag_T": {f"{r_}|{c_}": n_ for (r_, c_), n_ in sorted(tT["fires"].items())},
+                             "per_flag": "each flag's tallies asserted on its own outputs (equal but for (c))"}
+    full, ref = 300625, 218855
+    B.chk(f"v2 space (m:291): {res['coords']} Q-F3 coordinates; per flag value {res['full'][True]} + "
+          f"{res['refused'][True]} = 519,480 tuples, every one asserted (481 x 5 x 216)",
+          res["coords"] == 481 and all(res["full"][f] == full and res["refused"][f] == ref for f in (True, False)),
+          (res["full"], res["refused"]), cover=["F3V-SPACE"])
+    for flag, fl in ((True, "T"), (False, "F")):
+        B.chk(f"v2 PENDING (the seat's A2, (P1)) flag={fl}: {res['refused_ok'][flag]}/{ref} tuples with a PENDING "
+              f"checkpoint assert exactly one output, the refusal naming m:324's closure and its two branches",
+              res["refused_ok"][flag] == ref, res["refused_ok"][flag], cover=[f"F3V-PENDING-{fl}"])
+        for k_, name in _V2_CHECKS.items():
+            c = res["checks"][k_][flag]
+            B.chk(f"v2 {k_} flag={fl}: {c}/{full} tuples: {name}", c == full, res["fails"].get(k_, ""),
+                  cover=[f"F3V-{k_}-{fl}"])
+    star_w = {"NULL": 30000, "NULL-x↑": 30000, "NULL-x↓": 30000, "NO-READ": 10000, "CONFIRMED": 40000,
+              "DISCORDANT": 40000, "UNLICENSED": 120000, "NOT-RUN": 625}
+    ceil_w = {"Main": 375, "Fallback-1": 21250, "Fallback-2": 279000}
+    wh_w = {"not withheld": 40625, "released at f2's VERDICTS": 240000, "released at f2's NOT-RUN": 20000}
+    note_w = {"none": 40625, "confirmed": 40000, "discordant": 40000, "not replicated under a passing control": 60000,
+              "unlicensed": 100000, "not run": 20000}
+    for flag, fl in ((True, "T"), (False, "F")):
+        tf = res["by_flag"][flag]
+        ok = (tf["a3_star"] == star_w and tf["ceiling"] == ceil_w and tf["withholding"] == wh_w
+              and tf["v1_note"] == note_w and tf["L1"] == 75000 and tf["closed"] == 1875 and tf["step6_none"] == 225625)
+        B.chk(f"v2 tallies flag={fl} (hand-derived from the coordinate counts): A3* 30,000 x 3 / 10,000 / 40,000 x 2 / "
+              f"120,000 / 625 (NOT-RUN); ceiling Main 375 / Fallback-1 21,250 / Fallback-2 279,000; withholding 40,625 / "
+              f"240,000 / 20,000; v1-note 40,625 / 40,000 / 40,000 / 60,000 / 100,000 / 20,000; L1 75,000; §8.2 closed "
+              f"1,875; Step 6 'none' 225,625", ok, (tf["ceiling"], tf["L1"], tf["closed"]), cover=[f"F3V-TALLIES-{fl}"])
+        got = {rid: (tf["fires"].get((rid, "a"), 0), tf["fires"].get((rid, "b"), 0), tf["fires"].get((rid, "c"), 0))
+               for rid, *_ in PLACEHOLDER_SPEC_V2}
+        want = {rid: (a, b_, cT if flag else cF) for rid, (a, b_, cT, cF) in PLACEHOLDER_FIRES_V2.items()}
+        B.chk(f"v2 enumeration flag={fl}: every row's (a, b, c) fires equal the hand-derived counts (26 rows)",
+              got == want, sorted((k_, got[k_], want[k_]) for k_ in got if got[k_] != want[k_])[:2],
+              cover=[f"F3V-FIRES-{fl}"])
+        bt = {}
+        for (th, tr), n in tf["btreat"].items():
+            key = next(k_ for k_, v_ in TREAT_V2.items() if v_ == tr)
+            bt.setdefault(th, {})
+            bt[th][key] = bt[th].get(key, 0) + n
+        per_row = {"main": 2, "fallback-1": 4}
+        want_bt = {th: {k_: v_ * per_row[th] for k_, v_ in d_.items()} for th, d_ in BTREAT_V2.items()}
+        B.chk(f"v2 enumeration flag={fl}: (b)'s treatment follows A3* (m:349): under CONFIRMED a rewrite stating the "
+              f"confirmed result (a claim iff L1), under DISCORDANT or UNLICENSED the unconfirmed one, else a reading "
+              f"proposed -- per thesis row, hand-derived", bt == want_bt, bt, cover=[f"F3V-BTREAT-{fl}"])
+    res2 = _bt_v2_pass(table, oracle=False)
+    B.chk("v2: two passes over the 601,250 evaluations of the non-PENDING tuples (300,625 per flag value) give "
+          "byte-identical canonical JSON (sha256 equal)",
+          res2["outputs_sha256"] == res["outputs_sha256"], res["outputs_sha256"][:16], cover=["F3V-DETERMINISM"])
+
+
+# --- battery: Q-F3 (m:291 (i), (iii); the seat's A3) ------------------------------------------------------
+_F3_A3_CASES = {  # name: (n0, k0, n1, k1, mS, j, state)
+    "NOREAD-contrast": (0, 0, 0, 0, 32, 16, "NO-READ"),
+    "NOREAD-sham": (40, 28, 40, 28, 0, 0, "NO-READ"),
+    "REVERSE": (40, 12, 40, 12, 32, 16, "REVERSE"),
+    "POSITIVE": (40, 28, 40, 28, 32, 16, "POSITIVE"),
+    "POSITIVE-alpha05": (40, 24, 40, 24, 32, 16, "POSITIVE"),
+    "NULLX-UP": (40, 30, 40, 18, 32, 16, "NULL-x↑"),
+    "NULLX-DOWN": (40, 10, 40, 22, 32, 16, "NULL-x↓"),
+    "NULL-zero": (40, 20, 40, 20, 32, 16, "NULL"),
+    "NULL-i-only": (40, 22, 40, 22, 32, 16, "NULL"),
+    "NULL-E": (40, 28, 40, 28, 32, 24, "NULL"),
+}
+
+
+def _bt_f3_outcomes(B: _Battery) -> None:
+    from valence_core.mf3 import keys as f3k
+    B.chk("Q-F3's arms are mf3's (F3_TEMPLATES, F3_PAIRS == mf3.keys.TEMPLATES, PAIRS)",
+          F3_TEMPLATES == f3k.TEMPLATES and F3_PAIRS == f3k.PAIRS, (F3_TEMPLATES, F3_PAIRS), cover=["F3O-ARMS"])
+    a1 = {nm: f3_arm_outcome("A1", *c[:6])["state"] for nm, c in _OUT_CASES.items()}
+    want1 = {nm: c[6] for nm, c in _OUT_CASES.items()}
+    B.chk("A1 (control, α .01; m:326): every control outcome of the A0 cases, the same state (PASS, REVERSE, DEAD, "
+          "INDETERMINATE by (iii), (i), (ii), an empty map, E = 1/2, no read)", a1 == want1,
+          {k_: v_ for k_, v_ in a1.items() if v_ != want1[k_]}, cover=["F3O-A1"])
+    a2 = {nm: f3_arm_outcome("A2", *c[:6])["state"] for nm, c in _OUT_CASES.items()}
+    want2 = {nm: ("FAIL" if c[6] == "DEAD" else c[6]) for nm, c in _OUT_CASES.items()}
+    B.chk("A2 (confirmatory, α .01; m:326 'the same with FAIL for DEAD'): the A0 cases' states with FAIL for DEAD",
+          a2 == want2 and set(a2.values()) == {"PASS", "REVERSE", "FAIL", "INDETERMINATE"}, a2, cover=["F3O-A2"])
+    a3 = {nm: f3_arm_outcome("A3", *c[:6]) for nm, c in _F3_A3_CASES.items()}
+    B.chk("A3 (screen, α .05; m:326's order NO-READ -> REVERSE -> POSITIVE -> NULL-x -> NULL): every value reached, "
+          "NULL-x↑ and NULL-x↓ by (i) and (iii) holding with (ii) failing in one direction; a POSITIVE at .05 that is "
+          "not PASS at .01", {nm: o["state"] for nm, o in a3.items()} == {nm: c[6] for nm, c in _F3_A3_CASES.items()}
+          and arm_outcome(*_F3_A3_CASES["POSITIVE-alpha05"][:6])["state"] == "INDETERMINATE"
+          and set(o["state"] for o in a3.values()) == set(QF3_WORDS["A3"]),
+          {nm: o["state"] for nm, o in a3.items()}, cover=["F3O-A3"])
+    B.chk("A3's NO-READ carries its sub-reason (contrast-empty / sham-empty, PIN-V2-1); an arm pair with no session "
+          "is A1/A2 INDETERMINATE and A3 NO-READ (the unit's NOT-RUN is decided across the six arms, m:324)",
+          a3["NOREAD-contrast"]["noread"] == "contrast-empty" and a3["NOREAD-sham"]["noread"] == "sham-empty"
+          and f3_arm_outcome("A1", 0, 0, 0, 0, 0, 0)["state"] == "INDETERMINATE"
+          and f3_arm_outcome("A2", 0, 0, 0, 0, 0, 0)["state"] == "INDETERMINATE"
+          and f3_arm_outcome("A3", 0, 0, 0, 0, 0, 0)["state"] == "NO-READ", "", cover=["F3O-NOREAD"])
+    pw = {("A1", "cached"): f3_power_block("A1", 96, 0, 32, "cached")["planned"]["display"],
+          ("A1", "uncached"): f3_power_block("A1", 80, 0, 32, "uncached")["planned"]["display"],
+          ("A2", "-"): f3_power_block("A2", 144, 0, 56, "uncached")["planned"]["display"],
+          ("A3", "-"): f3_power_block("A3", 144, 0, 56, "uncached")["planned"]["display"]}
+    rec = f3_power_block("A3", 72, 72, 56, "uncached")
+    B.chk("power (m:190): the planned-floor figures .916 (A1 cached 96/32), .878 (A1 uncached 80/32), .862 (A2 "
+          "144/56 at P .65, α .01), .927 (A3 144/56, POSITIVE at P .65, α .05); at the realised n the figure of record "
+          "equals the planned one when n and m are the planned floors", [v_[-3:] for v_ in pw.values()]
+          == ["916", "878", "862", "927"] and rec["of_record"]["exact"] == rec["planned"]["exact"], pw, cover=["F3O-POWER"])
+    stars = {a3_star(c) for c in f3_coordinates()}
+    B.chk("A3* (Step 4, m:340): over the 481 coordinates every one of its seven values and NOT-RUN is reached, never "
+          "POSITIVE or REVERSE", stars == set(A3STAR) | {F2_NOT_RUN} and not stars & set(A3_HIT)
+          and set(QF3_WORDS["A3*"]) == set(A3STAR), sorted(stars), cover=["F3O-A3STAR"])
+    # the sentences
+    cts = {"pairs": {c: {} for c, _ in F3_PAIRS}, "launched": {a: 160 for a in F3_TEMPLATES},
+           "prepick": {a: 2 for a in F3_TEMPLATES}, "domain": {a: 150 for a in F3_TEMPLATES}}
+    g_ = {c: {"reached": True, "label": "the end look at 960 launches", "fisher": {"p": "1/2", "fired": False},
+              "abs": {"p": "1/3", "fired": False, "exceeds": False, "binding": True}} for c, _ in F3_PAIRS}
+    fl = {a: 144 if a in ("A2", "A3") else 56 if a in ("A2s", "A3s") else 96 if a == "A1" else 32 for a in F3_TEMPLATES}
+    o_null = f3_arm_outcome("A3", 72, 36, 72, 36, 56, 28)
+    s_null = f3_sentence("A3", o_null, cts, g_, fl, f3_power_block("A3", 72, 72, 56, "uncached"))
+    o_x = f3_arm_outcome("A3", 72, 50, 72, 34, 56, 28)
+    s_x = f3_sentence("A3", o_x, cts, g_, fl, f3_power_block("A3", 72, 72, 56, "uncached"))
+    o_nr = f3_arm_outcome("A3", 72, 50, 72, 30, 0, 0)
+    s_nr = f3_sentence("A3", o_nr, cts, g_, fl, f3_power_block("A3", 72, 72, 0, "uncached"))
+    s_a2 = f3_sentence("A2", f3_arm_outcome("A2", 72, 36, 72, 36, 56, 28), cts, g_, fl, f3_power_block("A2", 72, 72, 56, "uncached"))
+    s_pos = f3_sentence("A3", f3_arm_outcome("A3", 72, 54, 72, 54, 56, 28), cts, g_, fl, f3_power_block("A3", 72, 72, 56, "uncached"))
+    s_rev = f3_sentence("A3", f3_arm_outcome("A3", 72, 18, 72, 18, 56, 28), cts, g_, fl, f3_power_block("A3", 72, 72, 56, "uncached"))
+    s_a2r = f3_sentence("A2", f3_arm_outcome("A2", 72, 18, 72, 18, 56, 28), cts, g_, fl, f3_power_block("A2", 72, 72, 56, "uncached"))
+    B.chk("sentences (m:326; PIN-V2-16; the seat's A5 note): A3's NULL quotes the attained power at the realised n as "
+          "the figure of record with the planned-floor figure beside; NULL-x names its direction and 'not a preference "
+          "verdict'; NO-READ says 'no read obtained'; A2's FAIL sentence names α .01; a screen hit states Step 4's "
+          "withholding, POSITIVE also §7.3's re-review; A2's REVERSE names cell A2 open; every sentence states the pre-pick "
+          "rates and the guard at the last look (binding)",
+          o_null["state"] == "NULL" and "attained power" in s_null and "at the realised n (the power figure of record" in s_null
+          and "at the planned floors (144, 56) beside, as the planning value" in s_null
+          and o_x["state"] == "NULL-x↑" and "toward clean on one map" in s_x and "not a preference verdict" in s_x
+          and "NO-READ -- no read obtained" in s_nr and "FAIL" in s_a2 and "α .01" in s_a2
+          and "a screen hit toward clean" in s_pos and "§7.3's welfare re-review is triggered" in s_pos
+          and "a screen hit toward corrupted" in s_rev and "welfare" not in s_rev and "instruction inversion" not in s_rev
+          and "cell A2 named open" in s_a2r and "not-PASS for licensing" not in s_a2r
+          and all("pre-pick exclusion rate" in x_ and "(binding)" in x_ for x_ in (s_null, s_x, s_nr, s_a2)),
+          B.short(s_null, 120), cover=["F3O-SENTENCES"])
+
+
+def _bt_f3_counter_c(B: _Battery) -> None:
+    pair = ["velvet", "walnut"]
+    cases = [("The velvet text reads fine.", "attribution", {"velvet": "positive"}),
+             ("Nothing to note about these rounds.", None, {}),
+             ("The text looks garbled today.", "mention-only", {}),
+             ("Velvet appears first; then the walnut rounds are garbled.", "ambiguous", {"velvet": None, "walnut": "negative"}),
+             ("Corrupted walnut text, clean velvet text.", "attribution", {"walnut": "negative", "velvet": "positive"}),
+             ("Both velvet and walnut look clean.", "ambiguous", {"velvet": "positive", "walnut": "positive"}),
+             ("velvet clean walnut", "ambiguous", {"velvet": "positive", "walnut": "positive"}),
+             ("garbled velvet clean", "ambiguous", {"velvet": "tie"}),
+             ("velvet a b c d e f g broken", "ambiguous", {"velvet": None}),
+             ("velvet a b c d e broken", "attribution", {"velvet": "negative"}),
+             ("Velvet, (garbled!)", "attribution", {"velvet": "negative"}),
+             ("VELVET is correctly rendered and fine", "attribution", {"velvet": "positive"})]
+    got = [(score_line_c(t, pair)["class"], score_line_c(t, pair)["labels"]) for t, _, _ in cases]
+    ok = all(g_[0] == c[1] and g_[1] == c[2] for g_, c in zip(got, cases))
+    pair2 = ["prism", "slate"]
+    cases2 = [("Prism—clean; slate—corrupted", "ambiguous", {"prism": "positive", "slate": "tie"}),
+              ("prism/slate: clean", "ambiguous", {"prism": "positive", "slate": "positive"}),
+              ("prism's text is clean", "attribution", {"prism": "positive"}),
+              ("prism is clean, slate is corrupted", "ambiguous", {"prism": "positive", "slate": "positive"})]
+    got2 = [(score_line_c(t, pair2)["class"], score_line_c(t, pair2)["labels"]) for t, _, _ in cases2]
+    ok = ok and all(g_[0] == c[1] and g_[1] == c[2] for g_, c in zip(got2, cases2))
+    got = got + got2
+    cases = cases + cases2
+    B.chk("counter (c)'s scorer (m:312; PIN-V2-13): unscored without a stage-1 term; mention-only; ambiguous for a label "
+          "without a polarity in ±6 tokens, two labels of one polarity, a shared nearest term, a tie in distance; "
+          "attribution for one label with a polarity or two of opposite polarities; punctuation replaced by a space "
+          "(so 'prism—clean' and \"prism's\" keep their label), case folded, 'correct*' a prefix; m:312's nearest-term "
+          "rule scores 'prism is clean, slate is corrupted' ambiguous (slate's nearest term is 'clean'), as written", ok, [(c[0][:24], g_) for g_, c in zip(got, cases) if (g_[0], g_[1]) != (c[1], c[2])][:2],
+          cover=["F3C-SCORER"])
+    sc1 = score_line_c("The walnut text is corrupted.", pair)
+    sc2 = score_line_c("Corrupted walnut text, clean velvet text.", pair)
+    sc3 = score_line_c("Corrupted velvet text, clean walnut text.", pair)
+    j = [judge_c(sc1, "velvet", "walnut", "velvet"), judge_c(sc1, "velvet", "walnut", "walnut"),
+         judge_c(sc2, "velvet", "walnut", "velvet"), judge_c(sc3, "velvet", "walnut", "walnut"),
+         judge_c(sc2, "walnut", "velvet", "velvet")]
+    B.chk("counter (c)'s joint cell (m:312): correct := (corrupted label, negative) or (clean label, positive), both "
+          "assignments for two labels; the first pick follows when it is the label marked clean (or not the one "
+          "marked corrupted)", [(x["correct"], x["follows"]) for x in j]
+          == [(True, True), (True, False), (True, True), (False, True), (False, True)], j, cover=["F3C-JOINT"])
+    B.chk("counter (c)'s lexicons are m:312's as declared (19 stage-1 terms; 8 negative and 6 positive polarity terms; "
+          "window 6), checked against the proposal's text", len(STAGE1_TERMS) == 19 and len(POLARITY_NEG) == 8
+          and len(POLARITY_POS) == 6 and POLARITY_WINDOW == 6 and all(
+              t in (REPO / PROPOSAL_REL).read_text(encoding="utf-8").split("\n")[311]
+              for t in ("garbled, garble, typo, typos", "negative = corrupt*, garbl*, typo*, misspell*, scrambl*, jumbl*, "
+                        "mangl*, broken; positive = clean, correct*, intact, fine, readable, legible", "window ±6 tokens")),
+          (len(STAGE1_TERMS), len(POLARITY_NEG), len(POLARITY_POS)), cover=["F3C-LEXICONS"])
+
+
+def _bt_f3_records(n: int, template: str = "A3", lines: Sequence[str] = ()) -> list[dict]:
+    """Synthetic Q-F3 domain records for the secondaries and the draw (built from mf3's scripted suite)."""
+    from valence_core.mf3 import testing as f3t
+    base = next(r for c, r, _ in f3t.suite() if c.name == "f3 clean A3 start 0")
+    out = []
+    for s in range(n):
+        r = copy.deepcopy(base)
+        r["template"], r["s"] = template, s
+        r["cell"] = dict(r["cell"], pair=["velvet", "walnut"], map=s % 2, P=["velvet", "walnut"][s % 2],
+                         Q=["velvet", "walnut"][1 - s % 2])
+        if lines:
+            r["reasoning"][0]["text"] = lines[s % len(lines)]
+        out.append(r)
+    return out
+
+
+def _bt_f3_draw(B: _Battery) -> None:
+    recs = _bt_f3_records(60, lines=["The velvet text is garbled.", "All fine.", "Walnut reads clean."])
+    sec, draw = f3_secondaries(recs, [])
+    sec2, draw2 = f3_secondaries(recs, [["campaign", "A3", 5], ["campaign", "A3", 7], ["campaign", "A2", 9],
+                                        ["qual", "A3", 9]])
+    keyset = {x["s"] for x in sec["c"]["blind_read_key"]}
+    blind_ok = all(sorted(it) == ["item", "line", "roster_pair"] and it["roster_pair"] == sorted(it["roster_pair"])
+                   for it in draw["items"])
+    B.chk("blind read (m:312 (c); PIN-V2-14): 48 of 60 eligible A3 domain sessions drawn by the declared seed, the same "
+          "draw on a re-run; each item the line and its roster pair (alphabetical) only -- no s, map or pick; the key "
+          "in the secondary output", draw["n"] == 48 and draw["eligible"] == 60 and draw == f3_secondaries(recs, [])[1]
+          and blind_ok and len(keyset) == 48 and draw["seed"] == F3_BLIND_SEED, (draw["n"], draw["eligible"]),
+          cover=["F3C-DRAW"])
+    B.chk("blind read: campaign sessions read during an adjudication (a declared input, entries [stage, template, s]) "
+          "are excluded from the draw; another arm's entry and a gate stage's session (G-F3's A3 s=9, another session) "
+          "do not touch the campaign's A3", draw2["eligible"] == 58 and draw2["excluded_as_read_in_adjudication"] == [5, 7]
+          and not ({5, 7} & {x["s"] for x in sec2["c"]["blind_read_key"]}), draw2["eligible"], cover=["F3C-DRAW-EXCL"])
+    few = _bt_f3_records(10)
+    _, dfew = f3_secondaries(few, [])
+    B.chk("blind read: fewer than 48 eligible sessions draws them all (n = eligible)", dfew["n"] == 10 == dfew["eligible"],
+          dfew["n"], cover=["F3C-DRAW-FEW"])
+    c_ = sec["c"]
+    B.chk("counter (c) on A3's first lines: classes over the domain, the joint over attribution lines, decides nothing; "
+          "(f) reasoning-line statistics per arm (length, cap hits, defects by class, stage-1 mention rate)",
+          c_["lines"] == 60 and sum(c_["classes"].values()) == 60 and c_["decides"] == "nothing (m:312)"
+          and c_["classes"]["attribution"] == 40 and sec["f"]["A3"]["lines"] == 360
+          and set(sec["f"]["A3"]["defects_by_class"]) == {"empty", "cap_no_newline", "echo"}
+          and sec["f"]["A3"]["stage1_mention"]["num"] == 120,
+          (c_["classes"], sec["f"]["A3"]["stage1_mention"]["num"]), cover=["F3C-SECONDARY"])
+
+
+def _bt_f3_valid_through(B: _Battery) -> None:
+    from valence_core.mf3 import testing as f3t
+    by = {c.name: r for c, r, _ in f3t.suite()}
+    l3 = by["f3 reasoning line 3 scaffold: excluded after two reads, domain kept"]
+    lex = by["f3 free lexical ends after its round"]
+    ok = ([f3_valid_through(l3, p) for p in range(1, 4)] == [True, True, False]
+          and [f3_valid_through(lex, p) for p in range(1, 6)] == [True, True, True, True, False])
+    B.chk("valid through position p at F3 (PIN-V2-17): a reasoning-line exclusion at ci 2 keeps choices 1-2 (the line "
+          "precedes its menu); a free-round exclusion at ci 3 keeps choices 1-4", ok,
+          ([f3_valid_through(l3, p) for p in range(1, 4)], [f3_valid_through(lex, p) for p in range(1, 6)]),
+          cover=["F3C-VALID-THROUGH"])
+
+
+def _bt_f3_notrun(B: _Battery) -> None:
+    ok_codes = [f"clock:gate-stopped:{s_}" for s_ in F3_GATE_STOP_STAGES] + [
+        f"clock:not-locked:{s_}" for s_ in F3_GATE_STOP_STAGES] + ["clock:pi-declined", "clock:k-zero",
+                                                                     "no-first-read:pi-stop", "no-first-read:gver-stop",
+                                                                     "no-first-read:cap"]
+    got = {c: _bt_raises(lambda c=c: not_run_reason(UNIT_F3, c, D2)) for c in ok_codes}
+    bad = {c: _bt_raises(lambda c=c: not_run_reason(UNIT_F3, c, D2))
+           for c in ("clock:no-box", "dose-not-completable", "pending-closed-at-v2", "clock:gate-stopped:G-ID-F0m",
+                     "clock:gate-stopped:G-SHAPE-F0", "clock:gate-stopped:G-TIME-OLMo-sft")}
+    B.chk("Q-F3's NOT-RUN causes (m:324; PIN-V2-19): the shared Clock causes over its gates (G-CAL, G-SHAPE-F3, "
+          "G-ANL-F3, G-TIME-F3, G-ID-F3, G-F3), pi-declined, k-zero and the three no-first-read causes give their "
+          "phrases with D2; the OLMo-only causes and other units' gates are refused",
+          not any(r_[0] for r_ in got.values()) and all(r_[0] for r_ in bad.values())
+          and "2026-12-22" in not_run_reason(UNIT_F3, "clock:pi-declined", D2), sorted(c for c, r_ in got.items() if r_[0])
+          + sorted(c for c, r_ in bad.items() if not r_[0]), cover=["F3N-CAUSES"])
+    with tempfile.TemporaryDirectory(prefix="m_analyze_f3nr_") as td:
+        base = Path(td)
+        B.scrub += [str(base), str(base.resolve())]
+        env = _bt_env(base)
+
+        def rec(u, cause, date=D2):
+            p_ = base / f"rec-{u}-{cause.replace(':', '_')}.json"
+            p_.write_text(json.dumps({"schema": NOT_RUN_RECORD_SCHEMA, "unit": u, "cause": cause, "also": [],
+                                      "date": date, "detail": "battery", "decisions_with_other_outcomes_known": []}))
+            return p_
+
+        def NR(u, r_, out, **kw):
+            kw.setdefault("ckpt_dir", base / "ckpt-canon")      # an empty canonical dir unless a case plants one
+            try:
+                st, lines, paths = run_not_run(u, r_, None, None, out, env, **kw)
+                return ("ok", st, json.loads(paths[0].read_text()))
+            except AnlRefusal as e:
+                return ("refused", B.clean(str(e)), None)
+        o1 = NR(UNIT_F3, rec(UNIT_F3, "clock:pi-declined"), base / "o1")
+        o2 = NR(UNIT_F3, rec(UNIT_F3, "clock:pi-declined"), base / "o1")
+        (base / "o3").mkdir()
+        (base / "o3" / "Q-F3_blind-read.json").write_text("{}")
+        o3 = NR(UNIT_F3, rec(UNIT_F3, "clock:pi-declined"), base / "o3")
+        B.chk("not-run --unit Q-F3: a Clock NOT-RUN writes Q-F3_NOT-RUN.json once (identical again) with its rows A2/A3 "
+              "reported descriptively and date_is_clock_of_record against D2; refused beside an existing Q-F3 output",
+              o1[0] == "ok" and o1[1] == "written" and o2[1] == "identical" and o1[2]["date_is_clock_of_record"] is True
+              and o1[2]["rows"]["A2"].startswith(LABEL_F3_DESC + "was not run: ") and o3[0] == "refused",
+              (o1[0], o1[1], o3[0]), cover=["F3N-CMD"])
+        c1 = NR("OLMo-sft", rec("OLMo-sft", "pending-closed-at-v2"), base / "c1", v2_closure=True,
+                campaign_p=Path("none"))
+        camp = lambda u, ses: {"identity": {"unit": u, "stage": "campaign"}, "sessions": ses}
+        (base / "camp-sessions.json").write_text(json.dumps(camp("OLMo-dpo", [{"template": "A0-OLMo-dpo", "s": 0}])))
+        (base / "camp-empty.json").write_text(json.dumps(camp("OLMo-dpo", [])))
+        (base / "camp-other-unit.json").write_text(json.dumps(camp("OLMo-sft", [])))
+        (base / "camp-malformed.json").write_text(json.dumps({"identity": {"unit": "OLMo-dpo", "stage": "campaign"}}))
+        c6 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c6", v2_closure=True,
+                campaign_p=base / "camp-sessions.json")
+        c7 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c7", v2_closure=True,
+                campaign_p=base / "camp-empty.json")
+        c8 = NR("OLMo-dpo", rec("OLMo-dpo", "clock:pi-declined", D_O_PRIME), base / "c8",
+                campaign_p=base / "camp-empty.json")
+        c9 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c9", v2_closure=True,
+                campaign_p=base / "camp-other-unit.json")
+        c10 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c10", v2_closure=True,
+                 campaign_p=base / "camp-malformed.json")
+        c11 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c11", v2_closure=True)
+        c12 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c12", v2_closure=True,
+                 campaign_p=base / "no-such-campaign.json")
+        (base / "ckpt-c13").mkdir()
+        (base / "ckpt-c13" / "OLMo-dpo_campaign.json").write_text(json.dumps(camp("OLMo-dpo", [])))
+        c13 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c13", v2_closure=True,
+                 campaign_p=Path("none"), ckpt_dir=base / "ckpt-c13")
+        with _bt_patched(env, "head_has", lambda rel: True):
+            c14 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c14", v2_closure=True,
+                     campaign_p=Path("none"))
+        com0 = env.committed
+        with _bt_patched(env, "committed", lambda p: ([f"{p}: not committed at HEAD"], None)
+                         if Path(p).name == "camp-empty.json" else com0(p)):
+            c15 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c15", v2_closure=True,
+                     campaign_p=base / "camp-empty.json")
+        with _bt_patched(env, "committed", lambda p: ([], b"{}") if Path(p).name == "camp-empty.json" else com0(p)):
+            c16 = NR("OLMo-dpo", rec("OLMo-dpo", "pending-closed-at-v2"), base / "c16", v2_closure=True,
+                     campaign_p=base / "camp-empty.json")
+        c2 = NR("OLMo-sft", rec("OLMo-sft", "pending-closed-at-v2"), base / "c2")
+        c3 = NR("OLMo-dpo", rec("OLMo-dpo", "clock:pi-declined", D_O_PRIME), base / "c3", v2_closure=True,
+                campaign_p=Path("none"))
+        c4 = NR("Q-F0", rec("Q-F0", "pending-closed-at-v2", D1), base / "c4", v2_closure=True, campaign_p=Path("none"))
+        B.chk("not-run --v2-closure (the seat's A2): an OLMo checkpoint PENDING at v2 with no session closes as NOT-RUN "
+              "pending-closed-at-v2, declared upstream of the v2 posting; without the flag that cause is refused, with it "
+              "any other cause is, and Q-F0 never takes it; --campaign is required with the flag -- the unit's campaign "
+              "checkpoint, committed at HEAD as read (an uncommitted one, or one whose bytes are not HEAD's blob, "
+              "refused; one with sessions refused: PI-stopped and analyzed, m:324; another unit's or a malformed one "
+              "refused with the identity message, an absent file as unreadable; an empty one accepted) or 'none', "
+              "declared and recorded, refused while the unit's campaign checkpoint exists in the tree or at HEAD; "
+              "--campaign without the flag is refused; an OLMo Clock record reads against D_O'",
+              c1[0] == "ok" and c1[2]["cause"] == "pending-closed-at-v2" and c1[2].get("v2_closure", {}).get("campaign")
+              == "declared none" and c2[0] == "refused" and c3[0] == "refused"
+              and c6[0] == "refused" and "analyzed as obtained" in c6[1]
+              and c7[0] == "ok" and (c7[2].get("v2_closure", {}).get("campaign") or {}).get("sha256")
+              == _sha256_bytes((base / "camp-empty.json").read_bytes())
+              and c8[0] == "refused" and "--v2-closure" in c8[1]
+              and c9[0] == "refused" and "is not OLMo-dpo's campaign checkpoint" in c9[1]
+              and c10[0] == "refused" and "is not OLMo-dpo's campaign checkpoint" in c10[1]
+              and c11[0] == "refused" and "needs --campaign" in c11[1]
+              and c12[0] == "refused" and "unreadable" in c12[1]
+              and c13[0] == "refused" and "--campaign none, but" in c13[1]
+              and c14[0] == "refused" and "--campaign none, but" in c14[1]
+              and c15[0] == "refused" and "not committed at HEAD as read" in c15[1]
+              and c16[0] == "refused" and "not HEAD's blob" in c16[1]
+              and c4[0] == "refused" and NR("OLMo-dpo", rec("OLMo-dpo", "clock:pi-declined", D_O_PRIME), base / "c5")[2][
+                  "date_is_clock_of_record"] is True,
+              (c1[0], c2[0], c3[0], c4[0], c6[0], c7[0], c9[0], c10[0], c11[0], c12[0], c13[0], c14[0], c15[0],
+               c16[0]), cover=["F3N-V2-CLOSURE"])
+
+
+def _bt_f3_chain(root: Path, lsha: str, rule=None, floors: int = 2, launches: int = 4, hour_cap: Any = 40,
+                 pi_stop: str | None = None) -> dict:
+    """mf3's own stage chain on the stub (G-TIME-F3, G-ID-F3, G-F3, the campaign), as mf3.stages' self-test runs it,
+    into a temp out root with mf3's gates dir patched; returns the checkpoint paths."""
+    from valence_core.m import corr as m_corr
+    from valence_core.mf3 import guard as f3g, keys as f3k, schedule as f3sch, scaffold as f3sc, stages as f3s, testing as f3t
+    prop_sha = _sha256_bytes((REPO / PROPOSAL_REL).read_bytes())
+    _pool, renders = f3sc.pool_and_renders()
+    base = {"lock_sha256": lsha, "proposal_sha256": prop_sha, "renders_sha16": m_corr.renders_sha(renders),
+            "reasoning_cap": 60, **f3s._STUB_WEIGHTS}
+    f3sch.write_schedule_files(root / "schedules")
+    gates_dir = root.parent / (root.name + "-gates")
+    gates_dir.mkdir(parents=True, exist_ok=True)
+
+    def cells(stage):
+        if stage == "campaign":
+            return {(t, s): f3sch.campaign_schedule(t, 1)[s] for t in f3k.TEMPLATES for s in range(16)}
+        return {(t, j): f3sch.gate_schedule(stage, t, f3sch.GATE_PLAN_COUNTS[(stage, t)])[j]
+                for t in (f3k.TEMPLATES if stage != "id" else f3k.GID_TEMPLATES)
+                for j in range(f3sch.GATE_PLAN_COUNTS[(stage, t)])}
+
+    def adapter(stage, rl=None):
+        a = f3t.F3Adapter()
+        a.load(f3s._script_policy(stage, cells(stage), rl), None)
+        return a
+    out = {}
+    with _bt_patched(f3g, "GATES_DIR", gates_dir), contextlib.redirect_stdout(io.StringIO()):
+        f3s.run_gate_stage(adapter("time"), gate="time", templates_counts=[(t, 1) for t in f3k.TEMPLATES],
+                           identity_extra={**base, "locked_path": "uncached"}, out_root=root)
+        out["time"] = root / "ckpt" / "Q-F3_time.json"
+        f3s.run_gid_pair_f3(adapter("id"), identity_extra=base, prior_ckpt=out["time"], out_root=root)
+        f3s.run_gate_stage(adapter("qual"), gate="qual",
+                           templates_counts=[(t, f3sch.GATE_PLAN_COUNTS[("qual", t)]) for t in f3k.TEMPLATES],
+                           identity_extra={**base, "locked_path": "cached"}, out_root=root, prior_ckpt=out["time"])
+        out["qual"] = root / "ckpt" / "Q-F3_qual.json"
+        out["result"] = f3s.run_campaign(adapter("campaign", rule), floors={a: floors for a in f3k.TEMPLATES},
+                                         launch_counts={a: launches for a in f3k.TEMPLATES}, hour_cap=hour_cap,
+                                         prior_ckpt=out["qual"], identity_extra={**base, "locked_path": "cached"},
+                                         out_root=root, pi_stop=pi_stop)
+        out["campaign"] = root / "ckpt" / "Q-F3_campaign.json"
+    return out
+
+
+def _bt_f3_reader(B: _Battery) -> None:
+    with tempfile.TemporaryDirectory(prefix="m_analyze_f3_") as td:
+        base = Path(td)
+        B.scrub += [str(base), str(base.resolve()), str(base).replace("/private/", "/", 1)]
+        q3_cl = closure(lazies=LAZY_VERDICT_MODULES + LAZY_F3_MODULES)
+        q3_sha = closure_sha256(q3_cl)
+        _BT_STATE["f3_closure"], _BT_STATE["f3_closure_sha256"] = q3_cl, q3_sha
+        B.chk("the Q-F3 closure (PIN-V2-12): the base closure's modules plus mf3's (the reader's lazy imports reach "
+              "mf3.scaffold and mf3.readrule); the base closure carries no mf3 module, so an OLMo lock binds no mf3 byte",
+              any(k_.startswith("valence_core/mf3/") for k_ in q3_cl["modules"])
+              and not any(k_.startswith("valence_core/mf3/") for k_ in _BT_STATE["closure"]["modules"])
+              and set(_BT_STATE["closure"]["modules"]) <= set(q3_cl["modules"]), len(q3_cl["modules"]),
+              cover=["F3R-CLOSURE"])
+        a_sha = _sha256_bytes(Path(__file__).read_bytes())
+        lock_text = (f"LOCK-m-F3 (battery) analyzer {a_sha} package {_BT_STATE['package_sha256']} closure {q3_sha}\n")
+        lock = base / "LOCK-F3-battery.md"
+        lock.write_text(lock_text, encoding="utf-8")
+        lsha = _sha256_bytes(lock_text.encode("utf-8"))
+        dec_p = base / "decisions-Q-F3.json"
+        dec_p.write_text(json.dumps({"schema": DECISIONS_SCHEMA, "unit": UNIT_F3, "decisions_with_other_outcomes_known": []}))
+        adj_p = base / "adj-reads.json"
+        adj_p.write_text(json.dumps({"schema": F3_ADJ_READS_SCHEMA, "unit": UNIT_F3, "sessions": []}))
+        v1d = base / "v1"
+        v1d.mkdir()
+        posted_ok = {"schema": POSTING_OUT_SCHEMA, "posting": "v1", "table_kind": "posted", "bar": {"verdict": "PASS"}}
+        (v1d / posting_out_name("posted")).write_text(json.dumps(posted_ok))
+        v1_rec_only = base / "v1-rec-only"
+        v1_rec_only.mkdir()
+        (v1_rec_only / posting_out_name("of-record")).write_text(json.dumps({**posted_ok, "table_kind": "of-record"}))
+        v1_fail = base / "v1-fail"
+        v1_fail.mkdir()
+        (v1_fail / posting_out_name("posted")).write_text(json.dumps({**posted_ok, "bar": {"verdict": "FAIL"}}))
+        v2tor = _bt_v2_table_of_record(base)
+        v2ph = base / "table-v2-placeholder.json"
+        v2ph.write_text(json.dumps(placeholder_table_v2()), encoding="utf-8")
+        env = _bt_env(base, closure_sha256=q3_sha)
+        chain = _bt_f3_chain(base / "c1" / "mf3", lsha)
+
+        def V(ch, out_name, env_=None, **kw):
+            inp = VerdictInputs(unit=UNIT_F3, lock=kw.pop("lock", lock), decisions=kw.pop("decisions", dec_p),
+                                campaign=kw.pop("campaign", ch["campaign"]), time=kw.pop("time", ch["time"]),
+                                qual=kw.pop("qual", ch["qual"]), out=base / "out" / out_name,
+                                adj_reads=kw.pop("adj_reads", adj_p), v1_dir=kw.pop("v1_dir", v1d),
+                                sentences=kw.pop("sentences", v2tor), **kw)
+            try:
+                st, lines, paths = run_verdicts(inp, env_ or env)
+                return ("ok", st, lines, paths)
+            except AnlRefusal as e:
+                return ("refused", B.clean(str(e)), [], [])
+            except AnlStop as e:
+                return ("stop", B.clean(str(e)), [], [])
+            except Exception as e:                                    # noqa: BLE001
+                return ("crash", B.clean(f"{type(e).__name__}: {e}"), [], [])
+        v = V(chain, "complete")
+        doc = json.loads((base / "out" / "complete" / "Q-F3_VERDICTS.json").read_text()) if v[0] == "ok" else {}
+        sec = json.loads((base / "out" / "complete" / "Q-F3_secondary.json").read_text()) if v[0] == "ok" else {}
+        drw = json.loads((base / "out" / "complete" / "Q-F3_blind-read.json").read_text()) if v[0] == "ok" else {}
+        B.chk("Q-F3 reader: a COMPLETE stub campaign (mf3's production writer, the stub chain G-TIME-F3 -> G-ID-F3 -> "
+              "G-F3 -> campaign) -> VERDICTS, secondary and blind-read files written; three arm verdicts with their "
+              "sentences, the coordinate (A1, A2, A3) and the rows", v[0] == "ok" and v[1] == "written"
+              and sorted(doc.get("arms", {})) == ["A1", "A2", "A3"] and all(doc["arms"][a]["sentence"] for a in ("A1", "A2", "A3"))
+              and doc.get("coordinate", {}).get("A3") in QF3_WORDS["A3"] and doc.get("clock_of_record") == D2
+              and sec.get("schema") == F3_SECONDARY_SCHEMA and drw.get("schema") == F3_BLIND_SCHEMA
+              and sorted(doc.get("beside", {})) == sorted(F3_TEMPLATES)
+              and (doc.get("inputs", {}).get("sentences") or {}).get("sha256") == _sha256_bytes(v2tor.read_bytes()),
+              (v[0], v[1] if v[0] != "ok" else doc.get("coordinate")), cover=["F3R-READER-COMPLETE"])
+        v2 = V(chain, "complete")
+        B.chk("Q-F3 reader: the same run again is byte-identical ('identical'); stdout names no roster word",
+              v2[0] == "ok" and v2[1] == "identical" and not _bt_roster_hit("\n".join(v[2] + v2[2])), v2[1][:60],
+              cover=["F3R-READER-IDENTICAL"])
+        B.chk("Q-F3 reader: every rate carries {num, den, domain} and every p its test (m:358), per arm and in the counters",
+              doc and all(rates_tests_problems({"rates": doc["arms"][a]["rates"], "tests": doc["arms"][a]["tests"],
+                                                "counter_rates": doc["counter_rates"]}) == [] for a in ("A1", "A2", "A3")),
+              len(doc.get("counter_rates") or []), cover=["F3R-READER-RATES"])
+        refs = {
+            "closure-not-in-lock": V(chain, "r1", env_=_bt_env(base)),
+            "no-v1-posting": V(chain, "r2", v1_dir=base / "no-v1"),
+            "no-adj-reads": V(chain, "r3", adj_reads=None),
+            "wrong-unit-time": V(chain, "r4", time=chain["campaign"]),
+            "stub-refused": V(chain, "r5", env_=_bt_env(base, closure_sha256=q3_sha, allow_stub=False)),
+            "v1-of-record-only": V(chain, "r7", v1_dir=v1_rec_only),
+            "v1-posted-FAIL": V(chain, "r8", v1_dir=v1_fail),
+            "no-v2-table": V(chain, "r9", sentences=None),
+            "v2-placeholder-table": V(chain, "r10", sentences=v2ph),
+            "q-f0-input": V(chain, "r11", olmo_states=adj_p),
+        }
+        try:
+            run_verdicts(VerdictInputs(unit="Q-F0", lock=lock, decisions=dec_p, campaign=chain["campaign"],
+                                       time=chain["time"], qual=chain["qual"], out=base / "out" / "r12",
+                                       adj_reads=adj_p), env)
+            refs["v1-unit-q-f3-input"] = ("ok", "", [], [])
+        except AnlRefusal as e:
+            refs["v1-unit-q-f3-input"] = ("refused", B.clean(str(e)), [], [])
+        (base / "other-lock.md").write_text(lock_text + "x\n", encoding="utf-8")
+        refs["lock-sha"] = V(chain, "r6", lock=base / "other-lock.md")
+        why_ = {"closure-not-in-lock": "the lock does not name this run's Q-F3 closure sha256",
+                "no-v1-posting": "no committed v1 posting on the posted text", "no-adj-reads": "--adjudication-reads",
+                "wrong-unit-time": "the time checkpoint is not an ended Q-F3/time gate stage",
+                "stub-refused": "self-test stub", "lock-sha": "lock_sha256 is not the lock's sha256",
+                "v1-of-record-only": "no committed v1 posting on the posted text",
+                "v1-posted-FAIL": "no committed v1 posting on the posted text", "no-v2-table": "needs --sentences",
+                "v2-placeholder-table": "not an accepted v2 table of record", "q-f0-input": "Q-F0's VERDICTS inputs",
+                "v1-unit-q-f3-input": "Q-F3's VERDICTS inputs only"}
+        B.chk("Q-F3 reader refusals, each before any pick is interpreted and each for its own reason: the lock not naming the Q-F3 closure (a base-"
+              "closure env); no committed v1 posting on the posted text that PASSed C7's bar (absent, the of-record "
+              "output alone, a FAIL; decision (10')); no v2 table of record, or a placeholder (PIN-V2-24); Q-F0's "
+              "inputs given; no adjudication-reads file; a gate checkpoint of the wrong stage; stub provenance outside "
+              "the battery path (PIN-30); the campaign's lock sha not the lock's; and a Q-F0 run given Q-F3's inputs",
+              all(r_ is not None and r_[0] == "refused" and why_[k_] in r_[1] for k_, r_ in refs.items()),
+              {k_: (r_[0], r_[1][:60]) for k_, r_ in refs.items() if not (r_[0] == "refused" and why_[k_] in r_[1])},
+              cover=["F3R-READER-REFUSALS"])
+        def a1_forced_v2(t, s, kind, i, call):
+            if t == "A1" and s == 0 and kind == "forced" and i == 0:
+                time.sleep(0.02)                 # the session's recorded time passes the 1e-9 h cap
+            return "Config choice one." if (t == "A1" and s == 0 and kind == "forced" and i == 1) else None
+        cap0 = _bt_f3_chain(base / "c2" / "mf3", lsha, rule=a1_forced_v2, hour_cap=1e-9)
+        vn = V(cap0, "cap0")
+        nr = json.loads((base / "out" / "cap0" / "Q-F3_NOT-RUN.json").read_text()) if vn[0] == "ok" else {}
+        B.chk("Q-F3 reader: a campaign capped after one session excluded at a forced round, none reaching a first read "
+              "(an hour cap of 1e-9), is NOT-RUN "
+              "no-first-read:cap at the unit grain (m:324), Q-F3_NOT-RUN.json written with rows A2/A3 descriptively",
+              vn[0] == "ok" and nr.get("cause") == "no-first-read:cap" and nr.get("rows", {}).get("A1") == "NOT-RUN",
+              (vn[0], vn[1] if vn[0] != "ok" else nr.get("cause")), cover=["F3R-READER-NOTRUN"])
+
+        def a2_scaffold(t, s, kind, i, call):
+            return "<|im_start|> go" if (t == "A2" and s == 0 and kind == "line" and i == 2) else None
+        stp = _bt_f3_chain(base / "c3" / "mf3", lsha, rule=a2_scaffold)
+        vs = V(stp, "hair")
+        pis = base / "pis.json"
+        ck_bytes = Path(stp["campaign"]).read_bytes()
+        pis.write_text(json.dumps({"schema": PI_STOP_SCHEMA, "unit": UNIT_F3, "campaign_sha256": _sha256_bytes(ck_bytes),
+                                   "bar": HAIR_BAR, "text": "battery: the PI stops Q-F3 on the hair trigger"}))
+        vs2 = V(stp, "hair2", pi_stop=pis)
+        B.chk("Q-F3 reader: a scaffold hair-trigger STOP on a contrast reasoning line (mf3's writer) is refused without "
+              "a PI-stop record (PIN-8 at F3) and analyzed as obtained with one", vs[0] == "refused" and vs2[0] == "ok",
+              (vs[0], vs2[0], vs2[1] if vs2[0] != "ok" else ""), cover=["F3R-READER-HAIR"])
+        _BT_STATE["f3_chain"] = chain
+        _BT_STATE["f3_doc"] = doc
+
+
+def _bt_roster_hit(text: str) -> bool:
+    from valence_core.mf3 import schedule as f3sch
+    words = {w for p in f3sch.roster() for w in p}
+    return any(re.search(rf"\b{re.escape(w)}\b", text) for w in words)
+
+
+def _bt_v2_table_of_record(base: Path, name: str = "table-v2.json") -> Path:
+    """A committed-by-double v2 table of record over a temp preprint holding the v2 placeholder rows at their locs."""
+    tab = placeholder_table_v2()
+    pre_lines = [f"Line {i}." for i in range(1, 40)]
+    for r in tab["rows"]:
+        ln = r["loc"]["line"] - 1
+        pre_lines[ln] = pre_lines[ln] + " " + r["text"] if r["loc"]["sentence"] == 2 else r["text"]
+    pre = "\n".join(pre_lines) + "\n"
+    (base / "PREPRINT-v2-battery.md").write_text(pre, encoding="utf-8")
+    rec = copy.deepcopy(tab)
+    rec["kind"] = "of-record"
+    rec["preprint"] = {"path": "PREPRINT-v2-battery.md", "sha256": _sha256_bytes(pre.encode("utf-8")),
+                       "bytes": len(pre.encode("utf-8")), "lines": pre.count("\n")}
+    out = base / name
+    out.write_text(json.dumps(rec), encoding="utf-8")
+    return out
+
+
+def _bt_f3_posting(B: _Battery) -> None:
+    tab = placeholder_table_v2()
+    with tempfile.TemporaryDirectory(prefix="m_analyze_v2post_") as td:
+        base = Path(td)
+        B.scrub += [str(base), str(base.resolve()), str(base).replace("/private/", "/", 1)]
+        recp = _bt_v2_table_of_record(base)
+        rec = json.loads(recp.read_text(encoding="utf-8"))
+        tp = table_problems(rec, read_repo_file=lambda rel: (base / rel).read_bytes() if (base / rel).is_file() else None,
+                            posting="v2")
+        vd, fd, out = base / "verdicts", base / "f3", base / "out"
+        for d_ in (vd, fd, out):
+            d_.mkdir()
+        for u, st_ in (("Q-F0", "PASS"), ("OLMo-sft", "PASS"), ("OLMo-dpo", "DEAD")):
+            (vd / f"{u}_VERDICTS.json").write_text(json.dumps({"schema": VERDICTS_SCHEMA, "unit": u, "arm": {"state": st_}}))
+        (vd / "OLMo-instruct_NOT-RUN.json").write_text(json.dumps({"cause": "pending-closed-at-v2",
+                                                                  "reason": "still pending at the v2 posting, with no session"}))
+        (fd / "Q-F3_VERDICTS.json").write_text(json.dumps({"coordinate": {"A1": "PASS", "A2": "PASS", "A3": "NULL"},
+                                                           "inputs": {"sentences": {"path": "table-v2.json",
+                                                                                    "sha256": _sha256_bytes(recp.read_bytes())}}}))
+        flag = base / "flag-absent.json"
+        env = _bt_env(base)
+
+        def tup(q3, olmo_i="NOT-RUN", reasons=None, name="t.json", **over):
+            d_ = {"schema": TUPLE_SCHEMA_V2, "posting": "v2",
+                  "tuple": {"Q-F0": "PASS", "OLMo-sft": "PASS", "OLMo-dpo": "DEAD", "OLMo-instruct": olmo_i, "Q-F3": q3},
+                  "reasons": reasons if reasons is not None else {"OLMo-instruct": "still pending at the v2 posting, with no session"}}
+            d_.update(over)
+            p_ = base / name
+            p_.write_text(json.dumps(d_))
+            return p_
+        q3 = {"A1": "PASS", "A2": "PASS", "A3": "NULL", "f2": F2_NOT_REQUIRED, "f2_control": None}
+
+        def P(tp_, table=recp, rw=None, out_=out):
+            try:
+                st, lines, paths = run_posting_v2(tp_, table, flag, vd, fd, out_, env, rewrites=rw)
+                return ("ok", st, json.loads(paths[0].read_text()), lines)
+            except AnlRefusal as e:
+                return ("refused", B.clean(str(e)), None, [])
+            except AnlPostingFail as e:
+                return ("fail", e.bar["verdict"], None, e.lines)
+        p1 = P(tup(q3))
+        outs = p1[2] or {}
+        B.chk("posting --posting v2 (the seat's A3; PIN-V2-21): the table of record's run under a declared v2 tuple writes "
+              "POSTING-v2_outputs.of-record.json with Steps 1-7 (A3* NULL, Main under L0, L1 and A2 PASS), the "
+              "enumeration over the v2 table, and the closure of the PENDING checkpoint (pending-closed-at-v2) admitted",
+              tp == [] and p1[0] == "ok" and p1[1] == "written" and outs["outputs"]["a3_star"] == "NULL"
+              and outs["outputs"]["ceiling"]["name"] == "Main" and outs["outputs"]["step7"] == "closed into §5.7"
+              and outs["schema"] == POSTING_OUT_SCHEMA_V2, (tp[:1], p1[0], p1[1] if p1[0] != "ok" else ""),
+              cover=["F3P-OF-RECORD"])
+        p2 = P(tup(q3, olmo_i="PENDING", reasons={}, name="t-pend.json"))
+        p3 = P(tup({**q3, "A3": "POSITIVE", "f2": "CONFIRMED", "f2_control": "PASS"}, name="t-mis.json"))
+        p4 = P(tup(q3, name="t-badtab.json"), table=base / "no-table.json")
+        p5 = P(tup("NOT-RUN", reasons={"OLMo-instruct": "still pending at the v2 posting, with no session",
+                                        "Q-F3": "x"}, name="t-f3nr.json"))
+        other = base / "table-v2-other.json"
+        other.write_text(json.dumps(rec, indent=1), encoding="utf-8")         # the same table, other bytes
+        p7 = P(tup(q3, name="t-other.json"), table=other, out_=base / "out-other")
+        B.chk("posting v2 refusals: a PENDING checkpoint (the refusal names m:324's closure, the seat's A2); a Q-F3 "
+              "coordinate its VERDICTS do not carry; an absent table; Q-F3 NOT-RUN without its NOT-RUN output; an "
+              "of-record table other than the one Q-F3's VERDICTS read (PIN-V2-24)",
+              p2[0] == "refused" and "closed there first" in p2[1] and p3[0] == "refused" and p4[0] == "refused"
+              and p5[0] == "refused" and p7[0] == "refused" and "PIN-V2-24" in p7[1],
+              (p2[0], p3[0], p4[0], p5[0], p7[0]), cover=["F3P-REFUSALS"])
+        posted = copy.deepcopy(rec)
+        posted["kind"] = "posted"
+        pp = base / "table-v2-posted.json"
+        pp.write_text(json.dumps(posted), encoding="utf-8")
+        rwp = base / "rewrites.json"
+        rwp.write_text(json.dumps({"schema": REWRITES_SCHEMA, "posting": "v2", "rows": []}))
+        p6 = P(tup(q3, name="t-posted.json"), table=pp, rw=rwp)
+        B.chk("posting v2 on the posted text (C7's bar, PIN-44 at v2): a posted copy of the table of record still "
+              "enumerates rows -> FAIL, nothing written, its record printed as the v2 posting's",
+              p6[0] == "fail" and p6[1] == "FAIL" and not (out / posting_out_name_v2("posted")).exists()
+              and any(ln.startswith("POSTING v2:") for ln in p6[3]) and not any("POSTING v1" in ln for ln in p6[3]),
+              (p6[0], p6[1]), cover=["F3P-POSTED-BAR"])
 
 
 def battery() -> dict:
@@ -8014,6 +11025,14 @@ def battery() -> dict:
         B.group("campaign counts", lambda: _bt_counts_path(B))
         B.group("reader path", lambda: _bt_reader(B))
         B.group("structure", lambda: _bt_structure(B, lines, hook))
+        B.group("G-ANL-F3 riding items", lambda: _bt_riding(B, hook, table or placeholder_table()))
+        B.group("G-ANL-F3 Q-F3 outcomes", lambda: _bt_f3_outcomes(B))
+        B.group("G-ANL-F3 counter (c) and the blind read", lambda: (_bt_f3_counter_c(B), _bt_f3_draw(B),
+                                                                    _bt_f3_valid_through(B)))
+        B.group("G-ANL-F3 Q-F3 NOT-RUN and the v2 closure", lambda: _bt_f3_notrun(B))
+        B.group("G-ANL-F3 Q-F3 reader path", lambda: _bt_f3_reader(B))
+        B.group("G-ANL-F3 v2 posting", lambda: _bt_f3_posting(B))
+        B.group("G-ANL-F3 v2 outcome space", lambda: _bt_v2_tuples(B, placeholder_table_v2()))
     snap1 = _bt_snapshot()
     B.chk("the battery wrote nothing canonical (data/m before == after; blocked dirs by os.stat only)",
           snap0 == snap1, sorted(set(snap0.items()) ^ set(snap1.items()))[:2], cover=["STR-NO-CANONICAL-WRITE"])
@@ -8028,15 +11047,24 @@ def battery() -> dict:
             "ok": n_ok == n and count_ok and not unreached, "coverage_ids": sorted(B.reached),
             "outputs_sha256": B.extra.get("outputs_sha256"), "tallies": B.extra.get("tallies"),
             "flag_of_record": B.extra.get("flag_of_record"), "closure": _BT_STATE.get("closure"),
-            "closure_sha256": _BT_STATE.get("closure_sha256")}
+            "closure_sha256": _BT_STATE.get("closure_sha256"), "regression": B.extra.get("regression"),
+            "v1_unchanged": B.extra.get("v1_unchanged"), "v2_outputs_sha256": B.extra.get("v2_outputs_sha256"),
+            "v2_tallies": B.extra.get("v2_tallies"), "f3_closure": _BT_STATE.get("f3_closure"),
+            "f3_closure_sha256": _BT_STATE.get("f3_closure_sha256")}
 
 
 # --- ganl -------------------------------------------------------------------------------------------
-def ganl_commit_problems(committed: Callable[[Path], tuple[list[str], bytes | None]], cl: Mapping) -> list[str]:
-    """PIN-39's files: the analyzer, the placeholder, the proposal, valence_core/m/*.py and the closure."""
+def ganl_commit_problems(committed: Callable[[Path], tuple[list[str], bytes | None]], cl: Mapping,
+                         f3_cl: Mapping | None = None) -> list[str]:
+    """PIN-39's files: the analyzer, the placeholder, the proposal, valence_core/m/*.py and the closure; at G-ANL-F3
+    also the v2 placeholder, ADDENDUM-m1, valence_core/mf3/*.py and the Q-F3 closure (PIN-V2-23)."""
     rels = ([ANALYZER_REL, PLACEHOLDER_REL, PROPOSAL_REL]
             + sorted(_repo_rel(f) for f in (REPO / "valence_core" / "m").glob("*.py"))
             + sorted(cl["modules"]) + sorted(cl["data"]))
+    if f3_cl is not None:
+        rels += ([PLACEHOLDER_V2_REL, ADDENDUM_M1_REL]
+                 + sorted(_repo_rel(f) for f in (REPO / "valence_core" / "mf3").glob("*.py"))
+                 + sorted(set(f3_cl["modules"]) - set(cl["modules"])) + sorted(set(f3_cl["data"]) - set(cl["data"])))
     return [x for rel in rels for x in committed(REPO / rel)[0]]
 
 
@@ -8049,8 +11077,13 @@ def run_ganl(out: str | None) -> int:
         # (package_sha256's files) and every closure file must be committed at HEAD with identical
         # working-tree bytes, or `ganl` refuses (exit 2) before the battery; a --out test directory is
         # exempt (non-canonical).
+        # PIN (Code, declared at LOCK-m-F3 v0.1; the STOP's §3 item 11): PIN-V2-23 -- `ganl` writes
+        # data/m/gates/G-ANL-F3.json, write-once, against committed blobs (PIN-39 widened to the v2 placeholder,
+        # ADDENDUM-m1, valence_core/mf3/*.py and the Q-F3 closure); G-ANL-F0.json is untouched; the manifest is
+        # G-ANL-F0's form with stage G-ANL-F3, schema m-ganl-f3-v1 and a g_anl_f3 block (the regression, v1
+        # unchanged, the v2 space, counter (c)'s lexicons, the blind-read seed, the Clock dates, PINS_F3).
         try:
-            probs = ganl_commit_problems(_prod_committed, closure())
+            probs = ganl_commit_problems(_prod_committed, closure(), closure(lazies=LAZY_VERDICT_MODULES + LAZY_F3_MODULES))
         except SystemExit as e:                  # PIN-26: AnlStop (the closure) -> 4, AnlRefusal -> 2
             print(str(e), file=sys.stderr, flush=True)
             return _exit_of(e)
@@ -8068,7 +11101,7 @@ def run_ganl(out: str | None) -> int:
         except SystemExit as e:
             print(f"REFUSED: {e}", file=sys.stderr)
             return 2
-    path = dest / Path(GANL_REL).name
+    path = dest / Path(GANL_F3_REL).name
     if path.exists():
         print(f"NOTE: {path.name} exists; the battery runs and the write is write-once (identical or refused)",
               flush=True)
@@ -8079,7 +11112,7 @@ def run_ganl(out: str | None) -> int:
     art = ganl_artifact(res)
     probs = ganl_artifact_problems(art, res)
     if probs:
-        print(f"STOP: the G-ANL-F0 artifact fails its own content check: {probs[:3]}; nothing written",
+        print(f"STOP: the G-ANL-F3 artifact fails its own content check: {probs[:3]}; nothing written",
               file=sys.stderr)
         return 4
     try:
@@ -8087,22 +11120,57 @@ def run_ganl(out: str | None) -> int:
     except AnlRefusal as e:
         print(str(e), file=sys.stderr)
         return 2
-    print(f"G-ANL-F0: {st}: {_repo_rel(path)} (sha256 {_sha256_bytes(path.read_bytes())})", flush=True)
+    print(f"G-ANL-F3: {st}: {_repo_rel(path)} (sha256 {_sha256_bytes(path.read_bytes())})", flush=True)
     return 0
 
 
 GANL_KEYS = ("analyzer", "battery", "closure", "closure_sha256", "counters", "decisions_other_states",
-             "flag_of_record", "gate_stop_stages", "not_run_vocabulary", "package_sha256", "pending_substates",
-             "pins", "placeholder", "proposal", "schema", "seat_routed", "spec", "stage", "templates", "verdict")
+             "flag_of_record", "g_anl_f3", "gate_stop_stages", "not_run_vocabulary", "package_sha256",
+             "pending_substates", "pins", "placeholder", "proposal", "schema", "seat_routed", "spec", "stage",
+             "templates", "verdict")
+GANL_F3_BLOCK_KEYS = ("addendum", "blind_read", "clock", "counter_c", "counters_q_f3", "f3_closure",
+                      "f3_closure_sha256", "gate_stop_stages_q_f3", "pending_unlocked_by_era", "pins",
+                      "placeholder_v2", "regression", "regression_report", "seat_ruled", "v1_unchanged", "v2")
+REGRESSION_REPORT = {
+    "shows": "the extended analyzer, on m's moved package, recomputes Q-F0's VERDICTS and secondary outputs from the "
+             "committed inputs of 2026-10-19 byte for byte, with the identity fields bound to the record's",
+    "does_not_show": "that the extended blob satisfies LOCK-m-F0's binding -- only 655e0f7f... does; the v1 `posting` "
+                     "command records the three shas and does not refuse on them (PIN-42's binding)"}
+
+
+def _g_anl_f3_block(res: Mapping) -> dict:
+    p2 = (REPO / PLACEHOLDER_V2_REL).read_bytes() if (REPO / PLACEHOLDER_V2_REL).is_file() else b""
+    ad = (REPO / ADDENDUM_M1_REL).read_bytes()
+    return {"placeholder_v2": {"path": PLACEHOLDER_V2_REL, "sha256": _sha256_bytes(p2)},
+            "addendum": {"path": ADDENDUM_M1_REL, "sha256": _sha256_bytes(ad)},
+            "clock": {"D1": D1, "D_O_prime": D_O_PRIME, "D2": D2, "era_boundary": ADDENDUM_M1_DATE},
+            "f3_closure": res.get("f3_closure"), "f3_closure_sha256": res.get("f3_closure_sha256"),
+            "regression": res.get("regression"), "regression_report": REGRESSION_REPORT,
+            "v1_unchanged": res.get("v1_unchanged"),
+            "v2": {"tuples": 519480, "full": 300625, "pending_refused": 218855, "evaluations": 1038960,
+                   "outputs_sha256": res.get("v2_outputs_sha256"), "tallies": res.get("v2_tallies"),
+                   "outputs_form": "sha256 over the lines json.dumps({t, flag, outputs}, sort_keys, ensure_ascii False, "
+                                   "compact) + newline for the 300,625 tuples with no PENDING checkpoint, flag True then "
+                                   "False, itertools.product(Q5, O6, O6, O6) x f3_coordinates() order; regenerable "
+                                   "byte-identically (not committed)"},
+            "counter_c": {"stage1": list(STAGE1_TERMS), "negative": list(POLARITY_NEG), "positive": list(POLARITY_POS),
+                          "window": POLARITY_WINDOW},
+            "blind_read": {"seed": F3_BLIND_SEED, "n": F3_BLIND_N}, "pins": PINS_F3, "seat_ruled": SEAT_RULED_F3,
+            "pending_unlocked_by_era": dict(PENDING_UNLOCKED), "gate_stop_stages_q_f3": list(F3_GATE_STOP_STAGES),
+            "counters_q_f3": "the Qwen counters as Q-F0's, plus reasoning_line_defect keyed (arm, class, line position) "
+                             "over every reasoning line generated; pre_pick_exclusion keyed on the excluding forced "
+                             "round's property or 'reasoning line 1' (PIN-V2-18; COUNTERS' declarations are Q-F0's)"}
 
 
 def ganl_artifact(res: Mapping) -> dict:
-    """The G-ANL-F0 manifest (decision 12): shas, closure, battery counts, coverage, tallies,
-    outputs_sha256, flag of record, counters, vocabularies, PINs; no timestamp, no HEAD."""
+    """The G-ANL-F3 manifest, in G-ANL-F0's form (decision 12) with the g_anl_f3 block (PIN-V2-23): shas,
+    closure, battery counts, coverage, tallies, outputs_sha256, flag of record, counters, vocabularies, PINs;
+    no timestamp, no HEAD."""
     ab = Path(__file__).read_bytes()
     pl = (REPO / PLACEHOLDER_REL).read_bytes()
     pb = (REPO / PROPOSAL_REL).read_bytes()
-    art = {"schema": GANL_SCHEMA, "stage": "G-ANL-F0", "spec": "PROPOSAL-m v1.11 §3.1 m:278; §8 step 8 m:358",
+    art = {"schema": GANL_F3_SCHEMA, "stage": "G-ANL-F3",
+           "spec": "PROPOSAL-m v1.11 §3.2 m:291 (§3.1 m:278 carried); ADDENDUM-m1 §2.5; the seat's answers of 2026-11-06",
            "analyzer": {"path": ANALYZER_REL, "sha256": _sha256_bytes(ab), "sha16": _sha256_bytes(ab)[:16]},
            "placeholder": {"path": PLACEHOLDER_REL, "sha256": _sha256_bytes(pl)},
            "proposal": {"path": PROPOSAL_REL, "sha256": _sha256_bytes(pb)},
@@ -8125,7 +11193,7 @@ def ganl_artifact(res: Mapping) -> dict:
                          "labels": {"e2b": LABEL_E2B, "olmo-base": LABEL_BASE, "S1": LABEL_S1, "weight": LABEL_WEIGHT},
                          "abstract": {"all": ABSTRACT_ALL, "some": ABSTRACT_SOME, "none": ABSTRACT_NONE},
                          "titles": TITLES, "s81_tokens": S81_TOKEN},
-           "pins": PINS, "seat_routed": SEAT_ROUTED, "verdict": "PASS"}
+           "pins": PINS, "seat_routed": SEAT_ROUTED, "g_anl_f3": _g_anl_f3_block(res), "verdict": "PASS"}
     return art
 
 
@@ -8156,8 +11224,13 @@ def ganl_artifact_problems(art: Mapping, res: Mapping) -> list[str]:
             probs.append(f"battery.{k_}")
     if art.get("flag_of_record") != res.get("flag_of_record"):
         probs.append("flag_of_record")
-    if art.get("pins") != PINS or art.get("seat_routed") != SEAT_ROUTED or art.get("schema") != GANL_SCHEMA:
+    if art.get("pins") != PINS or art.get("seat_routed") != SEAT_ROUTED or art.get("schema") != GANL_F3_SCHEMA:
         probs.append("pins / seat_routed / schema")
+    g3 = art.get("g_anl_f3")
+    if not isinstance(g3, Mapping) or sorted(g3) != sorted(GANL_F3_BLOCK_KEYS) or g3 != _g_anl_f3_block(res) \
+            or (isinstance(g3.get("f3_closure"), Mapping)
+                and closure_sha256(g3["f3_closure"]) != g3.get("f3_closure_sha256")):
+        probs.append("g_anl_f3")
     return probs
 
 
@@ -8176,30 +11249,47 @@ def _exit_of(e: BaseException) -> int:
     return 4
 
 
+def _cli_path(a: str | None, keep_empty: bool = False) -> Path | None:
+    """A CLI path argument, resolved against the repository root when relative (A-m1 §2.5 (1); PIN-V2-8).
+    None stays None; an empty argument is None (the default applies, as `Path(a or default)` had it), or,
+    with keep_empty (a required input, --rewrites), Path('') as before (read as '.')."""
+    if a is None or (a == "" and not keep_empty):
+        return None
+    try:
+        q = Path(a).expanduser()             # a quoted "~/x" is the home directory's, as the shell would read it
+    except RuntimeError:                     # "~name/..." naming no user: a refusal (exit 2), never a traceback
+        raise AnlRefusal(f"REFUSED: {a!r}: its '~' names no user on this machine (PIN-V2-8)")
+    return q if (q.is_absolute() or a == "") else REPO / q
+
+
 def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
-    ap = argparse.ArgumentParser(description="PROPOSAL-m analyzer (G-ANL-F0)")
+    ap = argparse.ArgumentParser(description="PROPOSAL-m analyzer (G-ANL-F0, extended at G-ANL-F3)")
     ap.add_argument("--selftest", action="store_true", help="the synthetic battery (model-free)")
     sub = ap.add_subparsers(dest="cmd")
-    g = sub.add_parser("ganl", help="the battery, then data/m/gates/G-ANL-F0.json (write-once)")
+    g = sub.add_parser("ganl", help="the battery, then data/m/gates/G-ANL-F3.json (write-once)")
     g.add_argument("--out", default=None, help="a non-canonical test directory (default data/m/gates)")
     v = sub.add_parser("verdicts", help="one unit's VERDICTS")
     v.add_argument("--unit", required=True)
     v.add_argument("--lock", required=True)
     v.add_argument("--decisions", required=True)
-    for a in ("campaign", "time", "qual", "adjudication", "pi-stop", "olmo-states", "sentences", "flag-source", "out"):
+    for a in ("campaign", "time", "qual", "adjudication", "pi-stop", "olmo-states", "sentences", "flag-source", "out",
+              "adjudication-reads", "v1-dir"):
         v.add_argument(f"--{a}", default=None)
     n = sub.add_parser("not-run", help="a Clock / dose NOT-RUN record")
     n.add_argument("--unit", required=True)
     n.add_argument("--record", required=True)
     for a in ("time", "qual", "out"):
         n.add_argument(f"--{a}", default=None)
-    p = sub.add_parser("posting", help="§7's v1 outputs under a declared tuple")
-    p.add_argument("--posting", required=True, choices=["v1"])
+    n.add_argument("--v2-closure", action="store_true", help="an OLMo checkpoint PENDING at v2, closed with no session")
+    n.add_argument("--campaign", default=None, help="with --v2-closure (required there): the unit's campaign checkpoint "
+                                                    "(its session count) or 'none'")
+    p = sub.add_parser("posting", help="§7's v1 or v2 outputs under a declared tuple")
+    p.add_argument("--posting", required=True, choices=["v1", "v2"])
     p.add_argument("--tuple", required=True)
     p.add_argument("--sentences", required=True)
-    for a in ("rewrites", "flag-source", "verdicts-dir", "out"):
+    for a in ("rewrites", "flag-source", "verdicts-dir", "f3-verdicts-dir", "out"):
         p.add_argument(f"--{a}", default=None)
     args = ap.parse_args(argv)
     if args.selftest:
@@ -8209,7 +11299,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if battery()["ok"] else 1
     if args.cmd == "ganl":
         try:
-            return run_ganl(args.out)
+            out_ = str(_cli_path(args.out)) if (args.out is not None and args.out.strip()) else args.out
+            return run_ganl(out_)
         except SystemExit as e:                  # PIN-26: never exit 1 (the selftest-FAIL code)
             print(str(e.code if not isinstance(e, (AnlRefusal, AnlStop)) else e), file=sys.stderr, flush=True)
             return _exit_of(e)
@@ -8217,30 +11308,45 @@ def main(argv: list[str] | None = None) -> int:
         ap.print_usage(sys.stderr)
         return 2
     try:
-        env = production_env()
+        env = production_env(UNIT_F3) if getattr(args, "unit", None) == UNIT_F3 else production_env()
         if args.cmd == "verdicts":
             U = args.unit
-            ck = REPO / CKPT_REL
-            inp = VerdictInputs(unit=U, lock=Path(args.lock), decisions=Path(args.decisions),
-                                campaign=Path(args.campaign or ck / f"{U}_campaign.json"),
-                                time=Path(args.time or ck / f"{U}_time.json"), qual=Path(args.qual or ck / f"{U}_qual.json"),
-                                out=Path(args.out or REPO / VERDICTS_REL),
-                                adjudication=Path(args.adjudication) if args.adjudication else None,
-                                pi_stop=Path(args.pi_stop) if args.pi_stop else None,
-                                olmo_states=Path(args.olmo_states) if args.olmo_states else None,
-                                sentences=Path(args.sentences) if args.sentences else None,
-                                flag_source=Path(args.flag_source) if args.flag_source else None)
+            ck = REPO / (F3_CKPT_REL if U == UNIT_F3 else CKPT_REL)
+            inp = VerdictInputs(unit=U, lock=_cli_path(args.lock, True), decisions=_cli_path(args.decisions, True),
+                                campaign=_cli_path(args.campaign) or ck / f"{U}_campaign.json",
+                                time=_cli_path(args.time) or ck / f"{U}_time.json",
+                                qual=_cli_path(args.qual) or ck / f"{U}_qual.json",
+                                out=_cli_path(args.out) or REPO / (F3_VERDICTS_REL if U == UNIT_F3 else VERDICTS_REL),
+                                adjudication=_cli_path(args.adjudication) if args.adjudication else None,
+                                pi_stop=_cli_path(args.pi_stop) if args.pi_stop else None,
+                                olmo_states=_cli_path(args.olmo_states) if args.olmo_states else None,
+                                sentences=_cli_path(args.sentences) if args.sentences else None,
+                                flag_source=_cli_path(args.flag_source) if args.flag_source else None,
+                                adj_reads=_cli_path(args.adjudication_reads) if args.adjudication_reads else None,
+                                v1_dir=_cli_path(args.v1_dir) if args.v1_dir else None)
             st, lines, _ = run_verdicts(inp, env)
         elif args.cmd == "not-run":
-            st, lines, _ = run_not_run(args.unit, Path(args.record), Path(args.time) if args.time else None,
-                                       Path(args.qual) if args.qual else None,
-                                       Path(args.out or REPO / VERDICTS_REL), env)
+            st, lines, _ = run_not_run(args.unit, _cli_path(args.record, True), _cli_path(args.time) if args.time else None,
+                                       _cli_path(args.qual) if args.qual else None,
+                                       _cli_path(args.out) or REPO / (F3_VERDICTS_REL if args.unit == UNIT_F3
+                                                                      else VERDICTS_REL), env,
+                                       v2_closure=args.v2_closure,
+                                       campaign_p=(Path("none") if args.campaign == "none" else _cli_path(args.campaign)))
+        elif args.posting == "v2":
+            st, lines, _ = run_posting_v2(_cli_path(args.tuple, True), _cli_path(args.sentences, True),
+                                          _cli_path(args.flag_source) or REPO / FLAG_SOURCE_REL,
+                                          _cli_path(args.verdicts_dir) or REPO / VERDICTS_REL,
+                                          _cli_path(args.f3_verdicts_dir) or REPO / F3_VERDICTS_REL,
+                                          _cli_path(args.out) or REPO / VERDICTS_REL, env,
+                                          rewrites=_cli_path(args.rewrites, True) if args.rewrites is not None else None)
         else:
-            st, lines, _ = run_posting(Path(args.tuple), Path(args.sentences),
-                                       Path(args.flag_source or REPO / FLAG_SOURCE_REL),
-                                       Path(args.verdicts_dir or REPO / VERDICTS_REL),
-                                       Path(args.out or REPO / VERDICTS_REL), env,
-                                       rewrites=Path(args.rewrites) if args.rewrites is not None else None)
+            if args.f3_verdicts_dir is not None:
+                raise AnlRefusal("REFUSED: --f3-verdicts-dir is the v2 posting's input")
+            st, lines, _ = run_posting(_cli_path(args.tuple, True), _cli_path(args.sentences, True),
+                                       _cli_path(args.flag_source) or REPO / FLAG_SOURCE_REL,
+                                       _cli_path(args.verdicts_dir) or REPO / VERDICTS_REL,
+                                       _cli_path(args.out) or REPO / VERDICTS_REL, env,
+                                       rewrites=_cli_path(args.rewrites, True) if args.rewrites is not None else None)
     except AnlPostingFail as e:                  # PIN-26 / PIN-44: the FAIL's record on stdout, exit 5
         for ln in e.lines:
             print(ln, flush=True)

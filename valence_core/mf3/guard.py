@@ -43,7 +43,10 @@ PACKAGE_DIR = Path(__file__).resolve().parent
 M_PACKAGE_DIR = REPO / "valence_core" / "m"
 GATES_DIR = REPO / "data" / "mf3" / "gates"
 UNIT = "Q-F3"
-GID_CRITERION = m_guard.GID_CRITERION        # m:281's 2/2 criterion, which m:295 carries ("as above")
+# PIN (the seat's F-7, 2026-11-06): m:281's 2/2 criterion, which m:295 carries ("as above"), and per reasoning line
+# an identical (n_tok, cap_hit, stop_reason) triple.
+GID_CRITERION = (m_guard.GID_CRITERION + " and, per reasoning line, an identical (n_tok, cap_hit, stop_reason) "
+                 "triple (the seat's F-7)")
 STAGES = ("time", "id", "qual", "campaign")
 assert_insulated = m_guard.assert_insulated
 insulated_read = m_guard.insulated_read
@@ -412,7 +415,8 @@ def _selftest(chk) -> None:
     chk("mf3.guard: insulation, the read, label ids and the laptop checklist are valence_core.m.guard's",
         assert_insulated is m_guard.assert_insulated and insulated_read is m_guard.insulated_read
         and label_ids is m_guard.label_ids and preflight_laptop is m_guard.preflight_laptop
-        and GID_CRITERION == "2/2 byte-identical cached/uncached transcript pairs")
+        and GID_CRITERION == ("2/2 byte-identical cached/uncached transcript pairs and, per reasoning line, an "
+                              "identical (n_tok, cap_hit, stop_reason) triple (the seat's F-7)"))
     probs = import_problems()
     chk("mf3.guard: the licence's module set -- the static closure of mf3's production imports is exactly "
         "M_MODULES, no stages/gshape/gcal/runner/verify/testing reached, and a fresh interpreter loads none "

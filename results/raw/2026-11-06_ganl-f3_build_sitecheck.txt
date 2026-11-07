@@ -1,0 +1,105 @@
+# G-ANL-F3 build: the ten-suite site check (Code's raw, 2026-11-06)
+#
+# Run in Code's scratch worktree on a scratch commit of the final bytes over e7e070f (main's HEAD
+# at the run), so that the analyzer is HEAD's blob there, as the drivers' gate line requires; each
+# file byte-identical to the BUILD commit's (sha256 below). Each suite is gated on its summary line.
+# The summary, then each suite's summary line(s) verbatim; local paths scrubbed. closure_verify3
+# reads the untracked HANDOFF-2026-09-04-design.md, which was copied into the worktree for the run
+# (read only). The m_sessions FAIL is three cases: the design raw's N9 (one case's premise: LOCK-m-F0
+# binds the analyzer of record) and N12's two G-CAL-OLMo cases, which fail at HEAD without this build
+# (the last section: m_sessions' self-test at e7e070f with the analyzer of record, and Code's probe).
+#
+#   scripts/m_analyze.py  sha256 6ec3222b54c78ea5107a5ef89f9ffd3dd2fc649394f0dc6180280023c82b93d9
+#   valence_core/mf3/readrule.py  sha256 87eed2ae20ac913f4a2fe94f52cf542f8ccd06e82551b00acd69f2410c0c6671
+#   valence_core/mf3/stages.py  sha256 02ecdaa0209ca88b9d31d83ba33431fd73f9326e876e74eec4beeb50f73b5ecb
+#   valence_core/mf3/guard.py  sha256 396b5ca054b788b9d3a51153db3bfae594bb2c14fb00ba9fd305cb07efad9c5b
+#   data/m/gates/m_posting_sentences.placeholder-v2.json  sha256 cd3df57495588bfa473d583210f20b696570f537a02264ee4cb806580506d240
+#
+
+## Commands (each run in the worktree; $PY = <repo>/jlens-qwen36/.venv/bin/python)
+run regression '^  ([0-9]+)/\1 reproduced through valence_core' $PY -m valence_core.regression.analysis
+run format_recon '^  ([0-9]+)/\1 selftest checks pass' $PY scripts/format_recon.py --selftest
+run k1_stage1 '^  ([0-9]+)/\1 Stage 1 selftest checks pass' $PY scripts/k1_stage1.py --selftest
+run k1_analyze '^  ([0-9]+)/\1 analyzer battery checks pass' $PY scripts/k1_analyze.py --selftest
+run e2d_d2_analyze '^  ([0-9]+)/\1 branches verified' $PY scripts/e2d_d2_analyze.py --selftest
+run recon_echo '^  ([0-9]+)/\1 selftest checks pass' $PY scripts/recon_echo.py --selftest
+run closure_verify3 '^  ([0-9]+)/\1 third-pass checks pass' $PY scripts/e2d_closure_verify3.py
+run m_sessions '^  ([0-9]+)/\1 m selftest checks pass$' $PY scripts/m_sessions.py --selftest
+run m_analyze '^  ([0-9]+)/\1 m_analyze battery checks pass' $PY scripts/m_analyze.py --selftest
+run mf3_sessions '^  ([0-9]+)/\1 mf3 selftest checks pass$' $PY scripts/mf3_sessions.py --selftest
+
+## Summary
+
+PASS regression rc=0 ::   154/154 reproduced through valence_core
+PASS format_recon rc=0 ::   67/67 selftest checks pass
+PASS k1_stage1 rc=0 ::   21/21 Stage 1 selftest checks pass
+PASS k1_analyze rc=0 ::   20/20 analyzer battery checks pass (13s)
+PASS e2d_d2_analyze rc=0 ::   46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+PASS recon_echo rc=0 ::   18/18 selftest checks pass
+PASS closure_verify3 rc=0 ::   24/24 third-pass checks pass
+FAIL m_sessions rc=1
+PASS m_analyze rc=0 ::   525/525 m_analyze battery checks pass
+PASS mf3_sessions rc=0 ::   136/136 mf3 selftest checks pass
+gates failed: 1
+
+
+
+## closure_verify3
+  24/24 third-pass checks pass
+
+## e2d_d2_analyze
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+
+## format_recon
+  67/67 selftest checks pass
+
+## k1_analyze
+  20/20 analyzer battery checks pass (13s)
+
+## k1_stage1
+  21/21 Stage 1 selftest checks pass
+
+## m_analyze
+  525/525 m_analyze battery checks pass
+
+## m_sessions
+  [FAIL] gcal-olmo: a non-stub precheck without the pod id is refused (POD ID ABSENT, no laptop checklist on OLMo); a non-stub startup refuses an adapter whose weights path is not the manifest entry's, or has none
+  [PASS] m_sessions: gport (G-PORT, m:275) on a temp dir -- all 64 archived CORR rows of data/f/sessions.jsonl (sha-pinned; the smoke file outside) replay: INVOCATION first, one 'gport s=<s> ok' per row in f1 order, last line '  G-PORT 64/64 archived CORR transcripts reproduced'; the artifact is exactly {criterion, unit, n_rows, n_ok, mismatches, f1_sessions_sha16, package_sha256, verdict PASS}; exit 0 (0, [' G-PORT 64/64 archived CORR transcripts reproduced'], {})
+  [PASS] m_sessions: gport STOPs (exit 4) on a tampered archived row -- 'gport s=5 MISMATCH: <problems>', 63/64, the artifact's mismatches name s 5 and verdict STOP -- and on a row list one CORR row short (63/63 reproduced is not 64/64); a re-run over an identical artifact changes nothing (exit 0) (4, ['gport s=5 MISMATCH: harness bytes differ at offset 0'], 4, 0)
+  [FAIL] m_sessions: time --unit Q-F0 on the Qwen path (main, no factory) refuses with exit 2 before the loader and the DRIVER and SNAPSHOT lines, no file under the test root created, removed or rewritten, naming its problem, in 31 cases: a missing flag; a proposal outside the repository or not committed; a symlink loop (proposal, lock); a lock other than LOCK-m-F0.md; a proposal the lock does not name in full (not at all; by its sha16 only); a committed file the lock names that is not a proposal (the banner check); a malformed hash; licence (d), (e) and (f); the renders; m:267's checklist; an ENDED checkpoint with and without --resume (STAGE ENDED, never CHECKPOINT EXISTS's resume advice); one on disk without --resume; a looping link at the checkpoint path; time with a top-level --out, --selftest or --build-schedules; a tampered schedule file; a run-time known answer (on the named proposal); the gate line (planted) and its analyzer and CLAUDE.md; the driver not committed (stubbed, and the real driver_problems over a planted git answer); the snapshot check (stubbed, and the real qwen_snapshot without HF_HUB_OFFLINE) {'a lock-named non-proposal': (2, 'pts/m_analyze.py: its sha256 6ec3222b54c78ea5... is not named in full in LOCK-m-F0.md\'s committed text (lock §1 binds the...
+  [FAIL] m_sessions-olmo: gcal completability --unit OLMo-sft on the stub writes G-CAL_completability_olmo-sft.json (a FAIL on an all-miss script: exit 4, the NOT-RUN line); on the box path without the pod id or the weights it is refused before any load (exit 2) naming both (4, 'RUN with reason "dose not completable" (m:176, m:302; §5); artifact <tmp>/m_selftest_7j9jr9ly/gcal_ol...
+  843/846 m selftest checks pass
+
+## mf3_sessions
+  136/136 mf3 selftest checks pass
+
+## recon_echo
+  18/18 selftest checks pass
+
+## regression
+  154/154 reproduced through valence_core
+
+## mf3 module self-tests
+banner: 7/7 (0.1s)
+bars: 6/6 (0.4s)
+gshape: 6/6 (22.0s)
+guard: 11/11 (0.5s)
+keys: 8/8 (0.0s)
+lines: 10/10 (0.0s)
+readrule: 9/9 (0.3s)
+resume: 5/5 (0.0s)
+runner: 10/10 (0.0s)
+scaffold: 9/9 (0.0s)
+schedule: 15/15 (0.7s)
+stages: 23/23 (10.1s)
+verify: 5/5 (0.0s)
+TOTAL 124/124
+
+## m_sessions at HEAD without the build (a second scratch worktree at e7e070f, the analyzer of record; command <repo>/jlens-qwen36/.venv/bin/python scripts/m_sessions.py --selftest)
+  [FAIL] gcal-olmo: a non-stub precheck without the pod id is refused (POD ID ABSENT, no laptop checklist on OLMo); a non-stub startup refuses an adapter whose weights path is not the manifest entry's, or has none
+  [FAIL] m_sessions-olmo: gcal completability --unit OLMo-sft on the stub writes G-CAL_completability_olmo-sft.json (a FAIL on an all-miss script: exit 4, the NOT-RUN line); on the box path without the pod id or the weights it is refused before any load (exit 2) naming both (4, 'RUN with reason "dose not completable" (m:176, m:302; §5); artifact <tmp>/m_selftest_jkres3o6/gcal_ol...
+  844/846 m selftest checks pass
+
+## Code's probe: gcal.precheck on the canonical paths with the pod id unset (OLMo-sft, as gcal's case calls it; OLMo-instruct, the unit the driver case runs)
+OLMo-sft precheck: GcalRefusal :: G-CAL REFUSED: CHECKPOINT EXISTS at <tmp>/head-wt/data/m/ckpt/G-CAL_olmo-sft.json; pass --resume to continue it (skip-only) or move it aside; never overwritten
+OLMo-instruct precheck: GcalRefusal :: G-CAL REFUSED: CHECKPOINT EXISTS at <tmp>/head-wt/data/m/ckpt/G-CAL_olmo-instruct.json; pass --resume to continue it (skip-only) or move it aside; never overwritten

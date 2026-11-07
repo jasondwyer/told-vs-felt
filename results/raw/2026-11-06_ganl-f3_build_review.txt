@@ -1,0 +1,192 @@
+# G-ANL-F3 build: blind code review (Code's raw, 2026-11-06)
+
+*A blind review agent (fresh context, read-only) reviewed the uncommitted build in Code's scratch worktree (detached at `273ca8f`): `scripts/m_analyze.py`, `valence_core/mf3/{readrule,stages,guard}.py` and the v2 placeholder file, against the seat's answers, the pre-build block's §3, PROPOSAL-m v1.11 (m:291, m:306–326, m:336–349) and ADDENDUM-m1 §2.5. Two additions made while it ran were sent to it before it finished (Q-F3's beside block; the A2 REVERSE and A3 hit sentence clauses). Its report follows verbatim, local paths scrubbed (`<tmp>` = Code's session scratch, `<repo>` = the repository); Code's dispositions follow it, each item re-checked at source.*
+
+*The same agent then reviewed the fixes (§3, verbatim; Code's dispositions in §4). The last code delta, the fixes for the follow-up's NOTEs, was reviewed by the values-check's third pass (§5). The scratch commits the reports name (69ff08d, 5f9a696) are detached commits in Code's scratch worktree and are not in the repository's history.*
+
+## 1. The report (verbatim)
+
+Blind review of the G-ANL-F3 build. I found no MAJOR defect. There are five MINOR findings: four are missing or weak guards, one is in counter (c)'s tokenizer. There are five NOTEs.
+
+I reviewed the final bytes, the analyzer with sha256 16b56512…, which the coordinator has since put in scratch commit 69ff08d. That review includes both mid-review additions: `f3_beside_blocks` and the `f3_sentence` change.
+- I re-ran the battery on those bytes: 525/525, exit 0.
+- mf3's module self-tests: 118/118 (readrule 9, guard 11, stages 23, the other nine modules 75).
+- I wrote nothing in the worktree. The untracked `HANDOFF-2026-09-04-design.md` in it, which appeared at 22:11, is not from my runs.
+
+## Findings
+
+**1. MINOR, close to MAJOR (`run_verdicts_f3`, the decision-(10′) check in V1; PIN-V2-12, N6).** The guard is weaker than the rule it encodes.
+- It only checks that `POSTING-v1_outputs.of-record.json` exists (`is_file()`). `posting --posting v1` writes that file when it enumerates the table of record. That is the start of the v1 posting: before the PI's rewrites, and before C7's pass on the posted text.
+- Only a PASS on the posted text writes `POSTING-v1_outputs.posted.json`; a FAIL writes nothing.
+- Failure case: Code runs the of-record posting. While the PI is rewriting, `verdicts --unit Q-F3` passes V1 and writes Q-F3_VERDICTS.json. A Q-F3 outcome then exists before v1 posts, which A-m1:40 forbids.
+- The check also accepts `{}` (the battery's own stub), an uncommitted file, or any file at that name.
+- Fix: require `POSTING-v1_outputs.posted.json`, committed at HEAD (`env.committed`), with schema POSTING_OUT_SCHEMA, posting "v1", table_kind "posted" and bar.verdict "PASS". Reword PIN-V2-12 and N6 to match.
+
+**2. MINOR (`run_posting_v2`; PIN-V2-4 and PIN-V2-21): nothing binds the v2 table of record. There is no v2 equivalent of PIN-40.**
+- At v1, LOCK-m-F0 hashes the table, Q-F0's VERDICTS records it, and `run_posting` refuses any other of-record table.
+- At v2, any committed `m-posting-sentences-v2` table of kind of-record is accepted, and Q-F3's VERDICTS records no table.
+- Failure case: the v2 table is rebuilt or reclassified after Q-F3_VERDICTS.json exists, with the outcome known, and the posting accepts it silently.
+- Fix: have `verdicts --unit Q-F3` take `--sentences` (the committed v2 table) and record its sha256 and its preprint's sha256. That also forces the table to exist before the outcome is computed. Then `run_posting_v2` refuses an of-record table that differs. Alternatively, route the gap to the seat (Q7).
+
+**3. MINOR (`_f3_adj_reads` and the blind draw in `f3_secondaries`; PIN-V2-14): the adjudication-reads entries have no stage.**
+- The schema is `[[template, s], ...]`. The gate stages number sessions from s = 0 per template, as the campaign does.
+- Failure case: the seat adjudicates a G-F3 bar and reads G-F3's A3 session s=3. Listing ["A3", 3] removes campaign A3 s=3, which was never read, from the draw and changes the draw. The schema cannot express the gate session.
+- Fix: add a `stage` field and let only "campaign" entries exclude, or declare the file campaign-only and refuse other stages.
+
+**4. MINOR (`run_not_run` with `--v2-closure`): the "no session" condition is not checked.** m:324 and the seat's A2 send a checkpoint with sessions to "PI-stopped and analyzed as obtained".
+- Failure case: a checkpoint whose campaign has recorded sessions is closed with a `pending-closed-at-v2` record. `crosscheck_coordinate(v2=True)` then admits that NOT-RUN at v2. The command never reads the campaign checkpoint.
+- Fix: refuse when `data/m/ckpt/{U}_campaign.json` (or a declared `--campaign`) records one session or more. That reads the session count only, not any pick.
+
+**5. MINOR (counter (c), `_f3_tokens`; PIN-V2-13): deleting punctuation joins tokens.** These lines are lost to the counter in ways a reader of the frozen scorer would not expect. I ran each one:
+- "Prism—clean; slate—corrupted" is not scored at all: the tokens become "prismclean" and "slatecorrupted".
+- "prism/slate: clean" is mention-only: the token is "prismslate".
+- "prism's text is clean" is mention-only: the token is "prisms".
+- m:312's "punctuation stripped, whitespace-split" does not require deletion over replacing with a space.
+- Fix: replace each P* character with a space before splitting. Add these cases to F3C-SCORER and declare the choice in PIN-V2-13.
+- An observation on m:312's rule, not the code: "prism is clean, slate is corrupted" scores ambiguous, because slate's nearest polarity term is "clean" (one token back). That is the most natural attribution sentence. Worth raising with the seat before LOCK-m-F3 v0.1 freezes the lexicon.
+
+**6. NOTE: the oracle is only partly independent.**
+- `_bt_oracle_v2` recodes the branching itself: A3*, the ceiling, withholding, the v1-note, Steps 6 and 7, §8.1/§8.2 and the enumeration.
+- But it copies the implementation's literal strings and readings: PIN-V2-3's labels, one "[stages]" clause, Step 6's power slot written "[…, f2's]" rather than m:342's "— f2's if f2 ran, else the screen's", and §8.2's cell text. So wording drift from m:342, or a misreading of m:340–343 shared by both, would pass.
+- The hand-derived constants are all correct. I re-derived:
+  - all 26 rows of `PLACEHOLDER_FIRES_V2`;
+  - `BTREAT_V2` (main: 100,250 / 10,000 / 30,000 / 160,000; fallback-1: 79,000);
+  - A3* tallies: 30,000 ×3 / 10,000 / 40,000 ×2 / 120,000 / 625;
+  - ceiling: 375 / 21,250 / 279,000;
+  - withholding: 40,625 / 240,000 / 20,000;
+  - v1-note: 40,625 / 40,000 / 40,000 / 60,000 / 100,000 / 20,000;
+  - L1 75,000; §8.2 closed 1,875; Step 6 "none" 225,625.
+- Suggestion: check Step 6's fixed phrases against m:342, the way `constants_by_line` does for v1.
+
+**7. NOTE: stale texts in the register and the artifact that a reader of G-ANL-F3.json would trust.**
+- `PINS["PIN-29"]` still says the hook refuses everything under data/m/{ckpt,reports,verdicts} and that the snapshot covers data/m only. The exception and the mf3 roots appear only in SEAT_RULED_F3 A1 and the code comments.
+- In the artifact, `pending_substates` omits "unlocked-before-D_O′", and `gate_stop_stages` omits Q-F3.
+- The COUNTERS declarations still say reasoning_line_defect is "not tabulated" and that the pre-pick numerator is `exclusion.phase == 'forced'`.
+- `pending_state`'s error lists sub-states without the D_O′ name, so a declaration typed with an ASCII `'` gets a confusing message.
+- `pending_era` treats a declaration dated 2026-11-05 as D_O′-era, although A-m1 was committed at 21:10 that day. No such declaration exists.
+
+**8. NOTE: CLI loose ends.**
+- `ganl --out` is still resolved against the working directory, not the repository root, contrary to PIN-V2-8's "every path argument".
+- `verdicts` for Q-F0 or OLMo silently ignores `--adjudication-reads` and `--v1-dir`. For Q-F3 it silently ignores `--olmo-states`, `--sentences` and `--flag-source`.
+- The argparse description and the posting help still say "G-ANL-F0" and "v1 outputs".
+
+**9. NOTE: the binding and artifact checks are slightly loose.**
+- `posting --posting v2` runs on `production_env()`, so its output records the base closure (a3bc7bb9…) while LOCK-m-F3 will name the Q-F3 closure (d19f336d…). That is accurate for what the command imports, but say so in PIN-V2-21.
+- `ganl_artifact_problems` recomputes the hash of the base closure but never of `g_anl_f3.f3_closure`.
+- The F3V-DETERMINISM check's text says "1,038,960 evaluations", but its sha covers only the 601,250 non-PENDING ones.
+
+**10. NOTE: N1 confirmed.**
+- At HEAD, `table_problems(m_posting_sentences.json)` returns "the preprint's sha256 / bytes / lines differ from the table's". So `posting --posting v1` over the table of record refuses on either analyzer.
+- The regression passes only by serving the preprint from 1523cce's blob. That blob is the 2026-10-19 input, so it fits A-m1's "committed inputs of 2026-10-19".
+- Because of finding 1, this also blocks the Q-F3 VERDICTS path until the seat or the PI resolves it.
+
+## Checked and correct
+- **`_campaign_structure`** is behaviour-identical to 273ca8f's inline V2 block. The diff shows only parameter substitutions and the return. The rest of `run_verdicts` after V2 is byte-identical. Before V2, it differs only by the Q-F3 dispatch and `_clock_refusal`.
+- **v1 unchanged:**
+  - The recomputed 1,080-tuple `outputs_sha256` is 83df98b1…, equal to the value recorded in G-ANL-F0.json.
+  - The base closure is still a3bc7bb9; the package is 60199b36; the Q-F3 closure is d19f336d, adding seven mf3 modules.
+- **v1-path behaviour changes are all licensed:** A-m1 §2.5 (1) and (2) (the Clock refusal, the path reading, the PENDING era, `date_is_clock_of_record` now read against D_O′), plus N2's narrowing of `QF3_WORDS["A3*"]` to m:340's seven values.
+- **Outcomes and v2 outputs:** `a3_outcome`, `a2_outcome` and `f3_arm_outcome` match m:326. `a3_star`, `withholding` and `v1_note` match m:340. `ceiling_v2` matches m:341. `step6_text` matches m:342. §8.1, §8.2 and Step 7 match m:343. `enumeration_v2`'s (b) rewrite clause matches m:349. The PendingAtV2 text and the 218,855 / 300,625 split match A2.
+- **Power:** recomputed .916, .878, .862 and .927.
+- **Regression (A1):** the identity binding and LOCK-m-F0.md:147–149 check out, and outputs are compared byte for byte. The PIN-29 exception admits by path and blob sha only, and refuses any other path under the roots before reading it. The mf3 roots are refused, and the snapshot covers data/mf3.
+- **The CLI-path quirk is fixed:** a relative `--flag-source` now reads TRUE. The Clock dates check out on m:16, A-m1:28 and A-m1:40, and the addendum's sha matches the pin.
+- **F-6:** at G-TIME-F3 no contrast per-line list appears in the strip, the report or the reads; the stage line prints "k of <= 36" with no realised total. Sham sessions keep each line's cap_hit in the reads.
+- **F-7:** `identical` requires both the transcript and the per-line triples, in both the stage loop and `gid_pairs`. The criterion string is updated and the cache licence checks it.
+- **Blinding:** no pick reaches stdout. The draw file carries the line and the sorted roster pair only.
+- **The two late changes:** `f3_beside_blocks` matches v1's `beside_blocks` except for the deliberate F3 changes. The new `f3_sentence` clauses agree with m:340, m:342 and m:345.
+- **Q-F3 reader helpers:** `f3_valid_through`, `f3_counts`, the tabulation's keys against its denominators, the per-property table, `_f3_guard_from` against mf3's look order, `f3_unit_state` and `_f3_check_record` against mf3's domain rule all check out.
+
+My probe scripts are in <tmp>/review (`probe1.py`, `probe2.py`, the selftest outputs).
+
+## 2. Code's dispositions
+
+Each finding was re-checked at source before it was acted on. The fixes are in the BUILD commit's bytes. After them, the battery ran again on the final bytes (the selftest raw), and the reviewer was asked to re-check the delta.
+
+| Finding | Re-checked at source | Disposition |
+|---|---|---|
+| 1 (MINOR) | `run_verdicts_f3` checked only `POSTING-v1_outputs.of-record.json`'s presence. `run_posting` writes the of-record output before the PI's rewrites, and writes `.posted.json` only on a PASS (C7's bar). A-m1:40 is "runs only after the `POSTING v1` entry exists". | Applied. V1 now requires `POSTING-v1_outputs.posted.json` committed at HEAD (`env.committed`), with schema `m-posting-v1-outputs-v1`, posting v1, table kind posted and bar verdict PASS. PIN-V2-12 and N6 are reworded. The battery refuses the absent case, the of-record output alone, and a FAIL. |
+| 2 (MINOR) | At v1, PIN-40 binds the table of record through LOCK-m-F0 and Q-F0's VERDICTS. At v2, Q7 ("built at the Q-F3 VERDICTS session against the posted v1") left the binding unbuilt. | Applied (PIN-V2-24). `verdicts --unit Q-F3` requires `--sentences`: a committed, accepted v2 table of record, recorded in its inputs. So the table exists before the outcome is computed. `run_posting_v2` refuses an of-record table other than the one Q-F3's VERDICTS (or its no-first-read NOT-RUN) read. The battery refuses a missing table and a placeholder, and in the posting a same-content table with other bytes. |
+| 3 (MINOR) | m:312 (c) excludes "sessions read during any adjudication" from a draw of campaign A3 sessions. The gate stages number their sessions from 0, as the campaign does. | Applied. The entries are `[stage, template, s]`, and only campaign entries exclude (PIN-V2-14). The battery checks that a G-F3 entry does not touch the campaign's A3. |
+| 4 (MINOR) | m:324: "PI-stopped and analyzed as obtained if it has sessions, else NOT-RUN". `--v2-closure` never read the campaign. | Applied. `--v2-closure` refuses a checkpoint whose campaign records a session. `--campaign` names the checkpoint, by default `data/m/ckpt/{U}_campaign.json`, and it is read for its session count alone. Absent or empty, the closure is accepted. `--campaign` without the flag is refused (PIN-V2-20). |
+| 5 (MINOR) | Reproduced: "Prism—clean; slate—corrupted" gave tokens prismclean and slatecorrupted (not scored); "prism/slate: clean" and "prism's text is clean" were mention-only. | Applied. Each Unicode P* character is replaced by a space (PIN-V2-13), and the reviewer's four cases are in F3C-SCORER. The observation on m:312's nearest-term rule ("prism is clean, slate is corrupted" is ambiguous) is the design raw's N10, a FLAG for the seat; the rule is m:312's and stands. |
+| 6 (NOTE) | The oracle's Step 6 strings were the implementation's. The FAIL text had also dropped m:342's "scoped". | Applied. Step 6 now renders m:342's own texts (`S6_RETIRED`, `S6_CLAUSES`, `S6_FAIL`, `S6_OPEN`, `S6_BESIDE`), and `constants_by_line` checks each on m:342. The oracle reads m:342 from the proposal at run time (`_bt_m342`). FAIL now reads "the rival stated unsettled, scoped at this scaffolding and stimulus strength", REVERSE reads "cell A2 named open (an instruction-inversion finding; pre-registration)", and the NULL clause's power slot takes m:342's dash ("[the power figure of record for the realised n — the screen's]", or "— f2's") (PIN-V2-6). |
+| 7 (NOTE) | PIN-29's register text, the artifact's vocabularies, COUNTERS' Q-F0 declarations, `pending_state`'s message and the era boundary. | Applied, but for two items. PIN-29's text now names the exception and the mf3 roots. The g_anl_f3 block adds `pending_unlocked_by_era`, `gate_stop_stages_q_f3` and `counters_q_f3`. `pending_state`'s message names both eras' unlocked sub-states. COUNTERS stays Q-F0's declaration, unchanged, with Q-F3's in the block. The era boundary is kept as declared (PIN-V2-10: the commit day counts as D_O′'s); disclosed. |
+| 8 (NOTE) | `ganl --out` resolved against the working directory; each reader ignored the other's inputs; the help texts. | Applied. ganl's `--out` goes through `_cli_path` (an empty `--out` is refused as before). Q-F3 refuses `--olmo-states` and `--flag-source`, and a Q-F0 or OLMo run refuses `--adjudication-reads` and `--v1-dir`. The help texts name G-ANL-F3 and v2. |
+| 9 (NOTE) | The v2 posting's binding, the manifest check and F3V-DETERMINISM's text. | Applied. PIN-V2-21 says the binding records the base closure. `ganl_artifact_problems` recomputes the Q-F3 closure's sha256. The check's text counts the 601,250 evaluations its sha covers. |
+| 10 (NOTE) | N1 reproduced at HEAD. | No change. With finding 1's guard, Q-F3's VERDICTS path also waits on N1 (N6). |
+
+## 3. The follow-up review of the fixes (verbatim)
+
+All five fixes do what the findings asked. I found no regression in the v1 path or in the v1 posting, and no refusal that fires where it should not. I have four NOTEs and no MAJOR or MINOR issues.
+
+I reviewed `git diff 69ff08d 5f9a696 -- scripts/m_analyze.py` on bytes ec7ea234…. My own re-run of the battery on those bytes gives 525/525, exit 0, which matches your selftest_g.txt. The probe scripts wrote only to the scratchpad; the worktree is unchanged apart from your untracked HANDOFF file.
+
+## Findings on the delta
+
+**1. NOTE (`main` for `ganl --out`): a quoted tilde path now lands inside the repo.**
+- `main` now passes `--out` through `_cli_path`, which never expands `~`. So `run_ganl`'s own `expanduser()` no longer has anything to expand.
+- Failure case: `ganl --out "~/x"` (quoted, or passed in argv by a script) now resolves to `<repo>/~/x` and creates a directory literally named `~` in the repo. Before the change it went to `$HOME/x`.
+- Fix: call `Path(a).expanduser()` inside `_cli_path` before the absolute test, or leave a `~`-leading `--out` unresolved.
+
+**2. NOTE (`run_not_run` with `--v2-closure`): what is left after the fix.**
+- An absent `data/m/ckpt/{U}_campaign.json` is still read as "no session". That covers a checkpoint whose campaign file is not in this tree yet (still on the box) or was moved aside as `*.json.podchange-*` after a box change.
+- `--campaign` is not checked to be this unit's checkpoint (`identity.unit`).
+- A JSON object with no `sessions` list is refused with the "records sessions" message, which is the wrong reason.
+- Suggestion: require the checkpoint to be present and committed, or a declared attestation when it is absent. Check `identity.unit`, and word the malformed case separately. None of this is a regression.
+
+**3. NOTE (battery, F3R-READER-REFUSALS): the check asserts only that each case was refused, not why.**
+- Each case changes one input from the passing default, so today the refusal can be traced to that input.
+- Asserting the message would keep it that way, as F3P-REFUSALS already does with "PIN-V2-24" and "closed there first".
+
+**4. NOTE (pre-existing, but now load-bearing): `.gitignore` ignores `data/mf3/verdicts/*.json`.** The rule is `/data/mf3/*` with no admit line for `verdicts/`, which `git check-ignore` confirms.
+- `posting --posting v2` now reads `Q-F3_VERDICTS.json` and the no-first-read `Q-F3_NOT-RUN.json` for the table binding.
+- The commit that first writes them will need an admit block, as PIN-25's practice has it.
+
+## Each fix, checked
+- **Finding 1 (the v1-posting precondition).** V1 now requires `POSTING-v1_outputs.posted.json`, committed at HEAD (`env.committed`), with schema `POSTING_OUT_SCHEMA`, posting "v1", table_kind "posted" and bar.verdict "PASS".
+  - These are exactly the fields `run_posting` writes, and it writes that file only on a PASS.
+  - The battery covers three cases: the file absent, the of-record output alone, and a FAIL.
+- **Finding 2 (the v2 table of record).** `--sentences` is required and must be committed. It must pass `table_problems(posting="v2")` and be of kind "of-record". Its sha is recorded in `inputs`, which both the VERDICTS and the no-first-read NOT-RUN outputs carry through `common`. All of this happens in V1, before any byte that carries a pick.
+  - `run_posting_v2` mirrors PIN-40's loop: a VERDICTS output must match, a no-first-read NOT-RUN must match if it records a table, and a Clock NOT-RUN is skipped.
+  - p7 (the same table, different bytes) is refused.
+- **Finding 3 (adjudication-reads).** Entries are now `[stage, template, s]`, with stage in mf3's four stages. Only campaign A3 entries exclude a session from the draw, and the draw records only those. The G-F3 s=9 case leaves the draw alone.
+- **Finding 4 (`--v2-closure`).** A campaign that records one session or more is refused, citing analyzed-as-obtained. `--campaign` without `--v2-closure` is refused. A v1 `not-run` with neither flag is unaffected.
+- **Finding 5 (tokenizer).** Punctuation now becomes a space. I probed:
+  - "Prism—clean; slate—corrupted" is scored, and comes out ambiguous because of the distance tie.
+  - "prism's text is clean" and "prism (clean) vs slate (corrupted)" are attribution.
+  - The earlier F3C-SCORER cases are unchanged.
+- **NOTE 6 (Step 6 and the oracle).** Every `S6_*` text appears verbatim on m:342 (STR-CONSTANTS passes). The oracle now extracts m:342 from the proposal and agrees with the implementation on all 300,625 tuples. The rendered texts are correct:
+  - FAIL now includes "scoped".
+  - REVERSE reads "cell A2 named open (an instruction-inversion finding; pre-registration)".
+  - The NULL power slot reads "[… — f2's]".
+- **NOTEs 7–9.** All applied:
+  - PIN-29's register text now carries the exception and the mf3 roots.
+  - `pending_state`'s message now lists the D_O′ name.
+  - The g_anl_f3 block gained `counters_q_f3`, `gate_stop_stages_q_f3` and `pending_unlocked_by_era`, and `GANL_F3_BLOCK_KEYS` matches.
+  - The Q-F3 closure's hash is now recomputed in `ganl_artifact_problems`.
+  - F3V-DETERMINISM now says 601,250 evaluations.
+  - PIN-V2-21 says the binding records the base closure.
+  - The v1 reader refuses `--adjudication-reads` and `--v1-dir`. The Q-F3 reader refuses `--olmo-states` and `--flag-source`.
+
+## No v1 regression
+- The A1 regression is still byte-identical, and v1-unchanged is still 2,160/2,160.
+- I recomputed on these bytes: the 1,080-tuple outputs_sha256 is still 83df98b1…, equal to G-ANL-F0.json's. The base closure is still a3bc7bb9 and the Q-F3 closure still d19f336d.
+- `run_posting` (v1) is untouched.
+- The new v1 refusals fire only when a Q-F3-only flag is given (`--adjudication-reads`, `--v1-dir`, or `--campaign` without `--v2-closure`). The CLI passes None when a flag is absent or empty.
+
+The probe script is <tmp>/review/probe3.py, and my battery output is <tmp>/review/selftest_out4.txt.
+
+## 4. Code's dispositions of the follow-up
+
+| NOTE | Re-checked at source | Disposition |
+|---|---|---|
+| 1 | `_cli_path` built `REPO / Path(a)` without `expanduser`; `run_ganl` expanded only an unresolved `--out`. | Applied: `_cli_path` expands `~` before the absolute test, for every CLI path. |
+| 2 | An absent campaign file was read as no session; `--campaign`'s identity was unchecked; one message covered a malformed file. | Applied, in two steps. Here: `--campaign` is required with `--v2-closure`, as the unit's campaign checkpoint (identity unit and stage campaign checked, a sessions list, refused if it records a session) or `none`, a declaration recorded in the output's `v2_closure` block; a malformed or another unit's file is refused with one identity message, apart from the sessions refusal, and an absent path as unreadable (PIN-V2-20). The suggestion's other half was completed on the values-check's third pass (its NOTE A1): the checkpoint must be committed at HEAD as read, and `none` is refused while `data/m/ckpt/{U}_campaign.json` exists in the tree or at HEAD. The battery's F3N-V2-CLOSURE covers each case. |
+| 3 | F3R-READER-REFUSALS asserted refusal only. | Applied: each case asserts a substring of its own refusal message. |
+| 4 | `git check-ignore -v`: `/data/mf3/*` (.gitignore:273) matches `data/mf3/verdicts/Q-F3_VERDICTS.json` and `Q-F3_NOT-RUN.json`; `!/data/m/gates/*.json` (:235) admits the v2 placeholder and G-ANL-F3.json. | Recorded as the design raw's N11; no change here (the admit belongs to the commit that first writes Q-F3's outputs). |
+
+The battery re-ran on the final bytes after these changes (the selftest raw).
+
+## 5. The last code delta
+
+The follow-up review's fixes (§4) changed the analyzer once more after the follow-up review had read it. That delta was reviewed by the values-check's third pass, together with the texts written after it. Its report (part (A)) and Code's dispositions are verbatim in `results/raw/2026-11-06_ganl-f3_build_valuescheck.md` §3. Its four NOTEs were fixed, and the same agent checked the fixes (§4 there).

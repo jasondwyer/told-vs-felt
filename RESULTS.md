@@ -21,6 +21,114 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-ANL-F3 — BUILD (m:291; ADDENDUM-m1 §2.5; the seat's answers of 2026-11-06, A1–A5 and B, routed by
+  the PI): `scripts/m_analyze.py` extended in place, with B's F-6 and F-7 applied to `valence_core/mf3`, under order
+  (a).** The analyzer's battery passes 525/525 checks and reaches all 538 coverage ids. A1's regression holds:
+  the extended analyzer, on m's moved package, recomputes `Q-F0_VERDICTS.json` and `Q-F0_secondary.json` from the
+  committed inputs of 2026-10-19, byte for byte, with the identity fields bound to the record's. All 519,480 v2
+  tuples are asserted. Five FLAGs go to the seat (N1, N9, N10, N12 and N13 below); the PI ruled to commit with
+  N9 recorded as a FLAG. No `LOCK-m-OLMo-*.md` existed at the commit.
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 04:45:07 UTC 2026**.)
+  - **The routing**: the coordinating session's relay of 2026-11-06, after the STOP's close (`54bbfe5`): "G-ANL-F3,
+    to A1–A5: Build it in scratch, per C1. Apply B as written." Order (a) with the second-STOP flip (C1). Code's
+    reading: no second STOP; N1, N9, N10, N12 and N13 go to the seat as FLAGs, and on N9 the PI ruled "Commit
+    with flag".
+  - **What it adds** (Code's build design and PIN register, with the function-level map:
+    [`_ganl-f3_build_design`](results/raw/2026-11-06_ganl-f3_build_design.md)):
+    - A1: the regression as a battery case, with the identity of record (ed8e886's blob, `655e0f7f…`; LOCK-m-F0's
+      package and closure). PIN-29's exception admits the seven released Q-F0 files by blob. `data/mf3/ckpt`,
+      `reports` and `verdicts` are refused roots. A battery check confirms the 1,080 v1 tuples' outputs are
+      unchanged under both flag values, value for value, against the analyzer of record executed in-process.
+    - A2: a v2 tuple with a PENDING checkpoint asserts only the refusal naming m:324's closure (218,855 tuples per
+      flag value). The other 300,625 tuples assert the full set against an independent oracle and hand-derived
+      tallies. The closure runs upstream: a PI stop through the campaign driver for a checkpoint with sessions,
+      `not-run --v2-closure --campaign <its committed checkpoint | none>` for one whose campaign recorded none
+      (`none` refused while the unit's campaign checkpoint exists).
+    - A3: `verdicts --unit Q-F3` over mf3's checkpoints (outputs in `data/mf3/verdicts`; counter (c)'s scorer and
+      lexicons; the blind-read draw, seed 20261106; run only after the v1 posting's posted re-run PASSed, and with
+      the v2 table of record as a bound input), `posting --posting v2`, and the v2 placeholder table
+      (`data/m/gates/m_posting_sentences.placeholder-v2.json`).
+    - A4: the CLI-path reading; D_O′ and D2 verified at every run against ADDENDUM-m1 (pinned by sha256), D1 and
+      D2 against m:16 (the proposal pinned by sha256); N8's era rule for PENDING. A5: ten of Code's eleven readings
+      declared among PIN-V2-1 to PIN-V2-24; the eleventh, round 2's rule, is a procedure, done as N4.
+    - B: F-6 (G-TIME-F3's contrast sessions report no per-line list; "k of <= 36") and F-7 (G-ID-F3 also needs an
+      identical (n_tok, cap_hit, stop_reason) triple per reasoning line).
+  - **Hashes** (the committed bytes):
+    - analyzer `6ec3222b…93d9`;
+    - m's package `60199b36…feec` (unchanged);
+    - the base closure `a3bc7bb9…b22b` (unchanged, so an OLMo lock names no mf3 byte);
+    - the Q-F3 closure `d19f336d…f039`;
+    - mf3's package `f30ad505…6310`, moved by B's edits from `44110d15…3842`.
+  - **FLAG, not adjudicated (N1):** at HEAD, `PREPRINT-v1_0-draft.md` carries the note release's status banner
+    (`32aefcc`), so the table of record's preprint check refuses at HEAD. The regression serves the preprint of
+    record by its committed blob (`1523cce`, `45b67246…`, the sha256 the table and LOCK-m-F0 name), a dated note.
+    But the v1 `posting` command over the table of record, on either analyzer, refuses at HEAD. With the three OLMo
+    checkpoints NOT-RUN "dose not completable" on the record at `6ce8b9a` (escalated to the seat; which NOT-RUN
+    records and posting text follow is the seat's and the PI's), the v1 posting (A-m1 §4 step 6) is the next step
+    after the OLMo track once those records exist, and this flag blocks it. No analyzer change is made for it;
+    the fix is the seat's or the PI's call.
+  - **FLAG, not adjudicated (N9): with this analyzer, `scripts/m_sessions.py --selftest` fails one case that it
+    passes without it.**
+    - The counts: 845/846 on the build's first base (`273ca8f`). On the commit's base (`e7e070f`), 843/846 with
+      this analyzer and 844/846 without it; N12's two cases fail either way.
+    - The failing check is "time --unit Q-F0 on the Qwen path (main, no factory) refuses with exit 2 … in 31
+      cases"; the case is "a lock-named non-proposal". It gives the Q-F0 driver `scripts/m_analyze.py` as its
+      proposal, as a committed file that LOCK-m-F0 names, and expects the refusal "startup: banner".
+    - LOCK-m-F0 binds the analyzer of record (`655e0f7f…`), not this one. So the driver now refuses earlier, on
+      lock §1's binding ("is not named in full in LOCK-m-F0.md's committed text").
+    - Code's reading: the refusal is right — the driver refuses a `--proposal-file` whose sha256 LOCK-m-F0's
+      committed text does not name in full (lock §1), and this analyzer's is not named there. What moved is the
+      case's premise, and any in-place G-ANL-F3 commit moves it.
+    - No change is made to `scripts/m_sessions.py`, a TOOLING_FILES entry. Its fix, and the G-SHAPE-F0 re-run that
+      PIN-S10 then requires (the step-10 read's Q2 clears only a subcommand-wiring edit), are the seat's call.
+    - The PI's ruling, in chat on 2026-11-06, relayed by the coordinating session. The coordinating session asked
+      "Commit G-ANL-F3 with the self-test case flagged for the seat?", and the PI answered "Commit with flag". The
+      question was put on the 845/846 count; the case this analyzer moves is the same one on either base.
+  - **FLAG, not adjudicated (N12): two G-CAL-OLMo cases of `scripts/m_sessions.py --selftest` fail at HEAD,
+    without this build.**
+    - At `e7e070f`, the self-test with the analyzer of record is 844/846 (Code's run in a second scratch worktree).
+      The two FAILs are gcal's "a non-stub precheck without the pod id is refused (POD ID ABSENT …)"
+      (`valence_core/m/gcal.py`) and m_sessions-olmo's "gcal completability --unit OLMo-sft on the stub … on the
+      box path without the pod id or the weights it is refused before any load (exit 2) naming both"
+      (`scripts/m_sessions.py`).
+    - Each reaches the G-CAL precheck on the canonical paths with the pod id unset, expecting its refusal before
+      any load (the pod id's; in the driver's case the weights' too). Since `6ce8b9a` committed G-CAL-OLMo's
+      checkpoints, the precheck refuses first on "CHECKPOINT EXISTS" (Code's probe). Both pass on `273ca8f`.
+    - This build touches neither. A fix edits m's package (`60199b36…`) or a TOOLING_FILES entry; the seat's call.
+  - **FLAG, not adjudicated (N13): `--campaign none` beside a set-aside campaign checkpoint.** The `none` check
+    looks only for `data/m/ckpt/{U}_campaign.json`, not for a `.podchange-*` set-aside (`resume._set_aside`).
+    Code's reading: under the respawn protocol's consistency clause a set-aside's sessions are outside the
+    campaign of record, so `none` stays a true declaration. If the seat reads it otherwise, the fix refuses
+    `none` beside a set-aside, a second hash-moving round.
+  - **Dated notes** (the design raw §3): N1 above; N2 `QF3_WORDS["A3*"]` corrected to m:340's seven values; N3
+    G-SHAPE-F3 re-runs before LOCK-m-F3 v0.1 (mf3's package moved); N4 round 2's misparaphrase search found
+    nothing to correct; N5 v1 behaviour kept by construction; N6 the Q-F3 VERDICTS precondition is the v1 posting's
+    posted re-run, committed and PASSing (so it waits on N1 too); N7 f2's outcome is a declared input; N8 the blind
+    read's agreement is computed at the Q-F3 VERDICTS entry; N9 above; N10 FLAG: m:312's nearest-term rule scores
+    "prism is clean, slate is corrupted" ambiguous, the seat's call before LOCK-m-F3 v0.1 freezes the lexicons; N11
+    `data/mf3/verdicts/*.json` is ignored by `.gitignore`, so the commit that first writes Q-F3's outputs needs an
+    admit block; N12 and N13 above.
+  - **Code's readings, each a flag strikable by the seat until LOCK-m-F3 v1.0** (answers:50; texts in `PINS_F3`, the
+    design raw §2; striking one moves the analyzer's sha256, rebuilds and re-runs G-ANL-F3, and after LOCK-m-F3 v0.1
+    moves a hash that lock names): PIN-V2-1 A3's NO-READ; V2-2 the power figure of record; V2-3 the A2/A3 labels;
+    V2-4 the v2 table; V2-5 A3*, withholding, the v1-note; V2-6 Step 6 from m:342's texts; V2-7 §8.1/§8.2 at v2;
+    V2-8 the CLI paths; V2-9 the Clock dates; V2-10 the PENDING era; V2-11 the regression's identity and preprint;
+    V2-12 the Q-F3 reader's V1; V2-13 counter (c)'s scorer; V2-14 the blind draw; V2-15 the shared V2 helper and
+    Q-F3's V4; V2-16 the Q-F3 sentences; V2-17 valid-through and the secondaries; V2-18 the counters; V2-19 Q-F3's
+    NOT-RUN causes; V2-20 not-run and the v2 closure; V2-21 the v2 posting; V2-22 the v2 enumeration's (b);
+    V2-23 the artifact; V2-24 the v2 table bound at Q-F3's VERDICTS.
+  - **Checks before the commit:** the analyzer battery 525/525 ([`_ganl-f3_build_selftest`](results/raw/2026-11-06_ganl-f3_build_selftest.txt));
+    the ten-suite site check on `e7e070f` plus the five files, nine of ten suites passing and m_sessions at 843/846 (N9's case and N12's two) ([`_ganl-f3_build_sitecheck`](results/raw/2026-11-06_ganl-f3_build_sitecheck.txt));
+    a blind code review (no MAJOR over four rounds; the five MINOR fixed; each NOTE applied or disclosed; [`_ganl-f3_build_review`](results/raw/2026-11-06_ganl-f3_build_review.txt)) and
+    a blind values-check of this entry and the design raw (four passes: 116 items, 2 FAIL and 14 IMPRECISE; 49, 1 FAIL and 6 IMPRECISE; 18, 1 FAIL and 9 IMPRECISE; 7, all CONFIRMED;
+    [`_ganl-f3_build_valuescheck`](results/raw/2026-11-06_ganl-f3_build_valuescheck.md)), each item re-checked at
+    source and applied or disclosed, with Code's dispositions in the raws.
+  - **Next:** the canonical `ganl` run on this commit writes `data/m/gates/G-ANL-F3.json` in its own commit
+    (G-ANL-F0.json untouched). An OLMo lock follows only if the seat's adjudication of G-CAL-OLMo (`6ce8b9a`) leaves
+    a checkpoint to lock; if one is written, it names this analyzer (order (a)). LOCK-m-F3 v0.1, which names this
+    analyzer and its lexicons (m:292) and the re-run G-SHAPE-F3 (N3), waits for the coordinating session's word.
+    Not pushed.
+
 - 2026-11-06 — **G-ACQ (n) — PROPOSAL-n v0.2 §3's G-ACQ, §8 step 5, on the PI's "Now, in parallel": PASS on every
   part run.**
   - `allenai/OLMo-2-0325-32B-Instruct` at `b96024342a77` (G-DATA's tokenizer revision) is acquired on pod
