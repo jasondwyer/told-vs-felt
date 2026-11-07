@@ -1,0 +1,82 @@
+# Respawn protocol step (ii) BACKEND (CLAUDE.md §Environment, respawn protocol; ledger rule 2) on the new box, for PROPOSAL-m v1.11's `BACKEND — characterization` (m:251, m:302; ADDENDUM-m1 §4 step 4). PI-local date 2026-11-06. Run only after step (i) PASSED (exit=0 at 2026-11-07T00:29:55Z).
+# BOX: pod qny1x4v8padeke (jspace-olmo-m); 1 x NVIDIA A100-SXM4-80GB (81920 MiB, driver 595.91.07, driver CUDA 13.2); data center US-CA-2; image runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404; network volume o73qvy742n at /workspace.
+# CODE: box repo HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731 (== laptop HEAD at ship time).
+# ENV: `source /workspace/env.sh` first (CUBLAS_WORKSPACE_CONFIG=:4096:8, PYTHONPATH=/workspace/repo/jspace-lab, HF_HOME=/workspace/hf-cache, /workspace/venv activated).
+# COMMAND (box, cwd /workspace/repo/jspace-lab): nohup /workspace/venv/bin/python scripts/box_determinism.py --stage base --repeats 5 > /workspace/respawn_determinism.txt 2>&1 &
+#   It ran inside `nohup bash -c "<the command>; echo exit=$? > /workspace/respawn_determinism.exit"` so its exit status is on record; that is the only addition.
+# LAUNCH 2026-11-07T00:30:14Z   END 2026-11-07T00:33:38Z   EXIT exit=0   (Code's `date -u` stamps, taken on the box)
+# ARTIFACT: /workspace/models/determinism_base.json (box only), sha256 61f160ea43497735260949b9bdaf3dd88804bca96997fa101566943f30165434 = the committed data/olmo/determinism_base.json; the committed file is left as it stands (the 2026-08-23 precedent).
+# The box file's stdout+stderr follows verbatim (sha256 6b31aadaae6371181050d62237def5dbfab318e3aa3a2fb743d6049d961754e2, byte-identical after transfer); Code's laptop check is appended after it.
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:   9%|▉         | 66/707 [00:00<00:01, 605.15it/s]Loading weights:  18%|█▊        | 127/707 [00:00<00:00, 590.62it/s]Loading weights:  26%|██▋       | 187/707 [00:00<00:01, 516.47it/s]Loading weights:  34%|███▍      | 240/707 [00:00<00:01, 455.34it/s]Loading weights:  41%|████      | 287/707 [00:00<00:00, 448.72it/s]Loading weights:  47%|████▋     | 333/707 [00:00<00:01, 363.35it/s]Loading weights:  53%|█████▎    | 372/707 [00:00<00:00, 366.50it/s]Loading weights:  59%|█████▉    | 418/707 [00:00<00:00, 385.68it/s]Loading weights:  65%|██████▍   | 458/707 [00:01<00:00, 369.98it/s]Loading weights:  70%|███████   | 496/707 [00:01<00:00, 355.04it/s]Loading weights:  76%|███████▌  | 536/707 [00:01<00:00, 362.48it/s]Loading weights:  82%|████████▏ | 580/707 [00:01<00:00, 381.52it/s]Loading weights:  89%|████████▊ | 627/707 [00:01<00:00, 403.83it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 452.94it/s]
+{
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/base",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cuda": "12.8",
+ "capability": [
+  8,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== A. repeat determinism (deterministic=True) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+
+=== C. kernel path: cached vs uncached (rule-2 gate) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  worst symKL 0.000e+00 vs 1e-3 bar -> PASS (cached path licensed)
+
+=== B. deterministic_algorithms OFF ===
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  63%|██████▎   | 447/707 [00:00<00:00, 4406.05it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 4133.34it/s]
+  probe 0: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+
+wrote /workspace/models/determinism_base.json
+SUMMARY: repeat-exact(det ON)=True | cached==uncached exact=True maxKL=0.00e+00 | det-OFF repeat-exact=True
+
+# ---- Code's laptop check, run after the transfer (not box output) ----
+# INVOCATION: <repo>/jlens-qwen36/.venv/bin/python -I <scratch>/check_determinism.py data/olmo/determinism_base.json <the box's new determinism_base.json> <the box stdout above>
+# What it does: a field-by-field walk of the two JSON artifacts (every dict key, list element and leaf value); A, B and C read from the new artifact
+# (A: all_exact and max_abs = max_kl = 0.0; B: repeat_all_exact, max_repeat_abs = 0.0 and identical to det ON; C: all_exact and max_kl < 1e-3);
+# valence_core.m.resume.backend_identifier (m:251, Code's definition) on the provenance block the run printed, cross-checked on both artifacts' blocks.
+committed sha256: 61f160ea43497735260949b9bdaf3dd88804bca96997fa101566943f30165434 2819 bytes
+box new   sha256: 61f160ea43497735260949b9bdaf3dd88804bca96997fa101566943f30165434 2819 bytes
+byte-identical: True
+field-by-field: 108 leaf fields in the committed artifact, 108 in the new; differences: 0
+A repeat determinism (det ON): all_exact=True max_abs=0.0 max_kl=0.0 -> EXACT
+B det OFF: repeat_all_exact=True max_repeat_abs=0.0 max_vs_det_abs=0.0 max_vs_det_kl=0.0 -> EXACT (and identical to ON)
+C kernel path: all_exact=True max_kl=0.0 (bar symKL < 1e-3) -> EXACT, under the bar
+printed provenance == JSON provenance: True
+printed provenance == committed provenance: True
+backend identifier (printed block): 641ee466f4553b6a
+backend identifier (new JSON block): 641ee466f4553b6a
+backend identifier (committed 2026-08-19 block): 641ee466f4553b6a
+ALL OF A, B, C EXACT: True

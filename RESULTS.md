@@ -21,6 +21,75 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **BACKEND — characterization (PROPOSAL-m v1.11 m:251, m:302; ADDENDUM-m1 §4 step 4, the OLMo track's
+  first node), on the PI's go of 2026-11-06 ("Go when in stock", then "Yes, watch"): the respawn protocol on the new
+  box, pod `qny1x4v8padeke`. (i) INTEGRITY PASS, 29/29 files. (ii) BACKEND PASS: A, B and C are all exact at 0.0, and
+  the new artifact is byte-identical to the committed one. Backend identifier `641ee466f4553b6a`.** (Stamp verified
+  at write time: `date -u` → **Sat Nov  7 00:36:43 UTC 2026**.)
+
+  - **The box.**
+    - Pod `qny1x4v8padeke`, named `jspace-olmo-m`, made by the RunPod MCP's `create-pod` at 2026-11-07T00:17:14Z on
+      the spec of record. A stock watch read A100-SXM4-80GB secure availability about every 20 minutes; its 20th read
+      was the first to list US-CA-2, at price.secure **$1.79/hr**. `list-pods` before the create showed no
+      `jspace-olmo-m`; the old pod `uimuzt7d890y5b` (EXITED) was not touched.
+    - Image `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`; 1 × NVIDIA A100-SXM4-80GB (81,920 MiB, driver
+      595.91.07, driver CUDA 13.2); data center US-CA-2; network volume `o73qvy742n` at `/workspace` (466 G, 242 G
+      used); container disk 30 GB; port 22/tcp only. The `env.sh` hook was missing from `~/.bashrc` and is restored.
+  - **Step (i) INTEGRITY — PASS.** `box_respawn_check.py` re-hashed every file under `/workspace/models/` against the
+    committed manifest: **29 files match across base / sft / dpo / instruct**, both directions, exit 0
+    (00:23:05Z → 00:29:55Z). Raw [`2026-11-06_respawn_integrity.txt`](results/raw/2026-11-06_respawn_integrity.txt).
+  - **Step (ii) BACKEND — PASS**, run only after (i) passed (`box_determinism.py --stage base --repeats 5`, `env.sh`
+    sourced, exit 0, 00:30:14Z → 00:33:38Z). Raw
+    [`_respawn_determinism`](results/raw/2026-11-06_respawn_determinism.txt).
+
+    | measurement | result |
+    |---|---|
+    | A. repeat determinism (det ON) | exact, max\|d\| **0.000e+00**, symKL 0 |
+    | B. deterministic-algorithms OFF | repeat-exact, and **identical to ON** (max\|d\| 0.000e+00, symKL 0) |
+    | C. kernel path, cached vs uncached | exact, worst symKL **0.000e+00** vs the 1e-3 bar |
+
+    - The new `/workspace/models/determinism_base.json` was compared field by field with the committed
+      `data/olmo/determinism_base.json`: 108 leaf fields each, **0 differences**, byte-identical (sha256
+      `61f160ea…5434`). As on 2026-08-23, the committed artifact is left as it stands; the raw is the evidence that it
+      was re-measured.
+  - **Backend identifier (m:251): `641ee466f4553b6a`.** It is `valence_core.m.resume.backend_identifier` on the
+    provenance block the run printed; the check is appended to the determinism raw. The printed block equals the
+    committed 2026-08-19 block, so the identifier is the value that block gives too.
+    - Provenance (ledger 27): torch 2.8.0+cu128, transformers 5.15.0, accelerate 1.14.0, safetensors 0.8.0,
+      huggingface_hub 1.28.0, numpy 2.1.2, Python 3.12.3; CUDA 12.8 (torch's build), capability [8, 0]; bf16;
+      deterministic ON with `CUBLAS_WORKSPACE_CONFIG` `:4096:8`; seed 20260818; declared choice window 8192; 64 layers.
+    - By code reading, not measured: the m package builds its OLMo adapter as `OLMoHFAdapter(path,
+      choice_window=8192)` with the same deterministic and seed defaults (`scripts/m_sessions.py:809`). Its
+      provenance therefore differs from this run's only in `path`, which the identifier drops, so G-CAL-OLMo on this
+      box should compute the same identifier. Its own run is the check.
+  - **Code on the box (the 2026-08-23 housekeeping, again).**
+    - The box repo was at `6dfc455` (2026-08-24) with 4 modified tracked files and 66 untracked files, left by the
+      August B-phase. Every one was hashed (`git hash-object`) before anything moved:
+      - 60 are byte-identical to the laptop's HEAD `1bf94a6` at the same path;
+      - 4 are byte-identical to that HEAD at another path (`scripts/c1r3_gate_rep{A,B}.json` and
+        `scripts/e0_frames.json` under `data/configs/`, `scripts/e0_tasks.jsonl` as `data/corpus/e0_tasks.jsonl`);
+      - the 4 modified files each equal an earlier commit of the same path (`.gitignore` at `5c1b161`,
+        `HANDOFF-2026-08-24.md` at `f4b402a`, `RESULTS.md` at `c17337c`, `paper_analysis.ipynb` at `947b9ea`);
+      - 2 (`ADDENDUM-g3-b2r.md`, `ADDENDUM-g3-b2r-v1.1.md`) were never committed and are byte-identical to the
+        laptop's own untracked copies at root.
+    - So nothing box-only existed. The one gitignored file the merge would overwrite,
+      `data/olmo/b2r_concepts_base.npz`, is byte-identical to HEAD's.
+    - **Nothing was deleted.** The 66 untracked files were moved, and the 4 modified ones copied, to
+      `/workspace/repo/box-dirty-2026-11-06/` on the volume, where all 70 hashes were re-checked; the 4 were then
+      restored with `git checkout`.
+    - The code shipped as a full-history git bundle (279 MB, `main` at `1bf94a6`) and fast-forwarded: **box HEAD =
+      laptop HEAD at ship time = `1bf94a6`**, working tree clean. The laptop has since moved to `958e762`, which
+      changes only RESULTS.md and two raws, so the box's code is the laptop's.
+  - **FLAG, not adjudicated: `RUNPOD_POD_ID` is unset in a non-interactive ssh shell on this pod.** The pod-id PIN
+    (`valence_core/m/resume.py:256–257`) reads the pod id from that variable, "verify on the box before the first OLMo
+    stage", and resume.py's module note says "Every OLMo stage requires the pod id at its start". The variable is set
+    (`qny1x4v8padeke`) in the container's PID-1 environment, and `/workspace/env.sh` does not export it. A stage
+    launched over ssh needs it exported first; how is the seat's or the PI's call, not made here.
+  - **What follows.** Both gates PASS, so experimental forwards may run on this box (CLAUDE.md: "Both PASS before
+    anything runs"), and the consistency clause binds: a campaign completes on this one backend, and a box change
+    aborts and restarts it. The next node is G-CAL-OLMo-{ckpt} (m:302); it waits for the PI's word, with a smoke
+    first. No lock is written and nothing is pushed. **The pod is RUNNING at $1.79/hr and bills while it waits.**
+
 - 2026-11-06 — **G-ANL-F3 (m:291; ADDENDUM-m1 §2.5 and §4 step 5; the prebuild answers' §9 item 2): STOPS before the
   first edit to `scripts/m_analyze.py`, on three questions for the seat.
   The routing is the prebuild answers' §9 item 2 ("G-SHAPE-F3 → G-ANL-F3 under Q3's rule"), under the PI's routing of
