@@ -1,0 +1,472 @@
+{
+ "controls": {
+  "OLMo-dpo": {
+   "render-as-response": {
+    "advisories": [],
+    "fired_fields": [],
+    "fired_items": [],
+    "n": 2816,
+    "n_fired": 0,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  },
+  "OLMo-instruct": {
+   "render-as-response": {
+    "advisories": [],
+    "fired_fields": [],
+    "fired_items": [],
+    "n": 2816,
+    "n_fired": 0,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  },
+  "OLMo-sft": {
+   "render-as-response": {
+    "advisories": [],
+    "fired_fields": [],
+    "fired_items": [],
+    "n": 2816,
+    "n_fired": 0,
+    "required": false
+   },
+   "seg+gold": {
+    "advisories": [],
+    "fired_fields": [
+     "claim",
+     "lexical_raw",
+     "degeneracy",
+     "ends",
+     "strict"
+    ],
+    "fired_items": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "n": 2816,
+    "n_fired": 2816,
+    "required": true
+   }
+  }
+ },
+ "criterion": "**G-SHAPE-p**, model-free, before LOCK-p v0.1: G-SHAPE-F0's layers over p's sources map and the OLMo templates with p's renders in m's place; PASS required.",
+ "criterion_f0": "Model-free: every corrupted render placed inside each F0m and F0m-OLMo round template beside its bracketed header, a clean gold as the response, run through the full scoring stack of both substrates; asserts that no class fires on harness bytes or the render itself. It tests scoring scope, nothing else.",
+ "disclosure": "PROPOSAL-p's units were pre-registered on 2026-11-06 after the shared dose failed completability on this lineage (G-CAL-OLMo, 2026-11-06), and the corruption rule was changed once, from the gate's read, before any session ran (p v0.2 §5.4)",
+ "fire_predicate": {
+  "round": [
+   "claim",
+   "advisory",
+   "v3.exclusion",
+   "v3.content_label",
+   "v3.advisory",
+   "echo_line",
+   "lexical_raw",
+   "scaffold",
+   "degeneracy",
+   "ends",
+   "strict",
+   "termination"
+  ],
+  "rule": "a placement fires iff any field fires (m's PIN-S3); any fire is a STOP"
+ },
+ "g_shape_f0_placements": {
+  "path": "data/m/gates/G-SHAPE-F0.json",
+  "per_unit": {
+   "OLMo-dpo": {
+    "G-SHAPE-F0": "2fec663fc9c3f6f4c8b3ed70f88301c282c9c274acc39668dd34695caa876189",
+    "G-SHAPE-p": "2fec663fc9c3f6f4c8b3ed70f88301c282c9c274acc39668dd34695caa876189",
+    "equal": true
+   },
+   "OLMo-instruct": {
+    "G-SHAPE-F0": "f7f90e860ad47dade7d587691ef5b2f2d1689cca77c0d799ffde5c9a170be3a7",
+    "G-SHAPE-p": "f7f90e860ad47dade7d587691ef5b2f2d1689cca77c0d799ffde5c9a170be3a7",
+    "equal": true
+   },
+   "OLMo-sft": {
+    "G-SHAPE-F0": "be6ddba6b21d78a3b139fb5da86eed7e990e4a2e488fc7089a5175145d3454fd",
+    "G-SHAPE-p": "be6ddba6b21d78a3b139fb5da86eed7e990e4a2e488fc7089a5175145d3454fd",
+    "equal": true
+   }
+  },
+  "readable": true,
+  "rule": "descriptive: a placement key is [unit, pair, map, clause, template, n, item, gold, phase] -- no render -- so p's enumeration equals m's key for key; it decides nothing",
+  "sha256": "38ba8e28cc37e73d0ff387b458529f82f3c54cf35ccc5a3bf223a0a934553b51",
+  "source": "HEAD's blob"
+ },
+ "grid": {
+  "OLMo-dpo": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "2fec663fc9c3f6f4c8b3ed70f88301c282c9c274acc39668dd34695caa876189",
+   "rows_sha256": "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6",
+   "substrate": "olmo",
+   "template": "A0-OLMo-dpo"
+  },
+  "OLMo-instruct": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "f7f90e860ad47dade7d587691ef5b2f2d1689cca77c0d799ffde5c9a170be3a7",
+   "rows_sha256": "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6",
+   "substrate": "olmo",
+   "template": "A0-OLMo-instruct"
+  },
+  "OLMo-sft": {
+   "coverage": {
+    "banners": 16,
+    "exact": true,
+    "gold_variants": 22,
+    "phases": 2,
+    "renders": 16,
+    "templates": 4
+   },
+   "fires": [],
+   "fires_listed": 0,
+   "n": 2816,
+   "n_fired": 0,
+   "n_misplaced": 0,
+   "placements_sha256": "be6ddba6b21d78a3b139fb5da86eed7e990e4a2e488fc7089a5175145d3454fd",
+   "rows_sha256": "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6",
+   "substrate": "olmo",
+   "template": "A0-OLMo-sft"
+  }
+ },
+ "grid_total": 8448,
+ "inputs": {
+  "golds": {
+   "n_items": 16,
+   "n_variants": 22,
+   "sha256": "ecebca75ed51e28644fee5558d509ed9904ef0b93cf379d155d0520174820902"
+  },
+  "n_renders": 16,
+  "pool_sha16": "711deec1c2645194",
+  "pools_file": "data/f/pools.json",
+  "pools_file_sha256": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+  "proposal_m": {
+   "path": "PROPOSAL-m-gating-campaign-v1_11.md",
+   "sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"
+  },
+  "renders_raw_sha256": "25bd3d012a1c47867c45bb7cec4cfd30397104975dbc0456a8bcd210583eb895",
+  "renders_sha256_m_convention": "6baf494960da45896206f7eaadbc6b158642a42e09e1d11f70812959e3673c4c",
+  "renders_sha256_p_convention": "1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722",
+  "renders_source": "results/raw/2026-11-06_p_preread_renders.txt (its json.dumps(renders) line; the file of the seat's read of record, ans2 §0), asserted equal to corrupt.RENDERS_OF_RECORD and to corrupt_p's recomputation",
+  "roster_sha256_olmo": "fbc52072132c923edaa714c892691af137f9ebeb3f651a0676594f6c6cd98010",
+  "round_templates_sha256": "df6e7ddd0056f8a7fb4517fd492defd0d5a9e6aa42a4a29ca2767de04bc1a5a5",
+  "seat_read": {
+   "line": "16 of 16 instructions and golds recoverable",
+   "path": "results/raw/2026-11-07_p-preread_design-to-code_answers.md",
+   "sha256": "ab40f470b93a7eae58a9f1552eab17e166d6159c3f0bdac917627fc7385cb08b"
+  },
+  "session_banner_sha256": "6124c724758f61109af42141cd2dd576e2fb4e4b9c781e5a22af8be16a6a30ae"
+ },
+ "layer_p": {
+  "m_imported": [
+   "audit",
+   "bars",
+   "banner",
+   "corr",
+   "gcal",
+   "gshape",
+   "guard",
+   "keys",
+   "readrule",
+   "resume",
+   "runner_olmo",
+   "runner_qwen",
+   "scaffold",
+   "schedule",
+   "stages",
+   "verify"
+  ],
+  "problems": [],
+  "rule": "guard.import_problems: the fresh-interpreter import set equals the licence's; no test double at module level; no m attribute assigned and no setattr outside the register; no classify call (term (e)'s static form)"
+ },
+ "layer_s": {
+  "files": {
+   "valence_core/m/runner_olmo.py": "95ebd48f3aa347bfdc9e125b49f244fb2ea2584322c891100b515794d499f317",
+   "valence_core/m/runner_qwen.py": "68bf4be75a99bce26c36e5dfc2edf7ff21caa5d3cf728bc8b16bcf16386e806c",
+   "valence_core/m/scaffold.py": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5"
+  },
+  "problems": [],
+  "r8_scope": "17 files of valence_core/m/*.py (gshape.py exempt; _selftest bodies exempt)",
+  "rules": [
+   "R1",
+   "R2",
+   "R3",
+   "R4",
+   "R5",
+   "R6",
+   "R7",
+   "R8"
+  ]
+ },
+ "olmo_grids_identical": true,
+ "olmo_rows_sha256": [
+  "bf4e9c235073d834f0efc3446d2b038c8b776a4fd7e7672f077e7efacf84bac6"
+ ],
+ "proposal": "PROPOSAL-p",
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "provenance": {
+  "committed": true,
+  "import_closure": {
+   "valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604",
+   "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a",
+   "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf",
+   "valence_core/e2d/__init__.py": "3269faeccf97f55c104e1485ecb9d3d5079d3d5b4ea6c9abda8e761e636a6213",
+   "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
+   "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
+   "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70",
+   "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae",
+   "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598",
+   "valence_core/e2d/runner.py": "e784da8593cab45b2d77e9967f2f7ed0c8595c5ddc0d456f4fd591dd3083c2ed",
+   "valence_core/readout.py": "774e5ca359c5671cafd6f7a2d645d040d8eecb9e67944964c0ba074c22483136",
+   "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71",
+   "valence_core/stats.py": "956a650c603b0772ad85db8a3f82c310b9a67bba2e4440ab128ec9ee1e396d8f"
+  },
+  "import_closure_digest": "23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4",
+  "m_package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
+  "numpy": "2.5.1",
+  "numpy_stream_known_answer": "clean (f|CORR|0 permutation)",
+  "p_package_sha256": "717958dadfbadf489a07a577f625bb7f77314c4b2405ea399ead96738a43b900",
+  "sources": {
+   "data/configs/e2a_ban_list.json": "9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4",
+   "data/configs/e2b_audit_v2.json": "e89e4cd0cae31671a872f36d0cd0c34bcfc63b2d78cce366f172a8fabb453da2",
+   "data/configs/f_termination_patterns.json": "014b3940d62401b0b698e803145362b56c0b74de7d9f087a4fce0ecb111c2f46",
+   "data/f/pools.json": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+   "data/olmo/a1_repair_roster.json": "c82c6653e4f48375bac0beec124a0774d0a5fe353f2612ada339d9fecde3cfdc",
+   "data/olmo/b3_screen_dpo.json": "e900b67606c4a3c113689e8a4d402705de6d51b1e749abd3710e90f2f26d1067",
+   "data/olmo/b3_screen_instruct.json": "9ba4b64d95b26e1cd720902d569a0ed6179d67b6ea5aa344614b546cfc32bd24",
+   "data/olmo/b3_screen_sft.json": "015aed2bf5fb730f5509c5793a91b195ccce5ec4b6d2966215faa7360ff71e66",
+   "data/olmo/scaffold_dpo.json": "0c39ce9675f8db7aa35e0ea3a97ac29c3debd714fae6a7d98fd9c4ab1eb6574a",
+   "data/olmo/scaffold_instruct.json": "21110cea5331675daf538a42ae482a76c24965375c0dfe94ae72fc19bf2fd9cf",
+   "data/olmo/scaffold_sft.json": "0c3592ad0bb2cb1d359c14eca1603317ce39e412eab33dc747dd959c5fdcb5a8",
+   "scripts/p_sessions.py": "4d75cf03c6a3eb1036cf0c0609403b5795a528a54b22c59324041a0389466bde",
+   "valence_core/adapters/olmo_hf.py": "df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc",
+   "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
+   "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
+   "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70",
+   "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae",
+   "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598",
+   "valence_core/m/__init__.py": "b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4",
+   "valence_core/m/audit.py": "16d0abb91444af1b86dcdabdca919f8e61ce371055fe9581a96d02eb950e50f6",
+   "valence_core/m/banner.py": "730442ca354d8d92fe52135d42506cd83cef2d10deb7dfc23d0a1c204a6d170c",
+   "valence_core/m/bars.py": "e7f028d8a08c70d29b03296276dc292d8a4042a0e20ac8e6f0c70540b91e1d6c",
+   "valence_core/m/corr.py": "74818109a284d203177bae82170cbfa1f2cec8cbd85dfa2f7db018530eb27fce",
+   "valence_core/m/gcal.py": "fbae9a015330677a67c9d401699dc49848fad4a20ce26bb760eb6723eb53f6ef",
+   "valence_core/m/gshape.py": "257e02f43bfe8bb67156129cfb2c270f594ab48b62bd555c627eb2f0b66ca13c",
+   "valence_core/m/guard.py": "6aa5ac2dc7a7e071ad848053aa1a7e73c9539d1d5cb6fe1152b0f11e7a4d8b87",
+   "valence_core/m/keys.py": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+   "valence_core/m/readrule.py": "fca9e7329ec42419ed0eaa658d1a954b68db0e05a93cbb6b3a4502f781737a9e",
+   "valence_core/m/resume.py": "78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7",
+   "valence_core/m/runner_olmo.py": "95ebd48f3aa347bfdc9e125b49f244fb2ea2584322c891100b515794d499f317",
+   "valence_core/m/runner_qwen.py": "68bf4be75a99bce26c36e5dfc2edf7ff21caa5d3cf728bc8b16bcf16386e806c",
+   "valence_core/m/scaffold.py": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5",
+   "valence_core/m/schedule.py": "f262f9e0120bcf6e694c0850b56dc3a19ab3c931b28ba92d47009f9f49a72d0d",
+   "valence_core/m/stages.py": "42cb4002a8a790bd13a6d0b0e729cec2a7e619b5ecbaf3241358a7f6b1aa275f",
+   "valence_core/m/verify.py": "6940c2543827b416863e55087becf6c0d31d54cf980b2e996d3999413f8c9254",
+   "valence_core/p/__init__.py": "2e21845c6c7c263d5736caa00e3178be79a8928a063a923a728b734a4d81079d",
+   "valence_core/p/corrupt.py": "1ae7d853989b6563949c8652aa1a200e439381a8121dd6aaab5726a9536bb1bc",
+   "valence_core/p/gcal.py": "e5618be7a6327c5109645e55c643b022a28e0d82bddf3e1701076944b3e694f3",
+   "valence_core/p/gshape.py": "6c6d386ba49c126b63925274b887d9a49af2a404aa8e71d6d122e494587c772b",
+   "valence_core/p/guard.py": "a4dc2343a1e11d72f7405d6601b9d20effcedf528f2130e17a6921e96521dae0",
+   "valence_core/p/keys.py": "2b426a5def376972f9e88a3616b025f0ff8cee242eb0f8df8cf9dc0a41d140ce",
+   "valence_core/p/proxy.py": "889458cf851d517a50f9ff9890387dbd9ed1cdd81b2379a616f846ef5ac01878",
+   "valence_core/p/register.py": "cfaf26969be3001a76f3c89e801573c50ccb7343c5455036a2d2ac3ec9a2503b",
+   "valence_core/p/report.py": "2b20f82c3f999e00ac9729e1eea1016b14fef5ee740d4720fee3479675dbd687",
+   "valence_core/p/schedule.py": "5b5a54c3aa0fb9e2d40cb1608ff36ecd5e3d46a4b603192b066338ab3f56ab56",
+   "valence_core/p/testing.py": "f5637c3b4cfd0d2b7583a361e8a7e4cd33e99cf252758001c0e7c10ac5bf9f31",
+   "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
+  },
+  "sources_digest": "a634212bda3a47f5ad608a9edd6498bdac1dec77c7e11466aa3d2a5f1d97b77b"
+ },
+ "runner_dynamic_evidence": {
+  "existing_checks": [
+   {
+    "check": "runner_qwen: {} scripted sessions reach their declared outcomes (clean x8; forced v2/echo/content/lexical end; free v2/echo/content continue; free lexical ends; scaffold stops)",
+    "evidences": "classify outcomes",
+    "module": "runner_qwen"
+   },
+   {
+    "check": "runner_qwen: clean sessions -- 6 reads, valid, complete, domain, first pick coded on P",
+    "evidences": "classify outcomes",
+    "module": "runner_qwen"
+   },
+   {
+    "check": "runner_qwen: contrast Q rounds deliver the corrupt_m render ('corrupted'); sham and P clean",
+    "evidences": "render placed in situ",
+    "module": "runner_qwen"
+   },
+   {
+    "check": "runner_olmo: {} scripted sessions reach their declared outcomes (clean x8; forced AuditSpec/echo/lexical end; '* * *' continues; free echo/AuditSpec/lexical end; scaffold stops)",
+    "evidences": "classify outcomes",
+    "module": "runner_olmo"
+   },
+   {
+    "check": "runner_olmo: clean sessions -- 6 reads, valid, complete, over contrast/sham x both start orders x both clauses",
+    "evidences": "classify outcomes",
+    "module": "runner_olmo"
+   },
+   {
+    "check": "runner_olmo: items from the item key's [:8]/[8:] split; contrast Q delivers the render",
+    "evidences": "render placed in situ",
+    "module": "runner_olmo"
+   }
+  ],
+  "gshape_check": "gshape: the runners hand classify the generation's text, never the segment, banner or render -- every scripted runner case on both substrates through the real run_session_qwen / run_session_olmo with recording audits: the scored text is the adapter's emitted text and the record's; Qwen's render is the segment's Task line and the record's task_text; item, earlier, own_pair, echo_lines and phase are the round's; six mutated runner copies (segment, transcript or render scored; clean text as render; OLMo segment or render scored) are each caught",
+  "where": "m's self-test (scripts/m_sessions.py --selftest) at the m package_sha256 recorded here, for m's runners; p's proxy self-test (valence_core/p/proxy.py, in scripts/p_sessions.py --selftest) at the p package_sha256 recorded here, for the stored result the OLMo runner receives (p §2.2)"
+ },
+ "schema": "p-gshape-v1",
+ "spec": "PROPOSAL-p v0.2 §4.2 (G-SHAPE-p) and §8 step 4; G-SHAPE-F0's layers, PROPOSAL-m v1.11 m:277",
+ "stacks": {
+  "olmo": {
+   "audit_sha16": "dd3fe09bed429e54",
+   "ban_ids": {
+    "dpo": {
+     "n_ids": 9,
+     "sha16": "2dd86a453a2275ef"
+    },
+    "instruct": {
+     "n_ids": 9,
+     "sha16": "2dd86a453a2275ef"
+    },
+    "sft": {
+     "n_ids": 9,
+     "sha16": "2dd86a453a2275ef"
+    }
+   },
+   "ban_ids_note": "generation-side (m:262 'asserted at startup'); olmo_startup asserts it on the box before any OLMo session (LOCK-m-OLMo-{ckpt} v0.1, m:302); not exercised by G-SHAPE-F0",
+   "claim_order": [
+    "audit",
+    "echo",
+    "lexical"
+   ],
+   "echo_set": "the banner's Note lines (audit.olmo_echo_lines)",
+   "end_rule": "olmo_ends (the first claim in any round)",
+   "scaffold_strings": [
+    "</think>",
+    "<think>",
+    "<|endoftext|>",
+    "<|im_end|>",
+    "<|im_start|>",
+    "<|pad|>"
+   ],
+   "scaffold_strings_checked": {
+    "scaffold_dpo.json": "equal",
+    "scaffold_instruct.json": "equal",
+    "scaffold_sft.json": "equal"
+   },
+   "term_sha16": "014b3940d62401b0"
+  }
+ },
+ "stage": "G-SHAPE-p",
+ "stop_reason_rule": "m's gshape._stop_reasons over the OLMo units' grid, by import, with 'coverage:Q-F0' removed (p places no Q-F0 render), plus 'p-guard' on a Layer P problem",
+ "stop_reasons": [],
+ "template_shape": {
+  "n_labels": 12,
+  "n_problems": 0,
+  "n_range": [
+   1,
+   10
+  ],
+  "problems": []
+ },
+ "verdict": "PASS"
+}

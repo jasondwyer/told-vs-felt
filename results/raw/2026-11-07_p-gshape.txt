@@ -1,0 +1,19 @@
+# G-SHAPE-p -- the run of record (p v0.2 §4.2; p §8 step 4's last item), Code's raw, 2026-11-07
+#
+# Command: $PY -B scripts/p_sessions.py gshape (canonical: no --out), from the repository root, $PY = <repo>/jlens-qwen36/.venv/bin/python;
+# HEAD a665a09 (the p BUILD commit), every file of the sources map and of the import closure committed at HEAD and unedited
+# (the run refuses otherwise). Code stamps (date -u): start Sat Nov  7 21:39:17 UTC 2026; end Sat Nov  7 21:39:23 UTC 2026; exit 0. Artifact data/p/gates/G-SHAPE-p.json,
+# sha256 3fb0f64098dc6c9b435859aa27df35f1511754b4cb6396e1568891794cfd6961 (written once). No model, no tokenizer, no pod. Local absolute paths scrubbed: the
+# repository's prefix shown as <repo>; nothing else changed.
+#
+## stdout
+
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_sessions.py gshape
+G-SHAPE-p (the run of record; committed sources)
+gshape-p OLMo-sft: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-dpo: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-instruct: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo grids identical: True; total 8448; template shape problems 0; Layer S problems 0; Layer P problems 0
+gshape-p placement keys vs G-SHAPE-F0's committed artifact: OLMo-sft equal; OLMo-dpo equal; OLMo-instruct equal
+gshape-p provenance: p package 717958dadfbadf48, m package 7756dcf42532b222, sources a634212bda3a47f5, closure 23abe773f751bb19
+G-SHAPE-p: PASS; artifact <repo>/data/p/gates/G-SHAPE-p.json (written)

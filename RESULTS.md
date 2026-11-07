@@ -21,6 +21,31 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-SHAPE-p — PASS (p v0.2 §4.2; p §8 step 4's last item): the run of record on the BUILD's committed
+  sources (`a665a09`). `data/p/gates/G-SHAPE-p.json`, schema `p-gshape-v1`, sha256
+  `3fb0f64098dc6c9b435859aa27df35f1511754b4cb6396e1568891794cfd6961`, written once.** Model-free; nothing ran on a
+  model or the box.
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 21:40:06 UTC 2026**.)
+  - **The run.** `scripts/p_sessions.py gshape`, canonical, at HEAD `a665a09`: every file of the sources map (48
+    files) and of the import closure (14 files) committed at HEAD and unedited, and p's and m's package hashes those
+    of their committed blobs (the run refuses otherwise). Raw: [`_p-gshape`](results/raw/2026-11-07_p-gshape.txt)
+    (exit 0).
+  - **Layers A and C** (G-SHAPE-F0's, by import, with p's renders): 2,816 placements per OLMo unit, 8,448 in all; 0
+    fired and 0 misplaced on each unit; `seg+gold` fires on 2,816 of 2,816 per unit (required); `render-as-response` 0
+    of 2,816 (reported). The three units' rows are identical (`olmo_rows_sha256` `bf4e9c235073d834…`).
+  - **Shape** 0 problems; **Layer S** 0 problems; **Layer P** none (the import set is the licence's; term (e)'s static
+    check clean). Verdict PASS, no stop reason.
+  - **Against G-SHAPE-F0:** each unit's placement keys equal those of G-SHAPE-F0's artifact as HEAD's blob holds it
+    (sha256 `38ba8e28cc37e73d…`), as they must: a key carries no render.
+  - **Inputs of record:** the renders read from the committed renders raw (sha256 `25bd3d012a1c4786…`), p's renders by
+    both conventions (`1551c19997dc4541`, `6baf494960da4589`); the pools file `8547d9a11ba55b95`; p v0.2
+    `42f2977b…3b32`.
+  - **Provenance:** p's package `717958da…b900`, m's `7756dcf4…49bb`, the sources digest `a634212bda3a47f5…`, the
+    closure digest `23abe773f751bb19…`, numpy 2.5.1. The artifact carries §5.4's disclosure with its 2026-11-06 date
+    (F-p3).
+  - **Next:** LOCK-p v0.1 is p §8 step 6's, after LOCK-m-F3 v0.1. G-SHAPE-p re-runs first if its sources map differs
+    then (F-p5). G-CAL-p waits for the coordinating session's go for the box. Not pushed.
+
 - 2026-11-07 — **p package — BUILD (p §8 step 4): PROPOSAL-p's own package, `valence_core/p/` (11 files), and
   driver, `scripts/p_sessions.py`, on PROPOSAL-p v0.2 (`18b0111`) and the design seat's answers of 2026-11-07
   (Q0–Q4), routed by the PI ("Then build → G-SHAPE-p → G-CAL-p on your go for the box"). m's modules are imported
