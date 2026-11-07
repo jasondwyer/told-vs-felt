@@ -21,6 +21,28 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **N1 — HELD: STOP to the seat. Restoring the preprint's bytes of record fails G-ANL-F3's battery check
+  `F3R-PREPRINT-OF-RECORD` (`scripts/m_analyze.py:9983–9986`), which asserts that the file at HEAD is not the
+  bytes of record. The canonical `ganl` and LOCK-m-F3 v0.1 wait for the seat's choice.**
+
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 19:45:27 UTC 2026**.)
+
+  - **The block:** [`2026-11-07_n1-battery_code-to-design.md`](results/raw/2026-11-07_n1-battery_code-to-design.md).
+    - It sets the seat's §7 N1 ruling ("three message texts … stay"; "the analyzer's blob … is untouched")
+      against the check's condition at `:9985`, which reads the working-tree file (`:9892–9895`).
+    - After N1 the battery does not pass and `ganl` writes nothing.
+    - The F3 session found this, and N1's blind values-check found it again independently.
+  - **Options:**
+    - (b) fix the check in place before LOCK-m-F3 v0.1, which moves the analyzer blob before any lock names it.
+      Code recommends this.
+    - (a) `ganl` and the lock first, then N1, leaving the check failing for Q-F3's life.
+    - (c) defer N1.
+  - **Also for the seat:** Code's reading of N18's "sidecar form", and two N1 residues (`README-NOTE.md:214`'s
+    `:264`; the gitleaks `RELEASE` pin).
+  - **N1's state:** prepared and values-checked (38 items, 1 FAIL, which is this conflict). Its edits are held
+    outside the tree, and nothing of N1 is committed.
+  - **Committed by path:** the block and this entry. Not pushed.
+
 - 2026-11-07 — **G-SHAPE-F3 — the canonical re-run on `993eba1`, before LOCK-m-F3 v0.1: PASS.
   N3: B's F-6 and F-7 moved mf3's package at `e0b4f2c`. The hygiene commit then edited `scripts/mf3_sessions.py`, a
   G-SHAPE-F3 tooling file. So G-SHAPE-F3 re-runs as the seat's answers of 2026-11-07 order it (§7: "… →
