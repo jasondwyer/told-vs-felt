@@ -4477,9 +4477,9 @@ PINS_F3 = {
                  "(unlocked-before-D_O'); the other era's name is refused; Q-F0's VERDICTS of 2026-10-19 is left as it was.",
     "PIN-V2-11": "A1's regression: the identity of record is ed8e886's analyzer blob (asserted 655e0f7f...) with "
                  "LOCK-m-F0.md:147-149's package and closure; the preprint of record is served by its committed blob "
-                 "(1523cce, the table of record's 45b67246..., since the file at HEAD carries the status banner of "
-                 "32aefcc); every other input is read from the tree, the seven released files through PIN-29's "
-                 "exception by blob.",
+                 "(1523cce, the table of record's 45b67246..., whatever the tree holds; HEAD's sha256 reported); "
+                 "every other input is read from the tree, the seven released files through PIN-29's exception by "
+                 "blob.",
     "PIN-V2-12": "Q-F3's reader (`verdicts --unit Q-F3`): v1's in form; V1 refuses unless the lock names the analyzer, "
                  "m's package and the Q-F3 closure (the base closure plus LAZY_F3_MODULES, so an OLMo lock binds no "
                  "mf3 byte), the v1 posting on the posted text is committed and PASSed C7's bar (decision (10')), the "
@@ -9868,12 +9868,11 @@ def _bt_qf0_regression() -> dict:
     # the identity of record is the analyzer blob of ed8e886 (read with git
     # cat-file, asserted to hash to 655e0f7f...) with the package and closure shas LOCK-m-F0.md:147-149
     # names; PIN-14's check runs inside run_verdicts against those three. The table of record binds its
-    # preprint by sha256 (PIN-40, LOCK-m-F0 names it), and PREPRINT-v1_0-draft.md at HEAD carries the
-    # note release's status banner since 32aefcc ("not a text of record"), so the preprint of record is
-    # served by its committed blob (1523cce, asserted to the table's sha256): no blob but that one can
-    # satisfy the table's binding, as no analyzer blob but 655e0f7f... can satisfy the lock's. Every other
-    # input is read from the tree: the seven released files through PIN-29's exception by blob, each pin
-    # asserted equal to HEAD's blob here.
+    # preprint by sha256 (PIN-40, LOCK-m-F0 names it), and, whatever the tree holds (HEAD's sha256 reported),
+    # the preprint of record is served by its committed blob (1523cce, asserted to the table's sha256): no blob
+    # but that one can satisfy the table's binding, as no analyzer blob but 655e0f7f... can satisfy the lock's.
+    # Every other input is read from the tree: the seven released files through PIN-29's exception by blob,
+    # each pin asserted equal to HEAD's blob here.
     out: dict = {"pins": {}, "identity": {}, "preprint": {}, "outputs": {}, "status": None, "error": None}
     for rel, sha in PIN29_RELEASED.items():
         hb = _bt_git_blob(f"HEAD:{rel}")
@@ -9893,6 +9892,7 @@ def _bt_qf0_regression() -> dict:
     out["preprint"] = {"path": pre["path"], "table_sha256": pre["sha256"], "commit": REGRESSION_PREPRINT_COMMIT,
                        "blob_sha256": _sha256_bytes(pblob) if pblob is not None else None,
                        "head_file_sha256": _sha256_bytes(head_pre.read_bytes()) if head_pre.is_file() else None}
+    out["preprint"]["head_file_is_table"] = out["preprint"]["head_file_sha256"] == pre["sha256"]   # reported only
     if ablob is None or out["identity"]["analyzer_sha256"] != RECORD_ANALYZER_SHA256 or pblob is None \
             or out["preprint"]["blob_sha256"] != pre["sha256"]:
         out["error"] = "the record's analyzer blob or preprint blob is not the pinned one"
@@ -9981,9 +9981,11 @@ def _bt_riding(B: _Battery, hook: _OpenHook, table: Mapping) -> None:
           (str(idt.get("analyzer_sha256"))[:16], idt.get("lock_names_all_three")), cover=["F3R-RECORD-IDENTITY"])
     pp = reg["preprint"]
     B.chk("regression (A1): the preprint of record is served by its committed blob (1523cce, the table of record's "
-          "sha256 45b67246...); the bannered file at HEAD differs (32aefcc; its sha256 reported)",
-          pp.get("blob_sha256") == pp.get("table_sha256") and pp.get("head_file_sha256") not in (None, pp.get("table_sha256")),
-          (str(pp.get("blob_sha256"))[:16], str(pp.get("head_file_sha256"))[:16]), cover=["F3R-PREPRINT-OF-RECORD"])
+          "sha256 45b67246...), whatever the tree holds; the file in the tree's sha256 and whether it is the table's "
+          "are reported, neither asserted",
+          pp.get("blob_sha256") is not None and pp.get("blob_sha256") == pp.get("table_sha256"),
+          (str(pp.get("blob_sha256"))[:16], str(pp.get("head_file_sha256"))[:16], pp.get("head_file_is_table")),
+          cover=["F3R-PREPRINT-OF-RECORD"])
     outs = reg["outputs"]
     same = [rel for rel, v_ in outs.items() if v_["identical"]]
     B.chk("regression (A1; A-m1 §2.5 (3)): the extended analyzer, on the moved package, recomputes Q-F0's VERDICTS and "

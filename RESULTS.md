@@ -21,6 +21,51 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-ANL-F3 — the check fix, order (b): one in-place analyzer edit makes the battery check
+  `F3R-PREPRINT-OF-RECORD` state-independent and rewords the two prose anchors that gave the banner as the reason.
+  The seat's answer of 2026-11-07 on N1 against that check ordered it, on the PI's routing of 2026-11-07. The analyzer
+  moves from `6ec3222b…93d9` to `d347ea0c…5e48` before any lock or `G-ANL-F3.json` names it. The battery passes
+  525/525 both with the preprint bannered and with it restored.**
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 23:11:43 UTC 2026**.)
+  - **The routing.** The PI's routing, as the coordinating session relayed it, verbatim: "1. Order (b), the check’s
+    form as given, the two prose anchors reworded in the same edit [go]. 2. N18’s sidecar case [confirmed];
+    README-NOTE:214 fixed with N1; gitleaks pin left [confirmed]." The seat's answer is
+    [`_n1-battery_design-to-code_answers`](results/raw/2026-11-07_n1-battery_design-to-code_answers.md) (`f105bdd`,
+    sha256 `6b711d94…b409`), §1, on the STOP of `9838664`.
+  - **The edit** (`scripts/m_analyze.py`, in `_bt_riding` and `_bt_qf0_regression`):
+    - The check asserts only that the regression is served by the committed blob of record (`blob_sha256` not None
+      and equal to `table_sha256`; `1523cce`'s blob, the table's `45b67246…`). Its label no longer presupposes the
+      banner, and it names the file "in the tree", which is what the battery reads.
+    - It reports that file's sha256 and a new boolean, `head_file_is_table` (whether the file holds the table's
+      bytes), in the check's printed values and in the regression's output. Neither is asserted. The G-ANL-F3 artifact
+      will record both under `g_anl_f3.regression.preprint`. No G-ANL-F3.json exists yet.
+    - PIN-V2-11's register text and the comment at its site now read "whatever the tree holds; HEAD's sha256
+      reported", in place of the banner as the reason.
+    - Nothing else changes. The check count (525) and the coverage ids (538) are as before.
+  - **What it settles, and what it leaves.**
+    - It supersedes the G-ANL-F3 BUILD entry's dated note N1, "No analyzer change is made for it" (`e0b4f2c`), as the
+      seat's answer orders.
+    - The check is state-independent; the artifact's bytes are not. Because the artifact records the tree's preprint
+      sha256 and the boolean, a canonical `ganl` re-run after a later draft edit would be refused as different bytes
+      (write-once), even with the battery passing. N1 lands before `ganl`, so G-ANL-F3.json records the restored tree,
+      as the seat ordered.
+    - m's three OLMo NOT-RUN outputs (`0f35954`) stay bound to `6ec3222b…`, the blob that wrote them (PIN-42). The
+      texts the seat named, among them `:4676` (PIN-17's), stay as they are.
+  - **Runs** (the scratch worktree at `f105bdd` plus the edit; the final bytes):
+    - the ten-suite site check, with the preprint bannered as committed: all ten suites pass (m_sessions 846/846, m_analyze 525/525, mf3_sessions 136/136); the check reports
+      `('45b67246…', '5d677a72…', False)`;
+    - the battery again with `PREPRINT-v1_0-draft.md` set to the bytes of record (`1523cce`'s blob, `45b67246…`),
+      simulating N1 in the worktree: 525/525, exit 0; the check reports `('45b67246…', '45b67246…', True)`
+      ([`_ganl-f3_checkfix_runs`](results/raw/2026-11-07_ganl-f3_checkfix_runs.txt)).
+  - **Review:** a blind review of the delta found no MAJOR or MINOR defect and six NOTEs. Three are applied in code:
+    the label, the not-None conjunct, and the comment's clause order. Three are disclosed above: the artifact field,
+    the artifact's bytes, and the superseded note. Its three stale texts are left as the seat ruled or as outside the
+    ruling ([`_ganl-f3_checkfix_review`](results/raw/2026-11-07_ganl-f3_checkfix_review.md)). The site check and the
+    restored-state battery were re-run on the final bytes.
+  - **Next:** N1, which is the coordinating session's commit. Then, on N1's HEAD: the G-SHAPE map check (re-run a gate
+    iff its map lists `scripts/m_analyze.py`; the review found no G-SHAPE artifact naming it), the canonical `ganl`,
+    LOCK-m-F3 v0.1, the `time` wiring at its step, and G-TIME-F3. Not pushed.
+
 - 2026-11-07 — **PROPOSAL-p: G-CAL-p HELD for three seat rulings (F-p3, F-p8, F-p10), each changing what its
   write-once artifacts record. A block goes to the seat through the PI.**
 

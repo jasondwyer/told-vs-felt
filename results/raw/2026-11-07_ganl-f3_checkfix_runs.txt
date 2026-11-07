@@ -1,0 +1,80 @@
+# G-ANL-F3 -- the check fix (order (b)): the runs before the commit, on the final bytes (Code's raw, 2026-11-07)
+#
+# In Code's scratch worktree on a scratch commit of f105bdd (main's HEAD at the run) plus the edit;
+# scripts/m_analyze.py sha256 d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48, byte-identical to the file the commit adds. closure_verify3 reads the
+# untracked HANDOFF-2026-09-04-design.md, copied into the worktree for the run (read only). Local paths scrubbed.
+#
+# 1. The ten-suite site check, the preprint as committed (bannered, sha256 5d677a72...), 22:59:42Z-23:08:17Z.
+# 2. The battery again, `python -B scripts/m_analyze.py --selftest`, with PREPRINT-v1_0-draft.md set to the bytes
+#    of record (git show 1523cce:PREPRINT-v1_0-draft.md, sha256 45b67246...), simulating N1 in the worktree,
+#    23:08:17Z-23:11:04Z; the file was restored to its committed bytes after the run.
+#
+## Commands (1; each run in the worktree; $PY = <repo>/jlens-qwen36/.venv/bin/python)
+run regression '^  ([0-9]+)/\1 reproduced through valence_core' $PY -m valence_core.regression.analysis
+run format_recon '^  ([0-9]+)/\1 selftest checks pass' $PY scripts/format_recon.py --selftest
+run k1_stage1 '^  ([0-9]+)/\1 Stage 1 selftest checks pass' $PY scripts/k1_stage1.py --selftest
+run k1_analyze '^  ([0-9]+)/\1 analyzer battery checks pass' $PY scripts/k1_analyze.py --selftest
+run e2d_d2_analyze '^  ([0-9]+)/\1 branches verified' $PY scripts/e2d_d2_analyze.py --selftest
+run recon_echo '^  ([0-9]+)/\1 selftest checks pass' $PY scripts/recon_echo.py --selftest
+run closure_verify3 '^  ([0-9]+)/\1 third-pass checks pass' $PY scripts/e2d_closure_verify3.py
+run m_sessions '^  ([0-9]+)/\1 m selftest checks pass$' $PY scripts/m_sessions.py --selftest
+run m_analyze '^  ([0-9]+)/\1 m_analyze battery checks pass' $PY scripts/m_analyze.py --selftest
+run mf3_sessions '^  ([0-9]+)/\1 mf3 selftest checks pass$' $PY scripts/mf3_sessions.py --selftest
+
+## 1. Summary
+
+PASS regression rc=0 ::   154/154 reproduced through valence_core
+PASS format_recon rc=0 ::   67/67 selftest checks pass
+PASS k1_stage1 rc=0 ::   21/21 Stage 1 selftest checks pass
+PASS k1_analyze rc=0 ::   20/20 analyzer battery checks pass (14s)
+PASS e2d_d2_analyze rc=0 ::   46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+PASS recon_echo rc=0 ::   18/18 selftest checks pass
+PASS closure_verify3 rc=0 ::   24/24 third-pass checks pass
+PASS m_sessions rc=0 ::   846/846 m selftest checks pass
+PASS m_analyze rc=0 ::   525/525 m_analyze battery checks pass
+PASS mf3_sessions rc=0 ::   136/136 mf3 selftest checks pass
+gates failed: 0
+
+
+
+### closure_verify3
+  24/24 third-pass checks pass
+
+### e2d_d2_analyze
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+
+### format_recon
+  67/67 selftest checks pass
+
+### k1_analyze
+  20/20 analyzer battery checks pass (14s)
+
+### k1_stage1
+  21/21 Stage 1 selftest checks pass
+
+### m_analyze
+  525/525 m_analyze battery checks pass
+
+### m_sessions
+  [PASS] m_sessions: gport (G-PORT, m:275) on a temp dir -- all 64 archived CORR rows of data/f/sessions.jsonl (sha-pinned; the smoke file outside) replay: INVOCATION first, one 'gport s=<s> ok' per row in f1 order, last line '  G-PORT 64/64 archived CORR transcripts reproduced'; the artifact is exactly {criterion, unit, n_rows, n_ok, mismatches, f1_sessions_sha16, package_sha256, verdict PASS}; exit 0 (0, [' G-PORT 64/64 archived CORR transcripts reproduced'], {})
+  [PASS] m_sessions: gport STOPs (exit 4) on a tampered archived row -- 'gport s=5 MISMATCH: <problems>', 63/64, the artifact's mismatches name s 5 and verdict STOP -- and on a row list one CORR row short (63/63 reproduced is not 64/64); a re-run over an identical artifact changes nothing (exit 0) (4, ['gport s=5 MISMATCH: harness bytes differ at offset 0'], 4, 0)
+  846/846 m selftest checks pass
+
+### mf3_sessions
+  136/136 mf3 selftest checks pass
+
+### recon_echo
+  18/18 selftest checks pass
+
+### regression
+  154/154 reproduced through valence_core
+
+### F3R-PREPRINT-OF-RECORD, state 1 (bannered)
+  [PASS] regression (A1): the preprint of record is served by its committed blob (1523cce, the table of record's sha256 45b67246...), whatever the tree holds; the file in the tree's sha256 and whether it is the table's are reported, neither asserted ('45b67246f2b2bcb4', '5d677a724652c418', False)
+
+## 2. The battery with the preprint restored
+  525/525 m_analyze battery checks pass
+  525/525 m_analyze battery checks pass
+exit 0
+### F3R-PREPRINT-OF-RECORD, state 2 (restored)
+  [PASS] regression (A1): the preprint of record is served by its committed blob (1523cce, the table of record's sha256 45b67246...), whatever the tree holds; the file in the tree's sha256 and whether it is the table's are reported, neither asserted ('45b67246f2b2bcb4', '45b67246f2b2bcb4', True)
