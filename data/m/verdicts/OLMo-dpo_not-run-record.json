@@ -1,0 +1,22 @@
+{
+ "schema": "m-not-run-v1",
+ "unit": "OLMo-dpo",
+ "cause": "dose-not-completable",
+ "also": [],
+ "date": "2026-11-06",
+ "detail": "G-CAL-OLMo-dpo (m:176, m:302): condition (4) FAIL at the dose of record. Clean pool 61/64; corrupted pool 44/64 (11/16); corrupted >= 7/10: no; corrupted >= 3/4 x clean (183/256): no; covariate (clean minus corrupted, f0's sign) +17/64. Artifact data/m/gates/G-CAL_completability_olmo-dpo.json (sha256 ed89aaf5cd7ad52bb4f7e0aef1a485ab104cf1a72485baf557393af11e5fca08); checkpoint data/m/ckpt/G-CAL_olmo-dpo.json (sha256 239f6bd66897056768c531f66137786593946ef7fd90146fced7275a5178e8c2); run 2026-11-07T02:25:14Z to 02:30:37Z on pod qny1x4v8padeke, backend identifier 641ee466f4553b6a (RESULTS.md, the G-CAL-OLMo entry, 6ce8b9a). The full read of its 128 generations: results/raw/2026-11-06_gcal-olmo_read.txt section 5, block OLMo-dpo (lines 223-383 at 6ce8b9a). G-CAL has no picks to release.",
+ "decisions_with_other_outcomes_known": [
+  {
+   "decision": "ADDENDUM-m1 decision (16): the three OLMo units re-registered once, under a new Clock date D_O' = 2026-11-30 (ADDENDUM-m1 v0.1, committed at f26bc59)",
+   "date": "2026-11-06",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  },
+  {
+   "decision": "the PI's go for G-CAL-OLMo on sft, dpo and instruct, smoke first (the PI's routing of 2026-11-06, quoted at RESULTS.md@54bbfe5:237)",
+   "date": "2026-11-06",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  }
+ ]
+}

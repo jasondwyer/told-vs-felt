@@ -1,0 +1,37 @@
+# PROPOSAL-m OLMo-{sft,dpo,instruct} -- NOT-RUN (m:358 step 17; m:176, m:302, m:324): the analyzer's not-run path, on the PI's routing of 2026-11-06 ("The three m NOT-RUN records: [go]") and the design seat's answers (results/raw/2026-11-06_gcal-olmo_design-to-code_answers.md, sha256 4c3f57d4ec4c1404026bceb2dc2f07141ef36e3d1af66705a5f383dff148bf82, §1) and PROPOSAL-p v0.1 §8 step 1. PI-local date 2026-11-06. Laptop; nothing on the box.
+# HEAD at the run: e0b4f2c (G-ANL-F3's BUILD, the extended analyzer); scripts/m_analyze.py and valence_core/ identical to HEAD (git status empty), analyzer sha256 6ec3222b54c78ea5107a5ef89f9ffd3dd2fc649394f0dc6180280023c82b93d9.
+# COMMAND, per unit (paths absolute, as the record's step-17 lesson has it; <repo> = the repository root): <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/m_analyze.py not-run --unit OLMo-{ckpt} --record <repo>/data/m/verdicts/OLMo-{ckpt}_not-run-record.json   (no --time / --qual: no gate-stage checkpoint exists; --out default data/m/verdicts)
+# RECORD INPUTS (schema m-not-run-v1; Code's files, the seat's §1 content; validated by m_analyze.validate_not_run_record before the run):
+#   data/m/verdicts/OLMo-sft_not-run-record.json       a30df61c01d5e2533351871d8ff35dd6268e284c19f7359b9e0c21e472701be7
+#   data/m/verdicts/OLMo-dpo_not-run-record.json       4ed8576b5687ed338155f2282020218a0e84e87cb5d7ae7bb5b4d9bb088cfde8
+#   data/m/verdicts/OLMo-instruct_not-run-record.json  e633b2ac34ebe567e5340835857cb977002d01a418541bd967bd8e196554c829
+# OUTPUTS (schema m-not-run-out-v1), written once:
+#   data/m/verdicts/OLMo-sft_NOT-RUN.json       72745cb4328083373d9c9d482732c735dee28cc68c5f151ed2f3a9a35684b5b0
+#   data/m/verdicts/OLMo-dpo_NOT-RUN.json       94869b83758be62c835f16e4306787abcee9470544306cd5f530829d73ab8e96
+#   data/m/verdicts/OLMo-instruct_NOT-RUN.json  e2ecef56d747681dbc7ff48e19634f35f5eac8e6bb9c932efae77bfcbe7587e8
+
+## 1. The analyzer's output (verbatim, local paths scrubbed to <repo>; Code's `date -u` stamps per unit)
+HEAD e0b4f2c730aaa18f6251a38f3a7fcb7e08209d69
+=== OLMo-sft  2026-11-07T04:51:13Z
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/m_analyze.py not-run --unit OLMo-sft --record <repo>/data/m/verdicts/OLMo-sft_not-run-record.json
+NOT-RUN OLMo-sft: dose not completable (written: OLMo-sft_NOT-RUN.json)
+exit=0
+=== OLMo-dpo  2026-11-07T04:51:14Z
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/m_analyze.py not-run --unit OLMo-dpo --record <repo>/data/m/verdicts/OLMo-dpo_not-run-record.json
+NOT-RUN OLMo-dpo: dose not completable (written: OLMo-dpo_NOT-RUN.json)
+exit=0
+=== OLMo-instruct  2026-11-07T04:51:14Z
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/m_analyze.py not-run --unit OLMo-instruct --record <repo>/data/m/verdicts/OLMo-instruct_not-run-record.json
+NOT-RUN OLMo-instruct: dose not completable (written: OLMo-instruct_NOT-RUN.json)
+exit=0
+
+## 2. Each checkpoint's misses by item, by tool from data/m/ckpt/G-CAL_olmo-{ckpt}.json (the per-checkpoint summary the entries carry beside the full read)
+OLMo-sft:
+  CORR_clean: 62/64 hits, 2 misses by item {i: seeds} {2: [3], 4: [0]}
+  CORR_corrupted: 42/64 hits, 22 misses by item {i: seeds} {1: [0, 3], 2: [0, 1, 2, 3], 4: [1], 5: [0, 2], 7: [0], 8: [2], 9: [0, 2, 3], 11: [0, 2, 3], 13: [0, 2], 14: [3], 15: [0, 3]}
+OLMo-dpo:
+  CORR_clean: 61/64 hits, 3 misses by item {i: seeds} {7: [1], 10: [2], 13: [0]}
+  CORR_corrupted: 44/64 hits, 20 misses by item {i: seeds} {1: [1], 2: [0, 1, 2, 3], 5: [3], 8: [2, 3], 9: [0, 1, 2], 11: [1, 2, 3], 13: [3], 14: [2, 3], 15: [0, 2, 3]}
+OLMo-instruct:
+  CORR_clean: 59/64 hits, 5 misses by item {i: seeds} {2: [0], 7: [1], 10: [0, 2], 13: [0]}
+  CORR_corrupted: 42/64 hits, 22 misses by item {i: seeds} {1: [1], 2: [0, 1, 2, 3], 5: [3], 7: [1, 3], 8: [2, 3], 9: [0, 1, 2, 3], 11: [1, 2, 3], 14: [2, 3], 15: [0, 2, 3]}

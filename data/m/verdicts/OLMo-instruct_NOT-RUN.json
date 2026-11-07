@@ -1,0 +1,39 @@
+{
+ "also": [],
+ "analyzer_sha256": "6ec3222b54c78ea5107a5ef89f9ffd3dd2fc649394f0dc6180280023c82b93d9",
+ "cause": "dose-not-completable",
+ "closure_sha256": "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b",
+ "date": "2026-11-06",
+ "date_is_clock_of_record": false,
+ "decisions_with_other_outcomes_known": [
+  {
+   "date": "2026-11-06",
+   "decision": "ADDENDUM-m1 decision (16): the three OLMo units re-registered once, under a new Clock date D_O' = 2026-11-30 (ADDENDUM-m1 v0.1, committed at f26bc59)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  },
+  {
+   "date": "2026-11-06",
+   "decision": "the PI's go for G-CAL-OLMo on sft, dpo and instruct, smoke first (the PI's routing of 2026-11-06, quoted at RESULTS.md@54bbfe5:237)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  }
+ ],
+ "detail": "G-CAL-OLMo-instruct (m:176, m:302): condition (4) FAIL at the dose of record. Clean pool 59/64; corrupted pool 42/64 (21/32); corrupted >= 7/10: no; corrupted >= 3/4 x clean (177/256): no; covariate (clean minus corrupted, f0's sign) +17/64. Artifact data/m/gates/G-CAL_completability_olmo-instruct.json (sha256 62ed6d03127c1b5e22c04258ab593858ee9a92f870be58cf3e907627a31c35c1); checkpoint data/m/ckpt/G-CAL_olmo-instruct.json (sha256 724897d776324f0f15db82f38677a04686d3a097812c3f57ff416956a20358a6); run 2026-11-07T02:30:37Z to 02:35:53Z on pod qny1x4v8padeke, backend identifier 641ee466f4553b6a (RESULTS.md, the G-CAL-OLMo entry, 6ce8b9a). The full read of its 128 generations: results/raw/2026-11-06_gcal-olmo_read.txt section 5, block OLMo-instruct (lines 384-544 at 6ce8b9a). G-CAL has no picks to release.",
+ "gate_release": null,
+ "package_sha256": "60199b36557ac283771b83dcb4be101b5c56880dceacdecd05cce5a578e7feec",
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "reason": "dose not completable",
+ "record": {
+  "path": "data/m/verdicts/OLMo-instruct_not-run-record.json",
+  "sha256": "e633b2ac34ebe567e5340835857cb977002d01a418541bd967bd8e196554c829"
+ },
+ "release": null,
+ "rows": {
+  "olmo-instruct": "concluded, not answered — the told control at this stage was not run: dose not completable",
+  "state": "NOT-RUN"
+ },
+ "schema": "m-not-run-out-v1",
+ "state": "NOT-RUN",
+ "unit": "OLMo-instruct"
+}

@@ -21,6 +21,95 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **PROPOSAL-m OLMo-sft — NOT-RUN (m:358 step 17; m:176, m:302, m:324): "dose not completable", at
+  G-CAL-OLMo-sft's condition (4) of 2026-11-06. The analyzer's not-run path wrote the output from Code's record file, on
+  the PI's routing of the seat's G-CAL-OLMo answers. This entry also carries that routing's record for all three units.**
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 05:11:29 UTC 2026**.)
+
+  - **The routing.** The PI's block, verbatim (chat, the parent thread, relayed by the routing session):
+
+    > 1. Date: [2026-11-06]. The three m NOT-RUN records: [go].
+    > 2. PROPOSAL-p v0.1: [route for Code's pre-read]. If routed: letter [p]; §1's frame-word rule [confirmed as written]; D_p [2026-12-15]; pod budget [12 h for G-CAL-p, gate stages and three campaigns]; order on the pod [G-CAL-p first, then whichever lock chain is ready]; §5's v2 posting rule and its two declared sentences [adopted].
+    > 3. The pod: [stays up].
+
+    - The seat's answers it routes are committed with this entry, as placed:
+      [`2026-11-06_gcal-olmo_design-to-code_answers.md`](results/raw/2026-11-06_gcal-olmo_design-to-code_answers.md),
+      sha256 `4c3f57d4ec4c1404026bceb2dc2f07141ef36e3d1af66705a5f383dff148bf82`. Its §1 gives the three records'
+      content, and PROPOSAL-p v0.1's §8 step 1 repeats it. PROPOSAL-p itself (sha256 `1821a235…9953`) stays untracked
+      until its §8 step 3.
+    - Items 2 and 3 are not these entries' work. PROPOSAL-p's pre-read is another session's (the routing session's
+      word). The pod stays up, and nothing runs on it until the PI's go for G-CAL-p (p §8 step 5).
+  - **The record** (Code's input file, the seat's §1 content):
+    [`OLMo-sft_not-run-record.json`](data/m/verdicts/OLMo-sft_not-run-record.json), sha256 `a30df61c…1be7`, schema
+    `m-not-run-v1`, validated by `m_analyze.validate_not_run_record` before the run.
+    - `cause` `dose-not-completable`; `also` `[]` (no Clock cause: D_O′ = 2026-11-30 has not passed); `date`
+      `2026-11-06`, so `date_is_clock_of_record` is false. The seat's §1 gives the date as "C7's convention: the
+      calendar date of the terminal event, the grader's verdict". A citation residue, as a dated note (2026-11-06): the
+      rule it states is the one PIN-43 records from the seat's C5 (`scripts/m_analyze.py:510–513`).
+    - `detail`: the condition-(4) figures (clean 62/64; corrupted 42/64 against 7/10 and ¾ × clean = 93/128; covariate
+      +5/16), the artifact's and the checkpoint's sha256, the run, and the pointer to the full read.
+    - `decisions_with_other_outcomes_known` (PIN-35), both with `other_unit` Q-F0 and `other_state` PASS (m:318):
+      ADDENDUM-m1's decision (16), dated 2026-11-06 as its commit entry is; and the PI's go for this G-CAL run,
+      2026-11-06.
+    - The file name is Code's, in Q-F0's input style (`{U}_decisions.json`, `{U}_olmo-states.json`), inside the repo so
+      the output records its path relative to the root.
+  - **The output.** `scripts/m_analyze.py not-run --unit OLMo-sft --record …` (no `--time` / `--qual`: no gate-stage
+    checkpoint exists), at HEAD `e0b4f2c`: G-ANL-F3's extended analyzer, sha256 `6ec3222b…93d9`, package
+    `60199b36…feec`, identical to HEAD. Exit 0:
+    [`OLMo-sft_NOT-RUN.json`](data/m/verdicts/OLMo-sft_NOT-RUN.json), sha256 `72745cb4…b5b0`. State NOT-RUN, reason
+    "dose not completable", row "concluded, not answered — the told control at this stage was not run: dose not
+    completable". Raw [`_m-olmo-not-run`](results/raw/2026-11-06_m-olmo-not-run.txt).
+  - **The full read of its 128 generations** (m:358 step 17, "carrying the full read of those sessions and their
+    contrast picks"; G-CAL has no picks; m:318 exception (4) admits the read for a unit with no verdict left to bias).
+    - Every text is in [`_gcal-olmo_read`](results/raw/2026-11-06_gcal-olmo_read.txt) §5, block OLMo-sft (lines 62–222
+      at `6ce8b9a`), and Code read them all at the G-CAL-OLMo entry.
+    - Misses, by tool: clean 2 (item 2 seed 3, item 4 seed 0); corrupted 22, by item 1 (2), 2 (4), 4 (1), 5 (2),
+      7 (1), 8 (1), 9 (3), 11 (3), 13 (2), 14 (1), 15 (2).
+    - R1 A6's tallies: (i) 3, (ii) 0, (iii) 0, (iv) 12 (9 graded hits).
+
+- 2026-11-06 — **PROPOSAL-m OLMo-dpo — NOT-RUN (m:358 step 17; m:176, m:302, m:324): "dose not completable", at
+  G-CAL-OLMo-dpo's condition (4) of 2026-11-06, through the analyzer's not-run path. The routing is the OLMo-sft
+  entry's.** (Stamp: as the OLMo-sft entry.)
+
+  - **The record:** [`OLMo-dpo_not-run-record.json`](data/m/verdicts/OLMo-dpo_not-run-record.json), sha256
+    `4ed8576b…fde8`, the same form as OLMo-sft's. Its `detail` carries clean 61/64; corrupted 44/64 against 7/10 and ¾ ×
+    clean = 183/256; covariate +17/64. The decisions are the same two.
+  - **The output:** [`OLMo-dpo_NOT-RUN.json`](data/m/verdicts/OLMo-dpo_NOT-RUN.json), sha256 `94869b83…8e96`, exit 0,
+    the same analyzer, HEAD and row.
+  - **The full read of its 128 generations:** the read raw's §5, block OLMo-dpo (lines 223–383 at `6ce8b9a`).
+    - Misses, by tool: clean 3 (item 7 seed 1, item 10 seed 2, item 13 seed 0); corrupted 20, by item 1 (1), 2 (4),
+      5 (1), 8 (2), 9 (3), 11 (3), 13 (1), 14 (2), 15 (3).
+    - R1 A6's tallies: (i) 4, (ii) 0, (iii) 0, (iv) 6 (4).
+
+- 2026-11-06 — **PROPOSAL-m OLMo-instruct — NOT-RUN (m:358 step 17; m:176, m:302, m:324): "dose not completable", at
+  G-CAL-OLMo-instruct's condition (4) of 2026-11-06, through the analyzer's not-run path. The routing is the OLMo-sft
+  entry's.** (Stamp: as the OLMo-sft entry.)
+
+  - **The record:** [`OLMo-instruct_not-run-record.json`](data/m/verdicts/OLMo-instruct_not-run-record.json), sha256
+    `e633b2ac…c829`, the same form. Its `detail` carries clean 59/64; corrupted 42/64 against 7/10 and ¾ × clean =
+    177/256; covariate +17/64. The decisions are the same two.
+  - **The output:** [`OLMo-instruct_NOT-RUN.json`](data/m/verdicts/OLMo-instruct_NOT-RUN.json), sha256
+    `e2ecef56…87e8`, exit 0, the same analyzer, HEAD and row.
+  - **The full read of its 128 generations:** the read raw's §5, block OLMo-instruct (lines 384–544 at `6ce8b9a`).
+    - Misses, by tool: clean 5 (item 2 seed 0, item 7 seed 1, item 10 seeds 0 and 2, item 13 seed 0); corrupted 22,
+      by item 1 (1), 2 (4), 5 (1), 7 (2), 8 (2), 9 (4), 11 (3), 14 (2), 15 (3).
+    - R1 A6's tallies: (i) 2, (ii) 0, (iii) 0, (iv) 9 (5).
+  - **For all three.**
+    - The three outputs are, in the seat's words, "inputs the v1 posting cannot run without": PIN-23's cross-check
+      accepts a NOT-RUN coordinate only beside a NOT-RUN output of the same reason. The A-m1 §2.4 (b) status sentence is
+      the PI's at the posting.
+    - A dated note (2026-11-06): each record's `detail` cites its per-checkpoint run times to "the G-CAL-OLMo entry,
+      6ce8b9a". That entry gives only the overall window, 02:20:02Z → 02:35:53Z; the per-checkpoint times are in the
+      same commit's run raw (`results/raw/2026-11-06_gcal-olmo.txt`, the wrapper's stamps). The values are right, and
+      the records and the write-once outputs stand as written.
+    - A blind values-check ran before the commit
+      ([`_m-olmo-not-run_valuescheck`](results/raw/2026-11-06_m-olmo-not-run_valuescheck.md), with Code's
+      dispositions). It found 139 items: 128 confirmed, 6 confirmed by the relayed routing alone, 1 not checkable, **4
+      IMPRECISE, 0 FAIL**. Three are applied in these entries; the fourth, the run-time citation in the records'
+      `detail`, is the note above. It also re-derived all three outputs from the record files independently, byte for
+      byte.
+    - Nothing ran on the box, and the pod stays up (routing item 3). Nothing is pushed.
+
 - 2026-11-06 — **G-ANL-F3 — BUILD (m:291; ADDENDUM-m1 §2.5; the seat's answers of 2026-11-06, A1–A5 and B, routed by
   the PI): `scripts/m_analyze.py` extended in place, with B's F-6 and F-7 applied to `valence_core/mf3`, under order
   (a).** The analyzer's battery passes 525/525 checks and reaches all 538 coverage ids. A1's regression holds:
