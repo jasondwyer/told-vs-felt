@@ -21,6 +21,40 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-ANL-F3 (m:291; ADDENDUM-m1 §2.5 and §4 step 5; the prebuild answers' §9 item 2): STOPS before the
+  first edit to `scripts/m_analyze.py`, on three questions for the seat.
+  The routing is the prebuild answers' §9 item 2 ("G-SHAPE-F3 → G-ANL-F3 under Q3's rule"), under the PI's routing of
+  2026-11-06. The coordinating session relayed it after G-SHAPE-F3's commit (`1bf94a6`). Order (a) is open: no
+  `LOCK-m-OLMo-*.md` exists at HEAD or in the tree, and that session reports no pod up. This STOP fixes neither order.
+  - Q1: ADDENDUM-m1 §2.5 (3)'s byte-for-byte regression of Q-F0's VERDICTS cannot pass as written.
+    - The outputs of record name the analyzer that wrote them (`analyzer_sha256` `655e0f7f…`, `closure_sha256`
+      `a3bc7bb9…`, `package_sha256` `5f646db6…`), and m's package has already moved to `60199b36…` at `71cc23c`.
+    - PIN-14 refuses any VERDICTS run whose three hashes LOCK-m-F0 does not name.
+    - PIN-29 bars the battery from reading `data/m/ckpt` and `data/m/verdicts`, where the regression's inputs and outputs
+      live.
+    - Code recommends (R1): an in-process battery check that runs the extended computation on the committed inputs with
+      the run's identity bound to the record's, under a declared PIN-29 exception for Q-F0's seven released files, and
+      compares bytes.
+  - Q2: m:291 enumerates the v2 OLMo coordinate as 6³, PENDING included, while m:324 closes every checkpoint still
+    PENDING at the v2 posting. Code recommends (P1): each of the 218,855 tuples with a PENDING checkpoint asserts the v2
+    outputs' refusal, and the other 300,625 assert the full set.
+  - Q3: the build's scope. Code recommends building `verdicts --unit Q-F3`, `posting --posting v2` and a v2 placeholder
+    table now. Leaving them for a later round would move the blob again after LOCK-m-F3 v0.1 names it and, under (a),
+    after the OLMo locks name it, which Code reads Q3's rule as barring while an OLMo unit is open.
+  Code's planned readings for everything else are listed as PIN candidates in the block's §3, so the seat can strike
+  any of them now.
+  A blind values-check ran before commit (78 items: 63 confirmed, 1 FAIL, 12 IMPRECISE, 2 not checkable, relayed);
+  each FAIL and IMPRECISE item was re-checked at source and applied. The FAIL corrected A3\*'s value set: seven
+  values, never POSITIVE or REVERSE.
+  Not done: nothing is written to `scripts/m_analyze.py`; LOCK-m-F3 v0.1 is not started.** (Stamp verified at write
+  time: `date -u` → **Sat Nov  7 00:35:45 UTC 2026**.)
+
+  - **The block:** `results/raw/2026-11-06_ganl-f3_code-to-design_prebuild.md`.
+  - **Its values-check:** `results/raw/2026-11-06_ganl-f3_prebuild_valuescheck.md` (the report verbatim, with Code's
+    dispositions).
+  - **What Code does meanwhile:** nothing is written to the analyzer. The map of the analyzer by role and line is in
+    session scratch.
+
 - 2026-11-06 — **G-SHAPE-F3 — Q-F3's plumbing gate (m:290), the canonical run on the BUILD (F3) commit (`cd9756e`):
   PASS.
   "As G-SHAPE-F0 for the F3 templates, the reasoning header included" (m:290), read as the build design §7 composes it
