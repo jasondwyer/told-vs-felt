@@ -21,6 +21,90 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-ACQ (n) — PROPOSAL-n v0.2 §3's G-ACQ, §8 step 5, on the PI's "Now, in parallel": PASS on every
+  part run.**
+  - `allenai/OLMo-2-0325-32B-Instruct` at `b96024342a77` (G-DATA's tokenizer revision) is acquired on pod
+    `qny1x4v8padeke` as the hub ships it, in bf16, with no cast.
+  - Each of its 22 files is verified against the hub's own hashes. They are hashed into `data/olmo/manifest.json` as
+    the fifth entry, `olmo2_instruct` (`0415438`).
+  - Respawn (i) PASSES over five checkpoints (51 files). The one-forward hook-site check PASSES on attempt 2; attempt 1
+    was refused at the adapter's declared 8192-token default window, before any forward.
+  - **Not run: the BACKEND extension's 24 fresh-versus-cached reads, which wait for the n package (GA-5).**
+  - Six dated notes go to LOCK-n v0.1, and the second push's approval is recorded here, as `3b22158`'s note says.
+
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 03:57:23 UTC 2026**.)
+
+  - **Authority.**
+    - The PI's routing of 2026-11-06, quoted in full in the G-ANL-F3 STOP entry's close (`54bbfe5`): "G-ACQ
+      (PROPOSAL-n) on this box: [now, in parallel / after the campaigns]". To Code's question "When should G-ACQ run on
+      this box?", the PI answered in chat: "Now, in parallel".
+    - The seat's C3 (answers `4edfbb8e…ca42e`, committed at `54bbfe5`): "it is a download and a cast, not a stage, and
+      competes with nothing the OLMo gates do".
+    - Raw: [`2026-11-06_n-gacq.md`](results/raw/2026-11-06_n-gacq.md). Its §9 carries the box scripts, their outputs
+      (the two result JSONs included), the hub's listing and a capture of the box's state, byte for byte except that
+      progress-bar carriage returns are shown as line breaks.
+  - **Headroom** (`df -B1G /workspace`, GiB): 224 available of 466 before the pull, and 164 after the download and
+    after the move.
+  - **The download.** `snapshot_download` with `scripts/box_acquire_olmo.py`'s allow patterns (22 of the revision's 28
+    files) ran into a staging folder outside `/workspace/models`, 01:50:07Z → exit 0 at 02:02:59Z (771 s). It ran while
+    the pod session's smoke self-test was on the box; it and the verification ended before G-CAL-OLMo's runs began at
+    02:20:02Z.
+  - **Verification** against the hub's listing at the revision (CPU only; exit 0 at 02:06:46Z):
+    - all 22 files are present, with nothing missing or extra;
+    - each size equals the hub's; the 14 shards' sha256 equal the hub's LFS sha256; the 8 other files' git blob ids
+      equal the hub's;
+    - the shard headers are all BF16, 707 tensors, 32,234,279,936 parameters (the hub's total), with the index's
+      weight map agreeing (0 misplaced);
+    - the computed aggregate is `36f05404…0fdb`, as `scripts/box_hash_checkpoints.py` defines it;
+    - G-DATA's three tokenizer files are these bytes.
+  - **Into place.** After G-CAL-OLMo ended (`6ce8b9a`) and the pod session handed the box over:
+    - `/workspace/models/olmo2_instruct` holds 22 files, 64,478,373,025 bytes, with the downloader's metadata folder
+      moved aside, nothing deleted, and no OLMo-3 folder touched;
+    - `0415438` adds the manifest entry, with the four OLMo-3 entries byte-identical (file sha256 `293ad07f…` →
+      `d39e5066…`);
+    - the box repo went `1bf94a6` → `0415438` by bundle fast-forward, after the six untracked G-CAL files the pod
+      session left there were found byte-identical to `0415438`'s blobs and moved aside to
+      `/workspace/repo/box-untracked-gcal-2026-11-06/`.
+  - **The hook site** (`OLMoHFAdapter`, deterministic, bf16):
+    - attempt 1 (exit 1 at 03:17:10Z): `ValueError: declared choice_window 8192 exceeds the checkpoint's
+      max_position_embeddings 4096`, at construction, from the adapter's declared default (`olmo_hf.py:41–45`);
+    - attempt 2 (exit 0 at 03:20:35Z) passes the checkpoint's own cap of 4,096, and the check reads no window;
+    - `Olmo2ForCausalLM`, 64 layers, hidden size 5,120;
+    - one forward of a fixed 17-token sentence, with the adapter's capture hooks on every layer and
+      `output_hidden_states` on the same call: indices 0–62 are bitwise equal to `hidden_states[l + 1]`, and index 63
+      differs (150.89), consistent with the final norm;
+    - so the adapter's index *l* is the residual after decoder layer *l*, 0-based. Which index BK's "layer 32 of 64"
+      names is G-VEC's R check to settle;
+    - the mean residual norms of this sentence (37.07 at index 31, 37.09 at index 32) are descriptive;
+    - order: attempt 1 launched two minutes before `0415438` was committed, and attempt 2 ran during respawn (i). The
+      check only reads.
+  - **Respawn.**
+    - (i): `scripts/box_respawn_check.py` against the committed manifest at `0415438`, exit 0 at 03:27:32Z:
+      **INTEGRITY PASS, 51 files across 5 checkpoints**.
+    - (ii): the box's own, at `190ba90` on this pod (backend identifier `641ee466f4553b6a`, that entry's, not
+      recomputed). It is shared with A-m1's units, as G-ACQ allows.
+  - **The second push, recorded** (as `3b22158`'s note says this entry does):
+    - to Code's question "Push the three new local commits?" (`958e762`, `190ba90`, `273ca8f`), the PI answered in chat:
+      "Yes, push them";
+    - Code re-screened `1bf94a6..273ca8f` (no URL host outside `PUBLIC_HOSTS`) and pushed it;
+    - `273ca8f`'s message predates that word.
+  - **Dated notes for LOCK-n v0.1** (raw, end):
+    - **GA-1:** no cast. The hub's bytes are kept and verified, not re-serialized as the OLMo-3 four were; upstream
+      file identity is kept, and no model was loaded into CPU memory for the acquisition.
+    - **GA-2:** the revision is G-DATA's; the manifest records its 12-hex prefix.
+    - **GA-3:** staging during the pod session's smoke, and the move after G-CAL-OLMo.
+    - **GA-4:** the adapter's declared default window exceeds OLMo-2's 4,096 positions. No n window exists yet. The n
+      package declares them, and LOCK-n v0.1 holds each at or below 4,096. BK's sessions run 1,266–1,273 tokens.
+    - **GA-5:** the BACKEND extension's 24 fresh-versus-cached reads need n's cached read path. They run after §8
+      step 6's build, before LOCK-n v0.1 states §2.1's identity bound.
+    - **GA-6:** the hook-site check's norms decide nothing; R is G-VEC's.
+  - **Values-check:** a blind values-check (94 items: 71 PASS, 2 FAIL, 12 IMPRECISE, 9 UNVERIFIABLE) ran before commit.
+    - Each item was re-checked at source and applied.
+    - The raw, with Code's dispositions, is committed beside the G-ACQ raw.
+    - The two FAILs were GA-6's index-32 norm (37.09, not 37.07) and the missing record of the second push's approval.
+  - **Committed by path:** the raw, the values-check raw and this entry. Not pushed. §8's next node is step 6, the n
+    package build, on the laptop.
+
 - 2026-11-06 — **G-CAL-OLMo-{sft,dpo,instruct} (PROPOSAL-m v1.11 m:176, m:302, §5; ADDENDUM-m1 §4 step 4), on the PI's
   routing of 2026-11-06 and the seat's answers C1–C4: CONDITION (4) FAILS ON ALL THREE CHECKPOINTS. Each is NOT-RUN with
   reason "dose not completable" (m:176: "failure → that checkpoint NOT-RUN with reason 'dose not completable'").
