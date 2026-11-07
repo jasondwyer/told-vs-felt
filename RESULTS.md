@@ -193,6 +193,54 @@ applied to CLAUDE.md.
     dispositions).
   - **What Code does meanwhile:** nothing is written to the analyzer. The map of the analyzer by role and line is in
     session scratch.
+  - **The STOP's close (2026-11-06; the seat's answers, routed by the PI).** The seat's answers are committed by path
+    in the commit that adds this line:
+    [`_ganl-f3_design-to-code_answers`](results/raw/2026-11-06_ganl-f3_design-to-code_answers.md), sha256
+    `4edfbb8e3d08844e47a329a951f9c2dd381115f0fd92c8b2b77f2207777ca42e`, as routed.
+    - **What they rule** (Code's summary, as a finding aid; the answers are the record):
+      - A1: (R1), with a PIN-29 exception by blob for Q-F0's seven released files and mf3's three roots added to the
+        refused roots.
+      - A2: (P1).
+      - A3: all three parts of the scope now.
+      - A4: the riding texts confirmed by anchor. A5: none of Code's eleven PIN readings struck (they stay strikable
+        until LOCK-m-F3 v1.0), with two notes for the register.
+      - B: F-1 to F-7 ruled, and the review's finding 3 confirmed as the rule at every stage. F-6 and F-7 change
+        `valence_core/mf3` (F-7 a seat PIN at LOCK-m-F3 v0.1, set before G-ID-F3 runs); the answers do not say when
+        either edit lands.
+      - C1: order (a), and a second G-ANL-F3 STOP flips it to (b).
+      - C2: the three checkpoints batched per stage. C3: the pod stays up through the OLMo track; G-ACQ (PROPOSAL-n)
+        may start on the same box on the PI's word, Code checking volume headroom first (PROPOSAL-n §2.7). C4: the
+        pod-id PIN stands; one line in `/workspace/env.sh` exports `RUNPOD_POD_ID` from `/proc/1/environ`, quoted in
+        the G-CAL-OLMo entry, whose provenance must print `qny1x4v8padeke` or STOP.
+    - **Code's plan for B:** F-6 and F-7 are applied to `valence_core/mf3` in the G-ANL-F3 build, on the coordinating
+      session's relay of 2026-11-06 ("Apply B as written"); G-SHAPE-F3 then re-runs before LOCK-m-F3 v0.1 (N3).
+    - **Code's referent check:**
+      [`_ganl-f3_answers_referent-check`](results/raw/2026-11-06_ganl-f3_answers_referent-check.md). No item is
+      unresolved. Five minor residues are carried as dated notes:
+      - N1: F-5's A1 sizes are m:184's two columns.
+      - N2: A1's "PIN-14's posting path" is PIN-42's.
+      - N3: B's mf3 edits move mf3's package hash, so G-SHAPE-F3 re-runs before LOCK-m-F3 v0.1, its `1bf94a6`
+        artifact superseded by hand on the seat's ruling (PIN-S9), which that routing can carry.
+      - N4: C2's chain also carries the seat's G-CAL-OLMo read (m:271).
+      - N5: finding 3's line credits to the build's values-check what is F35's register row and the code's PIN.
+    - **Its blind values-check:**
+      [`_ganl-f3_answers_valuescheck`](results/raw/2026-11-06_ganl-f3_answers_valuescheck.md):
+      81 items, 67 confirmed, 1 FAIL (this line's summary gave F-6 and F-7 a timing the answers do not give),
+      10 IMPRECISE and 3 not checkable (relayed or chat-only); each re-checked at source and applied, with Code's
+      dispositions in the raw.
+    - **The routing, the PI's word, verbatim**, as the coordinating session relayed it from the parent thread:
+
+      > Routing — G-ANL-F3 answers and the pod — PI date 2026-11-06 (I confirm the date).
+      >   results/raw/2026-11-06_ganl-f3_design-to-code_answers.md
+      >     sha256 4edfbb8e3d08844e47a329a951f9c2dd381115f0fd92c8b2b77f2207777ca42e
+      >
+      > Go for G-CAL-OLMo on sft, dpo and instruct, smoke first.
+      > Order: [(a) with the second-STOP flip, as C1]. Batching: [as C2, three checkpoints per stage].
+      > Pod: stays up through the OLMo track. G-ACQ (PROPOSAL-n) on this box: [now, in parallel / after the campaigns].
+      > The PIN-29 exception of A1: [acknowledged].
+      > Run the answers as written. STOP on anything unresolved; minor residues as dated notes (the e9b5022 precedent).
+
+      The PI's choice on the G-ACQ line, in chat: "Now, in parallel".
 
 - 2026-11-06 — **G-SHAPE-F3 — Q-F3's plumbing gate (m:290), the canonical run on the BUILD (F3) commit (`cd9756e`):
   PASS.
