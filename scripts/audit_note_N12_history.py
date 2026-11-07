@@ -798,6 +798,11 @@ PUBLIC_HOSTS = {
     # history scan's public hosts so the ORCID can go in CITATION.cff?"): the ORCID registry's host, which
     # CITATION.cff's author entry carries in the URL form the CFF 1.2.0 schema requires for an orcid
     "orcid.org",
+    # the PI's word of 2026-11-06, in chat, "Allowlist and push", to Code's question "Push the seven local commits,
+    # with creativecommons.org allowlisted first?": the Creative Commons host, whose CC BY 4.0 legal-code URL
+    # data/n/bk/LICENSE (Berg & Kaiser's licence notice, committed at 5916097) carries, and which the PROPOSAL-n
+    # v0.2 entry's values-check raw (results/raw/2026-11-06_n-v0_2_entry_valuescheck.md) quotes
+    "creativecommons.org",
 }
 # What an IDENTIFIER value is doing in a tracked code file at HEAD (read in context by Code).
 CODE_LOCATOR_NOTES = {
