@@ -72,6 +72,22 @@ applied to CLAUDE.md.
     Each of its items was re-checked at source.
   - **Next:** the seat's answers to Q0–Q4 and v0.2; then p §8 step 3 commits p. Q-F3's lock chain waits for the
     coordinating session's word. Not pushed.
+  - **Close (PI date 2026-11-07).** The design seat's answers
+    ([`2026-11-07_p-preread_design-to-code_answers.md`](results/raw/2026-11-07_p-preread_design-to-code_answers.md),
+    sha256 `ab40f470b93a7eae58a9f1552eab17e166d6159c3f0bdac917627fc7385cb08b`) are committed here by path, as the PI placed them.
+    - They answer Q0–Q4 and rule G-ANL-F3's FLAGs N1, N9, N10, N12 and N13 (`e0b4f2c`).
+    - The PI's routing, in chat, verbatim:
+
+      > 1. G-ANL-F3: hygiene commit (N9, N12) → G-SHAPE-F0/F3 re-runs → canonical `ganl` → LOCK-m-F3 v0.1 → G-TIME-F3 [go]; N10 m:312 stands [confirmed]; N13 no change [confirmed].
+      > 2. N1: restore the preprint’s bytes of record, banner to `PREPRINT-v1_0-draft.STATUS.md`, N18’s constants and README-NOTE:78 updated [go].
+      > 3. PROPOSAL-p v0.2: [route to step 3]; route (b) and the register [accepted]. Then build → G-SHAPE-p → G-CAL-p on your go for the box.
+
+    - PROPOSAL-p v0.2 (`PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md`, sha256 `42f2977b…3b32`) stays
+      untracked until p §8 step 3, which follows Code's referent check of its §9 and of its "what changed" list
+      against these answers (their §9 item 2).
+    - Each routed item lands at its own commit: item 1's chain, in the order the answers' §7 gives; N1 in its own
+      commit; p's step 3, then its build and G-SHAPE-p. G-CAL-p waits for the coordinating session's go for the
+      box, as item 3 has it. Not pushed.
 
 - 2026-11-06 — **PROPOSAL-m OLMo-sft — NOT-RUN (m:358 step 17; m:176, m:302, m:324): "dose not completable", at
   G-CAL-OLMo-sft's condition (4) of 2026-11-06. The analyzer's not-run path wrote the output from Code's record file, on
