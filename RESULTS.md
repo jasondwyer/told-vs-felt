@@ -125,6 +125,11 @@ applied to CLAUDE.md.
     `273ca8f`, though `273ca8f`'s message says "The approved push covers 9cbacdb..1bf94a6; this commit, 958e762 and
     190ba90 are not in it". `190ba90`'s files were scrubbed of host address and local paths before commit. Whether the
     second push had the PI's word is for the routing session and the PI to say; it has been told.
+    - **Closed, 2026-11-06 (dated note): the second push was approved.** The routing session reports the PI's word in
+      its thread. To its question "Push the three new local commits?", which listed `958e762`, `190ba90` and
+      `273ca8f`, the PI answered "Yes, push them". It re-screened `1bf94a6..273ca8f` (no URL host outside
+      PUBLIC_HOSTS) and pushed `273ca8f:main`. `273ca8f`'s message was written before that word, so it describes the
+      first approval only. The routing session's G-ACQ entry records the approval verbatim; this note relays it.
 
 - 2026-11-06 — **G-CAL-OLMo — APPARATUS SMOKE on pod `qny1x4v8padeke`, on the PI's word of 2026-11-06 ("Yes,
   smoke"). Not G-CAL-OLMo: no G-CAL item, key, seed or grader ran, and nothing was written under `data/`. The path
