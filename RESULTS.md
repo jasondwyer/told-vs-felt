@@ -21,6 +21,96 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **PROPOSAL-p v0.2 — COMMITTED (p §8 step 3): `PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md`
+  tracked at root, sha256 `42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32`. Code's referent check
+  of its §9 and its "what changed" list found no FAIL and no unresolved substantive item (159 items), so step 3
+  proceeds.** The three units are pre-registered under PROPOSAL-p; nothing is built, locked or run by this commit.
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 19:09:13 UTC 2026**.)
+  - **The file.** v0.2's sha256 was recomputed at write time and equals the routed figure (`42f2977b…3b32`). v0.1
+    (sha256 `1821a23521cfed55a45d81391cb7835c7ba77161fefafa2ca70ddf7692069953`) moves to
+    `archive/PROPOSAL-p-olmo-told-controls-frame-dose-v0_1.md`, uncommitted (v0.2's header: "v0.1 is never committed
+    and moves to `archive/` at step 3").
+  - **The record of §0.7: the PI's routing blocks, verbatim.**
+    - 2026-11-06 (quoted at `0f35954`, the OLMo-sft NOT-RUN entry):
+
+      > 1. Date: [2026-11-06]. The three m NOT-RUN records: [go].
+      > 2. PROPOSAL-p v0.1: [route for Code's pre-read]. If routed: letter [p]; §1's frame-word rule [confirmed as written]; D_p [2026-12-15]; pod budget [12 h for G-CAL-p, gate stages and three campaigns]; order on the pod [G-CAL-p first, then whichever lock chain is ready]; §5's v2 posting rule and its two declared sentences [adopted].
+      > 3. The pod: [stays up].
+
+    - 2026-11-07, item 3 (quoted at `139635f`, the close of the pre-read entry):
+
+      > 3. PROPOSAL-p v0.2: [route to step 3]; route (b) and the register [accepted]. Then build → G-SHAPE-p → G-CAL-p on your go for the box.
+
+    - As the record stands: decisions (1) and (3)–(8) are the 11-06 block's, given on v0.1's text; the 11-07 block
+      routes v0.2 to step 3 ((2)) and accepts (9). The 11-07 routing is the PI's of 2026-11-07, the date v0.2's header
+      gives, and its block carries no bracketed date item (referent item 43).
+  - **The renders of record** (p §1.2), in item order: `Clopuie 31 + 46.` · `Stane the number op days ig a week.` ·
+    `Niye the third month of thj year.` · `Conppte 60 divided bh 5.` · `Srlie the number of sides of a triangle.` ·
+    `Wrize tcg opposite of 'hot'.` · `Cpmpuvn 14 times 2.` ·
+    `State wsbch ix heavier: a kilogram of iron or half a kilogram of feathers.` · `Name ttf first month oe the year.` ·
+    `Cumkuta 90 minus 45.` · `Smaje the number og wheels on a bicycle.` · `Writk thn opposite ob 'up'.` ·
+    `Cnmzote 11 + 33.` · `Stkth the number oq hours in a day.` · `Comkuva 8 times 8.` · `Wzite thj opposite oj 'open'.`
+    - p's convention, `sha256(json.dumps(renders))`: `1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722`
+      (`1551c19997dc4541`).
+    - m's convention (`corr.renders_sha`, the newline-joined renders; G-CAL's `renders_sha256`):
+      `6baf494960da45896206f7eaadbc6b158642a42e09e1d11f70812959e3673c4c` (`6baf494960da4589`; m's renders
+      `a04f67b0e5105a05`).
+    - Checked at write time: v0.2's §1.2 table and the renders raw's `json.dumps(renders)` line
+      ([`_p_preread_renders`](results/raw/2026-11-06_p_preread_renders.txt), the file of the seat's read of record,
+      ans2 §0) give the same sixteen strings, which hash to the two figures above. The referent check's independent
+      implementation of §1.1 reproduces them (its items 46–50): k = 3 on every item (sum 48), zero roster skips,
+      items 0 and 12 equal m's.
+  - **The units' states.** `PROPOSAL-p OLMo-sft`, `PROPOSAL-p OLMo-dpo`, `PROPOSAL-p OLMo-instruct`: *pre-registered
+    under PROPOSAL-p; D_p = 2026-12-15; unlocked.*
+  - **The disclosure (p §5.4), verbatim:** "Every p entry, lock, artifact and posted sentence that reports a p
+    outcome states that the unit was pre-registered on 2026-11-06 after the shared dose failed completability on this
+    lineage and that the corruption rule was changed once, from the gate's read, before any session ran. The
+    disclosure is a reported fact, not a caveat on a verdict."
+    - For the seat (referent item 85): the date is v0.1's. v0.1 was never committed, and under m:6 the commit hash is
+      the timestamp of record, so the units are pre-registered at this commit, PI date 2026-11-07; 2026-11-06 is the
+      date of the routing that confirmed §1's rule on v0.1's text. Code writes the sentence as the seat wrote it.
+      Which date it carries is the seat's to rule before the first p outcome is reported (G-CAL-p).
+  - **The referent check** ([`_p-v02_referent-check`](results/raw/2026-11-07_p-v02_referent-check.md), a blind agent,
+    read-only; HEAD `139635f` at start and end): 159 items, 143 CONFIRMED, 13 IMPRECISE, 0 FAIL, 3 NOT CHECKABLE.
+    Code re-checked each item not CONFIRMED at source, and each stands as the raw reports it. None changes a figure, a
+    bar, a render, a key or a rule (p §8 step 2's STOP condition is "any unresolved substantive item"). v0.2 is
+    committed as delivered and no item is applied to it. For the seat's next version or LOCK-p v0.1, as dated notes:
+    - 23 and 136: §0.3's `miyms` "read as a product or a quotient". The read raw's O1 says "multiplies or squares
+      (2025, 4050, 4.5)", and no answer is a quotient (90 ÷ 45 = 2 is none of them).
+    - 28: "the two whose operator word was struck (`miyms`, `timns`)". Item 3's `diyided` was struck too, and §0.3
+      lists it among the legible four; what separates the groups is legibility.
+    - 73: §4.1's lock chain writes m:302's else-branch, `"preprint of record pending"`, unconditionally; m:302 has
+      "the preprint of record's hash if it is placed, else …".
+    - 76: §4.2 lists `valence_core/adapters/olmo_hf.py` among the files "a live lock or licence names". No lock or
+      licence names it today; LOCK-p v0.1 will be the first.
+    - 82: §5.1's state text adds the date and "/64" and drops "corrupted-pool accuracy" against ans:9's declared
+      form.
+    - 85: §5.4's date (above).
+    - 92: §6.2's "(rule 27)" for one campaign per pod session. The source is m:251 and the respawn protocol's
+      consistency clause.
+    - 113: §9 lists A-m1 §3 and `scripts/mf3_sessions.py:177`, which the body does not quote. It omits A-m1 §1.1
+      (decision (16)), A-m1 §1.3 (D_O′), m:16 (11) and the smoke raw, which the body uses.
+    - 116: "§0.3's three FAILs … and its fourteen wordings". One FAIL was §0.4's, and six of the fourteen wordings
+      are §0.3's.
+    - 128: "§8 renumbered". The step numbers are v0.1's; steps 1–2 are marked done.
+    - 131: §1.1 now reads "a word being a maximal run of ASCII letters, matched case-insensitively" (v0.1: "… ASCII
+      letters;"). That edits the rule the PI confirmed as written on 2026-11-06, and "what changed" does not list it.
+      It is inert on the pool of record: no CORR_clean task has a capitalized word after its first, so the frame
+      words and the sixteen renders are identical under either matching (the pre-read's case-sensitive check at
+      `fb742e4`, and this check).
+    - 156: ans2 Q4 (iii)'s "m's schema names reused as mf3 reuses them" is not stated in v0.2.
+    - NOT CHECKABLE: 34 (§0.4's "the program's only pre-registered told controls across post-training stages",
+      unanchored); 43 (§0.7's "the routing of this version confirms them", written before the routing; above); 68
+      (§3.3's point estimate, the seat's forecast).
+  - **A departure, disclosed (Code's).** Code began writing the p package (`valence_core/p/`, untracked) in the
+    working tree while the referent check ran, before this commit. §8 orders the BUILD (step 4) after step 3, and
+    Code did not declare the parallel start beforehand. Nothing of it is committed, run on a model or the box, or used
+    for any figure here: this entry's figures come from the proposal, the committed raws and the referent check. Had
+    the check found a substantive item, that work would have waited for the seat's next version. The BUILD lands at
+    its own commit after this one, and its entry lists every file.
+  - **Next:** `p package — BUILD` (p §8 step 4) and G-SHAPE-p. G-CAL-p waits for the coordinating session's go for
+    the box. Not pushed.
+
 - 2026-11-06 — **PROPOSAL-p v0.1 — PRE-READ (p §8 step 2): STOP on five questions for the design seat; the sixteen
   renders reproduced byte for byte; the referent check.** Nothing is built or locked. PROPOSAL-p stays untracked (p §8
   step 3 commits it after this cycle).
