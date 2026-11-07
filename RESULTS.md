@@ -21,6 +21,54 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-ANL-F3 — the canonical run on N1's HEAD (`9480f9b`): PASS. `python scripts/m_analyze.py ganl`
+  writes `data/m/gates/G-ANL-F3.json` (sha256 `b91a8c67…936c`), once, against committed blobs. The battery passes
+  525/525 and reaches all 538 coverage ids. The analyzer is `d347ea0c…5e48`, and the regression records the restored tree.**
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 23:59:31 UTC 2026**.)
+  - **The order.** The seat's answer of 2026-11-07 on N1
+    ([`_n1-battery_design-to-code_answers`](results/raw/2026-11-07_n1-battery_design-to-code_answers.md), §1, at
+    `f105bdd`): "the check fix → N1 → the canonical `ganl` on that HEAD → LOCK-m-F3 v0.1 → G-TIME-F3", with "N1
+    before `ganl` so that `G-ANL-F3.json` records the restored tree". The check fix is `10a2bbb`; N1 is `9480f9b`
+    (the coordinating session's commit).
+  - **The G-SHAPE map check, before anything ran** (the answer's §1: "Code checks whether either G-SHAPE map lists
+    `m_analyze.py` before running anything; if one does, that gate re-runs once more on the final HEAD").
+    - Neither map lists `scripts/m_analyze.py`. G-SHAPE-F0's artifact (`38ba8e28…3b51`) records 42 file entries (sources,
+      import closure, tooling) and G-SHAPE-F3's (`0c9de56e…1461`) 52 (sources, import closure).
+    - Every one of the 94 entries' recorded sha256 equals HEAD's blob and the working tree at `9480f9b`. No file either
+      map lists changed between its run's commit (`0786c11`, `f9700ba`) and `9480f9b`.
+    - So neither gate re-runs.
+  - **The run** (`9480f9b`, tracked files unmodified; Code stamp 2026-11-07 23:34:27 UTC at the start):
+    - Before the battery, `ganl` checked that its files are committed at HEAD with identical working-tree bytes (PIN-39
+      widened, PIN-V2-23): the analyzer, both placeholders, the proposal, ADDENDUM-m1, `valence_core/m/*.py`,
+      `valence_core/mf3/*.py`, and both closures' modules and data.
+    - The battery: 525 of 525 checks pass (`EXPECTED_CHECKS` 525; a skipped assertion is a failure), and all 538 coverage ids are reached. The v2 space's 519,480 tuples are each asserted (481 × 5 × 216). The battery's own check finds that it wrote nothing canonical.
+    - `F3R-PREPRINT-OF-RECORD` reports `('45b67246…', '45b67246…', True)`: the regression is served by `1523cce`'s blob, and the file in the
+      tree is the table's (N1).
+    - The artifact: `data/m/gates/G-ANL-F3.json`, 81,161 bytes, sha256 `b91a8c672e85f1d493444c6b6388588ab0a646a8c36971320421c9f03aef936c`, written (no file existed before). Schema `m-ganl-f3-v1`, verdict PASS, no timestamp and no HEAD.
+    - Raw: [`_ganl-f3`](results/raw/2026-11-07_ganl-f3.txt) (local roots scrubbed to `<repo>` and `<tmp>`).
+  - **What the artifact binds** (read back from the file):
+    - the analyzer `d347ea0c…5e48`; m's `package_sha256` `7756dcf4…49bb`; the base closure `a3bc7bb9…b22b` (15
+      modules) and the Q-F3 closure `d19f336d…f039` (22 modules);
+    - the proposal `42ab36ec…6c6b`, ADDENDUM-m1 `ea08322d…9001`, the placeholder `44f1a2d4…0af9` and the v2
+      placeholder `cd3df574…d240`;
+    - the flag of record, `data/m/gates/G-CAL_model-free.json` (`aad8096a…34af`), value true;
+    - counter (c)'s lexicons, `g_anl_f3.counter_c`; the sha256 of its compact sort-keyed JSON is `1b7d5a01…8028`, the
+      value LOCK-m-F3 v0.1 freezes;
+    - the regression's preprint block (`g_anl_f3.regression.preprint`): the blob, the table and the file in the tree
+      are all `45b67246…7a41`, and `head_file_is_table` is true;
+    - v1 unchanged (`g_anl_f3.v1_unchanged`): 2,160 of 2,160 evaluations equal. The battery's outputs hash
+      (`battery.outputs_sha256`) begins `83df98b12a27be8e`, as in the BUILD's self-test (`e0b4f2c`).
+    - A second run, not of record, to a test directory (`ganl --out`, the same HEAD and tree) writes the same bytes: 525/525, sha256 `b91a8c67…936c`, `cmp` identical. The raw's last section records it.
+  - **Values-check:** a blind check of this entry and the raw ran before the commit: 48 items, 45 PASS, 1 IMPRECISE, 2 FAIL.
+    - The two FAILs were Code's. The lexicons hash's last four characters were written `8088` for `8028`. The
+      raw's first line carried G-ANL-F0's "no checkpoint, no pick", although A1's regression reads Q-F0's released
+      files by blob.
+    - Both are fixed, as are the IMPRECISE scrub note and two layout points.
+    - Each item was re-checked at source before it was applied. The raw, with Code's dispositions, is committed
+      beside ([`_ganl-f3_valuescheck`](results/raw/2026-11-07_ganl-f3_valuescheck.md)).
+  - **Next:** LOCK-m-F3 v0.1. It names this artifact, the analyzer, the lexicons and the re-run G-SHAPE-F3, with N10's
+    dated note. Then the `time` wiring at its step, and G-TIME-F3's six sessions. Not pushed. Committed by path.
+
 - 2026-11-07 — **N1 — the preprint's bytes of record restored, its status banner moved to a sidecar, on the seat's
   ruling (answers of 2026-11-07, §7, at `139635f`; amended by its answer to Code's STOP, at `f105bdd`) and the PI's
   routing.**
