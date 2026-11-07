@@ -21,6 +21,38 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-SHAPE-F3 — the canonical re-run on `993eba1`, before LOCK-m-F3 v0.1: PASS.
+  N3: B's F-6 and F-7 moved mf3's package at `e0b4f2c`. The hygiene commit then edited `scripts/mf3_sessions.py`, a
+  G-SHAPE-F3 tooling file. So G-SHAPE-F3 re-runs as the seat's answers of 2026-11-07 order it (§7: "… →
+  `mf3_sessions.py` literal → G-SHAPE-F3 re-run (N3)"), and the old artifact is superseded by hand under PIN-S9 on that
+  word. Model-free: no model, no generation, no pod; Layer T reads the Qwen tokenizer of record offline.**
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 19:39:06 UTC 2026**.)
+  - **The supersession:** the artifact of record (sha256 `0f9b7bb9…6e9c`, committed at `1bf94a6`) was moved by hand
+    with `git mv` to
+    [`G-SHAPE-F3.superseded-2026-11-07.json`](data/mf3/gates/G-SHAPE-F3.superseded-2026-11-07.json), committed with
+    this entry.
+  - **The re-run** (`python scripts/mf3_sessions.py gshape` on HEAD `993eba1`, every source committed;
+    the `git mv`, then the run: 19:24:56Z–19:25:02Z, after G-SHAPE-F0's):
+    - PASS. Layer A: A1 2,816, A2 1,408 and A3 1,408 placements, 0 fired, coverage exact. The required controls fire
+      on every placement: seg+gold 2,816/2,816, 1,408/1,408 and 1,408/1,408; reasoning+seg+gold at the free phase 1,408/1,408,
+      704/704 and 704/704. Render-as-response, reported and not required: 256/2,816, 128/1,408 and 128/1,408.
+    - Layer R: 8,448 line placements, 0 fired, coverage exact; its control 8,448/8,448. Layer S: 0 problems. Layer T:
+      640 joins, 0 failed (tokenizer sha256 `87a7830d63fcf43b…`).
+    - Against the superseded artifact, 6 of the 242 leaves differ, all provenance:
+      - mf3's package, `44110d15…` → `f30ad505…`;
+      - the sources digest;
+      - the sha256s of `scripts/mf3_sessions.py` (the hygiene commit) and of mf3's `guard.py`, `readrule.py` and
+        `stages.py` (B's F-6 and F-7, `e0b4f2c`).
+      Every result is identical.
+    - The new artifact is [`data/mf3/gates/G-SHAPE-F3.json`](data/mf3/gates/G-SHAPE-F3.json), sha256
+      `0c9de56e17d0872851f941473933c4811a79e754cfd99ebcdf589ca5f4e91461`.
+    - The raw is [`_mf3-gshape-f3-rerun`](results/raw/2026-11-07_mf3-gshape-f3-rerun.txt), local paths scrubbed.
+  - **Checks before the commit:** a blind values-check of both re-run entries and their raws (56 items: 51
+    CONFIRMED, 3 IMPRECISE, 0 FAIL, 2 NOT CHECKABLE; each correction applied;
+    [`_gshape-reruns_valuescheck`](results/raw/2026-11-07_gshape-reruns_valuescheck.md)).
+  - **What follows:** LOCK-m-F3 v0.1 names this artifact (m:292; the seat's answers §9 item 1), after the canonical
+    `ganl`, which waits for the ruling on N1 against the battery check F3R-PREPRINT-OF-RECORD. Not pushed.
+
 - 2026-11-07 — **G-SHAPE-F0 — the canonical re-run after the G-ANL-F3 hygiene commit (`993eba1`), before LOCK-m-F3
   v0.1: PASS.
   The hygiene commit edited `scripts/m_sessions.py`, a TOOLING_FILES entry of PIN-S10's map, and moved m's package

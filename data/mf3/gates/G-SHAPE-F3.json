@@ -269,7 +269,7 @@
    "scaffold": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5",
    "schedule": "f262f9e0120bcf6e694c0850b56dc3a19ab3c931b28ba92d47009f9f49a72d0d"
   },
-  "package_sha256": "44110d15941465c59ad01860b6027b98677aac361e76f0fd9185f392813a3842",
+  "package_sha256": "f30ad5053904ac222a81fa220f142b5f11f4da7965fdb8cdb83cd9b19e786310",
   "proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md",
   "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
   "sources": {
@@ -277,7 +277,7 @@
    "data/configs/e2b_audit_v2.json": "e89e4cd0cae31671a872f36d0cd0c34bcfc63b2d78cce366f172a8fabb453da2",
    "data/configs/f_termination_patterns.json": "014b3940d62401b0b698e803145362b56c0b74de7d9f087a4fce0ecb111c2f46",
    "data/f/pools.json": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
-   "scripts/mf3_sessions.py": "48008a53440d201044268bf48f118f79ed7ed82f7c894820e25726a2aba164cf",
+   "scripts/mf3_sessions.py": "fad31c20e44451db7367391ea14e1b9560527390dc8d249f03689d9950900cbb",
    "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
    "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
    "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70",
@@ -298,21 +298,21 @@
    "valence_core/mf3/banner.py": "0cd5e0acbc3a83e090c29e48f47ff2ad5a68638c6b41ef0d1635e9afa2977e6d",
    "valence_core/mf3/bars.py": "908355d2aa23a7907ddc6c4a81dad581c302e9a30fe311a2e0dde93481b047a9",
    "valence_core/mf3/gshape.py": "4314a57081a4e700d7d4e45db36e573bd0415281da32328537dccf99689e7a52",
-   "valence_core/mf3/guard.py": "5dc1d9ff46989be5b6f1fb8aa52472e176357189f2c7ea65c7ef5406b23ca23f",
+   "valence_core/mf3/guard.py": "396b5ca054b788b9d3a51153db3bfae594bb2c14fb00ba9fd305cb07efad9c5b",
    "valence_core/mf3/keys.py": "d9c24dd9b8a74c142e259d74709335611011386a8a967e90ff75499e5dfffaab",
    "valence_core/mf3/lines.py": "ceb2e06ffc0f187bd67182ff011c461ca07e7731bda36ed66e0c64b49f7bcb04",
-   "valence_core/mf3/readrule.py": "aa09054ae0e4f9e48d54038bbcd7af53e3995502efe1c79a83ea2cd02bf801e3",
+   "valence_core/mf3/readrule.py": "87eed2ae20ac913f4a2fe94f52cf542f8ccd06e82551b00acd69f2410c0c6671",
    "valence_core/mf3/resume.py": "5a6fd3841c5c5ec9303937f399a051d700a22c6632a7ce61a67190dee36e63a6",
    "valence_core/mf3/runner.py": "f2c3b8e8ddcc215560becd71ac6725d76627f09930f829ec140832364446f632",
    "valence_core/mf3/scaffold.py": "225d0833b11d6331631dcccab7fef731f8de756564f33ed496e56f1bab8690df",
    "valence_core/mf3/schedule.py": "b86061264cd2d4e5532ac645d5ad1e7be2964c80e63e6fe24e11f3f09bca929e",
-   "valence_core/mf3/stages.py": "83e9035e8059432e2477830fe02ede19d4dde4f25af0b31729cbb6ab6bab93ac",
+   "valence_core/mf3/stages.py": "02ecdaa0209ca88b9d31d83ba33431fd73f9326e876e74eec4beeb50f73b5ecb",
    "valence_core/mf3/testing.py": "54cf92377c3d91d6b845a813433268c7dad50708ea19613f69001f5452ea05ad",
    "valence_core/mf3/verify.py": "76e311c11775e95eb014b8de2910b31a558c71e676e7566eab107e416cdc1588",
    "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
    "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
   },
-  "sources_digest": "8bbfe59fcc93aa94983d23770bbbe5aa55133243e6147ce8627b0931728d5756"
+  "sources_digest": "b1bf20d83e98d2fdbc5eb4298f7cc250712e1c16f38291cc0997ce783983a7c7"
  },
  "runner_dynamic_evidence": {
   "checks": [

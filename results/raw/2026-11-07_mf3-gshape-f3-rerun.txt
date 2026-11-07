@@ -1,0 +1,11 @@
+# G-SHAPE-F3 -- the canonical re-run on HEAD 993eba1 (N3: B's F-6 and F-7 moved mf3's package at e0b4f2c; the hygiene commit edited scripts/mf3_sessions.py, a G-SHAPE-F3 tooling file), on the seat's s7 order under PIN-S9: `python scripts/mf3_sessions.py gshape` in the repository, 2026-11-07 19:24:56Z-19:25:02Z (Code's stamps, covering the git mv and then the run), after `git mv` of the artifact of record (sha256 0f9b7bb9...6e9c) to data/mf3/gates/G-SHAPE-F3.superseded-2026-11-07.json. Output verbatim; the trailing EXIT line is the shell's; local paths scrubbed (<repo>).
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py gshape
+G-SHAPE-F3 canonical run (every source committed at HEAD and unedited)
+G-SHAPE-F3 inputs: renders sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372; proposal sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b; mf3 package sha256 f30ad5053904ac222a81fa220f142b5f11f4da7965fdb8cdb83cd9b19e786310; sources digest b1bf20d83e98d2fdbc5eb4298f7cc250712e1c16f38291cc0997ce783983a7c7 (38 files); committed at HEAD: True
+G-SHAPE-F3 Layer A A1: 2816 placements, 0 fired, coverage exact True; reasoning+seg+gold 1408/1408; render-as-response 256/2816; seg+gold 2816/2816
+G-SHAPE-F3 Layer A A2: 1408 placements, 0 fired, coverage exact True; reasoning+seg+gold 704/704; render-as-response 128/1408; seg+gold 1408/1408
+G-SHAPE-F3 Layer A A3: 1408 placements, 0 fired, coverage exact True; reasoning+seg+gold 704/704; render-as-response 128/1408; seg+gold 1408/1408
+G-SHAPE-F3 Layer R: 8448 line placements, 0 fired, coverage exact True; control 8448/8448
+G-SHAPE-F3 Layer S: 0 problems; Layer T: 640 joins, 0 failed (tokenizer sha256 87a7830d63fcf43b)
+G-SHAPE-F3 PASS <repo>/data/mf3/gates/G-SHAPE-F3.json (written)
+EXIT=0
