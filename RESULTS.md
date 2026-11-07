@@ -21,6 +21,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **N1 — the preprint's bytes of record restored, its status banner moved to a sidecar, on the seat's
+  ruling (answers of 2026-11-07, §7, at `139635f`; amended by its answer to Code's STOP, at `f105bdd`) and the PI's
+  routing.**
+  - `PREPRINT-v1_0-draft.md` is back at `1523cce`'s blob (sha256 `45b67246…7a41`), which the table of record and
+    LOCK-m-F0 bind.
+  - The banner's text heads the new `PREPRINT-v1_0-draft.STATUS.md` verbatim.
+  - N18 accepts and records that sidecar form, and README-NOTE.md's lines 78 and 214 are updated.
+  - The commit follows `10a2bbb`, the battery-check fix that the seat's order (b) puts first. The tag
+    `note-2026-10-v2` is untouched.
+
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 23:32:13 UTC 2026**.)
+
+  - **The routing, verbatim:**
+    - item 2 of 2026-11-07: "N1: restore the preprint’s bytes of record, banner to `PREPRINT-v1_0-draft.STATUS.md`,
+      N18’s constants and README-NOTE:78 updated [go]";
+    - after the STOP: "2. N18’s sidecar case [confirmed]; README-NOTE:214 fixed with N1; gitleaks pin left
+      [confirmed]."
+    - Raw: [`2026-11-07_n1-preprint-bytes.md`](results/raw/2026-11-07_n1-preprint-bytes.md).
+  - **Why it was held.** The battery check `F3R-PREPRINT-OF-RECORD` asserted that the file at HEAD is not the bytes
+    of record, so N1 would have failed the battery and stopped `ganl`.
+    - Code sent a STOP (`9838664`), and the seat ruled order (b) (`f105bdd`).
+    - The check now asserts only that the regression is served by the blob of record (`10a2bbb`).
+  - **The file.**
+    - Before: `32aefcc`'s blob, `5d677a72…4467`, 89,267 bytes, 470 lines.
+    - After: `45b67246…7a41`, 88,668 bytes, 468 lines, byte for byte `32aefcc`'s parent blob.
+    - The diff removes exactly the banner line and the blank line after it (599 bytes).
+  - **The sidecar.** 892 bytes, sha256 `6277f6f4…4626`. Its first 599 bytes are `32aefcc`'s banner, byte for byte,
+    followed by one added sentence: the text moved because the table of record and LOCK-m-F0 bind the file's bytes,
+    as G-ANL-F3's N1 found.
+  - **N18** (`scripts/audit_note_N18.py`, 34 lines added; the reading confirmed by the seat).
+    - `PREPRINT_ROUTED` and `PREPRINT_BANNER` keep the tag's values. The release block quotes the first (N18's
+      `SOURCES` assert it), and the banner check reads `32aefcc` from history.
+    - New: `PREPRINT_STATUS`, and an on-disk case. A file equal to the banner commit's parent blob is accepted only
+      without `--preprint-pi-confirmed` and only if the sidecar begins with the banner's bytes, and the manifest
+      records the sidecar.
+    - Tests on the final bytes, in a scratch worktree: N18's positive run exits 0 with the sidecar case taken, and its
+      manifest hashes the final README-NOTE. The negative run, given the tag's value, stops with exit 2 and writes
+      nothing. The analyzer's battery on N1's tree passes 525/525, with `F3R-PREPRINT-OF-RECORD` reporting the tree's
+      file as the table's.
+  - **README-NOTE.md.**
+    - `:78`: its first sentence now describes the restored file and the sidecar, and two sources join its `src`
+      comment.
+    - `:214`: "patch v8's :264 … beneath its banner" becomes "patch v8's :262 does (:264 under the banner at the tag)",
+      with `@1523cce:262` added to its sources.
+  - **Dated notes:**
+    - **N1-a:** the ruling's three analyzer anchors, and the comment Code added at the STOP, by construct. The two
+      prose anchors (`:4480–4481`, `:9871–9872`) are reworded and the check (`:9983–9986`) is fixed, both in
+      `10a2bbb`; `:4676` is PIN-17's; this commit leaves the analyzer alone.
+    - **N1-b:** the gitleaks `RELEASE` pin of the tag's sha256 is left, as confirmed.
+    - **N1-c:** README-NOTE.md:242–243 and :254 describe the tag and stay.
+    - **N1-d:** the tag and N18's record there stand.
+    - **N1-e:** N18's manifest `round` field and its sidecar-case texts keep their pre-tag wording. Its .md line
+      "equals that blob: NO" compares against the banner commit's blob, so in the sidecar case it reads as false.
+  - **Values-check:** two blind checks ran before the commit.
+    - The first: 38 items, 28 PASS, 9 IMPRECISE, 1 FAIL. The FAIL was the battery conflict, resolved by the seat's
+      order (b).
+    - The second, on the revised drafts and the final bytes: 43 items, 40 PASS, 3 IMPRECISE, 0 FAIL.
+    - Every item was re-checked at source and applied, and the raw with Code's dispositions
+      ([`_valuescheck`](results/raw/2026-11-07_n1-preprint-bytes_valuescheck.md)) is committed beside.
+  - **Committed by path:** `PREPRINT-v1_0-draft.md`, `PREPRINT-v1_0-draft.STATUS.md`, `scripts/audit_note_N18.py`,
+    `README-NOTE.md`, the raw, the values-check raw and this entry. Not pushed. The preprint and README-NOTE are
+    release-surface files, so a push waits for the PI's word.
+
 - 2026-11-07 — **G-ANL-F3 — the check fix, order (b): one in-place analyzer edit makes the battery check
   `F3R-PREPRINT-OF-RECORD` state-independent and rewords the two prose anchors that gave the banner as the reason.
   The seat's answer of 2026-11-07 on N1 against that check ordered it, on the PI's routing of 2026-11-07. The analyzer

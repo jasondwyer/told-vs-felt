@@ -120,6 +120,15 @@ release block of 2026-10-27 gives for the file the tag is to hold, patch v8 unde
 banner, which is not a text of record; the script asserts that the value equals
 PREPRINT_ROUTED, the value on that block's lines 10 and 40, and the manifest records it as
 that routed sha256, not as a confirmation of a text of record.
+
+Round 6 (2026-11-07; the design seat's answers of 2026-11-07, section 7, N1, committed at 139635f, on the
+PI's go): the table of record and LOCK-m-F0 bind the preprint's bytes (45b67246...7a41), so the file
+returned to them -- the banner commit's parent blob -- and the banner's text moved, verbatim, to the
+sidecar PREPRINT_STATUS, which keeps the file labelled not a text of record. The tag note-2026-10-v2 still
+holds the bannered file; PREPRINT_ROUTED and PREPRINT_BANNER stay the tag's values (the release block
+quotes the first, and the banner check reads 32aefcc from history, not the disk). On disk the script
+accepts this sidecar form only without --preprint-pi-confirmed and only if PREPRINT_STATUS begins with
+the banner's bytes, and it records the sidecar.
 """
 import argparse
 import datetime
@@ -208,6 +217,10 @@ PREPRINT_REF = ("d6431e97", "222b8")  # block :21, "post-patch-v4 copy, sha `d64
 # abbreviates it (2fb0cf0:10)
 PREPRINT_ROUTED = "5d677a724652c418963ae835c27e72fa3d22416dc9f2001f4e414acbd9634467"
 PREPRINT_BANNER = ("32aefcc", ("45b67246", "7a41"))
+# Round 6 (2026-11-07; the seat's answers, section 7, N1, at 139635f): the file on disk is back at the banner
+# commit's parent blob (its bytes of record, which the table of record and LOCK-m-F0 bind), and the banner's
+# text, verbatim, heads this sidecar; PREPRINT_ROUTED and PREPRINT_BANNER above stay the tag's values
+PREPRINT_STATUS = "PREPRINT-v1_0-draft.STATUS.md"
 # Round 5: README.md (in the tree since dae2edc; edited at f5a580d, which the release block lists as "new `README.md`
 # (pointer to README-NOTE and the tag", 2fb0cf0:9, and again at f935864), which the PI's README.md pass edits before
 # N18's second run (da50cd1:60), is named (Code's addition)
@@ -547,6 +560,27 @@ def build(a, stamp):
                                                      "(patch v8 under its status banner, %s@%s:10)" % RB),
                         "sha256": None, "on_disk_matches_block_reference": True, "block_reference": bref,
                         "pi_confirmation": None}
+        elif ps == par_sha:
+            # round 6: the sidecar form -- the file is the banner commit's parent blob (its bytes of record), and
+            # the banner's text heads PREPRINT_STATUS verbatim
+            need(pconf is None, "--preprint-pi-confirmed %s is the tag's routed value, but %s on disk is its bytes "
+                                "of record, the banner commit's parent blob (round 6's sidecar form)" % (pconf, PREPRINT))
+            need(os.path.isfile(abs_(PREPRINT_STATUS)), "%s is at its bytes of record, but %s is not on disk" % (
+                PREPRINT, PREPRINT_STATUS))
+            with open(abs_(PREPRINT_STATUS), "rb") as fh:
+                side = fh.read()
+            need(side.startswith(ban_txt[:len(ban_txt) - len(par_txt)]),
+                 "%s does not begin with the banner %s carried from %s, verbatim" % (PREPRINT_STATUS, PREPRINT, ban_rev))
+            preprint = {"path": PREPRINT,
+                        "status": ("patch v8 at its bytes of record, the banner commit's parent blob, restored after "
+                                   "the tag on the design seat's ruling of 2026-11-07 (G-ANL-F3's N1): the table of "
+                                   "record and LOCK-m-F0 bind these bytes; the banner's text, verbatim, heads %s, so "
+                                   "the file stays labelled not a text of record; the tag holds the bannered file, "
+                                   "sha256 %s" % (PREPRINT_STATUS, PREPRINT_ROUTED)),
+                        "sha256": ps, "on_disk_matches_block_reference": False, "block_reference": bref,
+                        "pi_confirmation": None,
+                        "status_sidecar": {"path": PREPRINT_STATUS, "sha256": sha256_bytes(side),
+                                           "bytes": len(side), "begins_with_banner_verbatim": True}}
         elif pconf is not None:
             need(pconf == ps, "--preprint-pi-confirmed %s does not equal %s on disk (%s)" % (pconf, PREPRINT, ps))
             preprint = {"path": PREPRINT,
