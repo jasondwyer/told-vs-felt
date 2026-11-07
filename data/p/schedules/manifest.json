@@ -1,0 +1,24 @@
+{
+ "construction": "PROPOSAL-p v0.2 \u00a74.1: PROPOSAL-m v1.11 m:159-172 by reference (valence_core.m.schedule's builder, imported unchanged), under p's six OLMo key families (register entry (2))",
+ "files": {
+  "OLMo-dpo_campaign_A0-OLMo-dpo.json": "e1b51b382b0e7d20554d7f0d7ccdbc466168f10f74c175c988413b9de2f7cfaf",
+  "OLMo-dpo_campaign_A0s-OLMo-dpo.json": "079ad1eaa0234765c408884d9b77cd1baa67be62830540951426b0213cd10a31",
+  "OLMo-dpo_qual_A0-OLMo-dpo.json": "bf5c76d6f117392cd0c3a5bfdf2241919ab09f735ee343f068703dc0deafb9a9",
+  "OLMo-dpo_qual_A0s-OLMo-dpo.json": "d19515cb17e8c00c66fec4435ced2fb54249e005ad3678f887c200c8b7ca40f7",
+  "OLMo-dpo_time_A0-OLMo-dpo.json": "7127a7e2349d5171a6021e55cdfdcb1bddce1ce2ed2b9e79a073073b6bda1dea",
+  "OLMo-dpo_time_A0s-OLMo-dpo.json": "827aa9ea0c91db9f918b1b8d4cfa25f39d6a34df9efe03eafd067d42808666c5",
+  "OLMo-instruct_campaign_A0-OLMo-instruct.json": "3fd3e58739ac3d1207bf8e5821bc41b43bd23dd4cffc60dac890d154fa93e83c",
+  "OLMo-instruct_campaign_A0s-OLMo-instruct.json": "21c8f4b2edcaff6545d923dc212d8a1dfc1a9dcfaf6c3d260b2f3f103b1bc9b3",
+  "OLMo-instruct_qual_A0-OLMo-instruct.json": "f9ab4ebc9e8b2b6fe3a66f911f72c525535f8595ae6cc9b5e5a213361e56f821",
+  "OLMo-instruct_qual_A0s-OLMo-instruct.json": "77bcc070fa67d151333ea510288954c5f33488d54fac632a79d4020653c73154",
+  "OLMo-instruct_time_A0-OLMo-instruct.json": "c4b06a5124eebffb8cbc974d5d3b2c66e3b6e27864189511ba073450283d7639",
+  "OLMo-instruct_time_A0s-OLMo-instruct.json": "d171b647bb4bd7b3b5c322376cada8a1971ce3eba32e24ac6be3515f4a9f4ab7",
+  "OLMo-sft_campaign_A0-OLMo-sft.json": "56703ec998073cfc3e2371f7d46f759213ed8a7476fe7ac60de2db8ea6136fc3",
+  "OLMo-sft_campaign_A0s-OLMo-sft.json": "8140e3e5201115d1bac3e36013a05c86e016856fddaf40a74751aaaeaecaa209",
+  "OLMo-sft_qual_A0-OLMo-sft.json": "6938e232040a80ebb37fcf50b1e21ee031c55f18be9c4a8acc16d9e5508d83d0",
+  "OLMo-sft_qual_A0s-OLMo-sft.json": "377487dbdc0946c6260b3a1d2cde731962e24266df36065c533443327cb8b120",
+  "OLMo-sft_time_A0-OLMo-sft.json": "1ac7d2920e213148c76977fcbac26273e5725e78aec833fe75a8a4bfe118b537",
+  "OLMo-sft_time_A0s-OLMo-sft.json": "9cd29a32b2a6b13b13651c759eb5b80c0e2c19adf50545a2c6176f5f4d96010e"
+ },
+ "schema": "m-schedules-manifest-v1"
+}

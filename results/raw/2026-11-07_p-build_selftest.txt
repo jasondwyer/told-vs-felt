@@ -1,0 +1,106 @@
+# p package — BUILD: the p self-test of record on the final build (valence_core/p package_sha256 717958da…b900, scripts/p_sessions.py sha256 4d75cf03…6bde, as committed with this raw), on the laptop (the jlens venv), with no model and no pod: scripted test doubles drive every generation. Run after the last edit. Code stamp: Sat Nov  7 21:37:53 UTC 2026 (date -u, after the run); HEAD 9838664 plus the build's working tree. Local absolute paths scrubbed for the public origin: the repository's prefix shown as <repo>, the home directory as <home>, temp and scratch roots as <tmp> -- including roots cut by the self-tests' truncations, whose '...' markers and path tails are kept; nothing else changed. Tally: '103/103 p selftest checks pass'; exit 0.
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_sessions.py --selftest
+  [PASS] register: four entries, numbered 1-4 as ans2 Q0 declares them; (1) and (2) built, (3) and (4) declared
+  [PASS] register: every entry's kinds are among eligibility, keys, pins, Clock and roots (term (b)); each built entry admits exactly one replacement per attribute
+  [PASS] register: a built entry substitutes its declared replacement for the block and restores after it
+  [PASS] register: restoration holds after an exception inside the block (term (c))
+  [PASS] register: entries (3) and (4), an unknown entry, an undeclared attribute, a wrong module, a replacement other than the declared one and a stand-in carrying its qualified name are each a STOP (terms (a), (e))
+  [PASS] register: a site off the main thread is a STOP (term (d))
+  [PASS] corrupt: numpy's stream known answer is clean (every render rests on it)
+  [PASS] corrupt: each item's frame words are p §1.2's (first word + FUNCTION_WORDS, quotes excluded)
+  [PASS] corrupt: n_eligible under m and under p are p §1.2's (m -> p)
+  [PASS] corrupt: k = 3 on every item (the floor governs), k sums to 48, no roster skip
+  [PASS] corrupt: every changed position lies inside a frame word (and only there)
+  [PASS] corrupt: corrupt_p reproduces p §1.2's sixteen renders of record
+  [PASS] corrupt: both identifications hold (p's 1551c19997dc4541, m's 6baf494960da4589)
+  [PASS] corrupt: equality with m where p must equal m -- items 0 and 12 are m's renders (term (c))
+  [PASS] corrupt: corr._eligible_m is m's own after every call (restoration, term (c))
+  [PASS] corrupt: restoration holds after an exception inside the substitution (term (c))
+  [PASS] corrupt: m's renders are unchanged by p (corr.renders_m still gives m's sha a04f67b0e5105a05)
+  [PASS] corrupt: no roster word occurs in any render (both rosters, case-insensitive)
+  [PASS] keys: every p OLMo key is m's key with 'm-' replaced by 'p-' (m's construction, p's prefix)
+  [PASS] keys: the six families are p §4.1's (p-sched, p-olmo, p-olmo-time, p-olmo-qual, p-olmo-items, p-olmo-items-{gate})
+  [PASS] keys: no p key equals any m key (no p stream coincides with an m stream)
+  [PASS] keys: a non-OLMo unit passes through to m's function unchanged
+  [PASS] keys: G-CAL-p's seeds stay m-cal (keys.cal_seed is m's, unsubstituted)
+  [PASS] keys: under register entry (2) m's key functions are p's for the block
+  [PASS] keys: m's four key functions are m's own after the block, an exception included (term (c))
+  [PASS] schedule: with m's own keys (no substitution), p's builder reproduces data/m/schedules/' eighteen OLMo files byte for byte (term (c))
+  [PASS] schedule: under p's keys every key template and session-key template is p's (p-sched, p-olmo*, p-olmo-items*) and none is m's
+  [PASS] schedule: p's six campaign schedules are p's own draws -- each orders its cells differently from m's at the same name, over the same cell multiset (m:159's balance)
+  [PASS] schedule: of the twelve gate schedules' pi (a permutation(4), 24 values), exactly one equals m's by chance under a different key -- OLMo-sft qual A0s -- the coincidence the BUILD entry records
+  [PASS] schedule: m's four key functions are m's own after the builds (restoration, term (c))
+  [PASS] schedule: p's manifest names p's construction and the eighteen files' sha256s, in m's manifest schema
+  [PASS] schedule: writes nineteen files that verify clean, re-runs identically, refuses a differing existing file
+  [PASS] schedule: p writes nothing under data/m/schedules (refused before any write)
+  [PASS] schedule: a link at a temp name or at a schedule path is refused before any file is written, nothing written through it; a test write under data/p (data/p/schedules named explicitly included) is refused
+  [PASS] proxy: a result with no line break is the adapter's own object, unchanged (a cap hit and its stop reason kept), and nothing is logged as a cut
+  [PASS] proxy: every other attribute is the adapter's -- the weights path, the read window and provenance() read through
+  [PASS] proxy: on the character double, a result with no line break is stored as returned and the call counter counts every call
+  [PASS] proxy: gcal's DPO/instruct case -- '---\n\nTask: ...' is stored as '---', its token ids through the token that carried the break, stop newline, cap false
+  [PASS] proxy: '\r' is a line break (the stored text is 'foo', trailing whitespace stripped as the adapter strips)
+  [PASS] proxy: no stored text carries a line break; three cuts logged with the returned and stored forms
+  [PASS] proxy: when '---\n\n' is ONE token (as on OLMo's tokenizer), the stored text is '---' and the stored ids are that one token (n_tok 1), stop newline, cap false
+  [PASS] proxy: the proxy is read-only (attributes are set on the adapter, never on the proxy)
+  [PASS] proxy: a tokenizer whose decode cannot place the break is a STOP, never a guessed cut
+  [PASS] report: the trigger reads \n and \r
+  [PASS] report: control characters count DEL and tab, never a line break
+  [PASS] report: harness-shaped first lines -- m:258's patterns, the seven forms, '=== ... ===' -- and not answers
+  [PASS] report: refusals in the three forms, either apostrophe
+  [PASS] report: corrupted spelling as §2.3 writes it -- 'Januwy' and 'Janaury' count for january, 'January' and 'Janbaa' (distance 3) do not; numeric and hyphenated golds are not compared ('a' is not counted against '77'); a common word within distance 2 of a short gold counts ('the' against 'two', the FLAG's class)
+  [PASS] report: counters tabulate every record by key
+  [PASS] report: on G-CAL-OLMo's committed records the counters give the BUILD entry's figures -- the DEL at instruct 7 s1 the one control character, the two item-15 line breaks of record (DPO and instruct; no proxy then)
+  [PASS] guard: p's production modules and driver pass term (e)'s static check, and import exactly M_IMPORTED of valence_core.m (a fresh interpreter)
+  [PASS] guard: term (e)'s static check catches every planted form (the review's eleven and more), and passes a read of m, a setattr on self and a self-test body
+  [PASS] guard: p refuses m's, mf3's and the OLMo data root and the weights' root for any output, and anything inside the repository (data/, p's roots, results/raw, the root itself, a case variant) or an empty path for a test output; a scratch directory passes
+  [PASS] guard: the writer writes once, accepts identical bytes, and refuses different bytes, a link at the path and a link at the temp name, writing nothing through either; a linked parent directory is a problem
+  [PASS] guard: the licence lines name p's package hash, the seventeen m files (sixteen modules and __init__.py) and olmo_hf.py, each by name
+  [PASS] guard: the quarantined state-present module is not loaded
+  [PASS] gcal: PIN P21 -- p's segment, generate call and record literal are m's run_completability's (AST: the segment form, the positional arguments, the six keywords with m's OLMo temp and cap, the record's keys and values)
+  [PASS] gcal: every generate call p makes is m's procedure -- 128 calls in key order, the banner prefix, m's segment form on the key's task (p's renders on the corrupted pool), injections none, the key's m-cal seed, TEMP 0.7, STOP_CAP 60, the newline stop, the startup's ban ids, uncached
+  [PASS] gcal: a stub run writes p's artifact and checkpoint under its scratch directory, 128 records in m's record form
+  [PASS] gcal: the artifact's m fields are m's completability_artifact of the same checkpoint; proposal_p_sha256 and p's block beside
+  [PASS] gcal: the proxy cuts the four item-15 corrupted generations to '---' (no stored line break); the trigger count is 0
+  [PASS] gcal: the identity is m's _identity_olmo with p's proposal and renders (m's convention), plus p's eight fields (olmo_hf.py's and the driver's sha256 among them); m's stage string kept
+  [PASS] gcal: the clean-pool identity reads G-CAL-OLMo-sft's committed gate artifact and flags the stub's differences (a flag, not a bar); the generation-path fields are listed side by side
+  [PASS] gcal: conditions (1)-(2) are reported per item (k 3, three changed positions, k <= n/2 on all sixteen) and (3) names the seat's read of record
+  [PASS] gcal: condition (4) is m's on the run's counts; the strict grade and the counters are reported
+  [PASS] gcal: the printed lines -- PROVENANCE with the pod id, condition (4), the identity, the counters, the verdict
+  [PASS] gcal: a --resume of a complete checkpoint generates nothing and re-derives the identical artifact
+  [PASS] gcal: a checkpoint on disk without --resume is refused, never overwritten
+  [PASS] gcal: a checkpoint whose record is not graded as f0's grader grades it is refused, before any adapter is made (m's load checks, ahead of the load)
+  [PASS] gcal: with no proxy (a seam), a stored line break fires the hair trigger: the stage STOPs at the first key, the stop recorded with its text, no record stored; a --resume of the stopped checkpoint is refused before any adapter is made
+  [PASS] gcal: every STOP inside the loop is recorded in the checkpoint's stop field with its key, and the stage exits as a STOP -- one at the generation (key 0: launched 1, no record) and rule 28(d)(a)'s boundary before the generation (key 4: four records, launched 4, nothing launched for the stopped key)
+  [PASS] gcal: a link (dangling) at the checkpoint's path is refused before any adapter is made, nothing written through it
+  [PASS] gcal: refused before any adapter is made, in every state of the record (the pod id removed, the canonical roots an empty scratch root) -- Q-F0; a canonical run with no pod id; a canonical run with a seam; stubs into p's, p's parent's and m's roots
+  [PASS] gcal: m's startup pieces read the adapter through the proxy -- assert_olmo_adapter's path and window, build_ban_list's tokenizer surface (identical ids), the tokenizer probe
+  [PASS] gcal: on a --resume, an identity field the adapter does not give (here p's package hash, moved after a crash at key 5) is a CHECKPOINT MISMATCH refused before any adapter is made
+  [PASS] gcal: renders that do not reproduce are a STOP (a pinned figure), before any adapter is made; the call pin fails closed, as a problem, when m's source is unavailable
+  [PASS] gcal: strict grade -- the first word for a one-word variant, the leading words for 'twenty-four'
+  [PASS] gcal: m's gcal module is untouched by p (no attribute replaced; register entry (4) not exercised)
+  [PASS] gcal: the self-test writes nothing under data/p/gates or data/p/ckpt
+  [PASS] gshape-p: the inputs of record build off the committed renders raw, the answers raw and both proposals; the renders read are corrupt.RENDERS_OF_RECORD
+  [PASS] gshape-p: the full run PASSes -- 2,816 placements per OLMo unit (8,448), none fired or misplaced, seg+gold firing on every placement, the three grids identical, no shape, Layer S or Layer P problem
+  [PASS] gshape-p: each unit's placement keys equal m's own enumeration with m's renders, key for key (a key carries no render; computed here, in every state of the record)
+  [PASS] gshape-p: the comparison with G-SHAPE-F0's artifact reads HEAD's blob, and where HEAD carries it the three units' placement keys are equal (descriptive; the record says why where it is absent)
+  [PASS] gshape-p: the artifact points at the runners' dynamic evidence (m's self-test, p's proxy self-test)
+  [PASS] gshape-p: the verdict is m's _stop_reasons with exactly 'coverage:Q-F0' removed -- on a dropped grid m's function gives coverage:Q-F0 and the dropped units' coverage; p's keeps the latter only
+  [PASS] gshape-p: a scorer handed harness bytes fires (fire:<unit>), a silenced seg+gold control is a STOP, a broken template is a shape STOP, a Layer P problem is p-guard
+  [PASS] gshape-p: the renders are read from the raw's json.dumps line; a changed string is no longer the record
+  [PASS] gshape-p: a raw with two renders lines is a STOP
+  [PASS] gshape-p: an --out run writes once; a re-run with the same inputs is identical; a different file there is refused, never overwritten
+  [PASS] gshape-p: refused before evaluating -- a seamed run to the canonical path; an --out run inside the repository (p's gates, p's root, p's schedules, data/olmo, m's and mf3's roots)
+  [PASS] gshape-p: the self-test writes no canonical artifact
+  [PASS] p_sessions: MODULES lists every p module but the package marker and the test double
+  [PASS] p_sessions: --build-schedules writes 19 files that verify clean, re-runs identically, and refuses a differing existing file and a test directory inside the repository (exit 2)
+  [PASS] p_sessions: data/p/schedules equals a fresh regeneration byte for byte, manifest included (18 + 1)
+  [PASS] p_sessions: gshape --out runs G-SHAPE-p as an --out run -- PASS; INVOCATION is the first line
+  [PASS] p_sessions: time, qual and campaign are refused at the p BUILD (exit 2), each named
+  [PASS] p_sessions: no action is refused (exit 2) and INVOCATION is the first line
+  [PASS] p_sessions: hashes prints p's package sha256, the seventeen m files' (sixteen modules and __init__.py), olmo_hf.py's and the register's four entries
+  [PASS] p_sessions: gcal is refused before any load in every state of the record (the pod id removed, the canonical roots a scratch root, the loader trapped) -- POD ID ABSENT for OLMo-sft, and Q-F0 and the base checkpoint refused (exit 2); the loader never reached, the OLMo adapter module never imported
+  [PASS] p_sessions: on a simulated clear box (a pod id; G-CAL-p's precheck and the weights check passing as stand-ins, so no state of the record matters; G-CAL-p's run replaced by a recorder, the loader trapped, the OLMo adapter module a stand-in that refuses construction) the driver prints the DRIVER then the WEIGHTS line and calls G-CAL-p's run once, canonical (stub false, resume false); no adapter is made and sys.modules is restored
+  [PASS] p_sessions: the weights-files check (literal file names at small byte counts) refuses missing files, a wrong byte count and an unlisted file, and passes the files at their counts
+  [PASS] p_sessions: the licence's import set holds, and term (e)'s static check is clean over p and this driver
+  [PASS] p_sessions: the quarantined state-present module is not loaded after the self-test
+  103/103 p selftest checks pass

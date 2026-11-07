@@ -1,0 +1,31 @@
+{
+ "cells": [
+  {"P": "amber", "Q": "granite", "clause": 0, "map": 0, "pair": ["amber", "granite"], "pair_index": 3, "start": 0},
+  {"P": "walnut", "Q": "copper", "clause": 1, "map": 1, "pair": ["copper", "walnut"], "pair_index": 1, "start": 0},
+  {"P": "quartz", "Q": "velvet", "clause": 1, "map": 0, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 1},
+  {"P": "saddle", "Q": "maple", "clause": 0, "map": 1, "pair": ["maple", "saddle"], "pair_index": 2, "start": 1},
+  {"P": "granite", "Q": "amber", "clause": 1, "map": 1, "pair": ["amber", "granite"], "pair_index": 3, "start": 1},
+  {"P": "copper", "Q": "walnut", "clause": 0, "map": 0, "pair": ["copper", "walnut"], "pair_index": 1, "start": 1},
+  {"P": "velvet", "Q": "quartz", "clause": 0, "map": 1, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 0},
+  {"P": "maple", "Q": "saddle", "clause": 1, "map": 0, "pair": ["maple", "saddle"], "pair_index": 2, "start": 0},
+  {"P": "granite", "Q": "amber", "clause": 0, "map": 1, "pair": ["amber", "granite"], "pair_index": 3, "start": 0},
+  {"P": "copper", "Q": "walnut", "clause": 1, "map": 0, "pair": ["copper", "walnut"], "pair_index": 1, "start": 0},
+  {"P": "velvet", "Q": "quartz", "clause": 1, "map": 1, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 1},
+  {"P": "maple", "Q": "saddle", "clause": 0, "map": 0, "pair": ["maple", "saddle"], "pair_index": 2, "start": 1},
+  {"P": "amber", "Q": "granite", "clause": 1, "map": 0, "pair": ["amber", "granite"], "pair_index": 3, "start": 1},
+  {"P": "walnut", "Q": "copper", "clause": 0, "map": 1, "pair": ["copper", "walnut"], "pair_index": 1, "start": 1},
+  {"P": "quartz", "Q": "velvet", "clause": 0, "map": 0, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 0},
+  {"P": "saddle", "Q": "maple", "clause": 1, "map": 1, "pair": ["maple", "saddle"], "pair_index": 2, "start": 0}
+ ],
+ "gate": "qual",
+ "key_template": "p-sched|OLMo-sft|qual|A0s-OLMo-sft|0",
+ "kind": "gate",
+ "n": 16,
+ "pi": [3, 1, 0, 2],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "p-olmo-qual|sft|A0s-OLMo-sft|{s}", "items": "p-olmo-items-qual|sft|{s}"},
+ "sha256_of_cells": "67803ee129ca7c35fb908123114d8d6ebfbbeb0bc615055fa440e98fcaffc1f3",
+ "table": "m:161-170",
+ "template": "A0s-OLMo-sft",
+ "unit": "OLMo-sft"
+}

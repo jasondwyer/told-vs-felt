@@ -283,3 +283,28 @@ __pycache__/
 !/data/mf3/ckpt/
 /data/mf3/ckpt/*
 !/data/mf3/ckpt/*.json
+
+# PROPOSAL-p's package (valence_core/p; PROPOSAL-p v0.2 §4.2, the design seat's answers of 2026-11-07, Q3-Q4): its
+# schedules and manifest, its gate artifacts (G-SHAPE-p, G-CAL-p), its stage reports, its checkpoints and its
+# outputs travel as JSON (ledger 27), in data/m/'s layout under their own root -- data/m/ and data/mf3/ are
+# untouched (p §4.2: "with the .gitignore admit lines the first commit of each needs"). Every file under ckpt/
+# (checkpoints and their pod-change set-asides) is marked -diff in .gitattributes (m:318, by reference).
+# Atomic-write temporaries (*.tmp) stay local.
+!/data/p/
+/data/p/*
+!/data/p/schedules/
+/data/p/schedules/*
+!/data/p/schedules/*.json
+!/data/p/gates/
+/data/p/gates/*
+!/data/p/gates/*.json
+!/data/p/reports/
+/data/p/reports/*
+!/data/p/reports/*.json
+!/data/p/ckpt/
+/data/p/ckpt/*
+!/data/p/ckpt/*.json
+!/data/p/ckpt/*.json.podchange-*
+!/data/p/verdicts/
+/data/p/verdicts/*
+!/data/p/verdicts/*.json

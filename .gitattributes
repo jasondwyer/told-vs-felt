@@ -8,3 +8,7 @@
 # Q-F3 (valence_core/mf3): everything under data/mf3/ckpt/ (checkpoints and adjudication excerpts) may
 # carry a contrast pick and never renders in a diff or a log -p (PROPOSAL-m v1.11 m:318).
 /data/mf3/ckpt/** -diff
+
+# PROPOSAL-p (valence_core/p): everything under data/p/ckpt/ (checkpoints and adjudication excerpts) may carry a
+# contrast pick and never renders in a diff or a log -p (PROPOSAL-m v1.11 m:318, by reference, p §4.1).
+/data/p/ckpt/** -diff

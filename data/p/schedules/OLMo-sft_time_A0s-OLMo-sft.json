@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "maple", "Q": "saddle", "clause": 0, "map": 0, "pair": ["maple", "saddle"], "pair_index": 2, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "p-sched|OLMo-sft|time|A0s-OLMo-sft|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [2, 1, 3, 0],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "p-olmo-time|sft|A0s-OLMo-sft|{s}", "items": "p-olmo-items-time|sft|{s}"},
+ "sha256_of_cells": "b4954d738853d6df16736a547567f4e1e1378a7bb43838e335deeb8a882ff228",
+ "table": "m:161-170",
+ "template": "A0s-OLMo-sft",
+ "unit": "OLMo-sft"
+}

@@ -1,0 +1,31 @@
+{
+ "cells": [
+  {"P": "quartz", "Q": "velvet", "clause": 0, "map": 0, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 0},
+  {"P": "saddle", "Q": "maple", "clause": 1, "map": 1, "pair": ["maple", "saddle"], "pair_index": 2, "start": 0},
+  {"P": "copper", "Q": "walnut", "clause": 1, "map": 0, "pair": ["copper", "walnut"], "pair_index": 1, "start": 1},
+  {"P": "granite", "Q": "amber", "clause": 0, "map": 1, "pair": ["amber", "granite"], "pair_index": 3, "start": 1},
+  {"P": "velvet", "Q": "quartz", "clause": 1, "map": 1, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 1},
+  {"P": "maple", "Q": "saddle", "clause": 0, "map": 0, "pair": ["maple", "saddle"], "pair_index": 2, "start": 1},
+  {"P": "walnut", "Q": "copper", "clause": 0, "map": 1, "pair": ["copper", "walnut"], "pair_index": 1, "start": 0},
+  {"P": "amber", "Q": "granite", "clause": 1, "map": 0, "pair": ["amber", "granite"], "pair_index": 3, "start": 0},
+  {"P": "velvet", "Q": "quartz", "clause": 0, "map": 1, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 0},
+  {"P": "maple", "Q": "saddle", "clause": 1, "map": 0, "pair": ["maple", "saddle"], "pair_index": 2, "start": 0},
+  {"P": "walnut", "Q": "copper", "clause": 1, "map": 1, "pair": ["copper", "walnut"], "pair_index": 1, "start": 1},
+  {"P": "amber", "Q": "granite", "clause": 0, "map": 0, "pair": ["amber", "granite"], "pair_index": 3, "start": 1},
+  {"P": "quartz", "Q": "velvet", "clause": 1, "map": 0, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 1},
+  {"P": "saddle", "Q": "maple", "clause": 0, "map": 1, "pair": ["maple", "saddle"], "pair_index": 2, "start": 1},
+  {"P": "copper", "Q": "walnut", "clause": 0, "map": 0, "pair": ["copper", "walnut"], "pair_index": 1, "start": 0},
+  {"P": "granite", "Q": "amber", "clause": 1, "map": 1, "pair": ["amber", "granite"], "pair_index": 3, "start": 0}
+ ],
+ "gate": "qual",
+ "key_template": "p-sched|OLMo-instruct|qual|A0s-OLMo-instruct|0",
+ "kind": "gate",
+ "n": 16,
+ "pi": [0, 2, 1, 3],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "p-olmo-qual|instruct|A0s-OLMo-instruct|{s}", "items": "p-olmo-items-qual|instruct|{s}"},
+ "sha256_of_cells": "efd2a3231d41130af72e9a296697b2a31ffa440ed8ba7204239888e272477f17",
+ "table": "m:161-170",
+ "template": "A0s-OLMo-instruct",
+ "unit": "OLMo-instruct"
+}

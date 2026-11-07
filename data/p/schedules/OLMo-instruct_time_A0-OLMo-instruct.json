@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "copper", "Q": "walnut", "clause": 0, "map": 0, "pair": ["copper", "walnut"], "pair_index": 1, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "p-sched|OLMo-instruct|time|A0-OLMo-instruct|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [1, 2, 0, 3],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "p-olmo-time|instruct|A0-OLMo-instruct|{s}", "items": "p-olmo-items-time|instruct|{s}"},
+ "sha256_of_cells": "145dd41c51e00f5ce8dc761982c91bcb699f3faa66b0840dab323c012583ed49",
+ "table": "m:161-170",
+ "template": "A0-OLMo-instruct",
+ "unit": "OLMo-instruct"
+}

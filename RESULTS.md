@@ -21,6 +21,114 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **p package — BUILD (p §8 step 4): PROPOSAL-p's own package, `valence_core/p/` (11 files), and
+  driver, `scripts/p_sessions.py`, on PROPOSAL-p v0.2 (`18b0111`) and the design seat's answers of 2026-11-07
+  (Q0–Q4), routed by the PI ("Then build → G-SHAPE-p → G-CAL-p on your go for the box"). m's modules are imported
+  unchanged; the one declared substitution form carries register entries (1) and (2). Self-test of record
+  103/103; a G-SHAPE-p trial PASSes. Nothing is locked, and nothing runs on a model or the box; G-SHAPE-p's run
+  of record follows in its own commit.**
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 21:38:45 UTC 2026**.)
+  - **What is built** (p §4.2; the design raw [`_p-build_design`](results/raw/2026-11-07_p-build_design.md) §1 lists
+    every file with its sha256):
+    - `register` — the substitution register: ans2 Q0's five terms, p §4.2's entries (1)–(4); each built entry's
+      replacement is declared by qualified name and enforced by identity with the object that name resolves to (a
+      stand-in carrying the name is refused).
+    - `corrupt` — `corrupt_p`: `corr.corrupt_m` run under entry (1) with `eligible_p` (p §1.1, §1.4); the renders
+      of record, both sha conventions, and §3.2's structural conditions (1)–(2) per item.
+    - `keys` and `schedule` — p's six OLMo key families (`p-sched|`, `p-olmo|`, `p-olmo-time|`, `p-olmo-qual|`,
+      `p-olmo-items|`, `p-olmo-items-{gate}|`) and m's builder under entry (2): `data/p/schedules/`, eighteen files
+      and their own manifest (sha256 `999373656ab0fd76771a254f6d8d7d7da696c1448f8ae49b9e0ababe21eddb34`), in m's
+      schema names and layout (ans2 Q4 (iii)). G-CAL-p's seeds
+      stay `m-cal|…`.
+    - `proxy` — §2.2's stored-text invariant, reading (b): `StoredTextProxy` over the adapter's returned result;
+      `olmo_hf.py` unedited.
+    - `report` — §2.3's five descriptive counters and the `line_break_in_stored_text` hair trigger's predicate.
+    - `guard` — p's package hash, the licence's file sha256s, the measured import set, term (e)'s static check (p's
+      modules and driver), the roots p refuses (`data/m`, `data/mf3`, `data/olmo`, `/workspace/models`; the whole
+      repository for a test output), and the link-safe writers.
+    - `gcal` — G-CAL-p (p §3). m's pieces by import: the key set and seeds, the task of a key, the segment form,
+      the startup, f0's grader and its honesty asserts, the identity, the gate line, condition (4), the weights of
+      record, the boundary assertion, and the fields of m's artifact schema. p's own: the precheck, the loop, the
+      checkpoint (`p-gcal-checkpoint-v1`; every STOP of the generation loop recorded in it, bar a failure of the
+      checkpoint's own write), the hair trigger and the artifact's `p` block
+      (both renders conventions, conditions (1)–(3), the proxy's cuts, the clean-pool identity with G-CAL-OLMo's
+      committed artifacts, the strict grade, the counters, the covariates beside, the licence values at the run, the
+      disclosure). m's `run_completability` is not called; the generation call, inline there, is restated and pinned
+      to m's by an AST comparison and a check of all 128 calls (P21, F-p7).
+    - `gshape` — G-SHAPE-p (p §4.2): G-SHAPE-F0's layers by import (`grid`, `template_shape_problems`,
+      `runner_scope_problems`, `_stop_reasons` with `coverage:Q-F0` removed) with p's renders, read from the
+      committed renders raw, over the three OLMo units, plus Layer P (p's guard).
+    - `testing` — two self-test doubles: `CharScriptedAdapter` (a character tokenizer) and `ChunkScriptedAdapter`
+      (multi-character tokens: `---\n\n` is one token, as on OLMo's tokenizer); imported by self-tests only.
+    - `scripts/p_sessions.py` — `--selftest`, `--build-schedules`, `hashes`, `gshape`, and `gcal --unit
+      OLMo-{ckpt} [--resume]` (the box only; p's refusals that need no adapter before the load, and on a `--resume`
+      every identity field the adapter does not give; m's startup -- its adapter checks, with two model-free asserts
+      of m's own -- and the two adapter-given identity fields after it, before any generation; the DRIVER and WEIGHTS
+      lines; the OLMo adapter through the proxy); `time`, `qual` and `campaign` refused.
+    - `.gitignore` admits `data/p/{schedules,gates,reports,ckpt,verdicts}/*.json` and the checkpoints' pod-change
+      set-asides; `.gitattributes` marks `data/p/ckpt/**` `-diff` (m:318 by reference).
+  - **The licence** (p §4.2, C2's form; `scripts/p_sessions.py hashes` at the commit, verbatim in the design raw
+    §2): p's `package_sha256` `717958dadfbadf489a07a577f625bb7f77314c4b2405ea399ead96738a43b900` (11 files); the
+    sha256 of the seventeen m files p imports (sixteen modules,
+    measured in a fresh interpreter, and `__init__.py`) and of `valence_core/adapters/olmo_hf.py`
+    (`df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc`),
+    each by name on one line. m's `gcal.py` is the hygiene commit's (`993eba1`, `fbae9a01…`). Nothing in
+    `valence_core/m/`, `scripts/m_sessions.py`, `scripts/m_analyze.py`, `olmo_hf.py`, `data/m/` or `data/mf3/`
+    changes.
+  - **The substitution register** (ans2 Q0; the design raw §3): (1) `corr._eligible_m` → `eligible_p`, built; (2)
+    `valence_core.m.keys`' four key functions → p's, built; (3) `scripts/m_analyze.py` through `scripts/p_analyze.py`
+    (the OLMo Clock → D_p, the `data/m/…` roots → `data/p/…`, the v2 verdicts-dir resolution), declared, built at
+    step 6; (4) `gcal`'s renders source, declared and not exercised, as G-CAL-p does not call m's
+    `run_completability`. Term (c)'s equality cases pass: `corrupt_p` equals m's renders on items 0 and 12, and with
+    m's keys p's builder reproduces `data/m/schedules/`' eighteen OLMo files byte for byte; restoration holds after
+    each call, an exception included. No other site exists (term (e)'s static check is clean, and it catches the
+    sixteen planted forms of its self-test).
+  - **G-SHAPE-p trial** (`--out`, never of record): PASS — 2,816 placements per OLMo unit, 8,448 in all, none fired
+    or misplaced; `seg+gold` fires on every placement; the three grids identical; no shape, Layer S or Layer P problem;
+    each unit's placement keys equal m's own enumeration and G-SHAPE-F0's artifact at HEAD.
+  - **PINs and FLAGs** (the design raw §4–§5): twenty-one PINs (P1–P21), each the seat's to strike until LOCK-p v0.1.
+    Ten FLAGs, none blocking G-SHAPE-p:
+    - F-p1: §2.3's corrupted-spelling counter as written counts 23 of G-CAL-OLMo's 384 records, 17 of them only for
+      a common word within distance 2 of a short gold (`the`/`two`), one of those borderline (SFT's `do` for the
+      opposite of 'up').
+    - F-p2: one gate schedule draws m's π by coincidence.
+    - F-p3: §5.4's date (referent item 85) in the artifacts' disclosure.
+    - F-p4: register entries (3) and (4).
+    - F-p5: the licence moves with m (the hygiene commit moved `gcal.py`'s sha256).
+    - F-p6: the departure disclosed at `18b0111`.
+    - F-p7: §3.1's "by import or by §4.2's register" against the restated, pinned generation call.
+    - F-p8: G-CAL-p's identity carries p's sha256 as `proposal_sha256`. ans2 Q1 (iii) keeps m's proposal pin, with
+      `proposal_p_sha256` recorded beside it "in every p output"; Code reads that rule's scope as the analyzer's (Q1
+      is the analyzer path), and that reading is the seat's question.
+    - F-p9: notes ahead of step 6 (the single-thread assertion after a model load, m's stage roots).
+    - F-p10: the proxy's cut log keeps the returned text, the part after the break included, for the seat's read;
+      §2.2's "Nothing after the cut is stored" may read otherwise.
+  - **Scope, by §8's step numbers.** This BUILD is step 4's list. `scripts/p_analyze.py`, G-ANL-p and register
+    entry (3)'s self-test are step 6's: before any LOCK-p v0.1 and after LOCK-m-F3 v0.1 (p §4.3), and no p analyzer
+    is built if every checkpoint fails G-CAL-p (p §4.4). The gate-stage and campaign drivers are step 6's too, by
+    §8's list (p §6.2 gives the reason). The coordinating session confirmed this scope on 2026-11-07, by message
+    ("Confirmed: follow p v0.2's §8 as written. My brief was wrong to put scripts/p_analyze.py in the BUILD."); the
+    PI's item 3 accepts route (b), the analyzer path, and its build sequence ("Then build → G-SHAPE-p → G-CAL-p on
+    your go for the box") names no analyzer.
+  - **Checks before the commit.** The self-test of record, 103/103
+    ([`_p-build_selftest`](results/raw/2026-11-07_p-build_selftest.txt)); the site check on a scratch commit of the
+    final bytes over `9838664` ([`_p-build_sitecheck`](results/raw/2026-11-07_p-build_sitecheck.txt)): the ten suites
+    pass (154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24, m_sessions 846/846, m_analyze 525/525, mf3_sessions
+    136/136), with p's self-test 103/103, a G-SHAPE-p trial PASS and the hashes, every exit 0; a blind code review in
+    three rounds ([`_p-build_review`](results/raw/2026-11-07_p-build_review.md)) -- round 1, 1 MAJOR, 11 MINOR, 11
+    NOTE, the MAJOR a write hazard (on the box after the commit, the driver's self-test would have reached the real
+    model load and run G-CAL-p's one-shot gate canonically, with no go); round 2, 0 MAJOR, 3 MINOR, 11 NOTE; round 3,
+    0 MAJOR, 1 MINOR, 7 NOTE -- every MAJOR and MINOR fixed, declared where it is the seat's call (m10: P21, F-p7) or
+    disclosed (m3: the static check's reach; R3-1's second half: the self-test reads its inputs of record from their
+    committed blobs, so an uncommitted edit to one fails it, by design), each NOTE applied or disclosed; a blind
+    values-check in three passes ([`_p-build_valuescheck`](results/raw/2026-11-07_p-build_valuescheck.md)) -- pass 1,
+    118 items (3 FAIL, 15 IMPRECISE), pass 2, 136 items (0 FAIL, 14 IMPRECISE), pass 3, on the complete texts, 57
+    items (0 FAIL, 5 IMPRECISE) -- every item re-checked at source and applied. The design raw
+    ([`_p-build_design`](results/raw/2026-11-07_p-build_design.md)) carries the files, the licence, the register, the
+    PIN register and the FLAGs.
+  - **Next:** G-SHAPE-p's run of record (canonical, sources committed) in its own commit. G-CAL-p waits for the
+    coordinating session's go for the box. Not pushed.
+
 - 2026-11-07 — **N1 — HELD: STOP to the seat. Restoring the preprint's bytes of record fails G-ANL-F3's battery check
   `F3R-PREPRINT-OF-RECORD` (`scripts/m_analyze.py:9983–9986`), which asserts that the file at HEAD is not the
   bytes of record. The canonical `ganl` and LOCK-m-F3 v0.1 wait for the seat's choice.**
