@@ -21,6 +21,58 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **PROPOSAL-p v0.1 — PRE-READ (p §8 step 2): STOP on five questions for the design seat; the sixteen
+  renders reproduced byte for byte; the referent check.** Nothing is built or locked. PROPOSAL-p stays untracked (p §8
+  step 3 commits it after this cycle).
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 05:45:05 UTC 2026**.)
+  - **The routing.** The PI's block, relayed by the coordinating session and also quoted in `0f35954`'s entry
+    (RESULTS.md@0f35954:31–33), verbatim:
+    "1. Date: [2026-11-06]. The three m NOT-RUN records: [go]. 2. PROPOSAL-p v0.1: [route for Code's pre-read]. If
+    routed: letter [p]; §1's frame-word rule [confirmed as written]; D_p [2026-12-15]; pod budget [12 h for G-CAL-p,
+    gate stages and three campaigns]; order on the pod [G-CAL-p first, then whichever lock chain is ready]; §5's v2
+    posting rule and its two declared sentences [adopted]. 3. The pod: [stays up]."
+    - p is `PROPOSAL-p-olmo-told-controls-frame-dose-v0_1.md`, sha256 `1821a235…9953`.
+    - The seat's answers on the gate are `results/raw/2026-11-06_gcal-olmo_design-to-code_answers.md`, sha256
+      `4c3f57d4…bf82`, cited at `0f35954`.
+  - **The renders** (p §1.2) are reproduced byte for byte.
+    - The method: `corr.corrupt_m`'s own walk, with its eligible set restricted to §1.1's frame words.
+    - The list's sha256 prefix by p's definition is `1551c19997dc4541`, p's [S] figure.
+    - k = 3 on every item (sum 48); zero roster skips; items 0 and 12 equal m's.
+    - [`_p_preread_renders`](results/raw/2026-11-06_p_preread_renders.txt) is the file the seat's read of record
+      uses (p §1.3).
+    - By m's own convention (`corr.renders_sha`), p's renders hash `6baf494960da4589`.
+  - **The questions** ([`_p_code-to-design_preread`](results/raw/2026-11-06_p_code-to-design_preread.md)):
+    - **Q0, reuse where m's code fixes m's constants.** p §4.2 says m's modules are "imported unchanged by import, never by copy".
+      Code proposes one declared form: an attribute substitution for the duration of one call, named in the BUILD entry
+      and in LOCK-p v0.1, and asserted where p must equal m.
+    - **Q1, the analyzer path.** Route (a) is gone (`e0b4f2c`). The committed `posting --posting v2` reads all four v1
+      coordinates from one `--verdicts-dir`, so from the declared roots it cannot post p's states in m's OLMo positions.
+      - Code recommends (b): `scripts/p_analyze.py`, with the v2 posting of p's states run through it.
+      - The alternatives are an in-place round before LOCK-m-F3 v0.1 (a′), or one after Q-F3's and p's VERDICTS (c).
+    - **Q2, the stored-text site.** Code recommends an adapter proxy in `valence_core/p/`, with `olmo_hf.py`
+      unedited. No lock, licence or analyzer closure names that file, and the backend identifier hashes no source. Two
+      readings of §2.2 need the seat's confirmation. One of them, what is stored once content has been seen, decides
+      whether G-CAL-p's clean-pool identity with G-CAL-OLMo holds by construction or can fail on a stop token's
+      content alone.
+    - **Q3, placement (Code's call, made explicit).** The package and the corruptor go in `valence_core/p/`, outside
+      every module mf3 imports. Under Q1 (b) and Q2's recommendation nothing of p touches a file or hash that
+      LOCK-m-F3 v0.1 names, so **Q-F3's lock chain need not wait for p**.
+    - **Q4, the schedules.** The key map (Code proposes all six OLMo key families under p's prefix), m's unit and
+      template strings in p's records, and the builder.
+  - **The referent check** (p §9; [`_p_preread_referent-check`](results/raw/2026-11-06_p_preread_referent-check.md)):
+    107 items, 85 CONFIRMED, 17 IMPRECISE, 3 FAIL, 2 NOT CHECKABLE. Each item not CONFIRMED was re-checked at source.
+    - The FAILs, for the seat's v0.2:
+      - §0.3's "12 of 12" is 6 of 12;
+      - §0.3's "(v1.7, m:176)" is v1.8's operand exclusion;
+      - §0.4's anchor "n:§0.4" is A-m1 §1.5 and §5.
+    - Item 52 became Q2's reading (b).
+    - §6.1's gate-stage hours are already inside m:214's figures.
+  - **Checks before the commit:** a blind values-check of this entry, the STOP block, the renders raw and the
+    referent check's dispositions (84 items: 58 CONFIRMED, 19 IMPRECISE, 2 FAIL, 5 NOT CHECKABLE; every correction applied; [`_p_preread_valuescheck`](results/raw/2026-11-06_p_preread_valuescheck.md)).
+    Each of its items was re-checked at source.
+  - **Next:** the seat's answers to Q0–Q4 and v0.2; then p §8 step 3 commits p. Q-F3's lock chain waits for the
+    coordinating session's word. Not pushed.
+
 - 2026-11-06 — **PROPOSAL-m OLMo-sft — NOT-RUN (m:358 step 17; m:176, m:302, m:324): "dose not completable", at
   G-CAL-OLMo-sft's condition (4) of 2026-11-06. The analyzer's not-run path wrote the output from Code's record file, on
   the PI's routing of the seat's G-CAL-OLMo answers. This entry also carries that routing's record for all three units.**

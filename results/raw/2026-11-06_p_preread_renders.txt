@@ -1,0 +1,152 @@
+# PROPOSAL-p v0.1 §1.2 reproduced: the sixteen renders under p §1.1's frame-word rule (Code's raw, 2026-11-06)
+#
+# For the seat's legibility read of record (p §1.3) and p §8 step 2. PROPOSAL-p v0.1 is untracked at root,
+# sha256 1821a23521cfed55a45d81391cb7835c7ba77161fefafa2ca70ddf7692069953.
+#
+# Method: valence_core.m.corr.corrupt_m itself, called once per CORR_clean item (corr.load_pool(), sha-pinned
+# 8547d9a11ba55b95; the rosters corr.ROSTERS_OF_RECORD), with corr._eligible_m replaced for the duration of each
+# call by p §1.1's restriction (m's eligible positions inside a frame word: the item's first word or a word of
+# FUNCTION_WORDS, a word being a maximal run of ASCII letters, none inside a single-quoted span). The walk, the
+# per-slot draw, the replacement formula (corr.py:236), the roster skip and _k_m are m's code, unchanged. Each
+# per-item line also prints m's render (corr.renders_m) beside p's; "CASE-SENSITIVE DIFFERS" would flag an item
+# whose frame words change if FUNCTION_WORDS were matched case-sensitively (none does).
+#
+# Environment: the laptop venv (<repo>/jlens-qwen36/.venv/bin/python; numpy 2.5.1 -- the seat's was 2.2.6);
+# keys.stream("f|CORR|0").permutation(16) equals keys.F_CORR_0_PERMUTATION (the first output line), so the
+# stream is the stream of record. Repository at HEAD e0b4f2c; valence_core/m unchanged since 71cc23c (m's
+# package_sha256 60199b36...feec).
+#
+# Result: all sixteen renders byte-identical to p §1.2's table; sha256(json.dumps(renders))[:16] =
+# 1551c19997dc4541, p §1.2's [S] figure. By m's convention (corr.renders_sha, newline-joined):
+# p's renders 6baf494960da4589 (m's: a04f67b0e5105a05).
+#
+# Command (the script below), run with the repository root as the working directory:
+#   <repo>/jlens-qwen36/.venv/bin/python -B <tmp>/p_pre/renders_p.py
+#
+## Output (verbatim)
+known answer clean: True
+ 0 | Compute | 6 -> 6 | k 3 | skips 0 | 'Clopuie 31 + 46.' | gold ['77'] | m: 'Clopuie 31 + 46.'
+ 1 | State, the, of, in, a | 19 -> 8 | k 3 | skips 0 | 'Stane the number op days ig a week.' | gold ['7', 'seven'] | m: 'State the number oq dsys in a wemk.'
+ 2 | Name, the, of, the | 19 -> 8 | k 3 | skips 0 | 'Niye the third month of thj year.' | gold ['march'] | m: 'Name thy thiru month of the yebr.'
+ 3 | Compute, by | 13 -> 7 | k 3 | skips 0 | 'Conppte 60 divided bh 5.' | gold ['12', 'twelve'] | m: 'Coepqte 60 diyided by 5.'
+ 4 | State, the, of, of, a | 24 -> 8 | k 3 | skips 0 | 'Srlie the number of sides of a triangle.' | gold ['3', 'three'] | m: 'State the numbev of szbes of a tryangle.'
+ 5 | Write, the, of | 14 -> 7 | k 3 | skips 0 | "Wrize tcg opposite of 'hot'." | gold ['cold'] | m: "Writa the oppcsite oc 'hot'."
+ 6 | Compute | 10 -> 6 | k 3 | skips 0 | 'Cpmpuvn 14 times 2.' | gold ['28'] | m: 'Combuks 14 times 2.'
+ 7 | State, which, is, a, of, or, a, of | 45 -> 12 | k 3 | skips 0 | 'State wsbch ix heavier: a kilogram of iron or half a kilogram of feathers.' | gold ['iron'] | m: 'State whqch iy heayier: a kilogram of iron or holf a kilogdam of feathwis.'
+ 8 | Name, the, of, the | 19 -> 8 | k 3 | skips 0 | 'Name ttf first month oe the year.' | gold ['january'] | m: 'Name the ftrst month of the ybaa.'
+ 9 | Compute | 10 -> 6 | k 3 | skips 0 | 'Cumkuta 90 minus 45.' | gold ['45'] | m: 'Comgute 90 miyms 45.'
+10 | State, the, of, on, a | 24 -> 8 | k 3 | skips 0 | 'Smaje the number og wheels on a bicycle.' | gold ['2', 'two'] | m: 'State the nfmber of wheeqs on a bicyaxe.'
+11 | Write, the, of | 14 -> 7 | k 3 | skips 0 | "Writk thn opposite ob 'up'." | gold ['down'] | m: "Writo the oppssitu of 'up'."
+12 | Compute | 6 -> 6 | k 3 | skips 0 | 'Cnmzote 11 + 33.' | gold ['44'] | m: 'Cnmzote 11 + 33.'
+13 | State, the, of, in, a | 19 -> 8 | k 3 | skips 0 | 'Stkth the number oq hours in a day.' | gold ['24', 'twenty-four'] | m: 'State the numbxi of hourw in a day.'
+14 | Compute | 10 -> 6 | k 3 | skips 0 | 'Comkuva 8 times 8.' | gold ['64'] | m: 'Coltute 8 timns 8.'
+15 | Write, the, of | 14 -> 7 | k 3 | skips 0 | "Wzite thj opposite oj 'open'." | gold ['closed', 'shut'] | m: "Wtite thn opposite on 'open'."
+k sum: 48 | skips: 0
+n_eligible p range: 6 - 12
+roster substring in any render: False
+k <= n//2 everywhere: True
+renders equal to m's: [0, 12]
+json.dumps(renders): ["Clopuie 31 + 46.", "Stane the number op days ig a week.", "Niye the third month of thj year.", "Conppte 60 divided bh 5.", "Srlie the number of sides of a triangle.", "Wrize tcg opposite of 'hot'.", "Cpmpuvn 14 times 2.", "State wsbch ix heavier: a kilogram of iron or half a kilogram of feathers.", "Name ttf first month oe the year.", "Cumkuta 90 minus 45.", "Smaje the number og wheels on a bicycle.", "Writk thn opposite ob 'up'.", "Cnmzote 11 + 33.", "Stkth the number oq hours in a day.", "Comkuva 8 times 8.", "Wzite thj opposite oj 'open'."]
+sha256 prefix: 1551c19997dc4541
+sha256 full: 1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722
+m's n_eligible: [6, 19, 19, 13, 24, 14, 10, 45, 19, 10, 24, 14, 6, 19, 10, 14]
+m's k at 0.15: [3, 3, 3, 3, 4, 3, 3, 7, 3, 3, 4, 3, 3, 3, 3, 3] == corr._k_m: True
+m's k at 0.10: [3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3]
+
+## The script (verbatim)
+
+"""PROPOSAL-p v0.1 §1.2 reproduced: corr.corrupt_m's own walk, its eligible set restricted to §1.1's frame words.
+
+Run from the repository root: python -B <this file>. Reads data/f/pools.json and the rosters of record through
+valence_core.m.corr; writes nothing. corr._eligible_m is replaced for the duration of each call only.
+"""
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path.cwd()))
+from valence_core.m import corr, keys  # noqa: E402
+
+FUNCTION_WORDS = {"a", "an", "the", "of", "in", "on", "is", "are", "does", "do", "has", "have", "many", "or",
+                  "than", "by", "to", "and", "which", "what", "how"}
+
+
+def words_of(text):
+    """(start, end, word, quoted) for each maximal run of ASCII letters; quoted = inside a single-quoted span."""
+    out, i, in_quote = [], 0, False
+    while i < len(text):
+        ch = text[i]
+        if ch == "'":
+            in_quote = not in_quote
+            i += 1
+            continue
+        if ("a" <= ch <= "z") or ("A" <= ch <= "Z"):
+            j = i
+            while j < len(text) and (("a" <= text[j] <= "z") or ("A" <= text[j] <= "Z")):
+                j += 1
+            out.append((i, j, text[i:j], in_quote))
+            i = j
+            continue
+        i += 1
+    return out
+
+
+def frame_words(text, case_insensitive=True):
+    ws = words_of(text)
+    fr = []
+    for idx, (s, e, w, q) in enumerate(ws):
+        if q:
+            continue
+        key = w.lower() if case_insensitive else w
+        if idx == 0 or key in FUNCTION_WORDS:
+            fr.append((s, e, w))
+    return fr
+
+
+def eligible_p(text, case_insensitive=True):
+    spans = frame_words(text, case_insensitive)
+    return [p for p in corr._eligible_m(text) if any(s <= p < e for s, e, _ in spans)]
+
+
+def corrupt_p(text, i, rosters):
+    orig = corr._eligible_m
+    corr._eligible_m = lambda t: [p for p in orig(t) if any(s <= p < e for s, e, _ in frame_words(t))]
+    try:
+        return corr.corrupt_m(text, i, rosters)
+    finally:
+        corr._eligible_m = orig
+
+
+def k_at(n, rate_pct):
+    return min(max((rate_pct * n + 50) // 100, 3), n // 2)
+
+
+if __name__ == "__main__":
+    print("known answer clean:", keys.stream("f|CORR|0").permutation(16).tolist() == list(keys.F_CORR_0_PERMUTATION))
+    pool = corr.load_pool()
+    rosters = corr.ROSTERS_OF_RECORD
+    words = corr._roster_words(rosters)
+    rm = corr.renders_m(pool, rosters)
+    renders, metas = [], []
+    for i, it in enumerate(pool):
+        r, meta = corrupt_p(it["task"], i, rosters)
+        renders.append(r)
+        metas.append(meta)
+        n_m = len(corr._eligible_m(it["task"]))
+        fw = [w for _, _, w in frame_words(it["task"])]
+        cs = [w for _, _, w in frame_words(it["task"], case_insensitive=False)]
+        print(f"{i:2d} | {', '.join(fw)} | {n_m} -> {meta['n_eligible']} | k {meta['k']} | skips {meta['n_skips']} "
+              f"| {r!r} | gold {it['gold']} | m: {rm[i]!r}{'' if fw == cs else ' | CASE-SENSITIVE DIFFERS'}")
+    print("k sum:", sum(m["k"] for m in metas), "| skips:", sum(m["n_skips"] for m in metas))
+    print("n_eligible p range:", min(m["n_eligible"] for m in metas), "-", max(m["n_eligible"] for m in metas))
+    print("roster substring in any render:", any(w in r.lower() for r in renders for w in words))
+    print("k <= n//2 everywhere:", all(m["k"] <= m["n_eligible"] // 2 for m in metas))
+    print("renders equal to m's:", [i for i in range(16) if renders[i] == rm[i]])
+    print("json.dumps(renders):", json.dumps(renders))
+    print("sha256 prefix:", hashlib.sha256(json.dumps(renders).encode()).hexdigest()[:16])
+    print("sha256 full:", hashlib.sha256(json.dumps(renders).encode()).hexdigest())
+    n_m = [len(corr._eligible_m(it["task"])) for it in pool]
+    print("m's n_eligible:", n_m)
+    print("m's k at 0.15:", [k_at(n, 15) for n in n_m], "== corr._k_m:", [k_at(n, 15) for n in n_m] == [corr._k_m(n) for n in n_m])
+    print("m's k at 0.10:", [k_at(n, 10) for n in n_m])
