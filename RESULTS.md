@@ -21,6 +21,111 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-CAL-OLMo-{sft,dpo,instruct} (PROPOSAL-m v1.11 m:176, m:302, §5; ADDENDUM-m1 §4 step 4), on the PI's
+  routing of 2026-11-06 and the seat's answers C1–C4: CONDITION (4) FAILS ON ALL THREE CHECKPOINTS. Each is NOT-RUN with
+  reason "dose not completable" (m:176: "failure → that checkpoint NOT-RUN with reason 'dose not completable'").
+  Escalated to the seat; nothing adjudicated. The verdict of record is the grader's.** (Stamp verified at write time:
+  `date -u` → **Sat Nov  7 03:13:41 UTC 2026**.)
+
+  - **The routing.** The PI's block of 2026-11-06 ("Go for G-CAL-OLMo on sft, dpo and instruct, smoke first", order (a)
+    with the second-STOP flip as C1, batching as C2, the pod up through the OLMo track) is quoted in the G-ANL-F3 STOP
+    entry's close (RESULTS.md@54bbfe5:237). The seat's answers are
+    [`2026-11-06_ganl-f3_design-to-code_answers.md`](results/raw/2026-11-06_ganl-f3_design-to-code_answers.md) (sha256
+    `4edfbb8e…ca42e`, committed at `54bbfe5`); section C is this run's.
+  - **Smoke first (C1, "as the BACKEND entry has it").** The apparatus smoke of `b9a26ef`, on the PI's "Yes, smoke".
+    After C4's line, the real model-free prechecks of all three units were re-run in a fresh shell with `env.sh` alone:
+    PASS ×3, pod id `qny1x4v8padeke`, driver and weights clean.
+  - **C4.** One line appended to `/workspace/env.sh` (sha256 `a0587921…` → `f5174faa…`; the old file kept as
+    `/workspace/env.sh.bak-2026-11-06`):
+
+    ```
+    export RUNPOD_POD_ID="$(tr '\0' '\n' < /proc/1/environ | sed -n 's/^RUNPOD_POD_ID=//p')"  # C4 (seat answers 2026-11-06): the pod id as PID 1 reports it, never typed
+    ```
+
+    - In a fresh non-interactive ssh shell the variable is unset before `source` and `qny1x4v8padeke` after;
+      `resume.pod_id()` returns `qny1x4v8padeke`.
+    - **C4's check: PASS ×3.** Each checkpoint's provenance block records `pod_id` `qny1x4v8padeke` (one entry each,
+      128 launched).
+    - Residue, a dated note (2026-11-06): the driver's stdout `PROVENANCE:` line prints the adapter record and the
+      stamp only; the pod id is in the checkpoint file's provenance entry (`valence_core/m/gcal.py:1142`), and C4's
+      check reads it there.
+  - **The runs.** `scripts/m_sessions.py gcal completability --unit OLMo-{ckpt} --proposal-file
+    PROPOSAL-m-gating-campaign-v1_11.md`, back to back through a wrapper, on box HEAD `1bf94a6` with DRIVER
+    `f0e9d5c4…8403`, 02:20:02Z → 02:35:53Z. Raw [`_gcal-olmo`](results/raw/2026-11-06_gcal-olmo.txt).
+
+    | | clean | corrupted | ≥ 7/10 | ≥ 3/4 × clean | covariate | condition (4) |
+    |---|---|---|---|---|---|---|
+    | sft | 62/64 | 42/64 = 21/32 | no | no (93/128) | +5/16 | FAIL |
+    | dpo | 61/64 | 44/64 = 11/16 | no | no (183/256) | +17/64 | FAIL |
+    | instruct | 59/64 | 42/64 = 21/32 | no | no (177/256) | +17/64 | FAIL |
+
+    - Each identity carries backend identifier `641ee466f4553b6a`; the WEIGHTS lines are the BACKEND entry's weights of
+      record.
+    - The artifacts `data/m/gates/G-CAL_completability_olmo-{ckpt}.json` and checkpoints
+      `data/m/ckpt/G-CAL_olmo-{ckpt}.json` are committed here, byte-identical to the box's (sha256s in the raw).
+    - The wrapper's chain rule, declared before launch: continue on PASS or a verdict FAIL; halt on a refusal or a
+      STOP. Each run ended in a verdict FAIL (exit 4, the NOT-RUN line, no STOP line), so all three ran.
+  - **R1 A6's four tallies**, as the seat declared them (RESULTS.md@9cbacdb:4104–4113: "count-only, with no bar and
+    no effect on condition (4)"; computed and listed by `gcal.py:1042–1060`):
+
+    | | (i) hits on items 7 and 9 whose text does not state the answer, by Code's read | (ii) "close" answers on item 15 | (iii) termination-pattern lines | (iv) corruption mirroring (graded hits) |
+    |---|---|---|---|---|
+    | sft | 3 (of 12 candidates) | 0 | 0 | 12 (9) |
+    | dpo | 4 (of 12) | 0 | 0 | 6 (4) |
+    | instruct | 2 (of 9) | 0 | 0 | 9 (5) |
+
+    - Code read all 384 generations ([`_gcal-olmo_read`](results/raw/2026-11-06_gcal-olmo_read.txt), every text in
+      its section 5). The nine (i) hits are all corrupted-pool hits on item 7 or 9:
+      - 6 call the feathers heavier (sft 7 s2; dpo 7 s0, s1, s2; instruct 7 s0, s2);
+      - 1 gives both as 1 kilogram, with no comparison (sft 7 s3);
+      - 2 multiply and restate the operand (sft "90 miyms 45. = 4050"; dpo "90 * 45 = 4050").
+    - (ii): no item-15 generation on any checkpoint contains the word "close". The eight item-15 misses are banner or
+      scaffold text, or "Regenerate.".
+    - By R1 A6's terms neither read moves condition (4); the seat's ruling of 2026-10-10 stands ("a re-grading after
+      the data is rule 11's post hoc by definition").
+    - Seven observations go to the seat, post-hoc, none adjudicated (the read raw's §4): where the corrupted pool misses
+      (item 2 at 0/12; item 9 at 2/12, both of its hits artifacts); clean-pool hits on a "correction"; harness-shaped text; the
+      configuration-topic reading; two embedded double newlines before the stop and one control character on b3's
+      generation path; identical texts across checkpoints on the same keys (dpo / instruct 95 of 128); cap hits.
+  - **Under the record, stated, not adjudicated.** m:176 and m:302 make a failing checkpoint NOT-RUN with reason "dose
+    not completable"; `gcal.py`'s docstring adds "never 'STOP and re-specify'". OLMo-sft, OLMo-dpo and OLMo-instruct are
+    therefore NOT-RUN on this record. The covariates are recorded as the runs printed them. Which NOT-RUN records and
+    posting text follow, and what the pod does next, are the seat's and the PI's.
+  - **State.** No `LOCK-m-OLMo-{ckpt}` is written (C1's hold; on this outcome there is no next node). Nothing is pushed.
+    The box repo holds the six files untracked, byte-identical to those committed here, so the next bundle sync there
+    meets them first. The pod is RUNNING at $1.79/hr, kept up per C3. G-ACQ (PROPOSAL-n) runs on the box in parallel
+    from the routing session (`/workspace/staging-n`); its GPU pieces were to wait for this stop.
+  - **Values-check, and a gap disclosed.** The BACKEND entry (`190ba90`) and the smoke entry (`b9a26ef`) were committed
+    without the record's blind values-check (m:363: "Values-check pre-commit as the record does"). This entry's check
+    re-read both as well ([`_gcal-olmo_valuescheck`](results/raw/2026-11-06_gcal-olmo_valuescheck.md), with Code's
+    dispositions):
+    - 165 items: 122 confirmed, 13 confirmed by a raw's header only, 12 by uncommitted captures only, 10 not checkable
+      (chat-only words, write-time stamps, box facts never captured), **8 IMPRECISE, 0 FAIL**.
+    - The 3 IMPRECISE items in this entry are applied above: tally (i) stated in R1 A6's own terms, its cases listed in
+      full, and item 2's misses no longer called artifacts.
+    - The 12 capture-only claims are now on the record in
+      [`_backend_box-captures`](results/raw/2026-11-06_backend_box-captures.txt). That raw holds the stock-watch log,
+      the 70 box files' hashes and their classification, the holding folder's re-check, the bundle's identity, and the
+      box's hashes of the six G-CAL files.
+  - **Corrections to the two earlier entries** (the 5 IMPRECISE items there; dated notes, 2026-11-06):
+    - BACKEND, step (i): `box_respawn_check.py` hashes the manifest's files in the four checkpoint folders and flags
+      unlisted entries there. It does not hash every file under `/workspace/models/`; top-level files there, such as
+      `determinism_base.json`, are not in its scope.
+    - Smoke, "what the smoke is": the driver's refusal reads "the box run (G-CAL-OLMo-{ckpt}) writes data/m/gates and
+      data/m/ckpt only" (`scripts/m_sessions.py:484–486`); the label was dropped in the quote.
+    - Smoke, step 1: `driver_problems` ran once, before the per-unit loop, not per unit. The table's "weights and driver
+      checks: clean" repeats that single driver check in each column.
+    - Smoke, step 5: the generations went through the same three calls as G-CAL-OLMo's loop body
+      (`gcal.py:1152–1165`), re-implemented with the same arguments in the smoke's own loop. `gcal.py`'s lines did not
+      execute; the script's docstring cites them as "own call (gcal.py:1155-1165)".
+    - Smoke, finding 2: `scripts/m_sessions.py:6923–6929` holds the check's expectation. The pod-id forcing and the
+      box-path call sit at `:6919–6922`, and that call runs OLMo-instruct, not OLMo-sft. The substance is unchanged.
+  - **FLAG, not adjudicated: `190ba90` is public.** Remote `main` is `273ca8f`. The reflog shows a push of `1bf94a6`
+    at 20:31:08 −0500 and a second push, of `273ca8f`, at 20:39:16 −0500. The second published `958e762`, `190ba90` and
+    `273ca8f`, though `273ca8f`'s message says "The approved push covers 9cbacdb..1bf94a6; this commit, 958e762 and
+    190ba90 are not in it". `190ba90`'s files were scrubbed of host address and local paths before commit. Whether the
+    second push had the PI's word is for the routing session and the PI to say; it has been told.
+
 - 2026-11-06 — **G-CAL-OLMo — APPARATUS SMOKE on pod `qny1x4v8padeke`, on the PI's word of 2026-11-06 ("Yes,
   smoke"). Not G-CAL-OLMo: no G-CAL item, key, seed or grader ran, and nothing was written under `data/`. The path
   G-CAL-OLMo runs works on all three checkpoints: each loads, passes G-CAL-OLMo's startup, gives backend identifier

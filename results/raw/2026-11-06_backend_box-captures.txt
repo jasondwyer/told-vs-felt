@@ -1,0 +1,345 @@
+# Code's box-side captures behind the 2026-11-06 BACKEND entry (190ba90) and the G-CAL-OLMo entry, committed so that
+# claims the values-check found supported only by uncommitted scratch captures are on the record (its items 61, 77-78,
+# 102-108, 110-111). PI-local date 2026-11-06. Captured by Code's tools at the time; nothing here is re-typed.
+# Host IP/port and local paths are absent by construction (the connection file is never included).
+
+## 1. The stock watch (Code's log, one line per get-gpu-type read, PI-local clock)
+2026-11-06 12:37:09 EST  tick 1: US-CA-2 absent; listed US-KS-2 LOW, US-MD-1 LOW, US-MO-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 12:59:15 EST  tick 2: US-CA-2 absent; no dataCenters listed at all; overall NONE; price.secure 1.79; cudaVersions [13.2 unavailable]; no create
+2026-11-06 13:20:08 EST  tick 3: US-CA-2 absent; listed US-KS-2 LOW, US-MD-1 LOW, US-MO-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 13:41:17 EST  tick 4: US-CA-2 absent; listed US-KS-2 LOW, US-MD-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 14:02:08 EST  tick 5: US-CA-2 absent; listed US-KS-2 LOW, US-MD-1 LOW, US-WA-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 14:23:07 EST  tick 6: US-CA-2 absent; no dataCenters listed at all; overall NONE; price.secure 1.79; cudaVersions [13.2 unavailable]; no create
+2026-11-06 14:44:07 EST  tick 7: US-CA-2 absent; no dataCenters listed at all; overall NONE; price.secure 1.79; cudaVersions [13.2 unavailable]; no create
+2026-11-06 15:05:08 EST  tick 8: US-CA-2 absent; listed EUR-IS-1 LOW, US-KS-2 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 15:26:08 EST  tick 9: US-CA-2 absent; listed US-MD-1 LOW, US-MO-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 15:47:06 EST  tick 10: US-CA-2 absent; listed US-MD-1 LOW, US-WA-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 16:08:18 EST  tick 11: US-CA-2 absent; no dataCenters listed at all; overall NONE; price.secure 1.79; cudaVersions [13.2 unavailable]; no create
+2026-11-06 16:29:09 EST  tick 12: US-CA-2 absent; overall LOW but the read carried NO dataCenters field; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 16:50:08 EST  tick 13: US-CA-2 absent; listed US-KS-2 LOW, US-MD-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 17:11:07 EST  tick 14: US-CA-2 absent; no dataCenters listed at all; overall NONE; price.secure 1.79; cudaVersions [13.2 unavailable]; no create
+2026-11-06 17:32:07 EST  tick 15: US-CA-2 absent; listed US-KS-2 LOW, US-MD-1 LOW, US-WA-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 17:53:07 EST  tick 16: US-CA-2 absent; listed EU-RO-1 LOW, US-KS-2 LOW, US-MD-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 18:14:07 EST  tick 17: US-CA-2 absent; listed US-MD-1 LOW, US-WA-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 18:35:07 EST  tick 18: US-CA-2 absent; listed EUR-IS-1 LOW, US-KS-2 LOW, US-MD-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 18:56:08 EST  tick 19: US-CA-2 absent; listed EU-RO-1 LOW; overall LOW; price.secure 1.79; cudaVersions [13.2 available]; no create
+2026-11-06 19:17:22 EST  tick 20: US-CA-2 LISTED (LOW; also EUR-IS-1, US-KS-2, US-MD-1, US-MO-1, US-WA-1 LOW); price.secure 1.79; list-pods: only uimuzt7d890y5b (EXITED, untouched), no jspace-olmo-m; create-pod OK -> qny1x4v8padeke RUNNING (createdAt 2026-11-07T00:17:14.85Z, cost 1.79, US-CA-2, vol o73qvy742n at /workspace); loop stopped
+
+## 2. The box repo before anything moved: git status --porcelain -uall at box HEAD 6dfc455, each file with git hash-object and size (status, blob, bytes, path)
+ M	eeda99f446be3d6ad56a69ca8ac4545a30dad75d	7624	.gitignore
+ M	f53e7f172fae17cc96d4b2b107bd2419ea66721b	9668	HANDOFF-2026-08-24.md
+ M	de8d72cec0fd034b008aa9a4624ae3f2f7b6b8f7	388147	RESULTS.md
+ M	54afce556dfe4c9125cc5f0636b14f3c57ea4693	52499	paper_analysis.ipynb
+??	f153d073f3a0e985a35e25766d514bc06af0ac96	14599	ADDENDUM-g3-b2r-v1.1.md
+??	67b00c293e08f7d31e801f2bb3cf52c0338afb15	17806	ADDENDUM-g3-b2r-v1.2.md
+??	880c1e74b8deb835960e757eaff25037ed91baac	11747	ADDENDUM-g3-b2r.md
+??	bf0c245553ab75a06470ed25caff94b013b0495b	4522	data/configs/b2r_step1.json
+??	c52c74d398fc2b41dc775ee2a2666cccd51955d7	8593	data/olmo/b2_analysis.json
+??	b90f5db8738be9cbc97da4f24dfda81799acdb69	2874	data/olmo/b2_concepts_base.json
+??	4bb8565e827d4956e1c08c62ee89757bfc1cfe68	163187	data/olmo/b2_concepts_base.npz
+??	348eeccc04cdfd516409ee77250bccce3c586011	4569	data/olmo/b2_concepts_dpo.json
+??	48fa2659350f4f2795aae948e1b7ebc52a74a67b	163002	data/olmo/b2_concepts_dpo.npz
+??	17d9a6cecef5b34be63bec5a8b4de34be2f217f5	4580	data/olmo/b2_concepts_instruct.json
+??	90587494a6b2bc165eaeb3e442290ea814812f06	163160	data/olmo/b2_concepts_instruct.npz
+??	bf5386430458a140434b57fbfbbad17d174f2a8e	4565	data/olmo/b2_concepts_sft.json
+??	533d1c6796b185d18d63e098a55e0de33fb13604	164014	data/olmo/b2_concepts_sft.npz
+??	cd626e02e889d2c10131216b09237342551146bf	30067	data/olmo/b2_fidelity_base.json
+??	89189e1969e6b08f6628fd4fd6d43ded52bb7f88	41128	data/olmo/b2_fidelity_dpo.json
+??	d02fc5b5617f5639339fda8828e75a49f64212d0	41500	data/olmo/b2_fidelity_instruct.json
+??	c7e0d58f1b67747720765228a705186343da0be0	36580	data/olmo/b2_fidelity_sft.json
+??	0b29ae904d52184d81540eb228aa09bcc73478e2	43425	data/olmo/b2_register_base.json
+??	c9f83cdee2cb6226824baf5390a0e24e77bdb399	40273	data/olmo/b2_register_dpo.json
+??	5257f835b380fcce86ee91bdf2cc2f3bcdedbed0	38150	data/olmo/b2_register_instruct.json
+??	3e65307e8975c692b7bfbb6db26170d7591eb251	37673	data/olmo/b2_register_sft.json
+??	0637d470f081e526588fa35f9953176f8a88174e	6830	data/olmo/b2r_analysis.json
+??	b00b63d18182dc9f520b18f365aa99cb9607556a	817	data/olmo/b2r_budget.json
+??	cdd93d964c62b0030e27ac76b04482b4c2354aaf	2918	data/olmo/b2r_concepts_base.json
+??	ffbd86e62db6cd511c4d861005a277a9cbd54dd7	85510	data/olmo/b2r_control_base.json
+??	2912411ce09b505f343c38e8e6d1ab6ed3195100	101433	data/olmo/b2r_control_dpo.json
+??	56ad6102cb7f7e2e06c7e15748ca209897be9e49	99845	data/olmo/b2r_control_instruct.json
+??	815595644cac805e0107885435fb46ad101d4263	79243	data/olmo/b2r_control_sft.json
+??	5a6fbd9b301cae8f2b63219d14becc966dac5e96	118240	data/olmo/b2r_explore_dpo.json
+??	d7205bdf139ac438b3d23a20c05ebdf36de52a9b	115775	data/olmo/b2r_explore_instruct.json
+??	efcae0db258d274c84b663e139b3ba67b89e1fda	98713	data/olmo/b2r_explore_sft.json
+??	2a6ca4f9475b48eee6c918edd80a8caaf45cf2a7	6910	data/olmo/b2r_frac_table.json
+??	e526e5b859510739af71afd023adf22ccd48c55a	109547	data/olmo/b2r_qualify_base.json
+??	8ec0ddc7fb20e22350dc631a534781e40caf64c3	108867	data/olmo/b2r_qualify_dpo.json
+??	58d8c44842c33dacf02a5d05e3d09e676d2115b0	109628	data/olmo/b2r_qualify_instruct.json
+??	d2c8feb752b340045060acb64fab20aa19e81b73	112211	data/olmo/b2r_qualify_sft.json
+??	0ca36cc960a26e1645bb0688d8f8eb4a306fb22d	1146	data/olmo/b2r_sampling_base.json
+??	2af579ef07a461ad32c6ddbaf9e95832d7811777	1143	data/olmo/b2r_sampling_dpo.json
+??	ffb435c8aed97d1257660d06db1c356f63e5b0fc	1152	data/olmo/b2r_sampling_instruct.json
+??	2432eaceecde4184904922f80c28cfe4b2838b7f	1142	data/olmo/b2r_sampling_sft.json
+??	999ea3fb448f807d1bd1d71856ea074090697e5b	1817	data/olmo/b2r_valuescheck.json
+??	ac7ba6518f1d8490bc93d397b2538aee6dccc061	1747	data/olmo/b3_analysis_base.json
+??	c6a6efc7630a5d9e7e042f650429ab11a50fc5cb	1753	data/olmo/b3_analysis_dpo.json
+??	b1b442aa717da877a98a9872014cb4dfadf7fb8f	1726	data/olmo/b3_analysis_instruct.json
+??	5737975ea313beb90411258c6490751037cb8ccd	1743	data/olmo/b3_analysis_sft.json
+??	84119288ae62f4fabf31cb4faa5e36aa0033b280	548649	data/olmo/b3_screen_base.json
+??	68aa31eae9cdfa68f064bae3a72334100ab955ee	558829	data/olmo/b3_screen_dpo.json
+??	17773ecb1a50356b5c8957ae45efcb023d7c33fb	562832	data/olmo/b3_screen_instruct.json
+??	110652ddd71ccb89b4c939b875e80f659ae3bfeb	564712	data/olmo/b3_screen_sft.json
+??	ced0191536f194dc204b060952641a9e3eb239fc	6324	data/olmo/cached_gen_WITHDRAWN_v2.json
+??	b7efc3a6b3c6ee72d120e825de6fa844a89745fc	9605	results/raw/2026-08-24_b2.txt
+??	c428e2e370924b1eff42e6ca320abb33596ef7df	6254	results/raw/2026-08-24_b3.txt
+??	9eafe7b91016bca4ef2fb24850c0837d9864214c	4286	results/raw/2026-08-24_bphase_respawn.txt
+??	f9c9bdcbd3e35ef40f639585e5d2744a66aeb87f	1743	results/raw/2026-08-24_cached_gate_WITHDRAWN_v2.txt
+??	c7aab1e9117aa70832c10230827b8168d809575e	13747	scripts/b2r_analyze.py
+??	14be24bb5bb4946a8df3a3f1357295d6d62a23db	6735	scripts/b2r_scorer_selftest.py
+??	6456bc683ae34b0fc9b0e25a0b335beb315a28af	14007	scripts/box_b2r_campaign.py
+??	0b2b35fa209030f3aaacf084e7abe0f5c75641de	7189	scripts/box_b2r_concepts.py
+??	6af902d3a760d13a14abc4f3f7087376a193fc97	7162	scripts/box_b2r_sampling_smoke.py
+??	a638d0c430a2c7c53373543f588bbd2df0c2974a	4958	scripts/c1r3_gate_repA.json
+??	76d5cd9e63feff712e9071b2a1756c2a36d85bfc	4959	scripts/c1r3_gate_repB.json
+??	a33dbf2d307d559a64481c1fd1e09daa7f610735	2486	scripts/e0_frames.json
+??	10f7cd3cf122b4236061e1994f04c194517b57ae	10567	scripts/e0_tasks.jsonl
+??	7f6783656e108b66b38a9bdc4eff686c90f91261	5567	scripts/run_b2r.sh
+??	21af0a79410fcee30486a06b3c0fe6eeb1551f89	4512	scripts/run_bphase.sh
+??	819afd1abd6591e1dfae3bda5ffa93b19f128079	8911	valence_core/detection_v2.py
+
+## 3. Classification against laptop HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731 (git rev-parse 1bf94a6:<path> == blob?)
+NOT-HEAD(headblob=960d73daa641)	 M	eeda99f446be	7624	.gitignore
+NOT-HEAD(headblob=NONE)	 M	f53e7f172fae	9668	HANDOFF-2026-08-24.md
+NOT-HEAD(headblob=f85fb7a64761)	 M	de8d72cec0fd	388147	RESULTS.md
+NOT-HEAD(headblob=NONE)	 M	54afce556dfe	52499	paper_analysis.ipynb
+NOT-HEAD(headblob=NONE)	??	f153d073f3a0	14599	ADDENDUM-g3-b2r-v1.1.md
+HEAD-IDENTICAL	??	67b00c293e08	17806	ADDENDUM-g3-b2r-v1.2.md
+NOT-HEAD(headblob=NONE)	??	880c1e74b8de	11747	ADDENDUM-g3-b2r.md
+HEAD-IDENTICAL	??	bf0c245553ab	4522	data/configs/b2r_step1.json
+HEAD-IDENTICAL	??	c52c74d398fc	8593	data/olmo/b2_analysis.json
+HEAD-IDENTICAL	??	b90f5db8738b	2874	data/olmo/b2_concepts_base.json
+HEAD-IDENTICAL	??	4bb8565e827d	163187	data/olmo/b2_concepts_base.npz
+HEAD-IDENTICAL	??	348eeccc04cd	4569	data/olmo/b2_concepts_dpo.json
+HEAD-IDENTICAL	??	48fa2659350f	163002	data/olmo/b2_concepts_dpo.npz
+HEAD-IDENTICAL	??	17d9a6cecef5	4580	data/olmo/b2_concepts_instruct.json
+HEAD-IDENTICAL	??	90587494a6b2	163160	data/olmo/b2_concepts_instruct.npz
+HEAD-IDENTICAL	??	bf5386430458	4565	data/olmo/b2_concepts_sft.json
+HEAD-IDENTICAL	??	533d1c6796b1	164014	data/olmo/b2_concepts_sft.npz
+HEAD-IDENTICAL	??	cd626e02e889	30067	data/olmo/b2_fidelity_base.json
+HEAD-IDENTICAL	??	89189e1969e6	41128	data/olmo/b2_fidelity_dpo.json
+HEAD-IDENTICAL	??	d02fc5b5617f	41500	data/olmo/b2_fidelity_instruct.json
+HEAD-IDENTICAL	??	c7e0d58f1b67	36580	data/olmo/b2_fidelity_sft.json
+HEAD-IDENTICAL	??	0b29ae904d52	43425	data/olmo/b2_register_base.json
+HEAD-IDENTICAL	??	c9f83cdee2cb	40273	data/olmo/b2_register_dpo.json
+HEAD-IDENTICAL	??	5257f835b380	38150	data/olmo/b2_register_instruct.json
+HEAD-IDENTICAL	??	3e65307e8975	37673	data/olmo/b2_register_sft.json
+HEAD-IDENTICAL	??	0637d470f081	6830	data/olmo/b2r_analysis.json
+HEAD-IDENTICAL	??	b00b63d18182	817	data/olmo/b2r_budget.json
+HEAD-IDENTICAL	??	cdd93d964c62	2918	data/olmo/b2r_concepts_base.json
+HEAD-IDENTICAL	??	ffbd86e62db6	85510	data/olmo/b2r_control_base.json
+HEAD-IDENTICAL	??	2912411ce09b	101433	data/olmo/b2r_control_dpo.json
+HEAD-IDENTICAL	??	56ad6102cb7f	99845	data/olmo/b2r_control_instruct.json
+HEAD-IDENTICAL	??	815595644cac	79243	data/olmo/b2r_control_sft.json
+HEAD-IDENTICAL	??	5a6fbd9b301c	118240	data/olmo/b2r_explore_dpo.json
+HEAD-IDENTICAL	??	d7205bdf139a	115775	data/olmo/b2r_explore_instruct.json
+HEAD-IDENTICAL	??	efcae0db258d	98713	data/olmo/b2r_explore_sft.json
+HEAD-IDENTICAL	??	2a6ca4f9475b	6910	data/olmo/b2r_frac_table.json
+HEAD-IDENTICAL	??	e526e5b85951	109547	data/olmo/b2r_qualify_base.json
+HEAD-IDENTICAL	??	8ec0ddc7fb20	108867	data/olmo/b2r_qualify_dpo.json
+HEAD-IDENTICAL	??	58d8c44842c3	109628	data/olmo/b2r_qualify_instruct.json
+HEAD-IDENTICAL	??	d2c8feb752b3	112211	data/olmo/b2r_qualify_sft.json
+HEAD-IDENTICAL	??	0ca36cc960a2	1146	data/olmo/b2r_sampling_base.json
+HEAD-IDENTICAL	??	2af579ef07a4	1143	data/olmo/b2r_sampling_dpo.json
+HEAD-IDENTICAL	??	ffb435c8aed9	1152	data/olmo/b2r_sampling_instruct.json
+HEAD-IDENTICAL	??	2432eaceecde	1142	data/olmo/b2r_sampling_sft.json
+HEAD-IDENTICAL	??	999ea3fb448f	1817	data/olmo/b2r_valuescheck.json
+HEAD-IDENTICAL	??	ac7ba6518f1d	1747	data/olmo/b3_analysis_base.json
+HEAD-IDENTICAL	??	c6a6efc7630a	1753	data/olmo/b3_analysis_dpo.json
+HEAD-IDENTICAL	??	b1b442aa717d	1726	data/olmo/b3_analysis_instruct.json
+HEAD-IDENTICAL	??	5737975ea313	1743	data/olmo/b3_analysis_sft.json
+HEAD-IDENTICAL	??	84119288ae62	548649	data/olmo/b3_screen_base.json
+HEAD-IDENTICAL	??	68aa31eae9cd	558829	data/olmo/b3_screen_dpo.json
+HEAD-IDENTICAL	??	17773ecb1a50	562832	data/olmo/b3_screen_instruct.json
+HEAD-IDENTICAL	??	110652ddd71c	564712	data/olmo/b3_screen_sft.json
+HEAD-IDENTICAL	??	ced0191536f1	6324	data/olmo/cached_gen_WITHDRAWN_v2.json
+HEAD-IDENTICAL	??	b7efc3a6b3c6	9605	results/raw/2026-08-24_b2.txt
+HEAD-IDENTICAL	??	c428e2e37092	6254	results/raw/2026-08-24_b3.txt
+HEAD-IDENTICAL	??	9eafe7b91016	4286	results/raw/2026-08-24_bphase_respawn.txt
+HEAD-IDENTICAL	??	f9c9bdcbd3e3	1743	results/raw/2026-08-24_cached_gate_WITHDRAWN_v2.txt
+HEAD-IDENTICAL	??	c7aab1e9117a	13747	scripts/b2r_analyze.py
+HEAD-IDENTICAL	??	14be24bb5bb4	6735	scripts/b2r_scorer_selftest.py
+HEAD-IDENTICAL	??	6456bc683ae3	14007	scripts/box_b2r_campaign.py
+HEAD-IDENTICAL	??	0b2b35fa2090	7189	scripts/box_b2r_concepts.py
+HEAD-IDENTICAL	??	6af902d3a760	7162	scripts/box_b2r_sampling_smoke.py
+NOT-HEAD(headblob=NONE)	??	a638d0c430a2	4958	scripts/c1r3_gate_repA.json
+NOT-HEAD(headblob=NONE)	??	76d5cd9e63fe	4959	scripts/c1r3_gate_repB.json
+NOT-HEAD(headblob=NONE)	??	a33dbf2d307d	2486	scripts/e0_frames.json
+NOT-HEAD(headblob=NONE)	??	10f7cd3cf122	10567	scripts/e0_tasks.jsonl
+HEAD-IDENTICAL	??	7f6783656e10	5567	scripts/run_b2r.sh
+HEAD-IDENTICAL	??	21af0a79410f	4512	scripts/run_bphase.sh
+HEAD-IDENTICAL	??	819afd1abd65	8911	valence_core/detection_v2.py
+
+## 4. The 10 files not identical to HEAD at their path, traced (re-derived now with the same git queries)
+.gitignore  box blob eeda99f446be3d6ad56a69ca8ac4545a30dad75d
+   commits touching this blob at this path: b6e8f3f 2026-08-25;5c1b161 2026-08-24;
+   commits touching this blob at any path:  b6e8f3f 2026-08-25;5c1b161 2026-08-24;
+   paths at HEAD holding this blob: 
+   laptop working-tree copy: 960d73daa641fb0c38f285e394daffbeb3cf5e5e (status )
+HANDOFF-2026-08-24.md  box blob f53e7f172fae17cc96d4b2b107bd2419ea66721b
+   commits touching this blob at this path: ad2139a 2026-08-25;f4b402a 2026-08-24;
+   commits touching this blob at any path:  ad2139a 2026-08-25;f4b402a 2026-08-24;
+   paths at HEAD holding this blob: 
+RESULTS.md  box blob de8d72cec0fd034b008aa9a4624ae3f2f7b6b8f7
+   commits touching this blob at this path: b6e8f3f 2026-08-25;c17337c 2026-08-24;
+   commits touching this blob at any path:  b6e8f3f 2026-08-25;c17337c 2026-08-24;
+   paths at HEAD holding this blob: 
+   laptop working-tree copy: 894b966f7abdf89f18f919f5f730cc71c3467fc4 (status )
+paper_analysis.ipynb  box blob 54afce556dfe4c9125cc5f0636b14f3c57ea4693
+   commits touching this blob at this path: ba67acb 2026-08-19;947b9ea 2026-08-18;
+   commits touching this blob at any path:  ba67acb 2026-08-19;947b9ea 2026-08-18;
+   paths at HEAD holding this blob: 
+ADDENDUM-g3-b2r-v1.1.md  box blob f153d073f3a0e985a35e25766d514bc06af0ac96
+   commits touching this blob at this path: 
+   commits touching this blob at any path:  
+   paths at HEAD holding this blob: 
+   laptop working-tree copy: f153d073f3a0e985a35e25766d514bc06af0ac96 (status ??)
+ADDENDUM-g3-b2r.md  box blob 880c1e74b8deb835960e757eaff25037ed91baac
+   commits touching this blob at this path: 
+   commits touching this blob at any path:  
+   paths at HEAD holding this blob: 
+   laptop working-tree copy: 880c1e74b8deb835960e757eaff25037ed91baac (status ??)
+scripts/c1r3_gate_repA.json  box blob a638d0c430a2c7c53373543f588bbd2df0c2974a
+   commits touching this blob at this path: 
+   commits touching this blob at any path:  e16e76f 2026-08-12;
+   paths at HEAD holding this blob: data/configs/c1r3_gate_repA.json 
+scripts/c1r3_gate_repB.json  box blob 76d5cd9e63feff712e9071b2a1756c2a36d85bfc
+   commits touching this blob at this path: 
+   commits touching this blob at any path:  e16e76f 2026-08-12;
+   paths at HEAD holding this blob: data/configs/c1r3_gate_repB.json 
+scripts/e0_frames.json  box blob a33dbf2d307d559a64481c1fd1e09daa7f610735
+   commits touching this blob at this path: 
+   commits touching this blob at any path:  f190a32 2026-08-19;
+   paths at HEAD holding this blob: data/configs/e0_frames.json 
+scripts/e0_tasks.jsonl  box blob 10f7cd3cf122b4236061e1994f04c194517b57ae
+   commits touching this blob at this path: 
+   commits touching this blob at any path:  f190a32 2026-08-19;
+   paths at HEAD holding this blob: data/corpus/e0_tasks.jsonl 
+
+## 5. The holding folder /workspace/repo/box-dirty-2026-11-06/ after the move: its 70 hashes (blob, path), then the comparison with section 2
+eeda99f446be3d6ad56a69ca8ac4545a30dad75d	.gitignore
+f153d073f3a0e985a35e25766d514bc06af0ac96	ADDENDUM-g3-b2r-v1.1.md
+67b00c293e08f7d31e801f2bb3cf52c0338afb15	ADDENDUM-g3-b2r-v1.2.md
+880c1e74b8deb835960e757eaff25037ed91baac	ADDENDUM-g3-b2r.md
+f53e7f172fae17cc96d4b2b107bd2419ea66721b	HANDOFF-2026-08-24.md
+de8d72cec0fd034b008aa9a4624ae3f2f7b6b8f7	RESULTS.md
+bf0c245553ab75a06470ed25caff94b013b0495b	data/configs/b2r_step1.json
+c52c74d398fc2b41dc775ee2a2666cccd51955d7	data/olmo/b2_analysis.json
+b90f5db8738be9cbc97da4f24dfda81799acdb69	data/olmo/b2_concepts_base.json
+4bb8565e827d4956e1c08c62ee89757bfc1cfe68	data/olmo/b2_concepts_base.npz
+348eeccc04cdfd516409ee77250bccce3c586011	data/olmo/b2_concepts_dpo.json
+48fa2659350f4f2795aae948e1b7ebc52a74a67b	data/olmo/b2_concepts_dpo.npz
+17d9a6cecef5b34be63bec5a8b4de34be2f217f5	data/olmo/b2_concepts_instruct.json
+90587494a6b2bc165eaeb3e442290ea814812f06	data/olmo/b2_concepts_instruct.npz
+bf5386430458a140434b57fbfbbad17d174f2a8e	data/olmo/b2_concepts_sft.json
+533d1c6796b185d18d63e098a55e0de33fb13604	data/olmo/b2_concepts_sft.npz
+cd626e02e889d2c10131216b09237342551146bf	data/olmo/b2_fidelity_base.json
+89189e1969e6b08f6628fd4fd6d43ded52bb7f88	data/olmo/b2_fidelity_dpo.json
+d02fc5b5617f5639339fda8828e75a49f64212d0	data/olmo/b2_fidelity_instruct.json
+c7e0d58f1b67747720765228a705186343da0be0	data/olmo/b2_fidelity_sft.json
+0b29ae904d52184d81540eb228aa09bcc73478e2	data/olmo/b2_register_base.json
+c9f83cdee2cb6226824baf5390a0e24e77bdb399	data/olmo/b2_register_dpo.json
+5257f835b380fcce86ee91bdf2cc2f3bcdedbed0	data/olmo/b2_register_instruct.json
+3e65307e8975c692b7bfbb6db26170d7591eb251	data/olmo/b2_register_sft.json
+0637d470f081e526588fa35f9953176f8a88174e	data/olmo/b2r_analysis.json
+b00b63d18182dc9f520b18f365aa99cb9607556a	data/olmo/b2r_budget.json
+cdd93d964c62b0030e27ac76b04482b4c2354aaf	data/olmo/b2r_concepts_base.json
+ffbd86e62db6cd511c4d861005a277a9cbd54dd7	data/olmo/b2r_control_base.json
+2912411ce09b505f343c38e8e6d1ab6ed3195100	data/olmo/b2r_control_dpo.json
+56ad6102cb7f7e2e06c7e15748ca209897be9e49	data/olmo/b2r_control_instruct.json
+815595644cac805e0107885435fb46ad101d4263	data/olmo/b2r_control_sft.json
+5a6fbd9b301cae8f2b63219d14becc966dac5e96	data/olmo/b2r_explore_dpo.json
+d7205bdf139ac438b3d23a20c05ebdf36de52a9b	data/olmo/b2r_explore_instruct.json
+efcae0db258d274c84b663e139b3ba67b89e1fda	data/olmo/b2r_explore_sft.json
+2a6ca4f9475b48eee6c918edd80a8caaf45cf2a7	data/olmo/b2r_frac_table.json
+e526e5b859510739af71afd023adf22ccd48c55a	data/olmo/b2r_qualify_base.json
+8ec0ddc7fb20e22350dc631a534781e40caf64c3	data/olmo/b2r_qualify_dpo.json
+58d8c44842c33dacf02a5d05e3d09e676d2115b0	data/olmo/b2r_qualify_instruct.json
+d2c8feb752b340045060acb64fab20aa19e81b73	data/olmo/b2r_qualify_sft.json
+0ca36cc960a26e1645bb0688d8f8eb4a306fb22d	data/olmo/b2r_sampling_base.json
+2af579ef07a461ad32c6ddbaf9e95832d7811777	data/olmo/b2r_sampling_dpo.json
+ffb435c8aed97d1257660d06db1c356f63e5b0fc	data/olmo/b2r_sampling_instruct.json
+2432eaceecde4184904922f80c28cfe4b2838b7f	data/olmo/b2r_sampling_sft.json
+999ea3fb448f807d1bd1d71856ea074090697e5b	data/olmo/b2r_valuescheck.json
+ac7ba6518f1d8490bc93d397b2538aee6dccc061	data/olmo/b3_analysis_base.json
+c6a6efc7630a5d9e7e042f650429ab11a50fc5cb	data/olmo/b3_analysis_dpo.json
+b1b442aa717da877a98a9872014cb4dfadf7fb8f	data/olmo/b3_analysis_instruct.json
+5737975ea313beb90411258c6490751037cb8ccd	data/olmo/b3_analysis_sft.json
+84119288ae62f4fabf31cb4faa5e36aa0033b280	data/olmo/b3_screen_base.json
+68aa31eae9cdfa68f064bae3a72334100ab955ee	data/olmo/b3_screen_dpo.json
+17773ecb1a50356b5c8957ae45efcb023d7c33fb	data/olmo/b3_screen_instruct.json
+110652ddd71ccb89b4c939b875e80f659ae3bfeb	data/olmo/b3_screen_sft.json
+ced0191536f194dc204b060952641a9e3eb239fc	data/olmo/cached_gen_WITHDRAWN_v2.json
+54afce556dfe4c9125cc5f0636b14f3c57ea4693	paper_analysis.ipynb
+b7efc3a6b3c6ee72d120e825de6fa844a89745fc	results/raw/2026-08-24_b2.txt
+c428e2e370924b1eff42e6ca320abb33596ef7df	results/raw/2026-08-24_b3.txt
+9eafe7b91016bca4ef2fb24850c0837d9864214c	results/raw/2026-08-24_bphase_respawn.txt
+f9c9bdcbd3e35ef40f639585e5d2744a66aeb87f	results/raw/2026-08-24_cached_gate_WITHDRAWN_v2.txt
+c7aab1e9117aa70832c10230827b8168d809575e	scripts/b2r_analyze.py
+14be24bb5bb4946a8df3a3f1357295d6d62a23db	scripts/b2r_scorer_selftest.py
+6456bc683ae34b0fc9b0e25a0b335beb315a28af	scripts/box_b2r_campaign.py
+0b2b35fa209030f3aaacf084e7abe0f5c75641de	scripts/box_b2r_concepts.py
+6af902d3a760d13a14abc4f3f7087376a193fc97	scripts/box_b2r_sampling_smoke.py
+a638d0c430a2c7c53373543f588bbd2df0c2974a	scripts/c1r3_gate_repA.json
+76d5cd9e63feff712e9071b2a1756c2a36d85bfc	scripts/c1r3_gate_repB.json
+a33dbf2d307d559a64481c1fd1e09daa7f610735	scripts/e0_frames.json
+10f7cd3cf122b4236061e1994f04c194517b57ae	scripts/e0_tasks.jsonl
+7f6783656e108b66b38a9bdc4eff686c90f91261	scripts/run_b2r.sh
+21af0a79410fcee30486a06b3c0fe6eeb1551f89	scripts/run_bphase.sh
+819afd1abd6591e1dfae3bda5ffa93b19f128079	valence_core/detection_v2.py
+comparison: the 70 holding-folder blobs equal section 2's, path by path
+
+## 6. Gitignored files in the box repo before the merge (git status --porcelain --ignored -uall, "!!" lines), and those tracked at HEAD 1bf94a6
+.claude/settings.local.json
+data/olmo/b2r_concepts_base.npz
+scripts/__pycache__/b2_analyze.cpython-312.pyc
+scripts/__pycache__/b2r_analyze.cpython-312.pyc
+scripts/__pycache__/box_e0_corpus.cpython-312.pyc
+scripts/__pycache__/paper_data.cpython-310.pyc
+scripts/__pycache__/paper_data.cpython-312.pyc
+valence_core/__pycache__/__init__.cpython-312.pyc
+valence_core/__pycache__/detection.cpython-312.pyc
+valence_core/__pycache__/detection_v2.cpython-312.pyc
+valence_core/__pycache__/discrim.cpython-312.pyc
+valence_core/__pycache__/extract.cpython-312.pyc
+valence_core/__pycache__/gate.cpython-312.pyc
+valence_core/__pycache__/readout.cpython-312.pyc
+valence_core/__pycache__/session.cpython-312.pyc
+valence_core/__pycache__/session_e2a.cpython-312.pyc
+valence_core/__pycache__/stats.cpython-312.pyc
+valence_core/__pycache__/tagscreen.cpython-312.pyc
+valence_core/adapters/__pycache__/__init__.cpython-312.pyc
+valence_core/adapters/__pycache__/base.cpython-312.pyc
+valence_core/adapters/__pycache__/olmo_hf.cpython-312.pyc
+valence_core/adapters/__pycache__/qwen_mlx.cpython-312.pyc
+valence_core/regression/__pycache__/__init__.cpython-312.pyc
+valence_core/regression/__pycache__/analysis.cpython-312.pyc
+valence_core/regression/__pycache__/oracle.cpython-312.pyc
+tracked at HEAD: data/olmo/b2r_concepts_base.npz 
+
+## 7. The bundle shipped to the box
+bytes 279474757; sha256 bf4754f3d0a594279c66f6d5e332e3a1c41424029f5aff405dd63100e51619c1
+1bf94a6c8198268c8a79288a74b6ba231717f731 refs/heads/main
+jspace.bundle is okay
+The bundle contains this ref:
+1bf94a6c8198268c8a79288a74b6ba231717f731 refs/heads/main
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+
+## 8. The six G-CAL-OLMo files as the box held them after the runs (sha256 on the box; box repo HEAD and status first)
+1bf94a6c8198268c8a79288a74b6ba231717f731
+?? data/m/ckpt/G-CAL_olmo-dpo.json
+?? data/m/ckpt/G-CAL_olmo-instruct.json
+?? data/m/ckpt/G-CAL_olmo-sft.json
+?? data/m/gates/G-CAL_completability_olmo-dpo.json
+?? data/m/gates/G-CAL_completability_olmo-instruct.json
+?? data/m/gates/G-CAL_completability_olmo-sft.json
+ed89aaf5cd7ad52bb4f7e0aef1a485ab104cf1a72485baf557393af11e5fca08  data/m/gates/G-CAL_completability_olmo-dpo.json
+62ed6d03127c1b5e22c04258ab593858ee9a92f870be58cf3e907627a31c35c1  data/m/gates/G-CAL_completability_olmo-instruct.json
+799b3c3f96237f4fcc2a8e3fa4ddb0179159b017eda9a72572e1f24c83917617  data/m/gates/G-CAL_completability_olmo-sft.json
+239f6bd66897056768c531f66137786593946ef7fd90146fced7275a5178e8c2  data/m/ckpt/G-CAL_olmo-dpo.json
+724897d776324f0f15db82f38677a04686d3a097812c3f57ff416956a20358a6  data/m/ckpt/G-CAL_olmo-instruct.json
+1f16f7326eab748dabbc222634417c44ba89d332f1dd8ad27a7b8637ed7c2b72  data/m/ckpt/G-CAL_olmo-sft.json
+6a571918af9c791fd50d08e355777b317eeb217aa9e8bdfc703d45856c73bf79  /workspace/gcal_olmo/gcal_olmo-dpo.txt
+c477435770866e12733c1638373ea6dd5bd92f3e260ad724f921fa18129c9275  /workspace/gcal_olmo/gcal_olmo-instruct.txt
+b22fb127b05f3782b453699e8f12cb84af4e95419362ee23701686b0b0c9b6b8  /workspace/gcal_olmo/gcal_olmo-sft.txt
+f6e6f9caf96a73dbad2a10adb9b981daf8e701d6f02b461f899fefa9440a323f  /workspace/gcal_olmo/stamps.txt

@@ -1,0 +1,500 @@
+# G-CAL-OLMo-{sft,dpo,instruct} OF RECORD (PROPOSAL-m v1.11 m:176, m:302, §5; ADDENDUM-m1 §4 step 4), on the PI's routing of 2026-11-06 ("Go for G-CAL-OLMo on sft, dpo and instruct, smoke first"; order (a) with the second-STOP flip as C1; batching as C2) and the design seat's answers C1-C4 (results/raw/2026-11-06_ganl-f3_design-to-code_answers.md, sha256 4edfbb8e3d08844e47a329a951f9c2dd381115f0fd92c8b2b77f2207777ca42e, committed at 54bbfe5). PI-local date 2026-11-06.
+# BOX: pod qny1x4v8padeke (jspace-olmo-m), 1 x A100-SXM4-80GB, US-CA-2; backend identifier 641ee466f4553b6a (BACKEND entry, 190ba90). Box repo HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731 (its m code is the laptop's; the only code change since is scripts/audit_note_N12_history.py).
+# SMOKE FIRST: the apparatus smoke of b9a26ef (the PI's "Yes, smoke"), then after C4's line the model-free prechecks of all three units re-run in a fresh shell with only env.sh sourced: PASS x3, pod id qny1x4v8padeke.
+# C4 (the one line appended to /workspace/env.sh; env.sh sha256 a0587921... -> f5174faa..., backup /workspace/env.sh.bak-2026-11-06):
+#   export RUNPOD_POD_ID="$(tr '\0' '\n' < /proc/1/environ | sed -n 's/^RUNPOD_POD_ID=//p')"  # C4 (seat answers 2026-11-06): the pod id as PID 1 reports it, never typed
+# C4's check: each checkpoint's provenance block records pod_id qny1x4v8padeke (one entry each, launched 128): PASS x3. (The driver's stdout PROVENANCE line prints {record, stamp}; the pod id is in the checkpoint file's provenance entry, gcal.py:1142.)
+# COMMAND (box, via /workspace/smoke/run_gcal_olmo.sh, sha256 525e60d30dc8fc164eeceeb36f1d88d4043ce3bb9f7af819e9e677e9d0a69884, appended below; env.sh sourced; cwd /workspace/repo/jspace-lab), per ckpt in sft dpo instruct:
+#   /workspace/venv/bin/python scripts/m_sessions.py gcal completability --unit OLMo-{ckpt} --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+#   chain rule (declared before launch): continue on PASS (0) or a verdict FAIL (4 with the NOT-RUN line, no STOP line); halt on a refusal or a STOP.
+# RESULT: condition (4) FAIL on all three -- each checkpoint NOT-RUN with reason "dose not completable" (m:176, m:302; §5). Escalated; nothing adjudicated.
+#   sft      clean 62/64  corrupted 42/64 = 21/32  covariate +5/16   (bars: 7/10 no; 3/4 x clean = 93/128 no)
+#   dpo      clean 61/64  corrupted 44/64 = 11/16  covariate +17/64  (bars: 7/10 no; 183/256 no)
+#   instruct clean 59/64  corrupted 42/64 = 21/32  covariate +17/64  (bars: 7/10 no; 177/256 no)
+# ARTIFACTS (committed with this raw; byte-identical to the box's):
+#   data/m/gates/G-CAL_completability_olmo-sft.json      799b3c3f96237f4fcc2a8e3fa4ddb0179159b017eda9a72572e1f24c83917617
+#   data/m/gates/G-CAL_completability_olmo-dpo.json      ed89aaf5cd7ad52bb4f7e0aef1a485ab104cf1a72485baf557393af11e5fca08
+#   data/m/gates/G-CAL_completability_olmo-instruct.json 62ed6d03127c1b5e22c04258ab593858ee9a92f870be58cf3e907627a31c35c1
+#   data/m/ckpt/G-CAL_olmo-sft.json                      1f16f7326eab748dabbc222634417c44ba89d332f1dd8ad27a7b8637ed7c2b72
+#   data/m/ckpt/G-CAL_olmo-dpo.json                      239f6bd66897056768c531f66137786593946ef7fd90146fced7275a5178e8c2
+#   data/m/ckpt/G-CAL_olmo-instruct.json                 724897d776324f0f15db82f38677a04686d3a097812c3f57ff416956a20358a6
+# What follows, verbatim: the wrapper's stamps file (Code's `date -u` stamps, on the box), then each run's stdout+stderr (sha256 sft b22fb127..., dpo 6a571918..., instruct c4774357...), then the wrapper.
+
+# ==== stamps.txt ====
+launch sft 2026-11-07T02:20:02Z RUNPOD_POD_ID=qny1x4v8padeke
+end sft 2026-11-07T02:25:14Z exit=4
+launch dpo 2026-11-07T02:25:14Z RUNPOD_POD_ID=qny1x4v8padeke
+end dpo 2026-11-07T02:30:37Z exit=4
+launch instruct 2026-11-07T02:30:37Z RUNPOD_POD_ID=qny1x4v8padeke
+end instruct 2026-11-07T02:35:53Z exit=4
+done 2026-11-07T02:35:53Z
+
+# ==== gcal_olmo-sft.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/m_sessions.py gcal completability --unit OLMo-sft --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+DRIVER scripts/m_sessions.py f0e9d5c497a1ee336d7136c4937be53c53198f82faa3a691489026e5ea218403: committed at HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731, working tree identical
+WEIGHTS sft: allenai/Olmo-3.1-32B-Instruct-SFT revision 152782ecc41a, files_aggregate_sha256 ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5; 7 files at /workspace/models/sft, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  11%|█▏        | 81/707 [00:00<00:00, 723.50it/s]Loading weights:  22%|██▏       | 154/707 [00:00<00:01, 538.95it/s]Loading weights:  30%|██▉       | 211/707 [00:00<00:01, 464.19it/s]Loading weights:  37%|███▋      | 259/707 [00:00<00:01, 445.60it/s]Loading weights:  43%|████▎     | 305/707 [00:00<00:00, 423.68it/s]Loading weights:  49%|████▉     | 348/707 [00:00<00:00, 422.79it/s]Loading weights:  55%|█████▌    | 391/707 [00:00<00:00, 398.69it/s]Loading weights:  61%|██████    | 432/707 [00:00<00:00, 399.32it/s]Loading weights:  68%|██████▊   | 482/707 [00:01<00:00, 422.66it/s]Loading weights:  75%|███████▌  | 532/707 [00:01<00:00, 429.73it/s]Loading weights:  82%|████████▏ | 582/707 [00:01<00:00, 446.54it/s]Loading weights:  89%|████████▉ | 629/707 [00:01<00:00, 441.16it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 474.70it/s]
+GATE G-CAL-OLMo-sft: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer present 655e0f7f6743d0bf -- not read by G-CAL, HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/sft","python":"3.12.3","seed":20260818},"stamp":"2026-11-07T02:23:37Z"}
+gcal CORR_clean i=0 s=0 hit n_tok=2
+gcal CORR_clean i=0 s=1 hit n_tok=2
+gcal CORR_clean i=0 s=2 hit n_tok=2
+gcal CORR_clean i=0 s=3 hit n_tok=2
+gcal CORR_clean i=1 s=0 hit n_tok=8
+gcal CORR_clean i=1 s=1 hit n_tok=2
+gcal CORR_clean i=1 s=2 hit n_tok=2
+gcal CORR_clean i=1 s=3 hit n_tok=2
+gcal CORR_clean i=2 s=0 hit n_tok=7
+gcal CORR_clean i=2 s=1 hit n_tok=8
+gcal CORR_clean i=2 s=2 hit n_tok=18
+gcal CORR_clean i=2 s=3 miss n_tok=2
+gcal CORR_clean i=3 s=0 hit n_tok=8
+gcal CORR_clean i=3 s=1 hit n_tok=2
+gcal CORR_clean i=3 s=2 hit n_tok=2
+gcal CORR_clean i=3 s=3 hit n_tok=2
+gcal CORR_clean i=4 s=0 miss n_tok=3
+gcal CORR_clean i=4 s=1 hit n_tok=2
+gcal CORR_clean i=4 s=2 hit n_tok=7
+gcal CORR_clean i=4 s=3 hit n_tok=4
+gcal CORR_clean i=5 s=0 hit n_tok=1
+gcal CORR_clean i=5 s=1 hit n_tok=1
+gcal CORR_clean i=5 s=2 hit n_tok=1
+gcal CORR_clean i=5 s=3 hit n_tok=9
+gcal CORR_clean i=6 s=0 hit n_tok=2
+gcal CORR_clean i=6 s=1 hit n_tok=2
+gcal CORR_clean i=6 s=2 hit n_tok=2
+gcal CORR_clean i=6 s=3 hit n_tok=2
+gcal CORR_clean i=7 s=0 hit n_tok=14
+gcal CORR_clean i=7 s=1 hit n_tok=60
+gcal CORR_clean i=7 s=2 hit n_tok=60
+gcal CORR_clean i=7 s=3 hit n_tok=14
+gcal CORR_clean i=8 s=0 hit n_tok=1
+gcal CORR_clean i=8 s=1 hit n_tok=9
+gcal CORR_clean i=8 s=2 hit n_tok=8
+gcal CORR_clean i=8 s=3 hit n_tok=1
+gcal CORR_clean i=9 s=0 hit n_tok=2
+gcal CORR_clean i=9 s=1 hit n_tok=2
+gcal CORR_clean i=9 s=2 hit n_tok=2
+gcal CORR_clean i=9 s=3 hit n_tok=8
+gcal CORR_clean i=10 s=0 hit n_tok=11
+gcal CORR_clean i=10 s=1 hit n_tok=5
+gcal CORR_clean i=10 s=2 hit n_tok=5
+gcal CORR_clean i=10 s=3 hit n_tok=7
+gcal CORR_clean i=11 s=0 hit n_tok=1
+gcal CORR_clean i=11 s=1 hit n_tok=1
+gcal CORR_clean i=11 s=2 hit n_tok=14
+gcal CORR_clean i=11 s=3 hit n_tok=1
+gcal CORR_clean i=12 s=0 hit n_tok=2
+gcal CORR_clean i=12 s=1 hit n_tok=2
+gcal CORR_clean i=12 s=2 hit n_tok=2
+gcal CORR_clean i=12 s=3 hit n_tok=2
+gcal CORR_clean i=13 s=0 hit n_tok=2
+gcal CORR_clean i=13 s=1 hit n_tok=6
+gcal CORR_clean i=13 s=2 hit n_tok=8
+gcal CORR_clean i=13 s=3 hit n_tok=3
+gcal CORR_clean i=14 s=0 hit n_tok=2
+gcal CORR_clean i=14 s=1 hit n_tok=2
+gcal CORR_clean i=14 s=2 hit n_tok=2
+gcal CORR_clean i=14 s=3 hit n_tok=8
+gcal CORR_clean i=15 s=0 hit n_tok=1
+gcal CORR_clean i=15 s=1 hit n_tok=1
+gcal CORR_clean i=15 s=2 hit n_tok=1
+gcal CORR_clean i=15 s=3 hit n_tok=1
+gcal CORR_corrupted i=0 s=0 hit n_tok=60
+gcal CORR_corrupted i=0 s=1 hit n_tok=33
+gcal CORR_corrupted i=0 s=2 hit n_tok=53
+gcal CORR_corrupted i=0 s=3 hit n_tok=2
+gcal CORR_corrupted i=1 s=0 miss n_tok=2
+gcal CORR_corrupted i=1 s=1 hit n_tok=32
+gcal CORR_corrupted i=1 s=2 hit n_tok=8
+gcal CORR_corrupted i=1 s=3 miss n_tok=3
+gcal CORR_corrupted i=2 s=0 miss n_tok=21
+gcal CORR_corrupted i=2 s=1 miss n_tok=11
+gcal CORR_corrupted i=2 s=2 miss n_tok=3
+gcal CORR_corrupted i=2 s=3 miss n_tok=5
+gcal CORR_corrupted i=3 s=0 hit n_tok=2
+gcal CORR_corrupted i=3 s=1 hit n_tok=2
+gcal CORR_corrupted i=3 s=2 hit n_tok=2
+gcal CORR_corrupted i=3 s=3 hit n_tok=2
+gcal CORR_corrupted i=4 s=0 hit n_tok=2
+gcal CORR_corrupted i=4 s=1 miss n_tok=2
+gcal CORR_corrupted i=4 s=2 hit n_tok=2
+gcal CORR_corrupted i=4 s=3 hit n_tok=11
+gcal CORR_corrupted i=5 s=0 miss n_tok=1
+gcal CORR_corrupted i=5 s=1 hit n_tok=9
+gcal CORR_corrupted i=5 s=2 miss n_tok=11
+gcal CORR_corrupted i=5 s=3 hit n_tok=1
+gcal CORR_corrupted i=6 s=0 hit n_tok=2
+gcal CORR_corrupted i=6 s=1 hit n_tok=2
+gcal CORR_corrupted i=6 s=2 hit n_tok=2
+gcal CORR_corrupted i=6 s=3 hit n_tok=2
+gcal CORR_corrupted i=7 s=0 miss n_tok=8
+gcal CORR_corrupted i=7 s=1 hit n_tok=11
+gcal CORR_corrupted i=7 s=2 hit n_tok=60
+gcal CORR_corrupted i=7 s=3 hit n_tok=33
+gcal CORR_corrupted i=8 s=0 hit n_tok=12
+gcal CORR_corrupted i=8 s=1 hit n_tok=2
+gcal CORR_corrupted i=8 s=2 miss n_tok=3
+gcal CORR_corrupted i=8 s=3 hit n_tok=12
+gcal CORR_corrupted i=9 s=0 miss n_tok=3
+gcal CORR_corrupted i=9 s=1 hit n_tok=11
+gcal CORR_corrupted i=9 s=2 miss n_tok=3
+gcal CORR_corrupted i=9 s=3 miss n_tok=4
+gcal CORR_corrupted i=10 s=0 hit n_tok=9
+gcal CORR_corrupted i=10 s=1 hit n_tok=8
+gcal CORR_corrupted i=10 s=2 hit n_tok=2
+gcal CORR_corrupted i=10 s=3 hit n_tok=10
+gcal CORR_corrupted i=11 s=0 miss n_tok=6
+gcal CORR_corrupted i=11 s=1 hit n_tok=1
+gcal CORR_corrupted i=11 s=2 miss n_tok=24
+gcal CORR_corrupted i=11 s=3 miss n_tok=6
+gcal CORR_corrupted i=12 s=0 hit n_tok=60
+gcal CORR_corrupted i=12 s=1 hit n_tok=12
+gcal CORR_corrupted i=12 s=2 hit n_tok=8
+gcal CORR_corrupted i=12 s=3 hit n_tok=60
+gcal CORR_corrupted i=13 s=0 miss n_tok=2
+gcal CORR_corrupted i=13 s=1 hit n_tok=2
+gcal CORR_corrupted i=13 s=2 miss n_tok=12
+gcal CORR_corrupted i=13 s=3 hit n_tok=2
+gcal CORR_corrupted i=14 s=0 hit n_tok=8
+gcal CORR_corrupted i=14 s=1 hit n_tok=35
+gcal CORR_corrupted i=14 s=2 hit n_tok=8
+gcal CORR_corrupted i=14 s=3 miss n_tok=7
+gcal CORR_corrupted i=15 s=0 miss n_tok=6
+gcal CORR_corrupted i=15 s=1 hit n_tok=1
+gcal CORR_corrupted i=15 s=2 hit n_tok=1
+gcal CORR_corrupted i=15 s=3 miss n_tok=4
+gcal accuracy CORR_clean 62/64 = 31/32 (0.9688)
+gcal accuracy CORR_corrupted 42/64 = 21/32 (0.6563)
+gcal condition (4): FAIL -- corrupted 21/32 >= 7/10: no; >= 3/4 x clean = 93/128: no
+gcal covariate (clean minus corrupted, f0's sign): 5/16 = +0.3125 (LOCK-m-OLMo-sft v0.1 carries it, m:176)
+gcal tally (iii) lines matching f's descriptive termination patterns: 0 []
+gcal tally (iv) corrupted-pool answers restating a corrupted word of their render: 12, of them graded hits 9 ['CORR_corrupted i=2 s=0', 'CORR_corrupted i=2 s=1', 'CORR_corrupted i=4 s=3', 'CORR_corrupted i=7 s=1', 'CORR_corrupted i=7 s=2', 'CORR_corrupted i=8 s=0', 'CORR_corrupted i=8 s=3', 'CORR_corrupted i=9 s=1', 'CORR_corrupted i=10 s=0', 'CORR_corrupted i=10 s=1', 'CORR_corrupted i=10 s=3', 'CORR_corrupted i=13 s=2']
+gcal tally (i) for Code's read -- hits on items 7 and 9: 12 ['CORR_clean i=7 s=0', 'CORR_clean i=7 s=1', 'CORR_clean i=7 s=2', 'CORR_clean i=7 s=3', 'CORR_clean i=9 s=0', 'CORR_clean i=9 s=1', 'CORR_clean i=9 s=2', 'CORR_clean i=9 s=3', 'CORR_corrupted i=7 s=1', 'CORR_corrupted i=7 s=2', 'CORR_corrupted i=7 s=3', 'CORR_corrupted i=9 s=1']
+gcal tally (ii) for Code's read -- misses on item 15: 2 ['CORR_corrupted i=15 s=0', 'CORR_corrupted i=15 s=3']
+G-CAL-OLMo-sft completability: FAIL -- that checkpoint NOT-RUN with reason "dose not completable" (m:176, m:302; §5); artifact /workspace/repo/jspace-lab/data/m/gates/G-CAL_completability_olmo-sft.json (written)
+
+# ==== gcal_olmo-dpo.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/m_sessions.py gcal completability --unit OLMo-dpo --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+DRIVER scripts/m_sessions.py f0e9d5c497a1ee336d7136c4937be53c53198f82faa3a691489026e5ea218403: committed at HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731, working tree identical
+WEIGHTS dpo: allenai/Olmo-3.1-32B-Instruct-DPO revision fc84a4f69991, files_aggregate_sha256 c6e5e2abe093d0fcb6050500bdb7dc13998fa51fdde47cc93bffded126f33e60; 7 files at /workspace/models/dpo, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:   9%|▉         | 67/707 [00:00<00:01, 433.79it/s]Loading weights:  18%|█▊        | 128/707 [00:00<00:01, 499.46it/s]Loading weights:  25%|██▌       | 180/707 [00:00<00:01, 428.28it/s]Loading weights:  32%|███▏      | 224/707 [00:00<00:01, 400.52it/s]Loading weights:  37%|███▋      | 265/707 [00:00<00:01, 355.65it/s]Loading weights:  43%|████▎     | 302/707 [00:00<00:01, 330.46it/s]Loading weights:  48%|████▊     | 338/707 [00:00<00:01, 331.62it/s]Loading weights:  53%|█████▎    | 374/707 [00:01<00:01, 330.44it/s]Loading weights:  58%|█████▊    | 408/707 [00:01<00:00, 320.25it/s]Loading weights:  63%|██████▎   | 447/707 [00:01<00:00, 332.33it/s]Loading weights:  71%|███████▏  | 505/707 [00:01<00:00, 385.61it/s]Loading weights:  77%|███████▋  | 544/707 [00:01<00:00, 383.13it/s]Loading weights:  82%|████████▏ | 583/707 [00:01<00:00, 381.49it/s]Loading weights:  88%|████████▊ | 622/707 [00:01<00:00, 368.53it/s]Loading weights:  94%|█████████▍| 663/707 [00:01<00:00, 374.01it/s]Loading weights:  99%|█████████▉| 701/707 [00:01<00:00, 374.48it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 373.41it/s]
+GATE G-CAL-OLMo-dpo: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer present 655e0f7f6743d0bf -- not read by G-CAL, HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/dpo","python":"3.12.3","seed":20260818},"stamp":"2026-11-07T02:28:38Z"}
+gcal CORR_clean i=0 s=0 hit n_tok=2
+gcal CORR_clean i=0 s=1 hit n_tok=2
+gcal CORR_clean i=0 s=2 hit n_tok=2
+gcal CORR_clean i=0 s=3 hit n_tok=2
+gcal CORR_clean i=1 s=0 hit n_tok=8
+gcal CORR_clean i=1 s=1 hit n_tok=2
+gcal CORR_clean i=1 s=2 hit n_tok=2
+gcal CORR_clean i=1 s=3 hit n_tok=2
+gcal CORR_clean i=2 s=0 hit n_tok=7
+gcal CORR_clean i=2 s=1 hit n_tok=8
+gcal CORR_clean i=2 s=2 hit n_tok=17
+gcal CORR_clean i=2 s=3 hit n_tok=11
+gcal CORR_clean i=3 s=0 hit n_tok=8
+gcal CORR_clean i=3 s=1 hit n_tok=2
+gcal CORR_clean i=3 s=2 hit n_tok=33
+gcal CORR_clean i=3 s=3 hit n_tok=25
+gcal CORR_clean i=4 s=0 hit n_tok=15
+gcal CORR_clean i=4 s=1 hit n_tok=50
+gcal CORR_clean i=4 s=2 hit n_tok=5
+gcal CORR_clean i=4 s=3 hit n_tok=2
+gcal CORR_clean i=5 s=0 hit n_tok=1
+gcal CORR_clean i=5 s=1 hit n_tok=1
+gcal CORR_clean i=5 s=2 hit n_tok=1
+gcal CORR_clean i=5 s=3 hit n_tok=9
+gcal CORR_clean i=6 s=0 hit n_tok=60
+gcal CORR_clean i=6 s=1 hit n_tok=2
+gcal CORR_clean i=6 s=2 hit n_tok=2
+gcal CORR_clean i=6 s=3 hit n_tok=2
+gcal CORR_clean i=7 s=0 hit n_tok=14
+gcal CORR_clean i=7 s=1 miss n_tok=25
+gcal CORR_clean i=7 s=2 hit n_tok=36
+gcal CORR_clean i=7 s=3 hit n_tok=14
+gcal CORR_clean i=8 s=0 hit n_tok=1
+gcal CORR_clean i=8 s=1 hit n_tok=1
+gcal CORR_clean i=8 s=2 hit n_tok=8
+gcal CORR_clean i=8 s=3 hit n_tok=1
+gcal CORR_clean i=9 s=0 hit n_tok=2
+gcal CORR_clean i=9 s=1 hit n_tok=2
+gcal CORR_clean i=9 s=2 hit n_tok=2
+gcal CORR_clean i=9 s=3 hit n_tok=8
+gcal CORR_clean i=10 s=0 hit n_tok=12
+gcal CORR_clean i=10 s=1 hit n_tok=2
+gcal CORR_clean i=10 s=2 miss n_tok=6
+gcal CORR_clean i=10 s=3 hit n_tok=7
+gcal CORR_clean i=11 s=0 hit n_tok=1
+gcal CORR_clean i=11 s=1 hit n_tok=1
+gcal CORR_clean i=11 s=2 hit n_tok=2
+gcal CORR_clean i=11 s=3 hit n_tok=1
+gcal CORR_clean i=12 s=0 hit n_tok=2
+gcal CORR_clean i=12 s=1 hit n_tok=2
+gcal CORR_clean i=12 s=2 hit n_tok=2
+gcal CORR_clean i=12 s=3 hit n_tok=2
+gcal CORR_clean i=13 s=0 miss n_tok=3
+gcal CORR_clean i=13 s=1 hit n_tok=2
+gcal CORR_clean i=13 s=2 hit n_tok=8
+gcal CORR_clean i=13 s=3 hit n_tok=3
+gcal CORR_clean i=14 s=0 hit n_tok=2
+gcal CORR_clean i=14 s=1 hit n_tok=2
+gcal CORR_clean i=14 s=2 hit n_tok=2
+gcal CORR_clean i=14 s=3 hit n_tok=8
+gcal CORR_clean i=15 s=0 hit n_tok=4
+gcal CORR_clean i=15 s=1 hit n_tok=2
+gcal CORR_clean i=15 s=2 hit n_tok=1
+gcal CORR_clean i=15 s=3 hit n_tok=2
+gcal CORR_corrupted i=0 s=0 hit n_tok=3
+gcal CORR_corrupted i=0 s=1 hit n_tok=8
+gcal CORR_corrupted i=0 s=2 hit n_tok=3
+gcal CORR_corrupted i=0 s=3 hit n_tok=2
+gcal CORR_corrupted i=1 s=0 hit n_tok=10
+gcal CORR_corrupted i=1 s=1 miss n_tok=7
+gcal CORR_corrupted i=1 s=2 hit n_tok=8
+gcal CORR_corrupted i=1 s=3 hit n_tok=2
+gcal CORR_corrupted i=2 s=0 miss n_tok=12
+gcal CORR_corrupted i=2 s=1 miss n_tok=60
+gcal CORR_corrupted i=2 s=2 miss n_tok=11
+gcal CORR_corrupted i=2 s=3 miss n_tok=60
+gcal CORR_corrupted i=3 s=0 hit n_tok=2
+gcal CORR_corrupted i=3 s=1 hit n_tok=2
+gcal CORR_corrupted i=3 s=2 hit n_tok=2
+gcal CORR_corrupted i=3 s=3 hit n_tok=2
+gcal CORR_corrupted i=4 s=0 hit n_tok=2
+gcal CORR_corrupted i=4 s=1 hit n_tok=51
+gcal CORR_corrupted i=4 s=2 hit n_tok=29
+gcal CORR_corrupted i=4 s=3 hit n_tok=60
+gcal CORR_corrupted i=5 s=0 hit n_tok=1
+gcal CORR_corrupted i=5 s=1 hit n_tok=9
+gcal CORR_corrupted i=5 s=2 hit n_tok=3
+gcal CORR_corrupted i=5 s=3 miss n_tok=6
+gcal CORR_corrupted i=6 s=0 hit n_tok=2
+gcal CORR_corrupted i=6 s=1 hit n_tok=2
+gcal CORR_corrupted i=6 s=2 hit n_tok=14
+gcal CORR_corrupted i=6 s=3 hit n_tok=2
+gcal CORR_corrupted i=7 s=0 hit n_tok=60
+gcal CORR_corrupted i=7 s=1 hit n_tok=52
+gcal CORR_corrupted i=7 s=2 hit n_tok=60
+gcal CORR_corrupted i=7 s=3 hit n_tok=53
+gcal CORR_corrupted i=8 s=0 hit n_tok=12
+gcal CORR_corrupted i=8 s=1 hit n_tok=1
+gcal CORR_corrupted i=8 s=2 miss n_tok=3
+gcal CORR_corrupted i=8 s=3 miss n_tok=16
+gcal CORR_corrupted i=9 s=0 miss n_tok=3
+gcal CORR_corrupted i=9 s=1 miss n_tok=3
+gcal CORR_corrupted i=9 s=2 miss n_tok=3
+gcal CORR_corrupted i=9 s=3 hit n_tok=9
+gcal CORR_corrupted i=10 s=0 hit n_tok=60
+gcal CORR_corrupted i=10 s=1 hit n_tok=12
+gcal CORR_corrupted i=10 s=2 hit n_tok=2
+gcal CORR_corrupted i=10 s=3 hit n_tok=11
+gcal CORR_corrupted i=11 s=0 hit n_tok=6
+gcal CORR_corrupted i=11 s=1 miss n_tok=2
+gcal CORR_corrupted i=11 s=2 miss n_tok=4
+gcal CORR_corrupted i=11 s=3 miss n_tok=6
+gcal CORR_corrupted i=12 s=0 hit n_tok=2
+gcal CORR_corrupted i=12 s=1 hit n_tok=2
+gcal CORR_corrupted i=12 s=2 hit n_tok=8
+gcal CORR_corrupted i=12 s=3 hit n_tok=2
+gcal CORR_corrupted i=13 s=0 hit n_tok=60
+gcal CORR_corrupted i=13 s=1 hit n_tok=2
+gcal CORR_corrupted i=13 s=2 hit n_tok=8
+gcal CORR_corrupted i=13 s=3 miss n_tok=4
+gcal CORR_corrupted i=14 s=0 hit n_tok=8
+gcal CORR_corrupted i=14 s=1 hit n_tok=13
+gcal CORR_corrupted i=14 s=2 miss n_tok=2
+gcal CORR_corrupted i=14 s=3 miss n_tok=60
+gcal CORR_corrupted i=15 s=0 miss n_tok=10
+gcal CORR_corrupted i=15 s=1 hit n_tok=1
+gcal CORR_corrupted i=15 s=2 miss n_tok=6
+gcal CORR_corrupted i=15 s=3 miss n_tok=4
+gcal accuracy CORR_clean 61/64 = 61/64 (0.9531)
+gcal accuracy CORR_corrupted 44/64 = 11/16 (0.6875)
+gcal condition (4): FAIL -- corrupted 11/16 >= 7/10: no; >= 3/4 x clean = 183/256: no
+gcal covariate (clean minus corrupted, f0's sign): 17/64 = +0.2656 (LOCK-m-OLMo-dpo v0.1 carries it, m:176)
+gcal tally (iii) lines matching f's descriptive termination patterns: 0 []
+gcal tally (iv) corrupted-pool answers restating a corrupted word of their render: 6, of them graded hits 4 ['CORR_corrupted i=8 s=0', 'CORR_corrupted i=8 s=3', 'CORR_corrupted i=10 s=0', 'CORR_corrupted i=10 s=1', 'CORR_corrupted i=10 s=3', 'CORR_corrupted i=14 s=3']
+gcal tally (i) for Code's read -- hits on items 7 and 9: 12 ['CORR_clean i=7 s=0', 'CORR_clean i=7 s=2', 'CORR_clean i=7 s=3', 'CORR_clean i=9 s=0', 'CORR_clean i=9 s=1', 'CORR_clean i=9 s=2', 'CORR_clean i=9 s=3', 'CORR_corrupted i=7 s=0', 'CORR_corrupted i=7 s=1', 'CORR_corrupted i=7 s=2', 'CORR_corrupted i=7 s=3', 'CORR_corrupted i=9 s=3']
+gcal tally (ii) for Code's read -- misses on item 15: 3 ['CORR_corrupted i=15 s=0', 'CORR_corrupted i=15 s=2', 'CORR_corrupted i=15 s=3']
+G-CAL-OLMo-dpo completability: FAIL -- that checkpoint NOT-RUN with reason "dose not completable" (m:176, m:302; §5); artifact /workspace/repo/jspace-lab/data/m/gates/G-CAL_completability_olmo-dpo.json (written)
+
+# ==== gcal_olmo-instruct.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/m_sessions.py gcal completability --unit OLMo-instruct --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+DRIVER scripts/m_sessions.py f0e9d5c497a1ee336d7136c4937be53c53198f82faa3a691489026e5ea218403: committed at HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731, working tree identical
+WEIGHTS instruct: allenai/Olmo-3.1-32B-Instruct revision ac0587e4a774, files_aggregate_sha256 0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643; 8 files at /workspace/models/instruct, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  13%|█▎        | 91/707 [00:00<00:00, 798.71it/s]Loading weights:  24%|██▍       | 171/707 [00:00<00:00, 583.22it/s]Loading weights:  33%|███▎      | 233/707 [00:00<00:01, 463.32it/s]Loading weights:  40%|████      | 284/707 [00:00<00:00, 436.75it/s]Loading weights:  48%|████▊     | 338/707 [00:00<00:00, 427.23it/s]Loading weights:  56%|█████▌    | 393/707 [00:00<00:00, 442.45it/s]Loading weights:  62%|██████▏   | 438/707 [00:00<00:00, 428.11it/s]Loading weights:  71%|███████   | 500/707 [00:01<00:00, 450.15it/s]Loading weights:  79%|███████▊  | 556/707 [00:01<00:00, 478.65it/s]Loading weights:  86%|████████▌ | 605/707 [00:01<00:00, 478.76it/s]Loading weights:  93%|█████████▎| 654/707 [00:01<00:00, 387.45it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 467.81it/s]
+GATE G-CAL-OLMo-instruct: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer present 655e0f7f6743d0bf -- not read by G-CAL, HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/instruct","python":"3.12.3","seed":20260818},"stamp":"2026-11-07T02:34:11Z"}
+gcal CORR_clean i=0 s=0 hit n_tok=2
+gcal CORR_clean i=0 s=1 hit n_tok=2
+gcal CORR_clean i=0 s=2 hit n_tok=2
+gcal CORR_clean i=0 s=3 hit n_tok=2
+gcal CORR_clean i=1 s=0 hit n_tok=8
+gcal CORR_clean i=1 s=1 hit n_tok=2
+gcal CORR_clean i=1 s=2 hit n_tok=2
+gcal CORR_clean i=1 s=3 hit n_tok=2
+gcal CORR_clean i=2 s=0 miss n_tok=2
+gcal CORR_clean i=2 s=1 hit n_tok=8
+gcal CORR_clean i=2 s=2 hit n_tok=29
+gcal CORR_clean i=2 s=3 hit n_tok=9
+gcal CORR_clean i=3 s=0 hit n_tok=2
+gcal CORR_clean i=3 s=1 hit n_tok=12
+gcal CORR_clean i=3 s=2 hit n_tok=33
+gcal CORR_clean i=3 s=3 hit n_tok=23
+gcal CORR_clean i=4 s=0 hit n_tok=15
+gcal CORR_clean i=4 s=1 hit n_tok=2
+gcal CORR_clean i=4 s=2 hit n_tok=5
+gcal CORR_clean i=4 s=3 hit n_tok=6
+gcal CORR_clean i=5 s=0 hit n_tok=1
+gcal CORR_clean i=5 s=1 hit n_tok=1
+gcal CORR_clean i=5 s=2 hit n_tok=1
+gcal CORR_clean i=5 s=3 hit n_tok=1
+gcal CORR_clean i=6 s=0 hit n_tok=11
+gcal CORR_clean i=6 s=1 hit n_tok=2
+gcal CORR_clean i=6 s=2 hit n_tok=2
+gcal CORR_clean i=6 s=3 hit n_tok=2
+gcal CORR_clean i=7 s=0 hit n_tok=14
+gcal CORR_clean i=7 s=1 miss n_tok=25
+gcal CORR_clean i=7 s=2 hit n_tok=14
+gcal CORR_clean i=7 s=3 hit n_tok=14
+gcal CORR_clean i=8 s=0 hit n_tok=1
+gcal CORR_clean i=8 s=1 hit n_tok=1
+gcal CORR_clean i=8 s=2 hit n_tok=8
+gcal CORR_clean i=8 s=3 hit n_tok=1
+gcal CORR_clean i=9 s=0 hit n_tok=2
+gcal CORR_clean i=9 s=1 hit n_tok=2
+gcal CORR_clean i=9 s=2 hit n_tok=2
+gcal CORR_clean i=9 s=3 hit n_tok=8
+gcal CORR_clean i=10 s=0 miss n_tok=1
+gcal CORR_clean i=10 s=1 hit n_tok=2
+gcal CORR_clean i=10 s=2 miss n_tok=6
+gcal CORR_clean i=10 s=3 hit n_tok=2
+gcal CORR_clean i=11 s=0 hit n_tok=1
+gcal CORR_clean i=11 s=1 hit n_tok=1
+gcal CORR_clean i=11 s=2 hit n_tok=2
+gcal CORR_clean i=11 s=3 hit n_tok=1
+gcal CORR_clean i=12 s=0 hit n_tok=2
+gcal CORR_clean i=12 s=1 hit n_tok=2
+gcal CORR_clean i=12 s=2 hit n_tok=2
+gcal CORR_clean i=12 s=3 hit n_tok=2
+gcal CORR_clean i=13 s=0 miss n_tok=3
+gcal CORR_clean i=13 s=1 hit n_tok=2
+gcal CORR_clean i=13 s=2 hit n_tok=8
+gcal CORR_clean i=13 s=3 hit n_tok=3
+gcal CORR_clean i=14 s=0 hit n_tok=2
+gcal CORR_clean i=14 s=1 hit n_tok=2
+gcal CORR_clean i=14 s=2 hit n_tok=2
+gcal CORR_clean i=14 s=3 hit n_tok=2
+gcal CORR_clean i=15 s=0 hit n_tok=4
+gcal CORR_clean i=15 s=1 hit n_tok=2
+gcal CORR_clean i=15 s=2 hit n_tok=1
+gcal CORR_clean i=15 s=3 hit n_tok=2
+gcal CORR_corrupted i=0 s=0 hit n_tok=3
+gcal CORR_corrupted i=0 s=1 hit n_tok=8
+gcal CORR_corrupted i=0 s=2 hit n_tok=3
+gcal CORR_corrupted i=0 s=3 hit n_tok=2
+gcal CORR_corrupted i=1 s=0 hit n_tok=10
+gcal CORR_corrupted i=1 s=1 miss n_tok=60
+gcal CORR_corrupted i=1 s=2 hit n_tok=8
+gcal CORR_corrupted i=1 s=3 hit n_tok=2
+gcal CORR_corrupted i=2 s=0 miss n_tok=12
+gcal CORR_corrupted i=2 s=1 miss n_tok=60
+gcal CORR_corrupted i=2 s=2 miss n_tok=11
+gcal CORR_corrupted i=2 s=3 miss n_tok=60
+gcal CORR_corrupted i=3 s=0 hit n_tok=2
+gcal CORR_corrupted i=3 s=1 hit n_tok=2
+gcal CORR_corrupted i=3 s=2 hit n_tok=2
+gcal CORR_corrupted i=3 s=3 hit n_tok=2
+gcal CORR_corrupted i=4 s=0 hit n_tok=2
+gcal CORR_corrupted i=4 s=1 hit n_tok=9
+gcal CORR_corrupted i=4 s=2 hit n_tok=29
+gcal CORR_corrupted i=4 s=3 hit n_tok=8
+gcal CORR_corrupted i=5 s=0 hit n_tok=1
+gcal CORR_corrupted i=5 s=1 hit n_tok=1
+gcal CORR_corrupted i=5 s=2 hit n_tok=11
+gcal CORR_corrupted i=5 s=3 miss n_tok=4
+gcal CORR_corrupted i=6 s=0 hit n_tok=2
+gcal CORR_corrupted i=6 s=1 hit n_tok=2
+gcal CORR_corrupted i=6 s=2 hit n_tok=14
+gcal CORR_corrupted i=6 s=3 hit n_tok=2
+gcal CORR_corrupted i=7 s=0 hit n_tok=60
+gcal CORR_corrupted i=7 s=1 miss n_tok=60
+gcal CORR_corrupted i=7 s=2 hit n_tok=60
+gcal CORR_corrupted i=7 s=3 miss n_tok=4
+gcal CORR_corrupted i=8 s=0 hit n_tok=12
+gcal CORR_corrupted i=8 s=1 hit n_tok=1
+gcal CORR_corrupted i=8 s=2 miss n_tok=3
+gcal CORR_corrupted i=8 s=3 miss n_tok=14
+gcal CORR_corrupted i=9 s=0 miss n_tok=3
+gcal CORR_corrupted i=9 s=1 miss n_tok=3
+gcal CORR_corrupted i=9 s=2 miss n_tok=3
+gcal CORR_corrupted i=9 s=3 miss n_tok=3
+gcal CORR_corrupted i=10 s=0 hit n_tok=60
+gcal CORR_corrupted i=10 s=1 hit n_tok=12
+gcal CORR_corrupted i=10 s=2 hit n_tok=2
+gcal CORR_corrupted i=10 s=3 hit n_tok=11
+gcal CORR_corrupted i=11 s=0 hit n_tok=3
+gcal CORR_corrupted i=11 s=1 miss n_tok=2
+gcal CORR_corrupted i=11 s=2 miss n_tok=4
+gcal CORR_corrupted i=11 s=3 miss n_tok=6
+gcal CORR_corrupted i=12 s=0 hit n_tok=2
+gcal CORR_corrupted i=12 s=1 hit n_tok=2
+gcal CORR_corrupted i=12 s=2 hit n_tok=8
+gcal CORR_corrupted i=12 s=3 hit n_tok=2
+gcal CORR_corrupted i=13 s=0 hit n_tok=60
+gcal CORR_corrupted i=13 s=1 hit n_tok=2
+gcal CORR_corrupted i=13 s=2 hit n_tok=8
+gcal CORR_corrupted i=13 s=3 hit n_tok=2
+gcal CORR_corrupted i=14 s=0 hit n_tok=8
+gcal CORR_corrupted i=14 s=1 hit n_tok=13
+gcal CORR_corrupted i=14 s=2 miss n_tok=2
+gcal CORR_corrupted i=14 s=3 miss n_tok=60
+gcal CORR_corrupted i=15 s=0 miss n_tok=10
+gcal CORR_corrupted i=15 s=1 hit n_tok=1
+gcal CORR_corrupted i=15 s=2 miss n_tok=4
+gcal CORR_corrupted i=15 s=3 miss n_tok=4
+gcal accuracy CORR_clean 59/64 = 59/64 (0.9219)
+gcal accuracy CORR_corrupted 42/64 = 21/32 (0.6563)
+gcal condition (4): FAIL -- corrupted 21/32 >= 7/10: no; >= 3/4 x clean = 177/256: no
+gcal covariate (clean minus corrupted, f0's sign): 17/64 = +0.2656 (LOCK-m-OLMo-instruct v0.1 carries it, m:176)
+gcal tally (iii) lines matching f's descriptive termination patterns: 0 []
+gcal tally (iv) corrupted-pool answers restating a corrupted word of their render: 9, of them graded hits 5 ['CORR_corrupted i=1 s=1', 'CORR_corrupted i=2 s=1', 'CORR_corrupted i=4 s=3', 'CORR_corrupted i=8 s=0', 'CORR_corrupted i=8 s=3', 'CORR_corrupted i=10 s=0', 'CORR_corrupted i=10 s=1', 'CORR_corrupted i=10 s=3', 'CORR_corrupted i=14 s=3']
+gcal tally (i) for Code's read -- hits on items 7 and 9: 9 ['CORR_clean i=7 s=0', 'CORR_clean i=7 s=2', 'CORR_clean i=7 s=3', 'CORR_clean i=9 s=0', 'CORR_clean i=9 s=1', 'CORR_clean i=9 s=2', 'CORR_clean i=9 s=3', 'CORR_corrupted i=7 s=0', 'CORR_corrupted i=7 s=2']
+gcal tally (ii) for Code's read -- misses on item 15: 3 ['CORR_corrupted i=15 s=0', 'CORR_corrupted i=15 s=2', 'CORR_corrupted i=15 s=3']
+G-CAL-OLMo-instruct completability: FAIL -- that checkpoint NOT-RUN with reason "dose not completable" (m:176, m:302; §5); artifact /workspace/repo/jspace-lab/data/m/gates/G-CAL_completability_olmo-instruct.json (written)
+
+# ==== the wrapper, /workspace/smoke/run_gcal_olmo.sh (sha256 525e60d30dc8fc164eeceeb36f1d88d4043ce3bb9f7af819e9e677e9d0a69884) ====
+#!/bin/bash
+# G-CAL-OLMo-{sft,dpo,instruct} of record, back to back (the PI's routing of 2026-11-06; seat answers C1, C2),
+# after the apparatus smoke (b9a26ef) and C4's env.sh line. The driver is the committed one; this wrapper only
+# sequences it and records stamps and exit codes. A checkpoint that PASSes (0) or ends in a verdict FAIL (4 with the
+# NOT-RUN line and no STOP line: that unit NOT-RUN, the others separate units) lets the next run; a refusal (2) or a
+# STOP halts the chain for escalation.
+source /workspace/env.sh
+cd /workspace/repo/jspace-lab || exit 9
+OUT=/workspace/gcal_olmo
+mkdir -p "$OUT"
+for ck in sft dpo instruct; do
+  echo "launch $ck $(date -u +%Y-%m-%dT%H:%M:%SZ) RUNPOD_POD_ID=$RUNPOD_POD_ID" >> "$OUT/stamps.txt"
+  /workspace/venv/bin/python scripts/m_sessions.py gcal completability --unit "OLMo-$ck" \
+      --proposal-file PROPOSAL-m-gating-campaign-v1_11.md > "$OUT/gcal_olmo-$ck.txt" 2>&1
+  rc=$?
+  echo "end $ck $(date -u +%Y-%m-%dT%H:%M:%SZ) exit=$rc" >> "$OUT/stamps.txt"
+  if [ "$rc" -eq 0 ]; then continue; fi
+  if [ "$rc" -eq 4 ] && grep -q "completability: FAIL -- that checkpoint NOT-RUN" "$OUT/gcal_olmo-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/gcal_olmo-$ck.txt"; then continue; fi
+  echo "halt after $ck (exit=$rc): neither PASS nor a verdict FAIL" >> "$OUT/stamps.txt"
+  break
+done
+echo "done $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$OUT/stamps.txt"
+
+# ==== the post-C4 model-free precheck re-check, before the first load (fresh ssh shell, env.sh alone; tool output verbatim, then the box repo's git status --porcelain, empty) ====
+HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731 | pod_id qny1x4v8padeke | proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4 []
+driver_problems: ([], 'f0e9d5c497a1ee336d7136c4937be53c53198f82faa3a691489026e5ea218403')
+OLMo-sft precheck: PASS | olmo_weights_problems: []
+OLMo-dpo precheck: PASS | olmo_weights_problems: []
+OLMo-instruct precheck: PASS | olmo_weights_problems: []
+(porcelain end)
+
+[exited with code 0]
