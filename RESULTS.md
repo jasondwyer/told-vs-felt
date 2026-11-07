@@ -189,6 +189,24 @@ applied to CLAUDE.md.
   - **N1's state:** prepared and values-checked (38 items, 1 FAIL, which is this conflict). Its edits are held
     outside the tree, and nothing of N1 is committed.
   - **Committed by path:** the block and this entry. Not pushed.
+  - **Close (PI date 2026-11-07).** The design seat's answer
+    ([`2026-11-07_n1-battery_design-to-code_answers.md`](results/raw/2026-11-07_n1-battery_design-to-code_answers.md),
+    sha256 `6b711d946f331201262242dd053d51dbb5447c6403e3d0fc86d853f5d7d5b409`) is committed here by path, as the PI placed it.
+    - It rules order (b), confirms N18's sidecar case, has `README-NOTE.md:214` fixed in the N1 commit and leaves
+      the gitleaks pin. It logs its own anchor error as ledger (59).
+    - The PI's routing, in chat, verbatim:
+
+      > 1. Order (b), the check’s form as given, the two prose anchors reworded in the same edit [go].
+      > 2. N18’s sidecar case [confirmed]; README-NOTE:214 fixed with N1; gitleaks pin left [confirmed].
+
+    - **The order, as the answer's §1 and §4 give it:**
+      1. the check fix, in one analyzer edit with the two prose anchors reworded, the battery re-run and a blind review;
+      2. N1, released from hold with the `:214` fix;
+      3. a G-SHAPE re-run iff a map lists `m_analyze.py`;
+      4. the canonical `ganl`;
+      5. LOCK-m-F3 v0.1;
+      6. G-TIME-F3.
+    - The PROPOSAL-p block (`aee7d86`) is not answered here, and G-CAL-p stays held. Not pushed.
 
 - 2026-11-07 — **G-SHAPE-F3 — the canonical re-run on `993eba1`, before LOCK-m-F3 v0.1: PASS.
   N3: B's F-6 and F-7 moved mf3's package at `e0b4f2c`. The hygiene commit then edited `scripts/mf3_sessions.py`, a
