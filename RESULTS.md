@@ -21,6 +21,20 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **PROPOSAL-p: G-CAL-p HELD for three seat rulings (F-p3, F-p8, F-p10), each changing what its
+  write-once artifacts record. A block goes to the seat through the PI.**
+
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 21:42:36 UTC 2026**.)
+
+  - **The block:** [`2026-11-07_p-gcal-flags_code-to-design.md`](results/raw/2026-11-07_p-gcal-flags_code-to-design.md).
+  - **The three flags**, from the BUILD's design raw (`a665a09`):
+    - §5.4's disclosure date (2026-11-06 as written, against v0.2's commit on 2026-11-07);
+    - the proposal pin's scope in G-CAL-p's identity (the seat's Q1 (iii));
+    - whether the cut log's returned text counts as storage under §2.2.
+  - **The go:** the PI delegated G-CAL-p's go for the box to the coordinating session (routing item 3). It is held
+    until the seat rules, because G-CAL-p is one shot per checkpoint.
+  - **Committed by path:** the block and this entry. Not pushed.
+
 - 2026-11-07 — **G-SHAPE-p — PASS (p v0.2 §4.2; p §8 step 4's last item): the run of record on the BUILD's committed
   sources (`a665a09`). `data/p/gates/G-SHAPE-p.json`, schema `p-gshape-v1`, sha256
   `3fb0f64098dc6c9b435859aa27df35f1511754b4cb6396e1568891794cfd6961`, written once.** Model-free; nothing ran on a
