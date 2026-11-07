@@ -173,9 +173,10 @@ def _selftest(chk) -> None:
     chk("mf3_sessions: the quarantined state-present module is not loaded after the self-test",
         not any(m in sys.modules for m in guard.FORBIDDEN_MODULES))
     m_files = sorted((REPO / "valence_core" / "m").glob("*.py"))
-    chk("mf3_sessions: the F3 build changes nothing in valence_core/m -- its package hash is the OLMo build's "
-        "60199b36...feec", rs.m_resume.package_sha256_of(REPO / "valence_core" / "m").startswith("60199b36")
-        and len(m_files) == 18)
+    chk("mf3_sessions: valence_core/m holds 18 files and its package hash is 7756dcf4...49bb -- the OLMo build's "
+        "60199b36...feec as moved by the G-ANL-F3 hygiene commit's N12 self-test fix to gcal.py (the seat's ruling, "
+        "2026-11-07); the F3 build changes nothing there",
+        rs.m_resume.package_sha256_of(REPO / "valence_core" / "m").startswith("7756dcf4") and len(m_files) == 18)
 
 
 def run_selftest() -> int:

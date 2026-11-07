@@ -1,0 +1,81 @@
+# G-ANL-F3 hygiene commit (N9, N12): the ten-suite site check (Code's raw, 2026-11-07)
+#
+# Run in Code's scratch worktree on a scratch commit of 139635f (main's HEAD at the run) plus the three files,
+# each byte-identical to the file the hygiene commit adds (sha256 below), so that the drivers' gate line sees
+# committed bytes. Each suite is gated on its summary line. closure_verify3 reads the untracked
+# HANDOFF-2026-09-04-design.md, copied into the worktree for the run (read only). The last section is N12's
+# "in every state of the record": gcal's own self-test in three states, and m_sessions' self-test in the state
+# before 6ce8b9a (the G-CAL-OLMo checkpoints and artifacts moved out of the worktree for the runs, then restored).
+# Local paths scrubbed (<repo>, <home>, <tmp>).
+#
+#   scripts/m_sessions.py  sha256 625ca1b8692f06cd3eff593ef6192c530b82f4216f79578906ea0131a62bb1bf
+#   scripts/mf3_sessions.py  sha256 fad31c20e44451db7367391ea14e1b9560527390dc8d249f03689d9950900cbb
+#   valence_core/m/gcal.py  sha256 fbae9a015330677a67c9d401699dc49848fad4a20ce26bb760eb6723eb53f6ef
+#
+## Commands (each run in the worktree; $PY = <repo>/jlens-qwen36/.venv/bin/python)
+run regression '^  ([0-9]+)/\1 reproduced through valence_core' $PY -m valence_core.regression.analysis
+run format_recon '^  ([0-9]+)/\1 selftest checks pass' $PY scripts/format_recon.py --selftest
+run k1_stage1 '^  ([0-9]+)/\1 Stage 1 selftest checks pass' $PY scripts/k1_stage1.py --selftest
+run k1_analyze '^  ([0-9]+)/\1 analyzer battery checks pass' $PY scripts/k1_analyze.py --selftest
+run e2d_d2_analyze '^  ([0-9]+)/\1 branches verified' $PY scripts/e2d_d2_analyze.py --selftest
+run recon_echo '^  ([0-9]+)/\1 selftest checks pass' $PY scripts/recon_echo.py --selftest
+run closure_verify3 '^  ([0-9]+)/\1 third-pass checks pass' $PY scripts/e2d_closure_verify3.py
+run m_sessions '^  ([0-9]+)/\1 m selftest checks pass$' $PY scripts/m_sessions.py --selftest
+run m_analyze '^  ([0-9]+)/\1 m_analyze battery checks pass' $PY scripts/m_analyze.py --selftest
+run mf3_sessions '^  ([0-9]+)/\1 mf3 selftest checks pass$' $PY scripts/mf3_sessions.py --selftest
+
+## Summary
+
+PASS regression rc=0 ::   154/154 reproduced through valence_core
+PASS format_recon rc=0 ::   67/67 selftest checks pass
+PASS k1_stage1 rc=0 ::   21/21 Stage 1 selftest checks pass
+PASS k1_analyze rc=0 ::   20/20 analyzer battery checks pass (13s)
+PASS e2d_d2_analyze rc=0 ::   46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+PASS recon_echo rc=0 ::   18/18 selftest checks pass
+PASS closure_verify3 rc=0 ::   24/24 third-pass checks pass
+PASS m_sessions rc=0 ::   846/846 m selftest checks pass
+PASS m_analyze rc=0 ::   525/525 m_analyze battery checks pass
+PASS mf3_sessions rc=0 ::   136/136 mf3 selftest checks pass
+gates failed: 0
+
+
+
+## closure_verify3
+  24/24 third-pass checks pass
+
+## e2d_d2_analyze
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+
+## format_recon
+  67/67 selftest checks pass
+
+## k1_analyze
+  20/20 analyzer battery checks pass (13s)
+
+## k1_stage1
+  21/21 Stage 1 selftest checks pass
+
+## m_analyze
+  525/525 m_analyze battery checks pass
+
+## m_sessions
+  [PASS] m_sessions: gport (G-PORT, m:275) on a temp dir -- all 64 archived CORR rows of data/f/sessions.jsonl (sha-pinned; the smoke file outside) replay: INVOCATION first, one 'gport s=<s> ok' per row in f1 order, last line '  G-PORT 64/64 archived CORR transcripts reproduced'; the artifact is exactly {criterion, unit, n_rows, n_ok, mismatches, f1_sessions_sha16, package_sha256, verdict PASS}; exit 0 (0, [' G-PORT 64/64 archived CORR transcripts reproduced'], {})
+  [PASS] m_sessions: gport STOPs (exit 4) on a tampered archived row -- 'gport s=5 MISMATCH: <problems>', 63/64, the artifact's mismatches name s 5 and verdict STOP -- and on a row list one CORR row short (63/63 reproduced is not 64/64); a re-run over an identical artifact changes nothing (exit 0) (4, ['gport s=5 MISMATCH: harness bytes differ at offset 0'], 4, 0)
+  846/846 m selftest checks pass
+
+## mf3_sessions
+  136/136 mf3 selftest checks pass
+
+## recon_echo
+  18/18 selftest checks pass
+
+## regression
+  154/154 reproduced through valence_core
+
+## N12 in every state of the record
+gcal self-test (valence_core.m.gcal._selftest) in the hygiene worktree, 2026-11-07, on the final bytes:
+state A, the G-CAL-OLMo checkpoints and completability artifacts present (as at 139635f): gcal self-test: 63/63
+state B, the three checkpoints moved out, the artifacts present: gcal self-test: 63/63
+state C, checkpoints and artifacts moved out (the state before 6ce8b9a): gcal self-test: 63/63
+(each moved file restored after the runs)
+m_sessions' self-test in state C (checkpoints and artifacts out, the state before 6ce8b9a), 19:17:42Z-19:23:02Z: 846/846 m selftest checks pass, 0 FAIL (every moved file restored after)

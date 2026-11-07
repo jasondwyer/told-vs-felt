@@ -4475,7 +4475,9 @@ def _selftest(chk) -> None:
             "proposal by prefix only": (time_qwen("prop16", lic=[], more=(
                 (stages, "_committed", committed_but(TIME_LOCK_FILE, lock_prefix_only)),)),
                 "is not named in full in LOCK-m-F0.md's committed text"),
-            "a lock-named non-proposal": (time_qwen("propanalyzer", {"proposal_file": "scripts/m_analyze.py"},
+            # the seat's N9 ruling (2026-11-07): a committed file LOCK-m-F0 names in full that is neither the proposal
+            # nor the analyzer (the analyzer's blob moved at e0b4f2c, and LOCK-m-F0 names in full only 655e0f7f...)
+            "a lock-named non-proposal": (time_qwen("proppools", {"proposal_file": "data/f/pools.json"},
                                                     lic=[]), "startup: banner"),
             "checkpoint loop": (time_qwen("ckpt_loop", lic=[], setup=t_ckpt_loop),
                                 ("checkpoint: the checkpoint path does not resolve (RuntimeError)"
@@ -6916,7 +6918,16 @@ def _selftest(chk) -> None:
                 contextlib.redirect_stdout(o_g):
             rc_g = run_gcal_completability(go_dir, False, prel_t, adapter_factory=g_stub, unit="OLMo-sft")
         out_g = o_g.getvalue()
-        with env_pod(None):
+        # The seat's N12 ruling (2026-11-07): the case holds in every state of the record. From 6ce8b9a on the
+        # canonical G-CAL-OLMo checkpoints exist, so this call's canonical artifact and checkpoint paths point at
+        # an empty temporary root; the model-free artifact stays canonical. Self-test only: production unchanged.
+        g_empty = base / "gcal_empty_canonical"
+        g_canonical_of_record = gcal_mod._canonical    # bound before the patch: the stand-in derives from it
+
+        def g_empty_canonical(unit: str = "Q-F0") -> dict:
+            on, cn = gcal_mod._names(unit)
+            return {**g_canonical_of_record(unit), "out": g_empty / "gates" / on, "ckpt": g_empty / "ckpt" / cn}
+        with env_pod(None), patched(gcal_mod, "_canonical", g_empty_canonical):
             e_gb = io.StringIO()
             with contextlib.redirect_stderr(e_gb), contextlib.redirect_stdout(io.StringIO()):
                 rc_gb = run_gcal_completability(None, False, prel_t, unit="OLMo-instruct")

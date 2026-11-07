@@ -2393,7 +2393,19 @@ def _selftest(chk) -> None:
             and tokenizer_appends(AppendingOLMo()) is True, str(exc_ap)[:160])
         # non-stub refusals: the pod id (precheck) and the weights path (startup)
         env_no_pod = {k: v for k, v in os.environ.items() if k != _resume.POD_ENV}
-        with mock.patch.dict(os.environ, env_no_pod, clear=True):
+        # The seat's N12 ruling (2026-11-07): the case holds in every state of the record. From 6ce8b9a on the
+        # canonical G-CAL-OLMo checkpoints exist, and CHECKPOINT EXISTS rightly refuses first, so this call's
+        # canonical artifact and checkpoint paths point at an empty temporary root; the model-free artifact stays
+        # the canonical one precheck reads. Self-test only: the production paths are unchanged.
+        empty_root = Path(td) / "empty-canonical-root"
+        canonical_of_record = _canonical              # bound before the patch: the stand-in derives from it
+
+        def empty_canonical(unit: str = "Q-F0") -> dict[str, Path]:
+            out_name, ck_name = _names(unit)
+            return {**canonical_of_record(unit), "out": empty_root / "gates" / out_name,
+                    "ckpt": empty_root / "ckpt" / ck_name}
+        with mock.patch.dict(os.environ, env_no_pod, clear=True), \
+                mock.patch(f"{__name__}._canonical", empty_canonical):
             no_pod = refuses(lambda: precheck(out_path=None, resume=False, proposal_file=PROP_REL,
                                               proposal_sha256=PROP_SHA, stub=False, unit="OLMo-sft"),
                              GcalRefusal, "POD ID ABSENT")

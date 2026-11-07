@@ -21,6 +21,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-ANL-F3 — the hygiene commit (the seat's N9 and N12 rulings of 2026-11-07, on the PI's routing of
+  2026-11-07, item 1): the premises of three self-test cases are restored (N9's one, N12's two), and no production
+  behaviour changes. m's self-test of record is 846/846 again.**
+  (Stamp verified at write time: `date -u` → **Sat Nov  7 19:23:48 UTC 2026**.)
+  - **The routing.** The PI's block, item 1, as the coordinating session relayed it and as quoted at
+    RESULTS.md@139635f:79–81, verbatim: "1. G-ANL-F3: hygiene commit (N9, N12) → G-SHAPE-F0/F3 re-runs → canonical
+    `ganl` → LOCK-m-F3 v0.1 → G-TIME-F3 [go]; N10 m:312 stands [confirmed]; N13 no change [confirmed]." The seat's
+    answers are [`_p-preread_design-to-code_answers`](results/raw/2026-11-07_p-preread_design-to-code_answers.md)
+    (`139635f`, sha256 `ab40f470…b08b`), §7.
+  - **N9.** In `scripts/m_sessions.py`, the case "a lock-named non-proposal" now names `data/f/pools.json`. That file
+    is committed, LOCK-m-F0.md names its sha256 (`8547d9a1…`) in full, and it is neither the proposal nor the analyzer.
+    The case's expected refusal is "startup: banner" again, and it holds.
+  - **N12.** Two cases change: gcal's "a non-stub precheck without the pod id is refused" (`valence_core/m/gcal.py`),
+    and m_sessions-olmo's "gcal completability … on the box path without the pod id or the weights".
+    - Each now runs its non-stub G-CAL precheck with gcal's `_canonical` replaced, for that one call, by a stand-in
+      that derives from it. Every key is the original's except the artifact and the checkpoint, which point at an
+      empty temporary root; the model-free artifact stays canonical.
+    - Code's reading of the ruling's "empty temporary checkpoint root": the artifact path is redirected too.
+      `6ce8b9a` also committed the three completability artifacts, so with the checkpoint alone redirected the
+      precheck refuses COMPLETABILITY ARTIFACT EXISTS.
+    - Each case holds by construction in every state of the record, because no canonical artifact or checkpoint path
+      is left in the call.
+    - Runs: gcal's self-test is 63/63 in three states: as at `139635f`; with the three checkpoints moved out; and with
+      the checkpoints and the artifacts both moved out, which is the state before `6ce8b9a`. m_sessions' self-test
+      passes in the first state (the site check) and in the last.
+    - Only self-test code changes; the production paths do not.
+  - **What moves.**
+    - m's `package_sha256` moves from `60199b36…feec` to `7756dcf4…49bb`, because `gcal.py` is in `valence_core/m`.
+    - `scripts/mf3_sessions.py`'s check of m's package hash takes the new prefix, and its text names the move. The
+      seat's §7 order puts this literal after G-SHAPE-F0's re-run; it rides here instead, as the coordinating session's
+      step 1 lists it. G-SHAPE-F0 does not read it (its TOOLING_FILES are `gshape.py` and `scripts/m_sessions.py`).
+      Without it, mf3_sessions would stand at 135/136 at this commit. It is a G-SHAPE-F3 tooling file, so it precedes
+      G-SHAPE-F3's re-run.
+    - Recorded provenance that this commit makes stale, both re-run next:
+      - `data/m/gates/G-SHAPE-F0.json` records package `60199b36…` and `scripts/m_sessions.py`'s sha256;
+      - `data/mf3/gates/G-SHAPE-F3.json` records `scripts/mf3_sessions.py`'s sha256.
+      - The G-CAL-OLMo checkpoints and artifacts and m's three OLMo NOT-RUN outputs record `60199b36…` as of their
+        runs, and they stand as written.
+  - **What does not move.**
+    - The analyzer, `6ec3222b…93d9`.
+    - The base closure `a3bc7bb9…b22b` and the Q-F3 closure `d19f336d…f039`. Both hash the loaded valence_core modules
+      outside `valence_core/m` and the non-.py files opened at import; no `valence_core/m` file enters either.
+    - mf3's package `f30ad505…6310`, and its licence's eleven hashed m files (gcal is in mf3's `ABSENT_MODULES`).
+    - **FLAG, not adjudicated:** the seat's §7 says "(mf3's package moves; G-SHAPE-F3 re-runs …)", but it does not.
+      mf3's `package_sha256` covers `valence_core/mf3/*.py`, which this commit leaves unchanged.
+      `scripts/mf3_sessions.py` is a G-SHAPE-F3 tooling file, not part of the package. mf3's package last moved at
+      `e0b4f2c` (`44110d15…` → `f30ad505…`), which N3's re-run answers.
+  - **Checks before the commit:**
+    - the ten-suite site check on `139635f` plus the three files: all ten suites pass (m_sessions 846/846, m_analyze 525/525, mf3_sessions 136/136); `18b0111`, main's HEAD at the commit, changes no code or data since `139635f`
+      ([`_ganl-f3_hygiene_sitecheck`](results/raw/2026-11-07_ganl-f3_hygiene_sitecheck.txt));
+    - a blind code review and values-check (no MAJOR, two MINOR and seven NOTEs; the values-check's 37 items, 1 FAIL and 3 IMPRECISE; each applied or disclosed;
+      [`_ganl-f3_hygiene_review`](results/raw/2026-11-07_ganl-f3_hygiene_review.md)). Two review NOTEs changed code
+      (each stand-in now derives from `_canonical`; one comment), so m's package hash and the mf3 literal were recomputed,
+      and the site check and the three-state runs above were re-run on the final bytes.
+  - **Next.**
+    - The G-SHAPE-F0 re-run: `scripts/m_sessions.py` is in PIN-S10's map, and m's package moved.
+    - The G-SHAPE-F3 re-run (N3; `scripts/mf3_sessions.py` is a G-SHAPE-F3 tooling file).
+    - The canonical `ganl` waits for a ruling. N1's restoration of the preprint's bytes would fail the analyzer's
+      battery check F3R-PREPRINT-OF-RECORD (`m_analyze.py:9983–9986`), which asserts that the file at the path is
+      not the bytes of record. This was relayed to the coordinating session before this commit, and the PI is
+      weighing it.
+    - Not pushed.
+
 - 2026-11-07 — **PROPOSAL-p v0.2 — COMMITTED (p §8 step 3): `PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md`
   tracked at root, sha256 `42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32`. Code's referent check
   of its §9 and its "what changed" list found no FAIL and no unresolved substantive item (159 items), so step 3
