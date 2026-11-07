@@ -166,5 +166,106 @@
   },
   "files_aggregate_sha256": "0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643",
   "n_files": 8
+ },
+ "olmo2_instruct": {
+  "repo": "allenai/OLMo-2-0325-32B-Instruct",
+  "revision": "b96024342a77",
+  "dtype": "bfloat16",
+  "n_params": 32234279936,
+  "size_gb": 64.5,
+  "path": "/workspace/models/olmo2_instruct",
+  "acquired_utc": "2026-11-07T02:02:59Z",
+  "files": {
+   "config.json": {
+    "sha256": "e977b63b4196481a109089de5a4d4479eb18df70297d9c3e18d865cf5b098e51",
+    "bytes": 699
+   },
+   "generation_config.json": {
+    "sha256": "e5f94fd06e9143cc95086db8ff4ce18511ac5026703c509ba0ca77c421d740c8",
+    "bytes": 147
+   },
+   "merges.txt": {
+    "sha256": "b6fe424e334903f7fb84d3a106d9730455f4744b9fe3c21ee136d97a00e72502",
+    "bytes": 916646
+   },
+   "model-00001-of-00014.safetensors": {
+    "sha256": "d539da18a12ce2b7985e4b255e707956ee67e67105e3f4f215071f2ec612c1e1",
+    "bytes": 4991358312
+   },
+   "model-00002-of-00014.safetensors": {
+    "sha256": "5465b5c0e0ec170bf457c7af852b4887f9a13d603f13a52e6f2a3737b7ae8aa1",
+    "bytes": 4938975944
+   },
+   "model-00003-of-00014.safetensors": {
+    "sha256": "0b6e37dc85b5a0d0360dc461ed172d3c3ed907cb90aba821636ce5c0bb429b73",
+    "bytes": 4876048688
+   },
+   "model-00004-of-00014.safetensors": {
+    "sha256": "f52a93bd70044cabd8729ad9583ef6d96c6528e8765e52abad4e2d1c9a608e9c",
+    "bytes": 4876048704
+   },
+   "model-00005-of-00014.safetensors": {
+    "sha256": "997245db5a143d21abf2806ad9be4ac8c2c3c9dede5f07315bd05d522dd50dcb",
+    "bytes": 4876048704
+   },
+   "model-00006-of-00014.safetensors": {
+    "sha256": "98c2042bc4f9310afd36bf6152501fdf886d03764b60cf4eafc7f69d19c8b6e9",
+    "bytes": 4876048704
+   },
+   "model-00007-of-00014.safetensors": {
+    "sha256": "423d9b94bdb2c424ea5670f87a3313626b09d84be0a237eddd9117ad6e21c1f0",
+    "bytes": 4876048704
+   },
+   "model-00008-of-00014.safetensors": {
+    "sha256": "a3cd577278dfceb80a8aa972594a75d406e17283c5240a12ca9effb0b8d70f8a",
+    "bytes": 4876048704
+   },
+   "model-00009-of-00014.safetensors": {
+    "sha256": "3a8c9d3d0fe6f1087cf87573861a6d055ff3ede0f6816b97f77cd83975024eeb",
+    "bytes": 4876048704
+   },
+   "model-00010-of-00014.safetensors": {
+    "sha256": "45eb53627f4a8ba1edf53239c5d8ac57c77744f8500ac12611bd6818a8de132a",
+    "bytes": 4876048704
+   },
+   "model-00011-of-00014.safetensors": {
+    "sha256": "5a1bd367c7ca31ded74cfc45c6315ac309088016d75b89dca950f9040affb25b",
+    "bytes": 4876048704
+   },
+   "model-00012-of-00014.safetensors": {
+    "sha256": "0f5bea3b50b29bf0e9ccfc137415ae86df332569922c8d9ba17275adf9d7645e",
+    "bytes": 4876048704
+   },
+   "model-00013-of-00014.safetensors": {
+    "sha256": "2176fb4ceff37537dce4c7cc3b03e729576d91a58b60f68b353270b706345c7f",
+    "bytes": 4750216928
+   },
+   "model-00014-of-00014.safetensors": {
+    "sha256": "5d809a3c77c3757307669557ca455d28a29c9b38864fbe0b236f4d9f7b2cbe86",
+    "bytes": 1027604608
+   },
+   "model.safetensors.index.json": {
+    "sha256": "3314e3c934d083407d4d2a28d8e5efa14fdd95661729fa6ba3e30edd016ff8f1",
+    "bytes": 59034
+   },
+   "special_tokens_map.json": {
+    "sha256": "78afb564e81264029b25f9caf24bda2521d5bdaeff5cd3fdbc01d3da2e8ce2f2",
+    "bytes": 581
+   },
+   "tokenizer.json": {
+    "sha256": "73fd5254624f39a88e3faac6a8e11300fc3c735ed37880d4f4f08db898eaecca",
+    "bytes": 7137177
+   },
+   "tokenizer_config.json": {
+    "sha256": "fff5b9441e8fe1d696eebed3541e719776e5b096692ef38cea68b891fc4f3fc7",
+    "bytes": 4869
+   },
+   "vocab.json": {
+    "sha256": "9e14712c91b37c7aab74b1306baa46ac342d620637a4b44523cdc3aec7d24195",
+    "bytes": 1611056
+   }
+  },
+  "files_aggregate_sha256": "36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb",
+  "n_files": 22
  }
 }
