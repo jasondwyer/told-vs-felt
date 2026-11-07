@@ -21,6 +21,35 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-SHAPE-F0 — the canonical re-run after the G-ANL-F3 hygiene commit (`993eba1`), before LOCK-m-F3
+  v0.1: PASS.
+  The hygiene commit edited `scripts/m_sessions.py`, a TOOLING_FILES entry of PIN-S10's map, and moved m's package
+  through `valence_core/m/gcal.py`. So G-SHAPE-F0 re-runs as the seat's answers of 2026-11-07 order it (§7: "hygiene
+  commit → G-SHAPE-F0 re-run …"), and the old artifact is superseded by hand under PIN-S9 on that word. Model-free: no
+  model, no tokenizer, no pod.** (Stamp verified at write time: `date -u` → **Sat Nov  7 19:38:56 UTC 2026**.)
+  - **The supersession:** the artifact of record (sha256 `9e0b28fe…a979`, committed at `db97d8e`) was moved by hand
+    with `git mv` to
+    [`G-SHAPE-F0.superseded-2026-11-07.json`](data/m/gates/G-SHAPE-F0.superseded-2026-11-07.json), committed with
+    this entry.
+  - **The re-run** (`python scripts/m_sessions.py gshape` on HEAD `993eba1`, every scoring-stack, tooling, package and
+    closure file committed; the `git mv`, then the run: 19:24:22Z–19:24:28Z):
+    - PASS. Each of the four grids (Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct) has 2,816 placements, 0 fired.
+    - The required control (seg+gold) fires 2,816/2,816 on each. The reported render-as-response is 256/2,816 on
+      Q-F0 and 0 on OLMo.
+    - The three OLMo grids are identical; the template shape and the runner scope (static) are clean.
+    - Provenance: package `7756dcf4…49bb`; sources digest `cc7c152a…2703` (28 files); import-closure digest
+      `23abe773…eec4` (14 files outside `valence_core/m`; unchanged).
+    - Against the superseded artifact, 3 of the 346 leaves differ, all provenance: the package, the sources digest
+      and `scripts/m_sessions.py`'s sha256. Every result is identical.
+    - The new artifact is [`data/m/gates/G-SHAPE-F0.json`](data/m/gates/G-SHAPE-F0.json), sha256
+      `38ba8e28cc37e73d0ff387b458529f82f3c54cf35ccc5a3bf223a0a934553b51`.
+    - The raw is [`_m-gshape-f0-rerun`](results/raw/2026-11-07_m-gshape-f0-rerun.txt), local paths scrubbed.
+  - **Checks before the commit:** a blind values-check of both re-run entries and their raws (56 items: 51
+    CONFIRMED, 3 IMPRECISE, 0 FAIL, 2 NOT CHECKABLE; each correction applied;
+    [`_gshape-reruns_valuescheck`](results/raw/2026-11-07_gshape-reruns_valuescheck.md)).
+  - **What follows:** G-SHAPE-F3's re-run, on the same HEAD (its own entry). The canonical `ganl` waits for the
+    ruling on N1 against the battery check F3R-PREPRINT-OF-RECORD. Not pushed.
+
 - 2026-11-07 — **G-ANL-F3 — the hygiene commit (the seat's N9 and N12 rulings of 2026-11-07, on the PI's routing of
   2026-11-07, item 1): the premises of three self-test cases are restored (N9's one, N12's two), and no production
   behaviour changes. m's self-test of record is 846/846 again.**

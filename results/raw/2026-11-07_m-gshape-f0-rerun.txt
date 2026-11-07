@@ -1,0 +1,17 @@
+# G-SHAPE-F0 -- the canonical re-run after the G-ANL-F3 hygiene commit (993eba1), on the seat's s7 order under PIN-S9 (results/raw/2026-11-07_p-preread_design-to-code_answers.md): `python scripts/m_sessions.py gshape` (no --out) in the repository on HEAD 993eba1, 2026-11-07 19:24:22Z-19:24:28Z (Code's stamps, covering the git mv and then the run), after `git mv` of the artifact of record (sha256 9e0b28fe...a979) to data/m/gates/G-SHAPE-F0.superseded-2026-11-07.json. Output verbatim; the trailing EXIT line is the shell's; local paths scrubbed (<repo>).
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gshape
+G-SHAPE-F0 inputs: renders sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372; G-CAL model-free sha256 aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af; proposal sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b
+G-SHAPE-F0 provenance: package sha256 7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb; sources digest cc7c152af2694993eaeb502f02a03760d3683357f98242b67514535ab7f72703 (28 files); import closure digest 23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4 (14 files outside valence_core/m); sources committed at HEAD: yes (checked with every m package file and the import closure: canonical run, before scoring and again before the write)
+G-SHAPE-F0 grid Q-F0: 2816 placements, 0 fired
+G-SHAPE-F0 controls Q-F0: render-as-response 256/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-sft: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-sft: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-dpo: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-dpo: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-instruct: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-instruct: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 OLMo grids identical across the three checkpoints: yes
+G-SHAPE-F0 template shape: clean; runner scope (static): clean
+G-SHAPE-F0 verdict PASS
+G-SHAPE-F0 artifact: <repo>/data/m/gates/G-SHAPE-F0.json (written)
+EXIT=0

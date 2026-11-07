@@ -352,7 +352,7 @@
   "import_closure_scope": "the sha256 of __file__ of every loaded valence_core.* module outside valence_core/m (sys.modules read after the imports; the m package is package_sha256's)",
   "numpy": "2.5.1",
   "numpy_stream_known_answer": "clean (f|CORR|0 permutation)",
-  "package_sha256": "60199b36557ac283771b83dcb4be101b5c56880dceacdecd05cce5a578e7feec",
+  "package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
   "proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md",
   "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
   "sources": {
@@ -383,9 +383,9 @@
    "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
    "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
   },
-  "sources_digest": "ddbf93a8c11ebbf725bc3027718fa814d76ca6c3a33dd9c8690b7fd8b9fe557b",
+  "sources_digest": "cc7c152af2694993eaeb502f02a03760d3683357f98242b67514535ab7f72703",
   "tooling": {
-   "scripts/m_sessions.py": "f0e9d5c497a1ee336d7136c4937be53c53198f82faa3a691489026e5ea218403",
+   "scripts/m_sessions.py": "625ca1b8692f06cd3eff593ef6192c530b82f4216f79578906ea0131a62bb1bf",
    "valence_core/m/gshape.py": "257e02f43bfe8bb67156129cfb2c270f594ab48b62bd555c627eb2f0b66ca13c"
   }
  },
