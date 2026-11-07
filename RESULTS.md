@@ -21,6 +21,76 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-06 — **G-CAL-OLMo — APPARATUS SMOKE on pod `qny1x4v8padeke`, on the PI's word of 2026-11-06 ("Yes,
+  smoke"). Not G-CAL-OLMo: no G-CAL item, key, seed or grader ran, and nothing was written under `data/`. The path
+  G-CAL-OLMo runs works on all three checkpoints: each loads, passes G-CAL-OLMo's startup, gives backend identifier
+  `641ee466f4553b6a`, and generates through G-CAL-OLMo's own call. Two findings, not adjudicated: (1) launched from
+  ssh, the real precheck refuses "POD ID ABSENT", its only problem, and passes with PID 1's `RUNPOD_POD_ID`; (2) the
+  m self-test on the box is 844/846, both FAILs on laptop-site assumptions.** (Stamp verified at write time:
+  `date -u` → **Sat Nov  7 02:10:11 UTC 2026**.)
+
+  - **What the smoke is, and why it is Code's.**
+    - The record defines no G-CAL smoke: the Qwen G-CAL's completability run (2026-10-08) was its run of record.
+      The driver also refuses a real-model `--out` ("the box run writes data/m/gates and data/m/ckpt only").
+    - So the smoke runs the committed G-CAL-OLMo path's own pieces, up to and not including its 128 keyed
+      generations, from a script outside the repo (its source and sha256 are in the raw). Per unit:
+      1. the driver's model-free refusals: `gcal.precheck(stub=False, unit=…)` with `RUNPOD_POD_ID` as an
+         ssh-launched process inherits it, then again with the value from PID 1's environment;
+         `olmo_weights_problems`; `driver_problems`;
+      2. the load through the driver's `_load_olmo`;
+      3. `gcal._startup_olmo`: insulation; `olmo_startup`'s base and cross-checkpoint refusal, the 8192 window and
+         b3's ban list against `data/olmo/scaffold_{ckpt}.json`; TEMP 0.7 and STOP_CAP 60; the weights path; the
+         tokenizer probe;
+      4. `adapter.provenance()` and `resume.backend_identifier` on it;
+      5. 8 generations through G-CAL-OLMo's own loop body (`valence_core/m/gcal.py:1152–1165`: insulation, rule
+         28(d)(a)'s boundary, `adapter.generate(SESSION_BANNER, "Task: …\nResponse:", injections=(), temp 0.7,
+         cap 60, b3's ban ids, cached=False)`), on 4 neutral tasks (`scripts/box_determinism.py`'s probes, none of
+         them a G-CAL item) × 2 seeds keyed `m-smoke|{ckpt}|{t}|{s}`.
+    - Then the m self-test, model-free, on the box, in the same background job. Raws
+      [`_gcal-olmo_smoke`](results/raw/2026-11-06_gcal-olmo_smoke.txt) and
+      [`_gcal-olmo_smoke_box-selftest`](results/raw/2026-11-06_gcal-olmo_smoke_box-selftest.txt).
+  - **Results** (smoke exit 0, 01:31:47Z → 01:41:53Z; box repo `1bf94a6`, whose m code is the laptop's: the only
+    code change since is `scripts/audit_note_N12_history.py`):
+
+    | | sft | dpo | instruct |
+    |---|---|---|---|
+    | precheck, `RUNPOD_POD_ID` as inherited | REFUSED, POD ID ABSENT only | same | same |
+    | precheck, PID 1's `RUNPOD_POD_ID` | PASS | PASS | PASS |
+    | weights and driver checks | clean | clean | clean |
+    | load (s) | 211.6 | 175.7 | 183.3 |
+    | `_startup_olmo` | PASS, 9 ban ids | PASS, 9 | PASS, 9 |
+    | backend identifier | `641ee466f4553b6a` | same | same |
+    | 8 generations: total / mean / max (s) | 9.6 / 1.20 / 5.39 | 10.0 / 1.26 / 3.56 | 10.3 / 1.29 / 4.41 |
+    | CUDA peak (GiB) | 60.1 | 60.1 | 60.1 |
+
+    - The backend identifier is now measured through the m package's own loader on each checkpoint; the BACKEND
+      entry gave it by code reading.
+    - Code read all 24 generations (rule 25). 23 stop at the newline. 1 hits the 60-token cap (sft, task 0, seed 0:
+      a preamble reasoning about the question, "The user is asking for a color that represents the sea…"), and sft
+      once answers `{ "answer": "blue"`. These are descriptive observations on non-G-CAL tasks, post-hoc (rule 11).
+    - For the budget, not a projection of record: a G-CAL-OLMo run here is one load (about 3–3.5 min) plus 128
+      generations at about 1.2–1.3 s each on tasks this short.
+  - **Finding 1, not adjudicated: the pod id.** This is the BACKEND entry's flag, now shown on the real precheck.
+    Launched from an ssh shell, every OLMo unit's precheck refuses with "POD ID ABSENT: … ($RUNPOD_POD_ID)" and
+    nothing else; with PID 1's value it passes. The run of record needs `RUNPOD_POD_ID` exported in its launch
+    environment. How (the launch command, `env.sh`, a checklist line) is the seat's or the PI's call.
+  - **Finding 2, not adjudicated: the m self-test on the box is 844/846** (exit 1; 01:41:54Z → 02:07:28Z, about
+    25.5 min against the laptop's 5 min 15 s). Code's reading of the two FAILs:
+    - `qwen_snapshot's production defaults …` (`scripts/m_sessions.py:4158`) compares `MLX_LM_ALLOW_PATTERNS` with
+      the list parsed from mlx_lm's own source. mlx_lm is not installed on the box (`find_spec("mlx_lm")` returns
+      None), so the parsed list is empty.
+    - `gcal completability --unit OLMo-sft …` (`scripts/m_sessions.py:6923–6929`) forces the pod id absent and
+      expects the box path's refusal to name both "POD ID ABSENT" and "weights:". On the box the weights are present
+      (`olmo_weights_problems: []` above), so only the pod id can be named. The check's printed detail shows its
+      stub half as expected (exit 4, the NOT-RUN line).
+    - Neither is G-CAL-OLMo's own path. The build made three f0/e2a source checks site-tolerant
+      (`valence_core/m/gcal.py:108–112`: they "neither FAIL for the clone's absence nor disappear"); these two have no
+      such provision. The self-test of record stays the laptop's 846/846. A fix would edit `scripts/m_sessions.py`,
+      a TOOLING_FILES entry, so none is made here.
+  - **State after the smoke.** The box repo is clean at `1bf94a6`, with nothing for OLMo under `data/m/gates` or
+    `data/m/ckpt`, and nothing is loaded on the GPU. No G-CAL-OLMo run, no lock, nothing pushed. **The pod is RUNNING
+    at $1.79/hr and bills while it waits.**
+
 - 2026-11-06 — **BACKEND — characterization (PROPOSAL-m v1.11 m:251, m:302; ADDENDUM-m1 §4 step 4, the OLMo track's
   first node), on the PI's go of 2026-11-06 ("Go when in stock", then "Yes, watch"): the respawn protocol on the new
   box, pod `qny1x4v8padeke`. (i) INTEGRITY PASS, 29/29 files. (ii) BACKEND PASS: A, B and C are all exact at 0.0, and

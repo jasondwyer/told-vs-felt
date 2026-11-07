@@ -1,0 +1,235 @@
+# G-CAL-OLMo APPARATUS SMOKE on pod qny1x4v8padeke (jspace-olmo-m; 1 x A100-SXM4-80GB, US-CA-2), on the PI's word of 2026-11-06 ("Yes, smoke"). PI-local date 2026-11-06.
+# NOT G-CAL-OLMo: no G-CAL item, key, seed, grader, pool or render is generated on or graded; no checkpoint or artifact is written; nothing under data/ or /workspace/models is written. The record defines no G-CAL smoke (the Qwen G-CAL's completability run of 2026-10-08 was its run of record) and the driver refuses a real-model --out, so this smoke is Code's: it runs the committed G-CAL-OLMo path's pieces up to, and not including, its own generations (the script's docstring, appended below, lists them).
+# CODE: box repo HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731, working tree clean before and after (the box of the 2026-11-06 BACKEND entry). The script ran from /workspace/smoke/ (outside the repo); sha256 179ab0661133c0fe84d59f9d9fedbe75a63b169b8e3e07deb03f662dc87165d1; its source is appended after this run's output.
+# ENV: `source /workspace/env.sh`; RUNPOD_POD_ID not exported (as any ssh-launched process gets it). The script sets it from PID 1's environment only around each unit's second precheck, then removes it.
+# COMMAND (box, cwd /workspace/repo/jspace-lab): nohup bash -c "/workspace/venv/bin/python /workspace/smoke/gcal_olmo_smoke.py > /workspace/smoke/smoke.txt 2>&1; echo exit=$? > /workspace/smoke/smoke.exit; <the box self-test, its own raw>" &
+# LAUNCH 2026-11-07T01:31:45Z   SMOKE END 2026-11-07T01:41:54Z   EXIT exit=0   (Code's `date -u` stamps, taken on the box)
+# The box file's stdout+stderr follows verbatim (sha256 f753c65945fe700461c7a5a5c231099a701402488385f301fdd219a7b9793d5f, byte-identical after transfer).
+SMOKE start 2026-11-07T01:31:47Z; HEAD 1bf94a6c8198268c8a79288a74b6ba231717f731
+proposal PROPOSAL-m-gating-campaign-v1_11.md committed, sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b
+RUNPOD_POD_ID inherited by this process: None; in PID 1's environment: 'qny1x4v8padeke'
+driver_problems: []; driver sha256 f0e9d5c497a1ee336d7136c4937be53c53198f82faa3a691489026e5ea218403
+
+===== OLMo-sft (checkpoint sft) =====
+  precheck [RUNPOD_POD_ID as inherited]: REFUSED -- G-CAL REFUSED: ['POD ID ABSENT: G-CAL-OLMo-sft runs on the box only with its pod instance id ($RUNPOD_POD_ID), as every OLMo stage (stages._require_pod)']
+  precheck [RUNPOD_POD_ID from PID 1's environment]: PASS (no refusal)
+  olmo_weights_problems: []
+  WEIGHTS sft: allenai/Olmo-3.1-32B-Instruct-SFT revision 152782ecc41a, files_aggregate_sha256 ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5; 7 files at /workspace/models/sft, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:   7%|▋         | 46/707 [00:00<00:01, 457.46it/s]Loading weights:  14%|█▍        | 100/707 [00:00<00:01, 494.88it/s]Loading weights:  24%|██▎       | 167/707 [00:00<00:00, 571.80it/s]Loading weights:  32%|███▏      | 225/707 [00:00<00:00, 490.40it/s]Loading weights:  39%|███▉      | 276/707 [00:00<00:00, 462.38it/s]Loading weights:  49%|████▊     | 343/707 [00:00<00:00, 513.44it/s]Loading weights:  56%|█████▌    | 396/707 [00:00<00:00, 459.42it/s]Loading weights:  63%|██████▎   | 444/707 [00:00<00:00, 416.46it/s]Loading weights:  69%|██████▉   | 487/707 [00:01<00:00, 417.35it/s]Loading weights:  75%|███████▍  | 530/707 [00:01<00:00, 383.67it/s]Loading weights:  81%|████████  | 570/707 [00:01<00:00, 362.23it/s]Loading weights:  88%|████████▊ | 619/707 [00:01<00:00, 378.31it/s]Loading weights:  93%|█████████▎| 658/707 [00:01<00:00, 373.91it/s]Loading weights:  98%|█████████▊| 696/707 [00:01<00:00, 344.61it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 417.92it/s]
+  load: 211.6 s; cuda peak 60.0 GiB
+  startup (gcal._startup_olmo): PASS; ban ids 9; TEMP 0.7 STOP_CAP 60
+  provenance: {"adapter": "olmo-hf", "backend": "torch/cuda", "capability": [8, 0], "choice_window_declared": 8192, "cublas_workspace_config": ":4096:8", "cuda": "12.8", "deterministic": true, "device": "cuda", "dtype": "bfloat16", "gpu": "NVIDIA A100-SXM4-80GB", "library_versions": {"accelerate": "1.14.0", "huggingface_hub": "1.28.0", "numpy": "2.1.2", "safetensors": "0.8.0", "torch": "2.8.0+cu128", "transformers": "5.15.0"}, "n_layers": 64, "path": "/workspace/models/sft", "python": "3.12.3", "seed": 20260818}
+  backend identifier: 641ee466f4553b6a
+  gen t=0 s=0 seed=170918006 tokens=60 stop='cap' cap_hit=True 5.4 s :: 'The user is asking for a color that represents the sea. The most common color associated with the sea is blue. However, the user might be looking for a different color that is less obvious. One possible answer could be "turquoise," which is a shade of blue-green that is often associated with'
+  gen t=0 s=1 seed=2100768992 tokens=7 stop='newline' cap_hit=False 0.6 s :: '{ "answer": "blue"'
+  gen t=1 s=0 seed=200436289 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'hammer'
+  gen t=1 s=1 seed=2096454359 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'hammer'
+  gen t=2 s=0 seed=162845720 tokens=17 stop='newline' cap_hit=False 1.5 s :: 'A kettle is a container used for boiling water, often used for making tea or coffee'
+  gen t=2 s=1 seed=2125718670 tokens=10 stop='newline' cap_hit=False 0.9 s :: 'A kettle is a utensil used to boil water'
+  gen t=3 s=0 seed=141999663 tokens=5 stop='newline' cap_hit=False 0.5 s :: 'Concept: a small boat'
+  gen t=3 s=1 seed=2138148537 tokens=3 stop='newline' cap_hit=False 0.3 s :: '"The Titanic'
+  OLMo-sft: 8 generations, 9.6 s total, mean 1.20 s, max 5.39 s; cuda peak 60.1 GiB
+
+===== OLMo-dpo (checkpoint dpo) =====
+  precheck [RUNPOD_POD_ID as inherited]: REFUSED -- G-CAL REFUSED: ['POD ID ABSENT: G-CAL-OLMo-dpo runs on the box only with its pod instance id ($RUNPOD_POD_ID), as every OLMo stage (stages._require_pod)']
+  precheck [RUNPOD_POD_ID from PID 1's environment]: PASS (no refusal)
+  olmo_weights_problems: []
+  WEIGHTS dpo: allenai/Olmo-3.1-32B-Instruct-DPO revision fc84a4f69991, files_aggregate_sha256 c6e5e2abe093d0fcb6050500bdb7dc13998fa51fdde47cc93bffded126f33e60; 7 files at /workspace/models/dpo, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  12%|█▏        | 86/707 [00:00<00:00, 848.06it/s]Loading weights:  24%|██▍       | 171/707 [00:00<00:00, 542.88it/s]Loading weights:  33%|███▎      | 232/707 [00:00<00:00, 490.67it/s]Loading weights:  40%|████      | 285/707 [00:00<00:00, 455.79it/s]Loading weights:  48%|████▊     | 337/707 [00:00<00:00, 461.57it/s]Loading weights:  55%|█████▍    | 388/707 [00:00<00:00, 469.78it/s]Loading weights:  62%|██████▏   | 436/707 [00:00<00:00, 441.86it/s]Loading weights:  68%|██████▊   | 481/707 [00:01<00:00, 404.63it/s]Loading weights:  74%|███████▍  | 523/707 [00:01<00:00, 406.99it/s]Loading weights:  81%|████████  | 572/707 [00:01<00:00, 428.66it/s]Loading weights:  87%|████████▋ | 616/707 [00:01<00:00, 404.97it/s]Loading weights:  93%|█████████▎| 658/707 [00:01<00:00, 401.04it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 450.37it/s]
+  load: 175.7 s; cuda peak 60.1 GiB
+  startup (gcal._startup_olmo): PASS; ban ids 9; TEMP 0.7 STOP_CAP 60
+  provenance: {"adapter": "olmo-hf", "backend": "torch/cuda", "capability": [8, 0], "choice_window_declared": 8192, "cublas_workspace_config": ":4096:8", "cuda": "12.8", "deterministic": true, "device": "cuda", "dtype": "bfloat16", "gpu": "NVIDIA A100-SXM4-80GB", "library_versions": {"accelerate": "1.14.0", "huggingface_hub": "1.28.0", "numpy": "2.1.2", "safetensors": "0.8.0", "torch": "2.8.0+cu128", "transformers": "5.15.0"}, "n_layers": 64, "path": "/workspace/models/dpo", "python": "3.12.3", "seed": 20260818}
+  backend identifier: 641ee466f4553b6a
+  gen t=0 s=0 seed=1794565411 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'blue'
+  gen t=0 s=1 seed=502388149 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'blue'
+  gen t=1 s=0 seed=1798606612 tokens=47 stop='newline' cap_hit=False 3.6 s :: 'A hammer is the common tool used to drive a nail into a surface. Hammers have a heavy head that can apply a strong force to the nail when struck with a mallet or the hand, driving it into wood or other materials'
+  gen t=1 s=1 seed=473153410 tokens=8 stop='newline' cap_hit=False 0.7 s :: 'A hammer is used to drive a nail'
+  gen t=2 s=0 seed=1769091405 tokens=22 stop='newline' cap_hit=False 1.8 s :: 'A kettle is a container used to heat water or other liquids, commonly found in kitchens for preparing tea or coffee'
+  gen t=2 s=1 seed=510984667 tokens=19 stop='newline' cap_hit=False 1.5 s :: 'A kettle is a container used for boiling water, commonly found in kitchens for making tea or coffee'
+  gen t=3 s=0 seed=1756388218 tokens=3 stop='newline' cap_hit=False 0.3 s :: '"Mayfly'
+  gen t=3 s=1 seed=532114412 tokens=24 stop='newline' cap_hit=False 1.9 s :: '"The \'Calm Voyager\' is a fitting name for a small boat, suggesting peaceful journeys and a spirit of exploration'
+  OLMo-dpo: 8 generations, 10.0 s total, mean 1.26 s, max 3.56 s; cuda peak 60.1 GiB
+
+===== OLMo-instruct (checkpoint instruct) =====
+  precheck [RUNPOD_POD_ID as inherited]: REFUSED -- G-CAL REFUSED: ['POD ID ABSENT: G-CAL-OLMo-instruct runs on the box only with its pod instance id ($RUNPOD_POD_ID), as every OLMo stage (stages._require_pod)']
+  precheck [RUNPOD_POD_ID from PID 1's environment]: PASS (no refusal)
+  olmo_weights_problems: []
+  WEIGHTS instruct: allenai/Olmo-3.1-32B-Instruct revision ac0587e4a774, files_aggregate_sha256 0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643; 8 files at /workspace/models/instruct, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  11%|█▏        | 80/707 [00:00<00:00, 771.87it/s]Loading weights:  22%|██▏       | 158/707 [00:00<00:01, 511.75it/s]Loading weights:  30%|███       | 215/707 [00:00<00:01, 422.63it/s]Loading weights:  37%|███▋      | 261/707 [00:00<00:01, 362.36it/s]Loading weights:  45%|████▌     | 321/707 [00:00<00:00, 420.50it/s]Loading weights:  52%|█████▏    | 368/707 [00:00<00:00, 429.56it/s]Loading weights:  59%|█████▉    | 416/707 [00:00<00:00, 432.78it/s]Loading weights:  66%|██████▌   | 464/707 [00:01<00:00, 431.62it/s]Loading weights:  72%|███████▏  | 509/707 [00:01<00:00, 427.25it/s]Loading weights:  80%|███████▉  | 563/707 [00:01<00:00, 456.73it/s]Loading weights:  86%|████████▋ | 610/707 [00:01<00:00, 422.45it/s]Loading weights:  93%|█████████▎| 654/707 [00:01<00:00, 403.88it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 440.80it/s]
+  load: 183.3 s; cuda peak 60.1 GiB
+  startup (gcal._startup_olmo): PASS; ban ids 9; TEMP 0.7 STOP_CAP 60
+  provenance: {"adapter": "olmo-hf", "backend": "torch/cuda", "capability": [8, 0], "choice_window_declared": 8192, "cublas_workspace_config": ":4096:8", "cuda": "12.8", "deterministic": true, "device": "cuda", "dtype": "bfloat16", "gpu": "NVIDIA A100-SXM4-80GB", "library_versions": {"accelerate": "1.14.0", "huggingface_hub": "1.28.0", "numpy": "2.1.2", "safetensors": "0.8.0", "torch": "2.8.0+cu128", "transformers": "5.15.0"}, "n_layers": 64, "path": "/workspace/models/instruct", "python": "3.12.3", "seed": 20260818}
+  backend identifier: 641ee466f4553b6a
+  gen t=0 s=0 seed=862319142 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'blue'
+  gen t=0 s=1 seed=1147323056 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'blue'
+  gen t=1 s=0 seed=849844241 tokens=7 stop='newline' cap_hit=False 0.6 s :: 'The correct response is "hammer'
+  gen t=1 s=1 seed=1168156807 tokens=1 stop='newline' cap_hit=False 0.2 s :: 'hammer'
+  gen t=2 s=0 seed=820061768 tokens=19 stop='newline' cap_hit=False 1.5 s :: 'A kettle is a pot used for boiling water, often equipped with a spout and a lid'
+  gen t=2 s=1 seed=1206261470 tokens=18 stop='newline' cap_hit=False 1.4 s :: 'A kettle is a small, often electric or stovetop appliance used to boil water'
+  gen t=3 s=0 seed=824396927 tokens=24 stop='newline' cap_hit=False 1.9 s :: '"I\'d suggest calling your boat \'The Wanderlust.\' It evokes a sense of adventure and freedom on the water'
+  gen t=3 s=1 seed=1176796393 tokens=58 stop='newline' cap_hit=False 4.4 s :: 'A whimsical name for your small boat could be "Seagull\'s Whisper." This name conjures a sense of lightness and a gentle journey across the waters, while also referencing the coastal environment. If you\'d like more suggestions or a name with a particular theme, let me know'
+  OLMo-instruct: 8 generations, 10.3 s total, mean 1.29 s, max 4.41 s; cuda peak 60.1 GiB
+
+SMOKE end 2026-11-07T01:41:53Z; units failed to start or load: 0
+
+# ---- the smoke script as it ran (sha256 179ab0661133c0fe84d59f9d9fedbe75a63b169b8e3e07deb03f662dc87165d1) ----
+#!/usr/bin/env python3
+"""G-CAL-OLMo APPARATUS SMOKE -- on the PI's word of 2026-11-06 ("Yes, smoke"). NOT G-CAL-OLMo.
+
+Exercises, per checkpoint (sft, dpo, instruct), the path G-CAL-OLMo-{ckpt} runs on the box
+(scripts/m_sessions.py run_gcal_completability -> valence_core/m/gcal.py run_completability),
+with the committed code at the box's HEAD, and stops short of everything that is G-CAL's own:
+  (1) the driver's model-free refusals: gcal.precheck(stub=False, unit=...) with RUNPOD_POD_ID as
+      the shell gives it, then again with RUNPOD_POD_ID read from PID 1's environment; the weights
+      check (olmo_weights_problems) and the driver check (driver_problems);
+  (2) the load through the driver's own loader (_load_olmo at the checked path), timed;
+  (3) gcal._startup_olmo: insulation, runner_olmo.olmo_startup (base and cross-checkpoint refusal,
+      the 8192 window, b3's ban list against data/olmo/scaffold_{ckpt}.json and b3's ids sha16),
+      TEMP 0.7 and STOP_CAP 60, the weights path, the tokenizer probe;
+  (4) adapter.provenance() and resume.backend_identifier on it;
+  (5) 8 generations through G-CAL-OLMo's own call (gcal.py:1155-1165): insulation, rule 28(d)(a)'s
+      boundary, adapter.generate(SESSION_BANNER, "Task: {task}\\nResponse:", injections=(), seed,
+      temp OLMO_TEMP, max_tokens STOP_CAP, ban_ids, cached=False) -- on 4 neutral tasks
+      (scripts/box_determinism.py's PROBES tasks; none is a G-CAL item) x 2 seeds keyed
+      crc32("m-smoke|{ckpt}|{t}|{s}") % 2**31 (outside m-cal's key space). Every generation is
+      printed in full (rule 25), with its token count, stop reason and wall time.
+No G-CAL item, key, seed, grader, pool or render is generated on or graded; no checkpoint or
+artifact is written; nothing under data/ or /workspace/models is written.
+"""
+from __future__ import annotations
+
+import gc
+import hashlib
+import json
+import os
+import sys
+import time
+import zlib
+
+REPO = "/workspace/repo/jspace-lab"
+sys.path.insert(0, REPO)
+sys.path.insert(0, os.path.join(REPO, "scripts"))
+
+import m_sessions as ms  # noqa: E402  (the committed driver; imported, main() not run)
+from valence_core.m import gcal, guard, resume, stages  # noqa: E402
+from valence_core.m import runner_olmo as ro  # noqa: E402
+from valence_core.m import scaffold as sc  # noqa: E402
+from valence_core.session_e2a import SESSION_BANNER  # noqa: E402
+
+PROPOSAL = "PROPOSAL-m-gating-campaign-v1_11.md"
+TASKS = (
+    "Give one word for a colour of the sea.",
+    "Name a tool used to drive a nail.",
+    "Write one sentence about a kettle.",
+    "Suggest a name for a small boat.",
+)
+SEEDS_PER_TASK = 2
+
+
+def pid1_pod_id() -> str | None:
+    try:
+        raw = open("/proc/1/environ", "rb").read().split(b"\0")
+    except OSError:
+        return None
+    for kv in raw:
+        if kv.startswith(b"RUNPOD_POD_ID="):
+            return kv.split(b"=", 1)[1].decode()
+    return None
+
+
+def run_precheck(unit: str, sha: str, label: str) -> None:
+    try:
+        gcal.precheck(out_path=None, resume=False, proposal_file=PROPOSAL, proposal_sha256=sha,
+                      stub=False, unit=unit)
+        print(f"  precheck [{label}]: PASS (no refusal)", flush=True)
+    except gcal.GcalRefusal as e:
+        print(f"  precheck [{label}]: REFUSED -- {e}", flush=True)
+
+
+def main() -> int:
+    import torch
+    print(f"SMOKE start {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}; HEAD {stages._git_head()}",
+          flush=True)
+    probs, data = stages._committed(PROPOSAL)
+    if probs or data is None:
+        print(f"proposal {PROPOSAL}: {probs}", flush=True)
+        return 2
+    sha = hashlib.sha256(data).hexdigest()
+    print(f"proposal {PROPOSAL} committed, sha256 {sha}", flush=True)
+    inherited = os.environ.get(resume.POD_ENV)
+    pid1 = pid1_pod_id()
+    print(f"RUNPOD_POD_ID inherited by this process: {inherited!r}; in PID 1's environment: {pid1!r}",
+          flush=True)
+    dprobs, dsha = ms.driver_problems()
+    print(f"driver_problems: {dprobs}; driver sha256 {dsha}", flush=True)
+    failures = 0
+    for unit in ms.OLMO_UNITS:
+        ck = ms.olmo_ckpt(unit)
+        print(f"\n===== {unit} (checkpoint {ck}) =====", flush=True)
+        run_precheck(unit, sha, "RUNPOD_POD_ID as inherited")
+        if pid1 and inherited is None:
+            os.environ[resume.POD_ENV] = pid1
+            try:
+                run_precheck(unit, sha, "RUNPOD_POD_ID from PID 1's environment")
+            finally:
+                os.environ.pop(resume.POD_ENV, None)
+        wprobs, w = ms.olmo_weights_problems(ck)
+        print(f"  olmo_weights_problems: {wprobs}", flush=True)
+        if wprobs or w is None:
+            print("  SKIP: weights problems; nothing loaded", flush=True)
+            failures += 1
+            continue
+        print("  " + ms.weights_line(ck, w), flush=True)
+        rprobs, wrec = gcal.weights_of_record(ck)        # what run_completability hands _startup_olmo
+        if rprobs or wrec is None or str(wrec["path"]).rstrip("/") != str(w["path"]).rstrip("/"):
+            print(f"  SKIP: weights_of_record {rprobs} / path {wrec and wrec.get('path')!r} vs {w['path']!r}",
+                  flush=True)
+            failures += 1
+            continue
+        torch.cuda.reset_peak_memory_stats()
+        t0 = time.perf_counter()
+        adapter = ms._load_olmo(ck, w["path"])
+        t_load = time.perf_counter() - t0
+        print(f"  load: {t_load:.1f} s; cuda peak {torch.cuda.max_memory_allocated() / 2**30:.1f} GiB", flush=True)
+        try:
+            ban_ids = gcal._startup_olmo(adapter, ck, wrec, stub=False)
+        except gcal.GcalRefusal as e:
+            print(f"  STARTUP REFUSED: {e}", flush=True)
+            failures += 1
+            del adapter
+            gc.collect()
+            torch.cuda.empty_cache()
+            continue
+        print(f"  startup (gcal._startup_olmo): PASS; ban ids {len(ban_ids)}; "
+              f"TEMP {ro.OLMO_TEMP} STOP_CAP {ro.STOP_CAP}", flush=True)
+        prov = adapter.provenance()
+        print("  provenance: " + json.dumps(prov, sort_keys=True), flush=True)
+        print(f"  backend identifier: {resume.backend_identifier(prov)}", flush=True)
+        n = 0
+        times = []
+        for t, task in enumerate(TASKS):
+            for s in range(SEEDS_PER_TASK):
+                seed = zlib.crc32(f"m-smoke|{ck}|{t}|{s}".encode()) % 2**31
+                seg = f"Task: {task}\nResponse:"
+                guard.assert_insulated()
+                sc.assert_boundary(adapter, SESSION_BANNER, seg)
+                tg = time.perf_counter()
+                g = adapter.generate(SESSION_BANNER, seg, injections=(), seed=seed, temp=ro.OLMO_TEMP,
+                                     max_tokens=ro.STOP_CAP, ban_ids=ban_ids, cached=False)
+                dt = time.perf_counter() - tg
+                times.append(dt)
+                n += 1
+                print(f"  gen t={t} s={s} seed={seed} tokens={len(g.token_ids)} stop={g.stop_reason!r} "
+                      f"cap_hit={g.cap_hit} {dt:.1f} s :: {g.text!r}", flush=True)
+        print(f"  {unit}: {n} generations, {sum(times):.1f} s total, mean {sum(times) / len(times):.2f} s, "
+              f"max {max(times):.2f} s; cuda peak {torch.cuda.max_memory_allocated() / 2**30:.1f} GiB", flush=True)
+        del adapter
+        gc.collect()
+        torch.cuda.empty_cache()
+    print(f"\nSMOKE end {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}; units failed to start or load: "
+          f"{failures}", flush=True)
+    return 0 if failures == 0 else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
