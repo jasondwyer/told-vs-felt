@@ -21,6 +21,22 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-08 — **PROPOSAL-p: G-CAL-p's read goes to the seat. Condition (4) passed on all three checkpoints
+  (`b6ef939`, `ec0d9d3`); a block for the seat's read carries four items.**
+
+  (Stamp verified at write time: `date -u` → **Sun Nov  8 05:44:23 UTC 2026**.)
+
+  - **The block:** [`2026-11-08_p-gcal_code-to-design.md`](results/raw/2026-11-08_p-gcal_code-to-design.md).
+  - **It points the seat at Code's read** of all 384 generations (rule 25), and gives sft's zero margin and the
+    result against the seat's §3.3 expectation.
+  - **The four items:**
+    - F-p13 (new): control characters in five stored texts, on item 7;
+    - F-p12: G-SHAPE-p's re-run before LOCK-p v0.1, which needs the `5009e77` artifact ruled superseded;
+    - F-p11: the counter's remaining false hits;
+    - step 6's go, which is the PI's.
+  - **The pod** is up and idle.
+  - **Committed by path:** the block and this entry. Not pushed.
+
 - 2026-11-08 — **G-CAL-p-{sft,dpo,instruct} (PROPOSAL-p v0.2 §3, §8 step 5), on the coordinating session's go of
   2026-11-07 under the PI's routing of 2026-11-07, item 1: CONDITION (4) PASSES ON ALL THREE CHECKPOINTS, corrupted
   47/64, 52/64 and 51/64 against bars of 47, 46 and 45. The clean pool reproduces G-CAL-OLMo's 64 generations byte for
