@@ -1,0 +1,101 @@
+# LOCK-m-F3 v0.1 -- checks on the committed bytes, before the commit of record (Code's scratch; model-free).
+# Code stamp: 2026-11-08 01:20:09 UTC (date -u). A scratch worktree at 02dadb3 with LOCK-m-F3.md committed on a detached commit (7058c85, not for history); the file's bytes are the lock of record's (sha256 377c5d602709004c862e7f8b5ae6b70a9d441b558697c47b0bf585ceaecf6ce7). Run from that worktree's root with HF_HUB_OFFLINE=1: `python -B <tmp>/lock/licence_test.py`. It builds identity_extra from the lock's committed text (the eleven m files' sha256 and the WEIGHTS line), the lock's committed blob (its sha256) and the files (the proposal's, the analyzer's and mf3's package sha256), calls valence_core.mf3.stages.licence_problems on it, then three mutations, then the Q-F3 VERDICTS reader's three names (scripts/m_analyze.py, PIN-V2-12). The script follows its output, verbatim.
+
+## Output
+
+analyzer_sha256 named in the lock text: True
+package_sha256 named in the lock text: True
+proposal_sha256 named in the lock text: True
+licence_problems on the committed lock: []
+mutation analyzer sha refused: True ["analyzer: its sha256 is not identity_extra's analyzer_sha256", 'lock LOCK-m-F3.md: its committed text does not name analyzer_sha256 0000000000000000...']
+mutation m-file sha refused: True ["valence_core/m/corr.py: its sha256 (computed now) is not identity_extra's (Q1 (C2) part (b))", 'lock LOCK-m-F3.md: no line of its committed text names valence_core/m/corr.py with its sha256 1111111111111111... (Q1 (C2) part (b): listed by name)']
+mutation weights revision refused: True ["weights: the hub cache's refs/main for mlx-community/Qwen3.6-27B-4bit is 'c000ac2c2057d94be3fa931000c31723aac53282', not the bound revision (raw text) -- the load would read another snapshot", 'weights: the snapshot of record is unreadable (FileNotFoundError)', 'lock LOCK-m-F3.md: its committed text does not name weights_revision 2222222222222222...']
+VERDICTS reader (PIN-V2-12): analyzer d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 named in the committed lock text: True
+VERDICTS reader (PIN-V2-12): m package_sha256 7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb named in the committed lock text: True
+VERDICTS reader (PIN-V2-12): Q-F3 closure_sha256 d19f336dc69e987b7be0b69d84d32f4a55cc47c8f4728c0f13b0378608cbf039 named in the committed lock text: True
+LICENCE TEST PASS
+
+## The script (licence_test.py, verbatim)
+
+```python
+"""Exercise mf3's licence against a committed LOCK-m-F3.md in a scratch worktree (run from that worktree's root).
+
+python -B licence_test.py   (HF_HUB_OFFLINE=1)
+
+Builds identity_extra from the lock's committed text (the eleven m files' sha256 and the WEIGHTS line), from the
+lock's committed blob (its sha256) and from the files (the proposal's, the analyzer's and mf3's package sha256), and
+prints whether the lock's text names the analyzer's, mf3's package's and the proposal's sha256; then it calls
+valence_core.mf3.stages.licence_problems on that worktree: [] expected (licensed). Then three mutations, each of which
+must be refused: an analyzer sha256 not the file's, an m file's sha256 not the file's (corr.py), and a weights
+revision not the hub cache's. Then the Q-F3 VERDICTS reader's three names (scripts/m_analyze.py, PIN-V2-12): the
+analyzer's, m's package's and the Q-F3 closure's sha256 (production_env("Q-F3")), each in the committed lock text.
+"""
+import copy
+import hashlib
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+WT = Path.cwd()
+sys.path.insert(0, str(WT))
+from valence_core.mf3 import guard, stages  # noqa: E402
+from valence_core.mf3 import resume as rs  # noqa: E402
+
+assert Path(stages.__file__).resolve().is_relative_to(WT.resolve()), stages.__file__
+lock_rel = "LOCK-m-F3.md"
+blob = subprocess.run(["git", "cat-file", "blob", f"HEAD:{lock_rel}"], capture_output=True, cwd=WT, check=True).stdout
+text = blob.decode("utf-8")
+mm = {}
+for m in guard.M_HASHED:
+    path = f"valence_core/m/{m}.py"
+    hits = [ln for ln in text.splitlines() if path in ln and re.search(r"\b[0-9a-f]{64}\b", ln)]
+    shas = {h for ln in hits for h in re.findall(r"\b[0-9a-f]{64}\b", ln)}
+    assert len(shas) == 1, (m, shas)
+    mm[m] = shas.pop()
+w = re.findall(r"WEIGHTS \S+ revision ([0-9a-f]{40}) sha256 ([0-9a-f]{64})", text)
+assert len(set(w)) == 1, w
+wrev, wsha = w[0]
+
+
+def sha(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+prop = "PROPOSAL-m-gating-campaign-v1_11.md"
+extra = {"proposal_file": prop, "proposal_sha256": sha(WT / prop), "lock_file": lock_rel,
+         "lock_sha256": hashlib.sha256(blob).hexdigest(),
+         "analyzer_sha256": sha(WT / "scripts/m_analyze.py"),
+         "package_sha256": guard.package_sha256_of(guard.PACKAGE_DIR),
+         "weights_revision": wrev, "weights_sha256": wsha, "m_module_sha256": mm}
+for k in ("analyzer_sha256", "package_sha256", "proposal_sha256"):
+    print(f"{k} named in the lock text: {extra[k] in text}")
+probs = stages.licence_problems(extra, repo=WT)
+print("licence_problems on the committed lock:", probs)
+bad1 = dict(extra, analyzer_sha256="0" * 64)
+p1 = stages.licence_problems(bad1, repo=WT)
+bad2 = copy.deepcopy(extra)
+bad2["m_module_sha256"]["corr"] = "1" * 64
+p2 = stages.licence_problems(bad2, repo=WT)
+bad3 = dict(extra, weights_revision="2" * 40)
+p3 = stages.licence_problems(bad3, repo=WT)
+print("mutation analyzer sha refused:", bool(p1), p1[:2])
+print("mutation m-file sha refused:", bool(p2), p2[:3])
+print("mutation weights revision refused:", bool(p3), p3[:3])
+# the Q-F3 VERDICTS reader's three names (scripts/m_analyze.py, PIN-V2-12): the analyzer's, m's package's and the
+# Q-F3 closure's sha256 (production_env("Q-F3")), each in the committed lock text
+import importlib.util  # noqa: E402
+spec = importlib.util.spec_from_file_location("m_analyze_wt", WT / "scripts" / "m_analyze.py")
+ma = importlib.util.module_from_spec(spec)
+sys.modules["m_analyze_wt"] = ma
+spec.loader.exec_module(ma)
+assert Path(ma.__file__).resolve().is_relative_to(WT.resolve()), ma.__file__
+env = ma.production_env(ma.UNIT_F3)
+names = {"analyzer": hashlib.sha256((WT / "scripts/m_analyze.py").read_bytes()).hexdigest(),
+         "m package_sha256": env.package_sha256, "Q-F3 closure_sha256": env.closure_sha256}
+for k, v in names.items():
+    print(f"VERDICTS reader (PIN-V2-12): {k} {v} named in the committed lock text: {v in text}")
+ok = probs == [] and p1 and p2 and p3 and all(v in text for v in names.values())
+print("LICENCE TEST", "PASS" if ok else "FAIL")
+sys.exit(0 if ok else 1)
+```

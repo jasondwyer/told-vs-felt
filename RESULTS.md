@@ -21,6 +21,80 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **LOCK-m-F3 v0.1 — Q-F3's first lock (m:292), committed on the PI's routing of 2026-11-07, item 1.
+  `LOCK-m-F3.md` (sha256 `377c5d60…6ce7`) names the analyzer `d347ea0c…5e48`, mf3's package `f30ad505…6310`, the eleven
+  m files, the weights of record, the re-run G-SHAPE-F3 (`0c9de56e…1461`), G-ANL-F3's artifact (`b91a8c67…936c`) and
+  counter (c)'s lexicons (`1b7d5a01…8028`). It carries N10's and N13's dated notes.**
+  (Stamp verified at write time: `date -u` → **Sun Nov  8 01:21:08 UTC 2026**.)
+  - **The routing.**
+    - The PI's routing of 2026-11-07, item 1, quoted at RESULTS.md@139635f:81: "1. G-ANL-F3: hygiene commit (N9,
+      N12) → G-SHAPE-F0/F3 re-runs → canonical `ganl` → LOCK-m-F3 v0.1 → G-TIME-F3 [go]; N10 m:312 stands
+      [confirmed]; N13 no change [confirmed]."
+    - The seat's answers of 2026-11-07, §9 item 1: "LOCK-m-F3 v0.1 (naming the analyzer, the lexicons, the re-run
+      G-SHAPE-F3)".
+    - The N1 answer's order (`f105bdd`, §1): "the canonical `ganl` on that HEAD → LOCK-m-F3 v0.1 → G-TIME-F3". The
+      `ganl` is `02dadb3`.
+  - **What a stage cites** (lock §1, "How a stage cites this file"):
+    - `lock_file` `"LOCK-m-F3.md"` and `lock_sha256`
+      `377c5d602709004c862e7f8b5ae6b70a9d441b558697c47b0bf585ceaecf6ce7`: this file as committed here (a file
+      cannot hold its own hash);
+    - the proposal, the analyzer, mf3's package, the eleven m files and the weights, as the lock's tables give them;
+    - `renders_sha16` `a04f67b0e5105a05`; at G-TIME-F3, `reasoning_cap` 60 and `locked_path` `"uncached"`;
+    - `prior_proposal_sha256s`: none.
+  - **m:292's list, by section:** the schedules and the interleave rule §4; keys §5; the F3 verifier §6; banner and
+    reasoning-block bytes §6; module homes §5; the reasoning-line classes §7; G-SHAPE-F3's result §2; G-ANL-F3's
+    analyzer and lexicon hashes §1 and §3; every bar of the later stages §8 (13 bars, generated from `QF3_BARS`).
+  - **How it was made.**
+    - A generator in Code's scratch produced §1–§9's tables and verbatim blocks at `02dadb3`, from the committed
+      code, artifacts and design raws and, for the WEIGHTS line, the hub cache's snapshot of record. The one
+      exception is the N10 quotation in §3, which Code typed, verbatim from the seat's answer. Nothing generated is
+      transcribed by hand.
+    - The PIN-sites table lists 90 sites: every line of `valence_core/mf3/*.py`, `scripts/mf3_sessions.py` and
+      `scripts/m_analyze.py` that opens `PIN (Code, declared at LOCK-m-F3 v0.1` or `PIN (the seat's`, in a comment
+      or a docstring.
+    - A first draft's pattern found 79. It missed nine comments whose opening parenthesis wraps to the next line,
+      and two docstring PINs. It was fixed before the values-check.
+  - **Checks on the committed bytes.** These ran in a scratch worktree at `02dadb3` with this file committed there
+    (a detached commit, not for history). The script and its output are in
+    [`_lock-m-f3_checks`](results/raw/2026-11-07_lock-m-f3_checks.txt).
+    - mf3's licence (`stages.licence_problems`, (a)–(g)) returns no problem. Its `identity_extra` holds:
+      - the eleven m files' sha256 and the weights, read from the lock's committed text;
+      - the lock's sha256, from its committed blob;
+      - the proposal's, the analyzer's and mf3's package sha256, hashed from the files.
+    - Three mutations are each refused: an analyzer sha256 that is not the file's, an m file's sha256 that is not
+      the file's, and a weights revision that is not the hub cache's.
+    - The Q-F3 VERDICTS reader's three names (PIN-V2-12) each appear in the committed text: the analyzer's, m's
+      package's and the Q-F3 closure's sha256 (`production_env("Q-F3")`).
+  - **Code's readings declared at this lock** (lock §9):
+    - the two PIN registers, verbatim: the F3 build's (F1 onward) and G-ANL-F3's (PIN-V2-1 to PIN-V2-24);
+    - N10's condition (lock §3). The scorer's output records each label's polarity, not which term was nearest, so
+      the "same polarity, shared nearest term" count is not built. The seat may strike this reading.
+  - **Dated notes:**
+    - lock §8: the bar table's G-ID-F3 row predates the seat's F-7. F-7's triple criterion governs, and the row's
+      text is not edited, since that would move mf3's package.
+    - lock §9: the per-line parts of F32 and F36, and F59, are superseded by the seat's F-6 and F-7, applied at
+      `e0b4f2c`. The rest of the register stands.
+    - lock §10: N13's entry term; N1 at this lock; m's package moved before this lock (`993eba1`).
+  - **Values-check:** three blind passes over the lock, this entry and the checks raw ran before the commit.
+    - Pass 1: 68 items, 51 PASS, 14 IMPRECISE, 3 FAIL. Pass 2: 42 items, 35 PASS, 7 IMPRECISE, 0 FAIL. Pass 3:
+      19 items, 18 PASS, 1 IMPRECISE, 0 FAIL.
+    - The three FAILs, each fixed:
+      - the bar table's G-ID-F3 row against the seat's F-7 (a dated note added);
+      - the F3 register's F32, F36 and F59, superseded by F-6 and F-7 (a dated note added);
+      - G-ANL-F3's register, not byte-verbatim (the generator fixed).
+    - Each item was re-checked at source and applied, declared or disclosed. The raw, with Code's dispositions, is
+      committed beside ([`_lock-m-f3_valuescheck`](results/raw/2026-11-07_lock-m-f3_valuescheck.md)).
+  - **Next** (lock §11):
+    - the `time` wiring in `scripts/mf3_sessions.py`, which Code intends as an edit under F-1's clearance; its entry
+      states the reading on the edit as made;
+    - the wiring also carries the rest of m's pre-load check and a DRIVER line. The coordinating session's routing
+      of 2026-11-07, relayed in chat, directs it, and the wiring's entry records it. The seat's F-2 places the
+      pre-load check with the campaign subcommand's wiring; a dated note in the wiring's entry quotes F-2 and gives
+      Code's reading;
+    - its review and site check;
+    - then G-TIME-F3's six sessions.
+  - Not pushed. Committed by path.
+
 - 2026-11-07 — **G-ANL-F3 — the canonical run on N1's HEAD (`9480f9b`): PASS. `python scripts/m_analyze.py ganl`
   writes `data/m/gates/G-ANL-F3.json` (sha256 `b91a8c67…936c`), once, against committed blobs. The battery passes
   525/525 and reaches all 538 coverage ids. The analyzer is `d347ea0c…5e48`, and the regression records the restored tree.**
