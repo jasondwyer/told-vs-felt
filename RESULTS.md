@@ -21,6 +21,111 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-08 — **ADDENDUM-m2 v0.1 — PRE-READ (A-m2 §6 item 1): STOP on two questions before the smoke.**
+  - **The questions:** Q1 asks for counter (b) as tie-break (iii); Q2 asks for count (i)'s scope.
+  - **Also in the block:** four FLAGs for the build, and Code's PINs for §1, counter (a), §4.2 and the smoke driver.
+  - **The referent check:** 59 items, 35 PASS, 15 IMPRECISE, 2 FAIL and 7 OPEN; every item not marked PASS re-checked at source.
+  - **What waits:** A-m2 stays untracked. Its step-3 commit and the smoke wait for the seat's answers.
+
+  (Stamp verified at write time: `date -u` → **Sun Nov  8 08:35:11 UTC 2026**.)
+  - **The routing.**
+    - The PI's routing of 2026-11-08, item 2, quoted verbatim in the close of the G-CAL-p read entry (`daca8b0`): "ADDENDUM-m2:
+      route to Code’s pre-read and step 3 [go]; the four forms and the selection rule [as written]; the smoke’s laptop
+      go [go]."
+    - The coordinating session's instruction: "Do the referent check, and STOP on anything unresolved; minor residues
+      become dated notes. Then step 3".
+  - **The document read:** `ADDENDUM-m2-f3-reasoning-block-v0_1.md`, untracked at root, sha256 `cdcc8e86…53f0`,
+    verified.
+  - **The block:**
+    [`2026-11-08_a-m2_code-to-design_preread.md`](results/raw/2026-11-08_a-m2_code-to-design_preread.md).
+  - **The referent check** (A-m2 §7), in
+    [`_a-m2_preread_referent-check`](results/raw/2026-11-08_a-m2_preread_referent-check.md).
+    - **Method.** A fresh agent checked the document blind and read-only. It hashed the checkpoint without opening it
+      (m:318). Its report is in the raw verbatim, with Code's disposition of every item not marked PASS.
+    - **Totals:** 59 items: 35 PASS, 15 IMPRECISE, 2 FAIL and 7 OPEN. Every verdict stands after Code's re-check.
+    - **What holds.** Every fact the seat's ruling rests on: the 9 of 13, the critical of 4 at n = 13, the quotes, and
+      F25 and F28.
+    - **The FAILs:**
+      - §3.2's keys anchor. The smoke's key is outside every family regardless.
+      - §4.3's re-issue list, which omits the Q-F3 closure and G-ANL-F3 (F-C below).
+    - **Two OPENs become the questions:** counter (b) as Q1, count (i) as Q2.
+    - **For the seat's v0.2, if one is issued:** the FAIL at #22 and 14 of the IMPRECISE items. #38 is a reading (the block §5 item 1).
+  - **Code's PINs, proposed** (the block §2):
+    - **P1, §1's set-builder.** It works over the record's pieces: a line is in the domain iff no model-written piece
+      touches it. It reproduces §1's 9 of 13 on G-TIME-F3's sham lines.
+    - **P2, counter (a).** A line counts on containment, or on the frame `=== .+? ===`. It gives the seat's 11 of 13.
+    - **P3, the selected form's home.** Its constants live in mf3's `banner.py`. They are verified at every stage start
+      against A-m2 by sha256 and §3.1's literal, and asserted roster-free. `valence_core/m/banner.py` is untouched.
+      The files expected to move are listed.
+    - **P4, `scripts/mf3_sessions.py time --smoke --smoke-out DIR`:**
+      - **What it runs:** the twelve sessions, on G-TIME-F3's cells and item key, under the arm key
+        `m-smoke-f3|{form}|{template}|0`.
+      - **Checks:** G-VER under the smoke's scaffold, and a STOP on any backend but `a734dadec8f8ce9b`.
+      - **What it never touches:** it writes nothing inside the repository and never touches the stage's checkpoint.
+      - **Its kind:** an edit of F-1's kind, as at the `time` wiring, so G-SHAPE-F3 is not re-run for it.
+  - **The STOP** (the block §3):
+    - **Q1, counter (b).** It has no operational definition. Yet §3.3 uses it as tie-break (iii), "the rule, not the
+      read, selects", and the rule is declared before the smoke runs.
+      - Code recommends (R): a declared read, itemised by Code and confirmed by the seat.
+      - The alternatives are (T), striking (iii), and (M), a mechanical test. On G-TIME-F3's 25 sham responses (M)
+        selects exactly A3s round 8.
+      - A sub-question: does (iii) count free rounds only? Across forms, forced rounds differ only by seed.
+    - **Q2, count (i)'s scope.** As written, (i) is the echo member alone. m:293's bar, which the re-run must pass,
+      counts the union of empty, cap-reach and echo. So an inline form with run-on lines could be selected.
+      - The options are (E), as written, and (U), the union.
+      - If the seat is silent, (E).
+  - **The FLAGs for the build** (the block §4; none blocks the smoke):
+    - **F-A, the counters at VERDICTS.**
+      - **The gap today:** the Q4 counter has no VERDICTS path in the analyzer of record. LOCK-m-F3 v0.1 F29 says "the
+        analyzer tabulates it", but `lines.review_counter` has no caller outside its self-test.
+      - **What follows:** §3.4's (a) and (b) would be in the same position with the analyzer untouched.
+      - **Code's proposal:** compute them in Code's own step at VERDICTS.
+    - **F-B, the re-run's checkpoint.**
+      - **The first run's file:** `Q-F3_time.json` ends PASS, which `prior_gate` would accept. The analyzer reads one
+        time checkpoint.
+      - **Code's proposal:** `Q-F3_time-r2.json`, with the `id` and `qual` wirings naming their prior by path and
+        refusing `Q-F3_time.json`.
+      - **At VERDICTS:** where the analyzer releases the first run, it does so through `release_full`, which runs no
+        piece check, so the move does not refuse those records there.
+    - **F-C, the Q-F3 closure.** The lock names `d19f336d…`, and the build moves it. The re-issue must name the new
+      one. Whether G-ANL-F3 re-runs is the seat's.
+    - **F-D, m:261's task-round echo set, if F-c is selected.** Changing it means editing `valence_core/m/audit.py`,
+      one of the licence's eleven files.
+  - **Readings carried as dated notes** (the block §5):
+    - the adapter's strip under F-a and F-b (`Reasoning (one line):<line>`, `So far,<line>`);
+    - counts, not rates;
+    - the smoke's keys (F-0 is a fresh draw, not a replication);
+    - F-0's place in the departure order, moot under the two stops;
+    - the package's Q8 classes in the smoke's records, beside P1's;
+    - §1's equality as the seat's reading of m:265;
+    - the smoke's read licence. The sessions are outside every unit and are printed in full, unless the seat strikes it.
+  - **Values-check:** two blind passes ran before the commit.
+    - **The first pass:** 167 claims, 133 CONFIRMED, 23 IMPRECISE, 6 FAIL and 5 NOT CHECKABLE. The FAILs were:
+      - A-m2's sha256 tail, `…53f0`, now corrected in all three files;
+      - F-B's claim that readrule's piece check runs at the VERDICTS release. It does not, so that point is now a
+        note and its proposal is withdrawn;
+      - two item numbers in the referent raw.
+    - **The second pass:** the changed passages, plus Code's own changes (P1's overlap rule, from Code's
+      self-review of the smoke driver; P4's F-1 reading). 39 items: 34 CONFIRMED, 4 IMPRECISE, 0 FAIL and 1 NOT
+      CHECKABLE.
+    - **Applied:** every FAIL and IMPRECISE item was re-checked at source and applied.
+    - **The raw,** with both reports and Code's dispositions:
+      [`_a-m2_preread_valuescheck`](results/raw/2026-11-08_a-m2_preread_valuescheck.md).
+  - **Committed by path:** the block, the referent check, the values-check and this entry. A-m2 stays untracked.
+    Nothing ran on a model.
+  - **Next, on the seat's answers:**
+    1. A-m2's step-3 commit, of v0.2 if the seat issues one.
+    2. The smoke driver (P4). It is built in a scratch worktree and not committed.
+       - Its self-test passes 189 of 190. The one failing check asserts A-m2 committed, which only step 3
+         makes true.
+       - A lane of 36 mutants of the smoke code kills all 36.
+       - Q1's and Q2's answers are three constants, and the smoke refuses to run until they are set.
+       - Then come its blind review and values-check, and its commit.
+    3. The smoke's announcement to the coordinating session.
+    4. The smoke itself.
+
+    Not pushed.
+
 - 2026-11-08 — **PROPOSAL-p step 6 (p §8; the PI's routing of 2026-11-08, item 1, "Step 6 [go]"; the seat's answer at
   `daca8b0`, §4): Code STOPS before building the gate-stage driver, on nine questions for the seat.** Three attributes
   of m's code that G-TIME-OLMo (p) needs are not substitution sites in p's register, and the register's term (e) makes
