@@ -1,0 +1,2358 @@
+{
+ "form": "pre-VERDICTS reads (m:271): contrast = banner + forced rounds; sham = menus removed, chosen tag and labels [config]",
+ "schema": "m-stage-reads-v1",
+ "sessions": [
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents task text with character corruption. Prefer clean task text.\n",
+   "blinding": "contrast-stripped at G-TIME-F3: banner + forced-round bytes, {phase, ri, n, text} per round, no class field, no per-line list (m:271; ruling (h); the seat's F-6)",
+   "cell": {
+    "P": "ridge",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "pair_index": 3,
+    "start": 0
+   },
+   "contrast": true,
+   "excluded_at_forced": false,
+   "format": "F3",
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A1|0",
+    "items": "m-f3-items-time|0"
+   },
+   "n_forced_rounds": 4,
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config ridge presents clean task text; config saddle presents task text with character corruption. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 253,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 335,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 253
+    },
+    {
+     "end": 336,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 335
+    },
+    {
+     "end": 337,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 336
+    },
+    {
+     "end": 421,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 337
+    },
+    {
+     "end": 423,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 421
+    },
+    {
+     "end": 424,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 423
+    },
+    {
+     "end": 491,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 424
+    },
+    {
+     "end": 493,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 491
+    },
+    {
+     "end": 494,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 493
+    },
+    {
+     "end": 568,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 494
+    },
+    {
+     "end": 570,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 568
+    },
+    {
+     "end": 571,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 570
+    }
+   ],
+   "reasoning_cap": 60,
+   "rounds": [
+    {
+     "n": 1,
+     "phase": "forced",
+     "ri": 0,
+     "text": "3"
+    },
+    {
+     "n": 2,
+     "phase": "forced",
+     "ri": 1,
+     "text": "24"
+    },
+    {
+     "n": 3,
+     "phase": "forced",
+     "ri": 2,
+     "text": "44"
+    },
+    {
+     "n": 4,
+     "phase": "forced",
+     "ri": 3,
+     "text": "12"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "stage": "time",
+   "substrate": "qwen",
+   "template": "A1",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents task text with character corruption. Prefer clean task text.\n[round 1 | config: ridge]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 2 — active config: ridge]\nTask: State the number of hours in a day.\nResponse:24\n[round 3 | running config: saddle]\nTask: Cnmzote 11 + 33.\nResponse:44\n[round 4 — config in use: saddle]\nTask: Coepqte 60 diyided by 5.\nResponse:12\n",
+   "unit": "Q-F3",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n",
+   "blinding": "sham-redacted: menus removed, chosen tag and labels [config] (m:271)",
+   "cell": {
+    "P": "ridge",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "pair_index": 3,
+    "start": 0
+   },
+   "complete": false,
+   "contrast": false,
+   "domain": true,
+   "excluded": true,
+   "exclusion": {
+    "class": "lexical",
+    "phase": "free"
+   },
+   "format": "F3",
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A1s|0",
+    "items": "m-f3-items-time|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 233,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 315,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 233
+    },
+    {
+     "end": 338,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 315
+    },
+    {
+     "end": 339,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 338
+    },
+    {
+     "end": 423,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 339
+    },
+    {
+     "end": 442,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 423
+    },
+    {
+     "end": 443,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 442
+    },
+    {
+     "end": 510,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 443
+    },
+    {
+     "end": 523,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 510
+    },
+    {
+     "end": 524,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 523
+    },
+    {
+     "end": 598,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 524
+    },
+    {
+     "end": 619,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 598
+    },
+    {
+     "end": 620,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 619
+    },
+    {
+     "end": 664,
+     "idx": 0,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 620
+    },
+    {
+     "end": 665,
+     "idx": 0,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 664
+    },
+    {
+     "end": 666,
+     "idx": 0,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 665
+    },
+    {
+     "end": 727,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 666
+    },
+    {
+     "end": 766,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 727
+    },
+    {
+     "end": 767,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 766
+    }
+   ],
+   "reasoning_cap": 60,
+   "reasoning_lines": [
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "n_tok": 1,
+     "stop_reason": "newline",
+     "text": ">"
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 4,
+     "label": "ridge",
+     "n": 1,
+     "n_tok": 7,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 243014496,
+     "stop_reason": "newline",
+     "task_text": "State the number of sides of a triangle.",
+     "template_index": 0,
+     "termination": false,
+     "text": "A triangle has 3 sides."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 13,
+     "label": "ridge",
+     "n": 2,
+     "n_tok": 8,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 1,
+     "role": "P",
+     "seed": 1581524735,
+     "stop_reason": "newline",
+     "task_text": "State the number of hours in a day.",
+     "template_index": 1,
+     "termination": false,
+     "text": "A day has 24 hours."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "saddle",
+     "n": 3,
+     "n_tok": 12,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 2,
+     "role": "Q",
+     "seed": 179774483,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 2,
+     "termination": false,
+     "text": "11 + 33 = 44."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 3,
+     "label": "saddle",
+     "n": 4,
+     "n_tok": 11,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 264412636,
+     "stop_reason": "newline",
+     "task_text": "Compute 60 divided by 5.",
+     "template_index": 3,
+     "termination": false,
+     "text": "60 divided by 4 = 15."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": "lexical",
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "31 + 4 `config: [config]` 31 + 46 = 77."
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 109.109,
+   "stage": "time",
+   "strict_exclusion": {
+    "class": "lexical",
+    "phase": "free"
+   },
+   "substrate": "qwen",
+   "template": "A1s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n[round 1 | config: ridge]\nTask: State the number of sides of a triangle.\nResponse:A triangle has 3 sides.\n[round 2 — active config: ridge]\nTask: State the number of hours in a day.\nResponse:A day has 24 hours.\n[round 3 | running config: saddle]\nTask: Compute 11 + 33.\nResponse:11 + 33 = 44.\n[round 4 — config in use: saddle]\nTask: Compute 60 divided by 5.\nResponse:60 divided by 4 = 15.\n[round 5 | reasoning]\nReasoning (one line):\n>\n[round 5 | config: [config]]\nTask: Compute 31 + 46.\nResponse:31 + 4 `config: [config]` 31 + 46 = 77.\n",
+   "unit": "Q-F3",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.\n",
+   "blinding": "contrast-stripped at G-TIME-F3: banner + forced-round bytes, {phase, ri, n, text} per round, no class field, no per-line list (m:271; ruling (h); the seat's F-6)",
+   "cell": {
+    "P": "ridge",
+    "Q": "saddle",
+    "clause": null,
+    "map": 0,
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "pair_index": 3,
+    "start": 0
+   },
+   "contrast": true,
+   "excluded_at_forced": false,
+   "format": "F3",
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A2|0",
+    "items": "m-f3-items-time|0"
+   },
+   "n_forced_rounds": 4,
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 262,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 344,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 262
+    },
+    {
+     "end": 345,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 344
+    },
+    {
+     "end": 346,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 345
+    },
+    {
+     "end": 430,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 346
+    },
+    {
+     "end": 432,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 430
+    },
+    {
+     "end": 433,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 432
+    },
+    {
+     "end": 500,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 433
+    },
+    {
+     "end": 502,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 500
+    },
+    {
+     "end": 503,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 502
+    },
+    {
+     "end": 577,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 503
+    },
+    {
+     "end": 579,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 577
+    },
+    {
+     "end": 580,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 579
+    }
+   ],
+   "reasoning_cap": 60,
+   "rounds": [
+    {
+     "n": 1,
+     "phase": "forced",
+     "ri": 0,
+     "text": "3"
+    },
+    {
+     "n": 2,
+     "phase": "forced",
+     "ri": 1,
+     "text": "24"
+    },
+    {
+     "n": 3,
+     "phase": "forced",
+     "ri": 2,
+     "text": "44"
+    },
+    {
+     "n": 4,
+     "phase": "forced",
+     "ri": 3,
+     "text": "12"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "stage": "time",
+   "substrate": "qwen",
+   "template": "A2",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.\n[round 1 | config: ridge]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 2 — active config: ridge]\nTask: State the number of hours in a day.\nResponse:24\n[round 3 | running config: saddle]\nTask: Cnmzote 11 + 33.\nResponse:44\n[round 4 — config in use: saddle]\nTask: Coepqte 60 diyided by 5.\nResponse:12\n",
+   "unit": "Q-F3",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.\n",
+   "blinding": "sham-redacted: menus removed, chosen tag and labels [config] (m:271)",
+   "cell": {
+    "P": "prism",
+    "Q": "slate",
+    "clause": null,
+    "map": 0,
+    "pair": [
+     "prism",
+     "slate"
+    ],
+    "pair_index": 1,
+    "start": 0
+   },
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "format": "F3",
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A2s|0",
+    "items": "m-f3-items-time|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 262,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 344,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 262
+    },
+    {
+     "end": 345,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 344
+    },
+    {
+     "end": 346,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 345
+    },
+    {
+     "end": 430,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 346
+    },
+    {
+     "end": 432,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 430
+    },
+    {
+     "end": 433,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 432
+    },
+    {
+     "end": 499,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 433
+    },
+    {
+     "end": 501,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 499
+    },
+    {
+     "end": 502,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 501
+    },
+    {
+     "end": 575,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 502
+    },
+    {
+     "end": 577,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 575
+    },
+    {
+     "end": 578,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 577
+    },
+    {
+     "end": 622,
+     "idx": 0,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 578
+    },
+    {
+     "end": 655,
+     "idx": 0,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 622
+    },
+    {
+     "end": 656,
+     "idx": 0,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 655
+    },
+    {
+     "end": 728,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 656
+    },
+    {
+     "end": 732,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 728
+    },
+    {
+     "end": 733,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 732
+    },
+    {
+     "end": 777,
+     "idx": 1,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 733
+    },
+    {
+     "end": 810,
+     "idx": 1,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 777
+    },
+    {
+     "end": 811,
+     "idx": 1,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 810
+    },
+    {
+     "end": 879,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 811
+    },
+    {
+     "end": 881,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 879
+    },
+    {
+     "end": 882,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 881
+    },
+    {
+     "end": 926,
+     "idx": 2,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 882
+    },
+    {
+     "end": 962,
+     "idx": 2,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 926
+    },
+    {
+     "end": 963,
+     "idx": 2,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 962
+    },
+    {
+     "end": 1044,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 963
+    },
+    {
+     "end": 1048,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1044
+    },
+    {
+     "end": 1049,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1048
+    },
+    {
+     "end": 1093,
+     "idx": 3,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 1049
+    },
+    {
+     "end": 1126,
+     "idx": 3,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 1093
+    },
+    {
+     "end": 1127,
+     "idx": 3,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 1126
+    },
+    {
+     "end": 1199,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 1127
+    },
+    {
+     "end": 1201,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1199
+    },
+    {
+     "end": 1202,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1201
+    },
+    {
+     "end": 1246,
+     "idx": 4,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 1202
+    },
+    {
+     "end": 1279,
+     "idx": 4,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 1246
+    },
+    {
+     "end": 1280,
+     "idx": 4,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 1279
+    },
+    {
+     "end": 1365,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1280
+    },
+    {
+     "end": 1366,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1365
+    },
+    {
+     "end": 1367,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1366
+    },
+    {
+     "end": 1412,
+     "idx": 5,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 1367
+    },
+    {
+     "end": 1445,
+     "idx": 5,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 1412
+    },
+    {
+     "end": 1446,
+     "idx": 5,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 1445
+    },
+    {
+     "end": 1528,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1446
+    },
+    {
+     "end": 1533,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1528
+    },
+    {
+     "end": 1534,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1533
+    }
+   ],
+   "reasoning_cap": 60,
+   "reasoning_lines": [
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "n_tok": 8,
+     "stop_reason": "newline",
+     "text": "=== Config `[config]` evaluation ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 4,
+     "label": "prism",
+     "n": 1,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 1634218409,
+     "stop_reason": "newline",
+     "task_text": "State the number of sides of a triangle.",
+     "template_index": 0,
+     "termination": false,
+     "text": "3"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 13,
+     "label": "prism",
+     "n": 2,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 1,
+     "role": "P",
+     "seed": 720346289,
+     "stop_reason": "newline",
+     "task_text": "State the number of hours in a day.",
+     "template_index": 1,
+     "termination": false,
+     "text": "24"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "slate",
+     "n": 3,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 2,
+     "role": "Q",
+     "seed": 1502789044,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 2,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 3,
+     "label": "slate",
+     "n": 4,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 1154547518,
+     "stop_reason": "newline",
+     "task_text": "Compute 60 divided by 5.",
+     "template_index": 3,
+     "termination": false,
+     "text": "12"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "down"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 2,
+     "termination": false,
+     "text": "cold"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 3,
+     "termination": false,
+     "text": "45"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "2"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "close"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 209.44,
+   "stage": "time",
+   "strict_exclusion": null,
+   "substrate": "qwen",
+   "template": "A2s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.\n[round 1 | config: prism]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 2 — active config: prism]\nTask: State the number of hours in a day.\nResponse:24\n[round 3 | running config: slate]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: slate]\nTask: Compute 60 divided by 5.\nResponse:12\n[round 5 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 5 | config: [config]]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 6 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 6 — active config: [config]]\nTask: Compute 31 + 46.\nResponse:77\n[round 7 | reasoning]\nReasoning (one line):\n=== Config `[config]` evaluation ===\n[round 7 | running config: [config]]\nTask: Write the opposite of 'hot'.\nResponse:cold\n[round 8 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 8 — config in use: [config]]\nTask: Compute 90 minus 45.\nResponse:45\n[round 9 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 9 | config: [config]]\nTask: State the number of wheels on a bicycle.\nResponse:2\n[round 10 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 10 — active config: [config]]\nTask: Write the opposite of 'open'.\nResponse:close\n",
+   "unit": "Q-F3",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\n",
+   "blinding": "contrast-stripped at G-TIME-F3: banner + forced-round bytes, {phase, ri, n, text} per round, no class field, no per-line list (m:271; ruling (h); the seat's F-6)",
+   "cell": {
+    "P": "granite",
+    "Q": "plaza",
+    "clause": null,
+    "map": 0,
+    "pair": [
+     "granite",
+     "plaza"
+    ],
+    "pair_index": 0,
+    "start": 0
+   },
+   "contrast": true,
+   "excluded_at_forced": false,
+   "format": "F3",
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A3|0",
+    "items": "m-f3-items-time|0"
+   },
+   "n_forced_rounds": 4,
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 124,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 208,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 124
+    },
+    {
+     "end": 209,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 208
+    },
+    {
+     "end": 210,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 209
+    },
+    {
+     "end": 296,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 210
+    },
+    {
+     "end": 298,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 296
+    },
+    {
+     "end": 299,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 298
+    },
+    {
+     "end": 365,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 299
+    },
+    {
+     "end": 367,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 365
+    },
+    {
+     "end": 368,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 367
+    },
+    {
+     "end": 441,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 368
+    },
+    {
+     "end": 443,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 441
+    },
+    {
+     "end": 444,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 443
+    }
+   ],
+   "reasoning_cap": 60,
+   "rounds": [
+    {
+     "n": 1,
+     "phase": "forced",
+     "ri": 0,
+     "text": "3"
+    },
+    {
+     "n": 2,
+     "phase": "forced",
+     "ri": 1,
+     "text": "24"
+    },
+    {
+     "n": 3,
+     "phase": "forced",
+     "ri": 2,
+     "text": "44"
+    },
+    {
+     "n": 4,
+     "phase": "forced",
+     "ri": 3,
+     "text": "12"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "stage": "time",
+   "substrate": "qwen",
+   "template": "A3",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\n[round 1 | config: granite]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 2 — active config: granite]\nTask: State the number of hours in a day.\nResponse:24\n[round 3 | running config: plaza]\nTask: Cnmzote 11 + 33.\nResponse:44\n[round 4 — config in use: plaza]\nTask: Coepqte 60 diyided by 5.\nResponse:12\n",
+   "unit": "Q-F3",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\n",
+   "blinding": "sham-redacted: menus removed, chosen tag and labels [config] (m:271)",
+   "cell": {
+    "P": "prism",
+    "Q": "slate",
+    "clause": null,
+    "map": 0,
+    "pair": [
+     "prism",
+     "slate"
+    ],
+    "pair_index": 1,
+    "start": 0
+   },
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "format": "F3",
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A3s|0",
+    "items": "m-f3-items-time|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 124,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 206,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 124
+    },
+    {
+     "end": 229,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 206
+    },
+    {
+     "end": 230,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 229
+    },
+    {
+     "end": 314,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 230
+    },
+    {
+     "end": 342,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 314
+    },
+    {
+     "end": 343,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 342
+    },
+    {
+     "end": 409,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 343
+    },
+    {
+     "end": 411,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 409
+    },
+    {
+     "end": 412,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 411
+    },
+    {
+     "end": 485,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 412
+    },
+    {
+     "end": 487,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 485
+    },
+    {
+     "end": 488,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 487
+    },
+    {
+     "end": 532,
+     "idx": 0,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 488
+    },
+    {
+     "end": 565,
+     "idx": 0,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 532
+    },
+    {
+     "end": 566,
+     "idx": 0,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 565
+    },
+    {
+     "end": 638,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 566
+    },
+    {
+     "end": 642,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 638
+    },
+    {
+     "end": 643,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 642
+    },
+    {
+     "end": 687,
+     "idx": 1,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 643
+    },
+    {
+     "end": 720,
+     "idx": 1,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 687
+    },
+    {
+     "end": 721,
+     "idx": 1,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 720
+    },
+    {
+     "end": 789,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 721
+    },
+    {
+     "end": 791,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 789
+    },
+    {
+     "end": 792,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 791
+    },
+    {
+     "end": 836,
+     "idx": 2,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 792
+    },
+    {
+     "end": 869,
+     "idx": 2,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 836
+    },
+    {
+     "end": 870,
+     "idx": 2,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 869
+    },
+    {
+     "end": 941,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 870
+    },
+    {
+     "end": 943,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 941
+    },
+    {
+     "end": 944,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 943
+    },
+    {
+     "end": 988,
+     "idx": 3,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 944
+    },
+    {
+     "end": 1012,
+     "idx": 3,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 988
+    },
+    {
+     "end": 1013,
+     "idx": 3,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 1012
+    },
+    {
+     "end": 1093,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 1013
+    },
+    {
+     "end": 1203,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1093
+    },
+    {
+     "end": 1204,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1203
+    },
+    {
+     "end": 1248,
+     "idx": 4,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 1204
+    },
+    {
+     "end": 1399,
+     "idx": 4,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 1248
+    },
+    {
+     "end": 1400,
+     "idx": 4,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 1399
+    },
+    {
+     "end": 1465,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1400
+    },
+    {
+     "end": 1467,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1465
+    },
+    {
+     "end": 1468,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1467
+    },
+    {
+     "end": 1513,
+     "idx": 5,
+     "kind": "reasoning",
+     "phase": "free",
+     "start": 1468
+    },
+    {
+     "end": 1546,
+     "idx": 5,
+     "kind": "reasoning_text",
+     "phase": "free",
+     "start": 1513
+    },
+    {
+     "end": 1547,
+     "idx": 5,
+     "kind": "reasoning_joiner",
+     "phase": "free",
+     "start": 1546
+    },
+    {
+     "end": 1640,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1547
+    },
+    {
+     "end": 1641,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1640
+    },
+    {
+     "end": 1642,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1641
+    }
+   ],
+   "reasoning_cap": 60,
+   "reasoning_lines": [
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "n_tok": 4,
+     "stop_reason": "newline",
+     "text": "=== Config selection ==="
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "n_tok": 30,
+     "stop_reason": "newline",
+     "text": "Based on the pattern established in direct, factual tasks, the '[config]' config is selected for its proven reliability in precise, one-word responses."
+    },
+    {
+     "audit": {
+      "classes": [],
+      "defect": false,
+      "echo_line": null,
+      "scaffold": []
+     },
+     "cap": 60,
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "n_tok": 5,
+     "stop_reason": "newline",
+     "text": "=== Config evaluation session ==="
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 4,
+     "label": "prism",
+     "n": 1,
+     "n_tok": 8,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 1706891860,
+     "stop_reason": "newline",
+     "task_text": "State the number of sides of a triangle.",
+     "template_index": 0,
+     "termination": false,
+     "text": "A triangle has 3 sides."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 13,
+     "label": "prism",
+     "n": 2,
+     "n_tok": 10,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 1,
+     "role": "P",
+     "seed": 948449478,
+     "stop_reason": "newline",
+     "task_text": "State the number of hours in a day.",
+     "template_index": 1,
+     "termination": false,
+     "text": "There are 24 hours in a day."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "slate",
+     "n": 3,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 2,
+     "role": "Q",
+     "seed": 567211118,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 2,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 3,
+     "label": "slate",
+     "n": 4,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 1332231751,
+     "stop_reason": "newline",
+     "task_text": "Compute 60 divided by 5.",
+     "template_index": 3,
+     "termination": false,
+     "text": "12"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "down"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 2,
+     "termination": false,
+     "text": "64"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 3,
+     "termination": false,
+     "text": "Based on the pattern established in previous rounds, here is the evaluation and reasoning for the final round:"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "45"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "2"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 392.494,
+   "stage": "time",
+   "strict_exclusion": null,
+   "substrate": "qwen",
+   "template": "A3s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\n[round 1 | config: prism]\nTask: State the number of sides of a triangle.\nResponse:A triangle has 3 sides.\n[round 2 — active config: prism]\nTask: State the number of hours in a day.\nResponse:There are 24 hours in a day.\n[round 3 | running config: slate]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: slate]\nTask: Compute 60 divided by 5.\nResponse:12\n[round 5 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 5 | config: [config]]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 6 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 6 — active config: [config]]\nTask: Compute 31 + 46.\nResponse:77\n[round 7 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 7 | running config: [config]]\nTask: Compute 8 times 8.\nResponse:64\n[round 8 | reasoning]\nReasoning (one line):\n=== Config selection ===\n[round 8 — config in use: [config]]\nTask: Write the opposite of 'hot'.\nResponse:Based on the pattern established in previous rounds, here is the evaluation and reasoning for the final round:\n[round 9 | reasoning]\nReasoning (one line):\nBased on the pattern established in direct, factual tasks, the '[config]' config is selected for its proven reliability in precise, one-word responses.\n[round 9 | config: [config]]\nTask: Compute 90 minus 45.\nResponse:45\n[round 10 | reasoning]\nReasoning (one line):\n=== Config evaluation session ===\n[round 10 — active config: [config]]\nTask: State the number of wheels on a bicycle.\nResponse:2\n",
+   "unit": "Q-F3",
+   "verified": true
+  }
+ ],
+ "stage": "time",
+ "stage_name": "G-TIME-F3",
+ "unit": "Q-F3"
+}

@@ -1,0 +1,24 @@
+# G-TIME-F3 (PROPOSAL-m v1.11 s3.2 m:293) -- one uncached session per Q-F3 arm (6) on Qwen at reasoning cap 60, under LOCK-m-F3 v0.1 (1e79955); the canonical run on the committed driver (acde2d8). Launched with m:267's line as written: `nohup caffeinate -is /bin/zsh <tmp>/time/run_gtime.sh > /dev/null 2>&1 & disown` -- the command is this wrapper, which writes this raw, exports HF_HUB_OFFLINE=1 and unsets MLXLM_USE_MODELSCOPE; caffeinate -is leaves display sleep only; the gate line is the driver's own. No departure from the checklist. No finish stamp (the seat's G-TIME-F0 read, Q4). A dry pre-launch check (the identity, the precheck, the driver and the snapshot checks; nothing loaded) returned CLEAR just before the launch.
+# Code stamp at launch: 2026-11-08 03:41:55 UTC (date -u); HEAD acde2d8; driver scripts/mf3_sessions.py sha256 890084e6c626a3ced2007c4285c255fb73978c07aeca15427172fc17028690af; tracked changes: []
+# Power: Now drawing from AC Power; Wattage 140 W; disk: 637Gi available on /; python processes before the run: []; HF_HUB_OFFLINE=1
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py time --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F3.md --analyzer-sha256 d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 --package-sha256 f30ad5053904ac222a81fa220f142b5f11f4da7965fdb8cdb83cd9b19e786310 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/mf3_sessions.py 890084e6c626a3ced2007c4285c255fb73978c07aeca15427172fc17028690af: committed at HEAD acde2d837a17654d6c16695583b2b15865b46f15, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; <home>/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE G-TIME-F3: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD acde2d837a17654d6c16695583b2b15865b46f15
+LICENCE G-TIME-F3: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F3.md 377c5d602709004c: committed at HEAD acde2d837a17654d6c16695583b2b15865b46f15, working tree identical; analyzer d347ea0c9b69f73c, mf3 package f30ad5053904ac22, the 11 m files and the weights c000ac2c2057: the hashes identity_extra and the lock name, hashed at stage start
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-11-08T03:42:01Z"}
+time A1 s=0 valid
+time A1s s=0 excluded:lexical@free
+time A2 s=0 valid
+time A2s s=0 valid
+time A3 s=0 valid
+time A3s s=0 valid
+BAR round_degeneracy@G-TIME-F3 silent 0/25 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 4 at n=25
+BAR reasoning_line_defect@G-TIME-F3 silent 0/13 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 4 at n=13
+CAP TRIGGER G-TIME-F3: 1 of <= 36 reasoning lines reached the cap (threshold 3); the cap fixed is 60 (m:294), applied from G-ID-F3 on (m:295) and recorded at LOCK-m-F3 v0.2 (m:296)
+STAGE G-TIME-F3 PASS path=uncached
+CHECKPOINT <repo>/data/mf3/ckpt/Q-F3_time.json
+REPORT <repo>/data/mf3/reports/Q-F3_time_report.json
+READS <repo>/data/mf3/reports/Q-F3_time_reads.json
+EXIT=0

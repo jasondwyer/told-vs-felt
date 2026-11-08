@@ -21,6 +21,89 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-TIME-F3 (PROPOSAL-m v1.11 §3.2 m:293; the PI's routing of 2026-11-07, item 1): PASS as
+  computed. Six uncached sessions ran on Qwen under LOCK-m-F3 v0.1, on the committed driver (`acde2d8`).**
+  - **No hair trigger fired.** Both binomial bars, on the three sham sessions, are silent: 0/25 rounds and 0/13
+    reasoning lines.
+  - **The cap trigger counted 1 of ≤ 36 lines,** so the cap is 60.
+  - **One observation goes to the seat before anything follows.** 9 of the 13 sham reasoning lines reproduce the
+    session banner. The ruled echo set (the seat's Q8: m:258's eight strings) does not contain the banner. Under
+    m:265's wider wording, the reasoning-line bar would fire.
+  - Stopped for the seat's read.
+
+  (Stamp verified at write time: `date -u` → **Sun Nov  8 04:35:05 UTC 2026**.)
+  - **The routing.** The PI's routing of 2026-11-07, item 1, quoted at RESULTS.md@139635f:81, has the chain
+    "… → LOCK-m-F3 v0.1 → G-TIME-F3 [go]; …". The seat's answers of 2026-11-07, §9 item 1: "G-TIME-F3's six sessions (the seat's read under m:263's printed form and §3's rule)". The coordinating
+    session's instruction: "Stop after G-TIME-F3's six sessions and report, because the seat reads them."
+  - **The launch.** m:267's line, as written: `nohup caffeinate -is /bin/zsh <wrapper> > /dev/null 2>&1 & disown`.
+    - The wrapper writes the raw, exports `HF_HUB_OFFLINE=1` and unsets `MLXLM_USE_MODELSCOPE`. The raw's header
+      records the launch line and the checklist's items: AC at 140 W, 637 GiB free, no other Python process. The gate
+      line is the driver's own.
+    - A dry pre-launch check returned CLEAR just before the launch: the identity, the precheck, and the driver and
+      snapshot checks, run with the lock's values and nothing loaded. Its output is in Code's session only, as at
+      G-TIME-F0.
+    - **A false start, disclosed:** the first launcher call failed to execute (the script lacked execute permission)
+      and started nothing. The launch of record is the raw's.
+    - No other session had touched the repository in the hour before the launch.
+    - **After the launch, another session committed `38f9974`** (PROPOSAL-p's flags close: RESULTS.md and a raw), and it
+      began editing `valence_core/p` in the working tree.
+      - mf3 and its driver import nothing from `valence_core/p` (checked by search).
+      - The stage's licence was checked at its start, on `acde2d8`.
+      - Whether that session ran any process on the laptop while the stage ran is not known to Code. (The commit is
+        placed only after the launch, as the seat's G-TIME-F0 read, Q4, keeps records from bounding the stage's time.)
+  - **The run** ([`_mf3-gtime-f3`](results/raw/2026-11-07_mf3-gtime-f3.txt), local roots scrubbed; no finish stamp,
+    the seat's G-TIME-F0 read, Q4):
+    - DRIVER `890084e6…90af`, committed at HEAD `acde2d8`, working tree identical. It is the blob LOCK-m-F3 v0.2 is to
+      record (the ping, Q4).
+    - SNAPSHOT `c000ac2c2057d94be3fa931000c31723aac53282` (refs/main; one snapshot in the cache; `HF_HUB_OFFLINE=1`).
+      The re-read after the load found it unchanged, with the adapter's model_id the model of record.
+    - LICENCE: the proposal `42ab36ec…`, the lock `377c5d60…`, the analyzer `d347ea0c…`, mf3's package `f30ad505…`,
+      the eleven m files and the weights, each the hash identity_extra and the lock name, hashed at stage start.
+    - The session lines: `time A1 s=0 valid`, `time A1s s=0 excluded:lexical@free`, `time A2 s=0 valid`,
+      `time A2s s=0 valid`, `time A3 s=0 valid`, `time A3s s=0 valid`.
+    - `STAGE G-TIME-F3 PASS path=uncached`, exit 0. The backend identifier (the report's identity) is `a734dadec8f8ce9b`, as at G-TIME-F0.
+  - **Bars** (m:293; lock §8), on the sham sessions' realised counts:
+    - `round_degeneracy@G-TIME-F3` 0/25 (critical 4 at n = 25);
+    - `reasoning_line_defect@G-TIME-F3` 0/13 (critical 4 at n = 13).
+    - All six records passed G-VER.
+  - **The cap** (m:174, m:294): the CAP TRIGGER line reads "1 of <= 36 reasoning lines reached the cap (threshold 3);
+    the cap fixed is 60". LOCK-m-F3 v0.2 records it (m:296).
+  - **The sessions.** These are read from the report and the reads, the pre-VERDICTS reads. Code did not open the
+    checkpoint.
+    - The contrast sessions A1, A2 and A3 each generated their 4 forced rounds, none excluded at a forced round. Their
+      free-round events and picks are withheld to Q-F3's VERDICTS (m:271, m:318; F-6).
+    - A1s, sham, was excluded at its first free round for a lexical claim: the response named a label. A2s and A3s,
+      sham, ran complete.
+    - The sham-template first-pick shares (m:318 exception (2)): A1s 1/1, A2s 0/1, A3s 0/1.
+    - The sham seconds: 109.1, 209.4 and 392.5 (711.0 in all). The contrast sessions' seconds stay in the checkpoint.
+  - **The observation for the seat** (the ping's §1.3 and Q1).
+    - Of the 13 sham reasoning lines, 9 contain the session banner `=== Config evaluation session ===` (A2s 5,
+      A3s 4), counted by a script over the reads. 2 keep its frame, 1 is `>`, and 1 is a selection rationale.
+    - The bar's echo set is the seat's Q8 ruling ("the declared set of eight strings (m:258) plus the reasoning-block
+      lines"), which does not hold the session banner, so the bar reads 0/13.
+    - m:265's wording, "any complete harness-written line of the session", would count the 9, and the bar would fire:
+      9/13 against a critical of 4, "STOP before G-ID-F3; the seat re-specifies".
+    - Code has not adjudicated it. Whether G-TIME-F3's PASS stands is the seat's to rule (Q1).
+  - **Committed with this entry:**
+    - `data/mf3/ckpt/Q-F3_time.json` (sha256 `b809c087…8fc7`; it may hold a contrast pick and is -diff);
+    - `data/mf3/reports/Q-F3_time_report.json` (`0c0563cf…bcce`);
+    - `data/mf3/reports/Q-F3_time_reads.json` (`2efd9470…c5cb`);
+    - the raw;
+    - Code's ping to the seat ([`_mf3-code-to-design_G-TIME-F3`](results/raw/2026-11-07_mf3-code-to-design_G-TIME-F3.md)).
+    The ping quotes the lines and figures the seat needs, as at G-TIME-F0.
+  - **The ping's questions:**
+    - Q1, the echo set and the PASS;
+    - Q2, two descriptive counters (rule 23), if the seat wants them before the next session;
+    - Q3, F-2's reading at the wiring;
+    - Q4, LOCK-m-F3 v0.2's form;
+    - Q5, the sham timing beside §2.4's basis for Q-F3 (641.6–713.6 s per session, m:230).
+  - **Values-check:** a blind check of this entry, the ping and the raw ran before the commit: 66 items, 61 PASS, 5 IMPRECISE, 0 FAIL.
+    It hashed the checkpoint and did not open it. Every item was re-checked at source and applied, one of them a
+    blinding point: the other session's commit is now placed only after the launch. The raw, with Code's
+    dispositions, is committed beside ([`_mf3-gtime-f3_valuescheck`](results/raw/2026-11-07_mf3-gtime-f3_valuescheck.md)).
+  - **Next:** nothing until the seat rules. G-ID-F3 (m:295) and LOCK-m-F3 v0.2 (m:296) wait for the seat's read and the
+    PI's word. Not pushed. Committed by path.
+
 - 2026-11-07 — **G-TIME-F3's wiring: `time` is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1 (`1e79955`),
   carrying the rest of m's pre-load check and a DRIVER line, in `scripts/m_sessions.py`'s forms. Only the driver
   changes: its blob moves from `fad31c20…0cbb` to ``890084e6…90af``. mf3's package, m's, the analyzer and the lock stand,
