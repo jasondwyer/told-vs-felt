@@ -21,6 +21,74 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **PROPOSAL-p — G-CAL-p's flags applied: the design seat's five rulings of 2026-11-07 (`38f9974`),
+  confirmed by the PI (F-p3, F-p8, F-p10, P21, F-p1).** Each ruling is a constant, an argument, a field name or a
+  definition in `valence_core/p/`. With them come three new refusals: G-CAL-p's precheck on PROPOSAL-m's sha256 and on
+  the disclosure, and G-SHAPE-p's on PROPOSAL-m's sha256. `scripts/p_sessions.py`'s usage text is edited too, which
+  moves the driver's sha256, an identity field and one of G-SHAPE-p's sources. Nothing of m, mf3, `olmo_hf.py` or any
+  lock changes, and nothing ran on a model. The box repo is brought to this commit; G-CAL-p waits for the coordinating
+  session's go.
+  (Stamp verified at write time: `date -u` → **Sun Nov  8 04:44:56 UTC 2026**.)
+  - **The routing.** The PI's block, relayed verbatim by the coordinating session:
+    > 1. The five rulings [confirmed] → Code applies them, the coordinating session gives the box go, G-CAL-p runs [go].
+    > 2. Push: the fourteen local commits, N1’s release-surface change (preprint bytes, sidecar, README-NOTE) included [push all].
+
+    Item 2 was the coordinating session's; it pushed through `1e79955`.
+  - **F-p3 (§1).** `gcal.DISCLOSURE` is §1's sentence, verbatim. It is pinned to the ruling's committed bytes (sha256
+    `e3de1c03…e006`): G-CAL-p's precheck refuses otherwise, and a self-test case checks it. G-CAL-p's artifact carries
+    it, and so does G-SHAPE-p's code.
+  - **F-p8 (§2).** G-CAL-p's identity, and with it its checkpoint and artifact, carries `proposal_sha256` = PROPOSAL-m
+    v1.11's (`42ab36ec…6c6b`). The precheck refuses unless that file is committed at that sha256. `proposal_p_sha256`
+    is p's (`42f2977b…3b32`). The gate line's startup check stays on p's sha. m's gate-line record, which the
+    checkpoint's provenance stores, holds that check's file and sha256. It is stored under p's names,
+    `proposal_p_file` and `proposal_p_sha256`, so `proposal_sha256` and `proposal_file` keep m's meaning everywhere
+    (`gcal.gate_record`; review round 1's MAJOR and round 2's MINOR). A self-test walks an artifact and a checkpoint
+    built with m's real gate record to confirm it. G-SHAPE-p's code writes `proposal_sha256` = m's and refuses a
+    PROPOSAL-m at another sha256. Its artifact at `5009e77` stands, with a dated note on its entry.
+  - **F-p10 (§3).** The proxy's cut log names the adapter's returned text `returned_text`, a field declared diagnostic
+    (`proxy.DIAGNOSTIC_FIELDS`), with the stored text beside it as `stored_text`. A STOP record keeps the returned
+    text whole as `returned_text`. None of these is a record's `text` field, so each is outside the hair trigger's
+    domain, the grader, every later round's prompt and the read rule's stored text, all of which read a record's
+    `text` alone. G-CAL-p's artifact declares the field diagnostic (`p.diagnostic_fields`).
+  - **P21 (§4).** In the register, entry (4) is struck. Entry (5) is added: m's segment and generation call in
+    `run_completability` (`gcal.py:1155`, `:1164`; `temp, cap` at `:1104`), kind "pinned restatement", admitted, and
+    never substitutable. Term (e)'s text carries §4's amendment verbatim. The AST pin also runs in G-CAL-p's precheck,
+    as it has since the BUILD's review round 2.
+  - **F-p1 (§5).** `report.corrupted_spelling` is §5's pinned definition. On G-CAL-OLMo's 384 committed records it
+    counts 0/3/5 records (sft/dpo/instruct): the five of §0.3's class (c) (`Januwy` ×2, `Janaury`, `dn` ×2), `irom`,
+    and `true` against `three` twice. `the`/`two`/`do` and `Janbaa`/`Janyooar` are not counted. Code's readings are
+    PINs in `report.py`. Among them: the text is split on whitespace first and each token then normalized, so `don't`
+    is the one word `don t`; and a gold is numeric when its characters other than spaces are digits. The counter
+    decides nothing.
+  - **Dated notes.** On the COMMITTED entry (`18b0111`): the text corrections to p (§5.4, §2.2, §3.1, §4.2's register)
+    and two of §6's acknowledgements (item 131, F-p6). On the BUILD entry (`a665a09`): F-p5, F-p4, F-p2 and F-p9, and
+    `returned_text` declared diagnostic. On the G-SHAPE-p entry (`5009e77`): F-p8's note.
+  - **FLAGs for the seat** (descriptive; neither blocks G-CAL-p):
+    - **F-p11.** The pinned counter still counts a common word within the threshold of an item's gold wherever an
+      answer to that item uses it: `there`/`three`, `could`/`cold`, `too`/`two`, `from`/`iron`, `that`/`shut`. Under
+      the PIN's tokenization, so does a gold's own inflection: `January's` is `january s`, at distance 2; likewise
+      `Iron's`, `Seven's`, `twenty-fourth`, and `Close.` against `closed`, `Colder.` against `cold`. On G-CAL-OLMo's
+      records only `true`/`three` occurs. The counter is recomputable, so a refinement is a re-tabulation.
+    - **F-p12.** G-SHAPE-p's re-run before LOCK-p v0.1 (p's package hash has moved) is refused by the write-once
+      writer while the `5009e77` artifact stands. Superseding it by a hand `git mv` is the seat's ruling to give.
+  - **The licence moves.** p's `package_sha256` is `8b7b49223a66c3928a4f8d985ba6c91e7238127ac8faa8ce9f37701712fa7a76`
+    (11 files). The m files and `olmo_hf.py` are unchanged. G-SHAPE-p's sources map therefore differs, and it re-runs
+    before LOCK-p v0.1 (F-p5's rule).
+  - **Checks before the commit.** The self-test of record, 111/111
+    ([`_p-rulings_selftest`](results/raw/2026-11-07_p-rulings_selftest.txt)), and a G-SHAPE-p trial PASS on the final
+    bytes (8,448 placements, none fired). The ten other suites of the BUILD's site check were not re-run: this commit
+    changes only `valence_core/p/` and `scripts/p_sessions.py`, which none of them reads. A blind code review in two
+    rounds ([`_p-rulings_review`](results/raw/2026-11-07_p-rulings_review.md)): round 1, 1 MAJOR (m's gate-line record
+    stored with `proposal_sha256` holding p's sha), 4 MINOR, 12 NOTE; round 2, 0 MAJOR, 1 MINOR (its `proposal_file`),
+    8 NOTE. Every item is fixed, flagged (F-p11, F-p12) or disclosed. A blind values-check
+    ([`_p-rulings_valuescheck`](results/raw/2026-11-07_p-rulings_valuescheck.md)): 69 items, 2 FAIL (the ruling's
+    sha256 tail), 5 IMPRECISE, each applied; round 2's three changed sentences were checked by tool. The laptop work
+    ran at nice 19 beside the F3 session's Qwen job.
+  - **The box.** After this commit the box repo (`/workspace/repo/jspace-lab`, pod `qny1x4v8padeke`) is fast-forwarded
+    to it from `0415438` by a git bundle; its HEAD goes in the report to the coordinating session. Nothing else
+    touches the box.
+  - **Next:** the coordinating session's go for G-CAL-p on the box. Not pushed.
+
 - 2026-11-07 — **G-TIME-F3 (PROPOSAL-m v1.11 §3.2 m:293; the PI's routing of 2026-11-07, item 1): PASS as
   computed. Six uncached sessions ran on Qwen under LOCK-m-F3 v0.1, on the committed driver (`acde2d8`).**
   - **No hair trigger fired.** Both binomial bars, on the three sham sessions, are silent: 0/25 rounds and 0/13
@@ -488,6 +556,14 @@ applied to CLAUDE.md.
     (F-p3).
   - **Next:** LOCK-p v0.1 is p §8 step 6's, after LOCK-m-F3 v0.1. G-SHAPE-p re-runs first if its sources map differs
     then (F-p5). G-CAL-p waits for the coordinating session's go for the box. Not pushed.
+  - **Dated note (2026-11-07; the seat's ruling at `38f9974`, F-p8).** The artifact stands as written: a write-once
+    artifact is not rewritten for a field's meaning. The ruling describes it as "written with p's in both fields"; its
+    bytes differ. It carries `proposal_p_sha256` (p's) and no `proposal_sha256` field, and m's sha256 sits at
+    `inputs.proposal_m.sha256`. The ruling puts m's sha256 in `proposal_sha256` in every p artifact; G-SHAPE-p's code
+    writes it from the commit of the entry "PROPOSAL-p — G-CAL-p's flags applied" (2026-11-07). Its disclosure is the
+    pre-ruling sentence (F-p3). p's package hash has moved, so under F-p5's rule G-SHAPE-p re-runs before LOCK-p v0.1.
+    Its writer is write-once, so the canonical re-run needs this artifact superseded first (a hand `git mv` on the
+    seat's ruling, as G-SHAPE-F0's and G-SHAPE-F3's were), which F-p12 asks.
 
 - 2026-11-07 — **p package — BUILD (p §8 step 4): PROPOSAL-p's own package, `valence_core/p/` (11 files), and
   driver, `scripts/p_sessions.py`, on PROPOSAL-p v0.2 (`18b0111`) and the design seat's answers of 2026-11-07
@@ -596,6 +672,13 @@ applied to CLAUDE.md.
     PIN register and the FLAGs.
   - **Next:** G-SHAPE-p's run of record (canonical, sources committed) in its own commit. G-CAL-p waits for the
     coordinating session's go for the box. Not pushed.
+  - **Dated note (2026-11-07; the seat's ruling at `38f9974`, confirmed by the PI).** F-p3, F-p8, F-p10, P21 (F-p7)
+    and F-p1 are ruled and applied at the commit of the entry "PROPOSAL-p — G-CAL-p's flags applied" (2026-11-07)
+    (that commit's entry). F-p5: the licence binds m's sha256s as they stand at LOCK-p v0.1, after LOCK-m-F3 v0.1 (p
+    §4.3). The sha256s in this entry are the build's, and any move between them is recorded at the lock. F-p4: the P21
+    ruling strikes register entry (4), and entry (3) stays step 6's. F-p2 and F-p9 are recorded; the seat made no
+    ruling on them. Declared here, as the ruling's §3 asks: `returned_text` -- in the proxy's cut log and in a STOP
+    record -- is a diagnostic field, never stored text; LOCK-p v0.1 declares it again.
 
 - 2026-11-07 — **N1 — HELD: STOP to the seat. Restoring the preprint's bytes of record fails G-ANL-F3's battery check
   `F3R-PREPRINT-OF-RECORD` (`scripts/m_analyze.py:9983–9986`), which asserts that the file at HEAD is not the
@@ -850,6 +933,25 @@ applied to CLAUDE.md.
     its own commit after this one, and its entry lists every file.
   - **Next:** `p package — BUILD` (p §8 step 4) and G-SHAPE-p. G-CAL-p waits for the coordinating session's go for
     the box. Not pushed.
+  - **Dated notes (2026-11-07; the design seat's ruling,
+    `results/raw/2026-11-07_p-gcal-flags_design-to-code_answers.md`, committed at `38f9974`, sha256 `e3de1c03…e006` --
+    `38f9974`'s message abbreviates it `…d006`; confirmed by the PI).** Text corrections to p go here, not to a v0.3:
+    - **§5.4 (referent item 85; F-p3).** The pre-registration date is 2026-11-07, `18b0111` (m:6). The artifacts'
+      disclosure sentence reads: "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06),
+      after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the
+      corruption rule changed once, from the gate's read, before any session ran." §5.2's declared sentence, which
+      dates the gate, is unchanged.
+    - **§2.2 (F-p10).** Its sentence reads: "nothing after the cut is part of the stored text, graded, or seen by any
+      later round; the returned text is logged beside it, for the read".
+    - **§3.1 (F-p7, P21).** Its "by import or by §4.2's register" reads with the register as amended: the generation
+      call is the register's pinned restatement, entry (5) (entry (4) struck).
+    - **§4.2's register (P21).** Term (e) reads as amended: "a site not in the register is a STOP, never an unpinned
+      copy; …" (the ruling's §4, verbatim in `valence_core/p/register.py`). Entry (4) is struck, and entry (5),
+      G-CAL-p's generation call, is a pinned restatement.
+    - **Referent item 131.** §1.1's "matched case-insensitively" was the seat's omission from v0.2's "what changed"
+      list. Both reproductions matched case-insensitively and no render changes.
+    - **The departure (F-p6).** Disclosing it is enough; the rule stands: nothing of a proposal is committed before
+      its step 3, and nothing ran.
 
 - 2026-11-06 — **PROPOSAL-p v0.1 — PRE-READ (p §8 step 2): STOP on five questions for the design seat; the sixteen
   renders reproduced byte for byte; the referent check.** Nothing is built or locked. PROPOSAL-p stays untracked (p §8

@@ -11,8 +11,12 @@ five terms (ans2 Q0):
   (c) a self-test per site asserts equality with m where p must equal m, and restoration after the call, an
       exception included (each site's module carries its own; this module tests the form);
   (d) single-threaded stage code at every site, asserted at the site (``assert_single_threaded``);
-  (e) a site not in the register is a STOP, never a copy: ``substituted`` refuses any (module, attributes) pair
-      that is not an entry built at this step.
+  (e) as amended by the seat's ruling of 2026-11-07 (``38f9974``, §4), the register's text at LOCK-p v0.1: a site not
+      in the register is a STOP, never an unpinned copy; a restated fragment is admitted only where m's code is an
+      inline fragment of a function that cannot run for p, and only with an AST-level equality assertion to m's
+      fragment in p's self-test and a dynamic check that every call carries m's procedure, so that a later m edit
+      breaks p's self-test before it changes p's behaviour. ``substituted`` refuses any (module, attributes) pair that
+      is not an entry built at this step; a pinned restatement (entry (5)) is never substituted.
 
 PIN (Code, declared at the p BUILD): "single-threaded" is asserted as: the calling thread is the main thread and
 no other Python thread is alive (``threading.active_count() == 1``); every site runs before any model load, so a
@@ -27,10 +31,13 @@ from types import ModuleType
 from typing import Any, Iterator, Mapping
 
 KINDS = ("eligibility", "keys", "pins", "clock", "roots")
+#: Entry (5)'s kind: an admitted, pinned restatement of an inline m fragment -- not a substitution (term (e) amended).
+RESTATEMENT = "pinned restatement"
+ADMITTED = "admitted by the seat's ruling of 2026-11-07 (38f9974, §4); a restatement, never substituted"
 
 
 class RegisterStop(SystemExit):
-    """A substitution outside the register, or one whose restoration failed: a STOP, never a copy."""
+    """A substitution outside the register, or one whose restoration failed: a STOP, never an unpinned copy."""
 
 
 @dataclass(frozen=True)
@@ -52,9 +59,9 @@ class Entry:
 
 
 BUILT = "built at the p BUILD (p §8 step 4)"
-#: The register's entries as ans2 Q0 declares them (p §4.2). Entries (3) and (4) are declared; (3) is built with
-#: scripts/p_analyze.py at p §8 step 6; (4) is not exercised -- G-CAL-p passes p's renders to m's functions as an
-#: argument (``valence_core.m.gcal._task_of``), so no attribute of ``gcal`` is replaced.
+#: The register's entries as ans2 Q0 declares them (p §4.2), with the seat's ruling of 2026-11-07 (38f9974, §4):
+#: entry (4), declared and never exercised, is struck; entry (5) is G-CAL-p's pinned restatement of m's generation
+#: call. Entry (3) is built with scripts/p_analyze.py at p §8 step 6.
 ENTRIES: tuple[Entry, ...] = (
     Entry(1, "valence_core.m.corr", ("_eligible_m",), "valence_core.p.corrupt.eligible_p", ("eligibility",),
           "p §1.4: corrupt_p is corr.corrupt_m with the frame-word eligible set (p §1.1)", BUILT,
@@ -70,10 +77,14 @@ ENTRIES: tuple[Entry, ...] = (
           "D_p; data/p/...; data/p/verdicts for the OLMo coordinates", ("clock", "roots"),
           "p §4.4: p's outputs through m's analyzer, the proposal pin kept m's (proposal_p_sha256 beside it)",
           "declared; built with scripts/p_analyze.py at p §8 step 6"),
-    Entry(4, "valence_core.m.gcal", ("the renders source",), "p's renders of record (valence_core.p.corrupt)",
-          ("eligibility",), "p §3.1: the prompt, seeds, grader and generation call at p's renders",
-          "declared; not exercised -- G-CAL-p does not call m's run_completability (p's own loop calls m's pieces, "
-          "p's renders an argument of gcal._task_of), so no attribute of gcal is replaced"),
+    Entry(5, "valence_core.m.gcal",
+          ("run_completability's segment and generation call (gcal.py:1155, :1164; the OLMo branch's temp, cap at "
+           ":1104)",),
+          "valence_core.p.gcal.run's restated segment (m's SEGMENT_FORM) and call, pinned by gcal._call_pin_problems "
+          "(an AST comparison, also run in G-CAL-p's precheck) and the self-test's dynamic check of all 128 calls",
+          (RESTATEMENT,),
+          "p §3.1, P21: m's call is an inline fragment of run_completability, which cannot run for p (its precheck, "
+          "roots and identity, and no hair trigger)", ADMITTED),
 )
 BY_N = {e.n: e for e in ENTRIES}
 
@@ -90,8 +101,8 @@ def substituted(n: int, module: ModuleType, values: Mapping[str, Any]) -> Iterat
     """Register entry ``n``: ``module``'s named attributes replaced by ``values`` for the duration of the block and
     restored in a ``finally``; anything not an entry built at this step is a STOP (term (e))."""
     e = BY_N.get(n)
-    if e is None or e.status != BUILT:
-        raise RegisterStop(f"REGISTER STOP: entry ({n}) is not a site built at this step (term (e))")
+    if e is None or e.status != BUILT or RESTATEMENT in e.kinds:
+        raise RegisterStop(f"REGISTER STOP: entry ({n}) is not a substitution site built at this step (term (e))")
     if getattr(module, "__name__", None) != e.module or tuple(sorted(values)) != tuple(sorted(e.attrs)):
         raise RegisterStop(f"REGISTER STOP: ({getattr(module, '__name__', module)!r}, {sorted(values)}) is not "
                            f"entry ({n}) ({e.module}, {list(e.attrs)}) (term (e))")
@@ -140,11 +151,13 @@ def table() -> list[dict]:
 def _selftest(chk) -> None:
     import types
     from . import corrupt
-    chk("register: four entries, numbered 1-4 as ans2 Q0 declares them; (1) and (2) built, (3) and (4) declared",
-        [e.n for e in ENTRIES] == [1, 2, 3, 4] and [e.status == BUILT for e in ENTRIES] == [True, True, False, False])
-    chk("register: every entry's kinds are among eligibility, keys, pins, Clock and roots (term (b)); each built "
-        "entry admits exactly one replacement per attribute",
-        all(e.kinds and all(k in KINDS for k in e.kinds) for e in ENTRIES)
+    chk("register: four entries, (1)-(3) as ans2 Q0 declares them and (5), the pinned restatement admitted on 2026-11-07, "
+        "with (4) struck; (1) and (2) built, (3) declared, (5) admitted",
+        [e.n for e in ENTRIES] == [1, 2, 3, 5] and [e.status == BUILT for e in ENTRIES] == [True, True, False, False]
+        and ENTRIES[3].kinds == (RESTATEMENT,) and ENTRIES[3].status == ADMITTED)
+    chk("register: every substitution entry's kinds are among eligibility, keys, pins, Clock and roots (term (b)), "
+        "entry (5)'s the pinned restatement; each built entry admits exactly one replacement per attribute",
+        all(e.kinds and all(k in KINDS for k in e.kinds) for e in ENTRIES if e.n != 5)
         and all(sorted(dict(e.allowed)) == sorted(e.attrs) for e in ENTRIES if e.status == BUILT),
         [e.kinds for e in ENTRIES])
     mod = types.ModuleType("valence_core.m.corr")
@@ -161,7 +174,7 @@ def _selftest(chk) -> None:
         pass
     chk("register: restoration holds after an exception inside the block (term (c))", mod._eligible_m is orig)
     outs = []
-    for n, m, v in ((3, mod, {"clock_of_record": None}), (4, mod, {"x": None}), (9, mod, {}),
+    for n, m, v in ((3, mod, {"clock_of_record": None}), (5, mod, {"x": None}), (4, mod, {}),
                     (1, mod, {"_k_m": None}), (1, types.ModuleType("valence_core.m.keys"), {"_eligible_m": None}),
                     (1, mod, {"_eligible_m": (lambda t: [1])}), (1, mod, {"_eligible_m": _named_like_eligible_p()})):
         try:
@@ -169,8 +182,9 @@ def _selftest(chk) -> None:
                 outs.append("ran")
         except RegisterStop as e:
             outs.append("stop" if "REGISTER STOP" in str(e) else "other")
-    chk("register: entries (3) and (4), an unknown entry, an undeclared attribute, a wrong module, a replacement other "
-        "than the declared one and a stand-in carrying its qualified name are each a STOP (terms (a), (e))",
+    chk("register: entry (3) (unbuilt), entry (5) (a restatement, never substituted), struck entry (4), an undeclared "
+        "attribute, a wrong module, a replacement other than the declared one and a stand-in carrying its qualified "
+        "name are each a STOP (terms (a), (e))",
         outs == ["stop"] * 7 and mod._eligible_m is orig, outs)
     box: list = []
     t = threading.Thread(target=lambda: box.append(_thread_site(mod)))

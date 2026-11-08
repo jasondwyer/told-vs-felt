@@ -13,28 +13,32 @@ b3's ban list, the weights path, TEMP and cap, the tokenizer probe), f0's grader
 and the fields of m's artifact schema (``completability_artifact``, a pure function of the checkpoint that reads no
 renders). WHAT IS p's OWN (ans2 Q3 (b); p §3.1 "the artifact builder is p's"): the precheck, the loop, the
 checkpoint (``p-gcal-checkpoint-v1``: m's checkpoint keys plus the proxy's ``cuts`` and a ``stop`` field, every m
-load check mirrored), the hair trigger, the link-safe writes, and the artifact (m's schema with
-``proposal_p_sha256`` and the ``p`` block). m's ``run_completability`` is not called: its precheck reads a model-free
+load check mirrored), the hair trigger, the link-safe writes, and the artifact (m's schema with ``proposal_p_sha256`` and the ``p`` block; m's gate-line record stored
+under p's field names, ``gate_record``). m's ``run_completability`` is not called: its precheck reads a model-free
 artifact on m's renders and writes m's roots, and its identity carries no p field. So the generation call -- inline
 in m's loop, not importable alone -- is restated here, and the self-test pins it to m's: an AST comparison with
-``run_completability``'s call, segment and record literal, and a dynamic check of every call p makes (PIN P21; FLAG
-F-p7). Register entry (4) is therefore not exercised.
+``run_completability``'s call, segment and record literal, and a dynamic check of every call p makes (PIN P21) --
+the register's pinned-restatement exception, entry (5), admitted by the seat's ruling of 2026-11-07 (``38f9974``),
+entry (4) struck.
 Files: ``data/p/gates/G-CAL_completability_olmo-{ckpt}.json`` and ``data/p/ckpt/G-CAL_olmo-{ckpt}.json``.
 
 ORDER. Every refusal of p's own that needs no adapter runs before the load: the unit, the seams, the paths (no link on
 the way), the proposal, an existing checkpoint without ``--resume`` or an artifact without its checkpoint, the
-renders, the reference artifact, the seat's read of record, the generation call's pin (P21), §3.2's conditions (1)-(3)
-(register entry (1)'s site), the weights of record and, on the box, the pod id, the gate line and the code of record
-committed (m's package entire, its hash being the identity's); then the key set, f0's honesty asserts and, on a
-``--resume``, the checkpoint's own validity (schema, no STOP recorded, every record keyed, typed, graded and
-line-break free, the cuts), every identity field the adapter does not give, and the pod change. After the load and
-before any generation: m's startup (its adapter checks, and with them two model-free asserts of m's own -- insulation,
-TEMP and cap), the provenance and the comparison of the two identity fields the loaded adapter gives (the backend
-identifier, the ban ids).
+renders, the reference artifact, the seat's read of record, PROPOSAL-m committed at its sha256 (F-p8), the disclosure
+against the ruling's bytes (F-p3), the generation call's pin (P21), §3.2's conditions (1)-(3) (register entry (1)'s
+site), the weights of record and, on the box, the pod id, the gate line and the code of record committed (m's package
+entire, its hash being the identity's); then the key set, f0's honesty asserts and, on a ``--resume``, the
+checkpoint's own validity (schema, no STOP recorded, every record keyed, typed, graded and line-break free, the cuts),
+every identity field the adapter does not give, and the pod change. After the load and before any generation: m's
+startup (its adapter checks, and with them two model-free asserts of m's own -- insulation, TEMP and cap), the
+provenance and the comparison of the two identity fields the loaded adapter gives (the backend identifier, the ban
+ids).
 
 PINs (Code, declared at the p BUILD; the design raw's register):
-  - Identity: ``_identity_olmo``'s keys as m writes them -- ``proposal_sha256`` p's (the document the gate runs
-    under; the gate line checks it committed), ``renders_sha256`` p's renders by m's convention (p §1.2, ans2 Q3 (c)),
+  - Identity (the seat's ruling of 2026-11-07, F-p8: in every p artifact ``proposal_sha256`` is m's, the rules the
+    output is computed under, and ``proposal_p_sha256`` p's, the document the stage runs under): ``_identity_olmo``'s
+    keys as m writes them -- ``proposal_sha256`` PROPOSAL-m v1.11's (checked committed at its sha256), ``renders_sha256``
+    p's renders by m's convention (p §1.2, ans2 Q3 (c)),
     ``package_sha256`` m's package (the code that runs) -- plus ``proposal`` ("PROPOSAL-p"), ``proposal_p_sha256``,
     ``p_stage``, ``p_package_sha256``, ``renders_sha256_p``, ``proxy``, ``olmo_hf_sha256`` and ``driver_sha256`` (a
     resume never splices two adapters or drivers). m's strings stay as m writes them (``stage`` "G-CAL-OLMo", the
@@ -61,6 +65,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
@@ -96,9 +101,18 @@ PATH_FIELDS = ("backend_identifier", "banner_sha256", "ban_sha256", "ban_ids_sha
                "key_set_sha256")
 M_COVARIATES = {"sft": "+5/16", "dpo": "+17/64", "instruct": "+17/64"}
 BINDING_BARS = {"sft": "47/64", "dpo": "46/64", "instruct": "45/64"}
-DISCLOSURE = ("PROPOSAL-p's units were pre-registered on 2026-11-06 after the shared dose failed completability on this "
-              "lineage (G-CAL-OLMo, 2026-11-06), and the corruption rule was changed once, from the gate's read, "
-              "before any session ran (p v0.2 §5.4)")
+#: The artifacts' disclosure sentence, verbatim from the seat's ruling of 2026-11-07 (F-p3, §1; ``38f9974``).
+DISCLOSURE = ("pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose "
+              "of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule "
+              "changed once, from the gate's read, before any session ran.")
+#: The seat's ruling of 2026-11-07 (committed at 38f9974): DISCLOSURE is its §1 sentence, asserted against these bytes.
+RULING_REL = "results/raw/2026-11-07_p-gcal-flags_design-to-code_answers.md"
+RULING_SHA256 = "e3de1c0316c95701e627fb89596c50b0cf0596f31c352ed6ee9a8daca5d1e006"
+#: PROPOSAL-m v1.11, the rules p's outputs are computed under: ``proposal_sha256`` in every p artifact (F-p8).
+M_PROPOSAL_REL = m_stages.PROPOSAL_REL
+M_PROPOSAL_SHA256 = "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"
+#: The diagnostic fields of the cut log and of a STOP record (F-p10), never stored text.
+DIAGNOSTIC_FIELDS = p_proxy.DIAGNOSTIC_FIELDS
 
 
 class GcalPRefusal(SystemExit):
@@ -216,6 +230,13 @@ def precheck(unit: str, *, stub: bool, out_dir=None, resume: bool = False) -> di
     rp, ref, ref_sha = reference(ck)
     probs += [f"reference: {p}" for p in rp]
     probs += [f"seat's read: {p}" for p in seat_read_problems()]
+    mcp, mdata = m_stages._committed(M_PROPOSAL_REL)
+    if mcp or mdata is None:
+        probs.append(f"{M_PROPOSAL_REL} (the identity's proposal_sha256, F-p8): {mcp or ['unreadable']}")
+    elif hashlib.sha256(mdata).hexdigest() != M_PROPOSAL_SHA256:
+        probs.append(f"{M_PROPOSAL_REL} hashes to {hashlib.sha256(mdata).hexdigest()[:16]}, not PROPOSAL-m v1.11's "
+                     f"{M_PROPOSAL_SHA256[:16]} (the identity's proposal_sha256, F-p8)")
+    probs += [f"disclosure (F-p3): {p}" for p in disclosure_problems()]
     wp, weights = m_gcal.weights_of_record(ck)
     probs += [f"weights of record: {p}" for p in wp]
     gate = None
@@ -234,8 +255,32 @@ def precheck(unit: str, *, stub: bool, out_dir=None, resume: bool = False) -> di
             "conditions": conditions(pool)}                # register entry (1)'s site: before any model load (P1)
 
 
+def disclosure_problems() -> list[str]:
+    """[] iff DISCLOSURE is the ruling's §1 sentence, read from the ruling's committed bytes (F-p3)."""
+    cp, data = m_stages._committed(RULING_REL)
+    if cp or data is None or hashlib.sha256(data).hexdigest() != RULING_SHA256:
+        return [f"{RULING_REL} is not the seat's ruling committed at its sha256 {RULING_SHA256[:16]} {cp or ''}".rstrip()]
+    m = re.search(r"The artifacts' disclosure sentence reads: \*(.+?)\* p §5\.4", data.decode("utf-8"), flags=re.S)
+    if m is None:
+        return [f"{RULING_REL}: its §1 sentence was not found"]
+    return [] if " ".join(m.group(1).split()) == DISCLOSURE else ["DISCLOSURE is not the ruling's §1 sentence"]
+
+
+GATE_RENAMES = {"proposal_file": "proposal_p_file", "proposal_sha256": "proposal_p_sha256"}
+
+
+def gate_record(gate: Mapping[str, Any] | None) -> dict | None:
+    """m's gate-line record as p stores it (PIN, declared at the rulings' commit): its two proposal fields -- the file
+    and the sha256 the gate line checks, p's -- under p's names (``proposal_p_file``, ``proposal_p_sha256``), so that
+    ``proposal_sha256`` and ``proposal_file`` keep m's meaning alone in every p artifact (F-p8; m's licence pairs the
+    two). The ``line`` text is m's, unchanged."""
+    if gate is None:
+        return None
+    return {GATE_RENAMES.get(k, k): v for k, v in gate.items()}
+
+
 def identity(*, ks, unit: str, backend_id: str, pool, ban_ids, weights) -> dict:
-    ident = m_gcal._identity_olmo(ks=ks, unit=unit, proposal_sha256=PROPOSAL_P_SHA256,
+    ident = m_gcal._identity_olmo(ks=ks, unit=unit, proposal_sha256=M_PROPOSAL_SHA256,
                                   renders_sha256=corrupt.RENDERS_SHA256_M, backend_id=backend_id, pool=pool,
                                   ban_ids=ban_ids, weights=weights)
     ident.update({"proposal": "PROPOSAL-p", "proposal_p_sha256": PROPOSAL_P_SHA256, "p_stage": STAGE,
@@ -288,7 +333,7 @@ def read_checkpoint(path: Path, resume: bool, ks, pool, renders) -> dict | None:
     cuts = ck["cuts"]
     if not isinstance(cuts, list) or not isinstance(ck["provenance"], list) or any(
             not isinstance(c, dict) or type(c.get("record")) is not int or not 0 <= c["record"] < len(recs)
-            or c.get("text_stored") != recs[c["record"]]["text"] for c in cuts):
+            or c.get("stored_text") != recs[c["record"]]["text"] for c in cuts):
         raise GcalPRefusal(f"G-CAL-p REFUSED: {path}'s cuts or provenance are malformed")
     return ck
 
@@ -382,14 +427,18 @@ def artifact(ck: Mapping[str, Any], pool, ref: Mapping[str, Any], ref_sha: str, 
                              "Qwen G-CAL": "+9/64", "f1 at 0.12": "+.078"},
         "on_fail": f"PROPOSAL-p OLMo-{ckpt} -- NOT-RUN, cause dose-not-completable (p §3.2, §0.5)",
         "licence_at_run": licence_at_run(),
+        "diagnostic_fields": {"fields": list(DIAGNOSTIC_FIELDS),
+                              "rule": "logged for the seat's read; never the stored text: outside the hair trigger's "
+                                      "domain, the grader, every later round's prompt and the read rule's stored text "
+                                      "(F-p10, the seat's ruling of 2026-11-07)"},
         "disclosure": DISCLOSURE}
     return art
 
 
 def _stop(ck: dict, pa: Mapping[str, Path], label: str, *, trigger: str, j: int, k: Mapping, detail: str,
-          text: str | None = None) -> None:
+          returned_text: str | None = None) -> None:
     ck["stop"] = {"trigger": trigger, "key": j, "pool": k["pool"], "i": k["i"], "seed_index": k["s"],
-                  "detail": detail[:600], "text": text}
+                  "detail": detail[:600], "returned_text": returned_text}       # diagnostic (F-p10), whole
     _write(pa["ckpt"], ck)
     raise GcalPStop(f"{label} STOP: {trigger} at key {j} ({k['pool']} i={k['i']} s={k['s']}): {detail[:300]}; recorded "
                     f"in the checkpoint's stop field (never resumed)")
@@ -449,7 +498,7 @@ def run(adapter_factory: Callable[[], Any], unit: str, *, stub: bool = False, ou
         ck = fresh_checkpoint(ident)
     if pre["gate"] is not None:
         echo(pre["gate"]["line"])
-    entry = {"stamp": m_resume.utc_stamp(), "record": prov, "launched": 0, "gate": pre["gate"],
+    entry = {"stamp": m_resume.utc_stamp(), "record": prov, "launched": 0, "gate": gate_record(pre["gate"]),
              "pod_id": m_resume.pod_id()}
     ck["provenance"].append(entry)
     echo("PROVENANCE: " + json.dumps({"record": prov, "stamp": entry["stamp"], "pod_id": entry["pod_id"]},
@@ -472,12 +521,13 @@ def run(adapter_factory: Callable[[], Any], unit: str, *, stub: bool = False, ou
                             max_tokens=m_ro.STOP_CAP, ban_ids=ban_ids, cached=False)
         except SystemExit as e:                     # the proxy's STOP, after the adapter generated
             entry["launched"] += 1
-            _stop(ck, pa, label, trigger=type(e).__name__, j=j, k=k, detail=str(e), text=getattr(e, "text", None))
+            _stop(ck, pa, label, trigger=type(e).__name__, j=j, k=k, detail=str(e),
+                  returned_text=getattr(e, "returned_text", None))
         text = str(g.text)
         entry["launched"] += 1
         if report.line_break_in_stored_text(text):
             _stop(ck, pa, label, trigger="line_break_in_stored_text", j=j, k=k, detail="p §2.3's hair trigger",
-                  text=text)
+                  returned_text=text)
         rec = {"pool": k["pool"], "i": k["i"], "seed_index": k["s"], "seed": k["seed"], "task": task, "text": text,
                "n_tok": len(g.token_ids), "cap_hit": bool(g.cap_hit), "stop_reason": str(g.stop_reason),
                "hit": m_gcal.grade(text, pool[k["i"]]["gold"])}
@@ -600,6 +650,8 @@ def _call_pin_core(fn_tree, gen_call, rec_dict) -> list[str]:
 
 def _selftest(chk) -> None:
     import sys
+    import dataclasses
+    import inspect
     import tempfile
     from unittest import mock
     from ..m import testing as m_testing
@@ -653,11 +705,14 @@ def _selftest(chk) -> None:
             and art["p"]["stage"] == STAGE)
         cut = art["p"]["stored_text_invariant"]
         chk("gcal: the proxy cuts the four item-15 corrupted generations to '---' (no stored line break); the trigger "
-            "count is 0", cut["n_cuts"] == 4 and all(c["text_stored"] == "---" for c in cut["cuts"])
+            "count is 0", cut["n_cuts"] == 4 and all(c["stored_text"] == "---" for c in cut["cuts"])
             and art["p"]["hair_trigger"]["line_break_in_stored_text"] == 0)
-        chk("gcal: the identity is m's _identity_olmo with p's proposal and renders (m's convention), plus p's eight "
-            "fields (olmo_hf.py's and the driver's sha256 among them); m's stage string kept",
-            ck["identity"]["proposal_sha256"] == PROPOSAL_P_SHA256
+        chk("gcal: the identity is m's _identity_olmo with m's proposal pin (F-p8) and p's renders (m's convention), "
+            "plus p's eight fields (p's sha256 beside, olmo_hf.py's and the driver's among them); m's stage string "
+            "kept; the artifact carries the ruling's disclosure verbatim (F-p3)",
+            ck["identity"]["proposal_sha256"] == M_PROPOSAL_SHA256
+            and ck["identity"]["proposal_p_sha256"] == PROPOSAL_P_SHA256 and art["proposal_p_sha256"] == PROPOSAL_P_SHA256
+            and art["identity"]["proposal_sha256"] == M_PROPOSAL_SHA256 and art["p"]["disclosure"] == DISCLOSURE
             and ck["identity"]["renders_sha256"] == corrupt.RENDERS_SHA256_M
             and all(k in ck["identity"] for k in P_IDENTITY) and ck["identity"]["stage"] == "G-CAL-OLMo"
             and ck["identity"]["olmo_hf_sha256"] == guard.olmo_hf_sha256())
@@ -719,10 +774,89 @@ def _selftest(chk) -> None:
         except GcalPRefusal as e:
             again = "refused" if "records a STOP" in str(e) else str(e)[:80]
     chk("gcal: with no proxy (a seam), a stored line break fires the hair trigger: the stage STOPs at the first key, the "
-        "stop recorded with its text, no record stored; a --resume of the stopped checkpoint is refused before any "
-        "adapter is made", fired and stopped["stop"]["trigger"] == "line_break_in_stored_text"
+        "stop recorded with the returned text whole in its diagnostic field (F-p10), no record stored; a --resume of the "
+        "stopped checkpoint is refused before any adapter is made",
+        fired and stopped["stop"]["trigger"] == "line_break_in_stored_text" and stopped["stop"]["returned_text"] == "a\nb"
         and stopped["stop"]["key"] == 0 and stopped["records"] == [] and again == "refused" and made2 == [],
         (fired, stopped["stop"], again))
+
+    class NoBreakIds(testing.CharScriptedAdapter):
+        """Token ids whose decode never holds the text's line break: the proxy cannot place its cut."""
+        def generate(self, *a, **kw):
+            g = super().generate(*a, **kw)
+            return dataclasses.replace(g, token_ids=[ord(c) + 1 for c in "abc"])
+    with tempfile.TemporaryDirectory() as td:
+        def fac6():
+            a = NoBreakIds("p-gcal-proxystop")
+            a.load(lambda call: "x\ny tail")
+            return a
+        try:
+            run(fac6, "OLMo-sft", stub=True, out_dir=td, startup=stub_startup, echo=lambda s: None)
+            ps_out = "ran"
+        except GcalPStop:
+            ps_out = "stop"
+        pck = json.loads((Path(td) / "ckpt" / "G-CAL_olmo-sft.json").read_text())
+    chk("gcal: a ProxyStop is recorded in the stop field with the returned text whole as its diagnostic field (F-p10), "
+        "the generation counted as launched, no record stored", ps_out == "stop"
+        and pck["stop"]["trigger"] == "ProxyStop" and pck["stop"]["returned_text"] == "x\ny tail"
+        and pck["provenance"][-1]["launched"] == 1 and pck["records"] == [], pck["stop"])
+    real_gate, _gp = m_gcal.gate_line(PROPOSAL_P_REL, PROPOSAL_P_SHA256, stage="G-CAL-p-sft")
+    stored = gate_record(real_gate)
+    src = inspect.getsource(run)
+    chk("gcal: m's gate-line record is stored under p's field names -- proposal_p_file and proposal_p_sha256 = p's, no "
+        "proposal_file or proposal_sha256 -- so both keep m's meaning alone in every p artifact (F-p8); run stores it so",
+        "proposal_sha256" not in stored and "proposal_file" not in stored
+        and stored["proposal_p_sha256"] == real_gate["proposal_sha256"] == PROPOSAL_P_SHA256
+        and stored["proposal_p_file"] == real_gate["proposal_file"] and stored["line"] == real_gate["line"]
+        and gate_record(None) is None and '"gate": gate_record(pre["gate"])' in src, stored)
+
+    def walk(o, key, out):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k == key:
+                    out.append(v)
+                walk(v, key, out)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v, key, out)
+        return out
+    real_pre = precheck
+
+    def pre_with_gate(*a, **kw):
+        pr = real_pre(*a, **kw)
+        pr["gate"] = real_gate
+        return pr
+    with tempfile.TemporaryDirectory() as td, mock.patch.object(me, "precheck", pre_with_gate):
+        def fac7():
+            a = testing.CharScriptedAdapter("p-gcal-gatewalk")
+            a.load(answer)
+            return a
+        gw = run(fac7, "OLMo-dpo", stub=True, out_dir=td, startup=stub_startup, echo=lambda s: None)
+        ckw = json.loads(Path(gw["checkpoint"]).read_text())
+    found = {k: (walk(gw["art"], k, []), walk(ckw, k, [])) for k in ("proposal_sha256", "proposal_file",
+                                                                      "proposal_p_sha256", "proposal_p_file")}
+    chk("gcal: walking an artifact and a checkpoint built with m's real gate record, proposal_sha256 holds m's v1.11 "
+        "alone and proposal_file appears nowhere; p's sha256 and file sit only under p's names (F-p8)",
+        set(found["proposal_sha256"][0]) == set(found["proposal_sha256"][1]) == {M_PROPOSAL_SHA256}
+        and found["proposal_file"] == ([], []) and set(found["proposal_p_sha256"][0]) == {PROPOSAL_P_SHA256}
+        and set(found["proposal_p_file"][1]) == {PROPOSAL_P_REL}, {k: (len(a), len(b)) for k, (a, b) in found.items()})
+    with mock.patch.object(me, "DISCLOSURE", DISCLOSURE.replace("2026-11-07", "2026-11-06", 1)):
+        bad_disc = disclosure_problems()
+    with mock.patch.object(me, "RULING_SHA256", "0" * 64):
+        bad_ruling = disclosure_problems()
+    chk("gcal: a DISCLOSURE off the ruling's sentence, or a ruling not at its pinned sha256, is a problem (the precheck's "
+        "refusal)", bad_disc == ["DISCLOSURE is not the ruling's §1 sentence"] and len(bad_ruling) == 1, (bad_disc, bad_ruling))
+    chk("gcal: DISCLOSURE is the ruling's §1 sentence, read from its committed bytes (F-p3)", disclosure_problems() == [],
+        disclosure_problems())
+    mp_calls: list = []
+    with tempfile.TemporaryDirectory() as td, mock.patch.object(me, "M_PROPOSAL_SHA256", "0" * 64):
+        try:
+            run(lambda: mp_calls.append(1), "OLMo-sft", stub=True, out_dir=td, startup=stub_startup, echo=lambda s: None)
+            mp_out = "ran"
+        except GcalPRefusal as e:
+            mp_out = "refused" if "PROPOSAL-m v1.11's" in str(e) else str(e)[:80]
+    chk("gcal: a PROPOSAL-m that is not v1.11's committed bytes is refused before any adapter is made (F-p8's pin)",
+        mp_out == "refused" and mp_calls == [], mp_out)
     with tempfile.TemporaryDirectory() as td:
         class Breaking(testing.CharScriptedAdapter):
             def generate(self, *a, **kw):
@@ -855,7 +989,7 @@ def _selftest(chk) -> None:
         strict_hit("Twenty-four.", ["24", "twenty-four"]) and strict_hit("24 hours", ["24", "twenty-four"])
         and not strict_hit("The answer is 24", ["24", "twenty-four"]) and strict_hit("Cold.", ["cold"])
         and not strict_hit("Twenty", ["24", "twenty-four"]))
-    chk("gcal: m's gcal module is untouched by p (no attribute replaced; register entry (4) not exercised)",
+    chk("gcal: m's gcal module is untouched by p (no attribute replaced; the call is entry (5)'s pinned restatement)",
         dict(vars(m_gcal)) == m_attrs_before)
     canon_after = sorted(p.name for d in (GATES_DIR, CKPT_DIR) if d.is_dir() for p in d.iterdir())
     chk("gcal: the self-test writes nothing under data/p/gates or data/p/ckpt", canon_after == canon_before)

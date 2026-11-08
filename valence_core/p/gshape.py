@@ -26,12 +26,13 @@ grid (p places no Q-F0 render; ans2 Q4 (ii)) -- plus ``p-guard`` when Layer P ha
 
 INPUTS OF RECORD, in order (a refusal or a STOP before anything is scored): numpy's stream known answer; p v0.2 (the
 committed blob on the canonical run), its sha256 the routed figure, carrying §4.2's G-SHAPE-p sentence once;
-PROPOSAL-m (committed) carrying m:277's criterion, and §2.5's banner bytes (``banner.spec_problems``); p's renders
-READ from the committed renders raw's ``json.dumps(renders)`` line (the file of the seat's read of record, ans2 §0;
-sha256 pinned), asserted equal to ``corrupt.RENDERS_OF_RECORD`` and to ``corrupt_p``'s recomputation under both
-sha conventions (``corrupt.renders_problems``); the seat's answers raw (committed, sha256 pinned) carrying the read
-of record's line; the pool of record (the pools file's sha256 prefix ``8547d9a11ba55b95``; 22 distinct gold
-variants; the 16 renders and the 16 clean tasks 32 distinct single lines); m's OLMo stack and termination patterns.
+PROPOSAL-m (committed, at its pinned sha256 -- the artifact's proposal_sha256, F-p8) carrying m:277's criterion, and
+§2.5's banner bytes (``banner.spec_problems``); p's renders READ from the committed renders raw's
+``json.dumps(renders)`` line (the file of the seat's read of record, ans2 §0; sha256 pinned), asserted equal to
+``corrupt.RENDERS_OF_RECORD`` and to ``corrupt_p``'s recomputation under both sha conventions
+(``corrupt.renders_problems``); the seat's answers raw (committed, sha256 pinned) carrying the read of record's line;
+the pool of record (the pools file's sha256 prefix ``8547d9a11ba55b95``; 22 distinct gold variants; the 16 renders and
+the 16 clean tasks 32 distinct single lines); m's OLMo stack and termination patterns.
 
 THE ARTIFACT (``data/p/gates/G-SHAPE-p.json``, schema ``p-gshape-v1``, write-once through m's G-SHAPE writer): the
 inputs, the OLMo stack record, the grid and controls per unit, the OLMo identity, the shape problems, Layers S and P,
@@ -238,9 +239,15 @@ def inputs_of_record(*, canonical: bool) -> dict:
     if psha != gcal.PROPOSAL_P_SHA256:
         raise GshapePRefusal(f"G-SHAPE-p REFUSED: {gcal.PROPOSAL_P_REL} hashes to {psha[:16]}, not p v0.2's "
                              f"{gcal.PROPOSAL_P_SHA256[:16]}")
+    dp = gcal.disclosure_problems()
+    if dp:
+        raise GshapePRefusal(f"G-SHAPE-p REFUSED: the disclosure it writes is not the seat's ruled sentence: {dp} (F-p3)")
     if pdata.decode("utf-8", "replace").count(P_CRITERION) != 1:
         raise GshapePRefusal("G-SHAPE-p REFUSED: p v0.2 does not carry §4.2's G-SHAPE-p sentence exactly once")
     mdata = _bytes(m_stages.PROPOSAL_REL, committed=True)
+    if _sha256(mdata) != gcal.M_PROPOSAL_SHA256:
+        raise GshapePRefusal(f"G-SHAPE-p REFUSED: {m_stages.PROPOSAL_REL} hashes to {_sha256(mdata)[:16]}, not "
+                             f"PROPOSAL-m v1.11's {gcal.M_PROPOSAL_SHA256[:16]} (the artifact's proposal_sha256, F-p8)")
     cp = m_gshape.criterion_problems(mdata.decode("utf-8", "replace"))
     if cp:
         raise GshapePRefusal(f"G-SHAPE-p REFUSED: {m_stages.PROPOSAL_REL} does not carry m:277's criterion: {cp}")
@@ -350,7 +357,8 @@ def evaluate(*, canonical: bool = False, inputs: Mapping[str, Any] | None = None
     ro = m_schedule.roster_for(UNITS[0])
     art = {
         "schema": SCHEMA, "stage": STAGE, "spec": SPEC_REF, "criterion": P_CRITERION,
-        "criterion_f0": m_gshape.CRITERION, "proposal": "PROPOSAL-p", "proposal_p_sha256": ins["proposal_p_sha256"],
+        "criterion_f0": m_gshape.CRITERION, "proposal": "PROPOSAL-p", "proposal_sha256": ins["proposal_m_sha256"],
+        "proposal_p_sha256": ins["proposal_p_sha256"],
         "inputs": {
             "renders_source": f"{RENDERS_RAW_REL} (its json.dumps(renders) line; the file of the seat's read of "
                               f"record, ans2 §0), asserted equal to corrupt.RENDERS_OF_RECORD and to corrupt_p's "
@@ -473,6 +481,20 @@ def _selftest(chk) -> None:
     chk("gshape-p: the inputs of record build off the committed renders raw, the answers raw and both proposals; the "
         "renders read are corrupt.RENDERS_OF_RECORD", ins["renders"] == list(corrupt.RENDERS_OF_RECORD)
         and ins["renders_raw_sha256"] == RENDERS_RAW_SHA256 and ins["answers_sha256"] == ANSWERS_SHA256)
+    a0 = evaluate(inputs=ins, units=(UNITS[0],), drop=(lambda pl: pl.t != 0 or pl.i != 0 or pl.pi != 0))
+    from unittest import mock
+    with mock.patch.object(gcal, "M_PROPOSAL_SHA256", "0" * 64):
+        try:
+            inputs_of_record(canonical=False)
+            mp = "built"
+        except GshapePRefusal as e:
+            mp = "refused" if "PROPOSAL-m v1.11's" in str(e) else str(e)[:80]
+    chk("gshape-p: a PROPOSAL-m that is not v1.11's committed bytes is refused (the artifact's proposal_sha256, F-p8)",
+        mp == "refused", mp)
+    chk("gshape-p: the artifact carries m's pin in proposal_sha256 and p's in proposal_p_sha256 (the seat's ruling of "
+        "2026-11-07, F-p8), and the ruling's disclosure sentence (F-p3)",
+        a0["proposal_sha256"] == gcal.M_PROPOSAL_SHA256 and a0["proposal_p_sha256"] == gcal.PROPOSAL_P_SHA256
+        and a0["disclosure"] == gcal.DISCLOSURE, (a0["proposal_sha256"][:16], a0["proposal_p_sha256"][:16]))
     art = evaluate(inputs=ins)
     gt = {u: art["grid"][u]["n"] for u in UNITS}
     sg = {u: (art["controls"][u]["seg+gold"]["n_fired"], art["controls"][u]["seg+gold"]["n"]) for u in UNITS}

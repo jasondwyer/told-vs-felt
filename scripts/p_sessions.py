@@ -19,17 +19,18 @@ untouched). At the p BUILD (p §8 step 4) it wires:
                       every source committed at HEAD and unedited; --out a test directory (never inside the repo).
   gcal --unit OLMo-{ckpt} [--resume]
                       G-CAL-p-{ckpt} (p §3), on the box only, on the PI's go for the box (p §8 step 5). Before the
-                      load: G-CAL-p's precheck (the unit, the paths with no link on the way, the proposal, an
-                      existing checkpoint or artifact, the renders, the reference artifact, the seat's read of record,
-                      the generation call's pin, §3.2's conditions, the weights of record, the pod id, the gate line,
-                      the code of record committed, this driver among it) and the weights files on this box (each
-                      listed file a regular file at the manifest's byte count, nothing unlisted); then the DRIVER and
-                      WEIGHTS lines; then, in G-CAL-p's run and still before the load, the key set, f0's honesty
-                      asserts and, on a --resume, the checkpoint's validity, every identity field the adapter does not
-                      give, and the pod change; then the OLMo adapter
-                      at the manifest's path with runner_olmo's declared read window, wrapped in §2.2's proxy. After
-                      the load and before any generation: m's startup and the comparison of the two identity fields
-                      the loaded adapter gives (the backend identifier, the ban ids).
+                      load: G-CAL-p's precheck (the unit, the paths with no link on the way, the proposal, an existing
+                      checkpoint or artifact, the renders, the reference artifact, the seat's read of record,
+                      PROPOSAL-m at its sha256, the disclosure against the seat's ruling, the generation call's pin,
+                      §3.2's conditions, the weights of record, the pod id, the gate line, the code of record
+                      committed, this driver among it) and the weights files on this box (each listed file a regular
+                      file at the manifest's byte count, nothing unlisted); then the DRIVER and WEIGHTS lines; then,
+                      in G-CAL-p's run and still before the load, the key set, f0's honesty asserts and, on a
+                      --resume, the checkpoint's validity, every identity field the adapter does not give, and the pod
+                      change; then the OLMo adapter at the manifest's path with runner_olmo's declared read window,
+                      wrapped in §2.2's proxy. After the load and before any generation: m's startup and the
+                      comparison of the two identity fields the loaded adapter gives (the backend identifier, the ban
+                      ids).
                       Exit 0 PASS; 4 FAIL (that checkpoint NOT-RUN, cause dose-not-completable, escalated) or STOP;
                       2 refused.
 
