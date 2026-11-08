@@ -21,6 +21,126 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-08 — **G-CAL-p-{sft,dpo,instruct} (PROPOSAL-p v0.2 §3, §8 step 5), on the coordinating session's go of
+  2026-11-07 under the PI's routing of 2026-11-07, item 1: CONDITION (4) PASSES ON ALL THREE CHECKPOINTS, corrupted
+  47/64, 52/64 and 51/64 against bars of 47, 46 and 45. The clean pool reproduces G-CAL-OLMo's 64 generations byte for
+  byte on each (p §3.1's flag: none). The outputs were committed at `b6ef939` before anything else touched the box
+  (rule 27), and Code read all 384 generations. Stopped for the seat's read; G-ANL-p and every later p step wait for it
+  and for the PI's word.** (Stamp verified at write time: `date -u` → **Sun Nov  8 05:42:34 UTC 2026**.)
+
+  - **The routing.** The PI's block of 2026-11-07, item 1, relayed verbatim by the coordinating session: "1. The five
+    rulings [confirmed] → Code applies them, the coordinating session gives the box go, G-CAL-p runs [go]." The
+    coordinating session's go ("GO for G-CAL-p on the box") asked for:
+    - one shot per checkpoint, with m:176's procedure and seeds pinned;
+    - the clean pool checked byte for byte against G-CAL-OLMo's (p §3.1);
+    - the outputs committed by path before anything else touches the box;
+    - every generation read for the seat;
+    - then a stop and a report.
+
+    It checked `e03fbe4` first: the disclosure, `returned_text`, the two pins, the changed paths, the self-test and
+    the box repo.
+  - **Disclosure (p §5.4; F-p3's sentence, verbatim).** These units were *pre-registered on 2026-11-07 (PROPOSAL-p
+    v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this
+    lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session
+    ran.*
+  - **The box, unchanged since its characterization.** Pod `qny1x4v8padeke`, backend identifier `641ee466f4553b6a`
+    (BACKEND, `190ba90`). Its container (PID 1) has run since 2026-11-07T00:17:16Z, before that characterization, so
+    p §6.2 needs no new BACKEND entry. Before the launch, all read-only:
+    - box repo HEAD `e03fbe4`, tree clean;
+    - `env.sh` `f5174faa…`, G-CAL-OLMo's;
+    - torch 2.8.0+cu128 and transformers 5.15.0, G-CAL-OLMo's;
+    - GPU idle;
+    - G-CAL-p's precheck clear on all three units, with the pod id from `env.sh`.
+  - **The runs.** `scripts/p_sessions.py gcal --unit OLMo-{ckpt}`, no `--resume`, back to back through a wrapper
+    (`/workspace/gcal_p/run_gcal_p.sh`, sha256 `9f8b9df3…`), on DRIVER `1140b57e…`. They ran 04:53:27Z → 05:08:26Z,
+    about 15 minutes; p §6.1 planned under half an hour. The wrapper's chain rule was declared before launch and
+    dry-tested on seven cases: continue on a PASS (exit 0 with the PASS line) or a verdict FAIL (exit 4 with the
+    NOT-RUN line); halt on a refusal, a STOP or any other exit. All three exited 0. Raw
+    [`_gcal-p`](results/raw/2026-11-08_gcal-p.txt).
+
+    | | clean | corrupted | ≥ 7/10 | ≥ 3/4 × clean | bar | covariate | clean-pool identity | condition (4) |
+    |---|---|---|---|---|---|---|---|---|
+    | sft | 62/64 | 47/64 | yes | yes (93/128) | 47 | +15/64 | 64/64 | PASS |
+    | dpo | 61/64 | 52/64 = 13/16 | yes | yes (183/256) | 46 | +9/64 | 64/64 | PASS |
+    | instruct | 59/64 | 51/64 | yes | yes (177/256) | 45 | +1/8 | 64/64 | PASS |
+
+    - The bars are §3.2's, known in advance once the clean pool reproduced. **sft passes with no margin**: one
+      corrupted-pool hit fewer is a FAIL.
+    - The covariates stand beside PROPOSAL-m's at the shared renders (+5/16, +17/64, +17/64), Qwen's +9/64 and f1's
+      +.078, as §3.2 reports them. They go into LOCK-p v0.1.
+    - The artifacts `data/p/gates/G-CAL_completability_olmo-{ckpt}.json` and the checkpoints
+      `data/p/ckpt/G-CAL_olmo-{ckpt}.json` are committed at `b6ef939`, byte-identical to the box's. Their sha256s were
+      compared at both ends and are listed in the raw.
+    - Each artifact's identity carries `proposal_sha256` = PROPOSAL-m v1.11's and `proposal_p_sha256` = p's (F-p8).
+      The artifact also carries the ruled disclosure (F-p3) and `licence_at_run`.
+    - Its top-level `stage` ("G-CAL-OLMo"), `procedure` and `on_fail` are m's strings, by the BUILD's PIN
+      (`valence_core/p/gcal.py:44–46` at `e03fbe4`; `:40–42` at the BUILD, `a665a09`). p's stage name, unit name and
+      failure consequence are in its `p` block.
+  - **The clean-pool identity (§3.1: a flag, not a bar): 64/64 on every checkpoint**, on all seven fields, with the
+    generation-path fields equal. Items 0 and 12, whose p render is m's render, also reproduce G-CAL-OLMo's corrupted
+    generations, 8/8 on each checkpoint. So all 72 (prompt, seed) pairs that G-CAL-p shares with G-CAL-OLMo reproduce
+    byte for byte, about 26 hours apart on the same container.
+  - **The stored-text invariant (§2.2) and the hair trigger.** No stored text holds a line break (0/384), and the
+    proxy cut nothing (0/384). So its cut path ran on no real generation, only in the self-test. The two G-CAL-OLMo
+    texts that motivated it came from m's render of item 15; under p's render the same keys give harness text with no
+    line break.
+  - **§2.3's counters and the strict grade** (reported; they decide nothing):
+
+    | | control characters | harness-shaped first lines | cap hits | refusals | corrupted spelling | strict grade (clean / corrupted) |
+    |---|---|---|---|---|---|---|
+    | sft | 1 | 2 | 8 | 1 | 0 | 41 / 29 |
+    | dpo | 2 | 3 | 5 | 1 | 1 | 39 / 31 |
+    | instruct | 2 | 5 | 2 | 1 | 0 | 43 / 33 |
+
+    The one corrupted-spelling hit is dpo clean 4 s1, `true` against `three`: F-p11's class, and the same text as
+    G-CAL-OLMo's record. Each counter's keys are in section 3 B of the read raw.
+  - **Code's read of all 384 generations** ([`_gcal-p_read`](results/raw/2026-11-08_gcal-p_read.txt)). Twelve
+    observations for the seat, post-hoc, none adjudicated. The verdict of record is the grader's, under the seat's
+    ruling of 2026-10-10: "a re-grading after the data is rule 11's post hoc by definition". In brief:
+    - **O1, sft's zero margin.** Texts a reader might weigh differently from the grader, in each direction:
+      - two graded hits: corrupted 7 s2, which states iron, then reasons the masses equal; and 11 s0, `up=down`;
+      - two misses: 13 s3, `2 4`; and 2 s3, `3rd month of the year`.
+    - **O2, against §3.3's expectation** (a reading, not a bar). The gains came from Compute (24/24 on each; m
+      20/19/18) and Write (8/8/7 of 12; m 5/5/5). State/Name, where §3.3 expected them, did not gain on net, pooled:
+      55 of 84 against m's 56 (15/20/20 of 28 against 17/20/19, so −2, 0 and +1). Totals 47/52/51, against the seat's
+      estimate of about 53/52/50.
+    - **O3–O6, the misses by item:**
+      - item 2 stays at 0/12 with its content intact; on dpo's and instruct's s2 the garbled verb is read as a
+        month's name and the answer is "3";
+      - item 8's struck "the" is rendered `ttf`. sft scores 0/4 against m's 3/4, one text (s2) reading `ttf` as an
+        acronym. dpo and instruct score 4/4, every text naming January; four of their eight gloss "ttf", as a font
+        (s0) or as one of several terms or an unknown one (s2);
+      - item 7's s1 and s3 are a lone DEL and '``' on all three checkpoints;
+      - item 15's misses are all harness text.
+    - **O7–O8, control and harness-shaped text.** A DEL (item 7 s1, all three) and two ANSI-escaped texts (item 7 s0,
+      dpo and instruct); one configuration-topic response (sft corrupted 12 s0, G-CAL-OLMo's text).
+    - **O9–O12.** The identities above; R1 A6's tallies by m's own function, for comparability only (mirroring
+      4/4/4, against G-CAL-OLMo's 12/6/9); the strict grade's own artifacts; the counters.
+  - **FLAG for the seat** (descriptive; it blocks nothing in this entry):
+    - **F-p13. Control characters in stored text.** Five stored texts carry them, all on item 7: a lone DEL (s1 on
+      all three checkpoints) and ANSI escape sequences (s0 on dpo and instruct). Under m's render only instruct's s1
+      did. §2.3 counts them and nothing gates them. In a p session such a text would be a stored round body, which the
+      next round sees. Whether anything follows from that before LOCK-p v0.1 is the seat's to say.
+  - **Under the record, stated, not adjudicated.** p §3.2: "A checkpoint passing → its LOCK-p v0.1 (§4.3)". The go:
+    "PASS continues to step 6 later". So no NOT-RUN record follows. Step 6 (`scripts/p_analyze.py`, G-ANL-p, then each
+    LOCK-p v0.1) waits for the seat's read of these generations and the PI's word.
+  - **State.** Nothing is pushed.
+    - The box repo holds the six output files untracked, byte-identical to those committed here, so the next bundle
+      sync there meets them first.
+    - The pod is RUNNING and idle at $1.79/hr, up since 2026-11-07T00:17Z. What it does next is for the coordinating
+      session and the PI.
+    - Both are captured in [`_gcal-p_box-captures`](results/raw/2026-11-08_gcal-p_box-captures.txt): the sha256s at
+      both ends, the box tree after the run, and the pod's record from RunPod's API.
+  - **Values-check.** A blind values-check ran before this commit
+    ([`_gcal-p_valuescheck`](results/raw/2026-11-08_gcal-p_valuescheck.md), with Code's dispositions): 151 items,
+    137 confirmed, **1 FAIL, 7 IMPRECISE**, 6 not checkable.
+    - The FAIL was the read raw's O3 calling clean item 2 the weakest clean item; item 10 is, at 9/12.
+    - Each FAIL and IMPRECISE item was re-checked at source and applied, here and in the read raw.
+    - So were three of its four further notes: the disclosure bullet above, p §3.2's beside-figures in the read raw's
+      §1, and O7's clean-pool omissions. The fourth, the anchor, is now pinned to `e03fbe4`.
+    - Three of the six not-checkable items, all box facts, are now in the captures raw.
+    - The fixes were checked by tool, not by a second blind pass.
+
 - 2026-11-07 — **PROPOSAL-p — G-CAL-p's flags applied: the design seat's five rulings of 2026-11-07 (`38f9974`),
   confirmed by the PI (F-p3, F-p8, F-p10, P21, F-p1).** Each ruling is a constant, an argument, a field name or a
   definition in `valence_core/p/`. With them come three new refusals: G-CAL-p's precheck on PROPOSAL-m's sha256 and on

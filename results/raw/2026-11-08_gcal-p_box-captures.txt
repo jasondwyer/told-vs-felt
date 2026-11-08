@@ -1,0 +1,50 @@
+# G-CAL-p: Code's box captures cited by the entry (RESULTS.md, "G-CAL-p-{sft,dpo,instruct}", 2026-11-08). PI-local date 2026-11-08. Tool output verbatim; host address, port and key omitted.
+# They make three of the values-check's NOT CHECKABLE items checkable (#38 the sha256s compared at both ends, #79 the box tree after the run, #80 the pod's state).
+
+# ==== (1) After the run ended (05:08:26Z) and before commit A (b6ef939): the copy-back and its checks ====
+# One laptop command: list data/p/ckpt and data/p/gates on the laptop (before the copy); scp the six files under the box's /workspace/gcal_p into a scratch folder and the six data files into the same repo paths; shasum -a 256 on the laptop; then over ssh, read-only: sha256sum of the same twelve files on the box, the box repo's `git status --porcelain --untracked-files=all`, a search for .tmp files in data/p/gates and data/p/ckpt, a python-process count (`pgrep -af python | wc -l`; the 1 is the check's own `bash -c` line, which contains the word) and the GPU's memory in use.
+ls: data/p/ckpt: No such file or directory
+G-SHAPE-p.json
+== laptop
+2b7a7d7811c549eac13fc11fd2834fa37fdc3144ecbe7bf2666dfd662d47b3b5  stamps.txt
+bc80190c8dd0d22429fd3b7d6643c77160bf904a8271e8a803af44caed9844df  gcal_p-sft.txt
+bb4aae72b17abe23a015395b745d2ffa160aa24502b66b2c60cf09a289a37b07  gcal_p-dpo.txt
+854fed1b3b177164e7fc55435fd7b76d2d7f7719cbcbe54108e7de2f550bbc7a  gcal_p-instruct.txt
+9f8b9df3178b4b7655c21df55a7aed2b3bd3ac4bea88ec01f2a135548a38d67c  run_gcal_p.sh
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  wrapper.log
+035a204a7243fc46b152ce4f2b935849923db601735ad510ee3a5a39f6544832  data/p/gates/G-CAL_completability_olmo-dpo.json
+5e3ef51a2f3a24dbbacea922b4437c35c59eda64632376a997c2890efc5a6661  data/p/gates/G-CAL_completability_olmo-instruct.json
+78f46f07acfdc3577b2117a9671f46b77092042981e5bb2aa40afe03156b5123  data/p/gates/G-CAL_completability_olmo-sft.json
+6207ce5a472be553172fc21a998df481bb9ad52f6eb9cf833eb4919a8939d4ee  data/p/ckpt/G-CAL_olmo-dpo.json
+91458e86c2c4058248dad6cb2d374a4fb1a7f7b982806892aff15d6f89a7920c  data/p/ckpt/G-CAL_olmo-instruct.json
+2dc2e9a86e2908d92c93e7035bd377b8d5438ae04d65b3ce118943008a613443  data/p/ckpt/G-CAL_olmo-sft.json
+== box
+2b7a7d7811c549eac13fc11fd2834fa37fdc3144ecbe7bf2666dfd662d47b3b5  stamps.txt
+bc80190c8dd0d22429fd3b7d6643c77160bf904a8271e8a803af44caed9844df  gcal_p-sft.txt
+bb4aae72b17abe23a015395b745d2ffa160aa24502b66b2c60cf09a289a37b07  gcal_p-dpo.txt
+854fed1b3b177164e7fc55435fd7b76d2d7f7719cbcbe54108e7de2f550bbc7a  gcal_p-instruct.txt
+9f8b9df3178b4b7655c21df55a7aed2b3bd3ac4bea88ec01f2a135548a38d67c  run_gcal_p.sh
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  wrapper.log
+035a204a7243fc46b152ce4f2b935849923db601735ad510ee3a5a39f6544832  data/p/gates/G-CAL_completability_olmo-dpo.json
+5e3ef51a2f3a24dbbacea922b4437c35c59eda64632376a997c2890efc5a6661  data/p/gates/G-CAL_completability_olmo-instruct.json
+78f46f07acfdc3577b2117a9671f46b77092042981e5bb2aa40afe03156b5123  data/p/gates/G-CAL_completability_olmo-sft.json
+6207ce5a472be553172fc21a998df481bb9ad52f6eb9cf833eb4919a8939d4ee  data/p/ckpt/G-CAL_olmo-dpo.json
+91458e86c2c4058248dad6cb2d374a4fb1a7f7b982806892aff15d6f89a7920c  data/p/ckpt/G-CAL_olmo-instruct.json
+2dc2e9a86e2908d92c93e7035bd377b8d5438ae04d65b3ce118943008a613443  data/p/ckpt/G-CAL_olmo-sft.json
+== box git status
+?? data/p/ckpt/G-CAL_olmo-dpo.json
+?? data/p/ckpt/G-CAL_olmo-instruct.json
+?? data/p/ckpt/G-CAL_olmo-sft.json
+?? data/p/gates/G-CAL_completability_olmo-dpo.json
+?? data/p/gates/G-CAL_completability_olmo-instruct.json
+?? data/p/gates/G-CAL_completability_olmo-sft.json
+no .tmp files
+1
+0 MiB
+# (wrapper.log's e3b0c442... is the sha256 of the empty file.)
+
+# ==== (2) The pod's record, from RunPod's API (get-pod, read-only), read at about 05:18Z (startedAt + uptime); fields selected, the address, port and key fields omitted ====
+id qny1x4v8padeke | name jspace-olmo-m | status RUNNING | cost 1.79 | dataCenterId US-CA-2 | gpu NVIDIA A100-SXM4-80GB x 1
+createdAt 2026-11-07T00:17:14.85Z | startedAt 2026-11-07T00:17:14.842Z | runtime.uptime 104460
+runtime.gpus[0] util 0, memoryUtil 0 | runtime.cpu util 0 | network volume o73qvy742n at /workspace
+image runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404
