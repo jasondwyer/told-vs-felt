@@ -1,0 +1,574 @@
+# G-CAL-p-{sft,dpo,instruct} OF RECORD (PROPOSAL-p v0.2 s3, s8 step 5; m:176's procedure, pinned, with p's renders), on the coordinating session's go of 2026-11-07 under the PI's routing of 2026-11-07, item 1 ("1. The five rulings [confirmed] -> Code applies them, the coordinating session gives the box go, G-CAL-p runs [go]."). PI-local date 2026-11-08 (the go is of 2026-11-07; Code's stamps are UTC).
+# BOX: pod qny1x4v8padeke (jspace-olmo-m), 1 x A100-SXM4-80GB, US-CA-2; backend identifier 641ee466f4553b6a (BACKEND entry, 190ba90); the pod's container running since 2026-11-07T00:17:16Z (PID 1), before that characterization, so the box of record is unchanged (p s6.2). Box repo HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3, working tree clean before the launch; env.sh f5174faa... (G-CAL-OLMo's).
+# COMMAND (box, via /workspace/gcal_p/run_gcal_p.sh, sha256 9f8b9df3178b4b7655c21df55a7aed2b3bd3ac4bea88ec01f2a135548a38d67c, appended below; env.sh sourced; cwd /workspace/repo/jspace-lab), per ckpt in sft dpo instruct:
+#   /workspace/venv/bin/python scripts/p_sessions.py gcal --unit OLMo-{ckpt}        (one shot per checkpoint: no --resume)
+#   chain rule (declared before launch, dry-tested on 7 cases): continue on PASS (exit 0 with its PASS line, no STOP line) or a verdict FAIL (exit 4 with the NOT-RUN line, no STOP line); halt on a refusal (2), a STOP or any other exit.
+# RESULT (condition (4), m:176's bars unchanged, exact arithmetic; the clean-pool identity is p s3.1's flag, not a bar):
+#   sft      clean 62/64  corrupted 47/64 = 47/64  (>= 7/10: yes; >= 3/4 x clean = 93/128: yes)  covariate 15/64  clean-pool identity 64/64  -> PASS
+#   dpo      clean 61/64  corrupted 52/64 = 13/16  (>= 7/10: yes; >= 3/4 x clean = 183/256: yes)  covariate 9/64  clean-pool identity 64/64  -> PASS
+#   instruct clean 59/64  corrupted 51/64 = 51/64  (>= 7/10: yes; >= 3/4 x clean = 177/256: yes)  covariate 1/8  clean-pool identity 64/64  -> PASS
+# ARTIFACTS AND CHECKPOINTS (committed with this raw; byte-identical to the box's, sha256 compared at both ends):
+#   data/p/gates/G-CAL_completability_olmo-sft.json      78f46f07acfdc3577b2117a9671f46b77092042981e5bb2aa40afe03156b5123
+#   data/p/ckpt/G-CAL_olmo-sft.json                      2dc2e9a86e2908d92c93e7035bd377b8d5438ae04d65b3ce118943008a613443
+#   data/p/gates/G-CAL_completability_olmo-dpo.json      035a204a7243fc46b152ce4f2b935849923db601735ad510ee3a5a39f6544832
+#   data/p/ckpt/G-CAL_olmo-dpo.json                      6207ce5a472be553172fc21a998df481bb9ad52f6eb9cf833eb4919a8939d4ee
+#   data/p/gates/G-CAL_completability_olmo-instruct.json 5e3ef51a2f3a24dbbacea922b4437c35c59eda64632376a997c2890efc5a6661
+#   data/p/ckpt/G-CAL_olmo-instruct.json                 91458e86c2c4058248dad6cb2d374a4fb1a7f7b982806892aff15d6f89a7920c
+# What follows, verbatim: the wrapper's stamps file (Code's `date -u` stamps, on the box), each run's stdout+stderr (sha256 sft bc80190c..., sha256 dpo bb4aae72..., sha256 instruct 854fed1b...), the wrapper, the wrapper's own log, the launch call's output, and Code's read-only pre-flight.
+
+# ==== stamps.txt ====
+launch sft 2026-11-08T04:53:27Z RUNPOD_POD_ID=qny1x4v8padeke
+end sft 2026-11-08T04:58:40Z exit=0
+launch dpo 2026-11-08T04:58:40Z RUNPOD_POD_ID=qny1x4v8padeke
+end dpo 2026-11-08T05:03:53Z exit=0
+launch instruct 2026-11-08T05:03:53Z RUNPOD_POD_ID=qny1x4v8padeke
+end instruct 2026-11-08T05:08:26Z exit=0
+done 2026-11-08T05:08:26Z
+
+# ==== gcal_p-sft.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py gcal --unit OLMo-sft
+DRIVER scripts/p_sessions.py 1140b57eac8b2496feac4d8dd49b6d1a59183bc22701a233bebdb08899a40690: committed at HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3, working tree identical (G-CAL-p's precheck)
+WEIGHTS sft: allenai/Olmo-3.1-32B-Instruct-SFT revision 152782ecc41a, files_aggregate_sha256 ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5; 7 files at /workspace/models/sft, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  12%|█▏        | 88/707 [00:00<00:00, 829.96it/s]
+Loading weights:  24%|██▍       | 171/707 [00:00<00:01, 510.95it/s]
+Loading weights:  32%|███▏      | 229/707 [00:00<00:01, 471.05it/s]
+Loading weights:  40%|███▉      | 280/707 [00:00<00:00, 428.83it/s]
+Loading weights:  46%|████▌     | 325/707 [00:00<00:00, 383.13it/s]
+Loading weights:  57%|█████▋    | 404/707 [00:00<00:00, 476.06it/s]
+Loading weights:  64%|██████▍   | 456/707 [00:00<00:00, 477.91it/s]
+Loading weights:  72%|███████▏  | 506/707 [00:01<00:00, 433.32it/s]
+Loading weights:  78%|███████▊  | 552/707 [00:01<00:00, 367.75it/s]
+Loading weights:  84%|████████▍ | 595/707 [00:01<00:00, 380.18it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 483.39it/s]
+GATE G-CAL-p-sft: proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer present d347ea0c9b69f73c -- not read by G-CAL, HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3
+PROVENANCE: {"pod_id":"qny1x4v8padeke","record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/sft","python":"3.12.3","seed":20260818},"stamp":"2026-11-08T04:56:58Z"}
+gcal-p CORR_clean i=0 s=0 hit n_tok=2
+gcal-p CORR_clean i=0 s=1 hit n_tok=2
+gcal-p CORR_clean i=0 s=2 hit n_tok=2
+gcal-p CORR_clean i=0 s=3 hit n_tok=2
+gcal-p CORR_clean i=1 s=0 hit n_tok=8
+gcal-p CORR_clean i=1 s=1 hit n_tok=2
+gcal-p CORR_clean i=1 s=2 hit n_tok=2
+gcal-p CORR_clean i=1 s=3 hit n_tok=2
+gcal-p CORR_clean i=2 s=0 hit n_tok=7
+gcal-p CORR_clean i=2 s=1 hit n_tok=8
+gcal-p CORR_clean i=2 s=2 hit n_tok=18
+gcal-p CORR_clean i=2 s=3 miss n_tok=2
+gcal-p CORR_clean i=3 s=0 hit n_tok=8
+gcal-p CORR_clean i=3 s=1 hit n_tok=2
+gcal-p CORR_clean i=3 s=2 hit n_tok=2
+gcal-p CORR_clean i=3 s=3 hit n_tok=2
+gcal-p CORR_clean i=4 s=0 miss n_tok=3
+gcal-p CORR_clean i=4 s=1 hit n_tok=2
+gcal-p CORR_clean i=4 s=2 hit n_tok=7
+gcal-p CORR_clean i=4 s=3 hit n_tok=4
+gcal-p CORR_clean i=5 s=0 hit n_tok=1
+gcal-p CORR_clean i=5 s=1 hit n_tok=1
+gcal-p CORR_clean i=5 s=2 hit n_tok=1
+gcal-p CORR_clean i=5 s=3 hit n_tok=9
+gcal-p CORR_clean i=6 s=0 hit n_tok=2
+gcal-p CORR_clean i=6 s=1 hit n_tok=2
+gcal-p CORR_clean i=6 s=2 hit n_tok=2
+gcal-p CORR_clean i=6 s=3 hit n_tok=2
+gcal-p CORR_clean i=7 s=0 hit n_tok=14
+gcal-p CORR_clean i=7 s=1 hit n_tok=60
+gcal-p CORR_clean i=7 s=2 hit n_tok=60
+gcal-p CORR_clean i=7 s=3 hit n_tok=14
+gcal-p CORR_clean i=8 s=0 hit n_tok=1
+gcal-p CORR_clean i=8 s=1 hit n_tok=9
+gcal-p CORR_clean i=8 s=2 hit n_tok=8
+gcal-p CORR_clean i=8 s=3 hit n_tok=1
+gcal-p CORR_clean i=9 s=0 hit n_tok=2
+gcal-p CORR_clean i=9 s=1 hit n_tok=2
+gcal-p CORR_clean i=9 s=2 hit n_tok=2
+gcal-p CORR_clean i=9 s=3 hit n_tok=8
+gcal-p CORR_clean i=10 s=0 hit n_tok=11
+gcal-p CORR_clean i=10 s=1 hit n_tok=5
+gcal-p CORR_clean i=10 s=2 hit n_tok=5
+gcal-p CORR_clean i=10 s=3 hit n_tok=7
+gcal-p CORR_clean i=11 s=0 hit n_tok=1
+gcal-p CORR_clean i=11 s=1 hit n_tok=1
+gcal-p CORR_clean i=11 s=2 hit n_tok=14
+gcal-p CORR_clean i=11 s=3 hit n_tok=1
+gcal-p CORR_clean i=12 s=0 hit n_tok=2
+gcal-p CORR_clean i=12 s=1 hit n_tok=2
+gcal-p CORR_clean i=12 s=2 hit n_tok=2
+gcal-p CORR_clean i=12 s=3 hit n_tok=2
+gcal-p CORR_clean i=13 s=0 hit n_tok=2
+gcal-p CORR_clean i=13 s=1 hit n_tok=6
+gcal-p CORR_clean i=13 s=2 hit n_tok=8
+gcal-p CORR_clean i=13 s=3 hit n_tok=3
+gcal-p CORR_clean i=14 s=0 hit n_tok=2
+gcal-p CORR_clean i=14 s=1 hit n_tok=2
+gcal-p CORR_clean i=14 s=2 hit n_tok=2
+gcal-p CORR_clean i=14 s=3 hit n_tok=8
+gcal-p CORR_clean i=15 s=0 hit n_tok=1
+gcal-p CORR_clean i=15 s=1 hit n_tok=1
+gcal-p CORR_clean i=15 s=2 hit n_tok=1
+gcal-p CORR_clean i=15 s=3 hit n_tok=1
+gcal-p CORR_corrupted i=0 s=0 hit n_tok=60
+gcal-p CORR_corrupted i=0 s=1 hit n_tok=33
+gcal-p CORR_corrupted i=0 s=2 hit n_tok=53
+gcal-p CORR_corrupted i=0 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=1 s=0 miss n_tok=2
+gcal-p CORR_corrupted i=1 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=1 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=1 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=2 s=0 miss n_tok=1
+gcal-p CORR_corrupted i=2 s=1 miss n_tok=13
+gcal-p CORR_corrupted i=2 s=2 miss n_tok=4
+gcal-p CORR_corrupted i=2 s=3 miss n_tok=7
+gcal-p CORR_corrupted i=3 s=0 hit n_tok=4
+gcal-p CORR_corrupted i=3 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=3 hit n_tok=60
+gcal-p CORR_corrupted i=4 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=5 s=0 hit n_tok=1
+gcal-p CORR_corrupted i=5 s=1 hit n_tok=9
+gcal-p CORR_corrupted i=5 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=5 s=3 hit n_tok=1
+gcal-p CORR_corrupted i=6 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=7 s=0 hit n_tok=5
+gcal-p CORR_corrupted i=7 s=1 miss n_tok=2
+gcal-p CORR_corrupted i=7 s=2 hit n_tok=60
+gcal-p CORR_corrupted i=7 s=3 miss n_tok=2
+gcal-p CORR_corrupted i=8 s=0 miss n_tok=2
+gcal-p CORR_corrupted i=8 s=1 miss n_tok=2
+gcal-p CORR_corrupted i=8 s=2 miss n_tok=28
+gcal-p CORR_corrupted i=8 s=3 miss n_tok=2
+gcal-p CORR_corrupted i=9 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=9 s=1 hit n_tok=29
+gcal-p CORR_corrupted i=9 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=9 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=10 s=0 hit n_tok=9
+gcal-p CORR_corrupted i=10 s=1 hit n_tok=6
+gcal-p CORR_corrupted i=10 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=10 s=3 hit n_tok=6
+gcal-p CORR_corrupted i=11 s=0 hit n_tok=4
+gcal-p CORR_corrupted i=11 s=1 hit n_tok=1
+gcal-p CORR_corrupted i=11 s=2 miss n_tok=2
+gcal-p CORR_corrupted i=11 s=3 miss n_tok=2
+gcal-p CORR_corrupted i=12 s=0 hit n_tok=60
+gcal-p CORR_corrupted i=12 s=1 hit n_tok=12
+gcal-p CORR_corrupted i=12 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=12 s=3 hit n_tok=60
+gcal-p CORR_corrupted i=13 s=0 miss n_tok=4
+gcal-p CORR_corrupted i=13 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=3 miss n_tok=4
+gcal-p CORR_corrupted i=14 s=0 hit n_tok=33
+gcal-p CORR_corrupted i=14 s=1 hit n_tok=22
+gcal-p CORR_corrupted i=14 s=2 hit n_tok=6
+gcal-p CORR_corrupted i=14 s=3 hit n_tok=60
+gcal-p CORR_corrupted i=15 s=0 miss n_tok=6
+gcal-p CORR_corrupted i=15 s=1 hit n_tok=1
+gcal-p CORR_corrupted i=15 s=2 hit n_tok=1
+gcal-p CORR_corrupted i=15 s=3 miss n_tok=6
+gcal-p accuracy CORR_clean 62/64 = 31/32 (0.9688)
+gcal-p accuracy CORR_corrupted 47/64 = 47/64 (0.7344)
+gcal-p condition (4): PASS -- corrupted 47/64 >= 7/10: yes; >= 3/4 x clean = 93/128: yes
+gcal-p covariate (clean minus corrupted, f0's sign): 15/64 = +0.2344 (beside PROPOSAL-m's +5/16 at the shared renders, Qwen's +9/64, f1's +.078)
+gcal-p clean-pool identity with G-CAL-OLMo-sft: 64/64 identical
+gcal-p strict grade (reported, decides nothing): CORR_clean 41/64; CORR_corrupted 29/64
+gcal-p counters (decide nothing): control_chars 1 ['CORR_corrupted i=7 s=1']; harness_first_line 2 ['CORR_corrupted i=15 s=0', 'CORR_corrupted i=15 s=3']; cap_hits 8 ['CORR_clean i=7 s=1', 'CORR_clean i=7 s=2', 'CORR_corrupted i=0 s=0', 'CORR_corrupted i=3 s=3', 'CORR_corrupted i=7 s=2', 'CORR_corrupted i=12 s=0', 'CORR_corrupted i=12 s=3', 'CORR_corrupted i=14 s=3']; refusals 1 ['CORR_clean i=7 s=1']; corrupted_spelling 0 []; proxy cuts 0
+G-CAL-p-sft completability: PASS; artifact /workspace/repo/jspace-lab/data/p/gates/G-CAL_completability_olmo-sft.json (written)
+
+# ==== gcal_p-dpo.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py gcal --unit OLMo-dpo
+DRIVER scripts/p_sessions.py 1140b57eac8b2496feac4d8dd49b6d1a59183bc22701a233bebdb08899a40690: committed at HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3, working tree identical (G-CAL-p's precheck)
+WEIGHTS dpo: allenai/Olmo-3.1-32B-Instruct-DPO revision fc84a4f69991, files_aggregate_sha256 c6e5e2abe093d0fcb6050500bdb7dc13998fa51fdde47cc93bffded126f33e60; 7 files at /workspace/models/dpo, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:   9%|▉         | 63/707 [00:00<00:01, 629.72it/s]
+Loading weights:  18%|█▊        | 129/707 [00:00<00:00, 628.31it/s]
+Loading weights:  27%|██▋       | 192/707 [00:00<00:00, 616.73it/s]
+Loading weights:  36%|███▌      | 254/707 [00:00<00:00, 506.60it/s]
+Loading weights:  43%|████▎     | 307/707 [00:00<00:00, 446.41it/s]
+Loading weights:  50%|█████     | 354/707 [00:00<00:00, 419.15it/s]
+Loading weights:  56%|█████▋    | 398/707 [00:00<00:00, 421.79it/s]
+Loading weights:  63%|██████▎   | 442/707 [00:00<00:00, 377.61it/s]
+Loading weights:  70%|██████▉   | 493/707 [00:01<00:00, 391.00it/s]
+Loading weights:  75%|███████▌  | 533/707 [00:01<00:00, 392.77it/s]
+Loading weights:  81%|████████  | 573/707 [00:01<00:00, 365.12it/s]
+Loading weights:  86%|████████▋ | 611/707 [00:01<00:00, 358.86it/s]
+Loading weights:  92%|█████████▏| 648/707 [00:01<00:00, 315.96it/s]
+Loading weights:  98%|█████████▊| 690/707 [00:01<00:00, 320.74it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 404.75it/s]
+GATE G-CAL-p-dpo: proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer present d347ea0c9b69f73c -- not read by G-CAL, HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3
+PROVENANCE: {"pod_id":"qny1x4v8padeke","record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/dpo","python":"3.12.3","seed":20260818},"stamp":"2026-11-08T05:02:12Z"}
+gcal-p CORR_clean i=0 s=0 hit n_tok=2
+gcal-p CORR_clean i=0 s=1 hit n_tok=2
+gcal-p CORR_clean i=0 s=2 hit n_tok=2
+gcal-p CORR_clean i=0 s=3 hit n_tok=2
+gcal-p CORR_clean i=1 s=0 hit n_tok=8
+gcal-p CORR_clean i=1 s=1 hit n_tok=2
+gcal-p CORR_clean i=1 s=2 hit n_tok=2
+gcal-p CORR_clean i=1 s=3 hit n_tok=2
+gcal-p CORR_clean i=2 s=0 hit n_tok=7
+gcal-p CORR_clean i=2 s=1 hit n_tok=8
+gcal-p CORR_clean i=2 s=2 hit n_tok=17
+gcal-p CORR_clean i=2 s=3 hit n_tok=11
+gcal-p CORR_clean i=3 s=0 hit n_tok=8
+gcal-p CORR_clean i=3 s=1 hit n_tok=2
+gcal-p CORR_clean i=3 s=2 hit n_tok=33
+gcal-p CORR_clean i=3 s=3 hit n_tok=25
+gcal-p CORR_clean i=4 s=0 hit n_tok=15
+gcal-p CORR_clean i=4 s=1 hit n_tok=50
+gcal-p CORR_clean i=4 s=2 hit n_tok=5
+gcal-p CORR_clean i=4 s=3 hit n_tok=2
+gcal-p CORR_clean i=5 s=0 hit n_tok=1
+gcal-p CORR_clean i=5 s=1 hit n_tok=1
+gcal-p CORR_clean i=5 s=2 hit n_tok=1
+gcal-p CORR_clean i=5 s=3 hit n_tok=9
+gcal-p CORR_clean i=6 s=0 hit n_tok=60
+gcal-p CORR_clean i=6 s=1 hit n_tok=2
+gcal-p CORR_clean i=6 s=2 hit n_tok=2
+gcal-p CORR_clean i=6 s=3 hit n_tok=2
+gcal-p CORR_clean i=7 s=0 hit n_tok=14
+gcal-p CORR_clean i=7 s=1 miss n_tok=25
+gcal-p CORR_clean i=7 s=2 hit n_tok=36
+gcal-p CORR_clean i=7 s=3 hit n_tok=14
+gcal-p CORR_clean i=8 s=0 hit n_tok=1
+gcal-p CORR_clean i=8 s=1 hit n_tok=1
+gcal-p CORR_clean i=8 s=2 hit n_tok=8
+gcal-p CORR_clean i=8 s=3 hit n_tok=1
+gcal-p CORR_clean i=9 s=0 hit n_tok=2
+gcal-p CORR_clean i=9 s=1 hit n_tok=2
+gcal-p CORR_clean i=9 s=2 hit n_tok=2
+gcal-p CORR_clean i=9 s=3 hit n_tok=8
+gcal-p CORR_clean i=10 s=0 hit n_tok=12
+gcal-p CORR_clean i=10 s=1 hit n_tok=2
+gcal-p CORR_clean i=10 s=2 miss n_tok=6
+gcal-p CORR_clean i=10 s=3 hit n_tok=7
+gcal-p CORR_clean i=11 s=0 hit n_tok=1
+gcal-p CORR_clean i=11 s=1 hit n_tok=1
+gcal-p CORR_clean i=11 s=2 hit n_tok=2
+gcal-p CORR_clean i=11 s=3 hit n_tok=1
+gcal-p CORR_clean i=12 s=0 hit n_tok=2
+gcal-p CORR_clean i=12 s=1 hit n_tok=2
+gcal-p CORR_clean i=12 s=2 hit n_tok=2
+gcal-p CORR_clean i=12 s=3 hit n_tok=2
+gcal-p CORR_clean i=13 s=0 miss n_tok=3
+gcal-p CORR_clean i=13 s=1 hit n_tok=2
+gcal-p CORR_clean i=13 s=2 hit n_tok=8
+gcal-p CORR_clean i=13 s=3 hit n_tok=3
+gcal-p CORR_clean i=14 s=0 hit n_tok=2
+gcal-p CORR_clean i=14 s=1 hit n_tok=2
+gcal-p CORR_clean i=14 s=2 hit n_tok=2
+gcal-p CORR_clean i=14 s=3 hit n_tok=8
+gcal-p CORR_clean i=15 s=0 hit n_tok=4
+gcal-p CORR_clean i=15 s=1 hit n_tok=2
+gcal-p CORR_clean i=15 s=2 hit n_tok=1
+gcal-p CORR_clean i=15 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=0 s=0 hit n_tok=3
+gcal-p CORR_corrupted i=0 s=1 hit n_tok=8
+gcal-p CORR_corrupted i=0 s=2 hit n_tok=3
+gcal-p CORR_corrupted i=0 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=1 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=1 s=1 hit n_tok=8
+gcal-p CORR_corrupted i=1 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=1 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=2 s=0 miss n_tok=1
+gcal-p CORR_corrupted i=2 s=1 miss n_tok=8
+gcal-p CORR_corrupted i=2 s=2 miss n_tok=22
+gcal-p CORR_corrupted i=2 s=3 miss n_tok=4
+gcal-p CORR_corrupted i=3 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=3 hit n_tok=60
+gcal-p CORR_corrupted i=4 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=5 s=0 hit n_tok=1
+gcal-p CORR_corrupted i=5 s=1 hit n_tok=9
+gcal-p CORR_corrupted i=5 s=2 hit n_tok=1
+gcal-p CORR_corrupted i=5 s=3 hit n_tok=1
+gcal-p CORR_corrupted i=6 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=7 s=0 hit n_tok=29
+gcal-p CORR_corrupted i=7 s=1 miss n_tok=2
+gcal-p CORR_corrupted i=7 s=2 hit n_tok=60
+gcal-p CORR_corrupted i=7 s=3 miss n_tok=2
+gcal-p CORR_corrupted i=8 s=0 hit n_tok=60
+gcal-p CORR_corrupted i=8 s=1 hit n_tok=3
+gcal-p CORR_corrupted i=8 s=2 hit n_tok=60
+gcal-p CORR_corrupted i=8 s=3 hit n_tok=8
+gcal-p CORR_corrupted i=9 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=9 s=1 hit n_tok=18
+gcal-p CORR_corrupted i=9 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=9 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=10 s=0 hit n_tok=11
+gcal-p CORR_corrupted i=10 s=1 hit n_tok=40
+gcal-p CORR_corrupted i=10 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=10 s=3 hit n_tok=37
+gcal-p CORR_corrupted i=11 s=0 hit n_tok=10
+gcal-p CORR_corrupted i=11 s=1 hit n_tok=10
+gcal-p CORR_corrupted i=11 s=2 miss n_tok=2
+gcal-p CORR_corrupted i=11 s=3 hit n_tok=11
+gcal-p CORR_corrupted i=12 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=12 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=12 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=12 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=0 miss n_tok=4
+gcal-p CORR_corrupted i=13 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=3 miss n_tok=4
+gcal-p CORR_corrupted i=14 s=0 hit n_tok=8
+gcal-p CORR_corrupted i=14 s=1 hit n_tok=13
+gcal-p CORR_corrupted i=14 s=2 hit n_tok=6
+gcal-p CORR_corrupted i=14 s=3 hit n_tok=25
+gcal-p CORR_corrupted i=15 s=0 miss n_tok=6
+gcal-p CORR_corrupted i=15 s=1 hit n_tok=1
+gcal-p CORR_corrupted i=15 s=2 miss n_tok=6
+gcal-p CORR_corrupted i=15 s=3 miss n_tok=4
+gcal-p accuracy CORR_clean 61/64 = 61/64 (0.9531)
+gcal-p accuracy CORR_corrupted 52/64 = 13/16 (0.8125)
+gcal-p condition (4): PASS -- corrupted 13/16 >= 7/10: yes; >= 3/4 x clean = 183/256: yes
+gcal-p covariate (clean minus corrupted, f0's sign): 9/64 = +0.1406 (beside PROPOSAL-m's +17/64 at the shared renders, Qwen's +9/64, f1's +.078)
+gcal-p clean-pool identity with G-CAL-OLMo-dpo: 64/64 identical
+gcal-p strict grade (reported, decides nothing): CORR_clean 39/64; CORR_corrupted 31/64
+gcal-p counters (decide nothing): control_chars 2 ['CORR_corrupted i=7 s=0', 'CORR_corrupted i=7 s=1']; harness_first_line 3 ['CORR_clean i=13 s=0', 'CORR_corrupted i=2 s=3', 'CORR_corrupted i=15 s=2']; cap_hits 5 ['CORR_clean i=6 s=0', 'CORR_corrupted i=3 s=3', 'CORR_corrupted i=7 s=2', 'CORR_corrupted i=8 s=0', 'CORR_corrupted i=8 s=2']; refusals 1 ['CORR_clean i=7 s=1']; corrupted_spelling 1 ['CORR_clean i=4 s=1']; proxy cuts 0
+G-CAL-p-dpo completability: PASS; artifact /workspace/repo/jspace-lab/data/p/gates/G-CAL_completability_olmo-dpo.json (written)
+
+# ==== gcal_p-instruct.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py gcal --unit OLMo-instruct
+DRIVER scripts/p_sessions.py 1140b57eac8b2496feac4d8dd49b6d1a59183bc22701a233bebdb08899a40690: committed at HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3, working tree identical (G-CAL-p's precheck)
+WEIGHTS instruct: allenai/Olmo-3.1-32B-Instruct revision ac0587e4a774, files_aggregate_sha256 0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643; 8 files at /workspace/models/instruct, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  10%|█         | 74/707 [00:00<00:00, 707.68it/s]
+Loading weights:  21%|██        | 145/707 [00:00<00:01, 512.50it/s]
+Loading weights:  28%|██▊       | 200/707 [00:00<00:01, 422.10it/s]
+Loading weights:  35%|███▌      | 249/707 [00:00<00:01, 440.35it/s]
+Loading weights:  43%|████▎     | 303/707 [00:00<00:00, 457.79it/s]
+Loading weights:  50%|████▉     | 352/707 [00:00<00:00, 466.56it/s]
+Loading weights:  58%|█████▊    | 410/707 [00:00<00:00, 480.85it/s]
+Loading weights:  65%|██████▍   | 459/707 [00:00<00:00, 472.54it/s]
+Loading weights:  72%|███████▏  | 507/707 [00:01<00:00, 458.88it/s]
+Loading weights:  79%|███████▉  | 560/707 [00:01<00:00, 474.77it/s]
+Loading weights:  87%|████████▋ | 618/707 [00:01<00:00, 485.62it/s]
+Loading weights:  97%|█████████▋| 684/707 [00:01<00:00, 525.67it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 496.56it/s]
+GATE G-CAL-p-instruct: proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer present d347ea0c9b69f73c -- not read by G-CAL, HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3
+PROVENANCE: {"pod_id":"qny1x4v8padeke","record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/instruct","python":"3.12.3","seed":20260818},"stamp":"2026-11-08T05:06:56Z"}
+gcal-p CORR_clean i=0 s=0 hit n_tok=2
+gcal-p CORR_clean i=0 s=1 hit n_tok=2
+gcal-p CORR_clean i=0 s=2 hit n_tok=2
+gcal-p CORR_clean i=0 s=3 hit n_tok=2
+gcal-p CORR_clean i=1 s=0 hit n_tok=8
+gcal-p CORR_clean i=1 s=1 hit n_tok=2
+gcal-p CORR_clean i=1 s=2 hit n_tok=2
+gcal-p CORR_clean i=1 s=3 hit n_tok=2
+gcal-p CORR_clean i=2 s=0 miss n_tok=2
+gcal-p CORR_clean i=2 s=1 hit n_tok=8
+gcal-p CORR_clean i=2 s=2 hit n_tok=29
+gcal-p CORR_clean i=2 s=3 hit n_tok=9
+gcal-p CORR_clean i=3 s=0 hit n_tok=2
+gcal-p CORR_clean i=3 s=1 hit n_tok=12
+gcal-p CORR_clean i=3 s=2 hit n_tok=33
+gcal-p CORR_clean i=3 s=3 hit n_tok=23
+gcal-p CORR_clean i=4 s=0 hit n_tok=15
+gcal-p CORR_clean i=4 s=1 hit n_tok=2
+gcal-p CORR_clean i=4 s=2 hit n_tok=5
+gcal-p CORR_clean i=4 s=3 hit n_tok=6
+gcal-p CORR_clean i=5 s=0 hit n_tok=1
+gcal-p CORR_clean i=5 s=1 hit n_tok=1
+gcal-p CORR_clean i=5 s=2 hit n_tok=1
+gcal-p CORR_clean i=5 s=3 hit n_tok=1
+gcal-p CORR_clean i=6 s=0 hit n_tok=11
+gcal-p CORR_clean i=6 s=1 hit n_tok=2
+gcal-p CORR_clean i=6 s=2 hit n_tok=2
+gcal-p CORR_clean i=6 s=3 hit n_tok=2
+gcal-p CORR_clean i=7 s=0 hit n_tok=14
+gcal-p CORR_clean i=7 s=1 miss n_tok=25
+gcal-p CORR_clean i=7 s=2 hit n_tok=14
+gcal-p CORR_clean i=7 s=3 hit n_tok=14
+gcal-p CORR_clean i=8 s=0 hit n_tok=1
+gcal-p CORR_clean i=8 s=1 hit n_tok=1
+gcal-p CORR_clean i=8 s=2 hit n_tok=8
+gcal-p CORR_clean i=8 s=3 hit n_tok=1
+gcal-p CORR_clean i=9 s=0 hit n_tok=2
+gcal-p CORR_clean i=9 s=1 hit n_tok=2
+gcal-p CORR_clean i=9 s=2 hit n_tok=2
+gcal-p CORR_clean i=9 s=3 hit n_tok=8
+gcal-p CORR_clean i=10 s=0 miss n_tok=1
+gcal-p CORR_clean i=10 s=1 hit n_tok=2
+gcal-p CORR_clean i=10 s=2 miss n_tok=6
+gcal-p CORR_clean i=10 s=3 hit n_tok=2
+gcal-p CORR_clean i=11 s=0 hit n_tok=1
+gcal-p CORR_clean i=11 s=1 hit n_tok=1
+gcal-p CORR_clean i=11 s=2 hit n_tok=2
+gcal-p CORR_clean i=11 s=3 hit n_tok=1
+gcal-p CORR_clean i=12 s=0 hit n_tok=2
+gcal-p CORR_clean i=12 s=1 hit n_tok=2
+gcal-p CORR_clean i=12 s=2 hit n_tok=2
+gcal-p CORR_clean i=12 s=3 hit n_tok=2
+gcal-p CORR_clean i=13 s=0 miss n_tok=3
+gcal-p CORR_clean i=13 s=1 hit n_tok=2
+gcal-p CORR_clean i=13 s=2 hit n_tok=8
+gcal-p CORR_clean i=13 s=3 hit n_tok=3
+gcal-p CORR_clean i=14 s=0 hit n_tok=2
+gcal-p CORR_clean i=14 s=1 hit n_tok=2
+gcal-p CORR_clean i=14 s=2 hit n_tok=2
+gcal-p CORR_clean i=14 s=3 hit n_tok=2
+gcal-p CORR_clean i=15 s=0 hit n_tok=4
+gcal-p CORR_clean i=15 s=1 hit n_tok=2
+gcal-p CORR_clean i=15 s=2 hit n_tok=1
+gcal-p CORR_clean i=15 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=0 s=0 hit n_tok=3
+gcal-p CORR_corrupted i=0 s=1 hit n_tok=8
+gcal-p CORR_corrupted i=0 s=2 hit n_tok=3
+gcal-p CORR_corrupted i=0 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=1 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=1 s=1 hit n_tok=8
+gcal-p CORR_corrupted i=1 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=1 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=2 s=0 miss n_tok=1
+gcal-p CORR_corrupted i=2 s=1 miss n_tok=8
+gcal-p CORR_corrupted i=2 s=2 miss n_tok=34
+gcal-p CORR_corrupted i=2 s=3 miss n_tok=4
+gcal-p CORR_corrupted i=3 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=3 s=3 hit n_tok=60
+gcal-p CORR_corrupted i=4 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=4 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=5 s=0 hit n_tok=1
+gcal-p CORR_corrupted i=5 s=1 hit n_tok=1
+gcal-p CORR_corrupted i=5 s=2 hit n_tok=1
+gcal-p CORR_corrupted i=5 s=3 hit n_tok=1
+gcal-p CORR_corrupted i=6 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=6 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=7 s=0 miss n_tok=14
+gcal-p CORR_corrupted i=7 s=1 miss n_tok=2
+gcal-p CORR_corrupted i=7 s=2 hit n_tok=37
+gcal-p CORR_corrupted i=7 s=3 miss n_tok=2
+gcal-p CORR_corrupted i=8 s=0 hit n_tok=60
+gcal-p CORR_corrupted i=8 s=1 hit n_tok=3
+gcal-p CORR_corrupted i=8 s=2 hit n_tok=54
+gcal-p CORR_corrupted i=8 s=3 hit n_tok=8
+gcal-p CORR_corrupted i=9 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=9 s=1 hit n_tok=31
+gcal-p CORR_corrupted i=9 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=9 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=10 s=0 hit n_tok=11
+gcal-p CORR_corrupted i=10 s=1 hit n_tok=40
+gcal-p CORR_corrupted i=10 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=10 s=3 hit n_tok=31
+gcal-p CORR_corrupted i=11 s=0 hit n_tok=10
+gcal-p CORR_corrupted i=11 s=1 hit n_tok=10
+gcal-p CORR_corrupted i=11 s=2 miss n_tok=2
+gcal-p CORR_corrupted i=11 s=3 miss n_tok=3
+gcal-p CORR_corrupted i=12 s=0 hit n_tok=2
+gcal-p CORR_corrupted i=12 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=12 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=12 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=0 miss n_tok=4
+gcal-p CORR_corrupted i=13 s=1 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=2 hit n_tok=2
+gcal-p CORR_corrupted i=13 s=3 hit n_tok=2
+gcal-p CORR_corrupted i=14 s=0 hit n_tok=8
+gcal-p CORR_corrupted i=14 s=1 hit n_tok=13
+gcal-p CORR_corrupted i=14 s=2 hit n_tok=8
+gcal-p CORR_corrupted i=14 s=3 hit n_tok=41
+gcal-p CORR_corrupted i=15 s=0 miss n_tok=12
+gcal-p CORR_corrupted i=15 s=1 hit n_tok=1
+gcal-p CORR_corrupted i=15 s=2 miss n_tok=6
+gcal-p CORR_corrupted i=15 s=3 miss n_tok=4
+gcal-p accuracy CORR_clean 59/64 = 59/64 (0.9219)
+gcal-p accuracy CORR_corrupted 51/64 = 51/64 (0.7969)
+gcal-p condition (4): PASS -- corrupted 51/64 >= 7/10: yes; >= 3/4 x clean = 177/256: yes
+gcal-p covariate (clean minus corrupted, f0's sign): 1/8 = +0.1250 (beside PROPOSAL-m's +17/64 at the shared renders, Qwen's +9/64, f1's +.078)
+gcal-p clean-pool identity with G-CAL-OLMo-instruct: 64/64 identical
+gcal-p strict grade (reported, decides nothing): CORR_clean 43/64; CORR_corrupted 33/64
+gcal-p counters (decide nothing): control_chars 2 ['CORR_corrupted i=7 s=0', 'CORR_corrupted i=7 s=1']; harness_first_line 5 ['CORR_clean i=13 s=0', 'CORR_corrupted i=2 s=3', 'CORR_corrupted i=11 s=3', 'CORR_corrupted i=15 s=0', 'CORR_corrupted i=15 s=2']; cap_hits 2 ['CORR_corrupted i=3 s=3', 'CORR_corrupted i=8 s=0']; refusals 1 ['CORR_clean i=7 s=1']; corrupted_spelling 0 []; proxy cuts 0
+G-CAL-p-instruct completability: PASS; artifact /workspace/repo/jspace-lab/data/p/gates/G-CAL_completability_olmo-instruct.json (written)
+
+# ==== the wrapper, /workspace/gcal_p/run_gcal_p.sh (sha256 9f8b9df3178b4b7655c21df55a7aed2b3bd3ac4bea88ec01f2a135548a38d67c) ====
+#!/bin/bash
+# G-CAL-p-{sft,dpo,instruct} of record, back to back (PROPOSAL-p v0.2 s3, s8 step 5), on the coordinating session's
+# go of 2026-11-07 under the PI's routing of 2026-11-07, item 1 ("... the coordinating session gives the box go,
+# G-CAL-p runs [go]"). The driver is the committed one (e03fbe4); this wrapper only sequences it and records stamps and
+# exit codes. One shot per checkpoint: no --resume. A checkpoint that PASSes (0 with its PASS line) or ends in a
+# verdict FAIL (4 with the NOT-RUN line and no STOP line: that unit NOT-RUN, the others separate units) lets the next
+# run; a refusal (2), a STOP or any other exit halts the chain for escalation.
+source /workspace/env.sh
+cd /workspace/repo/jspace-lab || exit 9
+OUT=/workspace/gcal_p
+mkdir -p "$OUT"
+for ck in sft dpo instruct; do
+  echo "launch $ck $(date -u +%Y-%m-%dT%H:%M:%SZ) RUNPOD_POD_ID=$RUNPOD_POD_ID" >> "$OUT/stamps.txt"
+  /workspace/venv/bin/python scripts/p_sessions.py gcal --unit "OLMo-$ck" > "$OUT/gcal_p-$ck.txt" 2>&1
+  rc=$?
+  echo "end $ck $(date -u +%Y-%m-%dT%H:%M:%SZ) exit=$rc" >> "$OUT/stamps.txt"
+  if [ "$rc" -eq 0 ] && grep -q "^G-CAL-p-$ck completability: PASS; " "$OUT/gcal_p-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/gcal_p-$ck.txt"; then continue; fi
+  if [ "$rc" -eq 4 ] && grep -q "^G-CAL-p-$ck completability: FAIL -- PROPOSAL-p OLMo-$ck -- NOT-RUN" "$OUT/gcal_p-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/gcal_p-$ck.txt"; then continue; fi
+  echo "halt after $ck (exit=$rc): neither PASS nor a verdict FAIL" >> "$OUT/stamps.txt"
+  break
+done
+echo "done $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$OUT/stamps.txt"
+
+# ==== the wrapper's own log, /workspace/gcal_p/wrapper.log (0 bytes) ====
+(empty)
+
+# ==== the launch call's output (laptop; the pre-launch checks of the same ssh call: the wrapper's sha256 on the box, HEAD and porcelain line count, GPU memory, python process count; then the 20 s check after the launch) ====
+9f8b9df3178b4b7655c21df55a7aed2b3bd3ac4bea88ec01f2a135548a38d67c  (laptop)
+0
+9f8b9df3178b4b7655c21df55a7aed2b3bd3ac4bea88ec01f2a135548a38d67c  /workspace/gcal_p/run_gcal_p.sh
+HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3 porcelain_lines 0
+0 MiB
+2
+launch sft 2026-11-08T04:53:27Z RUNPOD_POD_ID=qny1x4v8padeke
+9710 bash -c cd /workspace/repo/jspace-lab && sha256sum /workspace/gcal_p/run_gcal_p.sh && echo "HEAD $(git rev-parse HEAD) porcelain_lines $(git status --porcelain | wc -l)" && nvidia-smi --query-gpu=memory.used --format=csv,noheader && pgrep -af python | wc -l && cd /workspace && nohup setsid bash /workspace/gcal_p/run_gcal_p.sh > /workspace/gcal_p/wrapper.log 2>&1 < /dev/null & sleep 20; cat /workspace/gcal_p/stamps.txt; pgrep -af "p_sessions.py gcal"; head -c 600 /workspace/gcal_p/gcal_p-sft.txt
+9711 bash -c cd /workspace/repo/jspace-lab && sha256sum /workspace/gcal_p/run_gcal_p.sh && echo "HEAD $(git rev-parse HEAD) porcelain_lines $(git status --porcelain | wc -l)" && nvidia-smi --query-gpu=memory.used --format=csv,noheader && pgrep -af python | wc -l && cd /workspace && nohup setsid bash /workspace/gcal_p/run_gcal_p.sh > /workspace/gcal_p/wrapper.log 2>&1 < /dev/null & sleep 20; cat /workspace/gcal_p/stamps.txt; pgrep -af "p_sessions.py gcal"; head -c 600 /workspace/gcal_p/gcal_p-sft.txt
+9730 /workspace/venv/bin/python scripts/p_sessions.py gcal --unit OLMo-sft
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py gcal --unit OLMo-sft
+DRIVER scripts/p_sessions.py 1140b57eac8b2496feac4d8dd49b6d1a59183bc22701a233bebdb08899a40690: committed at HEAD e03fbe44e3906acba1249d11585ccfa46b7760a3, working tree identical (G-CAL-p's precheck)
+WEIGHTS sft: allenai/Olmo-3.1-32B-Instruct-SFT revision 152782ecc41a, files_aggregate_sha256 ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5; 7 files at /workspace/models/sft, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+
+[exited with code 0]
+
+# ==== Code's read-only pre-flight on the box, before the launch (fresh non-interactive ssh shells, env.sh sourced where shown; host scrubbed; tool output verbatim) ====
+# (1) ssh <host> 'cd /workspace/repo/jspace-lab && source /workspace/env.sh && echo "HEAD $(git rev-parse --short HEAD) dirty $(git status --porcelain | wc -l)"; echo "pod ${RUNPOD_POD_ID:-UNSET}"; nvidia-smi --query-gpu=name,memory.used,memory.total,utilization.gpu --format=csv,noheader; ps aux | grep -E "python|p_sessions|m_sessions" | grep -v grep | wc -l; ls data/p/gates data/p/ckpt 2>&1 | head; /workspace/venv/bin/python -B -c "<for each unit: gcal.precheck(unit, stub=False); print the first 150 characters of the gate line>"'
+HEAD e03fbe4 dirty 0
+pod qny1x4v8padeke
+NVIDIA A100-SXM4-80GB, 0 MiB, 81920 MiB, 0 %
+0
+ls: cannot access 'data/p/ckpt': No such file or directory
+data/p/gates:
+G-SHAPE-p.json
+OLMo-sft precheck clear; gate: GATE G-CAL-p-sft: proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer present d347ea0c9b6
+OLMo-dpo precheck clear; gate: GATE G-CAL-p-dpo: proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer present d347ea0c9b6
+OLMo-instruct precheck clear; gate: GATE G-CAL-p-instruct: proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer present d347ea
+# (2) ssh <host> 'sha256sum /workspace/env.sh; ls -la /workspace/env.sh*; cat /workspace/env.sh (tokens redacted; none present); uptime -s; cat /proc/uptime; df -h /workspace | tail -1; ls -d /workspace/gcal_p; /workspace/venv/bin/python -c "import torch, transformers; print(torch.__version__, transformers.__version__)"'
+f5174faa745eca6e96cae0fe6e08d21732113f1d60927cb175ad7df14faae648  /workspace/env.sh
+-rw-r--r-- 1 root root 734 Nov  7 02:14 /workspace/env.sh
+-rw-r--r-- 1 root root 568 Nov  7 02:14 /workspace/env.sh.bak-2026-11-06
+(env.sh's text: G-CAL-OLMo's, C4's line last; sha256 as G-CAL-OLMo's raw records it, f5174faa...)
+2026-10-21 03:10:01            <- uptime -s: the host kernel's, not the pod's (see (3))
+1561309.61 174438069.55
+<volume>  466G  302G  164G  65% /workspace
+ls: cannot access '/workspace/gcal_p': No such file or directory
+2.8.0+cu128 5.15.0             <- torch, transformers: G-CAL-OLMo's PROVENANCE versions
+# (3) ssh <host> 'ps -o lstart=,etimes= -p 1; date -u'
+Sat Nov  7 00:17:16 2026  102898
+Sun Nov  8 04:52:14 UTC 2026
+# PID 1 (the pod's container) started 2026-11-07T00:17:16Z, the pod's creation; the BACKEND characterization (190ba90) ran on this container after it, so the box of record is unchanged (p §6.2: no new BACKEND entry).
+# (4) The wrapper's chain rule was dry-tested on the laptop before the launch, the python call replaced by a fake log and an exit code: PASS/0 and FAIL/4 continue; STOP/4, REFUSED/2, PASS/4, FAIL/0 and STOP/0 halt (7 cases, as declared).
