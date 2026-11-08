@@ -21,6 +21,44 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-08 — **PROPOSAL-p step 6 (p §8; the PI's routing of 2026-11-08, item 1, "Step 6 [go]"; the seat's answer at
+  `daca8b0`, §4): Code STOPS before building the gate-stage driver, on nine questions for the seat.** Three attributes
+  of m's code that G-TIME-OLMo (p) needs are not substitution sites in p's register, and the register's term (e) makes
+  such a site a STOP. One sentence of p §4.1 cannot be met by m's analyzer as it stands. None of step 6's stage driver
+  or analyzer is built or run. (Stamp verified at write time: `date -u` → **Sun Nov  8 07:52:34 UTC 2026**.)
+  - **The questions,** each with Code's proposal or reading:
+    [`_p-step6_code-to-design_prebuild`](results/raw/2026-11-08_p-step6_code-to-design_prebuild.md).
+    - **The gate stages.** G-TIME-OLMo (p) is m's `stages.run_gate_stage` run for p's unit under p's register.
+      - Q1: m's stage root `DEFAULT_OUT` (F-p9's question, recorded without a ruling). Entry (6) is proposed.
+      - Q2: m's schedule check refuses `data/p/schedules`. Under entry (2), Code's run of it reports 14 problems: the
+        six campaign files (the BUILD's P4), Q-F0's seven missing files and the manifest; p's verifier reports none.
+        Entry (7) is proposed.
+      - Q3: p's identity fields cannot enter m's exact identity. Two identity sites are recommended, as F-p8 and p:84
+        read; a sidecar is the alternative.
+      - Q4: when each entry is read, and term (d)'s assertion at a stage. Entry (1)'s renders are cached for the
+        process, so every substitution is entered before anything computes renders.
+      - Q5: §2.3's trigger in a session, as a check added to the proxy.
+    - **The analyzer path.**
+      - Q6: m's validator refuses a decision on the unit's own string, so p's OLMo-sft cannot list m's OLMo-sft
+        NOT-RUN.
+      - Q7: the output form, in-file through a staging directory or a sidecar.
+      - Q8: G-ANL-p's "m's battery run under p's roots", and the binding the NOT-RUN regression needs.
+      - Q9: entry (3)'s three sites made concrete.
+    - **The lexicon (F-p11), for the seat's word.** Code picked web2, a full dictionary, where `daca8b0` §3 names a
+      "frozen common-words list". No frequency-ranked list is on this machine.
+  - **Meanwhile,** independent of the answers. The rulings of `daca8b0` §1 (F-p13), §3 (F-p11) and §0.1 (the SFT
+    sentence) are written in p's package and pass p's self-test, uncommitted. They land with step 6's build and its
+    review. Nothing runs on a model or on the box. The pod stays up and idle, as the PI's routing (item 1) has it.
+  - **Values-check.** A blind values-check of the block's first draft, with Code's dispositions:
+    [`_p-step6_prebuild_valuescheck`](results/raw/2026-11-08_p-step6_prebuild_valuescheck.md).
+    - 66 items: 50 confirmed, **2 FAIL, 11 IMPRECISE**, 3 not checkable.
+    - The FAILs: a third blocker the draft missed (m's schedule check, now Q2), and a proxy check stated as existing
+      (now Q5's plan).
+    - Each FAIL and IMPRECISE item was re-checked at source and applied.
+    - The revised claims were checked by tool, not by a second blind pass.
+
+    Not pushed.
+
 - 2026-11-08 — **PROPOSAL-p: G-CAL-p's read goes to the seat. Condition (4) passed on all three checkpoints
   (`b6ef939`, `ec0d9d3`); a block for the seat's read carries four items.**
 
