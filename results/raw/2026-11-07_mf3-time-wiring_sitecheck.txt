@@ -1,0 +1,41 @@
+# G-TIME-F3's wiring -- the ten-suite site check, on LOCK-m-F3 v0.1's commit (1e79955) plus the wiring (Code's scratch worktrees; each suite gated on its own summary line, never on an exit code after a pipe). Local roots scrubbed.
+# Code stamp at the first writing: 2026-11-08 02:32:25 UTC (date -u). closure_verify3 reads the untracked HANDOFF-2026-09-04-design.md, which a fresh worktree lacks; the earlier site checks copied it in for the run (read only).
+
+## Run 1 -- the driver after review round 2 (sha256 bf34c11b...); the worktree without the untracked handoff
+
+PASS regression rc=0 ::   154/154 reproduced through valence_core
+PASS format_recon rc=0 ::   67/67 selftest checks pass
+PASS k1_stage1 rc=0 ::   21/21 Stage 1 selftest checks pass
+PASS k1_analyze rc=0 ::   20/20 analyzer battery checks pass (13s)
+PASS e2d_d2_analyze rc=0 ::   46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+PASS recon_echo rc=0 ::   18/18 selftest checks pass
+FAIL closure_verify3 rc=1
+PASS m_sessions rc=0 ::   846/846 m selftest checks pass
+PASS m_analyze rc=0 ::   525/525 m_analyze battery checks pass
+PASS mf3_sessions rc=0 ::   159/159 mf3 selftest checks pass
+gates failed: 1
+
+closure_verify3's two failures were its R13 checks, which read the untracked handoff. Re-run in a second worktree at 1e79955 with the same driver (bf34c11b...) and the handoff copied in:
+  24/24 third-pass checks pass
+
+## Run 2 -- the driver after review round 3's fixes, before the help-pairing pin; the handoff copied in
+
+PASS regression rc=0 ::   154/154 reproduced through valence_core
+PASS format_recon rc=0 ::   67/67 selftest checks pass
+PASS k1_stage1 rc=0 ::   21/21 Stage 1 selftest checks pass
+PASS k1_analyze rc=0 ::   20/20 analyzer battery checks pass (14s)
+PASS e2d_d2_analyze rc=0 ::   46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+PASS recon_echo rc=0 ::   18/18 selftest checks pass
+PASS closure_verify3 rc=0 ::   24/24 third-pass checks pass
+PASS m_sessions rc=0 ::   846/846 m selftest checks pass
+PASS m_analyze rc=0 ::   525/525 m_analyze battery checks pass
+PASS mf3_sessions rc=0 ::   160/160 mf3 selftest checks pass
+gates failed: 0
+
+## The driver's suite on 1773ae7f3dc3ddd256f5ff8188129397bf0b1ebbcf5f81da4b7c56beff6e9a56 (before the values-check's comment fixes), after the help-pairing pin (the only change since run 2, a self-test check); the other nine suites do not read the driver
+
+  160/160 mf3 selftest checks pass
+
+## The final bytes (sha256 890084e6c626a3ced2007c4285c255fb73978c07aeca15427172fc17028690af; this section written later, Code stamp 2026-11-08 03:39:55 UTC): the values-check's comment and docstring fixes to 1773ae7f..., with the code's syntax tree (docstrings stripped; comments are never in it) identical to 1773ae7f...'s, checked by ast.dump; the driver's suite re-run on them
+
+  160/160 mf3 selftest checks pass

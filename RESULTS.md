@@ -21,6 +21,104 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-07 — **G-TIME-F3's wiring: `time` is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1 (`1e79955`),
+  carrying the rest of m's pre-load check and a DRIVER line, in `scripts/m_sessions.py`'s forms. Only the driver
+  changes: its blob moves from `fad31c20…0cbb` to ``890084e6…90af``. mf3's package, m's, the analyzer and the lock stand,
+  and G-SHAPE-F3 is not re-run (the seat's F-1). The self-test passes 160/160. Three blind review rounds found no
+  MAJOR.**
+  (Stamp verified at write time: `date -u` → **Sun Nov  8 03:40:47 UTC 2026**.)
+  - **The routing.**
+    - LOCK-m-F3 v0.1 §11 item 1, and the PI's routing of 2026-11-07, item 1 ("… LOCK-m-F3 v0.1 → G-TIME-F3 [go]").
+    - The coordinating session's routing of 2026-11-07, relayed in chat in answer to Code's question. It is quoted in
+      full in the design raw (§1). It opens: "Build at time. Wire m's remaining pre-load checks at the `time` wiring,
+      in scripts/m_sessions.py's forms … Name each one in the G-TIME-F3 wiring entry."
+    - Design raw: [`_mf3-time-wiring_design`](results/raw/2026-11-07_mf3-time-wiring_design.md).
+  - **The pre-load checks, each named** (m's forms, in `qwen_snapshot` and `run_time`):
+    - the MLXLM_USE_MODELSCOPE refusal (in any letter case);
+    - the local-path refusal: no path or link named like the model id in the working directory;
+    - the hub's own offline resolution, with mlx_lm's patterns, returning refs/main's snapshot;
+    - the SNAPSHOT line;
+    - the post-load snapshot re-read with its model-id STOP (SNAPSHOT RE-READ REFUSED, SNAPSHOT MOVED, MODEL ID).
+
+    Beside them:
+    - the DRIVER line;
+    - the snapshot's revision checked against the lock's weights revision before the load. That is m's
+      REVISION_STAGES refusal (qual and campaign in m), extended to `time`.
+  - **Dated note, 2026-11-07 (the e9b5022 precedent): F-2.**
+    - The seat's F-2, verbatim (`results/raw/2026-11-06_ganl-f3_design-to-code_answers.md:25`): "**F-2.** Accepted:
+      the campaign's ruling forms (O4-1, O1-3, RM4-1, VC4-1, VC4-2) and the rest of m's pre-load check arrive with
+      the campaign subcommand's wiring, in `scripts/m_sessions.py`'s forms, each named in that step's entry; the
+      docstring's declaration stands until then."
+    - Code's reading, as routed:
+      - `time` is the first Q-F3 stage that loads Qwen;
+      - building the checks there means they are present when the campaign is wired, which F-2 needs, and that they
+        come with the stage wiring, as the F3 build design §8 and the PIN in `stages.licence_problems` say;
+      - they add refusals before the load and the SNAPSHOT line; with them come the DRIVER line, and after the load
+        the re-read line and three STOPs before any session. No measurement or verdict path changes.
+    - The campaign's ruling forms stay with the campaign.
+    - If the seat reads F-2 as forbidding the checks before the campaign, this note is where it will see it.
+  - **F-1, on the edit as made.**
+    - The edit wires a subcommand at its step and touches no scoring-stack function: every change is in the driver.
+      So G-SHAPE-F3 is not re-run.
+    - G-SHAPE-F3's artifact (`0c9de56e…1461`) records the driver at `fad31c20…0cbb`, and that record stays the
+      build's.
+    - The DRIVER line prints the new blob's sha256 before the load. It is recorded in the G-TIME-F3 entry and in
+      LOCK-m-F3 v0.2. That is one of the step-10 read's four Q2 conditions, which Code reads F-1's "with the same
+      scope" as carrying. All four hold (design raw §2).
+  - **The values a run takes.**
+    - As flags, in m's form: the analyzer's sha256, mf3's `package_sha256` and the renders' sha16.
+    - From the lock's committed text, as routed: `m_module_sha256` and the weights binding. The licence's (e′) and
+      (g) bind them to the files and the hub cache.
+  - **PIN sites:** nine, declared at LOCK-m-F3 v0.2 (design raw §5), as m's step-10 sites were at LOCK v0.2.
+  - **Self-test:** 136 → 160, 160/160 on the final bytes at `1e79955`. The driver's own checks go from 12 to 36.
+    - No case can load the model, run a session on it, or write `data/mf3`.
+    - The cases that can reach the Qwen branch trap the loader, the stage, the schedules writer and the self-test.
+      The stub-factory runs, which run sessions on the stub through the real stage, trap the loader. Each points
+      `DEFAULT_OUT` at a test root (design raw §6).
+    - The constants check's real `_load_qwen` call runs with every Qwen route closed.
+  - **Review:** three blind rounds, with Code's dispositions after each
+    ([`_mf3-time-wiring_review`](results/raw/2026-11-07_mf3-time-wiring_review.md)).
+    - Round 1: 0 MAJOR, 3 MINOR, 13 NOTEs; 41 mutants, 18 survived.
+    - Round 2: 0 MAJOR, 1 MINOR, 12 NOTEs; 74 mutants, 16 survived.
+    - Round 3: 0 MAJOR, 1 MINOR, 12 NOTEs; 99 runs, 16 survived, 7 of them equivalent.
+    - The five MINORs, each fixed:
+      - round 1's MINOR-2 was a production defect: `driver_problems` checked the canonical path, not the running file.
+        It was fixed in `driver_problems`;
+      - round 1's MINOR-1 was the self-test's own trap coverage;
+      - the other three (round 1's MINOR-3, round 2's and round 3's) were gaps against m's self-test.
+    - Code's check by mutation: the nine non-equivalent round-3 survivors, and the load route r3_k1, were built and
+      run under the driver checks, with the model imports blocked. All ten are killed.
+      - Eight ran on `1773ae7f…`, whose code is identical to the final bytes'.
+      - r3_p2 and r3_g1 ran on the final bytes, rebuilt in the reviewer's form (moves) after the values-check found
+        that Code's first builds differed. Three other builds were variants of the reviewer's.
+      - The reviewer's own ten mutants, run in memory by the values-check on `1773ae7f…` and on the final bytes, are
+        all killed.
+  - **Site check** ([`_mf3-time-wiring_sitecheck`](results/raw/2026-11-07_mf3-time-wiring_sitecheck.txt)):
+    - All ten suites pass on `1e79955` with the driver as it stood before the help-pairing pin: regression 154/154,
+      format_recon 67/67, k1_stage1 21/21, k1_analyze 20/20, e2d_d2_analyze 46/46, recon_echo 18/18, closure_verify3
+      24/24, m_sessions 846/846, m_analyze 525/525, mf3_sessions 160/160.
+    - The driver's suite, the only one that reads the driver, passes 160/160 on the final bytes
+      ([`_mf3-time-wiring_selftest`](results/raw/2026-11-07_mf3-time-wiring_selftest.txt)). Those bytes carry the
+      values-check's comment and docstring fixes; their code's syntax tree is identical to the bytes before.
+    - closure_verify3 reads the untracked `HANDOFF-2026-09-04-design.md`. Without it, in a fresh worktree, it fails
+      its two R13 checks (22/24), and the raw records that run. With the file copied in, as the earlier site checks
+      had it, it passes 24/24.
+  - **Values-check:** a blind check of this entry and its four raws ran before the commit: 58 items, 40 PASS, 12
+    IMPRECISE, 6 FAIL.
+    - The FAILs were wording, one count, one scrub and one mutation record. All are fixed, and every item was
+      re-checked at source.
+    - The driver's comment and docstring fixes left its code's syntax tree identical, and its self-test was re-run
+      on the new bytes (160/160).
+    - The raw, with Code's dispositions, is committed beside
+      ([`_mf3-time-wiring_valuescheck`](results/raw/2026-11-07_mf3-time-wiring_valuescheck.md)).
+  - **Records left as they are** (declared in the design raw, §7):
+    - G-SHAPE-F3's recorded driver blob;
+    - LOCK-m-F3 v0.1 §9's F57 row and its "carries no PIN line";
+    - `stages.py`'s docstring that no stage is wired, which an edit would move mf3's package to change;
+    - the driver's pre-existing drift from m.
+  - **Next:** G-TIME-F3's six sessions, launched with m:267's line as written, in their own entry. Not pushed.
+    Committed by path.
+
 - 2026-11-07 — **LOCK-m-F3 v0.1 — Q-F3's first lock (m:292), committed on the PI's routing of 2026-11-07, item 1.
   `LOCK-m-F3.md` (sha256 `377c5d60…6ce7`) names the analyzer `d347ea0c…5e48`, mf3's package `f30ad505…6310`, the eleven
   m files, the weights of record, the re-run G-SHAPE-F3 (`0c9de56e…1461`), G-ANL-F3's artifact (`b91a8c67…936c`) and
