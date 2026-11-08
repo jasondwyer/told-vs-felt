@@ -362,6 +362,24 @@ applied to CLAUDE.md.
   - **The go:** the PI delegated G-CAL-p's go for the box to the coordinating session (routing item 3). It is held
     until the seat rules, because G-CAL-p is one shot per checkpoint.
   - **Committed by path:** the block and this entry. Not pushed.
+  - **Close (PI date 2026-11-07).** The design seat's answer
+    ([`2026-11-07_p-gcal-flags_design-to-code_answers.md`](results/raw/2026-11-07_p-gcal-flags_design-to-code_answers.md),
+    sha256 `e3de1c0316c95701e627fb89596c50b0cf0596f31c352ed6ee9a8daca5d1e006`) is committed here by path, as the PI placed it.
+    - It rules the three flags and, beside them, F-p1 and F-p7:
+      - F-p3: 2026-11-07;
+      - F-p8: m's pin in `proposal_sha256` and p's in `proposal_p_sha256`, in every p artifact;
+      - F-p10: the returned text kept as a diagnostic field;
+      - P21: admitted as the register's pinned-restatement exception;
+      - F-p1: its definition pinned.
+    - The PI's routing, in chat, verbatim:
+
+      > 1. The five rulings [confirmed] → Code applies them, the coordinating session gives the box go, G-CAL-p runs [go].
+      > 2. Push: the fourteen local commits, N1’s release-surface change (preprint bytes, sidecar, README-NOTE) included [push all].
+
+    - The pod session applies the five rulings in one commit, with the answer's dated notes on the COMMITTED
+      entry, and brings the box repo to it. The coordinating session's go follows, and then G-CAL-p runs.
+    - The push of the fourteen commits since `fb742e4` (through `1e79955`) is the coordinating session's. This
+      record commit, and the `time` wiring `acde2d8` committed after that count, are not in it.
 
 - 2026-11-07 — **G-SHAPE-p — PASS (p v0.2 §4.2; p §8 step 4's last item): the run of record on the BUILD's committed
   sources (`a665a09`). `data/p/gates/G-SHAPE-p.json`, schema `p-gshape-v1`, sha256
