@@ -36,6 +36,26 @@ applied to CLAUDE.md.
     - step 6's go, which is the PI's.
   - **The pod** is up and idle.
   - **Committed by path:** the block and this entry. Not pushed.
+  - **Close (PI date 2026-11-08).** The design seat's answer
+    ([`2026-11-08_p-gcal_design-to-code_answers.md`](results/raw/2026-11-08_p-gcal_design-to-code_answers.md),
+    sha256 `4b77e39a05c930fc2af5e20094e44a10df512403db9ee49aea70fa12143548e1`) is committed here by path, as the PI placed it.
+    - **The read is closed:** G-CAL-p passed on all three checkpoints, and nothing is adjudicated.
+    - **The SFT sentence is declared:** every report of OLMo-SFT's A0 outcome carries *G-CAL-p passed at the bar,
+      47/64 against 47*.
+    - **The flags:**
+      - F-p13: a counter, not a hair trigger, with two terms;
+      - F-p12: `5009e77`'s artifact is superseded by G-SHAPE-p's re-run before LOCK-p v0.1;
+      - F-p11: refined with a frozen lexicon and a suffix rule, and two harness-shaped forms added.
+    - The PI's routing of 2026-11-08, in chat, verbatim:
+
+      > 1. G-CAL-p: read closed; the SFT at-the-bar sentence; F-p13 counter / F-p12 superseded / F-p11 refined [confirmed]. Step 6 [go]. Pod: [keep up through LOCK-p v0.1] (~$43/day idle).
+      > 2. G-TIME-F3: the ruling (bar fires under m:265; STOP) acknowledged; dated correction on the entry [go]. ADDENDUM-m2: route to Code’s pre-read and step 3 [go]; the four forms and the selection rule [as written]; the smoke’s laptop go [go].
+      > 3. Standing rule: model runs on the laptop are announced to the coordinating session and serialized [adopted].
+      > 4. Push: 7 local commits since the lock [push].
+
+    - **Step 6 goes to the pod session:** `p_analyze` + G-ANL-p, then the G-SHAPE-p re-run, then LOCK-p v0.1 ×3, then
+      G-TIME-OLMo (p) ×3 on the box, then the seat's read. The pod stays up through LOCK-p v0.1.
+    - **The push** of the seven commits since LOCK-m-F3 v0.1 is done (`1e79955..74c004c`). This commit is not in it.
 
 - 2026-11-08 — **G-CAL-p-{sft,dpo,instruct} (PROPOSAL-p v0.2 §3, §8 step 5), on the coordinating session's go of
   2026-11-07 under the PI's routing of 2026-11-07, item 1: CONDITION (4) PASSES ON ALL THREE CHECKPOINTS, corrupted
@@ -307,6 +327,20 @@ applied to CLAUDE.md.
     dispositions, is committed beside ([`_mf3-gtime-f3_valuescheck`](results/raw/2026-11-07_mf3-gtime-f3_valuescheck.md)).
   - **Next:** nothing until the seat rules. G-ID-F3 (m:295) and LOCK-m-F3 v0.2 (m:296) wait for the seat's read and the
     PI's word. Not pushed. Committed by path.
+  - **Close and dated correction (PI date 2026-11-08).** The design seat's answer
+    ([`2026-11-08_gtime-f3_design-to-code_answers.md`](results/raw/2026-11-08_gtime-f3_design-to-code_answers.md),
+    sha256 `f683f5d234d76de2bec9f3e81508dad122ca315e0356f417a73edec4c664ee19`) is committed here by path, as the PI placed it.
+    - **The dated correction, in the seat's words:** *PASS as computed under PINs F25/F28's echo set; under m:265's
+      domain the bar reads 9/13 ≥ 4 and fires; STOPPED by the seat's ruling of 2026-11-08 (A-m2 §0.2).*
+      The sessions, their picks and the reads stay where m:271 and m:318 place them.
+    - The PI's routing of 2026-11-08, in chat, verbatim (item 2, with item 3's standing rule; the full block is in the
+      G-CAL-p close of the same commit):
+
+      > 2. G-TIME-F3: the ruling (bar fires under m:265; STOP) acknowledged; dated correction on the entry [go]. ADDENDUM-m2: route to Code’s pre-read and step 3 [go]; the four forms and the selection rule [as written]; the smoke’s laptop go [go].
+      > 3. Standing rule: model runs on the laptop are announced to the coordinating session and serialized [adopted].
+
+    - ADDENDUM-m2 v0.1 (`ADDENDUM-m2-f3-reasoning-block-v0_1.md`, sha256 `cdcc8e86…53f0`) stays untracked until
+      its step 3, after Code's pre-read. G-ID-F3 waits for the re-run that A-m2 §5 sequences.
 
 - 2026-11-07 — **G-TIME-F3's wiring: `time` is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1 (`1e79955`),
   carrying the rest of m's pre-load check and a DRIVER line, in `scripts/m_sessions.py`'s forms. Only the driver
