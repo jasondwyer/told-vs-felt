@@ -24,11 +24,11 @@ library's background thread cannot be present at a site of record.
 
 AT STEP 6 (the design seat's answer of 2026-11-08, ``de729c4``): entry (3) is built at its two sites (the Clock and
 the v2 resolution; the roots are parameters, no site, Q9 (b)); entries (6)-(8) are built as declared (Q1-Q3); entry
-(9) is built on ``resume.Identity`` -- the site Code's block of 2026-11-08 proposes, because the declared one,
-``stages._identity``, cannot run -- and stays PENDING, refused by ``substituted``, until the seat rules. At a gate
-stage the substitutions are entered before the load and held to the stage's end (the seat's Q4): the assertion runs
-at each entry, and term (d)'s state at the stage's end, before restoration, is recorded (``single_thread_state``),
-never raised.
+(9) is built on ``resume.Identity``, the site the seat's answer to Code's entry (9) block declares (§2, ``6b63973``,
+routed by the PI on 2026-11-09) -- the site first declared, ``stages._identity``, cannot run -- and is entered and
+restored with entry (8) (``PAIRED_AFTER``). At a gate stage the substitutions are entered before the load and held to
+the stage's end (the seat's Q4): the assertion runs at each entry, and term (d)'s state at the stage's end, before
+restoration, is recorded (``single_thread_state``), never raised.
 """
 from __future__ import annotations
 
@@ -68,16 +68,12 @@ class Entry:
 
 BUILT = "built at the p BUILD (p §8 step 4)"
 BUILT_STEP6 = "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"
-#: Entry (9)'s status until the seat rules on Code's block of 2026-11-08 (results/raw/2026-11-08_p-step6_entry9_code-
-#: to-design.md): declared at de729c4 on stages._identity, a site that cannot run (m's _validated rebuilds every
-#: identity through resume.Identity, which refuses p's fields); Code's proposed site, resume.Identity, is built here
-#: and refused by ``substituted`` until the ruling admits it.
-PENDING = "built; pending the seat's ruling on entry (9)'s site (Code's block of 2026-11-08)"
 #: The register's entries as ans2 Q0 declares them (p §4.2), with the seat's ruling of 2026-11-07 (38f9974, §4):
 #: entry (4), declared and never exercised, is struck; entry (5) is G-CAL-p's pinned restatement of m's generation
 #: call. The seat's answer of 2026-11-08 (de729c4, results/raw/2026-11-08_p-step6_design-to-code_answers.md) makes
 #: entry (3) concrete (Q9: the Clock and the v2 resolution are sites; the roots are parameters, no site) and declares
-#: entries (6)-(9) for p's gate stages and campaign (Q1-Q3).
+#: entries (6)-(9) for p's gate stages and campaign (Q1-Q3); its answer to Code's entry (9) block (6b63973, §2,
+#: results/raw/2026-11-08_open50-entry9_design-to-code_answers.md) moves entry (9) to resume.Identity.
 #: PIN (Code, declared at step 6): entry (3)'s module is ``m_analyze``, the name scripts/p_analyze.py imports
 #: scripts/m_analyze.py under (scripts/ on sys.path; the import system registers it).
 ENTRIES: tuple[Entry, ...] = (
@@ -127,7 +123,8 @@ ENTRIES: tuple[Entry, ...] = (
           "the seat's Q3 (a): p's four fields added to m's identity by m's own builder, wrapped -- the stage's build "
           "(stages._identity, stages.py:1106) and m's rebuild in _validated (resume.py:507) both resolve "
           "resume.Identity at call time. Declared at de729c4 on stages._identity, which cannot run (Code's block of "
-          "2026-11-08)", PENDING,
+          "2026-11-08, 9624f70); on resume.Identity by the seat's answer to that block (6b63973, §2), entered and "
+          "restored with entry (8)", BUILT_STEP6,
           (("Identity", "valence_core.p.identity.identity_p"),)),
 )
 BY_N = {e.n: e for e in ENTRIES}
@@ -173,7 +170,7 @@ def substituted(n: int, module: ModuleType, values: Mapping[str, Any]) -> Iterat
     e = BY_N.get(n)
     if e is None or e.status not in SUBSTITUTABLE or RESTATEMENT in e.kinds:
         raise RegisterStop(f"REGISTER STOP: entry ({n}) is not a substitution site built at this step (term (e))"
-                           + (f": {e.status}" if e is not None and e.status == PENDING else ""))
+                           + (f": {e.status}" if e is not None else ""))
     if getattr(module, "__name__", None) != e.module or tuple(sorted(values)) != tuple(sorted(e.attrs)):
         raise RegisterStop(f"REGISTER STOP: ({getattr(module, '__name__', module)!r}, {sorted(values)}) is not "
                            f"entry ({n}) ({e.module}, {list(e.attrs)}) (term (e))")
@@ -234,19 +231,21 @@ def _selftest(chk) -> None:
     import types
     from . import corrupt
     chk("register: eight entries -- (1)-(3) as ans2 Q0 declares them, (3) made concrete by the seat's Q9, (5) the "
-        "pinned restatement admitted on 2026-11-07, (4) struck, (6)-(9) declared by the seat's answer of 2026-11-08; "
-        "(1) and (2) built at the BUILD, (3) and (6)-(8) at step 6, (5) admitted, (9) pending the seat's ruling on its "
-        "site",
+        "pinned restatement admitted on 2026-11-07, (4) struck, (6)-(9) declared by the seat's answer of 2026-11-08, "
+        "(9) on resume.Identity by its answer to Code's entry (9) block (6b63973); (1) and (2) built at the BUILD, (3) "
+        "and (6)-(9) at step 6, (5) admitted",
         [e.n for e in ENTRIES] == [1, 2, 3, 5, 6, 7, 8, 9]
         and [e.status for e in ENTRIES] == [BUILT, BUILT, BUILT_STEP6, ADMITTED, BUILT_STEP6, BUILT_STEP6,
-                                           BUILT_STEP6, PENDING]
+                                           BUILT_STEP6, BUILT_STEP6]
+        and (BY_N[9].module, BY_N[9].attrs, BY_N[9].allowed) == ("valence_core.m.resume", ("Identity",),
+                                                                 (("Identity", "valence_core.p.identity.identity_p"),))
         and BY_N[5].kinds == (RESTATEMENT,)
         and [BY_N[n].kinds for n in (3, 6, 7, 8, 9)] == [("clock", "roots"), ("roots",), ("roots",), ("pins",),
                                                          ("pins",)])
     chk("register: every substitution entry's kinds are among eligibility, keys, pins, Clock and roots (term (b)), "
         "entry (5)'s the pinned restatement; each built entry admits exactly one replacement per attribute",
         all(e.kinds and all(k in KINDS for k in e.kinds) for e in ENTRIES if e.n != 5)
-        and all(sorted(dict(e.allowed)) == sorted(e.attrs) for e in ENTRIES if e.status in SUBSTITUTABLE + (PENDING,)),
+        and all(sorted(dict(e.allowed)) == sorted(e.attrs) for e in ENTRIES if e.status in SUBSTITUTABLE),
         [e.kinds for e in ENTRIES])
     mod = types.ModuleType("valence_core.m.corr")
     mod._eligible_m = orig = (lambda t: [0])
@@ -263,8 +262,6 @@ def _selftest(chk) -> None:
     chk("register: restoration holds after an exception inside the block (term (c))", mod._eligible_m is orig)
     outs = []
     from . import analysis, identity, schedule as p_schedule, stage
-    res_mod = types.ModuleType("valence_core.m.resume")
-    res_mod.Identity = res_orig = (lambda **kw: kw)
     for n, m, v in ((3, mod, {"clock_of_record": None, "crosscheck_coordinate": None}), (5, mod, {"x": None}),
                     (4, mod, {}), (1, mod, {"_k_m": None}),
                     (1, types.ModuleType("valence_core.m.keys"), {"_eligible_m": None}),
@@ -274,18 +271,10 @@ def _selftest(chk) -> None:
                 outs.append("ran")
         except RegisterStop as e:
             outs.append("stop" if "REGISTER STOP" in str(e) else "other")
-    try:
-        with substituted(9, res_mod, {"Identity": identity.identity_p}):   # the declared replacement itself
-            pend = "ran"
-    except RegisterStop as e:
-        pend = "pending" if PENDING in str(e) else f"other: {e}"
     chk("register: entry (3) on a module other than m_analyze, entry (5) (a restatement, never substituted), struck "
         "entry (4), an undeclared attribute, a wrong module, a replacement other than the declared one and a stand-in "
-        "carrying its qualified name are each a STOP (terms (a), (e)); entry (9), with its declared replacement, is "
-        "refused while its site is pending, the refusal naming the pending status (N1)",
-        outs == ["stop"] * 7 and (pend == "pending") == (BY_N[9].status == PENDING)
-        and (pend == "ran") == (BY_N[9].status != PENDING) and mod._eligible_m is orig and res_mod.Identity is res_orig,
-        (outs, pend))
+        "carrying its qualified name are each a STOP (terms (a), (e))",
+        outs == ["stop"] * 7 and mod._eligible_m is orig, outs)
     ma = types.ModuleType("m_analyze")
     ma.clock_of_record, ma.crosscheck_coordinate = c_orig, x_orig = (lambda u: "m"), (lambda *a, **k: None)
     seen3 = []
@@ -307,41 +296,34 @@ def _selftest(chk) -> None:
         seen3 == [True] and seen68 == [True] and ma.clock_of_record is c_orig and ma.crosscheck_coordinate is x_orig
         and sm.DEFAULT_OUT is d0 and sc.verify_schedule_dir is v0 and rm.IDENTITY_KEYS_OLMO is k0)
     rm2 = types.ModuleType("valence_core.m.resume")
-    rm2.IDENTITY_KEYS_OLMO, rm2.Identity = ("a",), (lambda **kw: kw)
-    e9 = BY_N[9]
-    import dataclasses as _dc
+    rm2.IDENTITY_KEYS_OLMO, rm2.Identity = k2, b2 = ("a",), (lambda **kw: kw)
     try:
-        BY_N[9] = _dc.replace(e9, status=BUILT_STEP6)       # SELF-TEST ONLY: the pairing rule, whatever (9)'s status
-        try:
-            with substituted(9, rm2, {"Identity": identity.identity_p}):
-                alone = "ran"
-        except RegisterStop as e:
-            alone = "stop" if "entered only with entry (8)" in str(e) else f"other: {e}"
-        with substituted(8, rm2, {"IDENTITY_KEYS_OLMO": identity.IDENTITY_KEYS_OLMO_P}):
-            in8 = active(8)
-            with substituted(9, rm2, {"Identity": identity.identity_p}):
-                both = (active(8), active(9))
-        after = (active(8), active(9))
-    finally:
-        BY_N[9] = e9
+        with substituted(9, rm2, {"Identity": identity.identity_p}):
+            alone = "ran"
+    except RegisterStop as e:
+        alone = "stop" if "entered only with entry (8)" in str(e) else f"other: {e}"
+    with substituted(8, rm2, {"IDENTITY_KEYS_OLMO": identity.IDENTITY_KEYS_OLMO_P}):
+        in8 = active(8)
+        with substituted(9, rm2, {"Identity": identity.identity_p}):
+            both = (active(8), active(9), rm2.Identity is identity.identity_p
+                    and rm2.IDENTITY_KEYS_OLMO is identity.IDENTITY_KEYS_OLMO_P)
+    after = (active(8), active(9), rm2.Identity is b2 and rm2.IDENTITY_KEYS_OLMO is k2)
     rm3 = types.ModuleType("valence_core.m.resume")
     rm3.IDENTITY_KEYS_OLMO, rm3.Identity = ("a",), (lambda **kw: kw)
-    try:
-        BY_N[9] = _dc.replace(e9, status=BUILT_STEP6)
-        with substituted(8, rm3, {"IDENTITY_KEYS_OLMO": identity.IDENTITY_KEYS_OLMO_P}):
-            try:
-                with substituted(9, rm2, {"Identity": identity.identity_p}):
-                    cross = "ran"
-            except RegisterStop:
-                cross = "stop"
-            on_other = (active(8), active(8, rm3), active(8, rm2))
-    finally:
-        BY_N[9] = e9
-    chk("register: entry (9) is refused unless entry (8) is in force on the same module, and enters with it; the "
-        "register's count of the entries in force, per entry and module, rises and falls with each block (N-2, N-7; "
-        "round 3's NOTE 1)",
-        alone == "stop" and in8 is True and both == (True, True) and after == (False, False) and cross == "stop"
-        and on_other == (True, True, False) and not _ACTIVE, (alone, both, after, cross, on_other, dict(_ACTIVE)))
+    with substituted(8, rm3, {"IDENTITY_KEYS_OLMO": identity.IDENTITY_KEYS_OLMO_P}):
+        try:
+            with substituted(9, rm2, {"Identity": identity.identity_p}):
+                cross = "ran"
+        except RegisterStop:
+            cross = "stop"
+        on_other = (active(8), active(8, rm3), active(8, rm2))
+    chk("register: entry (9) -- on resume.Identity, as the seat's answer to Code's entry (9) block declares it "
+        "(6b63973, §2) -- is refused unless entry (8) is in force on the same module, and enters with it, its declared "
+        "replacement in force for the block and m's attributes restored after; the register's count of the entries in "
+        "force, per entry and module, rises and falls with each block (N-2, N-7; round 3's NOTE 1)",
+        alone == "stop" and in8 is True and both == (True, True, True) and after == (False, False, True)
+        and cross == "stop" and on_other == (True, True, False) and not _ACTIVE,
+        (alone, both, after, cross, on_other, dict(_ACTIVE)))
     st = single_thread_state()
     chk("register: the stage-end state records term (d)'s test without raising (the seat's Q4)",
         st["single_threaded"] is True and st["on_main_thread"] is True and st["active_count"] == 1, st)

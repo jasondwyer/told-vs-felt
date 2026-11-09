@@ -21,6 +21,39 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **p step 6 — entry (9) on `resume.Identity`, admitted (the design seat's answer to Code's entry (9)
+  block, §2, and the PI's routing of 2026-11-09, both committed at `6b63973`):** register entry (9) leaves PENDING and
+  is built at step 6. Only the register, two module docstrings and the self-tests change. Nothing ran on a model
+  or the box.
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 17:33:01 UTC 2026**.)
+  - **The routing**, relayed verbatim by the coordinating session: the PI's "Route as given", in reply to its question
+    "Do you route the seat's two rulings as drafted?", so the answer's §3 as drafted is the routing. Item 2, quoted
+    from the committed raw:
+
+    > 2. p: entry (9) on `resume.Identity` [declared]; step 6 continues — build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 [go].
+
+  - **The register, recorded as §2 asks:** (6) roots, (7) roots, (8) pins, (9) pins on `resume.Identity`, with
+    Q9 (b)'s roots as parameters (entry (3)'s reason says so).
+    - Entry (9): `valence_core.m.resume.Identity` → `valence_core.p.identity.identity_p` (m's builder, wrapped), kind
+      pins, status "built at p §8 step 6". Its reason now cites Code's block (`9624f70`) and the ruling (`6b63973`, §2).
+    - (8) and (9) are entered and restored together: the register refuses (9) unless (8) is in force on the same
+      module (`PAIRED_AFTER`, unchanged since `d215d5b`).
+    - The PENDING status is removed. A refused entry's message now names its status, whatever that status is.
+  - **The self-tests**, changed only where they admitted (9) by hand:
+    - `identity`: the case that set m's two attributes by hand now enters (8) and (9) through the register, and the
+      seat's three term (c) checks run through the register with nothing admitted.
+    - `stage`: the stub runs enter (9) as the stage does. Round 3's m-3 case now withholds (9) for its own duration (a
+      status outside the admitted ones, restored after). It now also checks the precheck's refusal of the unadmitted
+      entry, which its text claimed and its condition did not test.
+    - `register`: the pending case is removed. The pairing case runs on the built entry, and the first check asserts
+      (9)'s module, attribute and replacement.
+  - **Checks:** `scripts/p_sessions.py --selftest` 170/170; `scripts/p_analyze.py --selftest`: m's battery 525/525
+    (all 538 coverage ids), then G-ANL-p 14/14. p's package_sha256 is now
+    `7a08dbfad83aab44dbd11d52844c0473a24610790502a949dfbe650cc9661d24` (the BUILD's was `2d9a933a…f720`). No m file
+    changed.
+  - **Next:** G-SHAPE-p's re-run, with `5009e77`'s artifact superseded; then G-ANL-p and LOCK-p v0.1 ×3; then
+    G-TIME-OLMo (p) ×3 on the box. Not pushed. Committed by path.
+
 - 2026-11-09 — **The A-m2 smoke's driver, `time --smoke --smoke-out DIR` in `scripts/mf3_sessions.py` (A-m2 v0.3
   §3.2, §4.2; Code's P4, accepted at ans2 §3), on the PI's routing of 2026-11-09.**
   - **The blob:** the driver moves from `890084e6…90af` to `c9393a48…4d9b`.
@@ -268,6 +301,8 @@ applied to CLAUDE.md.
           resume;
         - with both restored, m's identity path is byte-identical to m's on m's inputs.
       - The G-SHAPE-p re-run, G-ANL-p and the three LOCK-p v0.1s wait for the flip, which moves p's package.
+      - **Dated note (2026-11-09):** the PI routed the seat's ruling on 2026-11-09 (`6b63973`). Entry (9) is
+        admitted at the 2026-11-09 entry "p step 6 — entry (9) on `resume.Identity`, admitted".
   - **G-TIME-OLMo (p)** (`valence_core/p/stage.py`; the driver's `time --unit OLMo-{ckpt} [--resume]`): m's
     `run_gate_stage` (gate `time`) for p's unit under entries (1), (2) and (6)–(9).
     - The order (the seat's Q4, a rule): every substitution is entered before anything in the process computes renders

@@ -1,5 +1,6 @@
 """PROPOSAL-p's four fields in m's checkpoint identity (register entries (8) and (9); the design seat's answer of
-2026-11-08, ``de729c4``, Q3 (a); Code's block on entry (9)'s site, 2026-11-08).
+2026-11-08, ``de729c4``, Q3 (a); Code's block on entry (9)'s site, 2026-11-08, and the seat's answer to it, §2,
+``6b63973``).
 
 p:84 puts "a ``proposal: PROPOSAL-p`` field with p's sha256 in every record's identity"; F-p8 (the rulings of
 2026-11-07, §2) puts ``proposal_p_sha256`` "in every p artifact -- gates, checkpoints, locks' identity blocks". A p gate
@@ -129,55 +130,44 @@ def _selftest(chk) -> None:
         restored = m_resume.IDENTITY_KEYS_OLMO is saved
     chk("identity: with entry (8) alone m's _validated refuses p's identity (TypeError: m's builder takes no p field) -- "
         "the reason entry (9) sits on resume.Identity -- and entry (8) restores", v8 == "TypeError" and restored, v8)
-    # Entry (9) is pending the seat's ruling on its site, so the register refuses it; this case installs the wrapper
-    # by hand (a self-test body, outside term (e)'s static check) to show that the proposed site makes m's own
-    # validation accept p's identity, and restores m's builder in a finally.
+    # Entries (8) and (9) through the register, as the stage enters them (the seat's answer of 2026-11-08 on Code's
+    # entry (9) block, §2, 6b63973): m's own validation accepts p's identity and refuses a wrong p field.
     saved_b, saved_k = m_resume.Identity, m_resume.IDENTITY_KEYS_OLMO
-    try:
-        m_resume.Identity, m_resume.IDENTITY_KEYS_OLMO = identity_p, IDENTITY_KEYS_OLMO_P
+    with register.substituted(8, m_resume, {"IDENTITY_KEYS_OLMO": IDENTITY_KEYS_OLMO_P}), \
+            register.substituted(9, m_resume, {"Identity": identity_p}):
         v9 = m_resume._validated(built) == built
         try:
             m_resume._validated({**built, "proposal": "PROPOSAL-m"})
             v9_bad = "accepted"
         except ValueError:
             v9_bad = "refused"
-    finally:
-        m_resume.Identity, m_resume.IDENTITY_KEYS_OLMO = saved_b, saved_k
-    chk("identity: with (8) and (9) on resume.Identity, m's _validated accepts p's identity and refuses a wrong p "
-        "field; m's builder and key set restored", v9 and v9_bad == "refused" and m_resume.Identity is saved_b
-        and m_resume.IDENTITY_KEYS_OLMO is saved_k, (v9, v9_bad))
+    chk("identity: with (8) and (9) entered through the register on resume.Identity, m's _validated accepts p's "
+        "identity and refuses a wrong p field; m's builder and key set restored", v9 and v9_bad == "refused"
+        and m_resume.Identity is saved_b and m_resume.IDENTITY_KEYS_OLMO is saved_k, (v9, v9_bad))
     # The seat's term (c) for entries (8) and (9) (the answer of 2026-11-08 on Code's entry (9) block, §2), through the
     # register: with both, _validated accepts a p identity and a moved p field is identity on resume (m's resume path
-    # refuses it, naming it); with both restored, m's identity path is byte-identical to m's on m's inputs. While entry
-    # (9) is pending, the register's entry is admitted for this case alone (SELF-TEST ONLY) and restored after.
-    import dataclasses
+    # refuses it, naming it); with both restored, m's identity path is byte-identical to m's on m's inputs.
     import tempfile
     from pathlib import Path
-    e9 = register.BY_N[9]
     m_before = (m_resume._canon(m_resume.Identity(**base)), m_resume._canon(m_resume._validated(m_only)))
     resumed, acc, diff = None, None, None
-    try:
-        if e9.status == register.PENDING:
-            register.BY_N[9] = dataclasses.replace(e9, status=register.BUILT_STEP6)
-        with register.substituted(8, m_resume, {"IDENTITY_KEYS_OLMO": IDENTITY_KEYS_OLMO_P}), \
-                register.substituted(9, m_resume, {"Identity": identity_p}):
-            acc = m_resume._validated(built) == json.loads(m_resume._canon(built))
-            moved = {**built, "p_package_sha256": "c" * 64}
-            diff = sorted(m_resume._identity_diff(built, moved))
-            with tempfile.TemporaryDirectory(prefix="p_identity_") as td:
-                cp = Path(td) / "OLMo-sft_time.json"
-                m_resume.write_checkpoint(cp, m_resume.load_or_init(cp, built, False))
-                try:
-                    m_resume.load_or_init(cp, moved, True)
-                    resumed = "accepted"
-                except SystemExit as e:
-                    resumed = "refused" if "p_package_sha256" in str(e) else f"other: {str(e)[:120]}"
-    finally:
-        register.BY_N[9] = e9
+    with register.substituted(8, m_resume, {"IDENTITY_KEYS_OLMO": IDENTITY_KEYS_OLMO_P}), \
+            register.substituted(9, m_resume, {"Identity": identity_p}):
+        acc = m_resume._validated(built) == json.loads(m_resume._canon(built))
+        moved = {**built, "p_package_sha256": "c" * 64}
+        diff = sorted(m_resume._identity_diff(built, moved))
+        with tempfile.TemporaryDirectory(prefix="p_identity_") as td:
+            cp = Path(td) / "OLMo-sft_time.json"
+            m_resume.write_checkpoint(cp, m_resume.load_or_init(cp, built, False))
+            try:
+                m_resume.load_or_init(cp, moved, True)
+                resumed = "accepted"
+            except SystemExit as e:
+                resumed = "refused" if "p_package_sha256" in str(e) else f"other: {str(e)[:120]}"
     m_after = (m_resume._canon(m_resume.Identity(**base)), m_resume._canon(m_resume._validated(m_only)))
     chk("identity: the seat's term (c) for (8) and (9), through the register -- with both, m's _validated accepts p's "
         "identity and a moved p field is identity on resume (_identity_diff names it; m's load_or_init refuses the "
         "resume, naming it); with both restored, m's builder and validation are byte-identical to m's on m's inputs",
         acc is True and diff == ["p_package_sha256"] and resumed == "refused" and m_after == m_before
-        and m_resume.Identity is _M_IDENTITY and m_resume.IDENTITY_KEYS_OLMO is saved_k
-        and register.BY_N[9] is e9, (acc, diff, resumed, m_after == m_before))
+        and m_resume.Identity is _M_IDENTITY and m_resume.IDENTITY_KEYS_OLMO is saved_k,
+        (acc, diff, resumed, m_after == m_before))

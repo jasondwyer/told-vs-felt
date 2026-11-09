@@ -1,5 +1,5 @@
 """PROPOSAL-p's gate stages: G-TIME-OLMo (p) (p v0.2 §4.1-§4.2, §8 step 6; the design seat's answer of 2026-11-08,
-``de729c4``, §1; Code's block on entry (9)'s site, 2026-11-08).
+``de729c4``, §1; Code's block on entry (9)'s site, 2026-11-08, and the seat's answer to it, §2, ``6b63973``).
 
 THE STAGE. m's ``stages.run_gate_stage`` with gate ``time`` (m:302: two sessions, one per arm, uncached), run for p's
 unit -- p's records keep m's unit and template strings (p:84) -- under the substitution register, every entry through
@@ -10,7 +10,8 @@ unit -- p's records keep m's unit and template strings (p:84) -- under the subst
   (6) ``stages.DEFAULT_OUT`` -> data/p: m's out-root guard admits data/p, and every path a stage writes derives from it;
   (7) ``schedule.verify_schedule_dir`` -> p's: m's load_committed verifies p's eighteen files and p's manifest;
   (8) ``resume.IDENTITY_KEYS_OLMO`` -> m's key set and p's four fields;
-  (9) ``resume.Identity`` -> m's builder, wrapped: p's four fields in the checkpoint identity.
+  (9) ``resume.Identity`` -> m's builder, wrapped: p's four fields in the checkpoint identity; entered and restored
+      with (8).
 
 The adapter is wrapped in §2.2's proxy, whose stored-text check is §2.3's hair trigger (the seat's Q5).
 
@@ -986,12 +987,11 @@ def _selftest(chk) -> None:
             m_stages.olmo_startup = saved
 
     @contextlib.contextmanager
-    def admit_9():
-        # SELF-TEST ONLY: entry (9) is pending the seat's ruling on its site, so the register refuses it; the test runs
-        # the stage with it admitted for its own duration and restores the register's entry after.
+    def withhold_9():
+        # SELF-TEST ONLY: the register's entry (9) withheld (a status outside SUBSTITUTABLE) for the case's own
+        # duration, so that an entry the stage enters is not admitted; the entry restored after.
         e = register.BY_N[9]
-        if e.status == register.PENDING:
-            register.BY_N[9] = dataclasses.replace(e, status=register.BUILT_STEP6)
+        register.BY_N[9] = dataclasses.replace(e, status="withheld for a self-test case")
         try:
             yield
         finally:
@@ -1046,7 +1046,7 @@ def _selftest(chk) -> None:
     m_scaffold._of_record.cache_clear()
     m_scaffold.pool_and_renders()                   # m's renders cached before entry (1): the order rule's case
     try:
-        with admit_9(), stage_substitutions():
+        with stage_substitutions():
             order = "entered"
     except StageStop as e:
         order = "stop" if "before entry (1)" in str(e) else "other"
@@ -1083,7 +1083,7 @@ def _selftest(chk) -> None:
         m_scaffold._of_record.cache_clear()
         buf = io.StringIO()
         try:
-            with admit_9(), olmo_stub_startup(), pod(), contextlib.redirect_stdout(buf):
+            with olmo_stub_startup(), pod(), contextlib.redirect_stdout(buf):
                 return run_time(unit, fac, stub=True, out_root=r, resume=resume, pre=pre), None, buf.getvalue()
         except (SystemExit, Exception) as e:
             return None, e, buf.getvalue()
@@ -1116,7 +1116,7 @@ def _selftest(chk) -> None:
             "round attributed, the entries entered recorded as (1), (2), (6)-(9), m's report and reads named); every m "
             "attribute restored and the renders cache cleared after",
             ok and restored and m_scaffold._of_record.cache_info().currsize == 0
-            and register.BY_N[9].status == register.PENDING, detail)
+            and register.BY_N[9].status == register.BUILT_STEP6, detail)
         if ok:
             first = res["paths"]["p_report"].read_bytes()
             res["paths"]["p_report"].rename(res["paths"]["p_report"].with_name("moved.json"))
@@ -1249,8 +1249,7 @@ def _selftest(chk) -> None:
         (rdirty / "schedules" / "stray.json").write_text("{}\n", encoding="utf-8")
         calls: list = []
         rd, ed, _ = stub_run(rdirty, factory_with(calls=calls))
-        with admit_9():
-            pre_s = precheck(unit, stub=True)
+        pre_s = precheck(unit, stub=True)
         try:
             run_time(unit, factory_with(calls=calls), stub=False, pre=pre_s)
             n2 = "ran"
@@ -1261,8 +1260,7 @@ def _selftest(chk) -> None:
             rd is None and isinstance(ed, StageRefusal) and "not clean" in str(ed) and calls == [] and n2 == "refused",
             (ed, calls, n2))
         try:
-            with admit_9():
-                run_time(unit, factory_with(), stub=True, out_root=REPO / "data" / "p" / "selftest")
+            run_time(unit, factory_with(), stub=True, out_root=REPO / "data" / "p" / "selftest")
             inside = "ran"
         except SystemExit as e:
             inside = "refused" if "inside the repository" in str(e) else f"other: {e}"
@@ -1320,13 +1318,18 @@ def _selftest(chk) -> None:
             and out_paths(unit, rsl)["p_stopped"].is_file() and isinstance(e_s2, StageRefusal),
             (lpb[-1:], ebb, e_e1, e_e2, e_s1, e_s2))
         rnine = root("nine")
-        with admit_9():
-            pre9 = precheck(unit, stub=True)
+        pre9 = precheck(unit, stub=True)
+        try:
+            with withhold_9():
+                precheck(unit, stub=True)
+            pre9_w = "passed"
+        except StageRefusal as e:
+            pre9_w = "refused" if "register entry (9) is not admitted" in str(e) else f"other: {e}"
         nine_calls: list = []
         r9, e9_, _ = None, None, None
         m_scaffold._of_record.cache_clear()
         try:
-            with olmo_stub_startup(), pod():
+            with withhold_9(), olmo_stub_startup(), pod():
                 run_time(unit, factory_with(calls=nine_calls), stub=True, out_root=rnine, pre=pre9)
         except SystemExit as e:
             e9_ = e
@@ -1339,13 +1342,14 @@ def _selftest(chk) -> None:
             r_l, e_l, _ = stub_run(lock_path.parent.parent, factory_with(calls=lk_calls))
         finally:
             os.close(held_fd)
-        chk("stage: a STOP while the substitutions are entered (entry (9) not admitted) leaves no call log (round 3's "
-            "m-3), and the precheck refuses an unadmitted entry first; a run while another holds the stage's lock is "
-            "refused before anything is read or loaded (NOTE 4)",
-            isinstance(e9_, register.RegisterStop) and not out_paths(unit, rnine)["p_calls"].exists() and nine_calls == []
+        chk("stage: a STOP while the substitutions are entered (entry (9) withheld for the case) leaves no call log "
+            "(round 3's m-3), and the precheck refuses an unadmitted entry first; a run while another holds the stage's "
+            "lock is refused before anything is read or loaded (NOTE 4)",
+            pre9_w == "refused" and register.BY_N[9].status == register.BUILT_STEP6
+            and isinstance(e9_, register.RegisterStop) and not out_paths(unit, rnine)["p_calls"].exists() and nine_calls == []
             and r_l is None and isinstance(e_l, StageRefusal) and "holds the stage's lock" in str(e_l)
             and lk_calls == [],
-            (e9_, e_l))
+            (pre9_w, e9_, e_l))
         # round 4: the STOP's record by reserve-then-rename, a Ctrl-C at the rename, every log write failing at an m
         # STOP, a log with no run line beside m's checkpoint, a dirty tail, a lock error named
         rki = root("ctrlc")
