@@ -21,6 +21,36 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **G-SHAPE-p — the re-run of record before LOCK-p v0.1: PASS (p v0.2 §4.2; F-p12, the seat's answer
+  of 2026-11-08 at `daca8b0`, §2; the PI's routing quoted at `6b63973`, item 2). `data/p/gates/G-SHAPE-p.json`, schema
+  `p-gshape-v1`, sha256 `3c4125a353b70ff7a89ce19687041f44556249ebce496fa4b3f6c9288f2d1554`, written once on the package LOCK-p v0.1 will name. `5009e77`'s artifact is
+  superseded.** Model-free; nothing ran on a model or the box.
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 17:35:01 UTC 2026**.)
+  - **The supersession:** the artifact of `5009e77` (sha256 `3fb0f640…6961`) was moved by hand with `git mv` to
+    [`G-SHAPE-p.superseded-2026-11-09.json`](data/p/gates/G-SHAPE-p.superseded-2026-11-09.json), committed with this
+    entry. F-p12 rules it superseded: the G-SHAPE-p of record is the re-run's, and the earlier artifact stays in
+    history.
+  - **The run:** `scripts/p_sessions.py gshape`, canonical, at HEAD `e8779b1` (entry (9) admitted), with every file of
+    the sources map (51 files) and of the import closure (14 files) committed and unedited. 17:33:37Z–17:33:44Z, exit
+    0, stderr empty. Raw: [`_p-gshape`](results/raw/2026-11-09_p-gshape.txt).
+  - **Results, as at `5009e77`:**
+    - 2,816 placements per OLMo unit, 8,448 in all; 0 fired and 0 misplaced.
+    - `seg+gold` fires on 2,816 of 2,816 per unit (required); `render-as-response` 0 of 2,816 (reported).
+    - The three units' rows are identical (`olmo_rows_sha256` `bf4e9c235073d834…`, unchanged).
+    - Shape, Layer S and Layer P: 0 problems. Each unit's placement keys equal G-SHAPE-F0's artifact's.
+    - Verdict PASS, no stop reason.
+  - **Against the superseded artifact:** 331 leaves against 327. Every difference is provenance or a ruled field.
+    - 4 leaves are new: `proposal_sha256`, m's pin `42ab36ec…6c6b`, as F-p8 rules for every p artifact; and three
+      sources-map files from step 6's build (`analysis.py`, `identity.py`, `stage.py`).
+    - 13 leaves differ:
+      - the disclosure, now F-p3's ruled sentence (`38f9974`) in place of the pre-ruling one;
+      - p's package sha256, `717958da…b900` → `7a08dbfa…1d24`;
+      - ten sources-map files of p's package and driver;
+      - the sources digest, `a634212bda3a47f5…` → `03c5244f01c8a080…`.
+    - Unchanged: m's package (`7756dcf4…49bb`), the import closure digest (`23abe773f751bb19…`), numpy 2.5.1 and every
+      input of record.
+  - **Next:** G-ANL-p; then LOCK-p v0.1 ×3, which name this artifact. Not pushed. Committed by path.
+
 - 2026-11-09 — **p step 6 — entry (9) on `resume.Identity`, admitted (the design seat's answer to Code's entry (9)
   block, §2, and the PI's routing of 2026-11-09, both committed at `6b63973`):** register entry (9) leaves PENDING and
   is built at step 6. Only the register, two module docstrings and the self-tests change. Nothing ran on a model
@@ -1599,6 +1629,10 @@ applied to CLAUDE.md.
     pre-ruling sentence (F-p3). p's package hash has moved, so under F-p5's rule G-SHAPE-p re-runs before LOCK-p v0.1.
     Its writer is write-once, so the canonical re-run needs this artifact superseded first (a hand `git mv` on the
     seat's ruling, as G-SHAPE-F0's and G-SHAPE-F3's were), which F-p12 asks.
+  - **Dated note (2026-11-09; F-p12, `daca8b0` §2).** This artifact is superseded by the re-run of 2026-11-09. Its bytes
+    (sha256 `3fb0f640…6961`) now sit at
+    [`G-SHAPE-p.superseded-2026-11-09.json`](data/p/gates/G-SHAPE-p.superseded-2026-11-09.json); the path named above
+    holds the re-run's artifact.
 
 - 2026-11-07 — **p package — BUILD (p §8 step 4): PROPOSAL-p's own package, `valence_core/p/` (11 files), and
   driver, `scripts/p_sessions.py`, on PROPOSAL-p v0.2 (`18b0111`) and the design seat's answers of 2026-11-07

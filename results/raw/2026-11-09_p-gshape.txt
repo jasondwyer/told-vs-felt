@@ -1,0 +1,20 @@
+# G-SHAPE-p -- the re-run of record before LOCK-p v0.1 (p v0.2 §4.2; F-p12, the seat's answer of 2026-11-08 at daca8b0, §2), Code's raw, 2026-11-09
+#
+# Command: $PY -B scripts/p_sessions.py gshape (canonical: no --out), from the repository root, $PY = <repo>/jlens-qwen36/.venv/bin/python;
+# HEAD e8779b1 (entry (9) admitted), every file of the sources map and of the import closure committed at HEAD and unedited (the run refuses otherwise).
+# Before the run, the artifact of 5009e77 (sha256 3fb0f64098dc6c9b435859aa27df35f1511754b4cb6396e1568891794cfd6961) was moved by hand with git mv to
+# data/p/gates/G-SHAPE-p.superseded-2026-11-09.json (F-p12's supersession; the move is committed with this raw). Code stamps (date -u): start Mon Nov  9 17:33:37 UTC 2026;
+# end Mon Nov  9 17:33:44 UTC 2026; exit 0; stderr empty. Artifact data/p/gates/G-SHAPE-p.json, sha256 3c4125a353b70ff7a89ce19687041f44556249ebce496fa4b3f6c9288f2d1554 (written once). No model, no tokenizer, no pod.
+# Local absolute paths scrubbed: the repository's prefix shown as <repo>; nothing else changed.
+#
+## stdout
+
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_sessions.py gshape
+G-SHAPE-p (the run of record; committed sources)
+gshape-p OLMo-sft: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-dpo: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-instruct: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo grids identical: True; total 8448; template shape problems 0; Layer S problems 0; Layer P problems 0
+gshape-p placement keys vs G-SHAPE-F0's committed artifact: OLMo-sft equal; OLMo-dpo equal; OLMo-instruct equal
+gshape-p provenance: p package 7a08dbfad83aab44, m package 7756dcf42532b222, sources 03c5244f01c8a080, closure 23abe773f751bb19
+G-SHAPE-p: PASS; artifact <repo>/data/p/gates/G-SHAPE-p.json (written)
