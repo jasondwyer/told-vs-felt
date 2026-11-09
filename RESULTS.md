@@ -21,6 +21,23 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-08 — **PROPOSAL-p step 6: entry (9) cannot run as declared -- one question for the seat (the seat's answer
+  at `de729c4`, Q3 (a), adopted the form Code proposed at `c9acd66`, and that form was incomplete).** The rest of step
+  6's build proceeds. G-SHAPE-p's re-run, G-ANL-p and the locks wait for this answer, because entry (9) is in p's
+  package and in the register the locks name. (Stamp verified at write time: `date -u` → **Mon Nov  9 03:42:59 UTC 2026**.)
+  - **The question:** [`_p-step6_entry9_code-to-design`](results/raw/2026-11-08_p-step6_entry9_code-to-design.md).
+    - Entry (9) as declared wraps `stages._identity`. But every stage start validates its identity in m's
+      `_validated`, which rebuilds it through `resume.Identity` (fixed keyword arguments). With entry (8) applied
+      and p's four fields added, Code's model-free run gives `TypeError: Identity() got an unexpected keyword
+      argument 'proposal'`, so the stage would refuse at its start.
+    - Code proposes entry (9) on `resume.Identity` itself, m's builder wrapped. One site serves both the stage's
+      build and m's rebuild, entry (8) is unchanged, and (8) and (9) always hold together. p_analyze needs neither.
+    - It is built in p's package with status pending; the register refuses it until the seat rules. A model-free
+      stub run of G-TIME-OLMo (p) with it admitted for the test's duration passes p's self-test.
+  - **Values-check.** A blind values-check of the block's first draft, with Code's dispositions:
+    [`_p-step6_entry9_valuescheck`](results/raw/2026-11-08_p-step6_entry9_valuescheck.md). 29 items: 23 confirmed,
+    0 FAIL, 5 IMPRECISE (each applied), 1 not checkable. Not pushed.
+
 - 2026-11-08 — **ADDENDUM-m2 v0.1 — PRE-READ (A-m2 §6 item 1): STOP on two questions before the smoke.**
   - **The questions:** Q1 asks for counter (b) as tie-break (iii); Q2 asks for count (i)'s scope.
   - **Also in the block:** four FLAGs for the build, and Code's PINs for §1, counter (a), §4.2 and the smoke driver.
