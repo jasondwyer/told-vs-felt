@@ -1,0 +1,90 @@
+# PROPOSAL-p step 6 -- the stage lock's flock on the box's volume (round 4's m-2): a model-free probe
+#
+# Code's raw, PI date 2026-11-09. valence_core/p/stage.py's stage_lock takes an exclusive, non-blocking flock on a
+# lock file beside the stage's record (data/p/ckpt/{U}_time_p.lock), which on the box lies on the network volume. No
+# flock had run there before. This probe, run on the pod before any lock is cut, asks: does the lock exclude another
+# process and a second file descriptor in the same process, and is it released on close? It wrote only under
+# /workspace/flock_probe/ (outside the repository), loaded no model and touched no record. The script is the one
+# below, verbatim; the mount's server and volume path are scrubbed to <runpod network volume>.
+#
+# Invocation (Code's laptop): scp the script to /workspace/flock_probe.py, then
+#   ssh <pod> 'cd /workspace && source /workspace/env.sh; echo RUNPOD_POD_ID=$RUNPOD_POD_ID; uname -sr;
+#              date -u +%Y-%m-%dT%H:%M:%SZ; /workspace/venv/bin/python -B /workspace/flock_probe.py'
+#
+# ---- output, verbatim ----
+RUNPOD_POD_ID=qny1x4v8padeke
+Linux 6.8.0-147-generic
+2026-11-09T06:48:31Z
+parent_acquire: acquired
+child_while_held: BlockingIOError
+same_process_second_fd_while_held: BlockingIOError
+child_after_release: acquired
+statvfs_f_fsid: 0
+mount: ['<runpod network volume> /workspace nfs4']
+# ---- end of output ----
+#
+# The mount's options, read on the pod after the probe (/proc/mounts; the server, its address and the client's address
+# scrubbed): <runpod network volume> /workspace nfs4 rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,
+# proto=tcp,nconnect=8,timeo=900,retrans=5,sec=sys,clientaddr=<scrubbed>,local_lock=none,addr=<scrubbed> 0 0
+# local_lock=none: the client sends its locks to the server (none is local to the pod). Exclusion across two pods on
+# one volume is not probed here; a lock a terminated client held may persist for the server's lease, and a run in that
+# interval reads it as held (fail-closed).
+#
+# Reading: on the pod's nfs4 volume the lock excludes another process and a second descriptor in the same process
+# while it is held, and is released on close -- the semantics stage_lock relies on. A lock error other than one held
+# elsewhere (BlockingIOError) is named by its errno, never read as "held" (stage.py's stage_lock).
+#
+# ---- the probe script, verbatim ----
+"""Model-free flock probe for the box's /workspace volume (round 4's m-2): does an exclusive, non-blocking flock
+exclude a second open file description (another process, and a second fd in the same process), and is it released
+on close? Writes only under /workspace/flock_probe/ (outside the repository)."""
+import fcntl
+import os
+import subprocess
+import sys
+
+D = "/workspace/flock_probe"
+os.makedirs(D, exist_ok=True)
+P = os.path.join(D, "probe.lock")
+CHILD = ("import fcntl, os, sys\n"
+         "fd = os.open(sys.argv[1], os.O_RDWR | os.O_CREAT, 0o644)\n"
+         "try:\n"
+         "    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)\n"
+         "    print('acquired')\n"
+         "except BlockingIOError:\n"
+         "    print('BlockingIOError')\n"
+         "except OSError as e:\n"
+         "    print('OSError', e.errno, os.strerror(e.errno))\n")
+
+
+def child():
+    r = subprocess.run([sys.executable, "-c", CHILD, P], capture_output=True, text=True)
+    return (r.stdout.strip() or r.stderr.strip()[-200:])
+
+
+out = {}
+fd = os.open(P, os.O_RDWR | os.O_CREAT, 0o644)
+try:
+    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    out["parent_acquire"] = "acquired"
+except OSError as e:
+    out["parent_acquire"] = f"OSError {e.errno} {os.strerror(e.errno)}"
+out["child_while_held"] = child()
+fd2 = os.open(P, os.O_RDWR)
+try:
+    fcntl.flock(fd2, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    out["same_process_second_fd_while_held"] = "acquired"
+except BlockingIOError:
+    out["same_process_second_fd_while_held"] = "BlockingIOError"
+except OSError as e:
+    out["same_process_second_fd_while_held"] = f"OSError {e.errno} {os.strerror(e.errno)}"
+finally:
+    os.close(fd2)
+os.close(fd)
+out["child_after_release"] = child()
+st = os.statvfs(D)
+out["statvfs_f_fsid"] = getattr(st, "f_fsid", None)
+mounts = [ln for ln in open("/proc/mounts") if " /workspace " in ln]
+out["mount"] = [" ".join(ln.split()[:3]) for ln in mounts]
+for k, v in out.items():
+    print(f"{k}: {v}")

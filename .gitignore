@@ -305,6 +305,14 @@ __pycache__/
 /data/p/ckpt/*
 !/data/p/ckpt/*.json
 !/data/p/ckpt/*.json.podchange-*
+# A gate stage's write-ahead call log (valence_core/p/stage.py's PIN, step 6): withheld like the checkpoint beside it
+# (-diff by the ckpt/ rule in .gitattributes) and committed with it (ledger 27) -- p's report is derived from it.
+!/data/p/ckpt/*_p-calls.jsonl
 !/data/p/verdicts/
 /data/p/verdicts/*
 !/data/p/verdicts/*.json
+# The corrupted-spelling counter's lexicon (the seat's answer of 2026-11-08, daca8b0 §3 (i): "Code picks the source
+# ... commits it under data/p/ with its sha256, declared at LOCK-p v0.1"): web2, byte for byte.
+!/data/p/lexicon/
+/data/p/lexicon/*
+!/data/p/lexicon/*.txt

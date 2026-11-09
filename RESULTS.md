@@ -21,6 +21,303 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **p step 6 — BUILD (the design seat's answer of 2026-11-08, `de729c4`, §4; the PI's routing of
+  2026-11-08 quoted in `de729c4`'s close lines, item 2, "build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 →
+  G-TIME-OLMo (p) on the box [go]"):** G-TIME-OLMo (p)'s stage and driver, p's analyzer and G-ANL-p's battery,
+  register entries (3) and (6)–(9), and the rulings of `daca8b0`. Entry (9) is built on `resume.Identity` and stays
+  PENDING until the PI's routing of the seat's ruling on it is relayed; the register refuses it until then. Nothing
+  ran on a model. On the box only a model-free `flock` probe ran, outside the repository.
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 07:54:00 UTC 2026**.)
+  - **The register** (`valence_core/p/register.py`):
+    - **(3)** `m_analyze` (scripts/m_analyze.py, imported by scripts/p_analyze.py): `clock_of_record` →
+      `analysis.clock_of_record_p` (D_p for the OLMo units, m's own for Q-F0 and Q-F3) and `crosscheck_coordinate` →
+      `analysis.crosscheck_coordinate_p` (the v2 resolution: p's directory for the OLMo units, m's for Q-F0); kinds
+      Clock and roots. The roots are parameters wherever m takes them, not a site (the seat's Q9 (b)).
+    - **(6)** `valence_core.m.stages.DEFAULT_OUT` → `REPO/data/p`, roots.
+    - **(7)** `valence_core.m.schedule.verify_schedule_dir` → `valence_core.p.schedule.verify_schedule_dir`, roots.
+    - **(8)** `valence_core.m.resume.IDENTITY_KEYS_OLMO` → m's key set and p's four fields, pins.
+    - **(9)** `valence_core.m.resume.Identity` → `identity.identity_p`, m's builder wrapped, pins: **PENDING**. The
+      register refuses it in production.
+      - The seat's answer to Code's block is in the tree, untracked:
+        `results/raw/2026-11-08_open50-entry9_design-to-code_answers.md`, sha256 `d6296d44…2b97`. Its §2 declares (9) on
+        `resume.Identity`. The PI has not routed it (the coordinating session, 2026-11-08), so entry (9) stays PENDING
+        until that routing is relayed verbatim.
+      - The answer's three term (c) checks are built and pass, with entry (9) admitted for that test alone and
+        restored after (`identity._selftest`):
+        - with (8) and (9), m's `_validated` accepts a p identity;
+        - a moved p field is identity on resume: `_identity_diff` names it, and m's `load_or_init` refuses the
+          resume;
+        - with both restored, m's identity path is byte-identical to m's on m's inputs.
+      - The G-SHAPE-p re-run, G-ANL-p and the three LOCK-p v0.1s wait for the flip, which moves p's package.
+  - **G-TIME-OLMo (p)** (`valence_core/p/stage.py`; the driver's `time --unit OLMo-{ckpt} [--resume]`): m's
+    `run_gate_stage` (gate `time`) for p's unit under entries (1), (2) and (6)–(9).
+    - The order (the seat's Q4, a rule): every substitution is entered before anything in the process computes renders
+      and before the load. PIN: m's renders cache (`scaffold._of_record`) is asserted empty at the entry (a STOP
+      otherwise) and cleared at the exit. Term (d)'s state is recorded at the stage's end, before restoration.
+    - Before the load: the stage's precheck, then the weights files, then the DRIVER and WEIGHTS lines.
+      - The lock must name, as a whole line or between backticks, every value `stage.lock_required` lists:
+        - both analyzers;
+        - PROPOSAL-m's and PROPOSAL-p's sha256s;
+        - m's and p's package sha256s;
+        - G-CAL-p's, G-SHAPE-p's and G-ANL-p's artifacts, the last two current;
+        - the covariate line;
+        - p's renders under both conventions;
+        - the lexicon;
+        - p's schedules manifest and the unit's six schedule files;
+        - m's six banner components, the OLMo ban list and the scaffold set;
+        - the driver;
+        - p's licence lines and the register's lines.
+      - It must also carry exactly one `BACKEND OF RECORD` line, the backend identifier of record.
+      - Every entry the stage enters must be admitted.
+    - After the load, inside the substitutions: the adapter's backend identifier against the lock's line.
+    - Throughout: the write-ahead call log (`ckpt/{U}_time_p-calls.jsonl`; PIN).
+      - Every event is one ASCII JSON line, written and fsynced as it happens: the run line, one line per proxy call,
+        a STOP's detail, and the end line in the `finally`.
+      - The log is opened once every entry is in force.
+      - It is withheld like the checkpoint (m:318). A resumed run appends to it. A torn last line, or one a failed
+        write left torn, is ended first.
+      - One process at a time: a `flock` on a lock file beside the record spans a run's reads, checks and appends,
+        and `time-report`'s read and write. On the box the file lies on the network volume (nfs4, `local_lock=none`).
+        A model-free probe on the pod found the lock exclusive across processes on one pod and released on close
+        (`results/raw/2026-11-09_p-step6_flock-probe.txt`). Exclusion across pods is not probed, and a lock a
+        terminated pod held may persist for the server's lease, which fails closed.
+    - The STOP (PIN): a run that ends in a SystemExit once its run line is written, or whose proxy call raised the
+      STOP, is STOPPED. The exception's whole chain is read.
+      - It is recorded twice:
+        - the marker `ckpt/{U}_time_p-STOPPED.json`, reserved at the run's start and renamed into place first, so
+          it needs no new space and is never half-written; the STOP's cause is then written over its padding;
+        - then the end line's stop mark.
+
+        A Ctrl-C during the recording is deferred until the end line has been attempted.
+      - Every later run refuses before the load while either stands, while the log is unreadable, or while m's
+        checkpoint stands beside a log with no run line.
+      - The residual covers any STOP but a ProxyStop whose own STOP line was written. A process killed between the
+        STOP's raise and the rename, or the rename and the end line both failing (EIO), leaves no record. The double
+        failure is announced on stdout and stderr, and the reservation stays beside the record. Stale reservations
+        are named at every later run's start and in p's report, never removed.
+      - The way out is the seat's ruling. A restart needs the call log, the marker and m's checkpoint moved aside by
+        hand, as m's PIN-37 has it. No adjudication input is defined, and a ruling to resume has no path in this
+        build.
+      - An interruption stays resumable.
+    - After the stage: p's report (`reports/{U}_time_p-report.json`; PIN), built from m's checkpoint and the call log.
+      It is re-derivable with the driver's `time-report` if the tail did not write it. It reports the seat's read
+      domain only:
+      - §2.3's counters on the sham sessions (every round; corrupted spelling on their forced rounds only, a free
+        round's item naming the pick), and the contrast forced rounds' control characters (F-p13 (a)), with the
+        line-break trigger over every round;
+      - the proxy's cuts on the sham session, attributed by seed and stored-text sha256;
+      - every contrast proxy count withheld: its call count is the free-round exclusion position;
+      - m's report and reads, named with their sha256s;
+      - the entries entered, and term (d)'s end states.
+    - The proxy checks every stored text it returns (the seat's Q5): unreachable by construction, and a STOP if it
+      fires. The message carries no text and no call index (PIN); the detail rides on the exception and goes to the
+      call log. The driver prints the message verbatim.
+  - **p's analyzer** (`scripts/p_analyze.py`, `valence_core/p/analysis.py`): m's `not-run`, `verdicts` and v2
+    `posting` for p's units under entry (3), staged and in-file (the seat's Q7). m's function writes into a staging
+    directory seeded with the final directory's files; p adds `proposal_p_sha256` beside m's `proposal_sha256` and a `p`
+    block, and writes each output once into data/p/verdicts. The `p` block holds the register in force, both analyzer
+    blobs, D_p's check, the disclosure, m's three NOT-RUNs beside m's decisions list (the seat's Q6) and, for OLMo-sft,
+    the at-the-bar sentence; the posting's adds the resolution. By `STAGING_NOTE`, carried in every p block, every
+    occurrence of the staging directory in an output m wrote, or a line m printed, names the final directory instead
+    (`analysis.map_staging_paths`). A file m wrote without reporting it, or a trace of the staging directory left after
+    that mapping, refuses the write, and so does any target that is a link or holds other bytes. Every target is
+    checked before the first write.
+  - **G-ANL-p's battery** (`p_analyze.py --selftest`; `ganl` writes the artifact): 14/14 on the working tree, after
+    m's battery.
+    - m's battery unchanged: 525/525, 538 coverage ids, G-ANL-F3's count and coverage.
+    - Entry (3) on the real `m_analyze`: equality and restoration, an exception included.
+    - p's Clock NOT-RUN through p's path, under sentinels for m's `CKPT_REL` and `VERDICTS_REL` that record and raise on
+      any use but `repr` and identity, which m's code does not make on p's paths. They are never used (Q9 (b)'s proof),
+      under all three commands.
+    - The pin beside, and m's form equal to p's but for the two added keys and the Clock's own field
+      (`date_is_clock_of_record`, false in m's form, which reads m's Clock).
+    - p's VERDICTS path on a synthetic OLMo-sft campaign (m's `_Camp`): m's form, plus exactly the two added keys. A
+      lock that does not name p's analyzer and package is refused.
+    - The seeded staging: m's exclusivity sees a seeded p output; the posted run's comparator is the seeded copy; a p
+      re-run on unchanged inputs is refused.
+    - The v2 resolution: OLMo outputs read from p's directory; an OLMo output only in m's directory is refused, and so
+      is a second m directory. No machine path is recorded.
+    - The regression, byte for byte:
+      - Q-F0's two outputs through `run_verdicts_p` (m's form) on the G-ANL-F3 battery's identity binding, with m's
+        own regression's checks;
+      - m's three OLMo NOT-RUN outputs (`0f35954`) on the bindings they were written under (`e0b4f2c`'s analyzer, its
+        package and closure, each pinned in full).
+    - `data/p` untouched: every file's sha256 is the same before and after.
+  - **The rulings of `daca8b0`** (`valence_core/p/report.py`):
+    - F-p13: control characters a counter; each stage's report lists every such text on the seat's read domain by key
+      (the sham sessions' rounds and the contrast forced rounds'; a contrast free round's is withheld to VERDICTS, item
+      (a)).
+    - F-p11: the lexicon (Code's pick, web2: `data/p/lexicon/web2.txt`, 235,976 lines, sha256 `be41ad97…bab9`, byte
+      for byte from the BSD and macOS system dictionary; the seat let it stand, `de729c4` §3), the suffix rule, and the
+      two harness-shaped first-line forms (`**`, `_…_`). The re-tabulation is reported as dated notes on the entries
+      that quote the counters.
+    - §0.1: the SFT at-the-bar sentence, a constant every OLMo-sft output's `p` block carries.
+  - **Blind review, round 1** (6 MAJOR, 8 MINOR, 12 NOTE; each applied). The reviewer's text is in
+    `results/raw/2026-11-09_p-step6_build_review.md`.
+    - **MAJOR 1.** Entry (7)'s replacement re-entered entry (2) after the load, so a live library thread STOPped the
+      stage. Now `keys.keys_context` uses entry (2) as the stage holds it (PIN). A run whose factory leaves a thread
+      alive PASSes, with term (d)'s end state recorded.
+    - **MAJOR 2.** p's report carried the proxy's call and cut totals, from which the contrast free-round count
+      follows. The report now holds the read domain only (above). A contrast free-round exclusion planted at free
+      round 0, at free round 1, and not at all leaves the report and lines unchanged but for the outputs' sha256s.
+    - **MAJOR 3.** The cut log and the report were lost on an exception or a tail failure. Now:
+      - the call log is write-ahead, and the report is built from the record and re-derivable;
+      - the lexicon is loaded and commit-checked before the load, and is `-text` in `.gitattributes`;
+      - three tested cases: a ProxyStop at a contrast free round, an interrupted then resumed stage, and the report
+        re-derived byte for byte.
+    - **MAJOR 4.** Entry (7)'s term (c) case was missing. p's verifier is now m's check (`check_dir`, pinned by AST).
+      Under m's keys and root it returns m's verifier's verdict on `data/m/schedules`, on the clean tree and on four
+      tampered copies.
+    - **MAJOR 5.** G-ANL-p never ran p's VERDICTS path. Now:
+      - a p-form VERDICTS group runs on a synthetic OLMo-sft campaign (m's `_Camp`): m's form, plus exactly the two
+        added keys;
+      - Q-F0's regression goes through `run_verdicts_p`, with m's own regression's checks.
+    - **MAJOR 6.** p's outputs were not bound to p's code. Now:
+      - every p block names p's `package_sha256`;
+      - every canonical command requires the code of record committed;
+      - a p-form VERDICTS's lock must name p's analyzer and package (PIN).
+    - **MINORs:**
+      - 7: D_p's check reads the D_P in use (PIN).
+      - 8: `lock_required` gains the proposals, p's package, the covariate line, the schedules, the banner components,
+        the ban list and the scaffold set. The backend identifier of record is now the lock's one
+        `BACKEND OF RECORD` line, not a code constant (PIN).
+      - 9: G-SHAPE-p's and G-ANL-p's artifacts must record the current code.
+      - 10: the report's entries are the ones entered.
+      - 11: the posting records no machine path, and refuses a second m directory.
+      - 12: term (e)'s check tracks `m_analyze`.
+      - 13: the seeded staging is exercised (exclusivity, the posted run's comparator), and a p re-run is refused
+        where m's reports identical.
+      - 14: CLI paths go through m's `_cli_path`.
+    - **NOTEs:** N1–N4 and N6–N12 are applied. N5 is items (a) and (b) below, pinned in `report.session_counters`.
+  - **Blind review, round 2** (on the fixed build): 23 of round 1's 26 items fixed, 2 partly (MINOR 9, N12), 1 not
+    (N5). New: 2 MAJOR, 4 MINOR, 10 NOTE, each applied or answered below. The text is in the same raw.
+    - **M-1.** A ProxyStop was lifted by a plain `--resume`, and the PASS report then showed no trace of it. A STOPPED
+      run (the STOP above) now blocks every later run before the load: the seat adjudicates before anything resumes
+      (Q5). Rounds 3 and 4 then found and closed further gaps (below); the residual is the STOP PIN's. An interruption
+      stays resumable. Every run's outcome is in p's report and a closing line.
+    - **M-2.** git ignored the call log. It is now admitted (`.gitignore`; `-diff` by the `ckpt/` rule), and a
+      self-test asserts that the three logs, the three reports and the lexicon are all admitted.
+    - **MINORs:**
+      - m-1: a torn last line is ended before the next run appends. `build_report` refuses a log that is not this
+        stage's: the run lines' schema, unit and stage; runs numbered 1..K; end and call lines naming its runs. A
+        line torn by a failed write within a run was not yet ended before that run's own end line; round 4's NOTE 2
+        closed that.
+      - m-2: before the load, a plain run refuses when m's checkpoint exists, and a `--resume` refuses when the call
+        log is lost.
+      - m-3: G-SHAPE-p's sources map and import closure are compared with the current ones.
+      - m-4: G-ANL-p takes its code record before the battery and refuses drift after it.
+    - **NOTEs:**
+      - N-1: `run_staged` refuses an unreported file and checks every target before the first write.
+      - N-2: entry (2) counts as in force only through the register (`register.active`).
+      - N-3: the attribution flag reads the sham session only.
+      - N-4: a lock names a value as a whole line or between backticks.
+      - N-5: the gate line is m's gate-stage form, with PROPOSAL-p and CLAUDE.md commit-checked.
+      - N-6: item (f) below.
+      - N-7: (9) is refused unless (8) is in force.
+      - N-8: the VERDICTS fixture's checkpoints carry p's four fields, and the `--v2-closure` branch runs under the
+        sentinels.
+      - N-9: a refused p re-run is worded as p's.
+      - N-10: the self-test count is the one below.
+      - N12's open half is item (g).
+  - **Blind review, round 3** (on the twice-fixed build): of round 2's 16 items, 12 were fixed, 2 partly (M-1, m-1)
+    and 2 answered. New: 1 MAJOR, 3 MINOR, 5 NOTE, each applied or answered. The text is in the same raw.
+    - **MAJOR.** A crash that tore a line inside a non-ASCII character made the whole call log unreadable, and the
+      stage read it as empty: a STOP in it was lifted. The fix:
+      - log lines are ASCII-only, so a tear cannot split a character;
+      - the log is read line by line on its own line ending, so a bad line is one malformed line;
+      - an unreadable log refuses every run before the load, and `build_report` names it.
+    - **MINORs:**
+      - 1: a STOP whose end line or STOP line failed to write was resumable. Now:
+        - the STOP is recorded twice (the marker, then the end line);
+        - its mark is read from the exception's whole chain;
+        - the proxy's STOP propagates even when its own log line fails.
+
+        Round 4 found the marker's own write window still open; see round 4.
+      - 2: U+0085, U+2028 and U+2029 in a logged text read back as fragments. ASCII lines and the line-ending split
+        fix this.
+      - 3: a STOP while the substitutions were entered left an empty log. The log now opens once every entry is in
+        force, and the precheck refuses an unadmitted entry.
+    - **NOTEs:**
+      - 1: the in-force count is per entry and module.
+      - 2: p's outputs are written two-phase (`guard.write_once_all`): every target checked, every file written
+        under its temp name, then renamed. A failure before the renames writes nothing; only a failed rename, or a
+        crash between renames, can leave the set part-written.
+      - 3: p's VERDICTS lock binding uses the whole-line or backtick rule.
+      - 4: the stage lock.
+      - 5: item (i) below.
+  - **Blind review, round 4** (focused on round 3's fixes): no MAJOR. Of round 3's items, 6 were fixed, 2 partly
+    (MINOR 1, NOTE 2) and 1 answered. New: 2 MINOR, 5 NOTE, each applied. The text is in the same raw.
+    - **m-1.** A Ctrl-C or a crash during the marker's own write could lose the STOP. The marker is now reserved at
+      the run's start and renamed into place first, and no echo can break the recording. Round 5 then dealt with the
+      double failure: a Ctrl-C during the recording is deferred, and the EIO case is announced on stdout and stderr
+      and stated as the PIN's residual.
+    - **m-2.** `flock` had never run on the box's volume, and every lock error read as "held". Now only a lock held
+      elsewhere reads so; any other error is named. The probe on the pod is above.
+    - **NOTEs:**
+      - 1: one cause (a full disk) failed both STOP records. The rename needs no new space.
+      - 2: a failed write's torn line is ended before the next record, and m's checkpoint beside a log with no run
+        line is refused.
+      - 3: `time-report` takes the stage's lock.
+      - 4: a crash's left-over temp no longer blocks a set of p outputs, and the part-written case is stated.
+      - 5: the self-test wording, the log's descriptor on a failed open, a failed STOP line's detail (now in the end
+        line) and the lock refusal's label.
+  - **Blind review, round 5** (narrow, on round 4's fixes): no MAJOR. Round 4's m-1 and m-2 fixed; its NOTEs 1 and
+    4 partly (completed below). New: 1 MINOR, 7 NOTE, each applied. The text is in the same raw.
+    - **m-1.** When the rename and the end line both failed, the stage stayed resumable and the last printed line
+      said the STOP was recorded. Now the double failure is announced once, on stdout and stderr, and stated as the
+      PIN's residual. A Ctrl-C during the recording is deferred, so it skips neither record.
+    - **NOTEs:**
+      - 1: the residual is worded as "any STOP but a ProxyStop whose own STOP line was written", and `time-report`'s
+        exit codes are listed fully.
+      - 2: a rename that took before an error is recorded as in place.
+      - 3: stale reservations are named, never removed, and only a run's own reservation is released.
+      - 4: the marker carries the STOP's cause, written over its padding.
+      - 5: a write that fails before its first byte leaves the tail clean.
+      - 6: the probe raw is committed with this build, with the mount's options; the exclusion is stated per pod.
+      - 7: a temp file is created exclusively, and the analyzer's refusal names a part-written set.
+  - **For the seat's word** (Code's readings, each in force until ruled):
+    - (a) `contrast_forced_control_chars` lists the contrast forced rounds' control-character texts by key. This is
+      F-p13 (a)'s listing; ruling (h) keeps class fields out of m's G-TIME report, though the read shows the same
+      texts.
+    - (b) Q5's "over the checkpoint" is read as the seat's read domain. Every other contrast count is withheld to
+      VERDICTS.
+    - (c) The proxy's STOP messages carry no text and no call index. The detail is in the withheld call log; Q5's
+      "the entry records the exception verbatim" holds for the message.
+    - (d) The contrast forced rounds' cut counts are withheld too, under ruling (h)'s extension (no class field).
+    - (e) A p re-run on unchanged inputs is refused (write-once) where m's own reports "identical" (PIN-37). The
+      seeded copy is p's file, with its two added keys.
+    - (f) The driver prints any STOP raised inside a session verbatim, as m's driver does. m's BOUNDARY INCIDENT
+      message carries the prefix's token count, and at a contrast free round that count depends on the transcript,
+      picks included. It is the one STOP text p can print that carries contrast information: inherited, unchanged,
+      flagged.
+    - (g) m's own G-TIME report and reads, written under `data/p/reports`, keep m's form, with no
+      `proposal_p_sha256`. F-p8's "every p artifact" is read as p's own artifacts. p's report binds m's two files by
+      their sha256s and carries `proposal_p_sha256`.
+    - (h) The backend identifier of record is the lock's one `BACKEND OF RECORD` line. A box change before the lock
+      means writing the lock with the new box's identifier, with no code edit. A box change after the lock STOPs
+      the stage before it generates. m:302 has a new `BACKEND` entry supersede the lock's field. p reads no
+      superseding record yet, so its form, a lock re-issue or a declared record, is the seat's to route.
+    - (i) The STOP rule's reach. Every SystemExit that ends a run once its run line is written makes the stage
+      STOPPED, m's refusals inside m's stage included. That extends m's "a resume never lifts a STOP" to cases m would
+      let re-run once the cause is fixed. The way out is the seat's ruling. A restart needs the call log, the marker
+      and m's checkpoint moved aside by hand, as m's PIN-37 has it. No adjudication input is defined, and a ruling to
+      resume has no path in this build.
+  - **Licence.** p's `package_sha256` `2d9a933af718bd15bc2de7cec1a1bf09e11ae30b47716584c98a55ca7b6ef720` (14 files).
+    The m files and `olmo_hf.py` are unchanged.
+  - **Checks before the commit.**
+    - `scripts/p_sessions.py --selftest`: 170/170. This includes term (e)'s static check and the import set.
+    - `scripts/p_analyze.py --selftest`: m's battery 525/525 (538 coverage ids), then G-ANL-p 14/14.
+    - Five blind reviews (above).
+    - A blind values-check of this entry and its dated notes: 238 items, 227 PASS, 10 IMPRECISE, 1 FAIL, each applied (`results/raw/2026-11-09_p-step6_build_valuescheck.md`); the fixes were checked by tool, not by a second blind pass.
+  - **Next.** The PI's routing of the seat's entry (9) ruling. Then, in order:
+    - the flip of entry (9);
+    - G-SHAPE-p's re-run (the `5009e77` artifact superseded);
+    - G-ANL-p;
+    - the three LOCK-p v0.1s;
+    - G-TIME-OLMo (p) ×3 on the box.
+
+    Not pushed.
+
 - 2026-11-08 — **ADDENDUM-m2 v0.2: OPEN #50 goes to the seat in a Code → design block, with Code's readings of #48
   and #49. v0.2 is not committed.**
 
@@ -419,6 +716,21 @@ applied to CLAUDE.md.
       §1, and O7's clean-pool omissions. The fourth, the anchor, is now pinned to `e03fbe4`.
     - Three of the six not-checkable items, all box facts, are now in the captures raw.
     - The fixes were checked by tool, not by a second blind pass.
+  - **Dated note (2026-11-09; the seat's answer of 2026-11-08 at `daca8b0`, §1 and §3).**
+    - **F-p13: control characters are a counter, not a hair trigger.** Each stage's entry lists every stored text that
+      carries one. At G-CAL-p there are five, all on item 7 (`report.counters`, `control_chars.texts`):
+      - sft corrupted 7 s1: '\x7f';
+      - dpo corrupted 7 s0: '\x1b[1m\x1b[36mTask: Which is heavier, a kilogram of iron or half a kilogram of
+        feathers?\x1b[0m';
+      - dpo corrupted 7 s1: '\x7f';
+      - instruct corrupted 7 s0: '\x1b[1m\x1b[32mTask is solved correctly\x1b[0m';
+      - instruct corrupted 7 s1: '\x7f'.
+    - **F-p11: the counters re-tabulated.** G-CAL-p's artifacts stand as written; this is the re-tabulation the
+      ruling asks for. Under the refined definitions, on the committed records:
+      - harness-shaped first lines are **2/5/6** (the artifacts: 2/3/5). The added lines are '**DRAFT ANSWER' (dpo
+        corrupted 15 s0) and '**Final Answer' (dpo and instruct corrupted 15 s3).
+      - corrupted spelling is **0/0/0** (the artifacts: 0/1/0). dpo clean 4 s1's `true` is in the lexicon.
+      - The other counters are unchanged.
 
 - 2026-11-07 — **PROPOSAL-p — G-CAL-p's flags applied: the design seat's five rulings of 2026-11-07 (`38f9974`),
   confirmed by the PI (F-p3, F-p8, F-p10, P21, F-p1).** Each ruling is a constant, an argument, a field name or a
@@ -487,6 +799,19 @@ applied to CLAUDE.md.
     to it from `0415438` by a git bundle; its HEAD goes in the report to the coordinating session. Nothing else
     touches the box.
   - **Next:** the coordinating session's go for G-CAL-p on the box. Not pushed.
+  - **Dated note (2026-11-09; the seat's answer of 2026-11-08 at `daca8b0`, §3, F-p11).** On G-CAL-OLMo's 384
+    committed records the refined counter gives **0/2/4** corrupted-spelling records (sft/dpo/instruct), against 0/3/5
+    by the pinned definition alone. The two `true` against `three` hits are now out, `true` being in the lexicon. Five
+    of the six that remain are §0.3's class (c), as the ruling keeps them:
+    - `Januwy` (dpo and instruct corrupted 8 s2);
+    - `Janaury` (instruct corrupted 8 s3);
+    - `dn` (dpo and instruct corrupted 11 s1).
+
+    The sixth is `irom` (instruct corrupted 7 s1), the model's own misspelling of `iron` (the render spells it right),
+    which the bullet lists apart.
+
+    The residuals the entry's F-p11 FLAG lists (`there`, `could`, `too`, `from`, `that`, the gold inflections) are
+    excluded by (i) or (ii). The lexicon is `data/p/lexicon/web2.txt` (sha256 `be41ad97…bab9`), named at LOCK-p v0.1.
 
 - 2026-11-07 — **G-TIME-F3 (PROPOSAL-m v1.11 §3.2 m:293; the PI's routing of 2026-11-07, item 1): PASS as
   computed. Six uncached sessions ran on Qwen under LOCK-m-F3 v0.1, on the committed driver (`acde2d8`).**
@@ -1365,6 +1690,15 @@ applied to CLAUDE.md.
       list. Both reproductions matched case-insensitively and no render changes.
     - **The departure (F-p6).** Disclosing it is enough; the rule stands: nothing of a proposal is committed before
       its step 3, and nothing ran.
+  - **Dated notes (2026-11-09; the design seat's answer of 2026-11-08 at `de729c4`, §2).**
+    - **p:84's decisions sentence (Q6).** It is read in this form. m's validated list carries Q-F0's outcome, Q-F3's
+      where known at the run, A-m1's (16) as m's records carry it, this document's adoption against Q-F0's PASS, and
+      p's own other units' known outcomes. m's three NOT-RUNs go in each output's `p` block, named `PROPOSAL-m
+      OLMo-{ckpt}`, with reason and output sha256. The reason is that m's validator refuses a unit naming itself, and p
+      keeps m's unit strings.
+    - **p §4.4's "m's battery run under p's roots" (Q8).** It is read as m's battery run unchanged, its count and
+      coverage asserted as at G-ANL-F3. p's own groups run m's verdicts, not-run and posting functions under entry (3)
+      on p's roots in temp directories. Then the regression, byte for byte.
 
 - 2026-11-06 — **PROPOSAL-p v0.1 — PRE-READ (p §8 step 2): STOP on five questions for the design seat; the sixteen
   renders reproduced byte for byte; the referent check.** Nothing is built or locked. PROPOSAL-p stays untracked (p §8

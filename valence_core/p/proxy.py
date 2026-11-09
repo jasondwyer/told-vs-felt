@@ -23,11 +23,19 @@ delegates every other attribute to the adapter -- m's code reads adapters by duc
 PIN (Code, declared at the p BUILD): "line break" is ``\\n`` or ``\\r`` (§2.3's hair trigger reads both); the cut text
 is the text before the first line break with trailing whitespace removed, as the adapter strips its own decoded text
 (olmo_hf.py:286), so a cut text is what the adapter would have returned had its stop fired at that break.
+
+PIN (Code, declared at step 6): the proxy logs every call -- its index, the call's seed, the stored text's sha256 and
+the cut event or none -- in ``calls``, and hands each record, as it happens, to ``on_call`` when one is given (a gate
+stage's write-ahead call log). A STOP's message carries no text and no call index: a stage's call may be a contrast
+free round's, whose text names the pick (m:318), so the text, the returned text and the call are carried on the
+exception (``stored_text``, ``returned_text``, ``call``) and logged as the call's record, withheld with the log; the
+message names the STOP alone and is printed verbatim (the seat's Q5).
 """
 from __future__ import annotations
 
 import dataclasses
-from typing import Any
+import hashlib
+from typing import Any, Callable
 
 LINE_BREAKS = ("\n", "\r")
 #: The diagnostic fields of a cut event and of a STOP record: logged for the seat's read, never stored text (F-p10).
@@ -37,12 +45,17 @@ PROXY_ID = ("valence_core.p.proxy.StoredTextProxy (p v0.2 §2.2, the seat's read
 
 
 class ProxyStop(SystemExit):
-    """The returned text's line break cannot be placed on its token ids; ``returned_text`` (diagnostic) carries the
-    returned text whole."""
+    """A STOP at the proxy: the returned text's line break cannot be placed on its token ids, or §2.3's hair trigger on
+    a stored text. The message names the STOP alone; ``returned_text`` (diagnostic), ``stored_text`` and ``call`` carry
+    the detail (the module docstring's PIN)."""
 
-    def __init__(self, msg: str, returned_text: str | None = None) -> None:
+    def __init__(self, msg: str, returned_text: str | None = None, *, stored_text: str | None = None,
+                 call: int | None = None) -> None:
         super().__init__(msg)
         self.returned_text = returned_text
+        self.stored_text = stored_text
+        self.call = call
+        self.log_error: str | None = None
 
 
 def has_line_break(text: str) -> bool:
@@ -66,21 +79,29 @@ def cut_result(adapter: Any, g: Any) -> tuple[Any, dict | None]:
     ids = [int(t) for t in g.token_ids]
     at = next((t + 1 for t in range(len(ids)) if _break_after_content(adapter.decode(ids[:t + 1]))), None)
     if at is None:
-        raise ProxyStop(f"PROXY STOP: the returned text holds a line break that no prefix of its token ids decodes "
-                        f"to after content ({text[:200]!r}); the boundary is not reconstructible", returned_text=text)
+        raise ProxyStop("PROXY STOP: the returned text holds a line break that no prefix of its token ids decodes to "
+                        "after content; the boundary is not reconstructible (the text is carried on the STOP, a "
+                        "diagnostic field, never in its message)", returned_text=text)
     cut = text[:_first_break(text)].rstrip()
     new = dataclasses.replace(g, text=cut, token_ids=ids[:at], cap_hit=False, stop_reason="newline")
     return new, {"returned_text": text, "stored_text": cut, "n_tok_returned": len(ids), "n_tok_stored": at,
                  "stop_reason_returned": str(g.stop_reason), "cap_hit_returned": bool(g.cap_hit)}
 
 
-class StoredTextProxy:
-    """The adapter, with ``generate`` returning reading (b)'s stored result."""
+def text_sha256(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-    def __init__(self, adapter: Any) -> None:
+
+class StoredTextProxy:
+    """The adapter, with ``generate`` returning reading (b)'s stored result; ``on_call`` (optional) receives each
+    call's record as it happens (the module docstring's PIN)."""
+
+    def __init__(self, adapter: Any, on_call: Callable[[dict], None] | None = None) -> None:
         object.__setattr__(self, "_adapter", adapter)
         object.__setattr__(self, "cuts", [])
+        object.__setattr__(self, "calls", [])
         object.__setattr__(self, "n_generate", 0)
+        object.__setattr__(self, "_on_call", on_call)
 
     def __getattr__(self, name: str) -> Any:
         return getattr(object.__getattribute__(self, "_adapter"), name)
@@ -88,15 +109,46 @@ class StoredTextProxy:
     def __setattr__(self, name: str, value: Any) -> None:
         raise AttributeError("StoredTextProxy is read-only; set attributes on the adapter")
 
+    def _log(self, rec: dict) -> None:
+        object.__getattribute__(self, "calls").append(rec)
+        hook = object.__getattribute__(self, "_on_call")
+        if hook is not None:
+            hook(rec)
+
     def generate(self, prefix_text: str, segment_text: str, injections=(), **kw) -> Any:
         a = object.__getattribute__(self, "_adapter")
         g = a.generate(prefix_text, segment_text, injections, **kw)
         n = object.__getattribute__(self, "n_generate")
         object.__setattr__(self, "n_generate", n + 1)
-        out, ev = cut_result(a, g)
+        seed = kw.get("seed")
+        try:
+            out, ev = cut_result(a, g)
+            stored_text_check(str(out.text), returned_text=str(g.text), call=n)
+        except ProxyStop as e:
+            if e.call is None:
+                e.call = n
+            try:
+                self._log({"call": n, "seed": seed, "stop": {"message": str(e), "returned_text": e.returned_text,
+                                                             "stored_text": e.stored_text}})
+            except Exception as le:                 # the STOP propagates whatever the log does (round 3's m-1)
+                e.log_error = f"{type(le).__name__}: {le}"
+            raise
         if ev is not None:
             object.__getattribute__(self, "cuts").append({"call": n, **ev})
+        self._log({"call": n, "seed": seed, "text_sha256": text_sha256(str(out.text)), "cut": ev})
         return out
+
+
+def stored_text_check(text: str, *, returned_text: str | None = None, call: int | None = None) -> None:
+    """§2.3's hair trigger at the proxy (the seat's answer of 2026-11-08, Q5): every stored text the proxy returns is
+    checked, and a line break is a STOP -- unreachable by construction (a cut text is the text before the first
+    break, stripped). Raised inside m's session, it ends the stage as an exception, without m's stop record; the
+    driver prints it verbatim and the seat adjudicates before anything resumes."""
+    if has_line_break(text):
+        raise ProxyStop("HAIR TRIGGER line_break_in_stored_text (p §2.3) at the proxy: a stored text holds a line break "
+                        "(the text, the returned text and the call are carried on the STOP and logged with the "
+                        "stage's call log, never in its message: m:318)", returned_text=returned_text,
+                        stored_text=text, call=call)
 
 
 def _selftest(chk) -> None:
@@ -171,3 +223,49 @@ def _selftest(chk) -> None:
     except ProxyStop:
         stopped = True
     chk("proxy: a tokenizer whose decode cannot place the break is a STOP, never a guessed cut", stopped)
+    caught = []
+    for t, rt in (("ok", None), ("a\nb", "a\nb tail"), ("a\rb", None)):
+        try:
+            stored_text_check(t, returned_text=rt, call=7)
+            caught.append("passed")
+        except ProxyStop as e:
+            caught.append(("stopped", "line_break_in_stored_text" in str(e), e.returned_text))
+    chk("proxy: the stored-text check (the seat's Q5) passes a text with no line break and STOPs on \\n or \\r, naming "
+        "§2.3's trigger and carrying the returned text (diagnostic)",
+        caught == ["passed", ("stopped", True, "a\nb tail"), ("stopped", True, None)], caught)
+    msgs = []
+    for t in ("secret\nzebra",):
+        try:
+            stored_text_check(t, returned_text=t + " tail", call=11)
+        except ProxyStop as e:
+            msgs.append((str(e), e.stored_text, e.returned_text, e.call))
+    w2 = m_testing.OLMoScriptedAdapter("p-proxy-wordhash2")
+    w2.load(["zebra\n\nx"])
+    try:
+        StoredTextProxy(w2).generate("B\n", "Task: x\nResponse:")
+    except ProxyStop as e:
+        msgs.append((str(e), e.stored_text, e.returned_text, e.call))
+    chk("proxy: a STOP's message carries no text and no call index (a stage's call may be a contrast free round's, "
+        "m:318); the text, the returned text and the call ride on the exception (the module docstring's PIN)",
+        len(msgs) == 2 and all("zebra" not in m and "11" not in m and "secret" not in m for m, *_ in msgs)
+        and msgs[0][1:] == ("secret\nzebra", "secret\nzebra tail", 11) and msgs[1][2] == "zebra\n\nx"
+        and msgs[1][3] == 0, msgs)
+    seen = []
+    a3 = testing.CharScriptedAdapter("p-proxy-log")
+    p3 = StoredTextProxy(a3, on_call=seen.append)
+    a3.load(["77", "a\nb"])
+    p3.generate("B\n", "Task: x\nResponse:", seed=101)
+    p3.generate("B\n", "Task: x\nResponse:", seed=102)
+    w3 = m_testing.OLMoScriptedAdapter("p-proxy-log-stop")
+    w3.load(["q\n\nx"])
+    p4 = StoredTextProxy(w3, on_call=seen.append)
+    try:
+        p4.generate("B\n", "Task: x\nResponse:", seed=103)
+    except ProxyStop:
+        pass
+    chk("proxy: every call is logged as it happens -- index, seed, the stored text's sha256 and the cut event or none; "
+        "a STOP's call logged with its detail before it propagates",
+        [r["seed"] for r in seen] == [101, 102, 103] and seen[0]["cut"] is None
+        and seen[0]["text_sha256"] == text_sha256("77") and seen[1]["cut"]["stored_text"] == "a"
+        and seen[1]["text_sha256"] == text_sha256("a") and seen[2]["stop"]["returned_text"] == "q\n\nx"
+        and p3.calls == seen[:2] and p4.calls == seen[2:], seen)

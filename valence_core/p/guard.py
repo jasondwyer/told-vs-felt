@@ -181,6 +181,64 @@ def write_once_bytes(path: Path, data: bytes, *, what: str = "file") -> str:
     return "written"
 
 
+def write_once_all(items: list[tuple[Path, bytes]], *, what: str = "file") -> list[str]:
+    """A set of write-once files, as close to all-or-nothing as a filesystem gives (round 3's NOTE 2): (1) every
+    target checked -- a link or non-file at it or at its temp name, or an existing file with other bytes, refuses
+    the set before anything is written; (2) every new file's bytes written and fsynced under its temp name, created
+    exclusively (a regular temp file a crash left behind is removed first; one that reappears means another writer:
+    refused) -- a failure removes every temp file this call made and writes nothing; (3) the renames, then the
+    directories fsynced. Returns 'written' or 'identical' per item. Only (3) can leave the set part-written: a rename
+    failing, or a crash between renames. A retry of this function completes such a set; p's analyzer, whose final
+    directory is seeded into m's staging, refuses its re-run instead and names the incomplete set for the seat
+    (``analysis.run_staged``; round 4's NOTE 4, round 5's NOTE 7)."""
+    status, temps = [], []
+    for path, data in items:
+        p, tmp = Path(path), Path(path).with_name(Path(path).name + ".tmp")
+        if p.is_symlink() or tmp.is_symlink() or (tmp.exists() and not tmp.is_file()) or (p.exists() and not p.is_file()):
+            raise GuardStop(f"GUARD STOP: {p} or its temp name is a link or a non-file; a {what} is never written "
+                            f"through a link (nothing written)")
+        if p.exists():
+            if p.read_bytes() != data:
+                raise GuardStop(f"GUARD STOP: {what} EXISTS at {p} with different bytes; it is never overwritten "
+                                f"(nothing written)")
+            status.append("identical")
+        else:
+            status.append("new")
+    try:
+        for (path, data), st in zip(items, status):
+            if st != "new":
+                continue
+            p = Path(path)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            tmp = p.with_name(p.name + ".tmp")
+            if tmp.is_file() and not tmp.is_symlink():
+                os.unlink(tmp)                      # a crash's left-over temp
+            try:
+                fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o666)
+            except FileExistsError:
+                raise GuardStop(f"GUARD STOP: {tmp} reappeared -- another writer of this set; nothing written") from None
+            temps.append(tmp)
+            with os.fdopen(fd, "wb") as fh:
+                fh.write(data)
+                fh.flush()
+                os.fsync(fh.fileno())
+    except BaseException:
+        for t in temps:
+            try:
+                os.unlink(t)
+            except OSError:
+                pass
+        raise
+    dirs = set()
+    for (path, _), st in zip(items, status):
+        if st == "new":
+            os.replace(Path(path).with_name(Path(path).name + ".tmp"), path)
+            dirs.add(Path(path).parent)
+    for d in sorted(dirs):
+        m_resume._fsync_dir(d)
+    return ["written" if st == "new" else "identical" for st in status]
+
+
 def atomic_write_nofollow(path: Path, data: bytes, *, what: str = "checkpoint") -> None:
     """A checkpoint's rewrite: atomic (temp file opened ``O_NOFOLLOW``, fsync, rename, directory fsync), refused when
     the path or its temp name is a link (or the temp name a non-file); an existing regular file is replaced."""
@@ -254,18 +312,24 @@ def _flat_targets(t: ast.AST) -> list[ast.AST]:
     return [t]
 
 
+#: m's modules outside valence_core.m that p imports by name: m's analyzer (scripts/m_analyze.py, imported by
+#: scripts/p_analyze.py as ``m_analyze``), register entry (3)'s module -- tracked as an m module by the static check.
+M_SCRIPT_MODULES = ("m_analyze",)
+
+
 def _m_names(tree: ast.AST, pkg: str) -> set[str]:
-    """Every local name bound to an object of valence_core.m (or to the dotted root of an ``import valence_core.m``)."""
+    """Every local name bound to an object of valence_core.m or of m's analyzer (``M_SCRIPT_MODULES``), or to the dotted
+    root of an ``import valence_core.m``."""
     names: set[str] = set()
     for n in ast.walk(tree):
         if isinstance(n, ast.ImportFrom):
-            if _is_m_from(n, pkg):
+            if _is_m_from(n, pkg) or (n.level == 0 and n.module in M_SCRIPT_MODULES):
                 names.update(a.asname or a.name for a in n.names)
             elif (n.level == 0 and n.module == "valence_core") or (n.level and not n.module):
                 names.update(a.asname or a.name for a in n.names if a.name == "m")
         elif isinstance(n, ast.Import):
             for a in n.names:
-                if a.name == "valence_core.m" or a.name.startswith("valence_core.m."):
+                if a.name == "valence_core.m" or a.name.startswith("valence_core.m.") or a.name in M_SCRIPT_MODULES:
                     names.add(a.asname or a.name.split(".")[0])
     changed = True
     while changed:                                  # local aliases: c = corr; c2 = c
@@ -383,6 +447,9 @@ PLANTED = {
     "importlib": "import importlib\nt = importlib.import_module('valence_core.m.testing')\n",
     "sys-modules": "import sys\nsys.modules['valence_core.m.corr'] = None\n",
     "classify": "def g(a):\n    return a.classify('t')\n",
+    "m-analyze": "import m_analyze\nm_analyze.clock_of_record = None\n",
+    "m-analyze-as": "import m_analyze as ma\nma.CKPT_REL = 'x'\n",
+    "m-analyze-from": "from m_analyze import VerdictInputs\nVerdictInputs.unit = None\n",
 }
 
 
@@ -452,6 +519,41 @@ def _selftest(chk) -> None:
         "link at the temp name, writing nothing through either; a linked parent directory is a problem",
         w1 == "written" and w2 == "identical" and res == ["refused"] * 3 and linked_parent
         and victims == [False, False], (res, victims))
+    with tempfile.TemporaryDirectory() as td:
+        d = Path(td)
+        (d / "a.json.tmp").write_bytes(b"stale")         # a crash's left-over temp: overwritten, never blocking
+        ok_set = write_once_all([(d / "a.json", b"a"), (d / "b.json", b"b")])
+        again = write_once_all([(d / "a.json", b"a"), (d / "b.json", b"b")])
+        (d / "y.json").write_bytes(b"other")
+        try:
+            write_once_all([(d / "x.json", b"x"), (d / "y.json", b"y")])
+            clash = "written"
+        except GuardStop:
+            clash = "refused"
+        real_fdopen = os.fdopen
+        n_open = {"n": 0}
+
+        def failing_fdopen(fd, *a, **k):
+            n_open["n"] += 1
+            if n_open["n"] == 2:
+                os.close(fd)
+                raise OSError(28, "No space left on device (planted)")
+            return real_fdopen(fd, *a, **k)
+        os.fdopen = failing_fdopen
+        try:
+            write_once_all([(d / "p.json", b"p"), (d / "q.json", b"q")])
+            enospc = "written"
+        except OSError:
+            enospc = "raised"
+        finally:
+            os.fdopen = real_fdopen
+        left = sorted(x.name for x in d.iterdir())
+    chk("guard: a set of write-once files is checked whole before anything is written (a clash refuses the set, the "
+        "other file unwritten); a write failing midway leaves no file of the set and no temp name; identical bytes "
+        "again are 'identical'; a crash's left-over temp file does not block the set (round 3's NOTE 2; round 4's "
+        "NOTE 4)",
+        ok_set == ["written", "written"] and again == ["identical", "identical"] and clash == "refused"
+        and enospc == "raised" and left == ["a.json", "b.json", "y.json"], (ok_set, again, clash, enospc, left))
     lines = licence_lines()
     chk("guard: the licence lines name p's package hash, the seventeen m files (sixteen modules and __init__.py) and "
         "olmo_hf.py, each by name", len(lines) == 1 + len(M_HASHED) + 1 and len(M_HASHED) == 17

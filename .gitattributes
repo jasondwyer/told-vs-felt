@@ -12,3 +12,6 @@
 # PROPOSAL-p (valence_core/p): everything under data/p/ckpt/ (checkpoints and adjudication excerpts) may carry a
 # contrast pick and never renders in a diff or a log -p (PROPOSAL-m v1.11 m:318, by reference, p §4.1).
 /data/p/ckpt/** -diff
+# The corrupted-spelling counter's lexicon (web2, 235,976 lines): a frozen word list, kept out of diffs for its size
+# and out of line-ending conversion, so its bytes -- and the sha256 every stage checks -- are the same in every checkout.
+/data/p/lexicon/** -diff -text

@@ -66,6 +66,32 @@ def substituted_keys() -> Iterator[None]:
         yield
 
 
+def in_force() -> bool:
+    """Entry (2) already in force: the register holds it (``register.active(2)``; a gate stage holds the entry from
+    before the load to its end, the seat's Q4) and all four of m's key functions are p's. Any p function in m's module
+    otherwise -- a partial state, or one set by hand outside the register -- is no declared state: a STOP."""
+    st = [getattr(m_keys, n) is P_FUNCS[n] for n in _NAMES]
+    if all(st) and register.active(2, m_keys):
+        return True
+    if any(st):
+        raise KeysStop(f"KEYS STOP: m's key functions are p's outside register entry (2) ({dict(zip(_NAMES, st))}); "
+                       f"the entry substitutes all four, through the register, or none")
+    return False
+
+
+@contextlib.contextmanager
+def keys_context() -> Iterator[None]:
+    """p's keys for the block. PIN (Code, declared at step 6): entry (2) is entered here unless a stage already holds it,
+    and then used as held, never re-entered -- a re-entry inside a stage would re-run term (d)'s assertion after the
+    model load, where a library thread may be alive (the seat's Q4: such a thread does not offend the term; the state
+    is recorded at the stage's end, never raised)."""
+    if in_force():
+        yield
+    else:
+        with substituted_keys():
+            yield
+
+
 def all_olmo_keys(funcs=None) -> list[str]:
     """Every OLMo key template of the six families as ``funcs`` (default p's) build them, ``s`` and ``b`` left as
     literals -- the comparison set of the self-test."""
@@ -111,3 +137,46 @@ def _selftest(chk) -> None:
         pass
     chk("keys: m's four key functions are m's own after the block, an exception included (term (c))",
         all(getattr(m_keys, n) is _M[n] for n in _NAMES))
+    import threading
+    gate, done = threading.Event(), threading.Event()
+    t = threading.Thread(target=lambda: (gate.set(), done.wait(10)), daemon=True)
+    with substituted_keys():
+        t.start()
+        gate.wait(10)
+        try:
+            with keys_context():
+                held = (m_keys.sched_key("OLMo-sft", "A0-OLMo-sft", 0), threading.active_count())
+        except register.RegisterStop as e:
+            held = ("stop", str(e)[:80])
+        done.set()
+    t.join(10)
+    try:
+        with keys_context():
+            entered = m_keys.item_key("OLMo-dpo", 4, "qual")
+    except register.RegisterStop:
+        entered = "stop"
+    saved = m_keys.arm_key
+    m_keys.arm_key = P_FUNCS["arm_key"]
+    try:
+        in_force()
+        partial = "accepted"
+    except KeysStop:
+        partial = "stop"
+    finally:
+        m_keys.arm_key = saved
+    saved4 = {n: getattr(m_keys, n) for n in _NAMES}
+    try:
+        for n, f in P_FUNCS.items():
+            setattr(m_keys, n, f)
+        in_force()
+        by_hand = "accepted"
+    except KeysStop:
+        by_hand = "stop"
+    finally:
+        for n, f in saved4.items():
+            setattr(m_keys, n, f)
+    chk("keys: where entry (2) is already held (a stage, a library thread alive after the load), keys_context uses it "
+        "as held and never re-enters the register; outside a stage it enters entry (2) itself; a partial substitution, "
+        "or all four set by hand outside the register, is a STOP (N-2); m's functions are m's own after",
+        held == ("p-sched|OLMo-sft|A0-OLMo-sft|0", 2) and entered == "p-olmo-items-qual|dpo|4" and partial == "stop"
+        and by_hand == "stop" and all(getattr(m_keys, n) is _M[n] for n in _NAMES), (held, entered, partial, by_hand))
