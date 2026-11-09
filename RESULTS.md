@@ -125,6 +125,28 @@ applied to CLAUDE.md.
     4. The smoke itself.
 
     Not pushed.
+  - **Close (PI date 2026-11-08).** The design seat's answer
+    ([`2026-11-08_a-m2-preread_design-to-code_answers.md`](results/raw/2026-11-08_a-m2-preread_design-to-code_answers.md),
+    sha256 `09d856efd81868999cdc5ef422ca6b28e5b9d76ff7517d9b44388ad9de2dea29`) is committed here by path, as the PI placed it.
+    - **What it rules:**
+      - Q1 (T): tie-break (iii) is struck, and (b) stays a declared read;
+      - Q2 (U): count (i) is the bar's numerator, the union of m:265's three classes;
+      - P1–P4 are accepted;
+      - F-A (ii): the counters are computed at VERDICTS in Code's own step;
+      - F-B: the re-run writes `Q-F3_time-r2.json`;
+      - F-C: G-ANL-F3 re-runs, superseding;
+      - F-D: F-c is a diagnostic arm, not selectable.
+    - ADDENDUM-m2 v0.2 (`ADDENDUM-m2-f3-reasoning-block-v0_2.md`, sha256 `69e23212…cb47`) is delivered beside
+      the answer and is committed by the F3 session (A-m2 §6 item 2), with v0.1 moving to `archive/`.
+    - The PI's routing of 2026-11-08, in chat, verbatim:
+
+      > 1. ADDENDUM-m2 v0.2: commit [go]; Q1 (T), Q2 (U), F-A–F-D as ruled [confirmed]; smoke driver commit, then the smoke’s laptop go (~1 h Qwen, announced) [go].
+      > 2. p step 6: entries (6)–(9) and the confirmations [confirmed]; web2 [stands]; build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 → G-TIME-OLMo (p) on the box [go].
+      > 3. Push: 3 local commits [push].
+
+    - **The F3 session's sequence:** the A-m2 v0.2 commit, then the smoke driver's commit, then the smoke on the
+      laptop (≈ 1 h of Qwen), announced to the coordinating session under the standing rule.
+    - **The push** of the three commits since `74c004c` is done (`74c004c..da1e1b8`). This commit is not in it.
 
 - 2026-11-08 — **PROPOSAL-p step 6 (p §8; the PI's routing of 2026-11-08, item 1, "Step 6 [go]"; the seat's answer at
   `daca8b0`, §4): Code STOPS before building the gate-stage driver, on nine questions for the seat.** Three attributes
@@ -163,6 +185,22 @@ applied to CLAUDE.md.
     - The revised claims were checked by tool, not by a second blind pass.
 
     Not pushed.
+  - **Close (PI date 2026-11-08).** The design seat's answer
+    ([`2026-11-08_p-step6_design-to-code_answers.md`](results/raw/2026-11-08_p-step6_design-to-code_answers.md),
+    sha256 `9e1783496c7120fa3e4f96511775c4e805c176736baf0f0d5f7e12a4571b9bab`) is committed here by path, as the PI placed it.
+    - **What it rules:**
+      - register entries (6)–(9) are declared: the roots, the schedule verifier, the identity keys and the identity
+        wrapper;
+      - Q4, Q5, Q8 and Q9 are confirmed;
+      - Q6 takes Code's form, with m's three NOT-RUNs in the output's `p` block;
+      - Q7 is staged, in-file;
+      - `web2` stands.
+    - The PI's routing of 2026-11-08, in chat, verbatim (the full block is in the A-m2 close of the same commit):
+
+      > 2. p step 6: entries (6)–(9) and the confirmations [confirmed]; web2 [stands]; build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 → G-TIME-OLMo (p) on the box [go].
+
+    - **Step 6 resumes with the pod session:** the build, then the G-SHAPE-p re-run, G-ANL-p, LOCK-p v0.1 ×3, and
+      G-TIME-OLMo (p) ×3 on the box, then the seat's read.
 
 - 2026-11-08 — **PROPOSAL-p: G-CAL-p's read goes to the seat. Condition (4) passed on all three checkpoints
   (`b6ef939`, `ec0d9d3`); a block for the seat's read carries four items.**
