@@ -21,6 +21,86 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **ADDENDUM-m2 v0.3 — COMMITTED (A-m2 §6 item 2), on the PI's routing of 2026-11-09.**
+  - **Committed:** `ADDENDUM-m2-f3-reasoning-block-v0_3.md` is tracked at root, sha256
+    `83093812afdd513a9522024e8b766254e47d9aa226d5894577baf69855d9fa67` (recomputed at write time).
+  - **v0.1** (`cdcc8e86…53f0`) and **v0.2** (`69e23212…cb47`) are moved to `archive/` and left uncommitted, as v0.3's
+    header and §6 item 2 have it.
+  - **The referent check of the delta** (v0.3 §6 item 1: the "what changed from v0.2" items against the seat's answer
+    on #50): a blind agent; HEAD was `2018ffc` before and after it ran (Code's `git log`). 8 items: 6 CONFIRMED,
+    2 IMPRECISE (three findings), 0 OPEN, 0 FAIL. No item moves a form, a figure, a bar, a key or the rule, so v0.3
+    is committed as delivered. The findings go to the seat as dated notes in the raw's dispositions:
+    - 3a, §3.4:
+      - the list after "the rest" is not exhaustive;
+      - ans3 and v0.3 word the second half differently;
+      - the "what changed" list says "gains" where a clause is also struck;
+      - ans3's line on G-ID-F3 is not in the text.
+    - 8a, §7: F-6 and F60 are not listed, and the anchors paragraph has no anchor for the G-ANL-F3 answers.
+    - 8b, §5 item 2: its summary omits the scope, #48 and #49.
+  - **Next:** the smoke driver's commit, then the smoke.
+
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 17:28:58 UTC 2026**.)
+  - **The routing, verbatim:** the PI's chat text of 2026-11-09, "Route as given", in reply to the coordinating
+    session's question "Do you route the seat's two rulings as drafted?", relayed by the coordinating session. The
+    routing is therefore ans3's §3 as drafted. Its item 1, quoted from the committed raw (ans3:18) as the #50 close
+    quotes it:
+
+    > 1. A-m2 v0.3: commit (§6 item 2) [go]; #50's sentence, #48, #49 [confirmed]; then the smoke driver's commit and the smoke's laptop go [go].
+
+  - **The routing blocks of 2026-11-08, verbatim** (v0.3 §6 item 2), from RESULTS.md's committed close lines.
+    - `daca8b0`'s close, items 2 and 3:
+
+      > 2. G-TIME-F3: the ruling (bar fires under m:265; STOP) acknowledged; dated correction on the entry [go]. ADDENDUM-m2: route to Code’s pre-read and step 3 [go]; the four forms and the selection rule [as written]; the smoke’s laptop go [go].
+      > 3. Standing rule: model runs on the laptop are announced to the coordinating session and serialized [adopted].
+
+    - `de729c4`'s close, item 1:
+
+      > 1. ADDENDUM-m2 v0.2: commit [go]; Q1 (T), Q2 (U), F-A–F-D as ruled [confirmed]; smoke driver commit, then the smoke’s laptop go (~1 h Qwen, announced) [go].
+
+  - **The seat's answers:** on the pre-read,
+    [`2026-11-08_a-m2-preread_design-to-code_answers.md`](results/raw/2026-11-08_a-m2-preread_design-to-code_answers.md)
+    (`de729c4`, sha256 `09d856ef…ea29`); on #50,
+    [`2026-11-08_open50-entry9_design-to-code_answers.md`](results/raw/2026-11-08_open50-entry9_design-to-code_answers.md)
+    (`6b63973`, sha256 `d6296d44…2b97`), §1.
+  - **What v0.3 changes from v0.2:** its own list below. The header, the anchors and §6's items 1 and 2 also change.
+    The rest of v0.2 stands, including §3.1's forms, §3.2's design, and §3.3's rule and stops.
+    - **§3.4, the counters' blinding scope (#50; Code's sentence adopted in the text).** Before the unit's VERDICTS
+      entry or NOT-RUN record, a gate stage's entry reports:
+      - (a) over its sham sessions' reasoning lines, and over its contrast sessions' first lines where it reports
+        their class;
+      - (b) over its sham sessions' rounds and its contrast sessions' forced rounds.
+
+      The campaign's looks report neither. The rest is computed and reported at the unit's VERDICTS entry or NOT-RUN
+      record, where the seat confirms or corrects each (b) item. The smoke is outside the scope: sham-only, of no unit,
+      readable in full.
+    - **§3.3, a stopped smoke (#49):** a smoke that stops under its driver's own refusals selects nothing. The driver
+      prints no tally and no rule; Code reports the stop, and the seat rules.
+    - **§4.2, the pin (#48):** the driver pins the committed A-m2's sha256, v0.3's, and parses §3.1's four literals
+      from it.
+  - **v0.2's OPEN items:** #48, #49 and #50 are answered in ans3 §1 and written into v0.3, so none is carried. The
+    referent check of v0.2 and its IMPRECISE items stay as they were committed at `2018ffc`.
+  - **Already done:** the G-TIME-F3 entry's dated correction, at `daca8b0`.
+  - **Left for the build:** §1's class correction goes into `lines.py` only with the selected form (one mf3 move,
+    not two).
+  - **The referent raw:** [`_a-m2-v03_referent-check`](results/raw/2026-11-09_a-m2-v03_referent-check.md), a blind
+    agent; its report verbatim, then Code's disposition of every item not CONFIRMED.
+  - **Values-check:** a blind agent, read-only, in two passes (Part A of
+    [`_a-m2-v03_valuescheck`](results/raw/2026-11-09_a-m2-v03_valuescheck.md)).
+    - Pass 1, on the drafts: 43 items; 36 CONFIRMED, 3 IMPRECISE, 0 FAIL, 4 NOT CHECKABLE.
+    - Pass 2, on the passages pass 1 corrected: 20 items in Part A; 17 CONFIRMED, 2 IMPRECISE, 0 FAIL, 1 NOT
+      CHECKABLE.
+    - Every item not CONFIRMED was re-checked at source, and applied or answered in the raw's dispositions.
+    - Pass 2's agent disclosed two breaches of its brief, neither touching `data/`: two temporary lists written in
+      the scratchpad root and deleted at once, and three pathspec-limited `git status --short` runs in the main tree.
+  - **Committed by path:** the addendum, the referent raw, the values-check raw and this entry. Nothing ran on a
+    model.
+  - **Next:**
+    1. The smoke driver (P4), pinned to v0.3's sha. Its commit follows this one, with its self-test run on that
+       commit's base.
+    2. The smoke's announcement to the coordinating session, under the standing laptop rule.
+
+    Not pushed.
+
 - 2026-11-09 — **p step 6 — BUILD (the design seat's answer of 2026-11-08, `de729c4`, §4; the PI's routing of
   2026-11-08 quoted in `de729c4`'s close lines, item 2, "build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 →
   G-TIME-OLMo (p) on the box [go]"):** G-TIME-OLMo (p)'s stage and driver, p's analyzer and G-ANL-p's battery,
