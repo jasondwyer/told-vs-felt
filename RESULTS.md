@@ -446,6 +446,50 @@ applied to CLAUDE.md.
     launch on its acknowledgement.
 
     Not pushed.
+  - **Close (PI date 2026-11-09).** The design seat's answer
+    ([`2026-11-09_a-m2-smoke-driver_design-to-code_answers.md`](results/raw/2026-11-09_a-m2-smoke-driver_design-to-code_answers.md),
+    sha256 `7793fee877916f3de508b216b0f42718d5445f3eda6b3a95876af703738909ad`) is committed here by path, on the
+    routing's item 3; the seat placed it untracked over the jspace-lab bridge (its header). Its §1 rules on this
+    entry's departure for the seat; its §2 reads two p entries above (`e8779b1`, `fdd79d8`) and this driver's
+    residuals.
+    - **The departure, O2-3 (§1.2):** "Accepted, inert. No strike." The ruling does not rest on the 2026-10-19 ground,
+      since Q-F3's metadata window stays open until its VERDICTS (§0). It rests on three facts:
+      - the directory traversed was a fresh worktree's copy at `daca8b0`, whose files carry the checkout's times;
+      - nothing was printed from `data/mf3/ckpt`, and nothing was computed against it;
+      - the run's own checkpoint, in the main checkout, was not traversed.
+
+      The file count and the `__pycache__` search are not O2-3's forms. The self-test's hash of `data/mf3` stands as
+      the practice disclosed in every round. No dated note goes on the G-TIME-F3 entry: its checkpoint was not touched.
+    - **The rule (§1.3), in one sentence:** standing from 2026-11-09 for every Code session and every blind reviewer, in
+      any worktree or checkout holding `data/<unit>/ckpt` or `data/<unit>/reports` before that unit's VERDICTS, every
+      `find` prunes those directories, no `du`, `ls -l/-t/-s`, `stat`, `wc -c` or `git diff --stat` that would reach
+      them is run, the forms permitted are a bare `git status --porcelain`, a name-only `ls`, `git ls-files` and the
+      pruned `find`, the brief Code hands a blind reviewer states the rule, and a departure is disclosed (the commands
+      by kind, what printed, the worktree's commit) and comes to the seat, which rules; it is procedure, binds no
+      hash, has the answer as its source, and leaves CLAUDE.md unedited.
+    - **Q-F3's carried form of O2-3, anchored.**
+      - Its text is the driver's docstring, `scripts/mf3_sessions.py` at `9c7062e`, lines 46–48 (26–28 at
+        `cd9756e`): "O2-3's listing forms (a bare git status --porcelain, a name-only ls, git ls-files, git diff
+        --name-status, shasum; no size or time metadata of data/mf3/ckpt or data/mf3/reports) go into Q-F3's launch
+        checklist until its VERDICTS."
+      - The BUILD (F3) entry's carry-overs record the carry (`RESULTS.md` at `cd9756e`, lines 110–111: "O2-3's
+        listing forms go into Q-F3's launch checklist."), and the BUILD's design raw points to the docstring
+        (`results/raw/2026-11-06_mf3-build_design.md`, line 147).
+      - No Q-F3 launch checklist is committed yet.
+      - The docstring's permitted forms add `git diff --name-status` and `shasum` to §1.3's list and lack the pruned
+        `find`. Code flags the difference to the seat.
+    - **§2:** register entry (9) (`e8779b1`), G-SHAPE-p's re-run of record (`fdd79d8`) and this driver's three
+      disclosed residuals are read: the two p entries as ruled, the residuals accepted as disclosed; nothing to add.
+    - The PI's routing of 2026-11-09, in chat, verbatim:
+
+      > 1. the departure accepted, inert, no strike [as ruled]; 2. the pruned-traversal rule and reviewer’s brief [adopted]; 3. Code’s close line on 9c7062e with the anchor [go], this raw committed by path; 4. the smoke’s laptop go and p’s chain [unchanged]; 5. nine local commits since da1e1b8, plus this one [push].
+
+    - **Item 4** had already run when the routing came: the smoke ran and stopped for the seat (`6cfd3db`), and p's
+      chain ran through G-TIME-OLMo (p) ×3 (`2258c52`).
+    - **Item 5:** the answer's §4 names the nine as `de729c4..fdd79d8`, and its header reads the record through
+      `fdd79d8`. The nine are pushed on this routing (origin moved `da1e1b8..fdd79d8`). Four later commits
+      (`f8b16d5`, `0afd842`, `2258c52`, `6cfd3db`) lie between them and this one, which cannot be pushed without
+      them; that question goes to the PI.
 
 - 2026-11-09 — **ADDENDUM-m2 v0.3 — COMMITTED (A-m2 §6 item 2), on the PI's routing of 2026-11-09.**
   - **Committed:** `ADDENDUM-m2-f3-reasoning-block-v0_3.md` is tracked at root, sha256
