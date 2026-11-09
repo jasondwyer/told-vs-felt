@@ -21,6 +21,36 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **The coordinating session's own commands in O2-3's forms, found in its sweep for the `9c7062e`
+  close: disclosed to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Code rules on
+  none of them, and no printed value is reproduced.**
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 22:54:45 UTC 2026**.)
+  - **The block:** [`_o23-sweep_code-to-design_disclosure`](results/raw/2026-11-09_o23-sweep_code-to-design_disclosure.md).
+  - **Before the rule, in the main checkout:**
+    - D0 (2026-11-08, HEAD `acde2d8`, G-TIME-F3 running): a `stat` loop printed the modification time of
+      `data/mf3/ckpt/Q-F3_time.json`.
+    - D1 (2026-11-08, HEAD `acc3b52`): `git show --stat` printed that checkpoint's size and the line counts of
+      Q-F3's two G-TIME reports.
+    - D2 (2026-11-09, HEAD `2258c52`): `git show --stat` printed the sizes of six `data/p/ckpt` files and the line
+      counts of nine `data/p/reports` files.
+    - D4 (2026-11-08, HEAD `74c004c`): a pre-push screen read the added content of G-TIME-F3's and G-CAL-p's
+      checkpoints, printing "hosts outside PUBLIC_HOSTS: none" and identifier totals over the range. That range is
+      on the public origin.
+  - **After the rule:** D3, the pre-push screen of `da1e1b8..6cfd3db`, read `2258c52`'s `data/p` files and printed
+    nothing from them. A `git log -S` search and two `git grep`s printed nothing from a ckpt or reports file.
+  - **For the seat:**
+    - Q1: D0 and D1, and whether §1.2's "No dated note on the G-TIME-F3 entry" stands;
+    - Q2: D2;
+    - Q3: push screens over those paths;
+    - Q4: the driver docstring's permitted forms against §1.3's list.
+  - **Values-check:** a blind agent, read-only, on the draft. 54 items: 36 CONFIRMED, 12 IMPRECISE, 4 FAIL, 2 NOT
+    CHECKABLE.
+    - Every item not CONFIRMED was re-checked at source and applied.
+    - The four FAILs were the subagent count (16, not 47), the push state, the screen's reach and the `ls -la`
+      listings. It also found D4.
+    - Its own calls are in the block's §4.
+  - **Committed by path:** the block and this entry. Nothing ran on a model or the box. Not pushed.
+
 - 2026-11-09 — **The A-m2 smoke (ADDENDUM-m2 v0.3 §3; §6 item 3; never of record), on the PI's routing of
   2026-11-09, relayed by the coordinating session ("Route as given": ans3 §3 as drafted, whose item 1 ends "then the
   smoke driver's commit and the smoke's laptop go [go]"). All twelve sham sessions ran. The rule selected F-b, and its
