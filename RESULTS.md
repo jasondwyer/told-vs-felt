@@ -21,6 +21,64 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **LOCK-p-OLMo-{sft,dpo,instruct} v0.1 (p v0.2 §4.1's chain; the order of the seat's answer of
+  2026-11-08 at `de729c4`, §4; the PI's routings quoted in `de729c4`'s close lines, item 2, and at `6b63973`, item
+  2):** three locks at the repository root, written by Code's generator and committed by path. Each licenses
+  G-TIME-OLMo (p) on its checkpoint and nothing later. Model-free; nothing ran on a model or the box.
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 18:08:38 UTC 2026**.)
+  - **The files** (sha256; each becomes its G-TIME checkpoint's `lock_sha256`):
+    - `LOCK-p-OLMo-sft.md`: `9cc9045a57dc8abc01f532dabc419c11ece0978102ad38b914f7fadefdd839ae` (26,351 bytes);
+    - `LOCK-p-OLMo-dpo.md`: `efcba384b68d2365a9d697782520f0e64fe10f09c362ae0e68026f8d15295aba` (26,135 bytes);
+    - `LOCK-p-OLMo-instruct.md`: `c03a1ef9d8fc3ccb71db93334eed9c790f79fbb649e0453b8c9f0f220f645cbd` (26,529 bytes).
+  - **What each carries:**
+    - §0: the disclosure (F-p3's sentence); on sft alone, the SFT sentence (`daca8b0`, §0.1); D_p 2026-12-15; the
+      proposal pins (F-p8); the uncached path (m:267); the backend identifier of record as one code-block line,
+      `BACKEND OF RECORD 641ee466f4553b6a` (the BACKEND entry at `190ba90` and G-CAL-p's three identities); the
+      weights of record.
+    - §1–§3: every value `stage.lock_required` lists, verbatim. That is 56 per lock: 29 in §1 (both analyzers, the
+      proposal pins, both packages, the three gate artifacts, the covariate, the renders by both conventions, the
+      lexicon, the schedules manifest and six schedule files, six banners, the ban list, the scaffold set and the
+      driver), 19 licence lines in §2 and the register's 8 lines in §3.
+    - §3 records the register as the seat's answer on entry (9) asks: (6) roots, (7) roots, (8) pins, (9) pins on
+      `resume.Identity`, with Q9 (b)'s roots as parameters.
+    - §4–§9: m:302's LOCK v0.1 contents for the checkpoint: its six schedule files and the manifest; all fifteen of
+      its keys under p's prefix (`keys.all_olmo_keys`); the banner bytes, each sha256 over the constant's JSON form
+      as the precheck reads it, with the raw bytes' sha256s beside (equal to LOCK-m-F3 §6's); the verifier and the
+      scaffold set's assertion; the covariate (p §3.2); every later bar (m's `bars.OLMO_BARS`, each field verbatim)
+      and p's hair trigger.
+    - §10: the analyzer blobs, both packages and m's analyzer closure sha256 (`a3bc7bb9…b22b`). §11: how the stage
+      cites the lock. §12: the PIN sites by file and line.
+  - **Checked before the commit,** in a process that imports the driver as its `time` command does:
+    - for each unit, `stage.lock_required` reports no problem, and the lock names each of its 56 values as the
+      stage's precheck reads them (a whole line or between backticks), none missing;
+    - each lock's one BACKEND line equals the BACKEND raw's printed identifier and G-CAL-p's three identities.
+    - The stage's full precheck (the lock committed at HEAD, the pod id, the weights of record) runs on the box,
+      for all three units, before the launch.
+  - **FLAG (j) for the seat, not adjudicated: G-SHAPE-p's drift check depends on the calling process.**
+    - `stage.gshape_drift_problems` (the fix of round 2's MINOR m-3 in step 6's BUILD review) compares G-SHAPE-p's
+      recorded import closure with
+      `gshape.import_closure`, which reads the modules loaded in the calling process outside `valence_core/p` and
+      `valence_core/m`.
+    - In the stage's own process the closure is the recorded 14 files: the driver's `time` runs the precheck first,
+      with the same module-level imports as G-SHAPE-p's run. So the check is exact where it binds.
+    - A process that has loaded a `valence_core` module outside those two packages that the driver does not load
+      sees drift that is not there. Code's lock generator imported `m_analyze`, which loads
+      `valence_core/e2d/habit.py`, and its first try was refused. The generator now computes every `lock_required`
+      before importing `m_analyze`; no value depends on that order. Extra p or m modules do not count.
+    - m's analyzer closure, by contrast, is computed in a fresh interpreter (PIN-1). Code reads this as a robustness
+      gap in a check Code built, not a defect in the locks. The fix Code would propose is a fresh-interpreter closure
+      for p's check, which would move p's package. Nothing is changed before the seat's word.
+  - **The backend clause.** Each lock says that a *backend* change after the lock STOPs the stage, and that a new box
+    of the same class gives the same identifier (m:267), so the line does not detect it. The stage's PIN
+    (`stage.py:36-38`) and the BUILD entry's reading (h) say "a box change"; both are left as written, the
+    correction carried to the seat's read block with (h).
+  - **Values-check:** a blind check of the three locks as first generated and of this entry's draft, before the
+    commit: 106 items, 93 PASS, 7 IMPRECISE, 0 FAIL, 6 not checkable (prospective or session history). No value
+    was wrong. Each of the seven was applied, and the fixes were checked by tool. Raw:
+    [`_p-lock-v01_valuescheck`](results/raw/2026-11-09_p-lock-v01_valuescheck.md).
+  - **Next:** G-TIME-OLMo (p) ×3 on the box, batched, under the routing of 2026-11-08 quoted in `de729c4`'s close
+    lines, item 2; then the seat's read. Not pushed. Committed by path.
+
 - 2026-11-09 — **G-ANL-p — the canonical run on HEAD `fdd79d8`: PASS (p v0.2 §4.4; the order of the seat's answer of
   2026-11-08 at `de729c4`, §4; the PI's routing quoted at `6b63973`, item 2). `scripts/p_analyze.py ganl` writes
   `data/p/gates/G-ANL-p.json` (sha256 `6440468b…b01a`), once. m's battery passes 525/525 and reaches all 538 coverage
