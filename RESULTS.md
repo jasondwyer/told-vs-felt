@@ -21,6 +21,32 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **G-ANL-p — the canonical run on HEAD `fdd79d8`: PASS (p v0.2 §4.4; the order of the seat's answer of
+  2026-11-08 at `de729c4`, §4; the PI's routing quoted at `6b63973`, item 2). `scripts/p_analyze.py ganl` writes
+  `data/p/gates/G-ANL-p.json` (sha256 `6440468b…b01a`), once. m's battery passes 525/525 and reaches all 538 coverage
+  ids; then G-ANL-p's 14 checks pass.** Model-free; nothing ran on a model or the box.
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 17:39:07 UTC 2026**.)
+  - **The run:** at `fdd79d8` with the tracked files unmodified. The run checks that its bindings are committed before
+    the battery, and after it that they still are and that the code did not move. 17:35:19Z–17:38:09Z, exit 0,
+    stderr empty. Raw: [`_p-ganl`](results/raw/2026-11-09_p-ganl.txt) (the repository's prefix scrubbed to `<repo>`).
+  - **The battery:** m's 525/525, its check count and coverage those of G-ANL-F3's artifact; then G-ANL-p's 14, all
+    PASS. Among them:
+    - entry (3) on the real `m_analyze`: D_p for the three OLMo units, m's D1 and D2 for Q-F0 and Q-F3, both functions
+      restored after the block and after an exception inside it;
+    - p's VERDICTS path on a synthetic OLMo-sft campaign whose checkpoints carry p's four identity fields;
+    - the Q-F0 regression: Q-F0's VERDICTS and secondary outputs through p's path, byte for byte;
+    - the NOT-RUN regression: m's three OLMo NOT-RUN outputs (`0f35954`) through p's staged path on the bindings they
+      were written under, byte for byte;
+    - `data/p` untouched by the battery (N11).
+  - **The artifact** (schema `p-ganl-v1`, 8,334 bytes, verdict PASS), read back:
+    - the analyzers, m's `d347ea0c…5e48` and p's `d3758fc4…7008`; the packages, m's `7756dcf4…49bb` and p's
+      `7a08dbfa…1d24`, the one G-SHAPE-p's re-run records;
+    - `proposal_sha256`, m's pin `42ab36ec…6c6b`, and `proposal_p_sha256` `42f2977b…3b32` (F-p8);
+    - register entry (3)'s row, the analyzer path's one entry;
+    - D_p 2026-12-15, with no problems; the disclosure, F-p3's sentence.
+  - **Next:** LOCK-p v0.1 ×3, which name this artifact; then G-TIME-OLMo (p) ×3 on the box. Not pushed. Committed by
+    path.
+
 - 2026-11-09 — **G-SHAPE-p — the re-run of record before LOCK-p v0.1: PASS (p v0.2 §4.2; F-p12, the seat's answer
   of 2026-11-08 at `daca8b0`, §2; the PI's routing quoted at `6b63973`, item 2). `data/p/gates/G-SHAPE-p.json`, schema
   `p-gshape-v1`, sha256 `3c4125a353b70ff7a89ce19687041f44556249ebce496fa4b3f6c9288f2d1554`, written once on the package LOCK-p v0.1 will name. `5009e77`'s artifact is

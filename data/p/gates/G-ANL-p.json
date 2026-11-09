@@ -1,0 +1,139 @@
+{
+ "analyzers": {
+  "scripts/m_analyze.py": {
+   "sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48"
+  },
+  "scripts/p_analyze.py": {
+   "sha256": "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008"
+  },
+  "valence_core/p": {
+   "package_sha256": "7a08dbfad83aab44dbd11d52844c0473a24610790502a949dfbe650cc9661d24"
+  }
+ },
+ "battery": {
+  "checks": [
+   "ganl-p: m's battery runs unchanged and passes, its check count and coverage those of G-ANL-F3's artifact",
+   "ganl-p: m's analyzer is the analyzer of record (its pin); D_p verifies against PROPOSAL-p's committed bytes",
+   "ganl-p: entry (3) on the real m_analyze -- D_p for the three OLMo units, m's D1 and D2 for Q-F0 and Q-F3 -- and both functions restored after the block and after an exception inside it",
+   "ganl-p: p's Clock NOT-RUN through p's path -- m's run_not_run under entry (3), the roots p's parameters, the record dated D_p the Clock of record -- with m's CKPT_REL and VERDICTS_REL sentinels that record and raise on any use, never used (the seat's Q9 (b); N3)",
+   "ganl-p: the pin beside (the seat's Q7) -- the output keeps m's proposal_sha256 (v1.11's) and carries p's proposal_p_sha256 beside it and the p block: the register, both analyzer blobs and p's package_sha256 (MAJOR 6), D_p, the disclosure, m's three NOT-RUNs beside m's decisions, and OLMo-sft's at-the-bar sentence",
+   "ganl-p: in m's form (no substitution, no p field) the output is m's own, and p's output is it with exactly proposal_p_sha256 and p added (the Clock aside: m's form reads D_O' as the Clock of record)",
+   "ganl-p: p's VERDICTS path (MAJOR 5) -- m's run_verdicts under entry (3) on a synthetic OLMo-sft campaign (m's _Camp, the production writer), its checkpoints carrying p's four identity fields as p's will (N-8: m's reader takes the identity as a dict), with m's root sentinels never used: each output is m's form on the same inputs with exactly proposal_p_sha256 and the p block added, the p block naming both analyzers and p's package",
+   "ganl-p: a p-form VERDICTS whose lock does not name p's analyzer and package -- as whole lines or between backticks, never inside a longer run (round 3's NOTE 3) -- is refused (MAJOR 6); the seeded staging (MINOR 13) -- m's exclusivity sees a p VERDICTS output seeded beside a NOT-RUN; a p re-run on unchanged inputs is refused write-once where m's own form reports identical (STAGING_NOTE)",
+   "ganl-p: the not-run --v2-closure branch (campaign 'none') through p's path, the roots p's parameters, under m's root sentinels, never used (N-8; Q9 (b))",
+   "ganl-p: the seeded comparator (MINOR 13) -- the v2 posted text's re-run reads the comparator from the staging copy of p's of-record output: its FAIL (a posted copy still enumerates rows) names that file's sha256, and no printed line names the staging directory",
+   "ganl-p: the v2 resolution (the seat's Q9 (c)) -- the posting reads the OLMo coordinates from p's directory and Q-F0's from m's, Q-F3's from mf3's parameter, under the sentinels; an OLMo output only in m's directory is refused; a posting m directory other than the bound one is refused; the output carries proposal_p_sha256, the resolution (no machine path: MINOR 11) and m's three NOT-RUN outputs' sha256s",
+   "ganl-p: the regression -- Q-F0's VERDICTS and secondary outputs through p's path (run_verdicts_p, m's form) on the G-ANL-F3 battery's identity binding, byte for byte, with m's own regression's checks: PIN-29's seven pins by blob, LOCK-m-F0 naming the identity of record, the preprint of record served by its blob (MAJOR 5)",
+   "ganl-p: the regression -- m's three OLMo NOT-RUN outputs (0f35954), through p's staged path in m's form on the bindings they were written under (e0b4f2c's analyzer, its package and closure, each pinned in full; N4), byte for byte",
+   "ganl-p: data/p is untouched by the battery -- every file's sha256 before and after (N11)"
+  ],
+  "checks_pass": 14,
+  "checks_total": 14,
+  "ok": true
+ },
+ "code": {
+  "m_analyzer_sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48",
+  "m_package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
+  "p_analyzer_sha256": "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008",
+  "p_package_sha256": "7a08dbfad83aab44dbd11d52844c0473a24610790502a949dfbe650cc9661d24"
+ },
+ "d_p": {
+  "date": "2026-12-15",
+  "problems": []
+ },
+ "disclosure": "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session ran.",
+ "m_battery": {
+  "checks_pass": 525,
+  "checks_total": 525,
+  "coverage_ids": 538,
+  "g_anl_f3": {
+   "checks_total": 525,
+   "coverage_ids": 538
+  },
+  "ok": true
+ },
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "register": [
+  {
+   "attrs": [
+    "clock_of_record",
+    "crosscheck_coordinate"
+   ],
+   "kind": "clock; roots",
+   "module": "m_analyze",
+   "n": 3,
+   "reason": "p §4.4: p's outputs through m's analyzer (scripts/m_analyze.py, imported by scripts/p_analyze.py), the proposal pin kept m's (proposal_p_sha256 beside it): (a) the Clock -- D_p for the OLMo units, m's own for Q-F0 and Q-F3; (c) the v2 posting's per-unit verdicts-dir resolution -- data/p/verdicts for the OLMo units, data/m/verdicts for Q-F0. (b) The roots are parameters wherever m takes them, not a site (the seat's Q9 (b))",
+   "replacement": "valence_core.p.analysis.{clock_of_record_p, crosscheck_coordinate_p}",
+   "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"
+  }
+ ],
+ "regression_not_run": {
+  "binding": {
+   "analyzer_sha256": "6ec3222b54c78ea5107a5ef89f9ffd3dd2fc649394f0dc6180280023c82b93d9",
+   "closure_sha256": "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b",
+   "package_sha256": "60199b36557ac283771b83dcb4be101b5c56880dceacdecd05cce5a578e7feec"
+  },
+  "error": null,
+  "outputs": {
+   "data/m/verdicts/OLMo-dpo_NOT-RUN.json": {
+    "identical": true,
+    "sha256": "94869b83758be62c835f16e4306787abcee9470544306cd5f530829d73ab8e96"
+   },
+   "data/m/verdicts/OLMo-instruct_NOT-RUN.json": {
+    "identical": true,
+    "sha256": "e2ecef56d747681dbc7ff48e19634f35f5eac8e6bb9c932efae77bfcbe7587e8"
+   },
+   "data/m/verdicts/OLMo-sft_NOT-RUN.json": {
+    "identical": true,
+    "sha256": "72745cb4328083373d9c9d482732c735dee28cc68c5f151ed2f3a9a35684b5b0"
+   }
+  }
+ },
+ "regression_qf0": {
+  "error": null,
+  "m": {
+   "error": null,
+   "identity": {
+    "analyzer_commit": "ed8e886",
+    "analyzer_sha256": "655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f",
+    "closure_sha256": "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b",
+    "lock_names_all_three": true,
+    "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771"
+   },
+   "pins": {
+    "data/m/ckpt/Q-F0_campaign.json": true,
+    "data/m/ckpt/Q-F0_qual.json": true,
+    "data/m/ckpt/Q-F0_time.json": true,
+    "data/m/verdicts/Q-F0_VERDICTS.json": true,
+    "data/m/verdicts/Q-F0_decisions.json": true,
+    "data/m/verdicts/Q-F0_olmo-states.json": true,
+    "data/m/verdicts/Q-F0_secondary.json": true
+   },
+   "preprint": {
+    "blob_sha256": "45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41",
+    "commit": "1523cce",
+    "head_file_is_table": true,
+    "head_file_sha256": "45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41",
+    "path": "PREPRINT-v1_0-draft.md",
+    "table_sha256": "45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41"
+   },
+   "status": "written"
+  },
+  "m_outputs_identical": true,
+  "outputs": {
+   "data/m/verdicts/Q-F0_VERDICTS.json": {
+    "identical": true,
+    "sha256": "ec7d208203ad3192ac623a4cf47feacd2a8f1f6c237f900097db223b5c8e35ea"
+   },
+   "data/m/verdicts/Q-F0_secondary.json": {
+    "identical": true,
+    "sha256": "dcaaaac3e9e3603e6e9c81af679e1687300957a38b809c80fb5d7ec6e3d6e9b7"
+   }
+  }
+ },
+ "schema": "p-ganl-v1",
+ "spec": "p §4.4; the seat's answer of 2026-11-08 (de729c4), Q8, Q9",
+ "stage": "G-ANL-p",
+ "verdict": "PASS"
+}
