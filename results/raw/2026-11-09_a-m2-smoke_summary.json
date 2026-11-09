@@ -1,0 +1,82 @@
+{
+ "addendum_m2_sha256": "83093812afdd513a9522024e8b766254e47d9aa226d5894577baf69855d9fa67",
+ "i_key": "union",
+ "schema": "a-m2-smoke-summary-v1",
+ "selectable": [
+  "F-a",
+  "F-b"
+ ],
+ "selection": {
+  "adopted": null,
+  "keys": {
+   "F-a": [
+    6,
+    11,
+    0
+   ],
+   "F-b": [
+    3,
+    0,
+    1
+   ]
+  },
+  "selected": "F-b",
+  "stop_selected_defects": true,
+  "stop_uninformative": false
+ },
+ "tally": {
+  "F-0": {
+   "cap": 0,
+   "complete": 3,
+   "counter_a": 5,
+   "echo": 3,
+   "empty": 0,
+   "free_responses": 18,
+   "lines": 18,
+   "responses": 30,
+   "sessions": 3,
+   "union": 3,
+   "valid": 3
+  },
+  "F-a": {
+   "cap": 1,
+   "complete": 3,
+   "counter_a": 11,
+   "echo": 5,
+   "empty": 0,
+   "free_responses": 18,
+   "lines": 18,
+   "responses": 30,
+   "sessions": 3,
+   "union": 6,
+   "valid": 2
+  },
+  "F-b": {
+   "cap": 3,
+   "complete": 3,
+   "counter_a": 0,
+   "echo": 0,
+   "empty": 0,
+   "free_responses": 18,
+   "lines": 18,
+   "responses": 30,
+   "sessions": 3,
+   "union": 3,
+   "valid": 3
+  },
+  "F-c": {
+   "cap": 0,
+   "complete": 2,
+   "counter_a": 2,
+   "echo": 2,
+   "empty": 0,
+   "free_responses": 13,
+   "lines": 13,
+   "responses": 25,
+   "sessions": 3,
+   "union": 2,
+   "valid": 2
+  }
+ },
+ "tied_on_i_ii": []
+}

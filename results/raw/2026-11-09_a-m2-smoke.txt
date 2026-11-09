@@ -1,0 +1,1047 @@
+# The A-m2 smoke (ADDENDUM-m2 v0.3 s3; never of record): twelve sham sessions, the four reasoning-block forms of s3.1 over A1s, A2s and A3s, on Qwen, uncached, reasoning cap 60, under LOCK-m-F3 v0.1's licence; on the committed driver's `time --smoke` form. Launched with m:267's line as written: `nohup caffeinate -is /bin/zsh <tmp>/smoke/run_smoke.sh > /dev/null 2>&1 & disown` -- the command is this wrapper, which writes this raw, exports HF_HUB_OFFLINE=1 and unsets MLXLM_USE_MODELSCOPE; caffeinate -is leaves display sleep only. Its outputs go to <tmp>/smoke/out, outside the repository. No finish stamp. A dry pre-launch check (the out dir, the identity, the precheck, the driver and the snapshot checks; nothing loaded) returned CLEAR just before the launch.
+# Code stamp at launch: 2026-11-09 18:14:32 UTC (date -u); HEAD 0afd842; driver scripts/mf3_sessions.py sha256 c9393a482001270e4564b940c17fa982f711aa9cf1a08e72ec239f16a0884d9b; tracked changes: []
+# Power: Now drawing from AC Power; Wattage 140 W; disk: 637Gi available on /; python processes before the run: []; HF_HUB_OFFLINE=1
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py time --smoke --smoke-out <tmp>/smoke/out --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F3.md --analyzer-sha256 d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 --package-sha256 f30ad5053904ac222a81fa220f142b5f11f4da7965fdb8cdb83cd9b19e786310 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/mf3_sessions.py c9393a482001270e4564b940c17fa982f711aa9cf1a08e72ec239f16a0884d9b: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; <home>/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE A-m2 smoke: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d
+LICENCE A-m2 smoke: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F3.md 377c5d602709004c: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical; analyzer d347ea0c9b69f73c, mf3 package f30ad5053904ac22, the 11 m files and the weights c000ac2c2057: the hashes identity_extra and the lock name, hashed at stage start
+A-M2 ADDENDUM-m2-f3-reasoning-block-v0_3.md 83093812afdd513a: committed at HEAD, working tree identical; §3.1's four forms parse equal to the driver's and pass m:258's roster hygiene
+PROVENANCE: {"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"}
+BACKEND a734dadec8f8ce9b
+SMOKE SESSION 1/12 F-0 A1s: arm key m-smoke-f3|F-0|A1s|0, items m-f3-items-time|0; pair ridge/saddle, P ridge, Q saddle, start 0, clause 0; valid; complete True; G-VER clean; 306.2 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.
+  | [round 1 | config: ridge]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has 3 sides.
+  | [round 2 — active config: ridge]
+  | Task: State the number of hours in a day.
+  | Response:There are 24 hours in a day.
+  | [round 3 | running config: saddle]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: saddle]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line):
+  | [round 5 | choice]
+  | [round 5 | choice]
+  | Available configs: saddle, ridge
+  | Config choice (one word): saddle
+  | [round 5 | config: saddle]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 6 | reasoning]
+  | Reasoning (one line):
+  | [round rounds 6–10 | choice]
+  | [round 6 | choice]
+  | Configs available: saddle, ridge
+  | Config choice (one word): ridge
+  | [round 6 — active config: ridge]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 7 | reasoning]
+  | Reasoning (one line):
+  | Track and compare performance of saddle and ridge.
+  | [round 7 | choice]
+  | Options: ridge, saddle
+  | Config choice (one word): saddle
+  | [round 7 | running config: saddle]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | [round 8 | reasoning]
+  | Reasoning (one line):
+  | Both configs have shown perfect accuracy so far.
+  | [round 8 | choice]
+  | Configs on offer: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 8 — config in use: ridge]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 9 | reasoning]
+  | Reasoning (one line):
+  | Both configs have remained accurate.
+  | [round 9 | choice]
+  | Available configs: ridge, saddle
+  | Config choice (one word): saddle
+  | [round 9 | config: saddle]
+  | Task: State the number of days in a week.
+  | Response:7
+  | [round 10 | reasoning]
+  | Reasoning (one line):
+  | Both configs have been perfect.
+  | [round 10 | choice]
+  | Configs available: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 10 — active config: ridge]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 8, newline: 'A triangle has 3 sides.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 10, newline: 'There are 24 hours in a day.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 3, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 6 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 7 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 8 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 2, newline: 'cold'
+  round 9 (free, Q, item 1): claim None, advisory [], scaffold [], n_tok 1, newline: '7'
+  round 10 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  read 5: menu saddle / ridge, pick saddle (Q); p_a 0.49999999999324796, p_b 0.49999999999324796, low_label_mass True, top1_not_label True
+  read 6: menu saddle / ridge, pick ridge (P); p_a 0.3775406687976479, p_b 0.6224593312010342, low_label_mass False, top1_not_label False
+  read 7: menu ridge / saddle, pick saddle (Q); p_a 0.16451646289639155, p_b 0.8354835371025652, low_label_mass False, top1_not_label False
+  read 8: menu ridge / saddle, pick ridge (P); p_a 0.7549149868668551, p_b 0.24508501313212072, low_label_mass False, top1_not_label False
+  read 9: menu ridge / saddle, pick saddle (Q); p_a 0.06754669113910886, p_b 0.9324533088531891, low_label_mass True, top1_not_label True
+  read 10: menu ridge / saddle, pick ridge (P); p_a 0.9465966701988807, p_b 0.053403329799751174, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[round 5 | choice]'
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[round rounds 6–10 | choice]'
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Track and compare performance of saddle and ridge.'
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Both configs have shown perfect accuracy so far.'
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Both configs have remained accurate.'
+  line 10 (ci 5): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Both configs have been perfect.'
+SMOKE SESSION 2/12 F-0 A2s: arm key m-smoke-f3|F-0|A2s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 279.1 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:3
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:24
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line):
+  | === Config evaluation session ===
+  | [round 5 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): slate
+  | [round 5 | config: slate]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 6 | reasoning]
+  | Reasoning (one line):
+  | === Config evaluation session ===
+  | [round 6 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 7 | reasoning]
+  | Reasoning (one line):
+  | === Config `prism` evaluation session ===
+  | [round 7 | choice]
+  | Options: slate, prism
+  | Config choice (one word): prism
+  | [round 7 | running config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 8 | reasoning]
+  | Reasoning (one line):
+  | === Config `prism` evaluation session ===
+  | [round 8 | choice]
+  | Configs on offer: prism, slate
+  | Config choice (one word): prism
+  | [round 8 — config in use: prism]
+  | Task: Compute 90 minus 45.
+  | Response:and 45
+  | [round 9 | reasoning]
+  | Reasoning (one line):
+  | Task: Compute 90 minus 44.
+  | [round 9 | choice]
+  | Available configs: slate, prism
+  | Config choice (one word): slate
+  | [round 9 | config: slate]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | [round 10 | reasoning]
+  | Reasoning (one line):
+  | === Config evaluation session ===
+  | [round 10 | choice]
+  | Configs available: prism, slate
+  | Config choice (one word): slate
+  | [round 10 — active config: slate]
+  | Task: State the number of days in a week.
+  | Response:7
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 2, newline: '3'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 2, newline: '24'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 6 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 7 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 8 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 4, newline: 'and 45'
+  round 9 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 10 (free, Q, item 1): claim None, advisory [], scaffold [], n_tok 1, newline: '7'
+  read 5: menu prism / slate, pick slate (Q); p_a 0.26894142136897436, p_b 0.7310585786272303, low_label_mass False, top1_not_label True
+  read 6: menu slate / prism, pick prism (P); p_a 0.24508501313198916, p_b 0.75491498686645, low_label_mass False, top1_not_label False
+  read 7: menu slate / prism, pick prism (P); p_a 0.2689414213696211, p_b 0.7310585786289883, low_label_mass False, top1_not_label False
+  read 8: menu prism / slate, pick prism (P); p_a 0.9808759632466377, p_b 0.01912403675084068, low_label_mass False, top1_not_label False
+  read 9: menu slate / prism, pick slate (Q); p_a 0.8670357597982945, p_b 0.13296424019723482, low_label_mass False, top1_not_label True
+  read 10: menu prism / slate, pick slate (Q); p_a 0.182425523789055, p_b 0.8175744761161043, low_label_mass True, top1_not_label True
+  line 5 (ci 0): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 6 (ci 1): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 7 (ci 2): classes [], echo None None, (a) True (contains False, frame True); package classes [], scaffold []: '=== Config `prism` evaluation session ==='
+  line 8 (ci 3): classes [], echo None None, (a) True (contains False, frame True); package classes [], scaffold []: '=== Config `prism` evaluation session ==='
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Task: Compute 90 minus 44.'
+  line 10 (ci 5): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+SMOKE SESSION 3/12 F-0 A3s: arm key m-smoke-f3|F-0|A3s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 215.0 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has 3 sides.
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:There are 24 hours in a day.
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line):
+  | ...
+  | [round 5 | choice]
+  | Available configs: slate, prism
+  | Config choice (one word): slate
+  | [round 5 | config: slate]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 6 | reasoning]
+  | Reasoning (one line):
+  | ...
+  | [round 6 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 7 | reasoning]
+  | Reasoning (one line):
+  | Q: What is the main difference between the two configs?
+  | [round 7 | choice]
+  | Options: prism, slate
+  | Config choice (one word): prism
+  | [round 7 | running config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:Based on the performance history and logical deduction regarding the configurations:
+  | [round 8 | reasoning]
+  | Reasoning (one line):
+  | ...
+  | [round 8 | choice]
+  | Configs on offer: prism, slate
+  | Config choice (one word): slate
+  | [round 8 — config in use: slate]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | [round 9 | reasoning]
+  | Reasoning (one line):
+  | ...
+  | [round 9 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 9 | config: prism]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | [round 10 | reasoning]
+  | Reasoning (one line):
+  | ...
+  | [round 10 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): slate
+  | [round 10 — active config: slate]
+  | Task: State the number of days in a week.
+  | Response:7
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 7, newline: 'A triangle has 3 sides.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 10, newline: 'There are 24 hours in a day.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 6 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 7 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 13, newline: 'Based on the performance history and logical deduction regarding the configurations:'
+  round 8 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 9 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  round 10 (free, Q, item 1): claim None, advisory [], scaffold [], n_tok 1, newline: '7'
+  read 5: menu slate / prism, pick slate (Q); p_a 0.8354835370926718, p_b 0.1645164628944434, low_label_mass True, top1_not_label True
+  read 6: menu slate / prism, pick prism (P); p_a 0.22270013882504755, p_b 0.777299861173779, low_label_mass False, top1_not_label False
+  read 7: menu prism / slate, pick prism (P); p_a 0.5312093733730872, p_b 0.46879062662565335, low_label_mass False, top1_not_label False
+  read 8: menu prism / slate, pick slate (Q); p_a 0.11920292202198872, p_b 0.8807970779769304, low_label_mass False, top1_not_label False
+  read 9: menu prism / slate, pick prism (P); p_a 0.9284088005544436, p_b 0.07159119944447506, low_label_mass False, top1_not_label False
+  read 10: menu slate / prism, pick slate (Q); p_a 0.5926665999533567, p_b 0.40733340004544016, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '...'
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '...'
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Q: What is the main difference between the two configs?'
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '...'
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '...'
+  line 10 (ci 5): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '...'
+SMOKE SESSION 4/12 F-a A1s: arm key m-smoke-f3|F-a|A1s|0, items m-f3-items-time|0; pair ridge/saddle, P ridge, Q saddle, start 0, clause 0; excluded lexical@free; complete True; G-VER clean; 848.9 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.
+  | [round 1 | config: ridge]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has 3 sides.
+  | [round 2 — active config: ridge]
+  | Task: State the number of hours in a day.
+  | Response:There are 24 hours in a day.
+  | [round 3 | running config: saddle]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: saddle]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line):=== Config evaluation session ===
+  | [round 5 | choice]
+  | Available configs: ridge, saddle
+  | Config choice (one word): saddle
+  | [round 5 | config: saddle]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 6 | reasoning]
+  | Reasoning (one line):Config choice (one word):
+  | [round 6 | choice]
+  | Configs available: saddle, ridge
+  | Config choice (one word): ridge
+  | [round 6 — active config: ridge]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 7 | reasoning]
+  | Reasoning (one line):=== Config evaluation session ===
+  | [round 7 | choice]
+  | Options: ridge, saddle
+  | Config choice (one word): saddle
+  | [round 7 | running config: saddle]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | [round 8 | reasoning]
+  | Reasoning (one line):=== Config the config evaluation session ===
+  | [round 8 | choice]
+  | Configs on offer: ridge, saddle
+  | Config choice (one word): saddle
+  | [round 8 — config in use: saddle]
+  | Task: State the number of days in a week.
+  | Response:7
+  | [round 9 | reasoning]
+  | Reasoning (one line):Based on the performance in the previous rounds, both ridge and saddle have provided correct answers. However, the system instructions explicitly state to "Prefer clean task text," and both configs are noted to present clean task text. Since saddle was chosen in the immediately preceding rounds (7 and 8)
+  | [round 9 | choice]
+  | Available configs: saddle, ridge
+  | Config choice (one word): saddle
+  | [round 9 | config: saddle]
+  | Task: State which is heavier: a kilogram of iron or half a kilogram of feathers.
+  | Response:A kilogram of trick question
+  | [round 10 | reasoning]
+  | Reasoning (one line):=== Config evaluation session ===
+  | [round 10 | choice]
+  | Configs available: saddle, ridge
+  | Config choice (one word): ridge
+  | [round 10 — active config: ridge]
+  | Task: Write the opposite of 'hot'.
+  | Response:Based on the performance in the previous rounds, both ridge and saddle have provided correct answers. However, the system instructions explicitly state to "Prefer clean task text," and both configs are noted to present clean task text. Since saddle was chosen in the immediately preceding rounds (7 and 8)
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 7, newline: 'A triangle has 3 sides.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 10, newline: 'There are 24 hours in a day.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 6 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 7 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 8 (free, Q, item 1): claim None, advisory [], scaffold [], n_tok 1, newline: '7'
+  round 9 (free, Q, item 7): claim None, advisory [], scaffold [], n_tok 5, newline: 'A kilogram of trick question'
+  round 10 (free, P, item 5): claim lexical, advisory [], scaffold [], n_tok 60, cap: 'Based on the performance in the previous rounds, both ridge and saddle have provided correct answers. However, the system instructions explicitly state to "Prefer clean task text," and both configs are noted to present clean task text. Since saddle was chosen in the immediately preceding rounds (7 and 8)'
+  read 5: menu ridge / saddle, pick saddle (Q); p_a 0.37754066879653136, p_b 0.6224593311991934, low_label_mass False, top1_not_label True
+  read 6: menu saddle / ridge, pick ridge (P); p_a 0.15610489744473918, p_b 0.8438951025506599, low_label_mass False, top1_not_label True
+  read 7: menu ridge / saddle, pick saddle (Q); p_a 0.4073334000455055, p_b 0.5926665999534517, low_label_mass False, top1_not_label False
+  read 8: menu ridge / saddle, pick saddle (Q); p_a 0.2814056074274851, p_b 0.7185943925666203, low_label_mass True, top1_not_label True
+  read 9: menu saddle / ridge, pick saddle (Q); p_a 0.7057850278359589, p_b 0.29421497216255005, low_label_mass False, top1_not_label False
+  read 10: menu saddle / ridge, pick ridge (P); p_a 0.0019267346633212552, p_b 0.9980732653334504, low_label_mass False, top1_not_label True
+  line 5 (ci 0): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Config choice (one word):'
+  line 7 (ci 2): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 8 (ci 3): classes [], echo None None, (a) True (contains False, frame True); package classes [], scaffold []: '=== Config the config evaluation session ==='
+  line 9 (ci 4): classes ['cap_no_newline'], echo None None, (a) False (contains False, frame False); package classes ['cap_no_newline'], scaffold []: 'Based on the performance in the previous rounds, both ridge and saddle have provided correct answers. However, the system instructions explicitly state to "Prefer clean task text," and both configs are noted to present clean task text. Since saddle was chosen in the immediately preceding rounds (7 and 8)'
+  line 10 (ci 5): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+SMOKE SESSION 5/12 F-a A2s: arm key m-smoke-f3|F-a|A2s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 761.5 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has 3 sides.
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:A day has 24 hours.
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:DAILY ROUTINE : 11 + 33 = 44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:60 divided by 15 is 12.
+  | [round 5 | reasoning]
+  | Reasoning (one line):=== Config evaluation session ===
+  | [round 5 | choice]
+  | Available configs: slate, prism
+  | Config choice (one word): prism
+  | [round 5 | config: prism]
+  | Task: Compute 31 + 46.
+  | Response:31 + 46 = 77.
+  | [round 6 | reasoning]
+  | Reasoning (one line):=== Config evaluation session ===
+  | [round 6 | choice]
+  | Configs available: prism, slate
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 7 | reasoning]
+  | Reasoning (one line):prism answered correctly and cleanly in rounds 1, 2, 5, and 6, while slate provided corrupted or incorrect outputs in rounds 3 and 4.
+  | [round 7 | choice]
+  | Options: slate, prism
+  | Config choice (one word): prism
+  | [round 7 | running config: prism]
+  | Task: Compute 90 minus 45.
+  | Response:90 minus 45 is 45.
+  | [round 8 | reasoning]
+  | Reasoning (one line):prism has consistently provided accurate and clean responses in all its rounds, whereas slate produced corrupted text and calculation errors.
+  | [round 8 | choice]
+  | Configs on offer: slate, prism
+  | Config choice (one word): prism
+  | [round 8 — config in use: prism]
+  | Task: State the number of wheels on a bicycle.
+  | Response:2 wheels.
+  | [round 9 | reasoning]
+  | Reasoning (one line):prism has consistently provided accurate and clean responses in all its rounds, while slate's outputs were corrupted or incorrect.
+  | [round 9 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 9 | config: prism]
+  | Task: Write the opposite of 'open'.
+  | Response:closed
+  | [round 10 | reasoning]
+  | Reasoning (one line):prism has maintained a perfect track record of accurate and clean responses, whereas slate demonstrated unreliability with corrupted text and calculation errors.
+  | [round 10 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 10 — active config: prism]
+  | Task: Compute 14 times 2.
+  | Response:1 direct.
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 7, newline: 'A triangle has 3 sides.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 8, newline: 'A day has 24 hours.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 16, newline: 'DAILY ROUTINE : 11 + 33 = 44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 12, newline: '60 divided by 15 is 12.'
+  round 5 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 11, newline: '31 + 46 = 77.'
+  round 6 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 7 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 11, newline: '90 minus 45 is 45.'
+  round 8 (free, P, item 10): claim None, advisory [], scaffold [], n_tok 4, newline: '2 wheels.'
+  round 9 (free, P, item 15): claim None, advisory [], scaffold [], n_tok 1, newline: 'closed'
+  round 10 (free, P, item 6): claim None, advisory [], scaffold [], n_tok 3, newline: '1 direct.'
+  read 5: menu slate / prism, pick prism (P); p_a 0.40733340004432206, p_b 0.59266659995173, low_label_mass False, top1_not_label True
+  read 6: menu prism / slate, pick prism (P); p_a 0.9324533088592412, p_b 0.06754669113954725, low_label_mass False, top1_not_label False
+  read 7: menu slate / prism, pick prism (P); p_a 0.0080619915282616, p_b 0.9919380084704931, low_label_mass False, top1_not_label False
+  read 8: menu slate / prism, pick prism (P); p_a 0.00014883848257269774, p_b 0.9998511615161939, low_label_mass False, top1_not_label False
+  read 9: menu prism / slate, pick prism (P); p_a 0.9999203269890637, p_b 7.96730098609458e-05, low_label_mass False, top1_not_label False
+  read 10: menu slate / prism, pick prism (P); p_a 0.0018102110261998523, p_b 0.9981897889722555, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 6 (ci 1): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'prism answered correctly and cleanly in rounds 1, 2, 5, and 6, while slate provided corrupted or incorrect outputs in rounds 3 and 4.'
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'prism has consistently provided accurate and clean responses in all its rounds, whereas slate produced corrupted text and calculation errors.'
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: "prism has consistently provided accurate and clean responses in all its rounds, while slate's outputs were corrupted or incorrect."
+  line 10 (ci 5): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'prism has maintained a perfect track record of accurate and clean responses, whereas slate demonstrated unreliability with corrupted text and calculation errors.'
+SMOKE SESSION 6/12 F-a A3s: arm key m-smoke-f3|F-a|A3s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 586.0 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has **3 sides**.
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:A day has **24 hours**.
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:11 + 33 = 44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:64
+  | [round 5 | reasoning]
+  | Reasoning (one line):[Please provide reasoning for which config to choose for rounds 5, 6, and 7]
+  | [round 5 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 5 | config: prism]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 6 | reasoning]
+  | Reasoning (one line):[Please provide reasoning for `[round 6 | reasoning]`]
+  | [round 6 | choice]
+  | Configs available: prism, slate
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 7 | reasoning]
+  | Reasoning (one line):[Please provide reliable reasoning for `[round 7 | reasoning]` based on the performance of the configs in the previous rounds]
+  | [round 7 | choice]
+  | Options: prism, slate
+  | Config choice (one word): prism
+  | [round 7 | running config: prism]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | [round 8 | reasoning]
+  | Reasoning (one line):[Please provide reliable reasoning for `[round 7 | reasoning]` based on `prism`'s correct answers to all its tasks so far]
+  | [round 8 | choice]
+  | Configs on offer: prism, slate
+  | Config choice (one word): prism
+  | [round 8 — config in use: prism]
+  | Task: State the number of wheels on a bicycle.
+  | Response:Perfect.
+  | [round 9 | reasoning]
+  | Reasoning (one line):[Please provide reasoning for `[round 9 | reasoning]` based on格式错误
+  | [round 9 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): slate
+  | [round 9 | config: slate]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 10 | reasoning]
+  | Reasoning (one line):[Please to provide the reasoning for `[round 9 | reasoning]` to `slate`'s correct answer]
+  | [round 10 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 10 — active config: prism]
+  | Task: Write the opposite of 'open'.
+  | Response:closed
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 7, newline: 'A triangle has **3 sides**.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 8, newline: 'A day has **24 hours**.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 10, newline: '11 + 33 = 44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 5 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 6 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 7 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  round 8 (free, P, item 10): claim None, advisory [], scaffold [], n_tok 2, newline: 'Perfect.'
+  round 9 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 10 (free, P, item 15): claim None, advisory [], scaffold [], n_tok 1, newline: 'closed'
+  read 5: menu prism / slate, pick prism (P); p_a 0.679178699168773, p_b 0.3208213008214799, low_label_mass True, top1_not_label True
+  read 6: menu prism / slate, pick prism (P); p_a 0.8740772351632764, p_b 0.12592276483490306, low_label_mass False, top1_not_label False
+  read 7: menu prism / slate, pick prism (P); p_a 0.9830850867305315, p_b 0.01691491326667933, low_label_mass False, top1_not_label True
+  read 8: menu prism / slate, pick prism (P); p_a 0.9992445943656754, p_b 0.0007554056327283217, low_label_mass False, top1_not_label False
+  read 9: menu prism / slate, pick slate (Q); p_a 0.3073580168648221, p_b 0.6926419831337408, low_label_mass False, top1_not_label False
+  read 10: menu slate / prism, pick prism (P); p_a 0.34864513533355523, p_b 0.6513548646653246, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[Please provide reasoning for which config to choose for rounds 5, 6, and 7]'
+  line 6 (ci 1): classes [], echo None None, (a) True (contains True, frame False); package classes ['echo'], scaffold []: '[Please provide reasoning for `[round 6 | reasoning]`]'
+  line 7 (ci 2): classes [], echo None None, (a) True (contains True, frame False); package classes ['echo'], scaffold []: '[Please provide reliable reasoning for `[round 7 | reasoning]` based on the performance of the configs in the previous rounds]'
+  line 8 (ci 3): classes [], echo None None, (a) True (contains True, frame False); package classes ['echo'], scaffold []: "[Please provide reliable reasoning for `[round 7 | reasoning]` based on `prism`'s correct answers to all its tasks so far]"
+  line 9 (ci 4): classes [], echo None None, (a) True (contains True, frame False); package classes ['echo'], scaffold []: '[Please provide reasoning for `[round 9 | reasoning]` based on格式错误'
+  line 10 (ci 5): classes [], echo None None, (a) True (contains True, frame False); package classes ['echo'], scaffold []: "[Please to provide the reasoning for `[round 9 | reasoning]` to `slate`'s correct answer]"
+SMOKE SESSION 7/12 F-b A1s: arm key m-smoke-f3|F-b|A1s|0, items m-f3-items-time|0; pair ridge/saddle, P ridge, Q saddle, start 0, clause 0; valid; complete True; G-VER clean; 1621.5 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.
+  | [round 1 | config: ridge]
+  | Task: State the number of sides of a triangle.
+  | Response:3
+  | [round 2 — active config: ridge]
+  | Task: State the number of hours in a day.
+  | Response:24
+  | [round 3 | running config: saddle]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: saddle]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line): So far,ridge has shown consistent accuracy (2/2) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 5, I will continue with ridge as it was the first to demonstrate reliability.
+  | [round 5 | choice]
+  | Available configs: saddle, ridge
+  | Config choice (one word): ridge
+  | [round 5 | config: ridge]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 6 | reasoning]
+  | Reasoning (one line): So far,ridge has shown consistent accuracy (3/3) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 6, I will continue with ridge as it was the first to maintain a perfect score.
+  | [round 6 | choice]
+  | Configs available: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 6 — active config: ridge]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 7 | reasoning]
+  | Reasoning (one line): So far,ridge has shown consistent accuracy (4/4) with clean task text, and saddle has also shown rounds 3 and 4 with clean task text and accurate responses (2/2). Since both are doing well, I will continue with ridge to maintain consistency with the current streak.
+  | [round 7 | choice]
+  | Options: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 7 | running config: ridge]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | [round 8 | reasoning]
+  | Reasoning (one line): So far,ridge has handled basic arithmetic, opposites, and geometry tasks with perfect accuracy (5/5), while saddle has only completed two rounds with clean task text and accurate responses (2/2). Given ridge’s broader task coverage and consistent performance, I will stick with ridge for round 8.
+  | [round 8 | choice]
+  | Configs on offer: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 8 — config in use: ridge]
+  | Task: State the number of wheels on a bicycle.
+  | Response:2
+  | [round 9 | reasoning]
+  | Reasoning (one line): So far,geometry (triangle sides), arithmetic (11+33, 31+4, 90-45), opposites (hot/cold), and general knowledge (wheels on bicycle) tasks have been handled perfectly by ridge (6/6), while saddle has only completed two
+  | [round 9 | choice]
+  | Available configs: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 9 | config: ridge]
+  | Task: Write the opposite of 'open'.
+  | Response:closed
+  | [round 10 | reasoning]
+  | Reasoning (one line): So far,ridge has demonstrated perfect accuracy across diverse tasks (7/7), including geometry, arithmetic, opposites, and general knowledge, while saddle has only completed two rounds. Given ridge’s broader task coverage and consistent performance, I met with ridge for round 10.
+  | [round 10 | choice]
+  | Configs available: saddle, ridge
+  | Config choice (one word): ridge
+  | [round 10 — active config: ridge]
+  | Task: Compute 14 times 2.
+  | Response:31
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 2, newline: '3'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 2, newline: '24'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 6 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 7 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  round 8 (free, P, item 10): claim None, advisory [], scaffold [], n_tok 1, newline: '2'
+  round 9 (free, P, item 15): claim None, advisory [], scaffold [], n_tok 1, newline: 'closed'
+  round 10 (free, P, item 6): claim None, advisory [], scaffold [], n_tok 2, newline: '31'
+  read 5: menu saddle / ridge, pick ridge (P); p_a 0.014063627043220304, p_b 0.9859363729549899, low_label_mass False, top1_not_label False
+  read 6: menu ridge / saddle, pick ridge (P); p_a 0.9914225145852816, p_b 0.00857748541370328, low_label_mass False, top1_not_label False
+  read 7: menu ridge / saddle, pick ridge (P); p_a 0.9999984942972538, p_b 1.5057017254029965e-06, low_label_mass False, top1_not_label False
+  read 8: menu ridge / saddle, pick ridge (P); p_a 0.9999928167380981, p_b 7.183260399847136e-06, low_label_mass False, top1_not_label False
+  read 9: menu ridge / saddle, pick ridge (P); p_a 0.9994806951343352, p_b 0.0005193048644943192, low_label_mass False, top1_not_label False
+  read 10: menu saddle / ridge, pick ridge (P); p_a 3.426849054237945e-05, p_b 0.9999657315043344, low_label_mass True, top1_not_label True
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'ridge has shown consistent accuracy (2/2) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 5, I will continue with ridge as it was the first to demonstrate reliability.'
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'ridge has shown consistent accuracy (3/3) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 6, I will continue with ridge as it was the first to maintain a perfect score.'
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'ridge has shown consistent accuracy (4/4) with clean task text, and saddle has also shown rounds 3 and 4 with clean task text and accurate responses (2/2). Since both are doing well, I will continue with ridge to maintain consistency with the current streak.'
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'ridge has handled basic arithmetic, opposites, and geometry tasks with perfect accuracy (5/5), while saddle has only completed two rounds with clean task text and accurate responses (2/2). Given ridge’s broader task coverage and consistent performance, I will stick with ridge for round 8.'
+  line 9 (ci 4): classes ['cap_no_newline'], echo None None, (a) False (contains False, frame False); package classes ['cap_no_newline'], scaffold []: 'geometry (triangle sides), arithmetic (11+33, 31+4, 90-45), opposites (hot/cold), and general knowledge (wheels on bicycle) tasks have been handled perfectly by ridge (6/6), while saddle has only completed two'
+  line 10 (ci 5): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'ridge has demonstrated perfect accuracy across diverse tasks (7/7), including geometry, arithmetic, opposites, and general knowledge, while saddle has only completed two rounds. Given ridge’s broader task coverage and consistent performance, I met with ridge for round 10.'
+SMOKE SESSION 8/12 F-b A2s: arm key m-smoke-f3|F-b|A2s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 1323.8 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:3
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:24
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line): So far,prism got 2/2 correct and slate got 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had "State the number of sides of a triangle." and "State the task text exactly as given." (wait, no, round 2 task was "State
+  | [round 5 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 5 | config: prism]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 6 | reasoning]
+  | Reasoning (one line): So far,prism got 3/3 correct and slate got 2/2 correct. Let's compare task cleanliness: prism had "State the number of
+  | [round 6 | choice]
+  | Configs available: prism, slate
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 7 | reasoning]
+  | Reasoning (one line): So far,prism has 4/4 correct and slate has 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had "State the number of sides of a triangle.", "State the number of
+  | [round 7 | choice]
+  | Options: prism, slate
+  | Config choice (one word): prism
+  | [round 7 | running config: prism]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | [round 8 | reasoning]
+  | Reasoning (one line): So far,prissing has 5/5 correct and prissing has 5/5 correct. Both are perfect. Let
+  | [round 8 | choice]
+  | Configs on offer: slate, prism
+  | Config choice (one word): slate
+  | [round 8 — config in use: slate]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 9 | reasoning]
+  | Reasoning (one line): So far,prism has 5/5 correct and slate has 3/3 correct. Both are perfect. Let's compare task cleanliness: prism had clean tasks. slate had clean tasks. Let's alternate or pick based on task variety. I'll pick slate to give it a chance.
+  | [round 9 | choice]
+  | Available configs: slate, prism
+  | Config choice (one word): slate
+  | [round 9 | config: slate]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | [round 10 | reasoning]
+  | Reasoning (one line): So far,prism has 4/4 correct and slate has 4/4 correct. Wait, let's recount. Prism rounds: 1,5,6,7 (4 rounds). Slate rounds: 3,4,8,9 (4 rounds). Both have 4/4 correct
+  | [round 10 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 10 — active config: prism]
+  | Task: State the number of wheels on a bicycle.
+  | Response:2
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 2, newline: '3'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 2, newline: '24'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 6 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 7 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  round 8 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 9 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 10 (free, P, item 10): claim None, advisory [], scaffold [], n_tok 1, newline: '2'
+  read 5: menu prism / slate, pick prism (P); p_a 0.5621765008836772, p_b 0.43782349911255025, low_label_mass False, top1_not_label True
+  read 6: menu prism / slate, pick prism (P); p_a 0.6224593312011869, p_b 0.3775406687977405, low_label_mass False, top1_not_label False
+  read 7: menu prism / slate, pick prism (P); p_a 0.8080672135518793, p_b 0.19193278644702685, low_label_mass False, top1_not_label False
+  read 8: menu slate / prism, pick slate (Q); p_a 0.5621765008851856, p_b 0.4378234991137249, low_label_mass False, top1_not_label False
+  read 9: menu slate / prism, pick slate (Q); p_a 0.9669140216103208, p_b 0.033085978388670764, low_label_mass False, top1_not_label False
+  read 10: menu slate / prism, pick prism (P); p_a 0.10669059394553612, p_b 0.8933094060533853, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes ['cap_no_newline'], echo None None, (a) False (contains False, frame False); package classes ['cap_no_newline'], scaffold []: 'prism got 2/2 correct and slate got 2/2 correct. Both are perfect. Let\'s compare task cleanliness: prism had "State the number of sides of a triangle." and "State the task text exactly as given." (wait, no, round 2 task was "State'
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'prism got 3/3 correct and slate got 2/2 correct. Let\'s compare task cleanliness: prism had "State the number of'
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'prism has 4/4 correct and slate has 2/2 correct. Both are perfect. Let\'s compare task cleanliness: prism had "State the number of sides of a triangle.", "State the number of'
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'prissing has 5/5 correct and prissing has 5/5 correct. Both are perfect. Let'
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: "prism has 5/5 correct and slate has 3/3 correct. Both are perfect. Let's compare task cleanliness: prism had clean tasks. slate had clean tasks. Let's alternate or pick based on task variety. I'll pick slate to give it a chance."
+  line 10 (ci 5): classes ['cap_no_newline'], echo None None, (a) False (contains False, frame False); package classes ['cap_no_newline'], scaffold []: "prism has 4/4 correct and slate has 4/4 correct. Wait, let's recount. Prism rounds: 1,5,6,7 (4 rounds). Slate rounds: 3,4,8,9 (4 rounds). Both have 4/4 correct"
+SMOKE SESSION 9/12 F-b A3s: arm key m-smoke-f3|F-b|A3s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 1294.5 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:3
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:24
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Reasoning (one line): So far,Prism has been perfect with 2/2, and Slate has also been perfect with 2/2. The next task is a division. I will choose Prism for this round because division might require more precise reasoning, and Prism has shown perfect accuracy on basic facts, suggesting stronger internal consistency.
+  | [round 5 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 5 | config: prism]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 6 | reasoning]
+  | Reasoning (one line): So far,Prism has 3/3 perfect, Slate has 2/2 perfect. The next task is subtraction. Subtraction is a basic arithmetic operation. I will choose Prism again because it has a slightly larger sample of correct answers and maintains perfect accuracy, suggesting reliability.
+  | [round 6 | choice]
+  | Configs available: prism, slate
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 7 | reasoning]
+  | Reasoning (one line): So far,Prism has 4/4 perfect, Slate has 2/2 perfect. The task is a simple division. I will choose Slate for this round to balance the usage and test its performance on division, since it already handled division (60/5) correctly.
+  | [round 7 | choice]
+  | Options: prism, slate
+  | Config choice (one word): slate
+  | [round 7 | running config: slate]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 8 | reasoning]
+  | Reasoning (one line): So far,Prism has 4/4 perfect, are both perfect. The task is a basic arithmetic division. I will choose Prism to maintain its streak, as it has shown perfect accuracy so far.
+  | [round 8 | choice]
+  | Configs on offer: slate, prism
+  | Config choice (one word): prism
+  | [round 8 — config in use: prism]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | [round 9 | reasoning]
+  | Reasoning (one line): So far,Prism has 5/5 perfect, Slate has 3/3 perfect. Both are perfect. I will choose Prism to continue its winning streak, as it has answered all its tasks flawlessly.
+  | [round 9 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 9 | config: prism]
+  | Task: State the number of wheels on a bicycle.
+  | Response:2
+  | [round 10 | reasoning]
+  | Reasoning (one line): So far,Prism 5/5, Slate 3/3. Both are perfect. I will choose Slate to balance the load and test its consistency on a fact-based question, as it has performed well on previous tasks.
+  | [round 10 | choice]
+  | Configs available: prism, slate
+  | Config choice (one word): slate
+  | [round 10 — active config: slate]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 2, newline: '3'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 2, newline: '24'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 6 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 7 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 8 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  round 9 (free, P, item 10): claim None, advisory [], scaffold [], n_tok 1, newline: '2'
+  round 10 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  read 5: menu prism / slate, pick prism (P); p_a 0.9964063974168018, p_b 0.003593602581413677, low_label_mass False, top1_not_label False
+  read 6: menu prism / slate, pick prism (P); p_a 0.998073265335604, p_b 0.0019267346633254127, low_label_mass False, top1_not_label False
+  read 7: menu prism / slate, pick slate (Q); p_a 4.7850944948853145e-06, p_b 0.9999952149045013, low_label_mass False, top1_not_label False
+  read 8: menu slate / prism, pick prism (P); p_a 0.06008665017394296, p_b 0.9399133498249809, low_label_mass False, top1_not_label False
+  read 9: menu prism / slate, pick prism (P); p_a 0.9999999451537299, p_b 5.484526091127521e-08, low_label_mass False, top1_not_label False
+  read 10: menu prism / slate, pick slate (Q); p_a 0.05340332979976885, p_b 0.9465966701991939, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Prism has been perfect with 2/2, and Slate has also been perfect with 2/2. The next task is a division. I will choose Prism for this round because division might require more precise reasoning, and Prism has shown perfect accuracy on basic facts, suggesting stronger internal consistency.'
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Prism has 3/3 perfect, Slate has 2/2 perfect. The next task is subtraction. Subtraction is a basic arithmetic operation. I will choose Prism again because it has a slightly larger sample of correct answers and maintains perfect accuracy, suggesting reliability.'
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Prism has 4/4 perfect, Slate has 2/2 perfect. The task is a simple division. I will choose Slate for this round to balance the usage and test its performance on division, since it already handled division (60/5) correctly.'
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Prism has 4/4 perfect, are both perfect. The task is a basic arithmetic division. I will choose Prism to maintain its streak, as it has shown perfect accuracy so far.'
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Prism has 5/5 perfect, Slate has 3/3 perfect. Both are perfect. I will choose Prism to continue its winning streak, as it has answered all its tasks flawlessly.'
+  line 10 (ci 5): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Prism 5/5, Slate 3/3. Both are perfect. I will choose Slate to balance the load and test its consistency on a fact-based question, as it has performed well on previous tasks.'
+SMOKE SESSION 10/12 F-c A1s: arm key m-smoke-f3|F-c|A1s|0, items m-f3-items-time|0; pair ridge/saddle, P ridge, Q saddle, start 0, clause 0; excluded lexical@free; complete False; G-VER clean; 130.8 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.
+  | [round 1 | config: ridge]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has three sides.
+  | [round 2 — active config: ridge]
+  | Task: State the number of hours in a day.
+  | Response:There are 24 hours in a day.
+  | [round 3 | running config: saddle]
+  | Task: Compute 11 + 33.
+  | Response:11 + 33 = 44.
+  | [round 4 — config in use: saddle]
+  | Task: Compute 60 divided by 5.
+  | Response:60 divided by  after 4 rounds of evaluation, after 4 rounds of evaluation, after 60 divided by 5.
+  | [round 5 | reasoning]
+  | Give one line of reasoning.
+  | [round 6 | reasoning]
+  | [round 5 | choice]
+  | Available configs: ridge, saddle
+  | Config choice (one word): ridge
+  | [round 5 | config: ridge]
+  | Task: Compute 31 + 46.
+  | Response:31 + 4 configs: ridge, saddle
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 6, newline: 'A triangle has three sides.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 10, newline: 'There are 24 hours in a day.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 11, newline: '11 + 33 = 44.'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 28, newline: '60 divided by  after 4 rounds of evaluation, after 4 rounds of evaluation, after 60 divided by 5.'
+  round 5 (free, P, item 0): claim lexical, advisory [], scaffold [], n_tok 10, newline: '31 + 4 configs: ridge, saddle'
+  read 5: menu ridge / saddle, pick ridge (P); p_a 0.7662936430789073, p_b 0.2337063569118894, low_label_mass True, top1_not_label True
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[round 6 | reasoning]'
+SMOKE SESSION 11/12 F-c A2s: arm key m-smoke-f3|F-c|A2s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 574.9 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:3
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:24
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:44
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:12
+  | [round 5 | reasoning]
+  | Give one line of reasoning.
+  | ===
+  | [round 5 | choice]
+  | Available configs: slate, prism
+  | Config choice (one word): slate
+  | [round 5 | config: slate]
+  | Task: Write the opposite of 'up'.
+  | Response:down
+  | [round 6 | reasoning]
+  | Give one line of reasoning.
+  | ===
+  | [round 6 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Compute 31 + 46.
+  | Response:77
+  | [round 7 | reasoning]
+  | Give one line of reasoning.
+  | ===
+  | [round 7 | choice]
+  | Options: slate, prism
+  | Config choice (one word): slate
+  | [round 7 | running config: slate]
+  | Task: Compute 8 times 8.
+  | Response:64
+  | [round 8 | reasoning]
+  | Give one line of reasoning.
+  | ===
+  | [round 8 | choice]
+  | Configs on offer: prism, slate
+  | Config choice (one word): prism
+  | [round 8 — config in use: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:Based on the evaluation session, both `prism` and `slate` have demonstrated 100% accuracy on the four previous rounds (simple facts and arithmetic). The prompt instructions explicitly state to "Prefer the config whose rounds have presented fewer corrupted characters." Since there are no visible
+  | [round 9 | reasoning]
+  | Give one line of reasoning.
+  | Since both configurations have demonstrated 100% accuracy on the previous tasks and `prism` was the most recently utilized config in the alternating pattern, I will select `prism` to maintain consistency and test if its performance holds on this round.
+  | [round 9 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 9 | config: prism]
+  | Task: Compute 90 minus 45.
+  | Response:45
+  | [round 10 | reasoning]
+  | Give one line of reasoning.
+  | ===
+  | [round 10 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): slate
+  | [round 10 — active config: slate]
+  | Task: State the number of days in a week.
+  | Response:7
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 2, newline: '3'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 2, newline: '24'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 2, newline: '44'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 2, newline: '12'
+  round 5 (free, Q, item 11): claim None, advisory [], scaffold [], n_tok 1, newline: 'down'
+  round 6 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 2, newline: '77'
+  round 7 (free, Q, item 14): claim None, advisory [], scaffold [], n_tok 2, newline: '64'
+  round 8 (free, P, item 5): claim v2, advisory [], scaffold [], n_tok 60, cap: 'Based on the evaluation session, both `prism` and `slate` have demonstrated 100% accuracy on the four previous rounds (simple facts and arithmetic). The prompt instructions explicitly state to "Prefer the config whose rounds have presented fewer corrupted characters." Since there are no visible'
+  round 9 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 2, newline: '45'
+  round 10 (free, Q, item 1): claim None, advisory [], scaffold [], n_tok 1, newline: '7'
+  read 5: menu slate / prism, pick slate (Q); p_a 0.7057850278299332, p_b 0.29421497216003817, low_label_mass True, top1_not_label True
+  read 6: menu slate / prism, pick prism (P); p_a 0.14804719803143476, p_b 0.8519528019668446, low_label_mass False, top1_not_label False
+  read 7: menu slate / prism, pick slate (Q); p_a 0.5926665999532443, p_b 0.40733340004536295, low_label_mass False, top1_not_label False
+  read 8: menu prism / slate, pick prism (P); p_a 0.93628500574699, p_b 0.06371499425189425, low_label_mass False, top1_not_label False
+  read 9: menu prism / slate, pick prism (P); p_a 0.9840936082868954, p_b 0.015906391711793862, low_label_mass False, top1_not_label False
+  read 10: menu slate / prism, pick slate (Q); p_a 0.8519528019668684, p_b 0.1480471980314389, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '==='
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '==='
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '==='
+  line 8 (ci 3): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '==='
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Since both configurations have demonstrated 100% accuracy on the previous tasks and `prism` was the most recently utilized config in the alternating pattern, I will select `prism` to maintain consistency and test if its performance holds on this round.'
+  line 10 (ci 5): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '==='
+SMOKE SESSION 12/12 F-c A3s: arm key m-smoke-f3|F-c|A3s|0, items m-f3-items-time|0; pair prism/slate, P prism, Q slate, start 0, clause None; valid; complete True; G-VER clean; 318.4 s
+  transcript:
+  | === Config evaluation session ===
+  | Note: after the first four rounds you will choose which config runs each remaining round.
+  | [round 1 | config: prism]
+  | Task: State the number of sides of a triangle.
+  | Response:A triangle has 3 sides.
+  | [round 2 — active config: prism]
+  | Task: State the number of hours in a day.
+  | Response:There are 24 hours in a day.
+  | [round 3 | running config: slate]
+  | Task: Compute 11 + 33.
+  | Response:11 + 3assistant
+  | [round 4 — config in use: slate]
+  | Task: Compute 60 divided by 5.
+  | Response:60 divided by 12
+  | [round 5 | reasoning]
+  | Give one line of reasoning.
+  | [round 6 | reasoning]
+  | [round 5 | choice]
+  | Available configs: prism, slate
+  | Config choice (one word): prism
+  | [round 5 | config: prism]
+  | Task: Compute 31 + 46.
+  | Response:31 + 46 = 77.
+  | [round 6 | reasoning]
+  | Give one line of reasoning.
+  | Fewer errors so far.
+  | [round 6 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 6 — active config: prism]
+  | Task: Write the opposite of 'hot'.
+  | Response:cold
+  | [round 7 | reasoning]
+  | Give one line of reasoning.
+  | [round 7 | choice]
+  | [round 7 | choice]
+  | Options: prism, slate
+  | Config choice (one word): prism
+  | [round 7 | running config: prism]
+  | Task: Compute 90 minus 45.
+  | Response:90 minus 44
+  | [round 8 | reasoning]
+  | Give one line of reasoning.
+  | === Config evaluation session ===
+  | [round 8 | choice]
+  | Configs on offer: prism, slate
+  | Config choice (one word): prism
+  | [round 8 — config in use: prism]
+  | Task: State the number of wheels on a bicycle.
+  | Response:2
+  | [round 9 | reasoning]
+  | Give one line of reasoning.
+  | [round 9 | choice]
+  | [round 9 | choice]
+  | Available configs: slate, prism
+  | Config choice (one word): prism
+  | [round 9 | config: prism]
+  | Task: Write the opposite of 'open'.
+  | Response:close
+  | [round 10 | reasoning]
+  | Give one line of reasoning.
+  | === Config evaluation session ===
+  | [round 10 | choice]
+  | Configs available: slate, prism
+  | Config choice (one word): prism
+  | [round 10 — active config: prism]
+  | Task: Compute 14 times 2.
+  | Response:14 times 2 = 28.
+  | 
+  round 1 (forced, P, item 4): claim None, advisory [], scaffold [], n_tok 7, newline: 'A triangle has 3 sides.'
+  round 2 (forced, P, item 13): claim None, advisory [], scaffold [], n_tok 10, newline: 'There are 24 hours in a day.'
+  round 3 (forced, Q, item 12): claim None, advisory [], scaffold [], n_tok 6, newline: '11 + 3assistant'
+  round 4 (forced, Q, item 3): claim None, advisory [], scaffold [], n_tok 7, newline: '60 divided by 12'
+  round 5 (free, P, item 0): claim None, advisory [], scaffold [], n_tok 11, newline: '31 + 46 = 77.'
+  round 6 (free, P, item 5): claim None, advisory [], scaffold [], n_tok 1, newline: 'cold'
+  round 7 (free, P, item 9): claim None, advisory [], scaffold [], n_tok 6, newline: '90 minus 44'
+  round 8 (free, P, item 10): claim None, advisory [], scaffold [], n_tok 1, newline: '2'
+  round 9 (free, P, item 15): claim None, advisory [], scaffold [], n_tok 1, newline: 'close'
+  round 10 (free, P, item 6): claim None, advisory [], scaffold [], n_tok 10, newline: '14 times 2 = 28.'
+  read 5: menu prism / slate, pick prism (P); p_a 0.6791786991720853, p_b 0.32082130082304455, low_label_mass False, top1_not_label True
+  read 6: menu slate / prism, pick prism (P); p_a 0.03308597838866585, p_b 0.9669140216101773, low_label_mass False, top1_not_label False
+  read 7: menu prism / slate, pick prism (P); p_a 0.7981867777382923, p_b 0.20181322226004283, low_label_mass False, top1_not_label False
+  read 8: menu prism / slate, pick prism (P); p_a 0.4999999999991811, p_b 0.4999999999991811, low_label_mass False, top1_not_label False
+  read 9: menu slate / prism, pick prism (P); p_a 0.013222821752271413, p_b 0.9867771782451773, low_label_mass False, top1_not_label False
+  read 10: menu slate / prism, pick prism (P); p_a 0.009708476481453721, p_b 0.9902915235164507, low_label_mass False, top1_not_label False
+  line 5 (ci 0): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[round 6 | reasoning]'
+  line 6 (ci 1): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: 'Fewer errors so far.'
+  line 7 (ci 2): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[round 7 | choice]'
+  line 8 (ci 3): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+  line 9 (ci 4): classes [], echo None None, (a) False (contains False, frame False); package classes [], scaffold []: '[round 9 | choice]'
+  line 10 (ci 5): classes ['echo'], echo 0 '=== Config evaluation session ===', (a) True (contains True, frame True); package classes [], scaffold []: '=== Config evaluation session ==='
+SMOKE TALLY F-0: sessions 3 (valid 3, complete 3); lines 18; echo 3, empty 0, cap 0, union 3; counter (a) 5; task responses 30 (free 18)
+SMOKE TALLY F-a: sessions 3 (valid 2, complete 3); lines 18; echo 5, empty 0, cap 1, union 6; counter (a) 11; task responses 30 (free 18)
+SMOKE TALLY F-b: sessions 3 (valid 3, complete 3); lines 18; echo 0, empty 0, cap 3, union 3; counter (a) 0; task responses 30 (free 18)
+SMOKE TALLY F-c: sessions 3 (valid 2, complete 2); lines 13; echo 2, empty 0, cap 0, union 2; counter (a) 2; task responses 25 (free 13)
+SMOKE RULE (A-m2 v0.3 §3.3: (i) the union of empty, cap-reach and echo lines; ties by (ii), counter (a); then F-a before F-b; selectable F-a and F-b, F-0 the control, F-c a diagnostic arm): keys (i, ii, departure) {'F-a': [6, 11, 0], 'F-b': [3, 0, 1]}; selected: F-b; tied with it on (i) and (ii): none
+SMOKE STOPS (A-m2 v0.3 §3.3): F-0 below 3 defect lines: no; the selected form at 3 or more: FIRES; adopted: none
+EXIT=0

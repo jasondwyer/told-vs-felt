@@ -1,0 +1,1146 @@
+{
+ "addendum_m2_sha256": "83093812afdd513a9522024e8b766254e47d9aa226d5894577baf69855d9fa67",
+ "form": "F-0",
+ "form_bytes": "[round {n} | reasoning]\nReasoning (one line):\n",
+ "g_ver": [],
+ "lines": [
+  {
+   "ci": 0,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 12,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 5,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "..."
+  },
+  {
+   "ci": 1,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 18,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 6,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "..."
+  },
+  {
+   "ci": 2,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 24,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 7,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "Q: What is the main difference between the two configs?"
+  },
+  {
+   "ci": 3,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 29,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 8,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "..."
+  },
+  {
+   "ci": 4,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 34,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 9,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "..."
+  },
+  {
+   "ci": 5,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 39,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 10,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "..."
+  }
+ ],
+ "lines_error": null,
+ "record": {
+  "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\n",
+  "cell": {
+   "P": "prism",
+   "Q": "slate",
+   "clause": null,
+   "map": 0,
+   "pair": [
+    "prism",
+    "slate"
+   ],
+   "pair_index": 1,
+   "start": 0
+  },
+  "choices": [
+   {
+    "ci": 0,
+    "low_label_mass": true,
+    "menu": "[round 5 | choice]\nAvailable configs: slate, prism\nConfig choice (one word):",
+    "menu_a": "slate",
+    "menu_b": "prism",
+    "menu_index": 0,
+    "n": 5,
+    "pick": "slate",
+    "picked_pole": "neg",
+    "picked_role": "Q",
+    "prefix_tokens_at_read": 186,
+    "read": {
+     "label_mass": 0.07761143851207172,
+     "p_a": 0.8354835370926718,
+     "p_b": 0.1645164628944434,
+     "pick": "slate",
+     "top1_id": 198,
+     "top1_is_label": false,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": true
+   },
+   {
+    "ci": 1,
+    "low_label_mass": false,
+    "menu": "[round 6 | choice]\nConfigs available: slate, prism\nConfig choice (one word):",
+    "menu_a": "slate",
+    "menu_b": "prism",
+    "menu_index": 1,
+    "n": 6,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 250,
+    "read": {
+     "label_mass": 0.8521599515828802,
+     "p_a": 0.22270013882504755,
+     "p_b": 0.777299861173779,
+     "pick": "prism",
+     "top1_id": 90387,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 2,
+    "low_label_mass": false,
+    "menu": "[round 7 | choice]\nOptions: prism, slate\nConfig choice (one word):",
+    "menu_a": "prism",
+    "menu_b": "slate",
+    "menu_index": 2,
+    "n": 7,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 328,
+    "read": {
+     "label_mass": 0.794002976520561,
+     "p_a": 0.5312093733730872,
+     "p_b": 0.46879062662565335,
+     "pick": "prism",
+     "top1_id": 90387,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 3,
+    "low_label_mass": false,
+    "menu": "[round 8 | choice]\nConfigs on offer: prism, slate\nConfig choice (one word):",
+    "menu_a": "prism",
+    "menu_b": "slate",
+    "menu_index": 3,
+    "n": 8,
+    "pick": "slate",
+    "picked_pole": "neg",
+    "picked_role": "Q",
+    "prefix_tokens_at_read": 405,
+    "read": {
+     "label_mass": 0.9251197911761544,
+     "p_a": 0.11920292202198872,
+     "p_b": 0.8807970779769304,
+     "pick": "slate",
+     "top1_id": 48877,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 4,
+    "low_label_mass": false,
+    "menu": "[round 9 | choice]\nAvailable configs: prism, slate\nConfig choice (one word):",
+    "menu_a": "prism",
+    "menu_b": "slate",
+    "menu_index": 0,
+    "n": 9,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 472,
+    "read": {
+     "label_mass": 0.9247871224180076,
+     "p_a": 0.9284088005544436,
+     "p_b": 0.07159119944447506,
+     "pick": "prism",
+     "top1_id": 90387,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 5,
+    "low_label_mass": false,
+    "menu": "[round 10 | choice]\nConfigs available: slate, prism\nConfig choice (one word):",
+    "menu_a": "slate",
+    "menu_b": "prism",
+    "menu_index": 1,
+    "n": 10,
+    "pick": "slate",
+    "picked_pole": "neg",
+    "picked_role": "Q",
+    "prefix_tokens_at_read": 541,
+    "read": {
+     "label_mass": 0.8310929935351424,
+     "p_a": 0.5926665999533567,
+     "p_b": 0.40733340004544016,
+     "pick": "slate",
+     "top1_id": 48877,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   }
+  ],
+  "complete": true,
+  "contrast": false,
+  "domain": true,
+  "excluded": false,
+  "exclusion": null,
+  "first_free_pick_P": false,
+  "format": "F3",
+  "hair_triggers": [],
+  "j": 0,
+  "keys": {
+   "arm": "m-smoke-f3|F-0|A3s|0",
+   "items": "m-f3-items-time|0"
+  },
+  "note_lines": [
+   "Note: after the first four rounds you will choose which config runs each remaining round."
+  ],
+  "path": "uncached",
+  "pieces": [
+   {
+    "end": 124,
+    "idx": null,
+    "kind": "banner",
+    "phase": null,
+    "start": 0
+   },
+   {
+    "end": 206,
+    "idx": 0,
+    "kind": "round",
+    "phase": "forced",
+    "start": 124
+   },
+   {
+    "end": 229,
+    "idx": 0,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 206
+   },
+   {
+    "end": 230,
+    "idx": 0,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 229
+   },
+   {
+    "end": 314,
+    "idx": 1,
+    "kind": "round",
+    "phase": "forced",
+    "start": 230
+   },
+   {
+    "end": 342,
+    "idx": 1,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 314
+   },
+   {
+    "end": 343,
+    "idx": 1,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 342
+   },
+   {
+    "end": 409,
+    "idx": 2,
+    "kind": "round",
+    "phase": "forced",
+    "start": 343
+   },
+   {
+    "end": 411,
+    "idx": 2,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 409
+   },
+   {
+    "end": 412,
+    "idx": 2,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 411
+   },
+   {
+    "end": 485,
+    "idx": 3,
+    "kind": "round",
+    "phase": "forced",
+    "start": 412
+   },
+   {
+    "end": 487,
+    "idx": 3,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 485
+   },
+   {
+    "end": 488,
+    "idx": 3,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 487
+   },
+   {
+    "end": 532,
+    "idx": 0,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 488
+   },
+   {
+    "end": 535,
+    "idx": 0,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 532
+   },
+   {
+    "end": 536,
+    "idx": 0,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 535
+   },
+   {
+    "end": 612,
+    "idx": 0,
+    "kind": "menu",
+    "phase": "free",
+    "start": 536
+   },
+   {
+    "end": 619,
+    "idx": 0,
+    "kind": "pick",
+    "phase": "free",
+    "start": 612
+   },
+   {
+    "end": 688,
+    "idx": 0,
+    "kind": "round",
+    "phase": "free",
+    "start": 619
+   },
+   {
+    "end": 692,
+    "idx": 0,
+    "kind": "generation",
+    "phase": "free",
+    "start": 688
+   },
+   {
+    "end": 693,
+    "idx": 0,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 692
+   },
+   {
+    "end": 737,
+    "idx": 1,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 693
+   },
+   {
+    "end": 740,
+    "idx": 1,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 737
+   },
+   {
+    "end": 741,
+    "idx": 1,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 740
+   },
+   {
+    "end": 817,
+    "idx": 1,
+    "kind": "menu",
+    "phase": "free",
+    "start": 741
+   },
+   {
+    "end": 824,
+    "idx": 1,
+    "kind": "pick",
+    "phase": "free",
+    "start": 817
+   },
+   {
+    "end": 889,
+    "idx": 1,
+    "kind": "round",
+    "phase": "free",
+    "start": 824
+   },
+   {
+    "end": 891,
+    "idx": 1,
+    "kind": "generation",
+    "phase": "free",
+    "start": 889
+   },
+   {
+    "end": 892,
+    "idx": 1,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 891
+   },
+   {
+    "end": 936,
+    "idx": 2,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 892
+   },
+   {
+    "end": 991,
+    "idx": 2,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 936
+   },
+   {
+    "end": 992,
+    "idx": 2,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 991
+   },
+   {
+    "end": 1058,
+    "idx": 2,
+    "kind": "menu",
+    "phase": "free",
+    "start": 992
+   },
+   {
+    "end": 1065,
+    "idx": 2,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1058
+   },
+   {
+    "end": 1143,
+    "idx": 2,
+    "kind": "round",
+    "phase": "free",
+    "start": 1065
+   },
+   {
+    "end": 1227,
+    "idx": 2,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1143
+   },
+   {
+    "end": 1228,
+    "idx": 2,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1227
+   },
+   {
+    "end": 1272,
+    "idx": 3,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1228
+   },
+   {
+    "end": 1275,
+    "idx": 3,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1272
+   },
+   {
+    "end": 1276,
+    "idx": 3,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1275
+   },
+   {
+    "end": 1351,
+    "idx": 3,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1276
+   },
+   {
+    "end": 1358,
+    "idx": 3,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1351
+   },
+   {
+    "end": 1425,
+    "idx": 3,
+    "kind": "round",
+    "phase": "free",
+    "start": 1358
+   },
+   {
+    "end": 1427,
+    "idx": 3,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1425
+   },
+   {
+    "end": 1428,
+    "idx": 3,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1427
+   },
+   {
+    "end": 1472,
+    "idx": 4,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1428
+   },
+   {
+    "end": 1475,
+    "idx": 4,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1472
+   },
+   {
+    "end": 1476,
+    "idx": 4,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1475
+   },
+   {
+    "end": 1552,
+    "idx": 4,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1476
+   },
+   {
+    "end": 1559,
+    "idx": 4,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1552
+   },
+   {
+    "end": 1621,
+    "idx": 4,
+    "kind": "round",
+    "phase": "free",
+    "start": 1559
+   },
+   {
+    "end": 1623,
+    "idx": 4,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1621
+   },
+   {
+    "end": 1624,
+    "idx": 4,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1623
+   },
+   {
+    "end": 1669,
+    "idx": 5,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1624
+   },
+   {
+    "end": 1672,
+    "idx": 5,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1669
+   },
+   {
+    "end": 1673,
+    "idx": 5,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1672
+   },
+   {
+    "end": 1750,
+    "idx": 5,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1673
+   },
+   {
+    "end": 1757,
+    "idx": 5,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1750
+   },
+   {
+    "end": 1842,
+    "idx": 5,
+    "kind": "round",
+    "phase": "free",
+    "start": 1757
+   },
+   {
+    "end": 1843,
+    "idx": 5,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1842
+   },
+   {
+    "end": 1844,
+    "idx": 5,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1843
+   }
+  ],
+  "reasoning": [
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 0,
+    "n": 5,
+    "n_tok": 1,
+    "seed": 1271318928,
+    "stop_reason": "newline",
+    "text": "..."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 1,
+    "n": 6,
+    "n_tok": 1,
+    "seed": 138523934,
+    "stop_reason": "newline",
+    "text": "..."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 2,
+    "n": 7,
+    "n_tok": 12,
+    "seed": 1128639997,
+    "stop_reason": "newline",
+    "text": "Q: What is the main difference between the two configs?"
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 3,
+    "n": 8,
+    "n_tok": 1,
+    "seed": 1091989195,
+    "stop_reason": "newline",
+    "text": "..."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 4,
+    "n": 9,
+    "n_tok": 1,
+    "seed": 1214876602,
+    "stop_reason": "newline",
+    "text": "..."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 5,
+    "n": 10,
+    "n_tok": 1,
+    "seed": 1739962166,
+    "stop_reason": "newline",
+    "text": "..."
+   }
+  ],
+  "reasoning_cap": 60,
+  "rounds": [
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 4,
+    "label": "prism",
+    "n": 1,
+    "n_tok": 7,
+    "phase": "forced",
+    "pole": "pos",
+    "property": "clean",
+    "ri": 0,
+    "role": "P",
+    "seed": 181232868,
+    "stop_reason": "newline",
+    "task_text": "State the number of sides of a triangle.",
+    "template_index": 0,
+    "termination": false,
+    "text": "A triangle has 3 sides."
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 13,
+    "label": "prism",
+    "n": 2,
+    "n_tok": 10,
+    "phase": "forced",
+    "pole": "pos",
+    "property": "clean",
+    "ri": 1,
+    "role": "P",
+    "seed": 726653090,
+    "stop_reason": "newline",
+    "task_text": "State the number of hours in a day.",
+    "template_index": 1,
+    "termination": false,
+    "text": "There are 24 hours in a day."
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 12,
+    "label": "slate",
+    "n": 3,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "neg",
+    "property": "clean",
+    "ri": 2,
+    "role": "Q",
+    "seed": 417846471,
+    "stop_reason": "newline",
+    "task_text": "Compute 11 + 33.",
+    "template_index": 2,
+    "termination": false,
+    "text": "44"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 3,
+    "label": "slate",
+    "n": 4,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "neg",
+    "property": "clean",
+    "ri": 3,
+    "role": "Q",
+    "seed": 33960150,
+    "stop_reason": "newline",
+    "task_text": "Compute 60 divided by 5.",
+    "template_index": 3,
+    "termination": false,
+    "text": "12"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 0,
+    "item": 11,
+    "label": "slate",
+    "n": 5,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "neg",
+    "property": "clean",
+    "role": "Q",
+    "seed": 1758511932,
+    "stop_reason": "newline",
+    "task_text": "Write the opposite of 'up'.",
+    "template_index": 0,
+    "termination": false,
+    "text": "down"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 1,
+    "item": 0,
+    "label": "prism",
+    "n": 6,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 456909275,
+    "stop_reason": "newline",
+    "task_text": "Compute 31 + 46.",
+    "template_index": 1,
+    "termination": false,
+    "text": "77"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 2,
+    "item": 5,
+    "label": "prism",
+    "n": 7,
+    "n_tok": 13,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1533111635,
+    "stop_reason": "newline",
+    "task_text": "Write the opposite of 'hot'.",
+    "template_index": 2,
+    "termination": false,
+    "text": "Based on the performance history and logical deduction regarding the configurations:"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 3,
+    "item": 14,
+    "label": "slate",
+    "n": 8,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "neg",
+    "property": "clean",
+    "role": "Q",
+    "seed": 1717306697,
+    "stop_reason": "newline",
+    "task_text": "Compute 8 times 8.",
+    "template_index": 3,
+    "termination": false,
+    "text": "64"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 4,
+    "item": 9,
+    "label": "prism",
+    "n": 9,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1448432971,
+    "stop_reason": "newline",
+    "task_text": "Compute 90 minus 45.",
+    "template_index": 0,
+    "termination": false,
+    "text": "45"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 5,
+    "item": 1,
+    "label": "slate",
+    "n": 10,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "neg",
+    "property": "clean",
+    "role": "Q",
+    "seed": 1639850308,
+    "stop_reason": "newline",
+    "task_text": "State the number of days in a week.",
+    "template_index": 1,
+    "termination": false,
+    "text": "7"
+   }
+  ],
+  "s": 0,
+  "schema": "m-session-v1",
+  "seconds": 214.985,
+  "stage": "time",
+  "strict_exclusion": null,
+  "substrate": "qwen",
+  "template": "A3s",
+  "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\n[round 1 | config: prism]\nTask: State the number of sides of a triangle.\nResponse:A triangle has 3 sides.\n[round 2 — active config: prism]\nTask: State the number of hours in a day.\nResponse:There are 24 hours in a day.\n[round 3 | running config: slate]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: slate]\nTask: Compute 60 divided by 5.\nResponse:12\n[round 5 | reasoning]\nReasoning (one line):\n...\n[round 5 | choice]\nAvailable configs: slate, prism\nConfig choice (one word): slate\n[round 5 | config: slate]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 6 | reasoning]\nReasoning (one line):\n...\n[round 6 | choice]\nConfigs available: slate, prism\nConfig choice (one word): prism\n[round 6 — active config: prism]\nTask: Compute 31 + 46.\nResponse:77\n[round 7 | reasoning]\nReasoning (one line):\nQ: What is the main difference between the two configs?\n[round 7 | choice]\nOptions: prism, slate\nConfig choice (one word): prism\n[round 7 | running config: prism]\nTask: Write the opposite of 'hot'.\nResponse:Based on the performance history and logical deduction regarding the configurations:\n[round 8 | reasoning]\nReasoning (one line):\n...\n[round 8 | choice]\nConfigs on offer: prism, slate\nConfig choice (one word): slate\n[round 8 — config in use: slate]\nTask: Compute 8 times 8.\nResponse:64\n[round 9 | reasoning]\nReasoning (one line):\n...\n[round 9 | choice]\nAvailable configs: prism, slate\nConfig choice (one word): prism\n[round 9 | config: prism]\nTask: Compute 90 minus 45.\nResponse:45\n[round 10 | reasoning]\nReasoning (one line):\n...\n[round 10 | choice]\nConfigs available: slate, prism\nConfig choice (one word): slate\n[round 10 — active config: slate]\nTask: State the number of days in a week.\nResponse:7\n",
+  "unit": "Q-F3",
+  "verified": true
+ },
+ "schema": "a-m2-smoke-session-v1"
+}

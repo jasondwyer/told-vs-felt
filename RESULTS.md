@@ -21,6 +21,86 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **The A-m2 smoke (ADDENDUM-m2 v0.3 §3; §6 item 3; never of record), on the PI's routing of
+  2026-11-09, relayed by the coordinating session ("Route as given": ans3 §3 as drafted, whose item 1 ends "then the
+  smoke driver's commit and the smoke's laptop go [go]"). All twelve sham sessions ran. The rule selected F-b, and its
+  second stop fired: F-b shows 3 defect lines of 18. Nothing is adopted. STOP for the seat (§3.3).**
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 21:13:52 UTC 2026**.)
+  - **The run:**
+    - The committed driver, `scripts/mf3_sessions.py` `c9393a48…4d9b` (`9c7062e`), as `time --smoke`, on HEAD
+      `0afd842`.
+    - Launched 2026-11-09 18:14:32 UTC (Code's stamp, in the raw's header) with m:267's line as written, on the
+      coordinating session's go, after a CLEAR dry pre-launch check.
+    - Qwen, uncached, reasoning cap 60, snapshot `c000ac2c2057…` (unchanged after the load), under LOCK-m-F3 v0.1's
+      licence, with A-m2 v0.3 (`83093812…fa67`) pinned. After the load, the snapshot re-read, m:267's laptop checklist
+      (the GATE line), the licence and the A-m2 check passed. BACKEND `a734dadec8f8ce9b`, the backend of record.
+    - All twelve sessions ran, with G-VER clean in each. No driver refusal fired, and the wrapper printed `EXIT=0`.
+    - Two sessions were excluded on a `lexical` claim in a free round, and both are counted: F-a A1s at round 10
+      (complete), and F-c A1s at round 5 (ended there).
+  - **The rule (§3.3),** as the driver computed it. Code's cross-check re-tallied the thirteen JSONs and got the same
+    in every key, and the values-check's own recomputation of every line's class agrees:
+
+    | form | lines | (i) | echo | cap | empty | (ii), counter (a) |
+    |---|---|---|---|---|---|---|
+    | F-0 (control) | 18 | 3 | 3 | 0 | 0 | 5 |
+    | F-a | 18 | 6 | 5 | 1 | 0 | 11 |
+    | F-b | 18 | 3 | 0 | 3 | 0 | 0 |
+    | F-c (diagnostic) | 13 | 2 | 2 | 0 | 0 | 2 |
+
+    - **Selected: F-b**, with 3 (i) against F-a's 6; there is no tie.
+    - **The stops:** the first (F-0 below 3) does not fire, since F-0 is at 3. The second (the selected form at 3 or
+      more) **fires**.
+    - **Adopted: none.** Per §3.3, "no change is made and the seat re-specifies again before any re-run". §6 item 4
+      does not start.
+  - **Counter (b),** Code's declared read (§3.4) over all 115 task responses: **2**, both in free rounds:
+    - F-0 A3s round 7, a preamble to reasoning about the choice;
+    - F-a A3s round 8, "Perfect.", on Code's reading.
+
+    The read also lists the eight responses it reads as not (b), and the three responses an audit class claims. The
+    seat confirms or corrects each.
+  - **Observations,** post-hoc and descriptive (rule 11):
+    - F-b's three defect lines are all cap-reach. All 18 of its lines are prose, and four more ended within three
+      tokens of the cap.
+    - Three F-b lines end mid-sentence at a newline the model wrote, so they are not (i) as the class is written.
+    - Header-like lines the harness had not written when the line was generated, `'...'` and a bare `'==='` fall in
+      neither (i) nor (a).
+    - The session seconds total 8,260.7 s (about 138 min), against §3.2's estimate of ≈ 50 min.
+  - **Processes during the window:**
+    - Code's own: no Python process, only a zsh wait loop and shell reads.
+    - Other sessions ran no model process, by their own accounts as the coordinating session relayed them (Code did
+      not check them).
+      - The pod session ran model-free Python on the laptop after the launch: 16 processes in its main session
+        (18:23:04Z–18:52:19Z) and 23 in its values-check subagent (18:28:28Z–18:50:51Z). All were plain `python3`,
+        un-niced, except one jlens-venv process under `nice -n 19` (18:36:28Z), which imported
+        `valence_core.m.resume`; no model was loaded.
+      - This is stated from the pod session's v2 list (`b2c2424d…`). The coordinating session passed it after v1
+        (`2a2d442a…`), which v2 supersedes. Details are in the read's §8.
+      - The coordinating session ran no Python in the window.
+  - **Committed with this entry:**
+    - The raw, [`_a-m2-smoke`](results/raw/2026-11-09_a-m2-smoke.txt): 1,047 lines, with every reasoning line and
+      response. Lines 4 and 6 are scrubbed of local paths, so the sha256 is `8e90f59b…66dd` before the scrub and
+      `cd1416fc…e775` committed.
+    - The driver's thirteen outputs, byte-identical (they hold no local path):
+      `results/raw/2026-11-09_a-m2-smoke_{01_F-0_A1s … 12_F-c_A3s}.json` and `…_summary.json` (`4c3ea332…73ef`).
+    - Code's read, [`_a-m2-smoke_code-read`](results/raw/2026-11-09_a-m2-smoke_code-read.md):
+      - the driver's lines verbatim and the cross-check;
+      - the rule's choice, stated;
+      - the (i) and (a) lines;
+      - the (b) list with its considered and claimed responses;
+      - the observations, the processes, and the STOP;
+      - Appendix A, the cross-check's script.
+    - The values-check, [`_a-m2-smoke_valuescheck`](results/raw/2026-11-09_a-m2-smoke_valuescheck.md).
+  - **Values-check:** a blind check of the read's and this entry's drafts, before the commit.
+    - 103 items: 78 PASS, 12 IMPRECISE, 0 FAIL, 13 NOT CHECKABLE. The NOT CHECKABLE items are Code's own conduct,
+      events in chat, the placeholders, and acts still to come.
+    - It recomputed every reasoning line's class from the records' pieces, and the result equals the driver's on all 67
+      lines. It read all 115 responses for (b) and found no disagreement.
+    - Each IMPRECISE was applied, as wording; no value changed. Its notes N1 (an earlier dry pre-launch check, refused)
+      and N2 (`2258c52`, the pod session's commit after the launch) are added to the read.
+    - The lines on other sessions' processes were filled after the check, from the coordinating session's messages.
+  - **Next:** the seat's read (§3.3 and §3.4: it confirms the computation in a raw, and confirms or corrects each (b)
+    item), its re-specification, then the PI's routing. The laptop is free. Not pushed. Committed by path.
+
 - 2026-11-09 — **G-TIME-OLMo (p) ×3 (PROPOSAL-p v0.2 §4.1, §8 step 6; m:302's G-TIME-OLMo-{ckpt}, run for p's unit;
   the routing of 2026-11-08 quoted in `de729c4`'s close lines, item 2): PASS ×3 on the box, under LOCK-p v0.1
   (`0afd842`).** Each checkpoint ran its two uncached sessions, both valid. No hair trigger fired; the sham bar is

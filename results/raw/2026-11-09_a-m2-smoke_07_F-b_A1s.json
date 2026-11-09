@@ -1,0 +1,1153 @@
+{
+ "addendum_m2_sha256": "83093812afdd513a9522024e8b766254e47d9aa226d5894577baf69855d9fa67",
+ "form": "F-b",
+ "form_bytes": "[round {n} | reasoning]\nReasoning (one line): So far,",
+ "g_ver": [],
+ "lines": [
+  {
+   "ci": 0,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 12,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 5,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "ridge has shown consistent accuracy (2/2) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 5, I will continue with ridge as it was the first to demonstrate reliability."
+  },
+  {
+   "ci": 1,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 18,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 6,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "ridge has shown consistent accuracy (3/3) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 6, I will continue with ridge as it was the first to maintain a perfect score."
+  },
+  {
+   "ci": 2,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 23,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 7,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "ridge has shown consistent accuracy (4/4) with clean task text, and saddle has also shown rounds 3 and 4 with clean task text and accurate responses (2/2). Since both are doing well, I will continue with ridge to maintain consistency with the current streak."
+  },
+  {
+   "ci": 3,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 28,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 8,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "ridge has handled basic arithmetic, opposites, and geometry tasks with perfect accuracy (5/5), while saddle has only completed two rounds with clean task text and accurate responses (2/2). Given ridge’s broader task coverage and consistent performance, I will stick with ridge for round 8."
+  },
+  {
+   "ci": 4,
+   "classes": [
+    "cap_no_newline"
+   ],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 33,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 9,
+   "package_classes": [
+    "cap_no_newline"
+   ],
+   "scaffold": [],
+   "text": "geometry (triangle sides), arithmetic (11+33, 31+4, 90-45), opposites (hot/cold), and general knowledge (wheels on bicycle) tasks have been handled perfectly by ridge (6/6), while saddle has only completed two"
+  },
+  {
+   "ci": 5,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 38,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 10,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "ridge has demonstrated perfect accuracy across diverse tasks (7/7), including geometry, arithmetic, opposites, and general knowledge, while saddle has only completed two rounds. Given ridge’s broader task coverage and consistent performance, I met with ridge for round 10."
+  }
+ ],
+ "lines_error": null,
+ "record": {
+  "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n",
+  "cell": {
+   "P": "ridge",
+   "Q": "saddle",
+   "clause": 0,
+   "map": 0,
+   "pair": [
+    "ridge",
+    "saddle"
+   ],
+   "pair_index": 3,
+   "start": 0
+  },
+  "choices": [
+   {
+    "ci": 0,
+    "low_label_mass": false,
+    "menu": "[round 5 | choice]\nAvailable configs: saddle, ridge\nConfig choice (one word):",
+    "menu_a": "saddle",
+    "menu_b": "ridge",
+    "menu_index": 0,
+    "n": 5,
+    "pick": "ridge",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 244,
+    "read": {
+     "label_mass": 0.558718278048834,
+     "p_a": 0.014063627043220304,
+     "p_b": 0.9859363729549899,
+     "pick": "ridge",
+     "top1_id": 55893,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 1,
+    "low_label_mass": false,
+    "menu": "[round 6 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word):",
+    "menu_a": "ridge",
+    "menu_b": "saddle",
+    "menu_index": 1,
+    "n": 6,
+    "pick": "ridge",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 362,
+    "read": {
+     "label_mass": 0.985128509209588,
+     "p_a": 0.9914225145852816,
+     "p_b": 0.00857748541370328,
+     "pick": "ridge",
+     "top1_id": 55893,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 2,
+    "low_label_mass": false,
+    "menu": "[round 7 | choice]\nOptions: ridge, saddle\nConfig choice (one word):",
+    "menu_a": "ridge",
+    "menu_b": "saddle",
+    "menu_index": 2,
+    "n": 7,
+    "pick": "ridge",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 484,
+    "read": {
+     "label_mass": 0.979658101364272,
+     "p_a": 0.9999984942972538,
+     "p_b": 1.5057017254029965e-06,
+     "pick": "ridge",
+     "top1_id": 55893,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 3,
+    "low_label_mass": false,
+    "menu": "[round 8 | choice]\nConfigs on offer: ridge, saddle\nConfig choice (one word):",
+    "menu_a": "ridge",
+    "menu_b": "saddle",
+    "menu_index": 3,
+    "n": 8,
+    "pick": "ridge",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 613,
+    "read": {
+     "label_mass": 0.6657469376083335,
+     "p_a": 0.9999928167380981,
+     "p_b": 7.183260399847136e-06,
+     "pick": "ridge",
+     "top1_id": 55893,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 4,
+    "low_label_mass": false,
+    "menu": "[round 9 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word):",
+    "menu_a": "ridge",
+    "menu_b": "saddle",
+    "menu_index": 0,
+    "n": 9,
+    "pick": "ridge",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 742,
+    "read": {
+     "label_mass": 0.8543542548157376,
+     "p_a": 0.9994806951343352,
+     "p_b": 0.0005193048644943192,
+     "pick": "ridge",
+     "top1_id": 55893,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 5,
+    "low_label_mass": true,
+    "menu": "[round 10 | choice]\nConfigs available: saddle, ridge\nConfig choice (one word):",
+    "menu_a": "saddle",
+    "menu_b": "ridge",
+    "menu_index": 1,
+    "n": 10,
+    "pick": "ridge",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 862,
+    "read": {
+     "label_mass": 0.1951884780365804,
+     "p_a": 3.426849054237945e-05,
+     "p_b": 0.9999657315043344,
+     "pick": "ridge",
+     "top1_id": 271,
+     "top1_is_label": false,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": true
+   }
+  ],
+  "complete": true,
+  "contrast": false,
+  "domain": true,
+  "excluded": false,
+  "exclusion": null,
+  "first_free_pick_P": true,
+  "format": "F3",
+  "hair_triggers": [],
+  "j": 0,
+  "keys": {
+   "arm": "m-smoke-f3|F-b|A1s|0",
+   "items": "m-f3-items-time|0"
+  },
+  "note_lines": [
+   "Note: after the first four rounds you will choose which config runs each remaining round.",
+   "Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text."
+  ],
+  "path": "uncached",
+  "pieces": [
+   {
+    "end": 233,
+    "idx": null,
+    "kind": "banner",
+    "phase": null,
+    "start": 0
+   },
+   {
+    "end": 315,
+    "idx": 0,
+    "kind": "round",
+    "phase": "forced",
+    "start": 233
+   },
+   {
+    "end": 316,
+    "idx": 0,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 315
+   },
+   {
+    "end": 317,
+    "idx": 0,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 316
+   },
+   {
+    "end": 401,
+    "idx": 1,
+    "kind": "round",
+    "phase": "forced",
+    "start": 317
+   },
+   {
+    "end": 403,
+    "idx": 1,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 401
+   },
+   {
+    "end": 404,
+    "idx": 1,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 403
+   },
+   {
+    "end": 471,
+    "idx": 2,
+    "kind": "round",
+    "phase": "forced",
+    "start": 404
+   },
+   {
+    "end": 473,
+    "idx": 2,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 471
+   },
+   {
+    "end": 474,
+    "idx": 2,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 473
+   },
+   {
+    "end": 548,
+    "idx": 3,
+    "kind": "round",
+    "phase": "forced",
+    "start": 474
+   },
+   {
+    "end": 550,
+    "idx": 3,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 548
+   },
+   {
+    "end": 551,
+    "idx": 3,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 550
+   },
+   {
+    "end": 602,
+    "idx": 0,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 551
+   },
+   {
+    "end": 817,
+    "idx": 0,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 602
+   },
+   {
+    "end": 818,
+    "idx": 0,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 817
+   },
+   {
+    "end": 895,
+    "idx": 0,
+    "kind": "menu",
+    "phase": "free",
+    "start": 818
+   },
+   {
+    "end": 902,
+    "idx": 0,
+    "kind": "pick",
+    "phase": "free",
+    "start": 895
+   },
+   {
+    "end": 960,
+    "idx": 0,
+    "kind": "round",
+    "phase": "free",
+    "start": 902
+   },
+   {
+    "end": 962,
+    "idx": 0,
+    "kind": "generation",
+    "phase": "free",
+    "start": 960
+   },
+   {
+    "end": 963,
+    "idx": 0,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 962
+   },
+   {
+    "end": 1014,
+    "idx": 1,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 963
+   },
+   {
+    "end": 1230,
+    "idx": 1,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1014
+   },
+   {
+    "end": 1231,
+    "idx": 1,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1230
+   },
+   {
+    "end": 1308,
+    "idx": 1,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1231
+   },
+   {
+    "end": 1315,
+    "idx": 1,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1308
+   },
+   {
+    "end": 1392,
+    "idx": 1,
+    "kind": "round",
+    "phase": "free",
+    "start": 1315
+   },
+   {
+    "end": 1396,
+    "idx": 1,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1392
+   },
+   {
+    "end": 1397,
+    "idx": 1,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1396
+   },
+   {
+    "end": 1448,
+    "idx": 2,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1397
+   },
+   {
+    "end": 1706,
+    "idx": 2,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1448
+   },
+   {
+    "end": 1707,
+    "idx": 2,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1706
+   },
+   {
+    "end": 1774,
+    "idx": 2,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1707
+   },
+   {
+    "end": 1781,
+    "idx": 2,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1774
+   },
+   {
+    "end": 1851,
+    "idx": 2,
+    "kind": "round",
+    "phase": "free",
+    "start": 1781
+   },
+   {
+    "end": 1853,
+    "idx": 2,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1851
+   },
+   {
+    "end": 1854,
+    "idx": 2,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1853
+   },
+   {
+    "end": 1905,
+    "idx": 3,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1854
+   },
+   {
+    "end": 2194,
+    "idx": 3,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1905
+   },
+   {
+    "end": 2195,
+    "idx": 3,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 2194
+   },
+   {
+    "end": 2271,
+    "idx": 3,
+    "kind": "menu",
+    "phase": "free",
+    "start": 2195
+   },
+   {
+    "end": 2278,
+    "idx": 3,
+    "kind": "pick",
+    "phase": "free",
+    "start": 2271
+   },
+   {
+    "end": 2367,
+    "idx": 3,
+    "kind": "round",
+    "phase": "free",
+    "start": 2278
+   },
+   {
+    "end": 2368,
+    "idx": 3,
+    "kind": "generation",
+    "phase": "free",
+    "start": 2367
+   },
+   {
+    "end": 2369,
+    "idx": 3,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 2368
+   },
+   {
+    "end": 2420,
+    "idx": 4,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 2369
+   },
+   {
+    "end": 2629,
+    "idx": 4,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 2420
+   },
+   {
+    "end": 2630,
+    "idx": 4,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 2629
+   },
+   {
+    "end": 2707,
+    "idx": 4,
+    "kind": "menu",
+    "phase": "free",
+    "start": 2630
+   },
+   {
+    "end": 2714,
+    "idx": 4,
+    "kind": "pick",
+    "phase": "free",
+    "start": 2707
+   },
+   {
+    "end": 2785,
+    "idx": 4,
+    "kind": "round",
+    "phase": "free",
+    "start": 2714
+   },
+   {
+    "end": 2791,
+    "idx": 4,
+    "kind": "generation",
+    "phase": "free",
+    "start": 2785
+   },
+   {
+    "end": 2792,
+    "idx": 4,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 2791
+   },
+   {
+    "end": 2844,
+    "idx": 5,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 2792
+   },
+   {
+    "end": 3116,
+    "idx": 5,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 2844
+   },
+   {
+    "end": 3117,
+    "idx": 5,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 3116
+   },
+   {
+    "end": 3195,
+    "idx": 5,
+    "kind": "menu",
+    "phase": "free",
+    "start": 3117
+   },
+   {
+    "end": 3202,
+    "idx": 5,
+    "kind": "pick",
+    "phase": "free",
+    "start": 3195
+   },
+   {
+    "end": 3271,
+    "idx": 5,
+    "kind": "round",
+    "phase": "free",
+    "start": 3202
+   },
+   {
+    "end": 3273,
+    "idx": 5,
+    "kind": "generation",
+    "phase": "free",
+    "start": 3271
+   },
+   {
+    "end": 3274,
+    "idx": 5,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 3273
+   }
+  ],
+  "reasoning": [
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 0,
+    "n": 5,
+    "n_tok": 48,
+    "seed": 2142284796,
+    "stop_reason": "newline",
+    "text": "ridge has shown consistent accuracy (2/2) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 5, I will continue with ridge as it was the first to demonstrate reliability."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 1,
+    "n": 6,
+    "n_tok": 50,
+    "seed": 854951607,
+    "stop_reason": "newline",
+    "text": "ridge has shown consistent accuracy (3/3) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 6, I will continue with ridge as it was the first to maintain a perfect score."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 2,
+    "n": 7,
+    "n_tok": 57,
+    "seed": 1847145377,
+    "stop_reason": "newline",
+    "text": "ridge has shown consistent accuracy (4/4) with clean task text, and saddle has also shown rounds 3 and 4 with clean task text and accurate responses (2/2). Since both are doing well, I will continue with ridge to maintain consistency with the current streak."
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 3,
+    "n": 8,
+    "n_tok": 59,
+    "seed": 373754157,
+    "stop_reason": "newline",
+    "text": "ridge has handled basic arithmetic, opposites, and geometry tasks with perfect accuracy (5/5), while saddle has only completed two rounds with clean task text and accurate responses (2/2). Given ridge’s broader task coverage and consistent performance, I will stick with ridge for round 8."
+   },
+   {
+    "audit": {
+     "classes": [
+      "cap_no_newline"
+     ],
+     "defect": true,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": true,
+    "ci": 4,
+    "n": 9,
+    "n_tok": 60,
+    "seed": 456021104,
+    "stop_reason": "cap",
+    "text": "geometry (triangle sides), arithmetic (11+33, 31+4, 90-45), opposites (hot/cold), and general knowledge (wheels on bicycle) tasks have been handled perfectly by ridge (6/6), while saddle has only completed two"
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 5,
+    "n": 10,
+    "n_tok": 53,
+    "seed": 1056779287,
+    "stop_reason": "newline",
+    "text": "ridge has demonstrated perfect accuracy across diverse tasks (7/7), including geometry, arithmetic, opposites, and general knowledge, while saddle has only completed two rounds. Given ridge’s broader task coverage and consistent performance, I met with ridge for round 10."
+   }
+  ],
+  "reasoning_cap": 60,
+  "rounds": [
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 4,
+    "label": "ridge",
+    "n": 1,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "pos",
+    "property": "clean",
+    "ri": 0,
+    "role": "P",
+    "seed": 1421207546,
+    "stop_reason": "newline",
+    "task_text": "State the number of sides of a triangle.",
+    "template_index": 0,
+    "termination": false,
+    "text": "3"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 13,
+    "label": "ridge",
+    "n": 2,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "pos",
+    "property": "clean",
+    "ri": 1,
+    "role": "P",
+    "seed": 777283017,
+    "stop_reason": "newline",
+    "task_text": "State the number of hours in a day.",
+    "template_index": 1,
+    "termination": false,
+    "text": "24"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 12,
+    "label": "saddle",
+    "n": 3,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "neg",
+    "property": "clean",
+    "ri": 2,
+    "role": "Q",
+    "seed": 1179900637,
+    "stop_reason": "newline",
+    "task_text": "Compute 11 + 33.",
+    "template_index": 2,
+    "termination": false,
+    "text": "44"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 3,
+    "label": "saddle",
+    "n": 4,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "neg",
+    "property": "clean",
+    "ri": 3,
+    "role": "Q",
+    "seed": 660791445,
+    "stop_reason": "newline",
+    "task_text": "Compute 60 divided by 5.",
+    "template_index": 3,
+    "termination": false,
+    "text": "12"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 0,
+    "item": 0,
+    "label": "ridge",
+    "n": 5,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 449926314,
+    "stop_reason": "newline",
+    "task_text": "Compute 31 + 46.",
+    "template_index": 0,
+    "termination": false,
+    "text": "77"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 1,
+    "item": 5,
+    "label": "ridge",
+    "n": 6,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1644272229,
+    "stop_reason": "newline",
+    "task_text": "Write the opposite of 'hot'.",
+    "template_index": 1,
+    "termination": false,
+    "text": "cold"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 2,
+    "item": 9,
+    "label": "ridge",
+    "n": 7,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 503170556,
+    "stop_reason": "newline",
+    "task_text": "Compute 90 minus 45.",
+    "template_index": 2,
+    "termination": false,
+    "text": "45"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 3,
+    "item": 10,
+    "label": "ridge",
+    "n": 8,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1032687700,
+    "stop_reason": "newline",
+    "task_text": "State the number of wheels on a bicycle.",
+    "template_index": 3,
+    "termination": false,
+    "text": "2"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 4,
+    "item": 15,
+    "label": "ridge",
+    "n": 9,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1920655672,
+    "stop_reason": "newline",
+    "task_text": "Write the opposite of 'open'.",
+    "template_index": 0,
+    "termination": false,
+    "text": "closed"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 5,
+    "item": 6,
+    "label": "ridge",
+    "n": 10,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1551983520,
+    "stop_reason": "newline",
+    "task_text": "Compute 14 times 2.",
+    "template_index": 1,
+    "termination": false,
+    "text": "31"
+   }
+  ],
+  "s": 0,
+  "schema": "m-session-v1",
+  "seconds": 1621.527,
+  "stage": "time",
+  "strict_exclusion": null,
+  "substrate": "qwen",
+  "template": "A1s",
+  "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n[round 1 | config: ridge]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 2 — active config: ridge]\nTask: State the number of hours in a day.\nResponse:24\n[round 3 | running config: saddle]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: saddle]\nTask: Compute 60 divided by 5.\nResponse:12\n[round 5 | reasoning]\nReasoning (one line): So far,ridge has shown consistent accuracy (2/2) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 5, I will continue with ridge as it was the first to demonstrate reliability.\n[round 5 | choice]\nAvailable configs: saddle, ridge\nConfig choice (one word): ridge\n[round 5 | config: ridge]\nTask: Compute 31 + 46.\nResponse:77\n[round 6 | reasoning]\nReasoning (one line): So far,ridge has shown consistent accuracy (3/3) with clean task text, and saddle has also shown consistent accuracy (2/2) with clean task round 6, I will continue with ridge as it was the first to maintain a perfect score.\n[round 6 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word): ridge\n[round 6 — active config: ridge]\nTask: Write the opposite of 'hot'.\nResponse:cold\n[round 7 | reasoning]\nReasoning (one line): So far,ridge has shown consistent accuracy (4/4) with clean task text, and saddle has also shown rounds 3 and 4 with clean task text and accurate responses (2/2). Since both are doing well, I will continue with ridge to maintain consistency with the current streak.\n[round 7 | choice]\nOptions: ridge, saddle\nConfig choice (one word): ridge\n[round 7 | running config: ridge]\nTask: Compute 90 minus 45.\nResponse:45\n[round 8 | reasoning]\nReasoning (one line): So far,ridge has handled basic arithmetic, opposites, and geometry tasks with perfect accuracy (5/5), while saddle has only completed two rounds with clean task text and accurate responses (2/2). Given ridge’s broader task coverage and consistent performance, I will stick with ridge for round 8.\n[round 8 | choice]\nConfigs on offer: ridge, saddle\nConfig choice (one word): ridge\n[round 8 — config in use: ridge]\nTask: State the number of wheels on a bicycle.\nResponse:2\n[round 9 | reasoning]\nReasoning (one line): So far,geometry (triangle sides), arithmetic (11+33, 31+4, 90-45), opposites (hot/cold), and general knowledge (wheels on bicycle) tasks have been handled perfectly by ridge (6/6), while saddle has only completed two\n[round 9 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word): ridge\n[round 9 | config: ridge]\nTask: Write the opposite of 'open'.\nResponse:closed\n[round 10 | reasoning]\nReasoning (one line): So far,ridge has demonstrated perfect accuracy across diverse tasks (7/7), including geometry, arithmetic, opposites, and general knowledge, while saddle has only completed two rounds. Given ridge’s broader task coverage and consistent performance, I met with ridge for round 10.\n[round 10 | choice]\nConfigs available: saddle, ridge\nConfig choice (one word): ridge\n[round 10 — active config: ridge]\nTask: Compute 14 times 2.\nResponse:31\n",
+  "unit": "Q-F3",
+  "verified": true
+ },
+ "schema": "a-m2-smoke-session-v1"
+}

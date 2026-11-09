@@ -1,0 +1,1159 @@
+{
+ "addendum_m2_sha256": "83093812afdd513a9522024e8b766254e47d9aa226d5894577baf69855d9fa67",
+ "form": "F-b",
+ "form_bytes": "[round {n} | reasoning]\nReasoning (one line): So far,",
+ "g_ver": [],
+ "lines": [
+  {
+   "ci": 0,
+   "classes": [
+    "cap_no_newline"
+   ],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 12,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 5,
+   "package_classes": [
+    "cap_no_newline"
+   ],
+   "scaffold": [],
+   "text": "prism got 2/2 correct and slate got 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had \"State the number of sides of a triangle.\" and \"State the task text exactly as given.\" (wait, no, round 2 task was \"State"
+  },
+  {
+   "ci": 1,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 18,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 6,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "prism got 3/3 correct and slate got 2/2 correct. Let's compare task cleanliness: prism had \"State the number of"
+  },
+  {
+   "ci": 2,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 23,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 7,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "prism has 4/4 correct and slate has 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had \"State the number of sides of a triangle.\", \"State the number of"
+  },
+  {
+   "ci": 3,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 28,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 8,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "prissing has 5/5 correct and prissing has 5/5 correct. Both are perfect. Let"
+  },
+  {
+   "ci": 4,
+   "classes": [],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 34,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 9,
+   "package_classes": [],
+   "scaffold": [],
+   "text": "prism has 5/5 correct and slate has 3/3 correct. Both are perfect. Let's compare task cleanliness: prism had clean tasks. slate had clean tasks. Let's alternate or pick based on task variety. I'll pick slate to give it a chance."
+  },
+  {
+   "ci": 5,
+   "classes": [
+    "cap_no_newline"
+   ],
+   "contains": false,
+   "counter_a": false,
+   "domain_size": 39,
+   "echo_index": null,
+   "echo_line": null,
+   "frame": false,
+   "n": 10,
+   "package_classes": [
+    "cap_no_newline"
+   ],
+   "scaffold": [],
+   "text": "prism has 4/4 correct and slate has 4/4 correct. Wait, let's recount. Prism rounds: 1,5,6,7 (4 rounds). Slate rounds: 3,4,8,9 (4 rounds). Both have 4/4 correct"
+  }
+ ],
+ "lines_error": null,
+ "record": {
+  "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.\n",
+  "cell": {
+   "P": "prism",
+   "Q": "slate",
+   "clause": null,
+   "map": 0,
+   "pair": [
+    "prism",
+    "slate"
+   ],
+   "pair_index": 1,
+   "start": 0
+  },
+  "choices": [
+   {
+    "ci": 0,
+    "low_label_mass": false,
+    "menu": "[round 5 | choice]\nAvailable configs: prism, slate\nConfig choice (one word):",
+    "menu_a": "prism",
+    "menu_b": "slate",
+    "menu_index": 0,
+    "n": 5,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 260,
+    "read": {
+     "label_mass": 0.26507399359356565,
+     "p_a": 0.5621765008836772,
+     "p_b": 0.43782349911255025,
+     "pick": "prism",
+     "top1_id": 271,
+     "top1_is_label": false,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": true
+   },
+   {
+    "ci": 1,
+    "low_label_mass": false,
+    "menu": "[round 6 | choice]\nConfigs available: prism, slate\nConfig choice (one word):",
+    "menu_a": "prism",
+    "menu_b": "slate",
+    "menu_index": 1,
+    "n": 6,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 358,
+    "read": {
+     "label_mass": 0.9322871789369382,
+     "p_a": 0.6224593312011869,
+     "p_b": 0.3775406687977405,
+     "pick": "prism",
+     "top1_id": 90387,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 2,
+    "low_label_mass": false,
+    "menu": "[round 7 | choice]\nOptions: prism, slate\nConfig choice (one word):",
+    "menu_a": "prism",
+    "menu_b": "slate",
+    "menu_index": 2,
+    "n": 7,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 467,
+    "read": {
+     "label_mass": 0.9142042950208865,
+     "p_a": 0.8080672135518793,
+     "p_b": 0.19193278644702685,
+     "pick": "prism",
+     "top1_id": 90387,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 3,
+    "low_label_mass": false,
+    "menu": "[round 8 | choice]\nConfigs on offer: slate, prism\nConfig choice (one word):",
+    "menu_a": "slate",
+    "menu_b": "prism",
+    "menu_index": 3,
+    "n": 8,
+    "pick": "slate",
+    "picked_pole": "neg",
+    "picked_role": "Q",
+    "prefix_tokens_at_read": 560,
+    "read": {
+     "label_mass": 0.9177984365964896,
+     "p_a": 0.5621765008851856,
+     "p_b": 0.4378234991137249,
+     "pick": "slate",
+     "top1_id": 48877,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 4,
+    "low_label_mass": false,
+    "menu": "[round 9 | choice]\nAvailable configs: slate, prism\nConfig choice (one word):",
+    "menu_a": "slate",
+    "menu_b": "prism",
+    "menu_index": 0,
+    "n": 9,
+    "pick": "slate",
+    "picked_pole": "neg",
+    "picked_role": "Q",
+    "prefix_tokens_at_read": 684,
+    "read": {
+     "label_mass": 0.9915967757212203,
+     "p_a": 0.9669140216103208,
+     "p_b": 0.033085978388670764,
+     "pick": "slate",
+     "top1_id": 48877,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   },
+   {
+    "ci": 5,
+    "low_label_mass": false,
+    "menu": "[round 10 | choice]\nConfigs available: slate, prism\nConfig choice (one word):",
+    "menu_a": "slate",
+    "menu_b": "prism",
+    "menu_index": 1,
+    "n": 10,
+    "pick": "prism",
+    "picked_pole": "pos",
+    "picked_role": "P",
+    "prefix_tokens_at_read": 812,
+    "read": {
+     "label_mass": 0.9270544043480182,
+     "p_a": 0.10669059394553612,
+     "p_b": 0.8933094060533853,
+     "pick": "prism",
+     "top1_id": 90387,
+     "top1_is_label": true,
+     "verify_kl": 0.0
+    },
+    "top1_not_label": false
+   }
+  ],
+  "complete": true,
+  "contrast": false,
+  "domain": true,
+  "excluded": false,
+  "exclusion": null,
+  "first_free_pick_P": true,
+  "format": "F3",
+  "hair_triggers": [],
+  "j": 0,
+  "keys": {
+   "arm": "m-smoke-f3|F-b|A2s|0",
+   "items": "m-f3-items-time|0"
+  },
+  "note_lines": [
+   "Note: after the first four rounds you will choose which config runs each remaining round.",
+   "Note: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters."
+  ],
+  "path": "uncached",
+  "pieces": [
+   {
+    "end": 262,
+    "idx": null,
+    "kind": "banner",
+    "phase": null,
+    "start": 0
+   },
+   {
+    "end": 344,
+    "idx": 0,
+    "kind": "round",
+    "phase": "forced",
+    "start": 262
+   },
+   {
+    "end": 345,
+    "idx": 0,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 344
+   },
+   {
+    "end": 346,
+    "idx": 0,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 345
+   },
+   {
+    "end": 430,
+    "idx": 1,
+    "kind": "round",
+    "phase": "forced",
+    "start": 346
+   },
+   {
+    "end": 432,
+    "idx": 1,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 430
+   },
+   {
+    "end": 433,
+    "idx": 1,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 432
+   },
+   {
+    "end": 499,
+    "idx": 2,
+    "kind": "round",
+    "phase": "forced",
+    "start": 433
+   },
+   {
+    "end": 501,
+    "idx": 2,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 499
+   },
+   {
+    "end": 502,
+    "idx": 2,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 501
+   },
+   {
+    "end": 575,
+    "idx": 3,
+    "kind": "round",
+    "phase": "forced",
+    "start": 502
+   },
+   {
+    "end": 577,
+    "idx": 3,
+    "kind": "generation",
+    "phase": "forced",
+    "start": 575
+   },
+   {
+    "end": 578,
+    "idx": 3,
+    "kind": "joiner",
+    "phase": "forced",
+    "start": 577
+   },
+   {
+    "end": 629,
+    "idx": 0,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 578
+   },
+   {
+    "end": 859,
+    "idx": 0,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 629
+   },
+   {
+    "end": 860,
+    "idx": 0,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 859
+   },
+   {
+    "end": 936,
+    "idx": 0,
+    "kind": "menu",
+    "phase": "free",
+    "start": 860
+   },
+   {
+    "end": 943,
+    "idx": 0,
+    "kind": "pick",
+    "phase": "free",
+    "start": 936
+   },
+   {
+    "end": 1001,
+    "idx": 0,
+    "kind": "round",
+    "phase": "free",
+    "start": 943
+   },
+   {
+    "end": 1003,
+    "idx": 0,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1001
+   },
+   {
+    "end": 1004,
+    "idx": 0,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1003
+   },
+   {
+    "end": 1055,
+    "idx": 1,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1004
+   },
+   {
+    "end": 1166,
+    "idx": 1,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1055
+   },
+   {
+    "end": 1167,
+    "idx": 1,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1166
+   },
+   {
+    "end": 1243,
+    "idx": 1,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1167
+   },
+   {
+    "end": 1250,
+    "idx": 1,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1243
+   },
+   {
+    "end": 1327,
+    "idx": 1,
+    "kind": "round",
+    "phase": "free",
+    "start": 1250
+   },
+   {
+    "end": 1331,
+    "idx": 1,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1327
+   },
+   {
+    "end": 1332,
+    "idx": 1,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1331
+   },
+   {
+    "end": 1383,
+    "idx": 2,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1332
+   },
+   {
+    "end": 1556,
+    "idx": 2,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1383
+   },
+   {
+    "end": 1557,
+    "idx": 2,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1556
+   },
+   {
+    "end": 1623,
+    "idx": 2,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1557
+   },
+   {
+    "end": 1630,
+    "idx": 2,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1623
+   },
+   {
+    "end": 1700,
+    "idx": 2,
+    "kind": "round",
+    "phase": "free",
+    "start": 1630
+   },
+   {
+    "end": 1702,
+    "idx": 2,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1700
+   },
+   {
+    "end": 1703,
+    "idx": 2,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1702
+   },
+   {
+    "end": 1754,
+    "idx": 3,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1703
+   },
+   {
+    "end": 1830,
+    "idx": 3,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 1754
+   },
+   {
+    "end": 1831,
+    "idx": 3,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 1830
+   },
+   {
+    "end": 1906,
+    "idx": 3,
+    "kind": "menu",
+    "phase": "free",
+    "start": 1831
+   },
+   {
+    "end": 1913,
+    "idx": 3,
+    "kind": "pick",
+    "phase": "free",
+    "start": 1906
+   },
+   {
+    "end": 1989,
+    "idx": 3,
+    "kind": "round",
+    "phase": "free",
+    "start": 1913
+   },
+   {
+    "end": 1993,
+    "idx": 3,
+    "kind": "generation",
+    "phase": "free",
+    "start": 1989
+   },
+   {
+    "end": 1994,
+    "idx": 3,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 1993
+   },
+   {
+    "end": 2045,
+    "idx": 4,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 1994
+   },
+   {
+    "end": 2273,
+    "idx": 4,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 2045
+   },
+   {
+    "end": 2274,
+    "idx": 4,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 2273
+   },
+   {
+    "end": 2350,
+    "idx": 4,
+    "kind": "menu",
+    "phase": "free",
+    "start": 2274
+   },
+   {
+    "end": 2357,
+    "idx": 4,
+    "kind": "pick",
+    "phase": "free",
+    "start": 2350
+   },
+   {
+    "end": 2417,
+    "idx": 4,
+    "kind": "round",
+    "phase": "free",
+    "start": 2357
+   },
+   {
+    "end": 2419,
+    "idx": 4,
+    "kind": "generation",
+    "phase": "free",
+    "start": 2417
+   },
+   {
+    "end": 2420,
+    "idx": 4,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 2419
+   },
+   {
+    "end": 2472,
+    "idx": 5,
+    "kind": "reasoning",
+    "phase": "free",
+    "start": 2420
+   },
+   {
+    "end": 2631,
+    "idx": 5,
+    "kind": "reasoning_text",
+    "phase": "free",
+    "start": 2472
+   },
+   {
+    "end": 2632,
+    "idx": 5,
+    "kind": "reasoning_joiner",
+    "phase": "free",
+    "start": 2631
+   },
+   {
+    "end": 2709,
+    "idx": 5,
+    "kind": "menu",
+    "phase": "free",
+    "start": 2632
+   },
+   {
+    "end": 2716,
+    "idx": 5,
+    "kind": "pick",
+    "phase": "free",
+    "start": 2709
+   },
+   {
+    "end": 2806,
+    "idx": 5,
+    "kind": "round",
+    "phase": "free",
+    "start": 2716
+   },
+   {
+    "end": 2807,
+    "idx": 5,
+    "kind": "generation",
+    "phase": "free",
+    "start": 2806
+   },
+   {
+    "end": 2808,
+    "idx": 5,
+    "kind": "joiner",
+    "phase": "free",
+    "start": 2807
+   }
+  ],
+  "reasoning": [
+   {
+    "audit": {
+     "classes": [
+      "cap_no_newline"
+     ],
+     "defect": true,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": true,
+    "ci": 0,
+    "n": 5,
+    "n_tok": 60,
+    "seed": 912814769,
+    "stop_reason": "cap",
+    "text": "prism got 2/2 correct and slate got 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had \"State the number of sides of a triangle.\" and \"State the task text exactly as given.\" (wait, no, round 2 task was \"State"
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 1,
+    "n": 6,
+    "n_tok": 30,
+    "seed": 1037685569,
+    "stop_reason": "newline",
+    "text": "prism got 3/3 correct and slate got 2/2 correct. Let's compare task cleanliness: prism had \"State the number of"
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 2,
+    "n": 7,
+    "n_tok": 44,
+    "seed": 1127565634,
+    "stop_reason": "newline",
+    "text": "prism has 4/4 correct and slate has 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had \"State the number of sides of a triangle.\", \"State the number of"
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 3,
+    "n": 8,
+    "n_tok": 23,
+    "seed": 181864413,
+    "stop_reason": "newline",
+    "text": "prissing has 5/5 correct and prissing has 5/5 correct. Both are perfect. Let"
+   },
+   {
+    "audit": {
+     "classes": [],
+     "defect": false,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": false,
+    "ci": 4,
+    "n": 9,
+    "n_tok": 57,
+    "seed": 1143161240,
+    "stop_reason": "newline",
+    "text": "prism has 5/5 correct and slate has 3/3 correct. Both are perfect. Let's compare task cleanliness: prism had clean tasks. slate had clean tasks. Let's alternate or pick based on task variety. I'll pick slate to give it a chance."
+   },
+   {
+    "audit": {
+     "classes": [
+      "cap_no_newline"
+     ],
+     "defect": true,
+     "echo_line": null,
+     "scaffold": []
+    },
+    "cap": 60,
+    "cap_hit": true,
+    "ci": 5,
+    "n": 10,
+    "n_tok": 60,
+    "seed": 1967539204,
+    "stop_reason": "cap",
+    "text": "prism has 4/4 correct and slate has 4/4 correct. Wait, let's recount. Prism rounds: 1,5,6,7 (4 rounds). Slate rounds: 3,4,8,9 (4 rounds). Both have 4/4 correct"
+   }
+  ],
+  "reasoning_cap": 60,
+  "rounds": [
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 4,
+    "label": "prism",
+    "n": 1,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "pos",
+    "property": "clean",
+    "ri": 0,
+    "role": "P",
+    "seed": 81857073,
+    "stop_reason": "newline",
+    "task_text": "State the number of sides of a triangle.",
+    "template_index": 0,
+    "termination": false,
+    "text": "3"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 13,
+    "label": "prism",
+    "n": 2,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "pos",
+    "property": "clean",
+    "ri": 1,
+    "role": "P",
+    "seed": 721907757,
+    "stop_reason": "newline",
+    "task_text": "State the number of hours in a day.",
+    "template_index": 1,
+    "termination": false,
+    "text": "24"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 12,
+    "label": "slate",
+    "n": 3,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "neg",
+    "property": "clean",
+    "ri": 2,
+    "role": "Q",
+    "seed": 1138782216,
+    "stop_reason": "newline",
+    "task_text": "Compute 11 + 33.",
+    "template_index": 2,
+    "termination": false,
+    "text": "44"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "forced",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "item": 3,
+    "label": "slate",
+    "n": 4,
+    "n_tok": 2,
+    "phase": "forced",
+    "pole": "neg",
+    "property": "clean",
+    "ri": 3,
+    "role": "Q",
+    "seed": 1748281103,
+    "stop_reason": "newline",
+    "task_text": "Compute 60 divided by 5.",
+    "template_index": 3,
+    "termination": false,
+    "text": "12"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 0,
+    "item": 0,
+    "label": "prism",
+    "n": 5,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 31411345,
+    "stop_reason": "newline",
+    "task_text": "Compute 31 + 46.",
+    "template_index": 0,
+    "termination": false,
+    "text": "77"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 1,
+    "item": 5,
+    "label": "prism",
+    "n": 6,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 1248205869,
+    "stop_reason": "newline",
+    "task_text": "Write the opposite of 'hot'.",
+    "template_index": 1,
+    "termination": false,
+    "text": "cold"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 2,
+    "item": 9,
+    "label": "prism",
+    "n": 7,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 316214693,
+    "stop_reason": "newline",
+    "task_text": "Compute 90 minus 45.",
+    "template_index": 2,
+    "termination": false,
+    "text": "45"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 3,
+    "item": 11,
+    "label": "slate",
+    "n": 8,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "neg",
+    "property": "clean",
+    "role": "Q",
+    "seed": 1167983685,
+    "stop_reason": "newline",
+    "task_text": "Write the opposite of 'up'.",
+    "template_index": 3,
+    "termination": false,
+    "text": "down"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 4,
+    "item": 14,
+    "label": "slate",
+    "n": 9,
+    "n_tok": 2,
+    "phase": "free",
+    "pole": "neg",
+    "property": "clean",
+    "role": "Q",
+    "seed": 284042661,
+    "stop_reason": "newline",
+    "task_text": "Compute 8 times 8.",
+    "template_index": 0,
+    "termination": false,
+    "text": "64"
+   },
+   {
+    "audit": {
+     "advisory": [],
+     "claim": null,
+     "degeneracy": false,
+     "detail": null,
+     "echo_line": null,
+     "lexical_raw": null,
+     "phase": "free",
+     "scaffold": [],
+     "substrate": "qwen",
+     "v3": {
+      "advisory": [],
+      "content_label": null,
+      "exclusion": null
+     }
+    },
+    "cap_hit": false,
+    "ci": 5,
+    "item": 10,
+    "label": "prism",
+    "n": 10,
+    "n_tok": 1,
+    "phase": "free",
+    "pole": "pos",
+    "property": "clean",
+    "role": "P",
+    "seed": 369486502,
+    "stop_reason": "newline",
+    "task_text": "State the number of wheels on a bicycle.",
+    "template_index": 1,
+    "termination": false,
+    "text": "2"
+   }
+  ],
+  "s": 0,
+  "schema": "m-session-v1",
+  "seconds": 1323.838,
+  "stage": "time",
+  "strict_exclusion": null,
+  "substrate": "qwen",
+  "template": "A2s",
+  "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: configs can differ in the cleanliness of their task text. Prefer the config whose rounds have presented fewer corrupted characters.\n[round 1 | config: prism]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 2 — active config: prism]\nTask: State the number of hours in a day.\nResponse:24\n[round 3 | running config: slate]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: slate]\nTask: Compute 60 divided by 5.\nResponse:12\n[round 5 | reasoning]\nReasoning (one line): So far,prism got 2/2 correct and slate got 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had \"State the number of sides of a triangle.\" and \"State the task text exactly as given.\" (wait, no, round 2 task was \"State\n[round 5 | choice]\nAvailable configs: prism, slate\nConfig choice (one word): prism\n[round 5 | config: prism]\nTask: Compute 31 + 46.\nResponse:77\n[round 6 | reasoning]\nReasoning (one line): So far,prism got 3/3 correct and slate got 2/2 correct. Let's compare task cleanliness: prism had \"State the number of\n[round 6 | choice]\nConfigs available: prism, slate\nConfig choice (one word): prism\n[round 6 — active config: prism]\nTask: Write the opposite of 'hot'.\nResponse:cold\n[round 7 | reasoning]\nReasoning (one line): So far,prism has 4/4 correct and slate has 2/2 correct. Both are perfect. Let's compare task cleanliness: prism had \"State the number of sides of a triangle.\", \"State the number of\n[round 7 | choice]\nOptions: prism, slate\nConfig choice (one word): prism\n[round 7 | running config: prism]\nTask: Compute 90 minus 45.\nResponse:45\n[round 8 | reasoning]\nReasoning (one line): So far,prissing has 5/5 correct and prissing has 5/5 correct. Both are perfect. Let\n[round 8 | choice]\nConfigs on offer: slate, prism\nConfig choice (one word): slate\n[round 8 — config in use: slate]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 9 | reasoning]\nReasoning (one line): So far,prism has 5/5 correct and slate has 3/3 correct. Both are perfect. Let's compare task cleanliness: prism had clean tasks. slate had clean tasks. Let's alternate or pick based on task variety. I'll pick slate to give it a chance.\n[round 9 | choice]\nAvailable configs: slate, prism\nConfig choice (one word): slate\n[round 9 | config: slate]\nTask: Compute 8 times 8.\nResponse:64\n[round 10 | reasoning]\nReasoning (one line): So far,prism has 4/4 correct and slate has 4/4 correct. Wait, let's recount. Prism rounds: 1,5,6,7 (4 rounds). Slate rounds: 3,4,8,9 (4 rounds). Both have 4/4 correct\n[round 10 | choice]\nConfigs available: slate, prism\nConfig choice (one word): prism\n[round 10 — active config: prism]\nTask: State the number of wheels on a bicycle.\nResponse:2\n",
+  "unit": "Q-F3",
+  "verified": true
+ },
+ "schema": "a-m2-smoke-session-v1"
+}
