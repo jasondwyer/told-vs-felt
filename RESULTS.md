@@ -21,6 +21,145 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **The A-m2 smoke's driver, `time --smoke --smoke-out DIR` in `scripts/mf3_sessions.py` (A-m2 v0.3
+  §3.2, §4.2; Code's P4, accepted at ans2 §3), on the PI's routing of 2026-11-09.**
+  - **The blob:** the driver moves from `890084e6…90af` to `c9393a48…4d9b`.
+  - **What stands:** mf3's package, m's package, the analyzer and the lock.
+  - **The edit's kind:** F-1's. It adds a form to a wired subcommand and touches no scoring-stack function, so no
+    gate re-runs.
+  - **Checks:**
+    - Self-test 202/202 on this commit's base.
+    - A lane of 99 mutants of the smoke code; every one is killed by a failing check.
+    - Six rounds of blind code review (0 MAJOR in every round; 7, 2, 1, 1, 0 and 0 MINOR in rounds 1 to 6) and a
+      values-check in two passes (5 FAILs in pass 1, none in pass 2) ran before the commit.
+
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 17:31:40 UTC 2026**.)
+  - **The form** (A-m2 v0.3 §3; the pre-read's P1, P2 and P4, all accepted).
+    - **The forms.** The four forms of §3.1 are the driver's constants. Each run checks them against
+      `ADDENDUM-m2-f3-reasoning-block-v0_3.md`'s committed bytes, its sha256 pinned at `83093812…fa67` (§4.2; ans3
+      §1, #48), and against m:258's roster hygiene.
+    - **The sessions.** Twelve sham sessions run form-major (F-0, F-a, F-b, F-c, each over A1s, A2s and A3s):
+      - on G-TIME-F3's committed cells (s = 0), with its item key `m-f3-items-time|0`;
+      - under the arm key `m-smoke-f3|{form}|{template}|0`;
+      - uncached, at reasoning cap 60;
+      - through `runner.run_session_f3`, unchanged, on a scaffold whose `reasoning(ci)` returns the form's bytes after
+        mf3's own seed draw.
+    - **G-VER** runs on every record. Its one substitution is the scaffold it builds through `scaffold.f3_config`,
+      which is restored after each call.
+    - **The counts:**
+      - P1's domain: a line is in it iff no model-written piece touches it.
+      - The echo, by equality after `ws_norm`.
+      - Counter (a): containment, or the frame `=== .+? ===`.
+      - (i), the union of empty, cap and echo.
+    - **The rule** (§3.3): among F-a and F-b only, the fewest (i), then (ii), then F-a before F-b. The two stops are
+      read on (i). F-0 and F-c are reported and never selected.
+    - **Counter (b)** is Code's read and the seat's, not the driver's (ans2 §1). The smoke is outside §3.4's blinding
+      scope (v0.3 §3.4), so both counters are read over all twelve sessions.
+    - **Stops and refusals:**
+      - The smoke STOPs on any backend but `a734dadec8f8ce9b`.
+      - It STOPs after a session with a G-VER problem, a task-round `scaffold_absorption`, a line read or a block part
+        that raises, or a write that fails. A reasoning-line `scaffold_absorption` ends its session only.
+      - When a session's first stop is a G-VER, READS or RAW BLOCK line, that line also names the session's other
+        stops. A task-round fire alone stops on a HAIR TRIGGER line.
+      - A failed write names only itself on its STOP line. The raw printed before the write carries the rest, with
+        two gaps that need a second fault: a line-read error is kept in the session's JSON only, and a block part
+        that raises drops its own lines. If the write then fails, those are lost.
+      - **A STOP selects nothing (v0.3 §3.3, #49).** No tally or rule is printed, because `summary.json` is written
+        before them.
+        - What a failed summary write left (`summary.json` or its temp file) is renamed `.stopped`, or removed if the
+          rename fails.
+        - This happens only while DIR is still the directory the smoke made. Otherwise the STOP line says the
+          directory moved and that nothing under it was touched.
+        - When neither works, or the file cannot be examined, the STOP line says it is not a selection.
+      - It refuses `--resume`, and an out directory that is inside the repository, exists, or cannot be examined. It
+        checks the directory again just before making it, and pins it after: a directory that moves during the run
+        is a STOP before the next write.
+      - It never names, opens or creates `data/mf3/ckpt/Q-F3_time.json`.
+    - **The order after the load:**
+      1. the startup checks, the laptop checklist and the licence, in the stage's own order (`_begin`, then
+         `_licensed`);
+      2. the A-m2 check, PROVENANCE and the BACKEND STOP;
+      3. then `f3_startup`, the renders and the schedules.
+
+      The stage records provenance before its startup checks, and builds the renders and schedules before
+      `f3_startup`; the smoke does both later. P4's bullets list these in yet another order. Round 1's NOTE 1 asked
+      that the order be said, and it is not changed.
+    - **The raw:** stdout is the raw. Every transcript is printed in full (v0.3 §3.2's read licence), with every
+      response and its claim, every reasoning line with its classes and (a) flag, every read, then the tallies, the
+      rule and the stops.
+    - **Under `DIR`:** one JSON per session, written once with its line reads, and `summary.json`.
+  - **The self-test** (model-free, 202/202 on this commit's base, A-m2 v0.3 committed):
+    - **The 160 checks of the `time` wiring** pass unchanged.
+    - **The smoke's 42 checks** cover:
+      - A-m2's text and sha;
+      - the cells and the item key against G-TIME-F3's, and the arm key and seeds as the smoke's own;
+      - P1's domain under each form;
+      - the match and counter (a), and the rule at its bounds;
+      - the out-directory and CLI refusals;
+      - stub runs through `run_smoke`'s seam;
+      - the STOPs after the load:
+        - SNAPSHOT RE-READ and MOVED, and MODEL ID, before any session;
+        - SEAM, BACKEND, OUT DIR, SERIALIZE, G-VER, READS, RAW BLOCK, HAIR TRIGGER and the summary's, each checked to
+          print no tally or rule;
+        - no case reaches the in-run startup, licence, laptop-checklist, A-m2, PROVENANCE, renders or schedules
+          STOPs, or a failing load;
+      - the write path: a failure at the first and second session writes, at `summary.json`'s and at the directory's
+        fsync, and a record that does not serialize;
+      - the output directory moved, replaced or removed during the run;
+      - what a failed summary write leaves, renamed, removed or reported.
+
+      The smoke paths run with the loader, the checkpoint functions, any open under `data/mf3/ckpt` and any guarded
+      write or removal inside the repository trapped. The traps have positive controls, both as built and as
+      installed; every site that installs them records it; and `data/mf3` is hashed before and after. That hash
+      reads the bytes of every file there, the checkpoint included, outside the traps.
+  - **The lane:** 99 mutants of the smoke code, each applied over the driver with the smoke checks run in a fresh
+    interpreter. All 99 are killed by a failing check, none by a crash.
+  - **The reviews:** six blind rounds, in
+    [`_a-m2-smoke-driver_reviews`](results/raw/2026-11-09_a-m2-smoke-driver_reviews.md): each report verbatim, then
+    Code's disposition.
+    - **Rounds 1 to 5:** every item was applied in the next round's bytes, and that round reports on it, except:
+      - round 1's NOTE 1, not applied. It asked that the order after the load be stated, and it is, above.
+      - round 1's NOTE 7, not applied. Its `git status` comparison is barred by `stages._git`.
+        - The write traps, from round 4's bytes, cover the guarded writes it was after.
+        - The `data/mf3` hash covers that directory.
+        - rmdir, shutil, links, truncation and io.FileIO stay outside both.
+      - round 2's NOTE 6, applied, though round 3 could not map it to a hunk;
+      - round 3's NOTE 12, applied to the mutation lane, outside the driver.
+    - **Round 6, the last,** on the coordinating session's instruction of 2026-11-09. Its five NOTEs are applied or
+      disclosed in the committed bytes, which were not reviewed again. There is one behaviour change in production code,
+      NOTE 1's guard. Beside it are a STOP message's wording, docstrings and a comment; the rest is the self-test.
+    - **Disclosed residuals:**
+      - a swap in the instant between the pin and the write it guards, or a rename or removal;
+      - a failed session write names only itself on its STOP line;
+      - a failed stat right after the mkdir is reported as "making the output directory".
+  - **A departure for the seat (O2-3).** Round 6's reviewer disclosed three `find` traversals of its review
+    worktree that descended into `data/mf3/ckpt` unpruned. One was a newer-than filter, a `find -newer` form by
+    Code's reading of the report, and O2-3 names that form among the barred ones; Q-F3's carried form allows no size or time metadata of `data/mf3/ckpt` before
+    VERDICTS.
+    - None printed a name from there or read a file's contents. The same round's self-test hashed those bytes, as
+      every round's does.
+    - The worktree was a fresh checkout at `daca8b0`, so its files carry the checkout's times, not the run's.
+    - The precedent is the 2026-10-19 VERDICTS read, item 5, which ruled the same kind of departure "accepted,
+      inert". That ruling also noted that the metadata window had closed at the VERDICTS line; Q-F3's is still open.
+      The seat rules.
+  - **Values-check:** a blind agent, read-only, in two passes (Part B of
+    [`_a-m2-smoke-driver_valuescheck`](results/raw/2026-11-09_a-m2-smoke-driver_valuescheck.md); the same agent's
+    Part A, with its opening, is in the v0.3 commit's raw).
+    - Pass 1, on the drafts: 79 items; 60 CONFIRMED, 10 IMPRECISE, 5 FAIL, 4 NOT CHECKABLE.
+    - Pass 2, on the passages pass 1 corrected: 62 items in Part B; 44 CONFIRMED, 15 IMPRECISE, 0 FAIL, 3 NOT
+      CHECKABLE.
+    - Every item not CONFIRMED was re-checked at source, and applied or answered in the raw's dispositions. Each
+      correction was to this entry's wording or the review raw's; the driver's bytes did not change.
+    - Pass 2's agent disclosed two breaches of its brief, neither touching `data/`; they are in the v0.3 commit's raw.
+  - **The routing, verbatim:** the PI's chat text of 2026-11-09, "Route as given", quoted in full in the v0.3
+    commit's entry (`46773e2`). ans3's §3 item 1, as drafted, ends "then the smoke driver's commit and the smoke's
+    laptop go [go]".
+  - **Committed by path:** the driver, its review and values-check raws, and this entry. Nothing ran on a model.
+  - **Next:** the smoke's announcement to the coordinating session (about an hour of Qwen, one process), and the
+    launch on its acknowledgement.
+
+    Not pushed.
+
 - 2026-11-09 — **ADDENDUM-m2 v0.3 — COMMITTED (A-m2 §6 item 2), on the PI's routing of 2026-11-09.**
   - **Committed:** `ADDENDUM-m2-f3-reasoning-block-v0_3.md` is tracked at root, sha256
     `83093812afdd513a9522024e8b766254e47d9aa226d5894577baf69855d9fa67` (recomputed at write time).
