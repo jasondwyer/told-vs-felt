@@ -362,6 +362,27 @@ applied to CLAUDE.md.
     - **(b) STOP:** the seat's answer on #50 first.
 
     The smoke driver's second blind review round is running. Not pushed.
+  - **Close (PI date 2026-11-09).** The design seat's answer
+    ([`2026-11-08_open50-entry9_design-to-code_answers.md`](results/raw/2026-11-08_open50-entry9_design-to-code_answers.md),
+    sha256 `d6296d446c468d8c7444b25731d1633efd479357431859067b41f5f755f62b97`) is committed here by path, as the PI placed it.
+    One raw answers this block (§1) and the entry (9) block below (§2).
+    - **What it rules on #50:**
+      - v0.2 §6 item 1's STOP fires on #50, and A-m2 v0.3 answers it: Code's sentence goes into the text (v0.3
+        §3.4), not into a dated note;
+      - #48 is confirmed: P4 pins the committed A-m2's sha256, v0.3's (v0.3 §4.2);
+      - #49 is confirmed and written in (v0.3 §3.3): a smoke that stops under the driver's refusals selects nothing,
+        with no tally and no rule.
+    - ADDENDUM-m2 v0.3 (`ADDENDUM-m2-f3-reasoning-block-v0_3.md`, sha256 `83093812…fa67`) is delivered beside the
+      answer and is committed by the F3 session (A-m2 §6 item 2), with v0.1 and v0.2 moving to `archive/`. Its
+      referent check covers the delta only (three items).
+    - The PI's routing of 2026-11-09, in chat, verbatim: "Route as given", in reply to the coordinating session's
+      question "Do you route the seat's two rulings as drafted?". The routing is therefore the answer's §3 as drafted:
+
+      > 1. A-m2 v0.3: commit (§6 item 2) [go]; #50's sentence, #48, #49 [confirmed]; then the smoke driver's commit and the smoke's laptop go [go].
+      > 2. p: entry (9) on `resume.Identity` [declared]; step 6 continues — build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 [go].
+
+    - **The F3 session's sequence:** the A-m2 v0.3 commit, then the smoke driver's commit, then the smoke on the
+      laptop (≈ 1 h of Qwen), announced to the coordinating session under the standing rule.
 
 - 2026-11-08 — **PROPOSAL-p step 6: entry (9) cannot run as declared -- one question for the seat (the seat's answer
   at `de729c4`, Q3 (a), adopted the form Code proposed at `c9acd66`, and that form was incomplete).** The rest of step
@@ -379,6 +400,28 @@ applied to CLAUDE.md.
   - **Values-check.** A blind values-check of the block's first draft, with Code's dispositions:
     [`_p-step6_entry9_valuescheck`](results/raw/2026-11-08_p-step6_entry9_valuescheck.md). 29 items: 23 confirmed,
     0 FAIL, 5 IMPRECISE (each applied), 1 not checkable. Not pushed.
+  - **Close (PI date 2026-11-09).** The design seat's answer to this block is §2 of the raw committed with the #50
+    close above
+    ([`2026-11-08_open50-entry9_design-to-code_answers.md`](results/raw/2026-11-08_open50-entry9_design-to-code_answers.md),
+    sha256 `d6296d446c468d8c7444b25731d1633efd479357431859067b41f5f755f62b97`).
+    - **What it rules:** entry (9) is the wrapper on `valence_core.m.resume.Identity` itself, kind pins.
+      - p's four fields are optional keywords: kept as given when given (the rebuild in `_validated`), computed when
+        absent (the stage's own build), never typed; m's builder computes everything else unchanged.
+      - Both callers (`stages._identity`, `_validated`) resolve the name at call time, so one site serves both.
+      - Entry (8) is unchanged; (8) and (9) are entered and restored together, and they hold at the stage alone.
+      - The self-test terms (term (c)): with (8) and (9), `_validated` accepts a p identity and `_identity_diff`
+        reports a moved p field on resume; with both substituted back, m's identity path is byte-identical to m's on
+        m's inputs.
+      - The BUILD entry and LOCK-p v0.1 record the register as (6) roots, (7) roots, (8) pins, (9) pins on
+        `resume.Identity`, with Q9 (b)'s roots as parameters.
+    - The PI's routing of 2026-11-09, in chat, verbatim: "Route as given" (the question it answers and §3 in full are
+      in the #50 close above). Its item for this block:
+
+      > 2. p: entry (9) on `resume.Identity` [declared]; step 6 continues — build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 [go].
+
+    - **Step 6 resumes with the pod session** from the BUILD at `d215d5b`, where entry (9) is PENDING: the flip of
+      entry (9), then the G-SHAPE-p re-run, G-ANL-p and LOCK-p v0.1 ×3; then G-TIME-OLMo (p) ×3 on the box, under
+      the routing of 2026-11-08 quoted in `de729c4`'s close lines, item 2; then the seat's read.
 
 - 2026-11-08 — **ADDENDUM-m2 v0.1 — PRE-READ (A-m2 §6 item 1): STOP on two questions before the smoke.**
   - **The questions:** Q1 asks for counter (b) as tie-break (iii); Q2 asks for count (i)'s scope.
