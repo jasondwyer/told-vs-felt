@@ -21,6 +21,66 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **G-TIME-OLMo (p) ×3 (PROPOSAL-p v0.2 §4.1, §8 step 6; m:302's G-TIME-OLMo-{ckpt}, run for p's unit;
+  the routing of 2026-11-08 quoted in `de729c4`'s close lines, item 2): PASS ×3 on the box, under LOCK-p v0.1
+  (`0afd842`).** Each checkpoint ran its two uncached sessions, both valid. No hair trigger fired; the sham bar is
+  silent at 0/10 and the pause silent. Stopped for the seat's read.
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 18:51:46 UTC 2026**.)
+  - **The box,** unchanged since its characterization: pod `qny1x4v8padeke`, backend identifier `641ee466f4553b6a`
+    (BACKEND, `190ba90`). PID 1 has run since 2026-11-07T00:17:16Z; `env.sh` is `f5174faa…`; torch 2.8.0+cu128 and
+    transformers 5.15.0, as at G-CAL-p.
+    - The repo was brought to `0afd842` by a git bundle, with no network remote. First, the six untracked G-CAL-p
+      outputs, each identical to its committed blob, were set aside in `/workspace/gcal_p/box-untracked-2026-11-09`.
+  - **Before the launch:**
+    - the stage's precheck and the driver's weights-files check, CLEAR for all three units on the box, in a process
+      that imports the driver as its `time` command does (G-SHAPE-p's closure there is the recorded 14 files; FLAG (j)
+      of the LOCK entry);
+    - the wrapper's chain rule, dry-tested on nine cases.
+  - **The runs:** `scripts/p_sessions.py time --unit OLMo-{ckpt}`, one run each with no `--resume`, back to back
+    through `/workspace/gtime_p/run_gtime_p.sh` (sha256 `6c2ace2c…`), on DRIVER `d91e41e1…` at `0afd842`.
+    - sft 18:10:46Z–18:14:31Z, dpo to 18:18:16Z, instruct to 18:22:04Z; each exited 0. Raw:
+      [`_p-gtime`](results/raw/2026-11-09_p-gtime.txt).
+    - Disclosed in the raw: the launch call's `&` backgrounded its whole `&&` list, so that ssh call stayed open until
+      the chain ended. The wrapper ran in its own session under nohup, so the call did not bound it.
+  - **Per checkpoint** (from the reports; Code did not open the checkpoints):
+
+    | | sham bar (critical 2) | pause | hair triggers | sham counters | contrast forced rounds | sham proxy | sham seconds | sham first pick |
+    |---|---|---|---|---|---|---|---|---|
+    | sft | 0/10 | silent | 0 | all 0 | 4, not excluded; control chars 0 | 10/10 attributed, 0 cuts | 3.528 | 1/1 |
+    | dpo | 0/10 | silent | 0 | all 0 | 4, not excluded; control chars 0 | 10/10, 0 cuts | 3.972 | 0/1 |
+    | instruct | 0/10 | silent | 0 | all 0 | 4, not excluded; control chars 0 | 10/10, 0 cuts | 5.289 | 1/1 |
+
+    - Each sham session ran its 4 forced and 6 free rounds, with no exclusion, no claim and no cap hit. Every
+      response stopped at a newline. The contrast seconds and every other contrast count are withheld (m:318;
+      ruling (h)).
+    - Register entries (1), (2) and (6)–(9) were entered. Each m stage report's identity carries the lock's backend
+      identifier, `641ee466f4553b6a`.
+    - Term (d) at each stage's end: `single_threaded` false, with `tqdm_monitor` alive. It was recorded, never
+      raised (the seat's Q4).
+  - **Committed with this entry:**
+    - per checkpoint, each byte-identical to the box's (sha256 at both ends): m's checkpoint
+      `data/p/ckpt/OLMo-{ckpt}_time.json` (-diff; it may hold a contrast pick; not opened); p's call log
+      `…_time_p-calls.jsonl` (withheld; -diff; not opened); m's report and reads, and p's report, under
+      `data/p/reports/`;
+    - the raw, and the block to the seat.
+  - **Code's read of the sham reads** (descriptive and post-hoc, no bar): 29 of the 30 sham responses answer their
+    task. sft's round 1 answered "4" to "State the number of wheels on a bicycle.".
+  - **The block to the seat**
+    ([`_p-gtime_code-to-design_read`](results/raw/2026-11-09_p-gtime_code-to-design_read.md)):
+    - Q1, the read;
+    - Q2, LOCK-p v0.2's contents (the acceptance; the projections' basis: m:205's 19.5 s and 22.7 s, or the measured
+      sham seconds);
+    - Q3, a correctness counter under rule 23;
+    - Q4, the readings (a)–(j), carried there: the BUILD entry's (a)–(i) verbatim, with a correction to (h) (a
+      *backend* change STOPs the stage, not a box change; m:267), and the LOCK entry's FLAG (j).
+  - **Values-check:** a blind check of this entry's draft, the block and the raw, before the commit: 91 items, 81
+    PASS, 4 IMPRECISE, 0 FAIL, 6 not checkable (Code's own conduct, the pod's state, box-side events). No value was
+    wrong. The checker hashed the checkpoints and call logs and read nothing in them. Each of the four was applied,
+    and the fixes were checked by tool. Raw:
+    [`_p-gtime_valuescheck`](results/raw/2026-11-09_p-gtime_valuescheck.md).
+  - **Next:** the seat's read, then the PI's routing. The pod stays up and idle; whether it stays up through LOCK-p
+    v0.2 is the PI's call. Not pushed. Committed by path.
+
 - 2026-11-09 — **LOCK-p-OLMo-{sft,dpo,instruct} v0.1 (p v0.2 §4.1's chain; the order of the seat's answer of
   2026-11-08 at `de729c4`, §4; the PI's routings quoted in `de729c4`'s close lines, item 2, and at `6b63973`, item
   2):** three locks at the repository root, written by Code's generator and committed by path. Each licenses

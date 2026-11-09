@@ -1,0 +1,22 @@
+{"event": "run", "p_package_sha256": "7a08dbfad83aab44dbd11d52844c0473a24610790502a949dfbe650cc9661d24", "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32", "register_entered": [1, 2, 6, 7, 8, 9], "resume": false, "run": 1, "schema": "p-stage-calls-v1", "stage": "G-TIME-OLMo-dpo (p)", "stale_reservations": [], "unit": "OLMo-dpo"}
+{"call": 0, "cut": null, "event": "call", "run": 1, "seed": 1117217773, "text_sha256": "f151cd9e12c8994edfa316e4624f956bc68460454869177f287146f8cc956a12"}
+{"call": 1, "cut": null, "event": "call", "run": 1, "seed": 1313245331, "text_sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"}
+{"call": 2, "cut": null, "event": "call", "run": 1, "seed": 1063771826, "text_sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"}
+{"call": 3, "cut": null, "event": "call", "run": 1, "seed": 357647405, "text_sha256": "908aec4512d80ff4fefb1970899091e9de8e734b36b8fdb7678e77dc092f6959"}
+{"call": 4, "cut": null, "event": "call", "run": 1, "seed": 586269616, "text_sha256": "412195e21fba9a77669d5846b42804a31576d0d3f3ca478c0a3f8839aeaa4b17"}
+{"call": 5, "cut": null, "event": "call", "run": 1, "seed": 93307267, "text_sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"}
+{"call": 6, "cut": null, "event": "call", "run": 1, "seed": 76912973, "text_sha256": "37082e68df858e0ba76442174128811135890ae4c2c5df8b6f31aef5885d0be7"}
+{"call": 7, "cut": null, "event": "call", "run": 1, "seed": 837017945, "text_sha256": "c21ead0614e7e1b70edb3759e1d19ca1e12e6036980d10bfb73052fb1a018efa"}
+{"call": 8, "cut": null, "event": "call", "run": 1, "seed": 1185767791, "text_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"}
+{"call": 9, "cut": null, "event": "call", "run": 1, "seed": 1270484239, "text_sha256": "a68b412c4282555f15546cf6e1fc42893b7e07f271557ceb021821098dd66c1b"}
+{"call": 10, "cut": null, "event": "call", "run": 1, "seed": 324945199, "text_sha256": "e272deecde720ffc773d7a6a81adabbc366ccbb64da5abdb6b26f52cd3f952cb"}
+{"call": 11, "cut": null, "event": "call", "run": 1, "seed": 511693248, "text_sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"}
+{"call": 12, "cut": null, "event": "call", "run": 1, "seed": 1388538268, "text_sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"}
+{"call": 13, "cut": null, "event": "call", "run": 1, "seed": 896674874, "text_sha256": "908aec4512d80ff4fefb1970899091e9de8e734b36b8fdb7678e77dc092f6959"}
+{"call": 14, "cut": null, "event": "call", "run": 1, "seed": 1821152982, "text_sha256": "59e19706d51d39f66711c2653cd7eb1291c94d9b55eb14bda74ce4dc636d015a"}
+{"call": 15, "cut": null, "event": "call", "run": 1, "seed": 370474693, "text_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"}
+{"call": 16, "cut": null, "event": "call", "run": 1, "seed": 673923782, "text_sha256": "9d95a2cf0d7180b5089691163b188a7203b0cde179346b8cfaa8ab6c2c3e6414"}
+{"call": 17, "cut": null, "event": "call", "run": 1, "seed": 238773948, "text_sha256": "19ecf8eb89e6a0be746c0797c353af3a8299e9c954504aa7c6a74446a99f2e1c"}
+{"call": 18, "cut": null, "event": "call", "run": 1, "seed": 1888355398, "text_sha256": "c2356069e9d1e79ca924378153cfbbfb4d4416b1f99d41a2940bfdb66c5319db"}
+{"call": 19, "cut": null, "event": "call", "run": 1, "seed": 1710378666, "text_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"}
+{"event": "end", "exception": null, "n_cuts": 0, "n_generate": 20, "outcome": "returned", "run": 1, "status": "PASS", "stop_line_failed": null, "stop_marker": null, "term_d_at_stage_end": {"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}}

@@ -1,0 +1,662 @@
+{
+ "form": "pre-VERDICTS reads (m:271): contrast = banner + forced rounds; sham = menus removed, chosen tag [config]",
+ "schema": "m-stage-reads-v1",
+ "sessions": [
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config maple presents clean task text; config saddle presents task text with character corruption. Prefer clean task text.\n",
+   "blinding": "contrast-stripped at G-TIME: banner + forced-round bytes, {phase, ri, n, text} per round, no class field (m:271, m:280; the seat's ruling (h), Code's extension to the read)",
+   "cell": {
+    "P": "maple",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "maple",
+     "saddle"
+    ],
+    "pair_index": 2,
+    "start": 0
+   },
+   "contrast": true,
+   "excluded_at_forced": false,
+   "j": 0,
+   "keys": {
+    "arm": "p-olmo-time|dpo|A0-OLMo-dpo|0",
+    "items": "p-olmo-items-time|dpo|0"
+   },
+   "n_forced_rounds": 4,
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config maple presents clean task text; config saddle presents task text with character corruption. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 253,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 323,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 253
+    },
+    {
+     "end": 327,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 323
+    },
+    {
+     "end": 328,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 327
+    },
+    {
+     "end": 402,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 328
+    },
+    {
+     "end": 404,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 402
+    },
+    {
+     "end": 405,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 404
+    },
+    {
+     "end": 471,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 405
+    },
+    {
+     "end": 473,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 471
+    },
+    {
+     "end": 474,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 473
+    },
+    {
+     "end": 551,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 474
+    },
+    {
+     "end": 555,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 551
+    },
+    {
+     "end": 556,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 555
+    }
+   ],
+   "rounds": [
+    {
+     "n": 1,
+     "phase": "forced",
+     "ri": 0,
+     "text": "Cold"
+    },
+    {
+     "n": 2,
+     "phase": "forced",
+     "ri": 1,
+     "text": "12"
+    },
+    {
+     "n": 3,
+     "phase": "forced",
+     "ri": 2,
+     "text": "44"
+    },
+    {
+     "n": 4,
+     "phase": "forced",
+     "ri": 3,
+     "text": "down"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "stage": "time",
+   "substrate": "olmo",
+   "template": "A0-OLMo-dpo",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config maple presents clean task text; config saddle presents task text with character corruption. Prefer clean task text.\n[round 1 | config: maple]\nTask: Write the opposite of 'hot'.\nResponse:Cold\n[round 2 — active config: saddle]\nTask: Conppte 60 divided bh 5.\nResponse:12\n[round 3 | running config: maple]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: saddle]\nTask: Writk thn opposite ob 'up'.\nResponse:down\n",
+   "unit": "OLMo-dpo",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config quartz presents clean task text; config velvet presents clean task text. Prefer clean task text.\n",
+   "blinding": "sham-redacted: menus removed, chosen tag [config] (m:271)",
+   "cell": {
+    "P": "quartz",
+    "Q": "velvet",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "quartz",
+     "velvet"
+    ],
+    "pair_index": 0,
+    "start": 0
+   },
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "p-olmo-time|dpo|A0s-OLMo-dpo|0",
+    "items": "p-olmo-items-time|dpo|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config quartz presents clean task text; config velvet presents clean task text. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 234,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 305,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 234
+    },
+    {
+     "end": 309,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 305
+    },
+    {
+     "end": 310,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 309
+    },
+    {
+     "end": 384,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 310
+    },
+    {
+     "end": 386,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 384
+    },
+    {
+     "end": 387,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 386
+    },
+    {
+     "end": 454,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 387
+    },
+    {
+     "end": 456,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 454
+    },
+    {
+     "end": 457,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 456
+    },
+    {
+     "end": 534,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 457
+    },
+    {
+     "end": 538,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 534
+    },
+    {
+     "end": 539,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 538
+    },
+    {
+     "end": 603,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 539
+    },
+    {
+     "end": 605,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 603
+    },
+    {
+     "end": 606,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 605
+    },
+    {
+     "end": 698,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 606
+    },
+    {
+     "end": 699,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 698
+    },
+    {
+     "end": 700,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 699
+    },
+    {
+     "end": 786,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 700
+    },
+    {
+     "end": 791,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 786
+    },
+    {
+     "end": 792,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 791
+    },
+    {
+     "end": 918,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 792
+    },
+    {
+     "end": 936,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 918
+    },
+    {
+     "end": 937,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 936
+    },
+    {
+     "end": 1017,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 937
+    },
+    {
+     "end": 1019,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1017
+    },
+    {
+     "end": 1020,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1019
+    },
+    {
+     "end": 1113,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1020
+    },
+    {
+     "end": 1114,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1113
+    },
+    {
+     "end": 1115,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1114
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 5,
+     "label": "quartz",
+     "n": 1,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 324945199,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'hot'.",
+     "template_index": 0,
+     "termination": false,
+     "text": "cold"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 3,
+     "label": "velvet",
+     "n": 2,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 511693248,
+     "stop_reason": "newline",
+     "task_text": "Compute 60 divided by 5.",
+     "template_index": 1,
+     "termination": false,
+     "text": "12"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "quartz",
+     "n": 3,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 1388538268,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 2,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 11,
+     "label": "velvet",
+     "n": 4,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 896674874,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'up'.",
+     "template_index": 3,
+     "termination": false,
+     "text": "down"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "28"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "2"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 2,
+     "termination": false,
+     "text": "March"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 3,
+     "termination": false,
+     "text": "a kilogram of iron"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "24"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "3"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 3.972,
+   "stage": "time",
+   "strict_exclusion": null,
+   "substrate": "olmo",
+   "template": "A0s-OLMo-dpo",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config quartz presents clean task text; config velvet presents clean task text. Prefer clean task text.\n[round 1 | config: quartz]\nTask: Write the opposite of 'hot'.\nResponse:cold\n[round 2 — active config: velvet]\nTask: Compute 60 divided by 5.\nResponse:12\n[round 3 | running config: quartz]\nTask: Compute 11 + 33.\nResponse:44\n[round 4 — config in use: velvet]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 5 | config: [config]]\nTask: Compute 14 times 2.\nResponse:28\n[round 6 — active config: [config]]\nTask: State the number of wheels on a bicycle.\nResponse:2\n[round 7 | running config: [config]]\nTask: Name the third month of the year.\nResponse:March\n[round 8 — config in use: [config]]\nTask: State which is heavier: a kilogram of iron or half a kilogram of feathers.\nResponse:a kilogram of iron\n[round 9 | config: [config]]\nTask: State the number of hours in a day.\nResponse:24\n[round 10 — active config: [config]]\nTask: State the number of sides of a triangle.\nResponse:3\n",
+   "unit": "OLMo-dpo",
+   "verified": true
+  }
+ ],
+ "stage": "time",
+ "stage_name": "G-TIME-OLMo-dpo",
+ "unit": "OLMo-dpo"
+}

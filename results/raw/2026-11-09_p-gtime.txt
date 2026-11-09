@@ -1,0 +1,252 @@
+# G-TIME-OLMo (p) x3 OF RECORD (PROPOSAL-p v0.2 s4.1, s8 step 6; m:302's G-TIME-OLMo-{ckpt}, run for p's unit under register entries (1), (2), (6)-(9)), on the PI's routing of 2026-11-08 quoted in de729c4's close lines, item 2 ("build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 → G-TIME-OLMo (p) on the box [go]") and the coordinating session's relay of the PI's routing of 2026-11-09 (6b63973, item 2). Code's raw, 2026-11-09.
+# BOX: pod qny1x4v8padeke (jspace-olmo-m), 1 x A100-SXM4-80GB, US-CA-2; backend identifier 641ee466f4553b6a (BACKEND entry, 190ba90; each lock's BACKEND OF RECORD line; each report's identity); the pod's container running since 2026-11-07T00:17:16Z (PID 1), before that characterization; box repo at 0afd842 (LOCK-p v0.1), tree clean.
+# COMMAND (box, via /workspace/gtime_p/run_gtime_p.sh, sha256 6c2ace2c01ff97d6547354d04c93477c4c0e4ffbfce09933549efece0fad34d7, appended below; env.sh sourced; cwd /workspace/repo/jspace-lab), per ckpt in sft dpo instruct:
+#   /workspace/venv/bin/python scripts/p_sessions.py time --unit OLMo-{ckpt}        (one run per checkpoint: no --resume)
+#   chain rule (declared before launch, dry-tested on 9 cases, section below): continue on PASS (exit 0 with its P-REPORT PASS line, no STOP line) or PAUSE (exit 3 with its P-REPORT PAUSE line, no STOP line); halt on a refusal (2), a STOP or any other exit.
+# RESULT: PASS x3. Each checkpoint: two uncached sessions (A0-OLMo-{ckpt} contrast, A0s-OLMo-{ckpt} sham), both valid and verified; no hair trigger (m's three, p's line_break_in_stored_text 0); the sham bar round_degeneracy@G-TIME-OLMo-{ckpt} silent 0/10 (critical 2 at n=10); gtime_pause silent; exit 0. sft 18:10:46Z-18:14:31Z, dpo 18:14:31Z-18:18:16Z, instruct 18:18:16Z-18:22:04Z (stamps, below).
+# OUTPUTS (committed with this raw; byte-identical to the box's, sha256 compared at both ends; the checkpoints may hold a contrast pick and are -diff, never opened by Code; the call logs are withheld, -diff, never opened):
+#   data/p/ckpt/OLMo-sft_time.json                  aa56d5cf0be83b3828fb42b1566685a5aaffc97edc962483951d555f370dd3e2
+#   data/p/ckpt/OLMo-sft_time_p-calls.jsonl         bbf49d67efdb8b90da3c9c8695bcf71361d8eff6a843c0a87c24ea117de85ad1
+#   data/p/reports/OLMo-sft_time_report.json        2ccd028dced970c3ef34bc446f23709a7f0e7fc1ea35d4fcdea8b138f7257fa0
+#   data/p/reports/OLMo-sft_time_reads.json         294361ed8e7362417db5175ae8af9880a86c84d8e7fa5e8242231987474b408d
+#   data/p/reports/OLMo-sft_time_p-report.json      2070c00ce555f62ff66649f03864b8f8b15bca4a78458b2b0f9bb3a63d679083
+#   data/p/ckpt/OLMo-dpo_time.json                  51f98427ed2660a69604b7099a591be52f54d83bd17d95b2e3b41cb817343945
+#   data/p/ckpt/OLMo-dpo_time_p-calls.jsonl         cc391b3ca15b013708001b9679ce2eb8f1d1cd50ca1654997ca15297078ab377
+#   data/p/reports/OLMo-dpo_time_report.json        fb90c5a177591f948bf85ec2384301bf20615a4837f22d6284f52dd662e8f20d
+#   data/p/reports/OLMo-dpo_time_reads.json         b44035beba9a3ab480dd5fbd09b1b0d87ea92fdbef21e4f00fda80c899f6639e
+#   data/p/reports/OLMo-dpo_time_p-report.json      1623f1cb52c59c8fc29320bdac4271c89ce1a36f7bc6602fc3433b0926afe912
+#   data/p/ckpt/OLMo-instruct_time.json             426e4812f9dd5a145f15ab407bd14375dca5309f7526c54f7fad6afcd419d213
+#   data/p/ckpt/OLMo-instruct_time_p-calls.jsonl    0f97a8502513008a3dbf0b9db725483131f29a67474ef350908e0d0c44f2a464
+#   data/p/reports/OLMo-instruct_time_report.json   7f5369763d3751c137f3572b1828d16a22e21d14dd527aca5b400e8eba2797eb
+#   data/p/reports/OLMo-instruct_time_reads.json    c7045474cad63d1e2bafb0d05d8d80c2fb2efa87f21ff655c34fc1c6c09f75ad
+#   data/p/reports/OLMo-instruct_time_p-report.json edf90bc2c10df8a629e10d90ffeacb1fffeeb07fb7be0ec945af8f5851a16504
+# What follows, verbatim: the wrapper's stamps file (Code's `date -u` stamps, on the box), each run's stdout+stderr (sha256 sft 861e787b..., dpo d475a8c9..., instruct 594dd587...; the loader's carriage returns shown as line breaks), the wrapper, the wrapper's own log, the launch call's output, Code's pre-flight and the copy-back. Host and port scrubbed; no laptop path occurs.
+
+# ==== stamps.txt ====
+launch sft 2026-11-09T18:10:46Z RUNPOD_POD_ID=qny1x4v8padeke
+end sft 2026-11-09T18:14:31Z exit=0
+launch dpo 2026-11-09T18:14:31Z RUNPOD_POD_ID=qny1x4v8padeke
+end dpo 2026-11-09T18:18:16Z exit=0
+launch instruct 2026-11-09T18:18:16Z RUNPOD_POD_ID=qny1x4v8padeke
+end instruct 2026-11-09T18:22:04Z exit=0
+done 2026-11-09T18:22:04Z
+
+# ==== gtime_p-sft.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py time --unit OLMo-sft
+DRIVER scripts/p_sessions.py d91e41e1436b56b8f5aada09f1e24ae45c401234b50feeafb53771b32bf9a943: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical (G-TIME-OLMo-sft (p)'s precheck)
+WEIGHTS sft: allenai/Olmo-3.1-32B-Instruct-SFT revision 152782ecc41a, files_aggregate_sha256 ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5; 7 files at /workspace/models/sft, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE G-TIME-OLMo-sft (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  12%|█▏        | 84/707 [00:00<00:00, 803.58it/s]
+Loading weights:  23%|██▎       | 165/707 [00:00<00:00, 562.46it/s]
+Loading weights:  32%|███▏      | 226/707 [00:00<00:00, 504.41it/s]
+Loading weights:  39%|███▉      | 279/707 [00:00<00:00, 486.90it/s]
+Loading weights:  47%|████▋     | 331/707 [00:00<00:00, 493.36it/s]
+Loading weights:  54%|█████▍    | 385/707 [00:00<00:00, 492.70it/s]
+Loading weights:  62%|██████▏   | 435/707 [00:00<00:00, 470.48it/s]
+Loading weights:  68%|██████▊   | 483/707 [00:00<00:00, 468.04it/s]
+Loading weights:  75%|███████▌  | 531/707 [00:01<00:00, 448.35it/s]
+Loading weights:  83%|████████▎ | 585/707 [00:01<00:00, 467.88it/s]
+Loading weights:  90%|████████▉ | 635/707 [00:01<00:00, 465.87it/s]
+Loading weights:  96%|█████████▋| 682/707 [00:01<00:00, 446.94it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 496.73it/s]
+LICENCE G-TIME-OLMo-sft: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-sft.md 9cc9045a57dc8abc: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/sft","python":"3.12.3","seed":20260818},"stamp":"2026-11-09T18:14:13Z"}
+time A0-OLMo-sft s=0 valid
+time A0s-OLMo-sft s=0 valid
+BAR round_degeneracy@G-TIME-OLMo-sft silent template=A0s-OLMo-sft 0/10 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 2 at n=10
+BAR gtime_pause@G-TIME-OLMo-sft silent template=A0s-OLMo-sft
+STAGE G-TIME-OLMo-sft PASS path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-sft_time.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-sft_time_report.json
+READS /workspace/repo/jspace-lab/data/p/reports/OLMo-sft_time_reads.json
+P-REPORT G-TIME-OLMo-sft (p): PASS; checkpoint ckpt/OLMo-sft_time.json (sha256 aa56d5cf0be83b3828fb42b1566685a5aaffc97edc962483951d555f370dd3e2); p's report data/p/reports/OLMo-sft_time_p-report.json (written), call log ckpt/OLMo-sft_time_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (10 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 0 []; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (4 rounds): 0 []
+P-REPORT sham proxy: 10 of 10 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+
+# ==== gtime_p-dpo.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py time --unit OLMo-dpo
+DRIVER scripts/p_sessions.py d91e41e1436b56b8f5aada09f1e24ae45c401234b50feeafb53771b32bf9a943: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical (G-TIME-OLMo-dpo (p)'s precheck)
+WEIGHTS dpo: allenai/Olmo-3.1-32B-Instruct-DPO revision fc84a4f69991, files_aggregate_sha256 c6e5e2abe093d0fcb6050500bdb7dc13998fa51fdde47cc93bffded126f33e60; 7 files at /workspace/models/dpo, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE G-TIME-OLMo-dpo (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:   6%|▌         | 41/707 [00:00<00:01, 373.20it/s]
+Loading weights:  30%|██▉       | 212/707 [00:00<00:00, 1003.81it/s]
+Loading weights:  44%|████▍     | 310/707 [00:00<00:00, 493.98it/s] 
+Loading weights:  53%|█████▎    | 377/707 [00:00<00:00, 426.52it/s]
+Loading weights:  61%|██████    | 430/707 [00:00<00:00, 391.44it/s]
+Loading weights:  67%|██████▋   | 475/707 [00:01<00:00, 396.60it/s]
+Loading weights:  73%|███████▎  | 519/707 [00:01<00:00, 377.68it/s]
+Loading weights:  79%|███████▉  | 560/707 [00:01<00:00, 375.76it/s]
+Loading weights:  85%|████████▍ | 600/707 [00:01<00:00, 369.01it/s]
+Loading weights:  91%|█████████ | 640/707 [00:01<00:00, 373.27it/s]
+Loading weights:  97%|█████████▋| 687/707 [00:01<00:00, 394.30it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 429.60it/s]
+LICENCE G-TIME-OLMo-dpo: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-dpo.md efcba384b68d2365: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/dpo","python":"3.12.3","seed":20260818},"stamp":"2026-11-09T18:18:06Z"}
+time A0-OLMo-dpo s=0 valid
+time A0s-OLMo-dpo s=0 valid
+BAR round_degeneracy@G-TIME-OLMo-dpo silent template=A0s-OLMo-dpo 0/10 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 2 at n=10
+BAR gtime_pause@G-TIME-OLMo-dpo silent template=A0s-OLMo-dpo
+STAGE G-TIME-OLMo-dpo PASS path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-dpo_time.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-dpo_time_report.json
+READS /workspace/repo/jspace-lab/data/p/reports/OLMo-dpo_time_reads.json
+P-REPORT G-TIME-OLMo-dpo (p): PASS; checkpoint ckpt/OLMo-dpo_time.json (sha256 51f98427ed2660a69604b7099a591be52f54d83bd17d95b2e3b41cb817343945); p's report data/p/reports/OLMo-dpo_time_p-report.json (written), call log ckpt/OLMo-dpo_time_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (10 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 0 []; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (4 rounds): 0 []
+P-REPORT sham proxy: 10 of 10 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+
+# ==== gtime_p-instruct.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py time --unit OLMo-instruct
+DRIVER scripts/p_sessions.py d91e41e1436b56b8f5aada09f1e24ae45c401234b50feeafb53771b32bf9a943: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical (G-TIME-OLMo-instruct (p)'s precheck)
+WEIGHTS instruct: allenai/Olmo-3.1-32B-Instruct revision ac0587e4a774, files_aggregate_sha256 0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643; 8 files at /workspace/models/instruct, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE G-TIME-OLMo-instruct (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  10%|█         | 71/707 [00:00<00:00, 695.33it/s]
+Loading weights:  25%|██▌       | 177/707 [00:00<00:00, 880.82it/s]
+Loading weights:  37%|███▋      | 265/707 [00:00<00:00, 599.76it/s]
+Loading weights:  47%|████▋     | 333/707 [00:00<00:00, 536.53it/s]
+Loading weights:  55%|█████▌    | 392/707 [00:00<00:00, 503.14it/s]
+Loading weights:  63%|██████▎   | 445/707 [00:00<00:00, 489.67it/s]
+Loading weights:  70%|███████   | 496/707 [00:00<00:00, 438.40it/s]
+Loading weights:  78%|███████▊  | 553/707 [00:01<00:00, 471.02it/s]
+Loading weights:  86%|████████▋ | 611/707 [00:01<00:00, 480.19it/s]
+Loading weights:  93%|█████████▎| 661/707 [00:01<00:00, 483.72it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 515.63it/s]
+LICENCE G-TIME-OLMo-instruct: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-instruct.md c03a1ef9d8fc3ccb: committed at HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/instruct","python":"3.12.3","seed":20260818},"stamp":"2026-11-09T18:21:45Z"}
+time A0-OLMo-instruct s=0 valid
+time A0s-OLMo-instruct s=0 valid
+BAR round_degeneracy@G-TIME-OLMo-instruct silent template=A0s-OLMo-instruct 0/10 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 2 at n=10
+BAR gtime_pause@G-TIME-OLMo-instruct silent template=A0s-OLMo-instruct
+STAGE G-TIME-OLMo-instruct PASS path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-instruct_time.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-instruct_time_report.json
+READS /workspace/repo/jspace-lab/data/p/reports/OLMo-instruct_time_reads.json
+P-REPORT G-TIME-OLMo-instruct (p): PASS; checkpoint ckpt/OLMo-instruct_time.json (sha256 426e4812f9dd5a145f15ab407bd14375dca5309f7526c54f7fad6afcd419d213); p's report data/p/reports/OLMo-instruct_time_p-report.json (written), call log ckpt/OLMo-instruct_time_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (10 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 0 []; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (4 rounds): 0 []
+P-REPORT sham proxy: 10 of 10 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+
+# ==== the wrapper, /workspace/gtime_p/run_gtime_p.sh (sha256 6c2ace2c01ff97d6547354d04c93477c4c0e4ffbfce09933549efece0fad34d7; its comments quote in ASCII, x for ×) ====
+#!/bin/bash
+# G-TIME-OLMo (p) on sft, dpo and instruct, back to back (PROPOSAL-p v0.2 s4.1, s8 step 6; the design seat's answer of
+# 2026-11-08, de729c4, s4: "G-TIME-OLMo (p) x3 on the box, batched"; the PI's go in that routing, item 2). The driver
+# is the committed one, under each checkpoint's LOCK-p v0.1; this wrapper only sequences it and records stamps and exit
+# codes. One run per checkpoint: no --resume. A checkpoint that PASSes (0 with its P-REPORT PASS line, no STOP line) or
+# PAUSEs (3 with its P-REPORT PAUSE line, no STOP line: m:302's pause holds only that checkpoint's qualification, for
+# the seat's adjudication) lets the next run; a refusal (2), a STOP or any other exit halts the chain for escalation.
+source /workspace/env.sh
+cd /workspace/repo/jspace-lab || exit 9
+OUT=/workspace/gtime_p
+mkdir -p "$OUT"
+for ck in sft dpo instruct; do
+  echo "launch $ck $(date -u +%Y-%m-%dT%H:%M:%SZ) RUNPOD_POD_ID=$RUNPOD_POD_ID" >> "$OUT/stamps.txt"
+  /workspace/venv/bin/python scripts/p_sessions.py time --unit "OLMo-$ck" > "$OUT/gtime_p-$ck.txt" 2>&1
+  rc=$?
+  echo "end $ck $(date -u +%Y-%m-%dT%H:%M:%SZ) exit=$rc" >> "$OUT/stamps.txt"
+  if [ "$rc" -eq 0 ] && grep -q "^P-REPORT G-TIME-OLMo-$ck (p): PASS; " "$OUT/gtime_p-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/gtime_p-$ck.txt"; then continue; fi
+  if [ "$rc" -eq 3 ] && grep -q "^P-REPORT G-TIME-OLMo-$ck (p): PAUSE; " "$OUT/gtime_p-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/gtime_p-$ck.txt"; then continue; fi
+  echo "halt after $ck (exit=$rc): neither PASS nor PAUSE" >> "$OUT/stamps.txt"
+  break
+done
+echo "done $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$OUT/stamps.txt"
+
+# ==== the wrapper's own log, /workspace/gtime_p/wrapper.out (0 bytes) ====
+(empty)
+
+# ==== the launch call's output (laptop): ssh <host> 'cd /workspace/repo/jspace-lab && test -z "$(git status --porcelain --untracked-files=all)" && echo "tree clean at $(git rev-parse --short HEAD)" && cd /workspace/gtime_p && nohup setsid bash /workspace/gtime_p/run_gtime_p.sh > /workspace/gtime_p/wrapper.out 2>&1 < /dev/null & sleep 8; cat /workspace/gtime_p/stamps.txt; pgrep -af "p_sessions.py time" | ...; head -5 /workspace/gtime_p/gtime_p-sft.txt'
+# Disclosed: the `&` backgrounds the whole && list, so that remote shell waited on the wrapper and the ssh call stayed open until the chain ended (it exited 0 then). The wrapper ran in its own session (setsid: pid 13356, sid 13356) under nohup, its stdio on files; the ssh call's life did not bound it.
+tree clean at 0afd842
+launch sft 2026-11-09T18:10:46Z RUNPOD_POD_ID=qny1x4v8padeke
+13362 /workspace/venv/bin/python scripts/p_sessions.py time --unit OLMo-sft
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py time --unit OLMo-sft
+(no other line had been written yet)
+[exited with code 0]
+
+# ==== Code's pre-flight, before the launch (fresh non-interactive ssh shells to <host>; host scrubbed; tool output verbatim unless marked) ====
+# (1) Read-only, before the sync: ssh <host> 'source /workspace/env.sh; echo "pod=$RUNPOD_POD_ID"; echo "pid1_start=$(date -u -d "$(ps -o lstart= -p 1)" +%Y-%m-%dT%H:%M:%SZ)"; sha256sum /workspace/env.sh | cut -c1-16; /workspace/venv/bin/python -c "import torch, transformers; ..."; nvidia-smi ...; ls /workspace/gtime_p; ls /workspace/models/'
+pod=qny1x4v8padeke
+pid1_start=2026-11-07T00:17:16Z
+f5174faa745eca6e
+torch 2.8.0+cu128 transformers 5.15.0 cuda True
+NVIDIA A100-SXM4-80GB, 0 MiB, 0 %
+ls: cannot access '/workspace/gtime_p': No such file or directory
+(the /workspace/models listing omitted here: the checkpoints' directories and earlier runs' files; nothing read from it)
+# PID 1 (the pod's container) started 2026-11-07T00:17:16Z, as at G-CAL-p; the BACKEND characterization (190ba90) ran on
+# this container after it, so the box of record is unchanged. env.sh f5174faa..., torch and transformers G-CAL-p's.
+# (2) Read-only, before the sync: the box repo at e03fbe4 with six untracked files, each sha256 equal to the committed blob
+#     (laptop: shasum -a 256 on the committed files at HEAD):
+035a204a7243fc46b152ce4f2b935849923db601735ad510ee3a5a39f6544832  data/p/gates/G-CAL_completability_olmo-dpo.json
+5e3ef51a2f3a24dbbacea922b4437c35c59eda64632376a997c2890efc5a6661  data/p/gates/G-CAL_completability_olmo-instruct.json
+78f46f07acfdc3577b2117a9671f46b77092042981e5bb2aa40afe03156b5123  data/p/gates/G-CAL_completability_olmo-sft.json
+6207ce5a472be553172fc21a998df481bb9ad52f6eb9cf833eb4919a8939d4ee  data/p/ckpt/G-CAL_olmo-dpo.json
+91458e86c2c4058248dad6cb2d374a4fb1a7f7b982806892aff15d6f89a7920c  data/p/ckpt/G-CAL_olmo-instruct.json
+2dc2e9a86e2908d92c93e7035bd377b8d5438ae04d65b3ce118943008a613443  data/p/ckpt/G-CAL_olmo-sft.json
+# (3) The sync. Laptop: git bundle create p-lock-0afd842.bundle main ^e03fbe4 (1,850,880 bytes, sha256 a4bc7968...; one
+#     head, 0afd84217508eacfdaf6d8d46c5a379ac622ae3d refs/heads/main), copied to /workspace/tmp_bundles/, and the sync
+#     script (sha256 57336926...) and the wrapper (sha256 6c2ace2c...) to /workspace/gtime_p/, each re-hashed on the box
+#     equal. Box:
+#     bash /workspace/gtime_p/box_sync_lock.sh /workspace/tmp_bundles/p-lock-0afd842.bundle 0afd842... (the script
+#     fetches into refs/bundles/p-lock, refuses any untracked set other than the six G-CAL-p outputs and any byte
+#     difference from the target's blob, moves the six aside, fast-forwards, and re-checks the tree and the six):
+SYNC OK: HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d, tree clean; the six G-CAL-p outputs set aside in /workspace/gcal_p/box-untracked-2026-11-09, each identical to the commit's
+exit=0
+# (4) The stage's precheck and the driver's weights-files check, all three units, model-free, in a process that imports
+#     the driver as its time command does (/workspace/gtime_p/box_precheck_gtime.py; env.sh sourced):
+closure at precheck time: 14 files; equal to the recorded one: True
+OLMo-sft PRECHECK CLEAR; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 9cc9045a57dc8abc
+OLMo-dpo PRECHECK CLEAR; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 efcba384b68d2365
+OLMo-instruct PRECHECK CLEAR; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 c03a1ef9d8fc3ccb
+0 MiB
+# (5) The wrapper's chain rule, dry-tested on the laptop before the launch (the loop's conditions byte-identical to the
+#     wrapper's; the python call replaced by a stub printing a scripted line and exiting with a scripted code; outcomes
+#     sft/dpo/instruct -> the checkpoints run, HALT where the chain stops):
+pass/pass/pass -> sft dpo instruct
+pass/pause/pass -> sft dpo instruct
+pause/pause/pause -> sft dpo instruct
+pass/stop4/pass -> sft dpo HALT
+refuse/pass/pass -> sft HALT
+pass/passstop/pass -> sft dpo HALT
+pass/pass_wrongline/pass -> sft dpo HALT
+crash/pass/pass -> sft HALT
+pass/pass/stop4 -> sft dpo instruct HALT
+
+# ==== the copy-back (laptop: the files the stage left untracked under data/p on the box, by tar over ssh; sha256 at both ends) ====
+identical 51f98427ed2660a69604b7099a591be52f54d83bd17d95b2e3b41cb817343945 data/p/ckpt/OLMo-dpo_time.json
+identical cc391b3ca15b013708001b9679ce2eb8f1d1cd50ca1654997ca15297078ab377 data/p/ckpt/OLMo-dpo_time_p-calls.jsonl
+identical 426e4812f9dd5a145f15ab407bd14375dca5309f7526c54f7fad6afcd419d213 data/p/ckpt/OLMo-instruct_time.json
+identical 0f97a8502513008a3dbf0b9db725483131f29a67474ef350908e0d0c44f2a464 data/p/ckpt/OLMo-instruct_time_p-calls.jsonl
+identical aa56d5cf0be83b3828fb42b1566685a5aaffc97edc962483951d555f370dd3e2 data/p/ckpt/OLMo-sft_time.json
+identical bbf49d67efdb8b90da3c9c8695bcf71361d8eff6a843c0a87c24ea117de85ad1 data/p/ckpt/OLMo-sft_time_p-calls.jsonl
+identical 1623f1cb52c59c8fc29320bdac4271c89ce1a36f7bc6602fc3433b0926afe912 data/p/reports/OLMo-dpo_time_p-report.json
+identical b44035beba9a3ab480dd5fbd09b1b0d87ea92fdbef21e4f00fda80c899f6639e data/p/reports/OLMo-dpo_time_reads.json
+identical fb90c5a177591f948bf85ec2384301bf20615a4837f22d6284f52dd662e8f20d data/p/reports/OLMo-dpo_time_report.json
+identical edf90bc2c10df8a629e10d90ffeacb1fffeeb07fb7be0ec945af8f5851a16504 data/p/reports/OLMo-instruct_time_p-report.json
+identical c7045474cad63d1e2bafb0d05d8d80c2fb2efa87f21ff655c34fc1c6c09f75ad data/p/reports/OLMo-instruct_time_reads.json
+identical 7f5369763d3751c137f3572b1828d16a22e21d14dd527aca5b400e8eba2797eb data/p/reports/OLMo-instruct_time_report.json
+identical 2070c00ce555f62ff66649f03864b8f8b15bca4a78458b2b0f9bb3a63d679083 data/p/reports/OLMo-sft_time_p-report.json
+identical 294361ed8e7362417db5175ae8af9880a86c84d8e7fa5e8242231987474b408d data/p/reports/OLMo-sft_time_reads.json
+identical 2ccd028dced970c3ef34bc446f23709a7f0e7fc1ea35d4fcdea8b138f7257fa0 data/p/reports/OLMo-sft_time_report.json

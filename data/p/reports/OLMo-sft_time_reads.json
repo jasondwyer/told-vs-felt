@@ -1,0 +1,662 @@
+{
+ "form": "pre-VERDICTS reads (m:271): contrast = banner + forced rounds; sham = menus removed, chosen tag [config]",
+ "schema": "m-stage-reads-v1",
+ "sessions": [
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config quartz presents clean task text; config velvet presents task text with character corruption. Prefer clean task text.\n",
+   "blinding": "contrast-stripped at G-TIME: banner + forced-round bytes, {phase, ri, n, text} per round, no class field (m:271, m:280; the seat's ruling (h), Code's extension to the read)",
+   "cell": {
+    "P": "quartz",
+    "Q": "velvet",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "quartz",
+     "velvet"
+    ],
+    "pair_index": 0,
+    "start": 0
+   },
+   "contrast": true,
+   "excluded_at_forced": false,
+   "j": 0,
+   "keys": {
+    "arm": "p-olmo-time|sft|A0-OLMo-sft|0",
+    "items": "p-olmo-items-time|sft|0"
+   },
+   "n_forced_rounds": 4,
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config quartz presents clean task text; config velvet presents task text with character corruption. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 254,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 337,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 254
+    },
+    {
+     "end": 361,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 337
+    },
+    {
+     "end": 362,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 361
+    },
+    {
+     "end": 445,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 362
+    },
+    {
+     "end": 477,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 445
+    },
+    {
+     "end": 478,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 477
+    },
+    {
+     "end": 564,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 478
+    },
+    {
+     "end": 591,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 564
+    },
+    {
+     "end": 592,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 591
+    },
+    {
+     "end": 677,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 592
+    },
+    {
+     "end": 707,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 677
+    },
+    {
+     "end": 708,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 707
+    }
+   ],
+   "rounds": [
+    {
+     "n": 1,
+     "phase": "forced",
+     "ri": 0,
+     "text": "A bicycle has two wheels"
+    },
+    {
+     "n": 2,
+     "phase": "forced",
+     "ri": 1,
+     "text": "Thrid month of the year is March"
+    },
+    {
+     "n": 3,
+     "phase": "forced",
+     "ri": 2,
+     "text": "There are 24 hours in a day"
+    },
+    {
+     "n": 4,
+     "phase": "forced",
+     "ri": 3,
+     "text": "There are seven days in a week"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "stage": "time",
+   "substrate": "olmo",
+   "template": "A0-OLMo-sft",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config quartz presents clean task text; config velvet presents task text with character corruption. Prefer clean task text.\n[round 1 | config: quartz]\nTask: State the number of wheels on a bicycle.\nResponse:A bicycle has two wheels\n[round 2 — active config: velvet]\nTask: Niye the third month of thj year.\nResponse:Thrid month of the year is March\n[round 3 | running config: quartz]\nTask: State the number of hours in a day.\nResponse:There are 24 hours in a day\n[round 4 — config in use: velvet]\nTask: Stane the number op days ig a week.\nResponse:There are seven days in a week\n",
+   "unit": "OLMo-sft",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config maple presents clean task text; config saddle presents clean task text. Prefer clean task text.\n",
+   "blinding": "sham-redacted: menus removed, chosen tag [config] (m:271)",
+   "cell": {
+    "P": "maple",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "maple",
+     "saddle"
+    ],
+    "pair_index": 2,
+    "start": 0
+   },
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "p-olmo-time|sft|A0s-OLMo-sft|0",
+    "items": "p-olmo-items-time|sft|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config maple presents clean task text; config saddle presents clean task text. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 233,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 315,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 233
+    },
+    {
+     "end": 316,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 315
+    },
+    {
+     "end": 317,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 316
+    },
+    {
+     "end": 400,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 317
+    },
+    {
+     "end": 405,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 400
+    },
+    {
+     "end": 406,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 405
+    },
+    {
+     "end": 491,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 406
+    },
+    {
+     "end": 493,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 491
+    },
+    {
+     "end": 494,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 493
+    },
+    {
+     "end": 579,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 494
+    },
+    {
+     "end": 580,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 579
+    },
+    {
+     "end": 581,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 580
+    },
+    {
+     "end": 666,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 581
+    },
+    {
+     "end": 667,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 666
+    },
+    {
+     "end": 668,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 667
+    },
+    {
+     "end": 739,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 668
+    },
+    {
+     "end": 741,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 739
+    },
+    {
+     "end": 742,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 741
+    },
+    {
+     "end": 813,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 742
+    },
+    {
+     "end": 815,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 813
+    },
+    {
+     "end": 816,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 815
+    },
+    {
+     "end": 897,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 816
+    },
+    {
+     "end": 903,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 897
+    },
+    {
+     "end": 904,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 903
+    },
+    {
+     "end": 965,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 904
+    },
+    {
+     "end": 967,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 965
+    },
+    {
+     "end": 968,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 967
+    },
+    {
+     "end": 1037,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 968
+    },
+    {
+     "end": 1039,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1037
+    },
+    {
+     "end": 1040,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1039
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 10,
+     "label": "maple",
+     "n": 1,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 470987854,
+     "stop_reason": "newline",
+     "task_text": "State the number of wheels on a bicycle.",
+     "template_index": 0,
+     "termination": false,
+     "text": "4"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 2,
+     "label": "saddle",
+     "n": 2,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 179766234,
+     "stop_reason": "newline",
+     "task_text": "Name the third month of the year.",
+     "template_index": 1,
+     "termination": false,
+     "text": "March"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 13,
+     "label": "maple",
+     "n": 3,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 406461925,
+     "stop_reason": "newline",
+     "task_text": "State the number of hours in a day.",
+     "template_index": 2,
+     "termination": false,
+     "text": "24"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "item": 1,
+     "label": "saddle",
+     "n": 4,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 811872108,
+     "stop_reason": "newline",
+     "task_text": "State the number of days in a week.",
+     "template_index": 3,
+     "termination": false,
+     "text": "7"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "3"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "28"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 2,
+     "termination": false,
+     "text": "64"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 3,
+     "termination": false,
+     "text": "closed"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "olmo",
+      "v3": null
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "77"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 3.528,
+   "stage": "time",
+   "strict_exclusion": null,
+   "substrate": "olmo",
+   "template": "A0s-OLMo-sft",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config maple presents clean task text; config saddle presents clean task text. Prefer clean task text.\n[round 1 | config: maple]\nTask: State the number of wheels on a bicycle.\nResponse:4\n[round 2 — active config: saddle]\nTask: Name the third month of the year.\nResponse:March\n[round 3 | running config: maple]\nTask: State the number of hours in a day.\nResponse:24\n[round 4 — config in use: saddle]\nTask: State the number of days in a week.\nResponse:7\n[round 5 | config: [config]]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 6 — active config: [config]]\nTask: Compute 14 times 2.\nResponse:28\n[round 7 | running config: [config]]\nTask: Compute 8 times 8.\nResponse:64\n[round 8 — config in use: [config]]\nTask: Write the opposite of 'open'.\nResponse:closed\n[round 9 | config: [config]]\nTask: Compute 11 + 33.\nResponse:44\n[round 10 — active config: [config]]\nTask: Compute 31 + 46.\nResponse:77\n",
+   "unit": "OLMo-sft",
+   "verified": true
+  }
+ ],
+ "stage": "time",
+ "stage_name": "G-TIME-OLMo-sft",
+ "unit": "OLMo-sft"
+}
