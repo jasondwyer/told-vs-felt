@@ -21,6 +21,51 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-08 — **ADDENDUM-m2 v0.2: OPEN #50 goes to the seat in a Code → design block, with Code's readings of #48
+  and #49. v0.2 is not committed.**
+
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 04:26:12 UTC 2026**.)
+  - **Why.** The blind referent check of v0.2 left #50 open (51 items: 35 CONFIRMED, 13 IMPRECISE, 3 OPEN, 0 FAIL;
+    its raw is committed beside).
+    - §3.4 has counters (a) and (b) reported at every stage's entry from the re-run on, with no blinding scope.
+    - Before VERDICTS that conflicts with the rules that withhold contrast sessions' free-phase content: m:271's
+      withholding of their free-round events, m:263's phase-only print, F-6's ban on per-line lists at G-TIME-F3,
+      F60's first-line-only form at G-F3, and m:318 at the campaign's looks.
+    - The conflict is most direct for (b), which the seat's answers (`de729c4`, §1) have Code list "by session and
+      round".
+  - **The coordinating session's instruction** (relayed, 2026-11-08):
+    - hold the v0.2 commit;
+    - write #50 up for the seat;
+    - commit the block by path, but not v0.2, and send its hash.
+
+    Whether v0.2 §6 item 1's STOP ("any unresolved substantive item → STOP") fires on #50 is with the PI.
+  - **The block:**
+    [`2026-11-08_a-m2-v02_code-to-design_open50.md`](results/raw/2026-11-08_a-m2-v02_code-to-design_open50.md). It
+    gives:
+    - v0.2 §3.4's sentence, and the conflict;
+    - **what #50 binds:** the re-run's entry, G-F3's and the campaign's looks;
+    - **what it does not bind:** the commit, the sham-only smoke, and G-ID-F3 (sham-only, read in full);
+    - **Code's proposed fix**, before the unit's VERDICTS entry or NOT-RUN record:
+      - (a) over sham sessions' lines, and over contrast first lines where a stage reports their class;
+      - (b) over sham sessions' rounds and contrast sessions' forced rounds;
+      - nothing at the campaign's looks beyond m:318's counts;
+      - the rest at the VERDICTS entry or NOT-RUN record;
+    - **Code's readings:** #48, P4's pin is v0.2's sha; #49, a stopped smoke selects nothing.
+  - **The referent raw:** [`_a-m2-v02_referent-check`](results/raw/2026-11-08_a-m2-v02_referent-check.md), the
+    agent's report verbatim with Code's disposition of every item not CONFIRMED.
+  - **Values-check:** a blind check of the block, this entry and the referent raw's changed dispositions ran before the commit: 40
+    items, 29 CONFIRMED, 9 IMPRECISE, 0 FAIL, 2 NOT CHECKABLE. Every IMPRECISE item was re-checked at source and applied.
+    The fix now also covers the campaign's looks (m:318) and G-F3's first-line form (F60). The raw, with Code's
+    dispositions: [`_a-m2-v02_open50_valuescheck`](results/raw/2026-11-08_a-m2-v02_open50_valuescheck.md).
+  - **Committed by path:** the block, the referent raw, the values-check raw and this entry. v0.2 stays untracked.
+    Nothing ran on a model.
+  - **Next:** the PI's ruling on §6 item 1.
+    - **(a) No STOP:** the v0.2 commit with #50 as a FLAG, then the smoke driver's commit and the smoke's
+      announcement.
+    - **(b) STOP:** the seat's answer on #50 first.
+
+    The smoke driver's second blind review round is running. Not pushed.
+
 - 2026-11-08 — **PROPOSAL-p step 6: entry (9) cannot run as declared -- one question for the seat (the seat's answer
   at `de729c4`, Q3 (a), adopted the form Code proposed at `c9acd66`, and that form was incomplete).** The rest of step
   6's build proceeds. G-SHAPE-p's re-run, G-ANL-p and the locks wait for this answer, because entry (9) is in p's
