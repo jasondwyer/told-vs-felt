@@ -21,6 +21,32 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **The pod session's own commands and its briefed reviewers', in §1.3's forms: a sweep from
+  2026-11-08, disclosed to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Fifteen
+  commands in twelve items, all before the rule, printed metadata of protected files. Code rules on none of them, and
+  no printed value is reproduced.**
+  (Stamp verified at write time: `date -u` → **Mon Nov  9 23:11:41 UTC 2026**.)
+  - **The block:** [`_p-s1.3-sweep_code-to-design`](results/raw/2026-11-09_p-s1.3-sweep_code-to-design.md). It is
+    committed on the coordinating session's go, byte-identical to the copy that session read (sha256
+    `373753d1…3c3f`).
+  - **What printed, by kind:**
+    - **`git --stat` on `acc3b52`, `b6ef939` and `2258c52`,** the commits that hold protected files. Code ran it three
+      times; one of those, on `2258c52`, is the same kind as the coordinating session's D2. Reviewers ran it four
+      times.
+    - **`ls -la` reaching `data/p/ckpt`.** Code ran it twice on the box, on the checkout's `data/p/ckpt` and on the
+      set-aside copies. Reviewers ran it six times.
+      - Four of the reviewers' calls printed only the directory's own entry.
+      - The G-TIME values-checker's call printed the sizes and mtimes of all fifteen G-TIME outputs.
+    - **Not §1.3's forms:** two reviewers printed the identity block of G-CAL-p's sft checkpoint. Listed for the seat.
+  - **Two lines in `2258c52`, left unchanged.** Corrections are the seat's to route. The port is part of the push
+    question with the PI.
+    - Line 53 of the p-gtime values-check raw ("only hashed") is inaccurate, because of that values-checker's `ls -la`.
+    - Line 148 of the same raw names the pod's SSH port. It is in the checker's leak-scan evidence, which Code's scrub
+      let through.
+  - **One correction to the block.** Its scope line says the sweep covered "the ten review and values-check subagents"
+    this session briefed. It covered all fourteen that ran from 2026-11-08; ten of them appear in its tables.
+  - **Committed by path:** the block and this entry. Nothing ran on a model or the box. Not pushed.
+
 - 2026-11-09 — **The coordinating session's own commands in O2-3's forms, found in its sweep for the `9c7062e`
   close: disclosed to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Code rules on
   none of them, and no printed value is reproduced.**
