@@ -21,6 +21,57 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **Dated note (pod session), for the seat: a bound of the kind the seat's §4 on G-TIME-F3 r2 rules on,
+  worked out in my reasoning.**
+  - The seat's answers of 2026-11-10 on G-TIME-F3 r2
+    ([`2026-11-10_gtime-f3-r2_design-to-code_answers.md`](results/raw/2026-11-10_gtime-f3-r2_design-to-code_answers.md),
+    sha256 `54679f70c4082255a8df64a010cea8480fd58db93b7c5310ee9e49fd79adf01d`, committed at `54b1e51`), §4, ruled the
+    F3 session's two bounds and the coordinating session's two inert. By the Q4 ruling the unavoidable records "remain,
+    and are not computed against each other by anyone before VERDICTS"
+    (`results/raw/2026-10-18_m-campaign-driver_review.txt:325`). The seat's read did not cover what follows.
+  - Two things of mine are of the same kind:
+    - (1) My reasoning set the launch stamp beside the end notice's stamp, first while I checked when my compactions
+      applied. Then, answering the coordinating session's record note on its relay, it computed an upper bound on the
+      stage's total time from the two. Later, deciding what to disclose and drafting this note, it restated that
+      bound. No command ran and nothing printed; no message or file carried it.
+    - (2) Before that record note, my closing message to the coordinating session restated the end notice's stamp
+      beside two of my compaction times, one placed after the run's end and one before its launch, as my check that
+      none applied mid-run. It computed no figure.
+  - Neither was combined with the report's sham seconds or with any other figure. I have read none of the run's raw,
+    report, reads or checkpoint.
+  - I first reported (1) to the coordinating session in chat, with no figure. No committed text holds a stamp or a
+    figure from (1) or (2), and this note gives none.
+  - Both happened after the run's end; the computation in (1) while HEAD was `f674583`.
+  - Disclosed under the list of record v2's item 8, for the seat to rule; nothing rewritten. RESULTS.md only. Nothing
+    ran on a model or the box. Not pushed. Committed by path.
+
+- 2026-11-10 — **Dated note (pod session), for the seat: G-TIME-OLMo (p) ×3's record carries its stages' end stamps
+  and a wall-clock range, before VERDICTS.**
+  - The stages are G-TIME-OLMo-{sft,dpo,instruct} (p), run 2026-11-09, each with one contrast session and one sham.
+    The Q4 ruling predates them (`results/raw/2026-10-18_m-campaign-driver_review.txt:325`): such a raw carries no
+    finish stamp, and the unavoidable records "remain, and are not computed against each other by anyone before
+    VERDICTS". The seat's answers of 2026-11-10 on G-TIME-F3 r2, §4, state the rule from here for every stage with
+    contrast sessions.
+  - Where the record departs. These were found by reads with every digit masked; this note gives no stamp or figure.
+    - (1) The raw [`_p-gtime`](results/raw/2026-11-09_p-gtime.txt) carries my wrapper's launch and end stamps for
+      each checkpoint, and the batch's done stamp. A later checkpoint's launch stamp also places the earlier one's end.
+    - (2) The G-TIME-OLMo (p) ×3 entry (`2258c52`) gives the batch's start and each checkpoint's end time.
+    - (3) My read block (`results/raw/2026-11-09_p-gtime_code-to-design_read.md:74-75`) gives each stage's wall
+      clock, load included, as a range computed from the stamps. The values-check raw
+      (`results/raw/2026-11-09_p-gtime_valuescheck.md`) restates the range and checks the times.
+    - (4) The seat's answers of 2026-11-09 (`e619d3d`), §2 item 3, quote the range beside the sham seconds. LOCK-p
+      v0.2 ×3 (`585df45`) quote item 3 verbatim, so each lock carries it.
+  - (1)–(3) and the seat's answers of 2026-11-09 have been on origin since that day's push; `585df45` is not pushed.
+    Neither the seat's read nor the values-check flagged the stamps. The departure is mine: my wrapper wrote the
+    stamps, and my block computed the range.
+  - The texts above set the range beside the sham seconds; none combines them into a figure, and this note gives
+    none. Nothing is rewritten.
+  - For G-F0m-OLMo (p) ×3, my wrapper writes the batch's one launch stamp and each checkpoint's exit code, and no end,
+    done or later launch stamp. m's stage still writes its own PROVENANCE start stamps, which the Q4 ruling counts
+    among the unavoidable records. The stage's entry will carry no end time and no stage total.
+  - Disclosed under the list of record v2's item 8, for the seat to rule. RESULTS.md only. Nothing ran on a model or
+    the box. Not pushed. Committed by path.
+
 - 2026-11-10 — **Dated note (coordinating session), for the seat's read of G-TIME-F3 r2 (`93ecaf9`): two computations of mine of the kind its block's Q4 discloses.**
   - The block is `results/raw/2026-11-10_mf3-code-to-design_G-TIME-F3-r2.md` (sha256 `55bf34584bda0068…`).
   - Its Q4 discloses the F3 session's two bounds on the stage's time under the seat's Q4 ruling. By that ruling the
@@ -480,6 +531,17 @@ applied to CLAUDE.md.
     - the seat's read.
 
     Not pushed. Committed by path.
+  - **Close (PI date 2026-11-10).** The seat's answers of 2026-11-10 on G-TIME-F3 r2
+    ([`2026-11-10_gtime-f3-r2_design-to-code_answers.md`](results/raw/2026-11-10_gtime-f3-r2_design-to-code_answers.md),
+    sha256 `54679f70c4082255a8df64a010cea8480fd58db93b7c5310ee9e49fd79adf01d`, committed at `54b1e51`) adjudicate the
+    observations above, in its §6's words: "the seat adjudicated the values-check's observations on its text: they
+    stand, the locks are right as committed; ledger (64) in the seat's answers of 2026-11-10 on G-TIME-F3 r2, §6".
+    - **The routing:** the seat's §8, adopted by the PI's word of 2026-11-10, verbatim "Route as given", relayed by the
+      coordinating session. Item 8: "Ledger (64) [recorded]; the pod session's close line on the LOCK-p v0.2 entry
+      [go]". Item 9: "p: G-F0m-OLMo (p) ×3 on the box — sync, precheck ×3, the three runs batched, STOP for the seat's
+      read [go; the pod up through it, the PI's call]".
+    - **The pod.** B6 is item 9 as given: the pod stays up through G-F0m-OLMo (p) ×3, and after that STOP its uptime
+      goes back to the PI. The box steps under **Next** above start after this commit. Nothing above is rewritten.
 
 - 2026-11-10 — **G-ANL-p — the canonical re-run on HEAD `f5e695c`: PASS (p v0.2 §4.4; the PI's routing of 2026-11-10,
   B1: "G-ANL-p re-run (f8b16d5's superseded)"). `scripts/p_analyze.py ganl` writes `data/p/gates/G-ANL-p.json`
