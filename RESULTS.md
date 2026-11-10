@@ -71,6 +71,11 @@ applied to CLAUDE.md.
     among the unavoidable records. The stage's entry will carry no end time and no stage total.
   - Disclosed under the list of record v2's item 8, for the seat to rule. RESULTS.md only. Nothing ran on a model or
     the box. Not pushed. Committed by path.
+  - **Question for the seat** (added on the coordinating session's suggestion, PI date 2026-11-10): do LOCK-p v0.2 ×3
+    (`585df45`) stand with item 3's range in them, so that G-F0m-OLMo (p) ×3 runs under them as routed, or are they
+    re-issued first? Each lock's sha256 is the `lock_sha256` its checkpoint's G-F0m-OLMo (p) record will carry. The
+    box run holds meanwhile: no bundle sync, no precheck and no run until the PI's word (the coordinating session's
+    hold, PI date 2026-11-10).
 
 - 2026-11-10 — **Dated note (coordinating session), for the seat's read of G-TIME-F3 r2 (`93ecaf9`): two computations of mine of the kind its block's Q4 discloses.**
   - The block is `results/raw/2026-11-10_mf3-code-to-design_G-TIME-F3-r2.md` (sha256 `55bf34584bda0068…`).
