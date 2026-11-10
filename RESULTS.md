@@ -21,6 +21,43 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **G-SHAPE-F3 — the canonical re-run on the BUILD (`5d40d59`), before LOCK-m-F3 v0.1's re-issue: PASS.
+  A-m2 v0.5 §4.3; the PI's routing of 2026-11-10, A5: "… → the build's commit → G-SHAPE-F3 and G-ANL-F3 re-runs → …".
+  `data/mf3/gates/G-SHAPE-F3.json`, sha256 `ff3eaae5b1c6f0b660be418e42709132018d904e53657046367517c1243f1bf3`, is written
+  once on the package the re-issued lock will name. `f9700ba`'s artifact is superseded by hand under PIN-S9, in that
+  commit's form. Model-free: no model, no generation, no pod; Layer T reads the Qwen tokenizer of record offline.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 09:45:04 UTC 2026**.)
+  - **The supersession:** the artifact of record (sha256 `0c9de56e…1461`, committed at `f9700ba`) was moved by hand with
+    `git mv` to
+    [`G-SHAPE-F3.superseded-2026-11-10.json`](data/mf3/gates/G-SHAPE-F3.superseded-2026-11-10.json), committed with
+    this entry.
+  - **The re-run:** `python scripts/mf3_sessions.py gshape` on HEAD `5d40d59`, every source committed and unedited.
+    First the `git mv`, then the run: 09:43:41Z–09:43:47Z, exit 0, stderr empty.
+    - PASS. Layer A: A1 2,816, A2 1,408 and A3 1,408 placements, 0 fired, coverage exact.
+      - The required controls fire on every placement: seg+gold 2,816/2,816, 1,408/1,408 and 1,408/1,408;
+        reasoning+seg+gold at the free phase 1,408/1,408, 704/704 and 704/704.
+      - Render-as-response, reported and not required: 256/2,816, 128/1,408 and 128/1,408.
+    - Layer R: 8,448 line placements, 0 fired, coverage exact. Its control fires 9,592/9,592, and the label lines 0/768.
+    - Layer S: 0 problems. Layer T: 640 joins, 0 failed (tokenizer sha256 `87a7830d63fcf43b…`).
+  - **Against the superseded artifact:** 183 leaves before, 191 now; none removed, 8 added, 21 changed. Every result
+    other than Layer R's control count is identical. In detail:
+    - added: F-b's form and segment in the stack; the addendum's file and sha256 in the provenance; Layer R's label-line
+      test ("F-b's label line and m:174's label as the line (must not fire)", 0/768);
+    - changed, by §1 and F-b:
+      - the reasoning block's sha256;
+      - the stack's echo set, from m:258's eight strings to "every complete harness-written line of the session up to
+        the line, equality after ws_norm";
+      - Layer R's control, now "every line of the domain as the line (echo at its own index)", 8,448 → 9,592, all fired;
+      - the descriptive texts of Layer R's scope and Layer S's rules;
+      - the runner's dynamic-evidence checks, from 3 to 4;
+    - changed, by provenance: mf3's package (`f30ad505…` → `098455d9…`), the sources digest, and the sha256 of the 11
+      files the BUILD moved.
+  - **The new artifact:** [`data/mf3/gates/G-SHAPE-F3.json`](data/mf3/gates/G-SHAPE-F3.json). The raw is
+    [`_mf3-gshape-f3-r2`](results/raw/2026-11-10_mf3-gshape-f3-r2.txt), local paths scrubbed, with Code's leaf
+    comparison by name.
+  - **Next:** G-ANL-F3's canonical re-run on this commit (`02dadb3`'s artifact superseded), then LOCK-m-F3 v0.1's
+    re-issue. Committed by path. Nothing ran on a model. Not pushed.
+
 - 2026-11-10 — **mf3 package — BUILD (A-m2 v0.5 §4.2): F-b, §1's class and the cap of record in `valence_core/mf3/` and
   the driver, under the seat's ruling (a). G-ANL-F3's battery passes on the build (525/525) on the unchanged analyzer.**
   (Stamp verified at write time: `date -u` → **Tue Nov 10 09:42:22 UTC 2026**.)

@@ -1,0 +1,44 @@
+# G-SHAPE-F3 -- the canonical re-run on the BUILD (5d40d59), before LOCK-m-F3 v0.1's re-issue (A-m2 v0.5 §4.3; the PI's routing of 2026-11-10, A5): scripts/mf3_sessions.py gshape on HEAD 5d40d59, after the git mv of the artifact of record (f9700ba's, sha256 0c9de56e...1461) to data/mf3/gates/G-SHAPE-F3.superseded-2026-11-10.json. Code stamps (date -u): 2026-11-10 09:43:41 to 09:43:47 UTC; exit 0; stderr empty. No model. Local paths replaced by <repo>; nothing else changed. Then Code's leaf comparison of the new artifact against the superseded one (names only).
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py gshape
+G-SHAPE-F3 canonical run (every source committed at HEAD and unedited)
+G-SHAPE-F3 inputs: renders sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372; proposal sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b; mf3 package sha256 098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13; sources digest d55b86262b5b109f439b784404cac767f5805fd50584d00c8f02eedc209df3ac (38 files); committed at HEAD: True
+G-SHAPE-F3 Layer A A1: 2816 placements, 0 fired, coverage exact True; reasoning+seg+gold 1408/1408; render-as-response 256/2816; seg+gold 2816/2816
+G-SHAPE-F3 Layer A A2: 1408 placements, 0 fired, coverage exact True; reasoning+seg+gold 704/704; render-as-response 128/1408; seg+gold 1408/1408
+G-SHAPE-F3 Layer A A3: 1408 placements, 0 fired, coverage exact True; reasoning+seg+gold 704/704; render-as-response 128/1408; seg+gold 1408/1408
+G-SHAPE-F3 Layer R: 8448 line placements, 0 fired, coverage exact True; control 9592/9592; label lines 0/768 fired
+G-SHAPE-F3 Layer S: 0 problems; Layer T: 640 joins, 0 failed (tokenizer sha256 87a7830d63fcf43b)
+G-SHAPE-F3 PASS <repo>/data/mf3/gates/G-SHAPE-F3.json (written)
+
+## Against the superseded artifact (Code's leaf comparison, json.load of both; 183 leaves -> 191)
+removed: 0
+added: 8
+  + /layer_r/labels/lines
+  + /layer_r/labels/n
+  + /layer_r/labels/n_fired
+  + /layer_r/labels/name
+  + /provenance/addendum_file
+  + /provenance/addendum_sha256
+  + /stack/reasoning_block/form
+  + /stack/reasoning_block/segment
+changed: 21
+  ~ /inputs/reasoning_block_sha256
+  ~ /layer_r/control/n
+  ~ /layer_r/control/n_fired
+  ~ /layer_r/control/name
+  ~ /layer_r/scope
+  ~ /layer_s/rules
+  ~ /provenance/package_sha256
+  ~ /provenance/sources/scripts/mf3_sessions.py
+  ~ /provenance/sources/valence_core/mf3/banner.py
+  ~ /provenance/sources/valence_core/mf3/gshape.py
+  ~ /provenance/sources/valence_core/mf3/lines.py
+  ~ /provenance/sources/valence_core/mf3/readrule.py
+  ~ /provenance/sources/valence_core/mf3/resume.py
+  ~ /provenance/sources/valence_core/mf3/runner.py
+  ~ /provenance/sources/valence_core/mf3/scaffold.py
+  ~ /provenance/sources/valence_core/mf3/stages.py
+  ~ /provenance/sources/valence_core/mf3/testing.py
+  ~ /provenance/sources/valence_core/mf3/verify.py
+  ~ /provenance/sources_digest
+  ~ /runner_dynamic_evidence/checks
+  ~ /stack/line_echo_set
