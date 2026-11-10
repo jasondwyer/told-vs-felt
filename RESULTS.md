@@ -21,6 +21,83 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **ADDENDUM-m2 v0.5 — COMMITTED (A-m2 §6 item 2), on the PI's routing of 2026-11-10, section A (A5).**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 07:26:44 UTC 2026**.)
+  - **Committed:** `ADDENDUM-m2-f3-reasoning-block-v0_5.md` is tracked at root, sha256
+    `f27505c556a3304097d2154698bcf4498927e692c7341aec5060803c833b5354` (32,814 B), recomputed at write time against
+    the routing's list.
+  - **v0.3** (`83093812…fa67`, committed at `46773e2`) is moved to `archive/` by `git mv`, kept in history. **v0.4**
+    (`8f8ef932…714a`, never committed) is moved to `archive/` and left uncommitted, beside v0.1 and v0.2, as v0.5's
+    header and §6 item 2 have it.
+  - **The STOP entry's close line** (`50fea90`'s entry), citing `ans5:` by path and sha256, landed first, at
+    `0516832`, as A5's first step. v0.5 §6 item 2 lists it among this commit's items; the routing put it first.
+  - **The referent check of the delta** (v0.5 §6 item 1: the "what changed from v0.4" items against `stop:`, `ans5:`,
+    `read:`, `smoke:` and the file): a blind agent, under a brief quoting the list of record v2's items 1–5.
+    - By its report, HEAD was `42c5a92` when it started and `fc43249` when it ended. `fc43249` is the coordinating
+      session's close on `750a7dd`'s entry.
+    - 40 items: 35 CONFIRMED, 5 IMPRECISE, 0 OPEN, 0 FAIL
+      ([`_a-m2-v05_referent-check`](results/raw/2026-11-10_a-m2-v05_referent-check.md): the report verbatim, then
+      Code's dispositions and the items outside the delta).
+    - **Item 3.18, substantive in kind, is resolved in the record.** §4.3's arrows put the G-SHAPE-F3 and G-ANL-F3
+      re-runs before the build's review.
+      - v0.5 §6 item 4, A5, and `ans5:` §7 and §8 item 5 all give the other order: the battery, the review, the
+        build's commit, the re-runs, then the lock.
+      - §4.3's literal order cannot run: the canonical `ganl` and `gshape` refuse uncommitted sources.
+      - v0.5's own §5 makes the routing block the record of the PI's decisions ("the routing block is their record",
+        v0.5:81). Its item 3 orders "the battery run, the review, the re-runs" (v0.5:85), and A5's "[go]" is the PI's
+        decision on that order.
+      - Code will run A5's order, and this is not a STOP.
+    - **The other four are non-substantive:**
+      - the "every changed line" claim (§4.1's added clause and many within-line changes are not listed);
+      - two loosely placed tags;
+      - the list of record's unnamed version (v2, by A5 and C2);
+      - §6 item 2's close line, done at `0516832`.
+    - All five go to the seat as dated notes in the raw. v0.5 is committed as delivered.
+  - **A dated correction to Code's STOP block** (`50fea90`, `stop:` line 93). The smoke driver's diff
+    (`git diff acde2d8 9c7062e -- scripts/mf3_sessions.py`) adds 1,855 lines, 1,728 of them non-blank, and removes
+    none. The line's point, that the commit removed no line of the wiring, stands.
+  - **The routings, verbatim** (§6 item 2), as the coordinating session relayed them to this session:
+    - 2026-11-09 (evening), section A:
+
+      > A1. The smoke's result acknowledged: F-b selected, the second stop fired, nothing adopted; the seat's read confirms the rule's computation and counter (b) = 2 [as ruled].
+      > A2. The re-specification, ADDENDUM-m2 v0.4: F-b's exact bytes, cap 120 from the re-run of G-TIME-F3 on (m:174's trigger value applied from the re-run; m:294's trigger report-only) [adopted]
+      > A3. Code: close line on the smoke entry 6cfd3db citing the smoke answers by path and sha256; v0.4's referent check of the delta (v0.4 §6 item 1), then commit (v0.3 to archive/ by git mv); then the mf3 build → self-tests → G-SHAPE-F3 and G-ANL-F3 re-runs → LOCK-m-F3 v0.1 re-issued (cites the list of record, C2) → G-TIME-F3 re-run into Q-F3_time-r2.json at cap 120, on the laptop, announced to this session, ≈ 2.5–3.5 h, serialized with any other laptop model run → STOP for the seat's read [go].
+      > A4. The hour figures (v0.4 §4.4) are for the PI's cap at LOCK-m-F3 v1.0, not for now [noted]. D2 2026-12-22 [stands].
+
+    - 2026-11-10, its header and file list, C2 (which binds the lock's re-issue) and section A (A1–A5 also stand
+      verbatim in the close line at `0516832`):
+
+      > ROUTING — 2026-11-10 — the seat's four files, dropped untracked on the laptop; the PI commits by path
+      >
+      > Files (verify sha256 first):
+      >   results/raw/2026-11-10_a-m2-v04-stop_design-to-code_answers.md     a85b924930866191ab22e9ac9874a55fa9a3ff9c0b881f7d4aa34e04e7fb8faf  (11,894 B)
+      >   ADDENDUM-m2-f3-reasoning-block-v0_5.md  (root)                    f27505c556a3304097d2154698bcf4498927e692c7341aec5060803c833b5354  (32,814 B)
+      >   results/raw/2026-11-10_p-qual-wiring_design-to-code_answers.md     e20bca1327579fa52b5670c7f1444e820160485ff1f3884717045c8eb14923a9  (8,864 B)
+      >   results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md 6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd  (8,047 B)
+      >
+      > C2. The list of record v2 (§2 of the list ruling) replaces the sweeps ruling's §2 from today: item 3 = ':!data/*/ckpt/**' ':!data/*/reports/**' (or ':!data/**' / the prune), pickaxe included; item 2 = checkpoints and call logs closed, reports readable, no metadata of either; item 9 = test a command form on the machine before a rule names it [adopted]. Every session re-briefs any running subagent; LOCK-m-F3's re-issue and LOCK-p v0.2 cite v2.
+      >
+      > A1. Q1: option (a) — mf3 admits cap 60 on the stub path only; 120 binds every run on a model (_extra non-stub, resume.Identity on any non-stub binding, prior_gate require_real, the driver); the analyzer untouched; a G-ANL-F3 battery group curable only by an analyzer edit is a STOP, not an edit [as ruled].
+      > A2. Q2: resume.py and the driver's time wiring move (cap 120; checkpoint Q-F3_time-r2.json with the first-run refusal in the driver's precheck; --smoke retired) [confirmed].
+      > A3. Q3–Q4: §4.4 and the seven IMPRECISE items corrected in v0.5; the planning figure for the PI's cap at v1.0 is ≈ 280–560 h uncached, ≈ 35–50 h cached; NOT-RUN is by the PI declining v1.0 (m:243/m:324) [noted]. Corrections to read: as dated notes (5.30×; the binomial .168–.889; the opener-space sentence) [recorded].
+      > A4. Q5–Q6: the agent's two searches inert (C1); the declared parallel start accepted, the rule standing [as ruled]. Ledger (63) [recorded].
+      > A5. Close line on 50fea90 citing the A-m2 answers → v0.5's referent check of its delta → commit (v0.3 to archive/ by git mv; v0.4 to archive/ uncommitted) → the build resumes from the scratch worktree → G-ANL-F3's battery on the build → review rounds → the build's commit → G-SHAPE-F3 and G-ANL-F3 re-runs → LOCK-m-F3 v0.1 re-issued (cites the list v2) → G-TIME-F3 re-run into Q-F3_time-r2.json at cap 120, announced, ≈ 2.5–3.5 h → STOP for the seat's read [go].
+
+  - **Next:** the build resumes from the scratch worktree under `ans5:` §1–§2, and G-ANL-F3's battery runs on it
+    before the review rounds. Nothing of the build is committed, and no gate or stage of record runs, before this
+    commit (`ans5:` §6).
+  - **Values-check:** a blind agent, read-only, one pass, under a brief quoting the list of record v2's items 1–5
+    ([`_a-m2-v05_valuescheck`](results/raw/2026-11-10_a-m2-v05_valuescheck.md)). 71 items: 55 CONFIRMED, 6 IMPRECISE,
+    0 FAIL, 10 NOT CHECKABLE.
+    - Each IMPRECISE item is applied. Among them, item 3.18's disposition now cites v0.5's own §5 (v0.5:81, :85).
+    - The NOT CHECKABLE items are process claims, placeholders, this commit's own effects, and the 2026-11-10 header
+      line, which no committed text held before this entry.
+    - The checker disclosed one possible departure: a pathspec-limited `git status --porcelain` over five addenda at
+      root and in `archive/`, where the list's item 1 names the bare form. Nothing under `data/` was named or printed.
+      It goes to the seat under the list's item 8; Code rules on none of it.
+  - **Committed by path:** v0.5 at root, the `git mv` of v0.3 to `archive/`, the referent raw, the values-check raw and
+    this entry. Nothing ran on a model. Not pushed.
+
 - 2026-11-09 — **ADDENDUM-m2 v0.4: the referent check of the delta (§6 item 1) STOPs for the seat, and v0.4 is not
   committed. The seat's read of the smoke is committed by path, with the smoke entry's close line.**
   (Stamp verified at write time: `date -u` → **Tue Nov 10 04:41:24 UTC 2026**.)
