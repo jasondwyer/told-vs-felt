@@ -21,6 +21,25 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **Dated note (coordinating session), for the seat's read of G-TIME-F3 r2 (`93ecaf9`): two computations of mine of the kind its block's Q4 discloses.**
+  - The block is `results/raw/2026-11-10_mf3-code-to-design_G-TIME-F3-r2.md` (sha256 `55bf34584bda0068…`).
+  - Its Q4 discloses the F3 session's two bounds on the stage's time under the seat's Q4 ruling. By that ruling the
+    unavoidable records "remain, and are not computed against each other by anyone before VERDICTS"
+    (`results/raw/2026-10-18_m-campaign-driver_review.txt:325`, quoting the step-10 read's Q4 verbatim).
+  - Two computations of mine are of the same kind:
+    - (1) My reasoning restated the end notice's stated window, and once computed the stage's total time from the
+      launch stamp and the notice's stamp. No command ran and nothing printed; no message or file carried it.
+    - (2) My closing message to the PI gave the pod's idle cost, as a dollar figure, from my B6 ask to that message's
+      time. The ask came just after the launch and the message after the run's end, so the figure is a looser upper
+      bound on the stage's time. It reached the PI in chat only.
+  - Neither was combined with the report's sham seconds. I have read none of the run's raw, report, reads or checkpoint.
+  - The F3 session reports that its block discloses my relays of the notice's stamp and of later transcript times,
+    without times. My chat messages to the PI also carried the launch stamp beside the notice's stamp.
+  - No committed text holds a stamp or a figure from (1) or (2), and this note gives none.
+  - Both happened while HEAD was `f674583`, after the run's end.
+  - Disclosed under the list of record v2's item 8, for the seat to rule; nothing rewritten. RESULTS.md only. Nothing
+    ran on a model or the box. Not pushed. Committed by path.
+
 - 2026-11-10 — **G-TIME-F3, its re-run (PROPOSAL-m v1.11 §3.2 m:293; ADDENDUM-m2 v0.5 §4.3; the PI's routing of
   2026-11-10, A5): PASS. Six uncached sessions ran on Qwen under LOCK-m-F3 v0.1 as re-issued (`f674583`), with the
   reasoning block F-b at cap 120, into `data/mf3/ckpt/Q-F3_time-r2.json`.**
