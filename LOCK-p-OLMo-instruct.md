@@ -1,3 +1,98 @@
+# LOCK-p-OLMo-instruct v0.2
+
+*PROPOSAL-p's lock for its unit OLMo-instruct, re-issued above its v0.1 text kept verbatim: m:302's LOCK-m-OLMo-{ckpt} v0.2 "(acceptance; projections)", written for p -- in the seat's words "LOCK-m-OLMo v0.2: projections; OLMo port acceptance" (its answer on G-TIME-OLMo (p), `results/raw/2026-11-09_p-gtime_design-to-code_answers.md`, sha256 `7b8b1d5f825778232ee72d062754db531fa9c8bd8b707ccc5c8b4e0507ffadc3`, §2) -- in the form of the seat's answers on G-F0m-OLMo (p)'s wiring (`results/raw/2026-11-10_p-qual-wiring_design-to-code_answers.md`, sha256 `e20bca1327579fa52b5670c7f1444e820160485ff1f3884717045c8eb14923a9`, §3). Written by Code on the PI's routing of 2026-11-10 (B1, the order: "... → LOCK-p v0.2 ×3 → G-F0m-OLMo (p) ×3 on the box, batched → STOP for the seat's read [go]"; B3, the form [adopted]), on the code of the qual wiring's BUILD (`40086e8`) and the re-runs of G-SHAPE-p (`f5e695c`) and G-ANL-p (`ba89279`). It licenses G-F0m-OLMo (p) on OLMo-instruct; nothing later. Version v0.2, 2026-11-10, committed by path. This file's own sha256 is named in its entry (RESULTS.md, 2026-11-10, LOCK-p v0.2) and is the identity_extra lock_sha256 of OLMo-instruct's G-F0m-OLMo (p) checkpoint.*
+
+## A. v0.2: the seat's eight items (its answer of 2026-11-09, §2), quoted, with this checkpoint's values
+
+1. **The acceptance.** m:302's "the F0m-OLMo verifier's acceptance of the runner", in p's terms: m's OLMo runner, run by import through p's register entries (1), (2), (6)–(9) on backend `641ee466f4553b6a`, produced the two sessions m:302 names, both `verified` true under m's verifier (G-VER), no hair trigger (m's three and p's `line_break_in_stored_text`), the sham bar silent, the pause silent — the entry's figures quoted (0/10, 0 of 4 control characters, 10 of 10 proxy attributions, the sham seconds) and the seat's read of 2026-11-09 cited by path and sha256. The acceptance is of the runner-through-the-register on this box; it accepts no outcome.
+   - **This checkpoint** (the G-TIME-OLMo (p) ×3 entry, RESULTS.md, 2026-11-09, `2258c52`): the sham bar 0/10 (silent), the pause silent; the contrast forced rounds' control characters 0 of 4; the sham proxy 10 of 10 rounds attributed, 0 cuts; the sham seconds 5.289 s. The seat's read: `results/raw/2026-11-09_p-gtime_design-to-code_answers.md`, sha256 `7b8b1d5f825778232ee72d062754db531fa9c8bd8b707ccc5c8b4e0507ffadc3` (§1: PASS ×3 stand).
+
+   G-TIME-OLMo-instruct port acceptance recorded
+
+2. **The path:** uncached (m:267; each LOCK-p v0.1's §0 line), no G-ID for OLMo, as v0.1 has it.
+3. **The projections (per checkpoint).** The basis of record is **m:205's** — 19.5 s per session at instruct, 22.7 s at SFT/DPO, the pre-registered planning figures, which carry the load and the verify re-forward amortized — giving p §6.1's ≈ 3.4/3.9/4.5 h for the three campaigns at 160/192/224 sessions, inside the 12 h budget. **Beside it, the measured sham seconds** — 3.528, 3.972, 5.289 s (one sham session each; the contrast seconds withheld; the load excluded, each stage's wall clock 225–228 s with its load) — reported as the observed lower figure and no basis: n = 1 per checkpoint, sham only, load-free. The realised seconds supersede both at the campaign's looks and VERDICTS. Code computes the projection by m's rule at m:205's basis and prints the sham figure beside.
+   - **This checkpoint**, by m's rule (m:205: the unit's total + 26 sessions) at m:205's basis of record, 19.5 s per session: 160 sessions: (160 + 26) × 19.5 s = 1.01 h; 192 sessions: (192 + 26) × 19.5 s = 1.18 h; 224 sessions: (224 + 26) × 19.5 s = 1.35 h. **Beside it, the measured sham seconds:** 5.289 s (one sham session, the load excluded; not a basis).
+4. **The cap share:** the PI's at G-PWR, per checkpoint, within the 12 h (p §6.1); v0.2 records "at G-PWR, per checkpoint" and nothing more.
+5. **FLAG (j)** recorded as a known limitation of `stage.gshape_drift_problems` (exact in the stage's own process; a false drift in any process that loads a `valence_core` module outside p and m), with its fix — a fresh-interpreter closure for p's check — deferred to the next package move (§4 (j)).
+   - **Its fix landed with the qual wiring** (the seat's answers of 2026-11-10, §1: "(j)'s fix — a fresh-interpreter closure for p's drift check — lands with this move"), at `40086e8`: `stage.gshape_drift_problems` compares G-SHAPE-p's recorded import closure with `stage.fresh_import_closure`, computed in a fresh interpreter that imports p's driver, so the check no longer depends on the calling process.
+6. **The backend clause** as corrected ((h), §4): a backend change after the lock STOPs the stage; a box of the same class gives the same identifier and is not detected; a box change follows p §6.2's respawn protocol with a new `BACKEND — characterization` entry, recorded by a dated note at the lock in force, no re-issue; a differing identifier STOPs and the seat rules.
+7. **The carried listing rule, stated in one line** (the p answers' §2 item 7, now pointing at the list of record v2, `results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md`, sha256 `6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd`, which supersedes the sweeps ruling's §2): before the unit's VERDICTS, no size or time metadata of `data/p/ckpt` or `data/p/reports` in any session's shell; the permitted forms are the list of record's (v2, §2).
+8. **D_p 2026-12-15** restated; the disclosure (F-p3) and, on sft, the SFT sentence, carried from v0.1.
+
+## B. The values of record at v0.2 (`valence_core.p.stage.lock_required` on the moved code, in v0.1's §1-§3 forms)
+
+### B.1 The values the stage's precheck requires, verbatim
+- m's analyzer (scripts/m_analyze.py): `d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48`
+- p's analyzer (scripts/p_analyze.py): `d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008`
+- PROPOSAL-m (m's proposal pin, F-p8): `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b`
+- PROPOSAL-p (proposal_p_sha256): `42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32`
+- m's package_sha256: `7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb`
+- p's package_sha256: `08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26`
+- G-CAL-p's artifact: `5e3ef51a2f3a24dbbacea922b4437c35c59eda64632376a997c2890efc5a6661`
+- the covariate (p §3.2): `covariate G-CAL-p-instruct (clean minus corrupted, f0's sign): 1/8`
+- G-SHAPE-p's artifact: `f8d221098c8fe6f0839426e87fd1cc519a7928b5ee66f9a09b6dda8805fa631f`
+- G-ANL-p's artifact: `90d0d5d667feadaf718e317d43b5bd83400b61102a6a56962adbb472cce48f2e`
+- p's renders, m's convention (sha16): `6baf494960da4589`
+- p's renders, p's convention (sha256): `1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722`
+- the lexicon (F-p11): `be41ad97963bf8dabedd5871d5d691596175269d540956b0f9965a885c2bbab9`
+- p's schedules manifest: `999373656ab0fd76771a254f6d8d7d7da696c1448f8ae49b9e0ababe21eddb34`
+- schedule OLMo-instruct_campaign_A0-OLMo-instruct.json: `3fd3e58739ac3d1207bf8e5821bc41b43bd23dd4cffc60dac890d154fa93e83c`
+- schedule OLMo-instruct_campaign_A0s-OLMo-instruct.json: `21c8f4b2edcaff6545d923dc212d8a1dfc1a9dcfaf6c3d260b2f3f103b1bc9b3`
+- schedule OLMo-instruct_qual_A0-OLMo-instruct.json: `f9ab4ebc9e8b2b6fe3a66f911f72c525535f8595ae6cc9b5e5a213361e56f821`
+- schedule OLMo-instruct_qual_A0s-OLMo-instruct.json: `77bcc070fa67d151333ea510288954c5f33488d54fac632a79d4020653c73154`
+- schedule OLMo-instruct_time_A0-OLMo-instruct.json: `c4b06a5124eebffb8cbc974d5d3b2c66e3b6e27864189511ba073450283d7639`
+- schedule OLMo-instruct_time_A0s-OLMo-instruct.json: `d171b647bb4bd7b3b5c322376cada8a1971ce3eba32e24ac6be3515f4a9f4ab7`
+- banner SESSION_BANNER: `7f71cccbf74778ff3370c49ec68796bd054612b5f42e37034ef2041054d47e99`
+- banner COMMON: `e4ab3c3e68439b0b449d2c7124f4332415e6df302c1ccc7c3bc2d2d83910c923`
+- banner TOLD_MAP: `2a85bd6561d96fdb7ed77c4d4b25579d21d33358974fbf59a38fd3a123e8e017`
+- banner TOLD_MAP_SHAM: `2e5cc2943d879173e6fe39ce3078d5646e65320b7d6d42cea504c7fd67f84cc9`
+- banner TOLD_OBJ: `f59f7044a44bde123d2ba07209cdc5f3921fb9e6eb158a2bcbb44bf53aa973a2`
+- banner DECLARED_HARNESS_STRINGS: `e7cb0a23811890edcc2dd90bdf7a8c7afeb7a2d08461b686780a4a3e0142837a`
+- the OLMo ban list (sha16): `2dd86a453a2275ef`
+- the OLMo scaffold set (data/olmo/scaffold_instruct.json): `21110cea5331675daf538a42ae482a76c24965375c0dfe94ae72fc19bf2fd9cf`
+- the driver (scripts/p_sessions.py): `89551017bdfd78f67440ca3c5c1aa44a8a8ff83494a349b430aaaed22655af44`
+
+### B.2 The licence (p §4.2), one line each, verbatim
+
+```
+LICENCE valence_core/p package_sha256 08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26 (14 files, valence_core/p/*.py)
+LICENCE valence_core/m/audit.py sha256 16d0abb91444af1b86dcdabdca919f8e61ce371055fe9581a96d02eb950e50f6
+LICENCE valence_core/m/bars.py sha256 e7f028d8a08c70d29b03296276dc292d8a4042a0e20ac8e6f0c70540b91e1d6c
+LICENCE valence_core/m/banner.py sha256 730442ca354d8d92fe52135d42506cd83cef2d10deb7dfc23d0a1c204a6d170c
+LICENCE valence_core/m/corr.py sha256 74818109a284d203177bae82170cbfa1f2cec8cbd85dfa2f7db018530eb27fce
+LICENCE valence_core/m/gcal.py sha256 fbae9a015330677a67c9d401699dc49848fad4a20ce26bb760eb6723eb53f6ef
+LICENCE valence_core/m/gshape.py sha256 257e02f43bfe8bb67156129cfb2c270f594ab48b62bd555c627eb2f0b66ca13c
+LICENCE valence_core/m/guard.py sha256 6aa5ac2dc7a7e071ad848053aa1a7e73c9539d1d5cb6fe1152b0f11e7a4d8b87
+LICENCE valence_core/m/keys.py sha256 a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb
+LICENCE valence_core/m/readrule.py sha256 fca9e7329ec42419ed0eaa658d1a954b68db0e05a93cbb6b3a4502f781737a9e
+LICENCE valence_core/m/resume.py sha256 78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7
+LICENCE valence_core/m/runner_olmo.py sha256 95ebd48f3aa347bfdc9e125b49f244fb2ea2584322c891100b515794d499f317
+LICENCE valence_core/m/runner_qwen.py sha256 68bf4be75a99bce26c36e5dfc2edf7ff21caa5d3cf728bc8b16bcf16386e806c
+LICENCE valence_core/m/scaffold.py sha256 39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5
+LICENCE valence_core/m/schedule.py sha256 f262f9e0120bcf6e694c0850b56dc3a19ab3c931b28ba92d47009f9f49a72d0d
+LICENCE valence_core/m/stages.py sha256 42cb4002a8a790bd13a6d0b0e729cec2a7e619b5ecbaf3241358a7f6b1aa275f
+LICENCE valence_core/m/verify.py sha256 6940c2543827b416863e55087becf6c0d31d54cf980b2e996d3999413f8c9254
+LICENCE valence_core/m/__init__.py sha256 b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4
+LICENCE valence_core/adapters/olmo_hf.py sha256 df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc
+```
+
+### B.3 The register (p §4.2), one line each, verbatim
+
+```
+REGISTER {"attrs": ["_eligible_m"], "kind": "eligibility", "module": "valence_core.m.corr", "n": 1, "reason": "p §1.4: corrupt_p is corr.corrupt_m with the frame-word eligible set (p §1.1)", "replacement": "valence_core.p.corrupt.eligible_p", "status": "built at the p BUILD (p §8 step 4)"}
+REGISTER {"attrs": ["item_key", "arm_key", "sched_key", "gate_sched_key"], "kind": "keys", "module": "valence_core.m.keys", "n": 2, "reason": "p §4.1: the six OLMo key families under p's prefix, for the schedule builder, the arm streams and the item streams, so that no p stream coincides with an m stream", "replacement": "valence_core.p.keys.{item_key, arm_key, sched_key, gate_sched_key}", "status": "built at the p BUILD (p §8 step 4)"}
+REGISTER {"attrs": ["clock_of_record", "crosscheck_coordinate"], "kind": "clock; roots", "module": "m_analyze", "n": 3, "reason": "p §4.4: p's outputs through m's analyzer (scripts/m_analyze.py, imported by scripts/p_analyze.py), the proposal pin kept m's (proposal_p_sha256 beside it): (a) the Clock -- D_p for the OLMo units, m's own for Q-F0 and Q-F3; (c) the v2 posting's per-unit verdicts-dir resolution -- data/p/verdicts for the OLMo units, data/m/verdicts for Q-F0. (b) The roots are parameters wherever m takes them, not a site (the seat's Q9 (b))", "replacement": "valence_core.p.analysis.{clock_of_record_p, crosscheck_coordinate_p}", "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"}
+REGISTER {"attrs": ["run_completability's segment and generation call (gcal.py:1155, :1164; the OLMo branch's temp, cap at :1104)"], "kind": "pinned restatement", "module": "valence_core.m.gcal", "n": 5, "reason": "p §3.1, P21: m's call is an inline fragment of run_completability, which cannot run for p (its precheck, roots and identity, and no hair trigger)", "replacement": "valence_core.p.gcal.run's restated segment (m's SEGMENT_FORM) and call, pinned by gcal._call_pin_problems (an AST comparison, also run in G-CAL-p's precheck) and the self-test's dynamic check of all 128 calls", "status": "admitted by the seat's ruling of 2026-11-07 (38f9974, §4); a restatement, never substituted"}
+REGISTER {"attrs": ["DEFAULT_OUT"], "kind": "roots", "module": "valence_core.m.stages", "n": 6, "reason": "the seat's Q1: p's gate stages and campaign write under data/p; m's out-root guard reads DEFAULT_OUT at call time (stages.py:309) and so admits data/p and refuses data/m for p", "replacement": "valence_core.p.stage.DEFAULT_OUT_P (REPO/data/p)", "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"}
+REGISTER {"attrs": ["verify_schedule_dir"], "kind": "roots", "module": "valence_core.m.schedule", "n": 7, "reason": "the seat's Q2: m's load_committed runs m's verifier, which regenerates all four units' files and m's manifest and so refuses data/p/schedules; p's is m's check over p's eighteen files and p's manifest, regenerated by p's builder under entry (2)", "replacement": "valence_core.p.schedule.verify_schedule_dir", "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"}
+REGISTER {"attrs": ["IDENTITY_KEYS_OLMO"], "kind": "pins", "module": "valence_core.m.resume", "n": 8, "reason": "the seat's Q3 (a): p's four identity fields in every p gate-stage and campaign checkpoint's identity, as F-p8 ruled for checkpoints and p:84 asks", "replacement": "valence_core.p.identity.IDENTITY_KEYS_OLMO_P (m's key set + proposal, proposal_p_sha256, p_package_sha256, renders_sha256_p)", "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"}
+REGISTER {"attrs": ["Identity"], "kind": "pins", "module": "valence_core.m.resume", "n": 9, "reason": "the seat's Q3 (a): p's four fields added to m's identity by m's own builder, wrapped -- the stage's build (stages._identity, stages.py:1106) and m's rebuild in _validated (resume.py:507) both resolve resume.Identity at call time. Declared at de729c4 on stages._identity, which cannot run (Code's block of 2026-11-08, 9624f70); on resume.Identity by the seat's answer to that block (6b63973, §2), entered and restored with entry (8)", "replacement": "valence_core.p.identity.identity_p (m's builder, wrapped)", "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"}
+```
+
+---
+
+Where the v0.1 text below differs from v0.2's values of record (§B), v0.2's are of record.
+
 # LOCK-p-OLMo-instruct v0.1
 
 *PROPOSAL-p's lock for its unit OLMo-instruct (p v0.2 §4.1's chain: G-CAL-p → LOCK-p v0.1 → G-TIME-OLMo (p) → LOCK v0.2 → G-F0m-OLMo (p) → G-PWR → LOCK v1.0 with D_p → the campaign). Written by Code on the design seat's answer of 2026-11-08 (`de729c4`, §4) and the PI's routing of 2026-11-08 quoted in `de729c4`'s close lines, item 2 ("build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 → G-TIME-OLMo (p) on the box [go]"), with entry (9) as the seat's answer to Code's block of 2026-11-08 declares it and the PI's routing of 2026-11-09 quoted at `6b63973`, item 2 ("p: entry (9) on `resume.Identity` [declared]; step 6 continues — build → G-SHAPE-p re-run → G-ANL-p → LOCK-p v0.1 ×3 [go]"). It contains m:302's LOCK v0.1 contents for this checkpoint and the seat's additions. It licenses G-TIME-OLMo (p) on OLMo-instruct; nothing later. Version v0.1, 2026-11-09, drafted by Code and committed by path. This file's own sha256 is named in its entry (RESULTS.md, 2026-11-09, LOCK-p v0.1) and is the identity_extra lock_sha256 of OLMo-instruct's G-TIME-OLMo (p) checkpoint.*

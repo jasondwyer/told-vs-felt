@@ -21,6 +21,63 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **LOCK-p-OLMo-{sft,dpo,instruct} v0.2 (p v0.2 §4.1's chain; the PI's routing of 2026-11-10, B1's
+  "LOCK-p v0.2 ×3" and B3's form; the seat's answers of 2026-11-10, `42c5a92`, §3, and of 2026-11-09, `e619d3d`, §2).
+  Each lock is re-issued above its v0.1 text, kept verbatim. Each stands on the qual wiring's BUILD (`40086e8`) and on
+  the re-runs of G-SHAPE-p (`f5e695c`) and G-ANL-p (`ba89279`), and licenses G-F0m-OLMo (p) on its checkpoint, nothing
+  later.** Model-free; nothing ran on a model or the box.
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 09:11:14 UTC 2026**.)
+  - **The files.** Each sha256 below is the `lock_sha256` its checkpoint's G-F0m-OLMo (p) checkpoint will carry:
+    - `LOCK-p-OLMo-sft.md`, `3765fe22d3d548d96373d5ce20eebaad3c0558d6d6154e327db8a7946a0f2f98`;
+    - `LOCK-p-OLMo-dpo.md`, `b739081f60a5c5b0d7e2cdf586691585ee50dfe335321a1b57d7887edac43c2e`;
+    - `LOCK-p-OLMo-instruct.md`, `48e1c31523eb0c87b3f2fbede53a4f4a15c97565a3136678bb1c3782ecfeae52`.
+  - **The form**, B3 verbatim: "Q3: the lock's form — v0.2 header + the eight items, then the generated values of record on the moved code, then v0.1 verbatim under one superseding line; one BACKEND OF RECORD line; item 1 carries the whole line "G-TIME-OLMo-{ckpt} port acceptance recorded" [adopted]."
+    - **§A: the seat's eight items** (its answer of 2026-11-09, §2).
+      - Items 1–6 and 8 are quoted from its committed bytes.
+      - Item 7 is quoted with its pointer replaced, as the seat's §3 of 2026-11-10 asks. It now points at the list of
+        record v2 (`results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md`, sha256 `6c1135f5…6cdd`,
+        committed at `fc43249`), and its rule is unchanged.
+      - Under item 5 sits its fix's landing, at `40086e8`.
+      - Beside items 1 and 3 sit this checkpoint's values:
+        - item 1: the G-TIME-OLMo (p) entry's figures (`2258c52`), and the whole line `G-TIME-OLMo-{ckpt} port
+          acceptance recorded`;
+        - item 3: the projections, by m's rule (the unit's total + 26 sessions) at m:205's basis: for sft and dpo,
+          at 22.7 s, 1.17, 1.37 and 1.58 h at 160, 192 and 224 sessions; for instruct, at 19.5 s, 1.01, 1.18 and
+          1.35 h. The measured sham seconds sit beside them (3.528, 3.972 and 5.289 s) and are not a basis.
+    - **§B: the values of record at v0.2.** These are the 56 values `stage.lock_required` lists on the moved code, in
+      v0.1's §1–§3 forms, generated with nothing typed. Among them:
+      - p's package `08bfa693…fa26` and the driver `89551017…af44`;
+      - G-SHAPE-p's artifact `f8d22109…631f` and G-ANL-p's `90d0d5d6…8f2e`;
+      - p's licence lines and the register's lines.
+    - **Then v0.1's text, verbatim,** under one line: "Where the v0.1 text below differs from v0.2's values of record
+      (§B), v0.2's are of record." Its one `BACKEND OF RECORD 641ee466f4553b6a` line is the lock's one, as the
+      precheck requires.
+  - **The checks** (Code's, by tool, on each file):
+    - it names every `lock_required` value in `stage.lock_names`' form;
+    - it carries exactly one backend line, v0.1's;
+    - it carries the acceptance line as a whole line (`stage.qual_lock_problems`);
+    - it contains its committed v0.1 text verbatim, after the superseding line.
+
+    The stage's precheck at `qual` reads the committed lock. It runs on the box before the launch.
+  - **For the seat: the values-check's observations on the seat's own text** (not adjudicated).
+    - Two phrases the seat's §2 of 2026-11-09 puts in quotation marks as m:302's are PROPOSAL-m v1.6 and v1.7 wording,
+      not v1.11's (the pin, F-p8):
+      - its lead-in's "LOCK-m-OLMo v0.2: projections; OLMo port acceptance", compressed from those versions'
+        headings (v1.6:102, v1.7:109);
+      - item 1's "the F0m-OLMo verifier's acceptance of the runner", found in v1.6 and v1.7 only.
+    - In substance both stand: v1.11:302 has "(acceptance; projections)" and "port acceptance recorded at v0.2".
+    - The locks quote item 1 verbatim, as B3 asks. Each header now cites m:302 in v1.11's words, with the seat's
+      phrase as the seat's.
+    - Item 3's "verify re-forward", amortized, is not named at m:205, which names the load's amortization only.
+  - **Values-check:** 118 claims: 104 CONFIRMED, 4 IMPRECISE, 0 FAIL, 10 NOT CHECKABLE (the commit and the box, which lie ahead; Code's own conduct; the two fields the draft left open). The four were applied. Each lock's header now cites m:302 in PROPOSAL-m v1.11's words, with the seat's phrase given as the seat's; that moved each file's sha256, and each differs from the checked file in that one line alone (by diff). This entry's §A bullet is reworded. The checker's disclosures are in the raw, among them author dates in one `git log` and an over-broad grep of RESULTS.md's committed text at `2258c52`. It read or hashed no file under `data/*/ckpt` or `data/*/reports`, and printed no size or time of one ([`_p-lock-v02_valuescheck`](results/raw/2026-11-10_p-lock-v02_valuescheck.md)).
+  - **Next:** the box, on the PI's re-decision on the pod (B6):
+    - a bundle sync, with G-TIME's 15 untracked outputs set aside by digest;
+    - the precheck CLEAR ×3;
+    - G-F0m-OLMo (p) ×3, batched;
+    - the seat's read.
+
+    Not pushed. Committed by path.
+
 - 2026-11-10 — **G-ANL-p — the canonical re-run on HEAD `f5e695c`: PASS (p v0.2 §4.4; the PI's routing of 2026-11-10,
   B1: "G-ANL-p re-run (f8b16d5's superseded)"). `scripts/p_analyze.py ganl` writes `data/p/gates/G-ANL-p.json`
   (sha256 `90d0d5d667feadaf718e317d43b5bd83400b61102a6a56962adbb472cce48f2e`) once. m's battery passes 525/525 and
