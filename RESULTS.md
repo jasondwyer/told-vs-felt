@@ -21,6 +21,126 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **G-TIME-F3, its re-run (PROPOSAL-m v1.11 §3.2 m:293; ADDENDUM-m2 v0.5 §4.3; the PI's routing of
+  2026-11-10, A5): PASS. Six uncached sessions ran on Qwen under LOCK-m-F3 v0.1 as re-issued (`f674583`), with the
+  reasoning block F-b at cap 120, into `data/mf3/ckpt/Q-F3_time-r2.json`.**
+  - **No hair trigger fired.** Both binomial bars, on the three sham sessions, are silent: 0/30 rounds and 0/18
+    reasoning lines, each against a critical of 5. All six sessions are valid.
+  - **Counter (a) counts 0 of the 18 sham lines.** The first run's 13 held 9 banners and 2 frames.
+  - **m:294's count is 0 of ≤ 36 lines at the cap.** The cap is 120.
+  - **Counter (b), Code's declared read, lists 3 of 42 responses, all A1s free rounds,** for the seat to confirm or
+    correct.
+  - **Three disclosures go to the seat:**
+    - the raw header's process line;
+    - the end notice's stamps and its window on the end, with a bound that Code's own reasoning worked out (Q4);
+    - a harness listing after the end, from a mechanism that can fire mid-stage (Q3).
+  - Stopped for the seat's read.
+
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 13:41:03 UTC 2026**.)
+  - **The routing.** A5 of the PI's routing of 2026-11-10 ends: "… → G-TIME-F3 re-run into Q-F3_time-r2.json at cap
+    120, announced, ≈ 2.5–3.5 h → STOP for the seat's read [go]". The seat's ruling of 2026-11-08
+    (`results/raw/2026-11-08_gtime-f3_design-to-code_answers.md`) stopped the first run (`acc3b52`).
+  - **The launch.** It used m:267's line, as written: `nohup caffeinate -is /bin/zsh <wrapper> > /dev/null 2>&1 &
+    disown`, at HEAD `f674583`. It followed the coordinating session's acknowledgement, which the block quotes (§0).
+    - The wrapper writes the raw, exports `HF_HUB_OFFLINE=1` and unsets `MLXLM_USE_MODELSCOPE`. The raw's header
+      records the launch line and the checklist's items: AC at 140 W, and 635 GiB free. The gate line is the driver's
+      own.
+    - Before the launch: the mf3 self-test passed 182/182 after the lock's re-issue, the result its entry promised
+      here. Its output is committed beside. Then a dry pre-launch check returned CLEAR, with nothing loaded.
+    - **The header's process line, disclosed.** Its one entry, PID 18391, is a `zsh -c` shell whose argument list
+      named `python`. It is not a Python process. It is unidentified (the block, §0):
+      - It was not Code's launch shell, whose form differs. Code's first reading, that it was, is withdrawn (the
+        values-check, items 23 and 28).
+      - It was not the coordinating session's or the pod session's, as far as both transcripts show (the coordinating
+        session's answer of 2026-11-10).
+      - No Python process is known to have run at the launch.
+    - **While the stage ran** (the seat's laptop rule of 2026-11-08, §7):
+      - the coordinating session's acknowledgement: "I hold every other laptop model start until your end notice";
+      - Code's session ran no model or Python process;
+      - whether another session ran a non-model process is not known to Code;
+      - no commit has landed on main since the launch.
+    - **The end notice**, sent at the coordinating session's request:
+      - It carried the launch time, the end-wait's stamp (twice) and a later `pgrep` check's stamp. It also stated a
+        five-minute window on the end, from the end-wait's poll.
+      - Code's own reasoning worked out the interval from the launch to the end-wait's stamp, and from it and the sham
+        seconds a loose upper bound on the contrast sessions' seconds. No tool printed either figure, and no message
+        carried one.
+      - Code reads both as departures from the seat's G-TIME-F0 read, Q4. They go to the seat as the block's Q4.
+      - The coordinating session's relays repeated the stamps, to the pod session and to the PI. It has asked the pod
+        session to keep them out of committed text, has scrubbed its own memory notes, and has computed no bound.
+      - No committed text restates any of the stamps, so nothing committed places the window. This entry gives only
+        its width.
+    - **A harness listing after the end.** Code's auto-compaction applied just after the end-wait's notification. Its
+      attached git status names the re-run's checkpoint and its two report files, by name only.
+      - The coordinating session's compaction also applied after the end. Its scan found none during the run in the
+        pod session's transcript or in the eleven subagent transcripts touched in the six hours before the scan. That
+        scan looked for compactions, not for session starts.
+      - The same status arrives at a session's or a subagent's start, as it did for the values-check, after the end.
+      - Both mechanisms go to the seat as the block's Q3.
+  - **The run** ([`_mf3-gtime-f3-r2`](results/raw/2026-11-10_mf3-gtime-f3-r2.txt), local roots scrubbed; no finish
+    stamp, the seat's G-TIME-F0 read, Q4):
+    - DRIVER `1b593ba0…87c6`, committed at HEAD `f674583`, working tree identical. This is the BUILD's blob
+      (`5d40d59`).
+    - SNAPSHOT `c000ac2c2057d94be3fa931000c31723aac53282` (refs/main; one snapshot in the cache; `HF_HUB_OFFLINE=1`).
+      The re-read after the load found it unchanged.
+    - LICENCE: the proposal `42ab36ec…`, the lock `70da4a70…`, the analyzer `d347ea0c…`, mf3's package `098455d9…`,
+      and the eleven m files and the weights. A-m2 v0.5 (`f27505c5…`) is committed, and the reasoning block is F-b at
+      cap 120.
+    - The session lines: all six `valid`.
+    - `STAGE G-TIME-F3 PASS path=uncached`, exit 0. The backend identifier (the report's identity) is
+      `a734dadec8f8ce9b`, as at the first run and at G-TIME-F0.
+  - **Bars** (m:293; lock §8), on the sham sessions' realised counts:
+    - `round_degeneracy@G-TIME-F3` 0/30 (critical 5 at n = 30);
+    - `reasoning_line_defect@G-TIME-F3` 0/18 (critical 5 at n = 18), under A-m2 v0.5 §1's echo class: 0 empty, 0 at
+      the cap without a newline, 0 echo.
+    - All six records passed G-VER.
+  - **The cap** (A-m2 v0.5 §4.1; m:294, m:296). The CAP TRIGGER line reads "0 of <= 36 reasoning lines reached the cap
+    of 120 without a newline (threshold 3; m:294's trigger, reported, moving nothing: A-m2 v0.5 §4.1); the cap is 120,
+    recorded at LOCK-m-F3 v0.2 with this count (m:296)".
+  - **The sessions.** These are read from the report and the reads. Code did not open the checkpoint.
+    - Contrast A1, A2 and A3 each generated their 4 forced rounds, with the first run's responses, and none was
+      excluded at a forced round. Their free-round events, picks and seconds are withheld to Q-F3's VERDICTS (m:271,
+      m:318; F-6).
+    - Sham A1s, A2s and A3s are complete and valid, with 10 rounds each.
+    - The sham-template first-pick shares (m:318 exception (2)): A1s 1/1, A2s 1/1, A3s 0/1.
+    - The sham seconds: 1175.9, 1041.4 and 1118.3 (3335.6 in all). They join the first run's beside the projections
+      at LOCK-m-F3 v0.2 (the seat's Q5). The contrast sessions' seconds stay in the checkpoint.
+  - **The counters** (A-m2 v0.5 §3.4; rule 23, descriptive, deciding nothing):
+    - (a): 0 of 18 sham reasoning lines (the stage's COUNTER line).
+    - (b), Code's declared read over its gate-stage domain: 30 sham rounds and 12 contrast forced rounds, none
+      claimed by an audit class.
+      - (b) = 3, all A1s free rounds: round 8 (`response:` twelve times), and rounds 9 and 10 (echoes of the task's
+        text, carrying the audit's advisory `content:task_echo`).
+      - Read as not (b): A1s rounds 4 and 5, and A3s round 8.
+      - The seat confirms or corrects each (the block, §1.4).
+  - **Committed with this entry:**
+    - `data/mf3/ckpt/Q-F3_time-r2.json` (sha256 `ff644fa1…51b8`; it may hold a contrast pick, and it is -diff; Code
+      did not open it);
+    - `data/mf3/reports/Q-F3_time-r2_report.json` (`e9fc51b5…e1ba`);
+    - `data/mf3/reports/Q-F3_time-r2_reads.json` (`859031b0…a066`);
+    - the raw;
+    - the mf3 self-test's output after the lock's re-issue
+      ([`_mf3-selftest_after-lock-reissue`](results/raw/2026-11-10_mf3-selftest_after-lock-reissue.txt)), local roots
+      scrubbed;
+    - Code's block for the seat ([`_mf3-code-to-design_G-TIME-F3-r2`](results/raw/2026-11-10_mf3-code-to-design_G-TIME-F3-r2.md)),
+      which quotes the lines and figures the seat needs, as at the first run.
+  - **The block's questions:**
+    - Q1, the PASS and G-ID-F3;
+    - Q2, counter (b)'s items;
+    - Q3, the harness listing at a compaction and at a start;
+    - Q4, the end notice's window and Code's reasoning.
+  - **Values-check:** [`_mf3-gtime-f3-r2_valuescheck`](results/raw/2026-11-10_mf3-gtime-f3-r2_valuescheck.md): one blind
+    agent in two passes, under a brief quoting the list of record v2's items 1–5. It read the two report files for
+    the figures and hashed the checkpoints. It saw Code's transcript only through an extract that masks clock times.
+    - The first pass: 100 items, 80 CONFIRMED, 8 IMPRECISE, 2 FAIL, 10 NOT CHECKABLE.
+      - Both FAILs were one claim, "Code has computed no bound from it". It is now disclosed, as the block's Q4.
+      - Its item 28 led Code to withdraw its reading of PID 18391.
+    - The second pass, over the changes: 38 items, 27 CONFIRMED, 5 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE. The FAIL was
+      the commit-message draft, which had not yet been revised.
+    - Every FAIL and IMPRECISE item is applied. Code's masked scan of the checker's transcript found no barred form.
+  - **Next:** nothing until the seat rules. G-ID-F3 at 120 (m:295) and LOCK-m-F3 v0.2 (m:296) wait for the seat's read
+    and the PI's word. Not pushed. Committed by path.
+
 - 2026-11-10 — **LOCK-m-F3 v0.1 — RE-ISSUED under ADDENDUM-m2 v0.5 §4.3, above its v0.1 text kept verbatim, before the
   re-run of G-TIME-F3. `LOCK-m-F3.md`, sha256 `70da4a70aeeff434cae7f6a436d8391556118c26513b2456f3940d3872e81d3f`, is the file a Q-F3 stage cites from here on.**
   (Stamp verified at write time: `date -u` → **Tue Nov 10 10:15:42 UTC 2026**.)
