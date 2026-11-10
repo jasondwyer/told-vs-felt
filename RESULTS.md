@@ -39,6 +39,12 @@ applied to CLAUDE.md.
   - Both happened while HEAD was `f674583`, after the run's end.
   - Disclosed under the list of record v2's item 8, for the seat to rule; nothing rewritten. RESULTS.md only. Nothing
     ran on a model or the box. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-10; the F3 session's line, per the seat's §7).** The seat's read of G-TIME-F3 r2,
+    [`2026-11-10_gtime-f3-r2_design-to-code_answers.md`](results/raw/2026-11-10_gtime-f3-r2_design-to-code_answers.md)
+    (sha256 `54679f70c4082255a8df64a010cea8480fd58db93b7c5310ee9e49fd79adf01d`), rules this note's two computations
+    with the F3 session's two (§4, Q4): "inert; no strike". "Disclosure is what the rule asks when a mind does the
+    arithmetic, and both sessions disclosed." The file is committed by path with the re-run entry's close line (below),
+    on the PI's word "Route as given".
 
 - 2026-11-10 — **G-TIME-F3, its re-run (PROPOSAL-m v1.11 §3.2 m:293; ADDENDUM-m2 v0.5 §4.3; the PI's routing of
   2026-11-10, A5): PASS. Six uncached sessions ran on Qwen under LOCK-m-F3 v0.1 as re-issued (`f674583`), with the
@@ -159,6 +165,50 @@ applied to CLAUDE.md.
     - Every FAIL and IMPRECISE item is applied. Code's masked scan of the checker's transcript found no barred form.
   - **Next:** nothing until the seat rules. G-ID-F3 at 120 (m:295) and LOCK-m-F3 v0.2 (m:296) wait for the seat's read
     and the PI's word. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-10).** The seat's read of this re-run,
+    [`2026-11-10_gtime-f3-r2_design-to-code_answers.md`](results/raw/2026-11-10_gtime-f3-r2_design-to-code_answers.md)
+    (sha256 `54679f70c4082255a8df64a010cea8480fd58db93b7c5310ee9e49fd79adf01d`), is committed here by path with this
+    close, on the coordinating session's relay of the PI's word (the file's header: "the PI commits by path; Code adds
+    the re-run entry's close line"). In the seat's words (§7): "PASS stands; (b) = 3 confirmed; the listing inert; the
+    bounds inert, end notices stampless from here; the measured bases for v0.2".
+    - Q1 (§1.4): "PASS stands", under m:293's bars as A-m2 v0.5 §1 and §4.1 have them. The cap of record is 120, and
+      the first run's six sessions remain gate-stage sessions of the record.
+    - Q2 (§2): "(b) = 3: A1s free 3; forced 0; A2s 0; A3s 0". The three read as not (b) are confirmed.
+      - The rule for task echoes: a response that reproduces the task's instruction, "verbatim or truncated, its
+        imperative kept", is (b); one that restates the item's content in answer form is an attempt. The frozen audit
+        is not edited.
+      - Beside, under rule 11: `round_degeneracy` reads 0/30 where an eye reads 1/30 (A1s round 8, which the frozen
+        audit does not claim), "silent either way".
+    - Q3 (§4): the harness listing is "Not a departure, mid-stage or after; nothing is needed."
+    - Q4 (§4): Code's two bounds and the coordinating session's two are "inert; no strike".
+      - From here, for every stage with contrast sessions, and for G-ID-F3 "by the same form", the end notice carries
+        the exit status and the word "ended", with no stamp and no window.
+      - No session computes a stage total or a bound from any pair of stamps before VERDICTS.
+    - The measured bases (§3; §5 item 3): on the re-run's sham mean, 1,111.9 s, the campaign's uncached launches come
+      to ≈ 210–300 h. This replaces v0.5 §4.4's figure as the PI's planning figure. The cached figures wait for
+      G-ID-F3.
+    - The rest of §3, under rule 11:
+      - A2s round 8's line remarks on a missing space after a comma. It is counter-neutral and recorded, and the
+        opener's bytes stay.
+      - The wrapper's probe prints each match's full command line, uncut, from the next launch: "the wrapper is Code's
+        and its entry names the change".
+    - The mf3 BUILD entry's items (§5 item 4): Code's readings of `qwen_ends` and F6 are accepted, strikable until
+      v1.0. The stage does not write (b)'s domain, and the self-test's digest is item 1's form.
+    - §6's close line on the LOCK-p v0.2 entry and item 9 are the pod session's; ledger (64) is the seat's.
+    - Next (§5, §7): the `id` wiring, named in its entry with the DRIVER line's new blob; G-ID-F3 at 120 on the laptop,
+      announced; Code's block with the pairs' records; the seat's read; then LOCK-m-F3 v0.2 to §5 item 3.
+    - The PI's word, in chat, to the coordinating session's question "Route the seat's nine items as given?" (its relay
+      of 2026-11-10): "Route as given". The seat's §8 routing block, so adopted, verbatim:
+
+      > 1. G-TIME-F3 r2: PASS stands; the cap 120 of record [as ruled].
+      > 2. Counter (b) = 3 (A1s free 8, 9, 10); the task-echo rule [as ruled].
+      > 3. Q3 inert, nothing needed; Q4 inert, no strike; end notices carry the exit status and no stamp from here, for every stage with contrast sessions; no stage total or bound computed before VERDICTS [adopted].
+      > 4. The `id` wiring (F-1's kind, named in its entry) → G-ID-F3 at 120 on the laptop, announced, ≈ 1 h → the seat's read of the pairs → LOCK-m-F3 v0.2 to §5 [go].
+      > 5. The planning figure: ≈ 210–300 h uncached for the campaign on the re-run's measured mean (v0.5 §4.4's 280–560 h superseded); cached after G-ID-F3 [noted].
+      > 6. The BUILD entry's readings (`qwen_ends`; F6) accepted, strikable until v1.0; the stage does not write (b)'s domain; the self-test's digest item 1's form [as ruled].
+      > 7. The wrapper's probe prints full command lines at the next launch [adopted].
+      > 8. Ledger (64) [recorded]; the pod session's close line on the LOCK-p v0.2 entry [go].
+      > 9. p: G-F0m-OLMo (p) ×3 on the box — sync, precheck ×3, the three runs batched, STOP for the seat's read [go; the pod up through it, the PI's call].
 
 - 2026-11-10 — **LOCK-m-F3 v0.1 — RE-ISSUED under ADDENDUM-m2 v0.5 §4.3, above its v0.1 text kept verbatim, before the
   re-run of G-TIME-F3. `LOCK-m-F3.md`, sha256 `70da4a70aeeff434cae7f6a436d8391556118c26513b2456f3940d3872e81d3f`, is the file a Q-F3 stage cites from here on.**
