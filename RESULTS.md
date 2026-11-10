@@ -186,6 +186,35 @@ applied to CLAUDE.md.
     the account). Raw: [`_p-qual-wiring_valuescheck`](results/raw/2026-11-09_p-qual-wiring_valuescheck.md).
   - **Next:** the seat's answer and the PI's routing. LOCK-p v0.2 ×3's §2 text is drafted in scratch, not committed,
     and nothing is built before the routing. Not pushed.
+  - **Close (PI date 2026-11-10).** The design seat's answer
+    ([`2026-11-10_p-qual-wiring_design-to-code_answers.md`](results/raw/2026-11-10_p-qual-wiring_design-to-code_answers.md),
+    sha256 `e20bca1327579fa52b5670c7f1444e820160485ff1f3884717045c8eb14923a9`) is committed here by path, as the PI
+    placed it. The seat's answer: the order adopted; `qual` alone; the lock's form; B3's read licensed; item 2
+    corrected by the list's v2.
+    - **The PI's routing of 2026-11-10, section B, verbatim** (relayed by the coordinating session):
+      - B1. Q1: Code's order — the qual wiring (a p package move) → self-tests, m's battery, G-ANL-p's groups, blind review and values-check → G-SHAPE-p re-run (fdd79d8's artifact superseded, F-p12's form) → G-ANL-p re-run (f8b16d5's superseded) → LOCK-p v0.2 ×3 → G-F0m-OLMo (p) ×3 on the box, batched → STOP for the seat's read [go]; the wiring's build may start now. (h)'s PIN wording and (j)'s fix land with the move.
+      - B2. Q2: qual alone; the campaign's wiring its own move before v1.0 [adopted].
+      - B3. Q3: the lock's form — v0.2 header + the eight items, then the generated values of record on the moved code, then v0.1 verbatim under one superseding line; one BACKEND OF RECORD line; item 1 carries the whole line "G-TIME-OLMo-{ckpt} port acceptance recorded" [adopted].
+      - B4. Q4: B3's task_correct read licensed as a read of the reports' sham sessions; stage-entry figures from the reports likewise; item 2 of the list corrected by v2 [adopted]. Ledger (61) [recorded].
+      - B5. Close line on f3631f4 citing the p answers by path and sha256 [go].
+      - B6. The pod: keep up until the wiring's commit lands, then re-decide with the time to G-F0m-OLMo (p) in view [the PI's call].
+    - **What it rules**, in the seat's short form (§0): "Code's order stands (Q1), the move is `qual` alone (Q2), the
+      lock takes Code's form (Q3), and B3's read is licensed by name (Q4), with the list of record's item 2 corrected
+      for every unit: the reports are the read domain and may be read; the checkpoints may not." Ledger (61) is the
+      seat's (§5). The pod is the PI's call, with the facts in §6.
+    - **Section C** (all sessions) adopts the list of record v2, the list ruling's §2, in place of the sweeps ruling's
+      §2 from today. The coordinating session commits that ruling with C3's close on `750a7dd`'s entry. Every brief of
+      this session quotes v2's items 1–5 as written.
+    - **The pod.** B6 keeps pod `qny1x4v8padeke` up until the wiring's commit lands; the PI re-decides then. The PI's
+      answer on its idle uptime meanwhile, verbatim (PI date 2026-11-10, in chat): "Keep it up". It replied to the
+      coordinating session's "Keep the pod up idle until the seat rules and the runs can start?"; the other reply
+      offered was "Stop the pod", and the idle cost had been put as $1.79/hr, about $43 a day. Nothing on the box
+      changes before the PI re-decides.
+    - **Next.** §1's steps 1–2, on B1's word: the `qual` wiring as a p package move, then p's self-tests, m's battery,
+      G-ANL-p's groups, blind review and a values-check. The BUILD entry follows §7: "the BUILD entry names the two
+      files that move, (h)'s wording and (j)'s fix". The build starts after the word, so there is no declaration to
+      make. When the wiring's commit lands, its hash and the time to G-F0m-OLMo (p) go to the coordinating session for
+      B6. Not pushed.
 
 - 2026-11-09 — **The A-m2 session's commands and its subagents' in O2-3's forms, swept back to 2026-11-06: disclosed
   to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Code rules on none of them, and
