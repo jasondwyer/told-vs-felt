@@ -21,6 +21,51 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **The A-m2 session's commands and its subagents' in O2-3's forms, swept back to 2026-11-06: disclosed
+  to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Code rules on none of them, and
+  no printed value is reproduced.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 00:23:25 UTC 2026**.)
+  - **The block:**
+    [`_a-m2-session_code-to-design_disclosure`](results/raw/2026-11-09_a-m2-session_code-to-design_disclosure.md).
+  - **The sweep:**
+    - It covered this session's transcript and the 39 subagents it launched before the sweep, every shell call since
+      2026-11-06.
+    - Code's first pass covered only 29 of them and dropped `--stat` calls whose command did not name `data/`. A blind
+      values-check found both gaps. The final sweep reproduces the check's list. A second check found five more
+      calls, none of them in an O2-3 form.
+  - **Metadata printed while a window was open, before the rule:**
+    - **Q-F3's G-TIME checkpoint and reports**, 2026-11-08 and 2026-11-09, in the main checkout:
+      - nine calls by five checkers: the A-m2 v0.1 referent check, the pre-read's values-check and its second pass,
+        and the referent checks of v0.2 and v0.3. The calls were `ls -la`, `wc -c`, and `git show --stat` on
+        `acc3b52`;
+      - they printed the reports' sizes, modification times and line counts. Three calls also printed the
+        checkpoint's size, and one (B) the `ckpt` directory's size and modification time;
+      - their briefs barred opening `data/mf3/ckpt` and said nothing about metadata. Two of them still pointed to
+        `git show --stat` for checking commits, and one asked the checker to confirm that the reports were committed
+        at `acc3b52`.
+    - **m OLMo's G-CAL checkpoints**, 2026-11-07, before the unit's NOT-RUN record (`0f35954`):
+      - Code's two `git diff --stat` calls printed their sizes, and so did four calls by three subagents (three
+        `--stat` and one `ls -la`);
+      - the `ls -la` call also opened one checkpoint with `json.load`.
+    - **Newer-than filters over worktree copies:** three, by the G-ANL-F3 delta review and rounds 3 and 6. None
+      printed anything from `data/`.
+  - **Content read before the rule:** Code's `git grep` searches, one on 2026-11-07 (P) and two on 2026-11-09 (E1),
+    read `ckpt` or `reports` files and printed nothing from them.
+  - **Listed for completeness:**
+    - traversals and reads before the rule that printed no size or time: rounds 4–6 (round 6's hashes among them),
+      two name listings, three `git log` calls that printed commit ids, and two greps of report files;
+    - after the rule, name listings and one `git log` of first-add commit times (A1′), a form not on §1.3's list.
+  - **For the seat:** the Q-F3 items; the m OLMo items; whether the newer-than filters stand on §1.2's ground; whether
+    the content searches are departures.
+  - **From now on:** every brief Code hands a blind reviewer states §1.3, and Code's `git grep` excludes `data/`.
+  - **Values-check:** two blind passes, each under a brief that states §1.3
+    ([`_a-m2-session_disclosure_valuescheck`](results/raw/2026-11-09_a-m2-session_disclosure_valuescheck.md)).
+    - **Pass 1:** 71 items, 45 PASS, 17 IMPRECISE, 9 FAIL; 13 calls missing. The block was rewritten from a full
+      re-sweep.
+    - **Pass 2:** 68 items, 49 PASS, 17 IMPRECISE, 2 FAIL, both on the completeness claim; five calls missing, none in
+      an O2-3 form. Each item was applied, and every added fact was checked against its transcript, masked.
+  - **Committed by path:** the block, the values-check and this entry. Nothing ran on a model or the box. Not pushed.
+
 - 2026-11-09 — **The pod session's own commands and its briefed reviewers', in §1.3's forms: a sweep from
   2026-11-08, disclosed to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Fifteen
   commands in twelve items, all before the rule, printed metadata of protected files. Code rules on none of them, and
