@@ -21,6 +21,66 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **G-F0m-OLMo (p) is not wired: B5's chain stops before LOCK-p v0.2. STOP for the seat on four
+  questions; nothing is built and nothing ran.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 03:55:35 UTC 2026**.)
+  - **The routing.** B5 of the PI's routing of 2026-11-09 (evening) routes "LOCK-p v0.2 ×3 committed by path; then
+    G-F0m-OLMo (p) ×3 on the box, batched (24 sessions per checkpoint), then STOP for the seat's read [go]". Its first
+    item, the close line on `2258c52`, is committed at `e619d3d`. The rest cannot run as routed: B5's
+    "LOCK-p v0.2 ×3 committed by path" and the three runs are held for the seat's order ruling. LOCK-p v0.2 stays a
+    scratch draft, and nothing is built.
+  - **What stops it.**
+    - p's stage module runs m's gate `time` only (`valence_core/p/stage.py:109`, `GATE = "time"`; `run_time`; the
+      `_time_` paths). The driver refuses `qual`, exit 2 (`scripts/p_sessions.py:95–98`). Its docstring
+      (`:59–60`) says "each is wired after its checkpoint's LOCK-p v0.2 or v1.0, on its own word".
+    - Wiring `qual` moves p's `package_sha256` and the driver's sha256, and `stage.lock_required` lists both. It also
+      makes G-SHAPE-p's artifact stale (the driver is in its sources map), and G-ANL-p's (its recorded package). So
+      the stage would refuse a LOCK-p v0.2 committed first, before the load.
+    - m's precedent does not carry. m's lock records the driver's sha256 after the run and never tests it, and m's
+      `qual` wiring was the driver's alone.
+  - **The gap is Code's.** The step-6 BUILD wired `time` alone and said so only in the driver's docstring and
+    self-test. Neither its entry nor Code's G-TIME block raised it, and the seat's answers route LOCK-p v0.2 →
+    G-F0m-OLMo (p) directly.
+  - **The block** ([`_p-qual-wiring_code-to-design`](results/raw/2026-11-09_p-qual-wiring_code-to-design.md)) asks
+    four questions:
+    - Q1, the order. Code's proposal:
+      - the `qual` wiring as a p package move;
+      - self-tests, blind review and a values-check;
+      - G-SHAPE-p and G-ANL-p re-runs, their artifacts superseded in F-p12's form;
+      - LOCK-p v0.2 ×3;
+      - G-F0m-OLMo (p) ×3 on the box, batched;
+      - the seat's read.
+
+      With the move, (h)'s wording follows and (j)'s fix lands, as the seat's §4 has them.
+    - Q2, the move's scope: `qual` alone (Code's recommendation), or `qual` with the campaign.
+    - Q3, the lock's form after a move:
+      - v0.2's eight items, then its values on the moved code, then v0.1's text verbatim;
+      - one `BACKEND OF RECORD` line;
+      - m's line `G-TIME-OLMo-{ckpt} port acceptance recorded`, which p's `qual` precheck would require.
+    - Q4, B3's read against the list of record's item 2. Code's step reads the sham sessions in m's reads files,
+      which item 2's exceptions do not name. Code's reading is that B3 licenses it.
+  - **The pod.** Pod `qny1x4v8padeke` stays up and idle on the PI's answer, verbatim (PI date 2026-11-09, in chat):
+    "Keep it up".
+    - It replied to the coordinating session's question "Keep the pod up through G-F0m-OLMo (p)?". That session's
+      closing message had asked it as "Should I keep the pod up through G-F0m-OLMo (p) (my recommendation), or stop
+      it now?".
+    - B5 adds: "The pod stays up through G-F0m-OLMo (p) [up]."
+    - The run is now a build, its reviews, two gate re-runs and three locks away. Idle, the pod costs $1.79/hr.
+    - Whether it stays up meanwhile is the PI's call. Code changes nothing on the box.
+  - **Committed before this entry, at `e619d3d`:** the seat's answer on G-TIME-OLMo (p) (sha256
+    `7b8b1d5f…adc3`) with the close line on its entry (`2258c52`); (h)'s dated note on the step-6 BUILD entry; the
+    close line on this session's disclosure entry (`ddd95b0`), citing the sweeps ruling (C4).
+  - **Committed with this entry, by path:** the block and its values-check raw.
+  - **Values-check:** a blind check of the block, this entry and the three texts committed at `e619d3d`, run before both
+    commits on HEAD `3d6f402`: 113 items, 102 PASS, 7 IMPRECISE, 0 FAIL, 4 not checkable (Code's own conduct, the pod's
+    state, the box). No value was wrong. The seven were wording fixes, each applied before the commits and checked by
+    tool, not by a second blind pass. The checker ran no `git grep`, recursive grep, `rg` or `find`; its content
+    searches were greps of single named files outside `data/`. Its brief carried item 3's pathspec as written, which
+    excludes nothing on this git; it was corrected by message before any such search ran (the coordinating session has
+    the account). Raw: [`_p-qual-wiring_valuescheck`](results/raw/2026-11-09_p-qual-wiring_valuescheck.md).
+  - **Next:** the seat's answer and the PI's routing. LOCK-p v0.2 ×3's §2 text is drafted in scratch, not committed,
+    and nothing is built before the routing. Not pushed.
+
 - 2026-11-09 — **The A-m2 session's commands and its subagents' in O2-3's forms, swept back to 2026-11-06: disclosed
   to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Code rules on none of them, and
   no printed value is reproduced.**
