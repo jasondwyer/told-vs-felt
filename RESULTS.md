@@ -21,6 +21,30 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **The list of record's item 3 pathspec excludes nothing on this machine's git: flagged to the seat,
+  with the content searches it let through and one brief that carried it. Code rules on none of it, and nothing from a
+  `ckpt` or `reports` file is reproduced.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 04:30:28 UTC 2026**.)
+  - **The block:** [`_list-of-record-item3_code-to-design`](results/raw/2026-11-09_list-of-record-item3_code-to-design.md).
+  - **The defect** (git 2.39.5, Apple Git-154): at HEAD `9eed029`, `git ls-files -- ':!data/*/ckpt' ':!data/*/reports'`
+    lists all 36 tracked names under `data/<unit>/ckpt` and `data/<unit>/reports`, 21 of them in the open units.
+    With `/**` appended to each, it lists none.
+  - **What it let through:**
+    - C1, Code's `git grep` for a phrase of round 6's report, 03:12 UTC, HEAD `9eed029`. It printed six lines, all
+      from `results/raw`.
+    - C2, the values-checker's `git grep -l` for the pod id in `fdd79d8`'s tree, 03:28 UTC, HEAD `9eed029`. It
+      printed one count.
+    - The F3 session's referent agent ran two `git grep`s, at 03:25 and 03:27 UTC on HEAD `9eed029`, before its
+      correction reached it. Nothing printed from a `ckpt` or `reports` file (the session's account).
+    - The pod session reports none: one checker's brief carried the literal form, corrected at 03:37 UTC before any
+      search ran with it.
+  - **Since:** at 03:36 UTC both sessions were told to use the `/**` form, the prune or `':!data/**'`.
+  - **For the seat:** Q1, the ruling on these and on one `git show --name-status` call; Q2, item 3's text, and briefs
+    meanwhile; Q3, pickaxe searches.
+  - **Values-check:** a blind agent, read-only, on the draft before the two sessions' accounts came in: 52 items, 37 CONFIRMED, 6 IMPRECISE, 5 FAIL, 4 NOT CHECKABLE. The five FAILs were the block's and the entry's "two" searches, two sentences that the sessions' replies had overtaken, and one omitted call of the first checker. Each item was applied. The two sessions' accounts are as each reported to Code, and were not checked against their transcripts.
+  - **Committed by path:** the block and this entry. Nothing ran on a model or the box. Pushed on the routing's D1,
+    with the pod session's two commits before it (`e619d3d`, `f3631f4`).
+
 - 2026-11-09 — **G-F0m-OLMo (p) is not wired: B5's chain stops before LOCK-p v0.2. STOP for the seat on four
   questions; nothing is built and nothing ran.**
   (Stamp verified at write time: `date -u` → **Tue Nov 10 03:55:35 UTC 2026**.)
