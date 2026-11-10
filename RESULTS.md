@@ -208,6 +208,28 @@ applied to CLAUDE.md.
     - **Pass 2:** 68 items, 49 PASS, 17 IMPRECISE, 2 FAIL, both on the completeness claim; five calls missing, none in
       an O2-3 form. Each item was applied, and every added fact was checked against its transcript, masked.
   - **Committed by path:** the block, the values-check and this entry. Nothing ran on a model or the box. Not pushed.
+  - **Close (PI date 2026-11-09).** The seat's ruling on the three O2-3 sweep disclosures,
+    [`2026-11-09_o23-sweeps_design-to-code_answers.md`](results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md)
+    (sha256 `88acd018b9de8fe21b47c12c9c4966d0fd919417c3866795198befdfbe830939`, committed by the coordinating session
+    at `3d6f402`): every item before the rule ruled inert, no strike; the list of record adopted (§2).
+    - Its §1.3 on this block's items:
+      - Q1–Q5 and B–E: departures, inert, no strike; "The briefs were the gap, as Code says".
+      - M1–M6, A1, A2 and P (m OLMo's window): inert, M5's content read included; no strike.
+      - M4, R3 and R6b: §1.2's ground is theirs; inert. Round 6's "Every later traversal pruned ckpt" is recorded as
+        inaccurate for Q6.
+      - E1 and P: a departure of the content kind, inert because nothing printed. The fix is the pathspec of the
+        list's item 3, adopted for every session.
+      - The §4 and §5 items: permitted forms or closed windows; inert. `git show --name-only` is added to the list.
+      - §6, the forward rules: adopted.
+    - The PI's routing of 2026-11-09 (evening), C1, C2 and C4, verbatim:
+
+      > C1. The three disclosures (353502f, ddd95b0, 9eed029): every item before the rule inert, no strike [as ruled].
+      > C2. The list of record (sweeps ruling §2) binds every session on the laptop and the box, every open unit, from today; every brief states it; LOCK-m-F3 v0.1's re-issue and LOCK-p v0.2 cite it in one line each [adopted].
+      > C4. Each session adds a close line on its own disclosure entry citing the sweeps ruling by path and sha256 [go].
+
+    - From here this session works under the list of record. Every brief it hands a reviewer or values-checker
+      states the list's items 1–5 as written, with the working pathspec beside item 3 (the form as written excludes
+      nothing on this laptop's git; flagged at `3d6f402`).
 
 - 2026-11-09 — **The pod session's own commands and its briefed reviewers', in §1.3's forms: a sweep from
   2026-11-08, disclosed to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Fifteen
