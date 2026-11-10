@@ -1292,11 +1292,11 @@
     "valence_core/e2d/habit.py": "2d042d98eb0a02bcacd1afddf7aedefe15fb5c601e84b92131aedcdbb66f2ceb",
     "valence_core/e2d/runner.py": "e784da8593cab45b2d77e9967f2f7ed0c8595c5ddc0d456f4fd591dd3083c2ed",
     "valence_core/mf3/__init__.py": "64660bc9b64d1440d218fbd80ac30fa5a52f8e878357a78f8d70c4e4edc9a24f",
-    "valence_core/mf3/banner.py": "0cd5e0acbc3a83e090c29e48f47ff2ad5a68638c6b41ef0d1635e9afa2977e6d",
+    "valence_core/mf3/banner.py": "a5354146d2646390c4ab5a98b14d8d0abc7c07e925d29bf541b8d4920c73d231",
     "valence_core/mf3/keys.py": "d9c24dd9b8a74c142e259d74709335611011386a8a967e90ff75499e5dfffaab",
-    "valence_core/mf3/lines.py": "ceb2e06ffc0f187bd67182ff011c461ca07e7731bda36ed66e0c64b49f7bcb04",
-    "valence_core/mf3/readrule.py": "87eed2ae20ac913f4a2fe94f52cf542f8ccd06e82551b00acd69f2410c0c6671",
-    "valence_core/mf3/scaffold.py": "225d0833b11d6331631dcccab7fef731f8de756564f33ed496e56f1bab8690df",
+    "valence_core/mf3/lines.py": "f0fdb16bf4dc8cf0bd29dae52ff082d231157efa938c0fa7a255226025c7c50a",
+    "valence_core/mf3/readrule.py": "46e6be1855d534ec44909cb811d0db00fee679aa7cd4e6f97aab254d64d4b233",
+    "valence_core/mf3/scaffold.py": "d979792a89d27f2558c6deb485280d2b583bbb6a7336a02c6fa141700aa0f855",
     "valence_core/mf3/schedule.py": "b86061264cd2d4e5532ac645d5ad1e7be2964c80e63e6fe24e11f3f09bca929e",
     "valence_core/readout.py": "774e5ca359c5671cafd6f7a2d645d040d8eecb9e67944964c0ba074c22483136",
     "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
@@ -1304,7 +1304,7 @@
     "valence_core/stats.py": "956a650c603b0772ad85db8a3f82c310b9a67bba2e4440ab128ec9ee1e396d8f"
    }
   },
-  "f3_closure_sha256": "d19f336dc69e987b7be0b69d84d32f4a55cc47c8f4728c0f13b0378608cbf039",
+  "f3_closure_sha256": "06a36cbfb4ab5dce94bc1f900d43cea93e667a4cbe64b69f24986f5847eb63e8",
   "gate_stop_stages_q_f3": [
    "G-CAL",
    "G-SHAPE-F3",

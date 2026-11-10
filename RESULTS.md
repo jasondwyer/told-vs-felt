@@ -21,6 +21,34 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **G-ANL-F3 — the canonical re-run (`ganl`) on HEAD `0684263`, G-SHAPE-F3's re-run on the BUILD
+  (`5d40d59`), before LOCK-m-F3 v0.1's re-issue: PASS, 525/525, on the unchanged analyzer (`d347ea0c…`).
+  A-m2 v0.5 §4.3: "G-ANL-F3 re-runs on the unchanged analyzer … the artifact supersedes `02dadb3`'s (which records the
+  old closure; the canonical run is write-once, so the re-run's artifact is the one of record, the earlier kept in
+  history)". `data/m/gates/G-ANL-F3.json`, sha256 `c2b87ab6c00a9b61ff9265d33cf73aa0aeadcbf9470e7aee2435e004689dc08c`,
+  is written once. Model-free; nothing ran on a model.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 09:49:09 UTC 2026**.)
+  - **The supersession:** the artifact of record (sha256 `b91a8c67…936c`, committed at `02dadb3`) was moved by hand
+    with `git mv` to
+    [`G-ANL-F3.superseded-2026-11-10.json`](data/m/gates/G-ANL-F3.superseded-2026-11-10.json), kept in history and in
+    the tree, committed with this entry. This is the date-suffixed form `data/m/gates` holds for G-ANL-F0.
+  - **The run:** `python scripts/m_analyze.py ganl` on HEAD `0684263`. First the `git mv` (09:45:31Z), then the
+    battery and the artifact; the end at 09:48:18Z, exit 0, stderr empty. Every file the canonical run requires was
+    committed with the working tree's bytes: the analyzer, the placeholders, the proposal, ADDENDUM-m1,
+    `valence_core/m/*.py`, `valence_core/mf3/*.py` and both closures (`ganl_commit_problems`).
+    - The battery: 525/525. The Q-F3 reader group, whose stub chain runs mf3's stage chain at cap 60, passes on the
+      build. No group needed an analyzer edit (A1).
+  - **Against the superseded artifact:** 564 leaves before and after; none removed or added, 5 changed:
+    - the Q-F3 closure's sha256, `d19f336d…f039` → `06a36cbfb4ab5dce94bc1f900d43cea93e667a4cbe64b69f24986f5847eb63e8`;
+    - the sha256 of the four modules of that closure the BUILD moved: mf3's `banner.py`, `lines.py`, `readrule.py`
+      and `scaffold.py`.
+    - Every result is identical, and so are the analyzer's and m's package hashes.
+  - **The new artifact:** [`data/m/gates/G-ANL-F3.json`](data/m/gates/G-ANL-F3.json). The raw is
+    [`_ganl-f3-r2`](results/raw/2026-11-10_ganl-f3-r2.txt), the battery's output with local paths scrubbed, and
+    Code's leaf comparison by name.
+  - **Next:** LOCK-m-F3 v0.1 re-issued above its v0.1 text, naming the new mf3 package, the new Q-F3 closure and both
+    new artifacts, and citing the list of record v2. Committed by path. Nothing ran on a model. Not pushed.
+
 - 2026-11-10 — **G-SHAPE-F3 — the canonical re-run on the BUILD (`5d40d59`), before LOCK-m-F3 v0.1's re-issue: PASS.
   A-m2 v0.5 §4.3; the PI's routing of 2026-11-10, A5: "… → the build's commit → G-SHAPE-F3 and G-ANL-F3 re-runs → …".
   `data/mf3/gates/G-SHAPE-F3.json`, sha256 `ff3eaae5b1c6f0b660be418e42709132018d904e53657046367517c1243f1bf3`, is written
