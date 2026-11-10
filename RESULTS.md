@@ -21,6 +21,65 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-09 — **ADDENDUM-m2 v0.4: the referent check of the delta (§6 item 1) STOPs for the seat, and v0.4 is not
+  committed. The seat's read of the smoke is committed by path, with the smoke entry's close line.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 04:41:24 UTC 2026**.)
+  - **The routing:** the PI's routing of 2026-11-09 (evening), relayed verbatim by the coordinating session.
+    Section A is this session's; A1–A4, verbatim:
+
+    > A1. The smoke's result acknowledged: F-b selected, the second stop fired, nothing adopted; the seat's read confirms the rule's computation and counter (b) = 2 [as ruled].
+    > A2. The re-specification, ADDENDUM-m2 v0.4: F-b's exact bytes, cap 120 from the re-run of G-TIME-F3 on (m:174's trigger value applied from the re-run; m:294's trigger report-only) [adopted]
+    > A3. Code: close line on the smoke entry 6cfd3db citing the smoke answers by path and sha256; v0.4's referent check of the delta (v0.4 §6 item 1), then commit (v0.3 to archive/ by git mv); then the mf3 build → self-tests → G-SHAPE-F3 and G-ANL-F3 re-runs → LOCK-m-F3 v0.1 re-issued (cites the list of record, C2) → G-TIME-F3 re-run into Q-F3_time-r2.json at cap 120, on the laptop, announced to this session, ≈ 2.5–3.5 h, serialized with any other laptop model run → STOP for the seat's read [go].
+    > A4. The hour figures (v0.4 §4.4) are for the PI's cap at LOCK-m-F3 v1.0, not for now [noted]. D2 2026-12-22 [stands].
+
+  - **The two files, verified first:** sha256 and byte counts against the routing's list at HEAD `9eed029`, and the
+    sha256 again at write time. `read:`, `f13447d9…73cd` (11,378 B); v0.4, `8f8ef932…714a` (26,782 B).
+  - **Done:** `read:` is committed by path, on the coordinating session's relay of the routing (whose header reads
+    "the PI commits by path"), with its close line on the smoke entry (`6cfd3db`, below).
+  - **The referent check:** a blind agent, under a brief quoting the list of record's items 1–5. 59 items: 48
+    CONFIRMED, 7 IMPRECISE, 1 OPEN, 3 FAIL
+    ([`_a-m2-v04_referent-check`](results/raw/2026-11-09_a-m2-v04_referent-check.md): the report verbatim, then
+    Code's dispositions).
+  - **The STOP** ([`_a-m2-v04_code-to-design_STOP`](results/raw/2026-11-09_a-m2-v04_code-to-design_STOP.md)):
+    - **Q1, the cause (the OPEN):** G-ANL-F3's battery drives mf3's stub stage chain at reasoning cap 60 and names
+      `Q-F3_time.json` (`scripts/m_analyze.py:10713`, `:10722`, `:10742`). So §4.1–§4.2's cap of 120 at every
+      stage and §4.3's re-run "on the unchanged analyzer" cannot both hold.
+      - [C] Run against Code's scratch build, the chain raises at its first call.
+      - The options:
+        - (a) mf3 admits 60 on the stub only, Code's recommendation;
+        - (b) an in-place round of the analyzer. The one-round rule (the G-ANL-F3 answers' A3, prebuild answers:26)
+          may bar it while p's OLMo units are open. If it is not barred, it moves p's three locks, its analyzer pin
+          and G-ANL-p;
+        - (c) a form the seat names.
+    - **Q2 (FAIL A):** §4.2's list of the files that move omits `resume.py`, whose `Identity` refuses 120 at
+      G-TIME-F3, and the driver's `time` wiring (its cap of 60 and its default checkpoint). Code reads both as
+      moving: the cap under §4.1's rule, the checkpoint under §4.3's.
+    - **Q3 (FAIL B, FAIL C), in §4.4:**
+      - the campaign's launches: m §2.4's tables (k ≥ 24) give 704–992 cached and 672–960 uncached, not 448–704;
+      - the NOT-RUN sentence: in m:243 and m:324 a cap below the projection does not by itself make Q-F3 NOT-RUN;
+        the PI's declining to commit v1.0 does.
+    - **Q4:** the seven IMPRECISE findings, as dated notes. None moves a form, a bar, a key or the rule; one touches an
+      [E] hour figure for the PI's cap.
+    - **Q5:** a departure under the list of record (item 8). The referent agent ran two `git grep` searches with the
+      list's literal item-3 pathspec, which excludes nothing on this laptop's git (2.39.5); the defect is flagged at
+      `3d6f402`. Nothing from `data/*/ckpt` or `data/*/reports` printed.
+    - **Q6:** the build's parallel start, a departure disclosed.
+  - **The build:** its code was started in a scratch worktree before v0.4's commit, after a declaration to the
+    coordinating session at 2026-11-10T03:26:42Z. That is a departure from §6's order (Q6). It is paused at this STOP,
+    and nothing of it is committed. [C] There, 156 of 160 self-test checks pass; the four that fail are the driver's
+    own.
+  - **Not done, because of this STOP:** v0.4's commit (v0.3 stays at root, `46773e2`); the build's completion, review
+    and commit; the re-runs of G-SHAPE-F3 and G-ANL-F3; LOCK-m-F3 v0.1's re-issue; and the G-TIME-F3 re-run. The laptop
+    is free.
+  - **Values-check:** two blind passes by one agent, under a brief quoting the list of record's items 1–5 with the working pathspec
+    beside item 3 ([`_a-m2-v04_valuescheck`](results/raw/2026-11-09_a-m2-v04_valuescheck.md)).
+    - Pass 1: 102 items, 67 CONFIRMED, 20 IMPRECISE, 2 FAIL, 13 NOT CHECKABLE. Its two FAILs were on option (b)'s
+      costs (the one-round rule; p's pins on the analyzer), and they reversed Code's recommendation to (a).
+    - Pass 2, on the passages pass 1 changed: 64 items, 54 CONFIRMED, 3 IMPRECISE, 0 FAIL, 7 NOT CHECKABLE.
+    - Every item not CONFIRMED was re-checked at source, and applied or answered in the raw's dispositions.
+  - **Committed by path:** `read:`, the referent raw, the STOP block, the values-check raw, this entry and the close
+    line below. Nothing ran on a model. Not pushed.
+
 - 2026-11-09 — **The list of record's item 3 pathspec excludes nothing on this machine's git: flagged to the seat,
   with the content searches it let through and one brief that carried it. Code rules on none of it, and nothing from a
   `ckpt` or `reports` file is reproduced.**
@@ -368,6 +427,18 @@ applied to CLAUDE.md.
     - The lines on other sessions' processes were filled after the check, from the coordinating session's messages.
   - **Next:** the seat's read (§3.3 and §3.4: it confirms the computation in a raw, and confirms or corrects each (b)
     item), its re-specification, then the PI's routing. The laptop is free. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-09).** The seat's read of the smoke,
+    [`2026-11-09_a-m2-smoke_design-to-code_answers.md`](results/raw/2026-11-09_a-m2-smoke_design-to-code_answers.md)
+    (sha256 `f13447d9e9c018a0fc7b3e2651948225ccc4da6078470bfdcb98aa7012b273cd`), is committed here by path: the rule's
+    computation confirmed; (b) = 2 confirmed; re-specified at ADDENDUM-m2 v0.4.
+    - The read confirms the driver's tally and selection line by line (its §1). It confirms both (b) responses and
+      the eight read as not (b) (§2.1), and it finds no further candidate among the 115.
+    - ADDENDUM-m2 v0.4 is delivered untracked. Its referent check stopped for the seat (the entry above), so its
+      commit waits on the seat's answer.
+    - The PI's routing of 2026-11-09 (evening), A1 and A2, verbatim:
+
+      > A1. The smoke's result acknowledged: F-b selected, the second stop fired, nothing adopted; the seat's read confirms the rule's computation and counter (b) = 2 [as ruled].
+      > A2. The re-specification, ADDENDUM-m2 v0.4: F-b's exact bytes, cap 120 from the re-run of G-TIME-F3 on (m:174's trigger value applied from the re-run; m:294's trigger report-only) [adopted]
 
 - 2026-11-09 — **G-TIME-OLMo (p) ×3 (PROPOSAL-p v0.2 §4.1, §8 step 6; m:302's G-TIME-OLMo-{ckpt}, run for p's unit;
   the routing of 2026-11-08 quoted in `de729c4`'s close lines, item 2): PASS ×3 on the box, under LOCK-p v0.1
