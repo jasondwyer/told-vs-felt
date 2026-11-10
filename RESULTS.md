@@ -79,6 +79,29 @@ applied to CLAUDE.md.
     - Every item not CONFIRMED was re-checked at source, and applied or answered in the raw's dispositions.
   - **Committed by path:** `read:`, the referent raw, the STOP block, the values-check raw, this entry and the close
     line below. Nothing ran on a model. Not pushed.
+  - **Close (PI date 2026-11-10).** The seat's answers on this STOP,
+    [`2026-11-10_a-m2-v04-stop_design-to-code_answers.md`](results/raw/2026-11-10_a-m2-v04-stop_design-to-code_answers.md)
+    (sha256 `a85b924930866191ab22e9ac9874a55fa9a3ff9c0b881f7d4aa34e04e7fb8faf`), are committed here by path, on the
+    coordinating session's relay of the routing (whose header reads "the PI commits by path"): (a) ruled; `resume.py`
+    and the driver move; §4.4 corrected; v0.5 to the referent check.
+    - Q1, (a): mf3 admits cap 60 on the stub path only; 120 binds every run on a model; the analyzer is not touched. A
+      G-ANL-F3 battery group that only an analyzer edit could cure is a STOP, not an edit (the answers' §1).
+    - Q2: `resume.py` and the driver's `time` wiring move, and the `--smoke` form is retired (§2).
+    - Q3 and Q4: §4.4 and the seven IMPRECISE items are corrected in v0.5's text, not as dated notes (§3, §4).
+    - Q5: inert, ruled in the list of record v2 (`2026-11-10_list-of-record-v2_design-to-code_answers.md`). Q6: the
+      declared parallel start is accepted on the p step-3 precedent, and the rule stands (§6). Ledger (63) is the
+      seat's.
+    - The answers' §5 holds the corrections to `read:` as dated notes: 5.30× for its "4.7×"; the exact binomial, .168
+      to .889, for its "≈ 20–50%"; the opener-space sentence; and `read:`41's 448–704 launches (its §3).
+    - ADDENDUM-m2 v0.5 (`f27505c5…5354`, 32,814 B) is delivered untracked at root. Its referent check of the delta
+      comes next, then its commit.
+    - The PI's routing of 2026-11-10, section A, verbatim:
+
+      > A1. Q1: option (a) — mf3 admits cap 60 on the stub path only; 120 binds every run on a model (_extra non-stub, resume.Identity on any non-stub binding, prior_gate require_real, the driver); the analyzer untouched; a G-ANL-F3 battery group curable only by an analyzer edit is a STOP, not an edit [as ruled].
+      > A2. Q2: resume.py and the driver's time wiring move (cap 120; checkpoint Q-F3_time-r2.json with the first-run refusal in the driver's precheck; --smoke retired) [confirmed].
+      > A3. Q3–Q4: §4.4 and the seven IMPRECISE items corrected in v0.5; the planning figure for the PI's cap at v1.0 is ≈ 280–560 h uncached, ≈ 35–50 h cached; NOT-RUN is by the PI declining v1.0 (m:243/m:324) [noted]. Corrections to read: as dated notes (5.30×; the binomial .168–.889; the opener-space sentence) [recorded].
+      > A4. Q5–Q6: the agent's two searches inert (C1); the declared parallel start accepted, the rule standing [as ruled]. Ledger (63) [recorded].
+      > A5. Close line on 50fea90 citing the A-m2 answers → v0.5's referent check of its delta → commit (v0.3 to archive/ by git mv; v0.4 to archive/ uncommitted) → the build resumes from the scratch worktree → G-ANL-F3's battery on the build → review rounds → the build's commit → G-SHAPE-F3 and G-ANL-F3 re-runs → LOCK-m-F3 v0.1 re-issued (cites the list v2) → G-TIME-F3 re-run into Q-F3_time-r2.json at cap 120, announced, ≈ 2.5–3.5 h → STOP for the seat's read [go].
 
 - 2026-11-09 — **The list of record's item 3 pathspec excludes nothing on this machine's git: flagged to the seat,
   with the content searches it let through and one brief that carried it. Code rules on none of it, and nothing from a
