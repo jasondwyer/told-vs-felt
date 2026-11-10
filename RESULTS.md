@@ -21,6 +21,30 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **G-ANL-p — the canonical re-run on HEAD `f5e695c`: PASS (p v0.2 §4.4; the PI's routing of 2026-11-10,
+  B1: "G-ANL-p re-run (f8b16d5's superseded)"). `scripts/p_analyze.py ganl` writes `data/p/gates/G-ANL-p.json`
+  (sha256 `90d0d5d667feadaf718e317d43b5bd83400b61102a6a56962adbb472cce48f2e`) once. m's battery passes 525/525 and
+  reaches all 538 coverage ids, then G-ANL-p's 14 checks pass. `f8b16d5`'s artifact is superseded.** Model-free;
+  nothing ran on a model or the box.
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 08:48:32 UTC 2026**.)
+  - **The supersession** (F-p12's form). Before the run, `f8b16d5`'s artifact (sha256 `6440468b…b01a`) was moved with
+    `git mv` to `data/p/gates/G-ANL-p.superseded-2026-11-10.json`. It is kept in history, and the move is committed
+    here.
+  - **The run.** At `f5e695c` (G-SHAPE-p's re-run committed on the BUILD `40086e8`), with the tracked files unmodified,
+    at `nice -n 19`: 08:44:42Z–08:47:31Z, exit 0, stderr empty. Raw: [`_p-ganl`](results/raw/2026-11-10_p-ganl.txt),
+    with the repository's prefix scrubbed to `<repo>`.
+  - **The battery.** m's 525/525, its count and coverage those of G-ANL-F3's artifact; then G-ANL-p's 14, all PASS,
+    the groups as at `f8b16d5`. Among them: the Q-F0 and NOT-RUN regressions, byte for byte, and `data/p` untouched by
+    the battery (N11).
+  - **The artifact** (schema `p-ganl-v1`, 8,334 bytes, verdict PASS), read back:
+    - the analyzers: m's `d347ea0c…5e48` and p's `d3758fc4…7008`, unchanged;
+    - the packages: m's `7756dcf4…49bb`, and p's `08bfa693…fa26`, the BUILD's, which G-SHAPE-p's re-run records;
+    - `proposal_sha256`, m's pin `42ab36ec…6c6b`, and `proposal_p_sha256` `42f2977b…3b32` (F-p8).
+
+    The stage's staleness check reads it as current.
+  - **Next:** LOCK-p v0.2 ×3, which name this artifact and G-SHAPE-p's, then G-F0m-OLMo (p) ×3 on the box once the PI
+    re-decides on the pod (B6). Not pushed. Committed by path.
+
 - 2026-11-10 — **G-SHAPE-p — the re-run of record on the qual wiring's BUILD (`40086e8`), before LOCK-p v0.2: PASS
   (p v0.2 §4.2; the PI's routing of 2026-11-10, B1: "G-SHAPE-p re-run (fdd79d8's artifact superseded, F-p12's form)").
   `data/p/gates/G-SHAPE-p.json`, schema `p-gshape-v1`, sha256
