@@ -121,6 +121,67 @@ applied to CLAUDE.md.
       listings. It also found D4.
     - Its own calls are in the block's §4.
   - **Committed by path:** the block and this entry. Nothing ran on a model or the box. Not pushed.
+  - **Close (PI date 2026-11-09).** The design seat's ruling on the three sweep disclosures
+    ([`2026-11-09_o23-sweeps_design-to-code_answers.md`](results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md),
+    sha256 `88acd018b9de8fe21b47c12c9c4966d0fd919417c3866795198befdfbe830939`) is committed here by path, on the PI's
+    routing of 2026-11-09 (evening); the seat placed it untracked over the bridge (its header). In its §5's words:
+    every item before the rule ruled inert, no strike; the list of record adopted (§2).
+    - **This block (§1.1).**
+      - D0 and D1: departures, inert, no strike. D0 also breached O2-2/O3-1's standing rule: the end-wait is on the
+        PID alone, and no session runs a `stat`, listing or read of a running stage's raw, checkpoint or reports (§2
+        item 5).
+      - §1.2 of the answer at `2853e66` said "No dated note on the G-TIME-F3 entry: its checkpoint was not touched",
+        restated in the close on `9c7062e`'s entry. That sentence is revised: it held for round 6's worktree
+        traversals and does not hold for the main-checkout calls now disclosed. The note is §3's, entered at the
+        G-TIME-F3 entry.
+      - D2: a carried form bound `data/p` before the rule, since p's stages are m's OLMo stages run by import through
+        p's register, and m's OLMo build (`71cc23c`) declared O2-3's listing forms. A departure from it; inert, no
+        strike. LOCK-p v0.2 is to state the rule in one line (the routing's B2).
+      - Q3: before a unit's VERDICTS, a pre-push screen may read every file in the range, in §2 item 4's form. D4's
+        identifier totals, and the object-id comparisons and attribute reads in the block's §4, are permitted.
+      - Q4: the list of record is the union of the driver docstring's five forms and the §1.3 list of the answer at
+        `2853e66`. The docstring need not change.
+    - **The list of record (§2)** supersedes that §1.3 list and the docstring's five forms by their union. It binds
+      every session (Code's, their subagents', the coordinating session's) on the laptop and the box, for every unit
+      before its VERDICTS or NOT-RUN record. Open today: Q-F3 (`data/mf3`), p (`data/p`), and n (`data/n`) once it
+      writes. Its eight items: permitted forms, barred forms, content searches, the pre-push screen, a running stage,
+      briefs, scrubs, departures. It binds no hash and edits no committed file.
+      - **Flagged, not applied:** item 3's pathspec as written (`':!data/*/ckpt' ':!data/*/reports'`) excludes
+        nothing on this machine's git (2.39.5). At `9eed029`, `git ls-files` under it still lists all 36 tracked names
+        under those directories, and lists none with `/**` appended to each. Until the seat rules, the sessions use
+        the `/**` form or the prune. Code takes the defect to the seat in a block of its own, with the content searches
+        it let through.
+    - **The dated notes (§3)** are entered with this close, each at the end of its entry: G-TIME-F3 (`acc3b52`),
+      G-TIME-OLMo (p) (`2258c52`) and the smoke driver (`9c7062e`). The G-TIME-F3 note's "no content of the
+      checkpoint was read" is of its thirteen occasions. The reads the block lists under D3 and D4 are ruled in §1.1
+      Q3, and the A-m2 session's content searches in §1.3 item 4.
+    - The PI's routing of 2026-11-09 (evening), in chat, verbatim: its header and sections C and D. Sections A and B
+      went verbatim to the F3 and pod sessions, which close their own items.
+
+      > ROUTING — 2026-11-09 (evening) — the seat's four files, dropped untracked on the laptop; the PI commits by path
+      >
+      > C. All three sessions (this one, F3, p) — the O2-3 sweeps ruling
+      >  C1. The three disclosures (353502f, ddd95b0, 9eed029): every item before the rule inert, no strike [as ruled].
+      >  C2. The list of record (sweeps ruling §2) binds every session on the laptop and the box, every open unit, from today; every brief states it; LOCK-m-F3 v0.1's re-issue and LOCK-p v0.2 cite it in one line each [adopted].
+      >  C3. Dated notes, written by this session with its close line: on the G-TIME-F3 entry acc3b52 (the thirteen occasions, inert), on the G-TIME-OLMo (p) entry 2258c52 (line 53 corrected; D2/item 12), on the smoke-driver entry 9c7062e (round 6's "every later traversal pruned" did not hold for Q6) [go].
+      >  C4. Each session adds a close line on its own disclosure entry citing the sweeps ruling by path and sha256 [go].
+      >
+      > D. Push (the PI's)
+      >  D1. The eight commits since fdd79d8 (f8b16d5 … 9eed029) plus tonight's: push as is; the pod's SSH port at line 148 of the p-gtime values-check raw is described in the push's entry line as an ephemeral operational detail, not a secret; no history rewrite, no scrub commit [push as is] — or one masking commit first, knowing the original blob goes with it [alt].
+      >  D2. From here the pre-commit scrub covers ports, and briefs name the pod's address and port only by description [adopted].
+
+    - **The push (the routing's D1), as is.** The eight commits since `fdd79d8` (`f8b16d5` … `9eed029`) and this one
+      are pushed on this item: origin moves from `fdd79d8` to this commit. Line 148 of
+      [`_p-gtime_valuescheck`](results/raw/2026-11-09_p-gtime_valuescheck.md), in `2258c52`, gives the pod's SSH
+      port. It is an ephemeral operational detail, not a secret: a port on a pod whose id is already in the public
+      record, behind key authentication, on a box the PI retires after p's campaigns (§4). No history is rewritten
+      and no scrub commit is made. Tonight's later commits go out on the same item.
+      - The pre-push screen, in §2 item 4's form, over `fdd79d8..9eed029`: no host outside PUBLIC_HOSTS, no address,
+        no email and no port pattern. One pod-token match: that port. Three local-path matches, each the
+        home-directory prefix named as a search term in a values-check's scrub or leak check. No match inside a
+        `ckpt` or `reports` file. The same screen runs over this commit before the push.
+    - **The routing's D2:** from here the pre-commit scrub covers ports (§2 item 7), and briefs name the pod's address
+      and port only by description (§2 item 6). Both sessions have the list of record and D2 in their relays.
 
 - 2026-11-09 — **The A-m2 smoke (ADDENDUM-m2 v0.3 §3; §6 item 3; never of record), on the PI's routing of
   2026-11-09, relayed by the coordinating session ("Route as given": ans3 §3 as drafted, whose item 1 ends "then the
@@ -261,6 +322,14 @@ applied to CLAUDE.md.
     [`_p-gtime_valuescheck`](results/raw/2026-11-09_p-gtime_valuescheck.md).
   - **Next:** the seat's read, then the PI's routing. The pod stays up and idle; whether it stays up through LOCK-p
     v0.2 is the PI's call. Not pushed. Committed by path.
+  - **Dated note, 2026-11-09.** Line 53 of `_p-gtime_valuescheck.md` ('only hashed') is inaccurate: that checker's
+    `ls -la` printed the fifteen outputs' sizes and modification times (`ddd95b0`, item 11), before the rule of
+    2026-11-09; the sizes and times reached no text; the seat ruled it inert, no strike
+    ([`_o23-sweeps_design-to-code_answers`](results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md)). The
+    coordinating session's D2 and the pod session's item 12 printed this commit's `--stat` lines; the same ruling.
+    Before LOCK-p v0.2 no p document stated the carried listing rule; v0.2 states it.
+    (The sweeps ruling's §3 text, entered by the coordinating session with its close on `353502f`'s entry; LOCK-p
+    v0.2 follows on the routing's item B5.)
 
 - 2026-11-09 — **LOCK-p-OLMo-{sft,dpo,instruct} v0.1 (p v0.2 §4.1's chain; the order of the seat's answer of
   2026-11-08 at `de729c4`, §4; the PI's routings quoted in `de729c4`'s close lines, item 2, and at `6b63973`, item
@@ -591,6 +660,12 @@ applied to CLAUDE.md.
       `fdd79d8`. The nine are pushed on this routing (origin moved `da1e1b8..fdd79d8`). Four later commits
       (`f8b16d5`, `0afd842`, `2258c52`, `6cfd3db`) lie between them and this one, which cannot be pushed without
       them; that question goes to the PI.
+  - **Dated note, 2026-11-09.** Round 6's "Every later traversal pruned ckpt" (its report's disclosure,
+    [`_a-m2-smoke-driver_reviews`](results/raw/2026-11-09_a-m2-smoke-driver_reviews.md), line 665) did not hold for
+    Q6, the round-6 reviewer's unpruned `__pycache__` search at 07:00:57 UTC, which printed nothing (`9eed029`'s
+    block, §4), and §1.2's ruling above did not rest on it (the sweeps ruling of 2026-11-09, §1.3 item 3,
+    [`_o23-sweeps_design-to-code_answers`](results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md)).
+    (Entered by the coordinating session with its close on `353502f`'s entry, per §3 of that ruling.)
 
 - 2026-11-09 — **ADDENDUM-m2 v0.3 — COMMITTED (A-m2 §6 item 2), on the PI's routing of 2026-11-09.**
   - **Committed:** `ADDENDUM-m2-f3-reasoning-block-v0_3.md` is tracked at root, sha256
@@ -1605,6 +1680,16 @@ applied to CLAUDE.md.
 
     - ADDENDUM-m2 v0.1 (`ADDENDUM-m2-f3-reasoning-block-v0_1.md`, sha256 `cdcc8e86…53f0`) stays untracked until
       its step 3, after Code's pre-read. G-ID-F3 waits for the re-run that A-m2 §5 sequences.
+  - **Dated note, 2026-11-09.** Before the rule of 2026-11-09, size or time metadata of this stage's checkpoint or
+    reports printed in Code sessions' and their subagents' shells on thirteen occasions, all in the main checkout —
+    the coordinating session's D0 (one modification time of the running checkpoint) and D1; the pod session's items
+    1–2; the A-m2 session's Q1–Q5 and B–E (`353502f`, `ddd95b0`, `9eed029`). No value was computed against,
+    reproduced, or carried into any text, and no content of the checkpoint was read. The seat ruled each inert, no
+    strike ([`_o23-sweeps_design-to-code_answers`](results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md)), and
+    set the list of record (its §2).
+    (The sweeps ruling's §3 text, entered by the coordinating session with its close on `353502f`'s entry. It revises
+    §1.2's "No dated note on the G-TIME-F3 entry" (the answer at `2853e66`), restated in the close on `9c7062e`'s
+    entry.)
 
 - 2026-11-07 — **G-TIME-F3's wiring: `time` is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1 (`1e79955`),
   carrying the rest of m's pre-load check and a DRIVER line, in `scripts/m_sessions.py`'s forms. Only the driver
