@@ -1,3 +1,196 @@
+# LOCK-m-F3.md — v0.1, re-issued under ADDENDUM-m2 v0.5 (2026-11-10)
+
+*Q-F3's first lock, re-issued above its v0.1 text, which follows below verbatim: ADDENDUM-m2 v0.5 §4.3, "LOCK-m-F3 v0.1 is re-issued above its v0.1 text, which it keeps verbatim". This part records what §4.3 lists; v0.1's text (2026-11-07, committed at `1e79955`) runs from its own heading to the file's end. A stage cites the whole file by its sha256, which the re-issue's entry names.*
+
+## R0. Status
+
+- **Version:** v0.1, re-issued 2026-11-10, before the re-run of G-TIME-F3. LOCK-m-F3 v0.2 follows G-ID-F3 (m:296), as
+  before.
+- **On the PI's word.** The routing of 2026-11-10, A5, verbatim at RESULTS.md's close line (`0516832`): "… → G-SHAPE-F3
+  and G-ANL-F3 re-runs → LOCK-m-F3 v0.1 re-issued (cites the list v2) → G-TIME-F3 re-run into Q-F3_time-r2.json at
+  cap 120, announced, ≈ 2.5–3.5 h → STOP for the seat's read [go]". Its C2, verbatim at the close on `750a7dd`'s
+  entry (`fc43249`): "LOCK-m-F3's re-issue and LOCK-p v0.2 cite v2."
+- **The list of record:** the list of record v2 (`results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md`,
+  §2; committed at `fc43249`) binds every session on this unit from 2026-11-10, in place of the sweeps ruling of
+  2026-11-09, §2.
+- **Generated, not transcribed:** R1's identity table and R3's verbatim blocks (the PIN tables and the register) were
+  generated with a tool at the re-issue's HEAD (`reissue_gen.py`, Code's scratch; HEAD `23865fa`). Every file they
+  hash or quote is committed there with identical working-tree bytes. R1's rulings table and the driver's flag line
+  are Code's, typed and checked against the files. The prose is Code's, from the sources it cites.
+
+## R1. The binding identity at the re-issue
+
+| what | path or scope | sha256 | at v0.1 |
+|---|---|---|---|
+| the proposal of record | `PROPOSAL-m-gating-campaign-v1_11.md` | `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b` | unchanged |
+| ADDENDUM-m1 v0.1 | `ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md` | `ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001` | unchanged |
+| ADDENDUM-m2 v0.5 | `ADDENDUM-m2-f3-reasoning-block-v0_5.md` | `f27505c556a3304097d2154698bcf4498927e692c7341aec5060803c833b5354` | new |
+| the analyzer (G-ANL-F3) | `scripts/m_analyze.py` | `d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48` | unchanged |
+| m's package | `valence_core/m/*.py` (`resume.package_sha256_of`) | `7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb` | unchanged |
+| the Q-F3 closure (PIN-V2-12) | the base closure plus `LAZY_F3_MODULES`, 22 modules | `06a36cbfb4ab5dce94bc1f900d43cea93e667a4cbe64b69f24986f5847eb63e8` | new |
+| the base closure | 15 modules | `a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b` | unchanged |
+| mf3's package | `valence_core/mf3/*.py` | `098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13` | new |
+| the driver (the DRIVER line's value) | `scripts/mf3_sessions.py` | `1b593ba0465c5cf1af4d5b47283456b32359b37e0e3974848aade0f1d31287c6` | new |
+| G-SHAPE-F3's artifact | `data/mf3/gates/G-SHAPE-F3.json` | `ff3eaae5b1c6f0b660be418e42709132018d904e53657046367517c1243f1bf3` | new |
+| G-ANL-F3's artifact | `data/m/gates/G-ANL-F3.json` | `c2b87ab6c00a9b61ff9265d33cf73aa0aeadcbf9470e7aee2435e004689dc08c` | new |
+| Q-F3's schedules manifest | `data/mf3/schedules/manifest.json` | `c7b5df4405981cca40d86564828c854f45c65211f2b2e9c138d43fdacd2a3314` | unchanged |
+
+- **Unchanged and not repeated:** the eleven m files and the weights of record.
+  - `scripts/mf3_sessions.py hashes` at the re-issue's HEAD prints each m file's sha256 and the WEIGHTS line exactly as
+    v0.1's §1 lists them below.
+  - Those rows remain the lines the licence and the driver read: each m file on one line with its sha256, and one
+    WEIGHTS line.
+- **The values a non-stub stage's identity_extra carries beside the hashes:**
+  - `renders_sha16` `a04f67b0e5105a05`, unchanged;
+  - `reasoning_cap` 120, the cap of record, at every Q-F3 stage on a model, G-TIME-F3's re-run included (R2);
+  - `locked_path` `"uncached"` at G-TIME-F3, unchanged.
+- **How a stage cites this file:** v0.1's §1 item stands, with two changes.
+  - **The cap.** `_extra` refuses any cap but 120 on a run on a model at every stage, and admits 60 on the stub path
+    only. `prior_gate` reads the fixed cap as 120 on a run on a model. v0.1's 60 at G-TIME-F3 is now admitted on the
+    stub path only, beside 120 (m:174's pair at every stage). Its trigger-fixed cap from G-ID-F3 on holds on the stub
+    path only (R2; R3, F6, F8 and F19).
+  - **The driver's `time`** passes this file's values:
+
+    `--proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F3.md --analyzer-sha256 d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 --package-sha256 098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13 --renders-sha16 a04f67b0e5105a05`
+
+    It writes `data/mf3/ckpt/Q-F3_time-r2.json`, its report and reads named after it. Its precheck refuses an existing
+    or ENDED checkpoint there and refuses the first run's checkpoint name, `Q-F3_time.json`, as a target.
+  - **The licence's new (h):** in `stages.licence_problems`' words, "(h) the reasoning block's addendum, A-m2 v0.5
+    (``banner.ADDENDUM_M2_REL``), committed with the working tree's bytes, its sha256 the pinned one, its F-b literal
+    and cap the code's". Its sha256 is in the table above.
+  - v0.1's line anchors in `valence_core/mf3/stages.py` refer to that file at `1e79955`.
+- **The rulings this re-issue rests on** (each file's sha256 and the commit that added it):
+
+  | ruling | file | sha256 | committed at |
+  |---|---|---|---|
+  | ADDENDUM-m2 v0.5 | `ADDENDUM-m2-f3-reasoning-block-v0_5.md` | `f27505c556a3304097d2154698bcf4498927e692c7341aec5060803c833b5354` | `7589c1d` |
+  | the seat's answers on the v0.4 STOP (ruling (a)) | `results/raw/2026-11-10_a-m2-v04-stop_design-to-code_answers.md` | `a85b924930866191ab22e9ac9874a55fa9a3ff9c0b881f7d4aa34e04e7fb8faf` | `0516832` |
+  | the list of record v2 | `results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md` | `6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd` | `fc43249` |
+  | the seat's read of the smoke | `results/raw/2026-11-09_a-m2-smoke_design-to-code_answers.md` | `f13447d9e9c018a0fc7b3e2651948225ccc4da6078470bfdcb98aa7012b273cd` | `50fea90` |
+
+## R2. What the re-issue records (A-m2 v0.5 §4.3's list, in its order)
+
+- **The fire** (§0).
+  - G-TIME-F3 (`acc3b52`) computed PASS on an echo domain that v0.1's F25 and F28 narrowed. Under m:265's domain, "the
+    bar reads 9/13 against a critical of 4 at n = 13 and fires" (§0.2).
+  - The seat ruled G-TIME-F3 STOPPED before G-ID-F3, and re-specified; the dated correction on its entry is at
+    `daca8b0`.
+  - The first run's sessions, picks and reads stay where m:271 and m:318 put them. Its checkpoint,
+    `data/mf3/ckpt/Q-F3_time.json`, is never written again.
+- **The class correction** (§1).
+  - The echo class's domain is m:265's: every complete harness-written line of the session, up to the reasoning line
+    in question (Code's P1).
+  - Its match is equality after whitespace normalization.
+  - Q8's containment is withdrawn from the bar and kept as counter (a) (§3.4).
+- **The smoke's result and the selected form** (§3.5, §4.1).
+  - The smoke (`6cfd3db`) ran four forms on sham sessions. Its rule selected F-b: 3 defect lines of 18, against F-a's 6.
+  - Its second stop fired, so nothing was adopted then; the seat's read is at `50fea90`.
+  - A-m2 v0.4, then v0.5, re-specified the block as F-b, with its exact bytes as A-m2 §3.1 gives them:
+    `[round {n} | reasoning]\nReasoning (one line): So far,` (`valence_core.mf3.banner.REASONING_SEGMENT`).
+- **The cap of 120, and m:294's trigger as report-only** (§4.1).
+  - The cap is 120 at the re-run of G-TIME-F3 and at every later Q-F3 stage. The PI decided it on 2026-11-09 (the
+    routing of 2026-11-09 (evening), A2).
+  - m:294's trigger is reported at the re-run, as the count of lines at the cap, of ≤ 36, and moves nothing.
+  - The bar is untouched: a line at 120 without a newline is a defect line under m:265 (v0.1's §8, bar 5).
+- **The stub path's admission** (§4.2; ruling (a)).
+  - In §4.2's words: "The cap of record binds on every run on a model; the stub path alone may run at 60."
+  - The analyzer's battery drives mf3's stub chain at 60 (`scripts/m_analyze.py:10713`, `:10722`).
+  - `scaffold.f3_config`'s per-stage table, `STAGE_REASONING_CAPS`, keeps m:174's pair (60, 120) at every stage, the
+    caller choosing.
+- **The new mf3 package hash and the driver's blob; the new Q-F3 closure; G-SHAPE-F3's and G-ANL-F3's new artifacts:**
+  R1.
+  - The BUILD is `5d40d59`. The re-runs are `0684263` (G-SHAPE-F3) and `23865fa` (G-ANL-F3).
+  - Each earlier artifact is kept as `*.superseded-2026-11-10.json` beside its successor.
+  - Four modules of the Q-F3 closure moved with the BUILD: mf3's `banner`, `lines`, `readrule` and `scaffold`.
+- **The re-declared PINs F25 and F28, F29's correction, and the revised readings of F6, F8, F11 and F19:** R3.
+- **The list of record, cited in one line:** R0.
+- **The analyzer, unchanged.**
+  - `scripts/m_analyze.py` is not touched (sha256 `d347ea0c…`). In §4.3's words, "its lexicons and counter (c) are
+    unaffected by the block's form or the cap".
+  - v0.1's §3 stands.
+
+## R3. The PINs at the re-issue
+
+- **F25 and F28 re-declared; F6, F8, F11 and F19 re-read; F29's sentence corrected.** Each is quoted verbatim from its
+  site at the re-issue's HEAD. They replace v0.1's register rows for the same numbers (§9 below):
+
+| PIN | site | at | the text at the re-issue (verbatim) |
+|---|---|---|---|
+| F6 | `stages.prior_gate` | `valence_core/mf3/stages.py:493` | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "prior_gate (F6) reads the fixed cap as 120 unless its require_real is off"; F6 re-read): on a run on a model (require_real) the fixed cap is the cap of record, scaffold.CAP_OF_RECORD, whatever the trigger counts (§4.1: it is reported and moves nothing), and a prior G-TIME-F3 written at another cap -- the first run's form, at 60 -- is refused (Code's reading of F6 under §4.1: the prior's lines and the stage's are both at the cap of record). With require_real off -- the stub path, which alone may run at 60 -- the fixed cap is re-computed from the prior's own checkpoint, as at LOCK-m-F3 v0.1. |
+| F8 | `stages._extra` (the check) | `valence_core/mf3/stages.py:621` | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "stages._extra (F8's site) refuses any cap but 120 on a non-stub run and admits 60 on the stub path only"): m:174's pair on the stub, at every stage; the cap of record, scaffold.CAP_OF_RECORD, alone on a run on a model. |
+| F8 | `stages._extra` (its docstring PIN, opening at `:598`; the revised sentence) | `valence_core/mf3/stages.py:602` | The reasoning cap (A-m2 v0.5 §4.1-§4.2; F8 re-read): the cap of record, 120, on a run on a model at every stage, G-TIME-F3's re-run included; m:174's pair, 60 or 120, on the stub, which alone may run at 60; from G-ID-F3 on, the cap prior_gate fixes. |
+| F11 | `stages.cap_trigger` | `valence_core/mf3/stages.py:1040` | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "stages.cap_trigger (F11) keeps its count and reports it"; §4.1: "m:294's trigger is reported at the re-run -- the count of lines at the cap, of <= 36 -- and moves nothing (m:174 names no value beyond 120)"; F11 re-read): ``cap`` is the run's reasoning cap, its checkpoint identity's. The count is as above. A run at 120 fixes 120 whatever the count; a run at 60 -- the stub path's, which alone may run at 60 -- fixes the cap by the count, as at LOCK-m-F3 v0.1. |
+| F19 | `scaffold.f3_config` (cap) | `valence_core/mf3/scaffold.py:144` | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "scaffold.f3_config's per-stage cap (F19's site; the build makes it a table) keeps m:174's pair, 60 or 120, the caller choosing, since it carries no stub signal"; F19 re-read): every stage admits STAGE_REASONING_CAPS[stage], m:174's pair. The cap of record (120, §4.1) binds every run on a model at stages._extra (F8), resume.Identity, stages.prior_gate (F6) and the driver; the stub path alone may run at 60 (§4.2). |
+| F25 | `lines.domain` | `valence_core/mf3/lines.py:52` | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1, m:265; Code's P1 of the A-m2 pre-read; F25 re-declared): over the pieces, which tile the transcript, the span before ``upto`` splits into newline-terminated lines; a line is in the domain iff no model-written piece (generation, reasoning_text) touches it: none overlaps any of its characters, its newline included, and no zero-length one sits within it. A model text can hold a newline, so overlap, not a piece's start, decides. Every other piece kind is the harness's. An unterminated final fragment is not a complete line. Each line is kept as rendered (labels included); distinct by its ws_norm form, first occurrence kept; each non-empty after ws_norm (asserted: no harness line of F3 is blank). So the banner, its Note lines, every round header, every Task line, every menu line and the pick line as rendered are in it; a Response line and, under F-b, the reasoning label line are not (the model continues each). |
+| F28 | `lines.classify_line` (echo) | `valence_core/mf3/lines.py:155` | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1: "equality after whitespace normalization (runs of whitespace collapsed, ends stripped; case-sensitive)"; F28 re-declared): echo = the first line of the domain (``echo_set``, domain order) whose ws_norm form equals the line's; Q8's containment is withdrawn from the class and is counter (a)'s. |
+| F29 | `lines.review_counter` | `valence_core/mf3/lines.py:265` | PIN (Code, declared at LOCK-m-F3 v0.1; the seat's Q4): the unit is the generation (a task round or a reasoning line), keyed (template, kind, string); a generation containing two of the strings counts once under each. Its home is this module. At VERDICTS the analyzer is untouched: Code tabulates it with this module's functions over the same records in its own step, reported in the VERDICTS entry beside the analyzer's outputs (A-m2 v0.5 §3.4, which corrects F29's "the analyzer tabulates it" at the lock's re-issue). |
+
+- **F29's correction, a dated note (2026-11-10; A-m2 v0.5 §3.4).**
+  - v0.1's register gives F29's reading as "the analyzer tabulates it".
+  - At VERDICTS the analyzer is untouched. Code tabulates counters (a) and (b) and the Q4 review counter with mf3's
+    functions over the same records, in its own step, reported in the VERDICTS entry beside the analyzer's outputs.
+- **PIN sites revised in place,** under their earlier "declared at" tags (the BUILD's review, round 2), with their text
+  at the re-issue:
+
+| site | at | its text at the re-issue (verbatim) |
+|---|---|---|
+| F29's site | `valence_core/mf3/lines.py:265` | PIN (Code, declared at LOCK-m-F3 v0.1; the seat's Q4): the unit is the generation (a task round or a reasoning line), keyed (template, kind, string); a generation containing two of the strings counts once under each. Its home is this module. At VERDICTS the analyzer is untouched: Code tabulates it with this module's functions over the same records in its own step, reported in the VERDICTS entry beside the analyzer's outputs (A-m2 v0.5 §3.4, which corrects F29's "the analyzer tabulates it" at the lock's re-issue). |
+| `_extra`'s docstring PIN (opening at `:598`; the revised sentence) | `valence_core/mf3/stages.py:602` | The reasoning cap (A-m2 v0.5 §4.1-§4.2; F8 re-read): the cap of record, 120, on a run on a model at every stage, G-TIME-F3's re-run included; m:174's pair, 60 or 120, on the stub, which alone may run at 60; from G-ID-F3 on, the cap prior_gate fixes. |
+| `out_paths`'s docstring PIN | `valence_core/mf3/stages.py:101` | PIN (Code, declared at LOCK-m-F3 v0.1): m's layout under data/mf3 -- schedules/ (read only), ckpt/Q-F3_{stage}.json (pick-bearing; -diff), reports/Q-F3_{stage}_report.json and _reads.json (no contrast pick), G-ID-F3's artifact at guard.gid_artifact_path(). A-m2 v0.5 §4.2 keeps m's default stem here, for the stub; G-TIME-F3's re-run checkpoint and the refusal of the first run's live in the driver's precheck, which names the checkpoint (scripts/mf3_sessions.py), and for_checkpoint names the report and reads after it. |
+| `assert_boundary`'s PIN | `valence_core/mf3/scaffold.py:176` | PIN (Code, declared at LOCK-m-F3 v0.1; the seat's Q8 on the "\n\n" after the reasoning segment, N6): the token-comparison form is valence_core.m.scaffold.assert_boundary (the adapters' own comparison; the boundary must be the prefix token count); the character-offset form decodes the first k tokens of the UNTRUNCATED joint encode, k the prefix token count, and requires exactly the prefix's characters (NFC-normalised, the Qwen tokenizer's own normaliser; identity on ASCII and on the stub). Every generation's prefix is the whole transcript so far, so a reasoning line -- an empty one leaving F-b's "So far," then its joiner's "\n" (A-m2 v0.5 §4.1; runner.py's check), or a newline-led one -- lies with its joiner inside a later prefix, and the assertion is exact over them. Either form failing is a BOUNDARY INCIDENT: HALT before the generation, escalate. |
+| the driver's wiring PIN | `scripts/mf3_sessions.py:88` | PIN (Code, declared at LOCK-m-F3 v0.2; the time wiring; m's TIME_* form carried, scripts/m_sessions.py): G-TIME-F3 cites LOCK-m-F3.md (lock §1); one session per Q-F3 arm (m:293: "One session per Q-F3 arm (6), as G-TIME-F0"), the counts the committed time schedules carry (n 1 each); locked_path "uncached" (m:293, "G-TIME-F3 (Qwen, uncached)"); reasoning cap 60 at the first run (m:174), 120 from the re-run on (A-m2 v0.5 §4.1; the PIN below). The five flags are the lock's values, as LOCK-m-F0 §0's "How a stage cites this file" made them for m's driver. The values are Q-F3's; TIME_REASONING_CAP and TIME_FLAG_HELP have no counterpart in m. |
+
+- **Code's readings declared at the BUILD.** Each is strikable by the seat until LOCK-m-F3 v1.0, at the cost v0.1's §0
+  states:
+  - **Counter (b)'s domain on G-TIME-F3's contrast read** (`lines.b_candidates`). It rests on `m.audit.qwen_ends`
+    ("forced -> any claim" under the lenient scope): a claimed forced round ends the session, so the one claimed round
+    is the last forced round of a session the read marks `excluded_at_forced`.
+  - **F6:** on a run on a model, `prior_gate` refuses a prior G-TIME-F3 written at another cap.
+- **The PIN sites declared at the re-issue:** every line of `valence_core/mf3/*.py` and `scripts/mf3_sessions.py` that
+  opens `PIN (Code, declared at LOCK-m-F3 v0.1's re-issue`.
+
+18 sites.
+
+| site | where | its opening |
+|---|---|---|
+| `valence_core/mf3/banner.py:55` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; ADDENDUM-m2 v0.5 §4.1-§4.2): the reasoning block is F-b, |
+| `valence_core/mf3/gshape.py:275` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: the selected form "verified at every stage s |
+| `valence_core/mf3/gshape.py:454` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1; the build review's finding 11 carried): §1's |
+| `valence_core/mf3/lines.py:52` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1, m:265; Code's P1 of the A-m2 pre-read; |
+| `valence_core/mf3/lines.py:155` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1: "equality after whitespace normalization |
+| `valence_core/mf3/lines.py:185` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §3.4, "Q8's containment, as a counter"; Code's |
+| `valence_core/mf3/lines.py:202` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; the build review's findings 1 and 2): every task round |
+| `valence_core/mf3/readrule.py:376` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §3.4: "a gate stage's entry reports (a) over its |
+| `valence_core/mf3/resume.py:192` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "resume.Identity ... admits 60 only for an |
+| `valence_core/mf3/runner.py:167` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1, §4.2: "runner.py (the domain built |
+| `valence_core/mf3/scaffold.py:144` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "scaffold.f3_config's per-stage cap (F19's |
+| `valence_core/mf3/stages.py:186` | docstring | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: the selected form "verified at every |
+| `valence_core/mf3/stages.py:380` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: the selected form is "verified at every stag |
+| `valence_core/mf3/stages.py:493` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "prior_gate (F6) reads the fixed cap as 120 |
+| `valence_core/mf3/stages.py:621` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "stages._extra (F8's site) refuses any cap b |
+| `valence_core/mf3/stages.py:1040` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "stages.cap_trigger (F11) keeps its count an |
+| `valence_core/mf3/stages.py:1145` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §3.4: "a gate stage's entry reports (a) over its |
+| `scripts/mf3_sessions.py:95` | comment | PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.1-§4.3): the re-run of G-TIME-F3 runs at the ca |
+
+## R4. What follows
+
+1. **G-TIME-F3's re-run** (A-m2 v0.5 §4.3):
+   - six sessions on Qwen, uncached, on the same schedule cells and keys;
+   - the bars under §1, the cap 120, and m:294's count reported;
+   - written into `data/mf3/ckpt/Q-F3_time-r2.json`, its report and reads named after it;
+   - announced to the coordinating session and serialized with any other laptop model run (≈ 2.5–3.5 h, §4.4);
+   - then a STOP for the seat's read.
+2. **G-ID-F3 at 120.** In §4.3's words, "the `id` and `qual` wirings take the re-run's checkpoint by path and refuse
+   the first". Then:
+   - LOCK-m-F3 v0.2, recording the cap and the path;
+   - G-F3, G-PWR, and LOCK-m-F3 v1.0 with D2 (2026-12-22).
+- **The self-test:** the BUILD's two driver checks that read this file's committed text (its review's finding 11) are
+  expected to pass once this re-issue is committed. Code re-runs the self-test then.
+
+---
+
+Where v0.1's text below differs from the values and readings this re-issue records (R1–R3), the re-issue's are of record (A-m2 v0.5 §4.1–§4.3).
+
 # LOCK-m-F3.md — v0.1 (Q-F3's first lock, PROPOSAL-m v1.11 §3.2 m:292, §8 step 19 m:361)
 
 ## 0. Header and status

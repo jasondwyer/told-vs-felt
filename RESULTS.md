@@ -21,6 +21,57 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **LOCK-m-F3 v0.1 — RE-ISSUED under ADDENDUM-m2 v0.5 §4.3, above its v0.1 text kept verbatim, before the
+  re-run of G-TIME-F3. `LOCK-m-F3.md`, sha256 `70da4a70aeeff434cae7f6a436d8391556118c26513b2456f3940d3872e81d3f`, is the file a Q-F3 stage cites from here on.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 10:15:42 UTC 2026**.)
+  - **The routing:** the PI's routing of 2026-11-10, A5 ("… → LOCK-m-F3 v0.1 re-issued (cites the list v2) → G-TIME-F3
+    re-run into Q-F3_time-r2.json at cap 120, announced, ≈ 2.5–3.5 h → STOP for the seat's read [go]"), and its C2
+    ("LOCK-m-F3's re-issue and LOCK-p v0.2 cite v2").
+  - **The form:** LOCK-p v0.2's (`585df45`). The re-issue part comes first (R0–R4). Then a rule, and one sentence:
+    where v0.1's text differs from the values and readings the re-issue records, the re-issue's are of record. Then
+    v0.1's text, byte for byte as committed at `1e79955` (sha256 `377c5d60…6ce7`).
+  - **What it records** (v0.5 §4.3's list):
+    - R1, the binding identity at the re-issue.
+      - New: ADDENDUM-m2 v0.5 (`f27505c5…`), mf3's package (`098455d9…`), the driver (`1b593ba0…`), the Q-F3 closure
+        (`06a36cbf…`, 22 modules), G-SHAPE-F3's artifact (`ff3eaae5…`) and G-ANL-F3's (`c2b87ab6…`).
+      - Unchanged: the proposal, ADDENDUM-m1, the analyzer (`d347ea0c…`), m's package, the base closure and the
+        schedules manifest.
+      - The eleven m files and the WEIGHTS line are unchanged and not repeated; v0.1's §1 rows stand.
+      - The driver's `time` flags, its checkpoint `Q-F3_time-r2.json`, and the rulings it rests on.
+    - R2: the fire, the class correction, the smoke's result and the selected form, the cap of 120 with m:294's trigger
+      report-only, the stub path's admission, and the analyzer unchanged.
+    - R3:
+      - F25 and F28 re-declared, and F6, F8, F11 and F19 re-read, each quoted verbatim from its site;
+      - F29's correction, a dated note;
+      - the five PIN sites the BUILD revised in place;
+      - Code's two readings, strikable until v1.0;
+      - the register of the 18 PIN sites declared at the re-issue.
+    - R0 cites the list of record v2 in one line.
+  - **Checks before the commit:**
+    - R1's identity table and R3's verbatim blocks were generated at HEAD `23865fa` (`reissue_gen.py`, Code's
+      scratch), every file they hash or quote committed with identical bytes. R1's rulings table and the driver's
+      flag line are typed, and the values-check checked them.
+    - The driver's lock parsers on the composed text: `lock_m_modules` finds no problem and gives the eleven m files'
+      sha256 as hashed now; `lock_weights` finds no problem and one binding.
+    - Every hash a checker looks for in the lock's text is named in full:
+      - the proposal's, which the driver's `time_identity_extra` requires;
+      - the analyzer's and mf3's package, for the licence's (f), which also reads the eleven m files and the
+        weights (v0.1's §1 rows, unchanged);
+      - m's package and the Q-F3 closure, for the VERDICTS reader, beside the analyzer's.
+    - `time_identity_extra` and `stages.licence_problems` on the composed file as if committed, with `stages.committed`
+      patched for this file alone: no problem, cap 120.
+  - **Values-check:** [`_lock-m-f3-reissue_valuescheck`](results/raw/2026-11-10_lock-m-f3-reissue_valuescheck.md): one blind pass
+    under a brief quoting the list of record v2's items 1–5. 68 items: 54 CONFIRMED, 6 IMPRECISE, 1 FAIL, 7 NOT
+    CHECKABLE.
+    - The FAIL: the first draft said v0.1's cap of 60 at G-TIME-F3 now held on the stub only. On the stub,
+      G-TIME-F3 admits 120 as well. Corrected.
+    - Each IMPRECISE item is applied, and the parsers and licence were re-run on the final bytes.
+  - **After the commit:** Code re-runs the mf3 self-test. The BUILD's two red checks (its review's finding 11) are
+    expected to pass; the result goes into the G-TIME-F3 announcement and its entry.
+  - **Next:** the G-TIME-F3 re-run, announced to the coordinating session; on its acknowledgement, the launch, under
+    m:267's checklist.
+  - **Committed by path:** `LOCK-m-F3.md`, the values-check raw and this entry. Nothing ran on a model. Not pushed.
+
 - 2026-11-10 — **G-ANL-F3 — the canonical re-run (`ganl`) on HEAD `0684263`, G-SHAPE-F3's re-run on the BUILD
   (`5d40d59`), before LOCK-m-F3 v0.1's re-issue: PASS, 525/525, on the unchanged analyzer (`d347ea0c…`).
   A-m2 v0.5 §4.3: "G-ANL-F3 re-runs on the unchanged analyzer … the artifact supersedes `02dadb3`'s (which records the
