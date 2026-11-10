@@ -21,6 +21,106 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **The `id` wiring: `id` (G-ID-F3, m:295) is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1
+  as re-issued, in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its blob
+  moves from `1b593ba0…87c6` to `8d878f4a…00e7`. mf3's package, m's, the analyzer and the lock stand, and G-SHAPE-F3
+  is not re-run. The self-test passes 197/197. A blind review with 30 mutants found no MAJOR; its three MINORs (all
+  self-test gaps) and five of its NOTEs' points are applied.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 17:49:13 UTC 2026**.)
+  - **The routing.** The seat's read of G-TIME-F3 r2, §5 item 1
+    (`results/raw/2026-11-10_gtime-f3-r2_design-to-code_answers.md`, sha256 `54679f70…f01d`, committed at
+    `54b1e51`). The PI routed it on 2026-11-10 ("Route as given"). Its §8 item 4: "The `id` wiring (F-1's kind, named
+    in its entry) → G-ID-F3 at 120 on the laptop, announced, ≈ 1 h → the seat's read of the pairs → LOCK-m-F3 v0.2
+    to §5 [go]".
+  - **What `id` runs** (§5 item 1, item by item):
+    - **The stage.** The stage library's `run_gid_pair_f3`, unchanged.
+      - It carries keys `m-id|F3|{template}|{s}`, A2s and A3s once each, and the criterion 2/2 (`stages.gid_decide`).
+      - Each pair's identity is the seat's F-7 (`stages._gid_pair`).
+      - A divergence sends Q-F3 uncached (m:295).
+    - **The identity.** `stage_identity_extra("id")` builds time's identity without `locked_path`, at
+      `reasoning_cap` 120. The path is recorded at LOCK-m-F3 v0.2 (lock §1). `stages._extra` validates the identity
+      for "id" as a run on a model.
+    - **The prior.** G-TIME-F3's re-run checkpoint, `data/mf3/ckpt/Q-F3_time-r2.json`, is taken by path
+      (`id_prior_checkpoint`).
+      - The first run's name, `Q-F3_time.json`, is refused, also where the path resolves to it (A-m2 v0.5 §4.3: "the
+        `id` and `qual` wirings take the re-run's checkpoint by path and refuse the first"; lock R4 item 2).
+      - `prior_gate` runs with `require_real` on, at cap 120: in the precheck before the load, and in the stage after
+        it.
+    - **The artifact.** It is written at `guard.gid_artifact_path()` (`data/mf3/gates/Q-F3_G-ID.json`), write-once.
+      - The precheck refuses an existing artifact, a link included, with or without `--resume`, unless G-ID-F3's own
+        checkpoint carries an end pending.
+      - The stage refuses an existing one too (B7).
+    - **The outputs.** G-ID-F3's checkpoint, report and reads use m's default stem for "id": `data/mf3/ckpt/Q-F3_id.json`,
+      and `Q-F3_id_report.json` and `Q-F3_id_reads.json` under `data/mf3/reports/`.
+    - **Exit codes:** 0 PASS, 5 FAIL, 6 NOT-DETERMINED, 4 STOP, and 2 for a refusal before the load.
+  - **The edit, named:**
+    - `id` joins `WIRED_CMDS`; `qual` and `campaign` stay refused.
+    - `time`'s three functions become m's stage-generic forms (m's `stage_identity_extra`, `stage_precheck` and
+      `_run_stage`; here `run_stage`). `time_identity_extra`, `time_precheck` and `run_time` stay as wrappers (m's
+      step-10 wrapper form).
+      `time`'s refusals, lines and exit codes are unchanged, and every `time` check passes as before.
+    - New: `id_prior_checkpoint`, `run_id`, the constants `ID_LOCK_FILE`, `ID_REASONING_CAP`, `ID_PRIOR_CKPT_NAME` and
+      `STAGE_HELP`, and the `id` subparser with time's five flags and `--resume`.
+    - **F-1, on the edit as made.** It wires a subcommand at its step and touches no scoring-stack function: every
+      change is in the driver. So G-SHAPE-F3 is not re-run, as at the `time` wiring.
+      - The new blob: sha256 `8d878f4a894e05e4edf8a3c829548a9c0c864d5f45118875b7630e55d1d200e7`. The DRIVER line
+        prints it before the load.
+      - It is recorded in the G-ID-F3 entry and in LOCK-m-F3 v0.2: the seat's §5 item 1, "named in its entry with the
+        DRIVER line's new blob, recorded at v0.2", as the `time` wiring carried the step-10 read's Q2 condition.
+    - **PIN sites:** four new, each declared at LOCK-m-F3 v0.2 ("the id wiring").
+      - One sentence of the `time` wiring's WIRED_CMDS PIN is revised. "id, qual and campaign stay refused until their
+        steps" now reads "qual and campaign stay refused until their steps; id is wired at its own step (the id
+        wiring's PIN, below)".
+      - Neither text is recorded yet. v0.2 records both on the new blob, and re-anchors R3's `:88` and `:95` there (now
+        `:102` and `:109`; the review's NOTE-5 (c)).
+  - **Self-test:** 182 → 197, 197/197 on the final bytes ([`_mf3-id-wiring_selftest`](results/raw/2026-11-10_mf3-id-wiring_selftest.txt),
+    local roots scrubbed). The new `_selftest_id`'s 15 checks assert the following, in `time`'s forms:
+    - id's identity is time's without `locked_path`, at 120. A cap of 60 and another lock are refused. The not-wired
+      calls refuse on a test root, with the traps in place.
+    - `id --help` gives the five flags and `--resume`.
+    - On the stub, after `time` at the same root:
+      - PASS (exit 0), with the prior recorded and the artifact in a test gates directory;
+      - a scripted divergence exits 5 (FAIL), and no complete pair exits 6 (NOT-DETERMINED);
+      - with no prior it is a STOP, and the first run's checkpoint as the prior (by name or through a link) is a STOP;
+      - `--resume` launches only the missing halves;
+      - an end pending leaves its artifact.
+    - On the Qwen path, with the loader and both stages trapped:
+      - 33 refusals before the load. Among them, with the real prior gate in place: its refusals of a prior absent,
+        stub-written, under another proposal, not ended, ended STOP or at cap 60; the path's refusal of the first
+        run's, by name or through a link; and a looping link at the prior path.
+      - The problems are refused together, in one line.
+      - An out root without a factory is refused before anything.
+      - The state at G-ID-F3, with the first run's checkpoint beside the re-run's, passes.
+      - The DRIVER and SNAPSHOT lines come before the loader.
+      - After the load and the re-read, the stage reached is `run_gid_pair_f3`, with the re-run's checkpoint as the
+        prior, resume off, and the identity at 120 without `locked_path`.
+    - Nothing is loaded and nothing written under `data/mf3`.
+  - **Review:** one blind round, with Code's dispositions and round 2's mutant runs
+    ([`_mf3-id-wiring_review`](results/raw/2026-11-10_mf3-id-wiring_review.md)).
+    - Round 1: 0 MAJOR, 3 MINOR, 7 NOTEs. Of 30 mutants, 25 were killed and 5 survived: 1 equivalent and 4 gaps.
+    - The three MINORs were gaps the mutants found: the artifact refusal under `--resume`, id's out-root seam, and
+      the state at G-ID-F3. MINOR-1 is now two cases, and MINOR-2 and MINOR-3 one each.
+    - The NOTEs' applied points: a looping link at the prior path is a case; the not-wired check runs on a test root;
+      the reads are guarded; F-7 is cited at its site; and the post-load G-ID ARTIFACT DIFFERS is named.
+    - Not changed: the factory seam (time's, as in m, unreachable from `main`) and the carried `time` PIN texts that
+      NOTE-5 (b) names.
+    - Round 2 re-ran the four gaps, M23 and the five that had stopped the id block at an unguarded read (NOTE-3),
+      against the fixed self-test. All are killed, and the five now run the block to its end. The equivalent M14
+      survives, as in round 1.
+  - **Values-check:** [`_mf3-id-wiring_valuescheck`](results/raw/2026-11-10_mf3-id-wiring_valuescheck.md): one blind
+    agent, under a brief quoting the list of record v2's items 1–5.
+    - 94 items: 79 CONFIRMED, 9 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE.
+    - The FAIL was the review raw's "The precheck reads neither file's content": its prior gate reads the re-run's.
+    - Every FAIL and IMPRECISE item is applied. So is one of its observations: the new blob's full sha256 is named
+      here.
+    - Its two disclosures are in the raw: a partial execution of HEAD's driver source, which stopped at the first
+      repository import, and a name-only `git show` of a commit.
+  - **The site of the check:** the self-test ran in the main checkout on HEAD `29fe1fa` with the edit applied, the tree
+    this commit records.
+  - **Committed by path:** the driver, its self-test output, the review raw, the values-check raw and this entry.
+    Nothing ran on a model. Not pushed.
+  - **Next:** G-ID-F3 at 120 is announced to the coordinating session. Its launch waits for the ack.
+
 - 2026-11-10 — **Dated note (pod session), for the seat: a bound of the kind the seat's §4 on G-TIME-F3 r2 rules on,
   worked out in my reasoning.**
   - The seat's answers of 2026-11-10 on G-TIME-F3 r2
