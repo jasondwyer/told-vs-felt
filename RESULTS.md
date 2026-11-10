@@ -91,6 +91,28 @@ applied to CLAUDE.md.
   - **One correction to the block.** Its scope line says the sweep covered "the ten review and values-check subagents"
     this session briefed. It covered all fourteen that ran from 2026-11-08; ten of them appear in its tables.
   - **Committed by path:** the block and this entry. Nothing ran on a model or the box. Not pushed.
+  - **Close (PI date 2026-11-09).** The design seat's ruling on the three sweep disclosures
+    ([`2026-11-09_o23-sweeps_design-to-code_answers.md`](results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md),
+    sha256 `88acd018b9de8fe21b47c12c9c4966d0fd919417c3866795198befdfbe830939`), committed by the coordinating session
+    at `3d6f402`: every item before the rule ruled inert, no strike; the list of record adopted (§2).
+    - **On this block** (the ruling's §1.2):
+      - items 1–12 are departures from the carried form; inert; no strike. Items 3–6 and 8–10 printed G-CAL-p
+        checkpoints' metadata; those checkpoints hold no pick, and the seat read all 384 generations. Item 11 is the
+        one on p's blinded files. Item 12 is the coordinating session's D2 kind;
+      - §3's content reads: Code's read of G-CAL-p's checkpoints was the read of record (`ec0d9d3`). The two
+        subagents' prints of the sft checkpoint's identity block are inert, with no departure from m:318;
+      - §4's commands: inert;
+      - §5, the port: the ruling's §4, and the PI's push call;
+      - §6, this session's forward rules: adopted as written.
+    - **The line-53 correction** is the coordinating session's dated note on the G-TIME-OLMo (p) entry (the ruling's
+      §3).
+    - **The PI's routing of 2026-11-09 (evening), section C, verbatim** (relayed by the coordinating session; C3 is
+      that session's):
+      - C1. The three disclosures (353502f, ddd95b0, 9eed029): every item before the rule inert, no strike [as ruled].
+      - C2. The list of record (sweeps ruling §2) binds every session on the laptop and the box, every open unit, from today; every brief states it; LOCK-m-F3 v0.1's re-issue and LOCK-p v0.2 cite it in one line each [adopted].
+      - C4. Each session adds a close line on its own disclosure entry citing the sweeps ruling by path and sha256 [go].
+    - **From here** the list of record binds this session, its subagents and every brief it writes. LOCK-p v0.2 will
+      cite it in one line (the seat's answer on G-TIME-OLMo (p), §2 item 7).
 
 - 2026-11-09 — **The coordinating session's own commands in O2-3's forms, found in its sweep for the `9c7062e`
   close: disclosed to the seat under §1.3 of the seat's answer of 2026-11-09 (committed at `2853e66`). Code rules on
@@ -330,6 +352,32 @@ applied to CLAUDE.md.
     Before LOCK-p v0.2 no p document stated the carried listing rule; v0.2 states it.
     (The sweeps ruling's §3 text, entered by the coordinating session with its close on `353502f`'s entry; LOCK-p
     v0.2 follows on the routing's item B5.)
+  - **Close (PI date 2026-11-09).** The design seat's answer
+    ([`2026-11-09_p-gtime_design-to-code_answers.md`](results/raw/2026-11-09_p-gtime_design-to-code_answers.md),
+    sha256 `7b8b1d5f825778232ee72d062754db531fa9c8bd8b707ccc5c8b4e0507ffadc3`) is committed here by path, as the PI
+    placed it. The seat's read: PASS ×3 stand; the correctness counter declared; (a)–(j) as ruled.
+    - **The PI's routing of 2026-11-09 (evening), section B, verbatim** (relayed by the coordinating session):
+      - B1. G-TIME-OLMo (p) ×3: PASS ×3 stand on the seat's read [as ruled].
+      - B2. LOCK-p v0.2 ×3 to the answers' §2 (acceptance = m's verifier's acceptance of the runner-through-the-register on the box of record; path uncached; projections at m:205's basis, measured sham seconds beside; cap share "at G-PWR, per checkpoint"; FLAG (j) as a known limitation; the corrected backend clause; the carried listing rule in one line; D_p) [as written].
+      - B3. The task_correct counter under rule 23, Code's own step at each entry, from G-F0m-OLMo (p) on; key table declared in the first entry that reports it; no package move [declared].
+      - B4. Readings (a)–(j) [as ruled]; (h)'s correction adopted with a dated note on the BUILD entry; (j)'s fix at the next package move [deferred].
+      - B5. Code: close line on 2258c52 citing the p answers by path and sha256, with the dated note of C3 (line 53); LOCK-p v0.2 ×3 committed by path; then G-F0m-OLMo (p) ×3 on the box, batched (24 sessions per checkpoint), then STOP for the seat's read [go]. The pod stays up through G-F0m-OLMo (p) [up].
+    - **What it rules:**
+      - Q1: the three PASSes stand (§1.4). The seat read the sham sessions redacted and the contrast sessions'
+        banners and forced rounds only, and saw no pick.
+      - Q2: LOCK-p v0.2 ×3's contents, in eight items (§2).
+      - Q3: the `task_correct` counter, declared under rule 23 from G-F0m-OLMo (p) on. It is descriptive, tabulated by
+        Code's own step at each entry, and decides nothing (§3). G-TIME's row is the seat's: sham 29 of 30 (sft 9 of
+        10, dpo 10 of 10, instruct 10 of 10).
+      - Q4: readings (a)–(j) accepted as read (§4). (f)'s handling is stated. (h)'s correction is adopted, with the
+        dated note on the BUILD entry (2026-11-09, "p step 6 — BUILD"). (j)'s fix is deferred to the next package
+        move.
+      - Record hygiene (§5): line 53 of the values-check raw is corrected by the dated note above, the coordinating
+        session's (the sweeps ruling's §3). The port at its line 148 is the sweeps ruling's §4 and the PI's push
+        call.
+    - **Next.** LOCK-p v0.2 ×3 and G-F0m-OLMo (p) wait. `qual` is not wired in p's package, and wiring it moves values
+      the lock must name. Code's block to the seat on it follows, in its own commit (the 2026-11-09 entry
+      "G-F0m-OLMo (p) is not wired").
 
 - 2026-11-09 — **LOCK-p-OLMo-{sft,dpo,instruct} v0.1 (p v0.2 §4.1's chain; the order of the seat's answer of
   2026-11-08 at `de729c4`, §4; the PI's routings quoted in `de729c4`'s close lines, item 2, and at `6b63973`, item
@@ -1045,6 +1093,17 @@ applied to CLAUDE.md.
     - G-TIME-OLMo (p) ×3 on the box.
 
     Not pushed.
+  - **Dated note (2026-11-09; the seat's answer on G-TIME-OLMo (p), §4 (h) and §2 item 6; the PI's routing of
+    2026-11-09 (evening), item B4).** Reading (h) is corrected as the seat adopted it: a *backend* change after the
+    lock STOPs the stage, not a box change as such.
+    - A new box of the same class gives the same identifier (m:267) and is not detected.
+    - A box change follows p §6.2's respawn protocol, with a new `BACKEND — characterization` entry. It is recorded by
+      a dated note at the lock in force, with no re-issue.
+    - A differing identifier STOPs, and the seat rules. This is §2 item 6, the superseding form for p.
+    - Reading (h) above and the stage's PIN (`valence_core/p/stage.py:36–38`) stay as written until the next package
+      move, where the wording follows.
+    - The answer: [`_p-gtime_design-to-code_answers`](results/raw/2026-11-09_p-gtime_design-to-code_answers.md),
+      sha256 `7b8b1d5f…adc3`.
 
 - 2026-11-08 — **ADDENDUM-m2 v0.2: OPEN #50 goes to the seat in a Code → design block, with Code's readings of #48
   and #49. v0.2 is not committed.**
