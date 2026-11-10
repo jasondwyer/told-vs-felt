@@ -1,5 +1,5 @@
 """The F3 session loop, Qwen (PROPOSAL-m v1.11 §2.1-§2.2 m:159, m:174; §2.6 m:261, m:263, m:265; §2.7
-m:267; §3 m:271; §4 m:308; m:48).
+m:267; §3 m:271; §4 m:308; m:48; ADDENDUM-m2 v0.5 §1, §4.1).
 
 ONE SESSION. ``transcript = banner`` (§2.5's bytes for the arm). Forced rounds ri = 0..3 in F2 block
 order; each generated as ``adapter.generate(transcript, seg, injections=(), seed, TEMP 0.7, STOP_CAP
@@ -8,13 +8,15 @@ order; each generated as ``adapter.generate(transcript, seg, injections=(), seed
 lexical, m:261 -- ``valence_core.m.audit.QwenTaskRoundAudit``, imported), recorded, appended as
 ``seg + text + "\\n"``. Free choices ci = 0..5:
 
-  1. the reasoning block (m:174) -- ``[round {n} | reasoning]``, ``Reasoning (one line):`` -- and one
-     model line under the newline stop at the reasoning cap (60, or 120 after G-TIME-F3's trigger),
-     the frozen ban list active (m:265), ``injections=()``, ``cached=path_cached`` (m:267: "Qwen rounds
-     (and, in Q-F3, reasoning lines) run cached ... iff that unit's G-ID passes"), then ``"\\n"``;
-  2. its classes (``lines.classify_line``: empty, cap without a newline, reasoning-line echo) and its
-     scaffold hits; a hit is the hair trigger, an exclusion event that ends the session there (the
-     seat's Q8), so no read follows it;
+  1. the reasoning block -- A-m2 v0.5's F-b, ``[round {n} | reasoning]`` then ``Reasoning (one line): So
+     far,`` (banner.reasoning_block) -- and one model line continuing it under the newline stop at the
+     reasoning cap (120 from the re-run of G-TIME-F3 on, A-m2 v0.5 §4.1), the frozen ban list active
+     (m:265), ``injections=()``, ``cached=path_cached`` (m:267: "Qwen rounds (and, in Q-F3, reasoning
+     lines) run cached ... iff that unit's G-ID passes"), then ``"\\n"``;
+  2. its classes (``lines.classify_line``: empty, cap without a newline, reasoning-line echo over the
+     line's domain, built from the log's pieces as A-m2 v0.5 §1 has it) and its scaffold hits; a hit is
+     the hair trigger, an exclusion event that ends the session there (the seat's Q8), so no read
+     follows it;
   3. the unchanged menu block, the insulated vanilla read on ``transcript + menu`` (state-present
      asserted absent before every read, KL exactly 0.0), the pick line ``" {pick}\\n"``, the chosen
      round as F0m's.
@@ -162,9 +164,12 @@ def run_session_f3(adapter, scaffold: sc_mod.F3Scaffold, audit: m_audit.QwenTask
             sc_mod.assert_boundary(adapter, prefix, rs.seg)
             g = adapter.generate(prefix, rs.seg, injections=(), seed=rs.seed, temp=temp,
                                  max_tokens=rs.cap, ban_ids=ban_ids, cached=path_cached)
+            # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1, §4.2: "runner.py (the domain built
+            # from the log's pieces)"): the line's domain is lines.domain_before_line over the transcript and
+            # pieces logged so far plus the block about to be logged -- the verifier's one form on its own builder.
             la = lines.classify_line(g.text, n_tok=int(len(g.token_ids)), cap=rs.cap,
                                      stop_reason=str(g.stop_reason), cap_hit=bool(g.cap_hit),
-                                     echo_set=lines.echo_lines(sc.P, sc.Q, rs.n),
+                                     echo_set=lines.domain_before_line(prefix, log.tb.pieces, rs.seg),
                                      scaffold_strings=audit.scaffold_strings)
             log.add_reasoning(rs, g, la)
             log.tb.add("reasoning", "free", ci, rs.seg)
@@ -239,10 +244,10 @@ def _selftest(chk) -> None:
     cls = by["f3 reasoning lines: empty, cap, echo, label -- classes only, no end"]
     got_cls = [x["audit"]["classes"] for x in cls["reasoning"]]
     chk("mf3.runner: reasoning-line classes are recorded and end nothing; the production empty line (text \"\" at "
-        "the cap) writes \"Reasoning (one line):\\n\\n\" into the transcript; a line naming a label is not "
-        "lexical-claimed and never enters earlier (m:265)",
+        "the cap) writes F-b's \"Reasoning (one line): So far,\\n\" into the transcript; a line naming a label is "
+        "not lexical-claimed and never enters earlier (m:265)",
         got_cls == [["empty", "cap_no_newline"], ["cap_no_newline"], ["echo"], [], [], ["empty", "cap_no_newline"]]
-        and cls["reasoning"][0]["text"] == "" and "Reasoning (one line):\n\n[round" in cls["transcript"]
+        and cls["reasoning"][0]["text"] == "" and "Reasoning (one line): So far,\n[round" in cls["transcript"]
         and cls["complete"] and not cls["excluded"]
         and all(r["audit"]["claim"] is None for r in cls["rounds"]), got_cls)
     calls_ok = True
@@ -256,9 +261,22 @@ def _selftest(chk) -> None:
         calls_ok &= all(k["max_tokens"] == STOP_CAP for k in calls if k not in line_calls)
     chk("mf3.runner: the adapter saw injections=(), cached=False, TEMP 0.7 and the ban ids on every call; "
         "reasoning lines at the reasoning cap, task rounds at STOP_CAP 60", calls_ok)
-    cap120 = by["f3 cap-120 A2s start 0"]
-    chk("mf3.runner: at reasoning cap 120 the lines are generated at 120 and the record carries the cap",
-        cap120["reasoning_cap"] == 120 and all(x["cap"] == 120 for x in cap120["reasoning"]))
+    same_dom = []
+    for c, r, _ in suite:
+        for ci, x in enumerate(r["reasoning"]):
+            again = lines.classify_line(x["text"], n_tok=x["n_tok"], cap=x["cap"], stop_reason=x["stop_reason"],
+                                        cap_hit=x["cap_hit"], echo_set=lines.domain_of_record(r, ci),
+                                        scaffold_strings=kit.audit.scaffold_strings)
+            same_dom.append(again.as_dict() == x["audit"])
+    chk("mf3.runner: every scripted line's recorded classes equal classify_line over domain_of_record on the "
+        "finished record -- the domain at generation is the record's (A-m2 v0.5 §1, one builder)",
+        bool(same_dom) and all(same_dom), len(same_dom))
+    cap60 = by["f3 cap-60 A2s start 0 (the stub path's cap)"]
+    chk("mf3.runner: at reasoning cap 60 (the stub path's, A-m2 v0.5 §4.2) the lines are generated at 60 and the "
+        "record carries the cap; every other scripted case runs at the cap of record, 120 (the build review's "
+        "finding 9: the adapter's max_tokens is compared with each record's own cap above)",
+        cap60["reasoning_cap"] == 60 and all(x["cap"] == 60 for x in cap60["reasoning"])
+        and all(r["reasoning_cap"] == 120 for c, r, _ in suite if c.name != "f3 cap-60 A2s start 0 (the stub path's cap)"))
     # the reads' context and the pieces' tiling
     ctx_ok = True
     for c, r, _ in suite:
@@ -288,11 +306,11 @@ def _selftest(chk) -> None:
 
     bid = m_resume.backend_identifier(testing.F3Adapter().provenance())
     art = {"unit": "Q-F3", "criterion": guard.GID_CRITERION, "verdict": "PASS", "n_pairs": 2,
-           "pairs_identical": [True, True], "identity": {"backend_identifier": bid, "reasoning_cap": 60}}
+           "pairs_identical": [True, True], "identity": {"backend_identifier": bid, "reasoning_cap": 120}}
     with tempfile.TemporaryDirectory() as td:
         with mock.patch.object(guard, "GATES_DIR", Path(td)):
             guard.gid_artifact_path().write_text(json.dumps(art))
-            path_cached = guard.cached_path_admitted("qual", backend_identifier=bid, reasoning_cap=60)
+            path_cached = guard.cached_path_admitted("qual", backend_identifier=bid, reasoning_cap=120)
             rec_c, calls_c = testing.run_case(testing.CASES[0], path_cached=path_cached)
     try:
         testing.run_case(testing.CASES[0], path_cached=path_cached)      # the licence is gone

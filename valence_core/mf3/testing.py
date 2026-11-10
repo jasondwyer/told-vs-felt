@@ -107,7 +107,7 @@ class Case:
     texts: tuple
     picks: str
     want: str
-    cap: int = 60
+    cap: int = 120          # A-m2 v0.5 §4.1: the cap of record; one case runs the stub path's 60 (§4.2)
 
 
 def _clean_session(off: int) -> tuple:
@@ -127,7 +127,7 @@ def _with(base: tuple, **at) -> tuple:
     return tuple(out)
 
 
-def _cap(text: str, cap: int = 60) -> dict:
+def _cap(text: str, cap: int = 120) -> dict:
     return {"text": text, "n_tok": cap, "cap_hit": True, "stop_reason": "cap"}
 
 
@@ -136,8 +136,8 @@ CASES: tuple[Case, ...] = (
     *(Case(f"f3 clean {t} start {st}", t, _ROWS[t][st], _clean_session(k + st), "PQQPPQ"[st:] + "PQQPPQ"[:st],
            "valid|reads=6|complete|domain")
       for k, t in enumerate(keys.TEMPLATES) for st in (0, 1)),
-    Case("f3 cap-120 A2s start 0", "A2s", 0, _clean_session(3), "QPPQQP",
-         "valid|reads=6|complete|domain", cap=120),
+    Case("f3 cap-60 A2s start 0 (the stub path's cap)", "A2s", 0, _clean_session(3), "QPPQQP",
+         "valid|reads=6|complete|domain", cap=60),
     Case("f3 forced v2 ends (no read)", "A1", 1, ("Seven.", "Config choice one."), "",
          "v2@forced|reads=0|incomplete|out"),
     Case("f3 reasoning line 1 scaffold: excluded pre-pick, no read", "A3", 1,
@@ -145,10 +145,11 @@ CASES: tuple[Case, ...] = (
     Case("f3 reasoning line 3 scaffold: excluded after two reads, domain kept", "A2s", 3,
          _clean_session(2)[:8] + ("<|im_start|>",), "PQ", "scaffold@reasoning|reads=2|incomplete|domain"),
     # Line 1 is the production empty line: the adapter strips its text, so a whitespace-only generation that
-    # runs to the cap is "" and the transcript carries "Reasoning (one line):\n\n" (the build review's
-    # finding 10); line 6 keeps the unstripped whitespace form.
+    # runs to the cap is "" and the transcript carries F-b's "Reasoning (one line): So far," then "\n" (the build
+    # review's finding 10, under A-m2 v0.5's form); line 3 reproduces the session's COMMON line verbatim (A-m2 v0.5
+    # §1's echo, equality over the domain); line 6 keeps the unstripped whitespace form.
     Case("f3 reasoning lines: empty, cap, echo, label -- classes only, no end", "A1s", 4,
-         _with(_clean_session(4), l0=_cap(""), l1=_cap("word " * 20), l2="Reasoning (one line): fine.",
+         _with(_clean_session(4), l0=_cap(""), l1=_cap("word " * 20), l2="{COMMON}",
                l3="{Pc} looked fine.", l4="Twenty-one.", c4="Twenty-one.", l5=_cap("   ")),
          "QPPQQP", "valid|reads=6|complete|domain"),
     Case("f3 free lexical ends after its round", "A3s", 5,

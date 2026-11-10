@@ -1,6 +1,6 @@
 """G-SHAPE-F3 -- scoring-scope plumbing for Q-F3, model-free (PROPOSAL-m v1.11 §3.2 m:290; with m:277,
 m:174, m:261-265; the design seat's prebuild answers of 2026-11-06, Q8 and §8's "declared check for the
-build hazard"; Code's dated note N6).
+build hazard"; Code's dated note N6; ADDENDUM-m2 v0.5 §1, §4.1-§4.3).
 
 m:290: "G-SHAPE-F3 (plumbing). As G-SHAPE-F0 for the F3 templates, the reasoning header included." m:277
 (G-SHAPE-F0): "Model-free: every corrupted render placed inside each F0m and F0m-OLMo round template beside
@@ -20,12 +20,16 @@ THE ARTIFACT OF RECORD (``data/mf3/gates/G-SHAPE-F3.json``, write-once) carries:
            required, 100% -- the reasoning header included); ``render-as-response`` reported only.
   Layer R  the reasoning line's own placements: every banner of the six F3 templates x the free choices' n
            (5..10) x every gold variant as the line, run through the reasoning-line classes (m:265) and the
-           scaffold hits as the runner calls them; a placement fires iff a class or a hit fires. Its control:
-           the reasoning block itself as the line, plus the gold (required, 100%: the echo class fires).
+           scaffold hits as the runner calls them, over the line's domain (A-m2 v0.5 §1) in the session the
+           scaffold builds on that banner (``line_domains``); a placement fires iff a class or a hit fires.
+           Its control: every line of each domain as the line (required, 100%: the echo class fires at the
+           line's own index); and F-b's label line and m:174's label as the line must not fire (the label
+           line is the model's to continue, so it is no complete harness line).
   Layer S  a static (ast) check of mf3's runner: ``run_session_f3`` hands the task-round classifier the
-           generation's text (twice: forced, free) and the line classifier the line's generation; earlier
-           gets task-round texts only; no classify reference elsewhere outside self-tests, the verifier's
-           re-derivation and this module.
+           generation's text (twice: forced, free) and the line classifier the line's generation over the
+           domain ``lines.domain_before_line`` builds from the log; earlier gets task-round texts only; the
+           verifier re-derives the classes with the same builder on its own transcript; no classify reference
+           elsewhere outside self-tests, the verifier's re-derivation and this module.
   Layer T  Code's declared check for the build hazard (the seat's Q8 on the "\\n\\n" after the reasoning
            segment; N6): on the Qwen tokenizer of record (tokenizer.json of the snapshot of record, loaded
            with ``tokenizers``, no model), every F3 generation join -- the reasoning block after the forced
@@ -82,6 +86,10 @@ ROUND_FIRE_FIELDS = ("claim", "advisory", "v3.exclusion", "v3.content_label", "v
 LINE_FIRE_FIELDS = ("empty", "cap_no_newline", "echo", "scaffold")
 CONTROLS_REQUIRED = ("seg+gold", "reasoning+seg+gold")
 CONTROLS_REPORTED = ("render-as-response",)
+#: Layer R's earlier lines in the session it builds (a clean line, no label, no harness line).
+LAYER_R_LINE = "Both answered."
+#: Layer R's must-not-fire label lines: F-b's, as the transcript carries it, and m:174's.
+LAYER_R_LABELS = ("Reasoning (one line): So far,", "Reasoning (one line):")
 #: The scoring stack outside the two packages (G-SHAPE-F0's list minus its OLMo files).
 STACK_FILES = ("valence_core/session.py", "valence_core/session_e2a.py", "valence_core/e2d/audit_v3.py",
                "valence_core/e2d/contentclass.py", "valence_core/e2d/contentclass_v4.py",
@@ -99,8 +107,10 @@ EXIT = {"PASS": 0, "STOP": 4}
 RUNNER_DYNAMIC_EVIDENCE = (
     "mf3.runner: {} scripted F3 sessions reach their declared outcomes",
     "mf3.runner: reasoning-line classes are recorded and end nothing; the production empty line (text \"\" at the "
-    "cap) writes \"Reasoning (one line):\\n\\n\" into the transcript; a line naming a label is not lexical-claimed "
-    "and never enters earlier (m:265)",
+    "cap) writes F-b's \"Reasoning (one line): So far,\\n\" into the transcript; a line naming a label is not "
+    "lexical-claimed and never enters earlier (m:265)",
+    "mf3.runner: every scripted line's recorded classes equal classify_line over domain_of_record on the finished "
+    "record",
     "mf3.runner: pieces tile the transcript; each menu and reasoning line sits at its piece",
 )
 
@@ -220,8 +230,9 @@ def qwen_stack(pool) -> tuple[m_audit.QwenTaskRoundAudit, dict]:
                    "term_sha16": sc_mod.m_scaffold.TERM_SHA16,
                    "echo_set": "the banner's Note lines + 'Reasoning (one line):' (audit.qwen_echo_lines)",
                    "line_classes": list(lines.CLASSES),
-                   "line_echo_set": "m:258's eight strings as rendered for the session + the headers so far "
-                                    "(lines.echo_lines)"}
+                   "line_echo_set": "every complete harness-written line of the session up to the line, equality after "
+                                    "ws_norm (A-m2 v0.5 §1; lines.domain_before_line)",
+                   "reasoning_block": {"form": banner.REASONING_FORM, "segment": banner.REASONING_SEGMENT}}
 
 
 def tokenizer_of_record(snapshot_dir=None):
@@ -261,6 +272,22 @@ def inputs_of_record(*, canonical: bool, proposal_rel: str = "PROPOSAL-m-gating-
     bp = banner.spec_problems(REPO / proposal_rel)
     if bp:
         raise GshapeStop(f"G-SHAPE-F3 STOP: the banners placed are not §2.5's bytes: {bp}")
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: the selected form "verified at every stage start
+    # and in G-SHAPE-F3 against this file's committed bytes and sha256"): the addendum committed unedited on the
+    # canonical run, its sha256 the pinned one, its F-b literal and cap the code's, the segment free of roster words.
+    a_rel = banner.ADDENDUM_M2_REL
+    try:
+        a_data = (REPO / a_rel).read_bytes()
+    except OSError:
+        raise GshapeRefusal(f"G-SHAPE-F3 REFUSED: {a_rel} is unreadable") from None
+    if canonical:
+        from . import stages
+        cp_a, cdata_a = stages.committed(a_rel)
+        if cp_a or cdata_a != a_data:
+            raise GshapeRefusal(f"G-SHAPE-F3 REFUSED: {a_rel} is not committed at HEAD unedited: {cp_a}")
+    ap = banner.addendum_text_problems(a_data) + banner.segment_problems()
+    if ap:
+        raise GshapeStop(f"G-SHAPE-F3 STOP: the reasoning block is not A-m2 v0.5's F-b: {ap}")
     mf, mf_sha = _committed_json(MODEL_FREE_REL, canonical)
     ror = (mf or {}).get("renders_of_record") or {}
     if ror.get("renders_sha256") != RENDERS_SHA256_OF_RECORD:
@@ -286,7 +313,8 @@ def inputs_of_record(*, canonical: bool, proposal_rel: str = "PROPOSAL-m-gating-
     except (OSError, ImportError, ValueError) as e:
         raise GshapeRefusal(f"G-SHAPE-F3 REFUSED: Layer T's tokenizer of record is unavailable ({type(e).__name__}); "
                             f"G-SHAPE-F3 runs on the laptop (the Qwen site)") from None
-    return {"proposal_rel": proposal_rel, "proposal_sha256": _sha256(pdata), "model_free_sha256": mf_sha,
+    return {"proposal_rel": proposal_rel, "proposal_sha256": _sha256(pdata), "addendum_rel": a_rel,
+            "addendum_sha256": _sha256(a_data), "model_free_sha256": mf_sha,
             "completability_sha256": comp_sha, "seat_sha256": _sha256(seat.encode("utf-8")), "renders": renders,
             "pool": pool, "stack": qs, "stack_rec": qrec, "term_rx": sc_mod.load_term_rx(), "canonical": canonical,
             "sources_map": smap, "import_closure": cmap, "package_sha256": guard.package_sha256_of(guard.PACKAGE_DIR),
@@ -420,37 +448,69 @@ def grid(ins: Mapping[str, Any], *, scorer: Callable[[Placement], str] | None = 
 
 
 # --- Layer R --------------------------------------------------------------------------------------
-def line_placements(pool) -> Iterator[tuple]:
-    """(template, pi, mp, cl, n, gold) over every F3 template's banners x n 5..10 x every gold variant."""
+def line_domains(pool, renders) -> Iterator[tuple]:
+    """(template, pi, mp, cl, P, Q, n, domain) over every F3 template's banners x n 5..10: the domain of the line
+    at n (A-m2 v0.5 §1; lines.domain_before_line) in the session the scaffold builds on that banner."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §1; the build review's finding 11 carried): §1's
+    # domain needs a session, so Layer R builds one per banner through scaffold.f3_config -- start 0, G-F3's keys at
+    # s = 0 (any fixed keys serve: only harness bytes enter a domain), the contrast Q role's rounds delivering the
+    # render of record -- whose forced and chosen rounds answer with their item's first gold, whose earlier lines
+    # are LAYER_R_LINE, and whose every read picks P; the model's pieces never enter a domain.
+    r = schedule.roster()
     for tpl in keys.TEMPLATES:
         for pi, mp, cl, P, Q, _notes in _banners(tpl):
-            for n in banner.N_RANGE:
-                for it in pool:
-                    for g in it["gold"]:
-                        yield tpl, pi, mp, cl, P, Q, n, g
+            cell = {"pair_index": pi, "pair": list(r[pi]), "map": mp, "start": 0, "clause": cl, "P": P, "Q": Q}
+            sc = sc_mod.f3_config("qual", tpl, 0, cell, "uncached", reasoning_cap=sc_mod.CAP_OF_RECORD,
+                                  pool=pool, renders=renders)
+            tb = sc_mod.TranscriptBuilder(sc.banner)
+            for ri in range(sc.n_forced):
+                spec = sc.forced(ri)
+                tb.add("round", "forced", ri, spec.seg)
+                tb.add("generation", "forced", ri, pool[spec.item]["gold"][0])
+                tb.add("joiner", "forced", ri, "\n")
+            for ci in range(sc.n_free):
+                rs_ = sc.reasoning(ci)
+                yield tpl, pi, mp, cl, P, Q, rs_.n, lines.domain_before_line(tb.text, tb.pieces, rs_.seg)
+                tb.add("reasoning", "free", ci, rs_.seg)
+                tb.add("reasoning_text", "free", ci, LAYER_R_LINE)
+                tb.add("reasoning_joiner", "free", ci, "\n")
+                m = sc.menu(ci)
+                tb.add("menu", "free", ci, m.menu)
+                tb.add("pick", "free", ci, f" {P}\n")
+                spec = sc.chosen(ci, P)
+                tb.add("round", "free", ci, spec.seg)
+                tb.add("generation", "free", ci, pool[spec.item]["gold"][0])
+                tb.add("joiner", "free", ci, "\n")
 
 
-def line_fires(text: str, P: str, Q: str, n: int, scaffold_strings) -> list[str]:
-    la = lines.classify_line(text, n_tok=1, cap=sc_mod.REASONING_CAPS[0], stop_reason="newline", cap_hit=False,
-                             echo_set=lines.echo_lines(P, Q, n), scaffold_strings=scaffold_strings)
+def line_fires(text: str, dom: Sequence[str], scaffold_strings) -> list[str]:
+    la = lines.classify_line(text, n_tok=1, cap=sc_mod.CAP_OF_RECORD, stop_reason="newline",
+                             cap_hit=False, echo_set=dom, scaffold_strings=scaffold_strings)
     return list(la.classes) + (["scaffold"] if la.scaffold else [])
 
 
 def layer_r(ins: Mapping[str, Any]) -> dict:
     ss = ins["stack"].scaffold_strings
-    n = n_fired = c_n = c_fired = 0
+    golds = [g for it in ins["pool"] for g in it["gold"]]
+    n = n_fired = c_n = c_fired = l_n = l_fired = 0
     fires, keys_ = [], []
-    for tpl, pi, mp, cl, P, Q, nn, g in line_placements(ins["pool"]):
-        f = line_fires(g, P, Q, nn, ss)
-        cf = line_fires(banner.reasoning_block(nn).replace("\n", " ") + g, P, Q, nn, ss)
-        n += 1
-        keys_.append([tpl, pi, mp, cl, nn, g])
-        if f:
-            n_fired += 1
-            if len(fires) < 50:
-                fires.append({"key": [tpl, pi, mp, cl, nn, g], "fields": f})
-        c_n += 1
-        c_fired += bool(cf)
+    for tpl, pi, mp, cl, P, Q, nn, dom in line_domains(ins["pool"], ins["renders"]):
+        for g in golds:
+            f = line_fires(g, dom, ss)
+            n += 1
+            keys_.append([tpl, pi, mp, cl, nn, g])
+            if f:
+                n_fired += 1
+                if len(fires) < 50:
+                    fires.append({"key": [tpl, pi, mp, cl, nn, g], "fields": f})
+        for k, ln in enumerate(dom):
+            la = lines.classify_line(ln, n_tok=1, cap=sc_mod.CAP_OF_RECORD, stop_reason="newline",
+                                     cap_hit=False, echo_set=dom, scaffold_strings=ss)
+            c_n += 1
+            c_fired += la.echo_line == k
+        for lab in LAYER_R_LABELS:
+            l_n += 1
+            l_fired += bool(line_fires(lab, dom, ss))
     want = sum((16 if keys.names_labels(t) else 8) for t in keys.TEMPLATES) * len(banner.N_RANGE) * N_GOLD_VARIANTS
     return {"n": n, "n_fired": n_fired, "fires": fires, "exact": n == want == len({json.dumps(k) for k in keys_}),
             "placements_sha256": _json_sha256(keys_), "fire_fields": list(LINE_FIRE_FIELDS),
@@ -459,8 +519,11 @@ def layer_r(ins: Mapping[str, Any]) -> dict:
             # content-borne fields; G-SHAPE asks whether a render's content reaches a scorer.
             "scope": "every gold placed as a line ended by the newline stop (n_tok 1): the structural classes -- "
                      "empty (the text) and cap_no_newline (the stop) -- cannot fire; the content-borne fields, echo "
-                     "and scaffold, are the test; the reasoning header for every n 5..10",
-            "control": {"name": "reasoning block + gold as the line", "n": c_n, "n_fired": c_fired, "required": True}}
+                     "(over the line's domain, A-m2 v0.5 §1) and scaffold, are the test; every n 5..10",
+            "control": {"name": "every line of the domain as the line (echo at its own index)", "n": c_n,
+                        "n_fired": c_fired, "required": True},
+            "labels": {"name": "F-b's label line and m:174's label as the line (must not fire)", "lines": list(LAYER_R_LABELS),
+                       "n": l_n, "n_fired": l_fired}}
 
 
 # --- Layer S ------------------------------------------------------------------------------------
@@ -502,9 +565,19 @@ def runner_scope_problems(sources: Mapping[str, str] | None = None) -> dict:
     lc = [n for n in ast.walk(fn) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
           and n.func.attr == "classify_line"]
     if len(lc) != 1 or len(lc[0].args) != 1 or not _is(lc[0].args[0], "g.text") \
-            or not _is(_kw(lc[0], "echo_set"), "lines.echo_lines(sc.P, sc.Q, rs.n)") \
+            or not _is(_kw(lc[0], "echo_set"), "lines.domain_before_line(prefix, log.tb.pieces, rs.seg)") \
             or not _is(_kw(lc[0], "cap"), "rs.cap"):
-        probs.append("S4: the reasoning line is not classified once, on its generation's text, at its cap and n")
+        probs.append("S4: the reasoning line is not classified once, on its generation's text, at its cap, over the "
+                     "domain built from the log (A-m2 v0.5 §1)")
+    # S7: the verifier re-derives the classes with the same builder on its own rebuilt transcript (A-m2 v0.5 §4.2)
+    vrel = "valence_core/mf3/verify.py"
+    vtree = ast.parse((sources or {}).get(vrel) or (REPO / vrel).read_text(encoding="utf-8"))
+    vfn = next((n for n in vtree.body if isinstance(n, ast.FunctionDef) and n.name == "_verify"), None)
+    vlc = [] if vfn is None else [n for n in ast.walk(vfn) if isinstance(n, ast.Call)
+                                  and isinstance(n.func, ast.Attribute) and n.func.attr == "classify_line"]
+    if len(vlc) != 1 or not _is(_kw(vlc[0], "echo_set"), "lines.domain_before_line(tb.text, tb.pieces, rs.seg)"):
+        probs.append("S7: the verifier does not re-derive the line's classes once over lines.domain_before_line on its "
+                     "own builder")
     app = _calls(fn, "append")
     earlier_apps = [a for a in app if isinstance(a.func.value, ast.Name) and a.func.value.id == "earlier"]
     if len(earlier_apps) != 2 or not all(len(a.args) == 1 and _is(a.args[0], "g.text") for a in earlier_apps):
@@ -531,7 +604,9 @@ def runner_scope_problems(sources: Mapping[str, str] | None = None) -> dict:
                 probs.append(f"S6: {r}:{n.lineno}: a {n.attr} reference outside the runner, the verifier and self-tests")
     return {"problems": probs, "rules": "S1 two classify calls; S2 the generation's text; S3 the round's render, item, "
                                         "earlier, own pair, echo set and phase; S4 one classify_line on the line's "
-                                        "text at its cap and n; S5 earlier gets task-round texts only; S6 scope"}
+                                        "text at its cap over the domain built from the log; S5 earlier gets "
+                                        "task-round texts only; S6 scope; S7 the verifier's one classify_line over "
+                                        "the same builder on its own transcript"}
 
 
 # --- Layer T --------------------------------------------------------------------------------------
@@ -613,8 +688,10 @@ def evaluate(*, canonical: bool = False, inputs: Mapping[str, Any] | None = None
         reasons.append("fire:reasoning-line")
     if not lr["exact"]:
         reasons.append("coverage:reasoning-line")
-    if lr["control"]["n_fired"] != lr["control"]["n"]:
+    if lr["control"]["n_fired"] != lr["control"]["n"] or not lr["control"]["n"]:
         reasons.append("control-silent:reasoning-line")
+    if lr["labels"]["n_fired"]:
+        reasons.append("fire:reasoning-label")
     if ls["problems"]:
         reasons.append("scope-static")
     if lt["n_failed"] or not lt["n"]:
@@ -625,6 +702,7 @@ def evaluate(*, canonical: bool = False, inputs: Mapping[str, Any] | None = None
             "import_closure": dict(sorted(ins["import_closure"].items())),
             "import_closure_digest": _json_sha256(dict(sorted(ins["import_closure"].items()))),
             "proposal_file": ins["proposal_rel"], "proposal_sha256": ins["proposal_sha256"],
+            "addendum_file": ins["addendum_rel"], "addendum_sha256": ins["addendum_sha256"],
             "committed_at_head": bool(ins["canonical"])}
     art = {"schema": SCHEMA, "stage": STAGE, "spec": SPEC_REF, "criterion": CRITERION, "criterion_f0": CRITERION_F0,
            "inputs": {"renders_sha256": RENDERS_SHA256_OF_RECORD, "n_renders": len(renders),
@@ -714,7 +792,7 @@ def summary_lines(res: Mapping[str, Any]) -> list[str]:
                    + "; ".join(f"{k} {v['n_fired']}/{v['n']}" for k, v in sorted(c.items())))
     r = a["layer_r"]
     out.append(f"G-SHAPE-F3 Layer R: {r['n']} line placements, {r['n_fired']} fired, coverage exact {r['exact']}; control "
-               f"{r['control']['n_fired']}/{r['control']['n']}")
+               f"{r['control']['n_fired']}/{r['control']['n']}; label lines {r['labels']['n_fired']}/{r['labels']['n']} fired")
     out.append(f"G-SHAPE-F3 Layer S: {len(a['layer_s']['problems'])} problems; Layer T: {a['layer_t']['n']} joins, "
                f"{a['layer_t']['n_failed']} failed (tokenizer sha256 {a['layer_t']['tokenizer']['sha256'][:16]})")
     out.append(f"G-SHAPE-F3 {a['verdict']}" + (f" {a['stop_reasons']}" if a["stop_reasons"] else "") + f" {res['path']} ({res['how']})")
@@ -727,12 +805,16 @@ def _selftest(chk) -> None:
     ins = inputs_of_record(canonical=False)
     art = evaluate(inputs=ins)
     chk("mf3.gshape: G-SHAPE-F3 on the working tree -- PASS: Layer A 5,632 placements (A1 2,816; A2 and A3 1,408) none "
-        "fired, coverage exact; seg+gold and reasoning+seg+gold fire 100%; Layer R none fired, its control 100%; Layer S "
-        "clean; Layer T every join holds on the tokenizer of record",
+        "fired, coverage exact; seg+gold and reasoning+seg+gold fire 100%; Layer R none fired over each line's domain "
+        "(A-m2 v0.5 §1), its control 100% and the label lines silent; Layer S clean; Layer T every join holds on the "
+        "tokenizer of record; the addendum recorded",
         art["verdict"] == "PASS" and art["layer_a_total"] == 5632
         and [art["layer_a"][t]["n"] for t in keys.CONTRAST] == [2816, 1408, 1408]
         and all(art["layer_c"][t]["reasoning+seg+gold"]["n"] == art["layer_a"][t]["n"] // 2 for t in keys.CONTRAST)
-        and art["layer_r"]["n"] == 64 * 6 * 22 and art["layer_t"]["n"] > 0, art["stop_reasons"])
+        and art["layer_r"]["n"] == 64 * 6 * 22 and art["layer_r"]["control"]["n"] > 64 * 6
+        and art["layer_r"]["labels"] == {**art["layer_r"]["labels"], "n": 64 * 6 * 2, "n_fired": 0}
+        and art["provenance"]["addendum_sha256"] == banner.ADDENDUM_M2_SHA256 and art["layer_t"]["n"] > 0,
+        art["stop_reasons"])
     seams = {"a fired placement": dict(scorer=lambda pl: pl.seg + pl.gold),
              "a dropped placement": dict(drop=lambda pl: pl.i == 3 and pl.template == "A2"),
              "a runner scoring the segment": dict(sources={"valence_core/mf3/runner.py": (
@@ -740,10 +822,17 @@ def _selftest(chk) -> None:
                  "ra = audit.classify(g.text, render=spec.task_text", "ra = audit.classify(spec.seg + g.text, render=spec.task_text", 1)}),
              "a line entering earlier": dict(sources={"valence_core/mf3/runner.py": (
                  REPO / "valence_core/mf3/runner.py").read_text().replace(
-                 "            log.add_reasoning(rs, g, la)\n", "            log.add_reasoning(rs, g, la)\n            earlier.append(g.text)\n", 1)})}
+                 "            log.add_reasoning(rs, g, la)\n", "            log.add_reasoning(rs, g, la)\n            earlier.append(g.text)\n", 1)}),
+             "a runner classifying over another set": dict(sources={"valence_core/mf3/runner.py": (
+                 REPO / "valence_core/mf3/runner.py").read_text().replace(
+                 "echo_set=lines.domain_before_line(prefix, log.tb.pieces, rs.seg)", "echo_set=sc.note_lines", 1)}),
+             "a verifier classifying over another set": dict(sources={"valence_core/mf3/verify.py": (
+                 REPO / "valence_core/mf3/verify.py").read_text().replace(
+                 "echo_set=lines.domain_before_line(tb.text, tb.pieces, rs.seg)", "echo_set=sc.note_lines", 1)})}
     got = {k: evaluate(inputs=ins, **v)["verdict"] for k, v in seams.items()}
-    chk("mf3.gshape: STOPs on a fired placement, a coverage gap, a runner scoring its segment, and a reasoning line "
-        "reaching earlier", all(v == "STOP" for v in got.values()), got)
+    chk("mf3.gshape: STOPs on a fired placement, a coverage gap, a runner scoring its segment, a reasoning line "
+        "reaching earlier, and a runner or verifier classifying the line over another set than the domain "
+        "(S4, S7)", all(v == "STOP" for v in got.values()), got)
 
     class Merging:
         def __init__(self, t):
@@ -751,7 +840,7 @@ def _selftest(chk) -> None:
 
         def encode(self, text, add_special_tokens=False):
             e = self.t.encode(text, add_special_tokens=False)
-            if not (text.endswith("Response:") or text.endswith("Reasoning (one line):\n")):
+            if not text.endswith(("Response:", "Reasoning (one line): So far,")):
                 return e
 
             class E:

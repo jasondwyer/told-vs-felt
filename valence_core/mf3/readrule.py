@@ -1,6 +1,6 @@
 """Q-F3's pre-VERDICTS read rule, printed reasons and pick-free stage report (PROPOSAL-m v1.11 §2.6
 m:263; §3 m:271; §3.2 m:293, m:297; §4 m:318; the design seat's prebuild answers of 2026-11-06, Q5, and
-its G-ANL-F3 answers of 2026-11-06, F-6).
+its G-ANL-F3 answers of 2026-11-06, F-6; ADDENDUM-m2 v0.5 §3.4, §4.3).
 
 The blinding semantics are ``valence_core.m.readrule``'s, imported unchanged (the printed classes and
 forms, the withheld-field sets, the label scan, the header redaction, the round counts); m's record
@@ -18,10 +18,16 @@ checks refuse Q-F3 (``keys.templates``) and know no reasoning piece, so the F3 f
   (``excluded@free``) for a contrast session's line after its first pick and for every contrast line at
   G-TIME-F3 (ruling (h): no class -- a reasoning-line exclusion is the scaffold class, so its phase
   would name it).
-- ``stage_report`` (m:271, m:293, m:297): sham templates in full, with their reasoning lines by class;
-  contrast templates by forced-round counts and their first reasoning lines (pre-pick) by class, later
-  lines withheld with the free rounds; at G-TIME-F3 ruling (h)'s counts only (the seat's F-6: a contrast
-  session's lines enter the CAP TRIGGER count, and their per-line booleans stay in the checkpoint).
+- ``stage_report`` (m:271, m:293, m:297): sham templates in full, with their reasoning lines by class
+  and counter (a); contrast templates by forced-round counts and their first reasoning lines (pre-pick)
+  by class and counter (a), later lines withheld with the free rounds; at G-TIME-F3 ruling (h)'s counts
+  only (the seat's F-6: a contrast session's lines enter the CAP TRIGGER count, and their per-line
+  booleans stay in the checkpoint). Counter (a)'s blinding scope is A-m2 v0.5 §3.4's: a gate stage reports
+  it over its sham lines and over its contrast sessions' first lines where it reports their class.
+
+The piece check renders the reasoning block as built (F-b, A-m2 v0.5 §4.1), so a record written under
+m:174's block (G-TIME-F3's first run, ``Q-F3_time.json``) fails it: nothing after the build reads the
+first run's records through this module except ``release_full``, which checks nothing (A-m2 v0.5 §4.3).
 """
 from __future__ import annotations
 
@@ -364,12 +370,26 @@ def _domain(rec: Mapping) -> bool:
     return d
 
 
-def line_counts(rs: Iterable[Mapping]) -> dict:
-    """Reasoning lines generated, defect lines (the union, once per line) and lines per class."""
-    ls = [x for r in rs for x in r.get("reasoning") or []]
+def line_counts(rs: Iterable[Mapping], *, first_only: bool = False) -> dict:
+    """Reasoning lines generated, defect lines (the union, once per line), lines per class, lines at the cap
+    and counter (a) (A-m2 v0.5 §3.4, each line over its own domain); ``first_only``: each session's line 1."""
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §3.4: "a gate stage's entry reports (a) over its
+    # sham sessions' reasoning lines and over its contrast sessions' first lines where it reports their class"):
+    # counter (a) is computed from the full records (the domain needs the unredacted transcript) by
+    # lines.counter_a_of_record and reported as a count beside the classes, nowhere a per-line list.
+    ls: list[Mapping] = []
+    ca: list[bool] = []
+    for r in rs:
+        xs = r.get("reasoning") or []
+        flags = lines.counter_a_of_record(r) if xs else []
+        for x, a in zip(xs, flags):
+            if first_only and x["ci"] != 0:
+                continue
+            ls.append(x)
+            ca.append(bool(a))
     by = {c: sum(c in x["audit"]["classes"] for x in ls) for c in lines.CLASSES}
     return {"lines": len(ls), "defect_lines": sum(bool(x["audit"]["classes"]) for x in ls), "by_class": by,
-            "cap_reached": sum(bool(x["cap_hit"]) for x in ls)}
+            "cap_reached": sum(bool(x["cap_hit"]) for x in ls), "counter_a": sum(ca)}
 
 
 def _hair(rec: Mapping, *, include_free: bool) -> list[dict]:
@@ -455,10 +475,9 @@ def _contrast_block(rs: list[Mapping]) -> dict:
                                   if r["phase"] == "forced"))
         domain += int(_domain(rec))
         hair += _hair(rec, include_free=False)
-    line1 = [{"reasoning": [x for x in rec.get("reasoning") or [] if x["ci"] == 0]} for rec in rs]
     return {"contrast": True, "sessions": len(rs), "forced": m_rr._round_counts(forced, "qwen"),
             "audit_sessions_forced": audit_sessions, "excluded_at_forced": excl,
-            "sessions_excluded_at_forced": sum(excl.values()), "reasoning_line_1": line_counts(line1),
+            "sessions_excluded_at_forced": sum(excl.values()), "reasoning_line_1": line_counts(rs, first_only=True),
             "sessions_excluded_at_line_1": excl_l1, "domain_sessions": domain,
             "hair_triggers": sorted(hair, key=lambda h: (h["name"], str(h["phase"]))),
             "free_rounds": WITHHELD, "reasoning_lines_after_line_1": WITHHELD}
@@ -536,6 +555,33 @@ def _selftest(chk) -> None:
             ok = False
     chk("mf3.readrule: every scripted F3 record passes the piece check (F3's group order; the reasoning-only "
         "last group where a line ended the session)", ok)
+
+    def as_f0(r):
+        """The record with each block re-rendered as m:174's F-0 (G-TIME-F3's first run's form), pieces re-tiled."""
+        x = json.loads(json.dumps(r))
+        out, pos, ps = [], 0, []
+        for q in x["pieces"]:
+            frag = x["transcript"][q["start"]:q["end"]]
+            if q["kind"] == "reasoning":
+                frag = frag.replace("Reasoning (one line): So far,", "Reasoning (one line):\n")
+            ps.append({**q, "start": pos, "end": pos + len(frag)})
+            out.append(frag)
+            pos += len(frag)
+        x["transcript"], x["pieces"] = "".join(out), ps
+        return x
+
+    f0 = []
+    for r in recs:
+        if not r.get("reasoning"):
+            continue
+        try:
+            _check_record(as_f0(r))
+            f0.append(False)
+        except ValueError:
+            f0.append(True)
+    chk("mf3.readrule: a record written under m:174's block (F-0, the first G-TIME-F3 run's form) fails the piece "
+        "check, which renders F-b (A-m2 v0.5 §4.3: nothing new reads the first run's records through it)",
+        bool(f0) and all(f0), f0)
     con = [r for r in recs if r["contrast"]]
     sham = [r for r in recs if not r["contrast"]]
     stripped = [strip_contrast(r) for r in con]
@@ -570,16 +616,34 @@ def _selftest(chk) -> None:
     rep = stage_report(list({(r["template"], r["s"]): r for r in recs}.values()))
     js = json.dumps(rep)
     chk("mf3.readrule: the stage report covers the six templates; sham blocks carry reasoning-line counts by "
-        "class; contrast blocks are forced-round counts and line 1's classes and exclusions (pre-pick), free rounds "
-        "and later lines withheld; no label anywhere",
+        "class and counter (a) (A-m2 v0.5 §3.4); contrast blocks are forced-round counts and line 1's classes, "
+        "counter (a) and exclusions (pre-pick), free rounds and later lines withheld; no label anywhere",
         set(rep["templates"]) == set(keys.TEMPLATES)
         and rep["templates"]["A1s"]["reasoning_lines"]["by_class"] == {"empty": 2, "cap_no_newline": 3, "echo": 1}
+        and rep["templates"]["A1s"]["reasoning_lines"]["counter_a"] == 1
         and rep["templates"]["A1"]["free_rounds"] == WITHHELD and "reasoning_lines" not in rep["templates"]["A3"]
         and rep["templates"]["A3"]["reasoning_line_1"]["lines"] == len([r for r in recs if r["template"] == "A3"
                                                                         and r.get("reasoning")])
         and rep["templates"]["A3"]["sessions_excluded_at_line_1"] == 1
         and rep["templates"]["A3"]["reasoning_lines_after_line_1"] == WITHHELD
         and "granite" not in js)
+    # counter (a)'s blinding scope on a contrast session, with fixed counts (the build review's finding 3): a G-F3 A3
+    # session whose line 1 is clean and whose line 3 reproduces the COMMON line, and one whose line 1 reproduces it
+    a_late = testing.Case("A3, line 3 the COMMON line", "A3", 0, testing._with(testing._clean_session(7), l2="{COMMON}"),
+                          "PQQPPQ", "valid|reads=6|complete|domain")
+    a_first = testing.Case("A3, line 1 the COMMON line", "A3", 0, testing._with(testing._clean_session(7), l0="{COMMON}"),
+                           "PQQPPQ", "valid|reads=6|complete|domain")
+    rl_, _ = testing.run_case(a_late)
+    rf_, _ = testing.run_case(a_first)
+    ca_l, ca_f = lines.counter_a_of_record(rl_), lines.counter_a_of_record(rf_)
+    rep_l, rep_f = stage_report([rl_]), stage_report([rf_])
+    chk("mf3.readrule: counter (a) on a contrast session counts its line 1 only, before VERDICTS (A-m2 v0.5 §3.4) -- a "
+        "G-F3 A3 session whose line 1 is clean and whose line 3 reproduces the COMMON line counts 0; one whose line 1 "
+        "reproduces it counts 1",
+        ca_l[2] is True and not any(ca_l[:2]) and ca_f[0] is True
+        and rep_l["templates"]["A3"]["reasoning_line_1"]["counter_a"] == 0
+        and rep_f["templates"]["A3"]["reasoning_line_1"]["counter_a"] == 1,
+        (ca_l, ca_f, rep_l["templates"]["A3"]["reasoning_line_1"], rep_f["templates"]["A3"]["reasoning_line_1"]))
     trec = []
     for c in testing.CASES[:12]:
         r, _ = testing.run_case(c, stage="time", s=0, cell=__import__("valence_core.mf3.schedule", fromlist=["x"])
@@ -592,6 +656,19 @@ def _selftest(chk) -> None:
         tuple(blk) == TIME_CONTRAST_KEYS and tuple(blk["per_session"][0]) == TIME_SESSION_KEYS
         and "reasoning_cap_reached" not in json.dumps(blk))
     ts = strip_contrast(next(r for r in trec if r["template"] == "A3"))
+    # counter (b)'s G-TIME-F3 contrast branch on this module's real read (round 2's N3): the read's candidates equal
+    # the full record's forced ones, a session excluded at forced included
+    ex_case = next(c for c in testing.CASES if c.name == "f3 forced v2 ends (no read)")
+    rx, _ = testing.run_case(ex_case, stage="time", s=0, cell=__import__("valence_core.mf3.schedule", fromlist=["x"])
+                             .gate_schedule("time", ex_case.template, 1)[0])
+    pk = lambda cs: [(c_["phase"], c_["idx"]) for c_ in cs]
+    tb_same = [pk(lines.b_candidates(strip_contrast(r))) == pk(c_ for c_ in lines.b_candidates(r) if c_["phase"] == "forced")
+               for r in [r for r in trec if r["contrast"]] + [rx]]
+    chk("mf3.readrule: counter (b)'s domain on G-TIME-F3's contrast read (lines.b_candidates; ruling (h)'s form) equals "
+        "the full record's unclaimed forced rounds, for every contrast session here and one excluded at its second "
+        "forced round",
+        all(tb_same) and len(tb_same) == 4 and strip_contrast(rx)["excluded_at_forced"] is True
+        and pk(lines.b_candidates(strip_contrast(rx))) == [("forced", 0)], tb_same)
     chk("mf3.readrule: the G-TIME-F3 strip keeps {phase, ri, n, text} per forced round and no per-line list (F-6)",
         all(set(x) <= {"phase", "ri", "n", "text"} for x in ts["rounds"]) and "reasoning_cap_reached" not in ts
         and "reasoning" not in ts)

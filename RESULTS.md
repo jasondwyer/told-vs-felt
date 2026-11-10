@@ -21,6 +21,104 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **mf3 package — BUILD (A-m2 v0.5 §4.2): F-b, §1's class and the cap of record in `valence_core/mf3/` and
+  the driver, under the seat's ruling (a). G-ANL-F3's battery passes on the build (525/525) on the unchanged analyzer.**
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 09:42:22 UTC 2026**.)
+  - **The routing:** the PI's routing of 2026-11-10, A5 (verbatim in the close line at `0516832`): "… → the build resumes
+    from the scratch worktree → G-ANL-F3's battery on the build → review rounds → the build's commit → G-SHAPE-F3 and
+    G-ANL-F3 re-runs → LOCK-m-F3 v0.1 re-issued (cites the list v2) → …". v0.5 §6 item 4 gives the same order.
+  - **The declaration and the order** (`ans5:` §6; the v0.4 STOP's Q6):
+    - The build's code was started in a scratch worktree before the addendum's commit (v0.4's, then pending; v0.4 was
+      never committed), after a declaration to the coordinating session at 2026-11-10T03:26:42Z. The seat accepted it
+      on the p step-3 precedent, the rule standing.
+    - The text committed first: v0.5 at `7589c1d`. The build resumed after that commit (Code's stamp, 07:27:55 UTC).
+    - Nothing of the build was committed before this entry, and no gate or stage of record ran before `7589c1d`. The
+      scratch self-test runs before the STOP (156/160) were not of record; they are superseded.
+  - **The files that move** (v0.5 §4.2's list, and only they):
+    - `valence_core/mf3/`: `banner`, `gshape`, `lines`, `readrule`, `resume`, `runner`, `scaffold`, `stages`, `testing`
+      and `verify`;
+    - `scripts/mf3_sessions.py`, the `time` wiring (its `--smoke` form retired, the wiring restored to `acde2d8`'s bytes
+      before these edits).
+    - Not edited: `valence_core/m/` (`banner.py` and `audit.py` among them) and `scripts/m_analyze.py` (`d347ea0c…`).
+  - **The hashes**, on the final bytes:
+    - mf3's `package_sha256`: `098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13` (15 files;
+      `scripts/mf3_sessions.py hashes`, in the site-check raw). It was `f30ad505…` (LOCK-m-F3.md:96).
+    - The driver: sha256 `1b593ba0465c5cf1af4d5b47283456b32359b37e0e3974848aade0f1d31287c6` (`shasum -a 256`) and git
+      blob `9d54d25f…` (`git hash-object`); the sha256 is the DRIVER line's new value.
+    - The eleven m files' sha256 are unchanged (`hashes`, in the site-check raw).
+  - **Ruling (a), as built:**
+    - **The cap of record binds every run on a model** (`scaffold.CAP_OF_RECORD`, 120):
+      - `stages._extra` refuses any other cap on a non-stub run;
+      - `resume.Identity` admits 60 only on the stub's all-zero weights binding (`resume.STUB_WEIGHTS`);
+      - `stages.prior_gate` with `require_real` fixes 120 and refuses a prior G-TIME-F3 written at another cap (Code's
+        reading of F6, declared as a PIN);
+      - the driver validates `time`'s identity as a run on a model, so 120 alone.
+    - **The stub path alone may run at 60:**
+      - `scaffold.f3_config`'s per-stage table, `STAGE_REASONING_CAPS`, holds m:174's pair (60, 120) at every stage, the
+        caller choosing;
+      - with `require_real` off, `stages.prior_gate` recomputes the fixed cap from the prior's own checkpoint, as at
+        v0.1, and refuses a prior identity with no integer cap;
+      - `stages.cap_trigger` takes the run's cap, now a required argument. A run at 120 fixes 120 whatever its count
+        (reported, moving nothing); a run at 60 fixes the cap by the count, as at v0.1;
+      - `REASONING_CAPS` is unchanged.
+    - **The driver's `time`:**
+      - it writes `data/mf3/ckpt/Q-F3_time-r2.json`, its report and reads named after it;
+      - its precheck refuses an existing or ENDED checkpoint there, and refuses the first run's name, `Q-F3_time.json`,
+        as a target (a link included);
+      - the stage library keeps m's default stem.
+  - **F-b and §1's class:**
+    - F-b's bytes are rendered from banner's own constants, with m's header by import.
+    - The addendum is pinned at v0.5 (`f27505c5…5354`) and checked with §4.2's stub sentence. The check runs at every
+      stage start, the stub's included, on the working tree's bytes; on a non-stub start the licence's (h) also requires
+      them committed. G-SHAPE-F3 checks them too.
+    - §1's domain is built from the log's pieces by one builder in the runner, G-VER and the read rule, with the match
+      equality after whitespace normalization.
+    - Counters (a) and (b) follow §3.4, with its blinding scope.
+  - **G-ANL-F3's battery on the build** (A5; v0.5 §4.3), before the review rounds:
+    - `scripts/m_analyze.py --selftest` in the worktree, the analyzer unchanged: 525/525, exit 0, 07:42:55–07:45:40 UTC
+      ([`_a-m2-v05_build_battery`](results/raw/2026-11-10_a-m2-v05_build_battery.txt)).
+    - The Q-F3 reader group (`scripts/m_analyze.py:11035`), whose stub chain runs at 60 (`:10722`), passes. No group
+      needed an analyzer edit, so no STOP.
+    - On the final bytes it passes again, 525/525, in the site check.
+  - **The self-test** ([`_a-m2-v05_build_selftest`](results/raw/2026-11-10_a-m2-v05_build_selftest.txt)): 180/182.
+    - The two red checks are the review's finding 11, red by construction. Each fails on one problem: the committed
+      LOCK-m-F3.md does not name mf3's new package sha256.
+    - They pass at LOCK-m-F3 v0.1's re-issue, which v0.5 §4.3 places after this commit; Code re-runs the self-test there.
+    - The count: HEAD's 202, less the smoke form's 42, plus 22 this build adds.
+  - **The review** ([`_a-m2-v05_build_review`](results/raw/2026-11-10_a-m2-v05_build_review.md)): two blind rounds.
+    - Round 1 found 11 items: 0 BLOCKER, 3 MAJOR, 8 MINOR. The MAJORs:
+      - counter (b)'s key could not tell a G-ID-F3 pair's members apart (path added);
+      - its domain failed open on a redacted read (now fails closed, with G-TIME-F3's contrast read by Code's reading of
+        `qwen_ends`);
+      - a counter-(a) test could not fail (fixed counts now).
+    - Round 2 graded findings 1–10 RESOLVED and 11 NOT RESOLVED by design (deferred to this entry, its single-problem
+      failure verified), and found 3 new MINOR items, applied.
+  - **The site check** ([`_a-m2-v05_build_sitecheck`](results/raw/2026-11-10_a-m2-v05_build_sitecheck.txt)), on the final
+    bytes at the commit's base, `585df45`, main's HEAD. The commits since `7589c1d` are the pod session's p chain and
+    touch no file of this build. A first run at `7589c1d` gave the same counts.
+    - the ten suites: the regression analysis 154/154; `format_recon` 67/67; `k1_stage1` 21/21; `k1_analyze` 20/20;
+      `e2d_d2_analyze` 46/46; `recon_echo` 18/18; `e2d_closure_verify3` 24/24; `m_sessions` 846/846; `m_analyze` 525/525;
+      `mf3_sessions` 180/182, the two red checks above;
+    - a G-SHAPE-F3 trial, never of record: PASS (Layer A 0 fired over A1, A2 and A3; Layer R 8,448 line placements, 0
+      fired, control 9,592/9,592; Layers S and T clean);
+    - the package and m-file hashes above.
+  - **For the seat** (none moves a form, a bar, a key or the cap):
+    - Code's reading of `m.audit.qwen_ends` in counter (b)'s G-TIME-F3 contrast branch. Also whether the seat wants the
+      stage to write (b)'s domain itself: round 1's further proposed fix, which round 2 judged unneeded, and which
+      would touch ruling (h)'s report form.
+    - Code's reading of F6: `prior_gate` refuses a prior at another cap on a run on a model.
+    - The PINs revised in place: F29's site, `_extra`'s docstring PIN, `out_paths`, `assert_boundary` and the driver's
+      wiring PIN. They are carried to the lock's re-issue.
+    - A disclosure (the list's item 8): the driver's self-test, whose `tree_state` is unchanged since `acde2d8`,
+      sha256-hashes every file under `data/mf3`, ckpt and reports included, before and after its time cases, and
+      prints only the comparison. Code reads it as item 1's digest form.
+  - **Values-check** ([`_a-m2-v05_build_valuescheck`](results/raw/2026-11-10_a-m2-v05_build_valuescheck.md)): a blind
+    agent, one pass, under a brief quoting the list of record v2's items 1–5. 131 items: 109 CONFIRMED, 10 IMPRECISE,
+    0 FAIL, 12 NOT CHECKABLE. Each IMPRECISE item is applied; none moved a figure, a hash or the code.
+  - **Next:** G-SHAPE-F3's and G-ANL-F3's re-runs on this commit; then LOCK-m-F3 v0.1 re-issued; then the G-TIME-F3
+    re-run, announced to the coordinating session.
+  - **Committed by path:** the 11 files, the five raws and this entry. Nothing ran on a model. Not pushed.
+
 - 2026-11-10 — **LOCK-p-OLMo-{sft,dpo,instruct} v0.2 (p v0.2 §4.1's chain; the PI's routing of 2026-11-10, B1's
   "LOCK-p v0.2 ×3" and B3's form; the seat's answers of 2026-11-10, `42c5a92`, §3, and of 2026-11-09, `e619d3d`, §2).
   Each lock is re-issued above its v0.1 text, kept verbatim. Each stands on the qual wiring's BUILD (`40086e8`) and on

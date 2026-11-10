@@ -11,8 +11,10 @@ carried by Q6); the look-index invariant), the three-step finish (``set_end_pend
 (keys.templates), so Q-F3's identity and the load that validates it are here.
 
 THE IDENTITY (m:267): Q-F0's keys, with Q-F3's values (mf3's own ``package_sha256``), plus
-  reasoning_cap       the reasoning-line cap (m:174: "the cap enters the resume identity"): 60 at
-                      G-TIME-F3, the fixed cap after it;
+  reasoning_cap       the reasoning-line cap (m:174: "the cap enters the resume identity"): the cap of
+                      record, 120, at every stage from G-TIME-F3's re-run on (A-m2 v0.5 §4.1); 60 on the
+                      stub's all-zero weights binding only (STUB_WEIGHTS, §4.2); the first run's
+                      checkpoint carries 60;
   m_module_sha256     the C2 licence's part (b): each imported valence_core.m module's file sha256,
                       with the package's __init__.py (guard.M_HASHED);
   weights_revision,   the weights-snapshot binding (Q6: "mf3's at the F3 build"): the Qwen snapshot's
@@ -43,6 +45,9 @@ LOOK_EVERY = m_resume.LOOK_EVERY
 CANONICAL_ROOTS = (REPO / "data" / "mf3",) + tuple(m_resume.CANONICAL_ROOTS)
 IDENTITY_KEYS = tuple(m_resume.IDENTITY_KEYS) + ("reasoning_cap", "m_module_sha256", "weights_revision",
                                                  "weights_sha256")
+#: The stub's all-zero weights binding (stages._STUB_WEIGHTS is this; stages._extra refuses it on a run on a
+#: model): the one identity binding under which the stub's cap of 60 is admitted (A-m2 v0.5 §4.2).
+STUB_WEIGHTS = {"weights_revision": "0" * 40, "weights_sha256": "0" * 64}
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
 _HEX40 = re.compile(r"^[0-9a-f]{40}$")
 _HEX16 = re.compile(r"^[0-9a-f]{16}$")
@@ -184,9 +189,16 @@ def Identity(*, stage: str, template_set, lock_sha256: str, schedule_sha256: str
         raise ValueError(f"path {path!r} not allowed for Q-F3 {stage}; allowed {allowed}")
     if type(stop_cap) is not int or stop_cap != STOP_CAP:
         raise ValueError(f"stop_cap must be session_e2a.STOP_CAP = {STOP_CAP} (task rounds stay at 60, m:174)")
-    if type(reasoning_cap) is not int or reasoning_cap not in sc_mod.REASONING_CAPS or (
-            stage == "time" and reasoning_cap != STOP_CAP):
-        raise ValueError(f"reasoning_cap must be one of {sc_mod.REASONING_CAPS} ({STOP_CAP} at G-TIME-F3, m:174)")
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "resume.Identity ... admits 60 only for an
+    # identity carrying the stub's all-zero weights binding ... and refuses it on every other, 120 being the value it
+    # admits at every stage"): the cap of record, scaffold.CAP_OF_RECORD, at every stage; scaffold.STUB_CAP only with
+    # STUB_WEIGHTS, the binding stages._extra refuses on a run on a model (stages.py's _STUB_WEIGHTS check).
+    stub_binding = (weights_revision, weights_sha256) == (STUB_WEIGHTS["weights_revision"], STUB_WEIGHTS["weights_sha256"])
+    if type(reasoning_cap) is not int or not (reasoning_cap == sc_mod.CAP_OF_RECORD
+                                              or (reasoning_cap == sc_mod.STUB_CAP and stub_binding)):
+        raise ValueError(f"reasoning_cap must be {sc_mod.CAP_OF_RECORD} at every Q-F3 stage (A-m2 v0.5 §4.1-§4.2), or "
+                         f"{sc_mod.STUB_CAP} on the stub's all-zero weights binding only; got {reasoning_cap!r} at "
+                         f"{stage}")
     if hour_cap is None:
         if stage == "campaign":
             raise ValueError("a campaign identity carries the PI's hour cap (LOCK-m-F3 v1.0)")
@@ -272,8 +284,10 @@ def _selftest(chk) -> None:
         tuple(sorted(ident)) == tuple(sorted(IDENTITY_KEYS)) and ident["template_set"] == ["A1", "A3s"]
         and ident["package_sha256"] == guard.package_sha256() and ident["reasoning_cap"] == 120
         and sorted(ident["m_module_sha256"]) == sorted(guard.M_HASHED) and _validated(ident) == ident)
+    gid_kw = {"stage": "id", "template_set": ["A2s", "A3s"], "n": {"A2s": 1, "A3s": 1}, "path": "cached+uncached"}
+    stage_kw = ({"stage": "time", "path": "uncached"}, gid_kw, {}, {"stage": "campaign", "hour_cap": 40})
     refused = []
-    for kw in ({"reasoning_cap": 90}, {"stage": "time", "path": "uncached", "reasoning_cap": 120},
+    for kw in ({"reasoning_cap": 90}, *({**s_, "reasoning_cap": 60} for s_ in stage_kw),
                {"stage": "time", "path": "cached"}, {"stage": "id", "template_set": ["A2s"], "n": {"A2s": 16},
                                                      "path": "cached+uncached"},
                {"lock_sha256": "pre-lock"}, {"weights_revision": "abc"}, {"pod_id": "pod"},
@@ -284,9 +298,20 @@ def _selftest(chk) -> None:
             refused.append(False)
         except ValueError:
             refused.append(True)
-    chk("mf3.resume: refuses a cap outside 60/120, G-TIME at 120 or cached, G-ID without both templates, a "
-        "pre-lock hash, a malformed weights binding, a pod id, a campaign without its hour cap, a Q-F0 "
-        "template, a task-round cap other than 60", all(refused), refused)
+    chk("mf3.resume: refuses a cap outside m:174's pair (90), 60 on a non-stub weights binding at G-TIME-F3, G-ID-F3, "
+        "G-F3 and the campaign (A-m2 v0.5 §4.2: the real side), G-TIME cached, G-ID without both templates, a pre-lock "
+        "hash, a malformed weights binding, a pod id, a campaign without its hour cap, a Q-F0 template, a task-round "
+        "cap other than 60", all(refused), refused)
+    admitted = []
+    for s_ in stage_kw:
+        for w_, cap_ in (({}, 120), (STUB_WEIGHTS, 120), (STUB_WEIGHTS, 60)):
+            try:
+                admitted.append(Identity(**{**base, **s_, **w_, "reasoning_cap": cap_})["reasoning_cap"] == cap_)
+            except ValueError:
+                admitted.append(False)
+    chk("mf3.resume: admits 120 at every Q-F3 stage on any binding, and 60 on the stub's all-zero weights binding "
+        "only (A-m2 v0.5 §4.2), whose values are stages._STUB_WEIGHTS'", all(admitted) and len(admitted) == 12
+        and STUB_WEIGHTS == {"weights_revision": "0" * 40, "weights_sha256": "0" * 64}, admitted)
     with tempfile.TemporaryDirectory() as td:
         cp = Path(td) / "Q-F3_qual.json"
         ck = load_or_init(cp, ident, resume=False)
@@ -303,11 +328,13 @@ def _selftest(chk) -> None:
             exists = False
         except SystemExit as e:
             exists = "CHECKPOINT EXISTS" in str(e)
-        try:
-            load_or_init(cp, Identity(**{**base, "reasoning_cap": 60}), resume=True)
+        cp_stub = Path(td) / "Q-F3_qual_stub.json"                         # an identity at another cap: the stub's,
+        write_checkpoint(cp_stub, load_or_init(cp_stub, Identity(**{**base, **STUB_WEIGHTS}), resume=False))
+        try:                                                                # 120 -> 60, nothing else moved
+            load_or_init(cp_stub, Identity(**{**base, **STUB_WEIGHTS, "reasoning_cap": 60}), resume=True)
             capmove = False
         except SystemExit as e:
-            capmove = "reasoning_cap" in str(e)
+            capmove = "reasoning_cap" in str(e) and "weights" not in str(e)
         try:
             load_or_init(cp, Identity(**{**base, "m_module_sha256": {**ident["m_module_sha256"], "audit": "8" * 64}}),
                          resume=True)

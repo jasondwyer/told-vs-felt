@@ -1,9 +1,10 @@
 """Q-F3's gate-stage and campaign drivers (PROPOSAL-m v1.11 §2.4 m:192, m:247-249; §2.7 m:267; §3 m:271;
 §3.2 m:293-298; §4 m:308, m:316, m:318; §6 m:330; ADDENDUM-m1 decision (10') and §4 step 5; the design
-seat's prebuild answers of 2026-11-06, Q1 and Q5).
+seat's prebuild answers of 2026-11-06, Q1 and Q5; ADDENDUM-m2 v0.5 §4.1-§4.3).
 
-THE STAGES. ``run_gate_stage`` runs G-TIME-F3 (m:293: one session per arm, uncached, the reasoning
-lines at 60, the cap trigger counted over all six) and G-F3 (m:297: 40 sessions); ``run_gid_pair_f3``
+THE STAGES. ``run_gate_stage`` runs G-TIME-F3 (m:293: one session per arm, uncached; its re-run, A-m2
+v0.5 §4.3, at the cap of record, 120, into the checkpoint the driver names, ``Q-F3_time-r2.json``, the
+cap trigger counted over all six and reported, moving nothing) and G-F3 (m:297: 40 sessions); ``run_gid_pair_f3``
 runs G-ID-F3 (m:295: A2s then A3s, uncached then cached at each index, indices advancing per template
 as G-ID-F0m's, m:281, until a complete pair exists; 2/2 byte-identical transcripts and, per reasoning line, an
 identical (n_tok, cap_hit, stop_reason) triple: the seat's F-7); ``run_campaign`` runs the
@@ -72,7 +73,8 @@ TERMINAL = ("COMPLETE", "CAP", "PI-STOP")
 EXIT_CODES = {"PASS": 0, "COMPLETE": 0, "CAP": 0, "PI-STOP": 0, "PAUSE": 3, "STOP": 4, "FAIL": 5, "NOT-DETERMINED": 6}
 STAGE_NAMES = {"time": "G-TIME-F3", "id": "G-ID-F3", "qual": "G-F3", "campaign": f"campaign-{keys.UNIT}"}
 #: m:174: "if ≥ 3 of the reasoning lines G-TIME-F3 generates (≤ 36) reach the cap without a newline,
-#: the reasoning-line cap becomes 120 (pre-declared)".
+#: the reasoning-line cap becomes 120 (pre-declared)". A-m2 v0.5 §4.1 applies that value from G-TIME-F3's
+#: re-run on (scaffold.CAP_OF_RECORD); a run at 120 counts and reports the trigger, which moves nothing.
 CAP_TRIGGER = 3
 CAP_AFTER_TRIGGER = 120
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
@@ -98,7 +100,10 @@ def stage_name(stage: str) -> str:
 def out_paths(stage: str, out_root=DEFAULT_OUT) -> dict[str, Path]:
     """PIN (Code, declared at LOCK-m-F3 v0.1): m's layout under data/mf3 -- schedules/ (read only),
     ckpt/Q-F3_{stage}.json (pick-bearing; -diff), reports/Q-F3_{stage}_report.json and _reads.json (no
-    contrast pick), G-ID-F3's artifact at guard.gid_artifact_path()."""
+    contrast pick), G-ID-F3's artifact at guard.gid_artifact_path(). A-m2 v0.5 §4.2 keeps m's default stem
+    here, for the stub; G-TIME-F3's re-run checkpoint and the refusal of the first run's live in the driver's
+    precheck, which names the checkpoint (scripts/mf3_sessions.py), and for_checkpoint names the report and
+    reads after it."""
     stage_name(stage)
     root = Path(out_root)
     return {"root": root, "schedules": root / "schedules", "ckpt": root / "ckpt" / f"{keys.UNIT}_{stage}.json",
@@ -175,10 +180,18 @@ def _append_provenance(ckpt: dict, rec: Mapping) -> None:
 # --- run-time known answers, laptop preflight, git -------------------------------------------
 def startup_problems(proposal_path=PROPOSAL_PATH) -> list[str]:
     """numpy's stream, the F3 banners and reasoning block against the proposal FILE, roster hygiene of
-    the pool, golds and the eight harness strings, and the licence's import set (static); [] = clean."""
+    the pool, golds and the eight harness strings, the F-b segment's roster hygiene and the working tree's
+    ADDENDUM-m2 against its pinned sha256 and literals, and the licence's import set (static); [] = clean.
+
+    PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: the selected form "verified at every
+    stage start ... against this file's committed bytes and sha256"; the build review's finding 7): every
+    stage start, the stub's included, checks the working tree's addendum bytes against the pin
+    (banner.addendum_file_problems); a non-stub start's licence (h) also requires them committed at HEAD."""
     probs = [f"keys: {p}" for p in m_keys.stream_known_answer()]
     probs += [f"banner: {p}" for p in banner.spec_problems(Path(proposal_path))]
     probs += [f"corr: {p}" for p in m_corr.startup_hygiene()]
+    probs += [f"segment: {p}" for p in banner.segment_problems()]
+    probs += [f"addendum: {p}" for p in banner.addendum_file_problems()]
     probs += [f"imports: {p}" for p in guard.import_problems(runtime=False)]
     return probs
 
@@ -287,7 +300,9 @@ def licence_problems(extra: Mapping[str, Any], *, repo=REPO, hub_repo=None, envi
     text names the analyzer's and mf3's sha256 verbatim and each m file by name, its path and sha256 on one
     line (part (b): "listed by name"); (g) the weights of record -- HF_HUB_OFFLINE is exactly "1", the hub
     cache's refs/main for the model of record names ``weights_revision``, the binding computed now on that
-    snapshot is ``weights_revision`` / ``weights_sha256``, and the lock names both."""
+    snapshot is ``weights_revision`` / ``weights_sha256``, and the lock names both; (h) the reasoning
+    block's addendum, A-m2 v0.5 (``banner.ADDENDUM_M2_REL``), committed with the working tree's bytes, its
+    sha256 the pinned one, its F-b literal and cap the code's (``banner.addendum_text_problems``)."""
     # PIN (Code, declared at LOCK-m-F3 v0.1; the seat's Q1 (C2): "Every non-stub mf3 stage checks both at
     # start, as stages.py:530–608 checks m's"): m's (a)-(f), with (e) mf3's package and (e') the files
     # N1 and the build review's finding 7 declare (guard.M_HASHED), plus (g) Q6's weights binding. (f)'s
@@ -362,6 +377,13 @@ def licence_problems(extra: Mapping[str, Any], *, repo=REPO, hub_repo=None, envi
                 probs.append("weights: the snapshot of record binds differently now (revision or content addresses)")
         except (OSError, ValueError, KeyError) as e:
             probs.append(f"weights: the snapshot of record is unreadable ({type(e).__name__})")
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: the selected form is "verified at every stage
+    # start and in G-SHAPE-F3 against this file's committed bytes and sha256 (as the analyzer verifies A-m1's
+    # dates)"): (h) the addendum committed at HEAD with the working tree's bytes, then banner.addendum_text_problems.
+    cp_a, data_a = committed(banner.ADDENDUM_M2_REL, repo)
+    probs += [f"addendum {x}" for x in cp_a]
+    if data_a is not None:
+        probs += [f"addendum {x}" for x in banner.addendum_text_problems(data_a)]
     if lock_data is not None:
         lt = lock_data.decode("utf-8", "replace")
         for k, v in named.items():
@@ -387,7 +409,8 @@ def _licence(adapter, extra: Mapping[str, Any], name: str) -> None:
           f"{extra['lock_sha256'][:16]}: committed at HEAD {_git_head()}, working tree identical; analyzer "
           f"{extra['analyzer_sha256'][:16]}, mf3 package {extra['package_sha256'][:16]}, the {len(guard.M_HASHED)} m "
           f"files and the weights {extra['weights_revision'][:12]}: the hashes identity_extra and the lock name, "
-          f"hashed at stage start", flush=True)
+          f"hashed at stage start; A-m2 {banner.ADDENDUM_M2_VERSION} {banner.ADDENDUM_M2_SHA256[:16]} committed, the "
+          f"reasoning block {banner.REASONING_FORM} at cap {extra['reasoning_cap']}", flush=True)
 
 
 # --- the prior stage, the G-ID-F3 artifact -----------------------------------------------------
@@ -467,11 +490,27 @@ def prior_gate(stage: str, prior_ckpt, *, proposal_sha256=None, prior_proposal_s
     # G-TIME-F3's trigger (m:294) and applied from G-ID-F3 on (m:295, before LOCK v0.2 records it, m:296). So G-ID-F3
     # and G-F3 re-compute the trigger from G-TIME-F3's own checkpoint and refuse any other cap, and the campaign runs
     # at G-F3's cap. Only the fixed cap is printed.
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "prior_gate (F6) reads the fixed cap as 120
+    # unless its require_real is off"; F6 re-read): on a run on a model (require_real) the fixed cap is the cap of
+    # record, scaffold.CAP_OF_RECORD, whatever the trigger counts (§4.1: it is reported and moves nothing), and a prior
+    # G-TIME-F3 written at another cap -- the first run's form, at 60 -- is refused (Code's reading of F6 under §4.1:
+    # the prior's lines and the stage's are both at the cap of record). With require_real off -- the stub path, which
+    # alone may run at 60 -- the fixed cap is re-computed from the prior's own checkpoint, as at LOCK-m-F3 v0.1.
     if stage in ("id", "qual"):
-        fixed = cap_trigger(ck.get("sessions") or [])["fixed_cap"]
+        if require_real:
+            fixed = sc_mod.CAP_OF_RECORD
+            if ident.get("reasoning_cap") != sc_mod.CAP_OF_RECORD:
+                raise SystemExit(f"PRIOR STAGE AT ANOTHER CAP: {p} ran at reasoning cap {ident.get('reasoning_cap')!r}; "
+                                 f"{name} runs on a model only after a G-TIME-F3 at the cap of record, "
+                                 f"{sc_mod.CAP_OF_RECORD} (A-m2 v0.5 §4.1-§4.2) -- refusing")
+        else:
+            pcap = ident.get("reasoning_cap")
+            if type(pcap) is not int:
+                raise SystemExit(f"PRIOR STAGE MALFORMED: {p} carries no reasoning cap in its identity -- refusing")
+            fixed = cap_trigger(ck.get("sessions") or [], cap=pcap)["fixed_cap"]
         if reasoning_cap != fixed:
-            raise SystemExit(f"NOT THE FIXED CAP: {name} would run at reasoning cap {reasoning_cap!r}; G-TIME-F3's lines "
-                             f"at {p} fix the cap at {fixed} (m:174, m:294-295) -- refusing")
+            raise SystemExit(f"NOT THE FIXED CAP: {name} would run at reasoning cap {reasoning_cap!r}; the cap fixed for "
+                             f"it is {fixed} (A-m2 v0.5 §4.1-§4.2; m:174, m:294-295) -- refusing")
     elif stage == "campaign" and ident.get("reasoning_cap") != reasoning_cap:
         raise SystemExit(f"NOT THE FIXED CAP: the campaign would run at reasoning cap {reasoning_cap!r}; G-F3 at {p} ran "
                          f"at {ident.get('reasoning_cap')!r} (m:174) -- refusing")
@@ -545,7 +584,7 @@ def _schedules_sha(scheds: Mapping[str, Mapping]) -> str:
 # --- identity_extra, identity, start ----------------------------------------------------------
 _OPTIONAL_EXTRA = ("lock_file", "proposal_file", "prior_proposal_sha256s", "analyzer_sha256", "package_sha256",
                    "m_module_sha256")
-_STUB_WEIGHTS = {"weights_revision": "0" * 40, "weights_sha256": "0" * 64}
+_STUB_WEIGHTS = dict(rs.STUB_WEIGHTS)     # the stub's all-zero weights binding (A-m2 v0.5 §4.2: 60 is admitted on it only)
 
 
 def _repo_rel_ok(v: Any) -> bool:
@@ -560,7 +599,9 @@ def _extra(identity_extra: Mapping[str, Any], *, stage: str, stub: bool) -> dict
     proposal_sha256, renders_sha16, reasoning_cap, weights_revision, weights_sha256} and, except at G-ID-F3,
     locked_path (G-TIME-F3 "uncached"); optional on the stub, REQUIRED on a non-stub run: lock_file,
     proposal_file, analyzer_sha256, package_sha256 (mf3's) and m_module_sha256 (each m file of guard.M_HASHED).
-    The reasoning cap is 60 at G-TIME-F3 and, from G-ID-F3 on, the cap G-TIME-F3's trigger fixes (prior_gate)."""
+    The reasoning cap (A-m2 v0.5 §4.1-§4.2; F8 re-read): the cap of record, 120, on a run on a model at every
+    stage, G-TIME-F3's re-run included; m:174's pair, 60 or 120, on the stub, which alone may run at 60; from
+    G-ID-F3 on, the cap prior_gate fixes."""
     gid = stage == "id"
     want = ("lock_sha256", "proposal_sha256", "renders_sha16", "reasoning_cap", "weights_revision",
             "weights_sha256") + (() if gid else ("locked_path",))
@@ -577,8 +618,13 @@ def _extra(identity_extra: Mapping[str, Any], *, stage: str, stub: bool) -> dict
     if type(out["renders_sha16"]) is not str or not _HEX16.match(out["renders_sha16"]):
         raise ValueError("renders_sha16 must be 16 lower-case hex")
     cap = out["reasoning_cap"]
-    if type(cap) is not int or cap not in sc_mod.REASONING_CAPS or (stage == "time" and cap != sc_mod.REASONING_CAPS[0]):
-        raise ValueError(f"reasoning_cap must be one of {sc_mod.REASONING_CAPS} (60 at G-TIME-F3, m:174)")
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "stages._extra (F8's site) refuses any cap but
+    # 120 on a non-stub run and admits 60 on the stub path only"): m:174's pair on the stub, at every stage; the cap
+    # of record, scaffold.CAP_OF_RECORD, alone on a run on a model.
+    if type(cap) is not int or cap not in sc_mod.REASONING_CAPS or (not stub and cap != sc_mod.CAP_OF_RECORD):
+        raise ValueError(f"reasoning_cap must be {sc_mod.CAP_OF_RECORD} on a run on a model (A-m2 v0.5 §4.1-§4.2, the "
+                         f"cap of record) and one of {sc_mod.REASONING_CAPS} on the stub, which alone may run at "
+                         f"{sc_mod.STUB_CAP}; got {cap!r} at {stage_name(stage)}")
     for k in ("lock_file", "proposal_file"):
         v = identity_extra.get(k)
         if v is None:
@@ -981,7 +1027,7 @@ def run_gate_stage(adapter, *, gate: str, templates_counts: Sequence[tuple[str, 
     return _finish_gate(gate, name, ckpt, cpath, paths, hit)
 
 
-def cap_trigger(records: Sequence[Mapping]) -> dict:
+def cap_trigger(records: Sequence[Mapping], *, cap: int) -> dict:
     """m:174's cap trigger over G-TIME-F3's reasoning lines -- all six sessions (the seat's Q5)."""
     # PIN (Code, declared at LOCK-m-F3 v0.1; m:174, m:293, the seat's Q5): the count is the lines whose
     # generation stopped on the cap (cap_no_newline), over every reasoning line every G-TIME-F3 session
@@ -991,12 +1037,18 @@ def cap_trigger(records: Sequence[Mapping]) -> dict:
     # PIN (the seat's F-6, 2026-11-06): what is reported is the count k against the declared maximum ("k of
     # <= 36"), never the realised line total; the per-line booleans and the realised totals stay in the
     # checkpoint's records (m:271), from which this function re-derives them.
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "stages.cap_trigger (F11) keeps its count and
+    # reports it"; §4.1: "m:294's trigger is reported at the re-run -- the count of lines at the cap, of <= 36 -- and
+    # moves nothing (m:174 names no value beyond 120)"; F11 re-read): ``cap`` is the run's reasoning cap, its
+    # checkpoint identity's. The count is as above. A run at 120 fixes 120 whatever the count; a run at 60 -- the
+    # stub path's, which alone may run at 60 -- fixes the cap by the count, as at LOCK-m-F3 v0.1.
     ls = [x for r in records for x in r.get("reasoning") or []]
     k = sum(bool(x["cap_hit"]) for x in ls)
     return {"cap_reached": k, "threshold": CAP_TRIGGER, "max_lines": 36,
-            "fixed_cap": CAP_AFTER_TRIGGER if k >= CAP_TRIGGER else sc_mod.REASONING_CAPS[0],
+            "fixed_cap": CAP_AFTER_TRIGGER if (k >= CAP_TRIGGER or cap == CAP_AFTER_TRIGGER) else sc_mod.REASONING_CAPS[0],
             "rule": "m:174: >= 3 of the reasoning lines G-TIME-F3 generates (<= 36) reach the cap without a newline "
-                    "-> 120; counted over all six sessions (m:293; the seat's Q5); reported as k of <= 36 (F-6)"}
+                    "-> 120; counted over all six sessions (m:293; the seat's Q5); reported as k of <= 36 (F-6); a run "
+                    "at 120 fixes 120, its count reported and moving nothing (A-m2 v0.5 §4.1)"}
 
 
 def _contrast_first_reads(records: Sequence[Mapping]) -> dict:
@@ -1067,7 +1119,7 @@ def _finish_gate(gate: str, name: str, ckpt: dict, cpath: Path, paths: Mapping, 
               "stage_report": readrule.stage_report(records) if records else None,
               "identity": _ident_summary(ident), "provenance": rs.report_provenance(final), "files": files}
     if gate == "time":
-        report["cap_trigger"] = cap_trigger(records)
+        report["cap_trigger"] = cap_trigger(records, cap=ident["reasoning_cap"])
     if gate == "qual":
         report["contrast_first_read_flags"] = _contrast_first_reads(records)
     _assert_pick_free(report, name)
@@ -1088,11 +1140,27 @@ def _finish_gate(gate: str, name: str, ckpt: dict, cpath: Path, paths: Mapping, 
     rs.persist_end(cpath, final)
     for ln in end["lines"]:
         print(ln, flush=True)
+    sr = report.get("stage_report")
+    if sr is not None:
+        # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §3.4: "a gate stage's entry reports (a) over its
+        # sham sessions' reasoning lines"): the count over the sham templates' lines, beside the bars, as k of the
+        # realised n the reasoning-line bar prints; descriptive, deciding nothing.
+        ka = sum(sr["templates"][t]["reasoning_lines"]["counter_a"] for t in keys.SHAM if t in sr["templates"])
+        na = sum(sr["templates"][t]["reasoning_lines"]["lines"] for t in keys.SHAM if t in sr["templates"])
+        print(f"COUNTER (a) {name}: {ka} of {na} sham reasoning lines contain a complete harness-written line of their "
+              f"session or keep the banner's === ... === frame (A-m2 v0.5 §3.4; rule 23, descriptive, deciding nothing)",
+              flush=True)
     if gate == "time":
         ct = report["cap_trigger"]
-        print(f"CAP TRIGGER {name}: {ct['cap_reached']} of <= {ct['max_lines']} reasoning lines reached the cap "
-              f"(threshold {CAP_TRIGGER}); the cap fixed is {ct['fixed_cap']} (m:294), applied from G-ID-F3 on (m:295) "
-              f"and recorded at LOCK-m-F3 v0.2 (m:296)", flush=True)
+        if ident["reasoning_cap"] == CAP_AFTER_TRIGGER:
+            print(f"CAP TRIGGER {name}: {ct['cap_reached']} of <= {ct['max_lines']} reasoning lines reached the cap of "
+                  f"{ident['reasoning_cap']} without a newline (threshold {CAP_TRIGGER}; m:294's trigger, reported, "
+                  f"moving nothing: A-m2 v0.5 §4.1); the cap is {ct['fixed_cap']}, recorded at LOCK-m-F3 v0.2 with this "
+                  f"count (m:296)", flush=True)
+        else:
+            print(f"CAP TRIGGER {name}: {ct['cap_reached']} of <= {ct['max_lines']} reasoning lines reached the cap "
+                  f"(threshold {CAP_TRIGGER}); the cap fixed is {ct['fixed_cap']} (m:294), applied from G-ID-F3 on (m:295) "
+                  f"and recorded at LOCK-m-F3 v0.2 (m:296)", flush=True)
     print(_stage_line(name, status, ident["path"]), flush=True)
     for k, p in [("CHECKPOINT", cpath), ("REPORT", paths["report"]), ("READS", paths["reads"])] + (
             [("ADJUDICATION", apath)] if events else []):
@@ -1789,7 +1857,7 @@ def _selftest(chk) -> None:
     prop_sha = hashlib.sha256(PROPOSAL_PATH.read_bytes()).hexdigest()
     _pool, renders = sc_mod.pool_and_renders()
     base_extra = {"lock_sha256": "a" * 64, "proposal_sha256": prop_sha, "renders_sha16": m_corr.renders_sha(renders),
-                  "reasoning_cap": 60, **_STUB_WEIGHTS}
+                  "reasoning_cap": 120, **_STUB_WEIGHTS}
 
     def quiet(fn, *a, **k):
         buf = io.StringIO()
@@ -1818,12 +1886,12 @@ def _selftest(chk) -> None:
         gates_dir = Path(td) / "gates"
         gates_dir.mkdir()
         with mock.patch.object(guard, "GATES_DIR", gates_dir):
-            # --- G-TIME-F3: PASS, the cap trigger counted over all six ------------------------
+            # --- G-TIME-F3 at the cap of record on the stub (A-m2 v0.5 §4.1): PASS, the trigger counted over all six -
             def caps(t, s, kind, i, call):
                 if kind == "line" and keys.is_contrast(t) and i < 2 and t != "A3":
-                    return {"text": "x " * 30, "n_tok": 60, "cap_hit": True, "stop_reason": "cap"}
+                    return {"text": "x " * 60, "n_tok": 120, "cap_hit": True, "stop_reason": "cap"}
                 if kind == "line" and t == "A2s" and i == 0:
-                    return {"text": "y " * 30, "n_tok": 60, "cap_hit": True, "stop_reason": "cap"}
+                    return {"text": "y " * 60, "n_tok": 120, "cap_hit": True, "stop_reason": "cap"}
                 return None
             res, out, err = quiet(run_gate_stage, adapter("time", caps), gate="time", templates_counts=tc_time,
                                   identity_extra={**base_extra, "locked_path": "uncached"}, out_root=root)
@@ -1831,13 +1899,19 @@ def _selftest(chk) -> None:
             rep = json.loads((root / "reports" / "Q-F3_time_report.json").read_text())
             reads = json.loads((root / "reports" / "Q-F3_time_reads.json").read_text())
             ck_t = rs.read_checkpoint(ck_time)
-            chk("mf3.stages: G-TIME-F3 on the stub -- six sessions, PASS; the cap trigger counts cap-reach over all six "
-                "sessions' lines (4 contrast + 1 sham = 5 -> 120), printed and reported as '5 of <= 36' with no realised "
-                "total; contrast blocks are ruling (h)'s counts with no per-line list, the booleans in the checkpoint "
-                "(the seat's F-6); the stopped/ended checkpoint persists PASS",
+            chk("mf3.stages: G-TIME-F3 on the stub at the cap of record (120; A-m2 v0.5 §4.1) -- six sessions into m's "
+                "default stem (the stage library's, §4.2), PASS; the cap trigger counts cap-reach over all six sessions' "
+                "lines (4 contrast + 1 sham = 5), printed and reported as '5 of <= 36' with no realised total, moving "
+                "nothing (a run at 120 fixes 120); COUNTER (a) printed over the sham lines; contrast blocks are ruling "
+                "(h)'s counts with no per-line list, the booleans in the checkpoint (the seat's F-6); the stopped/ended "
+                "checkpoint persists PASS",
                 err is None and res["status"] == "PASS" and rep["cap_trigger"]["cap_reached"] == 5
                 and "lines" not in rep["cap_trigger"] and rep["cap_trigger"]["max_lines"] == 36
-                and rep["cap_trigger"]["fixed_cap"] == 120 and "5 of <= 36 reasoning lines" in out
+                and rep["cap_trigger"]["fixed_cap"] == 120 and sorted(rep["cap_trigger"]) == sorted(
+                    ("cap_reached", "threshold", "max_lines", "fixed_cap", "rule"))
+                and "5 of <= 36 reasoning lines reached the cap of 120" in out and "moving nothing" in out
+                and "COUNTER (a) G-TIME-F3: 0 of 18 sham reasoning lines" in out
+                and ck_t["identity"]["reasoning_cap"] == 120 and res["checkpoint"].name == "Q-F3_time.json"
                 and set(rep["stage_report"]["templates"]["A1"]) == set(readrule.TIME_CONTRAST_KEYS)
                 and "reasoning_cap_reached" not in json.dumps(rep) and "reasoning_cap_reached" not in json.dumps(reads)
                 and [x["cap_hit"] for r in ck_t["sessions"] if r["template"] == "A1" for x in r["reasoning"]][:2] == [True, True]
@@ -1851,17 +1925,19 @@ def _selftest(chk) -> None:
                 and sum(ln.startswith("time A") for ln in out.splitlines()) == 6, out[:200])
             # --- G-TIME-F3: the sham line bar fires (STOP); n = 0 lines is no test (reported, not fired) -----
             def echo_sham(t, s, kind, i, call):
-                return "Reasoning (one line): ok" if kind == "line" and keys.is_sham(t) and i < 2 else None
+                # the session banner verbatim -- the first run's nine (A-m2 v0.5 §0.1): an echo under §1's domain
+                return "=== Config evaluation session ===" if kind == "line" and keys.is_sham(t) and i < 2 else None
             r2 = root.parent / "time-stop"
             schedule.write_schedule_files(r2 / "schedules")
             res2, out2, err2 = quiet(run_gate_stage, adapter("time", echo_sham), gate="time", templates_counts=tc_time,
                                      identity_extra={**base_extra, "locked_path": "uncached"}, out_root=r2)
             adj2 = json.loads((r2 / "ckpt" / "Q-F3_time_adjudication.json").read_text())
-            chk("mf3.stages: G-TIME-F3 STOPs when its sham reasoning-line bar fires (6 echo lines of 18 >= 5); the "
-                "excerpt holds the sham lines; the cap-trigger count is still reported",
+            chk("mf3.stages: G-TIME-F3 STOPs when its sham reasoning-line bar fires (6 lines of 18 reproduce the session "
+                "banner, an echo under A-m2 v0.5 §1, >= 5); the excerpt holds the sham lines; COUNTER (a) counts the six; "
+                "the cap-trigger count is still reported",
                 err2 is None and res2["status"] == "STOP" and res2["bars"][1].fired
                 and adj2["events"][0]["kind"] == "bars" and len(adj2["events"][0]["rounds"]) == 6
-                and "CAP TRIGGER" in out2, (err2, res2 and res2["status"]))
+                and "COUNTER (a) G-TIME-F3: 6 of 18" in out2 and "CAP TRIGGER" in out2, (err2, res2 and res2["status"]))
 
             def lex_sham(t, s, kind, i, call):
                 if kind == "forced" and keys.is_sham(t) and i == 3:
@@ -1880,7 +1956,7 @@ def _selftest(chk) -> None:
             # --- refusals at the start ----------------------------------------------------------------
             refused = []
             for kw in ({"identity_extra": {**base_extra, "locked_path": "cached"}},
-                       {"identity_extra": {**base_extra, "locked_path": "uncached", "reasoning_cap": 120}},
+                       {"identity_extra": {**base_extra, "locked_path": "uncached", "reasoning_cap": 90}},
                        {"identity_extra": {**base_extra, "locked_path": "uncached", "lock_sha256": "pre-lock"}},
                        {"identity_extra": {**base_extra, "locked_path": "uncached", "renders_sha16": "0" * 16}},
                        {"identity_extra": {**base_extra, "locked_path": "uncached"}, "prior_ckpt": ck_time}):
@@ -1896,46 +1972,139 @@ def _selftest(chk) -> None:
             _, _, e = quiet(run_gate_stage, adapter("time"), gate="time", templates_counts=tc_time,
                             identity_extra={**base_extra, "locked_path": "uncached"}, out_root=root)
             refused[-1] = e is not None and "STAGE ENDED" in str(e)
-            chk("mf3.stages: G-TIME-F3 refuses a cached lock, a cap of 120, a pre-lock hash, renders other than the "
-                "renders of record, a prior stage, and a re-run of its ended checkpoint", all(refused), refused)
-            # --- a G-TIME-F3 whose trigger does not fire: the cap stays 60 -------------------------------
-            def caps60(t, s, kind, i, call):
+            chk("mf3.stages: G-TIME-F3 refuses a cached lock, a cap outside m:174's pair (90), a pre-lock hash, renders "
+                "other than the renders of record, a prior stage, and a re-run of its ended checkpoint", all(refused), refused)
+            # --- a G-TIME-F3 whose trigger does not fire: the cap is 120 all the same -----------------------
+            def caps2(t, s, kind, i, call):
                 if kind == "line" and t == "A1" and i < 2:
-                    return {"text": "x " * 30, "n_tok": 60, "cap_hit": True, "stop_reason": "cap"}
+                    return {"text": "x " * 60, "n_tok": 120, "cap_hit": True, "stop_reason": "cap"}
                 return None
-            r60 = root.parent / "time-60"
+            r60 = root.parent / "time-2caps"
             schedule.write_schedule_files(r60 / "schedules")
-            res60, _, err60 = quiet(run_gate_stage, adapter("time", caps60), gate="time", templates_counts=tc_time,
+            res60, _, err60 = quiet(run_gate_stage, adapter("time", caps2), gate="time", templates_counts=tc_time,
                                     identity_extra={**base_extra, "locked_path": "uncached"}, out_root=r60)
-            ck_time60 = r60 / "ckpt" / "Q-F3_time.json"
             rep60 = json.loads((r60 / "reports" / "Q-F3_time_report.json").read_text())
-            chk("mf3.stages: a G-TIME-F3 whose lines reach the cap twice (2 of 36 < 3) leaves the cap at 60",
+            chk("mf3.stages: a G-TIME-F3 at 120 whose lines reach the cap twice (2 of 36 < 3) reports 2, and the cap is "
+                "120 all the same (m:294's trigger moves nothing at a run at 120, A-m2 v0.5 §4.1)",
                 err60 is None and res60["status"] == "PASS" and rep60["cap_trigger"]["cap_reached"] == 2
-                and rep60["cap_trigger"]["fixed_cap"] == 60, (err60, rep60.get("cap_trigger")))
+                and rep60["cap_trigger"]["fixed_cap"] == 120, (err60, rep60.get("cap_trigger")))
+            ct_ = lambda k_, c_: cap_trigger([{"reasoning": [{"cap_hit": True}] * k_ + [{"cap_hit": False}]}],
+                                             cap=c_)["fixed_cap"]
+            chk("mf3.stages: cap_trigger (F11; A-m2 v0.5 §4.1-§4.2) -- a run at 60, the stub path's, fixes the cap by the "
+                "count as m:174 has it (5 -> 120, 2 -> 60); a run at 120 fixes 120 whatever the count (0, 2 or 5)",
+                (ct_(5, 60), ct_(2, 60), ct_(0, 120), ct_(2, 120), ct_(5, 120)) == (120, 60, 120, 120, 120))
+            # --- the stub path at 60 (A-m2 v0.5 §4.2: "the stub path alone may run at 60"), the first run's form -------
+            r_first = root.parent / "time-first"
+            schedule.write_schedule_files(r_first / "schedules")
+            res_f, out_f, err_f = quiet(run_gate_stage, adapter("time"), gate="time", templates_counts=tc_time,
+                                        identity_extra={**base_extra, "locked_path": "uncached", "reasoning_cap": 60},
+                                        out_root=r_first)
+            ck_first = r_first / "ckpt" / "Q-F3_time.json"
             # --- G-ID-F3 ------------------------------------------------------------------------------
-            ex60 = {**base_extra}
-            _, _, e_cap = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex60, prior_ckpt=ck_time,
-                                out_root=root, ckpt_path=root / "ckpt" / "gid-wrong-cap.json")
-            _, _, e_cap2 = quiet(run_gid_pair_f3, adapter("id"), identity_extra={**base_extra, "reasoning_cap": 120},
-                                 prior_ckpt=ck_time60, out_root=root, ckpt_path=root / "ckpt" / "gid-wrong-cap2.json")
-            chk("mf3.stages: G-ID-F3 runs only at the cap G-TIME-F3's trigger fixes, re-computed from its checkpoint "
-                "(60 refused where the lines fix 120, 120 where they fix 60; m:294-295); no artifact is written",
-                e_cap is not None and "NOT THE FIXED CAP" in str(e_cap) and e_cap2 is not None
-                and "NOT THE FIXED CAP" in str(e_cap2) and not guard.gid_artifact_path().exists(),
-                (str(e_cap)[:90], str(e_cap2)[:90]))
-            res4, out4, err4 = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex60, prior_ckpt=ck_time60,
+            ex120 = {**base_extra}
+            _, _, e_cap = quiet(run_gid_pair_f3, adapter("id"), identity_extra={**base_extra, "reasoning_cap": 60},
+                                prior_ckpt=ck_time, out_root=root, ckpt_path=root / "ckpt" / "gid-wrong-cap.json")
+            _, _, e_cap2 = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex120, prior_ckpt=ck_first, out_root=root,
+                                 ckpt_path=root / "ckpt" / "gid-wrong-cap2.json")
+            try:
+                prior_gate("id", ck_time, reasoning_cap=60)
+                e_cap3 = None
+            except SystemExit as e:
+                e_cap3 = e
+            chk("mf3.stages: on the stub, G-ID-F3 runs only at the cap prior_gate re-computes from G-TIME-F3's checkpoint "
+                "(F6 with require_real off; A-m2 v0.5 §4.2) -- 60 refused after a G-TIME-F3 at 120, 120 refused after one "
+                "at 60 whose trigger does not fire (the stub's first-run form, which ends PASS and prints its fixed cap, "
+                "60); no artifact is written",
+                err_f is None and res_f["status"] == "PASS" and rs.read_checkpoint(ck_first)["identity"]["reasoning_cap"] == 60
+                and "the cap fixed is 60 (m:294)" in out_f
+                and e_cap is not None and "NOT THE FIXED CAP" in str(e_cap)
+                and e_cap2 is not None and "NOT THE FIXED CAP" in str(e_cap2)
+                and e_cap3 is not None and "NOT THE FIXED CAP" in str(e_cap3) and not guard.gid_artifact_path().exists(),
+                (str(e_cap)[:90], str(e_cap2)[:90], str(e_cap3)[:90]))
+            # --- the real side (A-m2 v0.5 §4.2: "The self-test asserts the real side") ------------------------
+            real_extra = {**base_extra, "weights_revision": "6" * 40, "weights_sha256": "7" * 64,
+                          "lock_file": "LOCK-m-F3.md", "proposal_file": PROPOSAL_REL, "analyzer_sha256": "b" * 64,
+                          "package_sha256": "c" * 64, "m_module_sha256": {k_: "d" * 64 for k_ in guard.M_HASHED}}
+
+            def ex_for(st_, cap_, src=real_extra):
+                return {**src, "reasoning_cap": cap_, **({} if st_ == "id" else {"locked_path": "uncached"})}
+            extra_side = []
+            for st_ in keys.STAGES:
+                for cap_, stub_ in ((60, False), (120, False), (60, True), (120, True)):
+                    try:
+                        _extra(ex_for(st_, cap_, base_extra if stub_ else real_extra), stage=st_, stub=stub_)
+                        extra_side.append(cap_ == 120 or stub_)
+                    except ValueError as e:
+                        extra_side.append(cap_ == 60 and not stub_ and "on a run on a model" in str(e))
+            prior_side = []
+            with mock.patch(f"{__name__}.written_on_stub", lambda ck: False):
+                for pck, st_, cap_, want_ in ((ck_first, "id", 120, "PRIOR STAGE AT ANOTHER CAP"),
+                                              (ck_first, "qual", 120, "PRIOR STAGE AT ANOTHER CAP"),
+                                              (ck_time, "id", 60, "NOT THE FIXED CAP"),
+                                              (ck_time, "qual", 60, "NOT THE FIXED CAP"), (ck_time, "id", 120, None)):
+                    try:
+                        prior_gate(st_, pck, require_real=True, reasoning_cap=cap_)
+                        prior_side.append(want_ is None)
+                    except SystemExit as e:
+                        prior_side.append(want_ is not None and want_ in str(e))
+            chk("mf3.stages: the real side (A-m2 v0.5 §4.2) -- stages._extra refuses a cap of 60 on a non-stub run at every "
+                "Q-F3 stage and admits 120 there, and on the stub admits both; prior_gate with require_real refuses a prior "
+                "G-TIME-F3 written at 60 (the first run's form) at G-ID-F3 and G-F3, reads the fixed cap as 120 (60 refused "
+                "after a prior at 120), and admits 120 after a prior at 120",
+                all(extra_side) and len(extra_side) == 16 and all(prior_side) and len(prior_side) == 5,
+                (extra_side, prior_side))
+            # --- the stub chain at 60, as G-ANL-F3's battery runs it (A-m2 v0.5 §4.2: "the stub chain at 60 passes") -----
+            r60c = Path(td) / "chain60" / "mf3"
+            schedule.write_schedule_files(r60c / "schedules")
+            g60 = Path(td) / "gates60"
+            g60.mkdir()
+            ex60 = {**base_extra, "reasoning_cap": 60}
+            with mock.patch.object(guard, "GATES_DIR", g60):
+                rt6, _, et6 = quiet(run_gate_stage, adapter("time"), gate="time", templates_counts=tc_time,
+                                    identity_extra={**ex60, "locked_path": "uncached"}, out_root=r60c)
+                ri6, _, ei6 = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex60,
+                                    prior_ckpt=r60c / "ckpt" / "Q-F3_time.json", out_root=r60c)
+                rq6, _, eq6 = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
+                                    identity_extra={**ex60, "locked_path": "cached"}, out_root=r60c,
+                                    prior_ckpt=r60c / "ckpt" / "Q-F3_time.json")
+                rc6, _, ec6 = quiet(run_campaign, adapter("campaign"), floors={a: 2 for a in keys.TEMPLATES},
+                                    launch_counts={a: 4 for a in keys.TEMPLATES}, hour_cap=40,
+                                    prior_ckpt=r60c / "ckpt" / "Q-F3_qual.json",
+                                    identity_extra={**ex60, "locked_path": "cached"}, out_root=r60c)
+            # --- every stage start checks the segment and the addendum, the stub's included (the build review's
+            # finding 7; round 2's N2) -----------------------------------------------------------------------------
+            with mock.patch.object(banner, "addendum_file_problems", lambda path=None: ["planted addendum problem"]):
+                sp_a = startup_problems()
+                r_sa = Path(td) / "startup-addendum" / "mf3"
+                schedule.write_schedule_files(r_sa / "schedules")
+                _, _, e_sa = quiet(run_gate_stage, adapter("time"), gate="time", templates_counts=tc_time,
+                                   identity_extra={**base_extra, "locked_path": "uncached"}, out_root=r_sa)
+            with mock.patch.object(banner, "segment_problems", lambda segment=None: ["planted segment problem"]):
+                sp_s = startup_problems()
+            chk("mf3.stages: every stage start, the stub's included, checks the F-b segment's roster hygiene and the "
+                "working tree's addendum against its pin (A-m2 v0.5 §4.2; the build review's finding 7): startup_problems "
+                "carries each planted problem, and a stub G-TIME-F3 stops with STARTUP CHECKS FAIL, writing no checkpoint",
+                "addendum: planted addendum problem" in sp_a and "segment: planted segment problem" in sp_s
+                and startup_problems() == [] and e_sa is not None and "STARTUP CHECKS FAIL" in str(e_sa)
+                and not (r_sa / "ckpt" / "Q-F3_time.json").exists(), (sp_a[-2:], sp_s[-2:], str(e_sa)[:120]))
+            chk("mf3.stages: the stub chain at 60 -- G-TIME-F3 -> G-ID-F3 -> G-F3 -> the campaign, in the form G-ANL-F3's "
+                "battery runs it (scripts/m_analyze.py's _bt_f3_chain) -- passes under F-b (A-m2 v0.5 §4.2)",
+                et6 is None and ei6 is None and eq6 is None and ec6 is None and rt6["status"] == "PASS"
+                and ri6["status"] == "PASS" and rq6["status"] == "PASS" and rc6["status"] == "COMPLETE",
+                (et6, ei6, eq6, ec6))
+            res4, out4, err4 = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex120, prior_ckpt=ck_time,
                                      out_root=root)
             art = json.loads(guard.gid_artifact_path().read_text())
             chk("mf3.stages: G-ID-F3 -- A2s then A3s, uncached then cached at j = 0 each; 2/2 identical -> PASS; the "
                 "artifact carries the cap, the backend and both templates' key templates",
                 err4 is None and res4["status"] == "PASS" and art["verdict"] == "PASS" and art["n_pairs"] == 2
-                and art["identity"]["reasoning_cap"] == 60 and art["templates"] == ["A2s", "A3s"]
+                and art["identity"]["reasoning_cap"] == 120 and art["templates"] == ["A2s", "A3s"]
                 and [(p["template"], p["j"]) for p in art["indices"]] == [("A2s", 0), ("A3s", 0)], (err4, art.get("verdict")))
             bid = rs.backend_identifier(testing.F3Adapter().provenance())
             chk("mf3.stages: the G-ID-F3 PASS licenses the cached path at its cap only",
-                guard.cached_path_admitted("qual", backend_identifier=bid, reasoning_cap=60)
-                and not guard.cached_path_admitted("qual", backend_identifier=bid, reasoning_cap=120))
-            _, _, e5 = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex60, prior_ckpt=ck_time60,
+                guard.cached_path_admitted("qual", backend_identifier=bid, reasoning_cap=120)
+                and not guard.cached_path_admitted("qual", backend_identifier=bid, reasoning_cap=60))
+            _, _, e5 = quiet(run_gid_pair_f3, adapter("id"), identity_extra=ex120, prior_ckpt=ck_time,
                              out_root=root, ckpt_path=root / "ckpt" / "gid-again.json")
             chk("mf3.stages: a G-ID-F3 artifact is never overwritten", e5 is not None and "ARTIFACT EXISTS" in str(e5))
             gdir2 = Path(td) / "gates2"
@@ -1943,7 +2112,7 @@ def _selftest(chk) -> None:
             with mock.patch.object(guard, "GATES_DIR", gdir2):
                 def diverge(t, s, kind, i, call):
                     return "Eight." if (call["cached"] and t == "A3s" and kind == "forced" and i == 1) else None
-                res6, _, err6 = quiet(run_gid_pair_f3, adapter("id", diverge), identity_extra=ex60, prior_ckpt=ck_time60,
+                res6, _, err6 = quiet(run_gid_pair_f3, adapter("id", diverge), identity_extra=ex120, prior_ckpt=ck_time,
                                       out_root=root, ckpt_path=root / "ckpt" / "gid-fail.json")
                 fart = json.loads(guard.gid_artifact_path().read_text())
 
@@ -1953,19 +2122,19 @@ def _selftest(chk) -> None:
                 gdir3 = Path(td) / "gates3"
                 gdir3.mkdir()
                 with mock.patch.object(guard, "GATES_DIR", gdir3):
-                    res7, _, err7 = quiet(run_gid_pair_f3, adapter("id", incomplete), identity_extra=ex60,
-                                          prior_ckpt=ck_time60, out_root=root, ckpt_path=root / "ckpt" / "gid-adv.json")
+                    res7, _, err7 = quiet(run_gid_pair_f3, adapter("id", incomplete), identity_extra=ex120,
+                                          prior_ckpt=ck_time, out_root=root, ckpt_path=root / "ckpt" / "gid-adv.json")
                 def meta_diverge(t, s, kind, i, call):
                     if t == "A2s" and kind == "line" and i == 0:
-                        return ({"text": "Plain line.", "n_tok": 60, "cap_hit": True, "stop_reason": "cap"}
+                        return ({"text": "Plain line.", "n_tok": 120, "cap_hit": True, "stop_reason": "cap"}
                                 if call["cached"] else
                                 {"text": "Plain line.", "n_tok": 3, "cap_hit": False, "stop_reason": "newline"})
                     return None
                 gdir4 = Path(td) / "gates4"
                 gdir4.mkdir()
                 with mock.patch.object(guard, "GATES_DIR", gdir4):
-                    res_m, _, err_m = quiet(run_gid_pair_f3, adapter("id", meta_diverge), identity_extra=ex60,
-                                            prior_ckpt=ck_time60, out_root=root, ckpt_path=root / "ckpt" / "gid-meta.json")
+                    res_m, _, err_m = quiet(run_gid_pair_f3, adapter("id", meta_diverge), identity_extra=ex120,
+                                            prior_ckpt=ck_time, out_root=root, ckpt_path=root / "ckpt" / "gid-meta.json")
                     mart = json.loads(guard.gid_artifact_path().read_text())
             chk("mf3.stages: G-ID-F3's criterion binds each reasoning line's (n_tok, cap_hit, stop_reason) triple (the "
                 "seat's F-7) -- a transcript-identical pair whose cached line reached the cap FAILs (a G-ID fire); the "
@@ -1985,7 +2154,7 @@ def _selftest(chk) -> None:
             # --- G-F3 -------------------------------------------------------------------------------------
             exq = {**base_extra, "locked_path": "cached"}
             res8, out8, err8 = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
-                                     identity_extra=exq, out_root=root, prior_ckpt=ck_time60)
+                                     identity_extra=exq, out_root=root, prior_ckpt=ck_time)
             rq = json.loads((root / "reports" / "Q-F3_qual_report.json").read_text())
             chk("mf3.stages: G-F3 on the cached path the G-ID-F3 PASS licenses -- 40 sessions, PASS, both bars silent, "
                 "the contrast arms' first-read flags reported, no label in the report",
@@ -1995,17 +2164,28 @@ def _selftest(chk) -> None:
                 and not any(re.search(rf"\b{w}\b", json.dumps(rq)) for w in labels), err8)
             _, _, e9 = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
                              identity_extra={**base_extra, "locked_path": "uncached"}, out_root=root,
-                             prior_ckpt=ck_time60, ckpt_path=root / "ckpt" / "qual-uncached.json")
-            _, _, e10 = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
-                              identity_extra={**base_extra, "reasoning_cap": 120, "locked_path": "uncached"},
-                              out_root=root, prior_ckpt=ck_time, ckpt_path=root / "ckpt" / "qual-120.json")
+                             prior_ckpt=ck_time, ckpt_path=root / "ckpt" / "qual-uncached.json")
+            gdir5 = Path(td) / "gates5"
+            gdir5.mkdir()
+            art60 = {**art, "identity": {**art["identity"], "reasoning_cap": 60}}
+            (gdir5 / guard.gid_artifact_path().name).write_text(json.dumps(art60))
+            with mock.patch.object(guard, "GATES_DIR", gdir5):
+                _, _, e10 = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
+                                  identity_extra={**base_extra, "locked_path": "uncached"},
+                                  out_root=root, prior_ckpt=ck_time, ckpt_path=root / "ckpt" / "qual-120.json")
             _, _, e10b = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
-                               identity_extra={**base_extra, "reasoning_cap": 120, "locked_path": "uncached"},
-                               out_root=root, prior_ckpt=ck_time60, ckpt_path=root / "ckpt" / "qual-120b.json")
-            chk("mf3.stages: G-F3 refuses a lock fixing uncached where the licence gives cached, a cap other than the "
-                "one G-TIME-F3's trigger fixes, and (at the fixed cap) a G-ID-F3 artifact at another cap",
+                               identity_extra={**base_extra, "reasoning_cap": 60, "locked_path": "uncached"},
+                               out_root=root, prior_ckpt=ck_time, ckpt_path=root / "ckpt" / "qual-60.json")
+            _, _, e10c = quiet(run_gate_stage, adapter("qual"), gate="qual", templates_counts=tc_qual,
+                               identity_extra={**base_extra, "locked_path": "cached"},
+                               out_root=root, prior_ckpt=ck_first, ckpt_path=root / "ckpt" / "qual-first.json")
+            chk("mf3.stages: G-F3 on the stub refuses a lock fixing uncached where the licence gives cached, a cap other than "
+                "the one prior_gate fixes (60 after a G-TIME-F3 at 120; 120 after one at 60 whose trigger does not fire), "
+                "and a G-ID-F3 artifact at another cap",
                 e9 is not None and "PATH MISMATCH" in str(e9) and e10b is not None and "NOT THE FIXED CAP" in str(e10b)
-                and e10 is not None and "ANOTHER CAP" in str(e10), (str(e9)[:80], str(e10)[:80], str(e10b)[:80]))
+                and e10c is not None and "NOT THE FIXED CAP" in str(e10c)
+                and e10 is not None and "G-ID ARTIFACT AT ANOTHER CAP" in str(e10),
+                (str(e9)[:80], str(e10)[:80], str(e10b)[:80], str(e10c)[:80]))
             ck_qual = root / "ckpt" / "Q-F3_qual.json"
             # --- the campaign ------------------------------------------------------------------------------
             exc = {**base_extra, "locked_path": "cached"}
@@ -2015,10 +2195,16 @@ def _selftest(chk) -> None:
                                         prior_ckpt=ck_qual, identity_extra=exc, out_root=root)
             rc = json.loads((root / "reports" / "Q-F3_campaign_report.json").read_text())
             _, _, e_cc = quiet(run_campaign, adapter("campaign"), floors=fl, launch_counts=lc, hour_cap=40,
-                               prior_ckpt=ck_qual, identity_extra={**exc, "reasoning_cap": 120}, out_root=root,
-                               ckpt_path=root / "ckpt" / "camp-120.json")
-            chk("mf3.stages: the campaign refuses a cap other than G-F3's", e_cc is not None
-                and "NOT THE FIXED CAP" in str(e_cc), str(e_cc)[:90])
+                               prior_ckpt=ck_qual, identity_extra={**exc, "reasoning_cap": 60}, out_root=root,
+                               ckpt_path=root / "ckpt" / "camp-60.json")
+            try:
+                prior_gate("campaign", ck_qual, reasoning_cap=60)
+                e_cc2 = None
+            except SystemExit as e:
+                e_cc2 = e
+            chk("mf3.stages: the campaign on the stub refuses a cap other than G-F3's (60 after a G-F3 at 120), at the run "
+                "and at prior_gate", e_cc is not None and "NOT THE FIXED CAP" in str(e_cc)
+                and e_cc2 is not None and "NOT THE FIXED CAP" in str(e_cc2), (str(e_cc)[:90], str(e_cc2)[:90]))
             chk("mf3.stages: a campaign on the stub runs the six-arm rotation to every floor (12 launches) -> COMPLETE "
                 "with an end look; the report is pick-free (no reads file, no first-pick share)",
                 err11 is None and res11["status"] == "COMPLETE" and res11["launches"] == {a: 2 for a in keys.TEMPLATES}
@@ -2098,6 +2284,8 @@ def _selftest(chk) -> None:
         an = hashlib.sha256(ANALYZER_PATH.read_bytes()).hexdigest()
         pk = guard.package_sha256_of(guard.PACKAGE_DIR)
         (repo / "P.md").write_text("proposal\n")
+        a_m2 = (REPO / banner.ADDENDUM_M2_REL).read_bytes()
+        (repo / banner.ADDENDUM_M2_REL).write_bytes(a_m2)
 
         def lock_text(m_rows: Mapping[str, str]) -> str:
             return "\n".join([f"analyzer {an}", f"package {pk}", f"weights {wb['revision']} {wb['sha256']}"]
@@ -2108,7 +2296,7 @@ def _selftest(chk) -> None:
                  "L-unnamed.md": "\n".join([an, pk, wb["revision"], wb["sha256"]] + list(mm.values())) + "\n"}
         for f, txt in locks.items():
             (repo / f).write_text(txt)
-        for cmd in (["init", "-q"], ["add", "P.md", *locks],
+        for cmd in (["init", "-q"], ["add", "P.md", banner.ADDENDUM_M2_REL, *locks],
                     ["-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "-m", "t"]):
             subprocess.run(["git", *cmd], cwd=repo, capture_output=True)
         ex = {"proposal_file": "P.md", "proposal_sha256": hashlib.sha256(b"proposal\n").hexdigest(), "lock_file": "L.md",
@@ -2138,6 +2326,9 @@ def _selftest(chk) -> None:
         (hub / "refs" / "main").write_text("c" * 40 + "\n")
         newline = licence_problems(ex, repo=repo, hub_repo=hub, environ=off)
         (hub / "refs" / "main").write_text("c" * 40)
+        (repo / banner.ADDENDUM_M2_REL).write_bytes(a_m2 + b"\n")
+        a_dirty = licence_problems(ex, repo=repo, hub_repo=hub, environ=off)
+        (repo / banner.ADDENDUM_M2_REL).write_bytes(a_m2)
         (repo / "P.md").write_text("edited\n")
         dirty = licence_problems(ex, repo=repo, hub_repo=hub, environ=off)
     chk("mf3.stages: the licence (C2) is clean when the committed lock names the analyzer's and mf3's hashes, each "
@@ -2145,9 +2336,10 @@ def _selftest(chk) -> None:
         "now, the load is offline and refs/main names the bound revision", ok == [], ok[:2])
     chk(f"mf3.stages: the licence refuses each of {len(bad)} departures (another package, a moved, absent or unlisted "
         "m file, other weights, a lock not naming them, naming the m hashes without their files or under swapped "
-        "names, an online load), a refs/main moved to another revision or not the raw revision, and an uncommitted "
-        "proposal edit",
+        "names, an online load), a refs/main moved to another revision or not the raw revision, an uncommitted "
+        "proposal edit, and (h) an uncommitted edit of A-m2 v0.5",
         not silent and any("refs/main" in x for x in moved) and any("refs/main" in x for x in newline)
-        and dirty != [], (silent, moved[:1], newline[:1], dirty[:1]))
+        and dirty != [] and any(x.startswith("addendum") for x in a_dirty), (silent, moved[:1], newline[:1], dirty[:1],
+                                                                             a_dirty[:1]))
     chk("mf3.stages: guard.check_call_sites is clean over mf3 (the path threads from cached_path_admitted and gid_paths)",
         guard.check_call_sites([guard.PACKAGE_DIR]) == [], guard.check_call_sites([guard.PACKAGE_DIR])[:3])

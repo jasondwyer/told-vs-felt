@@ -1,5 +1,5 @@
 """The F3 verifier -- G-VER for Q-F3 (PROPOSAL-m v1.11 §3.1 m:284, carried by m:298; §3 m:271's
-``template_breakage`` and ``schedule_mismatch``; §2.1 m:159; §2.2 m:174; §2.5 m:253).
+``template_breakage`` and ``schedule_mismatch``; §2.1 m:159; §2.2 m:174; §2.5 m:253; ADDENDUM-m2 v0.5 §1, §4.2).
 
 m:284: "every session's harness bytes reconstructed from its recorded fields, the committed schedule
 and the rng streams before any artifact is written". ``verify_session`` rebuilds the session's
@@ -15,7 +15,9 @@ generations, reasoning lines and picks, and compares:
   template_breakage -- the harness bytes (banner; forced ``seg + text + "\\n"``; per free choice the
       reasoning block + line + ``"\\n"``, then ``menu + " {pick}\\n" + seg + text + "\\n"``), the
       pieces, round and menu numbering, each pick against its read (menu_a iff p_a >= p_b, verify KL
-      exactly 0.0), each reasoning line's classes and scaffold hits re-derived from its text, and the
+      exactly 0.0), each reasoning line's classes and scaffold hits re-derived from its text over its
+      domain, built by the runner's one form (lines.domain_before_line) on this verifier's own rebuilt
+      transcript (A-m2 v0.5 §4.2: "G-VER re-derives the classes with the same builder"), and the
       record's own end rules (exclusion, strict scope, hair triggers, domain, first pick, completeness).
 
 It never raises on a malformed record (a failure to report is template_breakage); messages name a
@@ -124,7 +126,7 @@ def _verify(rec, *, pool, renders, schedule_cell, scaffold_strings) -> list[str]
             return out + [f"{BREAK}: a reasoning line carries no text"]
         try:
             want = lines.classify_line(t, n_tok=x["n_tok"], cap=rs.cap, stop_reason=x["stop_reason"],
-                                       cap_hit=x["cap_hit"], echo_set=lines.echo_lines(sc.P, sc.Q, rs.n),
+                                       cap_hit=x["cap_hit"], echo_set=lines.domain_before_line(tb.text, tb.pieces, rs.seg),
                                        scaffold_strings=scaffold_strings)
             if _canon(x.get("audit")) != _canon(want.as_dict()):
                 bad(BREAK, "a reasoning line's classes or scaffold hits differ from its text's")
@@ -293,7 +295,7 @@ def _selftest(chk) -> None:
         x["template"], x["contrast"] = "A2s", False
 
     def tamper_cap(x):
-        x["reasoning_cap"] = 120
+        x["reasoning_cap"] = 60
 
     def tamper_exclusion(x):
         x["exclusion"]["ci"] = 0

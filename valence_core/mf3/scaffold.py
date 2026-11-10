@@ -1,5 +1,5 @@
 """Q-F3's session scaffold and record -- ONE code path for the F3 runner and its verifier
-(PROPOSAL-m v1.11 §2.1 m:159; §2.2 m:174; §2.6 m:265; §4 m:308).
+(PROPOSAL-m v1.11 §2.1 m:159; §2.2 m:174; §2.6 m:265; §4 m:308; ADDENDUM-m2 v0.5 §4.1-§4.2).
 
 THE SCAFFOLD is ``valence_core.m.scaffold.SessionScaffold``, imported and subclassed, never copied:
 ``_round``, ``forced``, ``chosen``, ``label_of`` and ``role_of`` are m's. F3 differs in two places:
@@ -8,8 +8,16 @@ THE SCAFFOLD is ``valence_core.m.scaffold.SessionScaffold``, imported and subcla
               -> P P Q Q, start 1 -> Q Q P P (m's alternating P Q P Q is F0m's);
   reasoning   per free choice, m:159's "one reasoning-line seed ``int(rng.integers(2**31))``, then the
               menu order ``rng.integers(2)`` ... then one generation seed": ``reasoning(ci)`` draws the
-              seed and returns the reasoning block (m:174) at the menu's n; ``menu(ci)`` refuses to
-              run before it. Calls out of that order are refused (a harness bug, not a session).
+              seed and returns the reasoning block (A-m2 v0.5's F-b, banner.reasoning_block) at the
+              menu's n; ``menu(ci)`` refuses to run before it. Calls out of that order are refused (a
+              harness bug, not a session).
+
+THE CAP (A-m2 v0.5 §4.1-§4.2): ``CAP_OF_RECORD``, 120, binds every run on a model from the re-run of
+G-TIME-F3 on ("m:174's trigger value, applied from the re-run on"); "the stub path alone may run at 60"
+(``STUB_CAP``). ``f3_config`` carries no stub signal, so its per-stage table ``STAGE_REASONING_CAPS``
+keeps m:174's pair (60, 120) at every stage, the caller choosing; the cap of record is enforced where
+the run's provenance is known (stages._extra, resume.Identity, stages.prior_gate, the driver).
+``REASONING_CAPS`` (60, 120) is m:174's pair, unchanged.
 
 THE RECORD is m-session-v1's (``SessionLog``, imported and subclassed) with ``"format": "F3"``, the
 reasoning-line cap and the reasoning lines (``"reasoning"``: one entry per line), and three more
@@ -41,7 +49,16 @@ from . import banner, keys, lines, schedule
 SCHEMA = m_scaffold.SCHEMA                    # "m-session-v1"
 FORMAT = "F3"
 N_FORCED = m_scaffold.N_FORCED                # 4 (recon.py:121's N_FORCED, m:174)
-REASONING_CAPS = (STOP_CAP, 2 * STOP_CAP)     # 60, or 120 after G-TIME-F3's cap trigger (m:174)
+REASONING_CAPS = (STOP_CAP, 2 * STOP_CAP)     # m:174's pair: 60, or 120 after G-TIME-F3's cap trigger (unchanged)
+#: A-m2 v0.5 §4.1: "The cap is 120 at the re-run of G-TIME-F3 and at every later Q-F3 stage"; §4.2: "The cap of
+#: record binds on every run on a model" (banner.ADDENDUM_M2_CAP, read from the addendum's committed text).
+CAP_OF_RECORD = 2 * STOP_CAP
+#: A-m2 v0.5 §4.2: "the stub path alone may run at 60" (banner.ADDENDUM_M2_STUB_CAP) -- admitted by stages._extra
+#: and resume.Identity on the stub only.
+STUB_CAP = STOP_CAP
+#: A-m2 v0.5 §4.2, F19's site ("the build makes it a table"): the caps f3_config admits per stage -- m:174's pair at
+#: every stage, "the caller choosing, since it carries no stub signal".
+STAGE_REASONING_CAPS = {st: REASONING_CAPS for st in keys.STAGES}
 F3_PIECE_KINDS = ("reasoning", "reasoning_text", "reasoning_joiner")
 PIECE_KINDS = ("banner", "round", "generation", "joiner", "menu", "pick") + F3_PIECE_KINDS
 FREE_GROUP = F3_PIECE_KINDS + ("menu", "pick", "round", "generation", "joiner")
@@ -59,9 +76,9 @@ TranscriptBuilder = m_scaffold.TranscriptBuilder
 class ReasoningSpec:
     ci: int
     n: int                 # the menu's n (m:174)
-    seg: str               # banner.reasoning_block(n)
+    seg: str               # banner.reasoning_block(n): F-b (A-m2 v0.5 §4.1)
     seed: int
-    cap: int               # the reasoning-line cap (60 / 120)
+    cap: int               # the reasoning-line cap (m:174's pair; CAP_OF_RECORD on every run on a model)
 
 
 class F3Scaffold(m_scaffold.SessionScaffold):
@@ -124,12 +141,14 @@ def f3_config(stage: str, template: str, s: int, cell: Mapping[str, Any], path: 
     # argument must agree with the scaffold's path.
     if path not in ("cached", "uncached") or (path == "cached" and stage == "time"):
         raise ValueError(f"path {path!r} not allowed for Q-F3 {stage}")
-    # PIN (Code, declared at LOCK-m-F3 v0.1; m:174): G-TIME-F3 generates its reasoning lines at
-    # STOP_CAP 60 -- the cap trigger is counted over them -- and every later stage at the cap
-    # G-TIME-F3's trigger fixes (60 or 120; m:294-295), checked by stages.prior_gate (F6) and recorded
-    # at LOCK-m-F3 v0.2 (m:296).
-    if stage == "time" and reasoning_cap != STOP_CAP:
-        raise ValueError(f"G-TIME-F3 generates its reasoning lines at {STOP_CAP} (m:174), not {reasoning_cap!r}")
+    # PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.2: "scaffold.f3_config's per-stage cap (F19's
+    # site; the build makes it a table) keeps m:174's pair, 60 or 120, the caller choosing, since it carries no stub
+    # signal"; F19 re-read): every stage admits STAGE_REASONING_CAPS[stage], m:174's pair. The cap of record (120,
+    # §4.1) binds every run on a model at stages._extra (F8), resume.Identity, stages.prior_gate (F6) and the
+    # driver; the stub path alone may run at 60 (§4.2).
+    if type(reasoning_cap) is not int or reasoning_cap not in STAGE_REASONING_CAPS[stage]:
+        raise ValueError(f"Q-F3 {stage} generates its reasoning lines at one of {STAGE_REASONING_CAPS[stage]} "
+                         f"(m:174's pair; A-m2 v0.5 §4.2), not {reasoning_cap!r}")
     if stage == "id" and template not in keys.GID_TEMPLATES:
         raise ValueError(f"G-ID-F3 runs {keys.GID_TEMPLATES} only (m:295)")
     c = check_cell(template, cell)
@@ -159,8 +178,9 @@ def assert_boundary(adapter, prefix: str, seg: str) -> int:
     # comparison; the boundary must be the prefix token count); the character-offset form decodes the
     # first k tokens of the UNTRUNCATED joint encode, k the prefix token count, and requires exactly the
     # prefix's characters (NFC-normalised, the Qwen tokenizer's own normaliser; identity on ASCII and on
-    # the stub). Every generation's prefix is the whole transcript so far, so an empty or newline-led
-    # reasoning line and its "\n\n" lie inside a later prefix and the assertion is exact over them.
+    # the stub). Every generation's prefix is the whole transcript so far, so a reasoning line -- an empty
+    # one leaving F-b's "So far," then its joiner's "\n" (A-m2 v0.5 §4.1; runner.py's check), or a newline-led
+    # one -- lies with its joiner inside a later prefix, and the assertion is exact over them.
     # Either form failing is a BOUNDARY INCIDENT: HALT before the generation, escalate.
     k = m_scaffold.assert_boundary(adapter, prefix, seg)
     joint = adapter.encode(prefix + seg)
@@ -248,12 +268,12 @@ def _selftest(chk) -> None:
 
     pool, renders = pool_and_renders()
     cell = schedule.gate_schedule("qual", "A2", 4)[2]          # start 1
-    sc = f3_config("qual", "A2", 2, cell, "uncached", reasoning_cap=60, pool=pool, renders=renders)
+    sc = f3_config("qual", "A2", 2, cell, "uncached", reasoning_cap=120, pool=pool, renders=renders)
     specs = [sc.forced(ri) for ri in range(4)]
     chk("mf3.scaffold: F2 block order -- start 1 gives Q Q P P (m:174), start 0 P P Q Q",
         cell["start"] == 1 and [s.role for s in specs] == ["Q", "Q", "P", "P"]
         and f3_config("qual", "A2", 0, schedule.gate_schedule("qual", "A2", 4)[0], "uncached",
-                      reasoning_cap=60).order == ("P", "P", "Q", "Q"))
+                      reasoning_cap=120).order == ("P", "P", "Q", "Q"))
     r0 = sc.reasoning(0)
     m0 = sc.menu(0)
     ch0 = sc.chosen(0, m0.a)
@@ -270,8 +290,8 @@ def _selftest(chk) -> None:
         and ch0.seed == cs0 and r1.seed == rs1)
     chk("mf3.scaffold: the reasoning block at the menu's n (5, then 6), cap carried; the chosen round "
         "shares n with its menu",
-        (r0.n, r1.n, m0.n, ch0.n) == (5, 6, 5, 5) and r0.seg == "[round 5 | reasoning]\nReasoning (one line):\n"
-        and r0.cap == 60)
+        (r0.n, r1.n, m0.n, ch0.n) == (5, 6, 5, 5) and r0.seg == "[round 5 | reasoning]\nReasoning (one line): So far,"
+        and r0.cap == 120)
     order_err = []
     sc2 = f3_config("qual", "A2", 2, cell, "uncached", reasoning_cap=120, pool=pool, renders=renders)
     for fn in (lambda: sc2.reasoning(0), lambda: [sc2.forced(i) for i in range(4)] and sc2.menu(0),
@@ -291,34 +311,57 @@ def _selftest(chk) -> None:
         "reasoning seed; a skipped index; a reasoning seed drawn twice)", all(order_err), order_err)
     refused = []
     for fn in (lambda: f3_config("time", "A1", 0, schedule.gate_schedule("time", "A1", 1)[0], "cached",
-                                 reasoning_cap=60),
-               lambda: f3_config("time", "A1", 0, schedule.gate_schedule("time", "A1", 1)[0], "uncached",
                                  reasoning_cap=120),
+               lambda: f3_config("time", "A1", 0, schedule.gate_schedule("time", "A1", 1)[0], "uncached",
+                                 reasoning_cap=90),
                lambda: f3_config("qual", "A1", 0, schedule.gate_schedule("qual", "A1", 4)[0], "uncached",
                                  reasoning_cap=90),
+               lambda: f3_config("campaign", "A3s", 0, schedule.campaign_schedule("A3s", 1)[0], "uncached",
+                                 reasoning_cap=180),
                lambda: f3_config("id", "A2", 0, schedule.gate_schedule("qual", "A2", 4)[0], "uncached",
-                                 reasoning_cap=60),
+                                 reasoning_cap=120),
                lambda: f3_config("qual", "A2", 0, {**schedule.gate_schedule("qual", "A2", 4)[0], "clause": 0},
-                                 "uncached", reasoning_cap=60),
+                                 "uncached", reasoning_cap=120),
                lambda: f3_config("qual", "A1", 0, {**schedule.gate_schedule("qual", "A1", 4)[0], "clause": None},
-                                 "uncached", reasoning_cap=60),
+                                 "uncached", reasoning_cap=120),
                lambda: f3_config("qual", "A1", 0, {**schedule.gate_schedule("qual", "A1", 4)[0], "P": "slate"},
-                                 "uncached", reasoning_cap=60)):
+                                 "uncached", reasoning_cap=120)):
         try:
             fn()
             refused.append(False)
         except ValueError:
             refused.append(True)
-    chk("mf3.scaffold: f3_config refuses G-TIME cached or at cap 120, a cap outside 60/120, G-ID on A2, a "
-        "clause on A2 or none on A1, a P off the map", all(refused), refused)
+    chk("mf3.scaffold: f3_config refuses G-TIME cached, a cap outside m:174's pair at any stage (90 at G-TIME-F3 and "
+        "G-F3, 180 in the campaign), G-ID on A2, a clause on A2 or none on A1, a P off the map", all(refused), refused)
+    admitted = []
+    for st_, t_, cell_ in (("time", "A1", schedule.gate_schedule("time", "A1", 1)[0]),
+                           ("id", "A2s", schedule.gate_schedule("id", "A2s", schedule.GATE_PLAN_COUNTS[("id", "A2s")])[0]),
+                           ("qual", "A1", schedule.gate_schedule("qual", "A1", 4)[0]),
+                           ("campaign", "A3s", schedule.campaign_schedule("A3s", 1)[0])):
+        for cap_ in REASONING_CAPS:
+            try:
+                admitted.append(f3_config(st_, t_, 0, cell_, "uncached", reasoning_cap=cap_).reasoning_cap == cap_)
+            except ValueError:
+                admitted.append(False)
+    chk("mf3.scaffold: f3_config admits m:174's pair, 60 and 120, at every Q-F3 stage, the caller choosing (A-m2 v0.5 "
+        "§4.2: it carries no stub signal; the cap of record binds where the run's provenance is known)",
+        all(admitted) and len(admitted) == 8, admitted)
+    chk("mf3.scaffold: the stage table carries m:174's pair (60, 120) for every Q-F3 stage; CAP_OF_RECORD is 120 and "
+        "STUB_CAP 60, the addendum's (banner.ADDENDUM_M2_CAP, banner.ADDENDUM_M2_STUB_CAP); REASONING_CAPS is m:174's "
+        "(60, 120), unchanged; the record's piece kinds are partitioned into the model's (generation, reasoning_text) "
+        "and the harness's (lines.MODEL_PIECE_KINDS / HARNESS_PIECE_KINDS)",
+        STAGE_REASONING_CAPS == {st: (60, 120) for st in keys.STAGES} and REASONING_CAPS == (60, 120)
+        and CAP_OF_RECORD == banner.ADDENDUM_M2_CAP == 120 and STUB_CAP == banner.ADDENDUM_M2_STUB_CAP == 60
+        and sorted(lines.MODEL_PIECE_KINDS + lines.HARNESS_PIECE_KINDS) == sorted(PIECE_KINDS)
+        and not set(lines.MODEL_PIECE_KINDS) & set(lines.HARNESS_PIECE_KINDS))
     kq = f3_config("campaign", "A3s", 5, campaign := schedule.campaign_schedule("A3s", 1)[5], "cached",
-                   reasoning_cap=60)
+                   reasoning_cap=120)
     chk("mf3.scaffold: keys and meta -- campaign m|A3s|5 / m-f3-items|5, j None, format F3, unit Q-F3",
         kq.keys == {"arm": "m|A3s|5", "items": "m-f3-items|5"} and kq.j is None and kq.format == "F3"
         and kq.unit == "Q-F3" and kq.contrast is False and campaign["clause"] is None)
     # deliveries: a contrast arm's Q role gets the render; A2s (sham) the clean text; items per role
-    c_sc = f3_config("qual", "A3", 1, schedule.gate_schedule("qual", "A3", 8)[1], "uncached", reasoning_cap=60)
-    s_sc = f3_config("qual", "A3s", 1, schedule.gate_schedule("qual", "A3s", 8)[1], "uncached", reasoning_cap=60)
+    c_sc = f3_config("qual", "A3", 1, schedule.gate_schedule("qual", "A3", 8)[1], "uncached", reasoning_cap=120)
+    s_sc = f3_config("qual", "A3s", 1, schedule.gate_schedule("qual", "A3s", 8)[1], "uncached", reasoning_cap=120)
     cs = [c_sc.forced(i) for i in range(4)]
     ss = [s_sc.forced(i) for i in range(4)]
     perm = np.random.default_rng(zlib.crc32(b"m-f3-items-qual|1") % 2**31).permutation(16)
@@ -336,7 +379,7 @@ def _selftest(chk) -> None:
         and all(x.task_text == (renders[x.item] if x.role == "Q" else pool[x.item]["task"]) for x in cs)
         and drawn(cs) and drawn(ss))
     log = F3Log(f3_config("qual", "A2s", 0, schedule.gate_schedule("qual", "A2s", 8)[0], "uncached",
-                          reasoning_cap=60))
+                          reasoning_cap=120))
     try:
         log.record(0.0)
         bad_domain = False
