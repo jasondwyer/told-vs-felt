@@ -1,0 +1,20 @@
+# G-SHAPE-p -- the re-run of record on the qual wiring's BUILD (40086e8), before LOCK-p v0.2 (the PI's routing of 2026-11-10, B1: "G-SHAPE-p re-run (fdd79d8's artifact superseded, F-p12's form)"; p v0.2 §4.2), Code's raw, 2026-11-10
+#
+# Command: $PY -B scripts/p_sessions.py gshape (canonical: no --out), from the repository root, at nice -n 19, $PY = <repo>/jlens-qwen36/.venv/bin/python;
+# HEAD 40086e8 (the qual wiring's BUILD), every file of the sources map and of the import closure committed at HEAD and unedited (the run refuses otherwise).
+# Before the run, fdd79d8's artifact (sha256 3c4125a353b70ff7a89ce19687041f44556249ebce496fa4b3f6c9288f2d1554) was moved by hand with git mv to
+# data/p/gates/G-SHAPE-p.superseded-2026-11-10.json (F-p12's supersession; the move is committed with this raw). Code stamps (date -u): start Tue Nov 10 08:43:16 UTC 2026;
+# end Tue Nov 10 08:43:23 UTC 2026; exit 0; stderr empty. Artifact data/p/gates/G-SHAPE-p.json, sha256 f8d221098c8fe6f0839426e87fd1cc519a7928b5ee66f9a09b6dda8805fa631f (written once). No model, no tokenizer, no pod.
+# Local absolute paths scrubbed: the repository's prefix shown as <repo>; nothing else changed.
+#
+## stdout
+
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_sessions.py gshape
+G-SHAPE-p (the run of record; committed sources)
+gshape-p OLMo-sft: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-dpo: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-instruct: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo grids identical: True; total 8448; template shape problems 0; Layer S problems 0; Layer P problems 0
+gshape-p placement keys vs G-SHAPE-F0's committed artifact: OLMo-sft equal; OLMo-dpo equal; OLMo-instruct equal
+gshape-p provenance: p package 08bfa6932597b09d, m package 7756dcf42532b222, sources 6bf8bb953bc67fba, closure 23abe773f751bb19
+G-SHAPE-p: PASS; artifact <repo>/data/p/gates/G-SHAPE-p.json (written)

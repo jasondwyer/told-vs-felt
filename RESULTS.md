@@ -21,6 +21,35 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **G-SHAPE-p — the re-run of record on the qual wiring's BUILD (`40086e8`), before LOCK-p v0.2: PASS
+  (p v0.2 §4.2; the PI's routing of 2026-11-10, B1: "G-SHAPE-p re-run (fdd79d8's artifact superseded, F-p12's form)").
+  `data/p/gates/G-SHAPE-p.json`, schema `p-gshape-v1`, sha256
+  `f8d221098c8fe6f0839426e87fd1cc519a7928b5ee66f9a09b6dda8805fa631f`, is written once on the package LOCK-p v0.2 will
+  name. `fdd79d8`'s artifact is superseded.** Model-free; nothing ran on a model or the box.
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 08:44:25 UTC 2026**.)
+  - **The supersession** (F-p12's form). Before the run, `fdd79d8`'s artifact (sha256 `3c4125a3…1554`) was moved
+    with `git mv` to `data/p/gates/G-SHAPE-p.superseded-2026-11-10.json`. It is kept in history, and the move is
+    committed here.
+  - **The run.** `scripts/p_sessions.py gshape` (canonical) at HEAD `40086e8`, at `nice -n 19`: 08:43:16Z–08:43:23Z,
+    exit 0, stderr empty. Every file of the sources map and of the import closure was committed and unedited, as the
+    canonical run requires. Raw: [`_p-gshape`](results/raw/2026-11-10_p-gshape.txt), with the repository's prefix
+    scrubbed to `<repo>`.
+  - **The result**, as at `fdd79d8`:
+    - each OLMo unit: 2,816 placements, 0 fired, 0 misplaced; `render-as-response` 0/2816 (reported); `seg+gold`
+      2816/2816 (required);
+    - the grids identical across the three, 8,448 in total;
+    - template-shape problems, Layer S problems and Layer P problems each 0;
+    - the placement keys equal G-SHAPE-F0's committed artifact's, unit by unit.
+  - **The artifact's provenance**, read back:
+    - p's package `08bfa693…fa26`, the BUILD's; m's package `7756dcf4…49bb`, unchanged;
+    - a sources map of 51 files, differing from `fdd79d8`'s artifact only in the two files the BUILD moved
+      (`scripts/p_sessions.py`, `valence_core/p/stage.py`);
+    - an import closure of 14 files, equal to `fdd79d8`'s artifact's, its digest `23abe773…eec4` unchanged.
+
+    The stage's drift check (`stage.gshape_drift_problems`, now computing the closure in a fresh interpreter) reads it
+    as current.
+  - **Next:** G-ANL-p's re-run (`f8b16d5`'s artifact superseded), then LOCK-p v0.2 ×3. Not pushed. Committed by path.
+
 - 2026-11-10 — **p — the `qual` wiring (G-F0m-OLMo (p)), a p package move: BUILD, on the PI's routing of 2026-11-10
   (B1–B3) and the seat's answers of 2026-11-10 (`42c5a92`, §1–§3).** Two files move, `valence_core/p/stage.py` and
   `scripts/p_sessions.py`, and (h)'s PIN wording and (j)'s fix land with them. Nothing ran on a model or on the box.

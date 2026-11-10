@@ -325,7 +325,7 @@
   "m_package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
   "numpy": "2.5.1",
   "numpy_stream_known_answer": "clean (f|CORR|0 permutation)",
-  "p_package_sha256": "7a08dbfad83aab44dbd11d52844c0473a24610790502a949dfbe650cc9661d24",
+  "p_package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26",
   "sources": {
    "data/configs/e2a_ban_list.json": "9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4",
    "data/configs/e2b_audit_v2.json": "e89e4cd0cae31671a872f36d0cd0c34bcfc63b2d78cce366f172a8fabb453da2",
@@ -338,7 +338,7 @@
    "data/olmo/scaffold_dpo.json": "0c39ce9675f8db7aa35e0ea3a97ac29c3debd714fae6a7d98fd9c4ab1eb6574a",
    "data/olmo/scaffold_instruct.json": "21110cea5331675daf538a42ae482a76c24965375c0dfe94ae72fc19bf2fd9cf",
    "data/olmo/scaffold_sft.json": "0c3592ad0bb2cb1d359c14eca1603317ce39e412eab33dc747dd959c5fdcb5a8",
-   "scripts/p_sessions.py": "d91e41e1436b56b8f5aada09f1e24ae45c401234b50feeafb53771b32bf9a943",
+   "scripts/p_sessions.py": "89551017bdfd78f67440ca3c5c1aa44a8a8ff83494a349b430aaaed22655af44",
    "valence_core/adapters/olmo_hf.py": "df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc",
    "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
    "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
@@ -374,12 +374,12 @@
    "valence_core/p/register.py": "1a1ea2b1edf21ed08818e063670a412b871e08ed22a39402c776328152bce333",
    "valence_core/p/report.py": "e807c5adc6d43cd97d3822a76f3d3fcc8b97e33e7beff01f223f0b6c321a5af1",
    "valence_core/p/schedule.py": "bc3ee06741079f776c0639b4252cace57107dd631c294b6f1d925008d59fde45",
-   "valence_core/p/stage.py": "b9cda707c0742bcf2b112ff9396eb97932e1f37a6577a46fb264af6e1d6a2960",
+   "valence_core/p/stage.py": "dbe957399863cfa78548b9a03491283faadd1171c84ca3c7b6b568f875e5569d",
    "valence_core/p/testing.py": "f5637c3b4cfd0d2b7583a361e8a7e4cd33e99cf252758001c0e7c10ac5bf9f31",
    "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
    "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
   },
-  "sources_digest": "03c5244f01c8a080dd5f5a32b224776e1aedea7388a222e0bfe1e32dd481a57a"
+  "sources_digest": "6bf8bb953bc67fbaa0e6877712cf0acd460d06ac54f96c6b01b23c4f32f9caa9"
  },
  "runner_dynamic_evidence": {
   "existing_checks": [
