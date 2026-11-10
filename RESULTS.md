@@ -21,6 +21,96 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **G-ID-F3 (PROPOSAL-m v1.11 §3.2 m:295; the seat's read of G-TIME-F3 r2, §5 items 1–2; the PI's
+  routing of 2026-11-10, its §8 item 4): FAIL. Its first pair, A2s at index 0, diverged between its uncached and cached
+  halves, and the stage stopped there; A3s did not run. It ran on Qwen at cap 120, under LOCK-m-F3 v0.1 as re-issued,
+  on the driver the `id` wiring committed (`fb82daa`). Its outputs are the checkpoint `data/mf3/ckpt/Q-F3_id.json`,
+  its report and reads under `data/mf3/reports/`, and the artifact `data/mf3/gates/Q-F3_G-ID.json`.**
+  - **The record's consequence**, quoted, not adjudicated: m:295, "a divergence sends Q-F3 uncached"; lock §8 bar 6,
+    "G-ID-F3 FAIL: Q-F3 runs uncached (m:295)".
+  - **The pair:**
+    - its two halves are identical through the four forced rounds;
+    - the first difference falls inside round 5's reasoning line, and all six lines differ;
+    - the picks agree through round 9 and differ at round 10.
+  - **Counters:** (a) 2 of 12 lines (two cached lines end with the session banner; no class claims them). (b) 0 of
+    20, Code's declared read.
+  - **Timing:** the uncached half 1,942.675 s, the cached half 208.347 s.
+  - Stopped for the seat's read: Q1 the FAIL and the path; Q2 counter (b); Q3 the reads' form.
+
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 18:58:08 UTC 2026**.)
+  - **The routing.** The seat's §8 item 4, routed by the PI ("Route as given"): "The `id` wiring (F-1's kind, named in
+    its entry) → G-ID-F3 at 120 on the laptop, announced, ≈ 1 h → the seat's read of the pairs → LOCK-m-F3 v0.2 to §5
+    [go]".
+  - **The launch.** It used m:267's line, as written: `nohup caffeinate -is /bin/zsh <wrapper> > /dev/null 2>&1 &
+    disown`, at HEAD `fb82daa`.
+    - It followed the coordinating session's ack and a dry pre-launch check, which returned CLEAR twice. Its prior gate
+      was not run there: list v2 item 2 has the checkpoint read by nothing but the stage's own code, G-VER, the
+      analyzer and the pre-push screen, and a dry check is none of them. The block quotes the ack
+      (§0).
+    - **The wrapper's one change** (§8 item 7): its probe prints each match's full command line, uncut. It found 0
+      matches.
+    - The launch PID's command line was caffeinate's, not the wrapper's as the launcher's comment says. The block
+      records the correction (§0). The end-wait was on the PID alone.
+    - **While the stage ran** (the seat's laptop rule of 2026-11-08, §7):
+      - the ack: "Until your end notice, my session starts no Python process and runs no listing of the tree.";
+      - Code's session ran no model or Python process, was not compacted, and started no subagent;
+      - whether another session ran a non-model process is not known to Code;
+      - no commit landed on main between the launch and the end.
+    - **The end notice** carried "ended" and the exit status, 5, with no stamp and no window (the seat's §4).
+  - **The run** ([`_mf3-gid-f3`](results/raw/2026-11-10_mf3-gid-f3.txt), local roots scrubbed; no finish stamp):
+    - **DRIVER** `8d878f4a894e05e4edf8a3c829548a9c0c864d5f45118875b7630e55d1d200e7`, committed at HEAD `fb82daa`,
+      working tree identical: the `id` wiring's blob, recorded here, and to be recorded at LOCK-m-F3 v0.2 (the seat's
+      §5 items 1 and 3).
+    - **SNAPSHOT** `c000ac2c2057d94be3fa931000c31723aac53282`, unchanged on the re-read after the load.
+    - The GATE and LICENCE lines name the proposal `42ab36ec…`, the lock `70da4a70…`, the analyzer `d347ea0c…`, mf3's
+      package `098455d9…`, the eleven m files and the weights.
+    - Then `id A2s s=0 valid` twice, `BAR gid_divergence@G-ID-F3 FIRED`, `STAGE G-ID-F3 FAIL path=cached+uncached`
+      and `EXIT=5`.
+    - The backend identifier (the report's identity) is `a734dadec8f8ce9b`, as at G-TIME-F3's two runs and at
+      G-TIME-F0.
+  - **The verdict and the pair.** These are read from the report, the reads and the artifact. Code did not open the
+    checkpoint.
+    - **The artifact:** verdict `FAIL`, `n_pairs` 1, `pairs_identical` `[false]`, under the seat's F-7 criterion.
+    - **The bar:** fired at k = 1 of n = 1. It "stops at the first divergence (m:281, m:295)".
+    - **The pair, A2s j = 0:** both halves are complete, valid and verified, on the same cell, keys and banner.
+      - The report's record: `transcript_identical` false, `line_triples_identical` false.
+      - The transcripts agree in their first 658 characters, up to a word inside round 5's reasoning line.
+      - Line tokens: uncached 66, 57, 35, 62, 95, 60; cached 88, 64, 71, 75, 41, 95. None reached the cap.
+      - The free rounds' responses differ at round 7 (`january` against `January`) and at round 10. There the cached
+        half picks the other config, so its task is another item.
+      - The block (§1) tabulates every round.
+  - **The counters** (A-m2 v0.5 §3.4; rule 23, descriptive, deciding nothing), over all of G-ID-F3's rounds and lines,
+    since its sessions are sham:
+    - (a): 0 of 6 lines uncached, and 2 of 6 cached. The cached half's lines 5 and 6 each end with the session banner.
+      §1's equality match does not claim them.
+    - (b), Code's declared read: 0 of 20. Every response is an answer attempt. The seat confirms or corrects (the
+      block, §2).
+  - **Timing** (sham, readable): uncached 1,942.675 s, cached 208.347 s. These go to the seat for v0.2's projections
+    (the block, §3).
+  - **Committed with this entry:**
+    - `data/mf3/ckpt/Q-F3_id.json` (sha256 `4244c7fc…e519`; it is -diff, and Code did not open it);
+    - `data/mf3/reports/Q-F3_id_report.json` (`b3b00428…ed48`) and `Q-F3_id_reads.json` (`79da1b71…e44f`);
+    - the artifact `data/mf3/gates/Q-F3_G-ID.json` (`ea8f7d3a…9260`);
+    - the raw;
+    - Code's block for the seat ([`_mf3-code-to-design_G-ID-F3`](results/raw/2026-11-10_mf3-code-to-design_G-ID-F3.md)),
+      which renders the configs by role, [P] and [Q];
+    - the values-check raw.
+  - **The block's questions:**
+    - Q1, the FAIL and the path, and whether v0.2 carries a cached projection under a FAIL;
+    - Q2, counter (b);
+    - Q3, the reads' form. The seat's §5 item 2 says "redacted reads", and the lock's F14 has the full sham-only
+      records.
+  - **Values-check:** [`_mf3-gid-f3_valuescheck`](results/raw/2026-11-10_mf3-gid-f3_valuescheck.md): one blind
+    agent, under a brief quoting the list of record v2's items 1–5. It read the report, the reads and the artifact
+    for the figures, and hashed the checkpoints.
+    - 73 items: 57 CONFIRMED, 8 IMPRECISE, 1 FAIL, 7 NOT CHECKABLE.
+    - The FAIL was the block's tail of the lock's sha256, a transposition.
+    - Every FAIL and IMPRECISE item is applied, and so is m:271's sentence for Q3.
+    - Its one departure, an interval between two start-side stamps worked out in its reasoning and printed nowhere,
+      is disclosed in the raw.
+  - **Next:** nothing until the seat rules. LOCK-m-F3 v0.2 (m:296) waits for the seat's read and the PI's word. Not
+    pushed. Committed by path.
+
 - 2026-11-10 — **The `id` wiring: `id` (G-ID-F3, m:295) is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1
   as re-issued, in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its blob
   moves from `1b593ba0…87c6` to `8d878f4a…00e7`. mf3's package, m's, the analyzer and the lock stand, and G-SHAPE-F3

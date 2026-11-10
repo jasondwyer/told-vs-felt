@@ -1,0 +1,350 @@
+{
+ "bars": [
+  {
+   "binding": true,
+   "crit": 1,
+   "exceeds": true,
+   "fired": true,
+   "k": 1,
+   "message": "BAR gid_divergence@G-ID-F3 FIRED",
+   "n": 1,
+   "name": "gid_divergence@G-ID-F3",
+   "p": null
+  }
+ ],
+ "criterion": "2/2 byte-identical cached/uncached transcript pairs and, per reasoning line, an identical (n_tok, cap_hit, stop_reason) triple (the seat's F-7)",
+ "files": {
+  "checkpoint": "ckpt/Q-F3_id.json",
+  "reads": "reports/Q-F3_id_reads.json"
+ },
+ "form": "pick-free stage report (m:271, m:295)",
+ "identity": {
+  "audit_v2_sha16": "7aa235d25eeb66dc",
+  "backend_identifier": "a734dadec8f8ce9b",
+  "ban_sha": "a934f1ad2b702245",
+  "lock_sha256": "70da4a70aeeff434cae7f6a436d8391556118c26513b2456f3940d3872e81d3f",
+  "m_module_sha256": {
+   "__init__": "b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4",
+   "audit": "16d0abb91444af1b86dcdabdca919f8e61ce371055fe9581a96d02eb950e50f6",
+   "banner": "730442ca354d8d92fe52135d42506cd83cef2d10deb7dfc23d0a1c204a6d170c",
+   "bars": "e7f028d8a08c70d29b03296276dc292d8a4042a0e20ac8e6f0c70540b91e1d6c",
+   "corr": "74818109a284d203177bae82170cbfa1f2cec8cbd85dfa2f7db018530eb27fce",
+   "guard": "6aa5ac2dc7a7e071ad848053aa1a7e73c9539d1d5cb6fe1152b0f11e7a4d8b87",
+   "keys": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+   "readrule": "fca9e7329ec42419ed0eaa658d1a954b68db0e05a93cbb6b3a4502f781737a9e",
+   "resume": "78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7",
+   "scaffold": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5",
+   "schedule": "f262f9e0120bcf6e694c0850b56dc3a19ab3c931b28ba92d47009f9f49a72d0d"
+  },
+  "package_sha256": "098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13",
+  "path": "cached+uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "reasoning_cap": 120,
+  "renders_sha16": "a04f67b0e5105a05",
+  "schedule_sha256": "845ab4d230c4d64ce35a266081ae0d2eb18810aeba1a865b7c9047daaf8f4c30",
+  "weights_revision": "c000ac2c2057d94be3fa931000c31723aac53282",
+  "weights_sha256": "03922eed43c73bf4af06cf4c51982005d95640dc6f39b57caf604749cf001e26"
+ },
+ "pairs": [
+  {
+   "complete": true,
+   "complete_cached": true,
+   "complete_uncached": true,
+   "identical": false,
+   "j": 0,
+   "line_triples_identical": false,
+   "template": "A2s",
+   "transcript_identical": false
+  }
+ ],
+ "provenance": [
+  {
+   "launched": 2,
+   "record": {
+    "adapter": "qwen3.6-27b-4bit-mlx",
+    "backend": "mlx",
+    "choice_window_declared": 8192,
+    "dtype": "4bit-quantized (MLX)",
+    "gdn_inference_mode": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "library_versions": {
+     "mlx": "0.31.2",
+     "mlx-lm": "0.31.3",
+     "numpy": "2.5.1"
+    },
+    "mlx_version": "0.31.2",
+    "model_id": "mlx-community/Qwen3.6-27B-4bit",
+    "n_encodes_clipped": 0,
+    "n_layers": 64,
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "python": "3.12.9"
+   },
+   "stamp": "2026-11-10T17:52:40Z"
+  }
+ ],
+ "schema": "m-stage-report-v1",
+ "stage": "id",
+ "stage_name": "G-ID-F3",
+ "stage_report": {
+  "cached": {
+   "form": "pick-free stage report (m:271, m:318)",
+   "stage": "id",
+   "substrate": "qwen",
+   "templates": {
+    "A2s": {
+     "all": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 10,
+      "termination": 0
+     },
+     "audit_sessions": 0,
+     "complete_sessions": 1,
+     "contrast": false,
+     "domain_sessions": 1,
+     "excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 0,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0,
+      "scaffold@reasoning": 0
+     },
+     "first_pick_P": {
+      "k": 1,
+      "n": 1,
+      "share": "1"
+     },
+     "first_pick_P_by_pair": {
+      "1": {
+       "k": 1,
+       "n": 1,
+       "share": "1"
+      }
+     },
+     "forced": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 4,
+      "termination": 0
+     },
+     "free": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 6,
+      "termination": 0
+     },
+     "hair_triggers": [],
+     "reads": {
+      "low_label_mass": 0,
+      "n": 6,
+      "top1_not_label": 0
+     },
+     "reasoning_lines": {
+      "by_class": {
+       "cap_no_newline": 0,
+       "echo": 0,
+       "empty": 0
+      },
+      "cap_reached": 0,
+      "counter_a": 2,
+      "defect_lines": 0,
+      "lines": 6
+     },
+     "sessions": 1,
+     "strict_excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 0,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0
+     },
+     "valid_sessions": 1
+    }
+   },
+   "unit": "Q-F3"
+  },
+  "uncached": {
+   "form": "pick-free stage report (m:271, m:318)",
+   "stage": "id",
+   "substrate": "qwen",
+   "templates": {
+    "A2s": {
+     "all": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 10,
+      "termination": 0
+     },
+     "audit_sessions": 0,
+     "complete_sessions": 1,
+     "contrast": false,
+     "domain_sessions": 1,
+     "excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 0,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0,
+      "scaffold@reasoning": 0
+     },
+     "first_pick_P": {
+      "k": 1,
+      "n": 1,
+      "share": "1"
+     },
+     "first_pick_P_by_pair": {
+      "1": {
+       "k": 1,
+       "n": 1,
+       "share": "1"
+      }
+     },
+     "forced": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 4,
+      "termination": 0
+     },
+     "free": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 6,
+      "termination": 0
+     },
+     "hair_triggers": [],
+     "reads": {
+      "low_label_mass": 0,
+      "n": 6,
+      "top1_not_label": 1
+     },
+     "reasoning_lines": {
+      "by_class": {
+       "cap_no_newline": 0,
+       "echo": 0,
+       "empty": 0
+      },
+      "cap_reached": 0,
+      "counter_a": 0,
+      "defect_lines": 0,
+      "lines": 6
+     },
+     "sessions": 1,
+     "strict_excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 0,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0
+     },
+     "valid_sessions": 1
+    }
+   },
+   "unit": "Q-F3"
+  }
+ },
+ "status": "FAIL",
+ "stop": null,
+ "timing": {
+  "cached_seconds": 208.347,
+  "uncached_seconds": 1942.675
+ },
+ "unit": "Q-F3"
+}
