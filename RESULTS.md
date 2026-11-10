@@ -126,6 +126,48 @@ applied to CLAUDE.md.
   - **Values-check:** a blind agent, read-only, on the draft before the two sessions' accounts came in: 52 items, 37 CONFIRMED, 6 IMPRECISE, 5 FAIL, 4 NOT CHECKABLE. The five FAILs were the block's and the entry's "two" searches, two sentences that the sessions' replies had overtaken, and one omitted call of the first checker. Each item was applied. The two sessions' accounts are as each reported to Code, and were not checked against their transcripts.
   - **Committed by path:** the block and this entry. Nothing ran on a model or the box. Pushed on the routing's D1,
     with the pod session's two commits before it (`e619d3d`, `f3631f4`).
+  - **Close (PI date 2026-11-10).** The seat's list ruling,
+    [`2026-11-10_list-of-record-v2_design-to-code_answers.md`](results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md)
+    (sha256 `6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd`, as the routing lists it; committed by
+    path with this close, under the routing's "the PI commits by path"): C1, C2, F1, F2 inert, no strike; the list
+    of record v2 adopted (§2) in place of the sweeps ruling's §2.
+    - Its §1 on this entry's items:
+      - C1, C2, F1 and F2 (F1 and F2 are the F3 session's two `git grep`s, so labeled in the block's §2) each read
+        protected content through the defect and printed nothing from a `ckpt` or `reports` file; "the one value C2
+        produced (a file count over a public tree) reached no text". "Inert; no strike." "The departure is the
+        rule's text, not the sessions': each quoted item 3 as item 6 required."
+      - The pod session's brief was corrected before any search ran: "nothing to rule".
+      - `git show --name-status` is "a name-only form"; it is permitted and added to item 1.
+      - The sessions' interim form (`/**`, the prune, or `':!data/**'`) "was right; it is item 3's text now".
+    - Its §2, the list of record v2, supersedes the sweeps ruling's §2 in full. Its source is the ruling's raw; the
+      list binds no hash and edits no committed file.
+    - Its §3, on the entry's Q2 and Q3: item 3's pathspec is restated as tested, and item 6 now says "the current
+      list of record", so a brief quotes v2 as written and needs no rider. Briefs issued before the ruling with the
+      sweeps ruling's items 1–5 and the working-form line "were right meanwhile". Pickaxe searches are item 3's
+      content searches: permitted with the pathspec, a departure without it over a range holding `ckpt` or
+      `reports` files.
+    - Its §4: ledger (62), the seat's, recorded on C3. A rule named a command form the seat had not tested on the
+      machine it binds; the fix is the list's new item 9.
+    - The PI's routing of 2026-11-10, section C, verbatim:
+
+      > C. All sessions first — the list of record v2 (coordinating session owns the close)
+      > C1. C1, C2, F1, F2 inert, no strike; git show --name-status permitted [as ruled].
+      > C2. The list of record v2 (§2 of the list ruling) replaces the sweeps ruling's §2 from today: item 3 = ':!data/*/ckpt/**' ':!data/*/reports/**' (or ':!data/**' / the prune), pickaxe included; item 2 = checkpoints and call logs closed, reports readable, no metadata of either; item 9 = test a command form on the machine before a rule names it [adopted]. Every session re-briefs any running subagent; LOCK-m-F3's re-issue and LOCK-p v0.2 cite v2.
+      > C3. Ledger (62) [recorded]. Close line on 750a7dd's entry citing the list ruling by path and sha256 [go].
+
+    - **Relayed** by 06:29 UTC: C verbatim to both sessions, with A to the F3 session and B to the pod session, each
+      told that v2 is current and to re-brief any running subagent. As each reported, neither had one running: the
+      F3 session's v0.4 referent agent and both values-check passes had ended before `50fea90`; the pod session's
+      ListAgents listed none, and its last, the qual-wiring values-checker, had ended before `f3631f4`. Both quote
+      v2's items 1–5 as written in every brief from here. This session had no subagent running at the relay.
+    - From here this session works under the list of record v2. Every brief it hands a reviewer or values-checker
+      quotes v2's items 1–5 as written, with no rider beside item 3.
+    - **Values-check:** a blind agent, read-only, on the draft and its commit message: 34 items, 24 CONFIRMED,
+      5 IMPRECISE, 0 FAIL, 5 NOT CHECKABLE (three on the relay, one on this session's subagents, one on the
+      message's "Nothing ran on a model or the box"). Each IMPRECISE item was applied: the commit's attribution,
+      F1 and F2's labels, the rest of §1's sentence on C2, the message's "§", and §3 on Q2 and Q3. So were three
+      of its optional notes. It read nothing under `data/`; its one command without a pathspec, a
+      `git diff --name-status` over two commits, is an item 1 form and printed no name under `data/`.
 
 - 2026-11-09 — **G-F0m-OLMo (p) is not wired: B5's chain stops before LOCK-p v0.2. STOP for the seat on four
   questions; nothing is built and nothing ran.**
