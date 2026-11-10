@@ -21,6 +21,121 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-10 — **p — the `qual` wiring (G-F0m-OLMo (p)), a p package move: BUILD, on the PI's routing of 2026-11-10
+  (B1–B3) and the seat's answers of 2026-11-10 (`42c5a92`, §1–§3).** Two files move, `valence_core/p/stage.py` and
+  `scripts/p_sessions.py`, and (h)'s PIN wording and (j)'s fix land with them. Nothing ran on a model or on the box.
+  (Stamp verified at write time: `date -u` → **Tue Nov 10 08:42:13 UTC 2026**.)
+  - **The routing.**
+    - B1, verbatim: "Q1: Code's order — the qual wiring (a p package move) → self-tests, m's battery, G-ANL-p's groups, blind review and values-check → G-SHAPE-p re-run (fdd79d8's artifact superseded, F-p12's form) → G-ANL-p re-run (f8b16d5's superseded) → LOCK-p v0.2 ×3 → G-F0m-OLMo (p) ×3 on the box, batched → STOP for the seat's read [go]; the wiring's build may start now. (h)'s PIN wording and (j)'s fix land with the move."
+    - B2: "Q2: qual alone; the campaign's wiring its own move before v1.0 [adopted]."
+    - The build started after that word, so there is no declaration to make (the seat's §7).
+  - **What moves** (the seat's §7: "the BUILD entry names the two files that move, (h)'s wording and (j)'s fix"):
+    - **`valence_core/p/stage.py`, the stage**, which now takes the gate as a parameter (`GATES`, `time` | `qual`).
+      - **The counts** are m:302's (`COUNTS`: 1 + 1 at `time`, 8 + 16 at `qual`). m's stage checks them against the
+        committed gate files' n after the load. At `qual` the precheck also checks them before the load
+        (`counts_problems`).
+      - **The prior.** At `qual`, G-TIME (p)'s checkpoint under the stage's root is m's `prior_ckpt`. Before the
+        load, `prior_problems` runs m's `prior_gate` on it, which checks:
+        - that it is this unit's G-TIME, and that it ended PASS;
+        - that it ran under m's proposal pin (F-p8);
+        - on a non-stub run, that it was not written on the stub.
+
+        It then checks that the checkpoint is p's, by its identity's `proposal` and `proposal_p_sha256`; m's pin
+        alone cannot tell a p record from m's. m's stage runs `prior_gate` again inside. No `prior_adjudication` is
+        passed.
+      - **The lock.** At `qual`, the lock must carry LOCK-p v0.2's line `G-TIME-OLMo-{ckpt} port acceptance recorded`
+        as a whole line, checked before the load. `QUAL_LOCK_LINE` is the text of m's `OLMO_QUAL_LOCK_LINE`
+        (`scripts/m_sessions.py:680`). p's licence binds no m script, so the self-test compares the two as text.
+      - **The outputs.**
+        - The call log, the STOP marker, the lock file and p's report take `_qual_` names.
+        - p's report covers the 24 sessions on the seat's read domain: the proxy's attribution over the sixteen sham
+          sessions, with every proxy count over the contrast sessions withheld.
+        - The report's three gate-worded strings stay as written at step 6 for `time`.
+      - **The run.** `run_gate(unit, gate, …)` runs either gate, and the driver calls it for both; `run_time` is kept
+        as `run_gate` at `time` (the step-6 self-test cases call it).
+    - **`scripts/p_sessions.py`, the driver**: `qual --unit OLMo-{ckpt} [--resume]` and `qual-report --unit
+      OLMo-{ckpt}`, as `time` and `time-report`. `campaign` is still refused: its wiring is its own move, before its
+      checkpoint's LOCK-p v1.0 (B2).
+    - **(h)'s wording** (the seat's answer of 2026-11-09, §4 (h) and §2 item 6).
+      - The PIN in the stage's BEFORE THE LOAD now reads, verbatim:
+
+        > PIN (Code, declared at step 6; worded at the qual wiring to the seat's answer of 2026-11-09, §2 item 6 and §4 (h)): the backend identifier of record is the lock's, never a code constant (m:302: "the backend identifier" is a LOCK v0.1 content); a backend change after the lock STOPs the stage (before it generates); a box of the same class gives the same identifier and is not detected (m:267); a box change follows p §6.2's respawn protocol with a new ``BACKEND — characterization`` entry, recorded by a dated note at the lock in force, no re-issue; a differing identifier STOPs and the seat rules.
+
+      - The backend STOP's printed message keeps its step-6 wording ("a superseding BACKEND entry is the seat's to
+        route"), so G-TIME's texts stay as written. It does not contradict item 6.
+    - **(j)'s fix** (`stage.fresh_import_closure`).
+      - The drift check takes G-SHAPE-p's import closure from a fresh `python -I -B` that imports p's driver by path,
+        never running it. The child lists the loaded `valence_core` modules that have a file; the parent applies the
+        rest of `gshape.import_closure`'s filters (outside p and m, a regular file in the repository) and hashes their
+        committed blobs.
+      - Any of these is a named problem, so the precheck refuses: a child that exits non-zero, prints no JSON,
+        cannot start, or runs past 600 s.
+      - On HEAD `42c5a92`, the fresh closure is G-SHAPE-p's recorded one at `fdd79d8`: 14 files, with the same
+        sha256s.
+      - `gshape.py` is unchanged. G-SHAPE-p records its closure in its own run, whose import graph is the driver's.
+        The self-test checks that the two closures carry the same files.
+    - **Unchanged:** every other file of p's package, every m file, `olmo_hf.py` and `.gitignore`. Under the existing
+      rules, git admits p's `_qual_` outputs and m's qual checkpoint, report and reads, and ignores the lock files and
+      STOP reservations. The self-test checks p's names; Code checked m's with `git check-ignore`.
+  - **`time`'s behaviour is unchanged.**
+    - The functions G-TIME's code calls default to `time`: `label`, `templates_counts`, `precheck`, `out_paths`,
+      `log_consistency_problems`, `build_report` and `write_report`. `run_time` is `run_gate` at `time`.
+    - G-TIME's precheck gains no check. Its drift check now takes the import closure from the fresh interpreter, at
+      both gates: (j)'s fix, which the seat's §1 lands with this move.
+    - The step-6 self-test cases pass: 166 of the 170 as written, and four rewritten for the two gates (the stage's git
+      admit-and-ignore case; the driver's refused-commands, simulated-box and report-command cases).
+    - A stub G-TIME (p) was run on m's scripted double through HEAD's stage and through the moved one, in three cases:
+      a PASS, a contrast free-round exclusion and a ProxyStop. The outputs are identical in every case:
+      - the call log's events;
+      - m's identity, and m's sessions on their template, index, contrast flag, verification and exclusion, with each
+        round's phase, indices, seed, text and cap flag (the sessions' other fields, wall-clock seconds among them, are
+        not compared);
+      - p's report and the STOP marker;
+      - the closing lines and the file names.
+
+      Only p's package sha256, which moves by construction, and the outputs' digests are masked.
+  - **For the seat: a reading, not adjudicated** (raised by round 1's reviewer).
+    - §2 item 6's "recorded by a dated note at the lock in force" does not say where the note lives.
+    - A note written into the lock file would move the lock's sha256. That sha256 is an identity field and the subject
+      of m's licence check, so on a resume across the note, m would refuse after the load.
+    - Code's reading is that the note sits on the lock's RESULTS entry.
+  - **For the seat, under the list of record's item 8: `git check-ignore` over names under `data/p/ckpt` and
+    `data/p/reports`.** Item 1 does not list it and item 2 does not bar it. It reads `.gitignore`'s rules for a name and
+    prints whether the name is ignored, nothing of a file. It ran four ways:
+    - by round 1's reviewer;
+    - by round 2's reviewer, with `-v -n`, which prints the matching rule;
+    - by Code's own check of the `_qual_` names, with `-q` (exit codes only);
+    - by the stage's self-test, as at step 6, now over both gates' names.
+
+    No `_qual_` file existed when they ran. Of the `_time_` names the self-test checks, the three call logs and three
+    reports are G-TIME's committed outputs, as at step 6; the STOP-marker, lock and `.reserve-1` names it now adds
+    name no file in the tree. Code rules on none of these.
+  - **Also for the seat, under item 8:** the values-checker's one `git grep` used a positive pathspec limited to
+    `data/p/gates/**`, not one of item 3's exclusion forms. It cannot reach `ckpt` or `reports`, and it printed
+    three lines of the two gate artifacts, each step 6's package hash. Code rules on none of it.
+  - **Licence.** The m files and `olmo_hf.py` are unchanged.
+    - p's `package_sha256` (14 files; step 6's was `7a08dbfa…1d24`):
+      `08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26`.
+    - The driver `scripts/p_sessions.py`: `89551017bdfd78f67440ca3c5c1aa44a8a8ff83494a349b430aaaed22655af44`.
+  - **Checks before the commit** (model-free, at `nice -n 19`, on the commit's base `7589c1d`):
+    - `scripts/p_sessions.py --selftest`: 184/184 (step 6: 170/170).
+    - `scripts/p_analyze.py --selftest`: m's battery 525/525 (538 coverage ids), then G-ANL-p 14/14.
+    - Blind review, two rounds ([`_p-qual-wiring_build_review`](results/raw/2026-11-10_p-qual-wiring_build_review.md)),
+      each brief quoting the list of record v2's items 1–5: round 1, no MAJOR or MINOR, seven NOTEs; round 2, on round 1's fixes, no MAJOR or MINOR, five NOTEs. Each was applied (N-4 at `qual` only, by design) except N-2 (the backend STOP's message, answered above). Round 2's fixes were checked by the self-tests, not by a third blind round; two citations its relabelling missed, which the values-check found, are relabelled.
+    - A blind values-check of this entry: 81 claims, 65 CONFIRMED, 6 IMPRECISE, 0 FAIL, 10 NOT CHECKABLE (Code's own conduct, the two fields the draft left open, future actions). Each IMPRECISE item was applied in the checker's wording or close to it; the fixes were checked by tool, not by a second blind pass
+      ([`_p-qual-wiring_build_valuescheck`](results/raw/2026-11-10_p-qual-wiring_build_valuescheck.md)).
+  - **Next**, in B1's order:
+    - G-SHAPE-p's re-run, `fdd79d8`'s artifact superseded in F-p12's form;
+    - G-ANL-p's re-run, `f8b16d5`'s superseded;
+    - LOCK-p v0.2 ×3;
+    - G-F0m-OLMo (p) ×3 on the box, batched;
+    - STOP for the seat's read.
+  - **The pod** (B6): "keep up until the wiring's commit lands, then re-decide with the time to G-F0m-OLMo (p) in
+    view [the PI's call]". This commit is that point. Its hash and Code's estimate go to the coordinating session.
+    - The PI's answer on the pod's idle uptime until now, verbatim (PI date 2026-11-10, in chat): "Keep it up". The
+      close line on `f3631f4`'s entry quotes it with its question.
+  - Not pushed.
+
 - 2026-11-10 — **ADDENDUM-m2 v0.5 — COMMITTED (A-m2 §6 item 2), on the PI's routing of 2026-11-10, section A (A5).**
   (Stamp verified at write time: `date -u` → **Tue Nov 10 07:26:44 UTC 2026**.)
   - **Committed:** `ADDENDUM-m2-f3-reasoning-block-v0_5.md` is tracked at root, sha256

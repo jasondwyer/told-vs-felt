@@ -56,15 +56,32 @@ At p §8 step 6 (the design seat's answer of 2026-11-08, ``de729c4``) it also wi
                       unavailable or unopenable); 4 STOP (no ended stage; the log absent, unreadable or not this
                       stage's; its runs under another p package).
 
-and refuses ``qual`` and ``campaign`` (G-F0m-OLMo (p), the campaign): each is wired after its checkpoint's LOCK-p v0.2
-or v1.0, on its own word.
+At the qual wiring (the design seat's answers of 2026-11-10, ``42c5a92``, §2, option (A): "``qual`` alone") it also
+wires:
+
+  qual --unit OLMo-{ckpt} [--resume]
+                      G-F0m-OLMo (p) (m:302; p §4.1), on the box only, under the checkpoint's LOCK-p v0.2: m's
+                      ``stages.run_gate_stage`` at gate ``qual`` -- 24 sessions, 8 contrast and 16 sham, uncached -- run
+                      for p's unit under the same register entries (``valence_core.p.stage``'s THE QUALIFICATION).
+                      Before the load: ``time``'s precheck at ``qual``, which also requires LOCK-p v0.2's line
+                      ``G-TIME-OLMo-{ckpt} port acceptance recorded`` as a whole line and m:302's counts equal to the
+                      committed qual schedule files' n, and the weights files on this box; then the DRIVER and WEIGHTS
+                      lines; then, still before the load, the prior stage -- G-TIME (p)'s checkpoint under data/p,
+                      through m's ``prior_gate`` (this unit's, ended PASS, under m's pin, not written on the stub; no
+                      adjudication input), then as p's (its identity's ``proposal`` and ``proposal_p_sha256`` this
+                      run's) -- and the rest as ``time``. Exit m's codes, as ``time``.
+  qual-report --unit OLMo-{ckpt}
+                      p's G-F0m-OLMo (p) report re-derived from m's checkpoint and the call log, as ``time-report``.
+
+and refuses ``campaign`` (the PROPOSAL-p campaign): its wiring is its own move, before its checkpoint's LOCK-p v1.0
+(the seat's Q2, 2026-11-10), on its own word.
 
 PIN (Code, declared at the p BUILD): the weights-files check is p's own, written to scripts/m_sessions.py's
 ``olmo_weights_problems`` semantics (a size check, never a re-hash -- the respawn protocol's step (i) re-hashes the
 volume once per box), so p's licence binds no m script. A refusal exits 2; any other STOP raised on the way (a
 register or keys STOP among them) exits 4, named.
 
-INVOCATION is the first line of every run. Nothing but ``gcal`` and ``time`` loads a model.
+INVOCATION is the first line of every run. Nothing but ``gcal``, ``time`` and ``qual`` loads a model.
 """
 from __future__ import annotations
 
@@ -92,16 +109,18 @@ DRIVER_REL = "scripts/p_sessions.py"
 #: Every p module with a self-test, in dependency order (the package marker and the test double have none).
 MODULES = ("register", "corrupt", "keys", "schedule", "proxy", "report", "guard", "identity", "analysis", "gcal",
            "gshape", "stage")
-#: The stage subcommands still refused at step 6: each is wired after its own lock (p §4.1's chain, m:302).
-STAGE_CMDS = ("qual", "campaign")
+#: The gate stages this driver runs, each with its report command (``{gate}-report``): ``stage.GATES``.
+GATE_CMDS = ("time", "qual")
+#: The stage subcommand still refused at the qual wiring: the campaign, wired at its own move (the seat's Q2).
+STAGE_CMDS = ("campaign",)
 STAGE_NAMES = {"time": "G-TIME-OLMo (p)", "qual": "G-F0m-OLMo (p)", "campaign": "the PROPOSAL-p campaign"}
-STAGE_AFTER = {"qual": "its checkpoint's LOCK-p v0.2", "campaign": "its checkpoint's LOCK-p v1.0"}
+STAGE_WHEN = {"campaign": "its own move, before its checkpoint's LOCK-p v1.0 (the seat's Q2, 2026-11-10)"}
 GCAL_EXIT = {"PASS": 0, "FAIL": 4}
 
 
 def refusal(cmd: str) -> str:
-    return (f"REFUSED: {cmd} ({STAGE_NAMES[cmd]}) is not wired at p §8 step 6 -- it is wired after "
-            f"{STAGE_AFTER[cmd]} (p §4.1's lock chain, m:302), on its own word")
+    return (f"REFUSED: {cmd} ({STAGE_NAMES[cmd]}) is not wired at the qual wiring -- its wiring is {STAGE_WHEN[cmd]}, "
+            f"on its own word")
 
 
 def build_schedules(out: str | None) -> int:
@@ -221,10 +240,10 @@ def run_gcal(unit: str, resume: bool) -> int:
     return GCAL_EXIT[res["verdict"]]
 
 
-def run_time_stage(unit: str, resume: bool) -> int:
-    """G-TIME-OLMo (p) on one checkpoint, on the box (``stage``'s module docstring)."""
+def run_gate_stage(gate: str, unit: str, resume: bool) -> int:
+    """G-TIME-OLMo (p) or G-F0m-OLMo (p) on one checkpoint, on the box (``stage``'s module docstring)."""
     try:
-        pre = stage.precheck(unit, stub=False, resume=resume)
+        pre = stage.precheck(unit, stub=False, resume=resume, gate=gate)
     except stage.StageRefusal as e:
         print(f"{e}; nothing loaded", file=sys.stderr, flush=True)
         return 2
@@ -234,15 +253,15 @@ def run_time_stage(unit: str, resume: bool) -> int:
     ck, w = pre["ckpt"], pre["weights"]
     wp = weights_files_problems(ck, w)
     if wp:
-        print(f"REFUSED: {stage.label(unit)}: weights: {wp}; nothing loaded", file=sys.stderr, flush=True)
+        print(f"REFUSED: {stage.label(unit, gate)}: weights: {wp}; nothing loaded", file=sys.stderr, flush=True)
         return 2
     print(f"DRIVER {DRIVER_REL} {guard.driver_sha256()}: committed at HEAD {m_stages._git_head()}, working tree "
-          f"identical ({stage.label(unit)}'s precheck)", flush=True)
+          f"identical ({stage.label(unit, gate)}'s precheck)", flush=True)
     print(f"WEIGHTS {ck}: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} "
           f"files at {w['path']}, each at the manifest's byte count (the full re-hash is the respawn protocol's step "
           f"(i), in this box's BACKEND entry)", flush=True)
     try:
-        res = stage.run_time(unit, lambda: _load_olmo(w["path"]), stub=False, resume=resume, pre=pre)
+        res = stage.run_gate(unit, gate, lambda: _load_olmo(w["path"]), stub=False, resume=resume, pre=pre)
     except stage.StageRefusal as e:
         print(f"{e}", file=sys.stderr, flush=True)
         return 2
@@ -254,24 +273,25 @@ def run_time_stage(unit: str, resume: bool) -> int:
     return m_stages.EXIT_CODES.get(res["status"], 4)
 
 
-def time_report(unit: str) -> int:
-    """p's report re-derived under data/p (``stage``'s P'S REPORT PIN); model-free, written once."""
+def gate_report(gate: str, unit: str) -> int:
+    """p's report at ``gate`` re-derived under data/p (``stage``'s P'S REPORT PIN); model-free, written once."""
+    cmd = f"{gate}-report"
     if unit not in stage.UNITS:
-        print(f"REFUSED: time-report: {unit!r} is not a p unit {stage.UNITS}", file=sys.stderr, flush=True)
+        print(f"REFUSED: {cmd}: {unit!r} is not a p unit {stage.UNITS}", file=sys.stderr, flush=True)
         return 2
     out = stage.DEFAULT_OUT_P
-    pp = stage.out_paths(unit, out)
+    pp = stage.out_paths(unit, out, gate=gate)
     if pp["p_report"].exists():
-        print(f"REFUSED: time-report: p's report exists ({pp['p_report'].name}); it is written once", file=sys.stderr,
+        print(f"REFUSED: {cmd}: p's report exists ({pp['p_report'].name}); it is written once", file=sys.stderr,
               flush=True)
         return 2
     try:
-        with stage.stage_lock(pp["p_lock"], out, what=f"time-report ({stage.label(unit)})"):
+        with stage.stage_lock(pp["p_lock"], out, what=f"{cmd} ({stage.label(unit, gate)})"):
             if pp["p_report"].exists():
-                print(f"REFUSED: time-report: p's report exists ({pp['p_report'].name}); it is written once",
+                print(f"REFUSED: {cmd}: p's report exists ({pp['p_report'].name}); it is written once",
                       file=sys.stderr, flush=True)
                 return 2
-            rep, how = stage.write_report(unit, out)
+            rep, how = stage.write_report(unit, out, gate=gate)
     except stage.StageRefusal as e:
         print(f"{e}", file=sys.stderr, flush=True)
         return 2
@@ -324,8 +344,9 @@ def _selftest(chk) -> None:
         rcg == 0 and outg.startswith("INVOCATION: ") and "G-SHAPE-p: PASS" in outg and "never of record" in outg,
         outg[-300:])
     refused = {c: run([c]) for c in STAGE_CMDS}
-    chk("p_sessions: qual and campaign are refused at step 6 (exit 2), each named with the lock it waits for",
-        STAGE_CMDS == ("qual", "campaign")
+    chk("p_sessions: campaign is refused at the qual wiring (exit 2), named with the move it waits for; time and qual "
+        "are the gate commands, each with its report command",
+        STAGE_CMDS == ("campaign",) and GATE_CMDS == stage.GATES == ("time", "qual")
         and all(rc == 2 and refusal(c) in out for c, (rc, out) in refused.items()), {c: rc for c, (rc, _) in refused.items()})
     rc0, out0 = run([])
     chk("p_sessions: no action is refused (exit 2) and INVOCATION is the first line",
@@ -356,9 +377,11 @@ def _selftest(chk) -> None:
     real_hf = sys.modules.get("valence_core.adapters.olmo_hf")
     with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, env_no_pod, clear=True), \
             mock.patch.object(gcal, "GATES_DIR", Path(td) / "gates"), \
-            mock.patch.object(gcal, "CKPT_DIR", Path(td) / "ckpt"), mock.patch.object(me, "_load_olmo", trap):
+            mock.patch.object(gcal, "CKPT_DIR", Path(td) / "ckpt"), \
+            mock.patch.object(stage, "DEFAULT_OUT_P", Path(td) / "p"), mock.patch.object(me, "_load_olmo", trap):
         gc = {u: run(["gcal", "--unit", u]) for u in ("OLMo-sft", "Q-F0", "OLMo-base")}
         tm = {u: run(["time", "--unit", u]) for u in ("OLMo-sft", "Q-F0", "OLMo-base")}
+        ql = {u: run(["qual", "--unit", u]) for u in ("OLMo-sft", "Q-F0", "OLMo-base")}
     chk("p_sessions: gcal is refused before any load in every state of the record (the pod id removed, the canonical "
         "roots a scratch root, the loader trapped) -- POD ID ABSENT for OLMo-sft, and Q-F0 and the base checkpoint "
         "refused (exit 2); the loader never reached, the OLMo adapter module never imported",
@@ -371,6 +394,13 @@ def _selftest(chk) -> None:
         all(rc == 2 and "REFUSED" in out for rc, out in tm.values()) and "POD ID ABSENT" in tm["OLMo-sft"][1]
         and trapped == [] and ("valence_core.adapters.olmo_hf" in sys.modules) == loaded_before,
         {u: (rc, _short(o, 120)) for u, (rc, o) in tm.items()})
+    chk("p_sessions: qual is refused before any load in every state of the record, as time is -- POD ID ABSENT for "
+        "OLMo-sft among its refusals, named as G-F0m-OLMo-sft (p), Q-F0 and the base checkpoint refused (exit 2); the "
+        "loader never reached",
+        all(rc == 2 and "REFUSED" in out for rc, out in ql.values()) and "POD ID ABSENT" in ql["OLMo-sft"][1]
+        and "G-F0m-OLMo-sft (p)" in ql["OLMo-sft"][1]
+        and trapped == [] and ("valence_core.adapters.olmo_hf" in sys.modules) == loaded_before,
+        {u: (rc, _short(o, 120)) for u, (rc, o) in ql.items()})
     seen: list = []
 
     def recorder(factory, unit, **kw):
@@ -399,44 +429,61 @@ def _selftest(chk) -> None:
         and restored, (rcb, di, wi, seen, trapped, _short(outb, 200)))
     seen_t: list = []
 
-    def t_recorder(unit, factory, **kw):
-        seen_t.append((unit, sorted(k for k in kw if k != "pre"), kw.get("stub"), kw.get("resume"),
-                       kw.get("pre", {}).get("unit")))
+    def t_recorder(unit, gate, factory, **kw):
+        seen_t.append((unit, gate, sorted(k for k in kw if k != "pre"), kw.get("stub"), kw.get("resume"),
+                       kw.get("pre", {}).get("unit"), kw.get("pre", {}).get("gate")))
         raise stage.StageStop("SELFTEST: the recorder stands in for the stage")
 
     t_pre = {"unit": "OLMo-sft", "ckpt": "sft", "weights": w_sft}
-    with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, env_box, clear=True), \
-            mock.patch.dict(sys.modules, {"valence_core.adapters.olmo_hf": fake_hf}), \
-            mock.patch.object(stage, "precheck", lambda unit, **kw: dict(t_pre)), \
-            mock.patch.object(me, "weights_files_problems", lambda ck, w, **kw: []), \
-            mock.patch.object(stage, "run_time", t_recorder), mock.patch.object(me, "_load_olmo", trap):
-        rct, outt = run(["time", "--unit", "OLMo-sft"])
+    pre_gates: list = []
+
+    def t_precheck(unit, **kw):
+        pre_gates.append(kw.get("gate"))
+        return dict(t_pre, gate=kw.get("gate"))
+    gt = {}
+    for g, extra in (("time", []), ("qual", []), ("qual --resume", ["--resume"])):
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, env_box, clear=True), \
+                mock.patch.dict(sys.modules, {"valence_core.adapters.olmo_hf": fake_hf}), \
+                mock.patch.object(stage, "precheck", t_precheck), \
+                mock.patch.object(me, "weights_files_problems", lambda ck, w, **kw: []), \
+                mock.patch.object(stage, "run_gate", t_recorder), mock.patch.object(me, "_load_olmo", trap):
+            gt[g] = run([g.split()[0], "--unit", "OLMo-sft", *extra])
     restored_t = sys.modules.get("valence_core.adapters.olmo_hf") is real_hf
-    dt, wt = outt.find("DRIVER scripts/p_sessions.py "), outt.find("WEIGHTS sft: ")
+    pos = {g: (out.find("DRIVER scripts/p_sessions.py "), out.find("WEIGHTS sft: ")) for g, (_, out) in gt.items()}
     chk("p_sessions: on a simulated clear box (stand-ins for the stage's precheck and the weights check; the stage's run a "
-        "recorder that STOPs; the loader trapped) time prints the DRIVER then the WEIGHTS line, calls the stage's run "
-        "once, canonical (stub false, resume false, the driver's own precheck passed), and a STOP exits 4, printed "
-        "verbatim; no adapter is made and sys.modules is restored",
-        rct == 4 and 0 <= dt < wt and seen_t == [("OLMo-sft", ["resume", "stub"], False, False, "OLMo-sft")]
-        and "STOP: SELFTEST: the recorder stands in for the stage" in outt and trapped == [] and restored_t,
-        (rct, dt, wt, seen_t, _short(outt, 200)))
+        "recorder that STOPs; the loader trapped) time and qual each print the DRIVER then the WEIGHTS line, call the "
+        "stage's run once at their own gate, canonical (stub false, resume false -- true for qual --resume -- the "
+        "driver's own precheck passed at that gate), and a STOP exits 4, printed verbatim; no adapter is made and "
+        "sys.modules is restored",
+        all(rc == 4 and "STOP: SELFTEST: the recorder stands in for the stage" in out for rc, out in gt.values())
+        and all(0 <= d < w for d, w in pos.values()) and pre_gates == ["time", "qual", "qual"]
+        and seen_t == [("OLMo-sft", "time", ["resume", "stub"], False, False, "OLMo-sft", "time"),
+                       ("OLMo-sft", "qual", ["resume", "stub"], False, False, "OLMo-sft", "qual"),
+                       ("OLMo-sft", "qual", ["resume", "stub"], False, True, "OLMo-sft", "qual")]
+        and trapped == [] and restored_t,
+        ({g: rc for g, (rc, _) in gt.items()}, pos, seen_t, pre_gates))
     import fcntl
-    with tempfile.TemporaryDirectory() as td, mock.patch.object(stage, "DEFAULT_OUT_P", Path(td) / "p"):
-        trr = {u: run(["time-report", "--unit", u]) for u in ("OLMo-sft", "Q-F0")}
-        wrote = sorted(str(x.relative_to(td)) for x in Path(td).rglob("*") if x.is_file() and not x.name.endswith(".lock"))
-        lk = stage.out_paths("OLMo-sft", Path(td) / "p")["p_lock"]
-        held = os.open(lk, os.O_RDWR | os.O_CREAT, 0o644)
-        fcntl.flock(held, fcntl.LOCK_EX)
-        try:
-            trl = run(["time-report", "--unit", "OLMo-sft"])
-        finally:
-            os.close(held)
-    chk("p_sessions: time-report (its root a scratch root, so no self-test can write a record) STOPs where no stage "
-        "has ended (exit 4), refuses a non-unit (exit 2) and refuses while another process holds the stage's lock "
-        "(exit 2; round 4's NOTE 3), writing no record",
-        trr["OLMo-sft"][0] == 4 and "P-REPORT STOP" in trr["OLMo-sft"][1] and trr["Q-F0"][0] == 2 and wrote == []
-        and trl[0] == 2 and "holds the stage's lock" in trl[1],
-        ({u: (rc, _short(o, 140)) for u, (rc, o) in trr.items()}, wrote, trl))
+    rr_ok = {}
+    for g in GATE_CMDS:
+        with tempfile.TemporaryDirectory() as td, mock.patch.object(stage, "DEFAULT_OUT_P", Path(td) / "p"):
+            trr = {u: run([f"{g}-report", "--unit", u]) for u in ("OLMo-sft", "Q-F0")}
+            wrote = sorted(str(x.relative_to(td)) for x in Path(td).rglob("*")
+                           if x.is_file() and not x.name.endswith(".lock"))
+            lk = stage.out_paths("OLMo-sft", Path(td) / "p", gate=g)["p_lock"]
+            held = os.open(lk, os.O_RDWR | os.O_CREAT, 0o644)
+            fcntl.flock(held, fcntl.LOCK_EX)
+            try:
+                trl = run([f"{g}-report", "--unit", "OLMo-sft"])
+            finally:
+                os.close(held)
+        rr_ok[g] = (trr["OLMo-sft"][0] == 4 and "P-REPORT STOP" in trr["OLMo-sft"][1]
+                    and stage.label("OLMo-sft", g) in trr["OLMo-sft"][1] and trr["Q-F0"][0] == 2
+                    and f"{g}-report" in trr["Q-F0"][1] and wrote == [] and lk.name == f"OLMo-sft_{g}_p.lock"
+                    and trl[0] == 2 and "holds the stage's lock" in trl[1])
+    chk("p_sessions: time-report and qual-report (each root a scratch root, so no self-test can write a record) STOP "
+        "where no stage has ended (exit 4, named as their own stage), refuse a non-unit (exit 2) and refuse while "
+        "another process holds their stage's lock (exit 2; round 4's NOTE 3), writing no record",
+        rr_ok == {g: True for g in GATE_CMDS}, rr_ok)
     names = ["config.json", "model-00001-of-00002.safetensors", "model-00002-of-00002.safetensors",
              "tokenizer.json"]                      # literal stand-ins: no record file is read (R3-1)
     w = {"repo": "selftest/olmo", "revision": "0" * 12, "sha256": "0" * 64, "path": "/nonexistent/sft",
@@ -492,7 +539,8 @@ def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
     ap = argparse.ArgumentParser(description="PROPOSAL-p driver (self-test, schedules, hashes, G-SHAPE-p, G-CAL-p, "
-                                             "G-TIME-OLMo (p); qual and campaign are refused until their locks)")
+                                             "G-TIME-OLMo (p), G-F0m-OLMo (p); the campaign is refused until its own "
+                                             "move)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of valence_core.p")
     ap.add_argument("--build-schedules", action="store_true", help="write p's schedule files + manifest")
     ap.add_argument("--out", default=None, help="a test directory for --build-schedules (never inside the repository)")
@@ -510,8 +558,15 @@ def main(argv: list[str] | None = None) -> int:
     tr = sub.add_parser("time-report", help="p's G-TIME report re-derived from the checkpoint and the call log "
                                             "(data/p; model-free; written once)")
     tr.add_argument("--unit", required=True, help="OLMo-sft, OLMo-dpo or OLMo-instruct")
+    q = sub.add_parser("qual", help="G-F0m-OLMo (p) (m:302; p §4.1) on one checkpoint, under its LOCK-p v0.2, after its "
+                                    "G-TIME-OLMo (p); the box only, on the PI's go")
+    q.add_argument("--unit", required=True, help="OLMo-sft, OLMo-dpo or OLMo-instruct")
+    q.add_argument("--resume", action="store_true", help="continue the unit's G-F0m-OLMo checkpoint (m's resume rules)")
+    qr = sub.add_parser("qual-report", help="p's G-F0m-OLMo report re-derived from the checkpoint and the call log "
+                                            "(data/p; model-free; written once)")
+    qr.add_argument("--unit", required=True, help="OLMo-sft, OLMo-dpo or OLMo-instruct")
     for s_ in STAGE_CMDS:
-        sub.add_parser(s_, help=f"{STAGE_NAMES[s_]}: refused at step 6 (wired after {STAGE_AFTER[s_]})")
+        sub.add_parser(s_, help=f"{STAGE_NAMES[s_]}: refused at the qual wiring (wired at {STAGE_WHEN[s_]})")
     try:
         a = ap.parse_args(argv)
     except SystemExit as e:
@@ -526,14 +581,15 @@ def main(argv: list[str] | None = None) -> int:
         return hashes()
     if a.cmd == "gcal":
         return run_gcal(a.unit, a.resume)
-    if a.cmd == "time":
-        return run_time_stage(a.unit, a.resume)
-    if a.cmd == "time-report":
-        return time_report(a.unit)
+    if a.cmd in GATE_CMDS:
+        return run_gate_stage(a.cmd, a.unit, a.resume)
+    if a.cmd in tuple(f"{g}-report" for g in GATE_CMDS):
+        return gate_report(a.cmd[:-len("-report")], a.unit)
     if a.cmd in STAGE_CMDS:
         print(refusal(a.cmd), flush=True)
         return 2
-    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, gcal, time or time-report)", flush=True)
+    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, gcal, time, time-report, qual or "
+          "qual-report)", flush=True)
     return 2
 
 
