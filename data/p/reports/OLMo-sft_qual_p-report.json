@@ -1,0 +1,130 @@
+{
+ "call_log": {
+  "form": "withheld like the checkpoint (m:318); its runs' totals are in it",
+  "n_malformed_lines": 0,
+  "n_runs": 1,
+  "path": "ckpt/OLMo-sft_qual_p-calls.jsonl",
+  "runs": [
+   {
+    "exception_type": null,
+    "outcome": "returned",
+    "resume": false,
+    "run": 1,
+    "stop": false
+   }
+  ],
+  "sha256": "e1c3467a6654948fc19e35b8457a887db3b79b86a8ff537aca7cb17a6f622fb7",
+  "stale_reservations": [],
+  "well_formed": true
+ },
+ "checkpoint": {
+  "path": "ckpt/OLMo-sft_qual.json",
+  "sha256": "1dff86dfda9a136b84338d694e3afa8525fdf6bf69d99ca5058ad7a457b94af8"
+ },
+ "counters": {
+  "contrast_forced_control_chars": {
+   "keys": [],
+   "n": 0,
+   "n_forced_rounds": 29,
+   "texts": {}
+  },
+  "hair_trigger": {
+   "domain": "every round of every session",
+   "n": 0,
+   "name": "line_break_in_stored_text"
+  },
+  "n_sham_forced_rounds": 64,
+  "n_sham_rounds": 160,
+  "sham": {
+   "cap_hits": {
+    "domain": "every sham round",
+    "keys": [
+     "A0s-OLMo-sft s=6 forced 0"
+    ],
+    "n": 1
+   },
+   "control_chars": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0,
+    "texts": {}
+   },
+   "corrupted_spelling": {
+    "domain": "the sham sessions' forced rounds",
+    "keys": [],
+    "n": 0
+   },
+   "harness_first_line": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   },
+   "refusals": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   }
+  },
+  "withheld": "the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint"
+ },
+ "declared_sentences": [
+  "G-CAL-p passed at the bar, 47/64 against 47"
+ ],
+ "disclosure": "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session ran.",
+ "form": "the seat's read domain only (m:271, m:318, the seat's ruling (h)): the sham sessions' counters and proxy cuts, the contrast forced rounds' control characters, the hair trigger over every round",
+ "identity_p": {
+  "p_package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26",
+  "proposal": "PROPOSAL-p",
+  "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+  "renders_sha256_p": "1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722"
+ },
+ "m_outputs": {
+  "reads": {
+   "path": "reports/OLMo-sft_qual_reads.json",
+   "sha256": "cad7da75e077c66336743fec2fd9ff4d502a47bb9ac63d806cc29a39a5a3ce77"
+  },
+  "report": {
+   "path": "reports/OLMo-sft_qual_report.json",
+   "sha256": "172f82c08cc015e58038f05ab34a6c61d6ff2bc8f660e948208545a9e8ca005c"
+  }
+ },
+ "p_package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26",
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "proxy": {
+  "attribution_complete": true,
+  "contrast": "withheld to the unit's VERDICTS or NOT-RUN record (m:318; the seat's ruling (h)): every proxy count over the contrast sessions -- the number of a session's calls is its free-round exclusion position",
+  "rule": "calls attributed to rounds by seed and stored-text sha256 (stage.attribute_calls); complete: every sham round attributed (N-3: the flag reads the sham sessions only)",
+  "sham": {
+   "cut_keys": [],
+   "n_attributed": 160,
+   "n_cuts": 0,
+   "n_rounds": 160,
+   "unattributed_keys": []
+  }
+ },
+ "register_entered": [
+  1,
+  2,
+  6,
+  7,
+  8,
+  9
+ ],
+ "root": "data/p",
+ "schema": "p-stage-report-v1",
+ "stage": "G-F0m-OLMo-sft (p)",
+ "status": "PASS",
+ "term_d_at_stage_end": [
+  {
+   "active_count": 2,
+   "on_main_thread": true,
+   "single_threaded": false,
+   "threads": [
+    "MainThread",
+    "tqdm_monitor"
+   ]
+  }
+ ],
+ "unit": "OLMo-sft"
+}

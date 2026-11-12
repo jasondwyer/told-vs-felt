@@ -1,0 +1,126 @@
+{
+ "call_log": {
+  "form": "withheld like the checkpoint (m:318); its runs' totals are in it",
+  "n_malformed_lines": 0,
+  "n_runs": 1,
+  "path": "ckpt/OLMo-dpo_qual_p-calls.jsonl",
+  "runs": [
+   {
+    "exception_type": null,
+    "outcome": "returned",
+    "resume": false,
+    "run": 1,
+    "stop": false
+   }
+  ],
+  "sha256": "ac41779d76a0c19a89492143654763629696a71ccbf365919b105260cc8229c4",
+  "stale_reservations": [],
+  "well_formed": true
+ },
+ "checkpoint": {
+  "path": "ckpt/OLMo-dpo_qual.json",
+  "sha256": "d1e3b9f1b266aa1f568c8d08fa29706e4143a4e83796bbf1c5071d4d9f794a24"
+ },
+ "counters": {
+  "contrast_forced_control_chars": {
+   "keys": [],
+   "n": 0,
+   "n_forced_rounds": 32,
+   "texts": {}
+  },
+  "hair_trigger": {
+   "domain": "every round of every session",
+   "n": 0,
+   "name": "line_break_in_stored_text"
+  },
+  "n_sham_forced_rounds": 64,
+  "n_sham_rounds": 160,
+  "sham": {
+   "cap_hits": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   },
+   "control_chars": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0,
+    "texts": {}
+   },
+   "corrupted_spelling": {
+    "domain": "the sham sessions' forced rounds",
+    "keys": [],
+    "n": 0
+   },
+   "harness_first_line": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   },
+   "refusals": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   }
+  },
+  "withheld": "the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint"
+ },
+ "declared_sentences": [],
+ "disclosure": "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session ran.",
+ "form": "the seat's read domain only (m:271, m:318, the seat's ruling (h)): the sham sessions' counters and proxy cuts, the contrast forced rounds' control characters, the hair trigger over every round",
+ "identity_p": {
+  "p_package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26",
+  "proposal": "PROPOSAL-p",
+  "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+  "renders_sha256_p": "1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722"
+ },
+ "m_outputs": {
+  "reads": {
+   "path": "reports/OLMo-dpo_qual_reads.json",
+   "sha256": "92c1cc85da421de1369dd7d127543acf725508108254f5bb1fa087381ac9db4f"
+  },
+  "report": {
+   "path": "reports/OLMo-dpo_qual_report.json",
+   "sha256": "efbe402d6f2de59c67a3e74f80c7d7cba5acd17adecddb18c05c28ddba7c3bdd"
+  }
+ },
+ "p_package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26",
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "proxy": {
+  "attribution_complete": true,
+  "contrast": "withheld to the unit's VERDICTS or NOT-RUN record (m:318; the seat's ruling (h)): every proxy count over the contrast sessions -- the number of a session's calls is its free-round exclusion position",
+  "rule": "calls attributed to rounds by seed and stored-text sha256 (stage.attribute_calls); complete: every sham round attributed (N-3: the flag reads the sham sessions only)",
+  "sham": {
+   "cut_keys": [],
+   "n_attributed": 160,
+   "n_cuts": 0,
+   "n_rounds": 160,
+   "unattributed_keys": []
+  }
+ },
+ "register_entered": [
+  1,
+  2,
+  6,
+  7,
+  8,
+  9
+ ],
+ "root": "data/p",
+ "schema": "p-stage-report-v1",
+ "stage": "G-F0m-OLMo-dpo (p)",
+ "status": "PASS",
+ "term_d_at_stage_end": [
+  {
+   "active_count": 2,
+   "on_main_thread": true,
+   "single_threaded": false,
+   "threads": [
+    "MainThread",
+    "tqdm_monitor"
+   ]
+  }
+ ],
+ "unit": "OLMo-dpo"
+}

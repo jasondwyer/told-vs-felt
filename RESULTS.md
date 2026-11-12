@@ -21,6 +21,90 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-11 — **G-F0m-OLMo (p) ×3 (PROPOSAL-p v0.2 §4.1, §8; m:302's G-F0m-OLMo-{ckpt}, run for p's unit under
+  register entries (1), (2), (6)–(9); the PI's routing of 2026-11-11, "Route as given", on the seat's answers of
+  2026-11-10 on G-ID-F3, §9 items 7–9): PASS ×3 on the box, path uncached, under LOCK-p v0.2 ×3 (`585df45`),
+  standing.** Each checkpoint ran 24 sessions, 8 contrast and 16 sham. The sham bar is silent at 0/160, and no hair
+  trigger fired. Stopped for the seat's read.
+  (Stamp verified at write time: `date -u` → **Thu Nov 12 04:55:18 UTC 2026**.)
+  - **The box,** unchanged since its characterization: pod `qny1x4v8padeke`, backend identifier `641ee466f4553b6a`
+    (BACKEND, `190ba90`). PID 1 has run since 2026-11-07T00:17:16Z; `env.sh` is `f5174faa…`; torch 2.8.0+cu128 and
+    transformers 5.15.0, as at G-TIME-OLMo (p). The GPU was idle before the launch.
+    - The repo was brought from `0afd842` to `eb3e08c` by a git bundle, with no network remote. First, G-TIME-OLMo
+      (p)'s 15 untracked outputs, each identical by digest to its committed blob, were set aside in
+      `/workspace/gtime_p/box-untracked-2026-11-10`.
+  - **Before the launch:**
+    - the stage's precheck at `qual` and the driver's weights-files check, CLEAR for all three units on the box, each
+      `lock_sha256` its committed lock's (sft `3765fe22…`, dpo `b739081f…`, instruct `48e1c315…`). (j)'s fresh closure
+      there is the recorded 14 files;
+    - the wrapper's chain rule, dry-tested on six cases.
+  - **The runs:** `scripts/p_sessions.py qual --unit OLMo-{ckpt}`, one run each with no `--resume`, back to back
+    through `/workspace/qual_p/run_qual_p.sh` (sha256 `28da64c9…`), on DRIVER `89551017…` at `eb3e08c`.
+    - The wrapper is in the one-launch-stamp form the seat adopted (its answers on G-ID-F3, §6 and §9 item 8). It
+      writes the batch's one launch stamp and each run's exit code (0, 0 and 0), and no end, done or later launch
+      stamp. This entry gives no end time and no stage total.
+    - The end-wait was on the wrapper's PID alone. The end notice carried "batch ended" and the exit statuses.
+    - Raw: [`_p-qual`](results/raw/2026-11-11_p-qual.txt), with the pod's address and port and the local roots
+      scrubbed.
+  - **Per checkpoint** (from m's and p's reports; Code did not open the checkpoints or the call logs):
+
+    | | sham bar (critical 7) | hair triggers | sham valid | sham cap hits | p's other sham counters | sham proxy | sham seconds | contrast forced rounds | excluded at a forced round | contrast forced control chars |
+    |---|---|---|---|---|---|---|---|---|---|---|
+    | sft | 0/160 | 0 | 16 of 16 | 1 | all 0 | 160/160 attributed, 0 cuts | 102.105 | 29 | 1 (lexical) | 0 of 29 |
+    | dpo | 0/160 | 0 | 16 of 16 | 0 | all 0 | 160/160, 0 cuts | 88.389 | 32 | 0 | 0 of 32 |
+    | instruct | 0/160 | 0 | 16 of 16 | 0 | all 0 | 160/160, 0 cuts | 85.237 | 32 | 0 | 0 of 32 |
+
+    - Each sham session ran its 4 forced and 6 free rounds, with no exclusion and no claim. sft's one cap hit is sham
+      session s=6's first forced round. The sham seconds are m's report's sum over the sixteen.
+    - sft's contrast session s=4 was excluded at a forced round by the lexical rule (m's stage report:
+      `excluded_at_forced` `lexical@forced` 1). The stage PASSes, since its bar reads the sham sessions.
+    - The contrast seconds and every count over a contrast free round are withheld (m:318; ruling (h)). The contrast
+      forced rounds' other counts (all 0) and m:283's first-read flags are in the block's §3.
+    - Register entries (1), (2) and (6)–(9) were entered. Each m stage report's identity carries its lock's sha256 and
+      the backend identifier `641ee466f4553b6a`.
+    - Term (d) at each stage's end: `single_threaded` false, with `tqdm_monitor` alive. It was recorded, never
+      raised.
+  - **`task_correct`** (rule 23; the seat's answers of 2026-11-09, §3; first reported here, by Code's own step). It
+    enters no bar, no verdict sentence and no label.
+    - sham sft 159 of 160 (forced 63 of 64, free 96 of 96); dpo 159 of 160 (63 of 64, 96 of 96); instruct 160 of 160.
+    - **Declared here, as the first entry that reports the counter** (the seat's §3):
+      - the key table, "the roster's sixteen items with one key each", verbatim: `3`, `24`, `44`, `12`, `down`, `77`,
+        `64`, `cold`, `7`, `45`, `2`, `closed`, `28`, `march`, `january`, `iron`;
+      - the match rule, verbatim: "a response is correct iff its whitespace- and punctuation-normalized, case-folded
+        text contains the item's declared key as a whole token (word-boundary match, so `12` does not satisfy the key
+        `2`), with number words `one` … `twelve` mapped to digits before the match";
+      - bound by the sha256 of `data/f/pools.json`, Code's reading of "the roster file" (the block's (t1)):
+        `8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0`.
+    - Code's readings (t1)–(t4) are in the block's §4, for the seat's word. Raw:
+      [`_p-qual_task-correct`](results/raw/2026-11-11_p-qual_task-correct.txt), the script verbatim with its stdout.
+  - **Committed with this entry:**
+    - per checkpoint, each byte-identical to the box's (sha256 at both ends):
+      - m's checkpoint `data/p/ckpt/OLMo-{ckpt}_qual.json` (-diff; it may hold contrast picks; not opened);
+      - p's call log `…_qual_p-calls.jsonl` (withheld; -diff; not opened);
+      - m's report and reads, and p's report, under `data/p/reports/`;
+    - the two raws, the block to the seat, and the values-check's raw.
+  - **The block to the seat**
+    ([`_p-qual_code-to-design_read`](results/raw/2026-11-11_p-qual_code-to-design_read.md)):
+    - Q1, the read, with sft's contrast exclusion;
+    - Q2, `task_correct`'s readings (t1)–(t4): the roster file read as the pool file, the punctuation reading, two
+      golds the keys do not credit, and the output's scope;
+    - Q3, p's next steps, G-PWR (p) first;
+    - observations (a)–(d), among them (d), the F3 values-checker's two laptop `git status --porcelain` runs during
+      the batch (disclosed at `05ef75d`), for the seat to judge.
+  - **Values-check:** a blind check of this entry's draft, the block and both raws, before the commit.
+    - 176 claims: 149 CONFIRMED, 11 IMPRECISE, 1 FAIL, 15 NOT CHECKABLE.
+    - The FAIL was a mistyped hash suffix in the block (sft's reads file), now fixed. No figure, count or quotation was
+      wrong.
+    - Each IMPRECISE item was applied, together with its observation that this entry itself carry the counter's
+      declarations.
+    - The additions made after the check were checked by tool: the block's §5(d) citation, reading (t4) and Q3's
+      quotations.
+    - The checker hashed the checkpoints and call logs and read nothing in them. Of the reads files it read only the
+      sham records. It computed nothing from any stamp. Its five disclosures are in its raw, for the seat.
+    - Raw: [`_p-qual_valuescheck`](results/raw/2026-11-11_p-qual_valuescheck.md).
+  - **Next:** the seat's read, then the PI's routing. The pod stays up and idle; its uptime goes back to the PI (§9
+    item 9). Not pushed. Committed by path.
+
 - 2026-11-11 — **LOCK-m-F3 v0.2 (PROPOSAL-m v1.11 §3.2 m:296, "Cap; path; projections"; the seat's G-ID-F3 answers,
   §5; the PI's routing of 2026-11-11, item 3), above the re-issued v0.1, which it keeps verbatim. `LOCK-m-F3.md`,
   sha256 `ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7`, is the file G-F3 cites.**

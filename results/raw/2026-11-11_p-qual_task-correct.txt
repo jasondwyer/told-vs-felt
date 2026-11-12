@@ -1,0 +1,234 @@
+# task_correct at G-F0m-OLMo (p) x3 (rule 23; the seat's answers of 2026-11-09 on G-TIME-OLMo (p), s3; the read licence, the seat's answers of 2026-11-10 on the qual wiring, s4, and the PI's B4): Code's own step, A-m2 v0.3 s3.4's form, not p's package and not the analyzer. Descriptive: it enters no bar, no verdict sentence and no label.
+# The script (scratch, model-free, stdlib only), sha256 9aa0e2d9155d1093ab260d90abc4dc9c8aeb3cd630b0edf49628561628014e0f, verbatim below. It reads the reads files' sham records only (a contrast record is skipped by its flag, nothing of it accessed) and prints k of n per checkpoint and phase, the key table, the match rule and Code's reading of it, the files' digests and record counts, and whether the alternative reading changes a count (the block's (t4) on the licence's scope). Its docstring cites the licence as the seat's s4 "and the PI's routing of 2026-11-10, B4"; the quoted words are the seat's s4, and B4's own line reads differently.
+# Run: python3 -I -B task_correct.py --selftest; then python3 -I -B task_correct.py <repo> qual. Also <repo> time, on G-TIME-OLMo (p)'s committed reads files, as a check of the step against the seat's own row: run before the qual run, and re-run after it for the capture below, with the same counts.
+
+# ==== stdout: the self-test, then the check on G-TIME-OLMo (p)'s committed reads files (re-run for this capture) ====
+selftest: 19/19 rule cases as declared
+task_correct (rule 23; descriptive; enters no bar, no verdict sentence, no label) -- stage time
+pools file data/f/pools.json (CORR_clean, 16 items) sha256 8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0
+key table (the seat's §3, verbatim): 3, 24, 44, 12, down, 77, 64, cold, 7, 45, 2, closed, 28, march, january, iron; each key the gold of exactly one item (its first gold)
+match rule (the seat's §3, verbatim): a response is correct iff its whitespace- and punctuation-normalized, case-folded text contains the item's declared key as a whole token (word-boundary match, so `12` does not satisfy the key `2`), with number words `one` … `twelve` mapped to digits before the match
+Code's reading of "punctuation-normalized": every character that is not a letter or a digit (str.isalnum) becomes a space, then the text splits on whitespace; the tokens are compared whole
+OLMo-sft: forced 3 of 4; free 6 of 6; all 9 of 10   (reads file sha256 294361ed8e7362417db5175ae8af9880a86c84d8e7fa5e8242231987474b408d; 1 sham records read, 1 contrast records skipped by flag)
+OLMo-dpo: forced 4 of 4; free 6 of 6; all 10 of 10   (reads file sha256 b44035beba9a3ab480dd5fbd09b1b0d87ea92fdbef21e4f00fda80c899f6639e; 1 sham records read, 1 contrast records skipped by flag)
+OLMo-instruct: forced 4 of 4; free 6 of 6; all 10 of 10   (reads file sha256 c7045474cad63d1e2bafb0d05d8d80c2fb2efa87f21ff655c34fc1c6c09f75ad; 1 sham records read, 1 contrast records skipped by flag)
+the alternative reading (punctuation deleted, not spaced): no count changes
+
+# ==== stdout at qual ====
+task_correct (rule 23; descriptive; enters no bar, no verdict sentence, no label) -- stage qual
+pools file data/f/pools.json (CORR_clean, 16 items) sha256 8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0
+key table (the seat's §3, verbatim): 3, 24, 44, 12, down, 77, 64, cold, 7, 45, 2, closed, 28, march, january, iron; each key the gold of exactly one item (its first gold)
+match rule (the seat's §3, verbatim): a response is correct iff its whitespace- and punctuation-normalized, case-folded text contains the item's declared key as a whole token (word-boundary match, so `12` does not satisfy the key `2`), with number words `one` … `twelve` mapped to digits before the match
+Code's reading of "punctuation-normalized": every character that is not a letter or a digit (str.isalnum) becomes a space, then the text splits on whitespace; the tokens are compared whole
+OLMo-sft: forced 63 of 64; free 96 of 96; all 159 of 160   (reads file sha256 cad7da75e077c66336743fec2fd9ff4d502a47bb9ac63d806cc29a39a5a3ce77; 16 sham records read, 8 contrast records skipped by flag)
+OLMo-dpo: forced 63 of 64; free 96 of 96; all 159 of 160   (reads file sha256 92c1cc85da421de1369dd7d127543acf725508108254f5bb1fa087381ac9db4f; 16 sham records read, 8 contrast records skipped by flag)
+OLMo-instruct: forced 64 of 64; free 96 of 96; all 160 of 160   (reads file sha256 afbcfb35c44a175763c071121cb5b559a75f604dae356c51cc19274544d172d0; 16 sham records read, 8 contrast records skipped by flag)
+the alternative reading (punctuation deleted, not spaced): no count changes
+
+# ==== task_correct.py (sha256 9aa0e2d9155d1093ab260d90abc4dc9c8aeb3cd630b0edf49628561628014e0f) ====
+#!/usr/bin/env python3
+"""task_correct -- the seat's rule-23 correctness counter, tabulated by Code's own step (scratch; model-free).
+
+Sources (quoted by the entry that first reports the counter):
+  - the counter, its key table and its match rule: the seat's answers of 2026-11-09 (p G-TIME), §3
+    (results/raw/2026-11-09_p-gtime_design-to-code_answers.md);
+  - the read licence: the seat's answers of 2026-11-10 (p qual wiring), §4, and the PI's routing of 2026-11-10, B4:
+    "the reads files' sham records only, never the checkpoint, the call log or a contrast session; printed as k of n
+    per checkpoint and phase, the key table and the match rule beside, nothing else";
+  - the form: Code's own step (A-m2 v0.3 §3.4's form), not p's package and not the analyzer.
+
+What it reads: data/p/reports/OLMo-{ckpt}_{stage}_reads.json, parsed whole. A record is read only if its
+``contrast`` flag is False, and then only if its ``blinding`` line is m's sham-redacted one; of a record whose flag
+is True nothing but the flag is accessed. Never a checkpoint, a call log or a report other than the reads files.
+
+Each round's item: the ``Task:`` line of the round's own ``round`` piece in the redacted transcript (the free rounds'
+structured item field is withheld by m's readrule), matched by equality to exactly one CORR_clean task; on a forced
+round the record's own ``item`` and ``task_text`` must agree. A round whose item matches no task, or more than one,
+is an error, never a miss ("an item with no key is an error, not a miss").
+
+What it prints: k of n per checkpoint and phase, the key table and the match rule, the files' sha256 (digests), the
+record counts, and one line saying whether the alternative reading of "punctuation-normalized" (punctuation deleted
+rather than spaced) changes any count. Never a response, an item, a session or a pick.
+
+Usage:
+  python -I -B task_correct.py --selftest
+  python -I -B task_correct.py <repo> <stage>          # stage: time | qual
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+POOLS_REL = "data/f/pools.json"
+POOLS_SHA256 = "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0"   # m's pin: corr.POOLS_SHA16 prefix
+POOL_NAME = "CORR_clean"
+#: The seat's key table, in the seat's order, verbatim (§3: "the roster's sixteen items with one key each").
+KEYS = ("3", "24", "44", "12", "down", "77", "64", "cold", "7", "45", "2", "closed", "28", "march", "january", "iron")
+#: "with number words one … twelve mapped to digits before the match"
+NUMBER_WORDS = {w: str(i) for i, w in enumerate(
+    ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"), start=1)}
+MATCH_RULE = ("a response is correct iff its whitespace- and punctuation-normalized, case-folded text contains the "
+              "item's declared key as a whole token (word-boundary match, so `12` does not satisfy the key `2`), with "
+              "number words `one` … `twelve` mapped to digits before the match")
+READING = ("Code's reading of \"punctuation-normalized\": every character that is not a letter or a digit "
+           "(str.isalnum) becomes a space, then the text splits on whitespace; the tokens are compared whole")
+SHAM_BLINDING = "sham-redacted: menus removed, chosen tag [config] (m:271)"
+UNITS = ("OLMo-sft", "OLMo-dpo", "OLMo-instruct")
+PHASES = ("forced", "free")
+
+
+class CounterError(SystemExit):
+    """A refusal: the counter prints no count when its input is not what the rule reads."""
+
+
+def tokens(text: str, *, alt: bool = False) -> list[str]:
+    t = text.casefold()
+    if alt:     # the alternative reading: punctuation deleted, not spaced
+        t = "".join(ch for ch in t if ch.isalnum() or ch.isspace())
+    else:
+        t = "".join(ch if ch.isalnum() else " " for ch in t)
+    return [NUMBER_WORDS.get(w, w) for w in t.split()]
+
+
+def correct(text: str, key: str, *, alt: bool = False) -> bool:
+    return key in tokens(text, alt=alt)
+
+
+def load_pool(root: Path) -> list[dict]:
+    b = (root / POOLS_REL).read_bytes()
+    if hashlib.sha256(b).hexdigest() != POOLS_SHA256:
+        raise CounterError(f"REFUSED: {POOLS_REL} is not at its sha256 {POOLS_SHA256}")
+    pool = json.loads(b)[POOL_NAME]
+    if len(pool) != 16:
+        raise CounterError(f"REFUSED: {POOL_NAME} carries {len(pool)} items, not 16")
+    return pool
+
+
+def key_table(pool: list[dict]) -> dict[int, str]:
+    """Each key belongs to the one item whose gold list carries it; a bijection onto the sixteen items."""
+    if len(set(KEYS)) != 16:
+        raise CounterError("REFUSED: the key table does not carry sixteen distinct keys")
+    item_key: dict[int, str] = {}
+    for k in KEYS:
+        owners = [i for i, it in enumerate(pool) if k in [g.casefold() for g in it["gold"]]]
+        if len(owners) != 1:
+            raise CounterError(f"REFUSED: key {k!r} is the gold of {len(owners)} items, not one")
+        if owners[0] in item_key:
+            raise CounterError(f"REFUSED: item {owners[0]} would carry two keys")
+        item_key[owners[0]] = k
+    if sorted(item_key) != list(range(16)):
+        raise CounterError("REFUSED: an item carries no key (an error, not a miss)")
+    return item_key
+
+
+def task_of(fragment: str) -> str:
+    lines = fragment.split("\n")
+    if len(lines) != 3 or not lines[0].startswith("[round ") or not lines[1].startswith("Task: ") \
+            or lines[2] != "Response:":
+        raise CounterError("REFUSED: a round piece is not '[round …]\\nTask: …\\nResponse:'")
+    return lines[1][len("Task: "):]
+
+
+def tally_file(path: Path, pool: list[dict], item_key: dict[int, str]) -> tuple[dict, dict, int, int]:
+    data = json.loads(path.read_bytes())
+    sessions = data.get("sessions")
+    if not isinstance(sessions, list):
+        raise CounterError(f"REFUSED: {path.name} carries no sessions list")
+    by_task = {}
+    for i, it in enumerate(pool):
+        by_task.setdefault(it["task"], []).append(i)
+    k = {ph: [0, 0] for ph in PHASES}
+    k_alt = {ph: [0, 0] for ph in PHASES}
+    n_sham = n_contrast = 0
+    for rec in sessions:
+        flag = rec.get("contrast")
+        if flag is True:
+            n_contrast += 1
+            continue                                   # nothing of a contrast record but its flag
+        if flag is not False or rec.get("blinding") != SHAM_BLINDING:
+            raise CounterError(f"REFUSED: {path.name}: a record is neither a flagged contrast nor a sham-redacted one")
+        n_sham += 1
+        t = rec["transcript"]
+        frags: dict[tuple[str, str, int], str] = {}
+        for p in rec["pieces"]:
+            if p["kind"] in ("round", "generation"):
+                kk = (p["kind"], p["phase"], p["idx"])
+                if kk in frags:
+                    raise CounterError(f"REFUSED: {path.name}: a duplicate {p['kind']} piece")
+                frags[kk] = t[p["start"]:p["end"]]
+        for r in rec["rounds"]:
+            ph = r["phase"]
+            if ph not in PHASES:
+                raise CounterError(f"REFUSED: {path.name}: a round phase outside (forced, free)")
+            ix = r["ri"] if ph == "forced" else r["ci"]
+            task = task_of(frags[("round", ph, ix)])
+            owners = by_task.get(task, [])
+            if len(owners) != 1:
+                raise CounterError(f"REFUSED: {path.name}: a {ph} round's task matches {len(owners)} items "
+                                   f"(an item with no key is an error, not a miss)")
+            item = owners[0]
+            if ph == "forced" and (r.get("item") != item or r.get("task_text") != task):
+                raise CounterError(f"REFUSED: {path.name}: a forced round's item / task_text disagrees with its "
+                                   f"Task line")
+            text = r["text"]
+            if frags.get(("generation", ph, ix)) != text:
+                raise CounterError(f"REFUSED: {path.name}: a {ph} round's text differs from its generation piece")
+            key = item_key[item]
+            k[ph][0] += correct(text, key)
+            k[ph][1] += 1
+            k_alt[ph][0] += correct(text, key, alt=True)
+            k_alt[ph][1] += 1
+    return k, k_alt, n_sham, n_contrast
+
+
+def selftest() -> int:
+    cases = [  # (response, key, want under Code's reading, want under the alternative)
+        ("4", "2", False, False), ("12", "2", False, False), ("2", "2", True, True),
+        ("A triangle has three sides", "3", True, True), ("A bicycle has two wheels", "2", True, True),
+        ("Seven", "7", True, True), ("Twelve.", "12", True, True), ("a kilogram of iron", "iron", True, True),
+        ("Closed", "closed", True, True), ("The opposite of 'open' is 'close", "closed", False, False),
+        ("March", "march", True, True), ("Twenty-four", "24", False, False), ("24 hours", "24", True, True),
+        ("January's", "january", True, False), ("Ironclad", "iron", False, False), ("DOWN!", "down", True, True),
+        ("[config] 77", "77", True, True), ("", "3", False, False), ("Shut", "closed", False, False),
+    ]
+    bad = [(c, k) for c, k, w, wa in cases if correct(c, k) != w or correct(c, k, alt=True) != wa]
+    print(f"selftest: {len(cases) - len(bad)}/{len(cases)} rule cases as declared" + (f"; FAIL {bad}" if bad else ""))
+    return 1 if bad else 0
+
+
+def main(argv: list[str]) -> int:
+    if argv[1:] == ["--selftest"]:
+        return selftest()
+    if len(argv) != 3 or argv[2] not in ("time", "qual"):
+        raise CounterError(__doc__)
+    root, stage = Path(argv[1]).resolve(), argv[2]
+    pool = load_pool(root)
+    item_key = key_table(pool)
+    first_gold = all(pool[i]["gold"][0].casefold() == k for i, k in item_key.items())
+    print(f"task_correct (rule 23; descriptive; enters no bar, no verdict sentence, no label) -- stage {stage}")
+    print(f"pools file {POOLS_REL} ({POOL_NAME}, 16 items) sha256 {POOLS_SHA256}")
+    print(f"key table (the seat's §3, verbatim): {', '.join(KEYS)}; each key the gold of exactly one item"
+          f"{' (its first gold)' if first_gold else ''}")
+    print(f"match rule (the seat's §3, verbatim): {MATCH_RULE}")
+    print(f"{READING}")
+    differs = []
+    for u in UNITS:
+        path = root / "data" / "p" / "reports" / f"{u}_{stage}_reads.json"
+        sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        k, k_alt, n_sham, n_contrast = tally_file(path, pool, item_key)
+        tot = [sum(k[ph][0] for ph in PHASES), sum(k[ph][1] for ph in PHASES)]
+        print(f"{u}: forced {k['forced'][0]} of {k['forced'][1]}; free {k['free'][0]} of {k['free'][1]}; "
+              f"all {tot[0]} of {tot[1]}   (reads file sha256 {sha}; {n_sham} sham records read, "
+              f"{n_contrast} contrast records skipped by flag)")
+        if k_alt != k:
+            differs.append(f"{u}: forced {k_alt['forced'][0]} of {k_alt['forced'][1]}, free {k_alt['free'][0]} of "
+                           f"{k_alt['free'][1]}")
+    print("the alternative reading (punctuation deleted, not spaced): "
+          + ("no count changes" if not differs else "counts differ -- " + "; ".join(differs)))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

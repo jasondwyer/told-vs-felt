@@ -1,0 +1,247 @@
+{
+ "bars": [
+  {
+   "binding": true,
+   "crit": 7,
+   "exceeds": false,
+   "fired": false,
+   "k": 0,
+   "message": "BAR round_degeneracy@G-F0m-OLMo-sft silent template=A0s-OLMo-sft 0/160 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 7 at n=160",
+   "n": 160,
+   "name": "round_degeneracy@G-F0m-OLMo-sft",
+   "p": "1/1"
+  }
+ ],
+ "contrast_first_read_flags": {
+  "A0-OLMo-sft": {
+   "low_label_mass": 0,
+   "reads": 7,
+   "scope": "first reads of domain sessions",
+   "top1_not_label": 1
+  }
+ },
+ "files": {
+  "checkpoint": "ckpt/OLMo-sft_qual.json",
+  "reads": "reports/OLMo-sft_qual_reads.json"
+ },
+ "form": "pick-free stage report (m:271, m:318)",
+ "identity": {
+  "audit_v2_sha16": "dd3fe09bed429e54",
+  "backend_identifier": "641ee466f4553b6a",
+  "ban_sha": "2dd86a453a2275ef",
+  "lock_sha256": "3765fe22d3d548d96373d5ce20eebaad3c0558d6d6154e327db8a7946a0f2f98",
+  "package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
+  "path": "uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "renders_sha16": "6baf494960da4589",
+  "schedule_sha256": "a4b0834f59b598cf6620f8c59f724f4cd49282081bf9b546626de8944c80da45"
+ },
+ "planned": {
+  "A0-OLMo-sft": 8,
+  "A0s-OLMo-sft": 16
+ },
+ "provenance": [
+  {
+   "launched": 24,
+   "record": {
+    "adapter": "olmo-hf",
+    "backend": "torch/cuda",
+    "capability": [
+     8,
+     0
+    ],
+    "choice_window_declared": 8192,
+    "cublas_workspace_config": ":4096:8",
+    "cuda": "12.8",
+    "deterministic": true,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "library_versions": {
+     "accelerate": "1.14.0",
+     "huggingface_hub": "1.28.0",
+     "numpy": "2.1.2",
+     "safetensors": "0.8.0",
+     "torch": "2.8.0+cu128",
+     "transformers": "5.15.0"
+    },
+    "n_layers": 64,
+    "path": "/workspace/models/sft",
+    "python": "3.12.3",
+    "seed": 20260818
+   },
+   "stamp": "2026-11-12T03:46:40Z"
+  }
+ ],
+ "recorded": {
+  "A0-OLMo-sft": 8,
+  "A0s-OLMo-sft": 16
+ },
+ "schema": "m-stage-report-v1",
+ "stage": "qual",
+ "stage_name": "G-F0m-OLMo-sft",
+ "stage_report": {
+  "form": "pick-free stage report (m:271, m:318)",
+  "stage": "qual",
+  "substrate": "olmo",
+  "templates": {
+   "A0-OLMo-sft": {
+    "audit_sessions_forced": 0,
+    "contrast": true,
+    "domain_sessions": 7,
+    "excluded_at_forced": {
+     "audit@forced": 0,
+     "echo@forced": 0,
+     "lexical@forced": 1
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 1
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 29,
+     "termination": 0
+    },
+    "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "hair_triggers": [],
+    "sessions": 8,
+    "sessions_excluded_at_forced": 1
+   },
+   "A0s-OLMo-sft": {
+    "all": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 1,
+     "claims": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 160,
+     "termination": 0
+    },
+    "audit_sessions": 0,
+    "complete_sessions": 16,
+    "contrast": false,
+    "domain_sessions": 16,
+    "excluded_sessions": {
+     "audit@forced": 0,
+     "audit@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 0,
+     "lexical@free": 0
+    },
+    "first_pick_P": {
+     "k": 9,
+     "n": 16,
+     "share": "9/16"
+    },
+    "first_pick_P_by_pair": {
+     "0": {
+      "k": 2,
+      "n": 4,
+      "share": "1/2"
+     },
+     "1": {
+      "k": 4,
+      "n": 4,
+      "share": "1"
+     },
+     "2": {
+      "k": 2,
+      "n": 4,
+      "share": "1/2"
+     },
+     "3": {
+      "k": 1,
+      "n": 4,
+      "share": "1/4"
+     }
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 1,
+     "claims": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 64,
+     "termination": 0
+    },
+    "free": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 96,
+     "termination": 0
+    },
+    "hair_triggers": [],
+    "reads": {
+     "low_label_mass": 0,
+     "n": 96,
+     "top1_not_label": 12
+    },
+    "sessions": 16,
+    "strict_excluded_sessions": {
+     "audit@forced": 0,
+     "audit@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 0,
+     "lexical@free": 0
+    },
+    "valid_sessions": 16
+   }
+  },
+  "unit": "OLMo-sft"
+ },
+ "status": "PASS",
+ "stop": null,
+ "timing": {
+  "contrast_seconds": "withheld to the unit's VERDICTS entry (m:318)",
+  "sham_seconds": 102.105,
+  "sham_sessions": 16
+ },
+ "unit": "OLMo-sft"
+}

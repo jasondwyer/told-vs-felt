@@ -1,0 +1,487 @@
+# G-F0m-OLMo (p) x3 OF RECORD (PROPOSAL-p v0.2 s4.1, s8; m:302's G-F0m-OLMo-{ckpt}, run for p's unit under register entries (1), (2), (6)-(9)), on the PI's routing of 2026-11-11 ("Route as given", on the seat's answers of 2026-11-10 on G-ID-F3, s9 items 7-9: the locks standing, the box's stamp rule, the box run), relayed by the coordinating session.
+# BOX: pod qny1x4v8padeke (jspace-olmo-m), 1 x A100-SXM4-80GB, US-CA-2; backend identifier 641ee466f4553b6a (BACKEND entry, 190ba90; each lock's BACKEND OF RECORD line; each report's identity); PID 1 (the pod's container) started 2026-11-07T00:17:16Z, as at G-TIME-OLMo (p) and the BACKEND characterization; box repo at eb3e08c.
+# COMMAND (box, via /workspace/qual_p/run_qual_p.sh, sha256 28da64c9a77944162639d51390dbe53b63c0c73956681b568d540292382d5d7b, appended below; env.sh sourced; cwd /workspace/repo/jspace-lab), per ckpt in sft dpo instruct:
+#   /workspace/venv/bin/python scripts/p_sessions.py qual --unit OLMo-{ckpt}        (one run per checkpoint: no --resume)
+#   chain rule (declared before launch, dry-tested on 6 cases, section below): continue on PASS (exit 0 with its P-REPORT PASS line, no STOP line) or PAUSE (exit 3 with its P-REPORT PAUSE line, no STOP line); halt on a refusal (2), a STOP or any other exit.
+#   stamps (the seat's answers of 2026-11-10 on G-ID-F3, s6 and s9 item 8): the wrapper writes the batch's one launch stamp and each run's exit code, and no end, done or later launch stamp. m's PROVENANCE start stamps remain in each run's stdout and report, the Q4 ruling's unavoidable records. No other stamp of the run is in this raw.
+# RESULT: PASS x3, each path=uncached. Each checkpoint: 24 sessions (8 A0-OLMo-{ckpt} contrast, 16 A0s-OLMo-{ckpt} sham), as planned and recorded; the sham bar round_degeneracy@G-F0m-OLMo-{ckpt} silent at 0/160 (critical 7 at n=160, p0 0.02); no hair trigger (the stage report's, and p's line_break_in_stored_text 0). sft: one contrast session (s=4) excluded at a forced round by the lexical rule, 23 of 24 valid; dpo and instruct 24 of 24.
+# OUTPUTS (committed with this raw; byte-identical to the box's, sha256 compared at both ends; the checkpoints may hold contrast picks and are -diff, never opened by Code; the call logs are withheld, -diff, never opened):
+#   data/p/ckpt/OLMo-sft_qual.json                  1dff86dfda9a136b84338d694e3afa8525fdf6bf69d99ca5058ad7a457b94af8
+#   data/p/ckpt/OLMo-sft_qual_p-calls.jsonl         e1c3467a6654948fc19e35b8457a887db3b79b86a8ff537aca7cb17a6f622fb7
+#   data/p/reports/OLMo-sft_qual_report.json        172f82c08cc015e58038f05ab34a6c61d6ff2bc8f660e948208545a9e8ca005c
+#   data/p/reports/OLMo-sft_qual_reads.json         cad7da75e077c66336743fec2fd9ff4d502a47bb9ac63d806cc29a39a5a3ce77
+#   data/p/reports/OLMo-sft_qual_p-report.json      3f91b661eb64f873aef398a631d791f5bf342091133e929ccfe135677e7c49a0
+#   data/p/ckpt/OLMo-dpo_qual.json                  d1e3b9f1b266aa1f568c8d08fa29706e4143a4e83796bbf1c5071d4d9f794a24
+#   data/p/ckpt/OLMo-dpo_qual_p-calls.jsonl         ac41779d76a0c19a89492143654763629696a71ccbf365919b105260cc8229c4
+#   data/p/reports/OLMo-dpo_qual_report.json        efbe402d6f2de59c67a3e74f80c7d7cba5acd17adecddb18c05c28ddba7c3bdd
+#   data/p/reports/OLMo-dpo_qual_reads.json         92c1cc85da421de1369dd7d127543acf725508108254f5bb1fa087381ac9db4f
+#   data/p/reports/OLMo-dpo_qual_p-report.json      9b1eb4581d84d563f0c73482ef78a94b23de419e43fcc31f6bda0cbf7e1b17f8
+#   data/p/ckpt/OLMo-instruct_qual.json             60103d81b55b66378cbc95fde0357a2d7e09e8ac33018c939d6ad2bfe88f29d1
+#   data/p/ckpt/OLMo-instruct_qual_p-calls.jsonl    4ce8c428c05115da9139f6c1fbb12c072a25d3f6ee7ec4e0fea2515adbbd2ab6
+#   data/p/reports/OLMo-instruct_qual_report.json   7c174940667bb483190fc476d186937f99acfaf4587dba67965061384d888b54
+#   data/p/reports/OLMo-instruct_qual_reads.json    afbcfb35c44a175763c071121cb5b559a75f604dae356c51cc19274544d172d0
+#   data/p/reports/OLMo-instruct_qual_p-report.json 57c7e5e350628d29c599784b74377081618dddf2e8458174c449cb8062b52f96
+# What follows, verbatim: the wrapper's stamps file; each run's stdout+stderr (sha256 sft 1dfba140..., dpo a6a5ff9f..., instruct 12c4b053...; the loader's carriage returns shown as line breaks); the wrapper; its own log; the launch call's output; Code's pre-flight (read-only checks, the sync, the precheck, the chain rule's dry test); the end-wait; the copy-back; and, after the copy-back, the five scripts those steps ran, verbatim but for the scrub. The pod's address and port are scrubbed to <host> and <port>, local roots to <repo>, <scratch> and <home>.
+
+# ==== stamps.txt (the wrapper's; read only after the wrapper's PID had ended) ====
+launch 2026-11-12T03:42:33Z HEAD=eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15 RUNPOD_POD_ID=qny1x4v8padeke
+ran sft exit=0
+ran dpo exit=0
+ran instruct exit=0
+ended
+
+# ==== qual_p-sft.txt (verbatim; sha256 1dfba140fdb68965f28d403c8f59d99730b64faab22c825ad02c0463084a2c16) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py qual --unit OLMo-sft
+DRIVER scripts/p_sessions.py 89551017bdfd78f67440ca3c5c1aa44a8a8ff83494a349b430aaaed22655af44: committed at HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, working tree identical (G-F0m-OLMo-sft (p)'s precheck)
+WEIGHTS sft: allenai/Olmo-3.1-32B-Instruct-SFT revision 152782ecc41a, files_aggregate_sha256 ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5; 7 files at /workspace/models/sft, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE G-F0m-OLMo-sft (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  11%|█         | 76/707 [00:00<00:00, 722.93it/s]
+Loading weights:  21%|██        | 149/707 [00:00<00:00, 590.67it/s]
+Loading weights:  30%|██▉       | 210/707 [00:00<00:00, 499.91it/s]
+Loading weights:  40%|████      | 283/707 [00:00<00:00, 554.00it/s]
+Loading weights:  48%|████▊     | 341/707 [00:00<00:00, 469.69it/s]
+Loading weights:  55%|█████▌    | 391/707 [00:00<00:00, 466.21it/s]
+Loading weights:  65%|██████▍   | 457/707 [00:00<00:00, 519.05it/s]
+Loading weights:  73%|███████▎  | 517/707 [00:00<00:00, 530.58it/s]
+Loading weights:  81%|████████  | 572/707 [00:01<00:00, 524.90it/s]
+Loading weights:  89%|████████▊ | 626/707 [00:01<00:00, 510.42it/s]
+Loading weights:  96%|█████████▌| 678/707 [00:01<00:00, 500.58it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 522.09it/s]
+LICENCE G-F0m-OLMo-sft: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-sft.md 3765fe22d3d548d9: committed at HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/sft","python":"3.12.3","seed":20260818},"stamp":"2026-11-12T03:46:40Z"}
+qual A0-OLMo-sft s=0 valid
+qual A0s-OLMo-sft s=0 valid
+qual A0-OLMo-sft s=1 valid
+qual A0s-OLMo-sft s=1 valid
+qual A0-OLMo-sft s=2 valid
+qual A0s-OLMo-sft s=2 valid
+qual A0-OLMo-sft s=3 valid
+qual A0s-OLMo-sft s=3 valid
+qual A0-OLMo-sft s=4 excluded:lexical@forced
+qual A0s-OLMo-sft s=4 valid
+qual A0-OLMo-sft s=5 valid
+qual A0s-OLMo-sft s=5 valid
+qual A0-OLMo-sft s=6 valid
+qual A0s-OLMo-sft s=6 valid
+qual A0-OLMo-sft s=7 valid
+qual A0s-OLMo-sft s=7 valid
+qual A0s-OLMo-sft s=8 valid
+qual A0s-OLMo-sft s=9 valid
+qual A0s-OLMo-sft s=10 valid
+qual A0s-OLMo-sft s=11 valid
+qual A0s-OLMo-sft s=12 valid
+qual A0s-OLMo-sft s=13 valid
+qual A0s-OLMo-sft s=14 valid
+qual A0s-OLMo-sft s=15 valid
+BAR round_degeneracy@G-F0m-OLMo-sft silent template=A0s-OLMo-sft 0/160 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 7 at n=160
+STAGE G-F0m-OLMo-sft PASS path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-sft_qual.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-sft_qual_report.json
+READS /workspace/repo/jspace-lab/data/p/reports/OLMo-sft_qual_reads.json
+P-REPORT G-F0m-OLMo-sft (p): PASS; checkpoint ckpt/OLMo-sft_qual.json (sha256 1dff86dfda9a136b84338d694e3afa8525fdf6bf69d99ca5058ad7a457b94af8); p's report data/p/reports/OLMo-sft_qual_p-report.json (written), call log ckpt/OLMo-sft_qual_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (160 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 1 ['A0s-OLMo-sft s=6 forced 0']; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (29 rounds): 0 []
+P-REPORT sham proxy: 160 of 160 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+
+# ==== qual_p-dpo.txt (verbatim; sha256 a6a5ff9f06680cb022be896a44e906b2c82a464898522e804013d7f415a62579) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py qual --unit OLMo-dpo
+DRIVER scripts/p_sessions.py 89551017bdfd78f67440ca3c5c1aa44a8a8ff83494a349b430aaaed22655af44: committed at HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, working tree identical (G-F0m-OLMo-dpo (p)'s precheck)
+WEIGHTS dpo: allenai/Olmo-3.1-32B-Instruct-DPO revision fc84a4f69991, files_aggregate_sha256 c6e5e2abe093d0fcb6050500bdb7dc13998fa51fdde47cc93bffded126f33e60; 7 files at /workspace/models/dpo, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE G-F0m-OLMo-dpo (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:   8%|▊         | 58/707 [00:00<00:01, 574.71it/s]
+Loading weights:  16%|█▋        | 116/707 [00:00<00:01, 484.22it/s]
+Loading weights:  23%|██▎       | 166/707 [00:00<00:01, 407.33it/s]
+Loading weights:  30%|██▉       | 209/707 [00:00<00:01, 378.10it/s]
+Loading weights:  35%|███▌      | 248/707 [00:00<00:01, 375.01it/s]
+Loading weights:  40%|████      | 286/707 [00:00<00:01, 349.61it/s]
+Loading weights:  46%|████▌     | 322/707 [00:00<00:01, 351.30it/s]
+Loading weights:  51%|█████     | 358/707 [00:00<00:01, 339.21it/s]
+Loading weights:  56%|█████▌    | 393/707 [00:01<00:00, 341.13it/s]
+Loading weights:  61%|██████    | 430/707 [00:01<00:00, 303.75it/s]
+Loading weights:  68%|██████▊   | 480/707 [00:01<00:00, 345.40it/s]
+Loading weights:  73%|███████▎  | 516/707 [00:01<00:00, 342.74it/s]
+Loading weights:  78%|███████▊  | 551/707 [00:01<00:00, 342.49it/s]
+Loading weights:  84%|████████▎ | 592/707 [00:01<00:00, 359.39it/s]
+Loading weights:  90%|████████▉ | 636/707 [00:01<00:00, 381.84it/s]
+Loading weights:  95%|█████████▌| 675/707 [00:01<00:00, 378.50it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 371.73it/s]
+LICENCE G-F0m-OLMo-dpo: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-dpo.md b739081f60a5c5b0: committed at HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/dpo","python":"3.12.3","seed":20260818},"stamp":"2026-11-12T03:53:18Z"}
+qual A0-OLMo-dpo s=0 valid
+qual A0s-OLMo-dpo s=0 valid
+qual A0-OLMo-dpo s=1 valid
+qual A0s-OLMo-dpo s=1 valid
+qual A0-OLMo-dpo s=2 valid
+qual A0s-OLMo-dpo s=2 valid
+qual A0-OLMo-dpo s=3 valid
+qual A0s-OLMo-dpo s=3 valid
+qual A0-OLMo-dpo s=4 valid
+qual A0s-OLMo-dpo s=4 valid
+qual A0-OLMo-dpo s=5 valid
+qual A0s-OLMo-dpo s=5 valid
+qual A0-OLMo-dpo s=6 valid
+qual A0s-OLMo-dpo s=6 valid
+qual A0-OLMo-dpo s=7 valid
+qual A0s-OLMo-dpo s=7 valid
+qual A0s-OLMo-dpo s=8 valid
+qual A0s-OLMo-dpo s=9 valid
+qual A0s-OLMo-dpo s=10 valid
+qual A0s-OLMo-dpo s=11 valid
+qual A0s-OLMo-dpo s=12 valid
+qual A0s-OLMo-dpo s=13 valid
+qual A0s-OLMo-dpo s=14 valid
+qual A0s-OLMo-dpo s=15 valid
+BAR round_degeneracy@G-F0m-OLMo-dpo silent template=A0s-OLMo-dpo 0/160 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 7 at n=160
+STAGE G-F0m-OLMo-dpo PASS path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-dpo_qual.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-dpo_qual_report.json
+READS /workspace/repo/jspace-lab/data/p/reports/OLMo-dpo_qual_reads.json
+P-REPORT G-F0m-OLMo-dpo (p): PASS; checkpoint ckpt/OLMo-dpo_qual.json (sha256 d1e3b9f1b266aa1f568c8d08fa29706e4143a4e83796bbf1c5071d4d9f794a24); p's report data/p/reports/OLMo-dpo_qual_p-report.json (written), call log ckpt/OLMo-dpo_qual_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (160 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 0 []; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (32 rounds): 0 []
+P-REPORT sham proxy: 160 of 160 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+
+# ==== qual_p-instruct.txt (verbatim; sha256 12c4b0533aa8e826e0783ca2885f9d964846ecbb1cac3bb7d87fab9e638c49ba) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py qual --unit OLMo-instruct
+DRIVER scripts/p_sessions.py 89551017bdfd78f67440ca3c5c1aa44a8a8ff83494a349b430aaaed22655af44: committed at HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, working tree identical (G-F0m-OLMo-instruct (p)'s precheck)
+WEIGHTS instruct: allenai/Olmo-3.1-32B-Instruct revision ac0587e4a774, files_aggregate_sha256 0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643; 8 files at /workspace/models/instruct, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE G-F0m-OLMo-instruct (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  12%|█▏        | 82/707 [00:00<00:00, 814.96it/s]
+Loading weights:  23%|██▎       | 164/707 [00:00<00:00, 587.68it/s]
+Loading weights:  32%|███▏      | 227/707 [00:00<00:00, 520.13it/s]
+Loading weights:  40%|███▉      | 282/707 [00:00<00:01, 397.63it/s]
+Loading weights:  46%|████▌     | 326/707 [00:00<00:01, 362.26it/s]
+Loading weights:  54%|█████▍    | 383/707 [00:00<00:00, 403.43it/s]
+Loading weights:  61%|██████    | 430/707 [00:00<00:00, 417.92it/s]
+Loading weights:  67%|██████▋   | 474/707 [00:01<00:00, 407.65it/s]
+Loading weights:  73%|███████▎  | 517/707 [00:01<00:00, 400.04it/s]
+Loading weights:  79%|███████▉  | 559/707 [00:01<00:00, 390.63it/s]
+Loading weights:  88%|████████▊ | 621/707 [00:01<00:00, 452.58it/s]
+Loading weights:  96%|█████████▌| 679/707 [00:01<00:00, 484.03it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 452.48it/s]
+LICENCE G-F0m-OLMo-instruct: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-instruct.md 48e1c31523eb0c87: committed at HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/instruct","python":"3.12.3","seed":20260818},"stamp":"2026-11-12T04:00:17Z"}
+qual A0-OLMo-instruct s=0 valid
+qual A0s-OLMo-instruct s=0 valid
+qual A0-OLMo-instruct s=1 valid
+qual A0s-OLMo-instruct s=1 valid
+qual A0-OLMo-instruct s=2 valid
+qual A0s-OLMo-instruct s=2 valid
+qual A0-OLMo-instruct s=3 valid
+qual A0s-OLMo-instruct s=3 valid
+qual A0-OLMo-instruct s=4 valid
+qual A0s-OLMo-instruct s=4 valid
+qual A0-OLMo-instruct s=5 valid
+qual A0s-OLMo-instruct s=5 valid
+qual A0-OLMo-instruct s=6 valid
+qual A0s-OLMo-instruct s=6 valid
+qual A0-OLMo-instruct s=7 valid
+qual A0s-OLMo-instruct s=7 valid
+qual A0s-OLMo-instruct s=8 valid
+qual A0s-OLMo-instruct s=9 valid
+qual A0s-OLMo-instruct s=10 valid
+qual A0s-OLMo-instruct s=11 valid
+qual A0s-OLMo-instruct s=12 valid
+qual A0s-OLMo-instruct s=13 valid
+qual A0s-OLMo-instruct s=14 valid
+qual A0s-OLMo-instruct s=15 valid
+BAR round_degeneracy@G-F0m-OLMo-instruct silent template=A0s-OLMo-instruct 0/160 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 7 at n=160
+STAGE G-F0m-OLMo-instruct PASS path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-instruct_qual.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-instruct_qual_report.json
+READS /workspace/repo/jspace-lab/data/p/reports/OLMo-instruct_qual_reads.json
+P-REPORT G-F0m-OLMo-instruct (p): PASS; checkpoint ckpt/OLMo-instruct_qual.json (sha256 60103d81b55b66378cbc95fde0357a2d7e09e8ac33018c939d6ad2bfe88f29d1); p's report data/p/reports/OLMo-instruct_qual_p-report.json (written), call log ckpt/OLMo-instruct_qual_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (160 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 0 []; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (32 rounds): 0 []
+P-REPORT sham proxy: 160 of 160 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+
+# ==== the wrapper, /workspace/qual_p/run_qual_p.sh (sha256 28da64c9a77944162639d51390dbe53b63c0c73956681b568d540292382d5d7b) ====
+#!/bin/bash
+# G-F0m-OLMo (p) on sft, dpo and instruct, back to back (the PI's routing of 2026-11-10, B1: "G-F0m-OLMo (p) ×3 on the
+# box, batched"; the seat's answers of 2026-11-10, §1 item 6: "batched as G-TIME was, 24 sessions per checkpoint (16
+# sham, 8 contrast), uncached"; the seat's §8 item 9 of 2026-11-10 on G-TIME-F3 r2: "the three runs batched"). The
+# driver is the committed one, under each checkpoint's LOCK-p v0.2; this wrapper only sequences it.
+# It records the batch's one launch stamp and each run's exit code, and no other stamp: each stage has contrast
+# sessions, so no finish stamp (the Q4 ruling, results/raw/2026-10-18_m-campaign-driver_review.txt:325), and no launch
+# stamp for a later run, which would place the earlier run's end (the seat's answers of 2026-11-10 on G-TIME-F3 r2,
+# §4). The last line is the word "ended".
+# One run per checkpoint: no --resume. A checkpoint that PASSes (0 with its P-REPORT PASS line, no STOP line) or
+# PAUSEs (3 with its P-REPORT PAUSE line, no STOP line) lets the next run; a refusal (2), a STOP or any other exit
+# halts the chain for escalation.
+source /workspace/env.sh
+cd /workspace/repo/jspace-lab || exit 9
+OUT=/workspace/qual_p
+mkdir -p "$OUT"
+echo "launch $(date -u +%Y-%m-%dT%H:%M:%SZ) HEAD=$(git rev-parse HEAD) RUNPOD_POD_ID=$RUNPOD_POD_ID" >> "$OUT/stamps.txt"
+for ck in sft dpo instruct; do
+  /workspace/venv/bin/python scripts/p_sessions.py qual --unit "OLMo-$ck" > "$OUT/qual_p-$ck.txt" 2>&1
+  rc=$?
+  echo "ran $ck exit=$rc" >> "$OUT/stamps.txt"
+  if [ "$rc" -eq 0 ] && grep -q "^P-REPORT G-F0m-OLMo-$ck (p): PASS; " "$OUT/qual_p-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/qual_p-$ck.txt"; then continue; fi
+  if [ "$rc" -eq 3 ] && grep -q "^P-REPORT G-F0m-OLMo-$ck (p): PAUSE; " "$OUT/qual_p-$ck.txt" \
+      && ! grep -q "^STOP:" "$OUT/qual_p-$ck.txt"; then continue; fi
+  echo "halt after $ck (exit=$rc): neither PASS nor PAUSE" >> "$OUT/stamps.txt"
+  break
+done
+echo "ended" >> "$OUT/stamps.txt"
+
+# ==== the wrapper's own log, /workspace/qual_p/wrapper.out (0 bytes) ====
+(empty)
+
+# ==== the launch call's output (laptop) ====
+# ssh <host> 'cd /workspace/repo/jspace-lab && test -z "$(git status --porcelain --untracked-files=all)" && echo "tree clean at $(git rev-parse --short HEAD)" && cd /workspace/qual_p && test ! -e /workspace/qual_p/stamps.txt && { (setsid nohup bash /workspace/qual_p/run_qual_p.sh > /workspace/qual_p/wrapper.out 2>&1 < /dev/null &); sleep 3; echo "wrapper pid(s): $(pgrep -f "[r]un_qual_p[.]sh" | tr "\n" " ")"; }'
+# then, to tell the wrapper from the rest: ssh <host> 'ps -o pid=,ppid=,sid=,args= -p 17156,17162,17273 | cut -c1-120'
+# Disclosed: the pattern also matched the remote shell and its command substitution, whose command text holds the script's name. The by-PID listing (arguments only, no times) left one process, the wrapper, in its own session (setsid) under PID 1. The end-wait below is on that PID.
+tree clean at eb3e08c
+wrapper pid(s): 17156 17162 17273 
+  17162       1   17162 bash /workspace/qual_p/run_qual_p.sh
+
+# ==== Code's pre-flight, before the launch (fresh non-interactive ssh shells to <host>; tool output verbatim) ====
+# (1) Read-only, before the sync: preflight_qual.sh (sha256 1317dbdd8d36e121ec66ccdb017bcfd42df8b5c80be20594704bc284d05d4f9c, below), then a process and memory listing:
+#     ssh <host> 'ps -eo pid,rss,etime,args --sort=-rss | head -6 | cut -c1-150; free -g | head -2'
+pod=qny1x4v8padeke
+pid1_start=2026-11-07T00:17:16Z
+env.sh sha256 f5174faa745eca6e
+torch 2.8.0+cu128 transformers 5.15.0 cuda True
+NVIDIA A100-SXM4-80GB, 0 MiB, 0 %
+box HEAD 0afd84217508eacfdaf6d8d46c5a379ac622ae3d
+tracked modified: 0
+untracked:
+data/p/ckpt/OLMo-dpo_time.json
+data/p/ckpt/OLMo-dpo_time_p-calls.jsonl
+data/p/ckpt/OLMo-instruct_time.json
+data/p/ckpt/OLMo-instruct_time_p-calls.jsonl
+data/p/ckpt/OLMo-sft_time.json
+data/p/ckpt/OLMo-sft_time_p-calls.jsonl
+data/p/reports/OLMo-dpo_time_p-report.json
+data/p/reports/OLMo-dpo_time_reads.json
+data/p/reports/OLMo-dpo_time_report.json
+data/p/reports/OLMo-instruct_time_p-report.json
+data/p/reports/OLMo-instruct_time_reads.json
+data/p/reports/OLMo-instruct_time_report.json
+data/p/reports/OLMo-sft_time_p-report.json
+data/p/reports/OLMo-sft_time_reads.json
+data/p/reports/OLMo-sft_time_report.json
+ls: cannot access '/workspace/qual_p': No such file or directory
+    PID   RSS     ELAPSED COMMAND
+  15484  9984       00:00 sshd: root@notty
+     83  5272  5-03:22:44 nginx: worker process
+  15496  4132       00:00 ps -eo pid,rss,etime,args --sort=-rss
+    104  4088  5-03:22:43 sshd: /usr/sbin/sshd [listener] 0 of 10-100 startups
+     82  3484  5-03:22:44 nginx: master process /usr/sbin/nginx
+               total        used        free      shared  buff/cache   available
+Mem:            1007         122         233          31         689         885
+# PID 1 started 2026-11-07T00:17:16Z, as at G-TIME-OLMo (p); env.sh f5174faa..., torch and transformers as there; the GPU idle; no process of an earlier stage alive. The box repo at 0afd842, clean, with G-TIME-OLMo (p)'s 15 outputs untracked.
+# (2) The sync. Laptop: git bundle create -q <scratch>/qualrun/p-qual.bundle main ^0afd842 (one head, below; no size printed). The bundle and three scripts copied with scp -q, each re-hashed on the box:
+cefd545389bdee54fcd0aa050f438490ba326735fef4c1923d9e7d58e5f80af8  p-qual.bundle
+a100500d89e27850184de77f537f437bf5f114dcba961cc2e07fd350bb4ad6f3  box_sync_qual.sh
+0df80a52ed3aebb56b8ff3314f82c44c003c4f40f55700625e5e8ed8ca470eca  box_precheck_qual.py
+28da64c9a77944162639d51390dbe53b63c0c73956681b568d540292382d5d7b  run_qual_p.sh
+#     (the laptop's four digests: identical, compared by diff)
+eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15 refs/heads/main
+#     Box: bash /workspace/qual_p/box_sync_qual.sh /workspace/tmp_bundles/p-qual.bundle eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15 (below: it fetches into refs/bundles/p-qual, refuses any untracked set other than G-TIME-OLMo (p)'s 15 and any digest difference from the target's blob, moves the 15 aside, fast-forwards, and re-checks the tree and the 15):
+SYNC OK: HEAD eb3e08c524fe8ea7e8828c7d7fd5794f9a58ec15, tree clean; G-TIME's 15 outputs set aside in /workspace/gtime_p/box-untracked-2026-11-10, each identical by digest to the commit's
+exit=0
+# (3) The stage's precheck at qual and the driver's weights-files check, all three units, model-free, in a process that imports the driver as its qual command does; before them, (j)'s fresh closure against G-SHAPE-p's record:
+#     ssh <host> 'cd /workspace/repo/jspace-lab && source /workspace/env.sh && /workspace/venv/bin/python -I -B /workspace/qual_p/box_precheck_qual.py; echo "exit=$?"; nvidia-smi --query-gpu=memory.used --format=csv,noheader'
+fresh closure (python -I -B): 14 files; problems [] ; equal to G-SHAPE-p's record: True
+OLMo-sft PRECHECK CLEAR at qual; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 3765fe22d3d548d9
+OLMo-dpo PRECHECK CLEAR at qual; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 b739081f60a5c5b0
+OLMo-instruct PRECHECK CLEAR at qual; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 48e1c31523eb0c87
+exit=0
+0 MiB
+# (4) The wrapper's chain rule, dry-tested on the laptop before the launch on these six cases, and re-run after the end, with the same outcomes, to capture its output here:
+harness = the wrapper with 4 lines replaced (env.sh -> RUNPOD_POD_ID=test; cd -> a scratch git repo; OUT -> a scratch dir; the python call -> a stub printing the scenario's line and exiting with its code); lines differing: 4
+sft=pass dpo=pass instruct=pass          -> ran: sft dpo instruct | stamps file: launch <stamp> HEAD=<sha> RUNPOD_POD_ID=test|ran sft exit=0|ran dpo exit=0|ran instruct exit=0|ended|| lines with a time: 1
+sft=pass dpo=pause instruct=pass         -> ran: sft dpo instruct | stamps file: launch <stamp> HEAD=<sha> RUNPOD_POD_ID=test|ran sft exit=0|ran dpo exit=3|ran instruct exit=0|ended|| lines with a time: 1
+sft=pause dpo=pause instruct=pause       -> ran: sft dpo instruct | stamps file: launch <stamp> HEAD=<sha> RUNPOD_POD_ID=test|ran sft exit=3|ran dpo exit=3|ran instruct exit=3|ended|| lines with a time: 1
+sft=pass dpo=stop instruct=pass          -> ran: sft dpo | stamps file: launch <stamp> HEAD=<sha> RUNPOD_POD_ID=test|ran sft exit=0|ran dpo exit=4|halt after dpo (exit=4): neither PASS nor PAUSE|ended|| lines with a time: 1
+sft=refuse dpo=pass instruct=pass        -> ran: sft | stamps file: launch <stamp> HEAD=<sha> RUNPOD_POD_ID=test|ran sft exit=2|halt after sft (exit=2): neither PASS nor PAUSE|ended|| lines with a time: 1
+sft=passstop dpo=pass instruct=pass      -> ran: sft | stamps file: launch <stamp> HEAD=<sha> RUNPOD_POD_ID=test|ran sft exit=0|halt after sft (exit=0): neither PASS nor PAUSE|ended|| lines with a time: 1
+
+# ==== the end-wait (laptop; on the wrapper's PID alone, the list of record v2 item 5; nothing the stage writes was read until it had ended) ====
+# wait_qual.sh (sha256 476e18db05ca37609c9459ae883c44919493fe856445d4cb1314f9323ddfc693, below), run in the background as: wait_qual.sh 17162. Its one output line:
+the wrapper (PID 17162) has ended
+# Then, after the end: the stamps file's lines other than the launch line, and no stage or wrapper process left on the box. The end notice to the coordinating session: "batch ended" with the exit statuses, no stamp and no window.
+
+# ==== the copy-back (laptop: the files the stage left untracked under data/p on the box, by tar over ssh; sha256 at both ends) ====
+# copyback_qual.sh (sha256 87a4ee841d419df73d300df5b2640d1f78117ea38a6f77f608a989b0eb21427a, below): the qual form of G-TIME-OLMo (p)'s copy-back (the stage's names, the address and port from the environment), drafted with the wiring, with one change made after the end: both tar extractions take -m, so the laptop copies carry no box write time.
+identical d1e3b9f1b266aa1f568c8d08fa29706e4143a4e83796bbf1c5071d4d9f794a24 data/p/ckpt/OLMo-dpo_qual.json
+identical ac41779d76a0c19a89492143654763629696a71ccbf365919b105260cc8229c4 data/p/ckpt/OLMo-dpo_qual_p-calls.jsonl
+identical 60103d81b55b66378cbc95fde0357a2d7e09e8ac33018c939d6ad2bfe88f29d1 data/p/ckpt/OLMo-instruct_qual.json
+identical 4ce8c428c05115da9139f6c1fbb12c072a25d3f6ee7ec4e0fea2515adbbd2ab6 data/p/ckpt/OLMo-instruct_qual_p-calls.jsonl
+identical 1dff86dfda9a136b84338d694e3afa8525fdf6bf69d99ca5058ad7a457b94af8 data/p/ckpt/OLMo-sft_qual.json
+identical e1c3467a6654948fc19e35b8457a887db3b79b86a8ff537aca7cb17a6f622fb7 data/p/ckpt/OLMo-sft_qual_p-calls.jsonl
+identical 9b1eb4581d84d563f0c73482ef78a94b23de419e43fcc31f6bda0cbf7e1b17f8 data/p/reports/OLMo-dpo_qual_p-report.json
+identical 92c1cc85da421de1369dd7d127543acf725508108254f5bb1fa087381ac9db4f data/p/reports/OLMo-dpo_qual_reads.json
+identical efbe402d6f2de59c67a3e74f80c7d7cba5acd17adecddb18c05c28ddba7c3bdd data/p/reports/OLMo-dpo_qual_report.json
+identical 57c7e5e350628d29c599784b74377081618dddf2e8458174c449cb8062b52f96 data/p/reports/OLMo-instruct_qual_p-report.json
+identical afbcfb35c44a175763c071121cb5b559a75f604dae356c51cc19274544d172d0 data/p/reports/OLMo-instruct_qual_reads.json
+identical 7c174940667bb483190fc476d186937f99acfaf4587dba67965061384d888b54 data/p/reports/OLMo-instruct_qual_report.json
+identical 3f91b661eb64f873aef398a631d791f5bf342091133e929ccfe135677e7c49a0 data/p/reports/OLMo-sft_qual_p-report.json
+identical cad7da75e077c66336743fec2fd9ff4d502a47bb9ac63d806cc29a39a5a3ce77 data/p/reports/OLMo-sft_qual_reads.json
+identical 172f82c08cc015e58038f05ab34a6c61d6ff2bc8f660e948208545a9e8ca005c data/p/reports/OLMo-sft_qual_report.json
+#     the wrapper's outputs (stamps.txt, wrapper.out, qual_p-{sft,dpo,instruct}.txt): identical to the box's by sha256 (box_sha256.txt against the laptop's)
+
+# ==== preflight_qual.sh (sha256 1317dbdd8d36e121ec66ccdb017bcfd42df8b5c80be20594704bc284d05d4f9c) ====
+#!/bin/bash
+# Read-only pre-flight on the box before the sync (the respawn protocol's identity checks; G-TIME (p)'s form): the pod
+# id, PID 1's start (the container of record), env.sh's digest, torch and transformers, the GPU idle, the box repo's
+# HEAD and its untracked names. Prints no size and reads no file under data/*/ckpt or data/*/reports.
+# Usage: preflight_qual.sh; BOX_ADDR and BOX_PORT from the environment.
+set -u
+: "${BOX_ADDR:?}" "${BOX_PORT:?}"
+ssh -q -i "$HOME/.ssh/id_runpod" -p "$BOX_PORT" -o BatchMode=yes -o ConnectTimeout=20 "root@$BOX_ADDR" '
+source /workspace/env.sh
+echo "pod=$RUNPOD_POD_ID"
+echo "pid1_start=$(date -u -d "$(ps -o lstart= -p 1)" +%Y-%m-%dT%H:%M:%SZ)"
+echo "env.sh sha256 $(sha256sum /workspace/env.sh | cut -c1-16)"
+/workspace/venv/bin/python -c "import torch, transformers; print(\"torch\", torch.__version__, \"transformers\", transformers.__version__, \"cuda\", torch.cuda.is_available())"
+nvidia-smi --query-gpu=name,memory.used,utilization.gpu --format=csv,noheader
+cd /workspace/repo/jspace-lab && echo "box HEAD $(git rev-parse HEAD)" && echo "tracked modified: $(git status --porcelain --untracked-files=no | wc -l)" && echo "untracked:" && git status --porcelain --untracked-files=all | sed -n "s/^?? //p"
+ls /workspace/qual_p 2>&1 | head -3
+'
+
+# ==== box_sync_qual.sh (sha256 a100500d89e27850184de77f537f437bf5f114dcba961cc2e07fd350bb4ad6f3) ====
+#!/bin/bash
+# Bring the box repo to the LOCK-p v0.2 commit (bundle, no network remote): fetch into a side ref, set G-TIME-OLMo
+# (p)'s 15 untracked outputs aside only where each is byte-identical to the target commit's blob -- compared by digest
+# (git hash-object against git rev-parse <target>:<path>; the list of record v2, item 1), never by reading content --
+# fast-forward, verify. Usage: box_sync_qual.sh <bundle path> <target commit sha>. Exits non-zero, touching nothing
+# further, on any surprise.
+set -u
+B=$1
+T=$2
+cd /workspace/repo/jspace-lab || exit 9
+git bundle verify "$B" > /dev/null 2>&1 || { echo "SYNC: bundle does not verify"; exit 10; }
+git fetch -q "$B" "main:refs/bundles/p-qual" || { echo "SYNC: fetch failed"; exit 11; }
+[ "$(git rev-parse refs/bundles/p-qual)" = "$T" ] || { echo "SYNC: bundle main is $(git rev-parse refs/bundles/p-qual), not $T"; exit 12; }
+git merge-base --is-ancestor HEAD "$T" || { echo "SYNC: HEAD $(git rev-parse --short HEAD) is not an ancestor of $T"; exit 13; }
+[ -z "$(git status --porcelain --untracked-files=no)" ] || { echo "SYNC: tracked files modified"; git status --short --untracked-files=no; exit 14; }
+ASIDE=/workspace/gtime_p/box-untracked-2026-11-10
+FILES=""
+for ck in sft dpo instruct; do
+  FILES="$FILES data/p/ckpt/OLMo-${ck}_time.json data/p/ckpt/OLMo-${ck}_time_p-calls.jsonl data/p/reports/OLMo-${ck}_time_report.json data/p/reports/OLMo-${ck}_time_reads.json data/p/reports/OLMo-${ck}_time_p-report.json"
+done
+UNTR=$(git status --porcelain --untracked-files=all | sed -n 's/^?? //p' | sort)
+WANT=$(printf '%s\n' $FILES | sort)
+[ "$UNTR" = "$WANT" ] || { echo "SYNC: the untracked set is not G-TIME's 15 outputs (names follow)"; echo "$UNTR"; exit 15; }
+for f in $FILES; do
+  [ "$(git hash-object "$f")" = "$(git rev-parse "$T:$f")" ] || { echo "SYNC: $f's digest is not $T's blob's"; exit 16; }
+done
+[ ! -e "$ASIDE" ] || { echo "SYNC: $ASIDE exists"; exit 17; }
+for f in $FILES; do
+  mkdir -p "$ASIDE/$(dirname "$f")"
+  mv "$f" "$ASIDE/$f" || { echo "SYNC: move aside failed for $f"; exit 18; }
+done
+git merge -q --ff-only "$T" || { echo "SYNC: fast-forward failed"; exit 19; }
+[ "$(git rev-parse HEAD)" = "$T" ] || { echo "SYNC: HEAD is not $T"; exit 20; }
+[ -z "$(git status --porcelain --untracked-files=all)" ] || { echo "SYNC: tree not clean after the fast-forward"; git status --short; exit 21; }
+for f in $FILES; do
+  [ "$(git hash-object "$ASIDE/$f")" = "$(git hash-object "$f")" ] || { echo "SYNC: $f after checkout differs from the set-aside copy (by digest)"; exit 22; }
+done
+echo "SYNC OK: HEAD $(git rev-parse HEAD), tree clean; G-TIME's 15 outputs set aside in $ASIDE, each identical by digest to the commit's"
+
+# ==== box_precheck_qual.py (sha256 0df80a52ed3aebb56b8ff3314f82c44c003c4f40f55700625e5e8ed8ca470eca) ====
+"""Model-free, on the box: G-F0m-OLMo (p)'s precheck at qual and the driver's weights-files check for the three units,
+in a process that imports the driver as its qual command does (nothing else first); before them, (j)'s fresh closure
+against G-SHAPE-p's record. Prints one line per unit. Reads no file under data/p/ckpt or data/p/reports (the prior's
+check runs in the stage itself, before the load)."""
+import json
+import sys
+
+sys.path.insert(0, "scripts")
+sys.argv = ["p_sessions.py"]
+import p_sessions  # noqa: E402,F401
+from valence_core.p import stage  # noqa: E402
+
+probs, cur = stage.fresh_import_closure()
+rec = json.load(open("data/p/gates/G-SHAPE-p.json"))["provenance"]["import_closure"]
+print("fresh closure (python -I -B):", len(cur), "files; problems", probs, "; equal to G-SHAPE-p's record:", cur == rec,
+      flush=True)
+for u in stage.UNITS:
+    try:
+        pre = stage.precheck(u, stub=False, gate="qual")
+        wp = p_sessions.weights_files_problems(pre["ckpt"], pre["weights"])
+        print(u, "PRECHECK CLEAR at qual; backend of record", pre["backend_of_record"], "; weights files problems", wp,
+              "; lock_sha256", pre["identity_extra"]["lock_sha256"][:16], flush=True)
+    except SystemExit as e:
+        print(u, "REFUSED/STOP:", str(e)[:800], flush=True)
+
+# ==== wait_qual.sh (sha256 476e18db05ca37609c9459ae883c44919493fe856445d4cb1314f9323ddfc693) ====
+#!/bin/bash
+# The end-wait for G-F0m-OLMo (p) x3 on the wrapper's PID alone (the list of record v2, item 5; O2-2's fix: the PID
+# paired with its command so a reused PID cannot pass): no read of the stage's stamps, stdout, checkpoints or reports.
+# Prints nothing but its own end line. Usage: wait_qual.sh <wrapper pid>; BOX_ADDR and BOX_PORT from the environment.
+# Its command text names none of the words the laptop's process checks look for.
+set -u
+PID=$1
+: "${BOX_ADDR:?}" "${BOX_PORT:?}"
+fails=0
+while true; do
+  ssh -q -i "$HOME/.ssh/id_runpod" -p "$BOX_PORT" -o BatchMode=yes -o ConnectTimeout=20 "root@$BOX_ADDR" \
+    "ps -p $PID -o args= 2>/dev/null | grep -q '[r]un_qual_p[.]sh'"
+  rc=$?
+  if [ "$rc" -eq 1 ]; then echo "the wrapper (PID $PID) has ended"; exit 0; fi
+  if [ "$rc" -ne 0 ]; then
+    fails=$((fails+1))
+    [ "$fails" -ge 30 ] && { echo "the box did not answer 30 times in a row; the wait stops, the run is not known to have ended"; exit 2; }
+    sleep 60
+    continue
+  fi
+  fails=0
+  sleep 120
+done
+
+# ==== copyback_qual.sh (sha256 87a4ee841d419df73d300df5b2640d1f78117ea38a6f77f608a989b0eb21427a) ====
+#!/bin/bash
+# Copy back G-F0m-OLMo (p)'s outputs (rule 27): the files the stage left untracked under data/p on the box, by tar over
+# ssh into the laptop repo, each sha256-compared. Refuses anything outside the qual stage's names in data/p/ckpt and
+# data/p/reports, and any local file already present. Prints names and digests only; opens no file's contents (the
+# checkpoints are pick-bearing, the call logs withheld). The wrapper's own outputs go to the scratch directory $1, for
+# the raw. Usage: copyback_qual.sh <scratch dir>; the pod's address and port come from the environment (BOX_ADDR,
+# BOX_PORT), never from a committed file.
+set -u
+SCR=$1
+REPO=<repo>
+: "${BOX_ADDR:?}" "${BOX_PORT:?}"
+SSH=(ssh -i "$HOME/.ssh/id_runpod" -p "$BOX_PORT" -o BatchMode=yes -o ConnectTimeout=20 "root@$BOX_ADDR")
+LIST=$("${SSH[@]}" 'cd /workspace/repo/jspace-lab && git status --porcelain --untracked-files=all | sed -n "s/^?? //p"') \
+  || { echo "COPYBACK: listing failed"; exit 10; }
+[ -n "$LIST" ] || { echo "COPYBACK: the box has no untracked output"; exit 11; }
+echo "$LIST" | grep -vE '^data/p/(ckpt|reports)/OLMo-(sft|dpo|instruct)_qual(\.json|_p-calls\.jsonl|_p-STOPPED\.json|_adjudication\.json|_report\.json|_reads\.json|_p-report\.json)$' \
+  && { echo "COPYBACK: unexpected untracked files above"; exit 12; }
+for f in $LIST; do [ -e "$REPO/$f" ] && { echo "COPYBACK: $f already exists locally"; exit 13; }; done
+"${SSH[@]}" "cd /workspace/repo/jspace-lab && tar cf - $(echo $LIST)" | tar xmf - -C "$REPO" || { echo "COPYBACK: tar failed"; exit 14; }
+BOX=$("${SSH[@]}" "cd /workspace/repo/jspace-lab && sha256sum $(echo $LIST)") || { echo "COPYBACK: box hashes failed"; exit 15; }
+bad=0
+while read -r h f; do
+  l=$(shasum -a 256 "$REPO/$f" | awk '{print $1}')
+  if [ "$h" = "$l" ]; then echo "identical $h $f"; else echo "DIFFERS box $h laptop $l $f"; bad=1; fi
+done <<< "$BOX"
+mkdir -p "$SCR"
+"${SSH[@]}" 'cd /workspace/qual_p && tar cf - stamps.txt wrapper.out qual_p-*.txt' | tar xmf - -C "$SCR" || { echo "COPYBACK: wrapper outputs failed"; exit 16; }
+"${SSH[@]}" 'cd /workspace/qual_p && sha256sum stamps.txt wrapper.out qual_p-*.txt' > "$SCR/box_sha256.txt"
+exit $bad
