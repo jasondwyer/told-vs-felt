@@ -21,6 +21,79 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-12 — **Dated note (pod session), for the seat, beside G-F0m-OLMo (p) ×3's block (`a225a89`;
+  `193811cb…`): pod `qny1x4v8padeke` was terminated on 2026-11-12 (PI-local). The audit log's actor is `runpod`
+  (Runpod's support account), not the account's; no reason is recorded. The pod's network volume survives.**
+  - Recorded on the PI's word of 2026-11-12, relayed verbatim by the coordinating session: "Yes, record it", the reply
+    to its question "Have the pod session record the termination for the seat?".
+  - **(a) The termination.** The account's audit log, searched on the pod's id (`list-audit-logs`), holds three
+    entries for it:
+    - a `delete` with value `{"status":"TERMINATED"}`, by actor `runpod`, on 2026-11-12 (PI-local). No reason is
+      recorded;
+    - two `create`s by the account on 2026-11-06 (PI-local): the pod's, and its pod-scoped API key's.
+    - Read from the start of 2026-11-10 (PI-local) over the whole account, the audit log holds that `delete` alone.
+    - `get-pod` on the id answers 404, "pod not found". `list-pods` lists one pod, `uimuzt7d890y5b`, EXITED, created
+      2026-08-23 and untouched.
+    - The coordinating session's read-only reads found the termination. This session re-read with the calls above,
+      read-only, and got the same results. Nothing was mutated.
+  - **(b) What survives.** The network volume `o73qvy742n` is present (`get-network-volume`: 500 GB,
+    HIGH_PERFORMANCE, US-CA-2; `df` showed 466 G at `190ba90`). It was the pod's `/workspace` (`190ba90`). Its contents
+    below are from the committed entries and this session's own records. Nothing on the volume has been read since
+    the termination.
+    - `/workspace/models/`: the five checkpoints of `data/olmo/manifest.json` (the four OLMo-3 entries, and
+      `olmo2_instruct` since `0415438`), and the `determinism_base.json` that `190ba90` re-measured.
+    - The box repo, `/workspace/repo/jspace-lab`, at `eb3e08c`. G-F0m-OLMo (p) ×3's 15 outputs are untracked in it,
+      each byte-identical (sha256, at the copy-back) to its file committed at `a225a89`.
+    - Set aside:
+      - `/workspace/repo/box-dirty-2026-11-06/` (the August leftovers, `190ba90`);
+      - `/workspace/repo/box-untracked-gcal-2026-11-06/` (G-CAL-OLMo's six, G-ACQ (n)'s entry);
+      - `/workspace/gcal_p/box-untracked-2026-11-09` (G-CAL-p's six);
+      - `/workspace/gtime_p/box-untracked-2026-11-10` (G-TIME-OLMo (p)'s 15).
+    - `/workspace/env.sh` (`f5174faa…`, with C4's line), the file before C4 as `/workspace/env.sh.bak-2026-11-06`,
+      `/workspace/venv`, and the caches `env.sh` pins to `/workspace`.
+    - This session's working folders, `/workspace/smoke`, `/workspace/gcal_olmo`, `/workspace/gcal_p`,
+      `/workspace/gtime_p` and `/workspace/qual_p`: scripts, wrappers, stamps files and stdout. At the volume's top
+      level, the 2026-11-06 respawn checks' output files and a lock probe's files. The sync bundles are under
+      `/workspace/tmp_bundles` and `/workspace/repo`.
+    - G-ACQ (n)'s staging folder, `/workspace/staging-n`: the coordinating session's ("the routing session" in the
+      G-CAL-OLMo entry).
+    - **Gone with the pod: its 30 GB container disk** (`190ba90`). The 2026-08-19 entry ("Box TERMINATED") gives the
+      record's view: "terminating a pod destroys a container whose only unique content is a one-line shell hook".
+      The records place two things of the box's there:
+      - that hook, the `~/.bashrc` line sourcing `/workspace/env.sh`, restored at the bring-up (`190ba90`). The same
+        entry: "`/workspace/venv` and the repo clone are on the volume and survive; the `~/.bashrc` hook sourcing
+        `env.sh` does not, and is one line to restore";
+      - the image's own files (`runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`), among them the system
+        site-packages torch is taken from. The 2026-08-18 entry has `/workspace/venv` "created with
+        `--system-site-packages`, so torch stays the image's CUDA-matched build" (2.8.0+cu128 at `190ba90`).
+      - Nothing else of this session's, by its records: its folders, bundles and outputs were on the volume, and its
+        box self-test of 2026-11-06 wrote a temporary artifact under `/tmp`.
+  - **(c) For the seat, adjudicating nothing.**
+    - The next box stage needs another box: the PI's go (the 2026-08-19 entry: pod "start still flagged for a go
+      because it spends money"), then respawn (i) INTEGRITY and (ii) BACKEND, both PASS, before any experimental
+      forward (CLAUDE.md, the respawn protocol: "On any new or replacement box, before any experimental forward").
+    - Whether the p gates that ran on the backend characterized at `190ba90` (G-CAL-p, G-TIME-OLMo (p),
+      G-F0m-OLMo (p)) carry to another box's backend is the seat's to rule. It bears on the block's Q3.
+    - Some of the texts on record that bear on it, by place only and not the whole set: CLAUDE.md's respawn protocol
+      and its consistency clause; the backend PIN in `valence_core/p/stage.py` (worded at the qual wiring,
+      `40086e8`); `190ba90`'s entry (its identifier sentence and its "What follows").
+  - **(d) The uptime question is moot: the pod no longer exists.** For the run, the seat's answers of 2026-11-10 on
+    G-ID-F3 (`c51ef5ba…`, `a6c6297`), §9 item 9: "[go; the pod up through it — your call]". After the STOP,
+    G-F0m-OLMo (p) ×3's entry (and its block, Q3): "its uptime goes back to the PI". The coordinating session had put
+    the question to the PI; per that session, it was still open at the termination.
+  - A blind values-check of this note before the commit: 56 claims; 46 CONFIRMED, 3 IMPRECISE, 0 FAIL, 7 NOT
+    CHECKABLE (chat relays, the coordinating session's reads, session conduct, future acts, and one claim this
+    session then settled from its transcript: the container disk).
+    - The three IMPRECISE items are applied: the actor's wording, (c)'s first item, and (d)'s sources. So are seven of
+      its observations; one of them is that (c) now names texts by place only.
+    - It checked the Runpod facts against this session's capture of its reads, not the API.
+    - Its disclosures: it read RESULTS.md beyond its listed ranges, and the manifest's `repo` and `path` fields beyond
+      its brief's names, all by exact path. Some short commands ran without `nice`. It listed no tree and touched
+      nothing under `data/mf3`.
+    - Additions after the check were checked by tool.
+  - Facts only; nothing here adjudicates. RESULTS.md only. Nothing ran on a model or a box. Not pushed. Committed by
+    path.
+
 - 2026-11-12 — **The `qual` wiring: `qual` (G-F3, m:297) is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.2,
   in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its blob moves from
   `8d878f4a…00e7` to `285eed04…0e44`. mf3's package, m's, the analyzer and the lock stand, and G-SHAPE-F3 is not
