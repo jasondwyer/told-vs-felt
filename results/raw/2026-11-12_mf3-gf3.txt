@@ -1,0 +1,60 @@
+# G-F3 (PROPOSAL-m v1.11 s3.2 m:297; LOCK-m-F3 v0.2 s9 item 2; the seat's read of G-ID-F3, s5 and s9 item 5, routed by the PI on 2026-11-11) -- 40 sessions on Qwen, 24 sham and 16 contrast, uncached, at reasoning cap 120, under LOCK-m-F3 v0.2 (05ef75d, sha256 ac82b94383d68716...); its prior G-TIME-F3's re-run checkpoint, data/mf3/ckpt/Q-F3_time-r2.json, taken by path, with G-ID-F3's artifact (FAIL) on disk; the canonical run on the committed driver (b427f82), into data/mf3/ckpt/Q-F3_qual.json, its report and reads. Launched with m:267's line as written: `nohup caffeinate -is /bin/zsh <tmp>/qual/run/run_gf3.sh > /dev/null 2>&1 & disown` -- the command is this wrapper, which writes this raw, exports HF_HUB_OFFLINE=1 and unsets MLXLM_USE_MODELSCOPE; caffeinate -is leaves display sleep only; the gate line is the driver's own. The wrapper is G-ID-F3's, its process probe printing each match's full command line, uncut, one per line (the seat's G-TIME-F3 r2 read, s3; its s8 item 7). The prior's and G-ID-F3's artifact's sha256 at launch are printed below, hashed only (the list of record v2's item 1; the qual wiring's review, NOTE-6, adopted). No departure from the checklist. No finish stamp (the seat's G-TIME-F0 read, Q4: G-F3 has contrast sessions). A dry pre-launch check (the identity, the precheck with its prior gate not run -- the checkpoint is read by the stage's own code only, the list of record v2's item 2 -- the driver and the snapshot checks; nothing loaded) returned CLEAR just before the launch.
+# Code stamp at launch: 2026-11-12 06:20:36 UTC (date -u); HEAD b427f82; driver scripts/mf3_sessions.py sha256 285eed04de4a8e610a021c6f06a7398eeac6f346d822c48a4315f80536760e44; tracked changes: []
+# Inputs at launch, by digest: the prior data/mf3/ckpt/Q-F3_time-r2.json sha256 ff644fa17599d2c816a3fda12be1dd1bd4292ecfb1597dbf8ef5faef984751b8; G-ID-F3's artifact data/mf3/gates/Q-F3_G-ID.json sha256 ea8f7d3acd20c3c3b00a11d7dad48283ff20a0abe961462270c3930553e39260
+# Power: Now drawing from AC Power; Wattage 140 W; disk: 630Gi available on /; HF_HUB_OFFLINE=1
+# python processes before the run (pgrep -ifl python: the argument-list match, case-insensitive; each match's full command line, uncut): 0
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py qual --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F3.md --analyzer-sha256 d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 --package-sha256 098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/mf3_sessions.py 285eed04de4a8e610a021c6f06a7398eeac6f346d822c48a4315f80536760e44: committed at HEAD b427f826d79aa41b97cd2284af823974cf39a511, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; <home>/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE G-F3: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD b427f826d79aa41b97cd2284af823974cf39a511
+LICENCE G-F3: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F3.md ac82b94383d68716: committed at HEAD b427f826d79aa41b97cd2284af823974cf39a511, working tree identical; analyzer d347ea0c9b69f73c, mf3 package 098455d91d1ae323, the 11 m files and the weights c000ac2c2057: the hashes identity_extra and the lock name, hashed at stage start; A-m2 v0.5 f27505c556a33040 committed, the reasoning block F-b at cap 120
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-11-12T06:20:43Z"}
+qual A1 s=0 valid
+qual A1s s=0 excluded:audit@forced
+qual A2 s=0 valid
+qual A2s s=0 valid
+qual A3 s=0 valid
+qual A3s s=0 valid
+qual A1 s=1 valid
+qual A1s s=1 valid
+qual A2 s=1 valid
+qual A2s s=1 valid
+qual A3 s=1 valid
+qual A3s s=1 valid
+qual A1 s=2 valid
+qual A1s s=2 excluded:lexical@free
+qual A2 s=2 valid
+qual A2s s=2 excluded:lexical@free
+qual A3 s=2 valid
+qual A3s s=2 valid
+qual A1 s=3 excluded:audit@forced
+qual A1s s=3 valid
+qual A2 s=3 valid
+qual A2s s=3 excluded:audit@forced
+qual A3 s=3 valid
+qual A3s s=3 valid
+qual A1s s=4 valid
+qual A2s s=4 excluded:lexical@forced
+qual A3 s=4 excluded:content@forced
+qual A3s s=4 valid
+qual A1s s=5 excluded:lexical@forced
+qual A2s s=5 excluded:audit@forced
+qual A3 s=5 excluded:audit@forced
+qual A3s s=5 valid
+qual A1s s=6 excluded:audit@forced
+qual A2s s=6 valid
+qual A3 s=6 valid
+qual A3s s=6 valid
+qual A1s s=7 valid
+qual A2s s=7 valid
+qual A3 s=7 valid
+qual A3s s=7 valid
+BAR round_degeneracy@G-F3 silent 7/189 exact one-sided P=0.8380 > alpha 0.05 vs p0 0.05; critical 16 at n=189
+BAR reasoning_line_defect@G-F3 silent 2/98 exact one-sided P=0.9996 > alpha 0.05 vs p0 0.10; critical 16 at n=98
+COUNTER (a) G-F3: 0 of 98 sham reasoning lines contain a complete harness-written line of their session or keep the banner's === ... === frame (A-m2 v0.5 §3.4; rule 23, descriptive, deciding nothing)
+STAGE G-F3 PASS path=uncached
+CHECKPOINT <repo>/data/mf3/ckpt/Q-F3_qual.json
+REPORT <repo>/data/mf3/reports/Q-F3_qual_report.json
+READS <repo>/data/mf3/reports/Q-F3_qual_reads.json
+EXIT=0

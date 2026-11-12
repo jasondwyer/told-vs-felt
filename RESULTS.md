@@ -21,6 +21,120 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-12 — **G-F3 (PROPOSAL-m v1.11 §3.2 m:297; LOCK-m-F3 v0.2 §9 item 2; the seat's G-ID-F3 answers, §8 and §9
+  item 5, routed by the PI on 2026-11-11): PASS. 40 uncached sessions ran on Qwen at cap 120 under LOCK-m-F3 v0.2
+  (`05ef75d`), on the `qual` wiring's driver (`b427f82`), into `data/mf3/ckpt/Q-F3_qual.json`.**
+  - **No hair trigger fired.** Both binomial bars, on the 24 sham sessions' realised counts, are silent:
+    `round_degeneracy` 7/189 and `reasoning_line_defect` 2/98, each against a critical of 16 at its realised n. m:297's
+    19 and 22 are at the planned 240 and 144. Both defect lines reached the cap without a newline. All 40 records are
+    verified.
+  - **Counter (a) counts 0 of the 98 sham lines,** and 0 of the 13 contrast first lines.
+  - **29 of 40 sessions are valid, so r for Q-F3's launch rule is 29/40** (m:192): A1 3/4, A2 4/4, A3 6/8, A1s 4/8, A2s
+    4/8, A3s 8/8. 8 sham and 3 contrast sessions were excluded, every contrast one at a forced round.
+  - **Counter (b), Code's declared read, lists 4 of 251 responses:** three contrast forced rounds and one sham free
+    round, for the seat to confirm or correct.
+  - **The attractor tally is the seat's,** over the 62 contrast forced rounds the block quotes.
+  - **This entry carries no write-time stamp line.** The seat's G-TIME-F0 read (Q4) counts an entry's own stamps among
+    the unavoidable records, "no tighter than the commit times"; the commit time stands for it (the block, §3).
+  - Stopped for the seat's read.
+  - **The routing.** The seat's G-ID-F3 answers (`a6c6297`), §8, routed by the PI on 2026-11-11 ("Route as given"):
+    "→ the `qual` wiring (its entry naming the edit and the blob) → G-F3 announced and serialized → the seat's read
+    (m:271's redacted reads, the contrast forced rounds, the attractor tally)".
+  - **The launch.** It used m:267's line, as written: `nohup caffeinate -is /bin/zsh <wrapper> > /dev/null 2>&1 &
+    disown`, at HEAD `b427f82`. It followed the coordinating session's ack ("G-F3 at cap 120 may launch."), which the
+    block quotes (§0).
+    - The wrapper writes the raw, exports `HF_HUB_OFFLINE=1` and unsets `MLXLM_USE_MODELSCOPE`. The raw's header
+      records the checklist's items (AC at 140 W, and 630 GiB free) and the probe's 0 matches. The gate line is the
+      driver's own.
+    - **The inputs at launch, by digest** (the `qual` wiring's review, NOTE-6, adopted): the prior
+      `data/mf3/ckpt/Q-F3_time-r2.json`, sha256 `ff644fa17599d2c816a3fda12be1dd1bd4292ecfb1597dbf8ef5faef984751b8`;
+      G-ID-F3's artifact `data/mf3/gates/Q-F3_G-ID.json`, sha256
+      `ea8f7d3acd20c3c3b00a11d7dad48283ff20a0abe961462270c3930553e39260`. Both match LOCK-m-F3 v0.2's values, and
+      both again after the end.
+    - Just before the launch, a dry pre-launch check returned CLEAR, with nothing loaded. The launch command would have
+      refused to launch if any Python process matched; none did.
+    - **While the stage ran:**
+      - Code's session started the end-wait (on the PID alone), sent the launched line with no stamp, wrote its
+        launch record in scratch, edited its memory note, and ended its turn;
+      - it ran no model and no Python process, read nothing of the run's outputs, and started no subagent;
+      - whether another session ran a non-model process is not known to Code.
+    - **One commit landed on main during the run:** `0190c6d`, the pod session's dated note, RESULTS.md only. The
+      order is in the coordinating session's post-run check; no time is stated. The stage had hashed its identity at
+      stage start, and RESULTS.md is not part of it.
+    - **Three harness listings named the stage's checkpoint during the run,** by name only:
+      - two at compactions in the coordinating session's transcript;
+      - one at the start of a subagent of the pod session.
+      - Code's own compaction applied after the end.
+      - Code's scan printed kinds and order only, and the coordinating session's own post-run check reports the same.
+        The class is r2 Q3's: "Not a departure, mid-stage or after; nothing is needed." The block records it (§0).
+    - **The end notice**, in the seat's r2 §4 form: "G-F3 (F3 session): ended, exit status 0." No stamp, no window.
+  - **The run** ([`_mf3-gf3`](results/raw/2026-11-12_mf3-gf3.txt), local roots scrubbed; no finish stamp, the seat's
+    G-TIME-F0 read, Q4):
+    - DRIVER `285eed04…0e44`, committed at HEAD `b427f82`, working tree identical. This is the `qual` wiring's blob.
+    - SNAPSHOT `c000ac2c2057d94be3fa931000c31723aac53282` (refs/main; one snapshot in the cache; `HF_HUB_OFFLINE=1`).
+      The re-read after the load found it unchanged.
+    - LICENCE: the proposal `42ab36ec…`, the lock `ac82b943…`, the analyzer `d347ea0c…`, mf3's package `098455d9…`,
+      and the eleven m files and the weights. A-m2 v0.5 (`f27505c5…`) is committed, and the reasoning block is F-b at
+      cap 120.
+    - The session lines: 29 `valid`. The 11 exclusions are `audit@forced` ×6, `lexical@forced` ×2, `lexical@free` ×2
+      (both sham) and `content@forced` ×1.
+    - `STAGE G-F3 PASS path=uncached`, exit 0. The backend identifier (the report's identity) is `a734dadec8f8ce9b`, as
+      at G-TIME-F3's two runs, G-ID-F3 and G-TIME-F0.
+  - **Bars** (m:297; lock §8), on the sham sessions' realised counts:
+    - `round_degeneracy@G-F3` 7/189, P = .8380 (critical 16 at n = 189). All 7 are v2 frame claims: 4 at forced rounds,
+      each ending its session, and 3 at A3s free rounds, which end nothing on Qwen (m:271).
+    - `reasoning_line_defect@G-F3` 2/98, P = .9996 (critical 16 at n = 98), under A-m2 v0.5 §1's echo class: 0 empty, 2
+      at the cap without a newline (A1s s=1 and A3s s=6, each a first line), 0 echo.
+    - All 40 records are verified.
+  - **The sessions.** These are read from the report and the reads. Code did not open the checkpoint.
+    - **Contrast.** 62 forced rounds (A1 16, A2 16, A3 30), with 2 v2 claims and 1 `content:stuck_attractor`. Three
+      sessions were excluded at a forced round (A1 s=3; A3 s=4 and s=5). Their first lines and first reads are reported
+      by class (the block, §1.2). Their free-round events and picks are withheld to Q-F3's VERDICTS entry or NOT-RUN
+      record (m:271), and their seconds to its VERDICTS entry (m:318).
+    - **Sham.** 16 sessions are complete and valid, with 10 rounds each. 8 were excluded: A1s s=0, 2, 5, 6 and A2s s=2,
+      3, 4, 5.
+    - **One item.** Six of the 11 exclusions, 4 sham and 2 contrast, fell on one item, "Name the third month of the
+      year." (rule 11, the block, §1.6).
+    - The sham-template first-pick shares (m:318 exception (2)): A1s 2/5, A2s 3/5, A3s 5/8, over the domain sessions.
+    - The sham seconds: the 16 complete sessions average 1,931.6 s (1,059.4–2,962.6 s), and all 24 total 31,160.56 s
+      (the report). v0.2's projections stand on the four-session mean, 1,319.6 s; m's uncached row at k 29–28 is 832
+      launches (m:238). The hours are the seat's [E]. The contrast sessions' seconds stay in the checkpoint.
+  - **The counters** (A-m2 v0.5 §3.4; rule 23, descriptive, deciding nothing):
+    - (a): 0 of 98 sham reasoning lines (the stage's COUNTER line), and 0 of the 13 contrast first lines (the report).
+    - (b), Code's declared read over its gate-stage domain: 189 sham rounds and 62 contrast forced rounds, of which 236
+      no audit class claims.
+      - (b) = 4: A3 s=0 round 4 (a remark on the task text's misspellings); A2 s=2 and A3 s=2 round 4 (round 1's
+        corrupted instruction, its operand changed); A2s s=1 round 7 (`any`).
+      - Eight are read as not (b), each with its grounds, five with an alternative (the block, §1.5).
+      - The seat confirms or corrects each.
+  - **Committed with this entry:**
+    - `data/mf3/ckpt/Q-F3_qual.json` (sha256 `65715bb9…7bd8`; it holds the contrast picks, and it is -diff; Code did
+      not open it);
+    - `data/mf3/reports/Q-F3_qual_report.json` (`180372c9…6a01`);
+    - `data/mf3/reports/Q-F3_qual_reads.json` (`2881b7d9…6730`);
+    - the raw;
+    - Code's block for the seat ([`_mf3-code-to-design_G-F3`](results/raw/2026-11-12_mf3-code-to-design_G-F3.md)),
+      which quotes the lines, figures and reads the seat needs.
+  - **The block's questions:**
+    - Q1, the PASS and what follows (G-PWR, m:361);
+    - Q2, counter (b)'s items.
+  - **Values-check:** [`_mf3-gf3_valuescheck`](results/raw/2026-11-12_mf3-gf3_valuescheck.md). Two blind agents ran
+    in turn, under briefs quoting the list of record v2's items 1–5. Each read the report files for the figures and
+    hashed the checkpoint only, and saw the session transcripts only through Code's order-only scan.
+    - **The first pass:** 69 items, 55 CONFIRMED, 7 IMPRECISE, 2 FAIL, 5 NOT CHECKABLE.
+      - Both FAILs were one count: the third-month item, whose corrupted render Code had not matched (now 6 of the 11
+        exclusions).
+      - Its item 62 withdrew the draft block's Q3: the seat's G-TIME-F0 read had already counted an entry's own stamps
+        among the unavoidable records.
+    - **The second pass, over the changes:** 28 items, 23 CONFIRMED, 3 IMPRECISE, 0 FAIL, 2 NOT CHECKABLE, and one
+      consistency finding.
+    - Every FAIL and IMPRECISE item is applied.
+    - The checkers' own departures are recorded in the raw for the seat. They were name-only listings under `data/`; a
+      grep over `*.md` without the `data/` exclusion, which searched no checkpoint or report; and a committed blob
+      hashed through `git show`.
+  - **Next:** nothing until the seat rules. G-PWR (m:361) waits for the seat's read and the PI's word. Not pushed.
+    Committed by path.
+
 - 2026-11-12 — **Dated note (pod session), for the seat, beside G-F0m-OLMo (p) ×3's block (`a225a89`;
   `193811cb…`): pod `qny1x4v8padeke` was terminated on 2026-11-12 (PI-local). The audit log's actor is `runpod`
   (Runpod's support account), not the account's; no reason is recorded. The pod's network volume survives.**

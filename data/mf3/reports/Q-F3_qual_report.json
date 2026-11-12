@@ -1,0 +1,683 @@
+{
+ "bars": [
+  {
+   "binding": true,
+   "crit": 16,
+   "exceeds": false,
+   "fired": false,
+   "k": 7,
+   "message": "BAR round_degeneracy@G-F3 silent 7/189 exact one-sided P=0.8380 > alpha 0.05 vs p0 0.05; critical 16 at n=189",
+   "n": 189,
+   "name": "round_degeneracy@G-F3",
+   "p": "164388599957899156071082203187266831387164626259495014186109526380336669517484914743421127460111482264879723306517736809611832647306223750283306350615530460324722191898039964958213366326520001979812175696361376614631416704111473316904192474741019/196159429230833773869868419475239575503198607639501078528000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "binding": true,
+   "crit": 16,
+   "exceeds": false,
+   "fired": false,
+   "k": 2,
+   "message": "BAR reasoning_line_defect@G-F3 silent 2/98 exact one-sided P=0.9996 > alpha 0.05 vs p0 0.10; critical 16 at n=98",
+   "n": 98,
+   "name": "reasoning_line_defect@G-F3",
+   "p": "99961014133320001920001029353281442496473624170872547035570261288194673667316269775609877691635517/100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  }
+ ],
+ "contrast_first_read_flags": {
+  "A1": {
+   "low_label_mass": 0,
+   "reads": 3,
+   "scope": "first reads of domain sessions",
+   "top1_not_label": 0
+  },
+  "A2": {
+   "low_label_mass": 0,
+   "reads": 4,
+   "scope": "first reads of domain sessions",
+   "top1_not_label": 0
+  },
+  "A3": {
+   "low_label_mass": 0,
+   "reads": 6,
+   "scope": "first reads of domain sessions",
+   "top1_not_label": 1
+  }
+ },
+ "files": {
+  "checkpoint": "ckpt/Q-F3_qual.json",
+  "reads": "reports/Q-F3_qual_reads.json"
+ },
+ "form": "pick-free stage report (m:271, m:318)",
+ "identity": {
+  "audit_v2_sha16": "7aa235d25eeb66dc",
+  "backend_identifier": "a734dadec8f8ce9b",
+  "ban_sha": "a934f1ad2b702245",
+  "lock_sha256": "ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7",
+  "m_module_sha256": {
+   "__init__": "b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4",
+   "audit": "16d0abb91444af1b86dcdabdca919f8e61ce371055fe9581a96d02eb950e50f6",
+   "banner": "730442ca354d8d92fe52135d42506cd83cef2d10deb7dfc23d0a1c204a6d170c",
+   "bars": "e7f028d8a08c70d29b03296276dc292d8a4042a0e20ac8e6f0c70540b91e1d6c",
+   "corr": "74818109a284d203177bae82170cbfa1f2cec8cbd85dfa2f7db018530eb27fce",
+   "guard": "6aa5ac2dc7a7e071ad848053aa1a7e73c9539d1d5cb6fe1152b0f11e7a4d8b87",
+   "keys": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+   "readrule": "fca9e7329ec42419ed0eaa658d1a954b68db0e05a93cbb6b3a4502f781737a9e",
+   "resume": "78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7",
+   "scaffold": "39d8b32f193c1b0a64705dbb3e5557759f3f046158af85cde31870a53c0921d5",
+   "schedule": "f262f9e0120bcf6e694c0850b56dc3a19ab3c931b28ba92d47009f9f49a72d0d"
+  },
+  "package_sha256": "098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13",
+  "path": "uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "reasoning_cap": 120,
+  "renders_sha16": "a04f67b0e5105a05",
+  "schedule_sha256": "609b7c927e0e1a0aba118ef47b528a552c502e8e877415bd04a07c88c2b06c39",
+  "weights_revision": "c000ac2c2057d94be3fa931000c31723aac53282",
+  "weights_sha256": "03922eed43c73bf4af06cf4c51982005d95640dc6f39b57caf604749cf001e26"
+ },
+ "no_test": [],
+ "planned": {
+  "A1": 4,
+  "A1s": 8,
+  "A2": 4,
+  "A2s": 8,
+  "A3": 8,
+  "A3s": 8
+ },
+ "provenance": [
+  {
+   "launched": 40,
+   "record": {
+    "adapter": "qwen3.6-27b-4bit-mlx",
+    "backend": "mlx",
+    "choice_window_declared": 8192,
+    "dtype": "4bit-quantized (MLX)",
+    "gdn_inference_mode": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "library_versions": {
+     "mlx": "0.31.2",
+     "mlx-lm": "0.31.3",
+     "numpy": "2.5.1"
+    },
+    "mlx_version": "0.31.2",
+    "model_id": "mlx-community/Qwen3.6-27B-4bit",
+    "n_encodes_clipped": 0,
+    "n_layers": 64,
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "python": "3.12.9"
+   },
+   "stamp": "2026-11-12T06:20:43Z"
+  }
+ ],
+ "recorded": {
+  "A1": 4,
+  "A1s": 8,
+  "A2": 4,
+  "A2s": 8,
+  "A3": 8,
+  "A3s": 8
+ },
+ "schema": "m-stage-report-v1",
+ "stage": "qual",
+ "stage_name": "G-F3",
+ "stage_report": {
+  "form": "pick-free stage report (m:271, m:318)",
+  "stage": "qual",
+  "substrate": "qwen",
+  "templates": {
+   "A1": {
+    "audit_sessions_forced": 1,
+    "contrast": true,
+    "domain_sessions": 3,
+    "excluded_at_forced": {
+     "audit@forced": 1,
+     "content@forced": 0,
+     "echo@forced": 0,
+     "lexical@forced": 0
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 1,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 1
+     },
+     "degeneracy_rounds": 1,
+     "rounds": 16,
+     "termination": 1
+    },
+    "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "hair_triggers": [],
+    "reasoning_line_1": {
+     "by_class": {
+      "cap_no_newline": 0,
+      "echo": 0,
+      "empty": 0
+     },
+     "cap_reached": 0,
+     "counter_a": 0,
+     "defect_lines": 0,
+     "lines": 3
+    },
+    "reasoning_lines_after_line_1": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "sessions": 4,
+    "sessions_excluded_at_forced": 1,
+    "sessions_excluded_at_line_1": 0
+   },
+   "A1s": {
+    "all": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 2,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 1,
+      "echo": 0,
+      "lexical": 2,
+      "v2": 2
+     },
+     "degeneracy_rounds": 2,
+     "rounds": 52,
+     "termination": 1
+    },
+    "audit_sessions": 2,
+    "complete_sessions": 4,
+    "contrast": false,
+    "domain_sessions": 5,
+    "excluded_sessions": {
+     "audit@forced": 2,
+     "audit@free": 0,
+     "content@forced": 0,
+     "content@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 1,
+     "lexical@free": 1,
+     "scaffold@reasoning": 0
+    },
+    "first_pick_P": {
+     "k": 2,
+     "n": 5,
+     "share": "2/5"
+    },
+    "first_pick_P_by_pair": {
+     "0": {
+      "k": 0,
+      "n": 1,
+      "share": "0"
+     },
+     "1": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     },
+     "2": {
+      "k": 0,
+      "n": 1,
+      "share": "0"
+     },
+     "3": {
+      "k": 1,
+      "n": 1,
+      "share": "1"
+     }
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 2,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 2
+     },
+     "degeneracy_rounds": 2,
+     "rounds": 27,
+     "termination": 1
+    },
+    "free": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 1,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 25,
+     "termination": 0
+    },
+    "hair_triggers": [],
+    "reads": {
+     "low_label_mass": 0,
+     "n": 25,
+     "top1_not_label": 2
+    },
+    "reasoning_lines": {
+     "by_class": {
+      "cap_no_newline": 1,
+      "echo": 0,
+      "empty": 0
+     },
+     "cap_reached": 1,
+     "counter_a": 0,
+     "defect_lines": 1,
+     "lines": 25
+    },
+    "sessions": 8,
+    "strict_excluded_sessions": {
+     "audit@forced": 2,
+     "audit@free": 0,
+     "content@forced": 0,
+     "content@free": 1,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 1,
+     "lexical@free": 1
+    },
+    "valid_sessions": 4
+   },
+   "A2": {
+    "audit_sessions_forced": 0,
+    "contrast": true,
+    "domain_sessions": 4,
+    "excluded_at_forced": {
+     "audit@forced": 0,
+     "content@forced": 0,
+     "echo@forced": 0,
+     "lexical@forced": 0
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 16,
+     "termination": 0
+    },
+    "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "hair_triggers": [],
+    "reasoning_line_1": {
+     "by_class": {
+      "cap_no_newline": 0,
+      "echo": 0,
+      "empty": 0
+     },
+     "cap_reached": 0,
+     "counter_a": 0,
+     "defect_lines": 0,
+     "lines": 4
+    },
+    "reasoning_lines_after_line_1": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "sessions": 4,
+    "sessions_excluded_at_forced": 0,
+    "sessions_excluded_at_line_1": 0
+   },
+   "A2s": {
+    "all": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 2,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 2,
+      "v2": 2
+     },
+     "degeneracy_rounds": 2,
+     "rounds": 57,
+     "termination": 0
+    },
+    "audit_sessions": 2,
+    "complete_sessions": 4,
+    "contrast": false,
+    "domain_sessions": 5,
+    "excluded_sessions": {
+     "audit@forced": 2,
+     "audit@free": 0,
+     "content@forced": 0,
+     "content@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 1,
+     "lexical@free": 1,
+     "scaffold@reasoning": 0
+    },
+    "first_pick_P": {
+     "k": 3,
+     "n": 5,
+     "share": "3/5"
+    },
+    "first_pick_P_by_pair": {
+     "0": {
+      "k": 1,
+      "n": 1,
+      "share": "1"
+     },
+     "1": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     },
+     "2": {
+      "k": 0,
+      "n": 1,
+      "share": "0"
+     },
+     "3": {
+      "k": 1,
+      "n": 1,
+      "share": "1"
+     }
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 2,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 2
+     },
+     "degeneracy_rounds": 2,
+     "rounds": 32,
+     "termination": 0
+    },
+    "free": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 25,
+     "termination": 0
+    },
+    "hair_triggers": [],
+    "reads": {
+     "low_label_mass": 3,
+     "n": 25,
+     "top1_not_label": 4
+    },
+    "reasoning_lines": {
+     "by_class": {
+      "cap_no_newline": 0,
+      "echo": 0,
+      "empty": 0
+     },
+     "cap_reached": 0,
+     "counter_a": 0,
+     "defect_lines": 0,
+     "lines": 25
+    },
+    "sessions": 8,
+    "strict_excluded_sessions": {
+     "audit@forced": 2,
+     "audit@free": 0,
+     "content@forced": 0,
+     "content@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 1,
+     "lexical@free": 1
+    },
+    "valid_sessions": 4
+   },
+   "A3": {
+    "audit_sessions_forced": 1,
+    "contrast": true,
+    "domain_sessions": 6,
+    "excluded_at_forced": {
+     "audit@forced": 1,
+     "content@forced": 1,
+     "echo@forced": 0,
+     "lexical@forced": 0
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 1,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 1,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 1
+     },
+     "degeneracy_rounds": 1,
+     "rounds": 30,
+     "termination": 0
+    },
+    "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "hair_triggers": [],
+    "reasoning_line_1": {
+     "by_class": {
+      "cap_no_newline": 1,
+      "echo": 0,
+      "empty": 0
+     },
+     "cap_reached": 1,
+     "counter_a": 0,
+     "defect_lines": 1,
+     "lines": 6
+    },
+    "reasoning_lines_after_line_1": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "sessions": 8,
+    "sessions_excluded_at_forced": 2,
+    "sessions_excluded_at_line_1": 0
+   },
+   "A3s": {
+    "all": {
+     "advisory_rounds": 1,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 3,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 3
+     },
+     "degeneracy_rounds": 3,
+     "rounds": 80,
+     "termination": 0
+    },
+    "audit_sessions": 2,
+    "complete_sessions": 8,
+    "contrast": false,
+    "domain_sessions": 8,
+    "excluded_sessions": {
+     "audit@forced": 0,
+     "audit@free": 0,
+     "content@forced": 0,
+     "content@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 0,
+     "lexical@free": 0,
+     "scaffold@reasoning": 0
+    },
+    "first_pick_P": {
+     "k": 5,
+     "n": 8,
+     "share": "5/8"
+    },
+    "first_pick_P_by_pair": {
+     "0": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     },
+     "1": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     },
+     "2": {
+      "k": 2,
+      "n": 2,
+      "share": "1"
+     },
+     "3": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     }
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 32,
+     "termination": 0
+    },
+    "free": {
+     "advisory_rounds": 1,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 3,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 3
+     },
+     "degeneracy_rounds": 3,
+     "rounds": 48,
+     "termination": 0
+    },
+    "hair_triggers": [],
+    "reads": {
+     "low_label_mass": 4,
+     "n": 48,
+     "top1_not_label": 5
+    },
+    "reasoning_lines": {
+     "by_class": {
+      "cap_no_newline": 1,
+      "echo": 0,
+      "empty": 0
+     },
+     "cap_reached": 1,
+     "counter_a": 0,
+     "defect_lines": 1,
+     "lines": 48
+    },
+    "sessions": 8,
+    "strict_excluded_sessions": {
+     "audit@forced": 0,
+     "audit@free": 2,
+     "content@forced": 0,
+     "content@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 0,
+     "lexical@free": 0
+    },
+    "valid_sessions": 8
+   }
+  },
+  "unit": "Q-F3"
+ },
+ "status": "PASS",
+ "stop": null,
+ "timing": {
+  "contrast_seconds": "withheld to the unit's VERDICTS entry (m:318)",
+  "sham_seconds": 31160.56,
+  "sham_sessions": 24
+ },
+ "unit": "Q-F3"
+}
