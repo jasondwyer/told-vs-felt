@@ -40,10 +40,20 @@ Q-F3's own driver (Q1: "A new driver, scripts/mf3_sessions.py"; scripts/m_sessio
                       prior (stages.prior_gate, require_real on) and an existing G-ID artifact. It writes
                       data/mf3/ckpt/Q-F3_id.json, its report and reads, and the artifact at
                       guard.gid_artifact_path(), write-once. Exit 0 PASS, 5 FAIL, 6 NOT-DETERMINED, 4 STOP.
+  qual --proposal-file F --lock-file L --analyzer-sha256 H --package-sha256 H --renders-sha16 H [--resume]
+                      G-F3 (m:297) on Qwen at the cap of record, 120, uncached: 40 sessions, 8 each of A1s, A2s
+                      and A3s (24 sham), 8 of A3, 4 of A1 and 4 of A2 (16 contrast), the counts the committed qual
+                      schedules carry (QUAL_COUNTS), in the stage library's launch order; under LOCK-m-F3 v0.2,
+                      whose committed text must carry its cap and path lines (QUAL_LOCK_LINES; an earlier blob is
+                      refused); its identity time's (locked_path "uncached", G-ID-F3 having failed); its prior
+                      G-TIME-F3's re-run checkpoint by path, the first run's refused (A-m2 v0.5 §4.3), with
+                      G-ID-F3's artifact on disk at the cap (stages.prior_gate, require_real on). The order of the
+                      refusals, the DRIVER and SNAPSHOT lines, the load and the re-read is time's. It writes
+                      data/mf3/ckpt/Q-F3_qual.json, its report and reads. Exit 0 PASS, 4 STOP.
 
-and refuses ``qual`` and ``campaign`` (G-F3, the campaign): each is wired at its own step, on its own word,
-after its lock (m:361; the OLMo build's PIN O12 form). The stage drivers they will call are built and
-stub-tested in valence_core.mf3.stages.
+and refuses ``campaign`` (the campaign): it is wired at its own step, on its own word, after its lock (m:361;
+the OLMo build's PIN O12 form). The stage driver it will call is built and stub-tested in
+valence_core.mf3.stages.
 
 Q6's forms (the seat: "scripts/mf3_sessions.py is written to the same forms from the start"): the
 CHECKPOINT STATE INCONSISTENT line is valence_core.m.resume's sealed form, imported by mf3.resume; the
@@ -59,8 +69,8 @@ pre-load check (the MLXLM_USE_MODELSCOPE and local-path refusals, the hub's own 
 SNAPSHOT line, the post-load re-read with its model-id STOP) is the ``time`` wiring's (the routing of
 2026-11-07: "Build at time"), in scripts/m_sessions.py's forms.
 
-INVOCATION is the first line of every run. Nothing here loads a model except ``time`` and ``id``, through
-``_load_qwen``, after every pre-load refusal.
+INVOCATION is the first line of every run. Nothing here loads a model except ``time``, ``id`` and ``qual``,
+through ``_load_qwen``, after every pre-load refusal.
 """
 from __future__ import annotations
 
@@ -95,9 +105,9 @@ STAGE_NAMES = {"time": "G-TIME-F3", "id": "G-ID-F3", "qual": "G-F3", "campaign":
 # of 2026-11-07, item 1 ("… → LOCK-m-F3 v0.1 → G-TIME-F3 [go]"). The edit touches no scoring-stack function. The
 # new blob's sha256 is printed by the DRIVER line and recorded in the G-TIME-F3 entry and in LOCK-m-F3 v0.2 (the
 # step-10 read's Q2 condition, which Code reads F-1's "with the same scope" as carrying; the routing of
-# 2026-11-07). qual and campaign stay refused until their steps; id is wired at its own step (the id wiring's PIN,
-# below).
-WIRED_CMDS = ("time", "id")
+# 2026-11-07). campaign stays refused until its step; id and qual are wired at their own steps (the id and qual
+# wirings' PINs, below).
+WIRED_CMDS = ("time", "id", "qual")
 REFUSED_CMDS = tuple(c for c in STAGE_CMDS if c not in WIRED_CMDS)
 # PIN (Code, declared at LOCK-m-F3 v0.2; the time wiring; m's TIME_* form carried, scripts/m_sessions.py): G-TIME-F3 cites
 # LOCK-m-F3.md (lock §1); one session per Q-F3 arm (m:293: "One session per Q-F3 arm (6), as G-TIME-F0"), the
@@ -141,11 +151,34 @@ TIME_FLAG_HELP = {"proposal_file": "the proposal of record (PROPOSAL-m-gating-ca
 ID_LOCK_FILE = TIME_LOCK_FILE
 ID_REASONING_CAP = 120
 ID_PRIOR_CKPT_NAME = TIME_CKPT_NAME
+# PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's QUAL_* form carried, scripts/m_sessions.py): ``qual`` is
+# wired for Q-F3 under LOCK-m-F3 v0.2, at its step -- the seat's read of G-ID-F3, §5 and §9 item 5, routed by the PI on
+# 2026-11-11 ("After v0.2: the `qual` wiring → G-F3, 40 sessions uncached, announced and serialized, ≈ one laptop day →
+# the seat's read [go]"). G-F3 (m:297): 40 sessions, 8 each of A1s, A2s and A3s (24 sham), 8 of A3, 4 of A1 and 4 of A2
+# (16 contrast), keys m-f3|{template}|{s}; QUAL_COUNTS are those counts in §2.4's table order, the committed qual
+# schedules' n (run_gate_stage refuses any other). It cites QUAL_LOCK_FILE, whose committed text must carry
+# QUAL_LOCK_LINES as lines -- LOCK-m-F3 v0.2's cap and path lines (v0.2 §2, §3) -- so the re-issue's and v0.1's blobs are
+# refused, as m's qual refused LOCK-m-F0 v0.1's (Code's intent, declared at LOCK-m-F3 v0.2 §9 item 1). Its identity is
+# time's: the cap of record, QUAL_REASONING_CAP, and locked_path QUAL_LOCKED_PATH, "uncached" (v0.2 §3: G-ID-F3 FAIL),
+# which stages._locked holds to the path the G-ID licence gives. Its prior is G-TIME-F3's re-run checkpoint by path,
+# QUAL_PRIOR_CKPT_NAME, the first run's name refused (A-m2 v0.5 §4.3), as id's; stages.prior_gate (require_real on) also
+# requires G-ID-F3's artifact on disk at the cap, any verdict. Its checkpoint, report and reads are m's default stem for
+# "qual". The edit is of F-1's kind: the new blob's sha256 is printed by the DRIVER line and recorded in the G-F3 entry
+# and in LOCK-m-F3 v1.0.
+QUAL_LOCK_FILE = TIME_LOCK_FILE
+QUAL_COUNTS = (("A1", 4), ("A1s", 8), ("A2", 4), ("A2s", 8), ("A3", 8), ("A3s", 8))
+QUAL_LOCKED_PATH = "uncached"
+QUAL_REASONING_CAP = 120
+QUAL_LOCK_LINES = ("- **`reasoning_cap = 120`.**", "- **`path = uncached`.**")
+QUAL_PRIOR_CKPT_NAME = TIME_CKPT_NAME
 STAGE_HELP = {"time": "G-TIME-F3 (m:293): six sessions on Qwen, uncached, under LOCK-m-F3 v0.1; the flags are the "
                       "lock's values (lock §1)",
               "id": "G-ID-F3 (m:295): A2s and A3s on Qwen, each index uncached then cached, at the cap of record, "
                     "under LOCK-m-F3 v0.1 as re-issued; its prior is G-TIME-F3's re-run checkpoint; the flags are the "
-                    "lock's values (lock §1)"}
+                    "lock's values (lock §1)",
+              "qual": "G-F3 (m:297): 40 sessions on Qwen, uncached, at the cap of record, under LOCK-m-F3 v0.2; its "
+                      "prior is G-TIME-F3's re-run checkpoint, with G-ID-F3's artifact; the flags are the lock's values "
+                      "(lock §1)"}
 HF_OFFLINE_ENV = "HF_HUB_OFFLINE"
 # PIN (Code, declared at LOCK-m-F3 v0.2; the time wiring; m's PIN at LOCK v0.2 carried, scripts/m_sessions.py): the model id the
 # Qwen path loads -- QwenMLXAdapter's default, passed explicitly by _load_qwen; the model of record mf3.resume
@@ -270,6 +303,13 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
                          package_sha256: str, renders_sha16: str) -> tuple[dict | None, list[str]]:
     """A wired stage's identity_extra and the problems that stop it being built ((None, problems)).
 
+    PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's stage_identity_extra for "qual" carried): G-F3's identity
+    is built as G-TIME-F3's, below, citing QUAL_LOCK_FILE, with reasoning_cap QUAL_REASONING_CAP and locked_path
+    QUAL_LOCKED_PATH; before the m files and the weights are read, the lock's committed text must carry each of
+    QUAL_LOCK_LINES at the start of a line (LOCK-m-F3 v0.2's cap and path lines), else it is refused -- the re-issue's
+    blob, for one, as m's qual refused a lock naming no QUAL_LOCK_PATH_TEXT. A line test, not m's substring test: v0.2
+    writes each string once, at its definitional line (the v0.2 values-check's item 42).
+
     PIN (Code, declared at LOCK-m-F3 v0.2; the id wiring; m's stage_identity_extra for "id" carried): G-ID-F3's
     identity is built as G-TIME-F3's, below, citing the same lock (ID_LOCK_FILE), with reasoning_cap
     ID_REASONING_CAP and no locked_path (m's "G-ID-F0m carries none"; the path is recorded at LOCK-m-F3 v0.2, lock
@@ -290,7 +330,7 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
     which refuses any cap but 120 (A-m2 v0.5 §4.2: "the driver's `time` at any cap but 120 is refused")."""
     if stage not in WIRED_CMDS:
         raise ValueError(f"stage_identity_extra: {stage!r} is not one of {WIRED_CMDS}")
-    want_lock = TIME_LOCK_FILE if stage == "time" else ID_LOCK_FILE
+    want_lock = {"time": TIME_LOCK_FILE, "id": ID_LOCK_FILE, "qual": QUAL_LOCK_FILE}[stage]
     probs: list[str] = []
     extra: dict = {}
     lock_text = ""
@@ -318,15 +358,23 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
     if extra["proposal_sha256"] not in lock_text:
         return None, [f"--proposal-file {extra['proposal_file']}: its sha256 {extra['proposal_sha256'][:16]}... is "
                       f"not named in full in {TIME_LOCK_FILE}'s committed text (lock §1 binds the proposal of record)"]
+    if stage == "qual":
+        lock_lines = lock_text.splitlines()
+        absent = [x for x in QUAL_LOCK_LINES if not any(ln.startswith(x) for ln in lock_lines)]
+        if absent:
+            return None, [f"--lock-file {want_lock}: its committed text carries no line opening {absent} (LOCK-m-F3 "
+                          f"v0.2 §2-§3: the cap and the path G-F3 runs under; an earlier blob is refused)"]
     mm, mprobs = lock_m_modules(lock_text)
     wb, wprobs = lock_weights(lock_text)
     if mprobs or wprobs or mm is None or wb is None:
         return None, mprobs + wprobs
     extra.update(analyzer_sha256=analyzer_sha256, package_sha256=package_sha256, renders_sha16=renders_sha16,
                  m_module_sha256=mm, weights_revision=wb[0], weights_sha256=wb[1],
-                 reasoning_cap=TIME_REASONING_CAP if stage == "time" else ID_REASONING_CAP)
+                 reasoning_cap={"time": TIME_REASONING_CAP, "id": ID_REASONING_CAP, "qual": QUAL_REASONING_CAP}[stage])
     if stage == "time":
         extra["locked_path"] = TIME_LOCKED_PATH
+    elif stage == "qual":
+        extra["locked_path"] = QUAL_LOCKED_PATH
     try:
         stages._extra(extra, stage=stage, stub=False)
     except ValueError as e:
@@ -358,24 +406,42 @@ def time_checkpoint(paths: dict) -> Path:
     return cpath
 
 
-def id_prior_checkpoint(paths: dict) -> Path:
-    """G-ID-F3's prior: G-TIME-F3's re-run checkpoint, <out_root>/ckpt/ID_PRIOR_CKPT_NAME, through
-    stages.checkpoint_path, taken by path; the first run's checkpoint name refused, also where the path resolves to
-    it (A-m2 v0.5 §4.3: "the `id` and `qual` wirings take the re-run's checkpoint by path and refuse the first")."""
-    cpath = stages.checkpoint_path(Path(paths["root"]) / "ckpt" / ID_PRIOR_CKPT_NAME, paths)
+def stage_prior_checkpoint(stage: str, paths: dict) -> Path:
+    """G-ID-F3's or G-F3's prior: G-TIME-F3's re-run checkpoint, <out_root>/ckpt/ID_PRIOR_CKPT_NAME (id) or
+    QUAL_PRIOR_CKPT_NAME (qual), through stages.checkpoint_path, taken by path; the first run's checkpoint name refused,
+    also where the path resolves to it (A-m2 v0.5 §4.3: "the `id` and `qual` wirings take the re-run's checkpoint by
+    path and refuse the first")."""
+    if stage not in ("id", "qual"):
+        raise ValueError(f"stage_prior_checkpoint: {stage!r} takes no prior checkpoint here")
+    name = ID_PRIOR_CKPT_NAME if stage == "id" else QUAL_PRIOR_CKPT_NAME
+    cpath = stages.checkpoint_path(Path(paths["root"]) / "ckpt" / name, paths)
     if cpath.name == FIRST_RUN_CKPT_NAME:
-        raise SystemExit(f"PRIOR PATH REFUSED: {cpath.name} is G-TIME-F3's first run's checkpoint; G-ID-F3 takes the "
-                         f"re-run's, {TIME_CKPT_NAME}, by path (A-m2 v0.5 §4.3)")
+        raise SystemExit(f"PRIOR PATH REFUSED: {cpath.name} is G-TIME-F3's first run's checkpoint; "
+                         f"{stages.stage_name(stage)} takes the re-run's, {TIME_CKPT_NAME}, by path (A-m2 v0.5 §4.3)")
     return cpath
+
+
+def id_prior_checkpoint(paths: dict) -> Path:
+    """G-ID-F3's prior: stage_prior_checkpoint for "id"."""
+    return stage_prior_checkpoint("id", paths)
 
 
 def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path) -> list[str]:
     """A wired stage's refusals that need no model, made before the Qwen load; [] = none fired.
 
+    PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's stage_precheck for "qual" carried, scripts/m_sessions.py):
+    at G-F3 the checks are G-TIME-F3's, below, on G-F3's six committed schedule files and its own checkpoint
+    (stages.out_paths("qual")), and the prior, as at G-ID-F3: stage_prior_checkpoint, then stages.prior_gate with
+    require_real on, which at "qual" also requires G-ID-F3's artifact on disk at the run's cap -- any verdict, under this
+    proposal, not written on the stub (stages.gid_artifact_problems). Made only by the stage after the load: the path
+    the G-ID licence gives on the loaded backend at the cap, which stages._locked holds to the locked path (PATH
+    MISMATCH), beside the list below.
+
     PIN (Code, declared at LOCK-m-F3 v0.2; the id wiring; m's stage_precheck for "id" carried, scripts/m_sessions.py):
     at G-ID-F3 the checks are G-TIME-F3's, below, on G-ID-F3's committed schedule files (A2s and A3s) and its own
     checkpoint (stages.out_paths("id"): the path itself, an ENDED one, one on disk without --resume and no end
-    pending), and two more, m's: the prior -- id_prior_checkpoint, then stages.prior_gate with require_real on, as
+    pending), and two more, m's: the prior -- id_prior_checkpoint (stage_prior_checkpoint for "id"), then
+    stages.prior_gate with require_real on, as
     the stage makes it after the load (G-TIME-F3 ended PASS, under this proposal, not written on the stub, at the cap
     of record, which is this run's) -- and an existing G-ID artifact, a link included, unless G-ID-F3's own
     checkpoint carries an end pending. Only this precheck refuses a link at the artifact path that does not resolve
@@ -405,8 +471,8 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path)
     except SystemExit as e:
         probs.append(f"renders: {e}")
     paths = stages.out_paths(stage, out_root)
-    wanted = ([("time", t) for t, _ in TIME_COUNTS] if stage == "time"
-              else [("id", t) for t in keys.GID_TEMPLATES])
+    wanted = {"time": [("time", t) for t, _ in TIME_COUNTS], "id": [("id", t) for t in keys.GID_TEMPLATES],
+              "qual": [("qual", t) for t, _ in QUAL_COUNTS]}[stage]
     try:
         stages.load_committed(wanted, paths["schedules"])
     except SystemExit as e:
@@ -425,15 +491,16 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path)
         probs.append(f"checkpoint: {e}")
     except (RuntimeError, OSError) as e:
         probs.append(f"checkpoint: the checkpoint path does not resolve ({type(e).__name__})")
-    if stage == "id":
+    if stage in ("id", "qual"):
         try:
-            stages.prior_gate("id", id_prior_checkpoint(paths), proposal_sha256=extra["proposal_sha256"],
+            stages.prior_gate(stage, stage_prior_checkpoint(stage, paths), proposal_sha256=extra["proposal_sha256"],
                               prior_proposal_sha256s=extra.get("prior_proposal_sha256s") or [], require_real=True,
                               reasoning_cap=extra["reasoning_cap"])
         except SystemExit as e:
             probs.append(f"prior: {e}")
         except (RuntimeError, OSError) as e:
             probs.append(f"prior: the prior checkpoint path does not resolve ({type(e).__name__})")
+    if stage == "id":
         gid_path = guard.gid_artifact_path()
         try:
             pending = cpath is not None and rs.pending_at(cpath)
@@ -562,11 +629,17 @@ def snapshot_line(info: dict) -> str:
 def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, analyzer_sha256: str | None,
               package_sha256: str | None, renders_sha16: str | None, resume_run: bool, adapter_factory=None,
               out_root: Path | None = None) -> int:
-    """G-TIME-F3 (m:293) through stages.run_gate_stage, or G-ID-F3 (m:295) through stages.run_gid_pair_f3. Exit:
-    stages.EXIT_CODES for the stage's status (0 PASS, 4 STOP; at G-ID-F3 also 5 FAIL and 6 NOT-DETERMINED) and 4
-    STOP for any SystemExit from the loader or the stage, or the driver's own post-load snapshot re-read or
-    model-id check (each "STOP: " and its message); 2 refused before the load (nothing loaded or written); any
-    other exception is uncaught (a traceback; exit 1, or 130 on Ctrl-C).
+    """G-TIME-F3 (m:293) and G-F3 (m:297) through stages.run_gate_stage, or G-ID-F3 (m:295) through
+    stages.run_gid_pair_f3. Exit: stages.EXIT_CODES for the stage's status (0 PASS, 4 STOP; at G-ID-F3 also 5 FAIL and
+    6 NOT-DETERMINED) and 4 STOP for any SystemExit from the loader or the stage, or the driver's own post-load
+    snapshot re-read or model-id check (each "STOP: " and its message); 2 refused before the load (nothing loaded or
+    written); any other exception is uncaught (a traceback; exit 1, or 130 on Ctrl-C).
+
+    PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's _run_stage "qual" branch carried): G-F3 runs the Qwen
+    path below as G-TIME-F3 does, its stage_identity_extra and stage_precheck for "qual", and then
+    stages.run_gate_stage with gate "qual", QUAL_COUNTS, the prior stage_prior_checkpoint gives at this run's out root --
+    the path the precheck read; the stage's prior_gate reads it again after the load, with G-ID-F3's artifact -- its own
+    checkpoint the stage's default, and the resume flag.
 
     PIN (Code, declared at LOCK-m-F3 v0.2; the id wiring; m's _run_stage "id" branch carried): G-ID-F3 runs the
     Qwen path below as G-TIME-F3 does, its stage_identity_extra and stage_precheck for "id", and then
@@ -643,9 +716,13 @@ def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, a
             res = stages.run_gate_stage(adapter, gate="time", templates_counts=list(TIME_COUNTS), resume=resume_run,
                                         identity_extra=extra, out_root=root,
                                         ckpt_path=time_checkpoint(stages.out_paths("time", root)))
-        else:
+        elif stage == "id":
             res = stages.run_gid_pair_f3(adapter, resume=resume_run, identity_extra=extra,
                                          prior_ckpt=id_prior_checkpoint(stages.out_paths("id", root)), out_root=root)
+        else:
+            res = stages.run_gate_stage(adapter, gate="qual", templates_counts=list(QUAL_COUNTS), resume=resume_run,
+                                        identity_extra=extra, out_root=root,
+                                        prior_ckpt=stage_prior_checkpoint("qual", stages.out_paths("qual", root)))
     except SystemExit as e:
         _say(f"STOP: {e}")
         return 4
@@ -660,6 +737,11 @@ def run_time(**kw) -> int:
 def run_id(**kw) -> int:
     """G-ID-F3 (m:295): run_stage for "id"."""
     return run_stage("id", **kw)
+
+
+def run_qual(**kw) -> int:
+    """G-F3 (m:297): run_stage for "qual"."""
+    return run_stage("qual", **kw)
 
 
 def _short(x, n: int = 160) -> str:
@@ -701,10 +783,10 @@ def _selftest(chk) -> None:
         rcg == 0 and outg.startswith("INVOCATION: ") and "G-SHAPE-F3 PASS" in outg
         and "G-SHAPE-F3 test run" in outg and not any(re.search(rf"\b{w}\b", outg) for w in labels), outg[-300:])
     refused = {c: run([c]) for c in REFUSED_CMDS}
-    chk("mf3_sessions: qual and campaign are refused (exit 2), each named; time and id are wired (WIRED_CMDS) and the "
-        "four are STAGE_CMDS",
+    chk("mf3_sessions: campaign is refused (exit 2), named; time, id and qual are wired (WIRED_CMDS) and the four are "
+        "STAGE_CMDS",
         all(rc == 2 and refusal(c) in out for c, (rc, out) in refused.items())
-        and WIRED_CMDS == ("time", "id") and REFUSED_CMDS == ("qual", "campaign")
+        and WIRED_CMDS == ("time", "id", "qual") and REFUSED_CMDS == ("campaign",)
         and set(REFUSED_CMDS) | set(WIRED_CMDS) == set(STAGE_CMDS), {c: rc for c, (rc, _) in refused.items()})
     rc0, out0 = run([])
     chk("mf3_sessions: no action is refused (exit 2) and INVOCATION is the first line",
@@ -733,6 +815,7 @@ def _selftest(chk) -> None:
         rs.m_resume.package_sha256_of(REPO / "valence_core" / "m").startswith("7756dcf4") and len(m_files) == 18)
     _selftest_time(chk, labels, run)
     _selftest_id(chk, labels)
+    _selftest_qual(chk, labels)
     chk("mf3_sessions: the quarantined state-present module is not loaded after the self-test",
         not any(m in sys.modules for m in guard.FORBIDDEN_MODULES))
 
@@ -1658,9 +1741,9 @@ def _selftest_id(chk, labels) -> None:
         st_u.enter_context(gpatch("_load_qwen", t_loader))
         st_u.enter_context(contextlib.redirect_stdout(io.StringIO()))
         st_u.enter_context(contextlib.redirect_stderr(io.StringIO()))
-        for fn in (lambda: stage_identity_extra("qual", **tflags),
-                   lambda: stage_precheck("qual", dict(ex_i or {}), resume_run=False, out_root=u_root),
-                   lambda: run_stage("qual", **tflags, resume_run=False)):
+        for fn in (lambda: stage_identity_extra("campaign", **tflags),
+                   lambda: stage_precheck("campaign", dict(ex_i or {}), resume_run=False, out_root=u_root),
+                   lambda: run_stage("campaign", **tflags, resume_run=False)):
             try:
                 fn()
                 unwired.append(False)
@@ -1670,7 +1753,7 @@ def _selftest_id(chk, labels) -> None:
                 unwired.append(False)
     chk("mf3_sessions: id's identity refuses a reasoning cap other than 120 (stages._extra, a run on a model) and a lock "
         "other than LOCK-m-F3.md ('G-ID-F3 cites LOCK-m-F3.md'); stage_identity_extra, stage_precheck and run_stage "
-        "raise ValueError for a stage that is not wired (qual), before anything is read or run (on a test root, with "
+        "raise ValueError for a stage that is not wired (campaign), before anything is read or run (on a test root, with "
         "the loader and both stages trapped)",
         ex60 is None and any("on a run on a model" in x for x in p60)
         and ex_ol is None and any("G-ID-F3 cites LOCK-m-F3.md" in x for x in p_ol) and unwired == [True, True, True],
@@ -2103,6 +2186,33 @@ def _selftest_id(chk, labels) -> None:
         def stand_loader():
             order.append("load")
             return Stand(QWEN_MODEL_ID)
+        # after the load, for id: a re-read that refuses, a moved refs/main or another model id STOPs before the stage
+        # (time's post-load cases, carried; the qual wiring's review, MINOR-1)
+        def stand_mid(mid):
+            def f():
+                order.append("load")
+                return Stand(mid)
+            return f
+        moved = dict(fake_snap, revision="e" * 40)
+        post = {
+            "re-read refuses": (id_q("post_refuse", lic=[], setup=plant_time(), loader=stand_loader,
+                                     snapfn=seq(([], fake_snap), (["selftest: gone"], None))),
+                                ("STOP: SNAPSHOT RE-READ REFUSED", "selftest: gone")),
+            "refs/main moved": (id_q("post_moved", lic=[], setup=plant_time(), loader=stand_loader,
+                                     snapfn=seq(([], fake_snap), ([], moved))),
+                                ("STOP: SNAPSHOT MOVED", f"before the load {rev}; after it {'e' * 40}")),
+            "another model id": (id_q("post_mid", lic=[], setup=plant_time(), loader=stand_mid("other/model"),
+                                      snapfn=seq(([], fake_snap), ([], fake_snap))),
+                                 ("STOP: MODEL ID", f"the adapter loaded 'other/model', the snapshot check read "
+                                                    f"'{QWEN_MODEL_ID}'")),
+        }
+        bad_post = {k: (v[0]["rc"], v[0]["err"][-200:]) for k, v in post.items()
+                    if not (v[0]["rc"] == 4 and all(x in v[0]["err"] for x in v[1]) and not v[0]["calls"]
+                            and v[0]["same"] and "SNAPSHOT re-read after the load: unchanged" not in v[0]["out"])}
+        chk("mf3_sessions: after the load, id STOPs (exit 4) before the stage on a re-read that refuses, a moved refs/main "
+            "or another model id, each STOP naming its evidence, with no re-read line (time's post-load cases, carried)",
+            not bad_post and len(post) == 3, bad_post)
+        order.clear()
         ru = id_q("post_ok", lic=[], setup=plant_time(), loader=stand_loader, snapfn=seq(([], fake_snap), ([], fake_snap)))
         call = ru["calls"][0][1] if ru["calls"] else {}
         want_prior = (ru["root"] / "ckpt" / TIME_CKPT_NAME).resolve()
@@ -2122,6 +2232,595 @@ def _selftest_id(chk, labels) -> None:
         "invocation; data/mf3's file hashes are unchanged and stages.DEFAULT_OUT and guard.GATES_DIR are restored",
         data_before == data_after and stages.DEFAULT_OUT == real_out and guard.GATES_DIR == real_gates
         and len(loads) == 4 and [c[0] for c in stage_calls] == ["gid"] and not escapes,
+        (len(loads), [c[0] for c in stage_calls], escapes, sorted(set(data_before) ^ set(data_after))[:3]))
+
+
+def _selftest_qual(chk, labels) -> None:
+    """The qual wiring's checks (model-free), in _selftest_id's forms. The stub-factory runs (``stub_run``: G-TIME-F3's
+    re-run checkpoint and a G-ID-F3 artifact written first on the stub at the same test root, then run_qual) have the
+    loader trapped, stages.DEFAULT_OUT a test root and guard.GATES_DIR a test directory per run. The cases that can
+    reach the Qwen branch (``q_q``) run with _load_qwen a trap (in the post-load case a stand-in carrying a model_id),
+    stages.run_gate_stage and stages.run_gid_pair_f3 traps, stages.DEFAULT_OUT a test root and guard.GATES_DIR beside
+    it, m:267's laptop checklist stubbed, and build_schedules and run_selftest trapped. So no case can load the model,
+    run a session on it or write data/mf3. The last check asserts how often each trap was reached."""
+    from unittest import mock
+
+    from valence_core.m import corr as m_corr
+    from valence_core.m import resume as m_res
+    from valence_core.mf3 import scaffold as sc_mod
+    from valence_core.mf3 import testing
+
+    G = globals()
+    loads: list = []
+    stage_calls: list = []
+    escapes: list = []
+    gid_name, ck_name = f"{keys.UNIT}_G-ID.json", f"{keys.UNIT}_qual.json"
+
+    def t_escape(name):
+        def f(*a, **k):
+            escapes.append(name)
+            raise SystemExit(f"selftest: {name} was reached from a qual invocation")
+        return f
+
+    def t_loader():
+        loads.append(1)
+        raise SystemExit("selftest: the Qwen loader was reached")
+
+    def t_stage(tag):
+        def f(*a, **k):
+            stage_calls.append((tag, k))
+            raise SystemExit("selftest: the stage was reached")
+        return f
+
+    def gpatch(name, val):
+        return mock.patch.dict(G, {name: val})
+
+    def run3(argv):
+        buf, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(err):
+            try:
+                rc = main(argv)
+            except SystemExit as e:
+                rc = e.code if isinstance(e.code, int) else 2
+        return rc, buf.getvalue(), err.getvalue()
+
+    def tree_state(root: Path) -> dict:
+        out = {}
+        for q in sorted(root.rglob("*")):
+            k = str(q.relative_to(root))
+            out[k] = ("link", os.readlink(q)) if q.is_symlink() else (
+                ("file", hashlib.sha256(q.read_bytes()).hexdigest()) if q.is_file() else ("dir", None))
+        return out
+
+    def labelled(text: str) -> bool:
+        return any(re.search(rf"\b{re.escape(w)}\b", text, re.IGNORECASE) for w in labels)
+
+    real_out, real_gates = stages.DEFAULT_OUT, guard.GATES_DIR
+    data_before = tree_state(real_out) if real_out.is_dir() else {}
+    _pool, renders = sc_mod.pool_and_renders()
+    prop_sha = hashlib.sha256(stages.PROPOSAL_PATH.read_bytes()).hexdigest()
+    tflags = {"proposal_file": stages.PROPOSAL_REL, "lock_file": TIME_LOCK_FILE,
+              "analyzer_sha256": hashlib.sha256(stages.ANALYZER_PATH.read_bytes()).hexdigest(),
+              "package_sha256": guard.package_sha256_of(guard.PACKAGE_DIR),
+              "renders_sha16": m_corr.renders_sha(renders)}
+    z64 = "0" * 64
+    real_committed = stages.committed
+
+    def committed_but(rel_x: str, ret):
+        return lambda rel, repo=stages.REPO: ret if rel == rel_x else real_committed(rel, repo)
+
+    # --- the identity, from the committed lock: time's; v0.2's two lines required, at the start of a line ----------
+    lock_cp, lock_blob = stages.committed(QUAL_LOCK_FILE)
+    lock_text = (lock_blob or b"").decode("utf-8", "replace")
+    ex_t, pt = stage_identity_extra("time", **tflags)
+    ex_q, pq = stage_identity_extra("qual", **tflags)
+    ex_w, pw = time_identity_extra(**tflags)
+    chk("mf3_sessions: qual's identity_extra from the committed LOCK-m-F3.md is time's -- the same proposal, lock, "
+        "analyzer, package, renders, m files and weights, reasoning_cap 120 (QUAL_REASONING_CAP) and locked_path "
+        "uncached (QUAL_LOCKED_PATH, v0.2 §3); stages._extra accepts it for 'qual'; the committed lock carries each of "
+        "QUAL_LOCK_LINES at a line's start; QUAL_COUNTS are m:297's counts in §2.4's table order, the committed "
+        "schedules' (schedule.GATE_PLAN_COUNTS), 40 sessions, 24 sham",
+        lock_cp == [] and pq == pt == pw == [] and ex_q is not None and ex_q == ex_t == ex_w
+        and ex_q["locked_path"] == QUAL_LOCKED_PATH == "uncached" and ex_q["reasoning_cap"] == QUAL_REASONING_CAP == 120
+        and all(any(ln.startswith(x) for ln in lock_text.splitlines()) for x in QUAL_LOCK_LINES)
+        and QUAL_LOCK_FILE == TIME_LOCK_FILE and QUAL_PRIOR_CKPT_NAME == TIME_CKPT_NAME
+        and QUAL_COUNTS == tuple((t, schedule.GATE_PLAN_COUNTS[("qual", t)]) for t in keys.TEMPLATES)
+        and sum(n for _, n in QUAL_COUNTS) == 40 and sum(n for t, n in QUAL_COUNTS if keys.is_sham(t)) == 24,
+        (pq, sorted(ex_q or {})))
+    # an earlier blob: the committed text from v0.2's rule on (the re-issue's part and v0.1's); and v0.2 with one line
+    # moved off a line's start, indented, or removed (the review's NOTE-2: a line's start, not after whitespace)
+    rule = "\n---\n\nWhere the re-issue's or v0.1's text below differs from v0.2"
+    earlier = lock_text.split(rule, 1)[1].split("\n", 2)[2] if rule in lock_text else ""
+    moved = lock_text.replace(QUAL_LOCK_LINES[1], "x " + QUAL_LOCK_LINES[1], 1)
+    indented = lock_text.replace(QUAL_LOCK_LINES[1], "  " + QUAL_LOCK_LINES[1], 1)
+    dropped = "\n".join(ln for ln in lock_text.splitlines() if not ln.startswith(QUAL_LOCK_LINES[0])) + "\n"
+    got = {}
+    for nm, txt in (("earlier", earlier), ("moved", moved), ("indented", indented), ("dropped", dropped)):
+        with mock.patch.object(stages, "committed", committed_but(QUAL_LOCK_FILE, ([], txt.encode("utf-8")))):
+            got[nm] = (stage_identity_extra("qual", **tflags), stage_identity_extra("time", **tflags),
+                       stage_identity_extra("id", **tflags))
+    chk("mf3_sessions: qual refuses a lock whose committed text lacks v0.2's lines at a line's start -- the earlier blob "
+        "(the re-issue's part and v0.1's, as committed below v0.2's rule), v0.2 with its path line moved off the "
+        "line's start or indented, and v0.2 with its cap line removed -- each 'carries no line opening' the line; time "
+        "and id accept all four (they run under v0.1 and its re-issue)",
+        earlier.startswith("# LOCK-m-F3.md — v0.1, re-issued")
+        and all(v[0][0] is None and any("carries no line opening" in x for x in v[0][1]) for v in got.values())
+        and all(v[1][0] is not None and v[2][0] is not None for v in got.values()),
+        {k: (v[0][1][:1], v[1][1][:1], v[2][1][:1]) for k, v in got.items()})
+    # the order (the review's NOTE-3): an earlier blob that also names an m file with a second sha256 is refused for
+    # its missing lines, the check the PIN says comes before the m files and the weights are read
+    both_bad = earlier + "\n| `valence_core/m/corr.py` | `" + "c" * 64 + "` |\n"
+    with mock.patch.object(stages, "committed", committed_but(QUAL_LOCK_FILE, ([], both_bad.encode("utf-8")))):
+        ex_bb, p_bb = stage_identity_extra("qual", **tflags)
+        ex_bt, p_bt = stage_identity_extra("time", **tflags)
+    chk("mf3_sessions: qual's lock-line check comes before the m files and the weights are read -- on an earlier blob "
+        "that also names corr.py with a second sha256, qual refuses for the missing lines alone, and time, which "
+        "makes no lock-line check, refuses for the doubled sha256",
+        ex_bb is None and len(p_bb) == 1 and "carries no line opening" in p_bb[0]
+        and ex_bt is None and any("valence_core/m/corr.py with 2 sha256" in x for x in p_bt), (p_bb, p_bt[:1]))
+    rc_h, out_h, _err_h = run3(["qual", "--help"])
+    flat_h = "".join(out_h.split())
+    chk("mf3_sessions: qual --help lists time's five flags, each followed by its TIME_FLAG_HELP text, and --resume, "
+        "'continue G-F3's checkpoint' (exit 0)",
+        rc_h == 0 and "--resumecontinueG-F3'scheckpoint(skip-only)" in flat_h
+        and all(f"--{k.replace('_', '-')}{k.upper()}" + "".join(v.split()) in flat_h for k, v in TIME_FLAG_HELP.items()),
+        out_h[-200:])
+
+    # --- the stub path: time, then id (a FAIL artifact), then qual at the same root ---------------------------------
+    def cells(gate):
+        return {(t, j): schedule.gate_schedule(gate, t, schedule.GATE_PLAN_COUNTS[(gate, t)])[j]
+                for t in (keys.GID_TEMPLATES if gate == "id" else keys.TEMPLATES)
+                for j in range(schedule.GATE_PLAN_COUNTS[(gate, t)])}
+    made_ad: list = []
+
+    def stub(gate, rule=None, interrupt=None):
+        def f():
+            a = testing.F3Adapter()
+            a.load(stages._script_policy(gate, cells(gate), rule, interrupt), None)
+            made_ad.append(a)
+            return a
+        return f
+
+    def stub_run(fn, root, factory, resume_run=False, *, gates, stage=None):
+        buf, err = io.StringIO(), io.StringIO()
+        with contextlib.ExitStack() as st:
+            st.enter_context(mock.patch.object(guard, "GATES_DIR", gates))
+            st.enter_context(mock.patch.object(stages, "DEFAULT_OUT", root.parent / "default-out"))
+            st.enter_context(gpatch("_load_qwen", t_loader))
+            if stage is not None:
+                st.enter_context(mock.patch.object(stages, "run_gate_stage", stage))
+            st.enter_context(contextlib.redirect_stdout(buf))
+            st.enter_context(contextlib.redirect_stderr(err))
+            try:
+                rc = fn(**tflags, resume_run=resume_run, adapter_factory=factory, out_root=root)
+            except stages._Interrupt as e:
+                rc = e
+        return rc, buf.getvalue(), err.getvalue()
+
+    div = lambda t, s, kind, i, call: "Eight." if (call["cached"] and t == "A3s" and kind == "forced" and i == 1) else None
+
+    def stub_prior(root):
+        g = root.parent / "gates"
+        g.mkdir(parents=True, exist_ok=True)
+        return stub_run(run_time, root, stub("time"), gates=g)[0]
+
+    with tempfile.TemporaryDirectory() as td:
+        base = Path(td)
+
+        def fresh(nm: str) -> Path:
+            r = base / nm / "mf3"
+            schedule.write_schedule_files(r / "schedules")
+            (base / nm / "gates").mkdir()
+            return r
+
+        def chain(nm, gid_rule=div):
+            r = fresh(nm)
+            g = r.parent / "gates"
+            rct = stub_prior(r)
+            rci = stub_run(run_id, r, stub("id", gid_rule), gates=g)[0]
+            return r, g, (rct, rci)
+
+        r_ok, g_ok, pre_ok = chain("ok")
+        made_ad.clear()
+        rc_ok, out_ok, err_ok = stub_run(run_qual, r_ok, stub("qual"), gates=g_ok)
+        ckp = r_ok / "ckpt" / ck_name
+        ck_ok = rs.read_checkpoint(ckp) if ckp.is_file() else {}
+        ident_ok = ck_ok.get("identity") or {}
+        art_ok = json.loads((g_ok / gid_name).read_text(encoding="utf-8")) if (g_ok / gid_name).is_file() else {}
+        chk("mf3_sessions: qual on the stub factory after time and a FAILed id on the stub at the same root -- G-F3 "
+            "through stages.run_gate_stage, its prior the re-run's checkpoint (Q-F3_time-r2.json) by path, recorded, and "
+            "the G-ID-F3 FAIL artifact on disk: 40 sessions in the stage's launch order, uncached, PASS (exit 0); "
+            "Q-F3_qual.json (stage qual, path uncached, cap 120, the committed lock's and proposal's sha256); its report "
+            "and reads; the STAGE line; no DRIVER or SNAPSHOT line; no label printed",
+            pre_ok == (0, 5) and art_ok.get("verdict") == "FAIL" and rc_ok == 0 and len(made_ad) == 1
+            and ident_ok.get("stage") == "qual" and ident_ok.get("path") == "uncached"
+            and ident_ok.get("reasoning_cap") == 120 and ident_ok.get("lock_sha256") == (ex_q or {}).get("lock_sha256")
+            and ident_ok.get("proposal_sha256") == prop_sha and ident_ok.get("n") == dict(QUAL_COUNTS)
+            and str((ck_ok.get("prior") or {}).get("checkpoint", "")).endswith("ckpt/" + TIME_CKPT_NAME)
+            and (ck_ok.get("stage_end") or {}).get("status") == "PASS"
+            and len(ck_ok.get("sessions") or []) == 40
+            and (r_ok / "reports" / f"{keys.UNIT}_qual_report.json").is_file()
+            and (r_ok / "reports" / f"{keys.UNIT}_qual_reads.json").is_file()
+            and sum(ln.startswith("qual A") for ln in out_ok.splitlines()) == 40
+            and "STAGE G-F3 PASS path=uncached" in out_ok
+            and "DRIVER " not in out_ok and "SNAPSHOT " not in out_ok and not labelled(out_ok + err_ok),
+            (pre_ok, rc_ok, err_ok[-200:], ident_ok.get("path")))
+        # a PASS artifact on this backend: the G-ID licence gives cached, the lock fixes uncached -> PATH MISMATCH
+        r_pm, g_pm, pre_pm = chain("pathmismatch", gid_rule=None)
+        rc_pm, _o, err_pm = stub_run(run_qual, r_pm, stub("qual"), gates=g_pm)
+        r_np = fresh("noprior")
+        rc_np, _o, err_np = stub_run(run_qual, r_np, stub("qual"), gates=r_np.parent / "gates")
+        r_na = fresh("noartifact")
+        rct_na = stub_prior(r_na)
+        rc_na, _o, err_na = stub_run(run_qual, r_na, stub("qual"), gates=r_na.parent / "gates")
+        r_fn, g_fn, _ = chain("firstname")
+        with gpatch("QUAL_PRIOR_CKPT_NAME", FIRST_RUN_CKPT_NAME):
+            rc_fn, _o, err_fn = stub_run(run_qual, r_fn, stub("qual"), gates=g_fn)
+        chk("mf3_sessions: on the stub, qual STOPs (exit 4) -- on a G-ID-F3 PASS artifact for this backend ('PATH "
+            "MISMATCH': the lock fixes uncached, the licence gives cached), with no G-TIME-F3 checkpoint ('PRIOR STAGE "
+            "ABSENT'), with no G-ID-F3 artifact ('G-ID ARTIFACT ABSENT'), and with the first run's checkpoint as the "
+            "prior ('PRIOR PATH REFUSED'); none writes a G-F3 checkpoint",
+            pre_pm == (0, 0) and rc_pm == 4 and "PATH MISMATCH" in err_pm and rc_np == 4
+            and "STOP: PRIOR STAGE ABSENT" in err_np and rct_na == 0 and rc_na == 4 and "G-ID ARTIFACT ABSENT" in err_na
+            and rc_fn == 4 and "PRIOR PATH REFUSED" in err_fn
+            and not any((r / "ckpt" / ck_name).exists() for r in (r_pm, r_np, r_na, r_fn)),
+            (rc_pm, rc_np, rc_na, rc_fn, err_pm[-120:]))
+        ex_codes = {st_: stub_run(run_qual, chain(f"exit_{st_}")[0], stub("qual"),
+                                  gates=base / f"exit_{st_}" / "gates", stage=lambda *a, _s=st_, **k: {"status": _s})[0]
+                    for st_ in ("PASS", "STOP")}
+        chk("mf3_sessions: qual's exit code is stages.EXIT_CODES of the stage's status (PASS 0, STOP 4)",
+            ex_codes == {"PASS": 0, "STOP": 4}, ex_codes)
+        r_rs, g_rs, _ = chain("resume")
+        stop_a3 = lambda t, s, kind, i: t == "A3" and s == 0 and kind == "forced" and i == 0
+        rc_r1, _o, _e = stub_run(run_qual, r_rs, stub("qual", None, stop_a3), gates=g_rs)
+        ck_rs = r_rs / "ckpt" / ck_name
+        ck_r1 = rs.read_checkpoint(ck_rs) if ck_rs.is_file() else {"sessions": []}
+        rc_r2, _o, err_r2 = stub_run(run_qual, r_rs, stub("qual"), gates=g_rs)
+        made_ad.clear()
+        rc_r3, out_r3, _e = stub_run(run_qual, r_rs, stub("qual"), True, gates=g_rs)
+        ck_r3 = rs.read_checkpoint(ck_rs) if ck_rs.is_file() else {}
+        chk("mf3_sessions: qual --resume reaches the stage -- a stub run interrupted at A3's first session leaves the "
+            "four launched before it (A1, A1s, A2, A2s at s = 0); without --resume the stage refuses the checkpoint "
+            "(exit 4, 'CHECKPOINT EXISTS'); with it the other 36 are launched and G-F3 ends PASS (exit 0)",
+            isinstance(rc_r1, stages._Interrupt)
+            and sorted((r["template"], r["s"]) for r in ck_r1["sessions"]) == [("A1", 0), ("A1s", 0), ("A2", 0), ("A2s", 0)]
+            and rc_r2 == 4 and "CHECKPOINT EXISTS" in err_r2 and rc_r3 == 0 and len(made_ad) == 1
+            and sum(ln.startswith("qual A") for ln in out_r3.splitlines()) == 36
+            and (ck_r3.get("stage_end") or {}).get("status") == "PASS" and len(ck_r3.get("sessions") or []) == 40,
+            (type(rc_r1).__name__, rc_r2, rc_r3))
+        real_w = m_res.write_checkpoint
+        cut = {"n": 0}
+
+        def w_cut(path, ck):
+            if cut["n"] == 0 and ck.get("stage_end") is not None:
+                cut["n"] += 1
+                raise stages._Interrupt("selftest: killed before the end was persisted")
+            real_w(path, ck)
+        r_pd, g_pd, _ = chain("pending")
+        with mock.patch.object(m_res, "write_checkpoint", w_cut):
+            rc_pd, _o, _e = stub_run(run_qual, r_pd, stub("qual"), gates=g_pd)
+        pend_ckpt = (r_pd / "ckpt" / ck_name).read_bytes() if (r_pd / "ckpt" / ck_name).is_file() else b"{}"
+        chk("mf3_sessions: a stub G-F3 cut between its outputs and its persisted end leaves a checkpoint with an end "
+            "pending, not ended (the precheck's pending case below reads it)",
+            isinstance(rc_pd, stages._Interrupt) and cut["n"] == 1 and rs.pending_at(r_pd / "ckpt" / ck_name)
+            and json.loads(pend_ckpt).get("stage_end") is None, (type(rc_pd).__name__, cut["n"]))
+
+    # --- the Qwen path with the loader and the stages trapped ------------------------------------------
+    with tempfile.TemporaryDirectory() as td:
+        base = Path(td)
+        rev = (ex_q or {}).get("weights_revision", "0" * 40)
+        fake_snap = {"model_id": QWEN_MODEL_ID, "revision": rev, "snapshot_dir": "<selftest>/snapshots/" + rev,
+                     "n_snapshots": 1, "offline": "1"}
+        no_prior = ((stages, "prior_gate", lambda *a, **k: {}),)
+
+        def fresh(nm: str) -> Path:
+            r = base / nm / "mf3"
+            schedule.write_schedule_files(r / "schedules")
+            (base / nm / "gates").mkdir()
+            return r
+
+        def q_q(nm: str, over: dict | None = None, *, setup=None, pre=(), lic=None, resume_flag=False, argv_pre=(),
+                drv=([], "d" * 64), snap=([], fake_snap), snapfn=None, loader=None, more=()):
+            root = fresh(nm)
+            if setup is not None:
+                setup(root)
+            before = tree_state(root.parent)
+            fl = {**tflags, **(over or {})}
+            argv = list(argv_pre) + ["qual"] + [x for k, v in fl.items() if v is not None
+                                                for x in ("--" + k.replace("_", "-"), v)]
+            n0, s0 = len(loads), len(stage_calls)
+            with contextlib.ExitStack() as st:
+                st.enter_context(mock.patch.object(stages, "DEFAULT_OUT", root))
+                st.enter_context(mock.patch.object(guard, "GATES_DIR", root.parent / "gates"))
+                st.enter_context(mock.patch.object(stages, "run_gate_stage", t_stage("gate")))
+                st.enter_context(mock.patch.object(stages, "run_gid_pair_f3", t_stage("gid")))
+                st.enter_context(mock.patch.object(guard, "preflight_laptop", lambda: list(pre)))
+                st.enter_context(gpatch("_load_qwen", t_loader if loader is None else loader))
+                st.enter_context(gpatch("build_schedules", t_escape("build_schedules")))
+                st.enter_context(gpatch("run_selftest", t_escape("run_selftest")))
+                if drv is not None:
+                    st.enter_context(gpatch("driver_problems", lambda: (list(drv[0]), drv[1])))
+                if snapfn is not None:
+                    st.enter_context(gpatch("qwen_snapshot", snapfn))
+                elif snap is not None:
+                    st.enter_context(gpatch("qwen_snapshot", lambda: (list(snap[0]), snap[1])))
+                if lic is not None:
+                    st.enter_context(mock.patch.object(stages, "licence_problems", lambda extra, **kw: list(lic)))
+                for obj, attr, val in more:
+                    st.enter_context(gpatch(attr, val) if obj is None else mock.patch.object(obj, attr, val))
+                rc_, out_, err_ = run3(argv + (["--resume"] if resume_flag else []))
+            return {"rc": rc_, "out": out_, "err": err_, "loads": len(loads) - n0, "calls": stage_calls[s0:],
+                    "same": before == tree_state(root.parent), "root": root}
+
+        def plant_time(*, proposal=prop_sha, cap=120, status="PASS", stub_weights=False, name=TIME_CKPT_NAME):
+            # a G-TIME-F3 checkpoint whose provenance carries no stub tag (m's i_real_prior, carried)
+            def setup(root):
+                cp = root / "ckpt" / name
+                cp.parent.mkdir(parents=True, exist_ok=True)
+                w = dict(rs.STUB_WEIGHTS) if stub_weights else {"weights_revision": "a" * 40, "weights_sha256": "b" * 64}
+                ident = rs.Identity(stage="time", template_set=list(keys.TEMPLATES), lock_sha256="1" * 64,
+                                    schedule_sha256="3" * 64, path="uncached", hour_cap=None,
+                                    n={t: 1 for t in keys.TEMPLATES}, audit_v2_sha16="4" * 16, ban_sha="5" * 16,
+                                    backend_identifier="6" * 16, proposal_sha256=proposal, reasoning_cap=cap, **w)
+                ck = rs.load_or_init(cp, ident, False)
+                rs.append_provenance(ck, rs.provenance_record(
+                    {"adapter": "qwen3.6-27b-4bit-mlx", "apparatus": "selftest-planted, no stub tag"}))
+                if status is not None:
+                    ck["stage_end"] = {"status": status, "fired": [], "adjudication": None}
+                rs.write_checkpoint(cp, ck)
+            return setup
+
+        def plant_art(*, verdict="FAIL", cap=120, proposal=prop_sha, stub_tag=False, raw=None):
+            # a G-ID-F3 artifact for gid_artifact_problems: its identity's proposal and cap, and its provenance
+            def setup(root):
+                p = root.parent / "gates" / gid_name
+                if raw is not None:
+                    p.write_text(raw, encoding="utf-8")
+                    return
+                tag = stages.STUB_MARK if stub_tag else "selftest-planted, no stub tag"
+                p.write_text(json.dumps({"verdict": verdict, "identity": {"proposal_sha256": proposal,
+                                                                         "reasoning_cap": cap},
+                                         "provenance": [{"record": {"adapter": "qwen3.6-27b-4bit-mlx",
+                                                                    "apparatus": tag}, "stamp": "selftest"}]}),
+                             encoding="utf-8")
+            return setup
+
+        def both(*setups):
+            def setup(root):
+                for s_ in setups:
+                    s_(root)
+            return setup
+
+        clear = both(plant_time(), plant_art())
+
+        def first_link(root):
+            plant_time(name=FIRST_RUN_CKPT_NAME)(root)
+            (root / "ckpt" / TIME_CKPT_NAME).symlink_to(root / "ckpt" / FIRST_RUN_CKPT_NAME)
+
+        def prior_loop(root):
+            d = root / "ckpt"
+            d.mkdir(parents=True, exist_ok=True)
+            (d / TIME_CKPT_NAME).symlink_to(d / "loop_p.json")
+            (d / "loop_p.json").symlink_to(d / TIME_CKPT_NAME)
+
+        def q_ckpt(status):
+            def setup(root):
+                cp = root / "ckpt" / ck_name
+                cp.parent.mkdir(parents=True, exist_ok=True)
+                ident = rs.Identity(stage="qual", template_set=list(keys.TEMPLATES), lock_sha256="1" * 64,
+                                    schedule_sha256="3" * 64, path="uncached", hour_cap=None, n=dict(QUAL_COUNTS),
+                                    audit_v2_sha16="4" * 16, ban_sha="5" * 16, backend_identifier="6" * 16,
+                                    proposal_sha256=prop_sha, reasoning_cap=120, weights_revision="a" * 40,
+                                    weights_sha256="b" * 64)
+                ck = rs.load_or_init(cp, ident, False)
+                if status is not None:
+                    ck["stage_end"] = {"status": status, "fired": [], "adjudication": None}
+                rs.write_checkpoint(cp, ck)
+            return setup
+
+        def tamper(root):
+            f = root / "schedules" / f"{keys.UNIT}_qual_A1s.json"
+            f.write_bytes(f.read_bytes().replace(b'"map": 0', b'"map": 1', 1))
+
+        def pending(root):
+            (root / "ckpt").mkdir(parents=True, exist_ok=True)
+            (root / "ckpt" / ck_name).write_bytes(pend_ckpt)
+
+        earlier_lock = ((stages, "committed", committed_but(QUAL_LOCK_FILE, ([], earlier.encode("utf-8")))),)
+        msg_top = "qual takes no --selftest / --build-schedules / --out"
+        q_refused = {
+            "missing": (q_q("missing", {"lock_file": None}), "qual needs ['--lock-file']"),
+            "outside": (q_q("outside", {"proposal_file": str(base / "outside.md")}), "lies outside the repository"),
+            "uncommitted": (q_q("uncommitted", {"proposal_file": "no-such-proposal.md"}), "not committed at HEAD"),
+            "other lock": (q_q("otherlock", {"lock_file": "CLAUDE.md"}), "G-F3 cites LOCK-m-F3.md"),
+            "proposal not in lock": (q_q("propnotinlock", {"proposal_file": "CLAUDE.md"}),
+                                     "is not named in full in LOCK-m-F3.md's committed text"),
+            "an earlier lock blob (no v0.2 lines)": (q_q("earlierlock", more=earlier_lock), "carries no line opening"),
+            "malformed": (q_q("malformed", {"analyzer_sha256": "xyz"}), "analyzer_sha256 must be a sha256 hex digest"),
+            "licence (d)": (q_q("lic_d", {"analyzer_sha256": z64}, more=no_prior), "is not identity_extra's analyzer_sha256"),
+            "licence (e)": (q_q("lic_e", {"package_sha256": z64}, more=no_prior), "is not identity_extra's package_sha256"),
+            "renders": (q_q("renders", {"renders_sha16": "0" * 16}, lic=[], more=no_prior), "renders: RENDERS MISMATCH"),
+            "preflight": (q_q("preflight", lic=[], pre=("ONE PROCESS: selftest",), more=no_prior),
+                          "preflight: ONE PROCESS: selftest"),
+            "prior absent (real gate)": (q_q("noprior", lic=[], setup=plant_art()), "prior: PRIOR STAGE ABSENT"),
+            "prior on the stub (real gate)": (q_q("stubprior", lic=[], setup=both(stub_prior, plant_art())),
+                                              "prior: PRIOR STAGE ON THE STUB"),
+            "prior under another proposal (real gate)": (q_q("otherprop", lic=[], setup=both(
+                plant_time(proposal="2" * 64), plant_art())), "prior: PRIOR STAGE UNDER ANOTHER PROPOSAL"),
+            "prior not ended (real gate)": (q_q("notended", lic=[], setup=both(plant_time(status=None), plant_art())),
+                                            "prior: PRIOR STAGE NOT ENDED"),
+            "prior ended STOP (real gate)": (q_q("priorstop", lic=[], setup=both(plant_time(status="STOP"), plant_art())),
+                                             "prior: PRIOR STAGE STOP"),
+            "prior at another cap (real gate)": (q_q("prior60", lic=[], setup=both(
+                plant_time(cap=60, stub_weights=True), plant_art())), "prior: PRIOR STAGE AT ANOTHER CAP"),
+            "prior the first run's, its name a link to it": (q_q("priorlink", lic=[], setup=both(first_link, plant_art())),
+                                                             "prior: PRIOR PATH REFUSED"),
+            "prior the first run's, by name": (q_q("priorname", lic=[], setup=clear, more=(
+                (None, "QUAL_PRIOR_CKPT_NAME", FIRST_RUN_CKPT_NAME),)), "prior: PRIOR PATH REFUSED"),
+            "a looping link at the prior path": (q_q("priorloop", lic=[], setup=both(prior_loop, plant_art())),
+                                                 "prior: the prior checkpoint path does not resolve"
+                                                 if sys.version_info < (3, 13) else "prior: PRIOR STAGE ABSENT"),
+            "G-ID artifact absent (real gate)": (q_q("noart", lic=[], setup=plant_time()), "prior: G-ID ARTIFACT ABSENT"),
+            "G-ID artifact on the stub (real gate)": (q_q("artstub", lic=[], setup=both(plant_time(), plant_art(stub_tag=True))),
+                                                      "prior: G-ID ARTIFACT ON THE STUB"),
+            "G-ID artifact at another cap (real gate)": (q_q("art60", lic=[], setup=both(plant_time(), plant_art(cap=60))),
+                                                         "prior: G-ID ARTIFACT AT ANOTHER CAP"),
+            "G-ID artifact under another proposal (real gate)": (q_q("artprop", lic=[], setup=both(
+                plant_time(), plant_art(proposal="2" * 64))), "prior: G-ID ARTIFACT UNDER ANOTHER PROPOSAL"),
+            "G-ID artifact unreadable (real gate)": (q_q("artbad", lic=[], setup=both(plant_time(), plant_art(raw="not json"))),
+                                                     "prior: G-ID ARTIFACT UNREADABLE"),
+            "exists": (q_q("exists", lic=[], setup=q_ckpt(None), more=no_prior), "checkpoint: CHECKPOINT EXISTS"),
+            "ended": (q_q("ended", lic=[], setup=q_ckpt("PASS"), more=no_prior), "checkpoint: STAGE ENDED"),
+            "ended --resume": (q_q("ended_r", lic=[], setup=q_ckpt("PASS"), resume_flag=True, more=no_prior),
+                               "checkpoint: STAGE ENDED"),
+            "schedules": (q_q("sched", lic=[], setup=tamper, more=no_prior), "schedules: SCHEDULES NOT CLEAN"),
+            "driver": (q_q("driver", lic=[], drv=(["selftest: uncommitted edits"], None), more=no_prior),
+                       "driver: selftest: uncommitted edits"),
+            "snapshot": (q_q("snapshot", lic=[], snap=(["selftest: no snapshot"], None), more=no_prior),
+                         "snapshot: selftest: no snapshot"),
+            "snapshot revision not the lock's": (q_q("snaprev", lic=[], snap=([], dict(fake_snap, revision="e" * 40)),
+                                                     more=no_prior), "not the lock's weights revision"),
+            "top-level --out": (q_q("topout", lic=[], argv_pre=("--out", str(base / "x"))), msg_top),
+            "--selftest": (q_q("topsel", lic=[], argv_pre=("--selftest",)), msg_top),
+            "--build-schedules": (q_q("topbuild", lic=[], argv_pre=("--build-schedules",)), msg_top),
+        }
+        bad_q = {k: (v[0]["rc"], v[0]["err"][-240:]) for k, v in q_refused.items()
+                 if not (v[0]["rc"] == 2 and v[1] in v[0]["err"] and "refused" in v[0]["err"].lower()
+                         and "refused" not in v[0]["out"].lower() and v[0]["loads"] == 0 and not v[0]["calls"]
+                         and "DRIVER " not in v[0]["out"] and "SNAPSHOT " not in v[0]["out"]
+                         and not (k.startswith("ended") and "CHECKPOINT EXISTS" in v[0]["err"])
+                         and v[0]["same"] and not labelled(v[0]["out"] + v[0]["err"]))}
+        chk(f"mf3_sessions: qual refuses before the load (exit 2, the refusal on stderr and not stdout, no DRIVER or "
+            f"SNAPSHOT line, the loader and both stages never reached, the test root and its gates directory unchanged, "
+            f"no label printed) in {len(q_refused)} cases: a flag missing; a file outside the repository or "
+            f"uncommitted; a lock other than LOCK-m-F3.md; a proposal the lock does not name; an earlier lock blob, "
+            f"without v0.2's lines; a malformed hash; the licence's (d) and (e); the renders; m:267's checklist; the "
+            f"prior (the real gate) absent, on the stub, under another proposal, not ended, ended STOP, at another cap, "
+            f"and the first run's -- the re-run's name a link to it, or the name itself; a looping link at the prior "
+            f"path; G-ID-F3's artifact absent, written on the stub, at another cap, under another proposal, or "
+            f"unreadable; G-F3's checkpoint existing without --resume, or ENDED, with or without it (with no "
+            f"CHECKPOINT EXISTS advice); a tampered schedule; the driver check; the snapshot check, and a snapshot "
+            f"revision not the lock's; a top-level --out, --selftest or --build-schedules beside qual (m's form, "
+            f"exactly, on stderr; the schedules writer and the self-test never reached)",
+            not bad_q and len(q_refused) == 35 and not escapes
+            and all(q_refused[k][0]["err"] == f"refused: {msg_top}\n" for k in ("top-level --out", "--selftest",
+                                                                                "--build-schedules")), (bad_q, escapes))
+        multi = q_q("multi", {"renders_sha16": "0" * 16}, lic=["selftest licence"], pre=("ONE PROCESS: selftest",),
+                    setup=plant_time(), drv=(["selftest: uncommitted edits"], None), snap=(["selftest: no snapshot"], None))
+        ref_lines = [ln for ln in multi["err"].splitlines() if ln.startswith("REFUSED")]
+        chk("mf3_sessions: qual's precheck problems (the licence's, the renders', the prior gate's -- here G-ID-F3's "
+            "artifact absent -- and m:267's checklist's), the driver check's and the snapshot check's are refused "
+            "together, in one REFUSED line naming G-F3 (exit 2; no DRIVER or SNAPSHOT line; nothing loaded)",
+            multi["rc"] == 2 and len(ref_lines) == 1 and multi["err"].count("REFUSED: G-F3:") == 1
+            and all(x in ref_lines[0] for x in (
+                "licence: selftest licence", "renders: RENDERS MISMATCH", "prior: G-ID ARTIFACT ABSENT",
+                "preflight: ONE PROCESS: selftest", "driver: selftest: uncommitted edits",
+                "snapshot: selftest: no snapshot"))
+            and "DRIVER " not in multi["out"] and "SNAPSHOT " not in multi["out"] and multi["loads"] == 0, ref_lines)
+        n0, s0 = len(loads), len(stage_calls)
+        e_ = io.StringIO()
+        seam_root = fresh("seam")
+        seam_before = tree_state(seam_root.parent)
+        with contextlib.ExitStack() as st:
+            st.enter_context(mock.patch.object(stages, "DEFAULT_OUT", fresh("seam_default")))
+            st.enter_context(mock.patch.object(guard, "GATES_DIR", seam_root.parent / "gates"))
+            st.enter_context(mock.patch.object(stages, "run_gate_stage", t_stage("gate")))
+            st.enter_context(mock.patch.object(stages, "run_gid_pair_f3", t_stage("gid")))
+            st.enter_context(mock.patch.object(guard, "preflight_laptop", lambda: []))
+            st.enter_context(gpatch("_load_qwen", t_loader))
+            st.enter_context(contextlib.redirect_stderr(e_))
+            st.enter_context(contextlib.redirect_stdout(io.StringIO()))
+            rc_or = run_qual(**{**tflags, "lock_file": "CLAUDE.md"}, resume_run=False, out_root=seam_root)
+        chk("mf3_sessions: run_qual with an out root and no stub factory refuses before anything -- before the identity "
+            "-- exit 2, the loader and both stages, trapped, never reached, the test root unchanged (time's seam case, "
+            "carried)",
+            rc_or == 2 and "REFUSED: qual: an out root names a test directory" in e_.getvalue()
+            and "cites" not in e_.getvalue() and len(loads) == n0 and len(stage_calls) == s0
+            and tree_state(seam_root.parent) == seam_before, e_.getvalue()[-200:])
+        rl = q_q("reach_load", lic=[], setup=clear)
+        lines_l = rl["out"].splitlines()
+        drv_i = next((i for i, x in enumerate(lines_l) if x.startswith("DRIVER ")), None)
+        snp_i = next((i for i, x in enumerate(lines_l) if x.startswith("SNAPSHOT ")), None)
+        rfb = q_q("first_beside", lic=[], setup=both(clear, plant_time(name=FIRST_RUN_CKPT_NAME, cap=60,
+                                                                        stub_weights=True)))
+        rr = q_q("resume_open", lic=[], setup=both(clear, q_ckpt(None)), resume_flag=True)
+        rp = q_q("pending", lic=[], setup=pending, more=no_prior)
+        chk("mf3_sessions: with every pre-load check clear -- the real prior gate passing a G-TIME-F3 checkpoint ended "
+            "PASS at cap 120 that the stub did not write, with a G-ID-F3 artifact at cap 120 that it did not write either "
+            "-- qual prints the DRIVER line and then the SNAPSHOT line and only then reaches the loader (the trap: exit "
+            "4, no stage reached, the test root unchanged); the state at G-F3, with the first run's checkpoint beside "
+            "the re-run's, passes; --resume lets an open G-F3 checkpoint through; and an end pending passes without "
+            "--resume: each reaches the loader",
+            rl["rc"] == 4 and rl["loads"] == 1 and not rl["calls"] and rl["same"] and drv_i is not None
+            and snp_i is not None and drv_i < snp_i
+            and lines_l[drv_i] == f"DRIVER {DRIVER_REL} {'d' * 64}: committed at HEAD {stages._git_head()}, working tree identical"
+            and lines_l[snp_i] == snapshot_line(fake_snap) and "STOP: selftest: the Qwen loader was reached" in rl["err"]
+            and all(x["rc"] == 4 and x["loads"] == 1 and not x["calls"] and "the Qwen loader was reached" in x["err"]
+                    and x["same"] for x in (rfb, rr, rp)), [(x["rc"], x["err"][-160:]) for x in (rl, rfb, rr, rp)])
+
+        class Stand:
+            def __init__(self, mid):
+                self.model_id = mid
+        order: list = []
+
+        def seq(*answers):
+            it = iter(answers)
+
+            def f():
+                order.append("snap")
+                return next(it)
+            return f
+
+        def stand_loader():
+            order.append("load")
+            return Stand(QWEN_MODEL_ID)
+        # after the load, for qual: a re-read that refuses, a moved refs/main or another model id STOPs before the stage
+        # (time's post-load cases, carried; the qual wiring's review, MINOR-1)
+        def stand_mid(mid):
+            def f():
+                order.append("load")
+                return Stand(mid)
+            return f
+        moved = dict(fake_snap, revision="e" * 40)
+        post = {
+            "re-read refuses": (q_q("post_refuse", lic=[], setup=clear, loader=stand_loader,
+                                     snapfn=seq(([], fake_snap), (["selftest: gone"], None))),
+                                ("STOP: SNAPSHOT RE-READ REFUSED", "selftest: gone")),
+            "refs/main moved": (q_q("post_moved", lic=[], setup=clear, loader=stand_loader,
+                                     snapfn=seq(([], fake_snap), ([], moved))),
+                                ("STOP: SNAPSHOT MOVED", f"before the load {rev}; after it {'e' * 40}")),
+            "another model id": (q_q("post_mid", lic=[], setup=clear, loader=stand_mid("other/model"),
+                                      snapfn=seq(([], fake_snap), ([], fake_snap))),
+                                 ("STOP: MODEL ID", f"the adapter loaded 'other/model', the snapshot check read "
+                                                    f"'{QWEN_MODEL_ID}'")),
+        }
+        bad_post = {k: (v[0]["rc"], v[0]["err"][-200:]) for k, v in post.items()
+                    if not (v[0]["rc"] == 4 and all(x in v[0]["err"] for x in v[1]) and not v[0]["calls"]
+                            and v[0]["same"] and "SNAPSHOT re-read after the load: unchanged" not in v[0]["out"])}
+        chk("mf3_sessions: after the load, qual STOPs (exit 4) before the stage on a re-read that refuses, a moved refs/main "
+            "or another model id, each STOP naming its evidence, with no re-read line (time's post-load cases, carried)",
+            not bad_post and len(post) == 3, bad_post)
+        order.clear()
+        ru = q_q("post_ok", lic=[], setup=clear, loader=stand_loader, snapfn=seq(([], fake_snap), ([], fake_snap)))
+        call = ru["calls"][0][1] if ru["calls"] else {}
+        want_prior = (ru["root"] / "ckpt" / TIME_CKPT_NAME).resolve()
+        chk("mf3_sessions: after the load and the re-read (snapshot, load, snapshot), qual reaches stages.run_gate_stage "
+            "-- not run_gid_pair_f3 -- once, with gate qual and QUAL_COUNTS, the prior the re-run's checkpoint at its out "
+            "root, by path, the out root stages.DEFAULT_OUT, resume off and the identity with locked_path uncached at cap "
+            "120 (here the trap: exit 4)",
+            ru["rc"] == 4 and [c[0] for c in ru["calls"]] == ["gate"] and order == ["snap", "load", "snap"]
+            and call.get("gate") == "qual" and list(call.get("templates_counts") or []) == list(QUAL_COUNTS)
+            and Path(call.get("prior_ckpt", "")) == want_prior and Path(call.get("out_root", "")) == ru["root"]
+            and call.get("resume") is False and (call.get("identity_extra") or {}).get("locked_path") == "uncached"
+            and (call.get("identity_extra") or {}).get("reasoning_cap") == 120
+            and "STOP: selftest: the stage was reached" in ru["err"] and ru["same"], (ru["rc"], order, sorted(call)))
+    data_after = tree_state(real_out) if real_out.is_dir() else {}
+    chk("mf3_sessions: the qual checks loaded nothing and wrote nothing under data/mf3 -- the loader trap was reached 4 "
+        "times in all (each of the four cases that clear every pre-load check asserts its own one reach), the stage "
+        "trap once (run_gate_stage, the post-load case), the schedules writer and the self-test never from a qual "
+        "invocation; data/mf3's file hashes are unchanged and stages.DEFAULT_OUT and guard.GATES_DIR are restored",
+        data_before == data_after and stages.DEFAULT_OUT == real_out and guard.GATES_DIR == real_gates
+        and len(loads) == 4 and [c[0] for c in stage_calls] == ["gate"] and not escapes,
         (len(loads), [c[0] for c in stage_calls], escapes, sorted(set(data_before) ^ set(data_after))[:3]))
 
 
@@ -2152,7 +2851,7 @@ def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
     ap = argparse.ArgumentParser(description="PROPOSAL-m Q-F3 driver (self-test, schedules, hashes, G-SHAPE-F3, "
-                                             "G-TIME-F3, G-ID-F3; qual and campaign are refused until their steps)")
+                                             "G-TIME-F3, G-ID-F3, G-F3; campaign is refused until its step)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of valence_core.mf3")
     ap.add_argument("--build-schedules", action="store_true", help="write Q-F3's schedule files + manifest")
     ap.add_argument("--out", default=None, help="output directory for --build-schedules")
@@ -2190,7 +2889,7 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd in REFUSED_CMDS:
         print(refusal(a.cmd), flush=True)
         return 2
-    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, time or id)", flush=True)
+    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, time, id or qual)", flush=True)
     return 2
 
 

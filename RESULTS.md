@@ -21,6 +21,117 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-12 — **The `qual` wiring: `qual` (G-F3, m:297) is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.2,
+  in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its blob moves from
+  `8d878f4a…00e7` to `285eed04…0e44`. mf3's package, m's, the analyzer and the lock stand, and G-SHAPE-F3 is not
+  re-run. The self-test passes 214/214. A blind review with 44 mutants found no MAJOR; its MINOR and four of its NOTEs
+  are applied, one of them in part.**
+  (Stamp verified at write time: `date -u` → **Thu Nov 12 06:17:19 UTC 2026**.)
+  - **The routing.** The seat's read of G-ID-F3, §5 and §9 item 5, routed by the PI on 2026-11-11 ("Route as given";
+    the close line at `a6c6297`). Item 5: "After v0.2: the `qual` wiring → G-F3, 40 sessions uncached, announced and
+    serialized, ≈ one laptop day → the seat's read [go]". LOCK-m-F3 v0.2 (`05ef75d`), §9 item 1.
+  - **What `qual` runs:**
+    - **The stage.** The stage library's `run_gate_stage` with gate "qual", unchanged. It runs `QUAL_COUNTS`, m:297's
+      40 sessions: 8 each of A1s, A2s and A3s (24 sham), 8 of A3, and 4 each of A1 and A2 (16 contrast). These are
+      the committed qual schedules' counts, in §2.4's table order; the stage launches them in its own rotation
+      (`schedule.gate_launch_order`).
+    - **The lock.** G-F3 cites `LOCK-m-F3.md`. Its committed text must carry each of `QUAL_LOCK_LINES` at the start
+      of a line: v0.2's cap line (§2) and path line (§3).
+      - The re-issue's and v0.1's blobs are refused, as m's `qual` refused LOCK-m-F0 v0.1's.
+      - This is Code's intent, declared at v0.2 §9 item 1, and declared here.
+      - It is a line-start test, where m's is a substring test. v0.2 writes each string once, as the opening of its
+        definitional line, so the test reads that line and not a mention elsewhere.
+    - **The identity.** It is time's: `reasoning_cap` 120 and `locked_path` "uncached" (v0.2 §3). `stages._locked`
+      refuses (PATH MISMATCH) a locked path other than the one the G-ID licence gives on the loaded backend at the
+      cap, an end pending aside.
+    - **The prior.** G-TIME-F3's re-run checkpoint, taken by path (`stage_prior_checkpoint`), with the first run's
+      name refused, also where the path resolves to it (A-m2 v0.5 §4.3).
+      - `prior_gate` runs with `require_real` on, in the precheck and in the stage.
+      - At "qual" it also requires G-ID-F3's artifact on disk at the cap, any verdict, under this proposal and not
+        written on the stub.
+    - **The outputs.** m's default stem for "qual": `data/mf3/ckpt/Q-F3_qual.json`, and `Q-F3_qual_report.json` and
+      `Q-F3_qual_reads.json` under `data/mf3/reports/`.
+    - **Exit codes:** 0 PASS, 4 STOP, and 2 for a refusal before the load.
+  - **The edit, named:**
+    - `qual` joins `WIRED_CMDS`; `campaign` stays refused.
+    - `stage_identity_extra`, `stage_precheck` and `run_stage` gain their `qual` branches. `id_prior_checkpoint`
+      becomes `stage_prior_checkpoint`, for `id` and `qual`, with `id_prior_checkpoint` kept as its wrapper.
+    - New: `run_qual`; the constants `QUAL_LOCK_FILE`, `QUAL_COUNTS`, `QUAL_LOCKED_PATH`, `QUAL_REASONING_CAP`,
+      `QUAL_LOCK_LINES` and `QUAL_PRIOR_CKPT_NAME`; and `STAGE_HELP["qual"]`. `qual`'s subparser, with time's five
+      flags and `--resume`, comes from `main`'s loop over `WIRED_CMDS`; at HEAD, `qual` had the refused subparser.
+    - **Two texts v0.2 §5 quotes verbatim on the blob of record are revised.** v1.0 re-quotes both and re-anchors the
+      other sites on this blob (the review's NOTE-5; the review raw gives the final anchors):
+      - The `time` wiring's WIRED_CMDS sentence. "qual and campaign stay refused until their steps; id is wired at its
+        own step (the id wiring's PIN, below)." now reads "campaign stays refused until its step; id and qual are
+        wired at their own steps (the id and qual wirings' PINs, below)."
+      - The `id` wiring's precheck PIN (the review's NOTE-4): "the prior -- id_prior_checkpoint, then
+        stages.prior_gate" now reads "the prior -- id_prior_checkpoint (stage_prior_checkpoint for "id"), then
+        stages.prior_gate".
+    - The rest of `time`'s and `id`'s PIN texts is unchanged, and so is what the two do, print and refuse. The lines
+      they share with `qual` become stage-keyed, and `_selftest_id`'s not-wired case now uses `campaign`.
+    - **F-1:** the edit touches no scoring-stack function; every change is in the driver. So G-SHAPE-F3 is not re-run.
+      The new blob is `285eed04de4a8e610a021c6f06a7398eeac6f346d822c48a4315f80536760e44`. The DRIVER line prints it
+      before the load, and it is recorded in the G-F3 entry and at LOCK-m-F3 v1.0.
+    - **PIN sites:** four new, each declared at LOCK-m-F3 v1.0 ("the qual wiring").
+    - **For G-F3** (the review's NOTE-6, adopted as Code's commitments):
+      - the G-F3 entry records, at launch, the digests of its prior and of G-ID-F3's artifact;
+      - no driver commit lands while G-F3 is open.
+  - **Self-test:** 197 → 214, 214/214 on the final bytes at HEAD `a225a89`
+    ([`_mf3-qual-wiring_selftest`](results/raw/2026-11-12_mf3-qual-wiring_selftest.txt), local roots scrubbed). The
+    new `_selftest_qual`'s 16 checks assert the following, in time's and id's forms:
+    - **The identity.** qual's identity is time's. A lock without v0.2's lines at a line's start is refused for qual
+      and accepted for time and id, in four forms:
+      - the earlier blob;
+      - v0.2 with its path line moved off a line's start;
+      - v0.2 with that line indented;
+      - v0.2 without its cap line.
+    - **The order.** The line check comes before the m files and the weights are read.
+    - **`qual --help`** gives the five flags and `--resume`.
+    - **On the stub, at a test root:**
+      - after time and a FAILed id at the same root: PASS (exit 0), 40 sessions, uncached, with the prior recorded;
+        the exit codes; `--resume` launching only the missing sessions; an end pending;
+      - a STOP on a G-ID PASS artifact (PATH MISMATCH), with no prior, with no artifact, and with the first run's name.
+    - **On the Qwen path, with the loader and both stages trapped:**
+      - 35 refusals before the load: `id`'s 33 cases less its four for an existing artifact, plus an earlier lock
+        blob and five for G-ID-F3's artifact at the real gate (absent, written on the stub, at another cap, under
+        another proposal, unreadable);
+      - the problems refused together, in one line;
+      - the out-root seam;
+      - the state at G-F3 passing;
+      - the DRIVER and SNAPSHOT lines before the loader;
+      - the three post-load STOPs: a re-read that refuses, a moved refs/main, and another model id;
+      - after the load, the stage reached is `run_gate_stage` with gate "qual", `QUAL_COUNTS`, the re-run's
+        checkpoint as the prior, and the identity uncached at 120.
+    - **Nothing is loaded** and nothing written under `data/mf3`.
+    - **Beside it:** `_selftest_id` gains one check, the same three post-load STOP cases for `id` (the review's
+      MINOR-1). So 197 + 16 + 1 = 214.
+  - **Review:** one blind round, with Code's dispositions and round 2's mutant runs
+    ([`_mf3-qual-wiring_review`](results/raw/2026-11-12_mf3-qual-wiring_review.md)).
+    - Round 1: 0 MAJOR, 1 MINOR, 7 NOTEs. Of 44 mutants, 39 were killed and 5 survived: 3 equivalent and 2 gaps.
+    - The MINOR was the two gaps: qual's post-load STOPs were not asserted, and the `id` wiring had the same gap.
+      Both now are.
+    - The NOTEs:
+      - applied: NOTE-2 and NOTE-3 (an indented line, and the refusal order, are cases), NOTE-4 (the `id`
+        precheck's PIN text) and NOTE-7 (the identity check's line count is "one or more");
+      - recorded: NOTE-5 for v1.0 (the re-quotes, and the anchors on this blob), and NOTE-6 as Code's commitments
+        for G-F3 (above);
+      - not changed: NOTE-1's equivalent (Q20), as at the `id` wiring.
+    - NOTE-7 is applied in part. The "moved" and "indented" variants still edit only the path line's first
+      occurrence, so a v1.0 that restated that line above v0.2's would fail the self-test, loudly (the values-check's
+      item 85). Recorded for the campaign wiring, the next driver edit.
+    - Round 2 re-ran the five survivors against the fixed self-test. Both gaps are killed, and two of the three
+      equivalents with them. Q20 survives, equivalent.
+  - **Values-check:** one blind check of the entry, the review raw and the self-test raw
+    ([`_mf3-qual-wiring_valuescheck`](results/raw/2026-11-12_mf3-qual-wiring_valuescheck.md)): 101 items, 82
+    CONFIRMED, 7 IMPRECISE, 5 FAIL, 7 NOT CHECKABLE.
+    - Every FAIL and IMPRECISE item is applied. The FAIL on NOTE-7 corrects the review raw's claim; the self-test's
+      gap is recorded for the campaign wiring.
+    - Its question on the reviewer's transcript (item 70) is answered there: the "pruned `find`" ran inside the
+      clone's set-up call, not as a third call.
+  - **Committed by path:** the driver, its self-test output, the review raw, the values-check raw and this entry.
+    Nothing ran on a model. Not pushed.
+  - **Next:** G-F3, announced to the coordinating session. Its launch waits for the ack.
+
 - 2026-11-11 — **G-F0m-OLMo (p) ×3 (PROPOSAL-p v0.2 §4.1, §8; m:302's G-F0m-OLMo-{ckpt}, run for p's unit under
   register entries (1), (2), (6)–(9); the PI's routing of 2026-11-11, "Route as given", on the seat's answers of
   2026-11-10 on G-ID-F3, §9 items 7–9): PASS ×3 on the box, path uncached, under LOCK-p v0.2 ×3 (`585df45`),
