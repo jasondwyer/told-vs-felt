@@ -21,6 +21,53 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-11 — **LOCK-m-F3 v0.2 (PROPOSAL-m v1.11 §3.2 m:296, "Cap; path; projections"; the seat's G-ID-F3 answers,
+  §5; the PI's routing of 2026-11-11, item 3), above the re-issued v0.1, which it keeps verbatim. `LOCK-m-F3.md`,
+  sha256 `ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7`, is the file G-F3 cites.**
+  (Stamp verified at write time: `date -u` → **Thu Nov 12 04:12:27 UTC 2026**.)
+  - **The routing.** The PI's "Route as given" on the seat's G-ID-F3 answers. Its §9 block is quoted in full in the
+    close line at `a6c6297`. Item 3: "LOCK-m-F3 v0.2 to §5 — cap; path uncached with the artifact; the uncached
+    projections on the four-session basis, the cached table not applicable; the `id` blob and PINs; the counters
+    [go]".
+  - **What it records**, in the seat's §5 order:
+    - **The cap** (v0.2 §2): `reasoning_cap = 120`, with m:294's count beside, 0 of ≤ 36.
+    - **The path** (v0.2 §3): `path = uncached`, with G-ID-F3's artifact (`ea8f7d3a…9260`: verdict FAIL, `n_pairs`
+      1, `pairs_identical` `[false]`), the bar's fire, A3s not run, the pair's record and the two halves' seconds.
+    - **The projections** (v0.2 §4) [E], uncached only, on the four-session basis (mean 1,319.6 s, slowest 1,942.7 s):
+      - the campaign ≈ 245–350 h at the mean and ≈ 360–520 h at the slowest;
+      - G-F3 ≈ 14.7–21.6 h;
+      - m:230's basis and the first run's seconds beside;
+      - the cached table not applicable, and the cached member's 208.3 s recorded.
+    - **The driver of record** (v0.2 §5): `8d878f4a…00e7`, with its six-commit history.
+      - The `time` wiring's nine PIN sites and the `id` wiring's four, verbatim.
+      - The revised WIRED_CMDS sentence; the plural "conditions"; the snapshot-revision refusal.
+      - R3's `:88` and `:95` re-anchored at `:102` and `:109`.
+    - **The counters and the first-pick shares** (v0.2 §6), for the re-run (the first run's beside) and for G-ID-F3.
+    - **Code's two BUILD readings**, `qwen_ends` and F6, strikable until v1.0 (v0.2 §7).
+    - **The departures ruled** (v0.2 §8): `r2:`§4 and the G-ID-F3 answers' §6, with a pointer to the observation
+      pending on §6 (`15d2f70`).
+    - **What follows** (v0.2 §9): the `qual` wiring, then G-F3, m:297 quoted in full with its bars.
+  - **The form** (`gt:`§5): v0.2 comes first, then a rule and its one sentence, then the re-issued v0.1 byte for byte as
+    committed at `f674583` (`70da4a70…1d3f`), with v0.1's own text below it.
+  - **Generated, not transcribed.** `v02_gen.py` (Code's scratch) generated v0.2 §1's tables, §5's history and the
+    verbatim PIN texts of §5 and §7 at v0.2's base, HEAD `15d2f70`. Before the commit, Code checked the composed file:
+    - the driver's own lock parsers (`lock_m_modules`, `lock_weights`) read the same eleven m files and the same WEIGHTS
+      line as from the re-issue;
+    - the analyzer's and mf3's package's sha256 are named in full, and each m file's path sits on one line with its
+      sha256 (the licence's (f)); the proposal's sha256 is named in full (`stage_identity_extra`);
+    - the v0.2 part names no m-file path, carries no WEIGHTS line, and holds no roster word and no clock time.
+  - **Values-check:** [`_lock-m-f3-v02_valuescheck`](results/raw/2026-11-11_lock-m-f3-v02_valuescheck.md): one blind
+    agent, under a brief quoting the list of record v2's items 1–5. It read the four report files and the G-ID-F3
+    artifact for the figures, hashed the checkpoints, and ran the driver's lock parsers with the model imports blocked.
+    - 57 items: 41 CONFIRMED, 9 IMPRECISE, 2 FAIL, 5 NOT CHECKABLE.
+    - One FAIL: G-F3's bars and first-pick share were missing; m:297 is now quoted in full. The other: a miscounted
+      bullet outside the seat's §5, now removed.
+    - Every FAIL and IMPRECISE item is applied. Two commitments beyond the routing are withdrawn or marked as
+      Code's intent: the plural's correction, and the `qual` wiring's lock check.
+  - **Committed by path:** `LOCK-m-F3.md`, the values-check raw and this entry. Nothing ran on a model or the box. Not
+    pushed.
+  - **Next:** the `qual` wiring (v0.2 §9 item 1), then G-F3, announced to the coordinating session.
+
 - 2026-11-11 — **Dated note (coordinating session), for the seat's next read: an observation on the seat's answers of 2026-11-10 on G-ID-F3, §6, and one listing by my values-checker.**
   - The answers are `results/raw/2026-11-10_gid-f3_design-to-code_answers.md` (sha256 `c51ef5ba…a9d7`), committed at
     `a6c6297`.
