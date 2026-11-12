@@ -110,6 +110,38 @@ applied to CLAUDE.md.
       is disclosed in the raw.
   - **Next:** nothing until the seat rules. LOCK-m-F3 v0.2 (m:296) waits for the seat's read and the PI's word. Not
     pushed. Committed by path.
+  - **Close (PI date 2026-11-11).** The seat's read of G-ID-F3,
+    [`2026-11-10_gid-f3_design-to-code_answers.md`](results/raw/2026-11-10_gid-f3_design-to-code_answers.md)
+    (sha256 `c51ef5ba77c30f223875de254c9e0fb0cdef44d900f62c30795659a431a4a9d7`), is committed here by path with this
+    close, on the coordinating session's relay of the PI's word (the file's header: "the PI commits by path; the F3
+    session and the pod session add their close lines"). In the seat's words (§8): "FAIL stands as computed; Q-F3 runs
+    uncached; (b) 0 of 20 and (a) 2 of 12 confirmed; the reads' form m:271's full record; v0.2 to §5".
+    - Q1 (§1.3): "G-ID-F3: FAIL stands as computed." "The path of record is uncached". Nothing is re-run or
+      re-specified, and A3s "was not owed".
+    - v0.2 and the cached projection (§1.3, §5): v0.2 records the path uncached, with the artifact and the pair's
+      record, and carries the uncached projections only. m:216's cached table "is not applicable under the FAIL"; the
+      cached member's 208.3 s is recorded as a figure of the stage.
+    - Q2 (§2): "(b) = 0 of 20, confirmed"; "(a) = 2 of 12, confirmed as descriptive".
+    - Q3 (§3): "nothing is redacted; the raws, the entry and the seat's read may quote G-ID's labels and picks; the
+      block's rendering by role was a courtesy, not a requirement." Ledger (66) is the seat's.
+    - The hours (§4) [E]: four uncached sham sessions at cap 120, mean 1,319.6 s. The campaign comes to ≈ 245–350 h
+      uncached at the mean and ≈ 360–520 h at the slowest observed; G-F3 to ≈ 15–22 h. The cap is the PI's at v1.0
+      (m:298), and the seat's default is to run G-F3 first.
+    - §6 (the pod session's two notes; LOCK-p v0.2 ×3) and items 6–9 concern the pod session's track.
+    - Next (§5, §8): LOCK-m-F3 v0.2 to §5; then the `qual` wiring, its entry naming the edit and the blob; then G-F3,
+      40 sessions uncached, announced and serialized; then the seat's read.
+    - The PI's word, in chat, to the coordinating session's question "Route the seat's nine items as given?" (its relay
+      of 2026-11-11): "Route as given". The seat's §9 routing block, so adopted, verbatim:
+
+      > 1. G-ID-F3: FAIL stands as computed; Q-F3 runs uncached (m:295; bar 6); nothing re-run or re-specified [as ruled].
+      > 2. (b) = 0 of 20; (a) = 2 of 12 descriptive [confirmed]. The reads' form: m:271's full record, nothing redacted [as ruled]; ledger (66) [recorded].
+      > 3. LOCK-m-F3 v0.2 to §5 — cap; path uncached with the artifact; the uncached projections on the four-session basis, the cached table not applicable; the `id` blob and PINs; the counters [go].
+      > 4. The hours: campaign ≈ 245–350 h uncached at the mean, ≈ 360–520 h at the slowest observed; G-F3 ≈ 15–22 h; the cap is yours at v1.0 (m:298), and m:243/m:324 let you decline v1.0 for projected hours at any point before D2 (2026-12-22) [noted; the seat's default: run G-F3 first].
+      > 5. After v0.2: the `qual` wiring → G-F3, 40 sessions uncached, announced and serialized, ≈ one laptop day → the seat's read [go].
+      > 6. Pod note 1 inert, no strike; pod note 2 a disclosed departure, inert in substance, no strike; ledger (65) [recorded].
+      > 7. LOCK-p v0.2 ×3 stand as committed; the dated note on their entry [stand — your call; alt: re-issue with item 3's clause struck, ≈ a cycle].
+      > 8. The box's stamp rule (one launch stamp, exit codes; no end time or stage total in the entry; relays stampless) [adopted].
+      > 9. The box run under the standing locks: sync → precheck ×3 → G-F0m-OLMo (p) ×3 batched → STOP for the seat's read [go; the pod up through it — your call].
 
 - 2026-11-10 — **The `id` wiring: `id` (G-ID-F3, m:295) is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.1
   as re-issued, in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its blob
