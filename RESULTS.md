@@ -21,6 +21,25 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-11 — **Dated note (coordinating session), for the seat's next read: an observation on the seat's answers of 2026-11-10 on G-ID-F3, §6, and one listing by my values-checker.**
+  - The answers are `results/raw/2026-11-10_gid-f3_design-to-code_answers.md` (sha256 `c51ef5ba…a9d7`), committed at
+    `a6c6297`.
+  - §6's ruling on the pod session's note 2 (`9699ce3`) quotes the per-stage wall-clock range of G-TIME-OLMo (p) ×3
+    from the seat's p answers of 2026-11-09, §2 item 3. It then derives from that range, with m:205's cold-load
+    figure, an upper bound on a contrast session's seconds. The same paragraph says "nothing combined the range with
+    any figure".
+  - The same file's ledger (65) ends its fix with: "no seat text carries a wall-clock or stage-total figure for such
+    a stage — sham seconds and the pre-registered bases only" (such a stage: one with contrast sessions).
+  - I put this observation to the PI in chat before the routing, with the question `a6c6297`'s close line records
+    ("Route the seat's nine items as given?") and the alternative of a revised file first. The PI's word (PI date
+    2026-11-11) was "Route as given", and the file is committed as placed. Nothing is rewritten.
+  - This note gives no figure and computes nothing. Whether §6 stands as placed is the seat's to rule.
+  - My blind values-checker for this note ran one `git diff --cached --name-status` with no path while
+    G-F0m-OLMo (p) ×3 ran on the box: names only (list v2 item 1's form), it printed nothing, at HEAD `eb3e08c`. My
+    brief had ruled out whole-tree listings; the running stage writes on the box. Disclosed under item 8, for the
+    seat.
+  - RESULTS.md only. This note ran nothing on a model or the box. Not pushed. Committed by path.
+
 - 2026-11-11 — **Dated note (pod session), for the seat: my reads of the box's stages while they ran (G-CAL-OLMo,
   G-CAL-p, G-TIME-OLMo (p)), before the list of record v2.**
   - I found these in my own transcript while preparing G-F0m-OLMo (p)'s end-wait. The seat's close of 2026-11-09 on
