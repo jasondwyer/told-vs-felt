@@ -21,6 +21,30 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-11 — **Dated note (pod session), for the seat: my reads of the box's stages while they ran (G-CAL-OLMo,
+  G-CAL-p, G-TIME-OLMo (p)), before the list of record v2.**
+  - I found these in my own transcript while preparing G-F0m-OLMo (p)'s end-wait. The seat's close of 2026-11-09 on
+    the sweep disclosures (RESULTS.md, that close; `results/raw/2026-11-09_o23-sweeps_design-to-code_answers.md`)
+    reads O2-2/O3-1's rule as already standing: "the end-wait is on the PID alone, and no session runs a `stat`,
+    listing or read of a running stage's raw, checkpoint or reports (§2 item 5)". Whether that rule bound the box's
+    stages before v2 is the seat's to say. I report these reads as possible departures. None was disclosed before.
+  - (1) G-TIME-OLMo (p) ×3, 2026-11-09, one contrast and one sham session per checkpoint, while the batch ran:
+    - the wrapper's stamps file, which carried each checkpoint's end stamp as it was written, read by single calls and
+      by wait loops that polled it for the first checkpoint's end and for the batch's last line;
+    - a watch (Monitor) that polled the stamps file and printed the outputs' `P-REPORT`, `STOP`, `REFUSED`, traceback
+      and error lines as they appeared;
+    - the first checkpoint's stdout: its first lines and later its last lines while it ran, and, once its invocation
+      had ended and the next one was running, its stdout from the stage's report section on;
+    - a process listing with elapsed times, and the GPU's state.
+  - (2) G-CAL-OLMo, 2026-11-07, and G-CAL-p ×3, 2026-11-08, while they ran: the wrapper's stamps file by wait loops
+    and a watch; the stages' stdout by tails, heads and greps for summary lines; process listings; the GPU's state.
+  - None read a checkpoint, a call log or a report file. What they printed is in my transcript only. The raws carry
+    the stamps files and stdout as copied back after each run.
+  - For G-F0m-OLMo (p) ×3 the end-wait is on the wrapper's PID alone: no read of its stamps, stdout, checkpoints or
+    reports until it has ended.
+  - Disclosed under the list of record v2's item 8, for the seat to rule; nothing rewritten. RESULTS.md only. Nothing
+    ran on a model or the box. Not pushed. Committed by path.
+
 - 2026-11-10 — **G-ID-F3 (PROPOSAL-m v1.11 §3.2 m:295; the seat's read of G-TIME-F3 r2, §5 items 1–2; the PI's
   routing of 2026-11-10, its §8 item 4): FAIL. Its first pair, A2s at index 0, diverged between its uncached and cached
   halves, and the stage stopped there; A3s did not run. It ran on Qwen at cap 120, under LOCK-m-F3 v0.1 as re-issued,
@@ -266,6 +290,13 @@ applied to CLAUDE.md.
   - Both happened after the run's end; the computation in (1) while HEAD was `f674583`.
   - Disclosed under the list of record v2's item 8, for the seat to rule; nothing rewritten. RESULTS.md only. Nothing
     ran on a model or the box. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-11).** The seat's answers of 2026-11-10 on G-ID-F3
+    ([`2026-11-10_gid-f3_design-to-code_answers.md`](results/raw/2026-11-10_gid-f3_design-to-code_answers.md), sha256
+    `c51ef5ba77c30f223875de254c9e0fb0cdef44d900f62c30795659a431a4a9d7`, committed at `a6c6297`), §6, rule this note
+    "inert, no strike". §8's words for both of the pod session's notes: "inert, no strike; the locks stand; the
+    wrapper's form adopted". Routed by the PI's word of 2026-11-11, verbatim "Route as given", on the seat's §9 item 6:
+    "Pod note 1 inert, no strike; pod note 2 a disclosed departure, inert in substance, no strike; ledger (65)
+    [recorded]". Nothing above is rewritten.
 
 - 2026-11-10 — **Dated note (pod session), for the seat: G-TIME-OLMo (p) ×3's record carries its stages' end stamps
   and a wall-clock range, before VERDICTS.**
@@ -298,6 +329,19 @@ applied to CLAUDE.md.
     re-issued first? Each lock's sha256 is the `lock_sha256` its checkpoint's G-F0m-OLMo (p) record will carry. The
     box run holds meanwhile: no bundle sync, no precheck and no run until the PI's word (the coordinating session's
     hold, PI date 2026-11-10).
+  - **Close (PI date 2026-11-11).** The seat's answers of 2026-11-10 on G-ID-F3
+    ([`2026-11-10_gid-f3_design-to-code_answers.md`](results/raw/2026-11-10_gid-f3_design-to-code_answers.md), sha256
+    `c51ef5ba77c30f223875de254c9e0fb0cdef44d900f62c30795659a431a4a9d7`, committed at `a6c6297`), in §8's words:
+    "inert, no strike; the locks stand; the wrapper's form adopted".
+    - §6 rules this note "A departure of the Q4 kind, in five texts, four of them on origin (the locks are not pushed);
+      the seat's part is its own", inert in substance, with no strike. Its answer to the question above: "They stand
+      as committed". §6 also adopts the wrapper's new form for the box's stages.
+    - Routed by the PI's word of 2026-11-11, verbatim "Route as given", on the seat's §9 items 6–9. Among them, item 7:
+      "LOCK-p v0.2 ×3 stand as committed; the dated note on their entry [stand — your call; alt: re-issue with item 3's
+      clause struck, ≈ a cycle]". And item 9: "The box run under the standing locks: sync → precheck ×3 → G-F0m-OLMo
+      (p) ×3 batched → STOP for the seat's read [go; the pod up through it — your call]".
+    - The hold recorded above lifts on the PI's word once this commit is in (§8: the coordinating session "lifts its
+      hold on the box on the PI's word"). §6's dated note is on the LOCK-p v0.2 entry. Nothing above is rewritten.
 
 - 2026-11-10 — **Dated note (coordinating session), for the seat's read of G-TIME-F3 r2 (`93ecaf9`): two computations of mine of the kind its block's Q4 discloses.**
   - The block is `results/raw/2026-11-10_mf3-code-to-design_G-TIME-F3-r2.md` (sha256 `55bf34584bda0068…`).
@@ -769,6 +813,13 @@ applied to CLAUDE.md.
       read [go; the pod up through it, the PI's call]".
     - **The pod.** B6 is item 9 as given: the pod stays up through G-F0m-OLMo (p) ×3, and after that STOP its uptime
       goes back to the PI. The box steps under **Next** above start after this commit. Nothing above is rewritten.
+  - **Dated note (PI date 2026-11-11)**, in the words of §6 of the seat's answers of 2026-11-10 on G-ID-F3
+    ([`2026-11-10_gid-f3_design-to-code_answers.md`](results/raw/2026-11-10_gid-f3_design-to-code_answers.md), sha256
+    `c51ef5ba77c30f223875de254c9e0fb0cdef44d900f62c30795659a431a4a9d7`, committed at `a6c6297`): "item 3's wall-clock
+    clause is a departure of the Q4 kind, ruled inert by the seat's answers of 2026-11-10 on G-ID-F3, §6; it is no basis
+    and binds nothing; the stamps it rests on are the G-TIME-OLMo (p) raw's, disclosed at `9699ce3`." The locks stand
+    as committed, their sha256s above unchanged (§9 item 7, routed by the PI's word of 2026-11-11, verbatim "Route as
+    given").
 
 - 2026-11-10 — **G-ANL-p — the canonical re-run on HEAD `f5e695c`: PASS (p v0.2 §4.4; the PI's routing of 2026-11-10,
   B1: "G-ANL-p re-run (f8b16d5's superseded)"). `scripts/p_analyze.py ganl` writes `data/p/gates/G-ANL-p.json`
