@@ -207,6 +207,22 @@ applied to CLAUDE.md.
     - Additions after the check were checked by tool.
   - Facts only; nothing here adjudicates. RESULTS.md only. Nothing ran on a model or a box. Not pushed. Committed by
     path.
+  - **Close (PI date 2026-11-13).** The seat's read of G-F0m-OLMo (p) ×3
+    ([`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md), sha256
+    `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, committed by path with this close line), §7's
+    words on this note and the pre-v2 reads note (`eb3e08c`): "the pre-v2 reads inert, no strike; the termination
+    recorded, the chain of §4".
+    - §4.1: "Nothing of the record is lost"; "The uptime question is moot."
+    - (c)'s question, answered in §4.2: "So the p gates and LOCK-p v0.2 ×3 carry to a replacement box of the spec of
+      record whose characterization gives `641ee466f4553b6a`; the new BACKEND entry is recorded by a dated note at each
+      lock, no re-issue". "A differing identifier is the STOP the PIN and the stage code name", and the seat rules
+      then. "No gate re-run is pre-registered for a box change, and the seat adds none".
+    - The chain (§0, Q3): "G-PWR (p) on the qualification's k (23, 24, 24) and the PI's cap share within p's 12 h → the
+      campaign wiring, its own move, built meanwhile and landed after G-PWR → LOCK-p v1.0 ×3 by D_p 2026-12-15 → a
+      replacement pod on the spec of record, on the PI's go → respawn (i) and (ii) → the same identifier: a dated note
+      at each lock, no re-issue, the gates and locks carry (m:302; the PIN) → precheck ×3 → the three campaigns, each
+      within one pod session."
+    - Routed by the PI's word of 2026-11-13, verbatim "Route as given" (§8 items 4–6). Nothing above is rewritten.
 
 - 2026-11-12 — **The `qual` wiring: `qual` (G-F3, m:297) is wired in `scripts/mf3_sessions.py` under LOCK-m-F3 v0.2,
   in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its blob moves from
@@ -402,6 +418,39 @@ applied to CLAUDE.md.
     - Raw: [`_p-qual_valuescheck`](results/raw/2026-11-11_p-qual_valuescheck.md).
   - **Next:** the seat's read, then the PI's routing. The pod stays up and idle; its uptime goes back to the PI (§9
     item 9). Not pushed. Committed by path.
+  - **Close (PI date 2026-11-13).** The seat's read of G-F0m-OLMo (p) ×3,
+    [`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md)
+    (sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`), is committed here by path with this
+    close, as the seat placed it (its header: "Placed untracked over the bridge; the PI commits by path"). In the seat's
+    words (§7): "PASS ×3 stand; task_correct confirmed, (t1)–(t4) accepted, the key table frozen; the attractor tally
+    0/29, 0/32, 0/32".
+    - (t3), §2, the two uncredited golds named here, as §2 asks of every entry that reports the counter: "one gold per
+      item, `twenty-four` and `shut` uncredited, the number words `one`–`twelve`".
+    - (t4), §2: "The docstring's attribution of the quoted words to "the PI's routing of 2026-11-10, B4" is Code's to
+      correct at the script's next edit; no record moves." The script is verbatim in the
+      [`_p-qual_task-correct`](results/raw/2026-11-11_p-qual_task-correct.txt) raw.
+    - The pod this entry's **Next** leaves up and idle was terminated on 2026-11-12 (the pod session's note,
+      `0190c6d`); §4.1: "The uptime question is moot."
+    - The PI's word, in chat, to the coordinating session's question "Route the seat's p answers as given?" (its relay
+      of 2026-11-13): "Route as given". The seat's §8 routing block, so adopted, verbatim:
+
+      > 1. G-F0m-OLMo (p) ×3: PASS ×3 stand; sft's contrast exclusion at forced reported beside, pre-registered [as ruled].
+      > 2. `task_correct` 159/159/160 confirmed; (t1)–(t4) accepted; the key table frozen as declared [as ruled].
+      > 3. The pod session's pre-v2 box reads, the three laptop listings during the box batch, the checkers' disclosures: inert, no strike [as ruled]. The coordinating session's observation on `gid:`§6: right; ledger (67); §6 stands as placed, its method withdrawn [recorded].
+      > 4. p's chain: G-PWR (p) now — the launch counts from k = 23/24/24 and your cap share per checkpoint within the 12 h budget [your call at G-PWR] → the campaign wiring (build now, land after G-PWR) → LOCK-p v1.0 ×3 by 2026-12-15, each read by the seat before its commit [go].
+      > 5. The replacement pod, on your go, when v1.0 ×3 is ready: the spec of record (A100-SXM4-80GB secure, US-CA-2, the same image, the volume mounted) → respawn (i) and (ii) → the same identifier: a dated note at each lock, the gates and locks carry; a differing one: STOP, the seat rules [go on the spec; the timing yours].
+      > 6. Then the bundle, precheck ×3, the three campaigns within one pod session, looks every 40 launches, the seat adjudicating pauses [go].
+      > 7. F3: G-F3 on the ack, ≈ 15–22 h; Code's two commitments accepted; v1.0's contents per §5 [as routed].
+      > 8. Push: 26 commits since `16c99d5` at the last count (through `0190c6d`), plus this routing's — the pre-push screen first [your call].
+
+      `gid:` in item 3 is the file's name for the seat's answers of 2026-11-10 on G-ID-F3 (`c51ef5ba…a9d7`, committed
+      at `a6c6297`). Item 7's G-F3 has since run (`2193832`).
+    - **Next** (§4.3 items 1–3): G-PWR (p), model-free, now, with the PI's cap share per checkpoint decided at G-PWR
+      (§8 item 4: "[your call at G-PWR]"); the campaign wiring's build meanwhile, landing after G-PWR's entry; LOCK-p
+      v1.0 ×3 by D_p (2026-12-15), each read by the seat before the PI commits it. By the coordinating session's relay
+      of this routing, G-PWR (p)'s figures go to that session and the pod session STOPs for the PI's cap share. No pod
+      before v1.0 ×3 is ready and the PI's go (§8 item 5). Nothing above is rewritten. Not pushed (§8 item 8 is the
+      PI's call).
 
 - 2026-11-11 — **LOCK-m-F3 v0.2 (PROPOSAL-m v1.11 §3.2 m:296, "Cap; path; projections"; the seat's G-ID-F3 answers,
   §5; the PI's routing of 2026-11-11, item 3), above the re-issued v0.1, which it keeps verbatim. `LOCK-m-F3.md`,
@@ -492,6 +541,14 @@ applied to CLAUDE.md.
     reports until it has ended.
   - Disclosed under the list of record v2's item 8, for the seat to rule; nothing rewritten. RESULTS.md only. Nothing
     ran on a model or the box. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-13).** The seat's read of G-F0m-OLMo (p) ×3
+    ([`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md), sha256
+    `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, committed by path with this close line), §7's
+    words on this note and the termination note (`0190c6d`): "the pre-v2 reads inert, no strike; the termination
+    recorded, the chain of §4". §3 rules these reads "before the rule that reached the box, inert, no strike": the
+    end-wait rule bound the box's stages from the list of record (v1, `3d6f402`), "after every read disclosed". "From
+    G-F0m on the end-wait is on the PID alone, as done. Nothing rewritten." Routed by the PI's word of 2026-11-13,
+    verbatim "Route as given" (§8 item 3). Nothing above is rewritten.
 
 - 2026-11-10 — **G-ID-F3 (PROPOSAL-m v1.11 §3.2 m:295; the seat's read of G-TIME-F3 r2, §5 items 1–2; the PI's
   routing of 2026-11-10, its §8 item 4): FAIL. Its first pair, A2s at index 0, diverged between its uncached and cached
