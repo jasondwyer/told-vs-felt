@@ -21,6 +21,100 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-13 — **G-PWR (p)'s program, committed before its run of record (PROPOSAL-p v0.2 §4.1, §8 step 6; m:285;
+  the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 1, routed by the PI on 2026-11-13, `a2c354e`):
+  `scripts/p_gpwr.py` (sha256 `3e4348b1…0464`), a sibling of `scripts/m_gpwr.py` that imports its functions
+  unchanged. Self-test 24/24. A blind review in two rounds, 48 mutants each, found no wrong figure. The record of the
+  figures is the run of record's, which follows this commit.**
+  - **What it computes, per unit** (OLMo-sft, OLMo-dpo, OLMo-instruct):
+    - m:192's launch rule per arm, from the seat's k = 23, 24 and 24 of 24 (§4.3 item 1), with the rows by k
+      (m:206–214). Beside it, the per-template counts: A0s 16 of 16 at each checkpoint (the G-F0m-OLMo (p) ×3 entry,
+      `a225a89`), so A0 = k − 16 of 8;
+    - the looks, ⌈total/40⌉, and power at the floors (A0-OLMo 80, A0s-OLMo 32) with PIN-3's base case;
+    - Q7's methods, carried to p's units by Code's reading (the record's readings, item 2):
+      - the projection;
+      - Q7 (a)'s two cases beside it, the floor case computed at two launch counts as Code read it at Q-F0 (item 4):
+        three cases in all;
+    - `round_degeneracy`'s sequential false pause at OLMo's p0 .02, α .05, on the sham rounds (m:330);
+    - the exclusion guard at the common rate .20:
+      - on OLMo its pausing half is the Fisher half alone (m:316: "on OLMo the absolute bar is reported only,
+        computed against the same .20");
+      - the absolute half and the union are beside;
+      - on the projection, the Fisher grid and its maxima, and the union's maximum over p ≤ .20;
+    - the joint as Q7 (c) has it;
+    - the hours at m:205's basis on total + 26, and their sum beside p §6.1's 12 h budget;
+    - the sham seconds beside, no basis (§4.3 item 1).
+    - It sets no cap share: that is the PI's at G-PWR (the seat's §8 item 4).
+  - **Its form, Code's reading, declared for the seat** (the record carries ten readings):
+    - The seat's F-5 rules this form for Q-F3's G-PWR (`results/raw/2026-11-06_ganl-f3_design-to-code_answers.md`).
+      Code applies it to p, reading p v0.2 §4.2's "m's modules imported unchanged by import, never by copy" as
+      covering m's G-PWR script.
+    - `m_gpwr` is executed from the load commit's blob, and `valence_core.m` from that commit's blobs, through
+      `m_gpwr`'s own finder. No attribute of an m module is substituted.
+    - `m_gpwr.degeneracy` holds Qwen's p0 .05 as a constant. So p computes the same three fields by the same `bars`
+      calls at OLMo's p0, and the self-test asserts equality with `m_gpwr.degeneracy` at Qwen's p0.
+    - On OLMo the joint's guard beside is the Fisher half's, where Q-F0's record carries the union (m:316).
+  - **Its inputs, bound to their texts.** Every quote of a constant is built from that constant. Every quote, those
+    and the fixed texts the readings rest on alike, must be verbatim in its committed text at its commit. So a
+    constant that differs from its text stops the run. The texts:
+    - the seat's answers (`a32d4d17…1112`);
+    - the G-F0m-OLMo (p) ×3 entry;
+    - PROPOSAL-m (`42ab36ec…6c6b`: m:205, m:209–214, m:316);
+    - PROPOSAL-p (`42f2977b…3b32`: the floors, the 12 h budget);
+    - each LOCK-p v0.2: the path line, and both proposals' sha256s;
+    - F-5, and Q7.
+  - **The self-test, 24 checks:**
+    - `m_gpwr`'s own self-test at the load commit, in its own process;
+    - a regression: at Q-F0's inputs the composition reproduces m's committed record's
+      (`data/m/gates/Q-F0_G-PWR.json`) power, launch, cases and joint, field for field (the basis texts aside), with a
+      meta-probe;
+    - the bars of record (`bars.OLMO_BARS`), with a perturbation probe and a STOP probe; the pausing halves read
+      from the bars' binding flags;
+    - OLMo's p0 reaching each unit's figure (.0863 on the projection, not Qwen's .0976);
+    - `schedule.interleave` over each OLMo unit's own arms at every case's computed stop;
+    - m:209–214's rows, and m:205's hours against m:209–212's OLMo column and m:214's sums;
+    - the STOPs: k = 0, power below .85 (not at .85 exactly), non-integer sham rounds;
+    - the sources, and each bound constant and the three pins perturbed in turn (k at two units), 20 cases;
+    - the record against the reviewed figures, with a perturbation probe of 15 cases. The blind review recomputed
+      every reviewed figure; the run's verifier, committed with the run, recomputes all but the Fisher half, the
+      union and the grid maxima. Both use the standard library alone;
+    - the stdout against a second rendering, line by line, with seven altered reports;
+    - the harness.
+    - Raw: [`_p-gpwr-program_selftest`](results/raw/2026-11-13_p-gpwr-program_selftest.txt).
+  - **The blind review.** One reviewer, briefed with the list of record v2 items 1–5. Code's dispositions follow each
+    round's report in the raw, and so do the reviewer's disclosures; it opened nothing under `data/*/ckpt` or
+    `data/*/reports`.
+    - Round 1, 48 mutants, no wrong figure: MAJOR-1, the guard's pausing value was unchecked; MAJOR-2, OLMo's p0 was
+      unchecked; MINOR-1 to MINOR-4, constants unbound to their texts, the OLMo cases, the report and the count form;
+      and NOTEs.
+    - Round 2, 48 mutants (the 30 survivors re-derived, 18 new): of the 30, 25 killed and 5 equivalent; of the 18,
+      11 killed, 3 redundant and 4 the one remaining gap. That gap was the report check rebuilding only part of the
+      report (MINOR-1); the check is now a full second rendering. Three NOTEs were applied.
+    - Every MAJOR and MINOR finding is applied, and every NOTE but two unprobed STOP branches, equivalent in effect,
+      which the reviewer accepted in round 2.
+    - The changes after round 2 were not put to a third round: the dispositions' changes, and the three that the
+      values-check led to. The self-test's checks and bites cover them, and the four versions' figures are equal.
+    - Raw: [`_p-gpwr-program_review`](results/raw/2026-11-13_p-gpwr-program_review.txt).
+  - **The figures in this commit.** They appear as the self-test's oracles (the reviewed figures) and in the review
+    raw. Their record is the run of record's, and none is reported here.
+  - **Values-check:** a blind check of the draft, the script and both raws before the commit: 96 claims, 81
+    CONFIRMED, 9 IMPRECISE (applied), 0 FAIL, 6 NOT CHECKABLE (future acts).
+    - Its observations led to this entry's wording and to three changes of the script's text: reading 1 quotes p
+      v0.2 §4.2 exactly; the comments say what each recomputation covers; the constants probe covers the two
+      tables it had skipped. Its own self-test run, on the script it checked, gave 24/24. Additions after it were
+      checked by tool.
+    - Its disclosures: reads of Code's and the reviewer's scratch files, and of this session's transcript and two
+      subagents' (to check the review raw's verbatim claim); one in-memory computation of the record; names-only,
+      count and digest git forms outside item 1's list. It opened nothing under `data/*/ckpt` or `data/*/reports`.
+  - **Next:** the run of record from this commit, by a wrapper:
+    - the launch checks (no `git fsck`: it would read the checkpoint blobs, which list v2 item 2 bars);
+    - the run, writing `data/p/gates/G-PWR-p.json` (write-once);
+    - a second run to scratch, for byte identity, on the same interpreter and settings;
+    - an out-of-process verifier on the standard library alone.
+    - Then its entry. The figures go to the coordinating session, and the G-PWR and lock track STOPs for the PI's
+      cap share. The campaign wiring's build may proceed meanwhile (§4.3 item 2).
+  - Nothing ran on a model. Not pushed. Committed by path.
+
 - 2026-11-12 — **G-F3 (PROPOSAL-m v1.11 §3.2 m:297; LOCK-m-F3 v0.2 §9 item 2; the seat's G-ID-F3 answers, §8 and §9
   item 5, routed by the PI on 2026-11-11): PASS. 40 uncached sessions ran on Qwen at cap 120 under LOCK-m-F3 v0.2
   (`05ef75d`), on the `qual` wiring's driver (`b427f82`), into `data/mf3/ckpt/Q-F3_qual.json`.**

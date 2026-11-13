@@ -1,0 +1,35 @@
+# G-PWR (p)'s program, its self-test before the commit (PROPOSAL-p v0.2 §4.1, §8 step 6; m:285; the seat's read of
+#   G-F0m-OLMo (p) ×3, §4.3 item 1, routed by the PI on 2026-11-13). Code stamp: 2026-11-13 (date). Model-free; no model
+#   process; reads no checkpoint, report or session record.
+# HEAD cff77a865f541c92ae15dc595759c32df09a2b18; scripts/p_gpwr.py at sha256
+#   3e4348b1dfa5539c664e8bb9a017cf982c60052f487f232ab2c5eb1a0da30464, then uncommitted and committed unchanged with this raw;
+#   the command: <repo>/jlens-qwen36/.venv/bin/python -I -B -X pycache_prefix=<a path that does not exist> -X utf8
+#   scripts/p_gpwr.py --selftest; exit 0.
+# The self-test of record runs again, from the committed blob at the run's HEAD, inside G-PWR (p)'s run of record, and
+#   is in that run's raw.
+
+PASS  m_gpwr is the load commit's blob, executed as the module m_gpwr with its commit pinned to the load commit
+PASS  m_gpwr's own self-test passes at the load commit, in its own isolated process
+PASS  the bars of record: bar_problems_p is empty at each checkpoint
+PASS  bar_problems_p reports each compared field perturbed, and a missing row
+PASS  compute STOPs on a bar that differs from the program's constants (a stand-in degeneracy row at p0 1/20)
+PASS  the guard's pausing halves from the bars' binding flags: Fisher alone on OLMo; both on Q-F0 (the union)
+PASS  degeneracy at Qwen's p0 and alpha == m_gpwr.degeneracy, on four round lists
+PASS  OLMo's p0 .02 reaches each unit's round_degeneracy through compute_unit: .0863 on the projection, not Qwen's .0976
+PASS  Q-F0 regression: compute_unit at Q-F0's inputs reproduces m's committed record (power, launch, every case, the joint)
+PASS  the regression reports a perturbed case, launch block and joint (its meta-probe)
+PASS  schedule.interleave over each OLMo unit's own arms gives m_gpwr.project's looks at every case's computed stop
+PASS  rows by k == m:209-214's planning rows (k 24-12) and totals (k 11-5 and 1)
+PASS  hours at m:205's basis == m:209-212's OLMo column at 160/192/224/288, and m:214's sums 3.4/3.9/4.5
+PASS  k = 0 STOPs (m:192); k out of [0, n_q], or not an int, is refused
+PASS  power below .85 STOPs (m:190): a stand-in analyzer at .84
+PASS  power at exactly .85 does not STOP (m:190's floor is >= .85): a stand-in analyzer at 17/20
+PASS  a non-integer count of sham rounds STOPs: realised 135 of 160 rounds (135/16 per launch)
+PASS  the sources: every input's committed text, at its commit, carries its quotes; the answers, PROPOSAL-m and PROPOSAL-p at their sha256s
+PASS  the sources check reports a quote the text lacks and a sha256 that differs
+PASS  each constant bound to its text: a perturbed k (at two units), basis, sham count or seconds, realised rounds, budget, path, gate sessions, floor, table cell, entry row or pinned sha256 refuses the sources (20 cases)
+PASS  the record: its oracles and the reviewed figures, the fixed texts and the display rule; a JSON round trip; the stdout rebuilt line by line from the record
+PASS  record_problems reports a perturbed total, guard figure (label and value), degeneracy, crit_j and p0, floor stop, realised rounds, count, power, cap share, hours and grid maximum
+PASS  line_problems_p reports a report with the guard's halves swapped, the joint's guard showing the bar's value, a case section dropped, the hours' sum, a unit's count, a case header's stop or the sham seconds altered
+PASS  the harness counts a check that raises, stops, or returns a false value, as a FAIL
+selftest: PASS (0 failed)
