@@ -538,6 +538,13 @@ applied to CLAUDE.md.
     brief had ruled out whole-tree listings; the running stage writes on the box. Disclosed under item 8, for the
     seat.
   - RESULTS.md only. This note ran nothing on a model or the box. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-13; the coordinating session's line, per the seat's §7).** The seat's read of G-F0m-OLMo (p) ×3,
+    [`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md)
+    (sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`), rules this note at its §3: "The
+    observation is right." Its §7 gives this line's words: "the observation stands; ledger (67); §6 as placed; the
+    listing inert". That "§6" is `gid:`§6 (§6 of the seat's answers of 2026-11-10 on G-ID-F3), which "stands as
+    placed, its method withdrawn" (§8 item 3). The file is committed by path with the pod session's close lines at
+    `a2c354e`, on the PI's word "Route as given".
 
 - 2026-11-11 — **Dated note (pod session), for the seat: my reads of the box's stages while they ran (G-CAL-OLMo,
   G-CAL-p, G-TIME-OLMo (p)), before the list of record v2.**
