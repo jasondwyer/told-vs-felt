@@ -21,6 +21,103 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-13 — **G-PWR (p), its run of record (PROPOSAL-p v0.2 §4.1, §8 step 6; m:285; the seat's read of
+  G-F0m-OLMo (p) ×3, §4.3 item 1, routed by the PI on 2026-11-13, `a2c354e`), from the program's commit `4c882e7`. At
+  each of the three units, k = 23, 24 and 24 of 24 gives m:209's row: L 96 contrast and 64 sham, 160 launches, 4
+  looks. Power at the floors is .878, and no n is raised. At m:205's basis the three campaigns come to 3.35 h. That
+  counts each unit's 160 launches and its 26 gate sessions, which have run, as m:205 does; p §6.1's cold loads are
+  not in it. p's 12 h budget covers G-CAL-p, the gate stages and the campaigns together. The cap share is the PI's:
+  STOP for it.**
+  - **The record:** `data/p/gates/G-PWR-p.json`, written once by the run, sha256
+    `bc2b090966654af1cff7d759628e7eac6fed3c78006980242669c8cd0191d604`.
+  - **The run,** by a wrapper, on the project's venv Python 3.12.9 with `-I -B` and a pycache prefix that does not
+    exist, under `env -i`:
+    - The launch checks: no `fsck.*`, `core.fsmonitor` or `core.hooksPath` in git's config; `git status` over the
+      script, `m_gpwr`, the analyzer, `valence_core/` and the record empty; the script's working-tree blob equal to
+      HEAD's; the record absent. No `git fsck`: it would read the checkpoint blobs, which list v2 item 2 bars.
+    - The self-test of record, from the committed blob at HEAD in its own process: 24/24, its lines identical to the
+      committed self-test raw's.
+    - Provenance:
+      - HEAD `4c882e7`; the script `3e4348b1…0464`;
+      - `m_gpwr` `1d7c0fe3…111c`, executed from its blob `6d05c8e6…`, Q-F0's G-PWR blob unchanged;
+      - the analyzer `d347ea0c…5e48` and m's package `7756dcf4…49bb`, which each LOCK-p v0.2 names, as it names
+        both proposals' sha256s;
+      - every repository module loaded was bound to its blob.
+    - The sources: each of nine inputs' committed texts at its commit, the three pinned sha256s equal.
+    - A second run, to scratch, on the same interpreter and settings: its record byte-identical, and its stdout
+      identical but for the WROTE line.
+    - The out-of-process verifier, on the standard library alone (Python 3.9.6, `-I -S`): 63/63.
+      - It recomputes the launch rule, the totals and looks, every case's looks, `round_degeneracy`, the guard's
+        absolute half and the hours.
+      - It does not recompute the Fisher half, the union or the grid maxima. The blind review recomputed those, and
+        the self-test pins them.
+      - It checks the power at the floors only against .85 and its display. The power is bound to Q-F0's value by
+        `m_gpwr`'s pin and the regression.
+    - WRAPPER EXIT 0.
+    - Raw: [`_p-gpwr`](results/raw/2026-11-13_p-gpwr.txt). It carries the output, the wrapper's source and the
+      verifier's, with local paths scrubbed. Its last output line, "wrapper rc=0", comes from the command that
+      launched the wrapper, not from the wrapper; the wrapper's status is WRAPPER EXIT.
+  - **The figures, per unit:**
+
+    | | OLMo-sft | OLMo-dpo | OLMo-instruct |
+    |---|---|---|---|
+    | k of 24; r | 23; 23/24 | 24; 1 | 24; 1 |
+    | beside, per template: A0, A0s | 7/8, 16/16 | 8/8, 16/16 | 8/8, 16/16 |
+    | N90, A0 and A0s (ceil(1.15 floor) 92 and 37) | 86, 35 | 80, 32 | 80, 32 |
+    | L, A0 and A0s; total; looks | 96, 64; 160; 4 | 96, 64; 160; 4 | 96, 64; 160; 4 |
+    | power at the floors (80, 32); PIN-3 | .878 (.8784); .878 | .878; .878 | .878; .878 |
+    | hours at m:205's basis, (160 + 26) sessions | × 22.7 s = 1.17 h | × 22.7 s = 1.17 h | × 19.5 s = 1.01 h |
+
+    - The same row holds at k = 21–24 (m:209). The hours sum to 3.35 h (3.4, m:214's figure at 160 each), beside p
+      §6.1's 12 h budget.
+    - The sham seconds, beside and no basis (m's report's sum over the sixteen sham sessions at G-F0m-OLMo (p)): sft
+      102.105 s, dpo 88.389 s, instruct 85.237 s.
+  - **The false-pause figures** (the same at all three units, but for sft's floor case):
+    - **The projection:** looks at launches 40, 80, 120 and 160 (A0 20, 40, 60, 96; A0s 20, 40, 60, 64).
+      - `round_degeneracy` (OLMo's p0 .02, α .05, on the sham rounds 200, 400, 600, 640; crit_j 8, 14, 19, 20):
+        false pause .0863.
+      - The exclusion guard at the common rate .20: the Fisher half .0699, the pausing figure on OLMo (m:316); the
+        absolute half .0929 (crits 8, 13, 18, 27), reported only; the union .1311.
+      - The Fisher half's grid maximum is .0768 at p = 1/2, refined .0768 at 251/500. The union's grid maximum over
+        p ≤ .20 is .1311, at .20.
+    - **Q7 (a)'s cases beside:**
+      - the sham arm at its floor at ceil(32 / r), 34 at sft: 130 launches, `round_degeneracy` .0705, the guard's
+        Fisher .0553, absolute .0868, union .1198;
+      - at 32, the same as ceil(32 / r) at dpo and instruct: 128 launches, .0609, Fisher .0545, absolute .0873, union
+        .1198;
+      - the realised rounds, 160 of 160 at each checkpoint: the projection's, .0863.
+    - **The joint** is `round_degeneracy`'s own on the projection, .0863, with the Fisher half beside, .0699. The
+      joint over the bar and the guard is not computed; the record says why in one sentence (Q7 (c)).
+    - Not figured: the hair triggers (no p0) and the lexical bar (no domain on OLMo, m:330).
+  - **Readings,** Code's, declared for the seat and in the record (ten items). Among them:
+    - the form, F-5's for Q-F3, applied to p;
+    - Q7's methods carried to p's units;
+    - the Fisher half alone pausing on OLMo, with the joint's guard beside the Fisher half where Q-F0's record
+      carries the union;
+    - `round_degeneracy` at OLMo's p0, by `bars`' own calls.
+  - **The cap share** per checkpoint, within the 12 h budget, is the PI's at G-PWR (the seat's §8 item 4,
+    "[your call at G-PWR]"). This run sets none. The figures go to the coordinating session for the PI. The G-PWR and
+    lock track STOPs here until the cap share is given; LOCK-p v1.0 ×3 then carry the launch counts, the looks and
+    the cap share, by D_p (2026-12-15). The campaign wiring's build may proceed meanwhile (§4.3 item 2).
+  - **Values-check:** a blind check of the draft, the record, the raw and the program before the commit: 135 claims, 129
+    CONFIRMED, 2 IMPRECISE (applied), 0 FAIL, 4 NOT CHECKABLE (the raw's committed path, future acts).
+    - It recomputed every figure on the standard library alone, and each equals the record's exact value:
+      - the launch rule and the rows by k;
+      - every case's looks;
+      - `round_degeneracy`;
+      - the guard's three halves with its own hypergeometric tail, the Fisher cells and all 99 grid values;
+      - the power at the floors (.8784) by its own implementation of m:190's base case;
+      - the hours.
+    - It re-rendered the raw's report lines from the record: 0 mismatches.
+    - Its observations are applied: the hours' scope in the header; the "wrapper rc=0" line's source; the run's
+      self-test lines, the nine sources and the LOCK-p v0.2 hashes, each checked by tool.
+    - Its disclosures: reads beyond its brief of the program, `m_gpwr`, `bars` and `m_analyze`'s power code; of
+      RESULTS.md at HEAD and at `a225a89` (a range that includes an entry's write-time stamp, not reproduced); and of
+      scratch files. Git and shell forms outside item 1's list, none under `data/*/ckpt` or `data/*/reports`.
+    - Raw: [`_p-gpwr_valuescheck`](results/raw/2026-11-13_p-gpwr_valuescheck.md).
+  - Committed by path: the record, the raw, the values-check's raw and this entry. Nothing ran on a model or a box.
+    Not pushed.
+
 - 2026-11-13 — **G-PWR (p)'s program, committed before its run of record (PROPOSAL-p v0.2 §4.1, §8 step 6; m:285;
   the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 1, routed by the PI on 2026-11-13, `a2c354e`):
   `scripts/p_gpwr.py` (sha256 `3e4348b1…0464`), a sibling of `scripts/m_gpwr.py` that imports its functions

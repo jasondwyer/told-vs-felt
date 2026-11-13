@@ -1,0 +1,503 @@
+# G-PWR (p), its run of record (PROPOSAL-p v0.2 s4.1, s8 step 6; m:285; the seat's read of G-F0m-OLMo (p) x3,
+#   s4.3 item 1, routed by the PI on 2026-11-13). Code stamp: 2026-11-13 (date). Model-free and exact; no model
+#   process; reads no checkpoint, report or session record.
+# HEAD 4c882e77a7b2b225650fe77a7d2f4ae36b94e554; the command: <repo>/jlens-qwen36/.venv/bin/python -I -B -X pycache_prefix=/nonexistent-p-gpwr-pycache
+#   -X utf8 scripts/p_gpwr.py --record data/p/gates/G-PWR-p.json
+# Python 3.12.9 (the project's venv, as at Q-F0's G-PWR); the verifier's:
+#   3.9.6 (/usr/bin/python3, -I -S, standard library only); git version 2.39.5 (Apple Git-154)
+# environment: env -i HOME=/var/empty LC_ALL=C PATH=/usr/bin:/bin
+# The launch check (before Python reads the script). No git fsck: it reads every object, the checkpoint blobs
+#   among them, which the list of record v2 item 2 bars (m's run of record ran it before v2);
+#   fsck.*, core.fsmonitor or core.hooksPath in git config: none;
+#   git status over scripts/p_gpwr.py, scripts/m_gpwr.py, scripts/m_analyze.py, valence_core/ and the record: empty;
+#   scripts/p_gpwr.py's working-tree blob b742a69a7f7b7bec0248b3d34ae842b33398bc21 = HEAD's b742a69a7f7b7bec0248b3d34ae842b33398bc21: yes;
+#   the record absent: yes.
+
+PROVENANCE {"head": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "script_sha256": "3e4348b1dfa5539c664e8bb9a017cf982c60052f487f232ab2c5eb1a0da30464", "m_gpwr_sha256": "1d7c0fe3a5997c1e2b7ed34fd4f65112692126c6a784a68ab1900db59363111c", "m_gpwr_blob": "6d05c8e6c3ba18df53642a7c954cd8f39122b7bf", "analyzer_sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48", "package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb", "closure": {"valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604", "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a", "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf", "valence_core/e2d/__init__.py": "3269faeccf97f55c104e1485ecb9d3d5079d3d5b4ea6c9abda8e761e636a6213", "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02", "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a", "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70", "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae", "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598", "valence_core/e2d/habit.py": "2d042d98eb0a02bcacd1afddf7aedefe15fb5c601e84b92131aedcdbb66f2ceb", "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397", "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71", "valence_core/stats.py": "956a650c603b0772ad85db8a3f82c310b9a67bba2e4440ab128ec9ee1e396d8f"}, "isolated": true, "pycache_prefix": "/nonexistent-p-gpwr-pycache", "python": "3.12.9"}
+SOURCES [{"commit": "a2c354eb650389257e63135fe0adfc252c303b40", "path": "results/raw/2026-11-12_p-qual_design-to-code_answers.md", "sha256": "a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112"}, {"commit": "a225a89076b0806dda398dd2759a32d85d5bf6c5", "path": "RESULTS.md", "sha256": "a2d65113e32936f5867d3398adfc9fb1d4e7e9104832817528d10c497686354e"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "PROPOSAL-m-gating-campaign-v1_11.md", "sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md", "sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "LOCK-p-OLMo-sft.md", "sha256": "3765fe22d3d548d96373d5ce20eebaad3c0558d6d6154e327db8a7946a0f2f98"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "LOCK-p-OLMo-dpo.md", "sha256": "b739081f60a5c5b0d7e2cdf586691585ee50dfe335321a1b57d7887edac43c2e"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "LOCK-p-OLMo-instruct.md", "sha256": "48e1c31523eb0c87b3f2fbede53a4f4a15c97565a3136678bb1c3782ecfeae52"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "results/raw/2026-11-06_ganl-f3_design-to-code_answers.md", "sha256": "4edfbb8e3d08844e47a329a951f9c2dd381115f0fd92c8b2b77f2207777ca42e"}, {"commit": "4c882e77a7b2b225650fe77a7d2f4ae36b94e554", "path": "results/raw/2026-10-14_m-design-to-code_step15_answers.md", "sha256": "07cd8e5f4535c95c61428a07c426490e694d16601818096d48210c534f780767"}]
+PASS  m_gpwr is the load commit's blob, executed as the module m_gpwr with its commit pinned to the load commit
+PASS  m_gpwr's own self-test passes at the load commit, in its own isolated process
+PASS  the bars of record: bar_problems_p is empty at each checkpoint
+PASS  bar_problems_p reports each compared field perturbed, and a missing row
+PASS  compute STOPs on a bar that differs from the program's constants (a stand-in degeneracy row at p0 1/20)
+PASS  the guard's pausing halves from the bars' binding flags: Fisher alone on OLMo; both on Q-F0 (the union)
+PASS  degeneracy at Qwen's p0 and alpha == m_gpwr.degeneracy, on four round lists
+PASS  OLMo's p0 .02 reaches each unit's round_degeneracy through compute_unit: .0863 on the projection, not Qwen's .0976
+PASS  Q-F0 regression: compute_unit at Q-F0's inputs reproduces m's committed record (power, launch, every case, the joint)
+PASS  the regression reports a perturbed case, launch block and joint (its meta-probe)
+PASS  schedule.interleave over each OLMo unit's own arms gives m_gpwr.project's looks at every case's computed stop
+PASS  rows by k == m:209-214's planning rows (k 24-12) and totals (k 11-5 and 1)
+PASS  hours at m:205's basis == m:209-212's OLMo column at 160/192/224/288, and m:214's sums 3.4/3.9/4.5
+PASS  k = 0 STOPs (m:192); k out of [0, n_q], or not an int, is refused
+PASS  power below .85 STOPs (m:190): a stand-in analyzer at .84
+PASS  power at exactly .85 does not STOP (m:190's floor is >= .85): a stand-in analyzer at 17/20
+PASS  a non-integer count of sham rounds STOPs: realised 135 of 160 rounds (135/16 per launch)
+PASS  the sources: every input's committed text, at its commit, carries its quotes; the answers, PROPOSAL-m and PROPOSAL-p at their sha256s
+PASS  the sources check reports a quote the text lacks and a sha256 that differs
+PASS  each constant bound to its text: a perturbed k (at two units), basis, sham count or seconds, realised rounds, budget, path, gate sessions, floor, table cell, entry row or pinned sha256 refuses the sources (20 cases)
+PASS  the record: its oracles and the reviewed figures, the fixed texts and the display rule; a JSON round trip; the stdout rebuilt line by line from the record
+PASS  record_problems reports a perturbed total, guard figure (label and value), degeneracy, crit_j and p0, floor stop, realised rounds, count, power, cap share, hours and grid maximum
+PASS  line_problems_p reports a report with the guard's halves swapped, the joint's guard showing the bar's value, a case section dropped, the hours' sum, a unit's count, a case header's stop or the sham seconds altered
+PASS  the harness counts a check that raises, stops, or returns a false value, as a FAIL
+selftest: PASS (0 failed)
+G-PWR (p): PROPOSAL-p's three OLMo units (uncached); model-free and exact
+
+UNIT OLMo-sft: k = 23 of 24, r = 23/24 (A0 7/8, A0s 16/16 beside)
+  POWER at the floors (A0 80, A0s 32): 0.878 (0.8784) >= .85; no n raised
+  PIN-3 of record at the floors: 0.878 split [40, 40] mS 32
+  LAUNCH A0: floor 80, ceil(1.15 floor) 92, N90 86 -> L 96
+  LAUNCH A0s: floor 32, ceil(1.15 floor) 37, N90 35 -> L 64
+  TOTAL 160; LOOKS 4; the same row at k = [21, 22, 23, 24]
+  HOURS at m:205's basis: 186 sessions (160 + 26) x 22.7 s = 1.17 h (1.2)
+  CASE projection: stop {'A0': 96, 'A0s': 64}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 40, A0s 40)
+    look 3: launches 120 (A0 60, A0s 60)
+    look 4: launches 160 (A0 96, A0s 64) end
+    round_degeneracy: n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+    guard: (n1, n2)_j [[20, 20], [40, 40], [60, 60], [96, 64]] abs crit_j [8, 13, 18, 27] Fisher cells_j [119, 568, 1384, 2436]
+    guard at the common rate 1/5: abs 0.0929, Fisher 0.0699, union 0.1311; pausing on this unit: fisher 0.0699
+    Fisher half on the grid: 1/100:0.0004, 1/50:0.0047, 3/100:0.0137, 1/25:0.0226, 1/20:0.0295, 3/50:0.0348, 7/100:0.0392, 2/25:0.0430, 9/100:0.0466, 1/10:0.0500, 11/100:0.0532, 3/25:0.0561, 13/100:0.0588, 7/50:0.0611, 3/20:0.0631, 4/25:0.0649, 17/100:0.0664, 9/50:0.0677, 19/100:0.0689, 1/5:0.0699, 21/100:0.0708, 11/50:0.0717, 23/100:0.0724, 6/25:0.0730, 1/4:0.0734, 13/50:0.0738, 27/100:0.0741, 7/25:0.0744, 29/100:0.0747, 3/10:0.0750, 31/100:0.0752, 8/25:0.0754, 33/100:0.0755, 17/50:0.0756, 7/20:0.0757, 9/25:0.0757, 37/100:0.0756, 19/50:0.0756, 39/100:0.0757, 2/5:0.0757, 41/100:0.0758, 21/50:0.0759, 43/100:0.0761, 11/25:0.0762, 9/20:0.0764, 23/50:0.0765, 47/100:0.0767, 12/25:0.0768, 49/100:0.0768, 1/2:0.0768, 51/100:0.0768, 13/25:0.0768, 53/100:0.0767, 27/50:0.0766, 11/20:0.0765, 14/25:0.0763, 57/100:0.0762, 29/50:0.0760, 59/100:0.0759, 3/5:0.0758, 61/100:0.0757, 31/50:0.0756, 63/100:0.0757, 16/25:0.0757, 13/20:0.0758, 33/50:0.0758, 67/100:0.0759, 17/25:0.0759, 69/100:0.0759, 7/10:0.0759, 71/100:0.0757, 18/25:0.0756, 73/100:0.0753, 37/50:0.0750, 3/4:0.0747, 19/25:0.0743, 77/100:0.0738, 39/50:0.0732, 79/100:0.0726, 4/5:0.0718, 81/100:0.0708, 41/50:0.0697, 83/100:0.0685, 21/25:0.0672, 17/20:0.0659, 43/50:0.0645, 87/100:0.0628, 22/25:0.0606, 89/100:0.0578, 9/10:0.0545, 91/100:0.0507, 23/25:0.0470, 93/100:0.0434, 47/50:0.0397, 19/20:0.0349, 24/25:0.0280, 97/100:0.0190, 49/50:0.0091, 99/100:0.0017
+    Fisher grid max 0.0768 at p 1/2; refined 0.0768 at p 251/500 (rates ['49/100', '51/100'])
+    union grid max over p <= 1/5: 0.1311 at p 1/5
+  CASE sham_at_floor_r: stop {'A0': 96, 'A0s': 34}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 46, A0s 34)
+    look 3: launches 120 (A0 86, A0s 34)
+    look 4: launches 130 (A0 96, A0s 34) end
+    round_degeneracy: n_j [200, 340, 340, 340] crit_j [8, 12, 12, 12] false pause 0.0705
+    guard: (n1, n2)_j [[20, 20], [46, 34], [86, 34], [96, 34]] abs crit_j [8, 15, 24, 27] Fisher cells_j [119, 556, 1085, 1213]
+    guard at the common rate 1/5: abs 0.0868, Fisher 0.0553, union 0.1198; pausing on this unit: fisher 0.0553
+  CASE sham_at_floor_min: stop {'A0': 96, 'A0s': 32}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 48, A0s 32)
+    look 3: launches 120 (A0 88, A0s 32)
+    look 4: launches 128 (A0 96, A0s 32) end
+    round_degeneracy: n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+    guard: (n1, n2)_j [[20, 20], [48, 32], [88, 32], [96, 32]] abs crit_j [8, 15, 25, 27] Fisher cells_j [119, 546, 1033, 1135]
+    guard at the common rate 1/5: abs 0.0873, Fisher 0.0545, union 0.1198; pausing on this unit: fisher 0.0545
+  CASE sham_realised_rounds: stop {'A0': 96, 'A0s': 64}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 40, A0s 40)
+    look 3: launches 120 (A0 60, A0s 60)
+    look 4: launches 160 (A0 96, A0s 64) end
+    round_degeneracy: n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+  JOINT: round_degeneracy's own (projection case): 0.0863; the guard's beside (fisher at .20): 0.0699
+
+UNIT OLMo-dpo: k = 24 of 24, r = 1/1 (A0 8/8, A0s 16/16 beside)
+  POWER at the floors (A0 80, A0s 32): 0.878 (0.8784) >= .85; no n raised
+  PIN-3 of record at the floors: 0.878 split [40, 40] mS 32
+  LAUNCH A0: floor 80, ceil(1.15 floor) 92, N90 80 -> L 96
+  LAUNCH A0s: floor 32, ceil(1.15 floor) 37, N90 32 -> L 64
+  TOTAL 160; LOOKS 4; the same row at k = [21, 22, 23, 24]
+  HOURS at m:205's basis: 186 sessions (160 + 26) x 22.7 s = 1.17 h (1.2)
+  CASE projection: stop {'A0': 96, 'A0s': 64}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 40, A0s 40)
+    look 3: launches 120 (A0 60, A0s 60)
+    look 4: launches 160 (A0 96, A0s 64) end
+    round_degeneracy: n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+    guard: (n1, n2)_j [[20, 20], [40, 40], [60, 60], [96, 64]] abs crit_j [8, 13, 18, 27] Fisher cells_j [119, 568, 1384, 2436]
+    guard at the common rate 1/5: abs 0.0929, Fisher 0.0699, union 0.1311; pausing on this unit: fisher 0.0699
+    Fisher half on the grid: 1/100:0.0004, 1/50:0.0047, 3/100:0.0137, 1/25:0.0226, 1/20:0.0295, 3/50:0.0348, 7/100:0.0392, 2/25:0.0430, 9/100:0.0466, 1/10:0.0500, 11/100:0.0532, 3/25:0.0561, 13/100:0.0588, 7/50:0.0611, 3/20:0.0631, 4/25:0.0649, 17/100:0.0664, 9/50:0.0677, 19/100:0.0689, 1/5:0.0699, 21/100:0.0708, 11/50:0.0717, 23/100:0.0724, 6/25:0.0730, 1/4:0.0734, 13/50:0.0738, 27/100:0.0741, 7/25:0.0744, 29/100:0.0747, 3/10:0.0750, 31/100:0.0752, 8/25:0.0754, 33/100:0.0755, 17/50:0.0756, 7/20:0.0757, 9/25:0.0757, 37/100:0.0756, 19/50:0.0756, 39/100:0.0757, 2/5:0.0757, 41/100:0.0758, 21/50:0.0759, 43/100:0.0761, 11/25:0.0762, 9/20:0.0764, 23/50:0.0765, 47/100:0.0767, 12/25:0.0768, 49/100:0.0768, 1/2:0.0768, 51/100:0.0768, 13/25:0.0768, 53/100:0.0767, 27/50:0.0766, 11/20:0.0765, 14/25:0.0763, 57/100:0.0762, 29/50:0.0760, 59/100:0.0759, 3/5:0.0758, 61/100:0.0757, 31/50:0.0756, 63/100:0.0757, 16/25:0.0757, 13/20:0.0758, 33/50:0.0758, 67/100:0.0759, 17/25:0.0759, 69/100:0.0759, 7/10:0.0759, 71/100:0.0757, 18/25:0.0756, 73/100:0.0753, 37/50:0.0750, 3/4:0.0747, 19/25:0.0743, 77/100:0.0738, 39/50:0.0732, 79/100:0.0726, 4/5:0.0718, 81/100:0.0708, 41/50:0.0697, 83/100:0.0685, 21/25:0.0672, 17/20:0.0659, 43/50:0.0645, 87/100:0.0628, 22/25:0.0606, 89/100:0.0578, 9/10:0.0545, 91/100:0.0507, 23/25:0.0470, 93/100:0.0434, 47/50:0.0397, 19/20:0.0349, 24/25:0.0280, 97/100:0.0190, 49/50:0.0091, 99/100:0.0017
+    Fisher grid max 0.0768 at p 1/2; refined 0.0768 at p 251/500 (rates ['49/100', '51/100'])
+    union grid max over p <= 1/5: 0.1311 at p 1/5
+  CASE sham_at_floor_r: stop {'A0': 96, 'A0s': 32}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 48, A0s 32)
+    look 3: launches 120 (A0 88, A0s 32)
+    look 4: launches 128 (A0 96, A0s 32) end
+    round_degeneracy: n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+    guard: (n1, n2)_j [[20, 20], [48, 32], [88, 32], [96, 32]] abs crit_j [8, 15, 25, 27] Fisher cells_j [119, 546, 1033, 1135]
+    guard at the common rate 1/5: abs 0.0873, Fisher 0.0545, union 0.1198; pausing on this unit: fisher 0.0545
+  CASE sham_at_floor_min: stop {'A0': 96, 'A0s': 32}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 48, A0s 32)
+    look 3: launches 120 (A0 88, A0s 32)
+    look 4: launches 128 (A0 96, A0s 32) end
+    round_degeneracy: n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+    guard: (n1, n2)_j [[20, 20], [48, 32], [88, 32], [96, 32]] abs crit_j [8, 15, 25, 27] Fisher cells_j [119, 546, 1033, 1135]
+    guard at the common rate 1/5: abs 0.0873, Fisher 0.0545, union 0.1198; pausing on this unit: fisher 0.0545
+  CASE sham_realised_rounds: stop {'A0': 96, 'A0s': 64}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 40, A0s 40)
+    look 3: launches 120 (A0 60, A0s 60)
+    look 4: launches 160 (A0 96, A0s 64) end
+    round_degeneracy: n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+  JOINT: round_degeneracy's own (projection case): 0.0863; the guard's beside (fisher at .20): 0.0699
+
+UNIT OLMo-instruct: k = 24 of 24, r = 1/1 (A0 8/8, A0s 16/16 beside)
+  POWER at the floors (A0 80, A0s 32): 0.878 (0.8784) >= .85; no n raised
+  PIN-3 of record at the floors: 0.878 split [40, 40] mS 32
+  LAUNCH A0: floor 80, ceil(1.15 floor) 92, N90 80 -> L 96
+  LAUNCH A0s: floor 32, ceil(1.15 floor) 37, N90 32 -> L 64
+  TOTAL 160; LOOKS 4; the same row at k = [21, 22, 23, 24]
+  HOURS at m:205's basis: 186 sessions (160 + 26) x 19.5 s = 1.01 h (1.0)
+  CASE projection: stop {'A0': 96, 'A0s': 64}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 40, A0s 40)
+    look 3: launches 120 (A0 60, A0s 60)
+    look 4: launches 160 (A0 96, A0s 64) end
+    round_degeneracy: n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+    guard: (n1, n2)_j [[20, 20], [40, 40], [60, 60], [96, 64]] abs crit_j [8, 13, 18, 27] Fisher cells_j [119, 568, 1384, 2436]
+    guard at the common rate 1/5: abs 0.0929, Fisher 0.0699, union 0.1311; pausing on this unit: fisher 0.0699
+    Fisher half on the grid: 1/100:0.0004, 1/50:0.0047, 3/100:0.0137, 1/25:0.0226, 1/20:0.0295, 3/50:0.0348, 7/100:0.0392, 2/25:0.0430, 9/100:0.0466, 1/10:0.0500, 11/100:0.0532, 3/25:0.0561, 13/100:0.0588, 7/50:0.0611, 3/20:0.0631, 4/25:0.0649, 17/100:0.0664, 9/50:0.0677, 19/100:0.0689, 1/5:0.0699, 21/100:0.0708, 11/50:0.0717, 23/100:0.0724, 6/25:0.0730, 1/4:0.0734, 13/50:0.0738, 27/100:0.0741, 7/25:0.0744, 29/100:0.0747, 3/10:0.0750, 31/100:0.0752, 8/25:0.0754, 33/100:0.0755, 17/50:0.0756, 7/20:0.0757, 9/25:0.0757, 37/100:0.0756, 19/50:0.0756, 39/100:0.0757, 2/5:0.0757, 41/100:0.0758, 21/50:0.0759, 43/100:0.0761, 11/25:0.0762, 9/20:0.0764, 23/50:0.0765, 47/100:0.0767, 12/25:0.0768, 49/100:0.0768, 1/2:0.0768, 51/100:0.0768, 13/25:0.0768, 53/100:0.0767, 27/50:0.0766, 11/20:0.0765, 14/25:0.0763, 57/100:0.0762, 29/50:0.0760, 59/100:0.0759, 3/5:0.0758, 61/100:0.0757, 31/50:0.0756, 63/100:0.0757, 16/25:0.0757, 13/20:0.0758, 33/50:0.0758, 67/100:0.0759, 17/25:0.0759, 69/100:0.0759, 7/10:0.0759, 71/100:0.0757, 18/25:0.0756, 73/100:0.0753, 37/50:0.0750, 3/4:0.0747, 19/25:0.0743, 77/100:0.0738, 39/50:0.0732, 79/100:0.0726, 4/5:0.0718, 81/100:0.0708, 41/50:0.0697, 83/100:0.0685, 21/25:0.0672, 17/20:0.0659, 43/50:0.0645, 87/100:0.0628, 22/25:0.0606, 89/100:0.0578, 9/10:0.0545, 91/100:0.0507, 23/25:0.0470, 93/100:0.0434, 47/50:0.0397, 19/20:0.0349, 24/25:0.0280, 97/100:0.0190, 49/50:0.0091, 99/100:0.0017
+    Fisher grid max 0.0768 at p 1/2; refined 0.0768 at p 251/500 (rates ['49/100', '51/100'])
+    union grid max over p <= 1/5: 0.1311 at p 1/5
+  CASE sham_at_floor_r: stop {'A0': 96, 'A0s': 32}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 48, A0s 32)
+    look 3: launches 120 (A0 88, A0s 32)
+    look 4: launches 128 (A0 96, A0s 32) end
+    round_degeneracy: n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+    guard: (n1, n2)_j [[20, 20], [48, 32], [88, 32], [96, 32]] abs crit_j [8, 15, 25, 27] Fisher cells_j [119, 546, 1033, 1135]
+    guard at the common rate 1/5: abs 0.0873, Fisher 0.0545, union 0.1198; pausing on this unit: fisher 0.0545
+  CASE sham_at_floor_min: stop {'A0': 96, 'A0s': 32}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 48, A0s 32)
+    look 3: launches 120 (A0 88, A0s 32)
+    look 4: launches 128 (A0 96, A0s 32) end
+    round_degeneracy: n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+    guard: (n1, n2)_j [[20, 20], [48, 32], [88, 32], [96, 32]] abs crit_j [8, 15, 25, 27] Fisher cells_j [119, 546, 1033, 1135]
+    guard at the common rate 1/5: abs 0.0873, Fisher 0.0545, union 0.1198; pausing on this unit: fisher 0.0545
+  CASE sham_realised_rounds: stop {'A0': 96, 'A0s': 64}, rounds per sham launch 10, 4 looks
+    look 1: launches 40 (A0 20, A0s 20)
+    look 2: launches 80 (A0 40, A0s 40)
+    look 3: launches 120 (A0 60, A0s 60)
+    look 4: launches 160 (A0 96, A0s 64) end
+    round_degeneracy: n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+  JOINT: round_degeneracy's own (projection case): 0.0863; the guard's beside (fisher at .20): 0.0699
+
+CAMPAIGNS at m:205's basis: OLMo-sft 1.17 h, OLMo-dpo 1.17 h, OLMo-instruct 1.01 h; sum 3.35 h (3.4); p's budget 12 h (p §6.1)
+SHAM SECONDS beside, no basis (m's report's sum over the sixteen sham sessions at G-F0m-OLMo (p)): OLMo-sft 102.105 s, OLMo-dpo 88.389 s, OLMo-instruct 85.237 s
+CAP SHARE: the PI's, per checkpoint, within p's 12 h budget, decided at G-PWR (p §4.1, §6.1; the seat's read of G-F0m-OLMo (p) x3, §4.3 item 1 and §8 item 4); not set by this program
+JOINT NOT COMPUTED: The joint over round_degeneracy and the guard is not computed: a sham session that ends early at a pre-pick exclusion enters the guard's sham count and cuts its own rounds in the bar's n, and a round the bar counts can be what excludes it, so the two are dependent through a model of exclusion and round-claim co-occurrence that no record gives.
+NOT FIGURED: hair_triggers: no p0: a ~zero-base-rate class whose fire stops the stage (m:271); p's added line_break_in_stored_text likewise; lexical: no domain on OLMo: every banner names labels; reported only (m:330)
+READINGS:
+  - The form: a sibling script importing scripts/m_gpwr.py's functions unchanged, executed from the load commit's blob. The seat's F-5 (results/raw/2026-11-06_ganl-f3_design-to-code_answers.md) rules this form for Q-F3's G-PWR; Code applies it to p, reading p v0.2 §4.2's "m's modules imported unchanged by import, never by copy" as covering m's G-PWR script. No attribute of an m module is substituted.
+  - Q7's methods (the seat's step-15 answers, results/raw/2026-10-14_m-design-to-code_step15_answers.md) are carried to p's three units by p v0.2 §4.1 (every m sentence about OLMo-{ckpt} read with p's unit in its place). Code's reading, declared here for the seat; a strike recomputes figures only.
+  - The guard on OLMo: m:316 makes the absolute half reported only on OLMo (bars.OLMO_BARS: binding false), so the guard's pausing figure is the Fisher half's own, computed as Q7 (b) computes it at the common null rate .20, with its grid and refined maximum beside; the absolute half's figure and the union are reported beside, in Q7 (b)'s form. The joint's guard beside is the Fisher half's. The pausing halves are read from the bars' binding flags.
+  - Q7 (a)'s cases: the sham arm at its floor at ceil(32 / r) and at 32, Code's reading at Q-F0 kept: 34 at sft's r = 23/24; 32 at r = 1 (dpo, instruct), where the two cases coincide. The realised-rounds case is G-F0m-OLMo (p)'s 160 of 160 sham rounds at each checkpoint, 10 per sham launch, equal to the projection's; it is computed and reported as such.
+  - round_degeneracy at OLMo's p0 .02: m_gpwr.degeneracy holds Qwen's p0 .05 as a module constant, so this program computes the same three fields by the same bars calls (critical_k, seq_false_pause) at the p0 and alpha of bars.OLMO_BARS' campaign row; the self-test asserts equality with m_gpwr.degeneracy at Qwen's p0.
+  - The projection is m_gpwr.project's, over m's arm roles A0 and A0s; the self-test asserts the same launch sequence from schedule.interleave over each OLMo unit's own arms, A0-OLMo-{ckpt} and A0s-OLMo-{ckpt}.
+  - k is the seat's (§4.3 item 1). Beside it, per template (m:192): A0s 16 of 16 at each checkpoint (the G-F0m-OLMo (p) x3 entry, a225a89), so A0 = k - 16 of 8: 7/8 at sft, 8/8 at dpo and instruct.
+  - The hours: m:205's OLMo basis (22.7 s per session at SFT and DPO, 19.5 s at instruct) applied to each unit's total + 26 sessions, as m:209-212's OLMo column, and their sum beside p §6.1's 12 h budget. The sham seconds are reported beside, no basis (§4.3 item 1).
+  - The cap share per checkpoint is the PI's at G-PWR (p §4.1, §6.1; the seat's §8 item 4: [your call at G-PWR]); this program sets none.
+  - m:190's raise is not triggered: power at the floors is at least .85 at each unit. Had it been below, this program would stop and escalate. The planning row (m:209: k 24-21, L 96 and 64, total 160, 4 looks) stands as each unit's input and is recomputed here, with PIN-3's base case at the planned floors, as at Q-F0.
+
+WROTE data/p/gates/G-PWR-p.json sha256 bc2b090966654af1cff7d759628e7eac6fed3c78006980242669c8cd0191d604
+EXIT 0
+
+# The second run, to scratch, for byte identity (its stdout kept in scratch):
+SECOND RUN EXIT 0
+BYTE-IDENTICAL: the second run's record equals the record of record
+STDOUT IDENTICAL: the second run printed what the first did, the WROTE line aside
+
+# The out-of-process verifier on the record of record:
+PASS  schema p-gpwr-v1, proposal PROPOSAL-p, path uncached, three units
+PASS  OLMo-sft: N90 and L by an exact binomial search (k 23/24)
+PASS  OLMo-sft: total 160, looks ceil(total/40) = 4
+PASS  OLMo-sft: k, r, per template beside
+PASS  OLMo-sft projection: stop {'A0': 96, 'A0s': 64}, looks [(40, 20, 20), (80, 40, 40), (120, 60, 60), (160, 96, 64)]
+PASS  OLMo-sft projection: round_degeneracy n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+PASS  OLMo-sft projection: the guard's absolute half at 1/5 on contrast launches [20, 40, 60, 96]: 0.0929; abs crit_j [8, 13, 18, 27]
+PASS  OLMo-sft projection: the pausing figure is the Fisher half's (m:316), 0.0699
+PASS  OLMo-sft sham_at_floor_r: stop {'A0': 96, 'A0s': 34}, looks [(40, 20, 20), (80, 46, 34), (120, 86, 34), (130, 96, 34)]
+PASS  OLMo-sft sham_at_floor_r: round_degeneracy n_j [200, 340, 340, 340] crit_j [8, 12, 12, 12] false pause 0.0705
+PASS  OLMo-sft sham_at_floor_r: the guard's absolute half at 1/5 on contrast launches [20, 46, 86, 96]: 0.0868; abs crit_j [8, 15, 24, 27]
+PASS  OLMo-sft sham_at_floor_r: the pausing figure is the Fisher half's (m:316), 0.0553
+PASS  OLMo-sft sham_at_floor_min: stop {'A0': 96, 'A0s': 32}, looks [(40, 20, 20), (80, 48, 32), (120, 88, 32), (128, 96, 32)]
+PASS  OLMo-sft sham_at_floor_min: round_degeneracy n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+PASS  OLMo-sft sham_at_floor_min: the guard's absolute half at 1/5 on contrast launches [20, 48, 88, 96]: 0.0873; abs crit_j [8, 15, 25, 27]
+PASS  OLMo-sft sham_at_floor_min: the pausing figure is the Fisher half's (m:316), 0.0545
+PASS  OLMo-sft sham_realised_rounds: stop {'A0': 96, 'A0s': 64}, looks [(40, 20, 20), (80, 40, 40), (120, 60, 60), (160, 96, 64)]
+PASS  OLMo-sft sham_realised_rounds: round_degeneracy n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+PASS  OLMo-sft: the joint is the projection's round_degeneracy, the Fisher half beside
+PASS  OLMo-sft: hours (160 + 26) x 227/10 s = 1.17 h (1.2)
+PASS  OLMo-sft: power at the floors displayed 0.878 >= .85, no n raised
+PASS  OLMo-dpo: N90 and L by an exact binomial search (k 24/24)
+PASS  OLMo-dpo: total 160, looks ceil(total/40) = 4
+PASS  OLMo-dpo: k, r, per template beside
+PASS  OLMo-dpo projection: stop {'A0': 96, 'A0s': 64}, looks [(40, 20, 20), (80, 40, 40), (120, 60, 60), (160, 96, 64)]
+PASS  OLMo-dpo projection: round_degeneracy n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+PASS  OLMo-dpo projection: the guard's absolute half at 1/5 on contrast launches [20, 40, 60, 96]: 0.0929; abs crit_j [8, 13, 18, 27]
+PASS  OLMo-dpo projection: the pausing figure is the Fisher half's (m:316), 0.0699
+PASS  OLMo-dpo sham_at_floor_r: stop {'A0': 96, 'A0s': 32}, looks [(40, 20, 20), (80, 48, 32), (120, 88, 32), (128, 96, 32)]
+PASS  OLMo-dpo sham_at_floor_r: round_degeneracy n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+PASS  OLMo-dpo sham_at_floor_r: the guard's absolute half at 1/5 on contrast launches [20, 48, 88, 96]: 0.0873; abs crit_j [8, 15, 25, 27]
+PASS  OLMo-dpo sham_at_floor_r: the pausing figure is the Fisher half's (m:316), 0.0545
+PASS  OLMo-dpo sham_at_floor_min: stop {'A0': 96, 'A0s': 32}, looks [(40, 20, 20), (80, 48, 32), (120, 88, 32), (128, 96, 32)]
+PASS  OLMo-dpo sham_at_floor_min: round_degeneracy n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+PASS  OLMo-dpo sham_at_floor_min: the guard's absolute half at 1/5 on contrast launches [20, 48, 88, 96]: 0.0873; abs crit_j [8, 15, 25, 27]
+PASS  OLMo-dpo sham_at_floor_min: the pausing figure is the Fisher half's (m:316), 0.0545
+PASS  OLMo-dpo sham_realised_rounds: stop {'A0': 96, 'A0s': 64}, looks [(40, 20, 20), (80, 40, 40), (120, 60, 60), (160, 96, 64)]
+PASS  OLMo-dpo sham_realised_rounds: round_degeneracy n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+PASS  OLMo-dpo: the joint is the projection's round_degeneracy, the Fisher half beside
+PASS  OLMo-dpo: hours (160 + 26) x 227/10 s = 1.17 h (1.2)
+PASS  OLMo-dpo: power at the floors displayed 0.878 >= .85, no n raised
+PASS  OLMo-instruct: N90 and L by an exact binomial search (k 24/24)
+PASS  OLMo-instruct: total 160, looks ceil(total/40) = 4
+PASS  OLMo-instruct: k, r, per template beside
+PASS  OLMo-instruct projection: stop {'A0': 96, 'A0s': 64}, looks [(40, 20, 20), (80, 40, 40), (120, 60, 60), (160, 96, 64)]
+PASS  OLMo-instruct projection: round_degeneracy n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+PASS  OLMo-instruct projection: the guard's absolute half at 1/5 on contrast launches [20, 40, 60, 96]: 0.0929; abs crit_j [8, 13, 18, 27]
+PASS  OLMo-instruct projection: the pausing figure is the Fisher half's (m:316), 0.0699
+PASS  OLMo-instruct sham_at_floor_r: stop {'A0': 96, 'A0s': 32}, looks [(40, 20, 20), (80, 48, 32), (120, 88, 32), (128, 96, 32)]
+PASS  OLMo-instruct sham_at_floor_r: round_degeneracy n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+PASS  OLMo-instruct sham_at_floor_r: the guard's absolute half at 1/5 on contrast launches [20, 48, 88, 96]: 0.0873; abs crit_j [8, 15, 25, 27]
+PASS  OLMo-instruct sham_at_floor_r: the pausing figure is the Fisher half's (m:316), 0.0545
+PASS  OLMo-instruct sham_at_floor_min: stop {'A0': 96, 'A0s': 32}, looks [(40, 20, 20), (80, 48, 32), (120, 88, 32), (128, 96, 32)]
+PASS  OLMo-instruct sham_at_floor_min: round_degeneracy n_j [200, 320, 320, 320] crit_j [8, 12, 12, 12] false pause 0.0609
+PASS  OLMo-instruct sham_at_floor_min: the guard's absolute half at 1/5 on contrast launches [20, 48, 88, 96]: 0.0873; abs crit_j [8, 15, 25, 27]
+PASS  OLMo-instruct sham_at_floor_min: the pausing figure is the Fisher half's (m:316), 0.0545
+PASS  OLMo-instruct sham_realised_rounds: stop {'A0': 96, 'A0s': 64}, looks [(40, 20, 20), (80, 40, 40), (120, 60, 60), (160, 96, 64)]
+PASS  OLMo-instruct sham_realised_rounds: round_degeneracy n_j [200, 400, 600, 640] crit_j [8, 14, 19, 20] false pause 0.0863
+PASS  OLMo-instruct: the joint is the projection's round_degeneracy, the Fisher half beside
+PASS  OLMo-instruct: hours (160 + 26) x 39/2 s = 1.01 h (1.0)
+PASS  OLMo-instruct: power at the floors displayed 0.878 >= .85, no n raised
+PASS  the hours' sum 3.35 h (3.4), budget 12 h, the cap share not set
+PASS  the sham seconds beside, no basis
+verify: PASS (0 failed)
+VERIFY EXIT 0
+# The record: data/p/gates/G-PWR-p.json sha256 bc2b090966654af1cff7d759628e7eac6fed3c78006980242669c8cd0191d604
+WRAPPER EXIT 0
+wrapper rc=0
+
+==== NOTE: the output's last line, "wrapper rc=0", was printed by the command that launched the wrapper, not by the
+wrapper; the wrapper's last command is an echo, so its own exit status is 0 whatever it found, and its status of
+record is its WRAPPER EXIT line above. ====
+
+==== THE WRAPPER, <scratch>/gpwr/run_p_gpwr.sh, as it ran (local paths scrubbed) ====
+
+#!/bin/bash
+# G-PWR (p)'s run of record: the launch checks (before Python reads the script), the run, a second run to scratch for
+# byte identity, the out-of-process verifier (standard library only). Prints the raw's body.
+set -u
+REPO=<repo>
+S=<scratch>/gpwr
+PY="$REPO/jlens-qwen36/.venv/bin/python"
+VPY=/usr/bin/python3
+REC=data/p/gates/G-PWR-p.json
+SECOND="$S/G-PWR-p.second-run.json"
+PFX=/nonexistent-p-gpwr-pycache
+ENVI=(env -i HOME=/var/empty LC_ALL=C PATH=/usr/bin:/bin)
+cd "$REPO" || exit 9
+[ -e "$PFX" ] && { echo "LAUNCH CHECK FAILED: the pycache prefix exists"; exit 21; }
+[ -e "$SECOND" ] && { echo "LAUNCH CHECK FAILED: the second run's scratch record exists"; exit 22; }
+echo "# G-PWR (p), its run of record (PROPOSAL-p v0.2 s4.1, s8 step 6; m:285; the seat's read of G-F0m-OLMo (p) x3,"
+echo "#   s4.3 item 1, routed by the PI on 2026-11-13). Code stamp: $(date +%F) (date). Model-free and exact; no model"
+echo "#   process; reads no checkpoint, report or session record."
+echo "# HEAD $(git rev-parse HEAD); the command: <repo>/jlens-qwen36/.venv/bin/python -I -B -X pycache_prefix=$PFX"
+echo "#   -X utf8 scripts/p_gpwr.py --record $REC"
+echo "# Python $("${ENVI[@]}" "$PY" -I -c 'import sys; print(sys.version.split()[0])') (the project's venv, as at Q-F0's G-PWR); the verifier's:"
+echo "#   $("${ENVI[@]}" "$VPY" -I -S -c 'import sys; print(sys.version.split()[0])') (/usr/bin/python3, -I -S, standard library only); $(git --version)"
+echo "# environment: env -i HOME=/var/empty LC_ALL=C PATH=/usr/bin:/bin"
+cfg=$(git config --get-regexp '^(fsck\.|core\.fsmonitor|core\.hookspath)' 2>/dev/null)
+st=$(git status --porcelain -- scripts/p_gpwr.py scripts/m_gpwr.py scripts/m_analyze.py valence_core/ "$REC")
+wt=$(git hash-object --no-filters scripts/p_gpwr.py); hd=$(git rev-parse HEAD:scripts/p_gpwr.py)
+echo "# The launch check (before Python reads the script). No git fsck: it reads every object, the checkpoint blobs"
+echo "#   among them, which the list of record v2 item 2 bars (m's run of record ran it before v2);"
+echo "#   fsck.*, core.fsmonitor or core.hooksPath in git config: $([ -z "$cfg" ] && echo none || echo "$cfg");"
+echo "#   git status over scripts/p_gpwr.py, scripts/m_gpwr.py, scripts/m_analyze.py, valence_core/ and the record: $([ -z "$st" ] && echo empty || echo "$st");"
+echo "#   scripts/p_gpwr.py's working-tree blob $wt = HEAD's $hd: $([ "$wt" = "$hd" ] && echo yes || echo NO);"
+echo "#   the record absent: $([ -e "$REC" ] && echo NO || echo yes)."
+if ! { [ -z "$cfg" ] && [ -z "$st" ] && [ "$wt" = "$hd" ] && [ ! -e "$REC" ]; }; then
+  echo "LAUNCH CHECK FAILED: nothing ran"; exit 20
+fi
+echo
+"${ENVI[@]}" "$PY" -I -B -X pycache_prefix=$PFX -X utf8 scripts/p_gpwr.py --record "$REC" > "$S/first-run.stdout.txt" 2>&1; rc=$?
+cat "$S/first-run.stdout.txt"
+echo "EXIT $rc"
+[ $rc -eq 0 ] || exit $rc
+echo
+echo "# The second run, to scratch, for byte identity (its stdout kept in scratch):"
+"${ENVI[@]}" "$PY" -I -B -X pycache_prefix=$PFX -X utf8 scripts/p_gpwr.py --record "$SECOND" > "$S/second-run.stdout.txt" 2>&1; rc2=$?
+echo "SECOND RUN EXIT $rc2"
+if cmp -s "$REC" "$SECOND"; then echo "BYTE-IDENTICAL: the second run's record equals the record of record"; else echo "DIFFERENT: the second run's record differs"; fi
+/usr/bin/grep -v '^WROTE ' "$S/first-run.stdout.txt" > "$S/first-run.stdout.cmp"
+/usr/bin/grep -v '^WROTE ' "$S/second-run.stdout.txt" > "$S/second-run.stdout.cmp"
+if cmp -s "$S/first-run.stdout.cmp" "$S/second-run.stdout.cmp"; then echo "STDOUT IDENTICAL: the second run printed what the first did, the WROTE line aside"; else echo "STDOUT DIFFERENT"; fi
+echo
+echo "# The out-of-process verifier on the record of record:"
+"${ENVI[@]}" "$VPY" -I -S "$S/verify_p_gpwr.py" "$REC"; vrc=$?
+echo "VERIFY EXIT $vrc"
+echo "# The record: $REC sha256 $(shasum -a 256 < "$REC" | cut -d' ' -f1)"
+same=$(cmp -s "$REC" "$SECOND" && cmp -s "$S/first-run.stdout.cmp" "$S/second-run.stdout.cmp" && echo 1 || echo 0)
+echo "WRAPPER EXIT $(( rc2 != 0 || vrc != 0 || same != 1 ))"
+
+==== THE VERIFIER, <scratch>/gpwr/verify_p_gpwr.py, as it ran (local paths scrubbed) ====
+
+# verify_p_gpwr.py -- the out-of-process check of G-PWR (p)'s record, with Python's standard library only (no
+# repository module; run -I -S). Independent exact recomputation, per unit, of: N90 and L for each arm (m:192), the
+# total and the looks (ceil(total/40)); every case's looks from the campaign rule (fewest launches, ties to the
+# contrast arm; an arm out of the rotation once it reaches its stop); round_degeneracy's crit_j and sequential false
+# pause on the sham rounds at p0 1/50, alpha 1/20; the guard's absolute half at the common rate 1/5 on the contrast
+# launches (crit at p0 1/5, alpha 1/20); the hours at m:205's basis ((total + 26) x basis / 3600) and their sum; the
+# displays half-up. The Fisher half is m_gpwr's DP, checked against brute force by m_gpwr's own self-test; it is not
+# recomputed here. Prints one line per check and a verdict.
+import json
+import sys
+from fractions import Fraction
+from math import ceil, comb
+
+K = {"sft": 23, "dpo": 24, "instruct": 24}
+N_Q, FLOOR, UNIT, LOOK = 24, {"A0": 80, "A0s": 32}, 32, 40
+BASIS = {"sft": Fraction(227, 10), "dpo": Fraction(227, 10), "instruct": Fraction(39, 2)}
+P0_DEGEN, P0_ABS, ALPHA = Fraction(1, 50), Fraction(1, 5), Fraction(1, 20)
+fails = []
+
+
+def check(name, ok, detail=""):
+    print(("PASS  " if ok else "FAIL  ") + name + ("" if ok else "  [" + str(detail)[:300] + "]"))
+    if not ok:
+        fails.append(name)
+
+
+def sf(k, n, p):
+    """P(X >= k), X ~ Bin(n, p), exact."""
+    if k <= 0:
+        return Fraction(1)
+    if k > n:
+        return Fraction(0)
+    return sum(comb(n, x) * p ** x * (1 - p) ** (n - x) for x in range(k, n + 1))
+
+
+def crit(n, p0, alpha):
+    """The smallest k with P(X >= k | n, p0) <= alpha, or None."""
+    for k in range(0, n + 1):
+        if sf(k, n, p0) <= alpha:
+            return k
+    return None
+
+
+def seq_false_pause(ns, p0, alpha):
+    """P(some look j has cumulative count >= crit(n_j)), increments Bin(n_j - n_{j-1}, p0): a DP over the surviving
+    counts, written here from the definition."""
+    dist, prev = {0: Fraction(1)}, 0
+    for n in ns:
+        d = n - prev
+        c = crit(n, p0, alpha)
+        nd = {}
+        for s, w in dist.items():
+            for x in range(0, d + 1):
+                t = s + x
+                if c is not None and t >= c:
+                    continue
+                nd[t] = nd.get(t, 0) + w * comb(d, x) * p0 ** x * (1 - p0) ** (d - x)
+        dist, prev = nd, n
+    return 1 - sum(dist.values())
+
+
+def n90(floor, r):
+    n = floor
+    while sf(floor, n, r) < Fraction(9, 10):
+        n += 1
+    return n
+
+
+def launch(floor, r):
+    up = ceil(Fraction(115, 100) * floor)
+    nn = n90(floor, r)
+    return {"floor": floor, "ceil_1.15_floor": up, "N90": nn, "L": -(-max(up, nn) // UNIT) * UNIT}
+
+
+def looks_of(stop):
+    """The campaign rule as written: the next launch is the arm with the fewest launches still short of its stop,
+    ties to A0; a look at every 40th launch and at the end."""
+    cnt, tot, out = {"A0": 0, "A0s": 0}, 0, []
+    while any(cnt[a] < stop[a] for a in ("A0", "A0s")):
+        live = [a for a in ("A0", "A0s") if cnt[a] < stop[a]]
+        a = min(live, key=lambda x: (cnt[x], 0 if x == "A0" else 1))
+        cnt[a] += 1
+        tot += 1
+        if tot % LOOK == 0:
+            out.append((tot, cnt["A0"], cnt["A0s"]))
+    if not out or out[-1][0] != tot:
+        out.append((tot, cnt["A0"], cnt["A0s"]))
+    return out
+
+
+def dec(x, places):
+    scale = 10 ** places
+    v = (x * scale * 2 + 1) // 2
+    whole, frac = divmod(int(v), scale)
+    return f"{whole}.{frac:0{places}d}"
+
+
+def main(path):
+    raw = open(path, "rb").read()
+    rec = json.loads(raw.decode("utf-8"))
+    check("schema p-gpwr-v1, proposal PROPOSAL-p, path uncached, three units",
+          (rec["schema"], rec["proposal"], rec["path"], sorted(rec["units"])) ==
+          ("p-gpwr-v1", "PROPOSAL-p", "uncached", ["OLMo-dpo", "OLMo-instruct", "OLMo-sft"]))
+    hsum = Fraction(0)
+    for c, k in K.items():
+        u = rec["units"][f"OLMo-{c}"]
+        r = Fraction(k, N_Q)
+        lr = {a: launch(FLOOR[a], r) for a in ("A0", "A0s")}
+        check(f"OLMo-{c}: N90 and L by an exact binomial search (k {k}/24)", u["launch"]["rule"] == lr,
+              (u["launch"]["rule"], lr))
+        L = {a: lr[a]["L"] for a in lr}
+        total = sum(L.values())
+        check(f"OLMo-{c}: total {total}, looks ceil(total/40) = {-(-total // LOOK)}",
+              (u["launch"]["L"], u["launch"]["total"], u["launch"]["looks"]) == (L, total, -(-total // LOOK)))
+        check(f"OLMo-{c}: k, r, per template beside",
+              (u["inputs"]["k"], u["inputs"]["r"], u["inputs"]["per_template_beside"]) ==
+              (k, f"{r.numerator}/{r.denominator}", {"A0": f"{k - 16}/8", "A0s": "16/16"}))
+        stops = {"projection": dict(L), "sham_at_floor_r": {"A0": L["A0"], "A0s": ceil(Fraction(32) / r)},
+                 "sham_at_floor_min": {"A0": L["A0"], "A0s": 32}, "sham_realised_rounds": dict(L)}
+        for name, stop in stops.items():
+            cs = u["cases"][name]
+            lks = looks_of(stop)
+            got = [(lk["launches"], lk["A0"], lk["A0s"]) for lk in cs["looks"]]
+            check(f"OLMo-{c} {name}: stop {stop}, looks {lks}", cs["stop"] == stop and got == lks, (cs["stop"], got))
+            rounds = [s * 10 for _, _, s in lks]
+            cj = [crit(n, P0_DEGEN, ALPHA) for n in rounds]
+            fp = seq_false_pause(rounds, P0_DEGEN, ALPHA)
+            rd = cs["round_degeneracy"]
+            check(f"OLMo-{c} {name}: round_degeneracy n_j {rounds} crit_j {cj} false pause {dec(fp, 4)}",
+                  rd["n_j"] == rounds and rd["crit_j"] == cj and Fraction(rd["false_pause"]["exact"]) == fp
+                  and rd["false_pause"]["display"] == dec(fp, 4), rd)
+            if name != "sham_realised_rounds":
+                n1 = [a0 for _, a0, _ in lks]
+                fa = seq_false_pause(n1, P0_ABS, ALPHA)
+                at = cs["guard"]["at_common_rate_p0"]
+                check(f"OLMo-{c} {name}: the guard's absolute half at 1/5 on contrast launches {n1}: {dec(fa, 4)}; "
+                      f"abs crit_j {[crit(n, P0_ABS, ALPHA) for n in n1]}",
+                      Fraction(at["abs"]["exact"]) == fa and at["p"] == "1/5"
+                      and cs["guard"]["abs_crit_j"] == [crit(n, P0_ABS, ALPHA) for n in n1], at["abs"])
+                gf = cs["guard_figure"]
+                check(f"OLMo-{c} {name}: the pausing figure is the Fisher half's (m:316), "
+                      f"{gf['at_common_rate_p0']['display']}",
+                      gf["pausing_halves"] == ["fisher"] and gf["figure"] == "fisher"
+                      and gf["at_common_rate_p0"] == at["fisher"], gf)
+        j = u["joint"]
+        check(f"OLMo-{c}: the joint is the projection's round_degeneracy, the Fisher half beside",
+              j["value"] == u["cases"]["projection"]["round_degeneracy"]["false_pause"]
+              and j["guard_beside"] == u["cases"]["projection"]["guard"]["at_common_rate_p0"]["fisher"]
+              and j["guard_beside_figure"] == "fisher", j["guard_beside_figure"])
+        h = Fraction(total + 26) * BASIS[c] / 3600
+        hsum += h
+        hb = u["hours_at_m205_basis"]
+        check(f"OLMo-{c}: hours ({total} + 26) x {BASIS[c]} s = {dec(h, 2)} h ({dec(h, 1)})",
+              (hb["sessions"], Fraction(hb["hours"]["exact"]), hb["hours"]["display"], hb["hours"]["one_place"]) ==
+              (total + 26, h, dec(h, 2), dec(h, 1)), hb)
+        af = u["power"]["at_floors"]
+        check(f"OLMo-{c}: power at the floors displayed {af['display']} >= .85, no n raised",
+              Fraction(af["exact"]) >= Fraction(85, 100) and af["display"] == dec(Fraction(af["exact"]), 3)
+              and u["power"]["n_raised"] is False, af["display"])
+    hs = rec["campaigns"]["hours_at_m205_basis_sum"]
+    check(f"the hours' sum {dec(hsum, 2)} h ({dec(hsum, 1)}), budget 12 h, the cap share not set",
+          (Fraction(hs["exact"]), hs["display"], hs["one_place"], rec["campaigns"]["budget_h"]) ==
+          (hsum, dec(hsum, 2), dec(hsum, 1), 12) and rec["campaigns"]["cap_share"].endswith("not set by this program"))
+    check("the sham seconds beside, no basis",
+          rec["campaigns"]["sham_seconds_beside"] == {
+              "OLMo-sft": {"sum_over_sixteen_sham_sessions_s": "102.105", "basis": "none"},
+              "OLMo-dpo": {"sum_over_sixteen_sham_sessions_s": "88.389", "basis": "none"},
+              "OLMo-instruct": {"sum_over_sixteen_sham_sessions_s": "85.237", "basis": "none"}})
+    print(f"verify: {'PASS' if not fails else 'FAIL'} ({len(fails)} failed)")
+    return 0 if not fails else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1]))
