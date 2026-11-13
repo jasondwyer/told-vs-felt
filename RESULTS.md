@@ -498,6 +498,27 @@ applied to CLAUDE.md.
   - **Committed by path:** `LOCK-m-F3.md`, the values-check raw and this entry. Nothing ran on a model or the box. Not
     pushed.
   - **Next:** the `qual` wiring (v0.2 §9 item 1), then G-F3, announced to the coordinating session.
+  - **Close (PI date 2026-11-13), on the entry's pointer (v0.2 §8; `15d2f70`).** The seat's read of G-F0m-OLMo (p)
+    ×3, [`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md)
+    (sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`), committed by path by the pod session
+    at `a2c354e`, rules at its §3 on the observation the pointer names (the coordinating session's note, `15d2f70`):
+    "The observation is right." In its words, the G-ID-F3 answers' "§6 stands as placed (the PI routed it as given;
+    nothing is rewritten)", and the derived figure is "withdrawn as a method and carried by no later text". Ledger (67)
+    is the seat's own.
+    - **§3, on this lock:** "LOCK-m-F3 v0.2 (`05ef75d`): as routed; its two FAILs applied (m:297 quoted in full); "the
+      plural's correction" and "the `qual` wiring's lock check" marked as Code's intent — the latter is accepted now
+      that the wiring declares it (§5)."
+    - **§3 (and §5, in its own words), on the lock file:** "LOCK-m-F3 v1.0 closes v0.2 §8's pointer by citing this
+      file." So `LOCK-m-F3.md` is not edited now. v1.0 carries the close, with the rest of §5's contents, after G-F3,
+      G-VER and G-PWR.
+    - **§7, for this session:** "Code (F3 session): G-F3 as routed; a close line on the LOCK-m-F3 v0.2 entry's pointer
+      (`05ef75d`) citing §3 of this file; v1.0's contents as §5 has them."
+      - G-F3 ran as routed (`2193832`).
+      - §5 accepts Code's two commitments for it, and both have held so far: the G-F3 entry records the two digests
+        at launch, and no driver commit has landed since the `qual` wiring (`b427f82`).
+    - **The PI's word,** in chat, to the coordinating session's question "Route the seat's p answers as given?" (its
+      relay of 2026-11-13): "Route as given". The seat's §8 routing block is quoted in full in the close line on
+      G-F0m-OLMo (p) ×3's entry (`a2c354e`). Nothing above is rewritten.
 
 - 2026-11-11 — **Dated note (coordinating session), for the seat's next read: an observation on the seat's answers of 2026-11-10 on G-ID-F3, §6, and one listing by my values-checker.**
   - The answers are `results/raw/2026-11-10_gid-f3_design-to-code_answers.md` (sha256 `c51ef5ba…a9d7`), committed at
