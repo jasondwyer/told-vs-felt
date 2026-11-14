@@ -21,6 +21,57 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0: the three drafts, for the seat's read (the seat's read of
+  G-F0m-OLMo (p) ×3, §4.3 item 3: "The seat reads each v1.0 before the PI commits it"). Code STOPS for the seat's
+  read: nothing follows until the seat answers and the PI routes.** Each draft is the v1.0 text above its committed
+  v0.2 text, drafted on the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p
+  (`82c3c44`). Nothing ran on a model or the box.
+  - **The drafts.** Each is byte-identical to the `LOCK-p-OLMo-{ckpt}.md` the PI's commit would place:
+    - sft: [`_p-lock-v1.0-draft_OLMo-sft`](results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-sft.md), sha256
+      `968c4abd85c4676569cd6596b488a031e7754943dde0c99050e5f7c0e2bcd427`;
+    - dpo: [`_p-lock-v1.0-draft_OLMo-dpo`](results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-dpo.md), sha256
+      `f2a6960f38e96c651ccf23d11aba3bb02354cdad4b57ef2745d934525747a28b`;
+    - instruct: [`_p-lock-v1.0-draft_OLMo-instruct`](results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-instruct.md),
+      sha256 `6da557e5e238fa9159697b72081c1b1800c6018f62c8158f27e8677be3237fad`.
+  - **Their contents,** §4.3 item 3's list, all present in each:
+    - the launch counts and looks from G-PWR (p), with the whole line
+      `launch counts = A0-OLMo-{ckpt} 96, A0s-OLMo-{ckpt} 64`;
+    - the cap share, with the PI's "2 h each" quoted with the coordinating session's question, and the whole line
+      `hour cap = 2 h`;
+    - D_p 2026-12-15;
+    - the hashes of PROPOSAL-p, the schedules, the pools and the renders, both analyzers' blobs, and p's moved package
+      and driver;
+    - "preprint of record pending";
+    - one BACKEND line, v0.1's (`641ee466f4553b6a`);
+    - the list of record v2, cited;
+    - v0.2's and v0.1's text, verbatim below.
+  - **Checks:**
+    - The generator reads the values of record (§8, the hashes, G-PWR (p)'s figures) from committed blobs or p's
+      code, and the seat's, m's and p's quotes from their pinned sources. The PI's word, the coordinating session's
+      questions and a few prose values (D_p, the floors, p0, α, the common rate, the 6 h total, the commit ids) are
+      constants in the script, checked by the values-check. A second run gives the same bytes. Raw:
+      [`_p-lock-v1.0-drafts_check`](results/raw/2026-11-14_p-lock-v1.0-drafts_check.txt), with the generator and the
+      dry precheck verbatim, one run of each, and the second run's comparison.
+    - The dry precheck ran the real non-stub precheck at `campaign`, each draft standing in for the committed lock,
+      with a stand-in pod id: CLEAR ×3, each draft's sha256 its `lock_sha256`.
+    - A blind values-check of the drafts: 114 claims, 110 CONFIRMED, 2 IMPRECISE (applied, and the drafts
+      regenerated), 0 FAIL, 2 NOT CHECKABLE. Nothing from §4.3 item 3's list is missing. Raw:
+      [`_p-lock-v1.0-drafts_valuescheck`](results/raw/2026-11-14_p-lock-v1.0-drafts_valuescheck.md).
+  - **For the seat:** the block
+    [`_p-lock-v1.0_code-to-design_read`](results/raw/2026-11-14_p-lock-v1.0_code-to-design_read.md). It lists every
+    commit since the seat's read and asks three questions:
+    - Q1: each draft, adopted or amended;
+    - Q2: §5's reading of "v1.0 names that box as the campaign's";
+    - Q3: the campaign wiring's eight declared items.
+  - **Then,** on the PI's word: each draft placed byte for byte as `LOCK-p-OLMo-{ckpt}.md` and committed by path by
+    D_p, with its v1.0 entry; then the replacement box, on the PI's go (§4.3 items 4–5).
+  - **A blind values-check** of this entry, the block and the check raw's header: 96 claims, 81 CONFIRMED,
+    5 IMPRECISE (applied), 0 FAIL, 10 NOT CHECKABLE (the coming commit and the PI's placement, Code's judgment and
+    commitments, the runs' priority). Its observations were applied, the generator's docstring among them; two runs of
+    the corrected generator give the drafts of record byte for byte. Raw:
+    [`_p-lock-v1.0_block_valuescheck`](results/raw/2026-11-14_p-lock-v1.0_block_valuescheck.md).
+  - Not pushed. Committed by path.
+
 - 2026-11-14 — **G-ANL-p — the canonical re-run on HEAD `f784bff` (G-SHAPE-p's re-run committed on the campaign
   wiring's BUILD `c0f1c69`): PASS (p v0.2 §4.4; the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 2).
   `scripts/p_analyze.py ganl` writes `data/p/gates/G-ANL-p.json` (sha256
