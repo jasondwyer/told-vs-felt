@@ -21,6 +21,62 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **WORKFLOW.md v1.0 — COMMITTED** (the coordinating session; the seat's answers of 2026-11-14, §C and
+  §D item 11, routed by the PI as given).
+  - **The file.** [`WORKFLOW.md`](WORKFLOW.md) v1.0 at root, sha256
+    `e7195706efee2704abc6d4e5bae984118e6add58013c9fbf3bdb1da971c6b061`, 11,492 bytes. The design seat placed it
+    untracked. I re-hashed it just before this commit, equal to the sha256 and bytes the paste block names, and commit
+    it by path as placed, unedited.
+  - **What it is.** The workflow of record, in nine sections: the three seats and what each may do; the two channels
+    (design → PI → Code as one paste block per sitting, Code → design as repo state only); the fixed forms of the
+    seat's raw and of Code's block; documents of record, versions and dated notes; handoffs; the rules it cites by
+    reference; chat; how it changes. Its header: "It changes no rule of any pre-registration; where a
+    pre-registration or the list of record speaks, it governs."
+  - **The routing.** The seat's answers of 2026-11-14,
+    [`2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`](results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md)
+    (sha256 `6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a`, committed by the F3 session at
+    `cdccc66`), §D item 11: "Ledger (68) recorded in this file's close line; `WORKFLOW.md` v1.0 committed by path
+    with its entry `WORKFLOW.md v1.0 — COMMITTED` (the file's sha256; your words quoted; CLAUDE.md untouched) [go]."
+  - **The PI's words** (PI date 2026-11-14), verbatim: "Route as given", the reply to my question "Route the seat's
+    answers as given?". And on commits, as the raw's §C quotes them: "I typically do not make commits to the repo
+    directly bc we have certain preregistration provenance etc that I don't want to mess up and need to unwind. So
+    your notes that say PI commits by path I have assumed code commits as has always been the case."
+  - **Close (PI date 2026-11-14; the coordinating session's line, per §D item 11): ledger (68).** §C: "The convention
+    of record has never changed: Code commits by path on the PI's routing; the PI routes and decides in chat and
+    commits nothing." (bold markers aside). §C names where the record said otherwise: the seat's raws of 2026-11-09
+    through 2026-11-12, the handoff of 2026-11-12, and the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 3, "before the
+    PI commits it", carried into the LOCK-p v1.0 drafts and the block at `012ffbe`. "The committed raws are not
+    edited"; the correction is §C's line, the drafts' amendment (A2) and WORKFLOW.md.
+  - **CLAUDE.md untouched.** §C: "CLAUDE.md is not edited for this: the stages' GATE and LICENCE lines print its
+    sha16, and its one-line pointer to WORKFLOW.md waits for its next version." At this commit its sha256 begins
+    `955788dec22ee820`, the value G-F3's GATE line prints
+    ([`2026-11-12_mf3-gf3.txt`](results/raw/2026-11-12_mf3-gf3.txt)).
+  - **Before the PI's word** I re-hashed both placed files, read both in full, scanned both for clock times, dollar
+    signs, IP addresses, local paths and emails (none), and matched the paste block to the raw's §D item by item. One
+    slip: the raw's header gives the dpo draft's sha256 as `f2a6960f…a28d`, where the file and `012ffbe`'s block give
+    `…a28b`. I put it to the PI before the routing. The PI's word was "Route as given", so the raw went in as placed
+    (the F3 session's commit `cdccc66`, at the paste block's sha256). I hand the slip to the pod session as an
+    observation for its close line on `012ffbe` (item 9); it decides nothing.
+  - **The hold** (PI date 2026-11-14). The pod session found that §B.4 item 7's ruling, "its line — the lock's
+    identifier against the adapter's, equal — is printed in the precheck ×3 raw at `campaign`" (bold markers aside),
+    has no source in the build: the precheck reads only the lock's BACKEND line (`valence_core/p/stage.py`:615), and
+    the comparison with the adapter's identifier runs inside each recorded run, after the load (:1352–1357), printing
+    nothing when the two are equal. I checked both sites. The PI's word, to my question "Hold the three LOCK-p commits
+    until the seat answers item 7?", verbatim: "Hold the locks". The pod session puts item 7 to the seat as a
+    committed block with its readings; Code adjudicates none.
+  - **Next** (the raw's §D): the pod session's close lines on `012ffbe` and `c0f1c69` (item 9); LOCK-p v1.0 ×3
+    amended by (A1)–(A3), with the generator and the dry precheck re-run and each diff and new sha256 in the pod
+    session's entry, a second STOP only if the diff is more than (A1)–(A3) (item 6), their placement and commit held
+    as above; G-PWR (Q-F3), with the PI's call at its entry, a cap or declining v1.0 (items 3–4); the replacement pod
+    once v1.0 ×3 are committed, at the PI's timing (item 10); the push on the PI's word, after the pre-push screen
+    (item 13).
+  - **A blind values-check** of this entry: 45 claims, 35 CONFIRMED, 2 IMPRECISE (applied), 0 FAIL, 8 NOT CHECKABLE
+    (the PI's words in chat, my own session's checks, this commit's own acts). Its optional wordings were applied.
+    "The hold" and the hold in "Next" were added after it (the check did not see the PI's word "Hold the locks") and
+    were checked by tool. Raw: [`_workflow-v1_valuescheck`](results/raw/2026-11-14_workflow-v1_valuescheck.md).
+  - WORKFLOW.md, RESULTS.md and the values-check raw only. Nothing ran on a model or the box. Not pushed. Committed by
+    path.
+
 - 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0: the three drafts, for the seat's read (the seat's read of
   G-F0m-OLMo (p) ×3, §4.3 item 3: "The seat reads each v1.0 before the PI commits it"). Code STOPS for the seat's
   read: nothing follows until the seat answers and the PI routes.** Each draft is the v1.0 text above its committed
