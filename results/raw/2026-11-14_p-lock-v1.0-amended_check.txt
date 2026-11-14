@@ -1,0 +1,848 @@
+# LOCK-p v1.0 x3 -- the amended drafts: the seat's (A1)-(A3) applied, each draft's diff against 012ffbe's, and the dry precheck (Code's raw, PI date 2026-11-14)
+#
+# On the seat's answers of 2026-11-14 (results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md, sha256 6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a), §B.2 and §B.5, routed by the PI ("Route as given", relayed by the coordinating session).
+# Model-free and read-only: nothing ran on a model or the box, and nothing was written in the repository. At HEAD dd0bb89, with the code of record committed
+# and unedited. The amended drafts of record are the generator's output in <tmp>/scratchpad/campwire/lock10a/final; a second run, into final_r2, is
+# byte-identical (section 3b). The generator is the one verbatim in 012ffbe's results/raw/2026-11-14_p-lock-v1.0-drafts_check.txt (its section 1), amended at the three template sites and in its
+# docstring alone, plus the reading of the seat's raw and the assertions (section 1). Sections 3-7 were run, and this raw written,
+# by Code's assembler (section 8). Local absolute paths scrubbed (<repo>, <tmp>); nothing else changed.
+
+## 1. The generator's amendment: a unified diff of the amended generator against the generator verbatim in 012ffbe's results/raw/2026-11-14_p-lock-v1.0-drafts_check.txt (its section 1, byte-identical to the scratch script it was run from, after scrubbing)
+
+--- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-drafts_check.txt section 1 (the generator of the drafts)
++++ the amended generator (section 2)
+@@ -12,7 +12,13 @@
+ session's questions (relayed, not committed) and a few prose values are constants here, checked by the values-check. Each draft is checked as the precheck at ``campaign`` checks a lock:
+ every lock_required value named, G-PWR (p)'s record named, exactly one BACKEND line, the two campaign lines as whole
+ lines. The drafts are written to <out_dir>, never into the repository. --dry: lock_required's problems are printed and
+-the drafts written anyway (a draft of the form only, before the BUILD and the re-runs are committed)."""
++the drafts written anyway (a draft of the form only, before the BUILD and the re-runs are committed).
++
++Amended on the seat's answers of 2026-11-14 (results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md,
++§B.2), routed by the PI: LOCK-p v1.0 x3 adopted with (A1)-(A3), common to the three -- the header's committer
++sentence, a bullet after §0's quote, §5's box sentence. Their texts are read from that raw at its sha256 (placed
++untracked by the seat, committed by the F3 session at cdccc66) and asserted in each draft, once each, with the replaced texts
++absent (the seat's §B.2: "Nothing else moves.")."""
+ from __future__ import annotations
+ 
+ import hashlib
+@@ -39,6 +45,10 @@
+            "6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd")
+ POOLS = ("data/f/pools.json", "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0")
+ GPWR_PROG = ("scripts/p_gpwr.py", "3e4348b1dfa5539c664e8bb9a017cf982c60052f487f232ab2c5eb1a0da30464")
++#: The seat's answers of 2026-11-14 (§B.2: the three drafts adopted with (A1)-(A3)), read at this sha256 whether or
++#: not committed yet.
++SEAT_A = ("results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md",
++          "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a")
+ #: The PI's cap share, verbatim, with the coordinating session's question (its relay of 2026-11-14).
+ PI_WORD = "2 h each"
+ QUESTION = "What hour cap per checkpoint for p's campaigns?"
+@@ -106,6 +116,31 @@
+ if gpwr.get("schema") != stage.GPWR_SCHEMA:
+     raise SystemExit("G-PWR (p)'s record is not of its schema")
+ committed(LIST_V2[0], LIST_V2[1])
++seat_a_bytes = (ROOT / SEAT_A[0]).read_bytes()
++if sha(seat_a_bytes) != SEAT_A[1]:
++    raise SystemExit(f"{SEAT_A[0]} is not at its sha256 {SEAT_A[1][:16]}")
++seat_a = seat_a_bytes.decode("utf-8")
++
++
++def amendment(tag: str, n: int) -> list[str]:
++    """The code spans of the seat's §B.2 bullet (tag), verbatim, n of them."""
++    ln = [x for x in seat_a.splitlines() if x.startswith(f"- **({tag}) ")]
++    if len(ln) != 1:
++        raise SystemExit(f"the seat's §B.2 ({tag}) is not one line")
++    spans = re.findall(r"`([^`]*)`", ln[0])
++    if len(spans) != n:
++        raise SystemExit(f"the seat's §B.2 ({tag}) carries {len(spans)} code spans, not {n}")
++    return spans
++
++
++A1_OLD, A1_NEW = amendment("A1", 2)
++if not (A1_OLD.startswith(f"Version v1.0, drafted {DATE}; ") and A1_NEW.startswith(f"Version v1.0, drafted {DATE}; ")):
++    raise SystemExit("(A1) is not the header's sentence of this date")
++A2_BULLET = amendment("A2", 2)[1]
++A3_OLD, A3_NEW = amendment("A3", 2)
++if not (A3_OLD.startswith("… ") and A3_NEW.startswith("… ")):
++    raise SystemExit("(A3) is not the box sentence's tail")
++A3_OLD, A3_NEW = A3_OLD[2:], A3_NEW[2:]
+ 
+ 
+ def fig(d: dict) -> str:
+@@ -147,9 +182,8 @@
+         f"seat's read, on the PI's routing of 2026-11-13 (\"Route as given\") and the PI's cap share of 2026-11-14 "
+         f"(§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`{BUILD}`) and "
+         f"the re-runs of G-SHAPE-p (`{GSHAPE}`) and G-ANL-p (`{GANL}`). It licenses the campaign on OLMo-{ck}, within "
+-        f"one pod session; nothing later. Version v1.0, drafted {DATE}; the seat reads it before the PI commits it, by "
+-        f"path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of "
+-        f"{unit}'s campaign checkpoint.*",
++        f"one pod session; nothing later. {A1_NEW} This file's own sha256 is named in its entry and is the "
++        f"identity_extra lock_sha256 of {unit}'s campaign checkpoint.*",
+         "",
+         "## §0. What v1.0 carries",
+         "",
+@@ -157,6 +191,7 @@
+         "",
+         f"  > {item3}",
+         "",
++        f"- {A2_BULLET}",
+         f"- m:302's LOCK-m-OLMo-{{ckpt}} v1.0, verbatim: {m302_v10}",
+         "- Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the "
+         "backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value "
+@@ -232,8 +267,7 @@
+         "(the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).",
+         f"- **The box** (the seat's §4.2): \"{q_box}\". This lock names the campaign's box by that identifier: the "
+         "replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives "
+-        "`641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its "
+-        "read). A differing identifier STOPs the stage before it "
++        f"`641ee466f4553b6a`, {A3_NEW} A differing identifier STOPs the stage before it "
+         "generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).",
+         "- **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and "
+         "checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: "
+@@ -305,6 +339,11 @@
+         if not v02.startswith(f"# LOCK-p-OLMo-{gcal.unit_ckpt(u)} v0.2\n"):
+             raise SystemExit(f"{rel}: the committed text is not v0.2's")
+         text = lock_text(u, req, v02)
++        for what, s, n in (("(A1)", A1_NEW, 1), ("(A2)", f"  > {item3}\n\n- {A2_BULLET}\n- m:302's ", 1),
++                           ("(A3)", A3_NEW, 1), ("(A1)'s replaced text", A1_OLD, 0),
++                           ("(A3)'s replaced text", A3_OLD, 0)):
++            if text.count(s) != n:
++                raise SystemExit(f"{u}: {what} occurs {text.count(s)} times in the draft, not {n}")
+         missing = [w for w, v in req.items() if not stage.lock_names(text, v)]
+         bp, bid = stage.lock_backend(text)
+         cp_ = stage.campaign_lock_problems(u, text)
+
+## 2. The amended generator (Code's scratch script), verbatim
+
+#!/usr/bin/env python3
+"""Write LOCK-p-OLMo-{sft,dpo,instruct}.md v1.0 drafts above v0.2's committed text (Code's generator; model-free; scratch).
+
+Usage: python -I -B gen_locks_v10.py <repo> <out_dir> <build_hash> <gshape_hash> <ganl_hash> <date> [--dry]
+
+The contents (the seat's read of G-F0m-OLMo (p) x3, results/raw/2026-11-12_p-qual_design-to-code_answers.md, §4.3 item
+3): m:302's v1.0 contents -- launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the
+schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record
+pending" -- one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. The values of record
+are read from committed blobs at HEAD or computed by p's own code on the committed tree; the seat's, m's and p's quotes
+are read from their committed sources at their pinned sha256s and asserted present. The PI's word, the coordinating
+session's questions (relayed, not committed) and a few prose values are constants here, checked by the values-check. Each draft is checked as the precheck at ``campaign`` checks a lock:
+every lock_required value named, G-PWR (p)'s record named, exactly one BACKEND line, the two campaign lines as whole
+lines. The drafts are written to <out_dir>, never into the repository. --dry: lock_required's problems are printed and
+the drafts written anyway (a draft of the form only, before the BUILD and the re-runs are committed).
+
+Amended on the seat's answers of 2026-11-14 (results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md,
+§B.2), routed by the PI: LOCK-p v1.0 x3 adopted with (A1)-(A3), common to the three -- the header's committer
+sentence, a bullet after §0's quote, §5's box sentence. Their texts are read from that raw at its sha256 (placed
+untracked by the seat, committed by the F3 session at cdccc66) and asserted in each draft, once each, with the replaced texts
+absent (the seat's §B.2: "Nothing else moves.")."""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(sys.argv[1]).resolve()
+OUT = Path(sys.argv[2]).resolve()
+BUILD, GSHAPE, GANL, DATE = sys.argv[3:7]
+DRY = "--dry" in sys.argv[7:]
+if str(OUT).startswith(str(ROOT)):
+    raise SystemExit("the drafts are written outside the repository")
+sys.path.insert(0, str(ROOT))
+from valence_core.m import stages as m_stages  # noqa: E402
+from valence_core.p import gcal, stage  # noqa: E402
+
+assert stage.__file__.startswith(str(ROOT)), stage.__file__
+SEAT = ("results/raw/2026-11-12_p-qual_design-to-code_answers.md",
+        "a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112")
+LIST_V2 = ("results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md",
+           "6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd")
+POOLS = ("data/f/pools.json", "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0")
+GPWR_PROG = ("scripts/p_gpwr.py", "3e4348b1dfa5539c664e8bb9a017cf982c60052f487f232ab2c5eb1a0da30464")
+#: The seat's answers of 2026-11-14 (§B.2: the three drafts adopted with (A1)-(A3)), read at this sha256 whether or
+#: not committed yet.
+SEAT_A = ("results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md",
+          "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a")
+#: The PI's cap share, verbatim, with the coordinating session's question (its relay of 2026-11-14).
+PI_WORD = "2 h each"
+QUESTION = "What hour cap per checkpoint for p's campaigns?"
+CHOICES = ('"2 h each"', '"3 h each"')
+CLOSING_Q = ("What hour cap do you want per checkpoint for p's campaigns: 2 h each, 3 h each, or different figures per "
+             "checkpoint?")
+
+
+def sha(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def committed(rel: str, want: str | None = None) -> bytes:
+    cp, data = m_stages._committed(rel)
+    if cp or data is None:
+        raise SystemExit(f"{rel}: {cp} (every source of the lock is committed at HEAD and unedited)")
+    if want is not None and sha(data) != want:
+        raise SystemExit(f"{rel} is not at its sha256 {want[:16]}")
+    return data
+
+
+def blob(rel: str) -> str:
+    return subprocess.run(["git", "-C", str(ROOT), "rev-parse", f"HEAD:{rel}"], check=True, capture_output=True,
+                          text=True).stdout.strip()
+
+
+def has(text: str, quote: str, where: str) -> str:
+    if quote not in text:
+        raise SystemExit(f"{where} does not carry the quote {quote[:60]!r}")
+    return quote
+
+
+seat = committed(*SEAT).decode("utf-8")
+item3 = [ln for ln in seat.splitlines() if ln.startswith("3. **LOCK-p v1.0 ×3** by D_p")]
+if len(item3) != 1:
+    raise SystemExit("the seat's §4.3 item 3 is not one line")
+item3 = item3[0]
+q_box = has(seat, "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box "
+                  "as the campaign's", "the seat's §4.2")
+m_text = committed(gcal.M_PROPOSAL_REL, gcal.M_PROPOSAL_SHA256).decode("utf-8")
+m_lines = m_text.splitlines()
+m302 = m_lines[301]
+i0 = m302.index("**LOCK-m-OLMo-{ckpt} v1.0** (")
+i1 = m302.index(") → campaign within one pod session", i0)
+m302_v10 = m302[i0:i1 + 1]
+q_proj = has(m_lines[191], "a projection, not a bound", "m:192")
+q_launch = has(m_lines[191], "arms launch, interleaved and outcome-blind, until each reaches its floor, the unit's cap, "
+                             "or a PI stop", "m:192")
+q_caps = has(m_lines[248], "Hour caps: wall-clock of detached generation time, set by the PI in that unit's LOCK v1.0",
+             "m:249")
+q_share = has(m_lines[248], "the OLMo caps are per-checkpoint shares of a pod budget the PI sets", "m:249")
+q_wait = has(m302, "an OLMo lock does not wait for the placement", "m:302")
+p_text = committed(gcal.PROPOSAL_P_REL, gcal.PROPOSAL_P_SHA256).decode("utf-8")
+q_mon = has(p_text, "m:330 by reference: looks every 40 launches and at the end; `round_degeneracy` at p0 .02 on the "
+                    "sham arms; hair triggers (§2.3's added); the guard; the seat adjudicates every pause; Code never "
+                    "self-adjudicates.", "p §6.3")
+q_dp = has(p_text, "A checkpoint not locked by D_p is NOT-RUN by its Clock under m:324's causes, with no "
+                   "re-registration path", "p §5.3")
+q_budget = has(p_text, "**The budget is 12 h** (the PI's word of 2026-11-06) for G-CAL-p, the gate stages and the three "
+                       "campaigns together", "p §6.1")
+pools = committed(*POOLS)
+committed(*GPWR_PROG)
+gpwr_bytes = committed(stage.GPWR_REL)
+gpwr = json.loads(gpwr_bytes.decode("utf-8"))
+if gpwr.get("schema") != stage.GPWR_SCHEMA:
+    raise SystemExit("G-PWR (p)'s record is not of its schema")
+committed(LIST_V2[0], LIST_V2[1])
+seat_a_bytes = (ROOT / SEAT_A[0]).read_bytes()
+if sha(seat_a_bytes) != SEAT_A[1]:
+    raise SystemExit(f"{SEAT_A[0]} is not at its sha256 {SEAT_A[1][:16]}")
+seat_a = seat_a_bytes.decode("utf-8")
+
+
+def amendment(tag: str, n: int) -> list[str]:
+    """The code spans of the seat's §B.2 bullet (tag), verbatim, n of them."""
+    ln = [x for x in seat_a.splitlines() if x.startswith(f"- **({tag}) ")]
+    if len(ln) != 1:
+        raise SystemExit(f"the seat's §B.2 ({tag}) is not one line")
+    spans = re.findall(r"`([^`]*)`", ln[0])
+    if len(spans) != n:
+        raise SystemExit(f"the seat's §B.2 ({tag}) carries {len(spans)} code spans, not {n}")
+    return spans
+
+
+A1_OLD, A1_NEW = amendment("A1", 2)
+if not (A1_OLD.startswith(f"Version v1.0, drafted {DATE}; ") and A1_NEW.startswith(f"Version v1.0, drafted {DATE}; ")):
+    raise SystemExit("(A1) is not the header's sentence of this date")
+A2_BULLET = amendment("A2", 2)[1]
+A3_OLD, A3_NEW = amendment("A3", 2)
+if not (A3_OLD.startswith("… ") and A3_NEW.startswith("… ")):
+    raise SystemExit("(A3) is not the box sentence's tail")
+A3_OLD, A3_NEW = A3_OLD[2:], A3_NEW[2:]
+
+
+def fig(d: dict) -> str:
+    return d["display"].lstrip("0") if d["display"].startswith("0.") else d["display"]
+
+
+def lock_text(unit: str, req: dict, v02: str) -> str:
+    ck = gcal.unit_ckpt(unit)
+    a0, a0s = stage.campaign_arms(unit)
+    u = gpwr["units"][unit]
+    L, looks = u["launch"]["L"], u["launch"]["looks"]
+    pj = u["cases"]["projection"]
+    look_at = ", ".join(str(x["launches"]) for x in pj["looks"])
+    a0_at = ", ".join(str(x["A0"]) for x in pj["looks"])
+    a0s_at = ", ".join(str(x["A0s"]) for x in pj["looks"])
+    hrs = u["hours_at_m205_basis"]
+    basis_num, basis_den = (int(x) for x in hrs["basis_s_per_session"].split("/"))
+    basis = f"{basis_num / basis_den:g}"
+    lines_c = stage.campaign_lock_lines(unit)
+    if lines_c != (f"launch counts = {a0} {L['A0']}, {a0s} {L['A0s']}", f"hour cap = {stage.campaign_hour_cap(unit)} h"):
+        raise SystemExit(f"{unit}: the campaign lines are not G-PWR (p)'s counts and the cap of record: {lines_c}")
+    sched = {t: req[f"schedule {unit}_campaign_{t}.json"] for t in (a0, a0s)}
+    r_disp = "1" if u["inputs"]["r"] == "1/1" else u["inputs"]["r"]   # G-PWR (p)'s entry: "24; 1"
+    v_manifest = req["p's schedules manifest"]
+    v_r16 = req["p's renders, m's convention (sha16)"]
+    v_r256 = req["p's renders, p's convention (sha256)"]
+    v_gshape = req["G-SHAPE-p's artifact"]
+    v_ganl = req["G-ANL-p's artifact"]
+    v_driver = req["the driver (scripts/p_sessions.py)"]
+    for v in req.values():
+        if re.search(r"^BACKEND OF RECORD ", v, re.M):
+            raise SystemExit("a required value is a BACKEND line; the lock carries v0.1's one only")
+    out = [
+        f"# LOCK-p-OLMo-{ck} v1.0",
+        "",
+        f"*PROPOSAL-p's lock for its unit OLMo-{ck} before its campaign, re-issued above its v0.2 text kept verbatim "
+        f"(v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{{ckpt}} v1.0, written for p as the seat's read of "
+        f"G-F0m-OLMo (p) ×3 has it (`{SEAT[0]}`, sha256 `{SEAT[1]}`, §4.3 item 3; §0 below). Drafted by Code for the "
+        f"seat's read, on the PI's routing of 2026-11-13 (\"Route as given\") and the PI's cap share of 2026-11-14 "
+        f"(§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`{BUILD}`) and "
+        f"the re-runs of G-SHAPE-p (`{GSHAPE}`) and G-ANL-p (`{GANL}`). It licenses the campaign on OLMo-{ck}, within "
+        f"one pod session; nothing later. {A1_NEW} This file's own sha256 is named in its entry and is the "
+        f"identity_extra lock_sha256 of {unit}'s campaign checkpoint.*",
+        "",
+        "## §0. What v1.0 carries",
+        "",
+        "- The seat's §4.3 item 3, verbatim:",
+        "",
+        f"  > {item3}",
+        "",
+        f"- {A2_BULLET}",
+        f"- m:302's LOCK-m-OLMo-{{ckpt}} v1.0, verbatim: {m302_v10}",
+        "- Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the "
+        "backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value "
+        "`lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two "
+        "lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's "
+        "text, which carries v0.1's, verbatim.",
+        "",
+        "## §1. Launch counts and looks (G-PWR (p); m:192, m:285, m:330)",
+        "",
+        f"- **G-PWR (p)'s record** `{stage.GPWR_REL}`, sha256 `{sha(gpwr_bytes)}` (its run of record `3e1b614`, from "
+        f"its program `{GPWR_PROG[0]}` at `4c882e7`, sha256 `{GPWR_PROG[1]}`), for {unit}:",
+        f"  - k = {u['inputs']['k']} of {u['inputs']['n_q']}, r = {r_disp}; L {L['A0']} on {a0} and "
+        f"{L['A0s']} on {a0s}, {L['A0'] + L['A0s']} launches;",
+        f"  - {looks} looks, at {look_at} launches ({a0} {a0_at}; {a0s} {a0s_at}), the last the end look;",
+        f"  - power at the floors (80, 32): {fig(u['power']['at_floors'])};",
+        f"  - on the projection: `round_degeneracy`'s false pause {fig(pj['round_degeneracy']['false_pause'])} "
+        f"(p0 .02, α .05); the exclusion guard's pausing Fisher half "
+        f"{fig(pj['guard']['at_common_rate_p0']['fisher'])} at the common rate .20 (m:316).",
+        f"- L is \"{q_proj}\" (m:192): \"{q_launch}\".",
+        "- The line, a whole line of this lock, as the campaign wiring's precheck requires it (`campaign_lock_lines`):",
+        "",
+        "```",
+        lines_c[0],
+        "```",
+        "",
+        "## §2. The hour cap (the PI's cap share; p §4.1, §6.1; m:249)",
+        "",
+        f"- **The PI's word, verbatim** (PI date 2026-11-14, relayed by the coordinating session): **\"{PI_WORD}\"**. It "
+        f"answered the coordinating session's question \"{QUESTION}\", offered with the choices {CHOICES[0]} and "
+        f"{CHOICES[1]}. The session's closing message put the same question as: \"{CLOSING_Q}\"",
+        f"- **For {unit}: {stage.campaign_hour_cap(unit)} h.** m:249: \"{q_caps}\"; \"{q_share}\".",
+        f"- Beside it, G-PWR (p)'s planning figure at m:205's basis: ({L['A0'] + L['A0s']} + "
+        f"{hrs['of_which_gate_sessions']}) sessions × {basis} s = {hrs['hours']['display']} h. The three caps come to "
+        f"6 h, within p §6.1's budget: \"{q_budget}\".",
+        "- The line, a whole line of this lock (`campaign_lock_lines`):",
+        "",
+        "```",
+        lines_c[1],
+        "```",
+        "",
+        "## §3. D_p",
+        "",
+        f"- **2026-12-15** (p §5.3): each `LOCK-p-OLMo-{{ckpt}} v1.0` is committed by it, by p §5.3's convention (C7's). "
+        f"p §5.3: \"{q_dp}\".",
+        "",
+        "## §4. The hashes of record (m:302's list, for p; the seat's §4.3 item 3)",
+        "",
+        "| Binds | Path | sha256 |",
+        "|---|---|---|",
+        f"| PROPOSAL-p (`proposal_p_sha256`) | `{gcal.PROPOSAL_P_REL}` | `{gcal.PROPOSAL_P_SHA256}` |",
+        f"| m's proposal pin (F-p8) | `{gcal.M_PROPOSAL_REL}` | `{gcal.M_PROPOSAL_SHA256}` |",
+        f"| the preprint of record | -- | preprint of record pending (m:302: \"{q_wait}\") |",
+        f"| p's schedules' manifest | `{stage.SCHED_MANIFEST_REL}` | `{v_manifest}` |",
+        f"| the campaign schedule, {a0} | `data/p/schedules/{unit}_campaign_{a0}.json` | `{sched[a0]}` |",
+        f"| the campaign schedule, {a0s} | `data/p/schedules/{unit}_campaign_{a0s}.json` | `{sched[a0s]}` |",
+        f"| the pools (`CORR_clean`; the seat's (t1)) | `{POOLS[0]}` | `{sha(pools)}` |",
+        f"| p's renders, m's convention (sha16) | a value | `{v_r16}` |",
+        f"| p's renders, p's convention | a value | `{v_r256}` |",
+        f"| m's analyzer (git blob `{blob(stage.ANALYZER_REL)}`) | `{stage.ANALYZER_REL}` | `{req[stage.M_AN]}` |",
+        f"| p's analyzer (git blob `{blob(stage.P_ANALYZER_REL)}`) | `{stage.P_ANALYZER_REL}` | `{req[stage.P_AN]}` |",
+        f"| p's package, moved at the campaign wiring | `valence_core/p/*.py` | `{req[stage.P_PKG]}` |",
+        f"| p's driver, moved at the campaign wiring | `scripts/p_sessions.py` | "
+        f"`{v_driver}` |",
+        f"| m's package | `valence_core/m/*.py` | `{req[stage.M_PKG]}` |",
+        f"| G-PWR (p)'s record | `{stage.GPWR_REL}` | `{sha(gpwr_bytes)}` |",
+        f"| G-PWR (p)'s program | `{GPWR_PROG[0]}` | `{GPWR_PROG[1]}` |",
+        f"| G-SHAPE-p's artifact, re-run on the BUILD | `{stage.GSHAPE_REL}` | `{v_gshape}` |",
+        f"| G-ANL-p's artifact, re-run on the BUILD | `{stage.GANL_REL}` | `{v_ganl}` |",
+        "",
+        "## §5. The backend line and the box",
+        "",
+        "- **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` "
+        "(the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).",
+        f"- **The box** (the seat's §4.2): \"{q_box}\". This lock names the campaign's box by that identifier: the "
+        "replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives "
+        f"`641ee466f4553b6a`, {A3_NEW} A differing identifier STOPs the stage before it "
+        "generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).",
+        "- **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and "
+        "checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: "
+        "the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to "
+        "route.",
+        "- **The path:** uncached (m:267).",
+        "",
+        "## §6. The list of record v2",
+        "",
+        f"- Cited: `{LIST_V2[0]}`, sha256 `{LIST_V2[1]}`. Its list (items 1–9) binds every session — Code's, their "
+        "subagents', the coordinating session's — on the laptop and the box, for this unit before its VERDICTS or "
+        "NOT-RUN record (its §2), the campaign's end-waits included (item 5). v0.2 §A item 7, below, carries the "
+        "listing rule's one-line form.",
+        "",
+        "## §7. The campaign's code and monitoring",
+        "",
+        f"- **The code** is the campaign wiring's BUILD (`{BUILD}`): `scripts/p_sessions.py campaign --unit {unit} "
+        f"[--resume] [--adjudication-file A] [--pi-stop-file P]`, m's `stages.run_campaign` under register entries "
+        f"(1), (2) and (6)–(9); `campaign-report --unit {unit}` re-derives p's report once the campaign has ended. Its "
+        "PINs and departures are declared for the seat in the BUILD's entry.",
+        f"- **Monitoring** (p §6.3, verbatim): \"{q_mon}\"",
+        "- **Standing, carried:** the disclosure (F-p3's sentence; p §5.4)"
+        + (" and the SFT sentence" if ck == "sft" else "")
+        + ", in v0.1's §0, below, unchanged.",
+        "",
+        "## §8. The values of record at v1.0 (`valence_core.p.stage.lock_required` on the campaign wiring's code, with "
+        "G-PWR (p)'s record, which the precheck at `campaign` adds; v0.2's §B forms)",
+        "",
+        "### §8.1 The values the stage's precheck requires, verbatim",
+        *[f"- {what}: `{v}`" for what, v in req.items() if not v.startswith(("LICENCE", "REGISTER"))],
+        "",
+        "### §8.2 The licence (p §4.2), one line each, verbatim",
+        "",
+        "```",
+        *[v for v in req.values() if v.startswith("LICENCE")],
+        "```",
+        "",
+        "### §8.3 The register (p §4.2), one line each, verbatim",
+        "",
+        "```",
+        *[v for v in req.values() if v.startswith("REGISTER")],
+        "```",
+        "",
+        "---",
+        "",
+        "Where the v0.2 text below, or the v0.1 text it carries, differs from v1.0's values of record (§8), v1.0's are of "
+        "record.",
+        "",
+        v02.rstrip("\n"),
+        "",
+    ]
+    return "\n".join(out)
+
+
+if __name__ == "__main__":
+    OUT.mkdir(parents=True, exist_ok=True)
+    for u in stage.UNITS:
+        probs, req = stage.lock_required(u)
+        gp, gsha = stage.gpwr_problems(u)
+        probs += gp
+        if gsha:
+            req["G-PWR (p)'s record"] = gsha
+        if probs:
+            print(f"{u}: lock_required/gpwr problems: {probs}")
+            if not DRY:
+                raise SystemExit(f"{u}: refusing to draft on problems")
+        rel = stage.lock_rel(u)
+        v02 = committed(rel).decode("utf-8")
+        if not v02.startswith(f"# LOCK-p-OLMo-{gcal.unit_ckpt(u)} v0.2\n"):
+            raise SystemExit(f"{rel}: the committed text is not v0.2's")
+        text = lock_text(u, req, v02)
+        for what, s, n in (("(A1)", A1_NEW, 1), ("(A2)", f"  > {item3}\n\n- {A2_BULLET}\n- m:302's ", 1),
+                           ("(A3)", A3_NEW, 1), ("(A1)'s replaced text", A1_OLD, 0),
+                           ("(A3)'s replaced text", A3_OLD, 0)):
+            if text.count(s) != n:
+                raise SystemExit(f"{u}: {what} occurs {text.count(s)} times in the draft, not {n}")
+        missing = [w for w, v in req.items() if not stage.lock_names(text, v)]
+        bp, bid = stage.lock_backend(text)
+        cp_ = stage.campaign_lock_problems(u, text)
+        if missing or bp or cp_ or bid != "641ee466f4553b6a":
+            raise SystemExit(f"{u}: the draft would not pass the precheck: missing {missing[:3]}, backend {bp} {bid}, "
+                             f"campaign lines {cp_}")
+        p = OUT / Path(rel).name
+        p.write_text(text, encoding="utf-8")
+        print(f"drafted {p.name} ({len(text.splitlines())} lines, sha256 {sha(p.read_bytes())}); backend {bid}; "
+              f"{len(req)} values named; v0.2 below at sha256 {sha(v02.encode('utf-8'))}")
+
+## 3. The generator's run into final, the amended drafts of record: <repo>/jlens-qwen36/.venv/bin/python -I -B <tmp>/scratchpad/campwire/lock10a/gen_locks_v10.py . <tmp>/scratchpad/campwire/lock10a/final c0f1c69 f784bff 82c3c44 2026-11-14, from the repository root, at nice -n 19 (stdout and stderr; the last line is the shell's exit status)
+
+drafted LOCK-p-OLMo-sft.md (432 lines, sha256 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4); backend 641ee466f4553b6a; 57 values named; v0.2 below at sha256 3765fe22d3d548d96373d5ce20eebaad3c0558d6d6154e327db8a7946a0f2f98
+drafted LOCK-p-OLMo-dpo.md (431 lines, sha256 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf); backend 641ee466f4553b6a; 57 values named; v0.2 below at sha256 b739081f60a5c5b0d7e2cdf586691585ee50dfe335321a1b57d7887edac43c2e
+drafted LOCK-p-OLMo-instruct.md (431 lines, sha256 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67); backend 641ee466f4553b6a; 57 values named; v0.2 below at sha256 48e1c31523eb0c87b3f2fbede53a4f4a15c97565a3136678bb1c3782ecfeae52
+rc=0
+
+## 3b. The second run (the same command, final_r2 the out directory), against the first (byte equality, computed in Python by the assembler, section 8; each sha256 by hashlib over the file's bytes)
+
+The second run's stdout is identical to the first's (string equality).
+LOCK-p-OLMo-sft.md: run 2 byte-identical to the draft of record (sha256 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4; run 2 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4)
+LOCK-p-OLMo-dpo.md: run 2 byte-identical to the draft of record (sha256 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf; run 2 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf)
+LOCK-p-OLMo-instruct.md: run 2 byte-identical to the draft of record (sha256 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67; run 2 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67)
+
+## 4. The diff check (Code's scratch script), verbatim
+
+#!/usr/bin/env python3
+"""Is each amended draft exactly 012ffbe's draft with (A1)-(A3) applied? (scratch; model-free; read-only)
+
+Independent of the generator: the amendments' texts are cut from the seat's raw by the arrow and the backticks, not by
+the generator's regex; each is applied to the draft committed at 012ffbe (git show) as one exact edit, its anchor
+asserted to occur once; the result is compared with the generator's draft byte for byte. Then each draft's unified
+diff against 012ffbe's (difflib, file labels only: no times) and its sha256 are printed, for the entry.
+
+Usage: python -I -B diff_check.py <repo> <drafts_dir>"""
+from __future__ import annotations
+
+import difflib
+import hashlib
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(sys.argv[1]).resolve()
+DRAFTS = Path(sys.argv[2]).resolve()
+SEAT_A = ("results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md",
+          "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a")
+BASE = "012ffbe"
+UNITS = ("sft", "dpo", "instruct")
+
+raw = (ROOT / SEAT_A[0]).read_bytes()
+assert hashlib.sha256(raw).hexdigest() == SEAT_A[1], "the seat's raw is not at its sha256"
+lines = raw.decode("utf-8").split("\n")
+
+
+def bullet(tag: str) -> str:
+    hit = [x for x in lines if x.startswith(f"- **({tag}) ")]
+    assert len(hit) == 1, tag
+    return hit[0]
+
+
+def unquote(s: str) -> str:
+    s = s.strip()
+    assert s.startswith("`") and s.endswith("`") and s.count("`") == 2, s[:40]
+    return s[1:-1]
+
+
+a1 = bullet("A1").split("** ", 1)[1]
+a1_old, a1_new = (unquote(x) for x in a1.split(" → "))
+a2 = bullet("A2")
+a2_text = unquote(a2[a2.index(", a bullet: ") + len(", a bullet: "):])
+a3 = bullet("A3").split("** ", 1)[1]
+a3_old, a3_new = (unquote(x) for x in a3.split(" → "))
+assert a3_old.startswith("… ") and a3_new.startswith("… ")
+a3_old, a3_new = a3_old[2:], a3_new[2:]
+
+bad = 0
+for ck in UNITS:
+    rel_old = f"results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-{ck}.md"
+    old = subprocess.run(["git", "-C", str(ROOT), "show", f"{BASE}:{rel_old}"], check=True,
+                         capture_output=True).stdout.decode("utf-8")
+    new_b = (DRAFTS / f"LOCK-p-OLMo-{ck}.md").read_bytes()
+    new = new_b.decode("utf-8")
+    exp = old
+    assert exp.count(a1_old) == 1, (ck, "A1")
+    exp = exp.replace(a1_old, a1_new)
+    q = [x for x in exp.split("\n") if x.startswith("  > 3. **LOCK-p v1.0 ×3** by D_p")]
+    assert len(q) == 1, (ck, "A2 anchor")
+    anchor = q[0] + "\n\n"
+    assert exp.count(anchor) == 1, (ck, "A2 anchor once")
+    exp = exp.replace(anchor, anchor + "- " + a2_text + "\n")
+    assert exp.count(a3_old) == 1, (ck, "A3")
+    exp = exp.replace(a3_old, a3_new)
+    same = exp.encode("utf-8") == new_b
+    bad += not same
+    old_sha = hashlib.sha256(old.encode("utf-8")).hexdigest()
+    new_sha = hashlib.sha256(new_b).hexdigest()
+    print(f"OLMo-{ck}: 012ffbe's draft sha256 {old_sha}; amended draft sha256 {new_sha}; "
+          f"equal to 012ffbe's draft with (A1)-(A3) applied: {same}")
+    d = list(difflib.unified_diff(old.splitlines(keepends=True), new.splitlines(keepends=True),
+                                  fromfile=f"{BASE}:{rel_old}", tofile=f"LOCK-p-OLMo-{ck}.md"))
+    hunks = [x for x in d if x.startswith("@@")]
+    plus = [x for x in d if x.startswith("+") and not x.startswith("+++")]
+    minus = [x for x in d if x.startswith("-") and not x.startswith("---")]
+    print(f"OLMo-{ck}: {len(hunks)} hunks, {len(minus)} lines removed, {len(plus)} lines added")
+    sys.stdout.write("".join(d))
+    print()
+print("ALL EXACT" if bad == 0 else f"{bad} draft(s) not exact")
+sys.exit(1 if bad else 0)
+
+## 5. The diff check's run over the amended drafts of record: <repo>/jlens-qwen36/.venv/bin/python -I -B <tmp>/scratchpad/campwire/lock10a/diff_check.py . <tmp>/scratchpad/campwire/lock10a/final, from the repository root, at nice -n 19 (stdout and stderr; the last line is the shell's exit status)
+
+OLMo-sft: 012ffbe's draft sha256 968c4abd85c4676569cd6596b488a031e7754943dde0c99050e5f7c0e2bcd427; amended draft sha256 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4; equal to 012ffbe's draft with (A1)-(A3) applied: True
+OLMo-sft: 3 hunks, 2 lines removed, 3 lines added
+--- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-sft.md
++++ LOCK-p-OLMo-sft.md
+@@ -1,6 +1,6 @@
+ # LOCK-p-OLMo-sft v1.0
+ 
+-*PROPOSAL-p's lock for its unit OLMo-sft before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-sft, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before the PI commits it, by path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-sft's campaign checkpoint.*
++*PROPOSAL-p's lock for its unit OLMo-sft before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-sft, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before Code commits it by path on the PI's routing, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-sft's campaign checkpoint.*
+ 
+ ## §0. What v1.0 carries
+ 
+@@ -8,6 +8,7 @@
+ 
+   > 3. **LOCK-p v1.0 ×3** by D_p (2026-12-15; p §5.3): m:302's v1.0 contents — launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record pending" — one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. **The seat reads each v1.0 before the PI commits it.**
+ 
++- The quoted sentence's "before the PI commits it" is the seat's slip, ledger (68) (the seat's answers of 2026-11-14, §C): Code commits by path on the PI's routing; the PI commits nothing. The quote stands as the record's text.
+ - m:302's LOCK-m-OLMo-{ckpt} v1.0, verbatim: **LOCK-m-OLMo-{ckpt} v1.0** (launch counts; D_O; hashes of this document, schedules, pools, renders, analyzer; **the preprint of record's hash if it is placed, else "preprint of record pending" — an OLMo lock does not wait for the placement**)
+ - Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value `lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's text, which carries v0.1's, verbatim.
+ 
+@@ -66,7 +67,7 @@
+ ## §5. The backend line and the box
+ 
+ - **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` (the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).
+-- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its read). A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
++- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note in RESULTS.md on this lock's v1.0 entry, naming the pod id, the identifier, the respawn raws (i) and (ii) and this file's path and sha256 (the seat's answers of 2026-11-14, §B.3). This file is not edited after its commit: its sha256 is the campaign checkpoint's lock_sha256. A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+ - **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to route.
+ - **The path:** uncached (m:267).
+ 
+
+OLMo-dpo: 012ffbe's draft sha256 f2a6960f38e96c651ccf23d11aba3bb02354cdad4b57ef2745d934525747a28b; amended draft sha256 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf; equal to 012ffbe's draft with (A1)-(A3) applied: True
+OLMo-dpo: 3 hunks, 2 lines removed, 3 lines added
+--- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-dpo.md
++++ LOCK-p-OLMo-dpo.md
+@@ -1,6 +1,6 @@
+ # LOCK-p-OLMo-dpo v1.0
+ 
+-*PROPOSAL-p's lock for its unit OLMo-dpo before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-dpo, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before the PI commits it, by path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-dpo's campaign checkpoint.*
++*PROPOSAL-p's lock for its unit OLMo-dpo before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-dpo, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before Code commits it by path on the PI's routing, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-dpo's campaign checkpoint.*
+ 
+ ## §0. What v1.0 carries
+ 
+@@ -8,6 +8,7 @@
+ 
+   > 3. **LOCK-p v1.0 ×3** by D_p (2026-12-15; p §5.3): m:302's v1.0 contents — launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record pending" — one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. **The seat reads each v1.0 before the PI commits it.**
+ 
++- The quoted sentence's "before the PI commits it" is the seat's slip, ledger (68) (the seat's answers of 2026-11-14, §C): Code commits by path on the PI's routing; the PI commits nothing. The quote stands as the record's text.
+ - m:302's LOCK-m-OLMo-{ckpt} v1.0, verbatim: **LOCK-m-OLMo-{ckpt} v1.0** (launch counts; D_O; hashes of this document, schedules, pools, renders, analyzer; **the preprint of record's hash if it is placed, else "preprint of record pending" — an OLMo lock does not wait for the placement**)
+ - Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value `lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's text, which carries v0.1's, verbatim.
+ 
+@@ -66,7 +67,7 @@
+ ## §5. The backend line and the box
+ 
+ - **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` (the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).
+-- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its read). A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
++- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note in RESULTS.md on this lock's v1.0 entry, naming the pod id, the identifier, the respawn raws (i) and (ii) and this file's path and sha256 (the seat's answers of 2026-11-14, §B.3). This file is not edited after its commit: its sha256 is the campaign checkpoint's lock_sha256. A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+ - **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to route.
+ - **The path:** uncached (m:267).
+ 
+
+OLMo-instruct: 012ffbe's draft sha256 6da557e5e238fa9159697b72081c1b1800c6018f62c8158f27e8677be3237fad; amended draft sha256 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67; equal to 012ffbe's draft with (A1)-(A3) applied: True
+OLMo-instruct: 3 hunks, 2 lines removed, 3 lines added
+--- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-instruct.md
++++ LOCK-p-OLMo-instruct.md
+@@ -1,6 +1,6 @@
+ # LOCK-p-OLMo-instruct v1.0
+ 
+-*PROPOSAL-p's lock for its unit OLMo-instruct before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-instruct, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before the PI commits it, by path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-instruct's campaign checkpoint.*
++*PROPOSAL-p's lock for its unit OLMo-instruct before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-instruct, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before Code commits it by path on the PI's routing, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-instruct's campaign checkpoint.*
+ 
+ ## §0. What v1.0 carries
+ 
+@@ -8,6 +8,7 @@
+ 
+   > 3. **LOCK-p v1.0 ×3** by D_p (2026-12-15; p §5.3): m:302's v1.0 contents — launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record pending" — one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. **The seat reads each v1.0 before the PI commits it.**
+ 
++- The quoted sentence's "before the PI commits it" is the seat's slip, ledger (68) (the seat's answers of 2026-11-14, §C): Code commits by path on the PI's routing; the PI commits nothing. The quote stands as the record's text.
+ - m:302's LOCK-m-OLMo-{ckpt} v1.0, verbatim: **LOCK-m-OLMo-{ckpt} v1.0** (launch counts; D_O; hashes of this document, schedules, pools, renders, analyzer; **the preprint of record's hash if it is placed, else "preprint of record pending" — an OLMo lock does not wait for the placement**)
+ - Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value `lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's text, which carries v0.1's, verbatim.
+ 
+@@ -66,7 +67,7 @@
+ ## §5. The backend line and the box
+ 
+ - **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` (the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).
+-- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its read). A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
++- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note in RESULTS.md on this lock's v1.0 entry, naming the pod id, the identifier, the respawn raws (i) and (ii) and this file's path and sha256 (the seat's answers of 2026-11-14, §B.3). This file is not edited after its commit: its sha256 is the campaign checkpoint's lock_sha256. A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+ - **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to route.
+ - **The path:** uncached (m:267).
+ 
+
+ALL EXACT
+rc=0
+
+## 6. The dry precheck (Code's scratch script), verbatim: byte-identical to 012ffbe's raw's section 3 (after scrubbing)
+
+#!/usr/bin/env python3
+"""The precheck at ``campaign`` over each LOCK-p v1.0 draft, as if the draft were the committed lock (scratch;
+model-free; read-only). m_stages._committed is stood in for the lock's path alone -- it returns the draft's bytes --
+and the pod id is a stand-in, since the precheck refuses without one (the box's own runs carry the real one). Nothing
+is loaded, generated or written; every other check reads the committed tree as the box's precheck will.
+
+Usage: python -I -B dry_precheck.py <repo> <drafts_dir>"""
+from __future__ import annotations
+
+import hashlib
+import os
+import sys
+from pathlib import Path
+from unittest import mock
+
+ROOT = Path(sys.argv[1]).resolve()
+DRAFTS = Path(sys.argv[2]).resolve()
+sys.path.insert(0, str(ROOT))
+from valence_core.m import resume as m_resume  # noqa: E402
+from valence_core.m import stages as m_stages  # noqa: E402
+from valence_core.p import stage  # noqa: E402
+
+real = m_stages._committed
+bad = 0
+for u in stage.UNITS:
+    rel = stage.lock_rel(u)
+    draft = (DRAFTS / Path(rel).name).read_bytes()
+
+    def committed(r, *a, _rel=rel, _d=draft, **kw):
+        return ([], _d) if r == _rel else real(r, *a, **kw)
+    with mock.patch.object(m_stages, "_committed", committed), \
+            mock.patch.dict(os.environ, {m_resume.POD_ENV: "dry-precheck-stand-in"}):
+        try:
+            pre = stage.precheck(u, stub=False, gate="campaign")
+            ok = pre["lock_bytes"] == draft and pre["backend_of_record"] == "641ee466f4553b6a"
+            gpwr16 = pre["lock_required"].get("G-PWR (p)'s record", "")[:16]
+            print(f"{u}: CLEAR at campaign over the draft (sha256 {hashlib.sha256(draft).hexdigest()}); lock_sha256 "
+                  f"{pre['identity_extra'].get('lock_sha256')}; backend {pre['backend_of_record']}; "
+                  f"{len(pre['lock_required'])} values required; G-PWR (p)'s record {gpwr16}...; {ok}")
+            bad += not ok
+        except SystemExit as e:
+            print(f"{u}: REFUSED: {e}")
+            bad += 1
+print("ALL CLEAR" if bad == 0 else f"{bad} unit(s) not clear")
+sys.exit(1 if bad else 0)
+
+## 7. The dry precheck's run over the amended drafts of record: <repo>/jlens-qwen36/.venv/bin/python -I -B <tmp>/scratchpad/campwire/lock10a/dry_precheck.py . <tmp>/scratchpad/campwire/lock10a/final, from the repository root, at nice -n 19 (stdout and stderr; the last line is the shell's exit status)
+
+OLMo-sft: CLEAR at campaign over the draft (sha256 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4); lock_sha256 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4; backend 641ee466f4553b6a; 57 values required; G-PWR (p)'s record bc2b090966654af1...; True
+OLMo-dpo: CLEAR at campaign over the draft (sha256 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf); lock_sha256 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf; backend 641ee466f4553b6a; 57 values required; G-PWR (p)'s record bc2b090966654af1...; True
+OLMo-instruct: CLEAR at campaign over the draft (sha256 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67); lock_sha256 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67; backend 641ee466f4553b6a; 57 values required; G-PWR (p)'s record bc2b090966654af1...; True
+ALL CLEAR
+rc=0
+
+## 8. The assembler (Code's scratch script), verbatim: it ran sections 3-7 from the repository root and wrote this raw
+
+#!/usr/bin/env python3
+"""Assemble the amended drafts' check raw (scratch): run the generator twice, the diff check and the dry precheck from
+the repository root at nice -n 19, and write each script verbatim with each run's output, local paths scrubbed.
+
+Usage: python -I -B assemble_check.py <repo> <out_raw>"""
+from __future__ import annotations
+
+import difflib
+import hashlib
+import subprocess
+import sys
+from pathlib import Path
+
+REPO = Path(sys.argv[1]).resolve()
+OUT = Path(sys.argv[2]).resolve()
+HERE = Path(__file__).resolve().parent
+TMP = HERE.parents[2]                      # the session's scratch root's parent: <tmp>
+PY = REPO / "jlens-qwen36/.venv/bin/python"
+OLD_RAW = "results/raw/2026-11-14_p-lock-v1.0-drafts_check.txt"
+SEAT_A = ("results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md",
+          "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a")
+
+
+def scrub(s: str) -> str:
+    return s.replace(str(TMP), "<tmp>").replace(str(REPO), "<repo>")
+
+
+def run(args: list[str]) -> tuple[str, str]:
+    cmd = ["nice", "-n", "19", str(PY), "-I", "-B", *args]
+    p = subprocess.run(cmd, cwd=REPO, capture_output=True, text=True)
+    shown = " ".join([str(PY), "-I", "-B", *args])
+    return scrub(shown), scrub(p.stdout + p.stderr) + f"rc={p.returncode}\n"
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+head = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--short=7", "HEAD"], capture_output=True, text=True,
+                      check=True).stdout.strip()
+gen, dchk, dry = HERE / "gen_locks_v10.py", HERE / "diff_check.py", HERE / "dry_precheck.py"
+final, final_r2 = HERE / "final", HERE / "final_r2"
+args_gen = [str(gen), ".", str(final), "c0f1c69", "f784bff", "82c3c44", "2026-11-14"]
+args_gen2 = [str(gen), ".", str(final_r2), "c0f1c69", "f784bff", "82c3c44", "2026-11-14"]
+c1, o1 = run(args_gen)
+c2, o2 = run(args_gen2)
+cd, od = run([str(dchk), ".", str(final)])
+cp, op = run([str(dry), ".", str(final)])
+
+# 012ffbe's raw: its section 1 (the generator) and section 3 (the dry precheck), for the comparison
+old = subprocess.run(["git", "-C", str(REPO), "show", f"012ffbe:{OLD_RAW}"], capture_output=True, text=True,
+                     check=True).stdout
+
+
+def section(text: str, start: str, end: str) -> str:
+    a = text.index(start)
+    a = text.index("\n\n", a) + 2
+    b = text.index(end, a)
+    return text[a:b].rstrip("\n") + "\n"
+
+
+old_gen = section(old, "## 1. ", "## 2. ")
+old_dry = section(old, "## 3. ", "## 4. ")
+orig_gen = scrub((HERE.parent / "lock10" / "gen_locks_v10.py").read_text(encoding="utf-8"))
+assert orig_gen == old_gen, "lock10's generator is not 012ffbe's raw's section 1"
+new_gen = scrub(gen.read_text(encoding="utf-8"))
+dry_src = scrub(dry.read_text(encoding="utf-8"))
+dry_same = dry_src == old_dry
+gdiff = "".join(difflib.unified_diff(old_gen.splitlines(keepends=True), new_gen.splitlines(keepends=True),
+                                     fromfile=f"012ffbe:{OLD_RAW} section 1 (the generator of the drafts)",
+                                     tofile="the amended generator (section 2)"))
+
+lines_cmp = ["The second run's stdout is identical to the first's (string equality)." if o1 == o2 else
+             "The second run's stdout DIFFERS from the first's."]
+for u in ("sft", "dpo", "instruct"):
+    n = f"LOCK-p-OLMo-{u}.md"
+    a, b = final / n, final_r2 / n
+    same = a.read_bytes() == b.read_bytes()
+    lines_cmp.append(f"{n}: run 2 {'byte-identical to' if same else 'DIFFERS from'} the draft of record "
+                     f"(sha256 {sha(a)}; run 2 {sha(b)})")
+
+hdr = f"""# LOCK-p v1.0 x3 -- the amended drafts: the seat's (A1)-(A3) applied, each draft's diff against 012ffbe's, and the dry precheck (Code's raw, PI date 2026-11-14)
+#
+# On the seat's answers of 2026-11-14 ({SEAT_A[0]}, sha256 {SEAT_A[1]}), §B.2 and §B.5, routed by the PI ("Route as given", relayed by the coordinating session).
+# Model-free and read-only: nothing ran on a model or the box, and nothing was written in the repository. At HEAD {head}, with the code of record committed
+# and unedited. The amended drafts of record are the generator's output in <tmp>/scratchpad/campwire/lock10a/final; a second run, into final_r2, is
+# byte-identical (section 3b). The generator is the one verbatim in 012ffbe's {OLD_RAW} (its section 1), amended at the three template sites and in its
+# docstring alone, plus the reading of the seat's raw and the assertions (section 1). Sections 3-7 were run, and this raw written,
+# by Code's assembler (section 8). Local absolute paths scrubbed (<repo>, <tmp>); nothing else changed.
+"""
+parts = [
+    hdr,
+    "## 1. The generator's amendment: a unified diff of the amended generator against the generator verbatim in 012ffbe's "
+    f"{OLD_RAW} (its section 1, byte-identical to the scratch script it was run from, after scrubbing)\n",
+    gdiff.rstrip("\n") + "\n",
+    "## 2. The amended generator (Code's scratch script), verbatim\n",
+    new_gen.rstrip("\n") + "\n",
+    f"## 3. The generator's run into final, the amended drafts of record: {c1}, from the repository root, at nice -n 19 "
+    "(stdout and stderr; the last line is the shell's exit status)\n",
+    o1,
+    "## 3b. The second run (the same command, final_r2 the out directory), against the first (byte equality, computed "
+    "in Python by the assembler, section 8; each sha256 by hashlib over the file's bytes)\n",
+    "\n".join(lines_cmp) + "\n",
+    "## 4. The diff check (Code's scratch script), verbatim\n",
+    scrub(dchk.read_text(encoding="utf-8")).rstrip("\n") + "\n",
+    f"## 5. The diff check's run over the amended drafts of record: {cd}, from the repository root, at nice -n 19 "
+    "(stdout and stderr; the last line is the shell's exit status)\n",
+    od,
+    "## 6. The dry precheck (Code's scratch script), verbatim: "
+    + ("byte-identical to 012ffbe's raw's section 3 (after scrubbing)\n" if dry_same
+       else "DIFFERS from 012ffbe's raw's section 3\n"),
+    dry_src.rstrip("\n") + "\n",
+    f"## 7. The dry precheck's run over the amended drafts of record: {cp}, from the repository root, at nice -n 19 "
+    "(stdout and stderr; the last line is the shell's exit status)\n",
+    op,
+    "## 8. The assembler (Code's scratch script), verbatim: it ran sections 3-7 from the repository root and wrote this raw\n",
+    scrub(Path(__file__).read_text(encoding="utf-8")).rstrip("\n") + "\n",
+]
+OUT.write_text("\n".join(parts), encoding="utf-8")
+print(f"wrote {OUT.name}: HEAD {head}; gen rc lines {o1.splitlines()[-1]} {o2.splitlines()[-1]}; diff check "
+      f"{od.splitlines()[-2]} {od.splitlines()[-1]}; dry {op.splitlines()[-2]} {op.splitlines()[-1]}; dry script same "
+      f"as 012ffbe's: {dry_same}")

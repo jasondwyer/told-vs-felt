@@ -21,6 +21,183 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0: `012ffbe`'s drafts with the seat's amendments (A1)–(A3),
+  committed as raws, each diff exactly (A1)–(A3); their placement as the locks held by the PI until the seat answers
+  item 7 (Code's block, this commit). STOP for the seat's read of item 7.** On the seat's answers of 2026-11-14, §B.2,
+  §B.4 and §B.5. `LOCK-p-OLMo-{ckpt}.md` stay at v0.2. Nothing ran on a model or the box.
+  - **The PI's words,** in chat, each relayed by the coordinating session (PI date 2026-11-14) and recorded in its
+    `WORKFLOW.md v1.0 — COMMITTED` entry (`dd0bb89`):
+    - To its question "Route the seat's answers as given?": "Route as given". The seat's routing block, item 6, so
+      adopted, verbatim:
+
+      > 6. LOCK-p v1.0 ×3 adopted with amendments (A1)–(A3); the generator and dry precheck re-run; the entry prints each diff and new sha256; no second STOP if the diff is exactly (A1)–(A3) [go]; then each placed byte for byte as `LOCK-p-OLMo-{ckpt}.md` and committed by path, now [go].
+
+    - Then, after Code's finding on item 7 (below), to its question "Hold the three LOCK-p commits until the seat
+      answers item 7?": "Hold the locks". Item 6's last step, the placement and its commit, waits.
+  - **The seat's answers,**
+    [`2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`](results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md)
+    (sha256 `6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a`), were committed by path by the F3
+    session at `cdccc66`. This commit adds the close lines on `012ffbe`'s entry and on the campaign wiring's
+    (`c0f1c69`), below (the routing block's item 9).
+  - **The amended drafts,** committed as raws and not placed (Code's form, within the relay of the PI's hold). §B.5
+    owes no second read of them; this commit's STOP is for item 7. Each is byte-identical to the
+    `LOCK-p-OLMo-{ckpt}.md` it would become, above v0.2's text kept verbatim:
+    - sft: [`_p-lock-v1.0-draft-amended_OLMo-sft`](results/raw/2026-11-14_p-lock-v1.0-draft-amended_OLMo-sft.md),
+      sha256 `fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4`;
+    - dpo: [`_p-lock-v1.0-draft-amended_OLMo-dpo`](results/raw/2026-11-14_p-lock-v1.0-draft-amended_OLMo-dpo.md),
+      sha256 `25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf`;
+    - instruct:
+      [`_p-lock-v1.0-draft-amended_OLMo-instruct`](results/raw/2026-11-14_p-lock-v1.0-draft-amended_OLMo-instruct.md),
+      sha256 `f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67`.
+
+    Placed, each sha256 is the `lock_sha256` its unit's campaign checkpoint would record.
+  - **The amendments** (§B.2), common to the three, as the seat wrote them; "Nothing else moves.":
+    - (A1), the header's committer sentence, now: "the seat reads it before Code commits it by path on the PI's
+      routing, by D_p (§3)".
+    - (A2), §0: a bullet after the verbatim quote of the seat's §4.3 item 3, beginning "The quoted sentence's "before
+      the PI commits it" is the seat's slip, ledger (68)".
+    - (A3), §5's box sentence: the dated note is now "in RESULTS.md on this lock's v1.0 entry, naming the pod id, the
+      identifier, the respawn raws (i) and (ii) and this file's path and sha256", and "This file is not edited after
+      its commit: its sha256 is the campaign checkpoint's lock_sha256."
+  - **Each diff** against `012ffbe`'s draft: unified, three lines of context, file labels and no times (Python's
+    `difflib`, as the check raw's section 5 prints it). Each has three hunks: two lines replaced, one inserted.
+    - OLMo-sft (`968c4abd…d427` → `fafb786d…2bc4`):
+
+      ```diff
+      --- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-sft.md
+      +++ LOCK-p-OLMo-sft.md
+      @@ -1,6 +1,6 @@
+       # LOCK-p-OLMo-sft v1.0
+       
+      -*PROPOSAL-p's lock for its unit OLMo-sft before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-sft, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before the PI commits it, by path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-sft's campaign checkpoint.*
+      +*PROPOSAL-p's lock for its unit OLMo-sft before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-sft, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before Code commits it by path on the PI's routing, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-sft's campaign checkpoint.*
+       
+       ## §0. What v1.0 carries
+       
+      @@ -8,6 +8,7 @@
+       
+         > 3. **LOCK-p v1.0 ×3** by D_p (2026-12-15; p §5.3): m:302's v1.0 contents — launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record pending" — one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. **The seat reads each v1.0 before the PI commits it.**
+       
+      +- The quoted sentence's "before the PI commits it" is the seat's slip, ledger (68) (the seat's answers of 2026-11-14, §C): Code commits by path on the PI's routing; the PI commits nothing. The quote stands as the record's text.
+       - m:302's LOCK-m-OLMo-{ckpt} v1.0, verbatim: **LOCK-m-OLMo-{ckpt} v1.0** (launch counts; D_O; hashes of this document, schedules, pools, renders, analyzer; **the preprint of record's hash if it is placed, else "preprint of record pending" — an OLMo lock does not wait for the placement**)
+       - Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value `lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's text, which carries v0.1's, verbatim.
+       
+      @@ -66,7 +67,7 @@
+       ## §5. The backend line and the box
+       
+       - **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` (the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).
+      -- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its read). A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+      +- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note in RESULTS.md on this lock's v1.0 entry, naming the pod id, the identifier, the respawn raws (i) and (ii) and this file's path and sha256 (the seat's answers of 2026-11-14, §B.3). This file is not edited after its commit: its sha256 is the campaign checkpoint's lock_sha256. A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+       - **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to route.
+       - **The path:** uncached (m:267).
+       
+      ```
+
+    - OLMo-dpo (`f2a6960f…a28b` → `25c52f56…3dcf`):
+
+      ```diff
+      --- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-dpo.md
+      +++ LOCK-p-OLMo-dpo.md
+      @@ -1,6 +1,6 @@
+       # LOCK-p-OLMo-dpo v1.0
+       
+      -*PROPOSAL-p's lock for its unit OLMo-dpo before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-dpo, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before the PI commits it, by path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-dpo's campaign checkpoint.*
+      +*PROPOSAL-p's lock for its unit OLMo-dpo before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-dpo, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before Code commits it by path on the PI's routing, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-dpo's campaign checkpoint.*
+       
+       ## §0. What v1.0 carries
+       
+      @@ -8,6 +8,7 @@
+       
+         > 3. **LOCK-p v1.0 ×3** by D_p (2026-12-15; p §5.3): m:302's v1.0 contents — launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record pending" — one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. **The seat reads each v1.0 before the PI commits it.**
+       
+      +- The quoted sentence's "before the PI commits it" is the seat's slip, ledger (68) (the seat's answers of 2026-11-14, §C): Code commits by path on the PI's routing; the PI commits nothing. The quote stands as the record's text.
+       - m:302's LOCK-m-OLMo-{ckpt} v1.0, verbatim: **LOCK-m-OLMo-{ckpt} v1.0** (launch counts; D_O; hashes of this document, schedules, pools, renders, analyzer; **the preprint of record's hash if it is placed, else "preprint of record pending" — an OLMo lock does not wait for the placement**)
+       - Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value `lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's text, which carries v0.1's, verbatim.
+       
+      @@ -66,7 +67,7 @@
+       ## §5. The backend line and the box
+       
+       - **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` (the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).
+      -- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its read). A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+      +- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note in RESULTS.md on this lock's v1.0 entry, naming the pod id, the identifier, the respawn raws (i) and (ii) and this file's path and sha256 (the seat's answers of 2026-11-14, §B.3). This file is not edited after its commit: its sha256 is the campaign checkpoint's lock_sha256. A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+       - **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to route.
+       - **The path:** uncached (m:267).
+       
+      ```
+
+    - OLMo-instruct (`6da557e5…7fad` → `f71c97c1…0e67`):
+
+      ```diff
+      --- 012ffbe:results/raw/2026-11-14_p-lock-v1.0-draft_OLMo-instruct.md
+      +++ LOCK-p-OLMo-instruct.md
+      @@ -1,6 +1,6 @@
+       # LOCK-p-OLMo-instruct v1.0
+       
+      -*PROPOSAL-p's lock for its unit OLMo-instruct before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-instruct, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before the PI commits it, by path, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-instruct's campaign checkpoint.*
+      +*PROPOSAL-p's lock for its unit OLMo-instruct before its campaign, re-issued above its v0.2 text kept verbatim (v0.2's text carries v0.1's): m:302's LOCK-m-OLMo-{ckpt} v1.0, written for p as the seat's read of G-F0m-OLMo (p) ×3 has it (`results/raw/2026-11-12_p-qual_design-to-code_answers.md`, sha256 `a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112`, §4.3 item 3; §0 below). Drafted by Code for the seat's read, on the PI's routing of 2026-11-13 ("Route as given") and the PI's cap share of 2026-11-14 (§2), each relayed by the coordinating session; on the code of the campaign wiring's BUILD (`c0f1c69`) and the re-runs of G-SHAPE-p (`f784bff`) and G-ANL-p (`82c3c44`). It licenses the campaign on OLMo-instruct, within one pod session; nothing later. Version v1.0, drafted 2026-11-14; the seat reads it before Code commits it by path on the PI's routing, by D_p (§3). This file's own sha256 is named in its entry and is the identity_extra lock_sha256 of OLMo-instruct's campaign checkpoint.*
+       
+       ## §0. What v1.0 carries
+       
+      @@ -8,6 +8,7 @@
+       
+         > 3. **LOCK-p v1.0 ×3** by D_p (2026-12-15; p §5.3): m:302's v1.0 contents — launch counts and looks from G-PWR, the cap share, D_p, the hashes of PROPOSAL-p, the schedules, the pools, the renders, both analyzers' blobs (p §4.4), p's moved package and driver, "preprint of record pending" — one BACKEND line, the list of record v2 cited, v0.2's and v0.1's text verbatim below. **The seat reads each v1.0 before the PI commits it.**
+       
+      +- The quoted sentence's "before the PI commits it" is the seat's slip, ledger (68) (the seat's answers of 2026-11-14, §C): Code commits by path on the PI's routing; the PI commits nothing. The quote stands as the record's text.
+       - m:302's LOCK-m-OLMo-{ckpt} v1.0, verbatim: **LOCK-m-OLMo-{ckpt} v1.0** (launch counts; D_O; hashes of this document, schedules, pools, renders, analyzer; **the preprint of record's hash if it is placed, else "preprint of record pending" — an OLMo lock does not wait for the placement**)
+       - Here, for p: §1 the launch counts and looks; §2 the cap share; §3 D_p; §4 the hashes of record; §5 the backend line and the box; §6 the list of record v2; §7 the campaign's code and monitoring; §8 every value `lock_required` lists, with G-PWR (p)'s record, which the precheck at `campaign` adds (the campaign's two lines, which the precheck also requires, are in §1 and §2; its one BACKEND line is v0.1's); then v0.2's text, which carries v0.1's, verbatim.
+       
+      @@ -66,7 +67,7 @@
+       ## §5. The backend line and the box
+       
+       - **The one backend line** is v0.1's, below, unchanged; this v1.0 adds none. Its identifier is `641ee466f4553b6a` (the `BACKEND — characterization` entry of 2026-11-06, `190ba90`).
+      -- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note at this lock (Code's reading of the seat's sentence, for its read). A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+      +- **The box** (the seat's §4.2): "the new BACKEND entry is recorded by a dated note at each lock, no re-issue, and v1.0 names that box as the campaign's". This lock names the campaign's box by that identifier: the replacement box of the spec of record (the seat's §4.3 item 4), whose `BACKEND — characterization` gives `641ee466f4553b6a`, recorded by a dated note in RESULTS.md on this lock's v1.0 entry, naming the pod id, the identifier, the respawn raws (i) and (ii) and this file's path and sha256 (the seat's answers of 2026-11-14, §B.3). This file is not edited after its commit: its sha256 is the campaign checkpoint's lock_sha256. A differing identifier STOPs the stage before it generates, and the seat rules (the backend PIN in `valence_core/p/stage.py`; m:302's superseding-entry clause).
+       - **One pod session** (m:302; rule 27): the campaign runs within one pod session, and its raw outputs and checkpoints are committed before the pod stops. A box change mid-campaign has no restart route in this build: the campaign wiring's PIN, declared for the seat at its BUILD; m:302's restart on the new box is the seat's to route.
+       - **The path:** uncached (m:267).
+       
+      ```
+  - **Checks.** Raw: [`_p-lock-v1.0-amended_check`](results/raw/2026-11-14_p-lock-v1.0-amended_check.txt). It holds
+    the generator, the diff check, the dry precheck and the assembler that ran them, each verbatim, with each first
+    run's output and the second run's comparison.
+    - The generator is the one verbatim in `012ffbe`'s check raw, amended at its three template sites and in its
+      docstring. It reads the amendments' texts from the seat's raw at its sha256, and asserts in each draft each
+      amendment once and each replaced text nowhere. A second run gives the same bytes.
+    - The diff check is independent of the generator. It cuts (A1)–(A3) from the seat's raw, applies them to each
+      `012ffbe` draft as exact edits, and compares: each result equals the amended draft byte for byte (ALL EXACT).
+    - The dry precheck ran the real non-stub precheck at `campaign`, each draft standing in for the committed lock,
+      with a stand-in pod id: CLEAR ×3, each draft's sha256 its `lock_sha256`, backend `641ee466f4553b6a`, 57 values
+      required.
+    - The check raw's runs are at HEAD `dd0bb89`; the first values-check's re-runs at `cdccc66` gave the same
+      bytes.
+  - **Blind values-checks:**
+    - of the diff and the check raw: 34 claims, 32 CONFIRMED, 1 IMPRECISE (applied), 0 FAIL, 1 NOT CHECKABLE (the runs'
+      process priority). In all three drafts the diff is exactly (A1)–(A3), verbatim, at §B.2's sites. Its observation
+      on the generator's docstring was applied too, and the check raw regenerated; checked by tool, every run's output
+      and every draft is unchanged. Raw:
+      [`_p-lock-v1.0-amended_valuescheck`](results/raw/2026-11-14_p-lock-v1.0-amended_valuescheck.md);
+    - of this entry, the two close lines and the block: 74 claims, 61 CONFIRMED, 9 IMPRECISE (applied), 0 FAIL, 4 NOT
+      CHECKABLE (Code's conduct and this commit's own acts). Seven of its eight observations were applied as well,
+      among them that (d) does not show that p's comparison ran; the eighth, on the seat's own wording, is recorded in
+      the raw. The additions after the check were checked by tool. Raw:
+      [`_p-lock-v1.0-held_valuescheck`](results/raw/2026-11-14_p-lock-v1.0-held_valuescheck.md).
+  - **Item 7: a finding, for the seat** (§B.4 item 7; the routing block's item 8).
+    - The ruling places the backend comparison's line "in the precheck ×3 raw at `campaign`". As built, the precheck
+      runs before the load. Of the backend it reads only the lock's `BACKEND OF RECORD` line
+      (`valence_core/p/stage.py:615`, `:639`); it never sees the adapter's identifier. The comparison runs after the
+      load, in each recorded run (`:1352–1357`), and prints nothing when the identifiers are equal. So that raw has no
+      such line to print.
+    - Code's block [`_p-backend-line_code-to-design`](results/raw/2026-11-14_p-backend-line_code-to-design.md) sets out
+      four readings, (a)–(d), with what each prints and what each moves. Only (c) moves p's code, and with it p's
+      package hash, which each draft names. Q1 asks which form. Code adjudicates none.
+  - **Next:** the seat's answer to Q1, then the PI's routing.
+    - Under (a), (b) or (d): on the PI's word, each amended draft placed byte for byte as `LOCK-p-OLMo-{ckpt}.md` and
+      committed by path, with its v1.0 entry naming its sha256. That is at once (§B.5: "now, not at the date"), and
+      D_p (2026-12-15) at the latest.
+    - Under (c): the BUILD, both re-runs and new drafts, for the seat's read.
+    - Under another form: as the seat rules it.
+    - Then the replacement pod, on the PI's go (the routing block's item 10).
+  - Not pushed. Committed by path.
+
 - 2026-11-14 — **WORKFLOW.md v1.0 — COMMITTED** (the coordinating session; the seat's answers of 2026-11-14, §C and
   §D item 11, routed by the PI as given).
   - **The file.** [`WORKFLOW.md`](WORKFLOW.md) v1.0 at root, sha256
@@ -127,6 +304,33 @@ applied to CLAUDE.md.
     the corrected generator give the drafts of record byte for byte. Raw:
     [`_p-lock-v1.0_block_valuescheck`](results/raw/2026-11-14_p-lock-v1.0_block_valuescheck.md).
   - Not pushed. Committed by path.
+  - **Close (PI date 2026-11-14).** The seat's answers of 2026-11-14,
+    [`2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`](results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md)
+    (sha256 `6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a`, committed by path by the F3 session at
+    `cdccc66`), answer this entry's block. §0, in the seat's words: "LOCK-p v1.0 ×3: adopted with three amendments common
+    to the three".
+    - Q1 (§B.2): each draft is adopted with (A1), the header's committer sentence; (A2), a bullet after §0's quote;
+      and (A3), §5's box sentence. "Nothing else moves." The amended drafts, their diffs against this entry's
+      drafts and their sha256s are in the entry above. The PI holds their placement as the locks until the seat
+      answers item 7 ("Hold the locks").
+    - Q2 (§B.3): "Code's reading is the seat's meaning, with its two halves made explicit". A box is named by its spec
+      and its identifier "because its pod id does not exist when the lock is written". The dated note is "a RESULTS.md
+      entry under the lock's v1.0 entry, written after respawn (ii) PASS, carrying the pod id, the identifier, the two
+      respawn raws and the lock's path and sha256".
+    - Q3 (§B.4): the campaign wiring's eight items are answered in the close line on its entry (`c0f1c69`); item 7's
+      line goes to Code's block. G-PWR (p)'s ten declared readings (`3e1b614`) stand: "Nothing in them moves a figure
+      of record."
+    - Ledger (68) (§C): the drafts' "the seat reads it before the PI commits it" carried the seat's slip. "The
+      convention of record has never changed: **Code commits by path on the PI's routing; the PI routes and decides in
+      chat and commits nothing.**" (A1) and (A2) carry it into each amended draft.
+    - Two observations, recorded and not ruled on; the raw is not edited:
+      - The raw's header gives the dpo draft's sha256 as `f2a6960f…a28d`. The file and this entry give `f2a6960f…a28b`
+        (`f2a6960f38e96c651ccf23d11aba3bb02354cdad4b57ef2745d934525747a28b`). The same header says each draft was
+        "re-hashed by the seat from the bytes read and equal to the block's".
+      - §0 calls (A2) "a bracketed correction after §0's quote". §B.2's text is a bullet, and the amended drafts
+        carry the bullet.
+    - The PI's word, in chat, to the coordinating session's question "Route the seat's answers as given?" (its relay of
+      2026-11-14): "Route as given". Nothing above is rewritten.
 
 - 2026-11-14 — **G-ANL-p — the canonical re-run on HEAD `f784bff` (G-SHAPE-p's re-run committed on the campaign
   wiring's BUILD `c0f1c69`): PASS (p v0.2 §4.4; the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 2).
@@ -380,6 +584,22 @@ applied to CLAUDE.md.
     - LOCK-p v1.0 ×3, drafted for the seat's read (D_p 2026-12-15).
 
     The replacement box waits for v1.0 ×3 and the PI's go. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-14).** The seat's answers of 2026-11-14,
+    [`2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`](results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md)
+    (sha256 `6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a`, committed by path by the F3 session at
+    `cdccc66`), §B.4, on this entry's eight declared items: "Each stands as built; the seat rules where Code asked".
+    - Item 3: "The domain fits a campaign's report." Before the unit's VERDICTS the report shows what the gates'
+      reports show, and withholds every contrast pick, free-round event and second.
+    - Item 4: "The right behaviour, and nothing is built now." A box change mid-campaign is "a seat-routed event, not
+      a driver path".
+    - Item 7: "Stands as a declared test gap." The ruling's next sentence places the comparison's line "in the
+      precheck ×3 raw at `campaign`". As built, the precheck never sees the adapter's identifier, so it has no such
+      line. Code's block
+      [`_p-backend-line_code-to-design`](results/raw/2026-11-14_p-backend-line_code-to-design.md), in this commit,
+      puts it to the seat (Q1). The PI holds the locks until the seat answers ("Hold the locks").
+    - Items 1, 2, 5, 6 and 8 stand as built.
+    - The PI's word, in chat, to the coordinating session's question "Route the seat's answers as given?" (its relay of
+      2026-11-14): "Route as given". Nothing above is rewritten.
 
 - 2026-11-13 — **G-PWR (p), its run of record (PROPOSAL-p v0.2 §4.1, §8 step 6; m:285; the seat's read of
   G-F0m-OLMo (p) ×3, §4.3 item 1, routed by the PI on 2026-11-13, `a2c354e`), from the program's commit `4c882e7`. At
