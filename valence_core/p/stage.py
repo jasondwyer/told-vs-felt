@@ -1,4 +1,4 @@
-"""PROPOSAL-p's gate stages: G-TIME-OLMo (p) and G-F0m-OLMo (p) (p v0.2 §4.1-§4.2, §8 step 6; the design seat's
+"""PROPOSAL-p's stages: G-TIME-OLMo (p), G-F0m-OLMo (p) and the campaign (p v0.2 §4.1-§4.2, §8 step 6; the design seat's
 answer of 2026-11-08, ``de729c4``, §1; Code's block on entry (9)'s site, 2026-11-08, and the seat's answer to it, §2,
 ``6b63973``; the seat's answers on G-F0m-OLMo (p)'s wiring, 2026-11-10, ``42c5a92``, §2-§3).
 
@@ -33,8 +33,33 @@ line between backticks does not satisfy it -- checked before the load (m's drive
 text as a substring). The call log, the marker, the lock file and p's report
 take the gate's name (``_qual_``); p's report covers the 24 sessions on the seat's read domain -- the proxy
 attribution over the sixteen sham sessions, every proxy count over the contrast sessions withheld, as at G-TIME.
-``time``'s behaviour is unchanged and its records stand. The campaign is not wired here: its wiring is its own move
-before LOCK-p v1.0 (the seat's Q2).
+``time``'s behaviour is unchanged and its records stand.
+
+THE CAMPAIGN. PIN (Code, declared at the campaign wiring; the seat's read of G-F0m-OLMo (p) x3, §4.3 item 2, of the
+campaign wiring: "p's own move ... `campaign` joins the wired commands; (j)'s closure and the register unchanged"): m's
+``stages.run_campaign`` run for p's unit under the same entries (``STAGES``, the gates and the campaign; ``GATES`` and
+``COUNTS`` unchanged). Its values in m's form, as scripts/m_sessions.py carries Q-F0's (read as text, never imported):
+the launch counts per arm G-PWR (p)'s of record (``CAMPAIGN_LAUNCH_COUNTS``, bound to data/p/gates/G-PWR-p.json by
+``gpwr_problems`` before the load), the floors the package's (``campaign_floors``), the hour cap the PI's cap share
+(``CAMPAIGN_HOUR_CAP``; a campaign is refused while it is unset); their line forms whole lines of the unit's LOCK-p
+v1.0 (``campaign_lock_lines``), and G-PWR (p)'s record named by the lock beside lock_required's values. Its prior is the
+unit's G-F0m-OLMo (p) checkpoint (``prior_problems`` at ``campaign``: m's prior_gate, then p's identity). Before the
+load, the campaign's own refusals: m's checkpoint read as a campaign's (``campaign_state``, m's driver's
+_campaign_state in p's form, a pause's arm the unit's own) -- an unreadable one refused, never read as empty; an
+ended one refused, its report re-derived by the driver's campaign-report; and the seat's adjudication and the PI's
+stop against its state (``campaign_ruling_problems``, m's driver's refusals in its words). A PAUSE is not a STOP: the
+run's end line records it and nothing is marked; a later run (always a --resume, which appends) resumes it with the
+seat's adjudication or ends it by the PI's stop, or, offering neither, is shown its pause and launches nothing (m's
+R6). The recorded run is ``_run_recorded``, the gate stage's, extracted unchanged with m's call a parameter. p's report
+(``build_report`` at ``campaign``) is written once m's checkpoint records the campaign's end -- terminal (COMPLETE,
+CAP, PI-STOP) or m's own STOP, nothing pending -- never at a pause; it names m's report and adjudication excerpt.
+Where the end look fired at a terminal end (m:330), m's status is PAUSE and the terminal stands: p's report records
+PAUSE, the terminal beside it (``campaign_terminal``), so the run and campaign-report exit as m's run does (3). The
+hour cap is a positive finite int or float of hours (m's hour_cap_exceeded also takes a text or a Fraction; p's cap is
+a number). A box change mid-campaign has no
+restart route in this build: p passes m no checkpoint path, so a --resume on another pod reaches m's CHECKPOINT
+MISMATCH (the pod id) after the load, a STOP under THE STOP below -- m:302's restart "on the new box" is the seat's to
+route.
 
 THE ORDER (the seat's Q4, a rule). Every substitution is entered before anything in the process computes renders and
 before the model load. m caches the renders of record for the process (``scaffold._of_record``, lru-cached) and
@@ -73,7 +98,8 @@ the cut event or none; a STOP's detail, the text and the returned text); and an 
 no record. It may hold contrast free-round text and counts, so it is withheld like the checkpoint (m:318) to the
 unit's VERDICTS or NOT-RUN record. A resumed run appends its own lines; a torn last line, or one a failed write left
 torn, is ended first. One process at a time: a ``flock`` on a lock file beside the record (``stage_lock``) spans a
-run's reads, checks and appends, and the report command's (``time-report``, ``qual-report``) read and write.
+run's reads, checks and appends, and the report command's (``time-report``, ``qual-report``, ``campaign-report``) read
+and write.
 
 THE STOP. PIN (Code, declared at step 6): a run that ends in a SystemExit once its run line is written -- p's STOPs
 (ProxyStop, StageStop, RegisterStop, KeysStop, ScheduleStop) and m's alike, a refusal raised inside m's stage included
@@ -93,14 +119,15 @@ PIN-37 has it; no adjudication input is defined, and a ruling to resume has no p
 (any other exception, or a run with no end line) stays resumable.
 
 P'S REPORT. PIN (Code, declared at step 6): ``reports/{U}_{gate}_p-report.json``, written once on an ended stage by
-``build_report`` -- at the stage's end, or later by the driver's ``time-report`` or ``qual-report`` from the checkpoint
-and the call log when the stage's tail did not write it. It holds the seat's read domain only (m:271, m:318, the seat's
-ruling (h)): §2.3's counters (``report.session_counters``); the proxy's cuts on the sham sessions, attributed to their
+``build_report`` -- at the stage's end, or later by the driver's ``time-report``, ``qual-report`` or (from the campaign
+wiring) ``campaign-report`` from the checkpoint and the call log when the stage's tail did not write it. It holds the
+seat's read domain only (m:271, m:318, the seat's ruling (h)): §2.3's counters (``report.session_counters``); the proxy's cuts on the sham sessions, attributed to their
 rounds through the call log by seed and stored-text sha256 (``attribute_calls``); m's report and reads named with their
-sha256s; the register entries the stage entered; term (d)'s end states; whether every recorded round was attributed.
+sha256s (the campaign's: its report and adjudication excerpt); the register entries the stage entered; term (d)'s
+end states; whether every recorded round was attributed.
 Every proxy count over a contrast session is withheld: the number of its calls is its free-round exclusion position.
 The self-test plants a contrast free-round exclusion at two positions, at each gate, and finds p's report and lines
-unchanged.
+unchanged; the campaign's report is built by the same function over the same fields.
 """
 from __future__ import annotations
 
@@ -108,6 +135,7 @@ import contextlib
 import fcntl
 import hashlib
 import json
+import math
 import os
 import re
 import signal
@@ -144,6 +172,20 @@ COUNTS = {"time": (1, 1), "qual": (8, 16)}
 #: m's ``OLMO_QUAL_LOCK_LINE`` (scripts/m_sessions.py), p's licence binding no m script (the self-test compares them).
 QUAL_LOCK_LINE = "G-TIME-OLMo-{ckpt} port acceptance recorded"
 LOCK_TEMPLATE = "LOCK-p-OLMo-{ckpt}.md"
+#: The stages p's driver runs: the two gates and, from the campaign wiring, the campaign (THE CAMPAIGN).
+STAGES = GATES + ("campaign",)
+#: PIN (Code, declared at the campaign wiring): the campaign's values in m's form -- scripts/m_sessions.py's
+#: CAMPAIGN_LAUNCH_COUNTS and CAMPAIGN_HOUR_CAP for Q-F0 (read as text, never imported) -- passed to m's
+#: stages.run_campaign as given here, their line forms required as whole lines of the unit's LOCK-p v1.0
+#: (``campaign_lock_lines``). The launch counts per arm, contrast first, are G-PWR (p)'s of record
+#: (data/p/gates/G-PWR-p.json), "a projection, not a bound" (m:192), bound to that record before the load
+#: (``gpwr_problems``); the hour cap is the PI's cap share for the checkpoint (p §4.1, §6.1), in hours (m:249): the
+#: PI's word of 2026-11-14, verbatim "2 h each", to the coordinating session's question "What hour cap per checkpoint
+#: for p's campaigns?" (offered with "2 h each" and "3 h each").
+CAMPAIGN_LAUNCH_COUNTS = {"OLMo-sft": (96, 64), "OLMo-dpo": (96, 64), "OLMo-instruct": (96, 64)}
+CAMPAIGN_HOUR_CAP: dict = {"OLMo-sft": 2, "OLMo-dpo": 2, "OLMo-instruct": 2}
+GPWR_REL = "data/p/gates/G-PWR-p.json"
+GPWR_SCHEMA = "p-gpwr-v1"
 #: The lock's backend line (the module docstring's BEFORE THE LOAD PIN), one per lock.
 BACKEND_LINE = "BACKEND OF RECORD {bid}"
 BACKEND_RX = re.compile(r"^BACKEND OF RECORD ([0-9a-f]{16})$", re.M)
@@ -185,7 +227,15 @@ REPORT_TEXT = {
                       "round"),
              "contrast": CONTRAST_WITHHELD_QUAL,
              "rule": ("calls attributed to rounds by seed and stored-text sha256 (stage.attribute_calls); complete: "
-                      "every sham round attributed (N-3: the flag reads the sham sessions only)")}}
+                      "every sham round attributed (N-3: the flag reads the sham sessions only)")},
+    "campaign": {"form": ("the seat's read domain only (m:271, m:318, the seat's ruling (h)): the sham sessions' "
+                          "counters and proxy cuts, the contrast forced rounds' control characters, the hair trigger "
+                          "over every round; written once the campaign has ended (m's ended_status) -- its status m's: "
+                          "PAUSE, the terminal beside it, where the end look fired at a terminal end -- never while "
+                          "the campaign is open at a pause"),
+                 "contrast": CONTRAST_WITHHELD_QUAL,
+                 "rule": ("calls attributed to rounds by seed and stored-text sha256 (stage.attribute_calls); "
+                          "complete: every sham round attributed (N-3: the flag reads the sham sessions only)")}}
 
 
 class StageRefusal(SystemExit):
@@ -199,10 +249,10 @@ class StageStop(SystemExit):
 def label(unit: str, gate: str = "time") -> str:
     """The stage's name for p's unit at ``gate`` (m's spelling, ' (p)' after it); a non-unit or a non-gate is named as
     given."""
-    if gate not in GATES:
-        return f"{gate!r} ({unit!r}; not a p gate stage, {GATES})"
+    if gate not in STAGES:
+        return f"{gate!r} ({unit!r}; not a p stage, {STAGES})"
     if unit not in UNITS:
-        return f"{'G-TIME' if gate == 'time' else 'G-F0m'} ({unit!r}, not a p unit)"
+        return f"{ {'time': 'G-TIME', 'qual': 'G-F0m', 'campaign': 'campaign'}[gate]} ({unit!r}, not a p unit)"
     return f"{m_stages.stage_name(unit, gate)} (p)"
 
 
@@ -490,12 +540,13 @@ def identity_extra(unit: str, *, stub: bool, lock_bytes: bytes) -> dict:
     return out
 
 
-def prior_problems(unit: str, prior_ckpt: Path, *, stub: bool, proposal_sha256: str) -> list[str]:
-    """THE QUALIFICATION, before the load: m's ``prior_gate`` on G-TIME (p)'s checkpoint (no adjudication, no earlier
-    proposal re-adopted, ``require_real`` on a non-stub run), then that the checkpoint is p's -- its identity's
-    ``proposal`` and ``proposal_p_sha256`` this run's (the qual review's N-5)."""
+def prior_problems(unit: str, prior_ckpt: Path, *, stub: bool, proposal_sha256: str, stage: str = "qual") -> list[str]:
+    """Before the load, at ``stage`` -- the qualification (its prior G-TIME (p)'s checkpoint) or the campaign (its
+    prior the qualification's): m's ``prior_gate`` on the prior's checkpoint (no adjudication, no earlier proposal
+    re-adopted, ``require_real`` on a non-stub run), then that the checkpoint is p's -- its identity's ``proposal`` and
+    ``proposal_p_sha256`` this run's (the qual review's N-5)."""
     try:
-        m_stages.prior_gate(unit, "qual", prior_ckpt, None, proposal_sha256=proposal_sha256,
+        m_stages.prior_gate(unit, stage, prior_ckpt, None, proposal_sha256=proposal_sha256,
                             prior_proposal_sha256s=(), require_real=not stub)
     except (SystemExit, ValueError) as e:
         return [f"m's prior_gate: {e}"]
@@ -512,9 +563,8 @@ def precheck(unit: str, *, stub: bool, resume: bool = False, lexicon: Path | Non
     """Every refusal that needs no adapter (the module docstring's BEFORE THE LOAD); StageRefusal on the first set.
     ``lexicon``: the lexicon's path (default the pinned file; the self-test's refusal case only)."""
     name = label(unit, gate)
-    if gate not in GATES:
-        raise StageRefusal(f"{name} REFUSED: p's gate stages are {GATES}; the campaign's wiring is its "
-                           f"own move before LOCK-p v1.0 (the seat's Q2, 2026-11-10)")
+    if gate not in STAGES:
+        raise StageRefusal(f"{name} REFUSED: p's stages are {STAGES}")
     if unit not in UNITS:
         raise StageRefusal(f"{name} REFUSED: p's units are {UNITS}")
     probs: list[str] = []
@@ -539,6 +589,9 @@ def precheck(unit: str, *, stub: bool, resume: bool = False, lexicon: Path | Non
               for n in ENTERED if register.BY_N[n].status not in register.SUBSTITUTABLE]
     if gate == "qual":
         probs += [f"the counts: {p}" for p in counts_problems(unit, gate)]
+    if gate == "campaign" and campaign_hour_cap(unit) is None:
+        probs.append(f"the hour cap is not set: the PI's cap share for {unit} (p §4.1, §6.1) is a LOCK-p v1.0 value, "
+                     f"and this build carries none")
     wp, weights = m_gcal.weights_of_record(gcal.unit_ckpt(unit))
     probs += [f"weights of record: {p}" for p in wp]
     lock_bytes, gline, req, bid = b"LOCK-p stub: no lock file on the self-test stub", None, {}, None
@@ -549,6 +602,11 @@ def precheck(unit: str, *, stub: bool, resume: bool = False, lexicon: Path | Non
         probs += [f"{lock_rel(unit)}: {x}" for x in cp]
         rprobs, req = lock_required(unit)
         probs += rprobs
+        if gate == "campaign":
+            gp, gsha = gpwr_problems(unit)
+            probs += gp
+            if gsha:
+                req["G-PWR (p)'s record"] = gsha
         if data is not None:
             lock_bytes = data
             ltext = data.decode("utf-8", "replace")
@@ -558,6 +616,8 @@ def precheck(unit: str, *, stub: bool, resume: bool = False, lexicon: Path | Non
             probs += [f"{lock_rel(unit)}: {p}" for p in bp]
             if gate == "qual":
                 probs += [f"{lock_rel(unit)}: {p}" for p in qual_lock_problems(unit, ltext)]
+            if gate == "campaign":
+                probs += [f"{lock_rel(unit)}: {p}" for p in campaign_lock_problems(unit, ltext)]
         if m_resume.pod_id() is None:
             probs.append(f"POD ID ABSENT: {name} runs on the box only with its pod instance id "
                          f"(${m_resume.POD_ENV}), as every OLMo stage")
@@ -606,15 +666,20 @@ def stage_substitutions() -> Iterator[list[int]]:
 
 def out_paths(unit: str, out: Path, *, gate: str = "time") -> dict[str, Path]:
     """p's two outputs and m's checkpoint, report and reads under the stage's root, at ``gate``."""
-    if gate not in GATES:
-        raise ValueError(f"{gate!r} is not one of p's gate stages {GATES}")
+    if gate not in STAGES:
+        raise ValueError(f"{gate!r} is not one of p's stages {STAGES}")
     mp = m_stages.out_paths(unit, gate, out)
     mp = m_stages.for_checkpoint(mp, m_stages.checkpoint_path(None, mp))
-    return {"p_report": out / "reports" / f"{unit}_{gate}_p-report.json",
+    out_ = {"p_report": out / "reports" / f"{unit}_{gate}_p-report.json",
             "p_calls": out / "ckpt" / f"{unit}_{gate}_p-calls.jsonl",
             "p_stopped": out / "ckpt" / f"{unit}_{gate}_p-STOPPED.json",
             "p_lock": out / "ckpt" / f"{unit}_{gate}_p.lock",
-            "m_ckpt": mp["ckpt"], "m_report": mp["report"], "m_reads": mp["reads"]}
+            "m_ckpt": mp["ckpt"], "m_report": mp["report"]}
+    if gate == "campaign":                          # m's campaign writes no reads; its pause excerpt sits beside it
+        out_["m_excerpt"] = m_stages.adjudication_path(mp["ckpt"])
+    else:
+        out_["m_reads"] = mp["reads"]
+    return out_
 
 
 class CallLog:
@@ -763,7 +828,8 @@ def stop_in(err: BaseException | None) -> bool:
 def stage_lock(path: Path, root: Path, *, what: str = "this stage") -> Iterator[None]:
     """PIN (Code, declared at step 6): one process on a stage's record at a time -- an exclusive, non-blocking
     ``flock`` on a lock file beside the record (``ckpt/{U}_{gate}_p.lock``; gitignored), held by a run from before the
-    record is read to the end of the run, and by its report command (``time-report``, ``qual-report``) for its read
+    record is read to the end of the run, and by its report command (``time-report``, ``qual-report``,
+    ``campaign-report``) for its read
     and write (round 3's NOTE 4; round 4's NOTE 3). Only a lock held elsewhere (BlockingIOError) reads as "held"; any
     other failure is named (round 4's m-2). On the box the file lies on the network volume (nfs4), where a model-free
     probe found the lock exclusive across processes on one pod and released on close
@@ -860,7 +926,23 @@ def build_report(unit: str, out: Path, *, gate: str = "time") -> dict:
     except (OSError, ValueError, UnicodeDecodeError) as e:
         raise StageStop(f"{name} P-REPORT STOP: m's checkpoint {pp['m_ckpt'].name} unreadable "
                         f"({type(e).__name__})") from None
-    end = ck.get("stage_end")
+    camp_terminal = None
+    if gate == "campaign":                          # THE CAMPAIGN: ended (terminal or STOP), nothing pending
+        status = m_resume.ended_status(ck) if isinstance(ck, dict) else None
+        if status is None or m_resume.pending_end(ck) is not None:
+            raise StageStop(f"{name} P-REPORT STOP: m's checkpoint records no campaign end (a pause is not one); "
+                            f"p's report is built on an ended campaign only")
+        camp = ck.get("campaign") if isinstance(ck.get("campaign"), Mapping) else {}
+        pauses = camp.get("pauses") if isinstance(camp.get("pauses"), list) else []
+        last = pauses[-1] if pauses else None
+        if (isinstance(camp.get("terminal"), Mapping) and isinstance(last, Mapping)
+                and last.get("kind") == "end_look" and last.get("adjudication") is None):
+            # m:330 (stages._campaign_end): a fired end look pauses the unit before its analysis -- the run's status
+            # is PAUSE and the terminal state stands; p's report records m's status, the terminal beside it
+            camp_terminal, status = status, "PAUSE"
+        end = {"status": status}
+    else:
+        end = ck.get("stage_end")
     if not isinstance(end, Mapping) or "status" not in end:
         raise StageStop(f"{name} P-REPORT STOP: m's checkpoint carries no persisted stage end; p's report is "
                         f"built on an ended stage only")
@@ -897,10 +979,12 @@ def build_report(unit: str, out: Path, *, gate: str = "time") -> dict:
     def named(p: Path) -> dict:
         return {"path": _rel_to(p, root), "sha256": _sha(p.read_bytes()) if p.is_file() else None}
     return {"schema": REPORT_SCHEMA, "stage": name, "unit": unit, "status": end["status"],
+            **({"campaign_terminal": camp_terminal} if camp_terminal is not None else {}),
             "form": REPORT_TEXT[gate]["form"],
             "root": "data/p" if root.resolve() == DEFAULT_OUT_P.resolve() else "(a test root)",
             "checkpoint": {"path": _rel_to(pp["m_ckpt"], root), "sha256": _sha(ckb)},
-            "m_outputs": {"report": named(pp["m_report"]), "reads": named(pp["m_reads"])},
+            "m_outputs": ({"report": named(pp["m_report"]), "adjudication_excerpt": named(pp["m_excerpt"])}
+                          if gate == "campaign" else {"report": named(pp["m_report"]), "reads": named(pp["m_reads"])}),
             "call_log": {**named(pp["p_calls"]), "n_runs": len(runs), "runs": run_rows,
                          "well_formed": not lp, "n_malformed_lines": len(lp),
                          "stale_reservations": sorted(x.name for x in pp["p_stopped"].parent.glob(
@@ -934,7 +1018,10 @@ def run_gate(unit: str, gate: str, adapter_factory: Callable[[], Any], *, stub: 
              out_root=None, pre: Mapping[str, Any] | None = None,
              echo: Callable[[str], None] = lambda s: print(s, flush=True)) -> dict:
     """G-TIME-OLMo (p) or G-F0m-OLMo (p) on one checkpoint (the module docstring); ``pre``: the driver's own precheck
-    of this run."""
+    of this run. The campaign is ``run_campaign``'s, refused here before anything (the campaign review's MINOR-1)."""
+    if gate not in GATES:
+        raise StageRefusal(f"{label(unit, gate)} REFUSED: run_gate runs p's gates {GATES}; the campaign runs by "
+                           f"run_campaign -- nothing loaded")
     pre = precheck(unit, stub=stub, resume=resume, gate=gate) if pre is None else pre
     if pre.get("unit") != unit or pre.get("gate") != gate or pre.get("stub") is not stub:
         raise StageRefusal(f"{label(unit, gate)} REFUSED: the precheck given is {pre.get('unit')!r}'s at "
@@ -1007,6 +1094,234 @@ def _run_gate_locked(unit, gate, adapter_factory, *, stub, resume, out, pp, pre,
         if pp_:
             raise StageRefusal(f"{name} REFUSED: the prior stage (before the load): {pp_} -- nothing recorded or "
                                f"loaded")
+    res = _run_recorded(unit, gate, adapter_factory, stub=stub, resume=resume, out=out, pp=pp, pre=pre, echo=echo,
+                        events=events,
+                        call_m=lambda px: m_stages.run_gate_stage(
+                            px, unit=unit, gate=gate, templates_counts=templates_counts(unit, gate),
+                            identity_extra=pre["identity_extra"], substrate="olmo", out_root=out, resume=resume,
+                            prior_ckpt=prior_ckpt))
+    try:
+        rep, how = write_report(unit, out, gate=gate)
+    except SystemExit as e:
+        raise StageStop(f"{name} STOP: m's stage ended ({res['status']}) but p's report was not written ({e}); "
+                        f"re-derive it with the driver's {gate}-report") from None
+    return {"status": res["status"], "result": res, "report": rep, "paths": pp, "written": how}
+
+
+# --- THE CAMPAIGN (the campaign wiring) -------------------------------------------------------------------------------
+def campaign_arms(unit: str) -> list[str]:
+    """The unit's two arms, contrast first (m:192's table order; keys.templates)."""
+    return list(m_keys.templates(unit))
+
+
+def campaign_launch_counts(unit: str) -> dict[str, int]:
+    """The unit's launch counts per arm (m:192: "a projection, not a bound"), keyed by its arms, contrast first."""
+    return dict(zip(campaign_arms(unit), CAMPAIGN_LAUNCH_COUNTS[unit]))
+
+
+def campaign_floors(unit: str) -> dict[str, int]:
+    """The unit's floors per arm: the package's schedule.FLOORS for the OLMo arms (m:182-183; p:84 "floors 80/32"),
+    as m's driver reads Q-F0's (campaign_floors): one source, the package the lock's package_sha256 pins."""
+    a0, a0s = campaign_arms(unit)
+    return {a0: int(m_schedule.FLOORS["A0-OLMo"]), a0s: int(m_schedule.FLOORS["A0s-OLMo"])}
+
+
+def campaign_hour_cap(unit: str) -> int | float | None:
+    """The PI's cap share for the unit's campaign, in hours (m:249): a positive finite int or float (m's
+    hour_cap_exceeded also takes a text or a Fraction; p's cap is a number, and a bool is not one here); None while it
+    is not set or not such a number."""
+    v = CAMPAIGN_HOUR_CAP.get(unit)
+    if type(v) not in (int, float) or not math.isfinite(v) or v <= 0:
+        return None
+    return v
+
+
+def campaign_lock_lines(unit: str) -> tuple[str, ...]:
+    """The campaign's line forms the unit's LOCK-p v1.0 carries as whole lines (m's CAMPAIGN_LOCK_LINES' form, the
+    unit's arms named): the launch counts per arm and, once set, the hour cap."""
+    lc = campaign_launch_counts(unit)
+    lines = ["launch counts = " + ", ".join(f"{a} {n}" for a, n in lc.items())]
+    cap = campaign_hour_cap(unit)
+    if cap is not None:
+        lines.append(f"hour cap = {cap} h")
+    return tuple(lines)
+
+
+def campaign_lock_problems(unit: str, text: str) -> list[str]:
+    """Each of ``campaign_lock_lines`` as a whole line of the lock's committed text (p's whole-line form, as the qual
+    stage requires its acceptance line); the cap's absence is the precheck's own refusal."""
+    return [f"the campaign's line {ln!r} is not a whole line of the lock (the campaign wiring's PIN)"
+            for ln in campaign_lock_lines(unit) if not re.search(rf"^{re.escape(ln)}$", text, re.M)]
+
+
+def gpwr_problems(unit: str) -> tuple[list[str], str | None]:
+    """G-PWR (p)'s record of the unit's launch counts: committed, its schema, and the unit's L per arm (m's arm roles
+    A0, A0s) equal to ``CAMPAIGN_LAUNCH_COUNTS``; (problems, the record's sha256)."""
+    cp, data = m_stages._committed(GPWR_REL)
+    if cp or data is None:
+        return [f"{GPWR_REL}: {x}" for x in (cp or ["unreadable"])], None
+    try:
+        rec = json.loads(data.decode("utf-8"))
+        u = rec["units"][unit]
+        lc = (u["launch"]["L"]["A0"], u["launch"]["L"]["A0s"])
+        schema = rec.get("schema")
+    except (ValueError, UnicodeDecodeError, KeyError, TypeError) as e:
+        return [f"{GPWR_REL}: not G-PWR (p)'s record of {unit} ({type(e).__name__})"], None
+    probs = [] if schema == GPWR_SCHEMA else [f"{GPWR_REL}: schema {schema!r}, not {GPWR_SCHEMA!r}"]
+    if lc != tuple(CAMPAIGN_LAUNCH_COUNTS[unit]):
+        probs.append(f"{GPWR_REL}: {unit}'s launch counts {lc}, not this build's {CAMPAIGN_LAUNCH_COUNTS[unit]}")
+    return probs, _sha(data)
+
+
+def ruling_texts(adjudication_file: str | None, pi_stop_file: str | None) -> tuple[dict, list[str]]:
+    """({"adjudication": text or None, "pi_stop": text or None}, problems): the campaign's two ruling files under m's
+    rule (scripts/m_sessions.py's ruling_texts, read as text, never imported): a regular file (a FIFO or a device is
+    refused before it is opened), UTF-8 with a leading byte-order mark dropped, not blank (a visible character); its
+    text passed as read (m's stage strips it). The texts stand in no command line, launch line or raw, and are never
+    printed."""
+    import unicodedata
+    texts: dict = {"adjudication": None, "pi_stop": None}
+    probs: list[str] = []
+    for key, flag, given in (("adjudication", "--adjudication-file", adjudication_file),
+                             ("pi_stop", "--pi-stop-file", pi_stop_file)):
+        if given is None:
+            continue
+        try:
+            if not Path(given).is_file():
+                probs.append(f"{flag} {given}: not a regular file")
+                continue
+            txt = Path(given).read_bytes().decode("utf-8-sig")
+        except (OSError, ValueError) as e:
+            probs.append(f"{flag} {given}: unreadable as UTF-8 text ({type(e).__name__})")
+            continue
+        if not any(not c.isspace() and unicodedata.category(c)[0] not in "CZ" for c in txt):
+            probs.append(f"{flag} {given}: blank (a ruling is a text with a visible character)")
+            continue
+        texts[key] = txt
+    return texts, probs
+
+
+def campaign_state(cpath: Path, unit: str) -> tuple[str, dict]:
+    """(state, summary) of the campaign checkpoint at ``cpath``: m's driver's _campaign_state (read as text, never
+    imported), the arms the unit's own (an OLMo pause names A0-OLMo-{ckpt} or A0s-OLMo-{ckpt}, not Q-F0's A0 or A0s).
+    state: "absent", "unreadable", "pending" (an end pending), "ended" (resume.ended_status) or "open"; the summary
+    free of any recorded text: launched, the recorded PI stop's sha256, the last pause's kind, launch count, arm,
+    whether adjudicated and its ruling's sha16, and every pause's ruling sha16 in order; {} when unreadable."""
+    p = Path(cpath)
+    arms = (None, *campaign_arms(unit))
+    try:
+        if not (p.exists() or p.is_symlink()):
+            return "absent", {"launched": False, "pi_stop_sha256": None, "last": None, "ruling_sha16s": []}
+        if not p.is_file():
+            return "unreadable", {}
+    except OSError:
+        return "unreadable", {}
+    try:
+        ck = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, ValueError, RecursionError):
+        return "unreadable", {}
+    camp = ck.get("campaign") if isinstance(ck, dict) else None
+    camp = {} if camp is None else camp
+    pauses = camp.get("pauses", []) if isinstance(camp, dict) else None
+    if (not isinstance(ck, dict) or type(ck.get("sessions", [])) is not list or not isinstance(camp, dict)
+            or type(pauses) is not list
+            or not all(isinstance(x, dict) and {"kind", "at_launches", "adjudication"} <= set(x)
+                       and x["kind"] in ("look", "end_look", "schedule_exhausted") and type(x["at_launches"]) is int
+                       and (x["adjudication"] is None or type(x["adjudication"]) is str)
+                       and x.get("arm") in arms for x in pauses)
+            or not (camp.get("pi_stop") is None or type(camp.get("pi_stop")) is str)):
+        return "unreadable", {}
+    last = pauses[-1] if pauses else None
+    try:
+        for x in pauses:
+            if x["adjudication"] is not None:
+                x["adjudication"].encode("utf-8")
+        summary = {"launched": bool(ck.get("sessions")),
+                   "pi_stop_sha256": (None if camp.get("pi_stop") is None
+                                      else _sha(camp["pi_stop"].encode("utf-8"))),
+                   "last": None if last is None else {
+                       "kind": last["kind"], "at_launches": last["at_launches"], "arm": last.get("arm"),
+                       "adjudicated": last["adjudication"] is not None,
+                       "adjudication_sha16": (m_stages._sha16_text(last["adjudication"])
+                                              if type(last["adjudication"]) is str else None)},
+                   "ruling_sha16s": [m_stages._sha16_text(x["adjudication"]) for x in pauses
+                                     if type(x["adjudication"]) is str]}
+    except UnicodeEncodeError:
+        return "unreadable", {}
+    if m_resume.pending_end(ck) is not None:
+        return "pending", summary
+    if m_resume.ended_status(ck) is not None:
+        return "ended", summary
+    return "open", summary
+
+
+def campaign_ruling_problems(cpath: Path, unit: str, adjudication: str | None, pi_stop: str | None) -> list[str]:
+    """The refusals of a ruling that does not fit the campaign's state, made before the load: m's driver's
+    campaign_ruling_problems (read as text, never imported) over ``campaign_state``, in its order and its words --
+    CHECKPOINT MISMATCH (a PI stop other than the one recorded); beside an end pending, RULING BESIDE AN END PENDING
+    for a ruling the stage would not apply there; PI STOP REFUSED (no session launched); SCHEDULE EXHAUSTED (an
+    adjudication alone on an exhausted schedule's open pause); RULING REUSED (an earlier pause's ruling offered again);
+    NO PAUSE TO ADJUDICATE. An unreadable or ended checkpoint is not refused here (the run's own refusals take it)."""
+    if adjudication is None and pi_stop is None:
+        return []
+    state, sm = campaign_state(cpath, unit)
+    if state in ("unreadable", "ended"):
+        return []
+    rec_pi = sm["pi_stop_sha256"]
+    if pi_stop is not None and rec_pi is not None and _sha(pi_stop.strip().encode("utf-8")) != rec_pi:
+        return [f"CHECKPOINT MISMATCH: {cpath} records the PI's stop; this run offers a different text -- refusing "
+                f"(the stage makes this refusal after the load)"]
+    if state == "pending":
+        a16 = m_stages._sha16_text(adjudication.strip()) if adjudication is not None else None
+        adj_w = "the seat's adjudication" + (
+            f", which the checkpoint already records as a pause's ruling (sha16 {a16}) and which needs nothing"
+            if a16 is not None and a16 in sm.get("ruling_sha16s", []) else "")
+        skip = [(w, f) for w, f, v in ((adj_w, "--adjudication-file", adjudication),
+                                       ("the PI's stop, which the checkpoint does not record", "--pi-stop-file",
+                                        pi_stop if rec_pi is None else None)) if v is not None]
+        if skip:
+            return [f"RULING BESIDE AN END PENDING at {cpath}: the checkpoint carries an end pending, which the stage "
+                    f"re-finishes before it applies any ruling, and it would not apply "
+                    f"{' and '.join(w for w, _f in skip)} (NOT APPLIED, after the load) -- refused before the load: "
+                    f"re-run without {' and '.join(f for _w, f in skip)}, with --resume, which re-finishes the end; "
+                    f"then offer a ruling for the pause the re-finish shows, if it leaves the campaign open"]
+        return []
+    pi = pi_stop is not None or rec_pi is not None
+    if pi and not sm["launched"]:
+        return [f"PI STOP REFUSED at {cpath}: no session has launched -- a unit that never launches is NOT-RUN by its "
+                f"Clock (m:192), not PI-stopped"]
+    last = sm["last"]
+    open_pause = last is not None and not last["adjudicated"]
+    if open_pause and last["kind"] == "schedule_exhausted" and not pi and adjudication is not None:
+        return [f"SCHEDULE EXHAUSTED at {cpath}: {last['arm']} has no committed cell left below its floor; only the "
+                f"PI's stop (pi_stop) ends this campaign (m:192, m:247)"]
+    if adjudication is not None and open_pause:
+        a16 = m_stages._sha16_text(adjudication.strip())
+        if a16 in sm.get("ruling_sha16s", []):
+            return [f"RULING REUSED at {cpath}: the seat's adjudication offered (sha16 {a16}) is the text the "
+                    f"checkpoint records as an earlier pause's ruling; an adjudication is offered only for the pause "
+                    f"it rules on (this campaign's open pause, at {last['at_launches']} launches, {last['kind']}) -- "
+                    f"refused before the load"]
+    if adjudication is not None and not open_pause:
+        how = ("drop --adjudication-file: resume with --resume and the PI's stop alone" if pi_stop is not None
+               else "resume with --resume alone")
+        tail = ("" if last is None else
+                f" -- its last pause ({last['kind']}, at {last['at_launches']} launches) already carries a ruling "
+                f"(sha16 {last['adjudication_sha16']}); {how}")
+        return [f"NO PAUSE TO ADJUDICATE at {cpath}: the campaign is not paused{tail}"]
+    return []
+
+
+def _run_recorded(unit: str, stage: str, adapter_factory: Callable[[], Any], *, stub: bool, resume: bool, out: Path,
+                  pp: Mapping[str, Path], pre: Mapping[str, Any], echo: Callable[[str], None], events: list[Mapping],
+                  call_m: Callable[[Any], Any]) -> Any:
+    """The recorded run, shared by the gates and the campaign (the module docstring's THE CALL LOG and THE STOP):
+    the gate line, the STOP's reservation, the substitutions entered, the run line, the proxied adapter and the
+    backend identifier against the lock's after the load, m's stage (``call_m`` on the proxy), and, in the
+    ``finally``, the end line and any STOP's marker; m's result returned. Extracted unchanged from the gate stage
+    at the campaign wiring (its m call made a parameter).
+    """
+    name = label(unit, stage)
     if pre["gate_line"]:
         echo(pre["gate_line"]["line"])
     k = 1 + sum(1 for e in events if e.get("event") == "run")
@@ -1023,7 +1338,7 @@ def _run_gate_locked(unit, gate, adapter_factory, *, stub, resume, out, pp, pre,
             # with nothing recorded. The log is opened once every entry is in force, so a STOP while they are entered
             # (nothing loaded) leaves no record behind it (round 3's m-3).
             try:
-                guard.write_once_bytes(reserve, _stopped_doc(unit, gate, k, None), what="p's STOP reservation")
+                guard.write_once_bytes(reserve, _stopped_doc(unit, stage, k, None), what="p's STOP reservation")
             except (OSError, SystemExit) as e:
                 raise StageRefusal(f"{name} REFUSED: the STOP's record cannot be reserved ({type(e).__name__}: "
                                    f"{e}) -- nothing recorded or loaded") from None
@@ -1040,9 +1355,7 @@ def _run_gate_locked(unit, gate, adapter_factory, *, stub, resume, out, pp, pre,
                         raise StageStop(f"{name} STOP: the adapter's backend identifier {bid} is not the lock's "
                                         f"{pre['backend_of_record']} (m:302; a superseding BACKEND entry is the seat's "
                                         f"to route) -- nothing generated")
-                res = m_stages.run_gate_stage(px, unit=unit, gate=gate, templates_counts=templates_counts(unit, gate),
-                                              identity_extra=pre["identity_extra"], substrate="olmo", out_root=out,
-                                              resume=resume, prior_ckpt=prior_ckpt)
+                res = call_m(px)
             except BaseException as e:
                 err = e
                 raise
@@ -1073,7 +1386,7 @@ def _run_gate_locked(unit, gate, adapter_factory, *, stub, resume, out, pp, pre,
                             late = me if not isinstance(me, Exception) else None
                         if pp["p_stopped"].exists() and not pp["p_stopped"].is_symlink():
                             try:
-                                _fill_cause(pp["p_stopped"], unit, gate, k, err)
+                                _fill_cause(pp["p_stopped"], unit, stage, k, err)
                             except BaseException:   # noqa: BLE001 -- best-effort: the marker stands without it
                                 pass
                     end_state = register.single_thread_state()
@@ -1129,11 +1442,131 @@ def _run_gate_locked(unit, gate, adapter_factory, *, stub, resume, out, pp, pre,
                 reserve.unlink()
             except OSError:
                 pass
+    return res
+
+
+def run_campaign(unit: str, adapter_factory: Callable[[], Any], *, stub: bool = False, resume: bool = False,
+                 adjudication: str | None = None, pi_stop: str | None = None, out_root=None,
+                 pre: Mapping[str, Any] | None = None,
+                 echo: Callable[[str], None] = lambda s: print(s, flush=True)) -> dict:
+    """The PROPOSAL-p campaign on one checkpoint (THE CAMPAIGN): m's ``stages.run_campaign`` for p's unit under the
+    substitutions, its values this build's (``campaign_launch_counts``, ``campaign_floors``, ``campaign_hour_cap``),
+    its prior the unit's qualification checkpoint, the seat's adjudication of a pending pause and the PI's stop
+    passed as texts; ``pre``: the driver's own precheck of this run."""
+    gate = "campaign"
+    pre = precheck(unit, stub=stub, resume=resume, gate=gate) if pre is None else pre
+    if pre.get("unit") != unit or pre.get("gate") != gate or pre.get("stub") is not stub:
+        raise StageRefusal(f"{label(unit, gate)} REFUSED: the precheck given is {pre.get('unit')!r}'s at "
+                           f"{pre.get('gate')!r} with stub {pre.get('stub')!r}; this run is {unit!r} at {gate!r} with "
+                           f"stub {stub!r}")
+    if stub:
+        out = guard.refuse_test_out(out_root)
+    elif out_root is not None:
+        raise StageRefusal(f"{label(unit, gate)} REFUSED: a non-stub run writes data/p only (ledger 27)")
+    else:
+        out = DEFAULT_OUT_P
+    pp = out_paths(unit, out, gate=gate)
+    with stage_lock(pp["p_lock"], out, what=label(unit, gate)):
+        return _run_campaign_locked(unit, adapter_factory, stub=stub, resume=resume, adjudication=adjudication,
+                                    pi_stop=pi_stop, out=out, pp=pp, pre=pre, echo=echo)
+
+
+def _run_campaign_locked(unit, adapter_factory, *, stub, resume, adjudication, pi_stop, out, pp, pre, echo) -> dict:
+    """THE CAMPAIGN's run under its stage lock. PIN (Code, declared at the campaign wiring): the gate stage's refusals
+    before the load, their wording the campaign's; then the campaign's own -- m's checkpoint read as a campaign
+    (``campaign_state``: an unreadable one refused, never read as empty; an ended one refused, its report re-derived
+    by the driver's campaign-report, never by a re-run), the rulings against its state (``campaign_ruling_problems``),
+    the cap set, the committed schedules, the qualification as the prior -- all before the load; then the recorded
+    run (``_run_recorded``). A PAUSE is not a STOP: the run's end line records it, nothing is marked, and a later run
+    resumes it with --resume and the seat's adjudication (or the PI's stop), or, with neither, is shown its pause (m's
+    R6) and launches nothing. p's report is written once m's checkpoint records the campaign's end (terminal or a
+    STOP of m's), never at a pause."""
+    gate = "campaign"
+    name = label(unit, gate)
+    if pp["p_report"].exists():
+        raise StageRefusal(f"{name} REFUSED: p's report exists ({pp['p_report'].name}); the campaign has ended and "
+                           f"been reported")
+    if pp["p_stopped"].exists() or pp["p_stopped"].is_symlink():
+        raise StageRefusal(f"{name} REFUSED: the campaign is STOPPED ({pp['p_stopped'].name}); the seat adjudicates "
+                           f"before anything resumes (the seat's Q5; a resume never lifts a STOP) -- nothing loaded")
+    if pp["p_calls"].exists() and not resume:
+        raise StageRefusal(f"{name} REFUSED: the call log exists ({pp['p_calls'].name}); a later run is a --resume, "
+                           f"which appends to it")
+    if pp["m_ckpt"].exists() and not resume:
+        raise StageRefusal(f"{name} REFUSED: m's checkpoint exists ({pp['m_ckpt'].name}); pass --resume to "
+                           f"continue it -- nothing loaded")
+    if resume and pp["m_ckpt"].exists() and not pp["p_calls"].exists():
+        raise StageRefusal(f"{name} REFUSED: m's checkpoint exists but p's call log does not -- the earlier runs' "
+                           f"record is lost; the seat adjudicates (ledger 27) -- nothing loaded")
+    events, lp = read_calls(pp["p_calls"])
+    unreadable = [x for x in lp if ": unreadable (" in x]
+    if unreadable:
+        raise StageRefusal(f"{name} REFUSED: the call log is unreadable ({unreadable[0]}); a run never reads an "
+                           f"unreadable record as an empty one -- the seat adjudicates; nothing loaded")
+    stops = stopped_runs(events)
+    if stops:
+        raise StageRefusal(f"{name} REFUSED: run(s) {stops} of this campaign ended in a STOP; the seat adjudicates "
+                           f"before anything resumes (the seat's Q5; a resume never lifts a STOP) -- nothing loaded")
+    if pp["m_ckpt"].exists() and not any(e.get("event") == "run" for e in events):
+        raise StageRefusal(f"{name} REFUSED: m's checkpoint exists but the call log holds no run line -- the record "
+                           f"is damaged, never read as an empty one; the seat adjudicates -- nothing loaded")
+    cons = log_consistency_problems(unit, events, gate=gate)
+    if cons:
+        raise StageRefusal(f"{name} REFUSED: the call log is not this campaign's: {cons[:3]} -- nothing loaded")
+    state, _sm = campaign_state(pp["m_ckpt"], unit)
+    if state == "unreadable":
+        raise StageRefusal(f"{name} REFUSED: m's checkpoint {pp['m_ckpt'].name} is unreadable as a campaign's -- "
+                           f"never read as an empty one; the seat adjudicates -- nothing loaded")
+    if state == "ended":
+        raise StageRefusal(f"{name} REFUSED: m's checkpoint records the campaign's end; p's report is re-derived "
+                           f"from it with the driver's campaign-report, never by a re-run")
+    rp = campaign_ruling_problems(pp["m_ckpt"], unit, adjudication, pi_stop)
+    if rp:
+        raise StageRefusal(f"{name} REFUSED: {rp[0]}")
+    cap = campaign_hour_cap(unit)
+    if cap is None:
+        raise StageRefusal(f"{name} REFUSED: the hour cap is not set (the PI's cap share, a LOCK-p v1.0 value)")
+    sp = p_schedule.verify_schedule_dir(out / "schedules")
+    if sp:
+        raise StageRefusal(f"{name} REFUSED: the schedules at {_rel_to(out / 'schedules', REPO)} are not clean "
+                           f"(entry (7)'s check, before the load): {sp[:3]}")
+    prior_ckpt = out_paths(unit, out, gate="qual")["m_ckpt"]
+    pr = prior_problems(unit, prior_ckpt, stub=stub, proposal_sha256=pre["identity_extra"]["proposal_sha256"],
+                        stage="campaign")
+    if pr:
+        raise StageRefusal(f"{name} REFUSED: the prior stage, the qualification (before the load): {pr} -- nothing "
+                           f"recorded or loaded")
+    offered = [f"{who} (sha16 {m_stages._sha16_text(text.strip())})"
+               for who, text in (("the seat's adjudication", adjudication), ("the PI's stop", pi_stop))
+               if text is not None]
+    if offered:                                     # pick-free: each text's sha16, never the text; after every
+        last = _sm.get("last") if isinstance(_sm, Mapping) else None   # refusal, just before the load (m's place)
+        on = ("; the campaign carries an end pending, which the stage re-finishes first" if state == "pending"
+              else f"; the campaign's last pause: {last['kind']} at {last['at_launches']} launches, "
+                   f"{'adjudicated' if last['adjudicated'] else 'open'}" if last else "; no pause recorded")
+        echo(f"RULING {name}: {' and '.join(offered)}{on}")
+
+    def call_m(px):
+        res_ = m_stages.run_campaign(px, unit=unit, floors=campaign_floors(unit),
+                                     launch_counts=campaign_launch_counts(unit), hour_cap=cap, prior_ckpt=prior_ckpt,
+                                     resume=resume, identity_extra=pre["identity_extra"], substrate="olmo",
+                                     out_root=out, adjudication=adjudication, pi_stop=pi_stop)
+        st_, _x = campaign_state(pp["m_ckpt"], unit)
+        if st_ not in ("open", "ended"):            # never a silent end: inside the recorded run, so THE STOP's
+            raise StageStop(f"{name} STOP: m's campaign returned "     # machinery records it (rounds 1-2's NOTE-1/A)
+                            f"{res_.get('status') if isinstance(res_, Mapping) else res_!r} but its checkpoint reads "
+                            f"{st_!r} (neither open nor ended); the seat adjudicates")
+        return res_
+    res = _run_recorded(unit, gate, adapter_factory, stub=stub, resume=resume, out=out, pp=pp, pre=pre, echo=echo,
+                        events=events, call_m=call_m)
+    state, _sm = campaign_state(pp["m_ckpt"], unit)
+    if state == "open":                             # a pause (or a shown pause): no report, nothing marked
+        return {"status": res["status"], "result": res, "report": None, "paths": pp, "written": None}
     try:
         rep, how = write_report(unit, out, gate=gate)
     except SystemExit as e:
-        raise StageStop(f"{name} STOP: m's stage ended ({res['status']}) but p's report was not written ({e}); "
-                        f"re-derive it with the driver's {gate}-report") from None
+        raise StageStop(f"{name} STOP: m's campaign ended ({res['status']}) but p's report was not written ({e}); "
+                        f"re-derive it with the driver's campaign-report") from None
     return {"status": res["status"], "result": res, "report": rep, "paths": pp, "written": how}
 
 
@@ -1146,7 +1579,8 @@ def summary_lines(res: Mapping[str, Any]) -> list[str]:
     sham = "; ".join(f"{k} {v['n']} {v['keys']}" for k, v in c["sham"].items())
     cc = c["contrast_forced_control_chars"]
     sp = rep["proxy"]["sham"]
-    return [f"P-REPORT {rep['stage']}: {rep['status']}; checkpoint {rep['checkpoint']['path']} (sha256 "
+    term = f" (the terminal {rep['campaign_terminal']} beside it)" if rep.get("campaign_terminal") else ""
+    return [f"P-REPORT {rep['stage']}: {rep['status']}{term}; checkpoint {rep['checkpoint']['path']} (sha256 "
             f"{rep['checkpoint']['sha256']}); p's report {_rel_to(res['paths']['p_report'], REPO)} "
             f"({res['written']}), call log {rep['call_log']['path']} ({rep['call_log']['n_runs']} run(s), withheld)",
             f"P-REPORT hair trigger {c['hair_trigger']['name']} over {c['hair_trigger']['domain']}: "
@@ -1761,14 +2195,14 @@ def _selftest(chk) -> None:
                  and bool(qual_lock_problems(unit, "G-TIME-OLMo-dpo port acceptance recorded"))
                  and bool(qual_lock_problems(unit, "# LOCK-p-OLMo-sft v0.1")))
         try:
-            precheck(unit, stub=True, gate="campaign")
+            precheck(unit, stub=True, gate="id")
             bad_gate = "ran"
         except StageRefusal as e:
-            bad_gate = "refused" if "gate stages" in str(e) else f"other: {e}"
+            bad_gate = "refused" if "p's stages are" in str(e) else f"other: {e}"
         qp = out_paths(unit, DEFAULT_OUT_P, gate="qual")
         chk("stage: p's gates are time and qual at m:302's counts (1 + 1, 8 + 16), each the committed gate files' n; the "
-            "qual stage's label and outputs carry its own name (_qual_), G-TIME's unchanged; another gate (the campaign) "
-            "is refused before anything loads; QUAL_LOCK_LINE is the text of m's OLMO_QUAL_LOCK_LINE (scripts/"
+            "qual stage's label and outputs carry its own name (_qual_), G-TIME's unchanged; a stage p does not run (G-ID, "
+            "m:267) is refused before anything loads; QUAL_LOCK_LINE is the text of m's OLMO_QUAL_LOCK_LINE (scripts/"
             "m_sessions.py read as text, never imported), required as a whole line, at its own checkpoint",
             GATES == ("time", "qual") and COUNTS == {"time": (1, 1), "qual": (8, 16)}
             and all(n_files[(u, g, t)] == n for u in UNITS for g in GATES for t, n in templates_counts(u, g))
@@ -2026,6 +2460,508 @@ def _selftest(chk) -> None:
             and not out_paths(unit, rbs, gate="qual")["p_stopped"].exists()
             and r_bs2 is None and isinstance(e_bs2, StageRefusal) and bs_calls == [],
             (e_bs, r_bs and r_bs["status"], e_bs2, bs_calls))
+        # THE CAMPAIGN (the campaign wiring): its values, its rulings, its state, and runs on m's scripted double
+        def camp_factory(r: Path, rule=None, calls=None):
+            def factory():
+                if calls is not None:
+                    calls.append("factory")
+                a = m_testing.OLMoScriptedAdapter("p-stage-selftest")
+                cells = {}
+                for t in campaign_arms(unit):
+                    d = json.loads((r / "schedules" / f"{unit}_campaign_{t}.json").read_text(encoding="utf-8"))
+                    cells.update({(t, j): c for j, c in enumerate(d["cells"])})
+                a.load(m_stages._script_policy(unit, "campaign", cells, rule), None)
+                return a
+            return factory
+
+        @contextlib.contextmanager
+        def hour_cap(v):
+            # SELF-TEST ONLY: the unit's cap set for the case's duration, restored after (the cap is the PI's)
+            saved = dict(CAMPAIGN_HOUR_CAP)
+            CAMPAIGN_HOUR_CAP[unit] = v
+            try:
+                yield
+            finally:
+                CAMPAIGN_HOUR_CAP.clear()
+                CAMPAIGN_HOUR_CAP.update(saved)
+
+        def camp_run(r: Path, fac, *, resume: bool = False, adjudication=None, pi_stop=None, cap_h=40):
+            m_scaffold._of_record.cache_clear()
+            buf = io.StringIO()
+            try:
+                with hour_cap(cap_h), olmo_stub_startup(), pod(), contextlib.redirect_stdout(buf):
+                    return (run_campaign(unit, fac, stub=True, out_root=r, resume=resume, adjudication=adjudication,
+                                         pi_stop=pi_stop), None, buf.getvalue())
+            except (SystemExit, Exception) as e:
+                return None, e, buf.getvalue()
+
+        def qualified(name: str) -> Path:
+            r = root(name)
+            stub_run(r, factory_with())
+            stub_run(r, factory_with(gate="qual"), gate="qual")
+            return r
+
+        def m_ck(r: Path) -> dict:
+            try:
+                return json.loads(out_paths(unit, r, gate="campaign")["m_ckpt"].read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                return {}
+
+        a0, a0s = campaign_arms(unit)
+        gpw = {u: gpwr_problems(u)[0] for u in UNITS}
+        saved_lc = dict(CAMPAIGN_LAUNCH_COUNTS)
+        try:
+            CAMPAIGN_LAUNCH_COUNTS[unit] = (128, 64)
+            gpw_bad = gpwr_problems(unit)[0]
+        finally:
+            CAMPAIGN_LAUNCH_COUNTS.clear()
+            CAMPAIGN_LAUNCH_COUNTS.update(saved_lc)
+        with hour_cap(40):
+            lines40 = campaign_lock_lines(unit)
+            lk40 = (campaign_lock_problems(unit, f"x\n{lines40[0]}\n{lines40[1]}\ny"),
+                    campaign_lock_problems(unit, f"{lines40[0]}.\n{lines40[1]}"),
+                    campaign_lock_problems(unit, lines40[0].replace("sft", "dpo") + f"\n{lines40[1]}"),
+                    campaign_lock_problems(unit, lines40[0]))
+        caps = {}
+        for v in (4, 4.5, 0, -1, True, float("inf"), "4", None):
+            with hour_cap(v):
+                caps[repr(v)] = (campaign_hour_cap(unit), campaign_lock_lines(unit)[1:])
+        cp_out = out_paths(unit, DEFAULT_OUT_P, gate="campaign")
+        chk("stage: the campaign's values (the campaign wiring's PIN) -- STAGES the gates and the campaign; the launch "
+            "counts G-PWR (p)'s of record at each unit (gpwr_problems clean, and a differing count refused), keyed by "
+            "the unit's arms, contrast first; the floors the package's, 80 and 32; the lock's lines whole lines (a "
+            "trailing period, another unit's arms, a missing cap line each refused); the campaign named campaign-OLMo-"
+            "{ckpt} (p), its outputs _campaign_ and m's adjudication excerpt in place of reads; the hour cap a positive "
+            "finite int or float (4.5 h kept, its line from the same value), never 0, a negative, a bool, an infinity, "
+            "a text or None (round 1's MINOR-2)",
+            STAGES == ("time", "qual", "campaign") and all(v == [] for v in gpw.values()) and bool(gpw_bad)
+            and campaign_launch_counts(unit) == {a0: 96, a0s: 64} and list(campaign_launch_counts(unit)) == [a0, a0s]
+            and campaign_floors(unit) == {a0: 80, a0s: 32}
+            and lines40 == (f"launch counts = {a0} 96, {a0s} 64", "hour cap = 40 h")
+            and lk40[0] == [] and all(bool(x) for x in lk40[1:])
+            and label(unit, "campaign") == "campaign-OLMo-sft (p)" and label("Q-F0", "campaign") == "campaign ('Q-F0', "
+            "not a p unit)"
+            and cp_out["p_calls"].name == "OLMo-sft_campaign_p-calls.jsonl"
+            and cp_out["m_excerpt"].name == "OLMo-sft_campaign_adjudication.json" and "m_reads" not in cp_out
+            and caps == {"4": (4, ("hour cap = 4 h",)), "4.5": (4.5, ("hour cap = 4.5 h",)), "0": (None, ()),
+                         "-1": (None, ()), "True": (None, ()), "inf": (None, ()), "'4'": (None, ()), "None": (None, ())},
+            (gpw, gpw_bad, lines40, lk40, label(unit, "campaign"), caps))
+        try:
+            with hour_cap(None):
+                precheck(unit, stub=True, gate="campaign")
+            no_cap = "ran"
+        except StageRefusal as e:
+            no_cap = "refused" if "the hour cap is not set" in str(e) else f"other: {e}"
+        with hour_cap(40):
+            pre_c = precheck(unit, stub=True, gate="campaign")
+        chk("stage: the campaign's precheck refuses an unset hour cap (the PI's cap share, a LOCK-p v1.0 value) before "
+            "anything loads, and passes on the stub with a cap set; the caps of record are the PI's word of 2026-11-14, "
+            "\"2 h each\", their lock lines \"hour cap = 2 h\" at each unit",
+            no_cap == "refused" and pre_c["gate"] == "campaign"
+            and CAMPAIGN_HOUR_CAP == {"OLMo-sft": 2, "OLMo-dpo": 2, "OLMo-instruct": 2}
+            and all(campaign_hour_cap(u) == 2 and campaign_lock_lines(u)[1] == "hour cap = 2 h" for u in UNITS),
+            (no_cap, CAMPAIGN_HOUR_CAP))
+        with tempfile.TemporaryDirectory(prefix="p_stage_rulings_") as td_r:
+            tr = Path(td_r)
+            (tr / "bom.txt").write_bytes(b"\xef\xbb\xbfThe seat's ruling.\n")
+            (tr / "zw.txt").write_text(" ​\t\n", encoding="utf-8")
+            (tr / "bad.txt").write_bytes(b"\xff\xfe\x00")
+            rt = (ruling_texts(str(tr / "bom.txt"), None), ruling_texts(None, str(tr / "zw.txt")),
+                  ruling_texts(str(tr / "absent.txt"), None), ruling_texts(str(tr), None),
+                  ruling_texts(None, str(tr / "bad.txt")))
+        chk("stage: ruling_texts reads a ruling file under m's rule -- a byte-order mark dropped; a blank text (a "
+            "zero-width space), an absent path, a directory and undecodable bytes each refused",
+            rt[0] == ({"adjudication": "The seat's ruling.\n", "pi_stop": None}, []) and "blank" in rt[1][1][0]
+            and "not a regular file" in rt[2][1][0] and "not a regular file" in rt[3][1][0]
+            and "unreadable as UTF-8" in rt[4][1][0], [x[1] for x in rt])
+        with tempfile.TemporaryDirectory(prefix="p_stage_cstate_") as td_s:
+            ts = Path(td_s)
+
+            def ck_file(name: str, obj) -> Path:
+                f = ts / name
+                f.write_text(obj if isinstance(obj, str) else json.dumps(obj), encoding="utf-8")
+                return f
+
+            def pause(kind="look", at=40, adj=None, arm=None):
+                return {"kind": kind, "at_launches": at, "adjudication": adj, "arm": arm}
+            sess = [{"template": a0}]
+            f_open = ck_file("open.json", {"sessions": sess, "campaign": {"pauses": [pause()], "pi_stop": None}})
+            f_qf0 = ck_file("qf0arm.json", {"sessions": sess, "campaign": {"pauses": [pause(arm="A0")]}})
+            f_bad = ck_file("bad.json", "{not json")
+            f_end = ck_file("end.json", {"sessions": sess, "campaign": {"pauses": [], "terminal": {"status": "COMPLETE"}}})
+            f_pend = ck_file("pend.json", {"sessions": sess, "campaign": {"pauses": [pause(adj="r1")]},
+                                           m_resume.END_PENDING: {"status": "COMPLETE"}})
+            f_none = ck_file("none.json", {"sessions": [], "campaign": {"pauses": []}})
+            f_adj = ck_file("adj.json", {"sessions": sess, "campaign": {"pauses": [pause(adj="ruling one"), pause(at=80)]}})
+            f_done = ck_file("done.json", {"sessions": sess, "campaign": {"pauses": [pause(adj="ruling one")]}})
+            f_exh = ck_file("exh.json", {"sessions": sess, "campaign": {"pauses": [pause("schedule_exhausted", 90, None, a0s)]}})
+            f_pi = ck_file("pi.json", {"sessions": sess, "campaign": {"pauses": [pause()], "pi_stop": "stop one"}})
+            states = {n: campaign_state(f, unit)[0] for n, f in (("absent", ts / "absent.json"), ("open", f_open),
+                                                                 ("qf0", f_qf0), ("bad", f_bad), ("end", f_end),
+                                                                 ("pend", f_pend))}
+            rpr = {"none": campaign_ruling_problems(f_open, unit, None, None),
+                   "adj_open": campaign_ruling_problems(f_open, unit, "a ruling", None),
+                   "mismatch": campaign_ruling_problems(f_pi, unit, None, "stop two"),
+                   "pending": campaign_ruling_problems(f_pend, unit, "a ruling", None),
+                   "pi_none": campaign_ruling_problems(f_none, unit, None, "stop"),
+                   "exhausted": campaign_ruling_problems(f_exh, unit, "a ruling", None),
+                   "exhausted_pi": campaign_ruling_problems(f_exh, unit, None, "stop"),
+                   "reused": campaign_ruling_problems(f_adj, unit, " ruling one\n", None),
+                   "no_pause": campaign_ruling_problems(f_done, unit, "a ruling", None),
+                   "ended": campaign_ruling_problems(f_end, unit, "a ruling", None)}
+        chk("stage: campaign_state reads m's campaign checkpoint tolerantly (absent, open, pending, ended; unreadable "
+            "when not JSON or when a pause names Q-F0's arm A0), and campaign_ruling_problems refuses, in m's driver's "
+            "words, a PI stop other than the one recorded (CHECKPOINT MISMATCH), a ruling beside an end pending, a PI "
+            "stop with nothing launched, an adjudication alone on an exhausted schedule, an earlier pause's ruling "
+            "offered again (RULING REUSED) and an adjudication with no open pause; none when the ruling fits",
+            states == {"absent": "absent", "open": "open", "qf0": "unreadable", "bad": "unreadable", "end": "ended",
+                       "pend": "pending"}
+            and rpr["none"] == [] and rpr["adj_open"] == [] and rpr["exhausted_pi"] == [] and rpr["ended"] == []
+            and rpr["mismatch"][0].startswith("CHECKPOINT MISMATCH")
+            and rpr["pending"][0].startswith("RULING BESIDE AN END PENDING")
+            and rpr["pi_none"][0].startswith("PI STOP REFUSED") and rpr["exhausted"][0].startswith("SCHEDULE EXHAUSTED")
+            and rpr["reused"][0].startswith("RULING REUSED") and rpr["no_pause"][0].startswith("NO PAUSE TO ADJUDICATE"),
+            (states, {k: (v[0][:40] if v else v) for k, v in rpr.items()}))
+        # a full campaign: COMPLETE at the floors, p's report written, the record's form
+        rcc = qualified("camp-complete")
+        r_c, e_c, _ = camp_run(rcc, camp_factory(rcc))
+        ok_c, det_c = e_c is None and r_c is not None and r_c["status"] == "COMPLETE", (e_c, r_c and r_c["status"])
+        if ok_c:
+            ppc = r_c["paths"]
+            rep_c = json.loads(ppc["p_report"].read_text(encoding="utf-8"))
+            ev_c, lp_c = read_calls(ppc["p_calls"])
+            runs_c = [e for e in ev_c if e.get("event") == "run"]
+            ok_c = (rep_c["status"] == "COMPLETE" and rep_c["stage"] == "campaign-OLMo-sft (p)"
+                    and set(rep_c["m_outputs"]) == {"report", "adjudication_excerpt"}
+                    and rep_c["m_outputs"]["report"]["sha256"] is not None
+                    and rep_c["proxy"]["attribution_complete"] is True
+                    and rep_c["proxy"]["sham"]["n_attributed"] == rep_c["proxy"]["sham"]["n_rounds"] > 0
+                    and rep_c["form"] == REPORT_TEXT["campaign"]["form"] and lp_c == []
+                    and [r["stage"] for r in runs_c] == ["campaign-OLMo-sft (p)"]
+                    and runs_c[0]["register_entered"] == list(ENTERED) and not ppc["p_stopped"].exists()
+                    and r_c["result"]["launches"] == {a0: 80, a0s: 32})
+            det_c = (rep_c["status"], rep_c["m_outputs"], r_c["result"]["launches"], lp_c)
+            first_c = ppc["p_report"].read_bytes()
+            r_c2, e_c2, _ = camp_run(rcc, camp_factory(rcc), resume=True)
+            ppc["p_report"].rename(ppc["p_report"].with_name("moved-campaign.json"))
+            r_c3, e_c3, _ = camp_run(rcc, camp_factory(rcc), resume=True)
+            _rc, how_c = write_report(unit, rcc, gate="campaign")
+            ok_c = (ok_c and r_c2 is None and isinstance(e_c2, StageRefusal) and "p's report exists" in str(e_c2)
+                    and r_c3 is None and isinstance(e_c3, StageRefusal) and "records the campaign's end" in str(e_c3)
+                    and ppc["p_report"].read_bytes() == first_c)
+        restored_c = (m_corr._eligible_m, m_keys.arm_key, m_stages.DEFAULT_OUT, m_schedule.verify_schedule_dir,
+                      m_resume.IDENTITY_KEYS_OLMO, m_resume.Identity) == m_attrs
+        chk("stage: a full campaign on m's scripted OLMo double, its prior the unit's G-F0m-OLMo (p) in the same "
+            "scratch root -- m's run_campaign under entries (1), (2), (6)-(9): COMPLETE at the floors (80 and 32 "
+            "launched), p's report written with it (the read domain, every sham round attributed, m's report and "
+            "adjudication excerpt named); a later --resume refused while p's report stands, and refused as ended once "
+            "it is moved away; the report re-derived byte for byte; every m attribute restored",
+            ok_c and restored_c, det_c)
+        # a pause: shown, then adjudicated to COMPLETE; a PI stop on another
+        echo8 = (lambda t, s, n, call: "{TOLD}" if t == a0s and s < 8 and n == 10 else None)
+        rcp = qualified("camp-pause")
+        r_p1, e_p1, out_p1 = camp_run(rcp, camp_factory(rcp, echo8))
+        ppp = out_paths(unit, rcp, gate="campaign")
+        n_after_p1 = len(m_ck(rcp)["sessions"]) if ppp["m_ckpt"].exists() else None
+        files_after_p1 = (ppp["p_report"].exists(), ppp["p_stopped"].exists())
+        r_p0, e_p0, _ = camp_run(rcp, camp_factory(rcp))
+        r_ps, e_ps, _ = camp_run(rcp, camp_factory(rcp), resume=True)
+        n_after_show = len(m_ck(rcp)["sessions"]) if ppp["m_ckpt"].exists() else None
+        r_pa, e_pa, out_pa = camp_run(rcp, camp_factory(rcp), resume=True,
+                                      adjudication="The seat rules the look's pause.")
+        ev_p, _lp = read_calls(ppp["p_calls"])
+        ends_p = [e.get("status") for e in ev_p if e.get("event") == "end"]
+        ck_p = m_ck(rcp)
+        chk("stage: a campaign whose first look fires (eight sham rounds echo the TOLD line) PAUSEs -- no p report, no "
+            "STOP marker; a later run without --resume is refused; with --resume and no ruling it is shown its pause "
+            "and launches nothing; with the seat's adjudication it resumes to COMPLETE, p's report then written; the "
+            "call log's end lines PAUSE, PAUSE, COMPLETE",
+            e_p1 is None and r_p1 is not None and r_p1["status"] == "PAUSE" and r_p1["report"] is None
+            and files_after_p1 == (False, False) and not ppp["p_stopped"].exists()
+            and r_p0 is None and isinstance(e_p0, StageRefusal) and "a later run is a --resume" in str(e_p0)
+            and e_ps is None and r_ps["status"] == "PAUSE" and r_ps["report"] is None and n_after_show == n_after_p1
+            and e_pa is None and r_pa["status"] == "COMPLETE" and r_pa["report"] is not None
+            and ppp["p_report"].exists() and ends_p == ["PAUSE", "PAUSE", "COMPLETE"]
+            and ((ck_p.get("campaign") or {}).get("pauses") or [{}])[0].get("adjudication")
+            == "The seat rules the look's pause."
+            and any(ln.startswith("RULING campaign-OLMo-sft (p): the seat's adjudication (sha16 ")
+                    and ln.endswith("the campaign's last pause: look at 40 launches, open") for ln in out_pa.splitlines())
+            and "The seat rules" not in out_pa,
+            (ends_p, n_after_p1, n_after_show, r_p1 and r_p1["status"], r_ps and r_ps["status"],
+             r_pa and r_pa["status"], ((ck_p.get("campaign") or {}).get("pauses") or [])[:1], e_p1, e_ps, e_pa,
+             str(e_p0)[:60]))
+        rcs = qualified("camp-pistop")
+        camp_run(rcs, camp_factory(rcs, echo8))
+        r_pi, e_pi, _ = camp_run(rcs, camp_factory(rcs), resume=True, pi_stop="The PI stops the campaign.")
+        chk("stage: a paused campaign ended by the PI's stop is PI-STOP (terminal), p's report written with it",
+            e_pi is None and r_pi is not None and r_pi["status"] == "PI-STOP" and r_pi["report"]["status"] == "PI-STOP"
+            and ((m_ck(rcs).get("campaign") or {}).get("terminal") or {}).get("status") == "PI-STOP",
+            (e_pi, r_pi and r_pi["status"]))
+        # p's STOP in the campaign: the proxy's trigger; the marker under the campaign's name; a later run refused
+        rcx = qualified("camp-stop")
+        r_x, e_x, _ = camp_run(rcx, camp_factory(rcx, lambda t, s, n, call: "zebra\n\nx" if t == a0 and s == 0
+                                                 and n == 6 else None))
+        x_calls: list = []
+        r_x2, e_x2, _ = camp_run(rcx, camp_factory(rcx, calls=x_calls), resume=True)
+        ppx = out_paths(unit, rcx, gate="campaign")
+        chk("stage: a campaign STOPPED by p's proxy (a line break in a stored text) leaves its marker under the "
+            "campaign's name and no report; a later run is refused before the factory is called",
+            r_x is None and isinstance(e_x, SystemExit) and stop_in(e_x) and ppx["p_stopped"].exists()
+            and ppx["p_stopped"].name == "OLMo-sft_campaign_p-STOPPED.json" and not ppx["p_report"].exists()
+            and r_x2 is None and isinstance(e_x2, StageRefusal) and x_calls == [], (e_x, e_x2, x_calls))
+        # refusals before the load: no qualification; an unset cap
+        rcn = root("camp-noprior")
+        n_calls: list = []
+        r_n, e_n, _ = camp_run(rcn, camp_factory(rcn, calls=n_calls))
+        rcq = qualified("camp-nocap")
+        q_calls: list = []
+        r_q, e_q, _ = camp_run(rcq, camp_factory(rcq, calls=q_calls), cap_h=None)
+        chk("stage: a campaign with no qualification in its root, or with no hour cap, is refused before the load -- "
+            "the factory never called, nothing recorded",
+            r_n is None and isinstance(e_n, StageRefusal) and "the qualification" in str(e_n) and n_calls == []
+            and not out_paths(unit, rcn, gate="campaign")["p_calls"].exists()
+            and r_q is None and isinstance(e_q, StageRefusal) and "hour cap is not set" in str(e_q) and q_calls == [],
+            (e_n, e_q))
+        # the values reach m's stage as declared (a recorder in m's place)
+        rcr = qualified("camp-recorder")
+        seen: dict = {}
+
+        def recorder(adapter, **kw):
+            seen.update(kw)
+            return {"status": "PAUSE"}
+        with mock.patch.object(m_stages, "run_campaign", recorder):
+            r_r, e_r, _ = camp_run(rcr, camp_factory(rcr), cap_h=37)
+        marked_r = out_paths(unit, rcr, gate="campaign")["p_stopped"].exists()
+        rcu_ = qualified("camp-recorder-unreadable")
+
+        def recorder_bad(adapter, **kw):
+            pth = out_paths(unit, rcu_, gate="campaign")["m_ckpt"]
+            pth.parent.mkdir(parents=True, exist_ok=True)
+            pth.write_text("{not json", encoding="utf-8")
+            return {"status": "COMPLETE"}
+        with mock.patch.object(m_stages, "run_campaign", recorder_bad):
+            r_u, e_u, _ = camp_run(rcu_, camp_factory(rcu_))
+        marked_u = out_paths(unit, rcu_, gate="campaign")["p_stopped"].exists()
+        chk("stage: run_campaign passes m's stage the unit's floors, launch counts and hour cap, the qualification's "
+            "checkpoint as its prior, the substrate olmo, the root and the rulings (a recorder in m's place); a return "
+            "that leaves the checkpoint neither open nor ended (absent: the recorder writes none; unreadable: it writes "
+            "garbage) is a STOP inside the recorded run, its marker written, never a silent end (rounds 1-2's "
+            "NOTE-1/A)",
+            r_r is None and isinstance(e_r, StageStop) and "neither open nor ended" in str(e_r) and marked_r
+            and r_u is None and isinstance(e_u, StageStop) and "'unreadable'" in str(e_u) and marked_u
+            and seen.get("floors") == {a0: 80, a0s: 32} and seen.get("launch_counts") == {a0: 96, a0s: 64}
+            and seen.get("hour_cap") == 37
+            and Path(seen.get("prior_ckpt")).resolve() == out_paths(unit, rcr, gate="qual")["m_ckpt"].resolve()
+            and seen.get("substrate") == "olmo" and Path(seen.get("out_root")).resolve() == rcr.resolve()
+            and seen.get("adjudication") is None
+            and seen.get("pi_stop") is None and seen.get("unit") == unit, (e_r, {k: str(v)[:40] for k, v in seen.items()}))
+        # round 1's MAJOR-1: a terminal end whose end look fires is m's PAUSE -- p's report records it, terminal beside
+        rce = qualified("camp-endlook")
+        real_look = m_stages.campaign_look
+
+        def end_fires(u, records, look):
+            r_ = real_look(u, records, look)
+            if look == "end":
+                r_ = dict(r_, fired=True, results=[dict(x, fired=(i == 0)) for i, x in enumerate(r_["results"])])
+            return r_
+        with mock.patch.object(m_stages, "campaign_look", end_fires):
+            r_e, e_e, _ = camp_run(rce, camp_factory(rce))
+        ppe = out_paths(unit, rce, gate="campaign")
+        rep_e = json.loads(ppe["p_report"].read_text(encoding="utf-8")) if ppe["p_report"].exists() else {}
+        camp_e = m_ck(rce).get("campaign") or {}
+        last_e = (camp_e.get("pauses") or [{}])[-1]
+        r_e2, e_e2, _ = camp_run(rce, camp_factory(rce), resume=True)
+        chk("stage: a campaign that ends COMPLETE with its end look firing (m:330) is m's PAUSE, the terminal standing -- "
+            "the run's status PAUSE, p's report written with status PAUSE and the terminal COMPLETE beside it, so the "
+            "run and campaign-report exit 3 as m's run does; a later run is refused (the campaign review's MAJOR-1)",
+            e_e is None and r_e is not None and r_e["status"] == "PAUSE" and rep_e.get("status") == "PAUSE"
+            and rep_e.get("campaign_terminal") == "COMPLETE" and m_stages.EXIT_CODES[rep_e.get("status")] == 3
+            and (camp_e.get("terminal") or {}).get("status") == "COMPLETE" and last_e.get("kind") == "end_look"
+            and last_e.get("adjudication") is None
+            and r_e2 is None and isinstance(e_e2, StageRefusal) and "p's report exists" in str(e_e2),
+            (e_e, r_e and r_e["status"], rep_e.get("status"), rep_e.get("campaign_terminal"), last_e.get("kind"), e_e2))
+        # round 2's MINOR-B: m's own STOP (a G-VER failure: a record edited after the runner returns); its status STOP,
+        # never PAUSE, even where the end look fires at the STOP point (C9(ii)), and no p marker (m's STOP is not p's)
+        real_run_olmo = m_stages.run_session_olmo
+
+        def tampered(adapter, sc, audit_, ban_ids, **kw):
+            rec_ = real_run_olmo(adapter, sc, audit_, ban_ids, **kw)
+            if sc.template == a0s and sc.s == 3:
+                rec_["rounds"][0]["text"] += " x"
+            return rec_
+        mstop = {}
+        for k_, look_patch in (("plain", None), ("end_look", end_fires)):
+            r_m = qualified(f"camp-mstop-{k_}")
+            with contextlib.ExitStack() as es_:
+                es_.enter_context(mock.patch.object(m_stages, "run_session_olmo", tampered))
+                if look_patch is not None:
+                    es_.enter_context(mock.patch.object(m_stages, "campaign_look", look_patch))
+                rr_, ee_, _ = camp_run(r_m, camp_factory(r_m))
+            pm_ = out_paths(unit, r_m, gate="campaign")
+            rp_ = json.loads(pm_["p_report"].read_text(encoding="utf-8")) if pm_["p_report"].exists() else {}
+            lp_ = ((m_ck(r_m).get("campaign") or {}).get("pauses") or [{}])[-1]
+            mstop[k_] = (ee_ is None and rr_ is not None and rr_["status"] == "STOP" and rp_.get("status") == "STOP"
+                         and "campaign_terminal" not in rp_ and not pm_["p_stopped"].exists(), lp_.get("kind"))
+        chk("stage: a campaign ended by m's own STOP (G-VER) is recorded STOP -- p's report written with it, no terminal "
+            "beside it, no p marker -- and stays STOP where the end look fires at the STOP point (its end_look pause "
+            "recorded by m; round 2's MINOR-B)",
+            mstop == {"plain": (True, None), "end_look": (True, "end_look")}, mstop)
+        # round 1's MINOR-1: run_gate runs the gates only
+        g_calls: list = []
+        rg_ = qualified("camp-rungate")
+        m_scaffold._of_record.cache_clear()
+        try:
+            with hour_cap(40), olmo_stub_startup(), pod(), contextlib.redirect_stdout(io.StringIO()):
+                run_gate(unit, "campaign", camp_factory(rg_, calls=g_calls), stub=True, out_root=rg_)
+            rg_out = "ran"
+        except StageRefusal as e:
+            rg_out = "refused" if "run_gate runs p's gates" in str(e) else f"other: {e}"
+        except (SystemExit, Exception) as e:
+            rg_out = f"raised {type(e).__name__}: {e}"
+        chk("stage: run_gate refuses the campaign before anything -- the factory never called, no call log written "
+            "(the campaign review's MINOR-1)",
+            rg_out == "refused" and g_calls == [] and not out_paths(unit, rg_, gate="campaign")["p_calls"].exists(),
+            rg_out)
+        # round 1's MINOR-4: the campaign's own refusals, each before the factory is called, on a paused campaign
+        rcf = qualified("camp-refusals")
+        camp_run(rcf, camp_factory(rcf, echo8))
+        ppf = out_paths(unit, rcf, gate="campaign")
+        ck_orig = ppf["m_ckpt"].read_bytes() if ppf["m_ckpt"].exists() else b"{}"
+        outcomes: dict = {}
+
+        def doctored(edit):
+            try:
+                ck_ = json.loads(ck_orig)
+                edit(ck_)
+                ppf["m_ckpt"].write_text(json.dumps(ck_), encoding="utf-8")
+            except (KeyError, IndexError, TypeError, ValueError, OSError):
+                pass                                # the case then fails on its own outcome, never aborting the rest
+
+        def refused_before(name_: str, **kw):
+            calls_: list = []
+            r_, e_, o_ = camp_run(rcf, camp_factory(rcf, calls=calls_), resume=True, **kw)
+            outcomes[name_] = (r_ is None and isinstance(e_, StageRefusal) and calls_ == [] and "RULING" not in o_,
+                               str(e_)[:160])
+        doctored(lambda c: c["campaign"]["pauses"][-1].__setitem__("adjudication", "X"))
+        refused_before("no_pause", adjudication="Y")
+        doctored(lambda c: c["campaign"].__setitem__("pauses", [
+            dict(c["campaign"]["pauses"][-1], adjudication="R1"), dict(c["campaign"]["pauses"][-1], at_launches=80)]))
+        refused_before("reused", adjudication=" R1 ")
+        doctored(lambda c: c["campaign"].__setitem__("pi_stop", "stop one"))
+        refused_before("mismatch", pi_stop="stop two")
+        ppf["m_ckpt"].write_text("{not json", encoding="utf-8")
+        refused_before("unreadable")
+        ppf["m_ckpt"].write_bytes(ck_orig)
+        scheds_ = sorted((rcf / "schedules").glob("*.json"))
+        if scheds_:
+            sched_orig = scheds_[0].read_bytes()
+            scheds_[0].write_text("{}", encoding="utf-8")
+            refused_before("schedules", adjudication="A ruling for the open pause.")
+            scheds_[0].write_bytes(sched_orig)
+        ppf["p_stopped"].write_text("{}", encoding="utf-8")
+        refused_before("marker")
+        ppf["p_stopped"].unlink()
+        log_orig = ppf["p_calls"].read_bytes() if ppf["p_calls"].exists() else b""
+        with open(ppf["p_calls"], "ab") as fh:
+            fh.write((json.dumps({"event": "run", "schema": CALLS_SCHEMA, "run": 2, "resume": True,
+                                  "stage": label(unit, "campaign"), "unit": unit}) + "\n").encode("ascii"))
+            fh.write((json.dumps({"event": "end", "run": 2, "outcome": "exception",
+                                  "exception": {"type": "StageStop", "message": "self-test", "stop": True}})
+                      + "\n").encode("ascii"))
+        refused_before("stop_line")
+        ppf["p_calls"].write_bytes(log_orig)
+        want_ref = {"no_pause": "NO PAUSE TO ADJUDICATE", "reused": "RULING REUSED", "mismatch": "CHECKPOINT MISMATCH",
+                    "unreadable": "unreadable as a campaign's", "schedules": "are not clean",
+                    "marker": "is STOPPED", "stop_line": "ended in a STOP"}
+        chk("stage: on a paused campaign each of its own refusals stands before the load, the factory never called and "
+            "no RULING line printed -- an adjudication with no open pause, an earlier pause's ruling offered again, a PI "
+            "stop other than the one recorded, an unreadable checkpoint, unclean schedules (a fitting ruling offered: "
+            "the RULING line waits for the load), a STOP marker with no STOP line, and a STOP line with no marker (each "
+            "guard apart; the campaign review's MINOR-4, round 2's MINOR-A)",
+            set(outcomes) == set(want_ref) and all(ok_ and want_ref[k] in msg for k, (ok_, msg) in outcomes.items()),
+            {k: (ok_, msg[:70]) for k, (ok_, msg) in outcomes.items()})
+        # round 3's NOTE-1: the RULING line beside an end pending -- the PI's stop offered again with the recorded text
+        # is the one ruling that reaches the line there; the recorded run stood in for, so nothing loads or runs
+        rec_runs: list = []
+
+        def no_run(*a, **kw):
+            rec_runs.append(a[1] if len(a) > 1 else kw.get("stage"))
+            raise StageRefusal("SELFTEST: the recorded run stood in for (round 3's NOTE-1)")
+        doctored(lambda c: (c["campaign"].__setitem__("pi_stop", "stop one"),
+                            c.__setitem__(m_resume.END_PENDING, {"status": "PI-STOP"})))
+        calls_pend: list = []
+        with mock.patch.object(sys.modules[__name__], "_run_recorded", no_run):
+            r_pend, e_pend, o_pend = camp_run(rcf, camp_factory(rcf, calls=calls_pend), resume=True,
+                                              pi_stop="stop one")
+        ppf["m_ckpt"].write_bytes(ck_orig)
+        want_pend = (f"RULING {label(unit, 'campaign')}: the PI's stop (sha16 {m_stages._sha16_text('stop one')}); the "
+                     f"campaign carries an end pending, which the stage re-finishes first")
+        chk("stage: beside an end pending the RULING line names it -- the PI's stop offered again with the recorded "
+            "text, the one ruling that reaches the line there, printed as its sha16 with the end pending, just before "
+            "the recorded run (stood in for: the factory never called) (round 3's NOTE-1)",
+            want_pend in o_pend and r_pend is None and isinstance(e_pend, StageRefusal) and "stood in for" in str(e_pend)
+            and rec_runs == ["campaign"] and calls_pend == [],
+            (o_pend[-240:], rec_runs, str(e_pend)[:100], calls_pend))
+        with tempfile.TemporaryDirectory(prefix="p_stage_cstate2_") as td_s2:
+            ts2 = Path(td_s2)
+
+            def ck_file2(name: str, obj) -> Path:
+                f = ts2 / name
+                f.write_text(json.dumps(obj), encoding="utf-8")
+                return f
+            sess2 = [{"template": a0}]
+            f_pi2 = ck_file2("pi.json", {"sessions": sess2, "campaign": {"pauses": [], "pi_stop": "stop one"}})
+            f_pendpi = ck_file2("pendpi.json", {"sessions": sess2, "campaign": {"pauses": [], "pi_stop": "stop one"},
+                                                m_resume.END_PENDING: {"status": "PI-STOP"}})
+            f_exh2 = ck_file2("exh.json", {"sessions": sess2, "campaign": {"pauses": [
+                {"kind": "schedule_exhausted", "at_launches": 90, "adjudication": None, "arm": a0s}]}})
+            rpr2 = {"stripped_same_stop": campaign_ruling_problems(f_pi2, unit, None, " stop one\n"),
+                    "recorded_stop_beside_pending": campaign_ruling_problems(f_pendpi, unit, None, "stop one"),
+                    "exhausted_with_stop": campaign_ruling_problems(f_exh2, unit, "a ruling", "stop")}
+        chk("stage: campaign_ruling_problems as m's driver words it on the three branches round 1 found untested -- the "
+            "recorded PI stop compared stripped; the recorded stop offered beside an end pending (the stage re-finishes, "
+            "no refusal); an adjudication on an exhausted schedule beside the PI's stop (the stop ends it, no refusal)",
+            rpr2 == {"stripped_same_stop": [], "recorded_stop_beside_pending": [], "exhausted_with_stop": []}, rpr2)
+        # the non-stub precheck at the campaign binds G-PWR (p)'s record and the lock's campaign lines (sentinels)
+        me_st = sys.modules[__name__]
+        real_committed = m_stages._committed
+
+        def committed_lock(rel, *a, **kw):
+            if rel == lock_rel(unit):
+                return [], b"LOCK-p stand-in for the self-test\nBACKEND OF RECORD 641ee466f4553b6a\n"
+            return real_committed(rel, *a, **kw)
+        with hour_cap(40), mock.patch.object(me_st, "gpwr_problems", lambda u: (["GPWR-SENTINEL"], "f" * 64)), \
+                mock.patch.object(me_st, "campaign_lock_problems", lambda u, t: ["LOCKLINE-SENTINEL"]), \
+                mock.patch.object(m_stages, "_committed", committed_lock):
+            try:
+                precheck(unit, stub=False, gate="campaign")
+                pc_ = "ran"
+            except StageRefusal as e:
+                pc_ = str(e)
+            except SystemExit as e:
+                pc_ = f"other: {e}"
+
+        def committed_gpwr(doc):
+            def f_(rel, *a, **kw):
+                if rel == GPWR_REL:
+                    return [], json.dumps(doc).encode("utf-8")
+                return real_committed(rel, *a, **kw)
+            return f_
+        good = json.loads(real_committed(GPWR_REL)[1].decode("utf-8"))
+        bad_schema = dict(good, schema="p-gpwr-v0")
+        bad_sham = json.loads(json.dumps(good))
+        bad_sham["units"][unit]["launch"]["L"]["A0s"] = 60
+        gps = {}
+        for k_, doc_ in (("good", good), ("schema", bad_schema), ("sham", bad_sham)):
+            with mock.patch.object(m_stages, "_committed", committed_gpwr(doc_)):
+                gps[k_] = gpwr_problems(unit)
+        chk("stage: the non-stub precheck at the campaign carries G-PWR (p)'s problems and the lock's campaign-line "
+            "problems among its refusals and requires the lock to name G-PWR (p)'s record (sentinels in their place); "
+            "gpwr_problems refuses a record of another schema and a sham launch count other than this build's",
+            "GPWR-SENTINEL" in pc_ and "LOCKLINE-SENTINEL" in pc_ and "does not name G-PWR (p)'s record" in pc_
+            and gps["good"][0] == [] and gps["good"][1] is not None
+            and any("schema" in x for x in gps["schema"][0]) and any("launch counts" in x for x in gps["sham"][0]),
+            (pc_[:200], gps["schema"][0], gps["sham"][0]))
         # FLAG (j)'s fix: the drift check's import closure, from a fresh interpreter
         from . import gshape as p_gshape
         phantom = type(sys)("valence_core.p_selftest_phantom")
@@ -2094,17 +3030,21 @@ def _selftest(chk) -> None:
             and rec_keys == sorted(fc1), ({k: v[0][:1] for k, v in fails.items()}, seen_fc, rec_keys and len(rec_keys),
                                           (rr_.stderr or "")[-200:]))
         ign = {}
-        for rel in [f"data/p/ckpt/{u}_{g}_p-calls.jsonl" for u in UNITS for g in GATES] + [
-                f"data/p/ckpt/{u}_{g}_p-STOPPED.json" for u in UNITS for g in GATES] + [
-                f"data/p/reports/{u}_{g}_p-report.json" for u in UNITS for g in GATES] + [report.LEXICON_REL]:
+        for rel in [f"data/p/ckpt/{u}_{g}_p-calls.jsonl" for u in UNITS for g in STAGES] + [
+                f"data/p/ckpt/{u}_{g}_p-STOPPED.json" for u in UNITS for g in STAGES] + [
+                f"data/p/reports/{u}_{g}_p-report.json" for u in UNITS for g in STAGES] + [
+                f"data/p/ckpt/{u}_campaign.json" for u in UNITS] + [
+                f"data/p/ckpt/{u}_campaign_adjudication.json" for u in UNITS] + [
+                f"data/p/reports/{u}_campaign_report.json" for u in UNITS] + [report.LEXICON_REL]:
             ign[rel] = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", rel], capture_output=True).returncode
         lock_ign = {rel: subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", rel],
                                         capture_output=True).returncode
-                    for rel in [f"data/p/ckpt/{u}_{g}_p.lock" for u in UNITS for g in GATES]
-                    + [f"data/p/ckpt/{u}_{g}_p-STOPPED.json.reserve-1" for u in UNITS for g in GATES]}
-        chk("stage: git admits every output p's gate stages write -- the six call logs, the six STOP markers, the six "
-            "reports -- and the lexicon, and ignores the six lock files and the STOP reservations (git check-ignore "
-            "exits 1, then 0, for each; round 2's M-2; ledger 27)",
+                    for rel in [f"data/p/ckpt/{u}_{g}_p.lock" for u in UNITS for g in STAGES]
+                    + [f"data/p/ckpt/{u}_{g}_p-STOPPED.json.reserve-1" for u in UNITS for g in STAGES]}
+        chk("stage: git admits every output p's stages write -- the nine call logs, the nine STOP markers, the nine "
+            "reports, m's three campaign checkpoints, adjudication excerpts and reports -- and the lexicon, and ignores "
+            "the nine lock files and the STOP reservations (git check-ignore exits 1, then 0, for each; round 2's M-2; "
+            "ledger 27; the campaign review's NOTE-5)",
             set(ign.values()) == {1} and set(lock_ign.values()) == {0}, (ign, lock_ign))
         sess = [{"template": "T", "s": 0, "contrast": False,
                  "rounds": [{"phase": "forced", "ri": 0, "seed": 7, "text": "a"},

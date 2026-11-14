@@ -21,6 +21,196 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **p — the campaign wiring: BUILD, a p package move, on the seat's read of G-F0m-OLMo (p) ×3, §4.3
+  item 2 (routed by the PI on 2026-11-13, `a2c354e`), and the PI's cap share of 2026-11-14.** Two files move,
+  `valence_core/p/stage.py` and `scripts/p_sessions.py`. `campaign` and `campaign-report` join the wired commands, with
+  G-PWR (p)'s launch counts (A0 96, A0s 64) and the PI's hour cap (2 h) at each checkpoint. (j)'s closure and the
+  register are unchanged. Nothing ran on a model or on the box.
+  - **The routing.**
+    - The seat's §4.3 item 2, verbatim from the words after its colon: "its build may start now, in parallel with G-PWR; its
+      BUILD, blind review and values-check, and G-SHAPE-p's and G-ANL-p's re-runs land after G-PWR's entry;
+      `campaign` joins the wired commands; (j)'s closure and the register unchanged".
+    - The coordinating session's relay (PI date 2026-11-13), after G-PWR (p)'s entry (`3e1b614`): the build may start
+      now, and "If any part of the wiring needs the cap's value, STOP at that point and tell me."
+    - Code's STOP point, the same day. In m's form the campaign's values are driver constants passed to
+      `stages.run_campaign`, and the governing lock carries their line forms (Q-F0's at `scripts/m_sessions.py:617–620`).
+      §4.3 puts p's wiring before v1.0, so the cap is a value of the BUILD. Code offered (a), m's form, with the cap
+      constants and the BUILD after the PI's cap share, or (b), a cap-free form reading the lock, which departs from
+      m's form and needs the seat. Code recommended (a).
+    - The coordinating session's ACK (PI date 2026-11-13), verbatim: "proceed under (a), m's form." and "Build the
+      cap-independent parts now, uncommitted. The cap constants and the BUILD commit come after the PI's cap share,
+      and then the review, the values-check and the two re-runs."
+    - **The PI's cap share** (PI date 2026-11-14, relayed by the coordinating session), verbatim: **"2 h each"**. It
+      answered the coordinating session's question "What hour cap per checkpoint for p's campaigns?", offered with the
+      choices "2 h each" and "3 h each". The session's closing message put the same question as: "What hour cap do
+      you want per checkpoint for p's campaigns: 2 h each, 3 h each, or different figures per checkpoint?" Per
+      checkpoint: sft 2 h, dpo 2 h, instruct 2 h.
+  - **What moves.**
+    - **`valence_core/p/stage.py`.** `STAGES` is `GATES + ("campaign",)`. `GATES` and `COUNTS` are unchanged: the
+      campaign is not a gate, and `run_gate` refuses it before anything runs. A new PIN in the module docstring, THE
+      CAMPAIGN, runs m's `stages.run_campaign` for p's unit under the same register entries (1), (2) and (6)–(9).
+      - **The values, in m's form.** They are passed to m's stage as `scripts/m_sessions.py` passes Q-F0's
+        `CAMPAIGN_LAUNCH_COUNTS` and `CAMPAIGN_HOUR_CAP` (read as text, never imported).
+        - The launch counts per arm, contrast first (`CAMPAIGN_LAUNCH_COUNTS`): A0-OLMo-{ckpt} 96 and A0s-OLMo-{ckpt}
+          64 at each unit, G-PWR (p)'s of record. Before the load, `gpwr_problems` binds them to
+          `data/p/gates/G-PWR-p.json`: the committed blob, schema `p-gpwr-v1`, and the unit's `launch.L` equal per arm.
+        - The floors (`campaign_floors`): m's `schedule.FLOORS` for the OLMo arms, 80 and 32, as m's driver reads
+          Q-F0's.
+        - The hour cap (`CAMPAIGN_HOUR_CAP`): 2 at each unit, with the PI's word and the question quoted in the
+          constant's comment. `campaign_hour_cap` takes a positive finite int or float of hours and refuses a bool;
+          anything else reads as unset. An unset cap is refused at the precheck and again before the load.
+      - **The lock (LOCK-p-OLMo-{ckpt} v1.0).** At `campaign`, the precheck's non-stub path requires the lock to name
+        G-PWR (p)'s record by its sha256, beside `lock_required`'s values, and to carry the campaign's two lines as
+        whole lines (`campaign_lock_lines`): `launch counts = A0-OLMo-{ckpt} 96, A0s-OLMo-{ckpt} 64` and
+        `hour cap = 2 h`.
+      - **The prior** is the unit's G-F0m-OLMo (p) checkpoint, checked by `prior_problems` at `campaign`: m's
+        `prior_gate`, with `require_real` on a non-stub run, then p's identity (`proposal`, `proposal_p_sha256`).
+      - **The campaign's refusals, before the load** (`_run_campaign_locked`), in order:
+        - p's report exists;
+        - the STOP marker stands;
+        - the call log, or m's checkpoint, exists and the run is not a `--resume`;
+        - m's checkpoint exists and the call log does not;
+        - the call log is unreadable, or a run in it ended in a STOP;
+        - m's checkpoint stands beside a log with no run line, or the log is not this campaign's;
+        - m's checkpoint is unreadable as a campaign's, or records the campaign's end. `campaign_state` mirrors m's
+          driver's `_campaign_state` with the unit's arms; an ended campaign's report is re-derived by
+          `campaign-report`, never by a re-run;
+        - a ruling does not fit the campaign's state (`campaign_ruling_problems`, m's driver's refusals in its words
+          and order);
+        - the cap is unset; the committed schedules are unclean; the prior fails.
+      - **The rulings.** The seat's adjudication of a pause and the PI's stop pass to m's stage as texts. **The RULING
+        line** prints each offered ruling's sha16 and the campaign's last pause, or its end pending, never a text. It
+        prints after every refusal of the campaign's checks, just before the recorded run; m's driver also prints its
+        line before the load.
+      - **The recorded run** is `_run_recorded`, extracted from the gate path with m's call made a parameter. Round 1's
+        reviewer found its body equal to HEAD's but for `gate`→`stage` at three sites and the call. Inside it, after
+        m's campaign returns, a checkpoint that reads neither open nor ended is a StageStop, which THE STOP's machinery
+        records.
+      - **A PAUSE is not a STOP.** The run's end line records it and nothing is marked. A later run is always a
+        `--resume`: with the seat's adjudication it resumes the campaign; with the PI's stop it ends it; with neither
+        it is shown its pause and launches nothing (m's R6).
+      - **p's report at `campaign`** (`reports/{U}_campaign_p-report.json`) is written once m's checkpoint records the
+        campaign's end, never at a pause. The end is terminal (COMPLETE, CAP, PI-STOP) or m's own STOP, with nothing
+        pending. The report keeps the gates' read domain (m:271, m:318, the seat's ruling (h)) and names m's report and
+        adjudication excerpt. Where the end look fired at a terminal end (m:330), m's status is PAUSE and the terminal
+        stands. p's report then records PAUSE with `campaign_terminal` beside it, so the run and `campaign-report`
+        exit 3, as m's run does.
+      - **The outputs** take the campaign's names: p's call log, STOP marker, lock file and report
+        (`{U}_campaign_p-…`); m's campaign checkpoint (`{U}_campaign.json`), report and adjudication excerpt. Under the existing `.gitignore` rules git admits the outputs and
+        ignores the lock files and reservations; the stage's self-test checks every one of these names with
+        `git check-ignore`.
+    - **`scripts/p_sessions.py`:** `campaign --unit OLMo-{ckpt} [--resume] [--adjudication-file A] [--pi-stop-file P]`
+      and `campaign-report --unit OLMo-{ckpt}`.
+      - Before the load, in order:
+        - the ruling files, under m's driver's rule (`stage.ruling_texts`: a regular file, UTF-8 with a byte-order
+          mark dropped, not blank; the texts never printed);
+        - the precheck at `campaign`;
+        - the weights files;
+        - then the DRIVER and WEIGHTS lines, and the stage.
+      - Exits are m's codes: COMPLETE, CAP and PI-STOP 0, PAUSE 3, STOP 4. A refusal exits 2, and a STOP on the way 4.
+      - m's driver's totals guard (`TOTALS_RX`, `redact_totals`, read as text) covers every REFUSED and STOP line of
+        `campaign` and of the three report commands (`gate_report`'s).
+      - `STAGE_CMDS`, `STAGE_NAMES`, `STAGE_WHEN` and `refusal` are removed; `CAMPAIGN_CMD` joins the unchanged
+        `GATE_CMDS`.
+    - **Unchanged:** every other file of p's package; every m file; `olmo_hf.py` and `.gitignore`; the register's
+      entries; and (j)'s fresh-interpreter closure, which G-SHAPE-p's re-run records. No campaign has run: no
+      `_campaign_` name exists under `data/p/ckpt` or `data/p/reports` (Code's name-only `ls`).
+  - **The gates' behaviour is unchanged.** Code ran a stub `time` then `qual` on m's scripted double, through HEAD's
+    stage and through the new one (each loaded as `valence_core.p.stage`), in five cases: a PASS through both gates,
+    and at each gate a contrast free-round exclusion and a ProxyStop.
+    - The normalized outputs are byte-identical between the two stages. They cover:
+      - the call log's events;
+      - m's identity, stage end and sessions, by template, index, contrast flag, verification and exclusion, with each
+        round's phase, indices, seed, text and cap flag;
+      - p's report, the STOP marker and the closing lines;
+      - the output names.
+    - Only the outputs' sha256s are masked: m's checkpoint and report carry its wall-clock timings, and the call
+      log's digest is masked with them. p's package sha256 needs no mask: both runs read the same package from disk,
+      the final one.
+  - **Declared for the seat, not adjudicated** (Code's PINs and readings; round 1's NOTE-3, NOTE-4 and NOTE-7; the
+    values-check's O-1):
+    1. **A later run is always a `--resume`.** m shows a paused campaign "with or without --resume" (its driver's
+       PIN, `scripts/m_sessions.py:1388–1389`) and re-finishes a pending end whatever `resume` says
+       (`stages.run_campaign`). p refuses a run without `--resume` once the call log exists, as at the gates.
+    2. **The campaign's lock lines are whole lines.** m's driver requires them as substrings. p's form is stricter, as
+       at `qual`.
+    3. **The campaign's report keeps the gates' read domain** under the seat's ruling (h), with m:318 governing what
+       is withheld. Whether that domain fits a campaign's report is the seat's call.
+    4. **No restart route after a box change.** p passes m no checkpoint path, so a `--resume` on another pod reaches
+       m's CHECKPOINT MISMATCH (the pod id) after the load, which is a STOP. m:302's restart "on the new box" is the
+       seat's to route. THE CAMPAIGN PIN says so.
+    5. **The RULING line's form differs from m's `ruling_line`.**
+       - p names the last pause as "{kind} at {n} launches, open" (or "adjudicated"); m prints "for the pause at {n}
+         launches ({kind})".
+       - p carries no "already records" note, which has no case on p's path: an adjudication the checkpoint already
+         records is refused before the line (by RULING REUSED, NO PAUSE TO ADJUDICATE or SCHEDULE EXHAUSTED; beside
+         an end pending, by RULING BESIDE AN END PENDING; on an ended campaign, as ended).
+    6. **The cap is a number,** an int or a float. m's `hour_cap_exceeded` also takes a text or a Fraction.
+    7. **S3, a gap shared with the gates.** The backend comparison never runs on the stub, so no self-test case kills a
+       mutant that drops it. This was so before this build.
+    8. **The campaign's values live in the stage, not the driver** (the values-check's O-1). m keeps Q-F0's in its
+       driver (`scripts/m_sessions.py:617–620`); p keeps them in `valence_core/p/stage.py`, where p's package hash,
+       which the lock names, pins them as the driver's hash pins m's. Code's STOP point of 2026-11-13 said "p's driver
+       must carry each checkpoint's cap"; the stage carries it, and the driver passes none of them.
+  - **For the seat, under the list of record's item 8:**
+    - `git check-ignore` over the campaign's output names under `data/p/ckpt` and `data/p/reports`, run two ways:
+      - by round 1's reviewer, `-q` over 24 paths, through a probe copy of the self-test;
+      - by the stage's self-test, its own case, now over the campaign's names, as at step 6 and the qual wiring.
+
+      It reads `.gitignore`'s rules for a name, reports by its exit status (`-q`, both runs) whether the name is
+      ignored, and prints nothing of a file. No `_campaign_` file existed under those directories when it ran.
+    - Round 1's reviewer ran `/usr/bin/grep -rn` over `valence_core/p/` and `scripts/`: a recursive search without
+      item 3's exclusion form, whose roots cannot reach `data/`. It matched a `.pyc`.
+    - Code rules on none of these.
+  - **Licence.** The m files and `olmo_hf.py` are unchanged.
+    - p's `package_sha256` (14 files; the qual wiring's was `08bfa693…fa26`):
+      `a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7`.
+    - The driver `scripts/p_sessions.py`: `9c641e19bd2aaf6379eb3f57339139f54c651b13e0188e0aaa7f521361a6a96d`.
+  - **Checks before the commit** (model-free, on the commit's base `3e1b614`; raw:
+    [`_p-campaign-wiring_build_checks`](results/raw/2026-11-14_p-campaign-wiring_build_checks.txt), with the two
+    self-tests' output, the gates' regression and round 3's re-derived mutants, local paths scrubbed):
+    - `scripts/p_sessions.py --selftest`: 204/204 (the qual wiring: 184/184).
+    - `scripts/p_analyze.py --selftest`: m's battery 525/525, reaching all 538 coverage ids, then G-ANL-p 14/14.
+    - The gates' regression above.
+    - Blind review, three rounds ([`_p-campaign-wiring_build_review`](results/raw/2026-11-14_p-campaign-wiring_build_review.md)),
+      round 1's brief quoting the list of record v2's items 1–5, rounds 2 and 3 binding them by reference:
+      - round 1: one MAJOR, four MINOR, seven NOTEs; 48 mutants, 21 killed, 27 survived (4 equivalent, 23 gaps);
+      - round 2, on round 1's fixes: no MAJOR, three MINOR, four NOTEs; 42 mutants, 30 killed, 12 survived (5
+        equivalent, 7 gaps);
+      - round 3, on round 2's fixes and the cap: no MAJOR, one MINOR (a test gap: the driver's exit 4 for a STOP of
+        m's own, untested at both commands), four NOTEs; 18 mutants, 13 killed, 5 survived (1 equivalent, 4 gaps).
+        It found that the cap of 2 reaches m's `run_campaign` as `hour_cap` for every unit, that the precheck requires
+        `hour cap = 2 h` as a whole line, and that nothing else assumes an unset cap.
+
+      Every MAJOR and MINOR was applied. Every NOTE was applied or answered: round 1's NOTE-3, NOTE-4 (a), (c) and (d)
+      and NOTE-7 are declared above; round 3's NOTE-2 records a mutant equivalent at the caps of record, which are
+      equal; its NOTE-4 is taken up at LOCK-p v1.0. Round 3's fixes (tests, and one docstring) were checked by tool,
+      not by a fourth blind round: the self-tests, and round 3's three new gap survivors (N17, N22, N26), re-derived
+      on the final files and run through the reviewer's harness, each now killed. S3 survived every round; it is the
+      gates' shared gap, declared above.
+
+      Code's own citation sweep after round 3 corrected the text in three ways, at four sites, and reflowed one
+      docstring line, all recorded with round 3's dispositions:
+      - the hour cap's citation, from m:251 (the pod-sessions paragraph) to m:249 ("Hour caps: wall-clock of detached
+        generation time, set by the PI in that unit's LOCK v1.0"), at both sites;
+      - THE CAMPAIGN PIN's quote of §4.3 item 2, made byte-exact;
+      - the driver docstring's list of the campaign's own refusals, now naming the cap and the schedules.
+
+      Every check above was re-run on the final files.
+    - A blind values-check of this entry and its two raws: 105 claims, 89 CONFIRMED, 13 IMPRECISE, 0 FAIL, 3 NOT
+      CHECKABLE (this line, left open in the draft; Code's own conduct; the future acts). Each IMPRECISE item was
+      applied in the checker's wording or close to it, and its observation O-1 is declared above as item 8. O-2, a
+      docstring line left long by the sweep's reflow, is cosmetic and not applied. The fixes were checked by tool, not
+      by a second blind pass. An earlier run of the values-check was stopped when the citation sweep began, before it
+      reported. Raw:
+      [`_p-campaign-wiring_build_valuescheck`](results/raw/2026-11-14_p-campaign-wiring_build_valuescheck.md).
+  - **Next**, in the relay's order:
+    - G-SHAPE-p's re-run, superseding `f5e695c`'s artifact;
+    - G-ANL-p's re-run, superseding `ba89279`'s;
+    - LOCK-p v1.0 ×3, drafted for the seat's read (D_p 2026-12-15).
+
+    The replacement box waits for v1.0 ×3 and the PI's go. Not pushed. Committed by path.
+
 - 2026-11-13 — **G-PWR (p), its run of record (PROPOSAL-p v0.2 §4.1, §8 step 6; m:285; the seat's read of
   G-F0m-OLMo (p) ×3, §4.3 item 1, routed by the PI on 2026-11-13, `a2c354e`), from the program's commit `4c882e7`. At
   each of the three units, k = 23, 24 and 24 of 24 gives m:209's row: L 96 contrast and 64 sham, 160 launches, 4

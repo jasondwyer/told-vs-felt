@@ -73,15 +73,32 @@ wires:
   qual-report --unit OLMo-{ckpt}
                       p's G-F0m-OLMo (p) report re-derived from m's checkpoint and the call log, as ``time-report``.
 
-and refuses ``campaign`` (the PROPOSAL-p campaign): its wiring is its own move, before its checkpoint's LOCK-p v1.0
-(the seat's Q2, 2026-11-10), on its own word.
+and, from the campaign wiring (the seat's read of G-F0m-OLMo (p) x3, §4.3 item 2), the PROPOSAL-p campaign:
+
+  campaign --unit OLMo-{ckpt} [--resume] [--adjudication-file A] [--pi-stop-file P]
+                      The campaign (m:192, m:247, m:330; p §4.1, §6.3), on the box only, under the checkpoint's LOCK-p
+                      v1.0: m's ``stages.run_campaign`` run for p's unit under the same register entries
+                      (``valence_core.p.stage``'s THE CAMPAIGN), its launch counts G-PWR (p)'s and its hour cap the
+                      PI's cap share, each as the lock carries it, its prior the unit's G-F0m-OLMo (p) checkpoint.
+                      Before the load: the ruling files (m's rule: a regular file, UTF-8, not blank; their texts never
+                      printed), the precheck at ``campaign`` (the lock's campaign lines as whole lines, G-PWR (p)'s
+                      record, the hour cap set), the weights files; then the DRIVER and WEIGHTS lines; then the
+                      campaign's own refusals (its state, the rulings against it, the cap, the schedules, the prior)
+                      and, after them, just before the load, the stage's RULING line (each ruling's sha16 and the pause
+                      it meets, or the end pending, never its text). A paused campaign resumes
+                      with --resume and the seat's adjudication (--adjudication-file), or ends by the PI's stop
+                      (--pi-stop-file); with neither it is shown its pause. Exit m's codes (PAUSE 3).
+  campaign-report --unit OLMo-{ckpt}
+                      p's campaign report re-derived from m's checkpoint and the call log, once the campaign has ended.
+
+Every REFUSED and STOP line of the campaign passes through ``redact_totals`` (m's driver's guard, p's own).
 
 PIN (Code, declared at the p BUILD): the weights-files check is p's own, written to scripts/m_sessions.py's
 ``olmo_weights_problems`` semantics (a size check, never a re-hash -- the respawn protocol's step (i) re-hashes the
 volume once per box), so p's licence binds no m script. A refusal exits 2; any other STOP raised on the way (a
 register or keys STOP among them) exits 4, named.
 
-INVOCATION is the first line of every run. Nothing but ``gcal``, ``time`` and ``qual`` loads a model.
+INVOCATION is the first line of every run. Nothing but ``gcal``, ``time``, ``qual`` and ``campaign`` loads a model.
 """
 from __future__ import annotations
 
@@ -92,6 +109,7 @@ import importlib
 import io
 import json
 import os
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -111,16 +129,23 @@ MODULES = ("register", "corrupt", "keys", "schedule", "proxy", "report", "guard"
            "gshape", "stage")
 #: The gate stages this driver runs, each with its report command (``{gate}-report``): ``stage.GATES``.
 GATE_CMDS = ("time", "qual")
-#: The stage subcommand still refused at the qual wiring: the campaign, wired at its own move (the seat's Q2).
-STAGE_CMDS = ("campaign",)
-STAGE_NAMES = {"time": "G-TIME-OLMo (p)", "qual": "G-F0m-OLMo (p)", "campaign": "the PROPOSAL-p campaign"}
-STAGE_WHEN = {"campaign": "its own move, before its checkpoint's LOCK-p v1.0 (the seat's Q2, 2026-11-10)"}
+#: The campaign's command, wired at the campaign wiring, with its report command (``campaign-report``).
+CAMPAIGN_CMD = "campaign"
 GCAL_EXIT = {"PASS": 0, "FAIL": 4}
+#: PIN (Code, declared at the campaign wiring): m's driver's guard (scripts/m_sessions.py's TOTALS_RX and
+#: redact_totals, read as text, never imported) over every REFUSED and STOP line the campaign prints. m's package seals
+#: the line at its source (resume.TOTALS_SEALED), so on a live line it finds no figure; it stays as a guard.
+TOTALS_RX = re.compile(r"hour_cap_ms_used \S+ != the sessions\\*' \S+ ms")
+TOTALS_REDACTED = ("hour_cap_ms_used and the sessions' total differ (both figures redacted at the driver's print: the "
+                   "step-14 read, Q3)")
 
 
-def refusal(cmd: str) -> str:
-    return (f"REFUSED: {cmd} ({STAGE_NAMES[cmd]}) is not wired at the qual wiring -- its wiring is {STAGE_WHEN[cmd]}, "
-            f"on its own word")
+def redact_totals(text: str) -> str:
+    return TOTALS_RX.sub(TOTALS_REDACTED, text)
+
+
+def _say(line: str) -> None:
+    print(redact_totals(line), file=sys.stderr, flush=True)
 
 
 def build_schedules(out: str | None) -> int:
@@ -277,30 +302,71 @@ def gate_report(gate: str, unit: str) -> int:
     """p's report at ``gate`` re-derived under data/p (``stage``'s P'S REPORT PIN); model-free, written once."""
     cmd = f"{gate}-report"
     if unit not in stage.UNITS:
-        print(f"REFUSED: {cmd}: {unit!r} is not a p unit {stage.UNITS}", file=sys.stderr, flush=True)
+        _say(f"REFUSED: {cmd}: {unit!r} is not a p unit {stage.UNITS}")
         return 2
     out = stage.DEFAULT_OUT_P
     pp = stage.out_paths(unit, out, gate=gate)
     if pp["p_report"].exists():
-        print(f"REFUSED: {cmd}: p's report exists ({pp['p_report'].name}); it is written once", file=sys.stderr,
-              flush=True)
+        _say(f"REFUSED: {cmd}: p's report exists ({pp['p_report'].name}); it is written once")
         return 2
     try:
         with stage.stage_lock(pp["p_lock"], out, what=f"{cmd} ({stage.label(unit, gate)})"):
             if pp["p_report"].exists():
-                print(f"REFUSED: {cmd}: p's report exists ({pp['p_report'].name}); it is written once",
-                      file=sys.stderr, flush=True)
+                _say(f"REFUSED: {cmd}: p's report exists ({pp['p_report'].name}); it is written once")
                 return 2
             rep, how = stage.write_report(unit, out, gate=gate)
     except stage.StageRefusal as e:
-        print(f"{e}", file=sys.stderr, flush=True)
+        _say(f"{e}")
         return 2
     except SystemExit as e:
-        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        _say(f"STOP: {e}")
         return 4
     for ln in stage.summary_lines({"report": rep, "paths": pp, "written": how}):
         print(ln, flush=True)
     return m_stages.EXIT_CODES.get(rep["status"], 4)
+
+
+def run_campaign_stage(unit: str, resume: bool, adjudication_file: str | None, pi_stop_file: str | None) -> int:
+    """The PROPOSAL-p campaign on one checkpoint, on the box (``stage``'s THE CAMPAIGN; this docstring's order)."""
+    name = stage.label(unit, CAMPAIGN_CMD)
+    texts, tprobs = stage.ruling_texts(adjudication_file, pi_stop_file)
+    if tprobs:
+        _say(f"REFUSED: {name}: {tprobs}; nothing loaded")
+        return 2
+    try:
+        pre = stage.precheck(unit, stub=False, resume=resume, gate=CAMPAIGN_CMD)
+    except stage.StageRefusal as e:
+        _say(f"{e}; nothing loaded")
+        return 2
+    except SystemExit as e:
+        _say(f"STOP: {e}; nothing loaded")
+        return 4
+    ck, w = pre["ckpt"], pre["weights"]
+    wp = weights_files_problems(ck, w)
+    if wp:
+        _say(f"REFUSED: {name}: weights: {wp}; nothing loaded")
+        return 2
+    print(f"DRIVER {DRIVER_REL} {guard.driver_sha256()}: committed at HEAD {m_stages._git_head()}, working tree "
+          f"identical ({name}'s precheck)", flush=True)
+    print(f"WEIGHTS {ck}: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} "
+          f"files at {w['path']}, each at the manifest's byte count (the full re-hash is the respawn protocol's step "
+          f"(i), in this box's BACKEND entry)", flush=True)
+    try:
+        res = stage.run_campaign(unit, lambda: _load_olmo(w["path"]), stub=False, resume=resume,
+                                 adjudication=texts["adjudication"], pi_stop=texts["pi_stop"], pre=pre)
+    except stage.StageRefusal as e:
+        _say(f"{e}")
+        return 2
+    except SystemExit as e:                     # a STOP on the way, the proxy's trigger included
+        _say(f"STOP: {e}")
+        return 4
+    if res["report"] is not None:
+        for ln in stage.summary_lines(res):
+            print(ln, flush=True)
+    else:
+        print(f"P-CAMPAIGN {name}: {res['status']}; p's report is written once the campaign has ended (never at a "
+              f"pause)", flush=True)
+    return m_stages.EXIT_CODES.get(res["status"], 4)
 
 
 def _short(x, n: int = 160) -> str:
@@ -343,11 +409,30 @@ def _selftest(chk) -> None:
     chk("p_sessions: gshape --out runs G-SHAPE-p as an --out run -- PASS; INVOCATION is the first line",
         rcg == 0 and outg.startswith("INVOCATION: ") and "G-SHAPE-p: PASS" in outg and "never of record" in outg,
         outg[-300:])
-    refused = {c: run([c]) for c in STAGE_CMDS}
-    chk("p_sessions: campaign is refused at the qual wiring (exit 2), named with the move it waits for; time and qual "
-        "are the gate commands, each with its report command",
-        STAGE_CMDS == ("campaign",) and GATE_CMDS == stage.GATES == ("time", "qual")
-        and all(rc == 2 and refusal(c) in out for c, (rc, out) in refused.items()), {c: rc for c, (rc, _) in refused.items()})
+    with tempfile.TemporaryDirectory() as td:
+        nofile = str(Path(td) / "no-such-ruling.txt")
+        blank = Path(td) / "blank.txt"
+        blank.write_text(" \u200b\n", encoding="utf-8")
+        rcn, outn = run([CAMPAIGN_CMD, "--unit", "OLMo-sft", "--adjudication-file", nofile])
+        rcb, outb = run([CAMPAIGN_CMD, "--unit", "OLMo-sft", "--pi-stop-file", str(blank)])
+    rcu, outu = run([CAMPAIGN_CMD])
+    rcr, outr = run([f"{CAMPAIGN_CMD}-report", "--unit", "Q-F0"])
+    chk("p_sessions: the campaign is wired (the campaign wiring) -- a ruling file that is absent or blank is refused "
+        "before anything else (exit 2), its text never printed; --unit is required; campaign-report refuses a non-unit; "
+        "time and qual stay the gate commands, the campaign joining them in stage.STAGES",
+        rcn == 2 and "not a regular file" in outn and "nothing loaded" in outn and rcb == 2 and "blank" in outb
+        and rcu == 2 and rcr == 2 and "is not a p unit" in outr
+        and GATE_CMDS == stage.GATES == ("time", "qual") and stage.STAGES == ("time", "qual", CAMPAIGN_CMD),
+        (rcn, rcb, rcu, rcr, outn[-160:]))
+    probe = ("CHECKPOINT STATE INCONSISTENT (x.json): hour_cap_ms_used 123457 != the sessions\\' 123456 ms; "
+             "['hour_cap_ms_used 9 != the sessions\\\\' 8 ms']")
+    red = redact_totals(probe)
+    chk("p_sessions: redact_totals rewrites both totals wherever they stand (bare, or inside a list's repr, its apostrophe "
+        "escaped or not) and leaves the rest of the line; its pattern is m's driver's, read as text",
+        "123457" not in red and "123456" not in red and " 9 " not in red and red.count(TOTALS_REDACTED) == 2
+        and red.startswith("CHECKPOINT STATE INCONSISTENT (x.json): ")
+        and f're.compile(r"{TOTALS_RX.pattern}")' in (REPO / "scripts" / "m_sessions.py").read_text(encoding="utf-8"),
+        red[:200])
     rc0, out0 = run([])
     chk("p_sessions: no action is refused (exit 2) and INVOCATION is the first line",
         rc0 == 2 and out0.startswith("INVOCATION: "))
@@ -462,9 +547,82 @@ def _selftest(chk) -> None:
                        ("OLMo-sft", "qual", ["resume", "stub"], False, True, "OLMo-sft", "qual")]
         and trapped == [] and restored_t,
         ({g: rc for g, (rc, _) in gt.items()}, pos, seen_t, pre_gates))
+    seen_c: list = []
+    pre_gates_c: list = []
+    c_mode = ["pause"]
+
+    def c_recorder(unit, factory, **kw):
+        seen_c.append((unit, sorted(k for k in kw if k != "pre"), kw.get("stub"), kw.get("resume"), kw.get("adjudication"),
+                       kw.get("pi_stop"), (kw.get("pre") or {}).get("gate")))
+        if c_mode[0] == "pause":
+            return {"status": "PAUSE", "result": {}, "report": None, "paths": {}, "written": None}
+        if c_mode[0] in ("m-stop", "complete"):        # an end m's stage returned, p's report written (round 3's MINOR-1)
+            st_ = "STOP" if c_mode[0] == "m-stop" else "COMPLETE"
+            return {"status": st_, "result": {}, "report": {"status": st_}, "paths": {}, "written": "written"}
+        if c_mode[0] == "refuse":
+            raise stage.StageRefusal("SELFTEST REFUSED: the recorder refuses")
+        raise SystemExit("SELFTEST STOP: hour_cap_ms_used 123457 != the sessions\\' 123456 ms")
+
+    def c_precheck(unit, **kw):
+        pre_gates_c.append(kw.get("gate"))
+        return dict(t_pre, gate=kw.get("gate"))
+    cres = {}
+    with tempfile.TemporaryDirectory() as td:
+        adj = Path(td) / "adj.txt"
+        adj.write_text("The seat's ruling text, never printed.\n", encoding="utf-8")
+        pis = Path(td) / "pi.txt"
+        pis.write_text("The PI's stop text, never printed.\n", encoding="utf-8")
+        for mode in ("pause", "refuse", "stop", "m-stop", "complete"):
+            c_mode[0] = mode
+            with mock.patch.dict(os.environ, env_box, clear=True), \
+                    mock.patch.dict(sys.modules, {"valence_core.adapters.olmo_hf": fake_hf}), \
+                    mock.patch.object(stage, "precheck", c_precheck), \
+                    mock.patch.object(me, "weights_files_problems", lambda ck, w, **kw: []), \
+                    mock.patch.object(stage, "summary_lines",
+                                      lambda res: [f"P-REPORT stand-in {res['report']['status']}"]), \
+                    mock.patch.object(stage, "run_campaign", c_recorder), mock.patch.object(me, "_load_olmo", trap):
+                cres[mode] = run([CAMPAIGN_CMD, "--unit", "OLMo-sft", "--resume", "--adjudication-file", str(adj),
+                                  "--pi-stop-file", str(pis)])
+    restored_c = sys.modules.get("valence_core.adapters.olmo_hf") is real_hf
+    pos_c = {m_: (o_.find("DRIVER scripts/p_sessions.py "), o_.find("WEIGHTS sft: ")) for m_, (_, o_) in cres.items()}
+    want_c = ("OLMo-sft", ["adjudication", "pi_stop", "resume", "stub"], False, True,
+              "The seat's ruling text, never printed.\n", "The PI's stop text, never printed.\n", CAMPAIGN_CMD)
+    chk("p_sessions: on a simulated clear box (stand-ins for the stage's precheck and the weights check; the stage's "
+        "campaign a recorder; the loader trapped) campaign prints the DRIVER then the WEIGHTS line, calls the stage's "
+        "campaign once per run, canonical (stub false, --resume given, both rulings as read, the driver's own precheck "
+        "at the campaign), never prints a ruling's text, and exits as m's run does: 3 on a PAUSE (no p report), 2 on a "
+        "refusal, 4 on a STOP raised on the way, its totals redacted at the print, 4 on a STOP m's stage returned and 0 "
+        "on a COMPLETE, each with p's report's lines; no adapter is made and sys.modules is restored (the campaign "
+        "review's MINOR-3; round 3's MINOR-1)",
+        cres["pause"][0] == 3 and "P-CAMPAIGN campaign-OLMo-sft (p): PAUSE" in cres["pause"][1]
+        and cres["refuse"][0] == 2 and "SELFTEST REFUSED" in cres["refuse"][1]
+        and cres["stop"][0] == 4 and "STOP: SELFTEST STOP" in cres["stop"][1] and "123457" not in cres["stop"][1]
+        and TOTALS_REDACTED in cres["stop"][1]
+        and cres["m-stop"][0] == 4 and "P-REPORT stand-in STOP" in cres["m-stop"][1]
+        and cres["complete"][0] == 0 and "P-REPORT stand-in COMPLETE" in cres["complete"][1]
+        and all(0 <= d < w for d, w in pos_c.values()) and not any("never printed" in o_ for _, o_ in cres.values())
+        and seen_c == [want_c] * 5 and pre_gates_c == [CAMPAIGN_CMD] * 5 and trapped == [] and restored_c,
+        ({m_: rc for m_, (rc, _) in cres.items()}, pos_c, seen_c[:1], pre_gates_c))
+    crep = {}
+    for st_ in ("PAUSE", "COMPLETE", "STOP", "STOP-written"):
+        def wr(unit, out, gate="time", _s=st_):
+            if _s == "STOP":
+                raise SystemExit("SELFTEST P-REPORT STOP: hour_cap_ms_used 123457 != the sessions\\' 123456 ms")
+            return {"status": _s.split("-")[0], "stage": "campaign-OLMo-sft (p)"}, "written"
+        with tempfile.TemporaryDirectory() as td, mock.patch.object(stage, "DEFAULT_OUT_P", Path(td) / "p"), \
+                mock.patch.object(stage, "write_report", wr), \
+                mock.patch.object(stage, "summary_lines", lambda res: [f"P-REPORT stand-in {res['report']['status']}"]):
+            crep[st_] = run([f"{CAMPAIGN_CMD}-report", "--unit", "OLMo-sft"])
+    chk("p_sessions: campaign-report exits as m's run does for the report it writes -- 3 on a PAUSE (the end look fired "
+        "at a terminal end), 0 on COMPLETE, 4 on a STOP of m's (round 3's MINOR-1) -- and 4 on a STOP raised on the "
+        "way, its totals redacted at the print (_say; a stand-in report writer; round 2's MINOR-C and NOTE-B)",
+        crep["PAUSE"][0] == 3 and "P-REPORT stand-in PAUSE" in crep["PAUSE"][1] and crep["COMPLETE"][0] == 0
+        and crep["STOP-written"][0] == 4 and "P-REPORT stand-in STOP" in crep["STOP-written"][1]
+        and crep["STOP"][0] == 4 and "123457" not in crep["STOP"][1] and TOTALS_REDACTED in crep["STOP"][1],
+        {k: (rc, _short(o, 120)) for k, (rc, o) in crep.items()})
     import fcntl
     rr_ok = {}
-    for g in GATE_CMDS:
+    for g in GATE_CMDS + (CAMPAIGN_CMD,):
         with tempfile.TemporaryDirectory() as td, mock.patch.object(stage, "DEFAULT_OUT_P", Path(td) / "p"):
             trr = {u: run([f"{g}-report", "--unit", u]) for u in ("OLMo-sft", "Q-F0")}
             wrote = sorted(str(x.relative_to(td)) for x in Path(td).rglob("*")
@@ -480,10 +638,10 @@ def _selftest(chk) -> None:
                     and stage.label("OLMo-sft", g) in trr["OLMo-sft"][1] and trr["Q-F0"][0] == 2
                     and f"{g}-report" in trr["Q-F0"][1] and wrote == [] and lk.name == f"OLMo-sft_{g}_p.lock"
                     and trl[0] == 2 and "holds the stage's lock" in trl[1])
-    chk("p_sessions: time-report and qual-report (each root a scratch root, so no self-test can write a record) STOP "
-        "where no stage has ended (exit 4, named as their own stage), refuse a non-unit (exit 2) and refuse while "
-        "another process holds their stage's lock (exit 2; round 4's NOTE 3), writing no record",
-        rr_ok == {g: True for g in GATE_CMDS}, rr_ok)
+    chk("p_sessions: time-report, qual-report and campaign-report (each root a scratch root, so no self-test can write a "
+        "record) STOP where no stage has ended (exit 4, named as their own stage), refuse a non-unit (exit 2) and refuse "
+        "while another process holds their stage's lock (exit 2; round 4's NOTE 3), writing no record",
+        rr_ok == {g: True for g in GATE_CMDS + (CAMPAIGN_CMD,)}, rr_ok)
     names = ["config.json", "model-00001-of-00002.safetensors", "model-00002-of-00002.safetensors",
              "tokenizer.json"]                      # literal stand-ins: no record file is read (R3-1)
     w = {"repo": "selftest/olmo", "revision": "0" * 12, "sha256": "0" * 64, "path": "/nonexistent/sft",
@@ -539,8 +697,7 @@ def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
     ap = argparse.ArgumentParser(description="PROPOSAL-p driver (self-test, schedules, hashes, G-SHAPE-p, G-CAL-p, "
-                                             "G-TIME-OLMo (p), G-F0m-OLMo (p); the campaign is refused until its own "
-                                             "move)")
+                                             "G-TIME-OLMo (p), G-F0m-OLMo (p), the campaign)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of valence_core.p")
     ap.add_argument("--build-schedules", action="store_true", help="write p's schedule files + manifest")
     ap.add_argument("--out", default=None, help="a test directory for --build-schedules (never inside the repository)")
@@ -565,8 +722,15 @@ def main(argv: list[str] | None = None) -> int:
     qr = sub.add_parser("qual-report", help="p's G-F0m-OLMo report re-derived from the checkpoint and the call log "
                                             "(data/p; model-free; written once)")
     qr.add_argument("--unit", required=True, help="OLMo-sft, OLMo-dpo or OLMo-instruct")
-    for s_ in STAGE_CMDS:
-        sub.add_parser(s_, help=f"{STAGE_NAMES[s_]}: refused at the qual wiring (wired at {STAGE_WHEN[s_]})")
+    cp = sub.add_parser(CAMPAIGN_CMD, help="the PROPOSAL-p campaign (m:192, m:330; p §4.1) on one checkpoint, under its "
+                                           "LOCK-p v1.0, after its G-F0m-OLMo (p); the box only, on the PI's go")
+    cp.add_argument("--unit", required=True, help="OLMo-sft, OLMo-dpo or OLMo-instruct")
+    cp.add_argument("--resume", action="store_true", help="continue the unit's campaign checkpoint (m's resume rules)")
+    cp.add_argument("--adjudication-file", default=None, help="the seat's adjudication of the pending pause (a file)")
+    cp.add_argument("--pi-stop-file", default=None, help="the PI's stop (a file): terminal, analyzed as obtained")
+    cpr = sub.add_parser("campaign-report", help="p's campaign report re-derived from the checkpoint and the call log, "
+                                                 "once the campaign has ended (data/p; model-free; written once)")
+    cpr.add_argument("--unit", required=True, help="OLMo-sft, OLMo-dpo or OLMo-instruct")
     try:
         a = ap.parse_args(argv)
     except SystemExit as e:
@@ -585,11 +749,12 @@ def main(argv: list[str] | None = None) -> int:
         return run_gate_stage(a.cmd, a.unit, a.resume)
     if a.cmd in tuple(f"{g}-report" for g in GATE_CMDS):
         return gate_report(a.cmd[:-len("-report")], a.unit)
-    if a.cmd in STAGE_CMDS:
-        print(refusal(a.cmd), flush=True)
-        return 2
-    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, gcal, time, time-report, qual or "
-          "qual-report)", flush=True)
+    if a.cmd == CAMPAIGN_CMD:
+        return run_campaign_stage(a.unit, a.resume, a.adjudication_file, a.pi_stop_file)
+    if a.cmd == f"{CAMPAIGN_CMD}-report":
+        return gate_report(CAMPAIGN_CMD, a.unit)
+    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, gcal, time, time-report, qual, "
+          "qual-report, campaign or campaign-report)", flush=True)
     return 2
 
 
