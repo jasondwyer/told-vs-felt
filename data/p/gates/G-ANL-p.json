@@ -7,7 +7,7 @@
    "sha256": "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008"
   },
   "valence_core/p": {
-   "package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26"
+   "package_sha256": "a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7"
   }
  },
  "battery": {
@@ -35,7 +35,7 @@
   "m_analyzer_sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48",
   "m_package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
   "p_analyzer_sha256": "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008",
-  "p_package_sha256": "08bfa6932597b09d2cd0109573449058b3d86072f63ee3d137fd91656e7cfa26"
+  "p_package_sha256": "a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7"
  },
  "d_p": {
   "date": "2026-12-15",

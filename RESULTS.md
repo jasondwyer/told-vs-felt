@@ -21,6 +21,37 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **G-ANL-p — the canonical re-run on HEAD `f784bff` (G-SHAPE-p's re-run committed on the campaign
+  wiring's BUILD `c0f1c69`): PASS (p v0.2 §4.4; the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 2).
+  `scripts/p_analyze.py ganl` writes `data/p/gates/G-ANL-p.json` (sha256
+  `d285d77645e309982329b6263e3fdf0bc4f5e802edba5acd885b6b9430c15604`) once. m's battery passes 525/525 and reaches
+  all 538 coverage ids, then G-ANL-p's 14 checks pass. `ba89279`'s artifact is superseded.** Model-free; nothing ran
+  on a model or the box.
+  - **The supersession** (F-p12's form). Before the run, `ba89279`'s artifact (sha256 `90d0d5d6…8f2e`) was moved with
+    `git mv` to `data/p/gates/G-ANL-p.superseded-2026-11-14.json`. It is kept in history, and the move is committed
+    here.
+  - **The run.** At `f784bff`, at `nice -n 19`: exit 0, stderr empty. Before the move, the re-run's wrapper checked
+    that `data/p/gates`, `valence_core` and `scripts` were clean. The run's canonical binding check passed: m's
+    analyzer at its pin, both analyzers and the code of record committed at HEAD, D_p against PROPOSAL-p. Raw:
+    [`_p-ganl`](results/raw/2026-11-14_p-ganl.txt), with the repository's prefix scrubbed to `<repo>`.
+  - **The battery.** m's 525/525, its check count and coverage those of G-ANL-F3's artifact; then G-ANL-p's 14,
+    all PASS, the groups as at `ba89279`. Among them: the Q-F0 and NOT-RUN regressions, byte for byte, and `data/p`
+    untouched by the battery (N11). The run's stdout equals `ba89279`'s raw line for line, but for its last line,
+    the artifact's sha256.
+  - **The artifact** (schema `p-ganl-v1`, verdict PASS), read back:
+    - the analyzers: m's `d347ea0c…5e48` and p's `d3758fc4…7008`, unchanged;
+    - the packages: m's `7756dcf4…49bb`, and p's `a38d93bb…a2d7`, the BUILD's, which G-SHAPE-p's re-run records;
+    - `proposal_sha256`, m's pin `42ab36ec…6c6b`, and `proposal_p_sha256` `42f2977b…3b32` (F-p8);
+    - against `ba89279`'s artifact, two values differ, both p's package sha256 (`code.p_package_sha256` and
+      `analyzers["valence_core/p"].package_sha256`).
+
+    The stage's staleness check reads it as current.
+  - **A blind values-check** of this entry and its raw: 74 claims, 68 CONFIRMED, 1 IMPRECISE (applied), 0 FAIL, 5 NOT
+    CHECKABLE (the commit, the push, the locks to come). Raw:
+    [`_p-ganl_valuescheck`](results/raw/2026-11-14_p-ganl_valuescheck.md).
+  - **Next:** LOCK-p v1.0 ×3, drafted for the seat's read (D_p 2026-12-15). They name this artifact and
+    G-SHAPE-p's. Not pushed. Committed by path.
+
 - 2026-11-14 — **G-SHAPE-p — the re-run of record on the campaign wiring's BUILD (`c0f1c69`), before LOCK-p v1.0:
   PASS (p v0.2 §4.2; the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 2: "its BUILD, blind review and values-check,
   and G-SHAPE-p's and G-ANL-p's re-runs land after G-PWR's entry"). `data/p/gates/G-SHAPE-p.json`, schema
