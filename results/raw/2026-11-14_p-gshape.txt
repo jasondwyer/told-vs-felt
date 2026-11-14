@@ -1,0 +1,21 @@
+# G-SHAPE-p -- the re-run of record on the campaign wiring's BUILD (c0f1c69), before LOCK-p v1.0 (the seat's read of G-F0m-OLMo (p) x3, s4.3 item 2: "its BUILD, blind review and values-check, and G-SHAPE-p's and G-ANL-p's re-runs land after G-PWR's entry"; p v0.2 s4.2). Code's raw, PI date 2026-11-14.
+#
+# Command: $PY -B scripts/p_sessions.py gshape (canonical: no --out), from the repository root, at nice -n 19, $PY = <repo>/jlens-qwen36/.venv/bin/python;
+# HEAD c0f1c69 (the campaign wiring's BUILD), every file of the sources map and of the import closure committed at HEAD and unedited (the run refuses otherwise).
+# Before the run, the re-run's wrapper (Code's scratch script) checked that HEAD was c0f1c69, that git status --porcelain -- data/p/gates valence_core scripts was empty and that the superseded path was absent; it then moved
+# f5e695c's artifact (sha256 f8d221098c8fe6f0839426e87fd1cc519a7928b5ee66f9a09b6dda8805fa631f) with git mv, outside the stage, to data/p/gates/G-SHAPE-p.superseded-2026-11-14.json (F-p12's supersession; the move is
+# committed with this raw), ran the command and recorded its exit. Exit 0; stderr empty.
+# Artifact data/p/gates/G-SHAPE-p.json, sha256 4a4fdee5032f98d2f637c9a03fc1e0392bebc2fe729bb1e0d49c6aebafedd06d (written once). No model, no tokenizer, no pod. No clock time is recorded.
+# Local absolute paths scrubbed: the repository's prefix shown as <repo>; nothing else changed.
+#
+## stdout
+
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_sessions.py gshape
+G-SHAPE-p (the run of record; committed sources)
+gshape-p OLMo-sft: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-dpo: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo-instruct: 2816 placements, 0 fired, 0 misplaced; render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+gshape-p OLMo grids identical: True; total 8448; template shape problems 0; Layer S problems 0; Layer P problems 0
+gshape-p placement keys vs G-SHAPE-F0's committed artifact: OLMo-sft equal; OLMo-dpo equal; OLMo-instruct equal
+gshape-p provenance: p package a38d93bb83b64400, m package 7756dcf42532b222, sources 7907c28d76c28501, closure 23abe773f751bb19
+G-SHAPE-p: PASS; artifact <repo>/data/p/gates/G-SHAPE-p.json (written)

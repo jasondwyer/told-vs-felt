@@ -21,6 +21,38 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **G-SHAPE-p — the re-run of record on the campaign wiring's BUILD (`c0f1c69`), before LOCK-p v1.0:
+  PASS (p v0.2 §4.2; the seat's read of G-F0m-OLMo (p) ×3, §4.3 item 2: "its BUILD, blind review and values-check,
+  and G-SHAPE-p's and G-ANL-p's re-runs land after G-PWR's entry"). `data/p/gates/G-SHAPE-p.json`, schema
+  `p-gshape-v1`, sha256 `4a4fdee5032f98d2f637c9a03fc1e0392bebc2fe729bb1e0d49c6aebafedd06d`, is written once on
+  the package LOCK-p v1.0 will name. `f5e695c`'s artifact is superseded.** Model-free; nothing ran on a model or the box.
+  - **The supersession** (F-p12's form, as at `f5e695c`). Before the run, `f5e695c`'s artifact (sha256 `f8d22109…631f`) was
+    moved with `git mv` to `data/p/gates/G-SHAPE-p.superseded-2026-11-14.json`. It is kept in history, and the
+    move is committed here.
+  - **The run.** `scripts/p_sessions.py gshape` (canonical) at HEAD `c0f1c69`, at `nice -n 19`: exit 0, stderr
+    empty. Every file of the sources map and of the import closure was committed and unedited, as the canonical
+    run requires. Raw: [`_p-gshape`](results/raw/2026-11-14_p-gshape.txt), with the repository's prefix scrubbed to
+    `<repo>`.
+  - **The result**, as at `f5e695c`:
+    - each OLMo unit: 2,816 placements, 0 fired, 0 misplaced; `render-as-response` 0/2816 (reported); `seg+gold`
+      2816/2816 (required);
+    - the grids identical across the three, 8,448 in total;
+    - template-shape problems, Layer S problems and Layer P problems each 0;
+    - the placement keys equal G-SHAPE-F0's committed artifact's, unit by unit.
+  - **The artifact's provenance**, read back:
+    - p's package `a38d93bb…a2d7`, the BUILD's; m's package `7756dcf4…49bb`, unchanged;
+    - a sources map of 51 files, differing from `f5e695c`'s artifact only in the two files the BUILD moved
+      (`scripts/p_sessions.py`, `valence_core/p/stage.py`); its digest `7907c28d…8b2d` (`f5e695c`'s `6bf8bb95…caa9`);
+    - an import closure of 14 files, equal to `f5e695c`'s artifact's, its digest `23abe773…eec4` unchanged.
+
+    The stage's drift check (`stage.gshape_drift_problems`, its closure computed in a fresh interpreter) reads it as
+    current.
+  - **A blind values-check** of this entry and its raw: 68 claims, 62 CONFIRMED, 1 IMPRECISE (applied), 0 FAIL, 5 NOT
+    CHECKABLE (the lock to come, the commit, the push). Raw:
+    [`_p-gshape_valuescheck`](results/raw/2026-11-14_p-gshape_valuescheck.md).
+  - **Next:** G-ANL-p's re-run (`ba89279`'s artifact superseded), then LOCK-p v1.0 ×3, drafted for the seat's read.
+    Not pushed. Committed by path.
+
 - 2026-11-14 — **p — the campaign wiring: BUILD, a p package move, on the seat's read of G-F0m-OLMo (p) ×3, §4.3
   item 2 (routed by the PI on 2026-11-13, `a2c354e`), and the PI's cap share of 2026-11-14.** Two files move,
   `valence_core/p/stage.py` and `scripts/p_sessions.py`. `campaign` and `campaign-report` join the wired commands, with
