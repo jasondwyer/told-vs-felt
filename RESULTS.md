@@ -629,6 +629,40 @@ applied to CLAUDE.md.
       hashed through `git show`.
   - **Next:** nothing until the seat rules. G-PWR (m:361) waits for the seat's read and the PI's word. Not pushed.
     Committed by path.
+  - **Close (PI date 2026-11-14).** The seat's read of G-F3,
+    [`2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`](results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md)
+    (sha256 `6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a`), is committed here by path with this
+    close, on the PI's routing (its header: "Code commits by path on the PI's routing"; §C, ledger (68)). Its §0,
+    first bullet, verbatim (bold markers aside):
+
+    > A. Q-F3 — G-F3 PASS stands as computed (m:297; LOCK-m-F3 v0.2 §9 item 2): both bars silent at their realised n (7/189, P .8380; 2/98, P .9996), no hair trigger, 40 of 40 verified; r = 29/40 (A1 3/4, A2 4/4, A3 6/8, A1s 4/8, A2s 4/8, A3s 8/8), recounted by the seat from the reads. The attractor tally: 0 of 62 contrast forced-round responses about the configuration; six non-answers recorded beside, none of them about a config (§A.3). Counter (b) = 4 of 251, confirmed; the eight read as not (b), confirmed, with the readings of record written out (§A.4). The hours [E] for the PI's cap at v1.0: 832 launches (m:238) come to ≈ 300 h on G-F3's 24-session basis (1,298.4 s per launch), ≈ 326 h at the realised r, ≈ 446 h if every launch ran complete (1,931.6 s), ≈ 685 h at the slowest complete session; v0.2's 305 h and m:230's 148–165 h beside (§A.5). G-PWR (m:361) follows on r = 29/40; the PI sets the cap at G-PWR's entry; LOCK-m-F3 v1.0 drafted for the seat's read, by D2 2026-12-22 (§A.7).
+
+    - **The readings of record** (§A.4), for every later count of (b) (`r2:` is the seat's read of G-TIME-F3's re-run,
+      `54b1e51`, as the raw's header defines it):
+      - the task-echo rule: "`r2:`§2's task-echo rule covers any instruction of the session — the round's own or
+        another round's, verbatim, truncated or with an operand changed — when the imperative is kept and no answer
+        follows."
+      - the one-word cases: "a response is an attempt when it has the item's answer form (a number for a number item; a
+        word for an antonym item; a comparison's subject for the heavier item) or carries a term of the item or of its
+        answer; otherwise it attempts nothing."
+    - **The run's facts** (§A.6): the listings and `0190c6d` are "`r2:`Q3's class — not a departure, mid-stage or
+      after; nothing is needed." "The entry's missing write-time stamp line is within the G-TIME-F0 Q4 ruling; the
+      commit time stands for it; nothing changes."
+    - **The PI's word,** in chat, to the coordinating session's question "Route the seat's answers as given?" (its
+      relay of 2026-11-14): "Route as given". The routing block's section A (§D), so adopted, verbatim (bold
+      markers aside):
+
+      > 1. G-F3 PASS stands; r = 29/40; the attractor tally 0 of 62; (b) 4 of 251 confirmed, the eight not-(b) confirmed, §A.4's readings of record; (a) 0/98 stands [as ruled].
+      > 2. A close line on the G-F3 entry (`2193832`) citing this file by path and sha256, quoting §0's first bullet; this file committed by path with it.
+      > 3. G-PWR (Q-F3) on r = 29/40, F-5's form; its entry carries §A.5's figures beside its m:205 line, by citation [go].
+      > 4. Your cap for Q-F3, at G-PWR's entry: §A.5's table — ≈ 300–326 h at G-F3's realised basis, ≈ 446 h if every launch runs complete, 685 h at the slowest; or decline v1.0 (NOT-RUN by D2, m:243/m:324) [your call at G-PWR's entry; the seat recommends no figure].
+      > 5. LOCK-m-F3 v1.0 drafted for the seat's read with §A.7's contents, by D2 2026-12-22 [go after your cap].
+
+    - **Its other sections:** §B (LOCK-p v1.0 ×3) is the pod session's, and §C (the workflow of record; ledger (68))
+      the coordinating session's (§D items 6–12).
+    - **Next** (§D items 3–5): G-PWR (Q-F3) on r = 29/40 in F-5's form, its entry carrying §A.5's figures beside its
+      m:205 line by citation of this raw; the PI's cap at G-PWR's entry; then LOCK-m-F3 v1.0, drafted for the seat's
+      read, by D2 2026-12-22.
 
 - 2026-11-12 — **Dated note (pod session), for the seat, beside G-F0m-OLMo (p) ×3's block (`a225a89`;
   `193811cb…`): pod `qny1x4v8padeke` was terminated on 2026-11-12 (PI-local). The audit log's actor is `runpod`
