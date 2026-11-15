@@ -1,0 +1,656 @@
+# G-PWR (Q-F3), its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's answers of 2026-11-14, sA.7 and
+#   sD items 3-4, routed by the PI on 2026-11-14). Code stamp: 2026-11-14 (date). Model-free and exact; no model
+#   process; reads no checkpoint, report or session record.
+# HEAD 46be7aa51cd12b4b7593a7c29547630157f8ba77; the command: <repo>/jlens-qwen36/.venv/bin/python -I -B -X pycache_prefix=/nonexistent-mf3-gpwr-pycache
+#   -X utf8 scripts/mf3_gpwr.py --record data/mf3/gates/Q-F3_G-PWR.json
+# Python 3.12.9 (the project's venv, as at G-PWR (p)); the verifier's:
+#   3.9.6 (/usr/bin/python3, -I -S, standard library only); git version 2.39.5 (Apple Git-154)
+# environment: env -i HOME=/var/empty LC_ALL=C PATH=/usr/bin:/bin
+# The launch check (before Python reads the script). No git fsck: it reads every object, the checkpoint blobs
+#   among them, which the list of record v2 item 2 bars;
+#   fsck.*, core.fsmonitor or core.hooksPath in git config: none;
+#   git status over scripts/mf3_gpwr.py, scripts/m_gpwr.py, scripts/m_analyze.py, valence_core/, the record and the
+#   seat's raw: empty;
+#   scripts/mf3_gpwr.py's working-tree blob fbbb283126f9d042a547053d60dd9016a0e0abb1 = HEAD's fbbb283126f9d042a547053d60dd9016a0e0abb1: yes;
+#   the record absent: yes; its directory present: yes.
+
+PROVENANCE {"head": "46be7aa51cd12b4b7593a7c29547630157f8ba77", "script_sha256": "2b575ef813af5079dd80ce0e16b1a14c7e3629dd0574a269135cb2cbe5bed161", "m_gpwr_sha256": "1d7c0fe3a5997c1e2b7ed34fd4f65112692126c6a784a68ab1900db59363111c", "m_gpwr_blob": "6d05c8e6c3ba18df53642a7c954cd8f39122b7bf", "analyzer_sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48", "package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb", "mf3_package_sha256": "098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13", "closure": {"valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604", "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a", "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf", "valence_core/e2d/__init__.py": "3269faeccf97f55c104e1485ecb9d3d5079d3d5b4ea6c9abda8e761e636a6213", "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02", "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a", "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70", "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae", "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598", "valence_core/e2d/habit.py": "2d042d98eb0a02bcacd1afddf7aedefe15fb5c601e84b92131aedcdbb66f2ceb", "valence_core/mf3/__init__.py": "64660bc9b64d1440d218fbd80ac30fa5a52f8e878357a78f8d70c4e4edc9a24f", "valence_core/mf3/bars.py": "908355d2aa23a7907ddc6c4a81dad581c302e9a30fe311a2e0dde93481b047a9", "valence_core/mf3/keys.py": "d9c24dd9b8a74c142e259d74709335611011386a8a967e90ff75499e5dfffaab", "valence_core/mf3/lines.py": "f0fdb16bf4dc8cf0bd29dae52ff082d231157efa938c0fa7a255226025c7c50a", "valence_core/mf3/schedule.py": "b86061264cd2d4e5532ac645d5ad1e7be2964c80e63e6fe24e11f3f09bca929e", "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397", "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71", "valence_core/stats.py": "956a650c603b0772ad85db8a3f82c310b9a67bba2e4440ab128ec9ee1e396d8f"}, "isolated": true, "pycache_prefix": "/nonexistent-mf3-gpwr-pycache", "python": "3.12.9"}
+SOURCES [{"commit": "cdccc664b1db0ebe8a89dcefdfa4cfe79fc57754", "path": "results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md", "sha256": "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a"}, {"commit": "21938326c8c0d23740390ee6a5ad42d941a60803", "path": "RESULTS.md", "sha256": "20167872352639bba80ea5708b7f66e7e3614286e34786f8bbffed83804d63c0"}, {"commit": "46be7aa51cd12b4b7593a7c29547630157f8ba77", "path": "PROPOSAL-m-gating-campaign-v1_11.md", "sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"}, {"commit": "46be7aa51cd12b4b7593a7c29547630157f8ba77", "path": "LOCK-m-F3.md", "sha256": "ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7"}, {"commit": "46be7aa51cd12b4b7593a7c29547630157f8ba77", "path": "results/raw/2026-11-06_ganl-f3_design-to-code_answers.md", "sha256": "4edfbb8e3d08844e47a329a951f9c2dd381115f0fd92c8b2b77f2207777ca42e"}, {"commit": "46be7aa51cd12b4b7593a7c29547630157f8ba77", "path": "results/raw/2026-10-14_m-design-to-code_step15_answers.md", "sha256": "07cd8e5f4535c95c61428a07c426490e694d16601818096d48210c534f780767"}, {"commit": "46be7aa51cd12b4b7593a7c29547630157f8ba77", "path": "valence_core/mf3/resume.py", "sha256": "de5ab3dad90a57f03087981e2da41176024bc74331017e9ebfc31fffc0f974cd"}]
+PASS  m_gpwr is the load commit's blob, executed as the module m_gpwr with its commit pinned to the load commit
+PASS  m_gpwr's own self-test passes at the load commit, in its own isolated process
+PASS  Q-F0's figures unchanged (m_gpwr.compute here, mf3 loaded, meets m_gpwr's own pins of its reviewed run), and the composition at Q-F0's inputs reproduces m_gpwr's looks, round_degeneracy and guard blocks in every case
+PASS  this process executed valence_core (m and mf3) from the load commit's blobs only
+PASS  the bars of record: bar_problems_f3 is empty (mf3's campaign rows; m_gpwr's guard constants; 10 rounds and 6 lines per session; the domains' arms; m's arithmetic)
+PASS  bar_problems_f3 reports each compared field of each campaign row perturbed, and a missing row
+PASS  the guard's pausing halves from the bars' binding flags: both on Qwen, so the union (m:316)
+PASS  the projection's form: mf3's interleave refuses anything but the six arms in table order; project_arms refuses a stop below 1, a bool or a missing arm; an end on a multiple of 40 adds no look and is flagged once
+PASS  the realised case's rule: 63/8 rounds and 49/12 lines per sham launch; floor(x + 1/2) per cumulative count (157.5 -> 158, 81 2/3 -> 82, 102 3/8 -> 102); the counts non-decreasing
+PASS  the launch rule at r = 29/40 (m:192): the reviewed (floor, ceil(1.15 floor), N90, L) per arm, each L equal to mf3's _n90_exact at its own balance unit
+PASS  power below .85 STOPs at A1 and at A2 (stand-in analyzers at .849); A3 below .85 does not STOP (the screen); exactly .85 does not STOP (m:190's floor is >= .85)
+PASS  k = 0 STOPs (m:192); k outside [0, n_q], or not an int, is refused
+PASS  compute() completes and report() prints
+PASS  the record: the reviewed figures (every printed figure; the exact values by digest), the oracles, the fixed texts and the display rule; a JSON round trip; the stdout rebuilt line by line from the record
+PASS  crit_j at every look of every case, for each bar, equals the mf3 bar's own evaluate(): its crit, firing at crit and silent at crit - 1
+PASS  the guard's regions at every distinct projection look of the three pairs, and at the floor cases' last looks, equal mf3's guard bars' evaluate(): each Fisher cell and the absolute half's critical count
+PASS  the regions check reports a dropped Fisher cell and an absolute crit moved by one (its probe)
+PASS  record_problems reports a perturbed total, L, stop, crit, false pause, realised rounding and rate, pausing figure (label and value), grid maximum, abs crit, joint, gate flag, exact4, hours, count, p0, readings, the cited row, the cap, a realised exact count, the unit's guard figure (display and exact), the joint's and one in the realised case; and an exact value moved below its display (the digest), and the unit's figure likewise
+PASS  line_problems_f3 reports a report with the guard's halves swapped, a joint guard showing another pair's union, a rows label, the hours' basis, a cited row, the looks, the realised rate, a power floor or the unit's guard figure (a case's or the joint's) altered, a case section dropped, or a reading dropped
+PASS  compute's STOP branches: the bars, k = 0, the launch cross-check, a launch row other than m:238's, non-integer units, the look count, the realised case's denominators, the rows' oracles, the citation's total
+PASS  the checks a correct run never fires, each made to fire once: the rows' oracles (an hours cell and a row of m:234-241, m:330's look count) stop compute(); the analyzer's planned floors, its alpha and P, and its cached A1 floors stop power_block_f3(); evaluate_problems reports a crit moved; bar_problems_f3 reports m_gpwr's guard p0 moved
+PASS  the sources: every input's committed text, at its own commit (the seat's raw at cdccc66, the G-F3 entry at 2193832, the rest at the load commit), carries its quotes, each source with its quote count as built; the seat's raw, PROPOSAL-m, F-5's raw and Q7's raw at their sha256s (LOCK-m-F3 and the G-F3 entry by their quotes)
+PASS  the sources check reports a quote the text lacks, a sha256 that differs, and every source read at the load commit (sources_problems); sources_commits_ok refuses the seat's raw recorded at the load commit; sources_shape_ok refuses the sources with one quote dropped
+PASS  the pinned commits are the citations they stand for: cdccc66, and 2193832 as the seat's raw cites the G-F3 entry, are their full shas' prefixes, and the seat's raw and the G-F3 entry each first appear at its pinned commit; the check reports a mistyped abbreviation and the load commit pinned in either's place
+PASS  the int-to-str digit cap is lifted: a figure of 5,001 digits renders (M.fs)
+PASS  each constant bound to its text: a perturbed k, n_q, per-template count, floor (two), balance unit, look cadence, path, alpha, m:190 figure, power floor, bar p0 (two), lexical domain, sham sessions, realised units (two), basis, table row, after-line total, m:330 look count, cited row, cited total, verbatim text (three), pinned sha256 (four) or the G-F3 entry's cited commit refuses the sources (31 cases)
+PASS  no lock in force at G-PWR's step names this program or its record of record (every LOCK*.md at the load commit; a LOCK-m-F3 at v1.0 follows G-PWR and is exempt), and the scan is complete (lock_scan: its names equal the root's LOCK*.md listed apart, the seven known when this program was built among them); the checks report a lock that names either, a scan that drops a lock, and a known lock the root lacks
+PASS  the harness counts a check that raises, stops, or returns a false value, as a FAIL
+selftest: PASS (0 failed)
+G-PWR Q-F3 (uncached): PROPOSAL-m v1.11 m:285 on k = 29 of 40, r = 29/40 (A1 3/4, A1s 4/8, A2 4/4, A2s 4/8, A3 6/8, A3s 8/8 beside); model-free and exact
+POWER A1 at the planned floors (80, 32), split [40, 40], alpha 1/100, P 7/10: 0.878 (0.8784); floor .85: met
+POWER A2 at the planned floors (144, 56), split [72, 72], alpha 1/100, P 13/20: 0.862 (0.8620); floor .85: met
+POWER A3 at the planned floors (144, 56), split [72, 72], alpha 1/20, P 13/20: 0.927 (0.9273); no floor (the screen): reported
+POWER beside: A1 at F-5's 96/32 (m:184's cached floor): 0.916 (0.9161); not used (READINGS)
+NO N RAISED: m:190's raise is not triggered
+LAUNCH A1: floor 80, ceil(1.15 floor) 92, N90 119, unit 32 -> L 128
+LAUNCH A1s: floor 32, ceil(1.15 floor) 37, N90 50, unit 32 -> L 64
+LAUNCH A2: floor 144, ceil(1.15 floor) 166, N90 210, unit 16 -> L 224
+LAUNCH A2s: floor 56, ceil(1.15 floor) 65, N90 84, unit 16 -> L 96
+LAUNCH A3: floor 144, ceil(1.15 floor) 166, N90 210, unit 16 -> L 224
+LAUNCH A3s: floor 56, ceil(1.15 floor) 65, N90 84, unit 16 -> L 96
+TOTAL 832; LOOKS 21; the same row at k = [28, 29]
+ROWS by k (m:192; checked against m:234-243 and m:330): A1/A1s/A2/A2s/A3/A3s, total, looks
+  k 40-35: 96/64/176/80/176/80, 672, 17
+  k 34-32: 128/64/192/80/192/80, 736, 19
+  k 31: 128/64/208/80/208/80, 768, 20
+  k 30: 128/64/208/96/208/96, 800, 20
+  k 29-28: 128/64/224/96/224/96, 832, 21
+  k 27: 128/64/240/96/240/96, 864, 22
+  k 26: 160/64/240/96/240/96, 896, 23
+  k 25-24: 160/64/256/112/256/112, 960, 24
+  k 23: 160/64/272/112/272/112, 992, 25
+  k 22: 160/96/288/128/288/128, 1088, 28
+  k 21: 192/96/304/128/304/128, 1152, 29
+  k 20: 192/96/320/128/320/128, 1184, 30
+  k 19: 192/96/336/144/336/144, 1248, 32
+  k 18: 224/96/352/144/352/144, 1312, 33
+  k 17: 224/96/368/160/368/160, 1376, 35
+  k 16: 224/96/400/160/400/160, 1440, 36
+  k 15: 256/128/432/176/432/176, 1600, 40
+  k 14: 256/128/448/192/448/192, 1664, 42
+  k 13: 288/128/496/208/496/208, 1824, 46
+  k 12: 320/128/528/224/528/224, 1952, 49
+  k 11: 352/160/576/240/576/240, 2144, 54
+  k 10: 384/160/640/272/640/272, 2368, 60
+  k 9: 416/192/704/288/704/288, 2592, 65
+  k 8: 480/224/800/336/800/336, 2976, 75
+  k 7: 544/224/912/384/912/384, 3360, 84
+  k 6: 608/288/1056/448/1056/448, 3904, 98
+  k 5: 736/320/1280/528/1280/528, 4672, 117
+  k 4: 928/416/1600/656/1600/656, 5856, 147
+  k 3: 1216/544/2128/880/2128/880, 7776, 195
+  k 2: 1856/800/3184/1312/3184/1312, 11648, 292
+  k 1: 3680/1600/6384/2640/6384/2640, 23328, 584
+
+CASE projection: stop {'A1': 128, 'A1s': 64, 'A2': 224, 'A2s': 96, 'A3': 224, 'A3s': 96}, per sham launch 10 rounds and 6 lines, 21 looks
+  look 1: launches 40 (A1 7, A1s 7, A2 7, A2s 7, A3 6, A3s 6)
+  look 2: launches 80 (A1 14, A1s 14, A2 13, A2s 13, A3 13, A3s 13)
+  look 3: launches 120 (A1 20, A1s 20, A2 20, A2s 20, A3 20, A3s 20)
+  look 4: launches 160 (A1 27, A1s 27, A2 27, A2s 27, A3 26, A3s 26)
+  look 5: launches 200 (A1 34, A1s 34, A2 33, A2s 33, A3 33, A3s 33)
+  look 6: launches 240 (A1 40, A1s 40, A2 40, A2s 40, A3 40, A3s 40)
+  look 7: launches 280 (A1 47, A1s 47, A2 47, A2s 47, A3 46, A3s 46)
+  look 8: launches 320 (A1 54, A1s 54, A2 53, A2s 53, A3 53, A3s 53)
+  look 9: launches 360 (A1 60, A1s 60, A2 60, A2s 60, A3 60, A3s 60)
+  look 10: launches 400 (A1 68, A1s 64, A2 67, A2s 67, A3 67, A3s 67)
+  look 11: launches 440 (A1 76, A1s 64, A2 75, A2s 75, A3 75, A3s 75)
+  look 12: launches 480 (A1 84, A1s 64, A2 83, A2s 83, A3 83, A3s 83)
+  look 13: launches 520 (A1 92, A1s 64, A2 91, A2s 91, A3 91, A3s 91)
+  look 14: launches 560 (A1 102, A1s 64, A2 101, A2s 96, A3 101, A3s 96)
+  look 15: launches 600 (A1 115, A1s 64, A2 115, A2s 96, A3 114, A3s 96)
+  look 16: launches 640 (A1 128, A1s 64, A2 128, A2s 96, A3 128, A3s 96)
+  look 17: launches 680 (A1 128, A1s 64, A2 148, A2s 96, A3 148, A3s 96)
+  look 18: launches 720 (A1 128, A1s 64, A2 168, A2s 96, A3 168, A3s 96)
+  look 19: launches 760 (A1 128, A1s 64, A2 188, A2s 96, A3 188, A3s 96)
+  look 20: launches 800 (A1 128, A1s 64, A2 208, A2s 96, A3 208, A3s 96)
+  look 21: launches 832 (A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96) end
+  round_degeneracy: n_j [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 1980, 2140, 2300, 2460, 2560, 2560, 2560, 2560, 2560, 2560, 2560, 2560] crit_j [16, 28, 40, 51, 63, 74, 85, 96, 106, 116, 125, 133, 142, 147, 147, 147, 147, 147, 147, 147, 147] false pause 0.1703
+  reasoning_line_defect: n_j [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1188, 1284, 1380, 1476, 1536, 1536, 1536, 1536, 1536, 1536, 1536, 1536] crit_j [19, 33, 47, 60, 73, 86, 100, 113, 125, 137, 147, 158, 168, 174, 174, 174, 174, 174, 174, 174, 174] false pause 0.1584
+  own_pair_lexical: n_j [130, 260, 400, 530, 660, 800, 930, 1060, 1200, 1340, 1500, 1660, 1820, 1920, 1920, 1920, 1920, 1920, 1920, 1920, 1920] crit_j [6, 10, 14, 17, 20, 24, 27, 30, 33, 36, 40, 44, 47, 50, 50, 50, 50, 50, 50, 50, 50] false pause 0.1641
+  guard A1/A1s: (n1, n2)_j [[7, 7], [14, 14], [20, 20], [27, 27], [34, 34], [40, 40], [47, 47], [54, 54], [60, 60], [68, 64], [76, 64], [84, 64], [92, 64], [102, 64], [115, 64], [128, 64], [128, 64], [128, 64], [128, 64], [128, 64], [128, 64]] abs crit_j [4, 6, 8, 10, 12, 13, 15, 17, 18, 20, 22, 24, 26, 28, 31, 34, 34, 34, 34, 34, 34] Fisher cells_j [8, 51, 119, 238, 398, 568, 816, 1097, 1384, 1689, 1901, 2117, 2329, 2594, 2945, 3290, 3290, 3290, 3290, 3290, 3290]
+  guard A1/A1s at the common rate 1/5: abs 0.1599, Fisher 0.1070, union 0.2094; pausing on Qwen: union 0.2094
+  guard A1/A1s, Fisher half on the grid: 1/100:0.0006, 1/50:0.0073, 3/100:0.0200, 1/25:0.0330, 1/20:0.0439, 3/50:0.0531, 7/100:0.0609, 2/25:0.0677, 9/100:0.0736, 1/10:0.0787, 11/100:0.0832, 3/25:0.0873, 13/100:0.0909, 7/50:0.0940, 3/20:0.0969, 4/25:0.0994, 17/100:0.1016, 9/50:0.1036, 19/100:0.1054, 1/5:0.1070, 21/100:0.1085, 11/50:0.1099, 23/100:0.1111, 6/25:0.1122, 1/4:0.1132, 13/50:0.1140, 27/100:0.1146, 7/25:0.1151, 29/100:0.1155, 3/10:0.1159, 31/100:0.1162, 8/25:0.1164, 33/100:0.1167, 17/50:0.1170, 7/20:0.1172, 9/25:0.1174, 37/100:0.1175, 19/50:0.1175, 39/100:0.1175, 2/5:0.1175, 41/100:0.1174, 21/50:0.1173, 43/100:0.1173, 11/25:0.1173, 9/20:0.1173, 23/50:0.1173, 47/100:0.1173, 12/25:0.1174, 49/100:0.1175, 1/2:0.1176, 51/100:0.1177, 13/25:0.1178, 53/100:0.1179, 27/50:0.1179, 11/20:0.1179, 14/25:0.1179, 57/100:0.1179, 29/50:0.1178, 59/100:0.1176, 3/5:0.1175, 61/100:0.1174, 31/50:0.1173, 63/100:0.1172, 16/25:0.1171, 13/20:0.1170, 33/50:0.1169, 67/100:0.1167, 17/25:0.1164, 69/100:0.1161, 7/10:0.1158, 71/100:0.1155, 18/25:0.1153, 73/100:0.1150, 37/50:0.1147, 3/4:0.1143, 19/25:0.1138, 77/100:0.1130, 39/50:0.1120, 79/100:0.1108, 4/5:0.1093, 81/100:0.1075, 41/50:0.1056, 83/100:0.1034, 21/25:0.1010, 17/20:0.0984, 43/50:0.0956, 87/100:0.0925, 22/25:0.0890, 89/100:0.0851, 9/10:0.0807, 91/100:0.0759, 23/25:0.0704, 93/100:0.0644, 47/50:0.0580, 19/20:0.0514, 24/25:0.0445, 97/100:0.0365, 49/50:0.0256, 99/100:0.0099
+  guard A1/A1s, Fisher grid max 0.1179 at p 11/20; refined 0.1179 at p 11/20 (rates ['27/50', '14/25'])
+  guard A1/A1s, union grid max over p <= 1/5: 0.2094 at p 1/5
+  guard A2/A2s: (n1, n2)_j [[7, 7], [13, 13], [20, 20], [27, 27], [33, 33], [40, 40], [47, 47], [53, 53], [60, 60], [67, 67], [75, 75], [83, 83], [91, 91], [101, 96], [115, 96], [128, 96], [148, 96], [168, 96], [188, 96], [208, 96], [224, 96]] abs crit_j [4, 6, 8, 10, 12, 13, 15, 17, 18, 20, 22, 24, 26, 28, 31, 34, 39, 43, 48, 52, 56] Fisher cells_j [8, 44, 119, 238, 371, 568, 816, 1052, 1384, 1743, 2222, 2754, 3350, 3954, 4540, 5075, 5905, 6738, 7565, 8398, 9062]
+  guard A2/A2s at the common rate 1/5: abs 0.1781, Fisher 0.1320, union 0.2401; pausing on Qwen: union 0.2401
+  guard A2/A2s, Fisher half on the grid: 1/100:0.0033, 1/50:0.0229, 3/100:0.0428, 1/25:0.0563, 1/20:0.0668, 3/50:0.0759, 7/100:0.0838, 2/25:0.0904, 9/100:0.0961, 1/10:0.1012, 11/100:0.1057, 3/25:0.1096, 13/100:0.1132, 7/50:0.1166, 3/20:0.1198, 4/25:0.1229, 17/100:0.1257, 9/50:0.1282, 19/100:0.1302, 1/5:0.1320, 21/100:0.1335, 11/50:0.1349, 23/100:0.1361, 6/25:0.1372, 1/4:0.1382, 13/50:0.1392, 27/100:0.1400, 7/25:0.1406, 29/100:0.1412, 3/10:0.1416, 31/100:0.1420, 8/25:0.1423, 33/100:0.1426, 17/50:0.1428, 7/20:0.1431, 9/25:0.1433, 37/100:0.1434, 19/50:0.1435, 39/100:0.1434, 2/5:0.1433, 41/100:0.1432, 21/50:0.1430, 43/100:0.1427, 11/25:0.1425, 9/20:0.1422, 23/50:0.1418, 47/100:0.1415, 12/25:0.1413, 49/100:0.1411, 1/2:0.1410, 51/100:0.1410, 13/25:0.1412, 53/100:0.1415, 27/50:0.1419, 11/20:0.1423, 14/25:0.1427, 57/100:0.1431, 29/50:0.1434, 59/100:0.1437, 3/5:0.1438, 61/100:0.1440, 31/50:0.1440, 63/100:0.1439, 16/25:0.1438, 13/20:0.1436, 33/50:0.1434, 67/100:0.1432, 17/25:0.1430, 69/100:0.1428, 7/10:0.1425, 71/100:0.1422, 18/25:0.1417, 73/100:0.1412, 37/50:0.1405, 3/4:0.1397, 19/25:0.1388, 77/100:0.1378, 39/50:0.1367, 79/100:0.1354, 4/5:0.1339, 81/100:0.1321, 41/50:0.1301, 83/100:0.1277, 21/25:0.1251, 17/20:0.1222, 43/50:0.1191, 87/100:0.1159, 22/25:0.1124, 89/100:0.1085, 9/10:0.1044, 91/100:0.1000, 23/25:0.0953, 93/100:0.0899, 47/50:0.0828, 19/20:0.0737, 24/25:0.0632, 97/100:0.0517, 49/50:0.0385, 99/100:0.0191
+  guard A2/A2s, Fisher grid max 0.1440 at p 31/50; refined 0.1440 at p 309/500 (rates ['61/100', '63/100'])
+  guard A2/A2s, union grid max over p <= 1/5: 0.2401 at p 1/5
+  guard A3/A3s: (n1, n2)_j [[6, 6], [13, 13], [20, 20], [26, 26], [33, 33], [40, 40], [46, 46], [53, 53], [60, 60], [67, 67], [75, 75], [83, 83], [91, 91], [101, 96], [114, 96], [128, 96], [148, 96], [168, 96], [188, 96], [208, 96], [224, 96]] abs crit_j [4, 6, 8, 10, 12, 13, 15, 17, 18, 20, 22, 24, 26, 28, 31, 34, 39, 43, 48, 52, 56] Fisher cells_j [6, 44, 119, 222, 371, 568, 777, 1052, 1384, 1743, 2222, 2754, 3350, 3954, 4500, 5075, 5905, 6738, 7565, 8398, 9062]
+  guard A3/A3s at the common rate 1/5: abs 0.1682, Fisher 0.1322, union 0.2327; pausing on Qwen: union 0.2327
+  guard A3/A3s, Fisher half on the grid: 1/100:0.0033, 1/50:0.0228, 3/100:0.0427, 1/25:0.0563, 1/20:0.0668, 3/50:0.0761, 7/100:0.0841, 2/25:0.0909, 9/100:0.0969, 1/10:0.1022, 11/100:0.1069, 3/25:0.1109, 13/100:0.1144, 7/50:0.1177, 3/20:0.1209, 4/25:0.1238, 17/100:0.1264, 9/50:0.1286, 19/100:0.1305, 1/5:0.1322, 21/100:0.1336, 11/50:0.1349, 23/100:0.1361, 6/25:0.1372, 1/4:0.1382, 13/50:0.1392, 27/100:0.1401, 7/25:0.1409, 29/100:0.1416, 3/10:0.1423, 31/100:0.1428, 8/25:0.1434, 33/100:0.1439, 17/50:0.1444, 7/20:0.1450, 9/25:0.1455, 37/100:0.1460, 19/50:0.1465, 39/100:0.1470, 2/5:0.1473, 41/100:0.1477, 21/50:0.1480, 43/100:0.1482, 11/25:0.1484, 9/20:0.1485, 23/50:0.1485, 47/100:0.1484, 12/25:0.1484, 49/100:0.1483, 1/2:0.1483, 51/100:0.1483, 13/25:0.1483, 53/100:0.1484, 27/50:0.1485, 11/20:0.1486, 14/25:0.1486, 57/100:0.1486, 29/50:0.1484, 59/100:0.1482, 3/5:0.1479, 61/100:0.1475, 31/50:0.1471, 63/100:0.1466, 16/25:0.1460, 13/20:0.1455, 33/50:0.1450, 67/100:0.1445, 17/25:0.1441, 69/100:0.1437, 7/10:0.1433, 71/100:0.1428, 18/25:0.1423, 73/100:0.1416, 37/50:0.1408, 3/4:0.1400, 19/25:0.1390, 77/100:0.1381, 39/50:0.1370, 79/100:0.1358, 4/5:0.1344, 81/100:0.1329, 41/50:0.1311, 83/100:0.1289, 21/25:0.1265, 17/20:0.1237, 43/50:0.1207, 87/100:0.1175, 22/25:0.1140, 89/100:0.1100, 9/10:0.1056, 91/100:0.1009, 23/25:0.0959, 93/100:0.0900, 47/50:0.0824, 19/20:0.0730, 24/25:0.0627, 97/100:0.0517, 49/50:0.0386, 99/100:0.0191
+  guard A3/A3s, Fisher grid max 0.1486 at p 14/25; refined 0.1486 at p 559/1000 (rates ['11/20', '57/100'])
+  guard A3/A3s, union grid max over p <= 1/5: 0.2327 at p 1/5
+  guard, the unit's figure (some pair pauses at the common rate 1/5; the pairs share no session): 0.5390
+
+CASE sham_at_floor_r: stop {'A1': 128, 'A1s': 45, 'A2': 224, 'A2s': 78, 'A3': 224, 'A3s': 78}, per sham launch 10 rounds and 6 lines, 20 looks
+  look 1: launches 40 (A1 7, A1s 7, A2 7, A2s 7, A3 6, A3s 6)
+  look 2: launches 80 (A1 14, A1s 14, A2 13, A2s 13, A3 13, A3s 13)
+  look 3: launches 120 (A1 20, A1s 20, A2 20, A2s 20, A3 20, A3s 20)
+  look 4: launches 160 (A1 27, A1s 27, A2 27, A2s 27, A3 26, A3s 26)
+  look 5: launches 200 (A1 34, A1s 34, A2 33, A2s 33, A3 33, A3s 33)
+  look 6: launches 240 (A1 40, A1s 40, A2 40, A2s 40, A3 40, A3s 40)
+  look 7: launches 280 (A1 47, A1s 45, A2 47, A2s 47, A3 47, A3s 47)
+  look 8: launches 320 (A1 55, A1s 45, A2 55, A2s 55, A3 55, A3s 55)
+  look 9: launches 360 (A1 63, A1s 45, A2 63, A2s 63, A3 63, A3s 63)
+  look 10: launches 400 (A1 71, A1s 45, A2 71, A2s 71, A3 71, A3s 71)
+  look 11: launches 440 (A1 80, A1s 45, A2 80, A2s 78, A3 79, A3s 78)
+  look 12: launches 480 (A1 93, A1s 45, A2 93, A2s 78, A3 93, A3s 78)
+  look 13: launches 520 (A1 107, A1s 45, A2 106, A2s 78, A3 106, A3s 78)
+  look 14: launches 560 (A1 120, A1s 45, A2 120, A2s 78, A3 119, A3s 78)
+  look 15: launches 600 (A1 128, A1s 45, A2 136, A2s 78, A3 135, A3s 78)
+  look 16: launches 640 (A1 128, A1s 45, A2 156, A2s 78, A3 155, A3s 78)
+  look 17: launches 680 (A1 128, A1s 45, A2 176, A2s 78, A3 175, A3s 78)
+  look 18: launches 720 (A1 128, A1s 45, A2 196, A2s 78, A3 195, A3s 78)
+  look 19: launches 760 (A1 128, A1s 45, A2 216, A2s 78, A3 215, A3s 78)
+  look 20: launches 777 (A1 128, A1s 45, A2 224, A2s 78, A3 224, A3s 78) end
+  round_degeneracy: n_j [200, 400, 600, 800, 1000, 1200, 1390, 1550, 1710, 1870, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010] crit_j [16, 28, 40, 51, 63, 74, 84, 93, 102, 110, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118] false pause 0.1547
+  reasoning_line_defect: n_j [120, 240, 360, 480, 600, 720, 834, 930, 1026, 1122, 1206, 1206, 1206, 1206, 1206, 1206, 1206, 1206, 1206, 1206] crit_j [19, 33, 47, 60, 73, 86, 99, 109, 120, 130, 139, 139, 139, 139, 139, 139, 139, 139, 139, 139] false pause 0.1441
+  own_pair_lexical: n_j [130, 260, 400, 530, 660, 800, 940, 1100, 1260, 1420, 1560, 1560, 1560, 1560, 1560, 1560, 1560, 1560, 1560, 1560] crit_j [6, 10, 14, 17, 20, 24, 27, 31, 35, 38, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42] false pause 0.1482
+  guard A1/A1s: (n1, n2)_j [[7, 7], [14, 14], [20, 20], [27, 27], [34, 34], [40, 40], [47, 45], [55, 45], [63, 45], [71, 45], [80, 45], [93, 45], [107, 45], [120, 45], [128, 45], [128, 45], [128, 45], [128, 45], [128, 45], [128, 45]] abs crit_j [4, 6, 8, 10, 12, 13, 15, 17, 19, 21, 23, 26, 29, 32, 34, 34, 34, 34, 34, 34] Fisher cells_j [8, 51, 119, 238, 398, 568, 778, 919, 1060, 1211, 1369, 1604, 1858, 2093, 2239, 2239, 2239, 2239, 2239, 2239]
+  guard A1/A1s at the common rate 1/5: abs 0.1595, Fisher 0.0957, union 0.2050; pausing on Qwen: union 0.2050
+  guard A2/A2s: (n1, n2)_j [[7, 7], [13, 13], [20, 20], [27, 27], [33, 33], [40, 40], [47, 47], [55, 55], [63, 63], [71, 71], [80, 78], [93, 78], [106, 78], [120, 78], [136, 78], [156, 78], [176, 78], [196, 78], [216, 78], [224, 78]] abs crit_j [4, 6, 8, 10, 12, 13, 15, 17, 19, 21, 23, 26, 29, 32, 36, 41, 45, 50, 54, 56] Fisher cells_j [8, 44, 119, 238, 371, 568, 816, 1141, 1529, 1979, 2477, 2910, 3341, 3809, 4332, 4997, 5659, 6329, 6989, 7255]
+  guard A2/A2s at the common rate 1/5: abs 0.1774, Fisher 0.1234, union 0.2355; pausing on Qwen: union 0.2355
+  guard A3/A3s: (n1, n2)_j [[6, 6], [13, 13], [20, 20], [26, 26], [33, 33], [40, 40], [47, 47], [55, 55], [63, 63], [71, 71], [79, 78], [93, 78], [106, 78], [119, 78], [135, 78], [155, 78], [175, 78], [195, 78], [215, 78], [224, 78]] abs crit_j [4, 6, 8, 10, 12, 13, 15, 17, 19, 21, 23, 26, 29, 32, 36, 40, 45, 49, 54, 56] Fisher cells_j [6, 44, 119, 222, 371, 568, 816, 1141, 1529, 1979, 2452, 2910, 3341, 3775, 4301, 4968, 5628, 6293, 6962, 7255]
+  guard A3/A3s at the common rate 1/5: abs 0.1699, Fisher 0.1234, union 0.2297; pausing on Qwen: union 0.2297
+  guard, the unit's figure (some pair pauses at the common rate 1/5; the pairs share no session): 0.5318
+
+CASE sham_at_floor_min: stop {'A1': 128, 'A1s': 32, 'A2': 224, 'A2s': 56, 'A3': 224, 'A3s': 56}, per sham launch 10 rounds and 6 lines, 18 looks
+  look 1: launches 40 (A1 7, A1s 7, A2 7, A2s 7, A3 6, A3s 6)
+  look 2: launches 80 (A1 14, A1s 14, A2 13, A2s 13, A3 13, A3s 13)
+  look 3: launches 120 (A1 20, A1s 20, A2 20, A2s 20, A3 20, A3s 20)
+  look 4: launches 160 (A1 27, A1s 27, A2 27, A2s 27, A3 26, A3s 26)
+  look 5: launches 200 (A1 34, A1s 32, A2 34, A2s 34, A3 33, A3s 33)
+  look 6: launches 240 (A1 42, A1s 32, A2 42, A2s 42, A3 41, A3s 41)
+  look 7: launches 280 (A1 50, A1s 32, A2 50, A2s 50, A3 49, A3s 49)
+  look 8: launches 320 (A1 59, A1s 32, A2 59, A2s 56, A3 58, A3s 56)
+  look 9: launches 360 (A1 72, A1s 32, A2 72, A2s 56, A3 72, A3s 56)
+  look 10: launches 400 (A1 86, A1s 32, A2 85, A2s 56, A3 85, A3s 56)
+  look 11: launches 440 (A1 99, A1s 32, A2 99, A2s 56, A3 98, A3s 56)
+  look 12: launches 480 (A1 112, A1s 32, A2 112, A2s 56, A3 112, A3s 56)
+  look 13: launches 520 (A1 126, A1s 32, A2 125, A2s 56, A3 125, A3s 56)
+  look 14: launches 560 (A1 128, A1s 32, A2 144, A2s 56, A3 144, A3s 56)
+  look 15: launches 600 (A1 128, A1s 32, A2 164, A2s 56, A3 164, A3s 56)
+  look 16: launches 640 (A1 128, A1s 32, A2 184, A2s 56, A3 184, A3s 56)
+  look 17: launches 680 (A1 128, A1s 32, A2 204, A2s 56, A3 204, A3s 56)
+  look 18: launches 720 (A1 128, A1s 32, A2 224, A2s 56, A3 224, A3s 56) end
+  round_degeneracy: n_j [200, 400, 600, 800, 990, 1150, 1310, 1440, 1440, 1440, 1440, 1440, 1440, 1440, 1440, 1440, 1440, 1440] crit_j [16, 28, 40, 51, 62, 71, 80, 87, 87, 87, 87, 87, 87, 87, 87, 87, 87, 87] false pause 0.1370
+  reasoning_line_defect: n_j [120, 240, 360, 480, 594, 690, 786, 864, 864, 864, 864, 864, 864, 864, 864, 864, 864, 864] crit_j [19, 33, 47, 60, 73, 83, 94, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102] false pause 0.1225
+  own_pair_lexical: n_j [130, 260, 400, 530, 670, 830, 990, 1120, 1120, 1120, 1120, 1120, 1120, 1120, 1120, 1120, 1120, 1120] crit_j [6, 10, 14, 17, 21, 24, 28, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] false pause 0.1354
+  guard A1/A1s: (n1, n2)_j [[7, 7], [14, 14], [20, 20], [27, 27], [34, 32], [42, 32], [50, 32], [59, 32], [72, 32], [86, 32], [99, 32], [112, 32], [126, 32], [128, 32], [128, 32], [128, 32], [128, 32], [128, 32]] abs crit_j [4, 6, 8, 10, 12, 14, 16, 18, 21, 24, 27, 31, 34, 34, 34, 34, 34, 34] Fisher cells_j [8, 51, 119, 238, 373, 470, 568, 679, 840, 1013, 1171, 1331, 1506, 1530, 1530, 1530, 1530, 1530]
+  guard A1/A1s at the common rate 1/5: abs 0.1539, Fisher 0.0802, union 0.1925; pausing on Qwen: union 0.1925
+  guard A2/A2s: (n1, n2)_j [[7, 7], [13, 13], [20, 20], [27, 27], [34, 34], [42, 42], [50, 50], [59, 56], [72, 56], [85, 56], [99, 56], [112, 56], [125, 56], [144, 56], [164, 56], [184, 56], [204, 56], [224, 56]] abs crit_j [4, 6, 8, 10, 12, 14, 16, 18, 21, 24, 27, 31, 34, 38, 42, 47, 51, 56] Fisher cells_j [8, 44, 119, 238, 398, 633, 925, 1254, 1553, 1855, 2178, 2478, 2780, 3216, 3676, 4138, 4602, 5069]
+  guard A2/A2s at the common rate 1/5: abs 0.1746, Fisher 0.1086, union 0.2265; pausing on Qwen: union 0.2265
+  guard A3/A3s: (n1, n2)_j [[6, 6], [13, 13], [20, 20], [26, 26], [33, 33], [41, 41], [49, 49], [58, 56], [72, 56], [85, 56], [98, 56], [112, 56], [125, 56], [144, 56], [164, 56], [184, 56], [204, 56], [224, 56]] abs crit_j [4, 6, 8, 10, 12, 14, 16, 18, 21, 24, 27, 31, 34, 38, 42, 47, 51, 56] Fisher cells_j [6, 44, 119, 222, 371, 599, 888, 1235, 1553, 1855, 2156, 2478, 2780, 3216, 3676, 4138, 4602, 5069]
+  guard A3/A3s at the common rate 1/5: abs 0.1613, Fisher 0.1090, union 0.2162; pausing on Qwen: union 0.2162
+  guard, the unit's figure (some pair pauses at the common rate 1/5; the pairs share no session): 0.5105
+
+CASE sham_realised: stop {'A1': 128, 'A1s': 64, 'A2': 224, 'A2s': 96, 'A3': 224, 'A3s': 96}, per sham launch 63/8 rounds and 49/12 lines (half up, per cumulative count), 21 looks
+  look 1: launches 40 (A1 7, A1s 7, A2 7, A2s 7, A3 6, A3s 6)
+  look 2: launches 80 (A1 14, A1s 14, A2 13, A2s 13, A3 13, A3s 13)
+  look 3: launches 120 (A1 20, A1s 20, A2 20, A2s 20, A3 20, A3s 20)
+  look 4: launches 160 (A1 27, A1s 27, A2 27, A2s 27, A3 26, A3s 26)
+  look 5: launches 200 (A1 34, A1s 34, A2 33, A2s 33, A3 33, A3s 33)
+  look 6: launches 240 (A1 40, A1s 40, A2 40, A2s 40, A3 40, A3s 40)
+  look 7: launches 280 (A1 47, A1s 47, A2 47, A2s 47, A3 46, A3s 46)
+  look 8: launches 320 (A1 54, A1s 54, A2 53, A2s 53, A3 53, A3s 53)
+  look 9: launches 360 (A1 60, A1s 60, A2 60, A2s 60, A3 60, A3s 60)
+  look 10: launches 400 (A1 68, A1s 64, A2 67, A2s 67, A3 67, A3s 67)
+  look 11: launches 440 (A1 76, A1s 64, A2 75, A2s 75, A3 75, A3s 75)
+  look 12: launches 480 (A1 84, A1s 64, A2 83, A2s 83, A3 83, A3s 83)
+  look 13: launches 520 (A1 92, A1s 64, A2 91, A2s 91, A3 91, A3s 91)
+  look 14: launches 560 (A1 102, A1s 64, A2 101, A2s 96, A3 101, A3s 96)
+  look 15: launches 600 (A1 115, A1s 64, A2 115, A2s 96, A3 114, A3s 96)
+  look 16: launches 640 (A1 128, A1s 64, A2 128, A2s 96, A3 128, A3s 96)
+  look 17: launches 680 (A1 128, A1s 64, A2 148, A2s 96, A3 148, A3s 96)
+  look 18: launches 720 (A1 128, A1s 64, A2 168, A2s 96, A3 168, A3s 96)
+  look 19: launches 760 (A1 128, A1s 64, A2 188, A2s 96, A3 188, A3s 96)
+  look 20: launches 800 (A1 128, A1s 64, A2 208, A2s 96, A3 208, A3s 96)
+  look 21: launches 832 (A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96) end
+  round_degeneracy: n_j [158, 315, 473, 630, 788, 945, 1103, 1260, 1418, 1559, 1685, 1811, 1937, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016] crit_j [14, 23, 33, 42, 51, 60, 68, 77, 86, 93, 100, 107, 114, 118, 118, 118, 118, 118, 118, 118, 118] false pause 0.1553
+  reasoning_line_defect: n_j [82, 163, 245, 327, 408, 490, 572, 653, 735, 809, 874, 939, 1005, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045] crit_j [14, 24, 33, 43, 52, 61, 70, 79, 88, 96, 103, 110, 117, 122, 122, 122, 122, 122, 122, 122, 122] false pause 0.1601
+  own_pair_lexical: n_j [102, 205, 315, 417, 520, 630, 732, 835, 945, 1055, 1181, 1307, 1433, 1512, 1512, 1512, 1512, 1512, 1512, 1512, 1512] crit_j [6, 9, 12, 14, 17, 20, 22, 25, 27, 30, 33, 36, 39, 40, 40, 40, 40, 40, 40, 40, 40] false pause 0.1333
+
+JOINT: each bar's own (projection case): round_degeneracy 0.1703, reasoning_line_defect 0.1584, own_pair_lexical 0.1641; the guards' beside (union at .20): A1 0.2094, A2 0.2401, A3 0.2327; the unit's guard figure 0.5390
+  The joint over the three bars, and over the bars and the guard, is not computed: a sham session that ends early at a pre-pick exclusion enters its pair's sham count and cuts its own rounds and lines from the bars' n, a round or line the bars count can be what excludes it, and the three bars count claims on the same sham sessions, so these figures are dependent through a model of exclusion and claim co-occurrence that no record gives (the three pairs' guard figures, which share no session, combine exactly into the unit's).
+HOURS at m:230's basis (READINGS): 832 launches x 641.6-713.6 s per session = 148.28-164.92 h (148-165 h; m:238's column 148–165 h)
+BESIDE, by citation, verbatim: the seat's answers of 2026-11-14, §A.5, its table on 832 launches (results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md at cdccc66, sha256 6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a):
+  | G-F3's 24 sham sessions as they fell, 1,298.4 s (exclusions ended early at G-F3's sham rate, 8 of 24) | **≈ 300 h** | 12.5 |
+  | the realised r, 29/40: 72.5 % complete at 1,931.6 s, 27.5 % ended by exclusion at 31.9 s | **≈ 326 h** | 13.6 |
+  | every launch complete, 1,931.6 s | ≈ 446 h | 18.6 |
+  | the slowest complete session, 2,962.6 s | ≈ 685 h | 28.5 |
+  | beside: v0.2's four-session basis, 1,319.6 s (`gid:`§4) | ≈ 305 h | 12.7 |
+  | beside: m:230's pre-registered 641.6–713.6 s | 148–165 h (m:238's column) | 6.2–6.9 |
+CAP: the PI's, at G-PWR's entry, written into LOCK-m-F3 v1.0 (m:298, m:249; the seat's answers of 2026-11-14, §A.5 and §D item 4); not set by this program
+NOT FIGURED: hair_triggers: no p0: a ~zero-base-rate class whose fire stops the stage (m:271); reported_at_looks: low label mass, top-1-not-a-label and pooled pre-pick exclusions: reported, no bar (m:330)
+READINGS:
+  - The seat's answers of 2026-11-14, §A.7, verbatim: "G-F3 → **G-PWR (Q-F3)** on r = 29/40 by Code's program in F-5's form (m:285: the power at the planned floors, any n raised, the launch counts and looks, §6's exact sequential false-pause figures at the look count, the guard's figure); its hours line at m:205's basis as the program has it, with §A.5's figures beside, by citation of this raw, as the realised basis of record".
+  - F-5 (the seat's G-ANL-F3 answers, results/raw/2026-11-06_ganl-f3_design-to-code_answers.md), verbatim: "G-PWR for Q-F3 is built at its step (after G-F3, before LOCK-m-F3 v1.0) as a sibling script `scripts/mf3_gpwr.py` that imports `scripts/m_gpwr.py`'s functions unchanged; its arms and floors are m:183–190's (A1 96/32; A2 144/56; A3 144/56; power floors A2 ≥ .85 at P = .65, every control ≥ .85 at P = .70; the grid rule for A2/A3), re-derived with the planned floors, attained power at the realised n reported in VERDICTS (m:190). Nothing of it touches a file a lock names."
+  - Q7 (the seat's step-15 answers, results/raw/2026-10-14_m-design-to-code_step15_answers.md), verbatim: "Code's defaults are the seat's, declared at G-PWR on Q1's terms (strikable until v1.0's commit; a strike recomputes figures only)".
+  - Q7 (a), verbatim: "n_j at each look from the projection — each arm launches to its L, interleaved by the campaign rule, every sham session running its 10 rounds — with two cases beside: the sham arm leaving the rotation at its floor; the sham arm at G-F0m-Qwen's measured 136 of 160 realised rounds."
+  - Q7 (b), verbatim: "the absolute half exact at p0 = .20 over the contrast arm's launches per look; the Fisher half under a common null rate equal to the absolute p0, with a grid of rates and the supremum beside; the guard's false-pause figure as the union — the probability that either half fires at some look — computed jointly over the contrast and sham counts under the common null rate, each half's own figure beside."
+  - Q7 (c), verbatim: "the joint figure is `round_degeneracy`'s own, with the guard's beside; the non-separable joint over the bar and the guard is not computed, and G-PWR says why in one sentence."
+  - Code's reading, the form: a sibling of scripts/m_gpwr.py importing its functions unchanged (F-5), executed from the load commit's blob. m_gpwr.compute and m_gpwr.project serve Q-F0's two arm roles, so Q-F3's six-arm projection, its three bars and its three guards are composed here from m_gpwr's functions (launch_count, looks_for, guard_block, rec, dec, fs) and mf3's (schedule.interleave, schedule._n90_exact, keys, bars); the self-test asserts the composition equal to m_gpwr's own figures at Q-F0's two arms. No attribute of an m or mf3 module is substituted.
+  - Code's reading of F-5's "A1 96/32": it is m:184's cached floor. Q-F3 runs uncached since G-ID-F3's FAIL (LOCK-m-F3 v0.2 §3, "path = uncached"); m:184 gives A1's floor as "96 cached, 80 uncached / 32" (m:230: "A1 floor 80"; mf3's schedule.FLOORS; the analyzer's F3_PLANNED). So A1 runs at 80/32, in the power (.878) and the launch rule alike; m:190's figure at 96/32 (.916) is printed beside and used nowhere.
+  - Code's reading of the power floors (m:190): A1, a control, needs >= .85 at P = .70 and alpha .01; A2 needs >= .85 at P = .65 and alpha .01; A3, the screen, has no floor, and its POSITIVE probability at alpha .05 and P = .65 is reported, not gated. Each figure is the analyzer's f3_power_block at the planned floors. m:190's raise is not triggered; had A1 or A2 fallen below .85, this program would STOP and escalate, applying neither the raise nor the grid rule for A2/A3.
+  - Code's reading of the launch rule (m:192): r = 29/40 is one rate for the unit, pooled over all 40 (m:297); each arm's L is m_gpwr.launch_count at its own floor and its own balance unit (mf3's schedule.UNIT_SIZE: 32 for A1 and A1s, 16 for A2 to A3s), cross-checked against mf3's schedule._n90_exact. The rows for k = 1..40 are computed the same way and checked against m:234-241's rows (the hours column at m:230's basis included) and m:243's line after them; looks = ceil(total / 40), checked against m:330's uncached list.
+  - Code's reading of the projection: mf3's schedule.interleave over keys.TEMPLATES (A1, A1s, A2, A2s, A3, A3s). The live arm with the fewest launches goes next, ties to table order, and an arm leaves the rotation for good at its stop. Each arm launches to its L. Looks fall at every 40th launch and at the end, and an end on a multiple adds no look (m:330; m_gpwr.project's form, over six arms).
+  - Code's reading of how the three bars' domains are pooled: each bar is cumulative over its own domain, with one count per look (m:330), at its own p0 and alpha from mf3's bars, by valence_core.m.bars' critical_k and seq_false_pause (as mf3's bars import them). round_degeneracy counts the three sham arms' task rounds (A1s + A2s + A3s; 10 per sham launch; p0 .05). reasoning_line_defect counts the same three arms' reasoning lines (6 per sham launch; p0 .10). own_pair_lexical counts A2s + A3s task rounds (10 per launch; p0 .02). No contrast-arm unit enters a bar's n (m:271's sham domain; m:330). crit_j at each look is checked against the mf3 bar's own evaluate().
+  - Code's reading of Q7 (a)'s floor case, its Q-F0 reading kept: the three sham arms leave the rotation at their floors, computed at ceil(floor / r), which is 45, 78 and 78 at r = 29/40, and at the floor itself, 32, 56 and 56. Every contrast arm launches to its L. Both keep 10 rounds and 6 lines per sham launch, which over-counts the units of the sessions they assume end early at an exclusion. The guards move with the sham arms' launches and are recomputed in both.
+  - Code's reading of Q7 (a)'s realised case, carried to Q-F3: G-F3's realised counts over its 24 sham sessions, 189 of <= 240 task rounds and 98 of <= 144 reasoning lines (the G-F3 entry; the seat's §A.1), taken as pooled rates per sham launch, 189/24 = 63/8 rounds and 98/24 = 49/12 lines. Each rate applies alike to every sham launch of each bar's domain, own_pair_lexical's A2s + A3s rounds at the same 63/8. Only the three bars are recomputed there; the guards count launches, which the case does not move.
+  - Code's reading of the realised case's rounding: the cumulative count at a look, launches x rate, is not whole at every look. Each is rounded to the nearest whole unit, a half up (floor(x + 1/2)), before the bar is evaluated. The rounded counts are non-decreasing, and their unrounded values are recorded beside (n_j_exact).
+  - Code's reading of the guard's binding halves: the guard is figured per contrast arm against its matched sham (m:316; keys.PAIRS: A1-A1s, A2-A2s, A3-A3s), each pair's cumulative launches per look passed to m_gpwr's guard functions in its arm roles (the contrast as A0, the sham as A0s). Both halves bind on Qwen (m:316; mf3's bars' binding flags, read), so the pausing figure is the union, each half's own figure beside: the absolute half exact at p0 .20 over the contrast arm's launches; the Fisher half at the common null rate .20, with the grid j/100, its refined maximum (+/- .01 by .001) and the union's maximum over common rates <= .20 (Code's Q-F0 reading, kept), the grid and the maxima figured on the projection only. Each pair's figure is its own. The unit's figure, m:285's "the exclusion guard's false-pause figure" for a unit whose guard runs per contrast arm, is the probability that some pair's guard pauses, 1 - (1 - u_A1)(1 - u_A2)(1 - u_A3), each u its pair's pausing figure at the common rate 1/5: exact under Q7 (b)'s model, the three pairs sharing no session; it is figured in every case the guards are.
+  - Code's reading of the joint (Q7 (c), adapted to Q-F3's three bars and its guard of three pairs): the joint figure is each bar's own (projection case), with the guard's beside: each pair's union and the unit's figure. The joint over the three bars, and over the bars and the guard, is not computed (the sentence under JOINT). The hair triggers carry no p0 and have no figure.
+  - Code's reading of the hours basis: §A.7's "m:205's basis" is read as the unit's own pre-registered basis line. m:205 is Q-F0's and the OLMo checkpoints' line and holds no Q-F3 figure; m:230 is Q-F3's uncached one, 641.6-713.6 s per session, applied to the unit's total (m:192: "hours = the unit's total × the basis named"), with m:238's column, 148-165 h, as its oracle. §A.5's figures are printed beside, by citation of the seat's raw (its path, commit and sha256; each row verbatim), as the realised basis of record. This program recomputes none of them.
+  - Code's reading of the cap: the PI's, at G-PWR's entry, written into LOCK-m-F3 v1.0 (m:298, m:249; the seat's §A.5 and §D item 4). This program sets none.
+  - Code's reading of LOOK_EVERY and of what this program opens: LOOK_EVERY is mf3's resume.LOOK_EVERY, which is m's (its committed source lines "from valence_core.m import resume as m_resume" and "LOOK_EVERY = m_resume.LOOK_EVERY", each required verbatim), read from valence_core.m.resume. valence_core.mf3.resume is not imported, because its import (through valence_core.m.corr) opens a file under data/, and this program opens nothing under data/. For the same reason Q-F0's figures are checked against m_gpwr's own pins of its reviewed run, not against m's committed record under data/m/gates.
+
+WROTE data/mf3/gates/Q-F3_G-PWR.json sha256 75d1d46bdfffe52f2704cd9ad5d87bc8627342f49ca1629977ba793370e001e5
+EXIT 0
+
+# The second run, to scratch, for byte identity (its stdout kept in scratch):
+SECOND RUN EXIT 0
+BYTE-IDENTICAL: the second run's record equals the record of record
+STDOUT IDENTICAL: the second run printed what the first did, the WROTE line aside
+
+# The out-of-process verifier on the record of record:
+PASS  schema mf3-gpwr-v1, unit Q-F3, path uncached
+PASS  inputs: k 29 of 40, r 29/40, the floors, the balance units, looks every 40
+PASS  A1: ceil(1.15 floor) 92, N90 119 and L 128 by an exact binomial search (k 29/40)
+PASS  A1s: ceil(1.15 floor) 37, N90 50 and L 64 by an exact binomial search (k 29/40)
+PASS  A2: ceil(1.15 floor) 166, N90 210 and L 224 by an exact binomial search (k 29/40)
+PASS  A2s: ceil(1.15 floor) 65, N90 84 and L 96 by an exact binomial search (k 29/40)
+PASS  A3: ceil(1.15 floor) 166, N90 210 and L 224 by an exact binomial search (k 29/40)
+PASS  A3s: ceil(1.15 floor) 65, N90 84 and L 96 by an exact binomial search (k 29/40)
+PASS  total 832, looks ceil(total/40) = 21
+PASS  rows k = 1..40: L per arm, total and looks, each recomputed
+PASS  the same row at k = [28, 29]
+PASS  projection: stop 128/64/224/96/224/96; 21 looks by the campaign rule
+PASS  projection round_degeneracy: n_j, crit_j and the sequential false pause 0.1703 (p0 1/20)
+PASS  projection reasoning_line_defect: n_j, crit_j and the sequential false pause 0.1584 (p0 1/10)
+PASS  projection own_pair_lexical: n_j, crit_j and the sequential false pause 0.1641 (p0 1/50)
+PASS  projection guard A1/A1s: looks, abs crit_j, the absolute half 0.1599 at p0 1/5
+PASS  projection guard A1/A1s: the pausing figure is the union, at least each half
+PASS  projection guard A2/A2s: looks, abs crit_j, the absolute half 0.1781 at p0 1/5
+PASS  projection guard A2/A2s: the pausing figure is the union, at least each half
+PASS  projection guard A3/A3s: looks, abs crit_j, the absolute half 0.1682 at p0 1/5
+PASS  projection guard A3/A3s: the pausing figure is the union, at least each half
+PASS  projection: the unit's guard figure, 1 - prod(1 - union) over the three pairs, 0.5390
+PASS  sham_at_floor_r: stop 128/45/224/78/224/78; 20 looks by the campaign rule
+PASS  sham_at_floor_r round_degeneracy: n_j, crit_j and the sequential false pause 0.1547 (p0 1/20)
+PASS  sham_at_floor_r reasoning_line_defect: n_j, crit_j and the sequential false pause 0.1441 (p0 1/10)
+PASS  sham_at_floor_r own_pair_lexical: n_j, crit_j and the sequential false pause 0.1482 (p0 1/50)
+PASS  sham_at_floor_r guard A1/A1s: looks, abs crit_j, the absolute half 0.1595 at p0 1/5
+PASS  sham_at_floor_r guard A1/A1s: the pausing figure is the union, at least each half
+PASS  sham_at_floor_r guard A2/A2s: looks, abs crit_j, the absolute half 0.1774 at p0 1/5
+PASS  sham_at_floor_r guard A2/A2s: the pausing figure is the union, at least each half
+PASS  sham_at_floor_r guard A3/A3s: looks, abs crit_j, the absolute half 0.1699 at p0 1/5
+PASS  sham_at_floor_r guard A3/A3s: the pausing figure is the union, at least each half
+PASS  sham_at_floor_r: the unit's guard figure, 1 - prod(1 - union) over the three pairs, 0.5318
+PASS  sham_at_floor_min: stop 128/32/224/56/224/56; 18 looks by the campaign rule
+PASS  sham_at_floor_min round_degeneracy: n_j, crit_j and the sequential false pause 0.1370 (p0 1/20)
+PASS  sham_at_floor_min reasoning_line_defect: n_j, crit_j and the sequential false pause 0.1225 (p0 1/10)
+PASS  sham_at_floor_min own_pair_lexical: n_j, crit_j and the sequential false pause 0.1354 (p0 1/50)
+PASS  sham_at_floor_min guard A1/A1s: looks, abs crit_j, the absolute half 0.1539 at p0 1/5
+PASS  sham_at_floor_min guard A1/A1s: the pausing figure is the union, at least each half
+PASS  sham_at_floor_min guard A2/A2s: looks, abs crit_j, the absolute half 0.1746 at p0 1/5
+PASS  sham_at_floor_min guard A2/A2s: the pausing figure is the union, at least each half
+PASS  sham_at_floor_min guard A3/A3s: looks, abs crit_j, the absolute half 0.1613 at p0 1/5
+PASS  sham_at_floor_min guard A3/A3s: the pausing figure is the union, at least each half
+PASS  sham_at_floor_min: the unit's guard figure, 1 - prod(1 - union) over the three pairs, 0.5105
+PASS  sham_realised: stop 128/64/224/96/224/96; 21 looks by the campaign rule
+PASS  sham_realised round_degeneracy: n_j, crit_j and the sequential false pause 0.1553 (p0 1/20)
+PASS  sham_realised reasoning_line_defect: n_j, crit_j and the sequential false pause 0.1601 (p0 1/10)
+PASS  sham_realised own_pair_lexical: n_j, crit_j and the sequential false pause 0.1333 (p0 1/50)
+PASS  sham_realised: no guard (the guards count launches)
+PASS  the joint: each bar's own on the projection, the guards' unions and the unit's figure beside
+PASS  hours at m:230's basis: 832 x 641.6-713.6 s = 148.28-164.92 h (148-165; m:238's 148-165)
+PASS  power at the floors: A1 and A2 displayed >= .85 and gated, A3 reported (not gated); no n raised
+PASS  §A.5's rows beside, each verbatim in the seat's raw (sha256 6b963adf...)
+PASS  the cap: none set (the PI's)
+PASS  provenance: HEAD and the script's sha256 are the run's
+verify: PASS (0 failed)
+VERIFY EXIT 0
+# The record: data/mf3/gates/Q-F3_G-PWR.json sha256 75d1d46bdfffe52f2704cd9ad5d87bc8627342f49ca1629977ba793370e001e5
+WRAPPER EXIT 0
+wrapper rc=0
+
+==== NOTE: the output's last line, "wrapper rc=0", was printed by the command that launched the wrapper, not by the
+wrapper; the wrapper's last command is an echo, so its own exit status is 0 whatever it found, and its status of
+record is its WRAPPER EXIT line above. ====
+
+==== THE WRAPPER, <scratchpad>/gpwrf3/run/run_mf3_gpwr.sh, as it ran (local paths scrubbed) ====
+
+#!/bin/bash
+# G-PWR (Q-F3)'s run of record: the launch checks (before Python reads the script), the run, a second run to scratch
+# for byte identity, the out-of-process verifier (standard library only). Prints the raw's body.
+set -u
+REPO=<repo>
+S=<scratchpad>/gpwrf3/run
+PY="$REPO/jlens-qwen36/.venv/bin/python"
+VPY=/usr/bin/python3
+REC=data/mf3/gates/Q-F3_G-PWR.json
+SEAT=results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md
+SECOND="$S/Q-F3_G-PWR.second-run.json"
+PFX=/nonexistent-mf3-gpwr-pycache
+ENVI=(env -i HOME=/var/empty LC_ALL=C PATH=/usr/bin:/bin)
+cd "$REPO" || exit 9
+[ -e "$PFX" ] && { echo "LAUNCH CHECK FAILED: the pycache prefix exists"; exit 21; }
+[ -e "$SECOND" ] && { echo "LAUNCH CHECK FAILED: the second run's scratch record exists"; exit 22; }
+echo "# G-PWR (Q-F3), its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's answers of 2026-11-14, sA.7 and"
+echo "#   sD items 3-4, routed by the PI on 2026-11-14). Code stamp: $(date +%F) (date). Model-free and exact; no model"
+echo "#   process; reads no checkpoint, report or session record."
+echo "# HEAD $(git rev-parse HEAD); the command: <repo>/jlens-qwen36/.venv/bin/python -I -B -X pycache_prefix=$PFX"
+echo "#   -X utf8 scripts/mf3_gpwr.py --record $REC"
+echo "# Python $("${ENVI[@]}" "$PY" -I -c 'import sys; print(sys.version.split()[0])') (the project's venv, as at G-PWR (p)); the verifier's:"
+echo "#   $("${ENVI[@]}" "$VPY" -I -S -c 'import sys; print(sys.version.split()[0])') (/usr/bin/python3, -I -S, standard library only); $(git --version)"
+echo "# environment: env -i HOME=/var/empty LC_ALL=C PATH=/usr/bin:/bin"
+cfg=$(git config --get-regexp '^(fsck\.|core\.fsmonitor|core\.hookspath)' 2>/dev/null)
+st=$(git status --porcelain -- scripts/mf3_gpwr.py scripts/m_gpwr.py scripts/m_analyze.py valence_core/ "$REC" "$SEAT")
+wt=$(git hash-object --no-filters scripts/mf3_gpwr.py); hd=$(git rev-parse HEAD:scripts/mf3_gpwr.py)
+echo "# The launch check (before Python reads the script). No git fsck: it reads every object, the checkpoint blobs"
+echo "#   among them, which the list of record v2 item 2 bars;"
+echo "#   fsck.*, core.fsmonitor or core.hooksPath in git config: $([ -z "$cfg" ] && echo none || echo "$cfg");"
+echo "#   git status over scripts/mf3_gpwr.py, scripts/m_gpwr.py, scripts/m_analyze.py, valence_core/, the record and the"
+echo "#   seat's raw: $([ -z "$st" ] && echo empty || echo "$st");"
+echo "#   scripts/mf3_gpwr.py's working-tree blob $wt = HEAD's $hd: $([ "$wt" = "$hd" ] && echo yes || echo NO);"
+echo "#   the record absent: $([ -e "$REC" ] && echo NO || echo yes); its directory present: $([ -d "$(dirname "$REC")" ] && echo yes || echo NO)."
+if ! { [ -z "$cfg" ] && [ -z "$st" ] && [ "$wt" = "$hd" ] && [ ! -e "$REC" ] && [ -d "$(dirname "$REC")" ]; }; then
+  echo "LAUNCH CHECK FAILED: nothing ran"; exit 20
+fi
+echo
+"${ENVI[@]}" "$PY" -I -B -X pycache_prefix=$PFX -X utf8 scripts/mf3_gpwr.py --record "$REC" > "$S/first-run.stdout.txt" 2>&1; rc=$?
+cat "$S/first-run.stdout.txt"
+echo "EXIT $rc"
+[ $rc -eq 0 ] || exit $rc
+echo
+echo "# The second run, to scratch, for byte identity (its stdout kept in scratch):"
+"${ENVI[@]}" "$PY" -I -B -X pycache_prefix=$PFX -X utf8 scripts/mf3_gpwr.py --record "$SECOND" > "$S/second-run.stdout.txt" 2>&1; rc2=$?
+echo "SECOND RUN EXIT $rc2"
+if cmp -s "$REC" "$SECOND"; then echo "BYTE-IDENTICAL: the second run's record equals the record of record"; else echo "DIFFERENT: the second run's record differs"; fi
+/usr/bin/grep -v '^WROTE ' "$S/first-run.stdout.txt" > "$S/first-run.stdout.cmp"
+/usr/bin/grep -v '^WROTE ' "$S/second-run.stdout.txt" > "$S/second-run.stdout.cmp"
+if cmp -s "$S/first-run.stdout.cmp" "$S/second-run.stdout.cmp"; then echo "STDOUT IDENTICAL: the second run printed what the first did, the WROTE line aside"; else echo "STDOUT DIFFERENT"; fi
+echo
+echo "# The out-of-process verifier on the record of record:"
+"${ENVI[@]}" "$VPY" -I -S "$S/verify_mf3_gpwr.py" "$REC" "$SEAT" "$(git rev-parse HEAD)" "$(shasum -a 256 < scripts/mf3_gpwr.py | cut -d' ' -f1)"; vrc=$?
+echo "VERIFY EXIT $vrc"
+echo "# The record: $REC sha256 $(shasum -a 256 < "$REC" | cut -d' ' -f1)"
+same=$(cmp -s "$REC" "$SECOND" && cmp -s "$S/first-run.stdout.cmp" "$S/second-run.stdout.cmp" && echo 1 || echo 0)
+echo "WRAPPER EXIT $(( rc2 != 0 || vrc != 0 || same != 1 ))"
+
+==== THE VERIFIER, <scratchpad>/gpwrf3/run/verify_mf3_gpwr.py, as it ran (local paths scrubbed) ====
+
+# verify_mf3_gpwr.py -- the out-of-process check of G-PWR (Q-F3)'s record, with Python's standard library only (no
+# repository module; run -I -S). Its inputs are the spec's, typed here from the texts (m:184-192, m:230, m:238,
+# m:297, m:316, m:330; the seat's answers of 2026-11-14 §A.1 and §A.5), never read from the program. Independent
+# exact recomputation of: N90 and L for each arm (m:192) at k = 29 of 40, and every row k = 1..40 with its total and
+# looks (ceil(total/40)); every case's looks from the campaign rule (the live arm with the fewest launches next,
+# ties to table order A1, A1s, A2, A2s, A3, A3s; an arm out of the rotation once at its stop); each binomial bar's
+# n_j over its domain, crit_j and sequential false pause at its own p0 and alpha 1/20, in all four cases (the
+# realised case's counts half up per cumulative count); the guard's absolute half per pair at p0 1/5 on the
+# contrast launches; the hours at m:230's basis; the displays half up. The Fisher half, the union and the grid are
+# not recomputed here (the blind review and the values-check recompute them; the self-test pins them by digest).
+# The power at the floors is checked against its gate (.85, A1 and A2) and its display only.
+# Usage: python3 -I -S verify_mf3_gpwr.py <record> <seat raw> [<expected head> <expected script sha256>]
+import hashlib
+import json
+import sys
+from fractions import Fraction
+from math import comb
+
+ARMS = ("A1", "A1s", "A2", "A2s", "A3", "A3s")
+PAIRS = (("A1", "A1s"), ("A2", "A2s"), ("A3", "A3s"))
+SHAM = ("A1s", "A2s", "A3s")
+K, NQ, EVERY = 29, 40, 40
+FLOOR = {"A1": 80, "A1s": 32, "A2": 144, "A2s": 56, "A3": 144, "A3s": 56}       # m:184-186, uncached
+UNIT = {"A1": 32, "A1s": 32, "A2": 16, "A2s": 16, "A3": 16, "A3s": 16}          # m:184-186's balance units
+BARS = {  # class: (p0, domain arms, units per sham launch at full sessions, unit kind)        m:297, m:330
+    "round_degeneracy": (Fraction(1, 20), SHAM, 10, "rounds"),
+    "reasoning_line_defect": (Fraction(1, 10), SHAM, 6, "lines"),
+    "own_pair_lexical": (Fraction(1, 50), ("A2s", "A3s"), 10, "rounds"),
+}
+ALPHA = Fraction(1, 20)
+ABS_P0 = Fraction(1, 5)                                                          # m:316, on Qwen
+REALISED = {"rounds": Fraction(189, 24), "lines": Fraction(98, 24)}              # §A.1: 189 rounds, 98 lines / 24
+BASIS = (Fraction(6416, 10), Fraction(7136, 10))                                 # m:230: 641.6-713.6 s
+SEAT_SHA = "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a"
+FAILS = []
+
+
+def check(name, ok, detail=""):
+    print(("PASS  " if ok else "FAIL  ") + name + ("" if ok or not detail else "  [" + str(detail)[:300] + "]"))
+    if not ok:
+        FAILS.append(name)
+
+
+def half_up(x):
+    x = Fraction(x)
+    return (2 * x.numerator + x.denominator) // (2 * x.denominator)
+
+
+def dec(x, places):
+    x = Fraction(x)
+    v = half_up(x * 10 ** places)
+    return "%d.%0*d" % (v // 10 ** places, places, v % 10 ** places)
+
+
+_CRIT = {}
+
+
+def crit(n, p0, alpha):
+    """Smallest c with P(Bin(n, p0) >= c) <= alpha, by a descending upper-tail sum; None if none <= n."""
+    if (n, p0, alpha) not in _CRIT:
+        _CRIT[(n, p0, alpha)] = _crit(n, p0, alpha)
+    return _CRIT[(n, p0, alpha)]
+
+
+def _crit(n, p0, alpha):
+    a, b = p0.numerator, p0.denominator
+    total = b ** n
+    tail, best = 0, None
+    for c in range(n, -1, -1):
+        tail += comb(n, c) * a ** c * (b - a) ** (n - c)
+        if tail * alpha.denominator <= alpha.numerator * total:
+            best = c
+        else:
+            break
+    return best
+
+
+def seq_false_pause(ns, p0, alpha):
+    """P(some look j: cumulative count >= crit(n_j)), binomial increments at p0, by a DP over survivors."""
+    a, b = p0.numerator, p0.denominator
+    surv, prev = {0: 1}, 0                         # weights over b**prev
+    for n in ns:
+        c = crit(n, p0, alpha)
+        m = n - prev
+        inc = [comb(m, i) * a ** i * (b - a) ** (m - i) for i in range(m + 1)]
+        nxt = {}
+        for s, w in surv.items():
+            for i, wi in enumerate(inc):
+                t = s + i
+                if c is not None and t >= c:
+                    continue
+                nxt[t] = nxt.get(t, 0) + w * wi
+        surv, prev = nxt, n
+    return 1 - Fraction(sum(surv.values()), b ** prev)
+
+
+def n90(floor, k, nq):
+    """Smallest N with P(Bin(N, k/nq) >= floor) >= 9/10, i.e. 10 * P(X <= floor - 1) <= 1, by bisection."""
+    a, b = k, nq - k
+    if b == 0:
+        return floor
+
+    def ok(n):
+        return 10 * sum(comb(n, x) * a ** x * b ** (n - x) for x in range(min(floor, n + 1))) <= nq ** n
+    lo, hi = floor, floor
+    while not ok(hi):
+        lo, hi = hi, hi * 2
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if ok(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+
+
+def launch(floor, unit, k, nq):
+    up = (115 * floor + 99) // 100
+    nn = n90(floor, k, nq)
+    big = max(up, nn)
+    return up, nn, ((big + unit - 1) // unit) * unit
+
+
+def looks_of(stop):
+    counts = {a: 0 for a in ARMS}
+    total, out = 0, []
+    while any(counts[a] < stop[a] for a in ARMS):
+        live = [a for a in ARMS if counts[a] < stop[a]]
+        nxt = min(live, key=lambda a: (counts[a], ARMS.index(a)))
+        counts[nxt] += 1
+        total += 1
+        if total % EVERY == 0:
+            out.append([total] + [counts[a] for a in ARMS])
+    if not out or out[-1][0] != total:
+        out.append([total] + [counts[a] for a in ARMS])
+    return out
+
+
+def main(argv):
+    rec = json.load(open(argv[1], encoding="utf-8"))
+    seat_raw = open(argv[2], "rb").read()
+    check("schema mf3-gpwr-v1, unit Q-F3, path uncached",
+          (rec["schema"], rec["unit"], rec["path"]) == ("mf3-gpwr-v1", "Q-F3", "uncached"))
+    inp = rec["inputs"]
+    check("inputs: k 29 of 40, r 29/40, the floors, the balance units, looks every 40",
+          (inp["k"], inp["n_q"], inp["r"], inp["floors"], inp["balance_units"], inp["look_every"])
+          == (29, 40, "29/40", FLOOR, UNIT, 40))
+    L = {}
+    for a in ARMS:
+        up, nn, l_ = launch(FLOOR[a], UNIT[a], K, NQ)
+        r_ = rec["launch"]["rule"][a]
+        L[a] = l_
+        check("%s: ceil(1.15 floor) %d, N90 %d and L %d by an exact binomial search (k 29/40)" % (a, up, nn, l_),
+              (r_["floor"], r_["ceil_1.15_floor"], r_["N90"], r_["L"], rec["launch"]["L"][a]) == (FLOOR[a], up, nn,
+                                                                                                    l_, l_))
+    total = sum(L.values())
+    check("total %d, looks ceil(total/40) = %d" % (total, -(-total // EVERY)),
+          (rec["launch"]["total"], rec["launch"]["looks"]) == (total, -(-total // EVERY)) and total == 832)
+    bad, same = [], []
+    memo = {}
+    for k in range(1, NQ + 1):
+        row = {}
+        for a in ARMS:
+            key = (FLOOR[a], UNIT[a], k)
+            if key not in memo:
+                memo[key] = launch(FLOOR[a], UNIT[a], k, NQ)[2]
+            row[a] = memo[key]
+        t = sum(row.values())
+        got = rec["launch"]["rows_by_k"][str(k)]
+        if {**row, "total": t, "looks": -(-t // EVERY)} != got:
+            bad.append(k)
+        if row == L:
+            same.append(k)
+    check("rows k = 1..40: L per arm, total and looks, each recomputed", not bad and len(rec["launch"]["rows_by_k"]) == 40,
+          bad)
+    check("the same row at k = %s" % same, rec["launch"]["k_with_this_row"] == same)
+    stops = {
+        "projection": dict(L),
+        "sham_at_floor_r": {**L, **{s: -(-FLOOR[s] * NQ // K) for s in SHAM}},
+        "sham_at_floor_min": {**L, **{s: FLOOR[s] for s in SHAM}},
+        "sham_realised": dict(L),
+    }
+    for name, stop in stops.items():
+        cs = rec["cases"][name]
+        lk = looks_of(stop)
+        got = [[x["launches"]] + [x[a] for a in ARMS] for x in cs["looks"]]
+        flags = [x["look"] for x in cs["looks"]] == list(range(1, len(lk) + 1)) and \
+            [bool(x.get("end")) for x in cs["looks"]] == [False] * (len(lk) - 1) + [True]
+        check("%s: stop %s; %d looks by the campaign rule" % (name, "/".join(str(stop[a]) for a in ARMS), len(lk)),
+              cs["stop"] == stop and got == lk and flags and cs["n_looks"] == len(lk))
+        for cls, (p0, dom, per, kind) in BARS.items():
+            ex = [Fraction(sum(row[1 + ARMS.index(a)] for a in dom)) * (REALISED[kind] if name == "sham_realised"
+                                                                          else per) for row in lk]
+            ns = [half_up(x) for x in ex]
+            if name != "sham_realised" and any(x.denominator != 1 for x in ex):
+                check("%s %s: whole units" % (name, cls), False)
+            cj = [crit(n, p0, ALPHA) for n in ns]
+            fp = seq_false_pause(ns, p0, ALPHA)
+            bf = cs["bars"][cls]
+            ok = (bf["n_j"], bf["crit_j"], Fraction(bf["false_pause"]["exact"]), bf["false_pause"]["display"]) == \
+                (ns, cj, fp, dec(fp, 4))
+            if name == "sham_realised":
+                ok = ok and bf["n_j_exact"] == ["%d/%d" % (x.numerator, x.denominator) for x in ex]
+            check("%s %s: n_j, crit_j and the sequential false pause %s (p0 %s)" % (name, cls, dec(fp, 4), p0), ok)
+        if name == "sham_realised":
+            check("sham_realised: no guard (the guards count launches)", "guards" not in cs and "guard_unit" not in cs)
+            continue
+        for c, s in PAIRS:
+            g = cs["guards"][c]
+            n1n2 = [[row[1 + ARMS.index(c)], row[1 + ARMS.index(s)]] for row in lk]
+            n1 = [x[0] for x in n1n2]
+            ac = [crit(n, ABS_P0, ALPHA) for n in n1]
+            afp = seq_false_pause(n1, ABS_P0, ALPHA)
+            at = g["at_common_rate_p0"]
+            check("%s guard %s/%s: looks, abs crit_j, the absolute half %s at p0 1/5" % (name, c, s, dec(afp, 4)),
+                  (g["looks_n1_n2"], g["abs_crit_j"], Fraction(at["abs"]["exact"]), at["abs"]["display"], at["p"])
+                  == (n1n2, ac, afp, dec(afp, 4), "1/5"))
+            un = Fraction(at["union"]["exact"])
+            check("%s guard %s/%s: the pausing figure is the union, at least each half" % (name, c, s),
+                  g["guard_figure"]["figure"] == "union" and g["guard_figure"]["at_common_rate_p0"] == at["union"]
+                  and un >= max(afp, Fraction(at["fisher"]["exact"])) and at["union"]["display"] == dec(un, 4))
+        surv = Fraction(1)
+        for c, _ in PAIRS:
+            surv *= 1 - Fraction(cs["guards"][c]["at_common_rate_p0"]["union"]["exact"])
+        gu = cs["guard_unit"]
+        check("%s: the unit's guard figure, 1 - prod(1 - union) over the three pairs, %s" % (name, dec(1 - surv, 4)),
+              Fraction(gu["exact"]) == 1 - surv and gu["display"] == dec(1 - surv, 4)
+              and gu["pairs"] == [list(p) for p in PAIRS] and gu["figure_per_pair"] == "union")
+    pc, jj = rec["cases"]["projection"], rec["joint"]
+    check("the joint: each bar's own on the projection, the guards' unions and the unit's figure beside",
+          jj["figures"] == {cls: pc["bars"][cls]["false_pause"] for cls in BARS}
+          and jj["guards_beside"] == {c: pc["guards"][c]["at_common_rate_p0"]["union"] for c, _ in PAIRS}
+          and jj["guard_unit_beside"] == pc["guard_unit"])
+    hb = rec["hours"]
+    hrs = [Fraction(total) * b / 3600 for b in BASIS]
+    check("hours at m:230's basis: %d x 641.6-713.6 s = %s-%s h (%d-%d; m:238's 148-165)"
+          % (total, dec(hrs[0], 2), dec(hrs[1], 2), half_up(hrs[0]), half_up(hrs[1])),
+          [Fraction(h["exact"]) for h in hb["hours"]] == hrs
+          and [(h["display"], h["whole"]) for h in hb["hours"]] == [(dec(h, 2), str(half_up(h))) for h in hrs]
+          and (hb["basis_line"], hb["launches"], hb["m238_column"]) == ("m:230", 832, "148–165")
+          and "%d–%d" % (half_up(hrs[0]), half_up(hrs[1])) == hb["m238_column"])
+    pw = rec["power"]
+    check("power at the floors: A1 and A2 displayed >= .85 and gated, A3 reported (not gated); no n raised",
+          all(Fraction(pw["arms"][a]["exact"]) >= Fraction(17, 20) and pw["arms"][a]["gated"] for a in ("A1", "A2"))
+          and not pw["arms"]["A3"]["gated"] and pw["n_raised"] is False
+          and all(pw["arms"][a]["display"] == dec(Fraction(pw["arms"][a]["exact"]), 3) for a in ("A1", "A2", "A3"))
+          and [(pw["arms"][a]["n"], pw["arms"][a]["mS"]) for a in ("A1", "A2", "A3")] == [(80, 32), (144, 56),
+                                                                                          (144, 56)])
+    bz = rec["beside_A5"]
+    check("§A.5's rows beside, each verbatim in the seat's raw (sha256 %s...)" % SEAT_SHA[:8],
+          hashlib.sha256(seat_raw).hexdigest() == SEAT_SHA and bz["sha256"] == SEAT_SHA and len(bz["rows"]) == 6
+          and all(r.encode() in seat_raw for r in bz["rows"]) and bz["launches"] == 832)
+    check("the cap: none set (the PI's)", "not set by this program" in rec["cap"] and "cap" not in rec["hours"])
+    if len(argv) > 3:
+        pv = rec["provenance"]
+        check("provenance: HEAD and the script's sha256 are the run's",
+              (pv["head"], pv["script_sha256"], pv["isolated"]) == (argv[3], argv[4], True))
+    print("verify: %s (%d failed)" % ("PASS" if not FAILS else "FAIL", len(FAILS)))
+    return 0 if not FAILS else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

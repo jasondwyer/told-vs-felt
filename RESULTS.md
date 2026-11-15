@@ -21,6 +21,128 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **G-PWR (Q-F3), its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's answers of
+  2026-11-14, §A.7 and §D items 3–4, routed by the PI on 2026-11-14, `cdccc66`), from the program's commit
+  `46be7aa`. k = 29 of 40 gives m:238's row: L 128, 64, 224, 96, 224 and 96, 832 launches, 21 looks. Power at the
+  planned floors is .878 (A1) and .862 (A2), each at least .85, with A3, the screen, at .927; no n is raised. At
+  m:230's basis the campaign comes to 148–165 h, m:238's column, with §A.5's figures beside by citation. The cap is
+  the PI's: STOP for it.**
+  - **The record:** `data/mf3/gates/Q-F3_G-PWR.json`, written once by the run, sha256
+    `75d1d46bdfffe52f2704cd9ad5d87bc8627342f49ca1629977ba793370e001e5`.
+  - **The run,** by a wrapper, on the project's venv Python 3.12.9 with `-I -B` and a pycache prefix that does not
+    exist, under `env -i`:
+    - The launch checks:
+      - no `fsck.*`, `core.fsmonitor` or `core.hooksPath` in git's config;
+      - `git status` empty over the script, `m_gpwr`, the analyzer, `valence_core/`, the record and the seat's raw;
+      - the script's working-tree blob equal to HEAD's;
+      - the record absent, and its directory present.
+      - No `git fsck`: it would read the checkpoint blobs, which list v2 item 2 bars.
+    - The self-test of record, from the committed blob at HEAD in its own process: 28/28, its lines identical to
+      the committed self-test raw's.
+    - Provenance:
+      - HEAD `46be7aa`; the script `2b575ef8…d161`;
+      - `m_gpwr` `1d7c0fe3…111c`, executed from its blob `6d05c8e6…`;
+      - the analyzer `d347ea0c…5e48`, m's package `7756dcf4…49bb` and mf3's package `098455d9…da13`;
+      - the closure of the repository modules the run loaded, 18 beside the script, each bound to its blob;
+        `m_gpwr` and the analyzer are bound by name (their sha256s above), and `valence_core/m` by name and by m's
+        package sha256.
+    - The sources: each of the seven inputs' committed texts at its own commit, the four pinned sha256s equal, and
+      the two pinned commits the citations they stand for.
+    - A second run, to scratch, on the same interpreter and settings: its record byte-identical, and its stdout
+      identical but for the WROTE line.
+    - The out-of-process verifier, on the standard library alone (Python 3.9.6, `-I -S`): 55/55.
+      - It recomputes the launch rule and all 40 rows, every case's looks, the three bars in every case (the
+        realised case's rounding included), each pair's absolute half, the unit's guard figure from the pairs'
+        unions, and the hours.
+      - It does not recompute the Fisher half, the union or the grid. The blind review recomputed the nine unions,
+        five of the Fisher halves and six grid points. The builder's recomputation of all of them is pinned by the
+        self-test's digest, and this entry's values-check recomputed all of them.
+      - It checks the power at the floors only against .85 and its display. The program's own record check holds
+        the displays to m:190's figures, which the sources check binds to m:190's text.
+    - WRAPPER EXIT 0.
+    - Raw: [`_mf3-gpwr`](results/raw/2026-11-14_mf3-gpwr.txt). It carries the output, the wrapper's source and the
+      verifier's, with local paths scrubbed. Its last output line, "wrapper rc=0", comes from the command that
+      launched the wrapper; the wrapper's status is WRAPPER EXIT.
+  - **The launch counts** (m:192; r = 29/40, one rate for the unit, with A1 3/4, A2 4/4, A3 6/8, A1s 4/8, A2s 4/8 and
+    A3s 8/8 beside):
+
+    | | A1 | A1s | A2 | A2s | A3 | A3s |
+    |---|---|---|---|---|---|---|
+    | floor (uncached) | 80 | 32 | 144 | 56 | 144 | 56 |
+    | ⌈1.15 floor⌉; N90 | 92; 119 | 37; 50 | 166; 210 | 65; 84 | 166; 210 | 65; 84 |
+    | balance unit; L | 32; 128 | 32; 64 | 16; 224 | 16; 96 | 16; 224 | 16; 96 |
+
+    - The total is 832 and the looks are 21. The same row holds at k = 28–29 (m:238). The rows for k = 1–40 agree
+      with m:234–241's table, m:243's totals and m:330's look counts wherever those give one.
+  - **The power at the planned floors** (the analyzer's `f3_power_block`, m:190): A1 (80, 32) at α .01 and P .70,
+    .878 (.8784); A2 (144, 56) at α .01 and P .65, .862 (.8620); A3 (144, 56) at α .05 and P .65, .927 (.9273),
+    reported, no floor. A1 at F-5's 96/32 is beside, .916, used nowhere (READINGS item 8).
+  - **The false-pause figures** (m:330: α .05 at each look; each bar's own p0; the guard at the common rate .20):
+
+    | case | looks | `round_degeneracy` | `reasoning_line_defect` | `own_pair_lexical` | guard pairs A1, A2, A3 (union) | the unit's guard |
+    |---|---|---|---|---|---|---|
+    | the projection | 21 | .1703 | .1584 | .1641 | .2094, .2401, .2327 | .5390 |
+    | the shams at ceil(floor / r): 45, 78, 78 | 20 | .1547 | .1441 | .1482 | .2050, .2355, .2297 | .5318 |
+    | the shams at their floors: 32, 56, 56 | 18 | .1370 | .1225 | .1354 | .1925, .2265, .2162 | .5105 |
+    | G-F3's realised units: 63/8 rounds, 49/12 lines per sham launch | 21 | .1553 | .1601 | .1333 | — | — |
+
+    - Each pair's halves on the projection (absolute, Fisher): A1 .1599, .1070; A2 .1781, .1320; A3 .1682, .1322.
+      The Fisher half's grid maxima are .1179 (A1, at 11/20), .1440 (A2, at 31/50; refined at 309/500) and .1486
+      (A3, at 14/25; refined at 559/1000). Each union's maximum over common rates p ≤ .20 is at .20.
+    - **The joint** is each bar's own on the projection, with the guard's beside: the pairs' unions and the unit's
+      .5390 (READINGS item 17). The joint over the three bars, and over the bars and the guard, is not computed;
+      the record says why in one sentence (Q7 (c)).
+    - Not figured: the hair triggers (no p0; m:271), and what m:330 reports at the looks without a bar (low label
+      mass, top-1-not-a-label, the pooled pre-pick exclusions).
+  - **The hours** at m:230's basis, by Code's reading of §A.7's and §D item 3's "m:205" (READINGS item 18): 832 ×
+    641.6–713.6 s = 148.28–164.92 h, so 148–165 h, m:238's column. Beside them, by citation of the seat's raw
+    (`cdccc66`, `6b963adf…0db3a`), are §A.5's six rows, as the realised basis of record. The record carries them
+    verbatim; here they are in short:
+    - G-F3's 24 sham sessions as they fell, 1,298.4 s per launch: ≈ 300 h;
+    - the realised r, 29/40 (72.5 % complete at 1,931.6 s, 27.5 % ended by exclusion at 31.9 s): ≈ 326 h;
+    - every launch complete, 1,931.6 s: ≈ 446 h;
+    - the slowest complete session, 2,962.6 s: ≈ 685 h;
+    - beside, v0.2's four-session basis, 1,319.6 s: ≈ 305 h; and m:230's 641.6–713.6 s: 148–165 h.
+    - The program recomputes none of §A.5's figures.
+  - **Code's readings, declared for the seat.** The record's READINGS carry the seat's, F-5's and Q7's texts
+    verbatim (items 1–6) and Code's fourteen readings (items 7–20), strikable until v1.0's commit (Q7). Code's
+    block, [`_mf3-gpwr_code-to-design`](results/raw/2026-11-14_mf3-gpwr_code-to-design.md), lists R1–R9, with the
+    alternatives the review named (R1–R7):
+    - R1, the hours basis, m:230 for the literal "m:205";
+    - R2, A1 at 80/32;
+    - R3 to R5, the floor case, the realised case pooled over the three sham arms, and its rounding;
+    - R6, the unit's guard figure;
+    - R7, the joint;
+    - R8, the two departures in form;
+    - R9, G-VER read as G-F3's per-record verification.
+    - Q1 (R1) and Q2 (R9) are for the seat. Neither blocks the PI's cap.
+    - None of R1 and R3–R9 moves the launch counts or the looks. A strike of R2, to F-5's literal 96/32, would:
+      A1's L 160 (⌈1.15 · 96⌉ = 111, N90 142), 864 launches and 22 looks, the cached table's row at k 29–28 (m:224),
+      or 154–171 h at m:230's basis. §A.5 figures its hours on 832 launches with A1 at 128.
+  - **The cap** is the PI's, at G-PWR's entry (§D item 4), written into LOCK-m-F3 v1.0 (m:298, m:249). This run sets
+    none. The figures go to the coordinating session for the PI's question with §A.5's table. The Q-F3 track
+    STOPs here until the cap is given. LOCK-m-F3 v1.0 is then drafted for the seat's read, by D2 (2026-12-22) (§D
+    item 5).
+  - **Values-check:** a blind check of the draft, the record, the raw and Code's block before the commit, in two
+    passes.
+    - The first, 53 claims: 45 CONFIRMED, 3 IMPRECISE, 3 FAIL, 2 NOT CHECKABLE (future acts; Code's reads). It
+      recomputed every figure on the standard library from the spec, and each equals the record's exact value:
+      - the launch rule and all 40 rows, and every case's looks;
+      - every bar in every case;
+      - each pair's absolute and Fisher halves and their union, by its own 2-D dynamic programme, and the Fisher
+        grids in full with their maxima;
+      - the unit's figure, the power at the floors by its own implementation of m:190's base case, and the hours.
+      - It re-rendered the raw's report lines from the record, with no difference.
+    - Its three FAILs were in the block's account of the readings: that none moves the launch counts (a strike of
+      R2 would), that R9 is in the READINGS (it is the block's own), and R5's alternatives (the review's are floor,
+      or a fractional-n mixture). All six of its findings are applied.
+    - The second pass, on the ten changed passages: 6 CONFIRMED, 3 IMPRECISE (applied), 0 FAIL, 1 NOT CHECKABLE.
+    - Code's masked scan of the checker's transcript (counts only): nothing under `data/` but the record, no ckpt
+      or reports path, no metadata form of `data/`, and no transcript.
+    - Raw: [`_mf3-gpwr_valuescheck`](results/raw/2026-11-14_mf3-gpwr_valuescheck.md).
+  - Committed by path: the record, the raw, Code's block, the values-check's raw and this entry. Nothing ran on a
+    model or a box. Not pushed.
+
 - 2026-11-14 — **G-PWR (Q-F3)'s program, committed before its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5;
   the seat's answers of 2026-11-14, §A.7 and §D item 3, routed by the PI on 2026-11-14, `cdccc66`):
   `scripts/mf3_gpwr.py` (sha256 `2b575ef8…d161`), a sibling of `scripts/m_gpwr.py` that imports its functions
