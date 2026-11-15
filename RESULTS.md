@@ -21,6 +21,88 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **LOCK-m-F3 v1.0: the draft, for the seat's read (the seat's answers of 2026-11-14, §A.7 and §D item
+  5, routed by the PI on 2026-11-14), on the PI's cap: "Hour cap: 480 h". Code STOPS for the seat's read: nothing
+  follows until the seat answers and the PI routes.** The draft is the v1.0 text above `LOCK-m-F3.md` v0.2's committed
+  text, verbatim; `LOCK-m-F3.md` itself is unchanged. Nothing ran on a model.
+  - **The routing.** §D item 5, verbatim as `cdccc66`'s close quotes it: "5. LOCK-m-F3 v1.0 drafted for the seat's
+    read with §A.7's contents, by D2 2026-12-22 [go after your cap]." The close line on `8c9b5ff`'s entry, below,
+    records the cap.
+  - **The PI's cap**, verbatim: "Hour cap: 480 h".
+    - It is the PI's answer to the coordinating session's question "What hour cap do you set for Q-F3's campaign, or
+      do you decline v1.0?". The coordinating session relayed it verbatim.
+    - It came in chat with no date of its own. The coordinating session's date for it, 2026-11-15, is that session's
+      own, not a PI date.
+  - **The draft:** [`_lock-m-f3-v1.0-draft`](results/raw/2026-11-15_lock-m-f3-v1.0-draft.md), sha256
+    `16a0c79eb995f3c8b0317df976a356183235cddce0b4546cbaf1db157de0f2db`,
+    1,482 lines: the v1.0 part (321 lines), then v0.2's bytes (`ac82b943…75a7`).
+    It is byte-identical to the `LOCK-m-F3.md` that Code's commit would place.
+  - **Its contents.** Every item of §A.7's list is present:
+    - §1, the launch counts and looks from G-PWR (Q-F3)'s record (`75d1d46b…01e5`): A1 128, A1s 64, A2 224, A2s 96,
+      A3 224, A3s 96, 832 launches, 21 looks. The whole line is
+      `launch counts = A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96`.
+    - §2, the PI's cap, quoted with the question, as the whole line `hour cap = 480 h`, with §A.5's projections beside
+      by citation.
+    - §3, D2 2026-12-22.
+    - §4, the hashes of:
+      - the proposal, ADDENDUM-m1 v0.1 and ADDENDUM-m2 v0.5;
+      - the schedules (the manifest and the six campaign files), the pools and the renders;
+      - the analyzer, m's and mf3's packages, and the closures;
+      - the driver (`285eed04…0e44`);
+      - the gate artifacts, G-F3's records (the checkpoint hashed only), and G-PWR's record and program.
+
+      It also carries "preprint of record pending".
+    - §5, the backend identifier `a734dadec8f8ce9b`, the weights snapshot `c000ac2c…` and the path.
+    - §6, the `qual` wiring's two revised PIN texts, re-quoted, and its four PIN sites. The other sites are re-anchored
+      on `285eed04…0e44`.
+    - §7, G-F3's figures of record: the bars; (a) 0/98; (b) 4/251, with §A.4's readings of record; the tally 0/62;
+      r 29/40 by template; and the first-pick shares. G-VER appears as Code's R9.
+    - §8, Code's two BUILD readings, unstruck.
+    - §9, v0.2 §8's pointer, closed by `pq:`§3.
+    - §10, the list of record v2, in one line.
+    - §11–§13: Code's readings in the draft and what v1.0's commit closes; how the campaign cites the file; what
+      follows.
+  - **Checks:**
+    - **The generator.** A scratch script and its template read every hash, G-PWR's figures and the PIN texts from
+      committed blobs, or from working-tree files committed clean. The blobs are at HEAD `ce3ed7c`, but for RESULTS.md
+      at `cdccc66`, `2193832` and `b427f82`, the driver at `fb82daa` and the decisions block at `5dca58b`. It finds
+      every quote in its source but the PI's word and the coordinating session's question, which are the relay's.
+      - It refuses a v1.0 part that restates the cap or path line, names an m-file path, carries a WEIGHTS line or
+        v0.2's rule text, or holds a clock time.
+      - It finds, in the seat's raw, each figure Code typed from that raw.
+      - A second run gives the same bytes.
+    - **The dry check**, with the draft standing in for the committed lock: CLEAR, 9/9.
+      - The driver's parsers read the same eleven m files and the same WEIGHTS value as from v0.2.
+      - The identities for time, id and qual are v0.2's but for `lock_sha256`, which is the draft's, and the
+        licence is [] for each.
+      - The analyzer's PIN-V2-12 values are named in full, and the driver's self-test passes 214/214.
+    - Raw: [`_lock-m-f3-v1.0-draft_check`](results/raw/2026-11-15_lock-m-f3-v1.0-draft_check.txt). It holds the
+      generator, its template and the dry check verbatim, one run of each, the second run's comparison, and the
+      self-test's output.
+  - **A departure, disclosed for the seat** (the list of record v2, item 8; the block's §6).
+    - The generator's first form read the HEAD blobs of G-F3's checkpoint, report and reads with `git show`, to
+      compare their bytes in memory. It ran so four times, at HEAD `ce3ed7c`, and nothing of those files printed.
+    - The generator of record compares ids only (`git hash-object` against `git rev-parse`).
+    - Nothing is rewritten; the seat rules.
+  - **For the seat:** the block
+    [`_lock-m-f3-v1.0_code-to-design`](results/raw/2026-11-15_lock-m-f3-v1.0_code-to-design.md).
+    - Q1: the draft, adopted or amended.
+    - Q2: Code's four readings in the draft.
+    - Carried and still open: `8c9b5ff`'s Q1 and Q2, and R1–R9. A strike of R2 would move §1's line.
+  - **Then,** on the PI's word:
+    1. the draft, placed byte for byte as `LOCK-m-F3.md` and committed by path with its v1.0 entry, by D2
+       2026-12-22;
+    2. the campaign wiring;
+    3. the campaign, on the PI's routing.
+  - **Values-check:** two blind passes, under briefs quoting the list of record v2's items 1–5.
+    - Pass 1, over the draft, the block, this entry and the close line: 181 claims, 154 CONFIRMED, 15 IMPRECISE,
+      3 FAIL, 9 NOT CHECKABLE. Every FAIL and IMPRECISE item is applied; its item 16 is the departure above.
+    - Pass 2, over the changes: 63 claims, 57 CONFIRMED, 3 IMPRECISE, 0 FAIL, 3 NOT CHECKABLE. Its three IMPRECISE
+      items are applied, without a third pass.
+    - Raw: [`_lock-m-f3-v1.0-draft_valuescheck`](results/raw/2026-11-15_lock-m-f3-v1.0-draft_valuescheck.md).
+  - **Committed by path:** the draft, the block, the check raw, the values-check raw and this entry, with the close
+    line on `8c9b5ff`'s entry. Not pushed.
+
 - 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0 — COMMITTED: `bd8808c`'s amended drafts, each placed byte for
   byte as its lock, on the seat's answer to item 7 ((a) and (d) together; no BUILD) and the PI's word releasing the
   hold ("Place the locks"). Each licenses the campaign on its checkpoint, within one pod session; nothing later.**
@@ -224,6 +306,16 @@ applied to CLAUDE.md.
     - Raw: [`_mf3-gpwr_valuescheck`](results/raw/2026-11-14_mf3-gpwr_valuescheck.md).
   - Committed by path: the record, the raw, Code's block, the values-check's raw and this entry. Nothing ran on a
     model or a box. Not pushed.
+  - **Close (Code's date 2026-11-15; the PI's word has no date of its own): the PI's cap.** The PI's word, verbatim:
+    "Hour cap: 480 h". It answers this entry's STOP (§D item 4).
+    - The coordinating session put the question "What hour cap do you set for Q-F3's campaign, or do you decline
+      v1.0?" to the PI, with the seat's §A.5 table and §D item 4 (the seat's answers of 2026-11-14, `6b963adf…db3a`,
+      committed at `cdccc66`). It relayed the answer verbatim.
+    - Its calendar date for the word, 2026-11-15, is its own, not a PI date.
+    - The cap goes into LOCK-m-F3 v1.0 (m:298, m:249). The draft, recorded in the entry "LOCK-m-F3 v1.0: the draft"
+      at the top of the Log, carries the line `hour cap = 480 h` in its §2.
+    - No seat raw answers this entry's block yet (R1–R9; Q1, Q2). The readings stand as declared, strikable until
+      v1.0's commit (Q7).
 
 - 2026-11-14 — **G-PWR (Q-F3)'s program, committed before its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5;
   the seat's answers of 2026-11-14, §A.7 and §D item 3, routed by the PI on 2026-11-14, `cdccc66`):

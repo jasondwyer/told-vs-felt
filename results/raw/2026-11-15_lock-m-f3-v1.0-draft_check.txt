@@ -1,0 +1,1156 @@
+# LOCK-m-F3 v1.0's draft: the generator, its template and the dry check (Code's check raw)
+# F3 session, Code's date 2026-11-15. HEAD ce3ed7c. Run from the repository root on the project's venv, Python 3.12.9:
+#   jlens-qwen36/.venv/bin/python -I -B -X utf8 <scratch>/gen_v10.py <scratch>/template_v10.md results/raw/2026-11-15_lock-m-f3-v1.0-draft.md
+#   the same command to <scratch>/final_draft_run2.md (the second run), then a byte comparison
+#   jlens-qwen36/.venv/bin/python -I -B -X utf8 <scratch>/dry_check_v10.py results/raw/2026-11-15_lock-m-f3-v1.0-draft.md <scratch>/final_dry_selftest.txt
+# Local paths are scrubbed (<repo>, <tmp>, <home>); <scratch> is Code's scratch folder. Nothing ran on a model.
+# Nothing under data/*/ckpt or data/*/reports was opened but to hash its bytes: the generator hashes G-F3's
+# checkpoint, report and reads, and compares their blob ids with HEAD's; the self-test hashes the files under
+# data/mf3 before and after, to assert that nothing was written there.
+# The scripts are Code's scratch tools; their sources follow the outputs, verbatim.
+
+----------------------------------------------------------------------------------------------------
+The generator's run of record (its stdout)
+----------------------------------------------------------------------------------------------------
+HEAD ce3ed7c (ce3ed7c5ba810795f05bd866a65e8b8cc3775bdb)
+DRAFT 2026-11-15_lock-m-f3-v1.0-draft.md sha256 16a0c79eb995f3c8b0317df976a356183235cddce0b4546cbaf1db157de0f2db (1482 lines; the v1.0 part 321 lines, then LOCK-m-F3.md v0.2's committed bytes, sha256 ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7)
+launch line: launch counts = A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96 | cap line: hour cap = 480 h
+qual PIN sites: :154, :306, :432, :638 | revised: :92->:102, :375->:440 | re-anchored: :102->:112, :150->:183, :160->:193, :278->:318, :386->:452, :462->:529, :487->:554, :577->:650, :128->:138, :273->:313, :571->:644, :109->:119
+BUILD readings at lines.py:202, stages.py:493
+CHECKS: markers filled; the v1.0 part names no m-file path, carries no WEIGHTS line, neither QUAL_LOCK_LINES string, nor v0.2's rule text; the draft carries each QUAL_LOCK_LINES string once, at a line's start; one WEIGHTS value, v0.2's; the analyzer's, m's package's, the Q-F3 closure's, mf3's package's and the proposal's sha256 in full; every quote found in its pinned source
+
+----------------------------------------------------------------------------------------------------
+The second run, and the comparison
+----------------------------------------------------------------------------------------------------
+second run's draft sha256 16a0c79eb995f3c8b0317df976a356183235cddce0b4546cbaf1db157de0f2db; the draft of record's sha256 16a0c79eb995f3c8b0317df976a356183235cddce0b4546cbaf1db157de0f2db; byte-identical: True
+
+----------------------------------------------------------------------------------------------------
+The dry check (its stdout; exit status on the last line)
+----------------------------------------------------------------------------------------------------
+[PASS] (1) lock_m_modules and lock_weights read the same eleven m files and the same WEIGHTS value from the draft as from v0.2, with no problem (weights revision c000ac2c2057)
+[PASS] (2) stage_identity_extra('time'): no problem on v0.2 or on the draft; the same identity but lock_sha256, which is the draft's sha256 (v0.2's is ac82b943...) (keys 12; reasoning_cap 120; locked_path uncached)
+[PASS] (3) stages.licence_problems on time's identity with the draft standing in, HF_HUB_OFFLINE=1: [] (and [] on v0.2) []
+[PASS] (2) stage_identity_extra('id'): no problem on v0.2 or on the draft; the same identity but lock_sha256, which is the draft's sha256 (v0.2's is ac82b943...) (keys 11; reasoning_cap 120; locked_path None)
+[PASS] (3) stages.licence_problems on id's identity with the draft standing in, HF_HUB_OFFLINE=1: [] (and [] on v0.2) []
+[PASS] (2) stage_identity_extra('qual'): no problem on v0.2 or on the draft; the same identity but lock_sha256, which is the draft's sha256 (v0.2's is ac82b943...) (keys 12; reasoning_cap 120; locked_path uncached)
+[PASS] (3) stages.licence_problems on qual's identity with the draft standing in, HF_HUB_OFFLINE=1: [] (and [] on v0.2) []
+[PASS] (4) the analyzer's PIN-V2-12 test, in its own substring form, on the draft: it names the analyzer's, m's package's and the Q-F3 closure's sha256 in full the analyzer's sha256 d347ea0c9b69f73c...; m's package_sha256 7756dcf42532b222...; the Q-F3 closure sha256 06a36cbfb4ab5dce...
+[PASS] (5) the driver's self-test with the draft standing in for the committed lock: exit 0, no FAIL line (214/214 mf3 selftest checks pass; FAIL lines 0; output final_dry_selftest.txt)
+DRAFT sha256 16a0c79eb995f3c8b0317df976a356183235cddce0b4546cbaf1db157de0f2db; v0.2 sha256 ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7
+DRY CHECK CLEAR: 9/9
+EXIT=0
+
+----------------------------------------------------------------------------------------------------
+The driver's self-test, with the draft standing in for the committed LOCK-m-F3.md (its stdout)
+----------------------------------------------------------------------------------------------------
+  [PASS] mf3.keys: stream is valence_core.m.keys.stream (imported, the one key-to-generator function)
+  [PASS] mf3.keys: item keys -- campaign m-f3-items|{s}; gates m-f3-items-{time|id|qual}|{s} (m:159)
+  [PASS] mf3.keys: arm keys -- campaign m|{arm}|{s}, time m-time|{arm}|{s}, id m-id|F3|{t}|{s}, qual m-f3|{t}|{s} (m:159, m:295, m:297)
+  [PASS] mf3.keys: schedule keys m-sched|Q-F3|{arm}|{b} and m-sched|Q-F3|{gate}|{template}|0
+  [PASS] mf3.keys: refusals (G-ID on A2, A1s; id schedule on A3; a Q-F0 template; a gate word 'campaign'; an unknown stage; A0s schedule; A0's role; a sham's sham) [True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.keys: contrast / sham / matched pairs / clause factor (m:159, m:184-186, m:310)
+  [PASS] mf3.keys: no Q-F3 key string equals a Q-F0 or OLMo key string (disjoint streams) []
+  [PASS] mf3.keys: key templates render literal {s}/{b} fields
+  [PASS] mf3.banner: bytes exact for A1 x clause, A1s x clause, A2 (TOLD-OBJ), A3 (COMMON only), P = maple, Q = cedar (m:253-257) []
+  [PASS] mf3.banner: A2s = A2 and A3s = A3 byte for byte (one banner per tier, m:185-186); note lines: two Note lines except A3/A3s (COMMON alone)
+  [PASS] mf3.banner: the reasoning block is A-m2 v0.5's F-b -- m:174's header line (m's REASONING_HEADER), a newline, 'Reasoning (one line): So far,' with no newline or space after it; n by str(n)
+  [PASS] mf3.banner: A-m2 v0.5 checks clean on its file of record (sha256 pinned; §3.1's F-b bullet and §4.1's literal = the segment; the cap 120; §4.2's stub cap 60) and fire on a changed byte, the F-b bullet, §4.1's literal or form, the cap sentence, the stub-cap sentence, an absent file, a changed segment in the code {'a changed byte (the pin)': True, 'the F-b bullet': True, 'the 4.1 literal': True, 'the 4.1 form': True, 'the cap': True, "the stub's cap": True, 'an absent fi...
+  [PASS] mf3.banner: the F-b segment carries no roster word (corr.hygiene's form, both rosters); the check fires on a segment naming one
+  [PASS] mf3.banner: refuses a clause missing or a bool on A1, a clause on A2/A3s, A0, P == Q, bad labels, and a reasoning n outside 5..10 or not an int [True, True, True, True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.banner: spec_problems is clean on the proposal of record (six templates, both clauses, the reasoning block at n = 5..10, §2.4's banner column) []
+  [PASS] mf3.banner: spec_problems fires on a mutated TOLD-OBJ / COMMON / reasoning line, an A3 banner with a TOLD line, a mutated arms table or m:174 label, and an absent proposal []
+  [PASS] mf3.banner: re.escape sanity -- every built banner is ASCII, newline-terminated, no blank line
+  [PASS] mf3.schedule: Q-F3's roster is Qwen's of record (e2d.config.ROSTER, via m.schedule)
+  [PASS] mf3.schedule: the exact-recurrence launch rule equals m.schedule._n90_launch on six cases (Q-F0's n_q 24 and Q-F3's 40) [((96, 24, 24, 32), (128, 128)), ((32, 12, 24, 32), (96, 96)), ((144, 35, 40, 16), (176, 176)), ((56, 30, 40, 16), (96, 96)), ((96, 31, 40, 32), (160, 160)), ((...
+  [PASS] mf3.schedule: the launch rule reproduces m:218-228 (cached) and m:232-243 (uncached) row totals, k = 1 included (24,000 / 23,328) {}
+  [PASS] mf3.schedule: k = 1 materialization (the PIN) -- A1 4352 (136 units; uncached 3680 a prefix), A1s 1600 (50), A2 = A3 6384 (399), A2s = A3s 2640 (165)
+  [PASS] mf3.schedule: A3's balance unit is 16 clause-free cells, A1's 32 with clause; each unit balanced; a prefix is a prefix of whole units (extending changes no earlier cell)
+  [PASS] mf3.schedule: a campaign unit = cells[k] for k in stream('m-sched|Q-F3|{arm}|{b}').permutation, recomputed independently
+  [PASS] mf3.schedule: every gate template's sixteen rows meet m:172's balance claims (clause-free form for A2-A3s) {}
+  [PASS] mf3.schedule: gate cells -- clause None where the TOLD line names no labels, the table's clause on A1/A1s; G-TIME-F3 = row j = 0
+  [PASS] mf3.schedule: the clause-free balance check fires on a flipped start and on mixed clauses
+  [PASS] mf3.schedule: G-F3's launch order -- strict rotation in table order, a template leaving at its count (40 launches)
+  [PASS] mf3.schedule: refusals (order out of table order; m > 16; a two-arm interleave; resume counts inconsistent with a rotation; G-ID on A2; zero units) [True, True, True, True, True, True]
+  [PASS] mf3.schedule: the six-arm rotation from zero, arms leaving at their floors; a resume continues where the rotation stopped (['A1', 'A1s', 'A2', 'A2s', 'A3', 'A3s', 'A1', 'A2', 'A3', 'A1'], ['A2s', 'A3', 'A3s', 'A1', 'A1s'])
+  [PASS] mf3.schedule: 20 schedule files + manifest; verify clean, fires on a changed file and an unlisted one; the writer refuses to overwrite a differing file (21, [], ['Q-F3_time_A3.json differs from the regeneration'], ['unlisted file extra.json'])
+  [PASS] mf3.schedule: file objects -- campaign n = the k = 1 row; G-TIME n 1 x 6; G-ID A2s/A3s n 16; G-F3 4/8/4/8/8/8 (m:293-297)
+  [PASS] mf3.schedule: GATE_TABLE is m's, which equals the spec's sixteen rows (m:161-170)
+  [PASS] mf3.lines: the domain (A-m2 v0.5 §1; P1) -- the banner, its Note line, round headers, Task lines, the menu's lines and the pick line as rendered, the block's header; not a Response line, not F-b's label line, not a header inside a model text; distinct, in first-occurrence order (('=== Config evaluation session ===', 'Note: after the first four rounds you will choose which config runs each remaining round.', '[round 1 | config: granite]...
+  [PASS] mf3.lines: domain_of_record on the finished record equals domain_before_line at generation, line by line
+  [PASS] mf3.lines: a zero-length model piece touches its line (an empty response, an empty F-b line); an unterminated final fragment is no line
+  [PASS] mf3.lines: refuses an empty harness line, an unknown piece kind, an offset outside the transcript, a line the record does not have [True, True, True, True]
+  [PASS] mf3.lines: clean lines carry no class and no scaffold hit
+  [PASS] mf3.lines: empty = whitespace-only after ws_norm (with the cap reached it is also cap_no_newline)
+  [PASS] mf3.lines: cap_no_newline = stopped on the cap (n_tok == cap); a newline as the cap-th sampled token is a newline stop, not cap-reach; also at cap 60
+  [PASS] mf3.lines: echo fires on a domain line reproduced verbatim after ws_norm (the banner, COMMON, a header written so far, a Task line, the pick line as rendered, extra whitespace) and reports its domain index {'banner': (('echo',), 0), 'COMMON': (('echo',), 1), 'header': (('echo',), 10), 'task': (('echo',), 9), 'pick line': (('echo',), 7), 'spaced': (('echo',), 1)}
+  [PASS] mf3.lines: no echo for a containing line (Q8's containment withdrawn, A-m2 v0.5 §1), a header not yet written, a case change, a missing period, F-b's or m:174's label, a line the session never wrote, a Response line {'prefixed': (), 'a header not yet written': (), 'lower case': (), 'no period': (), "F-b's label line": (), "m:174's label": (), 'a TOLD line the session never ...
+  [PASS] mf3.lines: counter (a) -- containment of a domain line (every echo line, the prefixed one) or the `=== … ===` frame (A-m2 v0.5 §3.4); not a line that contains no complete domain line ({'banner': True, 'COMMON': True, 'header': True, 'task': True, 'pick line': True, 'spaced': True, 'prefixed': True, 'a header not yet written': False, 'lower c...
+  [PASS] mf3.lines: counter_a_of_record recomputes each line over its own domain
+  [PASS] mf3.lines: scaffold hits are the Qwen scaffold set's case-sensitive substrings (no class)
+  [PASS] mf3.lines: classes are a set in declared order; the defect is their union once per line
+  [PASS] mf3.lines: refuses inconsistent cap fields, an unknown stop, a str as the domain, malformed audits [True, True, True, True, True, True, True, True]
+  [PASS] mf3.lines: counter (b)'s candidates are the unclaimed task responses with phase, index and path; the table counts Code's declared items per template and phase, refusing a claimed response, a repeat and a path the records do not hold ([{'phase': 'forced', 'idx': 0, 'n': 1, 'path': 'uncached', 'text': 'Five.'}, {'phase': 'forced', 'idx': 1, 'n': 2, 'path': 'uncached', 'text': 'Here is the eva...
+  [PASS] mf3.lines: counter (b) keys a G-ID-F3 pair's members by path (both counted; two records under one key refused); on G-TIME-F3's contrast read the claimed round is the last forced round of a session excluded at forced (m.audit.qwen_ends: a forced claim ends the session) and none otherwise; a round with no audit mapping in any other form is refused (the domain fails closed) ({'A2s': {'free': 2}}, True, [{'phase': 'forced', 'idx': 0, 'n': 1, 'path': 'uncached', 'text': 'Answer 0.'}, {'phase': 'forced', 'idx': 1, 'n': 2, 'path': 'unc...
+  [PASS] mf3.lines: the Q4 review counter tabulates the three strings per template and kind
+  [PASS] mf3.scaffold: F2 block order -- start 1 gives Q Q P P (m:174), start 0 P P Q Q
+  [PASS] mf3.scaffold: arm-rng draw order (m:159) -- 4 forced seeds, then per choice the reasoning seed, the menu order, the chosen seed; recomputed independently from the key
+  [PASS] mf3.scaffold: the reasoning block at the menu's n (5, then 6), cap carried; the chosen round shares n with its menu
+  [PASS] mf3.scaffold: out-of-order calls refused (reasoning before the forced rounds; a menu before its reasoning seed; a skipped index; a reasoning seed drawn twice) [True, True, True, True]
+  [PASS] mf3.scaffold: f3_config refuses G-TIME cached, a cap outside m:174's pair at any stage (90 at G-TIME-F3 and G-F3, 180 in the campaign), G-ID on A2, a clause on A2 or none on A1, a P off the map [True, True, True, True, True, True, True, True]
+  [PASS] mf3.scaffold: f3_config admits m:174's pair, 60 and 120, at every Q-F3 stage, the caller choosing (A-m2 v0.5 §4.2: it carries no stub signal; the cap of record binds where the run's provenance is known) [True, True, True, True, True, True, True, True]
+  [PASS] mf3.scaffold: the stage table carries m:174's pair (60, 120) for every Q-F3 stage; CAP_OF_RECORD is 120 and STUB_CAP 60, the addendum's (banner.ADDENDUM_M2_CAP, banner.ADDENDUM_M2_STUB_CAP); REASONING_CAPS is m:174's (60, 120), unchanged; the record's piece kinds are partitioned into the model's (generation, reasoning_text) and the harness's (lines.MODEL_PIECE_KINDS / HARNESS_PIECE_KINDS)
+  [PASS] mf3.scaffold: keys and meta -- campaign m|A3s|5 / m-f3-items|5, j None, format F3, unit Q-F3
+  [PASS] mf3.scaffold: contrast Q rounds deliver the corrupt_m render and P rounds clean text; the sham's are all clean; both templates draw from m-f3-items-qual|1's [:8] P / [8:] Q split in order
+  [PASS] mf3.scaffold: an empty record (no forced round) is out of the domain and records without error
+  [PASS] mf3.scaffold: pre-pick = forced, or reasoning line 1 (the seat's Q8)
+  [PASS] mf3.guard: insulation, the read, label ids and the laptop checklist are valence_core.m.guard's
+  [PASS] mf3.guard: the licence's module set -- the static closure of mf3's production imports is exactly M_MODULES, no stages/gshape/gcal/runner/verify/testing reached, and a fresh interpreter loads none beyond M_MODULES (N1) []
+  [PASS] mf3.guard: the static scan catches a module-level stages import and a lazy runner import (with their closures), and ignores a _selftest-only import
+  [PASS] mf3.guard: m_module_sha256s hashes each licensed module's file and the package's __init__.py (11); package_sha256 is m's formula over valence_core/mf3
+  [PASS] mf3.guard: cached_path_admitted -- PASS on this backend at this cap only; absent, another cap, another backend, FAIL, Q-F0's artifact, one pair and G-TIME-F3 all give uncached {'absent': False, 'pass': True, 'other cap': False, 'other backend': False, 'fail': False, "Q-F0's": False, 'one pair': False, 'time': False}
+  [PASS] mf3.guard: G-ID-F3 never asks for the licence it is the gate of; gid_paths is (False, True)
+  [PASS] mf3.guard: the call-site scanner is valence_core.m.guard's _CallSiteScan, subclassed; six methods are overridden -- the four that bind m's guard module or file (__init__, _flag_licensed_bindings, _is_guard_alias, _licensed), in_gid (m's G-ID function name) and flag (m's names in every inherited message) ['__init__', '_flag_licensed_bindings', '_is_guard_alias', '_licensed', 'flag', 'in_gid']
+  [PASS] mf3.guard: m's checker battery reproduces through the subclass under the name map -- _CLEAN_SRC silent, every one of m's 17 smuggles fires with its needle, and m's 6 gap groups (75 must-fire, 11 must-not-fire) hold {'clean': [], 'smuggles': [], 'missed': [], 'noisy': []}
+  [PASS] mf3.guard: check_call_sites is clean on Q-F3's licensed shapes (a keyword-only path_cached threaded from mf3's cached_path_admitted, by alias or by name; gid_paths inside run_gid_pair_f3; a literal False) []
+  [PASS] mf3.guard: check_call_sites fires on every Q-F3 smuggle (33: Q-F0's licence in three binding forms and m's gid_paths among them) and on an unparsable file (fails closed) []
+  [PASS] mf3.guard: the forbidden-literal scan fires on m's literals, clean otherwise
+  [PASS] mf3.runner: startup -- the e2a ban list (12 strings, ids), audit v2 sha16 pinned, termination patterns, TEMP 0.7, read window 8192
+  [PASS] mf3.runner: 20 scripted F3 sessions reach their declared outcomes (clean x12 over six templates and both starts; forced v2 ends; reasoning-line scaffold on line 1 (pre-pick) and line 3; line classes recorded without an end; free lexical ends; free v2 continues; task-round scaffold stops) []
+  [PASS] mf3.runner: clean sessions -- 4 forced, 6 reasoning lines, 6 reads, 6 chosen rounds; valid, complete, domain, first pick on P
+  [PASS] mf3.runner: a scaffold string on reasoning line 1 ends the session before any read -- excluded at reasoning (ci 0), out of the domain; on line 3 it ends after two reads, the domain kept (the seat's Q8)
+  [PASS] mf3.runner: reasoning-line classes are recorded and end nothing; the production empty line (text "" at the cap) writes F-b's "Reasoning (one line): So far,\n" into the transcript; a line naming a label is not lexical-claimed and never enters earlier (m:265) [['empty', 'cap_no_newline'], ['cap_no_newline'], ['echo'], [], [], ['empty', 'cap_no_newline']]
+  [PASS] mf3.runner: the adapter saw injections=(), cached=False, TEMP 0.7 and the ban ids on every call; reasoning lines at the reasoning cap, task rounds at STOP_CAP 60
+  [PASS] mf3.runner: every scripted line's recorded classes equal classify_line over domain_of_record on the finished record -- the domain at generation is the record's (A-m2 v0.5 §1, one builder) 98
+  [PASS] mf3.runner: at reasoning cap 60 (the stub path's, A-m2 v0.5 §4.2) the lines are generated at 60 and the record carries the cap; every other scripted case runs at the cap of record, 120 (the build review's finding 9: the adapter's max_tokens is compared with each record's own cap above)
+  [PASS] mf3.runner: pieces tile the transcript; each menu and reasoning line sits at its piece
+  [PASS] mf3.runner: rule 28(d)(a) halts before any generation on a collapsed token boundary and on a character-offset mismatch (both forms, the seat's Q8 / N6) [True, True]
+  [PASS] mf3.runner: a licensed cached path passes cached=True through on every call, reasoning lines included (m:267); the bytes are the uncached run's on the stub; without the G-ID-F3 PASS on disk the cached session is refused at the runner
+  [PASS] mf3.verify: every scripted F3 record (20) verifies -- clean, excluded, line-ended, hair-stopped {}
+  [PASS] mf3.verify: G-VER fires on a tampered line text, harness byte, line seed, line class, menu order, a contrast record relabelled sham on its shared banner, the cap, a line exclusion's ci, a dropped line {'line text': True, 'harness bytes': True, 'line seed': True, 'line classes': True, 'menu order': True, 'role on a shared banner': True, 'cap': True, 'line-1 ex...
+  [PASS] mf3.verify: a cell other than the committed one is schedule_mismatch, at once
+  [PASS] mf3.verify: a malformed record is template_breakage, never a traceback
+  [PASS] mf3.verify: verify_and_mark sets verified exactly True on a clean record
+  [PASS] mf3.readrule: every scripted F3 record passes the piece check (F3's group order; the reasoning-only last group where a line ended the session)
+  [PASS] mf3.readrule: a record written under m:174's block (F-0, the first G-TIME-F3 run's form) fails the piece check, which renders F-b (A-m2 v0.5 §4.3: nothing new reads the first run's records through it) [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.readrule: stripped contrast reads carry the banner and forced rounds only -- no reasoning line, menu, pick or free round
+  [PASS] mf3.readrule: redacted sham reads -- menus gone, chosen tags [config], no label in any free piece or reasoning line; reasoning lines kept
+  [PASS] mf3.readrule: printed reasons -- a contrast line-1 scaffold prints scaffold@reasoning, and excluded@free at G-TIME-F3 (no class, ruling (h)); a contrast later line prints excluded@free at every stage; a sham line prints scaffold@reasoning; a sham free lexical prints lexical@free
+  [PASS] mf3.readrule: session lines are declared forms and carry no label, pick or free index ['qual A1 s=0 valid', 'qual A1 s=2 valid', 'qual A1s s=0 valid']
+  [PASS] mf3.readrule: the stage report covers the six templates; sham blocks carry reasoning-line counts by class and counter (a) (A-m2 v0.5 §3.4); contrast blocks are forced-round counts and line 1's classes, counter (a) and exclusions (pre-pick), free rounds and later lines withheld; no label anywhere
+  [PASS] mf3.readrule: counter (a) on a contrast session counts its line 1 only, before VERDICTS (A-m2 v0.5 §3.4) -- a G-F3 A3 session whose line 1 is clean and whose line 3 reproduces the COMMON line counts 0; one whose line 1 reproduces it counts 1 ([False, False, True, False, False, False], [True, False, False, False, False, False], {'lines': 1, 'defect_lines': 0, 'by_class': {'empty': 0, 'cap_no_newline'...
+  [PASS] mf3.readrule: at G-TIME-F3 a contrast block is ruling (h)'s counts with no per-line list (the seat's F-6)
+  [PASS] mf3.readrule: counter (b)'s domain on G-TIME-F3's contrast read (lines.b_candidates; ruling (h)'s form) equals the full record's unclaimed forced rounds, for every contrast session here and one excluded at its second forced round [True, True, True, True]
+  [PASS] mf3.readrule: the G-TIME-F3 strip keeps {phase, ri, n, text} per forced round and no per-line list (F-6)
+  [PASS] mf3.readrule: refuses a sham to strip, a contrast to redact, a non-scaffold reasoning class, a line exclusion without ci, an empty report, a record missing a reasoning piece [True, True, True, True, True, True]
+  [PASS] mf3.bars: every declared Q-F3 bar (13) fires and stays silent on its cases (rule 21); m's mandatory and spec-count tables pass on m's arithmetic
+  [PASS] mf3.bars: the four planned critical counts are m:271's (G-TIME-F3 5 and 5; G-F3 19 and 22) {'round_degeneracy@G-TIME-F3': (30, 5, '0.05'), 'reasoning_line_defect@G-TIME-F3': (18, 5, '0.10'), 'round_degeneracy@G-F3': (240, 19, '0.05'), 'reasoning_line_...
+  [PASS] mf3.bars: refuses a Q-F0 scope, a float p0, a justification-less hair trigger, a wrong planned critical count, the lexical bar on A1s, a sham bar on a contrast template, the guard on a sham [True, True, True, True, True, True, True]
+  [PASS] mf3.bars: counts over the sham domain -- lines with any class over lines generated; v2/echo rounds over rounds; lexical rounds over A2s + A3s rounds (4, 49, 1, 86, 1, 54, True)
+  [PASS] mf3.bars: a stage-end bar at realised n = 0 is no test (B30), never a fire
+  [PASS] mf3.bars: declaration rows carry class, unit, p0, alpha, domain (with its text) and cadence (m:292)
+  [PASS] mf3.resume: the identity -- Q-F0's keys plus reasoning_cap, m_module_sha256 and the weights binding; templates in table order; mf3's own package hash
+  [PASS] mf3.resume: refuses a cap outside m:174's pair (90), 60 on a non-stub weights binding at G-TIME-F3, G-ID-F3, G-F3 and the campaign (A-m2 v0.5 §4.2: the real side), G-TIME cached, G-ID without both templates, a pre-lock hash, a malformed weights binding, a pod id, a campaign without its hour cap, a Q-F0 template, a task-round cap other than 60 [True, True, True, True, True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.resume: admits 120 at every Q-F3 stage on any binding, and 60 on the stub's all-zero weights binding only (A-m2 v0.5 §4.2), whose values are stages._STUB_WEIGHTS' [True, True, True, True, True, True, True, True, True, True, True, True]
+  [PASS] mf3.resume: m's checkpoint machinery on a Q-F3 identity -- a verified F3 record recorded and re-read skip-only; an existing checkpoint refused without --resume; a resume across a cap change or an m module change refused
+  [PASS] mf3.resume: the weights binding is the snapshot's revision and the sha256 of its load files' content addresses; a weight file re-pointed at another blob moves it; a link to an absent blob is refused
+  [PASS] mf3.resume: a stub run is refused under data/mf3 (and m's canonical roots)
+  [PASS] mf3.stages: G-TIME-F3 on the stub at the cap of record (120; A-m2 v0.5 §4.1) -- six sessions into m's default stem (the stage library's, §4.2), PASS; the cap trigger counts cap-reach over all six sessions' lines (4 contrast + 1 sham = 5), printed and reported as '5 of <= 36' with no realised total, moving nothing (a run at 120 fixes 120); COUNTER (a) printed over the sham lines; contrast blocks are ruling (h)'s counts with no per-line list, the booleans in the checkpoint (the seat's F-6); the stopped/ended checkpoint persists PASS (None, {'cap_reached': 5, 'fixed_cap': 120, 'max_lines': 36, 'rule': "m:174: >= 3 of the reasoning lines G-TIME-F3 generates (<= 36) reach the cap without a new...
+  [PASS] mf3.stages: G-TIME-F3's stdout, report and reads name no label in a pick-free form; session lines are the declared forms PROVENANCE: {"record":{"D":32,"WARNING":"synthetic apparatus; no OLMo weights were loaded and no result from it is a measurement","adapter":"SELFTEST-STUB -- NO...
+  [PASS] mf3.stages: G-TIME-F3 STOPs when its sham reasoning-line bar fires (6 lines of 18 reproduce the session banner, an echo under A-m2 v0.5 §1, >= 5); the excerpt holds the sham lines; COUNTER (a) counts the six; the cap-trigger count is still reported (None, 'STOP')
+  [PASS] mf3.stages: every sham session excluded at its fourth forced round leaves 0 sham lines -- the line bar is reported as no test and not fired, and the stage ends on its other bars (B30, by analogy with m:271's 'reported, not fired') (None, 'PASS')
+  [PASS] mf3.stages: G-TIME-F3 refuses a cached lock, a cap outside m:174's pair (90), a pre-lock hash, renders other than the renders of record, a prior stage, and a re-run of its ended checkpoint [True, True, True, True, True, True]
+  [PASS] mf3.stages: a G-TIME-F3 at 120 whose lines reach the cap twice (2 of 36 < 3) reports 2, and the cap is 120 all the same (m:294's trigger moves nothing at a run at 120, A-m2 v0.5 §4.1) (None, {'cap_reached': 2, 'fixed_cap': 120, 'max_lines': 36, 'rule': "m:174: >= 3 of the reasoning lines G-TIME-F3 generates (<= 36) reach the cap without a new...
+  [PASS] mf3.stages: cap_trigger (F11; A-m2 v0.5 §4.1-§4.2) -- a run at 60, the stub path's, fixes the cap by the count as m:174 has it (5 -> 120, 2 -> 60); a run at 120 fixes 120 whatever the count (0, 2 or 5)
+  [PASS] mf3.stages: on the stub, G-ID-F3 runs only at the cap prior_gate re-computes from G-TIME-F3's checkpoint (F6 with require_real off; A-m2 v0.5 §4.2) -- 60 refused after a G-TIME-F3 at 120, 120 refused after one at 60 whose trigger does not fire (the stub's first-run form, which ends PASS and prints its fixed cap, 60); no artifact is written ('NOT THE FIXED CAP: G-ID-F3 would run at reasoning cap 60; the cap fixed for it is 120 (A-m', 'NOT THE FIXED CAP: G-ID-F3 would run at reasoning cap 120; the c...
+  [PASS] mf3.stages: the real side (A-m2 v0.5 §4.2) -- stages._extra refuses a cap of 60 on a non-stub run at every Q-F3 stage and admits 120 there, and on the stub admits both; prior_gate with require_real refuses a prior G-TIME-F3 written at 60 (the first run's form) at G-ID-F3 and G-F3, reads the fixed cap as 120 (60 refused after a prior at 120), and admits 120 after a prior at 120 ([True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True], [True, True, True, True, True])
+  [PASS] mf3.stages: every stage start, the stub's included, checks the F-b segment's roster hygiene and the working tree's addendum against its pin (A-m2 v0.5 §4.2; the build review's finding 7): startup_problems carries each planted problem, and a stub G-TIME-F3 stops with STARTUP CHECKS FAIL, writing no checkpoint (['addendum: planted addendum problem'], ['segment: planted segment problem'], "STARTUP CHECKS FAIL (G-TIME-F3): ['addendum: planted addendum problem'] -- no se...
+  [PASS] mf3.stages: the stub chain at 60 -- G-TIME-F3 -> G-ID-F3 -> G-F3 -> the campaign, in the form G-ANL-F3's battery runs it (scripts/m_analyze.py's _bt_f3_chain) -- passes under F-b (A-m2 v0.5 §4.2) (None, None, None, None)
+  [PASS] mf3.stages: G-ID-F3 -- A2s then A3s, uncached then cached at j = 0 each; 2/2 identical -> PASS; the artifact carries the cap, the backend and both templates' key templates (None, 'PASS')
+  [PASS] mf3.stages: the G-ID-F3 PASS licenses the cached path at its cap only
+  [PASS] mf3.stages: a G-ID-F3 artifact is never overwritten
+  [PASS] mf3.stages: G-ID-F3's criterion binds each reasoning line's (n_tok, cap_hit, stop_reason) triple (the seat's F-7) -- a transcript-identical pair whose cached line reached the cap FAILs (a G-ID fire); the clean pairs' triples agree (None, [{'complete': True, 'complete_cached': True, 'complete_uncached': True, 'identical': False, 'j': 0, 'line_triples_identical': False, 'template': 'A2s', '...
+  [PASS] mf3.stages: G-ID-F3 FAILs on a divergent pair (A3s); an incomplete identical A2s pair advances A2s's index to j = 1 before A3s runs (m:281's rule, the seat's Q8) (None, None, [{'template': 'A2s', 'j': 0, 'complete': False, 'identical': True, 'transcript_identical': True, 'line_triples_identical': True, 'complete_uncached...
+  [PASS] mf3.stages: G-F3 on the cached path the G-ID-F3 PASS licenses -- 40 sessions, PASS, both bars silent, the contrast arms' first-read flags reported, no label in the report
+  [PASS] mf3.stages: G-F3 on the stub refuses a lock fixing uncached where the licence gives cached, a cap other than the one prior_gate fixes (60 after a G-TIME-F3 at 120; 120 after one at 60 whose trigger does not fire), and a G-ID-F3 artifact at another cap ('PATH MISMATCH (G-F3): the lock fixes the uncached path; the G-ID-F3 licence on t', 'G-ID ARTIFACT AT ANOTHER CAP: <tmp>...
+  [PASS] mf3.stages: the campaign on the stub refuses a cap other than G-F3's (60 after a G-F3 at 120), at the run and at prior_gate ('NOT THE FIXED CAP: the campaign would run at reasoning cap 60; G-F3 at <tmp>', 'NOT THE FIXED CAP: the campaign would run at reasoning cap 60; G...
+  [PASS] mf3.stages: a campaign on the stub runs the six-arm rotation to every floor (12 launches) -> COMPLETE with an end look; the report is pick-free (no reads file, no first-pick share) (None, 'COMPLETE')
+  [PASS] mf3.stages: a look evaluates round_degeneracy and reasoning-line defects over the three shams, the pooled lexical bar over A2s + A3s, and both guards per contrast arm (9 results)
+  [PASS] mf3.stages: a scaffold string on a contrast session's third reasoning line STOPs the campaign, announced by phase alone (class withheld, m:318 exception (1)); the stop block keeps the class (None, '<tmp>/tmpwjve_v4w/mf3/ckpt/camp-stop.json\nREPORT <tmp>/tmpwjve_v4w/mf3/...
+  [PASS] mf3.stages: a crash mid-session keeps what was written (the interrupted session is not recorded); a --resume skips every finished session and completes (True, 2, None)
+  [PASS] mf3.stages: a PI stop ends a launched campaign terminal (PI-STOP), its text in the checkpoint only (None, 'PI-STOP')
+  [PASS] mf3.stages: the licence (C2) is clean when the committed lock names the analyzer's and mf3's hashes, each m file (the ten modules and __init__.py) by name with its sha256 on one line, and the weights, they hold now, the load is offline and refs/main names the bound revision []
+  [PASS] mf3.stages: the licence refuses each of 10 departures (another package, a moved, absent or unlisted m file, other weights, a lock not naming them, naming the m hashes without their files or under swapped names, an online load), a refs/main moved to another revision or not the raw revision, an uncommitted proposal edit, and (h) an uncommitted edit of A-m2 v0.5 ([], ["weights: the hub cache's refs/main for mlx-community/Qwen3.6-27B-4bit is 'dddddddddddddddddddddddddddddddddddddddd', not the bound revision (raw text) --...
+  [PASS] mf3.stages: guard.check_call_sites is clean over mf3 (the path threads from cached_path_admitted and gid_paths) []
+  [PASS] mf3.gshape: G-SHAPE-F3 on the working tree -- PASS: Layer A 5,632 placements (A1 2,816; A2 and A3 1,408) none fired, coverage exact; seg+gold and reasoning+seg+gold fire 100%; Layer R none fired over each line's domain (A-m2 v0.5 §1), its control 100% and the label lines silent; Layer S clean; Layer T every join holds on the tokenizer of record; the addendum recorded []
+  [PASS] mf3.gshape: STOPs on a fired placement, a coverage gap, a runner scoring its segment, a reasoning line reaching earlier, and a runner or verifier classifying the line over another set than the domain (S4, S7) {'a fired placement': 'STOP', 'a dropped placement': 'STOP', 'a runner scoring the segment': 'STOP', 'a line entering earlier': 'STOP', 'a runner classifying ov...
+  [PASS] mf3.gshape: Layer T fires on a tokenizer whose joint encode collapses the boundary 640
+  [PASS] mf3.gshape: the artifact is write-once (identical accepted, different refused); a seamed run never writes the canonical path
+  [PASS] mf3.gshape: the tokenizer of record is read from the snapshot of record only (an absent file refuses)
+  [PASS] mf3.gshape: Layer S's dynamic evidence names runner self-test checks that exist (by their chk names) []
+  [PASS] mf3_sessions: MODULES lists every mf3 module but the package marker and the test double []
+  [PASS] mf3_sessions: --build-schedules writes 21 files that verify clean, re-runs identically, and refuses a differing existing file (exit 2) (0, 0, 2)
+  [PASS] mf3_sessions: data/mf3/schedules equals a fresh regeneration byte for byte, manifest included (20 + 1) []
+  [PASS] mf3_sessions: gshape --out runs G-SHAPE-F3 as a test run -- PASS; stdout is INVOCATION then the summary lines (counts and hashes, no label) line placements, 0 fired, coverage exact True; control 9592/9592; label lines 0/768 fired
+G-SHAPE-F3 Layer S: 0 problems; Layer T: 640 joins, 0 failed (tokenize...
+  [PASS] mf3_sessions: campaign is refused (exit 2), named; time, id and qual are wired (WIRED_CMDS) and the four are STAGE_CMDS {'campaign': 2}
+  [PASS] mf3_sessions: no action is refused (exit 2) and INVOCATION is the first line
+  [PASS] mf3_sessions: hashes prints mf3's package sha256, the eleven m files' (the ten modules and __init__.py) and the weights binding of record 8c854f45c65211f2b2e9c138d43fdacd2a3314
+WEIGHTS mlx-community/Qwen3.6-27B-4bit revision c000ac2c2057d94be3fa931000c31723aac53282 sha256 03922eed43c73bf4af06cf4c5...
+  [PASS] mf3_sessions: the cached-path source guard is clean over mf3 and this driver, and fires on a planted cached=True []
+  [PASS] mf3_sessions: no forbidden literal in mf3 or this driver []
+  [PASS] mf3_sessions: the licence's import set holds (static closure and a fresh interpreter, N1) []
+  [PASS] mf3_sessions: valence_core/m holds 18 files and its package hash is 7756dcf4...49bb -- the OLMo build's 60199b36...feec as moved by the G-ANL-F3 hygiene commit's N12 self-test fix to gcal.py (the seat's ruling, 2026-11-07); the F3 build changes nothing there
+  [PASS] mf3_sessions: time's identity_extra from the committed LOCK-m-F3.md -- the proposal's and the lock's sha256 their committed blobs'; m_module_sha256 the eleven files' as hashed now and as the lock lists them; the weights its one WEIGHTS line's; reasoning_cap 120 (A-m2 v0.5 §4.1), locked_path uncached; stages._extra accepts it ([], [])
+  [PASS] mf3_sessions: m_module_sha256 and the weights are read from the lock's committed text, not from the files or the hub: a lock whose corr.py line and WEIGHTS line name other sha256 gives those values; the licence, run on that lock, then refuses the corr.py file ((e')) and the weights binding ((g)), and nothing for (f) ([], ["valence_core/m/corr.py: its sha256 (computed now) is not identity_extra's (Q1 (C2) part (b))", 'weights: the snapshot of record binds differently now (re...
+  [PASS] mf3_sessions: that identity is licensed now (stages.licence_problems (a)-(g), HF_HUB_OFFLINE=1 given): the proposal and the lock committed, the analyzer, mf3's package, the eleven m files and the weights the ones the identity and the lock name []
+  [PASS] mf3_sessions: the lock parsers -- the eleven m files read one sha256 each and the WEIGHTS line its revision and sha256; refused: an m file named on no line, an m file with two different sha256, no WEIGHTS line (one glued to a letter, a digit, an underscore or a hyphen before it is none), two different WEIGHTS lines, a WEIGHTS line for another model (['--lock-file LOCK-m-F3.md: its committed text names valence_core/m/corr.py with no sha256 (one is required: lock §1, the eleven m files)'], ['--lock-file LOCK...
+  [PASS] mf3_sessions: QWEN_MODEL_ID is the model of record (mf3.resume), QwenMLXAdapter's default and m's driver's, and _load_qwen passes it explicitly; MLX_LM_ALLOW_PATTERNS is mlx_lm.utils._download's default list and m's driver's; HF_OFFLINE_ENV, TOTALS_RX's pattern and TOTALS_REDACTED are m's driver's, and the redaction replaces m's old totals form (the form is sealed at its source now; the pattern is kept as m keeps it) ('mlx-community/Qwen3.6-27B-4bit', [['*.json', 'model*.safetensors', '*.py', 'tokenizer.model', '*.tiktoken', 'tiktoken.model', '*.txt', '*.jsonl', '*.jinja']],...
+  [PASS] mf3_sessions: time --help lists the five flags, each followed by its own TIME_FLAG_HELP text (which names what the flag carries), and --resume (exit 0) ckage_sha256, as the lock names it
+  --renders-sha16 RENDERS_SHA16
+                        the renders' sha16, as the lock names it
+  --resume              cont...
+  [PASS] mf3_sessions: qwen_snapshot over fake hub caches -- a complete snapshot with HF_HUB_OFFLINE=1 is clear (the model of record, refs/main's revision, the hub's own offline resolution agreeing) and its SNAPSHOT line names exactly them; two snapshot directories and a stray file count 2; refused, with no info, in 17 cases: the variable unset or not exactly '1'; a local path or a dangling link named like the model id; refs/main absent, not UTF-8, not hex, or with a newline; no snapshot directory; a weight, config.json or tokenizer.json missing; an index unreadable, without weight_map, naming no weight, or naming a weight that is not a plain file name or not a string ([], {})
+  [PASS] mf3_sessions: qwen_snapshot refuses MLXLM_USE_MODELSCOPE 'true' in any letter case ('True', 'true', 'TRUE', 'tRuE'), with no info, each message naming the value; 'False' is clear {'True': ["MLXLM_USE_MODELSCOPE is 'True' (mlx_lm tests .lower() == 'true'): mlx_lm would load through modelscope, not the hub cache"], 'true': ["MLXLM_USE_MODE...
+  [PASS] mf3_sessions: qwen_snapshot's hub resolution (m's case) -- over a cached tree listing, files outside mlx_lm's patterns absent are clear and a pattern file absent (chat_template.jinja) is refused (IncompleteSnapshotError); the hub is called once with the load's model id and mlx_lm's patterns, offline (local_files_only) on the cache given; a resolution to another directory, or a hub that raises, is refused ([], ["the hub's offline resolution with mlx_lm's patterns refuses: IncompleteSnapshotError"], [(('mlx-community/Qwen3.6-27B-4bit',), {'local_files_only': True,...
+  [PASS] mf3_sessions: qwen_snapshot's production defaults read huggingface_hub's HF_HUB_CACHE and os.environ at call time (clear with HF_HUB_OFFLINE=1, refused without it; an explicit environ wins) ([], ["HF_HUB_OFFLINE is None, not '1' (Code's form of the offline load: the licence's (g) and the seat's step-10 read, Q5)"])
+  [PASS] mf3_sessions: qwen_snapshot's local-path refusal reads the process's working directory by default, and the weight names '..', '' and one with a backslash are refused as not plain file names (['<tmp>/tmpg0f4_tvx/cwd_default/mlx-community/Qwen3.6-27B-4bit exists or is a link: mlx_lm loads a local pat...
+  [PASS] mf3_sessions: time on the stub factory (the self-test's seam) runs G-TIME-F3 through stages.run_gate_stage with TIME_COUNTS -- six sessions, one per template, PASS (exit 0); the checkpoint, the report and the reads under the test root; no DRIVER or SNAPSHOT line (the Qwen path's); stdout and stderr name no label in any letter case (0, '', '<tmp>/tmpkdwuwdel/stub/mf3/reports/Q-F3_time-r2_report.json\nREADS <tmp>/tmp...
+  [PASS] mf3_sessions: time writes the re-run's checkpoint, TIME_CKPT_NAME (Q-F3_time-r2.json), its report and reads named after it, and never the first run's name (A-m2 v0.5 §4.3) ['Q-F3_time-r2.json']
+  [PASS] mf3_sessions: the driver refuses the first run's checkpoint name as a target (time_checkpoint: a STOP, exit 4, on the stub seam) and a TIME_REASONING_CAP other than 120 (refused before the load, exit 2: the identity validated as a run on a model, stages._extra; A-m2 v0.5 §4.2: the driver's time at any cap but 120 is refused) (4, "STOP: CHECKPOINT PATH REFUSED: Q-F3_time.json is G-TIME-F3's first run's checkpoint, never written again (A-m2 v0.5 §4.3); the re-run writes Q-F3_time.json...
+  [PASS] mf3_sessions: time on an ended G-TIME-F3 checkpoint, through the stub factory, is a STOP (exit 4, 'STAGE ENDED') with or without --resume: the stage refuses it after the factory (a resume never re-runs an ended stage) {False: 4, True: 4}
+  [PASS] mf3_sessions: time --resume reaches the stage -- a stub run interrupted in A3 leaves A1-A2s recorded; without --resume the stage refuses the checkpoint (exit 4, 'CHECKPOINT EXISTS'); with it only A3 and A3s are launched and the stage ends PASS (exit 0) ('_Interrupt', 4, 0, 32)
+  [PASS] mf3_sessions: time's exit code is stages.EXIT_CODES of the stage's status (PASS 0, STOP 4) {'PASS': 0, 'STOP': 4}
+  [PASS] mf3_sessions: a stub run cut between its outputs and its persisted end leaves a checkpoint with an end pending (rs.pending_at) and not ended (the precheck's pending case below reads it) ('_Interrupt', 1)
+  [PASS] mf3_sessions: time refuses before the load (exit 2, the refusal on stderr and not stdout, no DRIVER or SNAPSHOT line, the loader and the stage never reached, the test root unchanged, no label printed) in 36 cases: a flag missing; a file outside the repository, a looping link as the proposal or the lock, or uncommitted; a lock other than LOCK-m-F3.md; a proposal the lock does not name, or names by its sha16 only; a lock-named file that is not a proposal; a malformed hash; the licence's (d), (e), (f) and (g)'s offline condition; the renders; m:267's checklist; an existing checkpoint without --resume; an ENDED one, with or without --resume (with no CHECKPOINT EXISTS advice); the re-run's checkpoint name a link to the first run's checkpoint (A-m2 v0.5 §4.3); a looping link at the checkpoint path; a tampered schedule; the run-time known answers; the gate line's own problems, its analyzer, and CLAUDE.md uncommitted; the driver check, stubbed, real, and on a copy running (another name, or the driver's own name elsewhere); the snapshot check, stubbed and real, and a snapshot revision not the lock's; a top-level --out, --selftest or --build-schedules beside time (m's form, exactly, on stderr; the schedules writer and the self-test never reached) ({}, [])
+  [PASS] mf3_sessions: the precheck's problems (the licence's, the renders', m:267's checklist's), the driver check's and the snapshot check's are refused together, in one REFUSED line naming the stage (exit 2; no DRIVER or SNAPSHOT line; nothing loaded; m's multi case) ['REFUSED: G-TIME-F3: [\'licence: selftest licence\', "renders: RENDERS MISMATCH (G-TIME-F3): the lock\'s renders sha16 is not the renders of record built here ...
+  [PASS] mf3_sessions: run_time with an out root and no stub factory refuses before anything -- before the identity (given a lock the identity would refuse, the refusal is the out root's) -- exit 2, the loader and the stage, trapped, never reached: the Qwen run writes data/mf3 only REFUSED: time: an out root names a test directory; the Qwen run writes data/mf3 only (nothing loaded)
+
+  [PASS] mf3_sessions: with every pre-load check clear, time prints on stdout the DRIVER line (the driver's path and sha256, HEAD, in full) and then the SNAPSHOT line, and only then reaches the loader -- here the trap: STOP on stderr, exit 4, the stage never reached, the test root unchanged (4, 1, 'STOP: selftest: the Qwen loader was reached\n')
+  [PASS] mf3_sessions: absolute flag paths inside the repository are accepted (the identity takes their repo-relative form); --resume lets an existing open checkpoint through the precheck; a checkpoint with an end pending passes without --resume (it only re-finishes); and the first run's ended checkpoint at its own name beside the re-run's (A-m2 v0.5 §4.3: the state at the re-run) passes, its bytes untouched: each reaches the loader (the trap; exit 4) [(4, 'STOP: selftest: the Qwen loader was reached\n'), (4, 'STOP: selftest: the Qwen loader was reached\n'), (4, 'STOP: selftest: the Qwen loader was reached\n'...
+  [PASS] mf3_sessions: after the load, a re-read that refuses, a moved refs/main or another model id STOPs (exit 4) before the stage, each STOP naming its evidence (the re-read's problems; both revisions, in order; both model ids), with no re-read line; with the snapshot unchanged and the model of record, the order is snapshot, load, re-read, the re-read line is printed and the stage is reached (here the trap) ({}, 4, ['snap', 'load', 'snap'], 'STOP: selftest: the stage was reached\n')
+  [PASS] mf3_sessions: driver_problems on this driver -- clear with the committed blob's sha256 exactly when this process runs the driver of record and its working tree is HEAD's; else its problems and no sha ([], [], True)
+  [PASS] mf3_sessions: the time checks loaded nothing and wrote nothing under data/mf3 -- the loader trap was reached 5 times in all (each of the five cases that clear every pre-load check asserts its own one reach), the stage trap once (the post-load case that reaches it), the schedules writer and the self-test never from a time invocation; data/mf3's file hashes are unchanged and stages.DEFAULT_OUT is restored (5, 1, [], [])
+  [PASS] mf3_sessions: id's identity_extra from the committed LOCK-m-F3.md is time's without locked_path -- the same proposal, lock, analyzer, package, renders, m files and weights; reasoning_cap 120 (ID_REASONING_CAP, the cap of record); stages._extra accepts it for 'id'; time_identity_extra is stage_identity_extra for 'time'; the id constants are the lock's file and the re-run's checkpoint name ([], [], ['analyzer_sha256', 'lock_file', 'lock_sha256', 'm_module_sha256', 'package_sha256', 'proposal_file', 'proposal_sha256', 'reasoning_cap', 'renders_sha1...
+  [PASS] mf3_sessions: id's identity refuses a reasoning cap other than 120 (stages._extra, a run on a model) and a lock other than LOCK-m-F3.md ('G-ID-F3 cites LOCK-m-F3.md'); stage_identity_extra, stage_precheck and run_stage raise ValueError for a stage that is not wired (campaign), before anything is read or run (on a test root, with the loader and both stages trapped) (['reasoning_cap must be 120 on a run on a model (A-m2 v0.5 §4.1-§4.2, the cap of record) and one of (60, 120) on the stub, which alone may run at 60; got 60 at...
+  [PASS] mf3_sessions: id --help lists time's five flags, each followed by its TIME_FLAG_HELP text, and --resume, 'continue G-ID-F3's checkpoint' (exit 0) package_sha256, as the lock names it
+  --renders-sha16 RENDERS_SHA16
+                        the renders' sha16, as the lock names it
+  --resume              co...
+  [PASS] mf3_sessions: id on the stub factory after time on the stub at the same root -- G-ID-F3 through stages.run_gid_pair_f3, its prior the re-run's checkpoint (Q-F3_time-r2.json) by path, recorded in the G-ID checkpoint: A2s then A3s, uncached then cached at j = 0 each, 2/2 identical, PASS (exit 0); the artifact PASS at cap 120 in the test gates directory; Q-F3_id.json (stage id, path cached+uncached, cap 120, the committed lock's and proposal's sha256); its report and reads; four session lines and the STAGE line; no DRIVER or SNAPSHOT line; no label printed (0, 0, '', 'PASS')
+  [PASS] mf3_sessions: id's exit code is stages.EXIT_CODES of the stage's status -- a scripted divergence (A3s's cached half, its second forced round) exits 5, FAIL, the artifact FAIL with pairs [True, False]; an A2s with no complete pair (a label in its third chosen round at every index) exits 6, NOT-DETERMINED after GATE_MAX indices, the artifact so (5, 6)
+  [PASS] mf3_sessions: on the stub, id with no G-TIME-F3 checkpoint at its root is a STOP (exit 4, 'PRIOR STAGE ABSENT', the stage's prior_gate); the first run's checkpoint as the prior is refused -- by name (ID_PRIOR_CKPT_NAME set to Q-F3_time.json) and where the re-run's name is a link to it -- a STOP (exit 4, 'PRIOR PATH REFUSED'); none writes a G-ID checkpoint or an artifact (A-m2 v0.5 §4.3) (4, 4, 4, "STOP: PRIOR PATH REFUSED: Q-F3_time.json is G-TIME-F3's first run's checkpoint; G-ID-F3 takes the re-run's, Q-F3_time-r2.json, by path (A-m2 v0.5 §4....
+  [PASS] mf3_sessions: id --resume reaches the stage -- a stub run interrupted at A3s's first half leaves A2s's two halves recorded; without --resume the stage refuses the checkpoint (exit 4, 'CHECKPOINT EXISTS'); with it only A3s's two halves are launched and G-ID-F3 ends PASS (exit 0) ('_Interrupt', 4, 0)
+  [PASS] mf3_sessions: a stub G-ID-F3 cut between its outputs and its persisted end leaves its artifact and a checkpoint with an end pending, not ended (the precheck's pending case below reads both) ('_Interrupt', 1)
+  [PASS] mf3_sessions: id refuses before the load (exit 2, the refusal on stderr and not stdout, no DRIVER or SNAPSHOT line, the loader and both stages never reached, the test root and its gates directory unchanged, no label printed) in 33 cases: a flag missing; a file outside the repository or uncommitted; a lock other than LOCK-m-F3.md; a proposal the lock does not name; a malformed hash; the licence's (d) and (e); the renders; m:267's checklist; the prior (the real gate) absent, on the stub, under another proposal, not ended, ended STOP, at another cap, and the first run's -- the re-run's name a link to it, or the name itself; a looping link at the prior path; a G-ID artifact on disk, or a dangling link there, each also under --resume on an open G-ID checkpoint; G-ID-F3's checkpoint existing without --resume, or ENDED, with or without it (with no CHECKPOINT EXISTS advice); a tampered schedule; the driver check; the snapshot check, and a snapshot revision not the lock's; a top-level --out, --selftest or --build-schedules beside id (m's form, exactly, on stderr; the schedules writer and the self-test never reached) ({}, [])
+  [PASS] mf3_sessions: id's precheck problems (the licence's, the renders', the prior's, the artifact's, m:267's checklist's), the driver check's and the snapshot check's are refused together, in one REFUSED line naming G-ID-F3 (exit 2; no DRIVER or SNAPSHOT line; nothing loaded) ['REFUSED: G-ID-F3: [\'licence: selftest licence\', "renders: RENDERS MISMATCH (G-ID-F3): the lock\'s renders sha16 is not the renders of record built here (m:1...
+  [PASS] mf3_sessions: run_id with an out root and no stub factory refuses before anything -- before the identity (given a lock the identity would refuse, the refusal is the out root's) -- exit 2, the loader and both stages, trapped, never reached, the test root unchanged: the Qwen run writes data/mf3 only (time's seam case, carried) REFUSED: id: an out root names a test directory; the Qwen run writes data/mf3 only (nothing loaded)
+
+  [PASS] mf3_sessions: the state at G-ID-F3 (A-m2 v0.5 §4.3) -- the first run's checkpoint at its own name beside the re-run's -- passes every pre-load check, the real prior gate reading the re-run's: id reaches the loader (the trap; exit 4), the first run's bytes untouched (4, 'STOP: selftest: the Qwen loader was reached\n')
+  [PASS] mf3_sessions: with every pre-load check clear -- the real prior gate passing a G-TIME-F3 checkpoint ended PASS at cap 120 that the stub did not write -- id prints the DRIVER line and then the SNAPSHOT line on stdout and only then reaches the loader (the trap: STOP on stderr, exit 4, no stage reached, the test root unchanged); --resume lets an open G-ID checkpoint through, and a checkpoint with an end pending passes without --resume with its artifact beside it (it only re-finishes): each reaches the loader [(4, 'STOP: selftest: the Qwen loader was reached\n'), (4, 'STOP: selftest: the Qwen loader was reached\n'), (4, 'STOP: selftest: the Qwen loader was reached\n'...
+  [PASS] mf3_sessions: after the load, id STOPs (exit 4) before the stage on a re-read that refuses, a moved refs/main or another model id, each STOP naming its evidence, with no re-read line (time's post-load cases, carried) {}
+  [PASS] mf3_sessions: after the load and the re-read (snapshot, load, snapshot), id reaches stages.run_gid_pair_f3 -- not run_gate_stage -- once, with the prior the re-run's checkpoint at its out root, by path, the out root stages.DEFAULT_OUT, resume off and the identity without locked_path at cap 120 (here the trap: exit 4) (4, ['snap', 'load', 'snap'], ['identity_extra', 'out_root', 'prior_ckpt', 'resume'])
+  [PASS] mf3_sessions: the id checks loaded nothing and wrote nothing under data/mf3 -- the loader trap was reached 4 times in all (each of the four cases that clear every pre-load check asserts its own one reach), the stage trap once (run_gid_pair_f3, the post-load case), the schedules writer and the self-test never from an id invocation; data/mf3's file hashes are unchanged and stages.DEFAULT_OUT and guard.GATES_DIR are restored (4, ['gid'], [], [])
+  [PASS] mf3_sessions: qual's identity_extra from the committed LOCK-m-F3.md is time's -- the same proposal, lock, analyzer, package, renders, m files and weights, reasoning_cap 120 (QUAL_REASONING_CAP) and locked_path uncached (QUAL_LOCKED_PATH, v0.2 §3); stages._extra accepts it for 'qual'; the committed lock carries each of QUAL_LOCK_LINES at a line's start; QUAL_COUNTS are m:297's counts in §2.4's table order, the committed schedules' (schedule.GATE_PLAN_COUNTS), 40 sessions, 24 sham ([], ['analyzer_sha256', 'lock_file', 'lock_sha256', 'locked_path', 'm_module_sha256', 'package_sha256', 'proposal_file', 'proposal_sha256', 'reasoning_cap', 'r...
+  [PASS] mf3_sessions: qual refuses a lock whose committed text lacks v0.2's lines at a line's start -- the earlier blob (the re-issue's part and v0.1's, as committed below v0.2's rule), v0.2 with its path line moved off the line's start or indented, and v0.2 with its cap line removed -- each 'carries no line opening' the line; time and id accept all four (they run under v0.1 and its re-issue) {'earlier': (["--lock-file LOCK-m-F3.md: its committed text carries no line opening ['- **`reasoning_cap = 120`.**', '- **`path = uncached`.**'] (LOCK-m-F3 v0.2...
+  [PASS] mf3_sessions: qual's lock-line check comes before the m files and the weights are read -- on an earlier blob that also names corr.py with a second sha256, qual refuses for the missing lines alone, and time, which makes no lock-line check, refuses for the doubled sha256 (["--lock-file LOCK-m-F3.md: its committed text carries no line opening ['- **`reasoning_cap = 120`.**', '- **`path = uncached`.**'] (LOCK-m-F3 v0.2 §2-§3: the ...
+  [PASS] mf3_sessions: qual --help lists time's five flags, each followed by its TIME_FLAG_HELP text, and --resume, 'continue G-F3's checkpoint' (exit 0) 's package_sha256, as the lock names it
+  --renders-sha16 RENDERS_SHA16
+                        the renders' sha16, as the lock names it
+  --resume             ...
+  [PASS] mf3_sessions: qual on the stub factory after time and a FAILed id on the stub at the same root -- G-F3 through stages.run_gate_stage, its prior the re-run's checkpoint (Q-F3_time-r2.json) by path, recorded, and the G-ID-F3 FAIL artifact on disk: 40 sessions in the stage's launch order, uncached, PASS (exit 0); Q-F3_qual.json (stage qual, path uncached, cap 120, the committed lock's and proposal's sha256); its report and reads; the STAGE line; no DRIVER or SNAPSHOT line; no label printed ((0, 5), 0, '', 'uncached')
+  [PASS] mf3_sessions: on the stub, qual STOPs (exit 4) -- on a G-ID-F3 PASS artifact for this backend ('PATH MISMATCH': the lock fixes uncached, the licence gives cached), with no G-TIME-F3 checkpoint ('PRIOR STAGE ABSENT'), with no G-ID-F3 artifact ('G-ID ARTIFACT ABSENT'), and with the first run's checkpoint as the prior ('PRIOR PATH REFUSED'); none writes a G-F3 checkpoint (4, 4, 4, 4, ' lock fixes the uncached path; the G-ID-F3 licence on this backend at this cap gives cached -- refusing (m:267, rule 2)\n')
+  [PASS] mf3_sessions: qual's exit code is stages.EXIT_CODES of the stage's status (PASS 0, STOP 4) {'PASS': 0, 'STOP': 4}
+  [PASS] mf3_sessions: qual --resume reaches the stage -- a stub run interrupted at A3's first session leaves the four launched before it (A1, A1s, A2, A2s at s = 0); without --resume the stage refuses the checkpoint (exit 4, 'CHECKPOINT EXISTS'); with it the other 36 are launched and G-F3 ends PASS (exit 0) ('_Interrupt', 4, 0)
+  [PASS] mf3_sessions: a stub G-F3 cut between its outputs and its persisted end leaves a checkpoint with an end pending, not ended (the precheck's pending case below reads it) ('_Interrupt', 1)
+  [PASS] mf3_sessions: qual refuses before the load (exit 2, the refusal on stderr and not stdout, no DRIVER or SNAPSHOT line, the loader and both stages never reached, the test root and its gates directory unchanged, no label printed) in 35 cases: a flag missing; a file outside the repository or uncommitted; a lock other than LOCK-m-F3.md; a proposal the lock does not name; an earlier lock blob, without v0.2's lines; a malformed hash; the licence's (d) and (e); the renders; m:267's checklist; the prior (the real gate) absent, on the stub, under another proposal, not ended, ended STOP, at another cap, and the first run's -- the re-run's name a link to it, or the name itself; a looping link at the prior path; G-ID-F3's artifact absent, written on the stub, at another cap, under another proposal, or unreadable; G-F3's checkpoint existing without --resume, or ENDED, with or without it (with no CHECKPOINT EXISTS advice); a tampered schedule; the driver check; the snapshot check, and a snapshot revision not the lock's; a top-level --out, --selftest or --build-schedules beside qual (m's form, exactly, on stderr; the schedules writer and the self-test never reached) ({}, [])
+  [PASS] mf3_sessions: qual's precheck problems (the licence's, the renders', the prior gate's -- here G-ID-F3's artifact absent -- and m:267's checklist's), the driver check's and the snapshot check's are refused together, in one REFUSED line naming G-F3 (exit 2; no DRIVER or SNAPSHOT line; nothing loaded) ['REFUSED: G-F3: [\'licence: selftest licence\', "renders: RENDERS MISMATCH (G-F3): the lock\'s renders sha16 is not the renders of record built here (m:176: Q-...
+  [PASS] mf3_sessions: run_qual with an out root and no stub factory refuses before anything -- before the identity -- exit 2, the loader and both stages, trapped, never reached, the test root unchanged (time's seam case, carried) REFUSED: qual: an out root names a test directory; the Qwen run writes data/mf3 only (nothing loaded)
+
+  [PASS] mf3_sessions: with every pre-load check clear -- the real prior gate passing a G-TIME-F3 checkpoint ended PASS at cap 120 that the stub did not write, with a G-ID-F3 artifact at cap 120 that it did not write either -- qual prints the DRIVER line and then the SNAPSHOT line and only then reaches the loader (the trap: exit 4, no stage reached, the test root unchanged); the state at G-F3, with the first run's checkpoint beside the re-run's, passes; --resume lets an open G-F3 checkpoint through; and an end pending passes without --resume: each reaches the loader [(4, 'STOP: selftest: the Qwen loader was reached\n'), (4, 'STOP: selftest: the Qwen loader was reached\n'), (4, 'STOP: selftest: the Qwen loader was reached\n'...
+  [PASS] mf3_sessions: after the load, qual STOPs (exit 4) before the stage on a re-read that refuses, a moved refs/main or another model id, each STOP naming its evidence, with no re-read line (time's post-load cases, carried) {}
+  [PASS] mf3_sessions: after the load and the re-read (snapshot, load, snapshot), qual reaches stages.run_gate_stage -- not run_gid_pair_f3 -- once, with gate qual and QUAL_COUNTS, the prior the re-run's checkpoint at its out root, by path, the out root stages.DEFAULT_OUT, resume off and the identity with locked_path uncached at cap 120 (here the trap: exit 4) (4, ['snap', 'load', 'snap'], ['gate', 'identity_extra', 'out_root', 'prior_ckpt', 'resume', 'templates_counts'])
+  [PASS] mf3_sessions: the qual checks loaded nothing and wrote nothing under data/mf3 -- the loader trap was reached 4 times in all (each of the four cases that clear every pre-load check asserts its own one reach), the stage trap once (run_gate_stage, the post-load case), the schedules writer and the self-test never from a qual invocation; data/mf3's file hashes are unchanged and stages.DEFAULT_OUT and guard.GATES_DIR are restored (4, ['gate'], [], [])
+  [PASS] mf3_sessions: the quarantined state-present module is not loaded after the self-test
+  214/214 mf3 selftest checks pass
+
+----------------------------------------------------------------------------------------------------
+gen_v10.py (verbatim)
+----------------------------------------------------------------------------------------------------
+"""Generate LOCK-m-F3 v1.0's draft from the repository at HEAD (run from the repo root with the jlens venv, -I -B).
+
+The draft is the v1.0 part (template_v10.md, beside this script, its @@NAME@@ markers filled) above v0.2's committed
+text, byte for byte. Every file it reads at HEAD must be committed there with identical working-tree bytes; it also
+reads blobs at named earlier commits (RESULTS.md at cdccc66, 2193832 and b427f82; the driver at fb82daa; the decisions
+block at 5dca58b). Nothing under data/*/ckpt or data/*/reports is opened but to hash its working-tree bytes, and its
+HEAD blob is compared by id only, `git hash-object` against `git rev-parse HEAD:<path>` (the list of record v2, item
+1's forms): G-F3's checkpoint, report and reads are hashed only. Every quote but the PI's word and the coordinating
+session's question (the relay's), and every figure Code typed, is found by the tool in its source. It refuses (exit 1)
+a draft whose v1.0 part restates the cap or path line, names an m-file path, carries a WEIGHTS line or v0.2's rule
+text, holds a clock time or a $ figure, or leaves a marker unfilled. Usage: gen_v10.py
+<template> <out>. Deterministic: two runs give the same bytes."""
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+REPO = Path.cwd()
+TEMPLATE, OUT = Path(sys.argv[1]), Path(sys.argv[2])
+
+# --- Code's text: the PI's word and the coordinating session's question (relayed verbatim, 2026-11-15 Code's date)
+PI_WORD = "Hour cap: 480 h"
+PI_QUESTION = "What hour cap do you set for Q-F3's campaign, or do you decline v1.0?"
+CAP_H = 480
+assert f"{CAP_H} h" in PI_WORD
+
+# --- pinned values: each must equal what the repository gives now (a mismatch stops the generator)
+PIN = {
+    "seat_raw": ("results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md",
+                 "6b963adf126540dab95780d486ab0a6652a1308828548a5cb2763f998040db3a"),
+    "pq": ("results/raw/2026-11-12_p-qual_design-to-code_answers.md",
+           "a32d4d17c9d17d7920539f8c7e6945e8a71712bb76ba2f0154e22f3dbb9e1112"),
+    "list_v2": ("results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md",
+                "6c1135f5c0113e994399a80a5338bc48e45fbea57d3f0dbe21925e4c323e6cdd"),
+    "step15": ("results/raw/2026-10-14_m-design-to-code_step15_answers.md",
+               "07cd8e5f4535c95c61428a07c426490e694d16601818096d48210c534f780767"),
+    "proposal": ("PROPOSAL-m-gating-campaign-v1_11.md",
+                 "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"),
+    "am1": ("ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md",
+            "ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001"),
+    "am2": ("ADDENDUM-m2-f3-reasoning-block-v0_5.md",
+            "f27505c556a3304097d2154698bcf4498927e692c7341aec5060803c833b5354"),
+    "analyzer": ("scripts/m_analyze.py", "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48"),
+    "driver": ("scripts/mf3_sessions.py", "285eed04de4a8e610a021c6f06a7398eeac6f346d822c48a4315f80536760e44"),
+    "gpwr_prog": ("scripts/mf3_gpwr.py", "2b575ef813af5079dd80ce0e16b1a14c7e3629dd0574a269135cb2cbe5bed161"),
+    "gpwr_rec": ("data/mf3/gates/Q-F3_G-PWR.json", "75d1d46bdfffe52f2704cd9ad5d87bc8627342f49ca1629977ba793370e001e5"),
+    "gpwr_block": ("results/raw/2026-11-14_mf3-gpwr_code-to-design.md",
+                   "96ec20f9b84ab5e82caecbcc34179917eb82c5a04df04230b836cafa89303e90"),
+    "lock_v02": ("LOCK-m-F3.md", "ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7"),
+    "gshape": ("data/mf3/gates/G-SHAPE-F3.json", "ff3eaae5b1c6f0b660be418e42709132018d904e53657046367517c1243f1bf3"),
+    "ganl": ("data/m/gates/G-ANL-F3.json", "c2b87ab6c00a9b61ff9265d33cf73aa0aeadcbf9470e7aee2435e004689dc08c"),
+    "gid": ("data/mf3/gates/Q-F3_G-ID.json", "ea8f7d3acd20c3c3b00a11d7dad48283ff20a0abe961462270c3930553e39260"),
+    "manifest": ("data/mf3/schedules/manifest.json",
+                 "c7b5df4405981cca40d86564828c854f45c65211f2b2e9c138d43fdacd2a3314"),
+    "pools": ("data/f/pools.json", "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0"),
+}
+# the decisions block (m:286): not in the tree at HEAD; its record by commit (checked against git below)
+DEC_REL, DEC_SHA, DEC_ADD, DEC_DEL = ("DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md",
+                                      "fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8",
+                                      "5dca58b", "f5a580d")
+MF3_PKG = "098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13"
+M_PKG = "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb"
+Q3_CLOSURE = "06a36cbfb4ab5dce94bc1f900d43cea93e667a4cbe64b69f24986f5847eb63e8"
+BASE_CLOSURE = "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b"
+RENDERS = "a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372"
+RENDERS16 = "a04f67b0e5105a05"
+BACKEND = "a734dadec8f8ce9b"
+MODEL_ID = "mlx-community/Qwen3.6-27B-4bit"
+REVISION = "c000ac2c2057d94be3fa931000c31723aac53282"
+V02_DRIVER_COMMIT, V02_DRIVER = "fb82daa", "8d878f4a894e05e4edf8a3c829548a9c0c864d5f45118875b7630e55d1d200e7"
+GF3_RECORDS = [  # (what, path, prefix, suffix): hashed only, never opened (the list of record v2, item 1)
+    ("G-F3: the checkpoint (-diff; hashed only, never opened)", "data/mf3/ckpt/Q-F3_qual.json", "65715bb9", "7bd8"),
+    ("G-F3: the report", "data/mf3/reports/Q-F3_qual_report.json", "180372c9", "6a01"),
+    ("G-F3: the reads", "data/mf3/reports/Q-F3_qual_reads.json", "2881b7d9", "6730"),
+]
+ARMS = ("A1", "A1s", "A2", "A2s", "A3", "A3s")
+QUAL_LOCK_LINES = ("- **`reasoning_cap = 120`.**", "- **`path = uncached`.**")
+M_HASHED = ("__init__", "audit", "banner", "bars", "corr", "guard", "keys", "readrule", "resume", "scaffold",
+            "schedule")
+WEIGHTS_RX = re.compile(r"(?<![\w-])WEIGHTS (\S+) revision ([0-9a-f]{40}) sha256 ([0-9a-f]{64})\b")
+V02_RULE = "Where the re-issue's or v0.1's text below differs from v0.2"
+
+
+def git(*a, text=True):
+    r = subprocess.run(["git", *a], capture_output=True, text=text, check=True)
+    return r.stdout
+
+
+def blob(rev, rel):
+    return git("show", f"{rev}:{rel}", text=False)
+
+
+def sha(b):
+    return hashlib.sha256(b).hexdigest()
+
+
+def ab(h):
+    return f"{h[:8]}…{h[-4:]}"
+
+
+def committed_clean(rel):
+    st = subprocess.run(["git", "status", "--porcelain", "--", rel], capture_output=True, text=True).stdout.strip()
+    if re.match(r"data/[^/]+/(ckpt|reports)/", rel):
+        # the list of record v2, item 1: ids and digests only -- the working tree's blob id against HEAD's
+        wt = subprocess.run(["git", "hash-object", "--", rel], capture_output=True, text=True).stdout.strip()
+        hd = subprocess.run(["git", "rev-parse", f"HEAD:{rel}"], capture_output=True, text=True).stdout.strip()
+        return st == "" and len(wt) == 40 and wt == hd
+    try:
+        b = blob("HEAD", rel)
+    except subprocess.CalledProcessError:
+        return False
+    return st == "" and (REPO / rel).read_bytes() == b
+
+
+def ws(s):
+    return " ".join(s.split())
+
+
+def quote_in(q, text, what):
+    assert q in text, f"QUOTE NOT FOUND in {what}: {q[:80]!r}"
+    return q
+
+
+HEAD = git("log", "--format=%h", "-1").strip()
+HEAD_FULL = git("rev-parse", "HEAD").strip()
+texts = {}
+for k, (rel, want) in PIN.items():
+    assert committed_clean(rel), f"not committed clean at HEAD: {rel}"
+    b = blob("HEAD", rel)
+    assert sha(b) == want, f"{rel}: sha256 {sha(b)} != pinned {want}"
+    texts[k] = b.decode("utf-8")
+for _, rel, pre, suf in GF3_RECORDS:
+    assert committed_clean(rel), rel
+    h = sha((REPO / rel).read_bytes())
+    assert h.startswith(pre) and h.endswith(suf), rel
+for rel in ("CLAUDE.md", "LOCK-m-F0.md", "valence_core/mf3/gshape.py", "valence_core/mf3/lines.py",
+            "valence_core/mf3/stages.py", "valence_core/mf3/schedule.py"):
+    assert committed_clean(rel), f"not committed clean at HEAD: {rel}"
+SCHED = []
+for a in ARMS:
+    rel = f"data/mf3/schedules/Q-F3_campaign_{a}.json"
+    assert committed_clean(rel), rel
+    b = blob("HEAD", rel)
+    SCHED.append((a, rel, sha(b), json.loads(b)["n"]))
+
+# --- the packages and closures, from the code and the G-ANL-F3 artifact
+sys.path.insert(0, str(REPO))
+from valence_core.mf3 import guard as mf3_guard  # noqa: E402
+from valence_core.m import resume as m_resume  # noqa: E402
+
+assert mf3_guard.package_sha256_of(mf3_guard.PACKAGE_DIR) == MF3_PKG
+assert m_resume.package_sha256_of(REPO / "valence_core" / "m") == M_PKG
+ganl = json.loads(texts["ganl"])
+assert ganl["g_anl_f3"]["f3_closure_sha256"] == Q3_CLOSURE and ganl["closure_sha256"] == BASE_CLOSURE
+assert ganl["package_sha256"] == M_PKG
+n_q3, n_base = len(ganl["g_anl_f3"]["f3_closure"]["modules"]), len(ganl["closure"]["modules"])
+assert (n_q3, n_base) == (22, 15)
+gshape_src = blob("HEAD", "valence_core/mf3/gshape.py").decode()
+assert f'RENDERS_SHA256_OF_RECORD = "{RENDERS}"' in gshape_src and RENDERS.startswith(RENDERS16)
+assert f'QWEN_REVISION = "{REVISION}"' in gshape_src
+analyzer_blob = git("rev-parse", "HEAD:scripts/m_analyze.py").strip()
+lock_v02 = texts["lock_v02"]
+for v in (MF3_PKG, M_PKG, Q3_CLOSURE, BASE_CLOSURE, PIN["analyzer"][1], PIN["proposal"][1], REVISION):
+    assert v in lock_v02, v
+wv = set(WEIGHTS_RX.findall(lock_v02))
+assert len(wv) == 1 and next(iter(wv))[:2] == (MODEL_ID, REVISION)
+
+# --- G-PWR (Q-F3)'s record
+rec = json.loads(texts["gpwr_rec"])
+L = rec["launch"]["L"]
+assert rec["unit"] == "Q-F3" and rec["path"] == "uncached" and list(L) == list(ARMS)
+assert sum(L.values()) == 832 and rec["launch"]["looks"] == 21 and rec["launch"]["k_with_this_row"] == [28, 29]
+assert rec["inputs"]["floors"] == {"A1": 80, "A1s": 32, "A2": 144, "A2s": 56, "A3": 144, "A3s": 56}
+assert all(L[a] <= n for a, _, _, n in SCHED)
+pw = rec["power"]["arms"]
+proj = rec["cases"]["projection"]
+bars = proj["bars"]
+gd = proj["guards"]
+fill = {}
+fill["L_PROSE"] = ", ".join(f"{a} {L[a]}" for a in ARMS)
+fill["TOTAL"] = str(sum(L.values()))
+fill["LOOKS"] = str(rec["launch"]["looks"])
+fill["FLOORS_PROSE"] = ", ".join(f"{a} {rec['inputs']['floors'][a]}" for a in ARMS)
+fill["P_A1"], fill["P_A2"], fill["P_A3"] = (pw[a]["display"].lstrip("0") for a in ("A1", "A2", "A3"))
+assert (pw["A1"]["n"], pw["A1"]["mS"], pw["A2"]["n"], pw["A2"]["mS"], pw["A3"]["n"], pw["A3"]["mS"]) == (80, 32, 144, 56,
+                                                                                                    144, 56)
+assert pw["A1"]["gated"] and pw["A2"]["gated"] and not pw["A3"]["gated"]
+fill["RD"] = bars["round_degeneracy"]["false_pause"]["display"].lstrip("0")
+fill["RLD"] = bars["reasoning_line_defect"]["false_pause"]["display"].lstrip("0")
+fill["OPL"] = bars["own_pair_lexical"]["false_pause"]["display"].lstrip("0")
+fill["G1"], fill["G2"], fill["G3"] = (gd[a]["at_common_rate_p0"]["union"]["display"].lstrip("0") for a in ("A1", "A2", "A3"))
+assert all(gd[a]["at_common_rate_p0"]["p"] == "1/5" for a in ("A1", "A2", "A3"))
+fill["GU"] = proj["guard_unit"]["display"].lstrip("0")
+for k, p0 in (("round_degeneracy", "1/20"), ("reasoning_line_defect", "1/10"), ("own_pair_lexical", "1/50")):
+    assert rec["inputs"]["bars"][k]["p0"] == p0 and rec["inputs"]["bars"][k]["alpha"] == "1/20"
+fill["K"], fill["NQ"], fill["R"] = str(rec["inputs"]["k"]), str(rec["inputs"]["n_q"]), rec["inputs"]["r"]
+assert (rec["inputs"]["k"], rec["inputs"]["n_q"], rec["inputs"]["r"]) == (29, 40, "29/40")
+quote_in("A1's L 160 (⌈1.15 · 96⌉ = 111, N90 142 at r = 29/40), 864 launches and 22 looks", texts["gpwr_block"],
+         "G-PWR's block (R2)")
+quote_in("F-5's literal 96/32", texts["gpwr_block"], "G-PWR's block (R2)")
+assert rec["power"]["power_floor"] == "17/20" and rec["inputs"]["look_every"] == 40
+fill["LAUNCH_LINE"] = "launch counts = " + ", ".join(f"{a} {L[a]}" for a in ARMS)
+fill["CAP_LINE"] = f"hour cap = {CAP_H} h"
+fill["GPWR_REC"], fill["GPWR_PROG"] = PIN["gpwr_rec"][1], PIN["gpwr_prog"][1]
+assert rec["hours"]["basis_line"] == "m:230" and rec["hours"]["m238_column"] == "148–165"
+
+# --- quotes
+seat = texts["seat_raw"]
+seat_lines = seat.split("\n")
+a7 = next(ln for ln in seat_lines if ln.startswith("**A.7 What follows"))
+fill["A7"] = a7
+fill["ITEM5"] = quote_in("5. LOCK-m-F3 v1.0 drafted for the seat's read with §A.7's contents, by D2 2026-12-22 [go after "
+                         "your cap].", seat, "the seat's raw §D")
+prop_lines = texts["proposal"].split("\n")
+fill["M298"] = prop_lines[297]
+assert fill["M298"].startswith("**G-VER, G-PWR, LOCK-m-F3 v1.0**")
+fill["M286"] = prop_lines[285]
+assert fill["M286"].startswith("**LOCK-m-F0 v1.0.**")
+m192 = prop_lines[191]
+i0 = m192.index("**L is a projection, not a bound:**")
+i1 = m192.index("or a PI stop.", i0) + len("or a PI stop.")
+fill["M192_PROJ"] = m192[i0:i1].replace("**", "")
+fill["M249"] = quote_in("Hour caps: wall-clock of detached generation time, set by the PI in that unit's LOCK v1.0",
+                        prop_lines[248], "m:249")
+fill["M324_LOCK"] = quote_in("its LOCK v1.0 is not committed by its Clock date", prop_lines[323], "m:324")
+fill["M267_RESUME"] = quote_in("the unit's lock hash, schedule hash, path (cached/uncached), cap, look index, backend "
+                               "identifier", prop_lines[266], "m:267")
+fill["AM1_D2"] = quote_in("D2 stands at 2026-12-22", texts["am1"].split("\n")[39], "A-m1:40")
+fill["Q7"] = quote_in("strikable until v1.0's commit; a strike recomputes figures only", texts["step15"], "step-15 Q7")
+fill["A5_DEF"] = quote_in("the sum of sessions' generation time at m:249's definition; loads and the gaps between "
+                          "launches are not in them", seat, "§A.5")
+fill["CLAUDE_ONE"] = quote_in("a verdict campaign completes on ONE characterized backend",
+                              ws(blob("HEAD", "CLAUDE.md").decode()), "CLAUDE.md")
+res_gf3 = ws(blob("2193832", "RESULTS.md").decode())
+fill["GF3_BACKEND"] = quote_in(f"The backend identifier (the report's identity) is `{BACKEND}`, as at G-TIME-F3's two "
+                               "runs, G-ID-F3 and G-TIME-F0", res_gf3, "G-F3's entry")
+res_qw = ws(blob("b427f82", "RESULTS.md").decode()).replace("**", "")
+fill["QW_REQUOTE"] = quote_in("Two texts v0.2 §5 quotes verbatim on the blob of record are revised. v1.0 re-quotes both "
+                              "and re-anchors the other sites on this blob", res_qw, "the qual wiring's entry")
+fill["GF3_PASS"] = quote_in("G-F3 PASS stands as computed", seat, "§0")
+fill["GF3_VER"] = quote_in("40 of 40 verified", seat, "§0")
+fill["GF3_R"] = quote_in("A1 3/4, A2 4/4, A3 6/8, A1s 4/8, A2s 4/8, A3s 8/8", seat, "§A.2")
+fill["GF3_A"] = quote_in("is the stage's count of record and stands", seat, "§A.1")
+fill["GF3_B"] = quote_in("three contrast forced rounds (A3 forced 2, A2 forced 1) and one sham free round (A2s free 1)",
+                         seat, "§A.4")
+fill["GF3_ECHO"] = quote_in("`r2:`§2's task-echo rule covers any instruction of the session — the round's own or another "
+                            "round's, verbatim, truncated or with an operand changed — when the imperative is kept and "
+                            "no answer follows.", seat, "§A.4")
+fill["GF3_ONEWORD"] = quote_in("a response is an attempt when it has the item's answer form (a number for a number item; "
+                               "a word for an antonym item; a comparison's subject for the heavier item) or carries a "
+                               "term of the item or of its answer; otherwise it attempts nothing.", seat, "§A.4")
+fill["GF3_TALLY"] = quote_in("The tally is the seat's count of record for G-F3, descriptive, deciding nothing.", seat,
+                             "§A.3")
+fill["A7_READINGS"] = quote_in("Code's two BUILD readings carried from v0.2 (`qwen_ends`; F6), unstruck", a7, "§A.7")
+fill["A7_PREPRINT"] = quote_in("the seat declares the reading for the draft", a7, "§A.7")
+fill["A7_CAMPAIGN"] = quote_in("detached, checkpointed, uncached, m:267's laptop checklist, looks every 40 launches "
+                               "(m:330: 21 at 832), the seat adjudicating every pause", a7, "§A.7")
+fill["A7_VERDICTS"] = quote_in("the VERDICTS session waits for `POSTING v1` (10′)", a7, "§A.7")
+v02_ws = ws(lock_v02)
+v02_ws_nb = v02_ws.replace("**", "")
+fill["V02_PENDING"] = quote_in("Pending: the coordinating session's dated note of 2026-11-11 (`15d2f70`) puts an "
+                               "observation on §6's ruling on the pod session's note 2 to the seat's next read.",
+                               v02_ws_nb, "v0.2 §8")
+fill["LOCK0_STRIKE"] = quote_in("are each a flag the seat may strike until LOCK-m-F3 v1.0", v02_ws, "lock §0")
+fill["R2_STRIKE"] = quote_in("The BUILD entry's readings (`qwen_ends`; F6) accepted, strikable until v1.0", v02_ws,
+                             "v0.2 §7")
+fill["ANL_STRIKE"] = quote_in("strikable by the seat until LOCK-m-F3 v1.0", texts["analyzer"], "the analyzer")
+fill["R3_COST"] = quote_in("at the cost v0.1's §0 states", v02_ws, "R3")
+fill["LIC_G"] = quote_in("and the lock names both", ws(blob("HEAD", "valence_core/mf3/stages.py").decode()),
+                         "the licence's (g)")
+fill["LOCK0_COST"] = quote_in("Striking one moves the hash of its site's file.", v02_ws, "lock §0")
+fill["ANL_COST"] = quote_in("the analyzer's sha256 moves, G-ANL-F3 is rebuilt and re-run and its artifact superseded",
+                            v02_ws, "lock §9")
+pq = texts["pq"]
+fill["PQ_RIGHT"] = quote_in("The observation is right.", pq, "pq: §3")
+fill["PQ_CLOSE"] = quote_in("LOCK-m-F3 v1.0 closes v0.2 §8's pointer by citing this file.", pq, "pq: §3")
+fill["SEAT_AB"], fill["PQ_AB"], fill["LIST_AB"] = ab(PIN["seat_raw"][1]), ab(PIN["pq"][1]), ab(PIN["list_v2"][1])
+# the seat's figures that Code typed into §2 and §7: each string must be in the seat's raw (and, below, in the draft)
+SEAT_FIGS = ["7 of 189 sham rounds", "P = .8380 against p0 .05, critical 16 at n 189", "2 of 98 lines",
+             "P = .9996 against p0 .10, critical 16 at n 98", "Counter (a) 0 of 98", "counter (a) 0 of 13",
+             "(b) = 4 of 251", "A3 s=0 r4", "A2 s=2 r4", "A3 s=2 r4", "A2s s=1 r7", "0 of 62",
+             "A1s 2/5, A2s 3/5, A3s 5/8 over the domain sessions", "the 16 complete sessions mean 1,931.6 s",
+             "all 24 mean 1,298.4 s per launch (31,160.56 s / 24, the report's `sham_seconds`)",
+             "≈ 300 h", "≈ 326 h", "≈ 446 h", "≈ 685 h", "the slowest complete session, 2,962.6 s", "≈ 305 h",
+             "148–165 h (m:238's column)", "the realised r, 29/40", "G-F3's 24 sham sessions as they fell, 1,298.4 s",
+             "every launch complete, 1,931.6 s", "v0.2's four-session basis"]
+for f in SEAT_FIGS:
+    quote_in(f, seat, "the seat's raw (a typed figure)")
+DRAFT_FIGS = ["7 of 189 (P .8380 against p0 .05, critical 16 at n 189)",
+              "2 of 98 (P .9996 against p0 .10, critical 16 at n 98)", "0 of 98 sham lines",
+              "0 of the 13 contrast first lines", "4 of 251", "A3 s=0 r4; A2 s=2 r4; A3 s=2 r4; A2s s=1 r7",
+              "0 of 62", "A1s 2/5, A2s 3/5, A3s 5/8, over the domain sessions", "1,931.6 s", "1,298.4 s per launch",
+              "31,160.56 s / 24, the report's `sham_seconds`", "≈ 300 h", "≈ 326 h", "≈ 446 h", "≈ 685 h",
+              "2,962.6 s", "≈ 305 h", "148–165 h"]
+fill["HEAD"] = HEAD
+fill["DRIVER"], fill["DRIVER_AB"] = PIN["driver"][1], ab(PIN["driver"][1])
+fill["PI_WORD"], fill["PI_QUESTION"], fill["CAP_H"] = PI_WORD, PI_QUESTION, str(CAP_H)
+fill["BACKEND"], fill["MODEL_ID"], fill["REVISION"] = BACKEND, MODEL_ID, REVISION
+
+# --- §4's table
+rows = [
+    ("the proposal", f"`{PIN['proposal'][0]}`", f"`{PIN['proposal'][1]}`"),
+    ("the preprint of record (m:298: \"as edited for v2\")", "--",
+     "preprint of record pending (the seat's reading under decision (10′), §A.7)"),
+    ("ADDENDUM-m1 v0.1 (decision (10′); D2)", f"`{PIN['am1'][0]}`", f"`{PIN['am1'][1]}`"),
+    ("ADDENDUM-m2 v0.5", f"`{PIN['am2'][0]}`", f"`{PIN['am2'][1]}`"),
+    ("Q-F3's schedules manifest (20 files; lock §4)", f"`{PIN['manifest'][0]}`", f"`{PIN['manifest'][1]}`"),
+]
+rows += [(f"the campaign schedule, {a} (n {n:,})", f"`{rel}`", f"`{h}`") for a, rel, h, n in SCHED]
+rows += [
+    ("the pools (`CORR_clean`)", f"`{PIN['pools'][0]}`", f"`{PIN['pools'][1]}`"),
+    (f"the renders of record (a value; `renders_sha16` `{RENDERS16}`, lock §1)",
+     "`valence_core/mf3/gshape.py`'s `RENDERS_SHA256_OF_RECORD`", f"`{RENDERS}`"),
+    (f"the analyzer (git blob `{analyzer_blob}`)", f"`{PIN['analyzer'][0]}`", f"`{PIN['analyzer'][1]}`"),
+    ("m's package", "`valence_core/m/*.py` (`resume.package_sha256_of`)", f"`{M_PKG}`"),
+    ("mf3's package", "`valence_core/mf3/*.py`", f"`{MF3_PKG}`"),
+    ("the Q-F3 closure (PIN-V2-12)", f"the base closure plus `LAZY_F3_MODULES`, {n_q3} modules", f"`{Q3_CLOSURE}`"),
+    ("the base closure", f"{n_base} modules", f"`{BASE_CLOSURE}`"),
+    ("the driver of record (the `qual` wiring, `b427f82`)", f"`{PIN['driver'][0]}`", f"`{PIN['driver'][1]}`"),
+    ("G-SHAPE-F3's artifact", f"`{PIN['gshape'][0]}`", f"`{PIN['gshape'][1]}`"),
+    ("G-ANL-F3's artifact", f"`{PIN['ganl'][0]}`", f"`{PIN['ganl'][1]}`"),
+    ("G-ID-F3's artifact", f"`{PIN['gid'][0]}`", f"`{PIN['gid'][1]}`"),
+]
+rows += [(w, f"`{rel}`", f"`{sha((REPO / rel).read_bytes())}`") for w, rel, _, _ in GF3_RECORDS]
+rows += [
+    ("G-PWR (Q-F3)'s record", f"`{PIN['gpwr_rec'][0]}`", f"`{PIN['gpwr_rec'][1]}`"),
+    ("G-PWR (Q-F3)'s program", f"`{PIN['gpwr_prog'][0]}`", f"`{PIN['gpwr_prog'][1]}`"),
+    ("the sentence table of record (v2)", "--",
+     "built at Q-F3's VERDICTS session against the posted v1 (PIN-V2-24); none here (§11)"),
+]
+fill["HASHES"] = "| Binds | Path | sha256 |\n|---|---|---|\n" + "\n".join(f"| {a} | {b} | {c} |" for a, b, c in rows)
+assert sha(blob(DEC_ADD, DEC_REL)) == DEC_SHA
+assert subprocess.run(["git", "cat-file", "-e", f"HEAD:{DEC_REL}"], capture_output=True).returncode != 0
+dl = git("log", "--format=%h", "--diff-filter=D", "--", DEC_REL).split()
+ad = git("log", "--format=%h", "--diff-filter=A", "--", DEC_REL).split()
+assert dl == [DEC_DEL] and ad == [DEC_ADD], (dl, ad)
+assert DEC_SHA in blob("HEAD", "LOCK-m-F0.md").decode()
+fill["DEC_DEL"], fill["DEC_ADD"], fill["DEC_AB"] = DEC_DEL, DEC_ADD, ab(DEC_SHA)
+
+
+# --- PIN texts (v02_gen.py's extraction rule)
+def pin_at(lines, i):
+    if lines[i].lstrip().startswith("#"):
+        j = i
+        while (j + 1 < len(lines) and lines[j + 1].lstrip().startswith("#")
+               and not lines[j + 1].lstrip().startswith("# PIN")):
+            j += 1
+        return " ".join(l.lstrip()[1:].strip() for l in lines[i:j + 1]), "comment"
+    j = i
+    while j + 1 < len(lines) and lines[j + 1].strip() and '"""' not in lines[j]:
+        j += 1
+    return " ".join(l.strip() for l in lines[i:j + 1]).replace('"""', "").strip(), "docstring"
+
+
+def table_of(lines, marker):
+    out = []
+    for i, l in enumerate(lines):
+        if marker in l:
+            txt, kind = pin_at(lines, i)
+            out.append((i + 1, kind, txt[txt.index("PIN (Code"):]))
+    return out
+
+
+old_b = blob(V02_DRIVER_COMMIT, "scripts/mf3_sessions.py")
+assert sha(old_b) == V02_DRIVER
+old = old_b.decode().split("\n")
+new = blob("HEAD", "scripts/mf3_sessions.py").decode().split("\n")
+MK_T = "PIN (Code, declared at LOCK-m-F3 v0.2; the time wiring"
+MK_I = "PIN (Code, declared at LOCK-m-F3 v0.2; the id wiring"
+MK_Q = "PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring"
+MK_R = "PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; A-m2 v0.5 §4.1-§4.3)"
+t_old, t_new = table_of(old, MK_T), table_of(new, MK_T)
+i_old, i_new = table_of(old, MK_I), table_of(new, MK_I)
+q_new = table_of(new, MK_Q)
+r_old, r_new = table_of(old, MK_R), table_of(new, MK_R)
+assert (len(t_old), len(t_new), len(i_old), len(i_new), len(q_new), len(r_old), len(r_new)) == (9, 9, 4, 4, 4, 1, 1)
+assert not table_of(old, MK_Q)
+esc = lambda s: s.replace("|", "\\|")
+for _, _, txt in t_old + i_old:  # v0.2 §5 quotes each old text verbatim (escaped as its tables escape them)
+    assert esc(txt) in lock_v02, txt[:60]
+WIRED_OLD = "qual and campaign stay refused until their steps; id is wired at its own step (the id wiring's PIN, below)."
+WIRED_NEW = ("campaign stays refused until its step; id and qual are wired at their own steps (the id and qual wirings' "
+             "PINs, below).")
+IDPRE_OLD = "the prior -- id_prior_checkpoint, then stages.prior_gate"
+IDPRE_NEW = 'the prior -- id_prior_checkpoint (stage_prior_checkpoint for "id"), then stages.prior_gate'
+revised, same = [], []
+for kind_name, olds, news in (("time", t_old, t_new), ("id", i_old, i_new), ("re-issue", r_old, r_new)):
+    for (lo, ko, to), (ln, kn, tn) in zip(olds, news):
+        assert ko == kn
+        if to == tn:
+            same.append((kind_name, lo, ln, tn))
+        elif WIRED_OLD in to:
+            assert to.replace(WIRED_OLD, WIRED_NEW) == tn
+            revised.append(("WIRED", lo, ln, kn, tn))
+        elif IDPRE_OLD in to:
+            assert to.replace(IDPRE_OLD, IDPRE_NEW) == tn
+            revised.append(("IDPRE", lo, ln, kn, tn))
+        else:
+            raise AssertionError(f"an unexpected change at :{lo} -> :{ln}")
+assert [r[0] for r in revised] == ["WIRED", "IDPRE"] and len(same) == 8 + 3 + 1
+site = lambda n: f"`scripts/mf3_sessions.py:{n}`"
+fill["REVISED"] = ("| site | v0.2's anchor (blob `" + ab(V02_DRIVER) + "`) | where | the text in the blob of record (verbatim) |\n"
+                   "|---|---|---|---|\n"
+                   + "\n".join(f"| {site(ln)} | `:{lo}` | {kn} | {esc(tn)} |" for _, lo, ln, kn, tn in revised))
+fill["WIRED_SITE"] = site(revised[0][2]).strip("`")
+fill["IDPRE_SITE"] = site(revised[1][2]).strip("`")
+fill["WIRED_NEW"], fill["WIRED_OLD"], fill["IDPRE_NEW"], fill["IDPRE_OLD"] = WIRED_NEW, WIRED_OLD, IDPRE_NEW, IDPRE_OLD
+fill["PINS_QUAL"] = ("| site | where | the text in the blob of record (verbatim) |\n|---|---|---|\n"
+                     + "\n".join(f"| {site(n)} | {k} | {esc(t)} |" for n, k, t in q_new))
+
+
+def head_of(t):
+    return t[:t.index("):") + 1]
+
+
+fill["REANCHOR"] = ("| the PIN (its opening, to its first \"):\") | v0.2 §5's anchor | the anchor in the blob of record |\n"
+                    "|---|---|---|\n"
+                    + "\n".join(f"| {esc(head_of(t))} | `:{lo}` | `:{ln}` |" for _, lo, ln, t in same))
+fill["HISTORY"] = ("| commit | the edit | the blob's sha256 | the model runs its DRIVER line printed it for |\n"
+                   "|---|---|---|---|\n"
+                   f"| `b427f82` | the `qual` wiring | `{PIN['driver'][1]}` | G-F3 (`2193832`) |")
+hist = git("log", "--format=%h", f"{V02_DRIVER_COMMIT}..HEAD", "--", "scripts/mf3_sessions.py").split()
+assert hist == ["b427f82"], hist
+
+# --- the two BUILD readings (v0.2 §7's), from HEAD
+lines_py = blob("HEAD", "valence_core/mf3/lines.py").decode().split("\n")
+stages_py = blob("HEAD", "valence_core/mf3/stages.py").decode().split("\n")
+qe_i = next(i for i, l in enumerate(lines_py)
+            if "PIN (Code, declared at LOCK-m-F3 v0.1's re-issue; the build review's findings 1 and 2)" in l)
+f6_i = next(i for i, l in enumerate(stages_py) if "prior_gate (F6) reads the fixed cap as 120" in l and "PIN (Code" in l)
+qe_txt, _ = pin_at(lines_py, qe_i)
+f6_txt, _ = pin_at(stages_py, f6_i)
+for t in (qe_txt, f6_txt):
+    assert esc(t) in lock_v02
+fill["READINGS"] = ("| reading | site | the PIN (verbatim) |\n|---|---|---|\n"
+                    f"| `m.audit.qwen_ends` in counter (b)'s G-TIME-F3 contrast branch | "
+                    f"`valence_core/mf3/lines.py:{qe_i + 1}` | {esc(qe_txt)} |\n"
+                    f"| F6: `prior_gate` refuses a prior at another cap on a run on a model | "
+                    f"`valence_core/mf3/stages.py:{f6_i + 1}` | {esc(f6_txt)} |")
+
+# --- compose
+tmpl = TEMPLATE.read_text(encoding="utf-8")
+markers = set(re.findall(r"@@([A-Z0-9_]+)@@", tmpl))
+assert markers == set(fill), (sorted(markers - set(fill)), sorted(set(fill) - markers))
+v1 = tmpl
+for k, v in fill.items():
+    v1 = v1.replace(f"@@{k}@@", v)
+assert "@@" not in v1
+v1 = v1.rstrip("\n") + "\n\n"
+for x in QUAL_LOCK_LINES:
+    assert x not in v1, f"the v1.0 part restates {x}"
+for m in M_HASHED:
+    assert f"valence_core/m/{m}.py" not in v1, m
+assert not WEIGHTS_RX.findall(v1)
+assert V02_RULE not in v1
+# no clock time and no $ figure in the v1.0 part: m:N line anchors and file:line anchors are the only colon-digit forms
+clock = [m.group(0) for m in re.finditer(r"(?<![\w:./-])\d{1,2}:\d{2}(?::\d{2})?(?![\d\w])", v1)]
+assert not clock and "$" not in v1, (clock, "$" in v1)
+draft = v1.encode("utf-8") + blob("HEAD", "LOCK-m-F3.md")
+dt = draft.decode("utf-8")
+for x in QUAL_LOCK_LINES:
+    assert dt.count(x) == 1 and sum(ln.startswith(x) for ln in dt.splitlines()) == 1, x
+assert set(WEIGHTS_RX.findall(dt)) == wv
+for v in (PIN["analyzer"][1], M_PKG, Q3_CLOSURE, MF3_PKG, PIN["proposal"][1], REVISION, next(iter(wv))[2]):
+    assert v in dt, v
+assert dt.count("\n---\n\n" + V02_RULE) == 1 and dt.startswith("# LOCK-m-F3.md — v1.0")
+for f in DRAFT_FIGS:
+    assert f in v1, f"the v1.0 part lacks the typed figure {f!r}"
+for f in ("A1's L to 160, 864 launches, 22 looks", "F-5's literal 96/32", "each at least .85",
+          "every 40 launches and at the end"):
+    assert f in v1, f
+SHORT = [  # (the short quote as the draft carries it, its source text, the source's name)
+    ("Route as given", blob("cdccc66", "RESULTS.md").decode(), "the routing's close at cdccc66"),
+    ("21 at 832", prop_lines[329], "m:330"),
+    ("as §3.1", prop_lines[297], "m:298"),
+    ("as edited for v2", prop_lines[297], "m:298"),
+    ("G-VER, G-PWR, LOCK-m-F3 v1.0 as §3.1", prop_lines[297].replace("**", ""), "m:298, its bold dropped"),
+    ('"moved" and "indented"', ws(blob("b427f82", "RESULTS.md").decode()), "the qual wiring's entry"),
+    ("strikable until v1.0's commit", texts["step15"], "Q7"),
+    ("recomputes figures only", texts["step15"], "Q7"),
+    ('"ended"', v02_ws, "v0.2 §8"),
+    ("with no stamp and no window", v02_ws, "v0.2 §8"),
+]
+for q, src_text, nm in SHORT:
+    assert q in v1, f"the v1.0 part lacks {q!r}"
+    quote_in(q, src_text, nm)
+OUT.write_bytes(draft)
+print(f"HEAD {HEAD} ({HEAD_FULL})")
+print(f"DRAFT {OUT.name} sha256 {sha(draft)} ({len(draft.splitlines())} lines; the v1.0 part "
+      f"{len(v1.splitlines())} lines, then LOCK-m-F3.md v0.2's committed bytes, sha256 {PIN['lock_v02'][1]})")
+print(f"launch line: {fill['LAUNCH_LINE']} | cap line: {fill['CAP_LINE']}")
+print("qual PIN sites:", ", ".join(f":{n}" for n, _, _ in q_new), "| revised:",
+      ", ".join(f":{lo}->:{ln}" for _, lo, ln, _, _ in revised), "| re-anchored:",
+      ", ".join(f":{lo}->:{ln}" for _, lo, ln, _ in same))
+print(f"BUILD readings at lines.py:{qe_i + 1}, stages.py:{f6_i + 1}")
+print("CHECKS: markers filled; the v1.0 part names no m-file path, carries no WEIGHTS line, neither QUAL_LOCK_LINES "
+      "string, nor v0.2's rule text; the draft carries each QUAL_LOCK_LINES string once, at a line's start; one WEIGHTS "
+      "value, v0.2's; the analyzer's, m's package's, the Q-F3 closure's, mf3's package's and the proposal's sha256 in "
+      "full; every quote found in its pinned source")
+
+----------------------------------------------------------------------------------------------------
+template_v10.md (verbatim)
+----------------------------------------------------------------------------------------------------
+# LOCK-m-F3.md — v1.0 (Q-F3's lock for the campaign, PROPOSAL-m v1.11 §3.2 m:298)
+
+*Q-F3's lock for its campaign, above v0.2's text kept verbatim. v0.2's text carries the re-issued v0.1, which carries v0.1's own. It is drafted by Code for the seat's read in LOCK-p v1.0's manner, as the seat's answers of 2026-11-14 have it (`results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`, sha256 `@@SEAT_AB@@`, §A.7; §0 below). It rests on the PI's routing of those answers ("Route as given", 2026-11-14) and on the PI's cap (§2), each relayed by the coordinating session. It is drafted on the code at HEAD `@@HEAD@@`, on G-F3's record (`2193832`) and on G-PWR (Q-F3)'s run of record (`8c9b5ff`). It licenses Q-F3's campaign on the laptop, uncached, and nothing later. Version v1.0, drafted 2026-11-15 (Code's date); the seat reads it before Code commits it by path on the PI's routing, by D2 (§3). This file's own sha256 is named in its entry, and is the `lock_sha256` of Q-F3's campaign checkpoint.*
+
+## v1.0 §0. What v1.0 carries
+
+- The seat's §A.7, verbatim:
+
+  > @@A7@@
+
+- The routing's item 5 (§D), which the PI adopted with "Route as given", verbatim: "@@ITEM5@@"
+- m:298, verbatim: @@M298@@
+- §3.1's LOCK-m-F0 v1.0 (m:286), verbatim: @@M286@@
+- Here, for Q-F3:
+  - §1, the launch counts and looks, from G-PWR (Q-F3);
+  - §2, the hour cap;
+  - §3, D2;
+  - §4, the hashes of record, the preprint line among them;
+  - §5, the backend, the weights and the path;
+  - §6, the driver of record and the `qual` wiring's PINs;
+  - §7, G-F3's figures of record;
+  - §8, Code's two BUILD readings;
+  - §9, v0.2 §8's pointer, closed;
+  - §10, the list of record v2;
+  - §11, Code's readings in this draft, and what v1.0's commit closes;
+  - §12, how the campaign cites this file;
+  - §13, what follows.
+
+  Then v0.2's text follows, verbatim.
+- **Generated, not transcribed.** A tool at HEAD `@@HEAD@@` (`gen_v10.py`, Code's scratch) generated:
+  - every hash;
+  - §1's figures, from G-PWR (Q-F3)'s record, and §1's R2-strike figures, each found in G-PWR's block (R2);
+  - the PIN texts of §6 and §8, from their committed blobs;
+  - every quote but the PI's word and the coordinating session's question (typed, below), each found by the tool in
+    its source: the seat's raws, PROPOSAL-m, ADDENDUM-m1, CLAUDE.md, the analyzer, v0.2's text, and three RESULTS.md
+    blobs (the routing's close at `cdccc66`, G-F3's entry at `2193832`, the `qual` wiring's at `b427f82`);
+  - v0.2's text below, the committed file's bytes.
+
+  The files it reads at HEAD are committed there with identical working-tree bytes. It also reads blobs at earlier
+  commits: RESULTS.md at `cdccc66`, `2193832` and `b427f82`, the driver at `fb82daa`, and the decisions block at
+  `5dca58b` (§11). G-F3's checkpoint, report and reads are hashed only, in the list of record v2's digest forms (item
+  1). Code typed the PI's word, the coordinating session's question, the dates and the prose, and the seat's figures
+  in §2 and §7, each of which the tool finds in the seat's raw. The values-check checks them.
+- **Conventions:**
+  - "v1.0 §N" is a section of this amendment, "v0.2 §N" of v0.2's text, "R N" of the re-issue's part and "lock §N" of
+    v0.1's text.
+  - Code anchors are at HEAD `@@HEAD@@`. The driver's lines are those of its blob of record, `@@DRIVER_AB@@` (§6).
+  - Figures marked [E] are the seat's estimates (§A.5).
+
+## v1.0 §1. Launch counts and looks (G-PWR (Q-F3); m:192, m:285, m:330)
+
+- **G-PWR (Q-F3)'s record** is `data/mf3/gates/Q-F3_G-PWR.json`, sha256 `@@GPWR_REC@@`. Its run of record is `8c9b5ff`,
+  from its program `scripts/mf3_gpwr.py` at `46be7aa` (sha256 `@@GPWR_PROG@@`). It ran on the uncached path at k =
+  @@K@@ of @@NQ@@, r = @@R@@ (the seat's §A.2):
+  - L: @@L_PROSE@@; @@TOTAL@@ launches, m:238's row (k 29–28);
+  - @@LOOKS@@ looks, every 40 launches and at the end (m:330: "21 at 832");
+  - the floors (m:184–186, uncached; mf3's `schedule.FLOORS` under the path): @@FLOORS_PROSE@@;
+  - the power at the planned floors (m:190; the analyzer's `f3_power_block`): A1 (80, 32) @@P_A1@@ and A2 (144, 56)
+    @@P_A2@@, each at least .85, so no n is raised; A3 (144, 56), the screen, @@P_A3@@, reported only;
+  - on the projection (m:330: α .05 at each look, at each bar's p0):
+    - `round_degeneracy` @@RD@@ (p0 .05), `reasoning_line_defect` @@RLD@@ (p0 .10) and `own_pair_lexical` @@OPL@@
+      (p0 .02);
+    - the exclusion guard at the common rate .20, each pair's figure the union of its two halves (m:316): A1/A1s
+      @@G1@@, A2/A2s @@G2@@, A3/A3s @@G3@@;
+    - the unit's guard figure, the chance that some pair's guard pauses: @@GU@@ (G-PWR's reading R6).
+  - The floor cases and the realised case are in the record and in G-PWR's entry (`8c9b5ff`).
+- m:192, verbatim (its bold dropped): "@@M192_PROJ@@"
+- The line, a whole line of this lock, for the campaign wiring (Code's line form, as LOCK-m-F0 v1.0 §4's):
+
+```
+@@LAUNCH_LINE@@
+```
+
+- **G-PWR's readings** are Code's, declared for the seat. They are the record's READINGS (items 7–20) and Code's block
+  at `8c9b5ff` (`results/raw/2026-11-14_mf3-gpwr_code-to-design.md`), R1–R9; that block's Q1 and Q2 are open. Q7:
+  "@@Q7@@".
+  - Only a strike of R2, A1 at F-5's literal 96/32, would move a launch count: A1's L to 160, 864 launches, 22 looks.
+  - This line would then be regenerated before v1.0 is placed (§11).
+
+## v1.0 §2. The hour cap (the PI's; m:249, m:298)
+
+- **The PI's word, verbatim:** **"@@PI_WORD@@"**.
+  - It answered the coordinating session's question "@@PI_QUESTION@@". That question went to the PI with the seat's
+    §A.5 table and §D item 4. The coordinating session relayed the answer verbatim.
+  - The word came in chat and carries no date of its own. The coordinating session's calendar date for it is
+    2026-11-15: that is the session's own date, not a PI date. The PI's last dated block is of 2026-11-14 (the dates
+    convention).
+- **For Q-F3: @@CAP_H@@ h.** m:249: "@@M249@@".
+- **Beside it, the projections on G-F3's realised seconds** [E], from the seat's §A.5, cited from its raw (`cdccc66`).
+  832 launches come to:
+  - ≈ 300 h on G-F3's 24 sham sessions as they fell (1,298.4 s per launch);
+  - ≈ 326 h at the realised r;
+  - ≈ 446 h if every launch runs complete (1,931.6 s);
+  - ≈ 685 h at the slowest complete session (2,962.6 s).
+
+  Beside those, v0.2's four-session basis gives ≈ 305 h, and m:230's basis 148–165 h (m:238's column; G-PWR's hours
+  line, R1). §A.5: "@@A5_DEF@@".
+- The line, a whole line of this lock (Code's line form, as LOCK-m-F0 v1.0 §4's):
+
+```
+@@CAP_LINE@@
+```
+
+## v1.0 §3. D2
+
+- **2026-12-22.** The sources: m:16 (11); ADDENDUM-m1 §2.3, "@@AM1_D2@@"; and the analyzer's declared D2 (PIN-V2-9).
+- m:324: a unit is NOT-RUN if "@@M324_LOCK@@" (the first of the conditions m:324 lists).
+- v1.0 is committed by D2 iff its commit's committer date, in UTC, falls on or before it, the day inclusive. That is
+  the C7 convention, as LOCK-m-F0 v1.0 §5 reads D1 and ADDENDUM-m1 §1.3 reads D_O′. Applying it to D2 is Code's
+  reading (§11).
+
+## v1.0 §4. The hashes of record (m:286's list, by m:298's "as §3.1"; the seat's §A.7 list)
+
+@@HASHES@@
+
+- **Not repeated here:**
+  - the eleven m files and the weights of record. Their lines are v0.1's, below (lock §1), unchanged since. They are
+    the lines the licence and the driver read (the re-issue's R1; v0.2 §1).
+  - the cap line and the path line, which are v0.2's (§2 and §3, below), each written once.
+
+## v1.0 §5. The backend, the weights and the path
+
+- **The backend identifier** is `@@BACKEND@@`: the laptop's MLX backend, as G-F3's report identity carries it. G-F3's
+  entry (`2193832`): "@@GF3_BACKEND@@".
+  - m:267: the resume identity of every campaign and gate stage carries "@@M267_RESUME@@".
+  - CLAUDE.md: "@@CLAUDE_ONE@@".
+- **The weights of record:** `@@MODEL_ID@@`, snapshot `@@REVISION@@`. Its WEIGHTS line is v0.1's, below (lock §1). The
+  load is offline: `HF_HUB_OFFLINE` exactly "1" (the licence's (g)).
+- **The path:** uncached (v0.2 §3, below; m:295).
+- **The reasoning cap:** 120, the cap of record (v0.2 §2, below).
+
+## v1.0 §6. The driver of record and the `qual` wiring's PINs (`pq:`§5; the `qual` wiring's entry, `b427f82`)
+
+- **The DRIVER line's value of record** is `scripts/mf3_sessions.py`, sha256 `@@DRIVER@@`: the `qual` wiring's
+  (`b427f82`), as G-F3's DRIVER line printed it before the load (G-F3's entry, `2193832`).
+- **Its history since v0.2 §5's table** (every commit that changed it):
+
+@@HISTORY@@
+
+- **The two texts v0.2 §5 quotes that the `qual` wiring revised**, re-quoted on the blob of record. The `qual` wiring's
+  entry (its bold dropped): "@@QW_REQUOTE@@".
+
+@@REVISED@@
+
+  - **The WIRED_CMDS sentence**, in the PIN at `@@WIRED_SITE@@`, now reads: "@@WIRED_NEW@@" At the `qual` wiring it
+    replaced "@@WIRED_OLD@@"
+  - **The `id` wiring's precheck PIN**, at `@@IDPRE_SITE@@`: "@@IDPRE_NEW@@" replaced "@@IDPRE_OLD@@".
+- **The `qual` wiring's four PIN sites, declared at v1.0:**
+
+@@PINS_QUAL@@
+
+- **The other sites v0.2 §5 quotes or re-anchors, re-anchored on the blob of record.** Each text is unchanged:
+
+@@REANCHOR@@
+
+- **F-1:** the `qual` wiring touched no scoring-stack function, so G-SHAPE-F3 was not re-run (its entry).
+- **The campaign wiring's self-test gap** (the `qual` wiring's review, NOTE-7, recorded for the campaign wiring). The
+  self-test's "moved" and "indented" variants edit only the path line's first occurrence. So this v1.0 does not restate
+  v0.2's cap line or path line: each stands once, in v0.2's text below (§12).
+
+## v1.0 §7. G-F3's figures of record (the seat's answers of 2026-11-14, §A.1–§A.6, routed by the PI)
+
+- **The verdict.** "@@GF3_PASS@@" (§0). G-F3 ran under m:297, uncached at cap 120, on the `qual` wiring's driver,
+  under v0.2 (`05ef75d`). It is committed at `2193832`.
+- **The bars**, at the sham sessions' realised n:
+  - `round_degeneracy@G-F3` 7 of 189 (P .8380 against p0 .05, critical 16 at n 189);
+  - `reasoning_line_defect@G-F3` 2 of 98 (P .9996 against p0 .10, critical 16 at n 98);
+  - no hair trigger; "@@GF3_VER@@".
+- **r = 29/40** (m:192). By template: @@GF3_R@@.
+- **Counter (a):** 0 of 98 sham lines, which "@@GF3_A@@" (§A.1). Beside it, 0 of the 13 contrast first lines (§A.6).
+- **Counter (b): 4 of 251**, as §A.4 confirms it: A3 s=0 r4; A2 s=2 r4; A3 s=2 r4; A2s s=1 r7. In §A.4's words, "@@GF3_B@@".
+  The eight responses read as not (b) are confirmed. The readings of record, for every later count of (b) (§A.4),
+  verbatim:
+  - the task-echo rule: "@@GF3_ECHO@@"
+  - the one-word cases: "@@GF3_ONEWORD@@"
+- **The attractor tally:** 0 of 62 contrast forced-round responses about the configuration. §A.3: "@@GF3_TALLY@@"
+- **The sham first-pick shares** (m:318 exception (2)): A1s 2/5, A2s 3/5, A3s 5/8, over the domain sessions (§A.6).
+- **The basis of record** for §2's projections (§A.5, cited):
+  - the 16 complete sham sessions mean 1,931.6 s;
+  - all 24 mean 1,298.4 s per launch (31,160.56 s / 24, the report's `sham_seconds`).
+
+  The contrast sessions' seconds stay in the checkpoint (m:318).
+- **G-VER** (m:284; m:298's "G-VER, G-PWR, LOCK-m-F3 v1.0 as §3.1", its bold dropped). Code reads it as m:284's
+  verifier, which in Q-F3 runs inside every stage on every record; G-F3's 40 records are all verified. This is Code's
+  reading R9, and its block's Q2 at `8c9b5ff` is open (§11).
+
+## v1.0 §8. Code's two BUILD readings, carried from v0.2 §7, unstruck
+
+- The seat's §A.7: "@@A7_READINGS@@".
+- The PINs, verbatim at HEAD `@@HEAD@@` (mf3's package unchanged since v0.2):
+
+@@READINGS@@
+
+- The seat's rulings on them are quoted in v0.2 §7, below.
+
+## v1.0 §9. v0.2 §8's pointer, closed
+
+- v0.2 §8's pointer, verbatim (its bold dropped): "@@V02_PENDING@@"
+- **Closed** by `pq:`, the seat's read of G-F0m-OLMo (p) ×3: `results/raw/2026-11-12_p-qual_design-to-code_answers.md`,
+  sha256 `@@PQ_AB@@`, committed by the pod session at `a2c354e`. Its §3, verbatim: "@@PQ_RIGHT@@" And: "@@PQ_CLOSE@@"
+- The F3 session's close line on the v0.2 entry's pointer is at `013169c`.
+
+## v1.0 §10. The list of record v2
+
+- Cited: `results/raw/2026-11-10_list-of-record-v2_design-to-code_answers.md`, sha256 `@@LIST_AB@@` (`fc43249`), its §2. It binds every session on this unit (Code's, their subagents', the coordinating session's) before Q-F3's VERDICTS or NOT-RUN record, the campaign's end-waits included (item 5).
+
+## v1.0 §11. Code's readings in this draft, and what v1.0's commit closes
+
+- **Code's readings in this draft, for the seat's read** (none adjudicated):
+  1. the line forms of §1 and §2, Code's, as LOCK-m-F0 v1.0 §4's (the campaign wiring tests them, §13);
+  2. m:286's two items that the seat's §A.7 list does not name:
+     - the decisions block is not carried. Its file left the tree at `@@DEC_DEL@@` (release prep); its record is at
+       `@@DEC_ADD@@`, sha256 `@@DEC_AB@@`, as LOCK-m-F0 v1.0 §6 names it;
+     - the sentence table of record is built at Q-F3's VERDICTS session (PIN-V2-24, declared at LOCK-m-F3 v0.1), so
+       none is carried here;
+  3. D2's boundary, by the C7 convention (§3);
+  4. G-VER, read as G-F3's per-record verification (§7; R9).
+
+  The preprint line is the seat's reading (§A.7: "@@A7_PREPRINT@@").
+- **What v1.0's commit closes.** The record holds three strike windows open until LOCK-m-F3 v1.0:
+  - Code's readings declared at v0.1. lock §0: "@@LOCK0_STRIKE@@". They include lock §9's registers and G-ANL-F3's
+    PIN register (the analyzer: "@@ANL_STRIKE@@").
+  - The BUILD's two readings (§8): "@@R2_STRIKE@@" (the routing's item 6 of 2026-11-10, v0.2 §7).
+  - G-PWR (Q-F3)'s READINGS (§1): Q7's "strikable until v1.0's commit".
+
+  This draft strikes none. A strike before v1.0's commit carries its stated cost:
+  - a reading declared at v0.1, or at the BUILD (the re-issue's R3: "@@R3_COST@@"): "@@LOCK0_COST@@" (lock §0);
+  - an item of G-ANL-F3's PIN register: "@@ANL_COST@@" (lock §9);
+  - a G-PWR reading: a strike "recomputes figures only" (Q7).
+
+  The draft is then regenerated, with its dry check re-run, before it is placed.
+
+## v1.0 §12. How the campaign cites this file
+
+- `lock_file` is `"LOCK-m-F3.md"`. `lock_sha256` is this file's sha256 as committed at v1.0, which the v1.0 entry names.
+- The campaign (m:298; `stages.run_campaign`) runs under v1.0:
+  - uncached, at the cap of record;
+  - its prior G-F3's checkpoint (`stages.PRIOR_STAGE`: the campaign needs G-F3 PASS);
+  - with §1's launch counts and §2's hour cap, and the floors of mf3's `schedule.FLOORS` under the path.
+
+  This is m's campaign wiring's form, and the Q-F3 campaign wiring declares it (§13).
+- **The lines the code reads as lines** stand once each, unchanged: the eleven m files and the WEIGHTS line (v0.1's,
+  lock §1), and the cap line and the path line (v0.2 §2 and §3).
+- **The values it finds as substrings** are named in full in v1.0 §4, as in v0.2 §1, unchanged: the proposal's sha256
+  (`stage_identity_extra`), and the analyzer's, mf3's package's, m's package's and the Q-F3 closure's (the licence's
+  (f); PIN-V2-12). The weights' revision and sha256, which the licence's (g) also finds ("@@LIC_G@@"), stand in v0.1's
+  WEIGHTS line.
+- This v1.0 names no m-file path and carries no WEIGHTS line, and neither the cap line nor the path line appears in it.
+
+## v1.0 §13. What follows
+
+1. **The seat's read of this draft.** On the PI's word, the draft is placed byte for byte as `LOCK-m-F3.md` and
+   committed by path, with its v1.0 entry naming its sha256, by D2 (2026-12-22). Any amendment regenerates the draft
+   and re-runs its dry check first.
+2. **The campaign wiring.** The driver's `campaign` subcommand is an edit of F-1's kind; its entry names the edit and
+   the DRIVER line's new blob. It reads §1's and §2's lines from this file's committed text and closes NOTE-7's
+   self-test gap (§6). It is reviewed as the `qual` wiring was.
+3. **The campaign** (m:361; ADDENDUM-m1 §4 step 5), in §A.7's words: "@@A7_CAMPAIGN@@". It is announced to the
+   coordinating session and serialized.
+   Its end notice carries "ended" and the exit status, with no stamp and no window (v0.2 §8).
+4. **The VERDICTS session.** §A.7: "@@A7_VERDICTS@@".
+
+---
+
+Where v0.2's text below, or the text it carries, differs from v1.0, v1.0 is of record (the form of v0.2's own rule).
+
+----------------------------------------------------------------------------------------------------
+dry_check_v10.py (verbatim)
+----------------------------------------------------------------------------------------------------
+"""Dry check of LOCK-m-F3 v1.0's draft (run from the repo root with the jlens venv, -I -B):
+  (1)-(3), the driver's own readers of the lock's committed text, each run on the committed LOCK-m-F3.md (v0.2) and with
+  the draft standing in for it (stages.committed patched for that one path, every other path read for real):
+  (1) lock_m_modules and lock_weights: the same eleven m files and the same WEIGHTS value;
+  (2) stage_identity_extra for time, id and qual: no problem, and the same identity but for lock_sha256, the draft's;
+  (3) stages.licence_problems on each identity, HF_HUB_OFFLINE=1 given: [] (the licence's (a)-(h));
+  (4) the analyzer's PIN-V2-12 test, in its own substring form, on the draft: the analyzer's, m's package's and the
+      Q-F3 closure's sha256 named in full;
+  (5) the driver's whole self-test (scripts/mf3_sessions.py --selftest's run_selftest), once, with the draft standing in.
+Model-free: nothing is loaded (the self-test traps its loaders), and nothing is written under data/mf3 (the self-test
+asserts it). Nothing under data/*/ckpt or data/*/reports is opened by this script but to hash it: the driver's self-test
+(5) hashes every file under data/mf3, ckpt and reports included, to assert them unchanged, and prints no byte, size or
+time (the list of record v2, item 1's digest form). Usage: dry_check_v10.py <draft> <selftest out>. Exit 0 iff every
+check holds."""
+import contextlib
+import hashlib
+import importlib.util
+import io
+import json
+import sys
+from pathlib import Path
+from unittest import mock
+
+REPO = Path.cwd()
+sys.path.insert(0, str(REPO))
+DRAFT = Path(sys.argv[1]).read_bytes()
+ST_OUT = Path(sys.argv[2])
+sha = lambda b: hashlib.sha256(b).hexdigest()
+
+spec = importlib.util.spec_from_file_location("mf3_sessions", REPO / "scripts" / "mf3_sessions.py")
+drv = importlib.util.module_from_spec(spec)
+sys.modules["mf3_sessions"] = drv
+spec.loader.exec_module(drv)
+stages, guard = drv.stages, drv.guard
+from valence_core.m import corr as m_corr  # noqa: E402
+from valence_core.mf3 import scaffold as sc_mod  # noqa: E402
+
+real_committed = stages.committed
+lock_cp, lock_v02 = real_committed(drv.TIME_LOCK_FILE)
+assert lock_cp == [] and sha(lock_v02) == "ac82b94383d68716457097c6694dfd48897b324ba23a8129b6c483cb611575a7"
+
+
+def with_draft(rel, repo=stages.REPO):
+    return ([], DRAFT) if rel == drv.TIME_LOCK_FILE else real_committed(rel, repo)
+
+
+results = []
+
+
+def chk(name, ok, got=""):
+    results.append(bool(ok))
+    print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" {got}" if got else ""), flush=True)
+
+
+t02, td = lock_v02.decode("utf-8"), DRAFT.decode("utf-8")
+mm02, mmd = drv.lock_m_modules(t02), drv.lock_m_modules(td)
+wl02, wld = drv.lock_weights(t02), drv.lock_weights(td)
+chk("(1) lock_m_modules and lock_weights read the same eleven m files and the same WEIGHTS value from the draft as "
+    "from v0.2, with no problem", mm02 == mmd and mm02[1] == [] and mm02[0] is not None and len(mm02[0]) == 11
+    and wl02 == wld and wl02[1] == [] and wl02[0] is not None, f"(weights revision {wl02[0][0][:12] if wl02[0] else None})")
+
+_pool, renders = sc_mod.pool_and_renders()
+tflags = {"proposal_file": stages.PROPOSAL_REL, "lock_file": drv.TIME_LOCK_FILE,
+          "analyzer_sha256": sha(stages.ANALYZER_PATH.read_bytes()),
+          "package_sha256": guard.package_sha256_of(guard.PACKAGE_DIR),
+          "renders_sha16": m_corr.renders_sha(renders)}
+env = {drv.HF_OFFLINE_ENV: "1"}
+for stage in ("time", "id", "qual"):
+    ex02, p02 = drv.stage_identity_extra(stage, **tflags)
+    with mock.patch.object(stages, "committed", with_draft):
+        exd, pd = drv.stage_identity_extra(stage, **tflags)
+        lic_d = stages.licence_problems(exd, environ=env) if exd is not None else ["no identity"]
+    lic_02 = stages.licence_problems(ex02, environ=env) if ex02 is not None else ["no identity"]
+    same_but_lock = (ex02 is not None and exd is not None
+                     and {k: v for k, v in ex02.items() if k != "lock_sha256"}
+                     == {k: v for k, v in exd.items() if k != "lock_sha256"})
+    chk(f"(2) stage_identity_extra({stage!r}): no problem on v0.2 or on the draft; the same identity but lock_sha256, "
+        f"which is the draft's sha256 (v0.2's is ac82b943...)", p02 == [] and pd == [] and same_but_lock
+        and exd["lock_sha256"] == sha(DRAFT) and ex02["lock_sha256"] == sha(lock_v02),
+        f"(keys {len(exd or {})}; reasoning_cap {(exd or {}).get('reasoning_cap')}; locked_path "
+        f"{(exd or {}).get('locked_path')})")
+    chk(f"(3) stages.licence_problems on {stage}'s identity with the draft standing in, HF_HUB_OFFLINE=1: [] (and [] "
+        f"on v0.2)", lic_d == [] and lic_02 == [], str(lic_d[:2]))
+
+ganl = json.loads(real_committed("data/m/gates/G-ANL-F3.json")[1])
+vals = {"the analyzer's sha256": tflags["analyzer_sha256"], "m's package_sha256": ganl["package_sha256"],
+        "the Q-F3 closure sha256": ganl["g_anl_f3"]["f3_closure_sha256"]}
+chk("(4) the analyzer's PIN-V2-12 test, in its own substring form, on the draft: it names the analyzer's, m's package's "
+    "and the Q-F3 closure's sha256 in full", all(v in td for v in vals.values()), "; ".join(f"{k} {v[:16]}..." for k, v in vals.items()))
+
+buf = io.StringIO()
+with mock.patch.object(stages, "committed", with_draft), contextlib.redirect_stdout(buf):
+    rc = drv.run_selftest()
+out = buf.getvalue()
+ST_OUT.write_text(out, encoding="utf-8")
+last = [ln for ln in out.splitlines() if "mf3 selftest checks pass" in ln]
+n_fail = sum(ln.lstrip().startswith("[FAIL]") for ln in out.splitlines())
+chk("(5) the driver's self-test with the draft standing in for the committed lock: exit 0, no FAIL line",
+    rc == 0 and n_fail == 0 and len(last) == 1, f"({last[0].strip() if last else 'no summary line'}; FAIL lines "
+    f"{n_fail}; output {ST_OUT.name})")
+print(f"DRAFT sha256 {sha(DRAFT)}; v0.2 sha256 {sha(lock_v02)}")
+print(f"DRY CHECK {'CLEAR' if all(results) else 'NOT CLEAR'}: {sum(results)}/{len(results)}")
+sys.exit(0 if all(results) else 1)
+
