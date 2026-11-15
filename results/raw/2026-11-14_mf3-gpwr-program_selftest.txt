@@ -1,0 +1,39 @@
+# G-PWR (Q-F3)'s program, its self-test before the commit (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's answers of
+#   2026-11-14, §A.7 and §D item 3, routed by the PI on 2026-11-14). Code stamp: 2026-11-14 (date). Model-free; no
+#   model process; reads no checkpoint, report or session record.
+# HEAD bd8808c5d7adcf25654aa1fc831fe767d7e8448c; scripts/mf3_gpwr.py at sha256
+#   2b575ef813af5079dd80ce0e16b1a14c7e3629dd0574a269135cb2cbe5bed161, then uncommitted and committed unchanged with this
+#   raw; the command: <repo>/jlens-qwen36/.venv/bin/python -I -B -X pycache_prefix=<a path that does not exist> -X utf8
+#   scripts/mf3_gpwr.py --selftest; exit 0. The script's sha256 and HEAD were the same before and after the run.
+# The self-test of record runs again, from the committed blob at the run's HEAD, inside G-PWR (Q-F3)'s run of record,
+#   and is in that run's raw.
+
+PASS  m_gpwr is the load commit's blob, executed as the module m_gpwr with its commit pinned to the load commit
+PASS  m_gpwr's own self-test passes at the load commit, in its own isolated process
+PASS  Q-F0's figures unchanged (m_gpwr.compute here, mf3 loaded, meets m_gpwr's own pins of its reviewed run), and the composition at Q-F0's inputs reproduces m_gpwr's looks, round_degeneracy and guard blocks in every case
+PASS  this process executed valence_core (m and mf3) from the load commit's blobs only
+PASS  the bars of record: bar_problems_f3 is empty (mf3's campaign rows; m_gpwr's guard constants; 10 rounds and 6 lines per session; the domains' arms; m's arithmetic)
+PASS  bar_problems_f3 reports each compared field of each campaign row perturbed, and a missing row
+PASS  the guard's pausing halves from the bars' binding flags: both on Qwen, so the union (m:316)
+PASS  the projection's form: mf3's interleave refuses anything but the six arms in table order; project_arms refuses a stop below 1, a bool or a missing arm; an end on a multiple of 40 adds no look and is flagged once
+PASS  the realised case's rule: 63/8 rounds and 49/12 lines per sham launch; floor(x + 1/2) per cumulative count (157.5 -> 158, 81 2/3 -> 82, 102 3/8 -> 102); the counts non-decreasing
+PASS  the launch rule at r = 29/40 (m:192): the reviewed (floor, ceil(1.15 floor), N90, L) per arm, each L equal to mf3's _n90_exact at its own balance unit
+PASS  power below .85 STOPs at A1 and at A2 (stand-in analyzers at .849); A3 below .85 does not STOP (the screen); exactly .85 does not STOP (m:190's floor is >= .85)
+PASS  k = 0 STOPs (m:192); k outside [0, n_q], or not an int, is refused
+PASS  compute() completes and report() prints
+PASS  the record: the reviewed figures (every printed figure; the exact values by digest), the oracles, the fixed texts and the display rule; a JSON round trip; the stdout rebuilt line by line from the record
+PASS  crit_j at every look of every case, for each bar, equals the mf3 bar's own evaluate(): its crit, firing at crit and silent at crit - 1
+PASS  the guard's regions at every distinct projection look of the three pairs, and at the floor cases' last looks, equal mf3's guard bars' evaluate(): each Fisher cell and the absolute half's critical count
+PASS  the regions check reports a dropped Fisher cell and an absolute crit moved by one (its probe)
+PASS  record_problems reports a perturbed total, L, stop, crit, false pause, realised rounding and rate, pausing figure (label and value), grid maximum, abs crit, joint, gate flag, exact4, hours, count, p0, readings, the cited row, the cap, a realised exact count, the unit's guard figure (display and exact), the joint's and one in the realised case; and an exact value moved below its display (the digest), and the unit's figure likewise
+PASS  line_problems_f3 reports a report with the guard's halves swapped, a joint guard showing another pair's union, a rows label, the hours' basis, a cited row, the looks, the realised rate, a power floor or the unit's guard figure (a case's or the joint's) altered, a case section dropped, or a reading dropped
+PASS  compute's STOP branches: the bars, k = 0, the launch cross-check, a launch row other than m:238's, non-integer units, the look count, the realised case's denominators, the rows' oracles, the citation's total
+PASS  the checks a correct run never fires, each made to fire once: the rows' oracles (an hours cell and a row of m:234-241, m:330's look count) stop compute(); the analyzer's planned floors, its alpha and P, and its cached A1 floors stop power_block_f3(); evaluate_problems reports a crit moved; bar_problems_f3 reports m_gpwr's guard p0 moved
+PASS  the sources: every input's committed text, at its own commit (the seat's raw at cdccc66, the G-F3 entry at 2193832, the rest at the load commit), carries its quotes, each source with its quote count as built; the seat's raw, PROPOSAL-m, F-5's raw and Q7's raw at their sha256s (LOCK-m-F3 and the G-F3 entry by their quotes)
+PASS  the sources check reports a quote the text lacks, a sha256 that differs, and every source read at the load commit (sources_problems); sources_commits_ok refuses the seat's raw recorded at the load commit; sources_shape_ok refuses the sources with one quote dropped
+PASS  the pinned commits are the citations they stand for: cdccc66, and 2193832 as the seat's raw cites the G-F3 entry, are their full shas' prefixes, and the seat's raw and the G-F3 entry each first appear at its pinned commit; the check reports a mistyped abbreviation and the load commit pinned in either's place
+PASS  the int-to-str digit cap is lifted: a figure of 5,001 digits renders (M.fs)
+PASS  each constant bound to its text: a perturbed k, n_q, per-template count, floor (two), balance unit, look cadence, path, alpha, m:190 figure, power floor, bar p0 (two), lexical domain, sham sessions, realised units (two), basis, table row, after-line total, m:330 look count, cited row, cited total, verbatim text (three), pinned sha256 (four) or the G-F3 entry's cited commit refuses the sources (31 cases)
+PASS  no lock in force at G-PWR's step names this program or its record of record (every LOCK*.md at the load commit; a LOCK-m-F3 at v1.0 follows G-PWR and is exempt), and the scan is complete (lock_scan: its names equal the root's LOCK*.md listed apart, the seven known when this program was built among them); the checks report a lock that names either, a scan that drops a lock, and a known lock the root lacks
+PASS  the harness counts a check that raises, stops, or returns a false value, as a FAIL
+selftest: PASS (0 failed)

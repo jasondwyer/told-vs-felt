@@ -21,6 +21,136 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **G-PWR (Q-F3)'s program, committed before its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5;
+  the seat's answers of 2026-11-14, §A.7 and §D item 3, routed by the PI on 2026-11-14, `cdccc66`):
+  `scripts/mf3_gpwr.py` (sha256 `2b575ef8…d161`), a sibling of `scripts/m_gpwr.py` that imports its functions
+  unchanged. Self-test 28/28. A blind review in three rounds, 119 mutant runs, found no wrong figure. The record of
+  the figures is the run of record's, which follows this commit.**
+  - **The routing.** The seat's §D item 3, verbatim: "G-PWR (Q-F3) on r = 29/40, F-5's form; its entry carries
+    §A.5's figures beside its m:205 line, by citation [go]." The PI's word on the seat's answers, relayed by the
+    coordinating session, is "Route as given" (recorded in the close line committed at `cdccc66`). A builder
+    subagent wrote the program from Code's brief; Code read it in full before the review.
+  - **What it computes,** for Q-F3 on the uncached path (LOCK-m-F3 v0.2 §3), from k = 29 of 40 (the seat's §A.2):
+    - m:192's launch rule for each arm at its own floor and balance unit (m:184–186, uncached: A1 80, A1s 32, A2 and
+      A3 144, A2s and A3s 56; units 32 for A1 and A1s, 16 for the rest), cross-checked against mf3's `_n90_exact`;
+      the rows for k = 1–40 against m:234–243 and m:330; the looks, ⌈total/40⌉;
+    - the power at the planned floors by the analyzer's `f3_power_block` (m:190): A1 and A2 gated at .85, and A3,
+      the screen, reported only. A floor not met STOPs the run; the program applies neither m:190's raise nor its
+      grid rule;
+    - Q7's methods carried to Q-F3 by Code's reading: the projection over the six arms under mf3's interleave; Q7
+      (a)'s floor case, at two launch counts, as Code read it at Q-F0; and its realised case, on G-F3's sham counts
+      (189 of 240 task rounds, 98 of 144 reasoning lines);
+    - each binomial bar's exact sequential false pause at its own p0 and α .05, on its own domain (m:330):
+      `round_degeneracy` (p0 .05) and `reasoning_line_defect` (.10) on the three sham arms, and `own_pair_lexical`
+      (.02) on A2s and A3s;
+    - the exclusion guard per contrast arm against its matched sham, at the common rate .20. Both halves bind on
+      Qwen (m:316), so each pair's figure is the union. The Fisher grid and its maxima are figured on the
+      projection. The unit's figure is beside: the chance that some pair's guard pauses, exact because the pairs
+      share no session;
+    - the joint by Code's reading of Q7 (c) (READINGS item 17): each bar's own figure, with the guard's beside. Q7
+      (c)'s literal joint, `round_degeneracy`'s alone, goes to the seat;
+    - the hours at m:230's basis, by Code's reading of the "m:205" of §A.7 and §D item 3 (READINGS item 18; for the
+      seat), with §A.5's six rows beside, verbatim, by citation of the seat's raw.
+    - It sets no cap: that is the PI's, at G-PWR's entry (§D item 4).
+  - **Its form, Code's reading.** The record's READINGS carry the seat's, F-5's and Q7's texts verbatim (items 1–6)
+    and Code's fourteen readings (items 7–20); Q7: "strikable until v1.0's commit; a strike recomputes figures
+    only".
+    - F-5's form. `m_gpwr` is executed from the load commit's blob, and `valence_core` (m and mf3) from that
+      commit's blobs, through `m_gpwr`'s own finder. No attribute of an m or mf3 module is substituted.
+    - `m_gpwr.compute` serves Q-F0's two arms only. So the six-arm projection, the three bars and the three-pair
+      guard are composed from `m_gpwr`'s and mf3's functions, and the self-test asserts that the composition
+      reproduces `m_gpwr`'s own figures at Q-F0's inputs.
+    - Two departures in form; neither moves a value:
+      - `LOOK_EVERY` is read from `valence_core.m.resume`, not from Q-F3's own `valence_core.mf3.resume`, whose
+        import would open a file under `data/` (through `valence_core.m.corr`). mf3's two committed lines that make
+        its `LOOK_EVERY` m's are required verbatim. (`p_gpwr` reads m's too: p has no resume module of its own.)
+      - Q-F0's figures are checked against `m_gpwr`'s own pins of its reviewed run, where G-PWR (p)'s program reads
+        `data/m/gates/Q-F0_G-PWR.json`. The reviewer found that record's figures hash equal to the pin.
+    - The program opens nothing under `data/` but its own record: the run of record writes it there once, through a
+      temporary file beside it, and reads it back for its sha256.
+    - The readings the seat may strike go with the run's entry, in Code's block.
+  - **Its inputs, bound to their texts.**
+    - Every quote of a constant is built from that constant. Every quote, of a constant or of a fixed text, must be
+      verbatim in its committed text at its own commit. So a constant that differs from its text stops the run.
+    - Each pinned commit must be the citation it stands for: its abbreviation's full sha, the commit at which its
+      text first appears.
+    - The texts:
+      - the seat's answers, at `cdccc66` (`6b963adf…0db3a`);
+      - the G-F3 entry, at `2193832`;
+      - PROPOSAL-m (`42ab36ec…6c6b`: m:184–192, m:230–243, m:249, m:285, m:297, m:298, m:316, m:330);
+      - LOCK-m-F3 v0.2 (its path line and its launches line, §3);
+      - F-5 (`4edfbb8e…a42e`) and Q7 (`07cd8e5f…0767`);
+      - mf3's `resume.py` (its two lines that make its `LOOK_EVERY` m's).
+  - **The reviewed figures.** The builder's independent recomputation, on the standard library alone and by
+    algorithms written apart from the program's, gives every printed figure but the unit's guard figure, and the
+    sha256 of its exact values pins them. The unit's guard displays are Code's, by 1 − Π(1 − u) over that
+    recomputation's exact unions.
+  - **The self-test, 28 checks:**
+    - `m_gpwr`'s blob, and its own self-test at the load commit in its own process; Q-F0's figures unchanged, and
+      the composition at Q-F0's inputs; `valence_core` executed from blobs only;
+    - the bars of record (`bars.QF3_BARS`), with a perturbation probe; the pausing halves read from the bars'
+      binding flags;
+    - the projection's form, the realised case's rule, and the launch rule against the reviewed values and mf3's
+      `_n90_exact`;
+    - the STOPs: the power floor at A1 and A2 (not at A3, nor at .85 exactly); k = 0; and nine of compute()'s ten
+      STOP branches, the tenth being the power floor;
+    - the record against the reviewed figures (every printed figure; the exact values by digest); each bar's
+      crit_j against its own `evaluate()`; the guard's regions against mf3's guard bars at 39 (n1, n2) points of
+      the looks; each with a probe;
+    - the bites of the record check and of the report check, and each check a correct run never fires, made to
+      fire once (power_block_f3's other three STOPs among them);
+    - the sources at their own commits, with their quotes, their quote counts and four sha256 pins; each constant
+      bound to its text (31 cases); the pinned commits as citations;
+    - no lock in force names the program or its record, and the lock scan is complete; the digit cap lifted; the
+      harness.
+    - Raw: [`_mf3-gpwr-program_selftest`](results/raw/2026-11-14_mf3-gpwr-program_selftest.txt).
+  - **The blind review.** One reviewer, briefed with the list of record v2 items 1–5 and blind to Code's reasoning
+    in round 1. In rounds 2 and 3 it read Code's dispositions, which follow each report in the raw.
+    - Round 1, 51 mutants, no wrong figure: MINOR-1, the lock scan's completeness unchecked; MINOR-2, the sources'
+      commits unchecked; MINOR-3, checks that no run made fire (eight surviving mutants, and a ninth check found by
+      reading); and eleven NOTEs. Its NOTE 5: the three pairs
+      share no session, so a unit figure for the guard is exact, and the joint's sentence had called them
+      dependent. Code added the unit's figure and rewrote the sentence.
+    - Round 2, 46 mutants (round 1's 13 survivors and 33 new), no wrong figure: MINOR-A, the new checks never made
+      to fire; MINOR-B, the pinned commits untied to their citations; and seven NOTEs.
+    - Round 3, 22 mutants (the eleven round-2 survivors its revision answered, ten gaps and n31, one in two forms;
+      and 10 new): no MAJOR or MINOR finding.
+      Its NOTE 1, the quote-count comparison never made to fail, is applied. That change was not put to a fourth
+      round. Code applied round 3's c10 and round 2's n32 to the committed script with the reviewer's harness, and
+      the self-test failed for each.
+    - Every MAJOR and MINOR finding is applied. The surviving mutants are equivalent or redundant; the raw names
+      each. The NOTEs on Code's readings are not applied, but for round 1's NOTE 5 (the unit's guard figure and the
+      joint's sentence); the readings go to the seat as declared readings.
+    - Its recomputations, on the standard library, each equal to the program's: N90 and L; all 40 rows; the
+      projection's and the floor cases' looks; every bar in every case; the guard's halves and unions; grid points;
+      the power; the hours; and, in round 2, the unit's figures.
+    - Its disclosures are in each report. One departs from its brief: in round 1 its first batch started all of its
+      mutant processes at once, above the brief's six at a time; it stopped them and re-ran the batch six at a
+      time. No model was running. It opened nothing under `data/*/ckpt` or `data/*/reports`; under `data/` it read
+      `data/m/gates/Q-F0_G-PWR.json` alone.
+    - Raw: [`_mf3-gpwr-program_review`](results/raw/2026-11-14_mf3-gpwr-program_review.txt). Each round has four
+      sections: Code's message, the brief, the report and Code's dispositions. Each is verbatim but for local
+      paths, checked by tool against its source.
+  - **The figures in this commit.** They appear as the self-test's oracles (the reviewed figures) and in the review
+    raw. Their record is the run of record's, and none is reported here.
+  - **Values-check:** a blind check of the draft, the script and both raws before the commit: 78 claims, 57
+    CONFIRMED, 13 IMPRECISE (applied), 0 FAIL, 8 NOT CHECKABLE (future acts; Code's read of the program; the review
+    raw's transcript sources; the recomputation's file as the script's output). Its own self-test run gave 28/28.
+    - Two of its fixes also correct the review raw's header, which is Code's text. The raw was rebuilt, and its
+      twelve sections were re-checked by tool against their sources, the transcripts included.
+    - Code's masked scan of the checker's, the reviewer's and the builder's transcripts (counts only): no tool call
+      names a ckpt or reports path, no metadata form names `data/`, and none opens a transcript.
+    - Raw: [`_mf3-gpwr-program_valuescheck`](results/raw/2026-11-14_mf3-gpwr-program_valuescheck.md).
+  - **Next:** the run of record from this commit, by a wrapper:
+    - the launch checks (no `git fsck`: it would read the checkpoint blobs, which list v2 item 2 bars);
+    - the run, writing `data/mf3/gates/Q-F3_G-PWR.json` (write-once);
+    - a second run to scratch, for byte identity, on the same interpreter and settings;
+    - an out-of-process verifier on the standard library alone.
+    - Then its entry, with §A.5's figures beside its hours line (§D item 3's "m:205 line", by READINGS item 18's
+      reading), and Code's block with the readings for the seat. The figures go to the coordinating session, and
+      the track STOPs for the PI's cap (§D item 4).
+  - Committed by path: the script, its three raws and this entry. Nothing ran on a model or a box. Not pushed.
+
 - 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0: `012ffbe`'s drafts with the seat's amendments (A1)–(A3),
   committed as raws, each diff exactly (A1)–(A3); their placement as the locks held by the PI until the seat answers
   item 7 (Code's block, this commit). STOP for the seat's read of item 7.** On the seat's answers of 2026-11-14, §B.2,

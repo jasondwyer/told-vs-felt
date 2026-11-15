@@ -1,0 +1,728 @@
+# G-PWR (Q-F3)'s program, scripts/mf3_gpwr.py: its blind review (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's
+# answers of 2026-11-14, §A.7 and §D item 3, routed by the PI on 2026-11-14). Code stamp: 2026-11-14 (date).
+#
+# One reviewer subagent, briefed with the list of record v2 items 1-5 quoted. It was blind to Code's reasoning in
+# round 1; in rounds 2 and 3 it read Code's dispositions.
+#   - Round 1 read the builder's script at sha256 88acc98a...78dc (1,936 lines): 51 mutants. No MAJOR; MINOR-1 to
+#     MINOR-3 and eleven NOTEs. Code's dispositions follow its report. The script was revised to sha256
+#     24e8c672...74e4 (2,062 lines).
+#   - Round 2, by the same reviewer: its 13 round-1 survivors re-derived and 33 new mutants, 46 in all. No MAJOR;
+#     MINOR-A, MINOR-B and seven NOTEs. The script was revised to sha256 4a03c5ac...f663 (2,152 lines).
+#   - Round 3: the eleven round-2 survivors its revision answered (ten gaps, and n31) re-derived (one in two forms,
+#     12 runs) and 10 new mutants, 22 in all. No MAJOR or MINOR finding; five NOTEs. Its NOTE 1 was applied, which
+#     gives the committed sha256 2b575ef8...d161 (2,160 lines). That change was not put to a fourth round. Code
+#     applied round 3's surviving c10 and round 2's n32 to the committed script with the reviewer's harness, and the
+#     self-test failed for each. The committed script's self-test passes 28/28
+#     (results/raw/2026-11-14_mf3-gpwr-program_selftest.txt).
+#   - No round found a wrong figure. Every MAJOR and MINOR finding is applied. The NOTEs on Code's readings are not
+#     applied, but for round 1's NOTE 5 (the unit's guard figure and the joint's sentence, applied in part); the
+#     readings go to the seat as Code's declared readings (Q7: "strikable until v1.0's commit; a strike recomputes
+#     figures only").
+#
+# Each section below is verbatim except for local paths: <repo> is the repository's root and <scratchpad> is this
+# session's scratch folder, under which the briefs name the reviewer's folder <scratch>. Each round has four sections:
+# Code's message to the reviewer, the brief it points to, the reviewer's report and Code's dispositions. The
+# reviewer's mutants, harness and outputs stayed in <scratchpad> and are not committed. Its disclosures, within each
+# report, name what it ran and read beyond its brief. One departs from the brief: in round 1 its first batch started
+# all of its mutant processes at once, above the brief's six at a time; it stopped them and re-ran the batch six at a
+# time. No model was running. Rounds 2 and 3 throttled from the first batch. It opened nothing under data/*/ckpt or
+# data/*/reports; under data/ it read data/m/gates/Q-F0_G-PWR.json alone, in round 1.
+
+==== ROUND 1: CODE'S MESSAGE TO THE REVIEWER ====
+
+Your full brief is in the file <scratchpad>/gpwrf3/review/brief_review_r1.md. Read it first and follow it exactly: it is the whole task (a blind code review with mutants of the uncommitted script scripts/mf3_gpwr.py in the repo at <repo>). Write only in that brief's scratch folder; never edit the script in place, never run --record, never commit or change git state, open nothing under data/ except the one file the brief permits. Return your report as your final message, in the brief's report format.
+
+==== ROUND 1: THE BRIEF ====
+
+You are a blind code reviewer for a research repo at <repo> = <repo>. Review the new, uncommitted script `scripts/mf3_gpwr.py` (sha256 88acc98acb876a4912b16d5b33f391167e848c7c61ae487aa6e6948237de78dc, 1,936 lines) for correctness bugs, and test its self-test with mutants. Return your report as your final message (text only). You write nothing in the repository and change no git state. Your scratch folder is <scratch> = <scratchpad>/gpwrf3/review (write only there).
+
+## What the script is for
+G-PWR (Q-F3) is a model-free, exact computation for PROPOSAL-m's unit Q-F3 (six arms: contrast A1, A2, A3 and their matched shams A1s, A2s, A3s; the uncached path) on r = 29/40: power at the planned floors, launch counts per arm, the look count, the exact sequential false-pause probabilities of the unit's binomial bars, and the exclusion guard's false-pause figure. It imports `scripts/m_gpwr.py`'s functions unchanged, executing m_gpwr from the HEAD commit's blob (m_gpwr in turn executes `valence_core` from blobs through its own finder). It is a sibling of `scripts/p_gpwr.py` (committed), which applies the same form to other units. The cap on hours is the PI's, never the program's. Its spec, which you should read yourself:
+- The seat's answers `results/raw/2026-11-14_gf3-and-lock-p-v1_design-to-code_answers.md`: §A.1 (line 13), §A.2 (line 15), §A.5 (lines 35–46), §A.7 (line 50), and the routing block's items 3–4 (lines 92–93). The instruction: G-PWR (Q-F3) on r = 29/40 in F-5's form (m:285); its hours line "at m:205's basis as the program has it, with §A.5's figures beside, by citation of this raw".
+- `PROPOSAL-m-gating-campaign-v1_11.md` ("m:NNN" = that line): 184–192 (Q-F3's arms, floors, sizing, the launch rule), 205 (the basis line for Q-F0 and OLMo), 230–243 (Q-F3's uncached basis, its table, the line after it), 249, 285, 297, 298, 316, 330.
+- `results/raw/2026-10-14_m-design-to-code_step15_answers.md` lines 44–51: Q7, G-PWR's methods (written for unit Q-F0, which has one contrast arm A0 and one sham A0s).
+- `results/raw/2026-11-06_ganl-f3_design-to-code_answers.md` line 28: F-5, the sibling-script form ruled for Q-F3.
+- `LOCK-m-F3.md` (v0.2) lines 109 and 129: the uncached path and its table.
+- RESULTS.md's G-F3 entry (from line 795, a few dozen lines): k = 29 of 40; G-F3's realised sham counts.
+- Code: `scripts/m_gpwr.py` (launch_count, looks_for, project, guard_regions, guard_false_pause, guard_block, degeneracy, rec, dec, fs, compute, the provenance helpers, _CHILD_BOOT and its pins); `scripts/p_gpwr.py` (the committed sibling, for comparison of form); `valence_core/mf3/schedule.py` (FLOORS, UNIT_SIZE, N_Q, _n90_exact, interleave), `valence_core/mf3/keys.py`, `valence_core/mf3/bars.py` (QF3_BARS, LEXICAL_SHAM, MAX_ROUNDS, MAX_LINES, evaluate); `valence_core/m/bars.py` (critical_k, seq_false_pause); `valence_core/m/resume.py` (LOOK_EVERY, json_text); `scripts/m_analyze.py`'s f3_power_block (around lines 3336–3420).
+- You may read `data/m/gates/Q-F0_G-PWR.json` (under data/m/gates, which is not a ckpt or reports directory). Open nothing else under `data/`. Do not import `valence_core.mf3.resume` or `valence_core.m.corr`: their import opens a file under data/olmo/, and you need neither.
+
+## How to run it, without writing in the repo
+- Interpreter: `<repo>/jlens-qwen36/.venv/bin/python` (it has numpy, which valence_core imports). Always pass `-I -B -X pycache_prefix=/nonexistent-mf3-gpwr-review -X utf8`.
+- Self-test, from the repo root: `<python> -I -B -X pycache_prefix=/nonexistent-mf3-gpwr-review -X utf8 scripts/mf3_gpwr.py --selftest`. It takes about 4.5 minutes, part of which is m_gpwr's own self-test in a child process.
+- **Never run `--record`.** The run of record is not yours.
+- A dry render of the program's own output (not of record; its provenance step and its child self-test were stood in for, because the script is not committed) is at `<scratch>/../build/v3_run_dry_stdout.txt`. Its last line names a scratch path. Its figures are the program's outputs, to be checked, not oracles. Read nothing else in `<scratch>/..` (its other files are the builder's and Code's workspace; the review is blind to them).
+- Mutants:
+  - Never edit `scripts/mf3_gpwr.py` in place: other sessions share this working tree.
+  - Write each mutant's source under <scratch>.
+  - Run each mutant with a small harness in <scratch>. It reads the mutant's source and builds `mod = types.ModuleType("mf3_gpwr_mut")`. It sets `mod.__file__` to the REAL path `<repo>/scripts/mf3_gpwr.py`, so the script's REPO resolves to the repo. It execs the compiled source in `mod.__dict__`, then calls `mod.selftest(mod.M._analyzer())` and exits with its return value.
+  - A mutant is killed if the self-test returns non-zero or any check prints FAIL.
+  - To save time you may stub `mod._m_selftest = lambda: (True, "")` after the exec, since that check tests m's code, not this script's. Say so in your report.
+  - Use a fresh process per mutant: the module installs a meta-path finder.
+  - Run at most 6 mutants at a time, each under `nice -n 10`. No model is running on this machine; keep it that way.
+
+## What to do
+1. Read the script in full, and the spec texts above.
+2. Find correctness bugs. Check whether each computation matches the spec and m's methods:
+   - the launch rule per arm at its own floor and balance unit; the rows by k against m:234–243; the looks against m:330;
+   - the power at the planned floors: which floors on the uncached path, f3_power_block's arguments, which arms are gated at .85 and at which P and α (m:184–190);
+   - the projection: six arms interleaved by mf3's campaign rule; looks every 40 launches and at the end;
+   - each bar's domain, units per launch, p0 and α (m:297, m:330; mf3's bars.QF3_BARS);
+   - Q7 (a)'s cases as carried to Q-F3: the sham arms at their floors; the realised case on G-F3's counts, and its rounding;
+   - the guard per contrast arm against its matched sham, its pausing halves on Qwen (m:316), the grid and maxima;
+   - the joint (Q7 (c));
+   - the hours: which basis line serves Q-F3, and m:238's column; §A.5's rows beside;
+   - the sources check (each quote verbatim at its commit; the sha256 pins), the record checks, the display rule, the report and its second rendering;
+   - compute()'s and power_block_f3()'s STOP branches;
+   - the provenance and run-of-record logic in provenance_f3() and _main(). You cannot run these, so review them by reading.
+   Recompute some figures independently with your own code on the standard library: for example N90 for an arm at r = 29/40 by your own exact binomial, one bar's sequential false pause by your own DP, the absolute half of one guard, and A1's power at (80, 32).
+   Judge the READINGS: is each a faithful reading of its text? Where the spec leaves a choice, name the alternatives as a NOTE; do not decide them.
+3. Mutation test: about 40–48 mutants, each a plausible single defect, across:
+   - the constants (K, N_Q, the floors, the balance units, REALISED, SHAM_QUAL, PER_SESSION, BASIS_S, POWER_SPEC, POWER_GATED);
+   - project_arms; case_units and half_up;
+   - the bars' domains and p0s;
+   - the guard's pairing and its halves;
+   - power_block_f3;
+   - compute's STOP branches;
+   - record_problems, evaluate_problems, region_problems_f3;
+   - the report and _rebuilt_lines;
+   - build_sources' quotes; lock_problems.
+   Report which survive, and for each survivor whether it is equivalent or a real gap.
+4. Grade each finding MAJOR (a wrong figure, a check that cannot fire, or a spec departure), MINOR, or NOTE, with a concrete failure scenario and a fix.
+
+## Rules that bind you (the list of record v2, items 1–5, verbatim)
+1. "**Permitted (names, ids, digests):** a bare `git status --porcelain`; a name-only `ls` (no `-l`, `-t`, `-s`, `-la`); `git ls-files`; `git ls-tree --name-only`; `git diff --name-status` and `--name-only`; `git show --name-only` and `--name-status`; `git log --name-only`; `git log` with `--format` of ids, subjects and commit times over any path; `shasum`/`sha256sum` and any program's digest that prints no byte, size or time; `git rev-parse <rev>:<path>` compared in the shell; `git check-attr`; a `find` that prunes every `*/ckpt` and `*/reports` directory (`find … \( -path '*/ckpt' -o -path '*/reports' \) -prune -o … -print`)."
+2. "**Content.** Files under `data/*/ckpt` (the checkpoints and call logs) are read by nothing but the stage's own code, G-VER, the analyzer and the pre-push screen of item 4: no `cat`, `head`, `tail`, `json.load`, editor or search over them. Files under `data/*/reports` are the read domain (m:271; the stage writes them redacted) and may be read for their content by Code and by the seat — for a stage entry's figures, a declared counter, or a read — with nothing from them printed into a raw beyond what the entry's form reports. **Metadata:** no size or time of either directory or any file in them, in any form (`--stat`, `--numstat`, `ls -l/-t/-s/-la`, `du`, `wc -c`, `stat`, `git ls-tree -l`, `git cat-file -s`, any unpruned `find`, `mdfind` over them)."
+3. "**Content searches** over a checkout or a tree — `git grep`, recursive `grep`, `rg`, `mdfind -onlyin`, and the pickaxe (`git log -S` / `-G`) over any range — exclude the checkpoint and report files with a form tested on this git: `-- . ':!data/*/ckpt/**' ':!data/*/reports/**'` (equivalently `':(exclude,glob)data/*/ckpt/**' ':(exclude,glob)data/*/reports/**'`, or `':!data/**'` where nothing under `data/` is wanted), or the prune for `find`-driven greps. The bare `':!data/*/ckpt'` form is not an exclusion on git 2.39.5 and is not used. A pickaxe search without the pathspec can name a commit whose checkpoint matched, which is content; it is a departure."
+4. "**The pre-push screen** may read every file in the range, `ckpt` and `reports` included, and prints only a per-class verdict, range totals, and one line per distinct match outside those directories; a match inside one is a count by path class and a halt for the seat."
+5. "**A running stage:** the end-wait is on the PID alone (O3-1); no `stat`, listing, `tail`, `Monitor` or read of its raw, checkpoint or reports until the invocation has ended — in every session, including the coordinating one."
+
+Also:
+- Open nothing under data/*/ckpt or data/*/reports; you need neither. A whole-tree `git status` is permitted by item 1 but you do not need it: use pathspecs.
+- Use /usr/bin/grep (the default grep is ugrep).
+- Run no model. Write only in your scratch folder.
+- Put no clock time or timestamp in your report.
+
+## Report format
+- Findings, graded MAJOR, MINOR or NOTE, each with its scenario and fix.
+- The mutants: a table with id, the change, killed/survived and by which check, and for each survivor equivalent or gap.
+- Your independent recomputations.
+- Disclosures: anything you ran or read beyond this brief.
+
+==== ROUND 1: THE REVIEWER'S REPORT ====
+
+## Blind review of `scripts/mf3_gpwr.py` (uncommitted; sha256 88acc98a…de78dc, 1,936 lines)
+
+**Bottom line.** I found no MAJOR finding. Every figure I recomputed on the standard library matches what the program prints and its REVIEWED_* literals. The self-test as given passes: 25 PASS, 0 FAIL, exit 0, with m_gpwr's real child self-test.
+
+I ran 51 mutants: 38 were killed and 13 survived.
+- **3 survivors are equivalent.**
+- **8 survivors turn off checks that can fire but that nothing in the self-test makes fire.** A literal elsewhere still pins every figure, so no wrong figure gets through.
+- **2 survivors are real gaps** (MINOR-1 and MINOR-2 below).
+
+My harness stubbed `mod._m_selftest = lambda: (True, "")`, as the brief allows. With that stub, the unmutated baseline also passes 25/25.
+
+### Findings
+
+**MAJOR: none.**
+
+**MINOR-1: the lock scan's completeness is never asserted (mutant m64 survives).**
+- *What the self-test checks:* `locks_ok` only asserts that `LOCK-m-F3.md` and `LOCK-m-F0.md` are among the texts `lock_texts` returns.
+- *Scenario:* someone narrows `lock_texts`'s filter, for example m64's `startswith("LOCK-m")`. Then LOCK-g, LOCK-h and the three LOCK-p-OLMo-* files are never read, out of seven root locks at bd8808c. The self-test still passes. Both the self-test's "no lock names this program or its record" check and `_main`'s "the record's path is a file a lock names" refusal would silently skip five locks.
+- *Fix:* in `locks_ok`, assert that the scanned set equals the root's `LOCK*.md` list taken by separate code (`git ls-tree --name-only <load commit>`), or pin the seven names.
+
+**MINOR-2: the sources' commits are never asserted (mutant m65 survives).**
+- *Scenario:* `sources_record` reads every text at the load commit instead of cdccc66 or 2193832, and the self-test still passes. The seat's raw has the same bytes at HEAD (its sha256 is pinned), and HEAD's RESULTS.md still holds the G-F3 entry's quotes. The run's SOURCES block and the record would then cite HEAD as the commit of both texts, and the entry's quotes would be checked against the current RESULTS.md rather than at its commit.
+- *Fix:* assert each recorded commit: `_LOAD_COMMIT` for "LOAD", `_commit_of(rev)` otherwise, with the latter starting `cdccc66` and `2193832` respectively.
+
+**MINOR-3: checks that can fire but are never made to (survivors m39, m40, m48, m50, m53, m67, m71, m72).** The affected checks:
+- in `power_block_f3`, the STOPs comparing the analyzer's alpha/P with m:190, its planned floors with mf3's floors, and its cached-A1 floors (the last one by reading only);
+- `evaluate_problems` as a whole;
+- in `rows_problems`, the comparisons with m:234–241's rows, their hours column at m:230's basis, and m:330's look counts;
+- `record_problems`' comparison of the realised n_j with their half-up rounding;
+- `bar_problems_f3`'s comparison of mf3's guard constants with m_gpwr's.
+
+None of these lets a wrong figure through today, because the REVIEWED_* and inputs literals back each one. But READINGS item 9 says the rows are "checked against m:234-241's rows (the hours column ... included) ... and m:330's uncached list". With m53 or m71 the self-test still passes, and the agreement between REVIEWED_ROWS and the proposal's table outside k 29–28 then rests on nothing. *Fix:* add one probe per check:
+- `_with("TABLE_ROWS", {**TABLE_ROWS, range(35, 41): (96, 64, 176, 80, 672, 17, "121–133")})` must STOP with "the rows by k differ"; so must a variant with a row value changed, and `M330_LOOKS` with `(18, (672,))`;
+- stand-in analyzers with planned n or mS altered, alpha or P altered, or the cached-A1 floors altered must each STOP;
+- `evaluate_problems` must report on a record with one crit_j moved;
+- `bar_problems_f3` must report under a stand-in M with `GUARD_ABS_P0 = 3/20`.
+
+### NOTEs: readings with alternatives, for the seat (not decided here)
+
+1. **The hours basis (READINGS item 18).** §A.7 says "m:205's basis", and routing item 3 says "its m:205 line". m:205 holds Q-F0's uncached Qwen basis (488 s per session) and OLMo's, with no Q-F3 figure. The program uses m:230 instead: 641.6–713.6 s gives 148.28–164.92 h, which equals m:238's column and §A.5's last row, and it labels the line "HOURS at m:230's basis". The alternatives:
+   - (a) m:230, as built;
+   - (b) m:205 literally: 832 × 488 s = 112.78 h, shown as 113 h;
+   - (c) no line of its own, with §A.5's table as the hours.
+
+   The seat should confirm before the PI sets the cap.
+2. **The realised case pools all three sham templates (READINGS item 13).** The program applies 63/8 rounds and 49/12 lines to every sham launch, own_pair_lexical included. Over 8 sessions each, §A.1 gives A1s 52, A2s 57 and A3s 80 rounds, and 25, 25 and 48 lines. The lexical domain alone realised 137/16 rounds per session, not 63/8. With per-template rates, half-up as built, the end n are 2,060 / 1,076 / 1,644 and the false pauses .1642 / .1570 / .1527, against the program's .1553 / .1601 / .1333.
+3. **The realised case's rounding (READINGS item 14).** Half-up per cumulative count is one choice. Floor, or a fractional-n mixture, are alternatives; the effect is small.
+4. **The floor cases (READINGS item 12).** All three sham arms leave together, at ceil(floor/r) with the pooled r (45/78/78) and at the floors themselves (32/56/56). The alternatives are one sham arm at a time, or G-F3's per-template validity (A1s 4/8, A2s 4/8, A3s 8/8). Under the latter A1s leaves at 64, which is its L, A2s never leaves before its L of 96 (it would need 112), and A3s leaves at 56.
+5. **The joint (READINGS item 16).** Q7 (c)'s literal joint is round_degeneracy's own figure; the program gives each bar's own. The three guards run on disjoint sessions, so under the common null rate their unit-level union is exactly 1 − Π(1 − u). From the printed unions (.2094, .2401, .2327) that is about .539. JOINT_SENTENCE's dependence argument does not hold among the guards themselves. The bars do share sessions, so their joint lies between .1703 and the Bonferroni sum .4928.
+6. **A1 at 80/32 rather than F-5's literal "A1 96/32" (READINGS item 7).** This reading is justified by LOCK-m-F3 v0.2 §3 ("path = uncached") and m:184 ("96 cached, 80 uncached"). The program prints .916 at 96/32 beside the line and uses it nowhere.
+7. **m:190's raise and the grid rule are not applied.** The program STOPs and escalates instead, a choice inherited from Q-F0 and moot here (A1 .878, A2 .862). The grid minimum itself is not re-derived. I confirmed that (144, 48) gives .848 and fails.
+8. **A robustness limit, found through m27.** The exact figures are Fractions whose numerator and denominator each run to about 3,330 digits at k = 29 (round_degeneracy), and about 3,806 at k = 24 (own_pair_lexical). Python's default int↔str limit is 4,300 digits, and `-I` ignores `PYTHONINTMAXSTRDIGITS`. A change of domain or p0 crosses it: m27, the lexical bar over all three sham arms, reaches 4,349 digits and fails with a ValueError traceback, not a stated STOP. Today's domain fits, because k < 24 STOPs first. To remove the hazard, call `sys.set_int_max_str_digits(0)` or refuse with a stated message.
+9. **The mf3 resume quote is narrower than its claim.** It binds only `LOOK_EVERY = m_resume.LOOK_EVERY`, not the import line `from valence_core.m import resume as m_resume`; adding the import line as a second quote would close that.
+10. **Coverage of some checks.** `regions_ok` covers 39 points: the projection's distinct looks plus each floor case's last look. The floor cases' intermediate looks rest only on the reviewed cell counts. In `record_ok`, `so.splitlines() == reference_report(back)` is true by construction; the real check is the second rendering.
+11. **Small text and robustness points.** `compute()`'s docstring lists "the look count" before "the realised case's denominators", but the code checks the denominators first. The abbreviated revisions cdccc66 and 2193832 are resolved at run time; if one ever became ambiguous the run would refuse, which is safe. Pinning full shas would avoid it.
+
+**Provenance and run of record (reviewed by reading only).** I found no defect. The logic mirrors `p_gpwr`'s `_main`, with mf3's file set and package sha256 bound in addition. I followed it in order:
+- the write-once, writable-directory and name-length refusals;
+- the lock refusal, checked against all locks and before provenance;
+- the `-I` and pycache checks;
+- `provenance_f3`, which binds the script via the closure, m_gpwr (the executed blob must equal the load commit's), the analyzer, `valence_core/m/*.py` and `valence_core/mf3/*.py` (working tree equal to blob, file sets equal), the loaded closure, the `valence_core/` tree, sys.path and PYTHONPATH, and checks both package sha256s against disk;
+- the sources;
+- the self-test of record, running the committed blob at the load commit in its own process;
+- `record_problems`;
+- the late checks: closure, blobs executed, modules from the tree, HEAD moved, sys.path, and the stdout against the second rendering.
+
+### Mutants
+
+Check labels below are short forms of the self-test check names: power-stops ("power below .85 STOPs"), stop-probe ("compute's STOP branches"), record-bites ("record_problems reports a perturbed…"), report-bites ("line_problems_f3 reports…"), k0 ("k = 0 STOPs"), compute ("compute() completes…", meaning compute STOPped or raised). The others match the start of their check names.
+
+| id | change | result: killed by / survivor class |
+|---|---|---|
+| m01 | K 29→28 | killed: launch-rule, record, stop-probe, sources |
+| m04 | FLOOR reads A1's cached floor | killed: launch-rule, power-stops, compute |
+| m05 | balance unit 16 for every arm | killed: compute (rows-oracle STOP) |
+| m07 | A2 alpha .01→.05 | killed: power-stops, compute, sources |
+| m08 | POWER_GATED drops A1 | killed: power-stops, record |
+| m09 | POWER_GATED adds A3 | killed: power-stops, record |
+| m10 | REALISED lines 98→89 | killed: realised-rule, record, sources |
+| m11 | SHAM_QUAL 24→16 | killed: compute (denominators STOP), sources |
+| m13 | BASIS_S 3568/5→3586/5 | killed: compute (hours-column STOP), sources |
+| m14 | power gate `<`→`<=` | killed: power-stops |
+| m16 | project_arms always adds an end look | killed: qf0-composition, projection-form, record |
+| m18 | project_arms accepts a stop of 0 | killed: projection-form |
+| m20 | half_up rounds ties down | killed: realised-rule, record |
+| m21 | realised counts truncated | killed: realised-rule, record |
+| m23 | realised lines rate ×10 per session | killed: record |
+| m24 | floor case at floor(floor/r) | killed: record |
+| m25 | floor_min stop overridden by L | killed: record, regions |
+| m26 | BAR_ROWS lexical p0 .02→.05 | killed: bars-of-record, k0, compute, sources |
+| m27 | lexical domain = all three shams | killed: compute (ValueError, int-str limit), sources |
+| m29 | seq_false_pause at alpha = p0 | killed: record |
+| m30 | critical_k with p0 and alpha swapped | killed: record, evaluate |
+| m32 | guard roles swapped | killed: qf0-composition, record, report-bites |
+| m33 | pairs mis-matched (A1–A3s) | killed: record, regions, report-bites |
+| m34 | pausing figure "fisher" when both halves bind | killed: qf0-composition, halves, record, report-bites |
+| m35 | halves ignore the abs binding flag | killed: halves |
+| m37 | power split fl//2+1 | **survived: equivalent** (the analyzer re-splits n0+n1) |
+| m39 | alpha/P STOP removed | **survived: unprobed, redundant** (MINOR-3) |
+| m40 | planned-floors STOP removed | **survived: unprobed, redundant** (MINOR-3) |
+| m42 | k = 0 STOP removed | killed: k0, stop-probe |
+| m43 | citation-total STOP removed | killed: stop-probe |
+| m45 | realised-denominators STOP removed | killed: stop-probe |
+| m46 | launch cross-check removed | killed: stop-probe |
+| m47 | digest check removed | killed: record-bites |
+| m48 | realised n_j vs half-up comparison removed | **survived: redundant** (reviewed n_j literal) |
+| m50 | evaluate_problems returns [] | **survived: unprobed, redundant** (MINOR-3) |
+| m51 | regions abs-crit comparison removed | killed: region-probe |
+| m52 | pausing-figure check removed | killed: record-bites |
+| m53 | rows hours-column comparison removed | **survived: unprobed oracle** (MINOR-3) |
+| m55 | report: abs shows the union | killed: record (line check), report-bites |
+| m57 | report: row groups update the wrong end | killed: record, report-bites |
+| m59 | line check: length comparison removed | killed: report-bites |
+| m60 | SHAM_QUAL quote unbound | killed: bound-constants |
+| m62 | one LOOK_EVERY quote unbound | **survived: equivalent** (m:330's cadence quote still binds) |
+| m63 | every LOCK-m-F3 exempt | killed: locks |
+| m64 | only LOCK-m* scanned | **survived: real gap** (MINOR-1) |
+| m65 | every source read at the load commit | **survived: real gap** (MINOR-2) |
+| m67 | guard-constants check removed | **survived: redundant** (inputs and at_common_rate literals) |
+| m70 | same_row over the contrast arms only | **survived: equivalent** at k = 29 |
+| m71 | m:234–241 row comparison removed | **survived: unprobed oracle** (MINOR-3) |
+| m72 | m:330 look comparison removed | **survived: unprobed oracle** (MINOR-3) |
+| m73 | second rendering: abs/Fisher swapped | killed: record (line check) |
+
+### Independent recomputations (standard library only, written apart from the program)
+
+All of the following agree with the program and its literals:
+- **N90 and L at r = 29/40,** by binary search on exact lower tails: A1 (80, 92, 119, 128); A1s (32, 37, 50, 64); A2 = A3 (144, 166, 210, 224); A2s = A3s (56, 65, 84, 96). Total 832, 21 looks.
+- **All 40 rows by k** equal REVIEWED_ROWS. That includes m:234–241, m:243's 992 / 1,088 / 1,152 / 1,184 / 23,328, m:330's look counts, and all eight hours-column cells (120–133 through 171–190).
+- **The projection,** by an explicit rotation: its 21 looks equal `_PROJ_LOOKS`, and the floor cases' 20 and 18 looks equal their literals.
+- **The bars,** by my own integer DP with critical counts from descending upper tails; every n_j and crit_j list matches:
+  - projection .1703 / .1584 / .1641;
+  - floor_r .1547 / .1441 / .1482;
+  - floor_min .1370 / .1225 / .1354;
+  - realised .1553 / .1601 / .1333.
+- **The guard's absolute half,** with crit lists equal:
+  - projection: A1 .1599, A2 .1781, A3 .1682;
+  - floor_r: .1595 / .1774 / .1699;
+  - floor_min: .1539 / .1746 / .1613.
+- **The Fisher half and the union,** by a 2-D DP with Fisher sets from cumulative hypergeometric tails:
+  - projection: A1 .1070 / .2094, A2 .1320 / .2401, A3 .1322 / .2327, with Fisher cell counts per look equal for all three pairs;
+  - A1 floor_r .0957 / .2050, A1 floor_min .0802 / .1925.
+- **Grid points:** A1 at 11/20 and 27/50 gives .1179; A2 at 31/50 gives .1440 and at 1/2 gives .1410; A3 at 14/25 gives .1486 and at 1/100 gives .0033.
+- **Power,** by direct enumeration of (i)–(iii): A1 (80, 32) .878 (.8784); A1 (96, 32) .916 (.9161); A2 (144, 56) .862 (.8620); A3 (144, 56) at alpha .05 .927 (.9273); (144, 48) .848 (.8476).
+- **Hours:** 832 × 641.6 / 3600 = 148.28 h and 832 × 713.6 / 3600 = 164.92 h, giving 148–165 h.
+- **The Q-F0 oracle:** the figures hash of `data/m/gates/Q-F0_G-PWR.json` equals m_gpwr's pin a5aaea47…, so the composition check's oracle is the committed record.
+- **§A.5's table, arithmetic only:** 300.1, 325.7, 446.4, 684.7 and 305.0 h, and the laptop-day column, are internally consistent.
+
+### Disclosures
+
+- **Self-test run:** I ran the self-test once as given, from the repo root, with TMPDIR set to `<scratch>/tmp`. Nothing was left there.
+- **Audit hook:** my harness adds a Python audit hook that refuses any open under the repo's `data/`. No run tripped it, so the in-process self-test opens nothing under `data/`.
+- **Throttle failure:** my first batch script's throttle did not work in non-interactive zsh, and all 50 mutant processes started at once, breaking the six-at-a-time limit. I killed them (pkill of my own harness processes) shortly after, then re-ran under `xargs -P 6`. None of the aborted output is used. An `rm` of the aborted outputs was refused by the tool's safety check, so the re-run overwrote them instead.
+- **Extra processes:** up to three standard-library recompute processes ran alongside the six mutants at times.
+- **Reads beyond the listed lines:**
+  - the seat's raw in full;
+  - PROPOSAL-m lines 180–252, 271, 318 and 361;
+  - RESULTS.md lines 795–880;
+  - LOCK-m-F3's first line plus lines 109–112 and 129–131;
+  - the first lines of LOCK-m-F0 and LOCK-p-OLMo-sft;
+  - a count of "mf3_gpwr|Q-F3_G-PWR" in the seven root locks (0 each);
+  - the analyzer's `power_exact`, `power_block`, `arm_outcome` and `p_up`;
+  - m's `schedule._rotation` and its `Bar` class;
+  - the import lines of several valence_core modules, including `mf3/resume.py` and `m/corr.py` (read, not imported);
+  - parts of `p_gpwr`.
+- **Under `data/`:** only `data/m/gates/Q-F0_G-PWR.json`, loaded and hashed.
+- **Git and system commands:** `git status --porcelain -- <paths>`, once with `--ignored`, which listed `__pycache__` directories by name; a `find -newer <brief>` over them showed nothing written during the review. Also `git ls-files --error-unmatch`, `git log -1 --format`, `git ls-tree --name-only HEAD`, shasum, and pgrep/ps to confirm no model was running.
+- **Repo state:** nothing was written in the repo and no git state changed. The script's sha256 was unchanged at the end.
+
+Scratch files are in `<scratchpad>/gpwrf3/review/`:
+- `harness.py`, `make_mutants.py`, `make_m73.py`
+- `mutants/m*.py`
+- `recompute.py`, `qf0_pin.py`, `digits.py`, `cmp_rows.py`
+- `out/` (every run's output)
+
+==== ROUND 1: CODE'S DISPOSITIONS ====
+
+## Code's dispositions of round 1 (applied to the script before its commit)
+
+The script was revised from sha256 88acc98a...78dc (1,936 lines) to the revision put to round 2. Every MINOR finding is
+applied; of the NOTEs, 5, 8, 9 and 11 are applied and the rest are carried to the seat as Code's declared readings
+(Q7: "strikable until v1.0's commit; a strike recomputes figures only"), unchanged here.
+
+**MAJOR: none.** No figure changes.
+
+**MINOR-1, the lock scan's completeness: applied.** `locks_ok` lists the root's names apart (`git ls-tree -z
+--name-only` at the load commit, matched by `fnmatch` against "LOCK*.md") and requires the scan's names to equal that
+list. It also requires the seven locks at the root when the program was built (`KNOWN_LOCKS`: LOCK-g, LOCK-h,
+LOCK-m-F0, LOCK-m-F3 and the three LOCK-p-OLMo-*) to be among them; a lock is re-issued in place, never removed. A
+narrowed filter (m64) now fails the check. In the run of record `_main`'s lock refusal runs before the child
+self-test, so a narrowed filter would pass that refusal and then stop the run at the self-test, before compute().
+
+**MINOR-2, the sources' commits: applied.** The two revisions that are not the load commit are pinned in full
+(`SEAT_COMMIT_FULL` cdccc664b1db0ebe8a89dcefdfa4cfe79fc57754, `GF3_COMMIT_FULL`
+21938326c8c0d23740390ee6a5ad42d941a60803). `sources_commits_ok` requires the recorded commits to be those two and the
+load commit for the other five. The self-test's sources check requires it, and `_main` refuses the run without it.
+This also answers NOTE 11's abbreviated revisions.
+
+**MINOR-3, the checks a correct run never fires: applied.** A new self-test check, `_unexercised_probes`, makes each
+fire once:
+- the rows' oracles: `TABLE_ROWS` with an hours cell moved (40–35's "121–133") and with a row's launches moved
+  (34–32's A2 208), and `M330_LOOKS` with 672 launches at 18 looks, must each stop compute() with "the rows by k
+  differ" (m53, m71, m72);
+- `power_block_f3`: stand-in analyzers with A2's planned n moved, A1's alpha moved, and the cached A1 floors moved
+  must each stop it with its own message (m40, m39, and the cached-floor STOP read by the reviewer);
+- `evaluate_problems` must report a record with one crit_j moved (m50);
+- `bar_problems_f3` must report under a stand-in of the module's M with `GUARD_ABS_P0` 3/20 (m67).
+`record_check_bites` adds a realised `n_j_exact` perturbation (m48). `_MProxy` now stands in any attribute its stub
+carries; the region probe's stub is unchanged in effect.
+
+**NOTE 5, the joint and the guard's figure for the unit: applied in part.**
+- The record carries the unit's guard figure in each case with guards: the probability that some pair's guard
+  pauses, 1 − (1 − u_A1)(1 − u_A2)(1 − u_A3) over the pairs' unions. It is exact under Q7 (b)'s model because the
+  three pairs share no session. READINGS item 16 reads it as m:285's "the exclusion guard's false-pause figure" for a
+  unit whose guard runs per contrast arm, each pair's own figure beside.
+- The joint carries it beside the pairs' unions. The joint figure stays each bar's own (READINGS item 17, Code's
+  reading). The literal alternative (`round_degeneracy`'s alone, Q7 (c)) goes to the seat.
+- `JOINT_SENTENCE` no longer says the six figures are all dependent. The joint over the three bars, and over the bars
+  and the guard, is not computed, and the sentence says why; the pairs' figures combine exactly into the unit's.
+- The reviewed displays of the unit's figure (projection .5390, sham_at_floor_r .5318, sham_at_floor_min .5105) are
+  Code's, on the standard library, from the independent recomputation's exact unions. The record check requires the
+  figure's exact value to equal the rule over the record's own unions, which the exact digest pins.
+- The report prints it per case and in the JOINT line, in both renderings; `record_check_bites` and
+  `report_check_bites` alter it.
+
+**NOTE 8, the int-to-str digit cap: applied.** The program lifts the cap at its start
+(`sys.set_int_max_str_digits(0)`), so a struck reading's larger figures are computed rather than ending in a
+traceback. No value changes.
+
+**NOTE 9, the resume quote: applied.** The import line "from valence_core.m import resume as m_resume" is now a
+second required quote of valence_core/mf3/resume.py, and READINGS item 20 names both lines.
+
+**NOTE 11, the docstring's order: applied.** compute()'s docstring lists the realised case's denominators before the
+look count, as the code checks them.
+
+**NOTEs 1, 2, 3, 4, 6 and 7: no change; carried to the seat as declared readings.**
+- NOTE 1, the hours basis (READINGS item 18): m:230 as built. The alternatives the reviewer names are m:205 literally
+  (832 × 488 s = 112.78 h) and §A.5's table alone.
+- NOTE 2, the realised case pooled over the three sham templates (READINGS item 14). The reviewer's per-template
+  figures (end n 2,060 / 1,076 / 1,644; .1642 / .1570 / .1527) are the reviewer's, not of record.
+- NOTE 3, the rounding (READINGS item 15): half up per cumulative count.
+- NOTE 4, the floor cases (READINGS item 13): the three sham arms leave together at the pooled r; the alternatives
+  are one arm at a time, or G-F3's per-template validity.
+- NOTE 6, A1 at 80/32 (READINGS item 8).
+- NOTE 7, m:190's raise is not applied (READINGS item 9); moot at .878 and .862.
+
+**NOTE 10, coverage: no change.** The floor cases' intermediate looks rest on the reviewed cell counts. The clause
+`so.splitlines() == reference_report(back)` is true by construction and stays; the second rendering is the check.
+
+**The reviewer's disclosures** are recorded with its report. One departs from its brief: its first batch started all
+of its 50 mutant processes at once, above the brief's six at a time; it killed them and re-ran the batch at six at a
+time. No model was running, and none of the aborted output is used.
+
+==== ROUND 2: CODE'S MESSAGE TO THE REVIEWER ====
+
+Round 2 of your review of scripts/mf3_gpwr.py: the script is revised (sha256 24e8c672df647413f9c5ad0beb8bfef4494423250b27642b1efe26f1f89074e4), and your round-2 brief is <scratchpad>/gpwrf3/review/brief_review_r2.md. Read it, and Code's dispositions of your round-1 report beside it (dispositions_r1.md in the same folder), then do exactly what it says: re-derive your 13 survivors, add 20-30 mutants on the new code, review the new code, and report in round 1's format as your final message. Round 1's rules all still hold (the list of record v2 items 1-5; never --record; never edit the script in place; write only in your scratch folder; nothing under data/ but data/m/gates/Q-F0_G-PWR.json). At most 6 mutant processes at a time, under nice -n 10, throttled with xargs -P 6 from the first batch.
+
+==== ROUND 2: THE BRIEF ====
+
+Round 2 of your review of `scripts/mf3_gpwr.py` (repo <repo> = <repo>; your scratch <scratch> = this folder, <scratchpad>/gpwrf3/review).
+
+The script is revised: sha256 24e8c672df647413f9c5ad0beb8bfef4494423250b27642b1efe26f1f89074e4 (it was 88acc98a...78dc in round 1). Code's dispositions of your round-1 report are in <scratch>/dispositions_r1.md: read them first. Code's own run of the revised self-test, real m_gpwr child included, passed 26/26 (the 25 checks of round 1 and one new one).
+
+## What to do
+1. **Re-derive your 13 round-1 survivors** against the revision (m37, m39, m40, m48, m50, m53, m62, m64, m65, m67, m70, m71, m72): re-apply each defect to the revised code and report killed or survived, and by which check. An equivalent mutant may stay equivalent; say so.
+2. **New mutants, about 20–30, on the new and changed code:**
+   - `guard_unit` (the rule, the product over the three pairs, which figure per pair it multiplies) and where compute() places it; its check in `record_problems`, including the realised case's exclusion of it; the joint's `guard_unit_beside`;
+   - the new report lines, in both `reference_report` and `_rebuilt_lines`;
+   - `sources_commits_ok` and its two uses (the self-test's sources check; `_main`, by reading);
+   - `locks_ok`'s separate enumeration and `KNOWN_LOCKS`;
+   - `_unexercised_probes`, each of its probes; `_AnalyzerStandIn`; `_MProxy`'s generalization (the region probe must still bite);
+   - the new entries of `record_check_bites` and `report_check_bites`;
+   - the int-to-str digit lift; the resume import-line quote in `build_sources`.
+3. **Review the new code for correctness.** In particular, judge:
+   - the unit's guard figure's reading (READINGS item 16: m:285's "the exclusion guard's false-pause figure" for a unit whose guard runs per contrast arm);
+   - its exactness claim (the three pairs share no session under Q7 (b)'s model);
+   - the reviewed displays .5390 / .5318 / .5105, which you can recompute from your own unions;
+   - the rewritten `JOINT_SENTENCE` and READINGS items 16, 17 and 20: is each claim true, and is each quote verbatim in its source?
+4. **Report** in round 1's format: findings graded MAJOR, MINOR or NOTE with scenario and fix; the mutant table (round-1 survivors re-derived, then the new ones); your recomputations; disclosures.
+
+## How to run, and the rules
+Everything in your round-1 brief (<scratch>/brief_review_r1.md) still holds: the same interpreter and flags, your harness, a fresh process per mutant, never `--record`, never an edit of the script in place, and the list of record v2 items 1–5 verbatim as that brief quotes them. You may again stub `_m_selftest`.
+
+**At most 6 mutant processes at a time, each under `nice -n 10`.** Throttle with `xargs -P 6` from the first batch; round 1's first batch started all at once. No model is running on this machine; keep it that way. Open nothing under data/ except data/m/gates/Q-F0_G-PWR.json. Write only in <scratch>. No clock time or timestamp in your report.
+
+==== ROUND 2: THE REVIEWER'S REPORT ====
+
+## Round 2: blind review of `scripts/mf3_gpwr.py` (revised, uncommitted; sha256 24e8c672…74e4, 2,062 lines)
+
+**Bottom line.** I found no MAJOR finding. I ran the revised self-test as given, with m_gpwr's real child self-test: 26 PASS, exit 0, which matches Code's run. My harness baseline, with `_m_selftest` stubbed as the brief allows, also passes 26/26. The record's figures are round 1's: REVIEWED_EXACT_SHA256 is unchanged and the record check passes against it.
+
+- **The unit's guard figure is exact and verified.** Of the 12 checks of that figure, all 12 match my independent computation to the last digit: the nine pair unions and the three unit figures hash identically.
+- **Round-1 survivors (13):** 9 are now killed, including both round-1 real gaps (r64, r65). The 4 still surviving (r37, r48, r62, r70) are equivalent or redundant.
+- **New mutants (33):** 18 killed and 15 survived. Of the survivors, 5 are equivalent or redundant; the other 10 are gaps that the new checks leave open (MINOR-A and MINOR-B below, plus the import-line quote).
+
+### Findings
+
+**MAJOR: none.**
+
+**MINOR-A: the checks added in answer to round 1 are themselves never made to fire** (survivors n08, n10, n16, n19, n20, n21, n22). This is round 1's MINOR-3 class again, now for the new checks.
+- *`sources_commits_ok`:* n16 makes it `return True`, and n19 drops it from the self-test's sources check. Both pass, because no probe gives the function a wrong commit list. `_main`'s refusal still protects the run of record.
+- *The lock scan:*
+  - n20 drops `locks_ok`'s comparison of the scan against the separate root listing;
+  - n21 takes that listing from `lock_texts` itself, which makes the comparison always true;
+  - n22 drops the `KNOWN_LOCKS` subset check.
+
+  All three pass. r64 is killed today only because the comparison exists; under n20 or n21, r64 would survive again.
+- *The realised case:* n08 drops `record_problems`' rule that the realised case carries no unit figure. It passes, because no bite adds one.
+- *The unit figure's exact value:* n10 drops the comparison of the exact value with the rule. It passes, because the bite changes the exact value grossly and the display rule catches it. A change below display precision would then go undetected, since the unit figure is outside `exact_figures` (the digest).
+- *Fix,* one probe each:
+  - `sources_commits_ok` must return False on the recorded list with the load commit put in the seat's place;
+  - `locks_ok` must fail with `lock_texts` stood in to drop one name, and with `KNOWN_LOCKS` given a name the root lacks;
+  - `record_problems` must report a record whose realised case carries a copy of the projection's `guard_unit`;
+  - it must also report the unit figure when the projection's `guard_unit.exact` is moved by 1e-12. Alternatively, add the unit figure's exact value to `exact_figures` and re-take the digest.
+
+**MINOR-B: the pinned commits are not tied to the citations they stand for** (survivors n17 and n18).
+- *Why the commit check cannot catch it:* `sources_commits_ok` compares the recorded commits with the same constants `sources_record` reads at. It catches a code defect in `sources_record` (r65, now killed), but not a wrong pinned commit.
+- *Scenario, n17:* `GF3_COMMIT_FULL` set to bd8808c, another commit whose RESULTS.md still contains the three quoted sentences. The self-test passes, and SOURCES and the record would cite bd8808c as the commit of the G-F3 entry. The seat's raw is safe from this, because its sha256 is pinned; RESULTS.md has no such pin.
+- *Scenario, n18:* `SEAT_COMMIT`, the "cdccc66" printed on the BESIDE line and recorded in `beside_A5`, is checked only against itself. A typo such as cdccc67 would be printed and recorded as the citation.
+- *Fix:* assert `SEAT_COMMIT_FULL.startswith(SEAT_COMMIT)` and `GF3_COMMIT_FULL.startswith("2193832")`. Today both pinned commits are correct: `git log -1 --format=%H` resolves cdccc66 to cdccc664…7754 ("Close line … on G-F3's entry (2193832)") and 2193832 to 21938326…0803 ("G-F3 (PROPOSAL-m v1.11 …").
+
+### NOTEs
+
+1. **The unit's guard figure (READINGS item 16) is a faithful reading.** m:316 runs the guard "per contrast arm", and "a fire pauses that unit". So the probability that some pair's guard pauses the unit is the unit's version of m:285's "the exclusion guard's false-pause figure", and that phrase is quoted verbatim. The per-pair unions remain beside it; reading m:285's figure as per arm is the seat's alternative.
+
+   The exactness claim is true. Under Q7 (b)'s model every session is excluded independently at the common rate, with the projection's fixed launch counts. The three guards depend on disjoint sessions (A1/A1s, A2/A2s, A3/A3s), so they are independent and 1 − Π(1 − u) is exact. The displays .5390 / .5318 / .5105 check out.
+2. **JOINT_SENTENCE and READINGS items 16, 17 and 20: every claim is true and every quote is verbatim.**
+   - Item 20's two quotes are mf3/resume.py lines 35 and 44, byte for byte.
+   - Its claim that importing mf3.resume opens a file under data/ holds by static reading: resume.py:34 imports m.corr, and corr.py:133 runs `OLMO_ROSTER = olmo_roster()` at module level, which reads `data/olmo/a1_repair_roster.json` (corr.py:77, :124).
+   - The sentence's dependence claims hold: an early-ending sham session enters its pair's sham count and cuts the bars' units; a counted round or line can be what excludes it; and the bars count claims on overlapping sham sessions.
+3. **r48 still survives, and is equivalent in effect.** Its half of the check duplicates the reviewed n_j literal. The "157/1" bite that the dispositions file credits to m48 actually covers the other half: n34, which removes the n_j_exact half, is killed by it. That other half had no probe in round 1.
+4. **The int-to-str digit lift is correct, harmless and untested** (n31 survives). No figure here comes near 4,300 digits. A one-line probe, `M.fs(Fraction(1, 10**5000))` must not raise, would make it load-bearing.
+5. **The new import-line quote can be dropped unnoticed** (n32 survives), because nothing checks the set of quotes. The risk is low.
+6. **Text:**
+   - The module docstring at line 32 still says "its committed line "LOOK_EVERY = m_resume.LOOK_EVERY"", singular, though the import line is now required too.
+   - `SEAT_SHA256 ="` at line 191 is missing a space.
+   - `KNOWN_LOCKS` rests on Code's premise that a lock is re-issued in place, never removed. If a lock were ever retired, the self-test would fail, which is the safe direction.
+7. **Round-1 NOTEs 1, 2, 3, 4, 6 and 7 are unchanged** and stay with the seat as declared readings. I have nothing to add to them.
+
+### Mutants
+
+"probes" below is the new check "the checks a correct run never fires, each made to fire once". The other labels are as in round 1.
+
+**Round-1 survivors, re-applied to the revision**
+
+| id | change | result: killed by / survivor class |
+|---|---|---|
+| r37 | power split fl//2+1 | survived: equivalent (the analyzer re-splits n0+n1) |
+| r39 | alpha/P STOP removed | killed: probes |
+| r40 | planned-floors STOP removed | killed: probes |
+| r48 | realised n_j vs half-up half removed | survived: equivalent in effect (reviewed n_j literal) |
+| r50 | evaluate_problems returns [] | killed: probes |
+| r53 | rows hours-column comparison removed | killed: probes |
+| r62 | one LOOK_EVERY quote unbound | survived: equivalent (m:330's cadence quote still binds it) |
+| r64 | lock scan narrowed to LOCK-m* | killed: locks |
+| r65 | every source read at the load commit | killed: sources (`sources_commits_ok`) |
+| r67 | guard-constants check removed | killed: probes |
+| r70 | same_row over the contrast arms only | survived: equivalent at k = 29 |
+| r71 | m:234–241 row comparison removed | killed: probes |
+| r72 | m:330 look comparison removed | killed: probes |
+
+**New mutants**
+
+| id | change | result: killed by / survivor class |
+|---|---|---|
+| n01 | guard_unit over two pairs only | killed: record, report-bites |
+| n02 | guard_unit multiplies the abs half | killed: record, report-bites |
+| n03 | guard_unit as the union bound (a sum) | killed: record, report-bites |
+| n04 | guard_unit records the survival, not 1 minus it | killed: record, report-bites |
+| n05 | compute: guard_unit on the projection only | killed: record, record-bites, report-bites |
+| n06 | joint's guard_unit_beside taken from sham_at_floor_r | killed: record, report-bites |
+| n07 | record: unit check over guard_figure, not the union | survived: equivalent (guard_figure is pinned to the union) |
+| n08 | record: realised case's guard_unit exclusion dropped | **survived: gap** (MINOR-A) |
+| n09 | record: unit display vs REVIEWED_GUARD_UNIT dropped | survived: redundant (display rule plus the rule over digest-pinned unions) |
+| n10 | record: unit exact vs the rule dropped | **survived: gap below display precision** (MINOR-A) |
+| n11 | record: joint's guard_unit_beside check dropped | killed: record-bites |
+| n12 | reference_report: unit line dropped | killed: record (line check), report-bites |
+| n13 | reference_report: JOINT unit figure shows A1's union | killed: record, report-bites |
+| n14 | second rendering: unit line dropped | killed: record (line check) |
+| n15 | second rendering: JOINT unit figure from sham_at_floor_r | killed: record (line check) |
+| n16 | sources_commits_ok always true | **survived: gap** (MINOR-A) |
+| n17 | GF3_COMMIT_FULL pinned to bd8808c | **survived: gap** (MINOR-B) |
+| n18 | SEAT_COMMIT mistyped as cdccc67 | **survived: gap** (MINOR-B) |
+| n19 | self-test's sources check drops sources_commits_ok | **survived: gap** (MINOR-A; `_main` still refuses) |
+| n20 | locks_ok: scan-vs-listing comparison dropped | **survived: gap** (MINOR-A) |
+| n21 | locks_ok: listing taken from lock_texts (always true) | **survived: gap** (MINOR-A) |
+| n22 | locks_ok: KNOWN_LOCKS subset dropped | **survived: gap** (MINOR-A) |
+| n23 | KNOWN_LOCKS name mistyped | killed: locks |
+| n24 | probe: rows-oracle message prefix weakened to "STOP" | survived: equivalent in effect |
+| n25 | probe: m:330 perturbation made vacuous | killed: probes |
+| n26 | probe: evaluate perturbation made vacuous | killed: probes |
+| n27 | _AnalyzerStandIn ignores the path | survived: equivalent for its three probes |
+| n28 | _MProxy reverted to round 1's form | killed: probes (the bar_problems_f3 probe) |
+| n29 | _MProxy ignores its stub | killed: region-probe, probes (the region probe still bites) |
+| n30 | report bite on the unit figure made vacuous | killed: report-bites |
+| n31 | int-str digit lift removed | survived: equivalent at these inputs |
+| n32 | resume import-line quote dropped | survived: unprobed binding (NOTE 5) |
+| n34 | record: realised n_j_exact half removed | killed: record-bites (the new "157/1" bite) |
+
+### Independent recomputations
+
+- **Pair unions:** I computed all nine exact unions at the common rate 1/5 with my own round-1 2-D DP: projection .2094 / .2401 / .2327, sham_at_floor_r .2050 / .2355 / .2297, sham_at_floor_min .1925 / .2265 / .2162. Each one's exact "num/den" string hashes identically to the program's, taken from one in-process compute() run.
+- **Unit figures:** 1 − Π(1 − u) gives projection 0.53901381, sham_at_floor_r 0.53179360 and sham_at_floor_min 0.51046676, so .5390, .5318 and .5105, equal to REVIEWED_GUARD_UNIT. The exact strings also hash identically to the program's.
+- **Pinned commits:** cdccc66 and 2193832 resolve to the two full shas the script pins.
+- **Round 1's recomputations still hold:** the digest is unchanged and the record check passes against it.
+
+### Disclosures
+
+- **Self-test runs:** I ran the revised self-test once as given, with TMPDIR in scratch; nothing was left there. I also ran the stubbed baseline.
+- **Exact comparison:** I ran the program's compute() once in a harness (`exact_cmp.py`) to hash its exact unions and unit figures.
+- **Recomputation:** three standard-library processes for the exact unions ran before the mutant batch.
+- **Mutants:**
+  - 46 ran under `xargs -P 6` from the first batch; I checked that at most six ran at once.
+  - Each ran under `nice -n 10` with m_gpwr's child self-test stubbed.
+  - The audit hook refused nothing and no run produced a traceback.
+  - One more mutant, n33 (the import-line quote with a wrong alias), was generated but not run, to keep the new set near 30.
+- **Reads:** the round-2 brief and the dispositions file; my diff from round 1's copy to the revision; mf3/resume.py lines 33–36 (as bytes); m/corr.py's module-level lines (read, not imported).
+- **Git commands:** `git log -1 --format=%H` and `--format=%s` on the two commits; `git status --porcelain -- scripts valence_core`.
+- **Nothing under data/ was opened in round 2.**
+- **Nothing was written in the repo:** the script is unchanged (sha256 24e8c672…74e4, untracked).
+
+Everything is in `<scratchpad>/gpwrf3/review/r2/` (the base copy, the mutants, and the outputs in `out/`). The generator is `<scratchpad>/gpwrf3/review/make_mutants_r2.py`.
+
+==== ROUND 2: CODE'S DISPOSITIONS ====
+
+## Code's dispositions of round 2 (applied to the script before its commit)
+
+The script was revised from sha256 24e8c672...74e4 (2,062 lines). Both MINOR findings are applied; of the NOTEs, 3, 4,
+5 and 6 are applied, and 1, 2 and 7 need no change. No figure changes, and REVIEWED_EXACT_SHA256 is unchanged.
+
+**MAJOR: none.**
+
+**MINOR-A, the round-1 checks never made to fire: applied, one probe each.**
+- `sources_problems` (new) takes sources_record's problems and adds `sources_commits_ok`'s. The self-test's sources
+  check and `_main` both take the sources from it. The sources bite stands `sources_record` in to record every
+  source at the load commit and requires `sources_problems` to report it. It also requires `sources_commits_ok` to
+  refuse the recorded list with the seat's raw at the load commit (n16, n19).
+- `lock_scan` (new) returns `lock_texts` with the scan's completeness: the names read equal the root's LOCK*.md listed
+  apart, and `KNOWN_LOCKS` is among them. `locks_ok` and `_main` both use it, and `_main` refuses an incomplete scan
+  before the lock refusal. `locks_ok` stands `lock_texts` in to drop one lock and requires the comparison's own
+  message ("the lock scan read"). It stands `KNOWN_LOCKS` in with a name the root lacks and requires "the root lacks"
+  (n20, n21, n22). The messages are required by name, so the `KNOWN_LOCKS` check cannot stand in for the comparison
+  when a known lock is the one dropped.
+- `record_check_bites` adds a realised case carrying a copy of the projection's `guard_unit` (n08). It also moves the
+  projection's `guard_unit.exact` by 1e-12, below its display, and requires the unit figure's own message (n10). The
+  unit figure stays outside `exact_figures`; its exact value is checked against the rule over the digest-pinned
+  unions.
+
+**MINOR-B, the pinned commits tied to their citations: applied.** `citation_problems` (new) requires:
+- each abbreviation to be its full sha's prefix: `SEAT_COMMIT` cdccc66, and `GF3_COMMIT` 2193832, which
+  `build_sources` now binds to the seat's raw by the quote "the G-F3 entry (`2193832`)";
+- each text to first appear at its pinned commit: the seat's raw absent from cdccc66's parent, and none of the G-F3
+  entry's three quotes in 2193832's parent's RESULTS.md.
+
+The self-test checks it and probes it with "cdccc67", and with the load commit pinned in either commit's place
+(n17, n18). `_main` refuses the run without it. `bound_constants` adds a mistyped 2193832 (31 cases).
+
+**NOTE 3, Code's round-1 credit for the "157/1" bite: corrected.** The round-1 dispositions credited that bite to
+m48. It kills the `n_j_exact` half (n34), and r48 stays equivalent in effect: the reviewed n_j literal covers its
+half. The round-1 text stands as written; this corrects it.
+
+**NOTE 4, the digit cap's lift: a check added.** A 5,001-digit figure must render through `M.fs` (n31).
+
+**NOTE 5, the import-line quote: bound.** The sources check requires each source's quote count as built
+(`QUOTE_COUNTS` 18, 3, 33, 2, 1, 5, 2), so a quote dropped from `build_sources` fails it (n32).
+
+**NOTE 6, text: applied.** The module docstring names both of mf3's resume lines; `SEAT_SHA256 =` has its space.
+`KNOWN_LOCKS`' premise (a lock is re-issued in place, never removed) stays, with its failure in the safe direction,
+as the reviewer says.
+
+**NOTEs 1, 2 and 7: no change.** The unit figure's reading and its exactness, `JOINT_SENTENCE` and READINGS items 16,
+17 and 20 stand as the reviewer found them. Round 1's NOTEs 1, 2, 3, 4, 6 and 7 stay with the seat as declared
+readings.
+
+**The equivalent survivors stand:** r37, r48, r62, r70, n07, n09, n24, n27. n31 and n32 are now covered.
+
+**After round 2.** A round 3, by the same reviewer, re-derived round 2's survivors against this revision. Its report
+and Code's dispositions follow.
+
+==== ROUND 3: CODE'S MESSAGE TO THE REVIEWER ====
+
+Round 3 of your review of scripts/mf3_gpwr.py, a short one: the script is revised again (sha256 4a03c5accc0887f91b1801a63882920f23d9a52ebc39077d9dcd86c5952ef663), and your brief is <scratchpad>/gpwrf3/review/brief_review_r3.md, with Code's round-2 dispositions beside it (dispositions_r2.md). Read both, then do what the brief says: re-derive round 2's eleven gap survivors, add 8-12 mutants on the new code, review it briefly, and report in round 2's format as your final message. All earlier rules hold (the list of record v2 items 1-5; never --record; never edit the script in place; scratch only; nothing under data/ but data/m/gates/Q-F0_G-PWR.json; at most 6 mutants at a time under nice -n 10 via xargs -P 6).
+
+==== ROUND 3: THE BRIEF ====
+
+Round 3 of your review of `scripts/mf3_gpwr.py`: a short one (repo <repo> = <repo>; your scratch <scratch> = <scratchpad>/gpwrf3/review).
+
+The script is revised again: sha256 4a03c5accc0887f91b1801a63882920f23d9a52ebc39077d9dcd86c5952ef663 (it was 24e8c672...74e4 in round 2). Code's dispositions of your round-2 report are in <scratch>/dispositions_r2.md: read them first. Its last paragraph announces this round; ignore that paragraph's past tense. Code's own run of the revised self-test, with the real m_gpwr child, passed 28/28.
+
+## What to do
+1. **Re-derive round 2's eleven gap survivors** against the revision (n08, n10, n16, n17, n18, n19, n20, n21, n22, n31, n32): re-apply each defect to the revised code where its target still exists, and report killed or survived, and by which check. Where the revision moved a defect's target into a new function, `sources_problems` or `lock_scan`, apply the defect there and say so.
+2. **New mutants, about 8–12, on round 3's new code:**
+   - `citation_problems`: its prefix test, its two first-appearance tests, and the "2193832" binding in `build_sources`;
+   - `sources_problems`, and `_main`'s use of it and of `citation_problems` (by reading);
+   - `lock_scan` and `_main`'s refusal of an incomplete scan (by reading);
+   - `QUOTE_COUNTS`;
+   - the digit-cap check;
+   - the new `record_check_bites` entries.
+3. **Review the new code for correctness**, briefly.
+4. **Report** in round 2's format: findings graded MAJOR, MINOR or NOTE, with scenario and fix; the mutant table; disclosures.
+
+## How to run, and the rules
+Everything in your round-1 brief (<scratch>/brief_review_r1.md) still holds: the list of record v2 items 1–5 verbatim as it quotes them; never `--record`; never an edit of the script in place; write only in <scratch>; nothing under data/ except data/m/gates/Q-F0_G-PWR.json. You may stub `_m_selftest`. At most 6 mutant processes at a time, each under `nice -n 10`, throttled with `xargs -P 6`. No model is running on this machine; keep it that way. No clock time or timestamp in your report.
+
+==== ROUND 3: THE REVIEWER'S REPORT ====
+
+## Round 3: blind review of `scripts/mf3_gpwr.py` (revised, uncommitted; sha256 4a03c5ac…f663, 2,152 lines)
+
+**Bottom line.** There are no MAJOR or MINOR findings this round, only NOTEs.
+- **Self-test:** as given, with m_gpwr's real child self-test, 28 PASS and exit 0, matching Code's run. My stubbed baseline also passes 28/28. (Its background job reported exit 1 only because my trailing `grep -c` found no FAIL lines.)
+- **Round 2's eleven gap survivors:** all eleven are now killed. The brief asked to apply n19 at its new home; that form (q19b) is killed. Applied literally to the self-test (q19a), it survives as a harmless duplicate.
+- **New mutants (10):** 7 killed, and 3 survivors (c01, c07, c10), all redundant, equivalent or of low impact.
+
+### Findings
+
+**MAJOR: none. MINOR: none.**
+
+**NOTEs**
+
+1. **The `QUOTE_COUNTS` comparison is never made to fail** (c10 survives). With that comparison removed, round 2's n32 (the import-line quote dropped) would survive again.
+   - *Impact is low.* A dropped quote that is the only one binding a constant is still caught by `bound_constants`. The count mainly protects the fixed-text quotes, such as the import line.
+   - *A limit of counting:* it counts quotes, not their content, so a quote shortened in place keeps its count and, being a substring, still matches.
+   - *Fix:* `_with("SOURCES", <SOURCES with one quote dropped>, <the sources check>)` must fail.
+2. **`citation_problems`' prefix test for 2193832 is redundant** (c01 survives). Two other checks already pin that commit: the first-appearance test (the entry's three quotes must be absent from the parent's RESULTS.md) and the seat-raw quote "the G-F3 entry (`2193832`)", which binds `GF3_COMMIT`. Harmless.
+3. **Two survivors are equivalent:**
+   - c07: checking `KNOWN_LOCKS` against the scan rather than the root listing gives the same result for both probes.
+   - q19a: the self-test's own `sources_commits_ok(rc)` call now duplicates the check `sources_problems` makes.
+4. **The new code is correct, by reading and by check.**
+   - *`citation_problems`:* "first appears at its pinned commit" means absent from the first parent, which is sound on this linear history. I confirmed the facts it relies on:
+     - the seat's raw is in cdccc66's tree and not in its parent's (`git ls-tree --name-only`);
+     - the raw contains "the G-F3 entry (`2193832`)" (2 occurrences);
+     - 2193832's parent is 0190c6d, the one commit the G-F3 entry says landed during the run.
+   - *`sources_problems`:* it adds the commit check only when the reads are clean. That is fine, because any read problem refuses the run anyway.
+   - *`lock_scan` and `_main`:* `_main` refuses an incomplete scan before the record-path lock refusal, which then uses the same texts. It refuses on `sources_problems` and then on `citation_problems`, both before PROVENANCE is printed and before the child self-test.
+   - *The probes bite:*
+     - the digit-cap check fails without the lift (q31);
+     - the two new record bites kill n08 and n10 (q08, q10);
+     - `locks_ok` requires each message by name, so the `KNOWN_LOCKS` check cannot stand in for the comparison (q20, q21 and c08 are killed).
+5. **Unchanged:** round 1's NOTEs 1, 2, 3, 4, 6 and 7 and round 2's NOTEs 1 and 2 stand as before, with the seat.
+
+### Mutants
+
+**Round 2's gap survivors, re-applied**
+
+The brief asked to apply n20, n21 and n22 inside `lock_scan`, and n19 inside `sources_problems`; that is where q19b to q22 sit. For n19 I applied the defect in both places.
+
+| id | change | result: killed by / survivor class |
+|---|---|---|
+| q08 | n08: realised case's guard_unit exclusion dropped | killed: record-bites (the realised-case bite) |
+| q10 | n10: unit exact vs the rule dropped | killed: record-bites (the 1e-12 bite) |
+| q16 | n16: sources_commits_ok always true | killed: the sources bite |
+| q17 | n17: GF3_COMMIT_FULL pinned to bd8808c | killed: citations |
+| q18 | n18: SEAT_COMMIT mistyped as cdccc67 | killed: citations |
+| q19a | n19 as written: the self-test's lambda drops sources_commits_ok | survived: equivalent in effect (`sources_problems` makes the same check) |
+| q19b | n19 at its new home: sources_problems drops sources_commits_ok | killed: the sources bite |
+| q20 | n20 in lock_scan: scan-vs-listing comparison dropped | killed: locks |
+| q21 | n21 in lock_scan: listing taken from lock_texts | killed: locks |
+| q22 | n22 in lock_scan: KNOWN_LOCKS check dropped | killed: locks |
+| q31 | n31: int-str digit lift removed | killed: the digit-cap check |
+| q32 | n32: resume import-line quote dropped | killed: sources (QUOTE_COUNTS) |
+
+**New mutants on round 3's code**
+
+| id | change | result: killed by / survivor class |
+|---|---|---|
+| c01 | citation_problems: prefix test drops the 2193832 half | survived: redundant (NOTE 2) |
+| c02 | citation_problems: prefix test removed | killed: citations (the cdccc67 probe) |
+| c03 | citation_problems: the seat raw's first-appearance test disabled | killed: citations |
+| c04 | citation_problems: the entry's first-appearance test disabled | killed: citations |
+| c05 | build_sources: the 2193832 binding made a literal | killed: bound-constants (the "2193833" case) |
+| c06 | sources_problems: commit check only when other problems exist | killed: the sources bite |
+| c07 | lock_scan: KNOWN_LOCKS against the scan, not the root | survived: equivalent for the probes |
+| c08 | lock_scan: comparison as a subset, not equality | killed: locks (the dropped-lock probe) |
+| c09 | QUOTE_COUNTS mistyped (33 → 32) | killed: sources |
+| c10 | sources check: the QUOTE_COUNTS comparison removed | survived: never made to fail (NOTE 1) |
+
+### Disclosures
+
+- **Runs:** the real self-test once (TMPDIR in scratch, nothing left there) and the stubbed baseline once.
+- **Mutants:** 22 ran under `xargs -P 6` from the first batch; I checked that at most six ran at once. Each ran under `nice -n 10` with m_gpwr's child self-test stubbed. The audit hook refused nothing and no run produced a traceback.
+- **Reads and commands:**
+  - the round-3 brief and dispositions, and the diff from round 2's copy;
+  - `git ls-tree --name-only` of the seat's raw at cdccc66 and at its parent;
+  - `git log -1 --format=%H` of 2193832's parent;
+  - a `grep -c` of the seat's raw for the cited string;
+  - `git status --porcelain -- scripts valence_core`, and shasum.
+- **Nothing under data/ was opened in round 3.**
+- **Nothing was written in the repo:** the script is unchanged (sha256 4a03c5ac…f663, untracked).
+
+The files are in `<scratchpad>/gpwrf3/review/r3/` (the base copy, the mutants, and the outputs in `out/`). The generator is `<scratchpad>/gpwrf3/review/make_mutants_r3.py`.
+
+==== ROUND 3: CODE'S DISPOSITIONS ====
+
+## Code's dispositions of round 3 (applied to the script before its commit)
+
+Round 3 has no MAJOR or MINOR finding. Its NOTE 1 is applied; its other NOTEs need no change. No figure changes.
+
+**NOTE 1, the quote-count comparison never made to fail: applied.** The comparison moves into `sources_shape_ok`,
+which holds the sha256 pins and `QUOTE_COUNTS`. The self-test's sources check uses it, and the sources bite requires
+it to refuse the sources with the resume import line dropped. The limit the reviewer names stands, and the function's
+docstring says it: the count binds the set of quotes, not their words.
+
+**NOTE 2, the redundant prefix test for 2193832: no change.** It is redundant with the first-appearance test and the
+seat-raw quote, as the reviewer says, and harmless.
+
+**NOTE 3, the equivalent survivors: no change.** c07 and q19a stand as equivalent; so do round 2's r37, r48, r62,
+r70, n07, n09, n24 and n27.
+
+**NOTEs 4 and 5: no change.** The new code stands as the reviewer read it. Round 1's NOTEs 1, 2, 3, 4, 6 and 7 and
+round 2's NOTEs 1 and 2 go to the seat as Code's declared readings.
+
+**After round 3.** The change above was not put to a fourth round. Code applied the defect of c10 (the quote-count
+comparison removed) and of q32 (the import-line quote dropped) to the final script with the reviewer's harness, and
+the self-test reported FAIL for each. The final script's self-test, with m_gpwr's real child, is the committed
+self-test raw.
