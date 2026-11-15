@@ -21,6 +21,88 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0 — COMMITTED: `bd8808c`'s amended drafts, each placed byte for
+  byte as its lock, on the seat's answer to item 7 ((a) and (d) together; no BUILD) and the PI's word releasing the
+  hold ("Place the locks"). Each licenses the campaign on its checkpoint, within one pod session; nothing later.**
+  Model-free: nothing ran on a model or the box, and nothing re-ran.
+  - **The PI's words,** on the seat's paste block (its header: "DESIGN → PI → CODE (master session) — PI date
+    2026-11-14, evening"), relayed verbatim by the coordinating session: "Route as given" + "Place the locks". The
+    block's section B, the pod session's, so adopted, verbatim:
+
+    > 1. Item 7's line: readings (a) + (d) together. (a) respawn (ii)'s identifier printed beside the lock's "backend of record" line in the precheck ×3 raw at campaign (one line in the box's precheck wrapper). (d) after each campaign invocation ends, the report's identity.backend_identifier against the lock's line in the campaign raw and the entry's form — identifier only, no stamp; a mismatch in either is a STOP for the seat. (b) declined; (c) declined now — no BUILD before the locks; an S3 self-test (the comparison driven on the stub with a mismatched identifier, asserting the STOP) declared for p's next hash-moving BUILD, if any [as ruled].
+    > 2. The hold: release it — place the three amended drafts byte for byte as LOCK-p-OLMo-{ckpt}.md and commit by path now, v1.0 entries naming fafb786d…2bc4 / 25c52f56…3dcf / f71c97c1…0e67; the dry precheck at bd8808c already CLEAR ×3 on these bytes, nothing re-runs [PI's word: "Place the locks"].
+    > 3. Close lines on bd8808c's entry and on cdccc66's, citing the raw; ledger (69) in the latter (the dpo sha256 prefix "…a28d" in the morning raw's header should read "…a28b" — the seat's typed prefix; prefixes pasted from now on).
+    > 4. Then the replacement pod on the PI's go: respawn (i), (ii) → dated note (641ee466f4553b6a) or STOP → bundle → precheck ×3 with (a)'s line → three campaigns at 2 h each, (d)'s line after each invocation [go at the PI's timing].
+
+    The raw's own routing block (its §3, B) gives the same four items in short form.
+  - **The seat's answer** to the pod session's item-7 block (`bd8808c`),
+    [`2026-11-14_p-backend-line_design-to-code_answers.md`](results/raw/2026-11-14_p-backend-line_design-to-code_answers.md)
+    (sha256 `fd74d3f6e60d9ecd30f80652777af96d283f52063743b471b2563a73bea7e3ff`, 9,048 bytes), placed untracked, is
+    committed here by path as placed, its sha256 re-checked before the commit. Its header (bold markers aside):
+    "Placed untracked over the bridge; Code commits by path on the PI's routing; the pod session adds its close
+    line." Its §0, first bullet, verbatim (bold markers aside):
+
+    > Q1: (a) and (d), carried together. (b) declined. (c) declined now; its substance is a self-test, owed at p's next hash-moving BUILD if there is one, not a BUILD before the locks. Item 7's sentence in `gl:`§B.4 was wrong about the place: the comparison prints nothing when the identifiers are equal, and the precheck never sees the adapter's identifier, so no raw can carry "the comparison's line" without (c). The sentence is corrected here; the ruling's purpose — that the record show the campaign ran on the backend of record, where the self-test cannot show the comparison ran — is met by (a) and (d).
+
+    Of the locks (§0, second bullet): "nothing in this answer moves p's code or the amended drafts." `gl:` is the
+    seat's answers of 2026-11-14 (`6b963adf…db3a`, committed at `cdccc66`); the corrected sentence is quoted in the
+    pod session's close line on that raw's entry (G-F3's, `2193832`), below.
+  - **The files.** Each is `bd8808c`'s committed amended draft, copied byte for byte; each sha256 is the
+    `lock_sha256` its unit's campaign checkpoint will record:
+    - `LOCK-p-OLMo-sft.md`, `fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4`, from
+      [`_p-lock-v1.0-draft-amended_OLMo-sft`](results/raw/2026-11-14_p-lock-v1.0-draft-amended_OLMo-sft.md);
+    - `LOCK-p-OLMo-dpo.md`, `25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf`, from
+      [`_p-lock-v1.0-draft-amended_OLMo-dpo`](results/raw/2026-11-14_p-lock-v1.0-draft-amended_OLMo-dpo.md);
+    - `LOCK-p-OLMo-instruct.md`, `f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67`, from
+      [`_p-lock-v1.0-draft-amended_OLMo-instruct`](results/raw/2026-11-14_p-lock-v1.0-draft-amended_OLMo-instruct.md).
+
+    Each replaces its v0.2 (`585df45`: `3765fe22…2f98`, `b739081f…3c2e`, `48e1c315…ae52`) and carries that text
+    verbatim at its end, under one line: "Where the v0.2 text below, or the v0.1 text it carries, differs from v1.0's
+    values of record (§8), v1.0's are of record." What v1.0 adds is set out in `012ffbe`'s entry; its diff from those
+    drafts, exactly (A1)–(A3), is printed in `bd8808c`'s.
+  - **One entry for the three** (Code's form, v0.2's at `585df45`, where the seat's §2 item 1 and section B item 2 say
+    "v1.0 entries"): it names each lock with its sha256, and it is each lock's "v1.0 entry" (its §5), on which the
+    replacement box's dated note goes.
+  - **Item 7, as ruled** (the seat's §1). (a) and (d) are lines of the campaign's record, not of the locks' text,
+    which stands as drafted:
+    - (a), in the precheck ×3 raw at `campaign`: beside each unit's `backend of record 641ee466f4553b6a`, respawn (ii)'s
+      identifier for the box, computed by Code's laptop check from the characterization run's provenance block as on
+      2026-11-06, with the `BACKEND — characterization` entry's hash and the respawn raw's path, and the word "equal";
+    - (d), in each campaign raw once each invocation has ended (the list of record v2, item 5), and in the campaign
+      entry's form: m's campaign report's `identity.backend_identifier` against the lock's line, the identifier only,
+      never the record's stamp. The seat's §1, last bullet: "An invocation that launches no session leaves no
+      provenance entry (`resume.py:324`) and so no (d) line; it generates nothing either, so nothing is at stake in
+      it."
+
+    A mismatch in either is a STOP for the seat. (b) is declined, and (c) declined now: the S3 self-test (the
+    comparison driven on the stub with a mismatched identifier, asserting the STOP) is declared for p's next
+    hash-moving BUILD, if one comes; none is opened.
+  - **Checks** (Code's, by tool, read-only, on each placed file):
+    - its bytes equal `bd8808c`'s committed draft (`cmp`; its git blob id is the draft's at `bd8808c`), and its sha256
+      is the one above;
+    - `585df45`'s v0.2 text is in it verbatim, once, ending the file;
+    - it carries one `BACKEND OF RECORD` line, `641ee466f4553b6a`.
+
+    Nothing re-ran (the seat's §2, item 4). The dry precheck at `campaign` cleared these bytes ×3 at `bd8808c` (its
+    check raw's section 7, run at HEAD `dd0bb89`). Since then the tree has changed only in RESULTS.md, `bd8808c`'s
+    raws and F3's G-PWR (Q-F3) files (`46be7aa`, `8c9b5ff`): nothing under `valence_core/` or `data/p/`
+    (`git diff --name-status dd0bb89..8c9b5ff`).
+  - **Blind values-check:** 67 claims: 62 CONFIRMED, 0 IMPRECISE, 0 FAIL, 5 NOT CHECKABLE (the relay's fidelity to
+    the chat, Code's conduct and this commit's own acts). Eight of its eleven observations were applied in its terms,
+    among them: the one-entry bullet names the seat's "v1.0 entries"; Next quotes the seat's §2, items 2–3, verbatim;
+    (d)'s bullet quotes the seat's exception for an invocation that launches no session. The other three are recorded
+    in the raw. The edits after the check were checked by tool. Raw:
+    [`_p-lock-v1.0-placed_valuescheck`](results/raw/2026-11-14_p-lock-v1.0-placed_valuescheck.md).
+  - **Next** (section B, item 4), at the PI's timing. No pod is started without the PI's go, and its price is stated
+    first. The seat's §2, items 2–3, verbatim:
+
+    > 2. The replacement pod on the PI's go (the spec of record): respawn (i) INTEGRITY, (ii) BACKEND → `641ee466f4553b6a` → the dated note in RESULTS.md on the v1.0 entries (`gl:`§B.3); a differing identifier → STOP.
+    > 3. The box repo by bundle; precheck ×3 at `campaign` with (a)'s line; the three campaigns at 2 h each, one pod session, looks every 40; (d)'s line in each campaign raw after each invocation; the seat adjudicates every pause on the excerpt.
+
+    The dated note goes on this entry. It names the pod id, the identifier, the respawn raws (i) and (ii), and each
+    lock's path and sha256 (each lock's §5).
+  - Not pushed. Committed by path.
+
 - 2026-11-14 — **G-PWR (Q-F3), its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's answers of
   2026-11-14, §A.7 and §D items 3–4, routed by the PI on 2026-11-14, `cdccc66`), from the program's commit
   `46be7aa`. k = 29 of 40 gives m:238's row: L 128, 64, 224, 96, 224 and 96, 832 launches, 21 looks. Power at the
@@ -449,6 +531,19 @@ applied to CLAUDE.md.
     - Under another form: as the seat rules it.
     - Then the replacement pod, on the PI's go (the routing block's item 10).
   - Not pushed. Committed by path.
+  - **Close (PI date 2026-11-14).** The seat answered Q1 in
+    [`2026-11-14_p-backend-line_design-to-code_answers.md`](results/raw/2026-11-14_p-backend-line_design-to-code_answers.md)
+    (sha256 `fd74d3f6e60d9ecd30f80652777af96d283f52063743b471b2563a73bea7e3ff`), committed by path with this close:
+    (a) and (d), carried together; (b) declined; (c) declined now, its substance a self-test owed at p's next
+    hash-moving BUILD if there is one (its §0 and §1). On the block's point that (d) does not show that p's
+    comparison ran, its §1 (bold markers aside):
+
+    > And (d) is the detector for the S3 case itself: if a dropped comparison ever let a run continue on a differing adapter, (d)'s line would read "not equal" after that invocation, which is a STOP for the seat — the report's identity would disagree with the lock while nothing had fired.
+
+    - **The PI's word,** on the seat's paste block, relayed by the coordinating session: "Route as given" + "Place the
+      locks". The hold is released.
+    - **At this commit:** the amended drafts above, placed byte for byte as `LOCK-p-OLMo-{ckpt}.md`, with their v1.0
+      entry, `LOCK-p-OLMo-{sft,dpo,instruct} v1.0 — COMMITTED` (above). Nothing above is rewritten.
 
 - 2026-11-14 — **WORKFLOW.md v1.0 — COMMITTED** (the coordinating session; the seat's answers of 2026-11-14, §C and
   §D item 11, routed by the PI as given).
@@ -1191,6 +1286,23 @@ applied to CLAUDE.md.
     - **Next** (§D items 3–5): G-PWR (Q-F3) on r = 29/40 in F-5's form, its entry carrying §A.5's figures beside its
       m:205 line by citation of this raw; the PI's cap at G-PWR's entry; then LOCK-m-F3 v1.0, drafted for the seat's
       read, by D2 2026-12-22.
+  - **Close (PI date 2026-11-14), the pod session's: §B.4 item 7 of the seat's answers committed with the close
+    above (`6b963adf…db3a`), corrected; ledger (69).** The seat's answer to the pod session's item-7 block
+    (`bd8808c`),
+    [`2026-11-14_p-backend-line_design-to-code_answers.md`](results/raw/2026-11-14_p-backend-line_design-to-code_answers.md)
+    (sha256 `fd74d3f6e60d9ecd30f80652777af96d283f52063743b471b2563a73bea7e3ff`), is committed by path with the
+    `LOCK-p-OLMo-{sft,dpo,instruct} v1.0 — COMMITTED` entry. It calls those answers `gl:` and corrects their §B.4
+    item 7; `gl:` is not edited. The correction, verbatim (its §1, last paragraph):
+
+    > **The corrected sentence.** `gl:`§B.4 item 7 now reads: *Stands as a declared test gap. The live comparison runs at every non-stub recorded run and prints only on a mismatch. The record of its substance is (a) respawn (ii)'s identifier beside the lock's line in the precheck ×3 raw at `campaign`, and (d) the campaign report's `identity.backend_identifier` against the lock's line in each campaign raw after each invocation ends, the identifier only; a mismatch in either is a STOP for the seat. A self-test driving the comparison on the stub is owed at p's next hash-moving BUILD.* The seat's rule that a committed raw is not edited holds; this raw is the correction, and the pod session's close line on `gl:`'s entry quotes it.
+
+    - **Ledger (69), the seat's** (its §0, third bullet), verbatim: "`gl:`'s header gives the dpo draft's sha256 as
+      `f2a6960f…a28d`; the file and `012ffbe`'s block give `…a28b`. The coordinating session caught it before routing;
+      the pod session carries it as an observation. A typed prefix; the fix is that every sha256 prefix in a seat text
+      is pasted from the tool's output, never typed. Nothing else in the raw rests on it." The observation is in the
+      pod session's close line on `012ffbe`'s entry (`bd8808c`).
+    - **The PI's word,** on the seat's paste block, relayed by the coordinating session: "Route as given" + "Place the
+      locks".
 
 - 2026-11-12 — **Dated note (pod session), for the seat, beside G-F0m-OLMo (p) ×3's block (`a225a89`;
   `193811cb…`): pod `qny1x4v8padeke` was terminated on 2026-11-12 (PI-local). The audit log's actor is `runpod`
