@@ -600,6 +600,38 @@ applied to CLAUDE.md.
     were checked by tool. Raw: [`_workflow-v1_valuescheck`](results/raw/2026-11-14_workflow-v1_valuescheck.md).
   - WORKFLOW.md, RESULTS.md and the values-check raw only. Nothing ran on a model or the box. Not pushed. Committed by
     path.
+  - **Close (PI date 2026-11-14; the coordinating session's line, per the seat's §3 C): the hold released.** The
+    hold above waited on the seat's answer to item 7. That answer,
+    [`2026-11-14_p-backend-line_design-to-code_answers.md`](results/raw/2026-11-14_p-backend-line_design-to-code_answers.md)
+    (sha256 `fd74d3f6e60d9ecd30f80652777af96d283f52063743b471b2563a73bea7e3ff`, 9,048 bytes), is committed by path
+    by the pod session at `038bf3e`. Its §0, first bullet: "(a) and (d), carried together"; (b) declined; (c)
+    declined now, its substance a self-test owed at p's next hash-moving BUILD if there is one, not a BUILD before
+    the locks. Of the locks, its §0, second bullet: "nothing in this answer moves p's code or the amended drafts."
+    Its routing block for the PI, §3 C (bold markers aside): "C. Coordinating session — nothing new; the hold's
+    release recorded in your words."
+    - **The PI's words,** on the seat's paste block, verbatim: "Route as given" + "Place the locks". Before relaying
+      them I re-hashed the placed raw (equal to the sha256 and bytes the paste block names), read it in full, and
+      matched the paste block's sections B–D to its §3 item by item (the block in fuller words). I relayed section B
+      verbatim to the pod session. The raw's §3 D names HEAD `bd8808c`; HEAD at the routing was `8c9b5ff` (my
+      session's check): F3's G-PWR (Q-F3) commits `46be7aa` and `8c9b5ff` had followed `bd8808c`, and the raw cites
+      neither.
+    - **The release, carried out at `038bf3e`:** `bd8808c`'s three amended drafts, placed byte for byte as
+      `LOCK-p-OLMo-{sft,dpo,instruct}.md` (sha256 `fafb786d…2bc4`, `25c52f56…3dcf`, `f71c97c1…0e67`), with their
+      v1.0 entry, `LOCK-p-OLMo-{sft,dpo,instruct} v1.0 — COMMITTED`. I checked that commit: its parent is
+      `8c9b5ff`; each lock's blob id is its draft's at `bd8808c`; its RESULTS.md diff is +112/0 in three hunks (the
+      entry, a close on `bd8808c`'s entry, and a close on G-F3's entry after `cdccc66`'s); the seat's raw is at the
+      sha256 and bytes above; the entry's quote of the paste block's section B is byte for byte the block's.
+    - **The dpo slip** named above is the seat's ledger (69) (the raw's §0, third bullet), carried in the pod
+      session's close on G-F3's entry at `038bf3e`; the observation itself is in its close on `012ffbe`'s entry
+      (`bd8808c`).
+    - **Next** (the seat's §3 B item 4): the replacement pod on the PI's go, at the PI's timing; its price stated
+      first (the pod session's entry, Next); not started. The push, unchanged (§3 D): on the PI's word, after the
+      pre-push screen, as this entry's Next has it (item 13).
+    - **A blind values-check** of this close: 41 claims, 34 CONFIRMED, 1 IMPRECISE (applied), 0 FAIL, 6 NOT
+      CHECKABLE (my session's own acts and checks, and the relay in chat; the pod not started; this commit's own
+      acts). Its eight optional wordings were applied, two in close variants. Raw:
+      [`_lock-hold-release_valuescheck`](results/raw/2026-11-14_lock-hold-release_valuescheck.md).
+    - RESULTS.md and the values-check raw only. Nothing ran on a model or the box. Not pushed. Committed by path.
 
 - 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0: the three drafts, for the seat's read (the seat's read of
   G-F0m-OLMo (p) ×3, §4.3 item 3: "The seat reads each v1.0 before the PI commits it"). Code STOPS for the seat's
