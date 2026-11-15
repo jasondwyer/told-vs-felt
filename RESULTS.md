@@ -21,6 +21,125 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **LOCK-m-F3 v1.0 — COMMITTED: `81a40b4`'s draft with the seat's one amendment, (A1), regenerated and
+  placed byte for byte as `LOCK-m-F3.md`, sha256 `fe9518c7368fe1b34ee9e67f8ba663b1b3c7c02431b5f83d1b5d4b7e7b0c1aa6`.
+  Its diff against the draft of record (`16a0c79e…f2db`) is exactly (A1), so there is no second STOP. It licenses
+  Q-F3's campaign on the laptop, uncached, and nothing later.** On the seat's answers of 2026-11-15 and the PI's
+  "Route as given" (PI date 2026-11-15). Nothing ran on a model.
+  - **The PI's word,** on the seat's paste block (its header: "DESIGN → PI → CODE (master session) — PI date
+    2026-11-15"), relayed verbatim by the coordinating session: "Route as given". The block's section A, the F3
+    session's, so adopted, verbatim:
+
+    > 1. LOCK-m-F3 v1.0 adopted with one amendment (A1): a §4 row carrying the decisions block by its record (5dca58b; the file left the tree at f5a580d; sha256 fab576d8…34f8 in full, as LOCK-m-F0 v1.0 §6 names it), and §11 item 2's first clause reworded to match. Regenerate; dry check; the entry prints the diff against 16a0c79e…f2db and the new sha256; if the diff is exactly (A1), no second STOP: place byte for byte as LOCK-m-F3.md and commit by path with its v1.0 entry, now [go].
+    > 2. Q2 (a) line forms accepted; (b) as (A1), the sentence table at the VERDICTS session accepted; (c) D2 by the C7 convention accepted; (d) = R9.
+    > 3. 8c9b5ff's Q1: R1 stands (m:230 is Q-F3's basis line; the seat's "m:205" was the wrong line — ledger (70), the seat's, in the close line on 8c9b5ff). Q2: R9 confirmed — G-VER is m:284's verifier run by every stage on every record, met at G-F3 (40/40 verified), binding the campaign per record; no separate step. R2–R8 stand; nothing struck; 832 launches / 21 looks stand.
+    > 4. The disclosed departure (81a40b4 §6, the generator's first form) recorded, inert; digest forms for every path under data/*/ckpt and data/*/reports [as ruled].
+    > 5. Close lines on 81a40b4's and 8c9b5ff's entries citing the raw; the raw committed by path with them.
+    > 6. After v1.0's commit: the campaign wiring (F-1's kind; its entry names the edit and the new DRIVER blob and notes that v1.0 §6's value is the driver at the lock; NOTE-7's gap closed; G-SHAPE-F3 not re-run) [go; order as given].
+    > 7. The campaign on the PI's routing once the wiring's entry lands: announced to the coordinating session, serialized, detached, checkpointed, uncached, hour cap = 480 h, looks every 40; expect one or two pre-registered pauses (the seat adjudicates each on the excerpt) [the PI's go, at his timing].
+
+    Section D: not pushed. The raw's own routing block (its §6, A) has five items: the paste block's items 2–4
+    carry its item 2, drawing on its §0, §2 and §3, and the paste block's items 5–7 are its items 3–5.
+  - **The seat's answers,**
+    [`2026-11-15_lock-m-f3-v1_design-to-code_answers.md`](results/raw/2026-11-15_lock-m-f3-v1_design-to-code_answers.md)
+    (sha256 `49b82ff0dc53bea71d44bb6da640ebb68e8c903f27a30dd0ffd9e06a99470885`, 12,817 bytes), placed untracked, are
+    committed here by path as placed, their sha256 re-checked before the commit. Their header (bold markers aside):
+    "Placed untracked over the bridge; Code commits by path on the PI's routing; the F3 session adds its close lines."
+    Their §0, first bullet, verbatim (bold markers aside):
+
+    > Q1 — the draft: adopted, with one amendment, (A1): §4 carries the decisions block by its record, as m:298's "as §3.1" and m:286 list it (§1 below). Nothing else moves. If the regenerated draft's diff against `16a0c79e…f2db` is exactly (A1), no second STOP: Code places it byte for byte as `LOCK-m-F3.md` and commits by path, the v1.0 entry naming its sha256, on the PI's word, now (D2 2026-12-22 is the latest, not the plan).
+
+    Their rulings on Q2, on `8c9b5ff`'s block and on the disclosed departure are quoted in the close lines on
+    `81a40b4`'s entry and on `8c9b5ff`'s, below.
+  - **The file:** `LOCK-m-F3.md`, sha256 `fe9518c7368fe1b34ee9e67f8ba663b1b3c7c02431b5f83d1b5d4b7e7b0c1aa6`, 1,483
+    lines: the v1.0 part (322 lines), then v0.2's committed bytes (`ac82b943…75a7`), verbatim. It replaces v0.2
+    (`05ef75d`). Its sha256 is the `lock_sha256` of Q-F3's campaign checkpoint (v1.0 §12). It is committed before
+    D2, 2026-12-22 (v1.0 §3).
+  - **The diff** against the draft of record: unified, three lines of context, file labels and no times (Python's
+    `difflib`, as the generator writes it). It has two hunks: one line inserted, one replaced.
+
+    ```diff
+    --- 81a40b4:results/raw/2026-11-15_lock-m-f3-v1.0-draft.md
+    +++ LOCK-m-F3.md
+    @@ -114,6 +114,7 @@
+     | Binds | Path | sha256 |
+     |---|---|---|
+     | the proposal | `PROPOSAL-m-gating-campaign-v1_11.md` | `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b` |
+    +| the decisions block (its record at `5dca58b`; the file left the tree at `f5a580d`, release prep) | -- (not in the tree) | `fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8` (the full value, as LOCK-m-F0 v1.0 §6 names it) |
+     | the preprint of record (m:298: "as edited for v2") | -- | preprint of record pending (the seat's reading under decision (10′), §A.7) |
+     | ADDENDUM-m1 v0.1 (decision (10′); D2) | `ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md` | `ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001` |
+     | ADDENDUM-m2 v0.5 | `ADDENDUM-m2-f3-reasoning-block-v0_5.md` | `f27505c556a3304097d2154698bcf4498927e692c7341aec5060803c833b5354` |
+    @@ -264,7 +265,7 @@
+     - **Code's readings in this draft, for the seat's read** (none adjudicated):
+       1. the line forms of §1 and §2, Code's, as LOCK-m-F0 v1.0 §4's (the campaign wiring tests them, §13);
+       2. m:286's two items that the seat's §A.7 list does not name:
+    -     - the decisions block is not carried. Its file left the tree at `f5a580d` (release prep); its record is at
+    +     - the decisions block is carried by its record's sha256 in §4; the file left the tree at `f5a580d` (release prep); its record is at
+            `5dca58b`, sha256 `fab576d8…34f8`, as LOCK-m-F0 v1.0 §6 names it;
+          - the sentence table of record is built at Q-F3's VERDICTS session (PIN-V2-24, declared at LOCK-m-F3 v0.1), so
+            none is carried here;
+    ```
+
+    - **The row** is the seat's, after the proposal's. In Code's form, "fab576d8…34f8" is written in full, in
+      backticks like the table's other values. The value is the sha256 of the decisions block's blob at `5dca58b`,
+      and it equals LOCK-m-F0 v1.0 §6's row. The seat's other words, "(the full value, as LOCK-m-F0 v1.0 §6 names
+      it)" among them, are verbatim.
+    - **The clause.** The seat's words replace "the decisions block is not carried. Its file left the tree at
+      `f5a580d`", the sub-item's opening up to that commit (Code's reading of "first clause"). The rest of the
+      sub-item stands.
+  - **The regeneration** (Code's, by tool):
+    - The generator is `81a40b4`'s, with (A1) added: it adds the row, and its template carries the clause. It finds
+      each of the seat's words in the row and in the clause in the seat's raw, pinned by sha256.
+    - It ran at HEAD `81a40b4`. Every source it read at `ce3ed7c`, it reads as at `ce3ed7c`, the draft's base, after
+      asserting that the source's blob id is the same at HEAD. The tree differs from `ce3ed7c` only in `81a40b4`'s five
+      paths (`git diff --name-only ce3ed7c 81a40b4`), and it reads none of them as a source. It reads one of them, the
+      draft of record, at `81a40b4`, as the rebuild check's base and the diff's left side. It reads the seat's raw from
+      the working tree, untracked, pinned by sha256.
+    - So the draft's four "HEAD `ce3ed7c`" mentions stand, and nothing else moves. That is Code's reading: the four
+      name the base at which every source was read, unchanged at HEAD.
+    - It rebuilds the draft of record with (A1) applied by hand (the row inserted after the proposal's, the line
+      replaced), and it refuses unless the result is byte-identical to the regenerated draft. It is.
+    - Its other checks are `81a40b4`'s, unchanged, and they pass. A second run gives the same bytes and the same
+      diff.
+  - **The dry check**, with the regenerated draft standing in for the committed lock: CLEAR, 9/9, as at `81a40b4`.
+    - The driver's parsers read the same eleven m files and the same WEIGHTS value as from v0.2.
+    - The identities for time, id and qual are v0.2's but for `lock_sha256`, which is the draft's, and the licence is
+      [] for each.
+    - The analyzer's PIN-V2-12 values are named in full, and the driver's self-test passes 214/214.
+  - **Checks on the placed file** (Code's, by tool, before the commit):
+    - its bytes equal the regenerated draft's (`cmp`), and its sha256 is the one above;
+    - v0.2's committed bytes end it, once;
+    - each `QUAL_LOCK_LINES` string is in it once, at a line's start, and it carries one WEIGHTS value, v0.2's.
+  - Raw: [`_lock-m-f3-v1.0-placed_check`](results/raw/2026-11-15_lock-m-f3-v1.0-placed_check.txt). It holds the
+    generator's and the template's diffs against their forms in `81a40b4`'s check raw, and both verbatim; the dry
+    check, unchanged, verbatim; one run of each; the second run's comparison; the diff; the self-test's output; and
+    the checks on the placed file, above.
+  - **With this commit,** the three strike windows that v1.0 §11 names close, with nothing struck (the seat's §0,
+    bold markers aside: "R2–R8 stand; nothing is struck.").
+    - The seat's §2 offers a wording for R9: "the draft's §7 and §11 may say so in those words".
+    - Under the seat's "Nothing else moves", and so that the diff is exactly (A1), the draft's text stands as
+      drafted; that is Code's reading of the "may". R9's ruling is quoted in the close line on `8c9b5ff`'s entry.
+  - **What the placed text keeps.** Under "Nothing else moves", the lock keeps the draft's account of its drafting:
+    - §1, "that block's Q1 and Q2 are open", and §7, "its block's Q2 at `8c9b5ff` is open (§11)";
+    - §11, "(none adjudicated)" and "This draft strikes none";
+    - §0, "A tool at HEAD `ce3ed7c`", for the generator's run.
+
+    The seat's answers, quoted in the close lines below, and this entry record the rulings and the (A1) run.
+  - **Values-check:** one blind pass, under a brief quoting the list of record v2's items 1–5, over the placed file,
+    this entry, the two close lines and the check raw.
+    - 115 claims: 103 CONFIRMED, 3 IMPRECISE, 0 FAIL, 9 NOT CHECKABLE (acts still to come, Code's conduct, the
+      interpreter's flags, and the checks on the placed file, which the raw now records).
+    - Its three IMPRECISE items are applied: the draft of record's read is named (47), the backticks are Code's form
+      (113), and keeping the four "HEAD `ce3ed7c`" mentions is Code's reading (114).
+    - Its O3 (the bullet above) and O7 are applied. For O7 the check raw was re-assembled: six lines added in its
+      placed-file section, nothing else.
+    - The edits after the check were checked by tool. Raw:
+      [`_lock-m-f3-v1.0-placed_valuescheck`](results/raw/2026-11-15_lock-m-f3-v1.0-placed_valuescheck.md).
+  - **Next,** section A's items 6 and 7 (above): the campaign wiring, with its entry as the seat's §5 item 2. Code
+    asks the coordinating session for RESULTS.md before that entry. The campaign waits for the PI's go (item 7).
+  - **Committed by path:** `LOCK-m-F3.md`, the seat's raw, the check raw, the values-check raw and this entry, with
+    the close lines on `81a40b4`'s entry and on `8c9b5ff`'s. Not pushed.
+
 - 2026-11-15 — **LOCK-m-F3 v1.0: the draft, for the seat's read (the seat's answers of 2026-11-14, §A.7 and §D item
   5, routed by the PI on 2026-11-14), on the PI's cap: "Hour cap: 480 h". Code STOPS for the seat's read: nothing
   follows until the seat answers and the PI routes.** The draft is the v1.0 text above `LOCK-m-F3.md` v0.2's committed
@@ -102,6 +221,21 @@ applied to CLAUDE.md.
     - Raw: [`_lock-m-f3-v1.0-draft_valuescheck`](results/raw/2026-11-15_lock-m-f3-v1.0-draft_valuescheck.md).
   - **Committed by path:** the draft, the block, the check raw, the values-check raw and this entry, with the close
     line on `8c9b5ff`'s entry. Not pushed.
+  - **Close (PI date 2026-11-15): the seat's read, routed.** The seat's answers,
+    [`2026-11-15_lock-m-f3-v1_design-to-code_answers.md`](results/raw/2026-11-15_lock-m-f3-v1_design-to-code_answers.md)
+    (sha256 `49b82ff0dc53bea71d44bb6da640ebb68e8c903f27a30dd0ffd9e06a99470885`), are committed by path with this close
+    and with the entry "LOCK-m-F3 v1.0 — COMMITTED" at the top of the Log. They were routed by the PI's "Route as
+    given" (PI date 2026-11-15), relayed verbatim by the coordinating session.
+    - **Q1:** the draft is adopted with one amendment, (A1). The regenerated draft's diff is exactly (A1), and it is
+      placed as `LOCK-m-F3.md` v1.0, sha256 `fe9518c7…1aa6`.
+    - **Q2,** the raw's §0, second bullet, verbatim (bold markers aside):
+
+      > Q2 — Code's four readings in the draft: (a) the line forms, accepted (LOCK-m-F0 v1.0's "hour cap = 40 h" is the precedent); (b) the decisions block, carried by (A1); the sentence table of record built at Q-F3's VERDICTS session (PIN-V2-24), accepted; (c) D2's boundary by the C7 convention, accepted; (d) G-VER, as `8c9b5ff`'s Q2 below.
+
+      (d) is ruled in the close line on `8c9b5ff`'s entry.
+    - **The departure** disclosed above (the block's §6), the raw's §3, verbatim (bold markers aside):
+
+      > The generator's first form read the HEAD blobs of G-F3's checkpoint, report and reads with `git show` into memory, compared them with the working-tree bytes and discarded them, four times at `ce3ed7c`; nothing printed; the generator of record compares digests (item 1's forms). A departure of item 2, disclosed under item 8, inert: the reader was a scratch script, not a session or a model; its only output was a boolean; no field of any record reached a transcript, a raw or the draft, whose contents come from other sources. Nothing follows; the digest form is the one to keep for every path under `data/*/ckpt` and `data/*/reports`, and the blind values-checker's catch is the system working.
 
 - 2026-11-14 — **LOCK-p-OLMo-{sft,dpo,instruct} v1.0 — COMMITTED: `bd8808c`'s amended drafts, each placed byte for
   byte as its lock, on the seat's answer to item 7 ((a) and (d) together; no BUILD) and the PI's word releasing the
@@ -316,6 +450,22 @@ applied to CLAUDE.md.
       at the top of the Log, carries the line `hour cap = 480 h` in its §2.
     - No seat raw answers this entry's block yet (R1–R9; Q1, Q2). The readings stand as declared, strikable until
       v1.0's commit (Q7).
+  - **Close (PI date 2026-11-15): the seat's read of this entry's block, routed; ledger (70).** The seat's answers,
+    [`2026-11-15_lock-m-f3-v1_design-to-code_answers.md`](results/raw/2026-11-15_lock-m-f3-v1_design-to-code_answers.md)
+    (sha256 `49b82ff0dc53bea71d44bb6da640ebb68e8c903f27a30dd0ffd9e06a99470885`), are committed by path with the entry
+    "LOCK-m-F3 v1.0 — COMMITTED" at the top of the Log. They were routed by the PI's "Route as given" (PI date
+    2026-11-15), relayed verbatim by the coordinating session. Their §0, third to fifth bullets, verbatim (bold
+    markers aside):
+
+    > `8c9b5ff`'s Q1 (R1, the hours basis): R1 stands. m:230 is Q-F3's uncached basis line; the seat's "m:205" in `gl:`§A.7 and §D item 3 named Q-F0's and the OLMo units' line. Ledger (70), the seat's: an anchor named by the form of p's G-PWR, not by the unit's own line; the anchor pass checks the unit a line belongs to. The program's hours line (148–165 h) and §A.5's figures beside are as they should be.
+
+    > `8c9b5ff`'s Q2 (R9, G-VER): confirmed. m:284's G-VER is the verifier — every session's harness bytes reconstructed before any artifact is written, mismatch → STOP — one per substrate per template family, run by every stage on every record; it has no entry of its own in m:363's list. G-F3's 40 of 40 verified is G-VER at the qualification stage; the campaign's records are verified the same way, and a mismatch there is m:324's "G-VER STOP". No separate step is owed before v1.0. The seat's "after G-F3, G-VER and G-PWR" (`pq:`§5) and "G-VER as `pq:`§5 names it" (`gl:`§A.7) read it as a step; it is not one.
+
+    > R2–R8 stand; nothing is struck. §1's line — 832 launches, 21 looks — stands as G-PWR's record has it. The disclosed departure (`81a40b4` §6) is recorded, inert (§3).
+
+    - **Ledger (70)** is the seat's, quoted above; the routing's section A, item 3, puts it in this close line.
+    - The raw's §2 gives each of R1–R9 its ruling. With v1.0's commit the readings stand as of record, and §1's
+      line, `launch counts = A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96`, is in `LOCK-m-F3.md` v1.0 §1.
 
 - 2026-11-14 — **G-PWR (Q-F3)'s program, committed before its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5;
   the seat's answers of 2026-11-14, §A.7 and §D item 3, routed by the PI on 2026-11-14, `cdccc66`):
