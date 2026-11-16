@@ -21,6 +21,101 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **The seat's answers of 2026-11-15 (evening), committed by path, and PROPOSAL-q v0.0 — COMMITTED** (the
+  coordinating session; the raw's §10 items 7–9, routed by the PI as given). Q-F3's campaign has its go after (a′)'s
+  line, and launches after the push; p's box read stands and ADDENDUM-p1 is adopted; n starts with two sessions; the
+  commit window of the raw's §9 is adopted.
+  - **The raw.**
+    [`2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`](results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md),
+    sha256 `1f3ce1f9c668a983632a7a57181fc626d2bf304e3d9e5f23e4df1ec5220df84b`, 16,759 bytes. The design seat placed it
+    untracked. I re-hashed it just before this commit (equal to the sha256 and bytes the paste block names), read it
+    in full, and matched the paste block's sections A–D and N to its §10 item by item (the block in fuller words). It
+    reads three entries that carry no block: `a89a4fa`, `3f017d8` and `7ab4d2f`.
+  - **The PI's words** (PI date 2026-11-15, evening), verbatim: "Route as given". To the seat (2026-11-15, as the paste
+    block dates them), as the paste block and the raw's §0 quote them: "Pods are a go. Everything that's waiting on me
+    is a Go."
+  - **This entry is the coordinating session's line.** The raw's header has the F3 session, the pod session and the
+    coordinating session add their close lines, and PROPOSAL-q's header has the coordinating session add its close
+    line; this entry is that line for both. Item 7's "This raw committed by path with the close lines" is met in the
+    §9 form: the raw is committed here first, and each session's close line follows in that session's own window,
+    since no session edits another session's files.
+  - **Item 7, the commit window [adopt].** The raw's §9, verbatim:
+    - "every commit is by path, inside a commit window the coordinating session grants to one session at a time;"
+    - "an entry is drafted in the session's scratch and spliced into RESULTS.md inside its window, and the session
+      checks that RESULTS.md's diff holds its own hunks only before it commits;"
+    - "no session edits another session's files;"
+    - "the laptop rule and §2.3 item 2 bind them all."
+
+    This commit is the first made under it, in a window this session holds.
+  - **Item 8, PROPOSAL-q v0.0 — COMMITTED [go].**
+    [`PROPOSAL-q-open-menu-self-administration-v0_0.md`](PROPOSAL-q-open-menu-self-administration-v0_0.md) at root, as
+    placed by the seat's side thread of 2026-11-14 and unedited: sha256
+    `6006132be9d2997882ab0ad4543f805243c16d8b3f7209819cc3cb85727ce2c8` (Code's computation, as the paste block asks),
+    19,868 bytes (the paste block's figure). I read it in full before this commit. Its header calls it "A registered
+    intention, not a runnable pre-registration"; the raw's §6 adopts it for that.
+    - Its §8, at the defaults. The raw's §6 names (3), commit v0.0 by path as a registered intention, and (4), §7 (a)
+      into the preprint's limitations at v1. §8's other bracketed defaults: (5) the order of §6.2 as given; (6) L3(a)'s
+      data, the lineage's published preference pairs; (7) q4 stays in this document (split at v0.1 if D8's document
+      exceeds a section). (1), the date, is the header's "PI date 2026-11-14"; (2), the letter, is q.
+    - Its §9 candidate is ledger (71), the raw's §8: "q §9's candidate, as written there: a novelty claim (H2) made in
+      chat without re-reading PROPOSAL-e. Fix as q §9 has it."
+    - The raw's §6: "v0.1 is written when its own §6 says, unless the PI asks for a q1-only v0.1 sooner; nothing of q
+      runs before v1."
+  - **Item 9, ledger (73) [inert, no strike].** The raw's §8, verbatim (bold markers aside): "(73) A departure of the
+    list of record v2, item 2 (metadata), disclosed under item 8. On 2026-11-15, at HEAD `3f017d8`, the seat's side
+    thread ("Research direction and publication angle") listed `data/mf3/ckpt` with sizes over the file bridge, once,
+    to learn whether a campaign checkpoint existed. The output went to that thread's context; its reply to the PI says
+    only that no `Q-F3_campaign.json` exists, and no size reached a text. The seat's own, so the ruling is put to the
+    PI (§10 item 9) [inert, no strike]. Fix: a side thread that reads the repository reads the list of record v2
+    first; existence is asked by a names-only listing."
+  - **The seat's other ledger entries** are in the raw's §8: (72) is item 4's, routed to the pod session with its
+    close line on `7ab4d2f`'s entry; (74) stands in the raw.
+  - **The relays**, each verbatim and sent before this commit:
+    - section A to the F3 session: its close lines on `a89a4fa`'s and `3f017d8`'s entries; NOTE-8 as (a′) and (d),
+      with no edit to the driver; the campaign's go after (a′)'s line;
+    - section B to the pod session: its close line on `7ab4d2f`'s entry; the campaigns as routed, with the pod kept
+      up for n; ADDENDUM-p1 v0.1's referent check, its §2.2 answer and its commit. The seat placed the addendum at
+      root, sha256 `16cdbc11ec2afcdcb628e113bef799de2a328f6f709db2ea22b278c1faf3cb1b`, 7,415 bytes; I re-hashed it
+      (equal) and read it in full;
+    - section N: two new sessions started, n-build (n §8 step 6, the read runner's record schema first) and
+      n-analyzer (n §8 step 9's `n_analyze.py` and its battery, from that schema). Each brief quotes the list of
+      record v2's items 1–5 verbatim and the commit window.
+  - **ADDENDUM-p1's §3 item 2.** Its §3 asks the routing block to carry "The PI's target for v1, in his words"; the
+    pod session found the block does not, and my verbatim copy of the block confirms it. I put it to the PI. The PI's
+    words in chat (no date of their own; Code's date 2026-11-15), verbatim: "The most solid paper I could drop on
+    Arxiv early Dec. I care most about it being a meaningful contribution rather than semi-arbitrary v1 vs v2
+    nomenclature", the reply to my question "What's your target for v1, in your own words?". Relayed verbatim to the
+    pod session for the addendum's commit entry.
+  - **The raw's §2.3, the laptop for the campaign's length.**
+    - Item 1 ("For the PI: automatic macOS updates off until the campaign ends", bold markers aside) was relayed to
+      the PI. The PI's word in chat (no date of its own; Code's date 2026-11-15): "Auto updates are off." I read the
+      setting back: the four automatic-update keys of the system's SoftwareUpdate preferences read 0.
+    - Item 2 binds every session: no other model process; model-free test batteries at low priority, one at a time.
+      This session gives each battery a window, its own form (§9's windows are for commits).
+    - n-analyzer found that the laptop's only Python with numpy is the Qwen venv's, whose command line m's guard
+      counts as a model process at a Q-F3 invocation's precheck and post-load check. The F3 session showed from the
+      source that the guard runs only at an invocation's start (`scripts/mf3_sessions.py`:909;
+      `valence_core/mf3/stages.py`:281, through `_begin`, which `run_campaign` calls once), and I checked the sites.
+      So, this session's own form: every window closes before each launch or resume, and reopens when the F3 session
+      reports the PID alive 30 minutes after it, read by the PID alone (list v2 item 5).
+    - This session's own condition: the launch waits for the push (item 12) and for the PI's word on item 1, which is
+      now given.
+  - **Next, in this session's order:**
+    - the close lines (F3 ×2, pod ×1) and `ADDENDUM-p1 v0.1 — COMMITTED`, each in its window;
+    - the pre-push screen and the push (item 12, "[push now]"), before Q-F3's campaign has data and before any
+      VERDICTS session;
+    - then (a′)'s line and Q-F3's launch;
+    - p's three campaigns as routed, the pod kept up for n (item 5); the corpus's acceptance check and assembly when
+      the parts land (item 11);
+    - the p VERDICTS sessions, fresh, after ADDENDUM-p1's commit and the push.
+  - **A blind values-check** of this entry: 75 claims, 53 CONFIRMED, 9 IMPRECISE (all applied), 0 FAIL, 13 NOT
+    CHECKABLE (this session's own acts and relays, and this commit). Its two observations are met by the line above on
+    item 7 and this entry's line. The ADDENDUM-p1 and §2.3 paragraphs carry facts that arrived after the check; they
+    were checked by tool. Raw:
+    [`_campaign-go-routing_valuescheck`](results/raw/2026-11-15_campaign-go-routing_valuescheck.md).
+  - The raw, PROPOSAL-q, RESULTS.md and the values-check raw only. Nothing ran on a model or the box. Not pushed.
+    Committed by path.
+
 - 2026-11-15 — **BACKEND — characterization (CLAUDE.md's respawn protocol; m:251; the seat's answers of 2026-11-12,
   `pq:`§4.3 item 4, and of 2026-11-14, `fd74d3f6…e3ff`, §2 item 2), on the PI's go of 2026-11-15 ("Go for the pod
   whenever you need it"): the respawn protocol on the replacement box, pod `m43y3deb1gq3rp`, for PROPOSAL-p's three
