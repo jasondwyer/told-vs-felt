@@ -21,6 +21,106 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **p's counters at VERDICTS: the counters script and its self-test, committed before the script reads
+  any released record (the seat's answers of 2026-11-16, §3, §4 and §5 step 3), and two readings of "the counts the
+  record names" put to the seat. STOP for the seat's read on R1 and R2, which hold the counters step for the three
+  units and nothing else.** This entry is the dpo VERDICTS session's; the coordinating session gave it the counters
+  step. Nothing ran on a model or the box. No checkpoint, call log or p output was opened for content, and nothing
+  under `data/mf3` was listed or read.
+  - **The routing.** The PI's word on the paste block "DESIGN → PI → CODE (master session) — PI date 2026-11-16" was
+    "Route as given", relayed by the coordinating session. The block's section B, items 3–5, is quoted verbatim in the
+    instruct session's close on `9189623`'s entry (below). Items 3 and 4 rule the step, as the script's docstring
+    cites them; item 5 orders its commit.
+    - The seat's raw (sha256 `01ae2ae7…1b0f`, committed at `18102d0`), §3, verbatim in part: "the script imports p's
+      counter definitions and the frozen key table unchanged and adds no definition of its own; it is committed, with a
+      self-test that reproduces G-F0m-OLMo (p)'s committed sham figures from the reads files (159/160, 159/160,
+      160/160), before it reads any released record".
+    - The division of the work, from the coordinating session's close at `18102d0`: "the dpo session writes the counters
+      script and its self-test and runs the counters step after the third run".
+    - On the two readings, the coordinating session's word: "Yes, both go to the seat, before the counters step reads
+      anything".
+  - **The script:** `scripts/p_verdicts_counters.py`, sha256 `8e7fbed3…6905`. It sits outside p's package, so no hash a
+    lock pins moves.
+    - **What it imports:**
+      - from `valence_core/p/report.py`, p §2.3's predicates and p's own `session_counters`;
+      - p's renders of record;
+      - `task_correct.py`, loaded from its committed raw (`57e9c7dc…56e2`; the script itself `9aa0e2d9…4e0f`), both
+        sha256s checked;
+      - from m, the checkpoint reader (`resume.read_checkpoint`), the act of release (`readrule.release_full`) and the
+        pool (`corr.load_pool`); and p's and m's package hashes.
+    - **What it adds:** no definition. It applies the imported predicates to every recorded round of every recorded
+      session, by arm and phase, and the key table and match rule to the rounds R1 names.
+    - **Five gates.** Before them `run` reads only the task_correct raw, the pools file and the lexicon. It reads no
+      checkpoint until they pass, and no p report but the six time and qual p reports its gate-5 self-test reads:
+      - the three end notices' exit statuses, stated and each 0;
+      - each unit's output present, checked by existence only;
+      - p's and m's package_sha256 equal to the lock's (`a38d93bb…`, `7756dcf4…`);
+      - its own bytes equal to its blob at HEAD;
+      - its self-test, passing in the same process.
+    - **Then:**
+      - it reads nine checkpoints by exact path and checks them all before any count prints;
+      - the cells the stage reports carried are recomputed two ways, by p's `session_counters` and by the step's own
+        table, and each is asserted equal to the committed report;
+      - any difference STOPs, and after the gates any failure in that pass is a STOP (exit 4).
+  - **The self-test**
+    ([`_p-verdicts-counters_selftest`](results/raw/2026-11-16_p-verdicts-counters_selftest.txt)). It ran at `nice -n
+    19`, one invocation in each of three battery windows the coordinating session granted.
+    - Run 1, on the script as built (`f4ec08c3…9339`): 23/23.
+    - Run 2, after review round 1 (`a2687010…5b29`): 35/35.
+    - Run 3, of record, on the committed bytes: 37/37, exit 0, stderr empty.
+    - It reproduces G-F0m-OLMo (p)'s sham `task_correct`, 63/64 + 96/96, 63/64 + 96/96 and 64/64 + 96/96 (159/160,
+      159/160, 160/160). It gets them through the imported `tally_file` and through the step's own count, and gets
+      G-TIME-OLMo (p)'s 3/4 + 6/6, 4/4 + 6/6 and 4/4 + 6/6 as well.
+    - p's own `session_counters` over the reads files' sham records gives the committed qual and time p reports' sham
+      cells for the three units, and no withheld cell is computed.
+  - **The blind review**
+    ([`_p-verdicts-counters_review`](results/raw/2026-11-16_p-verdicts-counters_review.md)):
+    - round 1 found no MAJOR, seven MINOR and six NOTE, each applied or answered there;
+    - round 2, on the revised bytes: no MAJOR, two MINOR and nine NOTE, each applied or answered there. Its MINORs, both
+      applied: after the gates a failure was reported as a refusal (now a STOP), and an exception in the gate-5
+      self-test escaped (now contained).
+  - **The block. STOP for the seat's read on R1 and R2**
+    ([`_p-verdicts-counters_code-to-design`](results/raw/2026-11-16_p-verdicts-counters_code-to-design.md)):
+    - **R1, Code's reading:** `task_correct` is counted on the gate stages only, G-TIME-OLMo (p) and G-F0m-OLMo (p).
+      That covers their contrast sessions' rounds, with their sham rows recounted as a check. The campaign's is not
+      computed.
+    - **R2, Code's reading:** the proxy's counts over the contrast sessions are not computed. They need the call logs,
+      and the step reads the three checkpoints.
+    - **What they hold:** the counters step for the three units, which reads nothing until the seat's answer on R1 and
+      R2 is routed. They hold nothing else. The three `verdicts` runs go ahead, as the coordinating session has it.
+  - **This session's close line** on `9189623`'s entry (the paste block's item 6) is in this commit.
+  - **A departure, disclosed: this session's, before it had asked for any window.** Two `python3 -c` processes ran
+    without a battery window, one per unit (sft, instruct), each momentary. They printed the first decision item of m's
+    committed `data/m/verdicts/OLMo-{sft,instruct}_not-run-record.json`.
+    - Their command lines named `OLMo-sft` and `OLMo-instruct`. m's guard (`MODEL_PROCESS_MARKERS`, matched without
+      regard to case) would have counted them had a Q-F3 launch or resume fallen in that instant.
+    - No Python has run since outside a window; JSON checks use `jq`.
+    - The coordinating session's word: "Noted, and harmless: momentary, model-free, no Q-F3 invocation starting, and it
+      read committed m NOT-RUN records of closed units."
+  - **Reads under the list of record v2 and the amended brief:**
+    - the self-test read the files its raw names;
+    - Code read, from `data/p/reports`, dpo's p reports and m's dpo campaign report, for their structure and the
+      figures already reported (`jq` and the file reader);
+    - Code read the three decisions inputs under `data/p/verdicts` (inputs, not outputs);
+    - Code digested dpo's three checkpoints (`shasum`, and `git hash-object` against `git rev-parse`) in its `verdicts`
+      precheck, and named their paths in a scoped `git status --porcelain` there; none was opened for content;
+    - Code listed `data/p` and `data/p/verdicts` by name only (`git ls-files`, `ls`).
+  - **The blind values-check** of the five texts (this entry, the close line, the block and the two raws): 159 claims,
+    121 CONFIRMED, 18 IMPRECISE, 1 FAIL, 19 NOT CHECKABLE.
+    - The FAIL was in the review raw's round-1 dispositions: "every read-domain cell has a hit", where the synthetic
+      sham harness-line and refusal counters have none.
+    - The FAIL and each IMPRECISE are applied in the checker's terms. The edits were checked by tool, not by a second
+      blind pass.
+    - Raw: [`_p-verdicts-counters_valuescheck`](results/raw/2026-11-16_p-verdicts-counters_valuescheck.md).
+  - **Next:**
+    - the three `verdicts` runs, one per window. The coordinating session holds them for the PI's answer on item 8, a
+      push first or not; the push itself is not a condition of the runs (the seat's §8 item 8);
+    - after the third run ends and the seat's answer on R1 and R2 is routed, the counters step for the three units, in
+      a window: `nice -n 19 $PY -B scripts/p_verdicts_counters.py run --exit OLMo-sft=0 --exit OLMo-dpo=0 --exit
+      OLMo-instruct=0`, its stdout committed in a raw;
+    - then each unit's outputs and entries, each entry open at "the reads".
+  - Not pushed. Committed by path.
+
 - 2026-11-16 — **p's VERDICTS ×3, held before any run: STOP for the seat on the `--decisions` input, m:318's list of
   the decisions taken with another unit's outcome known (PIN-35), and on two things the three VERDICTS entries must
   carry (Code's joint block, this commit).** The instruct VERDICTS session writes it for the three units, on the
@@ -190,6 +290,27 @@ applied to CLAUDE.md.
       - after the third run ends, the counters step;
       - then the outputs, the raws and the entries, each entry open at "the reads";
       - then the seat's reads (§6), then the close lines.
+  - **Close (PI date 2026-11-16): the dpo VERDICTS session's.** The seat's raw names the three VERDICTS sessions for
+    close lines, and this is the dpo session's. It cites
+    [`2026-11-16_p-verdicts-decisions_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-decisions_design-to-code_answers.md)
+    (sha256 `01ae2ae7a06574cf6d000e32ba86972425d2b86ec0b972ccb0715d5e5d701b0f`), which the coordinating session
+    committed by path at `18102d0`, on the PI's "Route as given". It is committed with the counters script, on the
+    paste block's item 6.
+    - **For OLMo-dpo:**
+      - Q1 (c). This session's reading had been (a).
+        - The input is the block's six items, committed by the instruct session at `db2e821` as
+          `data/p/verdicts/OLMo-dpo_decisions.json` (sha256 `f8eac889…b5e2`).
+        - This session confirmed the file by reading it only. It held m's validator rules, and it held the block's
+          items in the block's words.
+      - Q2 (a), with procedures (i) and (ii), which this session follows. It reads no sibling's output, and its end
+        notice gives the exit status alone until the third run ends.
+    - **This session's piece:** Q3 (a) and Q4 (b), by the coordinating session's division of the work at `18102d0`.
+      - The counters script and its self-test are committed with this line, before the script reads any released
+        record.
+      - Two readings of "the counts the record names", R1 and R2, go to the seat in the same commit's block. The
+        entry of this commit, above, gives them.
+    - **Ledger (75), the seat's,** its fix verbatim: "for an input that is written once, the seat states the rule that
+      admits an item, then the items."
 
 - 2026-11-16 — **n — five early questions for the seat, four on readings the committed schema encodes (`5a97527`)
   and one on the label convention it leaves to the lock, put now so that a ruling moves the schema before work is
