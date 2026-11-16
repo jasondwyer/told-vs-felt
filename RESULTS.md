@@ -229,6 +229,29 @@ applied to CLAUDE.md.
     - Raw: [`2026-11-16_n-build-stop_valuescheck.md`](results/raw/2026-11-16_n-build-stop_valuescheck.md), with the
       report as returned and every disposition.
   - **Committed by path:** the block, the three site-check raws, the values-check raw and this entry. Not pushed.
+  - **Close (PI date 2026-11-16, second sitting; the coordinating session's line, per the n-build raw's header and its
+    §6, items 6–7): the seat's answers, routed.** The seat's answers of 2026-11-16 (second sitting),
+    [`2026-11-16_n-build_design-to-code_answers.md`](results/raw/2026-11-16_n-build_design-to-code_answers.md)
+    (sha256 `a49801523a09d2a7afdfb3e71a2913d216f27b695305707a235bad225ba6151a`, 18,342 bytes), are committed by path
+    here, re-hashed equal to the paste block's figures. They answer this block and `718c48e`'s: STOP Q1 (b), and Q2,
+    BK's form; the schema's Q1 (a), Q2 struck, Q3 (a), Q4 the comparison, Q5 the band; the flagged readings of
+    `5a97527` and `14e65d8` accepted, three amended; ledger (77)–(79). The PI's word on the paste block, verbatim:
+    "Route as given".
+    - **Decisions (n-1) and (n-2)** (the paste block's items 5 and 6, [adopt]) are recorded in ADDENDUM-n1 v0.1's own
+      commit. That commit follows the addendum's referent check (its §8.4) and comes before LOCK-n v0.1.
+    - **Items 7 and 8** are relayed verbatim to the n-build session. The pod session gets the box work of the raw's §5
+      items 1 and 4: the two small tokenizer files, and later the BACKEND extension with §2.4's comparison. **An
+      observation for the seat:** the raw's §6 header says "(and the pod session for items 1 and 4)". That fits §5's
+      numbering. §6's own item 4 is the flagged readings, with no box work. The pod session reads it the same way.
+      Item 7's bracket, "a download only on a failed check — yours", leaves the download to the PI: a download comes
+      only if a check of the two small files against the manifest fails, and then on the PI's word.
+    - **Relayed with them,** the addendum's own words: "Nothing of it runs before Code's commit (rules 9 and 11)". Its
+      §8.3 puts that commit before n-build's ids. So the render, the copy and the comparison wait for ADDENDUM-n1's
+      commit. My reading, for the seat: battery runs of drafts on synthetic data, in a window, are development, not the
+      addendum running.
+    - **Item 12, noted:** `data/n` holds only `bk`. The corpus's acceptance check runs when its parts land, as routed
+      on 2026-11-15.
+    - The n-build session adds its close lines here and on `718c48e`'s entry; the pod session adds one here.
 
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the schema pin moved from `5a97527` to `14e65d8` (n-build's
   schema commit changed the file the analyzer pins; the coordinating session's order: BUILD `5c0ae6b`, then the
@@ -921,6 +944,17 @@ applied to CLAUDE.md.
     session verifies this commit and tells the PI to nudge the seat, naming it. The build goes on under the
     coordinating session's windows. G-ANL-n's canonical run waits for the seat's answers and for its inputs
     (G-CAL-n's dose map).
+  - **Close (PI date 2026-11-16, second sitting; the coordinating session's line, per the n-ganl raw's header): the
+    seat's answers, routed.** The seat's answers of 2026-11-16 (second sitting),
+    [`2026-11-16_n-ganl_design-to-code_answers.md`](results/raw/2026-11-16_n-ganl_design-to-code_answers.md)
+    (sha256 `ff2e5d894442c48d281aa87c2be49cdd97396d2c41c5e7a40d0c012f8d08ebec`, 11,146 bytes), are committed by path
+    here, re-hashed equal to the paste block's figures. They answer this block: Q1 (b) and Q9 (a), through the origin;
+    Q2 (c); Q3 (a) with A.6; Q4 and Q5 confirmed; Q6 (a) amended for N1-P; Q7 the f = 0.10 decision when the cap
+    binds; Q8 Appendix A with the amendments. They accept the block's §3 readings, and PIN-n-20 to -26 with -12 and
+    -16 as amended (registered at `5c0ae6b` and `bedc198`). The PI's word on the paste block, verbatim: "Route as
+    given". Its item 9 is relayed verbatim to the n-analyzer session with items 5 and 6, and so is the addendum's
+    hold, in its own words: "Nothing of it runs before Code's commit (rules 9 and 11)". The n-analyzer session adds its
+    close line here.
 
 - 2026-11-16 — **Dated note (coordinating session), for the seat: the push of 2026-11-15, its pre-push screen, the
   halts of item 4 it met and two departures of mine; and the `data/mf3` hazard of five paths while Q-F3's campaign
@@ -975,6 +1009,41 @@ applied to CLAUDE.md.
     met above, the rest recorded in the raw. Raw:
     [`_push-note_valuescheck`](results/raw/2026-11-16_push-note_valuescheck.md).
   - RESULTS.md and the values-check raw only. Nothing ran on a model or the box. Not pushed. Committed by path.
+  - **Close (PI date 2026-11-16, second sitting; the coordinating session's line, per the p-counters raw's header and
+    its §6, items 5–6): the seat's rulings on this note, routed.** The seat's answers of 2026-11-16 (second sitting),
+    [`2026-11-16_p-verdicts-counters_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md)
+    (sha256 `aea918c5f6f374522ad780ce29685c8c3f950b7457a46933022c090e74680395`, 11,583 bytes), are committed by path
+    here, re-hashed equal to the paste block's figures. Their section C rules on this note. The PI's word on the paste
+    block (PI date 2026-11-16, second sitting), verbatim: "Route as given". The block's item 11, verbatim:
+
+    > 11. The push note (e5aba51): C.1 and C.2 inert, item 4 amended per C.2; C.3's digest rule; C.4 the standing rule for the five data/mf3 paths; a close line on e5aba51's entry with the two later pushes' screens (C.5) [as ruled].
+
+    - **C.1:** the first pass's halt, which I cleared by my own re-run, is inert, with no strike. From here a halt
+      under item 4 goes to the seat with the re-run beside it, whatever its cause is taken to be, and the seat clears
+      it, in a line.
+    - **C.2:** the shape class I printed for the three matches inside `data/mf3/reports` is inert, and item 4 is
+      amended: "For a match inside, the screen may print the rule's name and a shape class (length and alphabet)
+      beside the count by path class — never a value, a key, a path's content or a line."
+    - **C.3:** the three gitleaks matches are sha256 digests by the reports' own schema, false positives by class, and
+      "Push, with a note" stands as the push's word. From here the screen classifies a 64-hex token under a key whose
+      name carries `sha` as a digest and reports it as a count; any other 64-hex match inside stays a halt. (My plan:
+      the screen's gitleaks classification takes this rule before the next push.)
+    - **C.4:** this note's form for the five `data/mf3` paths is the standing rule while Q-F3's campaign runs: they run
+      on the box, whose `data/mf3` holds committed files only, or after the campaign, never on the laptop meanwhile.
+      The window rule for a p VERDICTS run stands as written.
+    - **C.5, the two later pushes, one line each** (gitleaks 8.30.1, the one on the laptop's path; the runs' outputs
+      do not print its version):
+      - `fa27c45..645bd3f`, 13 commits, on the PI's word "Yes, push first": every class CLEAR but `port`, whose one
+        match outside was read (the container port this note's own text declares, the range holding `e5aba51`);
+        nothing inside `ckpt` or `reports`; gitleaks, 0 findings; no halt.
+      - `645bd3f..bedc198`, 1 commit, on the PI's word "Push it": every class CLEAR; gitleaks, no leaks; no halt.
+    - **The paste block's section B (the raw's §6 block B), and the raw's §6 item 5:** the paste block's section B is
+      relayed verbatim to the dpo VERDICTS session, which does the counters for the three units, and in substance to
+      the instruct and sft sessions. The three briefs are amended as the raw's §2.2 words it: the counters step alone
+      reads "each unit's three checkpoints and three call logs", by exact path, never a listing, for the counts the
+      record names. After the counters raw, each session commits its own unit's outputs, secondary, raws and entries
+      (`— VERDICTS` and `— secondary DVs`, as routed on 2026-11-15), the division `18102d0`'s close line records; the
+      dpo session adds its close line on `9464f61`'s entry, with ledger (76).
 
 - 2026-11-16 — **n package — the read runner's record schema, committed first and alone (PROPOSAL-n v0.2 §8 step 6;
   the seat's answers of 2026-11-15, §5.1; the PI's "Route as given" on that evening's routing, section N, item 10):
