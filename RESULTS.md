@@ -21,6 +21,91 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **p's VERDICTS ×3, held before any run: STOP for the seat on the `--decisions` input, m:318's list of
+  the decisions taken with another unit's outcome known (PIN-35), and on two things the three VERDICTS entries must
+  carry (Code's joint block, this commit).** The instruct VERDICTS session writes it for the three units, on the
+  coordinating session's instruction. The sft and dpo VERDICTS sessions sent their facts and readings, and each item
+  taken from them was re-verified. Nothing ran in this session: no `verdicts` invocation and no Python. No p VERDICTS
+  output exists.
+  - **The routing,** verbatim: the PI's paste block of 2026-11-15 (evening), "Route as given", section B, item 6:
+
+    > ADDENDUM-p1 v0.1: referent check, the answer to its §2.2, then "ADDENDUM-p1 v0.1 — COMMITTED", before any p VERDICTS session [adopt]. Then PROPOSAL-p OLMo-{sft,dpo,instruct} — VERDICTS and — secondary DVs, fresh sessions [go, after its commit].
+
+    The PI's word to start the three sessions, in chat, relayed by the coordinating session: "Start them".
+  - **The hold.** The coordinating session's instruction, in its words: "So it's a STOP for the seat: one joint block
+    for all three units, written by you, since you raised it." Its later word: "One block, four questions". No session
+    runs `verdicts` until the seat's answer is routed; the sft and dpo sessions hold too.
+  - **What the record settles** (the block's §2): the seat's Q6 form (`de729c4`, §2; the dated note added at
+    `d215d5b`) gives two items, each with `other_unit` Q-F0 and `other_state` PASS: A-m1's decision (16) as m's records
+    carry it, and PROPOSAL-p's adoption (2026-11-07). m's three NOT-RUNs enter each output's `p` block through
+    `analysis.decisions_beside`. Q-F3's outcome is known at no run. The three sessions agree on these.
+  - **The questions,** each with what it stops:
+    - **Q1** (the decisions input): which of the decisions Q6's list does not name enter the input, and which go in the
+      entry's text only? The block gathers them across the three sessions:
+      - the PI's cap share, "2 h each" (2026-11-14), where m:318 names "an OLMo cap";
+      - the PI's "Place the locks" (2026-11-14), where m:318 names "a declined v1.0";
+      - ADDENDUM-p1's decision (p-1) (2026-11-15), whose §2.4 asks for "m:318's form";
+      - the PI's goes for p's stages, each with its anchor: the class m's own not-run records put in the analyzer's
+        input. Q6 names no go, though the G-CAL-p go and m's go-carrying records existed when it was written.
+
+      Stops the three runs.
+    - **Q2** (the decisions input): does a unit's list carry a sibling p unit's outcome, when the sibling's VERDICTS
+      exist before the unit's run? Code reads m:318's trigger as the VERDICTS' existence, not anyone's reading of them,
+      so the readings turn on whether a run, or the window that starts it, is a decision about its unit. The block
+      names two order-free procedures for the seat to weigh, without choosing them: the three inputs fixed before the
+      first run, and no sibling's state read or carried in an end notice until the third run ends. Stops the three runs
+      and their order.
+    - **Q3** (the entries): p §2.3's counters are due in the VERDICTS entries over the contrast sessions too, and p's
+      stage reports withhold that part "to the unit's VERDICTS … recomputable from the checkpoint"
+      (`valence_core/p/report.py:249–252`). No p code computes it. For `task_correct` the seat has ruled the form:
+      "Tabulated by Code's own step from the records at each entry" (A-m2 v0.3 §3.4's). Stops the entries' counters, not
+      the analyzer's outputs.
+    - **Q4** (the entries): the list of record v2 binds "for every unit before its VERDICTS or NOT-RUN record", and the
+      three sessions' briefs say "Never open them yourself", with no end given. The `task_correct` ruling and p §2.3
+      presume a read of the records at VERDICTS. Q-F0's entry also carried Code's own extractions (E1–E12, `0fa8539`),
+      which it records as "an addition to block §4's list that carries no figure of record": Code's precedent, not m's
+      requirement. Stops the entries' contents beyond the outputs and the reports.
+  - **Readings,** declared and not applied (the block's §5):
+    - Q1: (c) for the instruct and sft sessions. The input holds §2's two items, the cap share, the placement, (p-1)
+      and the PI's go for the campaigns, on PIN-35 ("m:318's record") and m's precedent. The other goes go in each
+      entry's text. (a) for the dpo session: §2's two items in the input, the rest "in the VERDICTS **entry** in m:318's
+      form".
+    - Q2: (a), no sibling item, for the instruct session; the dpo session's message reads the run order as "not a
+      decision about a unit"; the sft session gave none.
+    - Q3: (a), Code's own step, after a unit's analyzer output exists, over its released records, outside p's package.
+    - Q4: (b), the list of record's per-unit rule, for the counts the record names and nothing beyond them.
+  - **Not questions** (the block's §6):
+    - `p_analyze.py verdicts` never reaches `m_analyze.battery()` and touches nothing under `data/mf3`.
+    - The other arguments are settled from the record. Each lock's sha256 equals the `lock_sha256` the campaigns'
+      precheck printed (sft `fafb786d…`, dpo `25c52f56…`, instruct `f71c97c1…`). The checkpoints are
+      `data/p/ckpt/OLMo-{ckpt}_{campaign,time,qual}.json`. There is no adjudication and no PI-stop.
+    - Under every reading, each VERDICTS entry carries ADDENDUM-p1 §2.4's sentence and p §5.4's disclosure; sft's also
+      carries `daca8b0` §0.1's sentence.
+  - **The block:** [`_p-verdicts-decisions_code-to-design`](results/raw/2026-11-16_p-verdicts-decisions_code-to-design.md),
+    with Code's draft input items in its §2 and §3.
+  - **Reads under the list of record v2:**
+    - This session opened no checkpoint, call log or report, and listed or read nothing under `data/mf3`. One `git
+      ls-files` over `data/p` ran with the `ckpt` and `reports` names filtered from its output (item 1's form). Two
+      later name listings under `data/p/ckpt` were refused by this session's permission classifier before they ran, so
+      the paths above come from the entries that committed them.
+    - The second values-checker ran one whole-index `git ls-files` piped to a name filter. It printed two names, both
+      outside `data/`, but it passed over index names under `data/*/ckpt`, `data/*/reports` and `data/mf3`. It is item
+      1's form; the checker disclosed it because its brief said never to list under those directories. For the seat.
+  - **Blind values-check,** two passes, raw
+    [`_p-verdicts-decisions_valuescheck`](results/raw/2026-11-16_p-verdicts-decisions_valuescheck.md) (both checkers'
+    raws verbatim, local paths scrubbed):
+    - the first, of the two-question draft: 109 claims, 97 CONFIRMED, 3 IMPRECISE, 1 FAIL, 8 NOT CHECKABLE;
+    - the second, of the four-question draft: 141 claims, 123 CONFIRMED, 12 IMPRECISE, 0 FAIL, 6 NOT CHECKABLE.
+
+    The FAIL (a hash's tail), each IMPRECISE and each observation are applied. Five observations were MAJOR. Applying
+    them set PIN-35 and m's precedent beside Q1 (a), and moved the instruct session's Q1 reading from (a) to (c). They
+    framed Q2 on the VERDICTS' existence and fixed Q3 on the seat's `task_correct` ruling. And they named Q-F0's
+    extractions as Code's precedent, with readings on Q3 and Q4 added. The text added after the second pass was checked
+    by tool, quote by quote; there was no third blind pass.
+  - **Next:** the seat's answer and the PI's routing. Then the three runs, one invocation per unit in the coordinating
+    session's windows, and the six entries, each VERDICTS entry with ADDENDUM-p1 §2.4's sentence.
+  - Not pushed. Committed by path.
+
 - 2026-11-16 — **n — five early questions for the seat, four on readings the committed schema encodes (`5a97527`)
   and one on the label convention it leaves to the lock, put now so that a ruling moves the schema before work is
   built on it. They do not stop the build. Next: the rest of
