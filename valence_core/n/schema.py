@@ -19,8 +19,9 @@ other records, not specified here; the stage report and G-READ-n's artifact are 
 clock is a record in the analyzer's own schema (n-analyzer's `n-not-run-v1`); a NOT-RUN for no arm complete is derived
 from a report's end state and completeness.
 
-THE TWO PATHS (Code's construction, declared here; LOCK-n v0.1 pins it). BK's ``prereg.precondition_cache``
-(``data/n/bk/.../neutral_passages/analysis.json``) states the check n §2.1 adopts: "the
+THE TWO PATHS (Code's construction, accepted: the seat's answers of 2026-11-16, second sitting,
+``results/raw/2026-11-16_n-build_design-to-code_answers.md``, §3; LOCK-n v0.1 pins it). BK's
+``prereg.precondition_cache`` (``data/n/bk/.../neutral_passages/analysis.json``) states the check n §2.1 adopts: "the
 prefill-plus-cached-continuation margin against a fresh full forward over the identical ids under the identical
 additive mask".
   * ``cached`` -- the read of record (BK's ``margin``; n §4's m(c)): one prefill forward over the read sequence
@@ -42,16 +43,18 @@ each window at or below 4,096).
 
 THE RESTRICTED READ (n §2.1's secondary, "this program's restricted two-label first-token read (m:172's
 `choice_read` form, b3's on OLMo) on the same forward"). Every label of BK's set of 12 begins with the word "Zone",
-so the two labels' token sequences may share a prefix (whether they do is the tokenizer's). Code's reading, flagged
-for the seat at the BUILD: the read is taken at the first label-token position where S's and U's token sequences
+so the two labels' token sequences may share a prefix (whether they do is the tokenizer's). As the seat ruled (the
+seat's answers of 2026-11-16, ``results/raw/2026-11-16_n-build_design-to-code_answers.md``, §2.1; ADDENDUM-n1 §3),
+the read is taken at the first label-token position where S's and U's token sequences
 differ (offset ``k`` past the read position; for k >= 1 it lies on the cached continuation, the shared prefix
 teacher-forced): the two divergent tokens' full-softmax probabilities, renormalized; ``label_mass`` their sum; the
 pick is the larger, a tie going to ``present[0]`` (m's ``choice_read`` gives ties to its first label). m's
 ``choice_read`` also re-forwards the identical text to verify it (KL exactly 0.0); n takes the read on the read's
-own forward and does not repeat that re-forward -- §2.1's fidelity re-computation is n's re-forward (Code's
-reading, flagged).
+own forward and does not repeat that re-forward -- §2.1's fidelity re-computation is n's re-forward (the same
+ruling).
 
-SPANS AND THE SHADOW (rule 5(f)(i)-(iii); n §2.2; the record's provenance is Code's construction, declared here).
+SPANS AND THE SHADOW (rule 5(f)(i)-(iii); n §2.2; the record's provenance is Code's construction, declared here;
+the shadow by reference accepted: the seat's answers of 2026-11-16, §3).
 ``steered_spans`` lists the half-open token ranges the injection covers, each with its zone: the session record's
 ``turn_spans`` whose zone is ``cue_S`` (the S whole-turn spans, G-DATA (v); its dated note G-2) for every steered
 arm except N1-P, which steers every ``turn_spans`` entry of both zones (§2.4, "same-pole"). ``mask_sha16`` is k's
@@ -65,19 +68,28 @@ per-session interval so fixed meets rule 5(f)(iii)'s "held fixed within a cell" 
 seat. Every steered read names its shadow, the N1-V d = 0 read of the same session ("the 160 at d = 0 are the
 shadows for every arm", §2.4), whose ``ids_sha`` equals its own; the runner writes a steered read only after its
 shadow's record is on disk. The renderer reproduces BK's ids on all 160, G-DATA's dated note G-1's two recorded
-splits (``neu_b1`` run 62, ``neu_b3`` run 113) included; how they are carried is the lock's.
+splits (``neu_b1`` run 62, ``neu_b3`` run 113) included; the ids of record carry them (ADDENDUM-n1 §1:
+``data/n/ids/``, committed at ``d76f34f``).
 
 CAPTURES (n §2.2: "the residual at the read position captured at layers 32 and the final layer on every
-forward"; the form is Code's reading). From the cached path's prefill, at the read position: the residual after the
-site's decoder layer and after the last decoder layer (olmo_hf's capture index l is the residual after decoder
-layer l, 0-based; index n_layers - 1 is before the final norm: G-ACQ's hook-site check). float32, stored per cell
-in one ``.npy`` array of shape [rows, len(capture_layers), d_model], row r holding the cell's r-th record; each
-record carries its row and each layer's ``sha16_arr``. The fresh path's read-position residuals, from each of its
-two forwards (label S's and label U's), are hashed into the fidelity block, not stored. The cached path's
-continuations hold no read-position residual of their own (the cache keeps keys and values), so every forward
-that computes one is captured or hashed, and every read captures: G-TIME-n's "capture-on" kind is every read.
+forward", read as a band: ADDENDUM-n1 §6.2; the seat's answers of 2026-11-16, §2.5). From the cached path's prefill,
+at the read position: the residual after every decoder layer past the site through the last, 31 or 32 layers,
+``capture_layers = list(range(layer + 1, n_layers))`` (olmo_hf's capture index l is the residual after decoder
+layer l, 0-based; index n_layers - 1 is before the final norm: G-ACQ's hook-site check). float32, one ``.npy``
+array per cell per layer, named by ``capture_filename``, of shape [capacity, d_model] -- ``capture_capacity``: 40
+rows for N1-R's cells, 160 for every other -- row r holding the cell's r-th record, written in place, rows from
+``capture_rows`` on unwritten (Code's form, for I/O: a row is written once, never the array again). Each record
+carries its row and each layer's ``sha16_arr``; the cell file carries, per layer, the sha256 of the written rows
+[0, capture_rows) as float32 little-endian bytes in row order (``capture_sha256``). The arrays -- about 4.7–4.8 GB
+at 7,360 reads (ADDENDUM-n1 §6.2's figure), about 4.9–5.0 GB at the 7,680 rows -- are kept on the box's volume
+during it and copied to the laptop with their hashes before the pod stops, never committed to git; the lock pins
+the per-cell hash lists. The fresh path's read-position residuals, from each of its two forwards (label S's and
+label U's), are hashed into the fidelity block, not stored. The cached path's continuations hold no read-position
+residual of their own (the cache keeps keys and values), so every forward that computes one is captured or hashed,
+and every read captures: G-TIME-n's "capture-on" kind is every read.
 
-FIDELITY (n §2.1; G-DATA (vi); the comparison's form is Code's reading). ``absdiff = |margin - fresh_margin|``;
+FIDELITY (n §2.1; G-DATA (vi); the comparison's form is Code's reading, accepted: the seat's answers of 2026-11-16,
+§3). ``absdiff = |margin - fresh_margin|``;
 ``scale = max(|logprob_S|, |logprob_U|)`` of the cached read (the scale identified by reproduction, the step-2
 referent check's N1); ``rel = absdiff / scale``; ``exceeds_tau = rel > TAU`` and ``exceeds_tau4 = rel > TAU / 4``
 (§4 (f)'s sensitivity row). ``reason`` is ``dose-rule`` -- §2.1: "at d ∈ {0, +1, −1} every read is re-computed",
@@ -93,9 +105,10 @@ reading). At ``backend-ext``, which measures the bound, the block is null.
 
 N4 (n §2.4). ``told_variant`` "TOLD" (N4-T) or "SHAM" (N4-Ts); ``schedule_zone`` the zone the 80/80 schedule assigns
 the session ("S" or "U": the zone the TOLD line names; the referent zone of the sham arm's E, §4); ``told_line`` the
-line itself, §2.4's words (that the record carries the line, not its rendered join, is Code's reading). §2.4 puts
-the line in the choice prompt before "Reply with ONLY…"; the exact join is the lock's. N4's token sequence is its
-own: ``ids_sha_bk`` is null.
+line itself, §2.4's words (that the record carries the line, not its rendered join, is Code's reading, accepted:
+the seat's answers of 2026-11-16, §3). §2.4 puts
+the line in the choice prompt before "Reply with ONLY…"; the join is fixed (ADDENDUM-n1 §1.2 (ii)): after the
+prompt's first sentence, one space on each side. N4's token sequence is its own: ``ids_sha_bk`` is null.
 
 CROSS-RECORD PROPERTIES are not checked here, where one record or one cell is checked: a steered read's shadow exists
 with the same ``ids_sha`` (the runner asserts it before the read); ``ids_sha_bk`` equals the session record's (the
@@ -108,12 +121,13 @@ float finite. A non-finite number in a path makes that path's ``finite`` false a
 pauses). No record carries a time of day: ``duration_ms`` is the read's wall-clock of model work, both paths, and
 ``duration_ms_fresh`` the fresh path's share (null without a re-computation), for G-TIME-n's kinds and the cap.
 
-NOT RECORDED: Δm; the free-text reply of n §4 (b) (§2.1: "No new text is generated for N1, N2 or N4"; flagged for
-the seat at the BUILD); BK's welfare probes, which n does not run.
+NOT RECORDED: Δm; the free-text reply of n §4 (b) (§2.1: "No new text is generated for N1, N2 or N4"; §4 (b) is
+struck: ADDENDUM-n1 §4); BK's welfare probes, which n does not run.
 
 FILES. A stage's checkpoint directory holds one cell file per (arm, direction, dose point), named by
-``cell_filename``, beside its capture array; both written atomically (m's ``resume.atomic_write_json`` for the
-JSON), the array first.
+``cell_filename``, beside its capture arrays, one per capture layer, named by ``capture_filename``. A read's rows
+are written in place first, each array flushed to disk, then the JSON atomically (m's
+``resume.atomic_write_json``), so a JSON on disk never names a row its arrays lack.
 
 THE DOSE MAP (n §2.3: "d_eq = (0.10 · R_ℓ)/(ρ · R) and d_20 = min(1, 2·d_eq) ... a point within 0.05 of an
 existing one is merged"). ``check_stage_identity`` requires, exactly, ``rho == 0.3``,
@@ -121,10 +135,11 @@ existing one is merged"). ``check_stage_identity`` requires, exactly, ``rho == 0
 the merge rule, settled with n-analyzer so both sides derive the same points, is ``dose_points``' docstring.
 
 THE READ PLAN. ``read_plan(identity)`` is the campaign's declared read set: n §2.4's arms over the stage's dose map,
-N1-R on the 40 floor sessions, every other arm on all 160 -- 7,360 reads when nothing is merged. §2.3 states the
-merge for N1-V's points; that it reaches every arm reading BK-scale points (N1-V and N1-R, whose floors and leak
-ceilings are taken point by point, C12), and that a merged point is read once under the label kept, are Code's
-readings, flagged for the seat. An arm is complete exactly when its obtained read_ids are its plan's.
+N1-P at +1, +d_20, +d_eq and -1 (ADDENDUM-n1 §5.2), N1-R on the 40 floor sessions, every other arm on all 160 --
+7,680 reads when nothing is merged. §2.3 states the merge for N1-V's points; it reaches N1-R point for point (C12's
+floors are per point) and N1-P, and a merged point is read once under the label kept, its ``keeper`` (``arm_cells``;
+the seat's answers of 2026-11-16, §2.3; ADDENDUM-n1 §5.1-§5.2). An arm is complete exactly when its obtained
+read_ids are its plan's.
 
 THE STAGE REPORT (``n-report-v1``), settled with n-analyzer. Written at the end of every invocation that ends by the
 rules below. An invocation that ends otherwise (an exception, a refused write, a kill, a lost box) writes none; the
@@ -133,36 +148,40 @@ other per-read model output: the identity, counts, states, read ids, launch indi
 carries:
   * the stage identity and its sha256 (``identity_sha256``), and the plan's sha256 at the campaign;
   * planned, obtained and complete for every arm of the stage's plan. Obtained counts the records on disk, finite or
-    not, so an arm with a non-finite read can be complete; the analyzer treats such a read as unusable (Code's
-    reading, flagged);
-  * each cell file's sha256s and record count. Every cell is at a point the stage's dose map keeps, and its arm has
-    a per-arm entry;
+    not, so an arm with a non-finite read can be complete; the analyzer treats such a read as unusable (accepted,
+    with PIN-n-20's consequence: the seat's answers of 2026-11-16, §3);
+  * each cell file's sha256s and record count. Every cell is at a point the stage's dose map keeps for its arm
+    (``arm_cells``), and its arm has a per-arm entry;
   * every pause of the stage, in launch order, its id ``p01``, ``p02``, ... by its place in the list. A pause stands
     on the arms in its scope while it is unadjudicated. Its scope holds its read's arm, with no arm twice; which
-    other arms it holds, and a read-less fire's scope, are the runner's (its SCOPE pin, flagged). An adjudicated
-    pause is cleared, whatever the ruling, and the report records no ruling's effect on reads. A fired monitor ends
-    the invocation, every arm with it (Code's design, flagged: n §6 stops "the arm's launches"), and the runner
+    other arms it holds, and a read-less fire's scope, are the runner's (its SCOPE pin, flagged; the pause stands on
+    its scope's arms, as the seat's answers of 2026-11-16, §3 accept). An adjudicated pause is cleared, whatever the
+    ruling, and the report records no ruling's effect on reads. A fired monitor ends the invocation, every arm with
+    it, and the resume after the ruling continues all (accepted: the seat's answers of 2026-11-16, §3; n §6 stops
+    "the arm's launches"), and the runner
     launches in the stage's run order, so every read after a pause's own was launched after its ruling.
     ``resumed_at_launch_index`` is the first read attempted after the ruling, launched or refused as a rendering
     mismatch. The schema checks that it follows its own pause; that pauses and resumptions interleave as the runner
     launches them is the runner's to keep and the reader's to check. A read that fires two triggers is one pause:
-    its ``kind`` by the precedence rendering, nonfinite, identity-bound, fidelity-binomial, and the rest in
-    ``also_fired`` (Code's reading, flagged: n §6 gives no precedence). An identity-bound trigger is a d = 0 read's
+    its ``kind`` by the precedence the seat fixed (the seat's answers of 2026-11-16, §3): rendering, nonfinite,
+    identity-bound, fidelity-binomial, and the rest in ``also_fired``. An identity-bound trigger is a d = 0 read's
     (n §6: "the identity bound exceeded at d = 0"). A pause at which the binomial fired, as its kind or in
     ``also_fired``, carries the batch (first <= last, 0 <= k <= n, n > 0, 0 < alpha < 1), which ends at the pause's
     read where it has one;
-  * a rendering mismatch during a stage is a pause; G-VER's, before any read, is a G-VER-STOP (Code's reading,
-    flagged: n §6 lists "a rendering mismatch" among its pause-and-adjudicate triggers, and n §3 gives G-VER
-    "mismatch → STOP"). A rendering pause's read is not launched, so nothing else fires with it. It names the read's
-    place; after the ruling the read is attempted there, so its ``resumed_at_launch_index`` may equal its own launch
-    index and a later pause may share that place. A binomial fire at the run's end has a batch and no read: it is
-    the stage's last pause and resumes nothing. A G-VER-STOP comes before any read: its report holds no record and
-    no pause;
+  * a rendering mismatch during a stage is a pause; G-VER's, before any read, is a G-VER-STOP (accepted: the seat's
+    answers of 2026-11-16, §3; n §6 lists "a rendering mismatch" among its pause-and-adjudicate triggers, and n §3
+    gives G-VER "mismatch → STOP"). A rendering pause's read is not launched, so nothing else fires with it. It
+    names the read's place; after the ruling the read is attempted there, so its ``resumed_at_launch_index`` may
+    equal its own launch index and a later pause may share that place. A binomial fire at the run's end has a batch
+    and no read: it is the stage's last pause and resumes nothing. A G-VER-STOP comes before any read: its report
+    holds no record and no pause;
   * the fidelity binomial's running state over the stage: its trials and exceedances, which are the fidelity
     counters' totals; its evaluations; and its fires, each a pause's batch, whose k and n are within the stage's
     exceedances and trials;
   * the STOP's record, its detail one line of at most 200 characters; the cap, whose ``used_ms`` is the sum of the
-    records' ``duration_ms``, model work only (Code's reading, flagged; whether a cap counts loads is the lock's);
+    records' ``duration_ms`` (both paths): it counts the reads' and re-computations' model time, with each
+    invocation's model load reported beside it in ``loads_ms`` and outside it (the lock's clause as the seat ruled
+    it: the seat's answers of 2026-11-16, §3);
   * n §4's counters and the identity-bound count, over the stage. ``rendering_mismatches`` is the number of the
     stage's rendering pauses, or at a G-VER-STOP the number of G-VER's mismatches, at least one; nothing resumes
     after a STOP. ``nonfinite_reads`` and ``identity_out_of_bound`` count at least the pauses that name their kinds.
@@ -180,10 +199,10 @@ The end state is one of COMPLETE, PAUSE, PI-STOP, G-VER-STOP, CAP, by these rule
 
 G-READ-n'S ARTIFACT (``n-gread-v1``), settled with n-analyzer. It carries:
   * the campaign it read: plan, identity and cells, by sha256;
-  * the probe's package sha256 and settings: k's ``fit_lr`` hyperparameters, pinned in ``GREAD_LR`` (Code's reading
-    of n §0.10's B3, "k's form and bar", flagged); the CV form, n §3's grouped leave-one-session-out ("loso"; a
-    grouped k-fold, if the seat allows one for G-READ-n's cost, enters with its fold seed in its own schema
-    commit); the shuffles and their seed; the layers and the bar;
+  * the probe's package sha256 and settings: k's ``fit_lr`` hyperparameters, pinned in ``GREAD_LR`` (n §0.10's B3,
+    "k's form and bar"; accepted: the seat's answers of 2026-11-16, §3); the CV form, grouped 10-fold CV by session
+    ("kfold10", in place of n §3's leave-one-session-out: ADDENDUM-n1 §6.3), and its folds' seed (``cv_seed``, the
+    lock's); the shuffles and their seed; the layers and the bar;
   * at least one result, and at most one per (axis, point) of ``GREAD_AXES``: valence +1, +1/2, +d_20, +d_eq;
     span_reward f0.10, f0.20. The -1 reads enter +1's contrast; that the points are the kept ones is the reader's
     check. A result's
@@ -193,12 +212,13 @@ G-READ-n'S ARTIFACT (``n-gread-v1``), settled with n-analyzer. It carries:
     NOT-COMPUTED. The comparator is the 24 random directions at the point norm-matched to the result's; for
     span_reward's f0.10 and f0.20 that is +d_eq and +d_20, or the points they merged into. The dose map norm-matches
     them where they are kept, and to within the merge distance (0.05 on BK's scale) where they merged; not where
-    d_20 is capped at 1 (Code's reading, flagged).
+    d_20 is capped at 1 (accepted: the seat's answers of 2026-11-16, §3, with ADDENDUM-n1 §5.3 where the cap
+    binds).
 
-The PASS rule is Code's reading of n §3, flagged at the BUILD: the band median is at least .90, above the
-comparator's largest (n §3: "above the comparator's band"), and every layer is above its shuffle null (the last
-clause k §1.4 G3's form). A computed result without a comparator is a FAIL; a NOT-COMPUTED one carries neither a
-comparator nor AUCs.
+The PASS rule is the seat's (ADDENDUM-n1 §6.4; the seat's answers of 2026-11-16, §2.5): the band median is at least
+.90 and above the largest of the comparator's 24 band medians (n §3: "above the comparator's band"). There is no
+per-layer condition (k §1.4 G3's every-layer clause is not adopted); each layer's ``above_null`` is reported. A
+computed result without a comparator is a FAIL; a NOT-COMPUTED one carries neither a comparator nor AUCs.
 
 EXAMPLES. ``example_identity``, ``example_record``, ``example_cell``, ``example_report``, ``example_pause`` and
 ``example_gread`` build valid objects from literals, for this module's self-test and for the analyzer's battery; no
@@ -258,22 +278,26 @@ DOSES = {
 DOSE_SLUGS = {"+1": "p1", "+1/2": "p1_2", "+d_20": "pd20", "+d_eq": "pdeq", "0": "0", "-1": "m1",
               "f0.10": "f010", "f0.20": "f020"}
 
-#: §2.4's table: arm -> the (direction, dose labels) it reads, before §2.3's merges.
+#: §2.4's table, N1-P's row as ADDENDUM-n1 §5.2 amends it: arm -> the (direction, dose labels) it reads, before
+#: §2.3's merges (``arm_cells`` applies them).
 ARM_CELLS = {
     "N1-V": (("valence", ("+1", "+1/2", "+d_20", "+d_eq", "-1")), ("none", ("0",))),
     "N1-R": tuple((r, ("+1", "+1/2", "+d_20", "+d_eq", "-1")) for r in RANDOM_IDS),
-    "N1-P": (("valence", ("+1", "-1")),),
+    "N1-P": (("valence", ("+1", "+d_20", "+d_eq", "-1")),),
     "N2-E": (("span_reward", ("f0.10", "f0.20")),),
     "N2-S": (("span_sentiment", ("f0.10", "f0.20")),),
     "N2-C": (("span_character", ("f0.10", "f0.20")),),
     "N4-T": (("none", ("0",)),),
     "N4-Ts": (("none", ("0",)),),
 }
+#: Each movable label -> the points ``dose_points`` can fold it into (n §2.3; ADDENDUM-n1 §5.1): +d_20 into +1 or
+#: +1/2; +d_eq into those or a kept +d_20 (a fold into 0 is refused; d_20, d_eq > 0 never reach -1).
+KEEPER_CANDIDATES = {"+d_20": ("+1", "+1/2"), "+d_eq": ("+1", "+1/2", "+d_20")}
 ARM_SPAN_KIND = {"N1-V": "S", "N1-R": "S", "N1-P": "SU", "N2-E": "S", "N2-S": "S", "N2-C": "S",
                  "N4-T": "none", "N4-Ts": "none"}
 TOLD_VARIANT = {"N4-T": "TOLD", "N4-Ts": "SHAM"}
-#: n §2.4: TOLD "Prefer [zone X]."; SHAM "Either is fine.", in the choice prompt before "Reply with ONLY…" (the exact
-#: join is the lock's).
+#: n §2.4: TOLD "Prefer [zone X]."; SHAM "Either is fine.", in the choice prompt before "Reply with ONLY…" (the join
+#: fixed by ADDENDUM-n1 §1.2 (ii): after the prompt's first sentence, one space on each side).
 TOLD_LINE = "Prefer {zone}."
 SHAM_LINE = "Either is fine."
 SHADOW_ARM, SHADOW_DIRECTION, SHADOW_DOSE = "N1-V", "none", "0"
@@ -292,7 +316,8 @@ class SchemaError(ValueError):
 # --- field tables -------------------------------------------------------------------------------------------
 # Each entry: name -> (type, nullable, meaning). Types: "str", "int", "float", "bool", "sha16", "sha256",
 # "ints" (list of int), "floats" (list of float), "spans" (list of [int, int, str]), "pair" (list of two str),
-# "layer_sha16" (dict str(layer) -> sha16), or the name of a nested table.
+# "layer_sha16" (dict str(layer) -> sha16), "layer_sha256" (dict str(layer) -> sha256), "layer_names" (dict
+# str(layer) -> a file name), or the name of a nested table.
 
 RECORD_FIELDS: dict[str, tuple[str, bool, str]] = {
     "schema": ("str", False, "RECORD_SCHEMA"),
@@ -337,7 +362,7 @@ RECORD_FIELDS: dict[str, tuple[str, bool, str]] = {
     "logprob_U": ("float", True, "math.fsum(logprob_U_tokens)"),
     "margin": ("float", True, "logprob_S - logprob_U, nats (BK eq. 1)"),
     "restricted": ("restricted", True, "the restricted two-label read; null when not finite"),
-    "capture": ("capture", False, "the read position's residuals: the cell array's row and each layer's sha16"),
+    "capture": ("capture", False, "the read position's residuals: the cell arrays' row and each layer's sha16"),
     "fidelity": ("fidelity", True, "the fresh re-computation: at d in {0, +1, -1} always (campaign, backend-ext), "
                                    "elsewhere on the keyed sample; null otherwise"),
     "identity": ("identity", True, "the d = 0 identity check: on an unsteered read carrying a re-computation, at "
@@ -359,7 +384,7 @@ RESTRICTED_FIELDS: dict[str, tuple[str, bool, str]] = {
 }
 
 CAPTURE_FIELDS: dict[str, tuple[str, bool, str]] = {
-    "row": ("int", False, "the record's row in the cell's capture array"),
+    "row": ("int", False, "the record's row in the cell's capture arrays"),
     "sha16": ("layer_sha16", False, "str(layer) -> sha16_arr of that row's residual at that layer"),
 }
 
@@ -392,9 +417,13 @@ CELL_FIELDS: dict[str, tuple[str, bool, str]] = {
     "direction_id": ("str", False, "the cell's direction"),
     "dose_label": ("str", False, "the cell's dose point"),
     "records": ("records", False, "the cell's records, in launch order"),
-    "capture_file": ("str", False, "the capture array's file name, beside this file"),
+    "capture_files": ("layer_names", False, "str(layer) -> capture_filename(cell name, layer) for every capture "
+                                            "layer: that layer's float32 [capture_capacity(arm), d_model] array, "
+                                            "beside this file"),
     "capture_rows": ("int", False, "len(records)"),
-    "capture_sha256": ("sha256", False, "sha256 of the capture array file's bytes when this file was written"),
+    "capture_sha256": ("layer_sha256", False, "str(layer) -> sha256 of that layer's written rows [0, capture_rows), "
+                                              "float32 little-endian bytes in row order, when this "
+                                              "file was written"),
 }
 
 STAGE_IDENTITY_FIELDS: dict[str, tuple[str, bool, str]] = {
@@ -412,14 +441,16 @@ STAGE_IDENTITY_FIELDS: dict[str, tuple[str, bool, str]] = {
     "read_window": ("int", False, "the declared window of every forward of the stage, at most 4,096 (rule "
                                   "28(d)(c); GA-4)"),
     "session_set_sha256": ("sha256", False, "SESSION_SET_SHA256"),
-    "rendering_id": ("str", False, "the rendering of record (G-DATA (iv)), as the lock names it; at backend-ext, "
+    "rendering_id": ("str", False, "the rendering of record (ADDENDUM-n1 §1: the ids of record, by their "
+                                   "MANIFEST.json), as the lock names it; at backend-ext, "
                                    "before the lock, as the stage's entry names it"),
     "label_convention": ("str", False, "the label token convention, as the lock names it; at backend-ext, before "
                                        "the lock, as the stage's entry names it"),
     "layer_bk": ("int", False, "BK's site, 32 of 64"),
     "layer": ("int", False, "the adapter index of the site (G-VEC settles 31 or 32); at backend-ext, before G-VEC, "
                             "the capture site the stage's entry declares (nothing is injected there)"),
-    "capture_layers": ("ints", False, "[layer, n_layers - 1]"),
+    "capture_layers": ("ints", False, "list(range(layer + 1, n_layers)): every decoder layer past the site through "
+                                      "the last (ADDENDUM-n1 §6.2)"),
     "n_layers": ("int", False, "64"),
     "d_model": ("int", False, "5120"),
     "dose_map": ("dose_map", True, "the dose map of record; null only at backend-ext"),
@@ -462,10 +493,25 @@ def shadow_read_id(sid: str) -> str:
 
 
 def cell_filename(arm: str, direction_id: str, dose_label: str) -> str:
-    """The cell file's name; its capture array is the same stem with ``.npy``."""
+    """The cell file's name; its capture arrays are the same stem with ``.L{layer}.npy`` (``capture_filename``)."""
     if arm not in ARMS or direction_id not in DIRECTION_IDS or dose_label not in DOSE_SLUGS:
         raise SchemaError(f"no cell ({arm!r}, {direction_id!r}, {dose_label!r})")
     return f"{arm}__{direction_id}__{DOSE_SLUGS[dose_label]}.json"
+
+
+def capture_filename(cell_name: str, layer: int) -> str:
+    """One capture array's file name, beside its cell file (one array per cell per layer, ADDENDUM-n1 §6.2): the
+    cell file name's stem plus ``.L{layer}.npy``."""
+    if not cell_name.endswith(".json"):
+        raise SchemaError(f"{cell_name!r} is not a cell file name")
+    return cell_name[:-len(".json")] + f".L{layer}.npy"
+
+
+def capture_capacity(arm: str) -> int:
+    """The rows a cell's capture arrays hold: N1-R reads the 40 floor sessions (C2), every other arm at most the 160."""
+    if arm not in ARMS:
+        raise SchemaError(f"{arm!r} is not an arm")
+    return N_FLOOR if arm == "N1-R" else N_SESSIONS
 
 
 def expected_alpha(dose_label: str, dose_value: float, dose_map: Mapping[str, Any] | None) -> float:
@@ -513,14 +559,11 @@ def read_plan(identity: Mapping[str, Any]) -> list[str]:
     INDETERMINATE"). G-TIME-n's and the BACKEND extension's read sets are their own, not this one."""
     if identity.get("stage") != "campaign":
         raise SchemaError("read_plan is the campaign's; other stages declare their own read sets")
-    kept = dose_point_values(identity)
     out = []
     for arm in ARMS:
         runs = range(N_FLOOR) if arm == "N1-R" else range(N_SESSIONS)
-        for did, labels in ARM_CELLS[arm]:
+        for did, labels in arm_cells(arm, identity):
             for dl in labels:
-                if dl not in kept:
-                    continue
                 out.extend(read_id(arm, did, dl, session_id(bk_cell_of(r), r)) for r in runs)
     return sorted(out)
 
@@ -570,6 +613,13 @@ def _check_type(t: str, v: Any, where: str) -> None:
         ok = type(v) is dict and len(v) > 0 and all(
             type(k) is str and re.fullmatch(r"0|[1-9][0-9]*", k) and type(x) is str and _HEX16.fullmatch(x)
             for k, x in v.items())
+    elif t == "layer_sha256":
+        ok = type(v) is dict and len(v) > 0 and all(
+            type(k) is str and re.fullmatch(r"0|[1-9][0-9]*", k) and type(x) is str and _HEX64.fullmatch(x)
+            for k, x in v.items())
+    elif t == "layer_names":
+        ok = type(v) is dict and len(v) > 0 and all(
+            type(k) is str and re.fullmatch(r"0|[1-9][0-9]*", k) and type(x) is str for k, x in v.items())
     elif t == "path_sha256":
         ok = type(v) is dict and len(v) > 0 and all(
             type(k) is str and type(x) is str and _HEX64.fullmatch(x) for k, x in v.items())
@@ -666,7 +716,7 @@ NESTED = {
 # --- the checks of record -----------------------------------------------------------------------------------
 def dose_points(d_eq: float, d_20: float) -> list[dict]:
     """The dose map's points under n §2.3's merge rule ("a point within 0.05 of an existing one is merged"), in
-    the form settled with n-analyzer (Code's reading, flagged for the seat at the BUILD):
+    the form settled with n-analyzer (accepted: the seat's answers of 2026-11-16, §3):
 
       * +d_20 first, against the existing points in the order +1, +1/2, 0, -1; then +d_eq, against the same four
         and +d_20 if +d_20 was kept;
@@ -720,6 +770,36 @@ def dose_point_values(identity: Mapping[str, Any]) -> dict[str, float]:
     return out
 
 
+def keeper(label: str, identity: Mapping[str, Any]) -> str | None:
+    """The kept label a listed dose label is read under (n §2.3; ADDENDUM-n1 §5.1): the label itself if
+    ``dose_point_values`` keeps it, else the dose map point whose ``merged`` names it, else None. With no dose map,
+    every label but "0" gives None."""
+    if label in dose_point_values(identity):
+        return label
+    dm = identity.get("dose_map")
+    if dm is None:
+        return None
+    for p in dm["points"]:
+        if label in p["merged"]:
+            return p["label"]
+    return None
+
+
+def arm_cells(arm: str, identity: Mapping[str, Any]) -> list[tuple[str, list[str]]]:
+    """The arm's (direction_id, [labels]) list under the stage's dose map: each label ARM_CELLS lists, mapped to its
+    ``keeper`` in listed order, repeats and None dropped, so a merged point is read once under the label kept (the
+    seat's answers of 2026-11-16, §2.3; ADDENDUM-n1 §5.1-§5.2)."""
+    out = []
+    for did, labels in ARM_CELLS[arm]:
+        kept: list[str] = []
+        for dl in labels:
+            k = keeper(dl, identity)
+            if k is not None and k not in kept:
+                kept.append(k)
+        out.append((did, kept))
+    return out
+
+
 def check_stage_identity(identity: Any, where: str = "stage_identity") -> None:
     _check_table(identity, STAGE_IDENTITY_FIELDS, where)
     if identity["unit"] != UNIT:
@@ -738,8 +818,9 @@ def check_stage_identity(identity: Any, where: str = "stage_identity") -> None:
             _fail(f"{where}.{k}", "is null exactly at backend-ext")
     if not 0 < identity["read_window"] <= MAX_WINDOW:
         _fail(f"{where}.read_window", f"is not in (0, {MAX_WINDOW}] (GA-4)")
-    if identity["capture_layers"] != [identity["layer"], identity["n_layers"] - 1]:
-        _fail(f"{where}.capture_layers", "is not [layer, n_layers - 1]")
+    if identity["capture_layers"] != list(range(identity["layer"] + 1, identity["n_layers"])):
+        _fail(f"{where}.capture_layers", "is not list(range(layer + 1, n_layers)), the band past the site "
+                                         "(ADDENDUM-n1 §6.2)")
     if identity["layer_bk"] != 32:
         _fail(f"{where}.layer_bk", "is not 32 (BK Table 1)")
     if not 0 <= identity["layer"] < identity["n_layers"] - 1:
@@ -772,7 +853,7 @@ def check_record(rec: Any, identity: Mapping[str, Any], where: str = "record") -
         _fail(w("arm"), f"{arm!r} is not an arm")
     if dl not in DOSES:
         _fail(w("dose_label"), f"{dl!r} is not a dose label")
-    allowed = {(d, x) for d, labels in ARM_CELLS[arm] for x in labels}
+    allowed = {(d, x) for d, xs in arm_cells(arm, identity) for x in xs}
     if (did, dl) not in allowed:
         _fail(where, f"arm {arm} reads no ({did}, {dl})")
     kept = dose_point_values(identity)
@@ -968,10 +1049,16 @@ def check_cell(cell: Any, where: str = "cell") -> None:
     ident = cell["stage_identity"]
     check_stage_identity(ident, f"{where}.stage_identity")
     arm, did, dl = cell["arm"], cell["direction_id"], cell["dose_label"]
-    stem = cell_filename(arm, did, dl)[:-len(".json")]
-    if cell["capture_file"] != stem + ".npy":
-        _fail(f"{where}.capture_file", f"should be {stem}.npy")
+    name = cell_filename(arm, did, dl)
+    want_files = {str(x): capture_filename(name, x) for x in ident["capture_layers"]}
+    if cell["capture_files"] != want_files:
+        _fail(f"{where}.capture_files", "is not capture_filename(the cell's name, layer) for exactly the identity's "
+                                        "capture layers")
+    if sorted(cell["capture_sha256"]) != sorted(want_files):
+        _fail(f"{where}.capture_sha256", "must hash exactly the identity's capture layers")
     recs = cell["records"]
+    if len(recs) > capture_capacity(arm):
+        _fail(f"{where}.records", f"exceed the cell's capture capacity {capture_capacity(arm)}")
     if cell["capture_rows"] != len(recs):
         _fail(f"{where}.capture_rows", "is not len(records)")
     seen, last = set(), -1
@@ -1002,11 +1089,15 @@ GREAD_STATUSES = ("PASS", "FAIL", "NOT-COMPUTED")
 GREAD_BAR = 0.90
 #: k's fit_lr hyperparameters (valence_core/echo/probe.py's LR_SEED, LR_ITERS, LR_RATE, LR_L2), pinned.
 GREAD_LR = {"seed": 7, "iters": 300, "rate": 0.1, "l2": 0.01}
-#: Every cell file name a stage can hold: cell_filename over ARM_CELLS (136 names).
-VALID_CELL_NAMES = {cell_filename(a, d, x): a for a in ARMS for d, xs in ARM_CELLS[a] for x in xs}
-_CELL_KEYS = {cell_filename(a, d, x): (a, d, x) for a in ARMS for d, xs in ARM_CELLS[a] for x in xs}
-#: n §3's "grouped leave-one-session-out CV"; another form enters with its own seeds in its own schema commit.
-CV_FORMS = re.compile(r"loso")
+#: Every cell file name a stage can hold: cell_filename over ARM_CELLS, each listed label with the KEEPER_CANDIDATES
+#: it can fold into (139 names: N1-P's +1/2 among them, as its +d_20 or +d_eq can fold into +1/2).
+VALID_CELL_NAMES = {cell_filename(a, d, y): a for a in ARMS for d, xs in ARM_CELLS[a] for x in xs
+                    for y in (x,) + KEEPER_CANDIDATES.get(x, ())}
+_CELL_KEYS = {cell_filename(a, d, y): (a, d, y) for a in ARMS for d, xs in ARM_CELLS[a] for x in xs
+              for y in (x,) + KEEPER_CANDIDATES.get(x, ())}
+#: ADDENDUM-n1 §6.3's "grouped 10-fold cross-validation by session, the fold seed in the lock", in place of n §3's
+#: leave-one-session-out; the folds' seed is the probe's ``cv_seed``.
+CV_FORMS = re.compile(r"kfold10")
 GREAD_MERGEABLE = {"valence": ("+d_20", "+d_eq"), "span_reward": ()}
 
 REPORT_FIELDS: dict[str, tuple[str, bool, str]] = {
@@ -1024,7 +1115,7 @@ REPORT_FIELDS: dict[str, tuple[str, bool, str]] = {
     "binomial_state": ("binomial_state", False, "the fidelity binomial's running state over the stage: trials, "
                                                 "exceedances, evaluations, fires"),
     "stop": ("stop", True, "{kind, record_sha256, detail} at G-VER-STOP or PI-STOP; null otherwise"),
-    "cap": ("cap", False, "{hour_cap_ms, used_ms, hit}"),
+    "cap": ("cap", False, "{hour_cap_ms, used_ms, hit, loads_ms}"),
     "counters": ("counters", False, "n §4's counters and the identity-bound count, over the stage"),
 }
 PAUSE_FIELDS: dict[str, tuple[str, bool, str]] = {
@@ -1067,6 +1158,8 @@ CAP_FIELDS: dict[str, tuple[str, bool, str]] = {
     "hour_cap_ms": ("int", True, "the lock's cap in ms; null where none is set"),
     "used_ms": ("int", False, "the sum of the stage's records' duration_ms"),
     "hit": ("bool", False, "hour_cap_ms is set and used_ms >= hour_cap_ms"),
+    "loads_ms": ("ints", False, "each invocation's model-load wall-clock in ms, in invocation order: reported beside "
+                                "the cap, outside it"),
 }
 COUNTERS_FIELDS: dict[str, tuple[str, bool, str]] = {
     "fidelity": ("fid_counts", False, "'arm|dose' -> {trials, exceed_tau, exceed_tau4}"),
@@ -1083,7 +1176,7 @@ COUNTERS_FIELDS: dict[str, tuple[str, bool, str]] = {
 GREAD_FIELDS: dict[str, tuple[str, bool, str]] = {
     "schema": ("str", False, "GREAD_SCHEMA"),
     "campaign": ("gread_campaign", False, "{read_plan_sha256, stage_identity_sha256, cells}: what it read"),
-    "probe": ("gread_probe", False, "{package_sha256, lr, shuffles, shuffle_seed, cv, layers, bar}"),
+    "probe": ("gread_probe", False, "{package_sha256, lr, shuffles, shuffle_seed, cv, cv_seed, layers, bar}"),
     "results": ("gread_results", False, "at least one, and at most one per (axis, point) of GREAD_AXES"),
 }
 GREAD_CAMPAIGN_FIELDS: dict[str, tuple[str, bool, str]] = {
@@ -1096,7 +1189,8 @@ GREAD_PROBE_FIELDS: dict[str, tuple[str, bool, str]] = {
     "lr": ("lr", False, "{seed, iters, rate, l2}: k's fit_lr hyperparameters, GREAD_LR"),
     "shuffles": ("int", False, "200 (n §3)"),
     "shuffle_seed": ("int", False, "the label-shuffle null's seed"),
-    "cv": ("str", False, "'loso': n §3's grouped leave-one-session-out"),
+    "cv": ("str", False, "'kfold10': grouped 10-fold CV by session (ADDENDUM-n1 §6.3)"),
+    "cv_seed": ("int", False, "the folds' seed, the lock's"),
     "layers": ("ints", False, "the capture layers probed"),
     "bar": ("float", False, "0.90 (n §3)"),
 }
@@ -1139,11 +1233,12 @@ def _check_report_nested(t: str, v: Any, where: str) -> None:
             _fail(where, "expected an object")
         for name, x in v.items():
             if name not in VALID_CELL_NAMES:
-                _fail(f"{where}", f"{name!r} is not a cell file a stage can hold (cell_filename over ARM_CELLS)")
+                _fail(f"{where}", f"{name!r} is not a cell file a stage can hold (cell_filename over ARM_CELLS "
+                                  f"and KEEPER_CANDIDATES)")
             if type(x) is not dict or sorted(x) != sorted(keys):
                 _fail(f"{where}.{name}", f"keys are not {keys}")
-            for k in ("json_sha256", "capture_sha256"):
-                _check_type("sha256", x[k], f"{where}.{name}.{k}")
+            for k, tk in (("json_sha256", "sha256"), ("capture_sha256", "layer_sha256")):
+                _check_type(tk, x[k], f"{where}.{name}.{k}")
             if t == "cell_shas" and not (_is_int(x["records"]) and x["records"] >= 0):
                 _fail(f"{where}.{name}.records", "is not a count")
     elif t == "pauses":
@@ -1249,13 +1344,17 @@ def check_report(report: Any, where: str = "report") -> None:
         if sorted(per) != sorted(ARMS) or any(per[a]["planned"] != planned[a] for a in ARMS):
             _fail(w("per_arm"), "is not the plan's arms and counts")
     obtained: dict = {}
-    kept = dose_point_values(ident)
+    allowed = {(a, d, y) for a in ARMS for d, ys in arm_cells(a, ident) for y in ys}
+    want_layers = sorted(str(c) for c in ident["capture_layers"])
     for name, x in report["cells"].items():
-        arm, _did, dl = _CELL_KEYS[name]
+        arm, did, dl = _CELL_KEYS[name]
         if arm not in per:
             _fail(w("per_arm"), f"has no entry for {arm}, which cell {name} belongs to")
-        if dl not in kept:
-            _fail(w("cells"), f"{name} is at {dl}, a point the stage's dose map does not keep")
+        if (arm, did, dl) not in allowed:
+            _fail(w("cells"), f"{name} is at {dl}, a point the stage's dose map does not keep for {arm} "
+                              f"(arm_cells)")
+        if sorted(x["capture_sha256"]) != want_layers:
+            _fail(w(f"cells.{name}.capture_sha256"), "must hash exactly the identity's capture layers")
         obtained[arm] = obtained.get(arm, 0) + x["records"]
     for a, x in per.items():
         if x["obtained"] != obtained.get(a, 0):
@@ -1335,6 +1434,8 @@ def check_report(report: Any, where: str = "report") -> None:
     cap = report["cap"]
     if cap["used_ms"] < 0 or (cap["hour_cap_ms"] is not None and cap["hour_cap_ms"] < 0):
         _fail(w("cap"), "a negative figure")
+    if any(x < 0 for x in cap["loads_ms"]):
+        _fail(w("cap.loads_ms"), "a negative load time")
     if cap["hit"] != (cap["hour_cap_ms"] is not None and cap["used_ms"] >= cap["hour_cap_ms"]):
         _fail(w("cap.hit"), "is not used_ms >= hour_cap_ms")
     # the end-state rules (the module docstring's THE STAGE REPORT)
@@ -1366,8 +1467,8 @@ def check_report(report: Any, where: str = "report") -> None:
 
 
 def check_gread(art: Any, where: str = "gread") -> None:
-    """G-READ-n's artifact: every field, and its PASS rule as Code reads n §3 (band median >= bar, above the
-    comparator's largest, above the shuffle null at every layer)."""
+    """G-READ-n's artifact: every field, and its PASS rule, the seat's (ADDENDUM-n1 §6.4): band median >= bar and
+    above the comparator's largest band median, with no per-layer condition."""
     _check_table(art, GREAD_FIELDS, where)
     w = lambda f: f"{where}.{f}"                                          # noqa: E731
     if art["schema"] != GREAD_SCHEMA:
@@ -1378,7 +1479,7 @@ def check_gread(art: Any, where: str = "gread") -> None:
     if pr["lr"] != GREAD_LR:
         _fail(w("probe.lr"), f"is not k's fit_lr hyperparameters {GREAD_LR}")
     if CV_FORMS.fullmatch(pr["cv"]) is None:
-        _fail(w("probe.cv"), f"{pr['cv']!r} is not 'loso' (n §3's grouped leave-one-session-out)")
+        _fail(w("probe.cv"), f"{pr['cv']!r} is not 'kfold10' (ADDENDUM-n1 §6.3's grouped 10-fold CV by session)")
     seen = set()
     for i, r in enumerate(art["results"]):
         wr = w(f"results[{i}]")
@@ -1410,8 +1511,7 @@ def check_gread(art: Any, where: str = "gread") -> None:
             if r["band_median_auc"] != med:
                 _fail(f"{wr}.band_median_auc", "is not the median of per_layer's AUCs")
             cm = r["comparator"]["max"]
-            passed = (cm is not None and med >= GREAD_BAR and med > cm
-                      and all(x["above_null"] for x in r["per_layer"]))
+            passed = cm is not None and med >= GREAD_BAR and med > cm
             if r["status"] != ("PASS" if passed else "FAIL"):
                 _fail(f"{wr}.status", f"should be {'PASS' if passed else 'FAIL'}")
 
@@ -1431,6 +1531,7 @@ __all__ = [
     "GREAD_FIELDS", "GREAD_CAMPAIGN_FIELDS", "GREAD_PROBE_FIELDS", "GREAD_RESULT_FIELDS", "identity_sha256",
     "check_report", "check_gread", "example_report", "example_pause", "example_gread", "BINOMIAL_STATE_FIELDS",
     "VALID_CELL_NAMES", "CV_FORMS", "GREAD_MERGEABLE", "GREAD_LR",
+    "KEEPER_CANDIDATES", "keeper", "arm_cells", "capture_filename", "capture_capacity",
 ]
 
 
@@ -1453,7 +1554,7 @@ def example_identity(stage: str = "campaign", *, R: float = 25.5, R_ell: float =
         "imported_sha256": {"valence_core/m/resume.py": "3" * 64, "valence_core/adapters/olmo_hf.py": "4" * 64},
         "weights_sha256": "5" * 64, "backend_identifier": "6" * 16, "pod_id": "example-pod",
         "session_set_sha256": SESSION_SET_SHA256, "rendering_id": "example-rendering",
-        "label_convention": "example-labels", "layer_bk": 32, "layer": 31, "capture_layers": [31, 63],
+        "label_convention": "example-labels", "layer_bk": 32, "layer": 31, "capture_layers": list(range(32, 64)),
         "n_layers": 64, "d_model": 5120, "read_window": MAX_WINDOW,
         "dose_map": None if pre else {"rho": RHO, "R": R, "R_ell": R_ell, "d_eq": d_eq, "d_20": d_20,
                                       "points": dose_points(d_eq, d_20)},
@@ -1546,19 +1647,22 @@ def example_cell(identity: Mapping[str, Any], arm: str, direction_id: str, dose_
     """A valid cell of ``example_record``s over ``runs``, launch indices 0, 10, 20, ..."""
     recs = [example_record(identity, arm, direction_id, dose_label, r, launch=10 * i, row=i)
             for i, r in enumerate(runs)]
-    stem = cell_filename(arm, direction_id, dose_label)[:-len(".json")]
+    name = cell_filename(arm, direction_id, dose_label)
+    layers = identity["capture_layers"]
     return {"schema": CELL_SCHEMA, "stage_identity": identity, "arm": arm, "direction_id": direction_id,
-            "dose_label": dose_label, "records": recs, "capture_file": stem + ".npy", "capture_rows": len(recs),
-            "capture_sha256": "c" * 64}
+            "dose_label": dose_label, "records": recs,
+            "capture_files": {str(x): capture_filename(name, x) for x in layers}, "capture_rows": len(recs),
+            "capture_sha256": {str(x): "c" * 64 for x in layers}}
 
 
 def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", obtained_fraction: float = 1.0,
                    pauses: list | None = None, stop: dict | None = None, hour_cap_ms: int | None = None,
-                   used_ms: int = 1000) -> dict:
+                   used_ms: int = 1000, loads_ms: tuple = (5000,)) -> dict:
     """A valid report for ``identity``. At the campaign, every arm's cells carry ``obtained_fraction`` of its plan
     (records split over the arm's cells as the plan has them); elsewhere one N1-V d = 0 cell of 24 reads. ``pauses``,
     ``stop`` and the cap are taken as given; the end state must agree with them."""
     campaign = identity["stage"] == "campaign"
+    band = [str(x) for x in identity["capture_layers"]]
     cells: dict = {}
     per_arm: dict = {}
     if campaign:
@@ -1569,16 +1673,16 @@ def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", 
             by_cell.setdefault((arm, did, dl), []).append(rid)
         for (arm, did, dl), rids in sorted(by_cell.items()):
             got = len(rids) if obtained_fraction >= 1.0 else int(len(rids) * obtained_fraction)
-            cells[cell_filename(arm, did, dl)] = {"json_sha256": "d" * 64, "capture_sha256": "e" * 64,
-                                                  "records": got}
+            cells[cell_filename(arm, did, dl)] = {"json_sha256": "d" * 64,
+                                                  "capture_sha256": {x: "e" * 64 for x in band}, "records": got}
             pa = per_arm.setdefault(arm, {"planned": 0, "obtained": 0, "complete": False})
             pa["planned"] += len(rids)
             pa["obtained"] += got
         for pa in per_arm.values():
             pa["complete"] = pa["obtained"] == pa["planned"]
     else:
-        cells[cell_filename("N1-V", "none", "0")] = {"json_sha256": "d" * 64, "capture_sha256": "e" * 64,
-                                                      "records": 24}
+        cells[cell_filename("N1-V", "none", "0")] = {"json_sha256": "d" * 64,
+                                                      "capture_sha256": {x: "e" * 64 for x in band}, "records": 24}
         per_arm["N1-V"] = {"planned": 24, "obtained": 24, "complete": True}
     hit = hour_cap_ms is not None and used_ms >= hour_cap_ms
     batches = [p["binomial"] for p in (pauses or []) if p["binomial"] is not None]
@@ -1595,7 +1699,7 @@ def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", 
             "binomial_state": {"trials": 160, "exceed_tau": exc, "evaluations": max(1, len(batches)),
                                "fires": len(batches)},
             "stop": stop,
-            "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used_ms, "hit": hit},
+            "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used_ms, "hit": hit, "loads_ms": list(loads_ms)},
             "counters": {"fidelity": fid, **counts, "label_mass_below_floor": None}}
 
 
@@ -1616,7 +1720,7 @@ def example_pause(n: int, *, kind: str = "nonfinite", launch_index: int | None =
             "resumed_at_launch_index": resumed_at}
 
 
-def example_gread(*, statuses: Mapping | None = None, layers: tuple = (31, 63)) -> dict:
+def example_gread(*, statuses: Mapping | None = None, layers: tuple = tuple(range(32, 64))) -> dict:
     """A valid G-READ-n artifact: one result per (axis, point) of GREAD_AXES, each PASS unless ``statuses`` gives
     "FAIL" or "NOT-COMPUTED" for it (keyed "axis|label")."""
     statuses = dict(statuses or {})
@@ -1637,10 +1741,11 @@ def example_gread(*, statuses: Mapping | None = None, layers: tuple = (31, 63)) 
     return {"schema": GREAD_SCHEMA,
             "campaign": {"read_plan_sha256": "a" * 64, "stage_identity_sha256": "b" * 64,
                          "cells": {cell_filename("N1-V", "none", "0"): {"json_sha256": "d" * 64,
-                                                                         "capture_sha256": "e" * 64}}},
+                                                                         "capture_sha256": {str(x): "e" * 64
+                                                                                            for x in layers}}}},
             "probe": {"package_sha256": "2" * 64, "lr": {"seed": 7, "iters": 300, "rate": 0.1, "l2": 0.01},
                       "shuffles": 200, "shuffle_seed": 20260905, "layers": list(layers), "bar": GREAD_BAR,
-                      "cv": "loso"},
+                      "cv": "kfold10", "cv_seed": 20261116},
             "results": results}
 
 
@@ -1668,7 +1773,9 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
         except SchemaError as e:
             print(f"FAIL accept {name}: {e}")
 
-    def refuse(name, base, mutate, check=None):
+    def refuse(name, base, mutate, check=None, expect=None):
+        """``expect``: a fragment the refusal's message must hold, for a case built single-defect (its other fields
+        coordinated), so a weakened targeted check cannot pass it by another check's refusal."""
         nonlocal ok, total
         total += 1
         obj = copy.deepcopy(base)
@@ -1677,6 +1784,9 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
             (check or (lambda o: check_record(o, ident)))(obj)
             print(f"FAIL refuse {name}: accepted")
         except SchemaError as e:
+            if expect is not None and expect not in str(e):
+                print(f"FAIL refuse {name}: refused by another check: {e}"[:300])
+                return
             ok += 1
             if verbose:
                 print(f"  refused  {name}  <-  {e}"[:220])
@@ -1760,30 +1870,39 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     names = [cell_filename(a, d, x) for a in ARMS for d, xs in ARM_CELLS[a] for x in xs]
 
     def _cells() -> None:
-        if len(names) != 136 or len(set(names)) != 136:
+        if len(names) != 138 or len(set(names)) != 138:
             raise SchemaError(f"{len(names)} cells, {len(set(names))} distinct names")
-    accept("136 distinct cell files before merges (n §2.4)", _cells)
+    accept("138 distinct cell files before merges (n §2.4; N1-P's row, ADDENDUM-n1 §5.2)", _cells)
 
     def _plan() -> None:
         plan = read_plan(ident)
-        if len(plan) != 7360 or len(set(plan)) != 7360:
-            raise SchemaError(f"the plan has {len(plan)} reads, {len(set(plan))} distinct, not 7,360 (n §2.4)")
+        if len(plan) != 7680 or len(set(plan)) != 7680:
+            raise SchemaError(f"the plan has {len(plan)} reads, {len(set(plan))} distinct, not 7,680 (n §2.4; "
+                              "ADDENDUM-n1 §5.2)")
         per = {a: sum(1 for x in plan if x.startswith(a + "|")) for a in ARMS}
-        want = {"N1-V": 960, "N1-R": 4800, "N1-P": 320, "N2-E": 320, "N2-S": 320, "N2-C": 320, "N4-T": 160,
+        want = {"N1-V": 960, "N1-R": 4800, "N1-P": 640, "N2-E": 320, "N2-S": 320, "N2-C": 320, "N4-T": 160,
                 "N4-Ts": 160}
         if per != want:
             raise SchemaError(f"per-arm plan {per}")
         if any(x.startswith("N1-R|") and int(x.rsplit("/", 1)[1]) >= N_FLOOR for x in plan):
             raise SchemaError("N1-R planned off the floor sessions")
         pm = read_plan(merged)
-        if len(pm) != 7360 - 160 - 24 * 40 or any("|+d_20|" in x for x in pm):
+        if len(pm) != 6400 or any("|+d_20|" in x for x in pm):
             raise SchemaError(f"the merged plan has {len(pm)} reads")
         pd = read_plan(double)
-        if len(pd) != 7360 - 2 * (160 + 24 * 40) or any("|+d_20|" in x or "|+d_eq|" in x for x in pd):
+        if len(pd) != 5280 or any("|+d_20|" in x or "|+d_eq|" in x for x in pd):
             raise SchemaError(f"the doubly merged plan has {len(pd)} reads")
+        half_ids = {read_id("N1-P", "valence", "+1/2", session_id(bk_cell_of(r), r)) for r in range(N_SESSIONS)}
+        if not half_ids <= set(pd):
+            raise SchemaError("the doubly merged plan lacks N1-P's +1/2 reads (+d_eq's keeper)")
         if read_plan_sha256(ident) != read_plan_sha256(example_identity()):
             raise SchemaError("the plan's sha256 is not deterministic")
-    accept("the read plan: 7,360 reads by §2.4's table; 6,240 with +d_20 merged; 5,120 with both merged", _plan)
+    accept("the read plan: 7,680 reads by §2.4's table as ADDENDUM-n1 §5.2 amends N1-P's row, N1-P 640; 6,400 with "
+           "+d_20 merged into +1; 5,280 with +d_eq also into +1/2, "
+           "N1-P reading +1/2", _plan)
+    p_half = example_record(double, "N1-P", "valence", "+1/2", 150)
+    accept("an N1-P read at +1/2 under R_ell = 40.0 (+d_eq's keeper; ADDENDUM-n1 §5.1-§5.2)",
+           lambda: check_record(p_half, double))
 
     def _plan_refuses() -> None:
         try:
@@ -1818,9 +1937,8 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("a bool where an int belongs", b, setk("sign", True))
     refuse("NaN", b, setk("margin", float("nan")))
     refuse("a read_id of another form", b, setk("read_id", "N1-V/valence/+1/floor_b0/3"))
-    refuse("an arm reading a dose it does not read", b, lambda o: (o.__setitem__("arm", "N1-P"),
-           o.__setitem__("read_id", read_id("N1-P", "valence", "+1/2", o["session_id"])),
-           o.__setitem__("dose_label", "+1/2")))
+    refuse("an arm reading a dose it does not read (N1-P at +1/2 under the default map; single-defect)", p_half,
+           lambda o: None, expect="reads no")
     refuse("N1-R off the floor sessions", good["N1-R +1/2"], lambda o: (
         o.__setitem__("bk_run", 60), o.__setitem__("bk_cell", "neu_b1"),
         o.__setitem__("session_id", "neu_b1/60"),
@@ -1834,11 +1952,17 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("alpha off the formula", b, setk("alpha", 7.5))
     refuse("a direction sha not the stage's", b, setk("direction_sha16", "e" * 16))
     refuse("a dose value not the map's", good["N1-V +d_eq"], setk("dose_value", 0.33))
-    refuse("a span reaching the read position", b, lambda o: o["steered_spans"][-1].__setitem__(1, 1273))
+    refuse("a span reaching the read position (n_steered and the interval coordinated; single-defect)", b,
+           lambda o: (o["steered_spans"][-1].__setitem__(1, 1273),
+                      o.__setitem__("n_steered", sum(x[1] - x[0] for x in o["steered_spans"])),
+                      o.__setitem__("retention_interval", o["read_position"] - (1273 - 1))),
+           expect="reaches the read")
     refuse("overlapping spans", b, lambda o: o["steered_spans"][1].__setitem__(0, 100))
-    refuse("N1-P with the S spans only", np1, lambda o: (
+    refuse("N1-P with the S spans only (n_steered and the interval coordinated; single-defect)", np1, lambda o: (
         o.__setitem__("steered_spans", [s for s in o["steered_spans"] if s[2] == o["cue_S"]]),
-        o.__setitem__("n_steered", sum(x[1] - x[0] for x in o["steered_spans"]))))
+        o.__setitem__("n_steered", sum(x[1] - x[0] for x in o["steered_spans"])),
+        o.__setitem__("retention_interval", o["read_position"] - (o["steered_spans"][-1][1] - 1))),
+        expect="twelve turn spans")
     refuse("n_steered off the spans", b, setk("n_steered", 1))
     refuse("a retention interval off", b, setk("retention_interval", 39))
     refuse("a steered read without its shadow", b, setk("shadow_read_id", None))
@@ -1911,14 +2035,21 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("a repeated read", cell, lambda o: o["records"].__setitem__(
         2, dict(copy.deepcopy(o["records"][1]), launch_index=20, capture=dict(row=2, sha16=o["records"][1][
             "capture"]["sha16"]))), ci)
-    refuse("a capture file of another name", cell, lambda o: o.__setitem__("capture_file", "x.npy"), ci)
+    refuse("a capture file of another name (one layer's)", cell,
+           lambda o: o["capture_files"].__setitem__("40", "x.npy"), ci)
+    refuse("a capture sha256 map lacking a layer", cell, lambda o: o["capture_sha256"].pop("63"), ci)
+    refuse("a capture sha256 of the old single form", cell, lambda o: o.__setitem__("capture_sha256", "c" * 64), ci,
+           expect="expected layer_sha256")
     si = lambda o: check_stage_identity(o)                                 # noqa: E731
     refuse("a lock missing at campaign", ident, lambda o: o.__setitem__("lock_sha256", None), si)
     refuse("a dose map at backend-ext", ext, lambda o: o.__setitem__("dose_map", example_identity()["dose_map"]), si)
     refuse("another proposal", ident, lambda o: o.__setitem__("proposal_sha256", "0" * 64), si)
     refuse("another session set", ident, lambda o: o.__setitem__("session_set_sha256", "0" * 64), si)
     refuse("TAU changed", ident, lambda o: o["fidelity_rule"].__setitem__("tau", 0.02), si)
-    refuse("capture layers not [layer, last]", ident, lambda o: o.__setitem__("capture_layers", [32, 63]), si)
+    refuse("capture layers not the band past the site (two layers, [32, 63])", ident,
+           lambda o: o.__setitem__("capture_layers", [32, 63]), si)
+    refuse("capture layers of the old form, the site and the last ([31, 63])", ident,
+           lambda o: o.__setitem__("capture_layers", [31, 63]), si)
     refuse("+d_eq not the map's d_eq", ident, lambda o: o["dose_map"]["points"][3].__setitem__("value", 0.3), si)
     refuse("a label both kept and merged", ident, lambda o: o["dose_map"]["points"][0].__setitem__(
         "merged", ["+1/2"]), si)
@@ -1935,6 +2066,7 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     # the stage report (n-report-v1) and G-READ-n's artifact (n-gread-v1)
     cr = lambda o: check_report(o)                                         # noqa: E731
     cg = lambda o: check_gread(o)                                          # noqa: E731
+    band_e = {str(x): "e" * 64 for x in ident["capture_layers"]}           # a cell entry's capture_sha256
     rep = example_report(ident)
     rep_pause = example_report(ident, end_state="PAUSE", obtained_fraction=0.5, pauses=[example_pause(1)])
     rep_adj = example_report(ident, pauses=[example_pause(1, adjudicated=True)])
@@ -1987,7 +2119,9 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("report: a non-binomial pause with no read", rep_pause,
            lambda o: first_pause(o).update(read_id=None, launch_index=None), cr)
     refuse("report: PAUSE with no standing pause", rep_adj, lambda o: o.__setitem__("end_state", "PAUSE"), cr)
-    refuse("report: COMPLETE over a standing pause", rep_pause, lambda o: o.__setitem__("end_state", "COMPLETE"), cr)
+    rep_pause_full = example_report(ident, end_state="PAUSE", pauses=[example_pause(1)])
+    refuse("report: COMPLETE over a standing pause (every arm complete; single-defect)", rep_pause_full,
+           lambda o: o.__setitem__("end_state", "COMPLETE"), cr, expect="a standing pause ends only")
     refuse("report: CAP with the cap unspent", rep, lambda o: o.__setitem__("end_state", "CAP"), cr)
     refuse("report: the cap hit but the end not CAP", rep_cap, lambda o: o.__setitem__("end_state", "COMPLETE"), cr)
     refuse("report: hit not used_ms >= hour_cap_ms", rep_cap, lambda o: o["cap"].update(hit=False), cr)
@@ -2001,7 +2135,7 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("report: exceed_tau above exceed_tau4", rep,
            lambda o: o["counters"]["fidelity"]["N1-V|0"].update(exceed_tau=4), cr)
     refuse("report: a cell name that is no cell file's", rep, lambda o: o["cells"].__setitem__(
-        "N1-V__valence__p9.jsn", {"json_sha256": "d" * 64, "capture_sha256": "e" * 64, "records": 0}), cr)
+        "N1-V__valence__p9.jsn", {"json_sha256": "d" * 64, "capture_sha256": dict(band_e), "records": 0}), cr)
     refuse("gread: PASS under the bar", gr, lambda o: (o["results"][1].update(band_median_auc=0.85), [
         x.update(auc=0.85) for x in o["results"][1]["per_layer"]]), cg)
     refuse("gread: the shadow contrast at valence +1", gr, lambda o: o["results"][0].update(contrast="shadow"), cg)
@@ -2055,7 +2189,7 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("report: binomial exceedances above its trials", rep,
            lambda o: o["binomial_state"].update(exceed_tau=161), cr)
     refuse("report: a cell file no stage can hold", rep, lambda o: o["cells"].__setitem__(
-        "N4-T__valence__p1.json", {"json_sha256": "d" * 64, "capture_sha256": "e" * 64, "records": 0}), cr)
+        "N4-T__valence__p1.json", {"json_sha256": "d" * 64, "capture_sha256": dict(band_e), "records": 0}), cr)
     refuse("report: a STOP detail of two lines", rep_pistop,
            lambda o: o["stop"].update(detail="line one\nline two"), cr)
     refuse("report: a rendering mismatch under a nonfinite pause", rep_pause,
@@ -2111,10 +2245,10 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("report: a batch beyond the stage's exceedances", rep_end_binom,
            lambda o: first_pause(o)["binomial"].update(k=2), cr)
     refuse("report: a cell at a point the dose map merged away", rep_m, lambda o: o["cells"].__setitem__(
-        cell_filename("N1-V", "valence", "+d_eq"), {"json_sha256": "d" * 64, "capture_sha256": "e" * 64,
+        cell_filename("N1-V", "valence", "+d_eq"), {"json_sha256": "d" * 64, "capture_sha256": dict(band_e),
                                                     "records": 0}), cr)
     # the rendering count is the rendering pauses'; a G-VER-STOP comes before any read; a scope names an arm once;
-    # an identity-bound trigger is a d = 0 read's; the counters cover the pauses that name them; n §3's CV form only
+    # an identity-bound trigger is a d = 0 read's; the counters cover the pauses that name them; CV kfold10 only
 
     def gver_with_record(o):
         name = sorted(o["cells"])[0]
@@ -2133,7 +2267,40 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
            lambda o: o["counters"].__setitem__("nonfinite_reads", 0), cr)
     refuse("report: identity_out_of_bound below its pauses", rep_also,
            lambda o: o["counters"].__setitem__("identity_out_of_bound", 0), cr)
-    refuse("gread: a grouped k-fold (not n §3's form)", gr, lambda o: o["probe"].update(cv="kfold-10"), cg)
+    refuse("gread: a CV form not 'kfold10' (kfold-10)", gr, lambda o: o["probe"].update(cv="kfold-10"), cg)
+    # the capture band per layer (ADDENDUM-n1 §6.2); the cap's loads (the seat's answers of 2026-11-16, §3);
+    # G-READ-n's CV form, its seed and its PASS rule (ADDENDUM-n1 §6.3-§6.4)
+    refuse("report: a cell entry's capture_sha256 lacking a layer", rep,
+           lambda o: o["cells"][cell_filename("N1-V", "valence", "+1")]["capture_sha256"].pop("63"), cr)
+    refuse("report: a negative load time", rep, lambda o: o["cap"].update(loads_ms=[-1]), cr)
+    refuse("gread: the CV form 'loso' (n §3's, replaced by kfold10)", gr, lambda o: o["probe"].update(cv="loso"), cg)
+    refuse("gread: a probe without its cv_seed", gr, lambda o: o["probe"].pop("cv_seed"), cg)
+    refuse("gread: a cv_seed not an int", gr, lambda o: o["probe"].update(cv_seed="20261116"), cg)
+    gr_low = example_gread()
+    gr_low["results"][0]["per_layer"][0].update(auc=0.5, above_null=False)
+    accept("gread: PASS with one layer below its null, the band median >= .90 and above the comparator's max",
+           lambda: check_gread(gr_low))
+    refuse("gread: that result marked FAIL (no per-layer condition)", gr_low,
+           lambda o: o["results"][0].update(status="FAIL"), cg)
+    refuse("report: an N1-P cell at +1/2 under the default map (no listed label's keeper)", rep,
+           lambda o: o["cells"].__setitem__(cell_filename("N1-P", "valence", "+1/2"),
+                                            {"json_sha256": "d" * 64, "capture_sha256": dict(band_e), "records": 0}),
+           cr, expect="does not keep for N1-P")
+
+    def _names() -> None:
+        if len(VALID_CELL_NAMES) != 139 or VALID_CELL_NAMES.get(cell_filename("N1-P", "valence", "+1/2")) != "N1-P":
+            raise SchemaError(f"{len(VALID_CELL_NAMES)} valid cell names, or N1-P's +1/2 cell is not among them")
+    accept("139 valid cell names: the 138 listed and N1-P's +1/2, a keeper of its +d_20 or +d_eq", _names)
+
+    def _capacity() -> None:
+        if (capture_capacity("N1-R"), capture_capacity("N1-V"), capture_capacity("N4-Ts")) != (40, 160, 160):
+            raise SchemaError("the capture capacities are not 40 for N1-R and 160 for the other arms")
+        try:
+            capture_capacity("N9")
+        except SchemaError:
+            return
+        raise SchemaError("capture_capacity accepted an arm that is none")
+    accept("capture capacity: 40 rows for N1-R's cells, 160 for every other arm's; no other arm", _capacity)
     return ok, total
 
 

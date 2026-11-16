@@ -21,6 +21,60 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n — the schema's follow-up commit (v5): the seat's answers of 2026-11-16 (second sitting,
+  [`2026-11-16_n-build_design-to-code_answers.md`](results/raw/2026-11-16_n-build_design-to-code_answers.md)) and
+  ADDENDUM-n1 §5–§6 in `valence_core/n/schema.py`, settled with n-analyzer. The file's sha256 is now
+  `0ea39600…0db6`; it was `4bed3f9a…4665` at `14e65d8`. Its self-test passes 213/213 (50 accepted, 163 refused) on
+  these final bytes. Nothing ran on a model. The order is that raw's §5: after `n — ids of record`, before the
+  drafts' BUILD.**
+  - **What changed**, the raw's §5 item 2:
+    - **The capture band** (ADDENDUM-n1 §6.2). `capture_layers` is `list(range(layer + 1, n_layers))`, asserted.
+      - Each cell has one float32 array per layer, of shape [`capture_capacity(arm)`, d_model]: 40 rows for N1-R's
+        cells, 160 for every other arm's.
+      - Rows are written in place, and rows from `capture_rows` on stay unwritten.
+      - The cell file carries a `capture_files` map and a per-layer `capture_sha256` map.
+      - One array per cell per layer, hashed per layer, is the seat's (§2.5; ADDENDUM-n1 §6.2). The capacity rows
+        written in place, and the hash's byte form (rows [0, capture_rows), float32 little-endian, row order), are
+        Code's, for I/O.
+      - The report's and G-READ-n's artifact's cell entries carry the per-layer `capture_sha256` map.
+    - **G-READ-n's artifact** (§6.3–§6.4). The CV form is "kfold10" with its seed, `cv_seed`. PASS iff the band
+      median is at least .90 and above the largest of the comparator's 24 band medians; there is no per-layer
+      condition.
+    - **The read plan** (§5.1–§5.2).
+      - N1-P reads +1, +d_20, +d_eq and −1 under the merge.
+      - Each arm reads each listed label under its keeper (`keeper`, `arm_cells`, `KEEPER_CANDIDATES`). That gives
+        7,680 reads when nothing merges, 6,400 with +d_20 merged into +1, and 5,280 with +d_eq also merged into +1/2.
+      - `check_record` and `check_report` test a read's or cell's (arm, direction, dose) against `arm_cells`.
+    - **The cap** (the seat's §3). `loads_ms`, each invocation's model load, is reported beside the cap and outside
+      it. `used_ms` stays the records' `duration_ms`.
+    - **Unchanged:** the restricted block, and the pause precedence, which was already the order the seat fixed.
+    - **The docstrings.** The readings the seat's §3 accepted now say so; those it did not address stay flagged.
+  - **The self-test.** Six refusal cases now assert their targeted message (`refuse(…, expect=…)`).
+    - Four of them were rebuilt single-defect: the three the BUILD review flagged (the span bound, N1-P's span set,
+      COMPLETE over a standing pause), and the arm-dose case.
+    - The other two are new: the old single `capture_sha256` form, and an N1-P cell at +1/2 under the default map.
+  - **Settled with n-analyzer** by message:
+    - the keepers, N1-P's fidelity, the artifact, the band, the per-layer maps and their row-hash form, `loads_ms`;
+    - its PIN-n-31: VERDICTS reads no capture file, and binds the captures through the maps;
+    - Code's PIN for step 15: G-READ-n's driver reads captures only through `cells.load_cell`.
+
+    No ADDENDUM-n1 field joins the stage identity; that is flagged for the seat at the BUILD. n-analyzer moves its pin
+    to this commit next.
+  - **Windows.**
+    - The schema's first self-test window is listed in `n — ids of record`'s entry: 213/213 on its second run, a
+      script invocation that was not the granted one, which the coordinating session found harmless.
+    - The final bytes' self-test ran in its own window: 213/213, one run, its refusal lines the same as the first
+      run's.
+  - **Values-check:** one blind pass, 64 items: 45 CONFIRMED, 11 IMPRECISE, 0 FAIL and 8 NOT CHECKABLE.
+    - Every IMPRECISE item is applied in the checker's terms, and so are seven of its observations; three are left,
+      each with its reason.
+    - The changes to the schema were text only, and its self-test was re-run on the final bytes: 213/213.
+    - The edits after the check were checked by tool.
+    - Raw: [`2026-11-16_n-schema-v5_valuescheck.md`](results/raw/2026-11-16_n-schema-v5_valuescheck.md), with the
+      report as returned and every disposition.
+  - **Committed by path:** `valence_core/n/schema.py`, the values-check raw, this entry and the close line on
+    `718c48e`'s entry. Not pushed.
+
 - 2026-11-16 — **PROPOSAL-p OLMo-sft — VERDICTS (p v0.2 §4.4, §8 step 7; LOCK-p-OLMo-sft v1.0, `038bf3e`; ADDENDUM-p1
   v0.1, `fa27c45`; the seat's answers of 2026-11-16, `18102d0`): A0-OLMo-sft PASS. P = 72/80, Δ_c = +0.4000 (two-sided
   Clopper–Pearson 95% CI [+0.3124, +0.4558]) against E = 0.0625 from A0s-OLMo-sft; exact one-sided p toward clean =
@@ -1944,6 +1998,34 @@ applied to CLAUDE.md.
     - Raw: [`2026-11-16_n-schema-questions_valuescheck.md`](results/raw/2026-11-16_n-schema-questions_valuescheck.md),
       with both reports as returned and every disposition.
   - **Committed by path:** the block, the values-check raw and this entry. Not pushed.
+  - **Close (PI date 2026-11-16, second sitting), n-build's.**
+    - **The answers.** The seat answered this block's five questions in
+      [`2026-11-16_n-build_design-to-code_answers.md`](results/raw/2026-11-16_n-build_design-to-code_answers.md)
+      (sha256 `a49801523a09d2a7afdfb3e71a2913d216f27b695305707a235bad225ba6151a`, committed by path at `52b2c97`):
+      - Q1 (a);
+      - Q2, secondary (b), struck;
+      - Q3 (a);
+      - Q4, the comparison in form (b) (ADDENDUM-n1 §2);
+      - Q5, a band past the site (ADDENDUM-n1 §6).
+    - **The PI's item 8,** verbatim from the routing raw committed at `a61f13d`
+      (`results/raw/2026-11-16_second-sitting_pi-routing.md`):
+
+      > 8. n-build, schema Q1 (a), Q2 struck, Q3 (a), Q4 the counts-only convention check (four candidates, the 40 floor sessions), Q5 the band; the flagged readings accepted, three amended; the pause precedence and the cap clause fixed; the order of its §5; close lines on 645bd3f's and 718c48e's entries; ledger (77)–(79) [as ruled; go].
+
+    - **Where each answer lands.**
+      - The schema's follow-up commit (at the top of this log) carries Q1's restricted block unchanged, Q3's keepers,
+        Q5's band and the amended readings.
+      - Q2 needs no form, since the schema records no reply.
+      - Q4's comparison runs on the box in the BACKEND extension's session, over the label candidates committed under
+        `data/n/ids/` (`d76f34f`).
+    - **Ledger (77) and (78), the seat's** (its §4), verbatim:
+      - "(77) n §2.2 named the injection layer as a capture layer for a probe at the read position, where the hook's
+        own geometry makes that residual the shadow's; the gate as written could not PASS. Fix: a readout gate names
+        its capture sites by their position relative to the injection in the adapter's convention, and its first
+        capture is downstream of the site by construction."
+      - "(78) Two secondaries declared on data the design does not produce: a first-token read on labels that share
+        their first token; a free-text reply where §2.1 generates none. Fix: every secondary is checked against the
+        arms' table for the data it reads, and a token read against the labels' tokenization, before it is listed."
 
 - 2026-11-16 — **n — G-ANL-n: nine questions for the seat before its canonical run (PROPOSAL-n v0.2 §3 "G-ANL-n",
   §8 step 9; the seat's answers of 2026-11-15, §5.1–§5.2; the coordinating session's go for one early block). STOP for
