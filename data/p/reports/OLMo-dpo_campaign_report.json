@@ -1,0 +1,296 @@
+{
+ "arms": {
+  "A0-OLMo-dpo": {
+   "domain": 80,
+   "launched": 80,
+   "prepick_excluded": 0
+  },
+  "A0s-OLMo-dpo": {
+   "domain": 32,
+   "launched": 32,
+   "prepick_excluded": 0
+  }
+ },
+ "end_look": {
+  "arms": {
+   "A0-OLMo-dpo": {
+    "domain": 80,
+    "launched": 80,
+    "prepick_excluded": 0,
+    "read_flags": {
+     "low_label_mass": 0,
+     "reads": 80,
+     "scope": "first reads of domain sessions",
+     "top1_not_label": 4
+    }
+   },
+   "A0s-OLMo-dpo": {
+    "domain": 32,
+    "launched": 32,
+    "prepick_excluded": 0,
+    "read_flags": {
+     "low_label_mass": 0,
+     "reads": 192,
+     "scope": "all reads",
+     "top1_not_label": 8
+    }
+   }
+  },
+  "at_launches": 112,
+  "contrast_forced_degeneracy": {
+   "k": 0,
+   "n": 320
+  },
+  "fired": false,
+  "look": "end",
+  "results": [
+   {
+    "binding": true,
+    "crit": 12,
+    "exceeds": false,
+    "fired": false,
+    "k": 0,
+    "message": "BAR round_degeneracy@campaign-OLMo-dpo silent template=A0s-OLMo-dpo look=end 0/320 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 12 at n=320",
+    "n": 320,
+    "name": "round_degeneracy@campaign-OLMo-dpo",
+    "p": "1/1"
+   },
+   {
+    "binding": true,
+    "crit": null,
+    "exceeds": false,
+    "fired": false,
+    "k": 0,
+    "message": "BAR exclusion_guard_fisher@campaign-OLMo-dpo silent template=A0-OLMo-dpo look=end contrast 0/80 vs sham 0/32 one-sided Fisher P=1.0000 > alpha 0.05",
+    "n": 80,
+    "name": "exclusion_guard_fisher@campaign-OLMo-dpo",
+    "p": "1/1"
+   },
+   {
+    "binding": false,
+    "crit": 23,
+    "exceeds": false,
+    "fired": false,
+    "k": 0,
+    "message": "BAR exclusion_guard_abs@campaign-OLMo-dpo reported (silent; not binding) template=A0-OLMo-dpo look=end 0/80 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 23 at n=80",
+    "n": 80,
+    "name": "exclusion_guard_abs@campaign-OLMo-dpo",
+    "p": "1/1"
+   }
+  ]
+ },
+ "files": {
+  "checkpoint": "ckpt/OLMo-dpo_campaign.json"
+ },
+ "floors": {
+  "A0-OLMo-dpo": 80,
+  "A0s-OLMo-dpo": 32
+ },
+ "form": "pick-free campaign report (m:318: at looks, pooled pre-pick exclusion counts per arm)",
+ "hour_cap": 2,
+ "hour_cap_reached": false,
+ "identity": {
+  "audit_v2_sha16": "dd3fe09bed429e54",
+  "backend_identifier": "641ee466f4553b6a",
+  "ban_sha": "2dd86a453a2275ef",
+  "lock_sha256": "25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf",
+  "package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
+  "path": "uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "renders_sha16": "6baf494960da4589",
+  "schedule_sha256": "a45ad588e56a8f847c1e47e541e1d6c15aa3be8984b3c67a67b02ad1b19315d5"
+ },
+ "launch_counts_projection": {
+  "A0-OLMo-dpo": 96,
+  "A0s-OLMo-dpo": 64
+ },
+ "looks": [
+  {
+   "arms": {
+    "A0-OLMo-dpo": {
+     "domain": 20,
+     "launched": 20,
+     "prepick_excluded": 0,
+     "read_flags": {
+      "low_label_mass": 0,
+      "reads": 20,
+      "scope": "first reads of domain sessions",
+      "top1_not_label": 1
+     }
+    },
+    "A0s-OLMo-dpo": {
+     "domain": 20,
+     "launched": 20,
+     "prepick_excluded": 0,
+     "read_flags": {
+      "low_label_mass": 0,
+      "reads": 120,
+      "scope": "all reads",
+      "top1_not_label": 5
+     }
+    }
+   },
+   "at_launches": 40,
+   "contrast_forced_degeneracy": {
+    "k": 0,
+    "n": 80
+   },
+   "fired": false,
+   "look": 1,
+   "results": [
+    {
+     "binding": true,
+     "crit": 8,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR round_degeneracy@campaign-OLMo-dpo silent template=A0s-OLMo-dpo look=1 0/200 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 8 at n=200",
+     "n": 200,
+     "name": "round_degeneracy@campaign-OLMo-dpo",
+     "p": "1/1"
+    },
+    {
+     "binding": true,
+     "crit": null,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR exclusion_guard_fisher@campaign-OLMo-dpo silent template=A0-OLMo-dpo look=1 contrast 0/20 vs sham 0/20 one-sided Fisher P=1.0000 > alpha 0.05",
+     "n": 20,
+     "name": "exclusion_guard_fisher@campaign-OLMo-dpo",
+     "p": "1/1"
+    },
+    {
+     "binding": false,
+     "crit": 8,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR exclusion_guard_abs@campaign-OLMo-dpo reported (silent; not binding) template=A0-OLMo-dpo look=1 0/20 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 8 at n=20",
+     "n": 20,
+     "name": "exclusion_guard_abs@campaign-OLMo-dpo",
+     "p": "1/1"
+    }
+   ]
+  },
+  {
+   "arms": {
+    "A0-OLMo-dpo": {
+     "domain": 48,
+     "launched": 48,
+     "prepick_excluded": 0,
+     "read_flags": {
+      "low_label_mass": 0,
+      "reads": 48,
+      "scope": "first reads of domain sessions",
+      "top1_not_label": 3
+     }
+    },
+    "A0s-OLMo-dpo": {
+     "domain": 32,
+     "launched": 32,
+     "prepick_excluded": 0,
+     "read_flags": {
+      "low_label_mass": 0,
+      "reads": 192,
+      "scope": "all reads",
+      "top1_not_label": 8
+     }
+    }
+   },
+   "at_launches": 80,
+   "contrast_forced_degeneracy": {
+    "k": 0,
+    "n": 192
+   },
+   "fired": false,
+   "look": 2,
+   "results": [
+    {
+     "binding": true,
+     "crit": 12,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR round_degeneracy@campaign-OLMo-dpo silent template=A0s-OLMo-dpo look=2 0/320 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 12 at n=320",
+     "n": 320,
+     "name": "round_degeneracy@campaign-OLMo-dpo",
+     "p": "1/1"
+    },
+    {
+     "binding": true,
+     "crit": null,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR exclusion_guard_fisher@campaign-OLMo-dpo silent template=A0-OLMo-dpo look=2 contrast 0/48 vs sham 0/32 one-sided Fisher P=1.0000 > alpha 0.05",
+     "n": 48,
+     "name": "exclusion_guard_fisher@campaign-OLMo-dpo",
+     "p": "1/1"
+    },
+    {
+     "binding": false,
+     "crit": 15,
+     "exceeds": false,
+     "fired": false,
+     "k": 0,
+     "message": "BAR exclusion_guard_abs@campaign-OLMo-dpo reported (silent; not binding) template=A0-OLMo-dpo look=2 0/48 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 15 at n=48",
+     "n": 48,
+     "name": "exclusion_guard_abs@campaign-OLMo-dpo",
+     "p": "1/1"
+    }
+   ]
+  }
+ ],
+ "looks_count": 3,
+ "pauses": [],
+ "provenance": [
+  {
+   "launched": 112,
+   "record": {
+    "adapter": "olmo-hf",
+    "backend": "torch/cuda",
+    "capability": [
+     8,
+     0
+    ],
+    "choice_window_declared": 8192,
+    "cublas_workspace_config": ":4096:8",
+    "cuda": "12.8",
+    "deterministic": true,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "library_versions": {
+     "accelerate": "1.14.0",
+     "huggingface_hub": "1.28.0",
+     "numpy": "2.1.2",
+     "safetensors": "0.8.0",
+     "torch": "2.8.0+cu128",
+     "transformers": "5.15.0"
+    },
+    "n_layers": 64,
+    "path": "/workspace/models/dpo",
+    "python": "3.12.3",
+    "seed": 20260818
+   },
+   "stamp": "2026-11-16T03:28:21Z"
+  }
+ ],
+ "schedule_n": {
+  "A0-OLMo-dpo": 2208,
+  "A0s-OLMo-dpo": 960
+ },
+ "schema": "m-stage-report-v1",
+ "sham_generation_ms": 258245,
+ "stage": "campaign",
+ "stage_name": "campaign-OLMo-dpo",
+ "status": "COMPLETE",
+ "stop": null,
+ "terminal": {
+  "at_launches": 112,
+  "status": "COMPLETE"
+ },
+ "unit": "OLMo-dpo"
+}

@@ -1,0 +1,126 @@
+# Precheck x3 at `campaign` with item 7's (a) line, on the box before PROPOSAL-p's three campaigns (each under its LOCK-p-OLMo-{ckpt} v1.0, 038bf3e), on the seat's answers of 2026-11-14 (results/raw/2026-11-14_p-backend-line_design-to-code_answers.md, sha256 fd74d3f6…e3ff, §1 and §2 item 3) and the PI's go "Go for the pod whenever you need it" (PI date 2026-11-15, relayed by the coordinating session). PI-local date 2026-11-15.
+# BOX: pod m43y3deb1gq3rp (jspace-olmo-m), 1 x NVIDIA A100-SXM4-80GB, US-CA-2; backend identifier 641ee466f4553b6a (the BACKEND — characterization entry of 2026-11-15, 7ab4d2f; each lock's BACKEND OF RECORD line); box repo at 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a, brought from eb3e08c by a git bundle (eb3e08c..7ab4d2f, sha256 73c532d1…07a1, identical at both ends) fetched from the bundle file alone, G-F0m-OLMo (p)'s 15 untracked outputs set aside first, each identical by digest to its blob at 7ab4d2f; the pod not stopped or restarted across the three campaigns (get-pod's startedAt unchanged since the create).
+# SYNC (box, before the precheck): /workspace/campaign_p/box_sync_campaign.sh /workspace/tmp_bundles/p-campaign.bundle 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a (sha256 0d1fab4e…971b, appended below), exit 0; its one line, as Code's ssh call captured it: "SYNC OK: HEAD 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a, tree clean; G-F0m-OLMo (p)'s 15 outputs set aside in /workspace/qual_p/box-untracked-2026-11-15, each identical by digest to the commit's"
+# COMMAND (box, cwd /workspace/repo/jspace-lab, env.sh sourced): /workspace/venv/bin/python -I -B /workspace/campaign_p/box_precheck_campaign.py 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a results/raw/2026-11-15_respawn_determinism.txt > /workspace/campaign_p/precheck_campaign.txt 2>&1 (sha256 06dd1fac…2221, appended below; model-free: it imports the driver as the campaign command does; (j)'s fresh closure against G-SHAPE-p's record; per unit, stage.precheck at `campaign` and the driver's weights-files check; then (a)'s line: respawn (ii)'s identifier, read from the three `backend identifier (...)` lines of the committed determinism raw, which it checks is committed at 7ab4d2f and unchanged at the box's HEAD, beside the lock's backend of record, and "equal" or "NOT EQUAL").
+# EXIT exit=0 (precheck_campaign.exit). Run before the first campaign's launch.
+# RESULT: PRECHECK x3 AT campaign: ALL CLEAR, (a) equal x3.
+# What follows, verbatim: the box's precheck_campaign.txt (sha256 256b2aa228dd1501cf7aa69413187ce6288bf0cfacc7e17c8e732bb14befba9c); then the two box scripts.
+# ==== precheck_campaign.txt (verbatim) ====
+respawn (ii) raw results/raw/2026-11-15_respawn_determinism.txt: committed at 7ab4d2fbeb9e and unchanged at HEAD 7ab4d2fbeb9e: True; its identifier lines ['printed block: 641ee466f4553b6a', 'new JSON block: 641ee466f4553b6a', 'committed 2026-08-19 block: 641ee466f4553b6a'] -> 641ee466f4553b6a
+fresh closure (python -I -B): 14 files; problems [] ; equal to G-SHAPE-p's record: True
+OLMo-sft PRECHECK CLEAR at campaign; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 fafb786d31e079c8 ; G-PWR (p)'s record bc2b090966654af1
+OLMo-sft (a): respawn (ii)'s identifier 641ee466f4553b6a (Code's laptop check on the characterization run's provenance block; the `BACKEND — characterization` entry's commit 7ab4d2fbeb9e, with its dated note; results/raw/2026-11-15_respawn_determinism.txt) beside the lock's backend of record 641ee466f4553b6a: equal
+OLMo-dpo PRECHECK CLEAR at campaign; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 25c52f56cac4ca4c ; G-PWR (p)'s record bc2b090966654af1
+OLMo-dpo (a): respawn (ii)'s identifier 641ee466f4553b6a (Code's laptop check on the characterization run's provenance block; the `BACKEND — characterization` entry's commit 7ab4d2fbeb9e, with its dated note; results/raw/2026-11-15_respawn_determinism.txt) beside the lock's backend of record 641ee466f4553b6a: equal
+OLMo-instruct PRECHECK CLEAR at campaign; backend of record 641ee466f4553b6a ; weights files problems [] ; lock_sha256 f71c97c175d8a219 ; G-PWR (p)'s record bc2b090966654af1
+OLMo-instruct (a): respawn (ii)'s identifier 641ee466f4553b6a (Code's laptop check on the characterization run's provenance block; the `BACKEND — characterization` entry's commit 7ab4d2fbeb9e, with its dated note; results/raw/2026-11-15_respawn_determinism.txt) beside the lock's backend of record 641ee466f4553b6a: equal
+PRECHECK x3 AT campaign: ALL CLEAR, (a) equal x3
+# ==== /workspace/campaign_p/box_precheck_campaign.py (sha256 06dd1fac228a9ea1efed4f43cda92f4a6103bbd9d6ffeb8fb5075ead64972221) ====
+"""Model-free, on the box: the campaign's precheck x3 at ``campaign`` (p_sessions.py campaign's own order: the precheck,
+then the driver's weights-files check), in a process that imports the driver as its campaign command does (nothing else
+first); before them, (j)'s fresh closure against G-SHAPE-p's record (G-F0m-OLMo (p)'s wrapper form). After each unit's
+precheck line, item 7's (a) line (the seat's answers of 2026-11-14, results/raw/2026-11-14_p-backend-line_design-to-
+code_answers.md, s1 and s2 item 3): beside the lock's ``backend of record``, respawn (ii)'s identifier for this box as
+Code's laptop check computed it from the characterization run's provenance block, read here from the committed respawn
+raw (its three ``backend identifier (...)`` lines, which must agree), with the dated note's commit and the raw's path,
+and the word "equal" (or "NOT EQUAL", a STOP for the seat).
+
+Usage (box, cwd the repo, env.sh sourced): python -I -B box_precheck_campaign.py <note commit> <respawn (ii) raw path>
+Reads no file under data/p/ckpt or data/p/reports. Exits 0 only if the closure, all three prechecks, the weights
+checks and all three (a) lines hold."""
+import json
+import os
+import re
+import subprocess
+import sys
+
+NOTE_COMMIT, RAW = sys.argv[1], sys.argv[2]
+sys.path.insert(0, os.getcwd())                 # the repo root (cwd), so -I cannot drop it
+sys.path.insert(0, "scripts")
+sys.argv = ["p_sessions.py"]
+import p_sessions  # noqa: E402,F401
+from valence_core.p import stage  # noqa: E402
+
+bad = 0
+
+
+def git(*a):
+    return subprocess.run(["git", *a], capture_output=True, text=True).stdout.strip()
+
+
+# the respawn (ii) raw: committed at the note's commit, unchanged at HEAD and in the working tree
+in_note = git("rev-parse", f"{NOTE_COMMIT}:{RAW}")
+at_head = git("rev-parse", f"HEAD:{RAW}")
+on_disk = git("hash-object", RAW)
+anc = subprocess.run(["git", "merge-base", "--is-ancestor", NOTE_COMMIT, "HEAD"]).returncode == 0
+raw_ok = bool(in_note) and in_note == at_head == on_disk and anc
+ids = re.findall(r"^backend identifier \(([^)]*)\): ([0-9a-f]{16})$", open(RAW, encoding="utf-8").read(), re.M)
+idset = {v for _, v in ids}
+rid = idset.pop() if len(ids) == 3 and len(idset) == 1 else None
+print(f"respawn (ii) raw {RAW}: committed at {NOTE_COMMIT[:12]} and unchanged at HEAD {git('rev-parse', 'HEAD')[:12]}: "
+      f"{raw_ok}; its identifier lines {[f'{k}: {v}' for k, v in ids]} -> {rid}", flush=True)
+bad += not (raw_ok and rid)
+
+probs, cur = stage.fresh_import_closure()
+rec = json.load(open("data/p/gates/G-SHAPE-p.json"))["provenance"]["import_closure"]
+print("fresh closure (python -I -B):", len(cur), "files; problems", probs, "; equal to G-SHAPE-p's record:", cur == rec,
+      flush=True)
+bad += bool(probs) or cur != rec
+for u in stage.UNITS:
+    try:
+        pre = stage.precheck(u, stub=False, gate="campaign")
+        wp = p_sessions.weights_files_problems(pre["ckpt"], pre["weights"])
+        bor = pre["backend_of_record"]
+        print(u, "PRECHECK CLEAR at campaign; backend of record", bor, "; weights files problems", wp,
+              "; lock_sha256", pre["identity_extra"]["lock_sha256"][:16], "; G-PWR (p)'s record",
+              pre["lock_required"].get("G-PWR (p)'s record", "")[:16], flush=True)
+        eq = rid is not None and rid == bor
+        print(f"{u} (a): respawn (ii)'s identifier {rid} (Code's laptop check on the characterization run's provenance "
+              f"block; the `BACKEND — characterization` entry's commit {NOTE_COMMIT[:12]}, with its dated note; {RAW}) beside the lock's backend of record {bor}: "
+              f"{'equal' if eq else 'NOT EQUAL -- a STOP for the seat'}", flush=True)
+        bad += bool(wp) or not eq
+    except SystemExit as e:
+        print(u, "REFUSED/STOP:", str(e)[:800], flush=True)
+        bad += 1
+print("PRECHECK x3 AT campaign: ALL CLEAR, (a) equal x3" if bad == 0 else f"PRECHECK x3 AT campaign: {bad} problem(s)",
+      flush=True)
+sys.exit(1 if bad else 0)
+# ==== /workspace/campaign_p/box_sync_campaign.sh (sha256 0d1fab4ebdb063989cf94f3ab3867e71505ab48f08ff6891478d39b3a12b971b) ====
+#!/bin/bash
+# Bring the box repo to the campaign's commit (bundle, no network remote): fetch into a side ref, set G-F0m-OLMo (p)'s
+# 15 untracked outputs aside only where each is byte-identical to the target commit's blob (committed at a225a89) --
+# compared by digest (git hash-object against git rev-parse <target>:<path>; the list of record v2, item 1), never by
+# reading content -- fast-forward, verify. box_sync_qual.sh's form. Usage: box_sync_campaign.sh <bundle path> <target
+# commit sha>. Exits non-zero, touching nothing further, on any surprise.
+set -u
+B=$1
+T=$2
+cd /workspace/repo/jspace-lab || exit 9
+git bundle verify "$B" > /dev/null 2>&1 || { echo "SYNC: bundle does not verify"; exit 10; }
+git fetch -q "$B" "main:refs/bundles/p-campaign" || { echo "SYNC: fetch failed"; exit 11; }
+[ "$(git rev-parse refs/bundles/p-campaign)" = "$T" ] || { echo "SYNC: bundle main is $(git rev-parse refs/bundles/p-campaign), not $T"; exit 12; }
+git merge-base --is-ancestor HEAD "$T" || { echo "SYNC: HEAD $(git rev-parse --short HEAD) is not an ancestor of $T"; exit 13; }
+[ -z "$(git status --porcelain --untracked-files=no)" ] || { echo "SYNC: tracked files modified"; git status --short --untracked-files=no; exit 14; }
+ASIDE=/workspace/qual_p/box-untracked-2026-11-15
+FILES=""
+for ck in sft dpo instruct; do
+  FILES="$FILES data/p/ckpt/OLMo-${ck}_qual.json data/p/ckpt/OLMo-${ck}_qual_p-calls.jsonl data/p/reports/OLMo-${ck}_qual_report.json data/p/reports/OLMo-${ck}_qual_reads.json data/p/reports/OLMo-${ck}_qual_p-report.json"
+done
+UNTR=$(git status --porcelain --untracked-files=all | sed -n 's/^?? //p' | sort)
+WANT=$(printf '%s\n' $FILES | sort)
+[ "$UNTR" = "$WANT" ] || { echo "SYNC: the untracked set is not G-F0m-OLMo (p)'s 15 outputs (names follow)"; echo "$UNTR"; exit 15; }
+for f in $FILES; do
+  [ "$(git hash-object "$f")" = "$(git rev-parse "$T:$f")" ] || { echo "SYNC: $f's digest is not $T's blob's"; exit 16; }
+done
+[ ! -e "$ASIDE" ] || { echo "SYNC: $ASIDE exists"; exit 17; }
+for f in $FILES; do
+  mkdir -p "$ASIDE/$(dirname "$f")"
+  mv "$f" "$ASIDE/$f" || { echo "SYNC: move aside failed for $f"; exit 18; }
+done
+git merge -q --ff-only "$T" || { echo "SYNC: fast-forward failed"; exit 19; }
+[ "$(git rev-parse HEAD)" = "$T" ] || { echo "SYNC: HEAD is not $T"; exit 20; }
+[ -z "$(git status --porcelain --untracked-files=all)" ] || { echo "SYNC: tree not clean after the fast-forward"; git status --short; exit 21; }
+for f in $FILES; do
+  [ "$(git hash-object "$ASIDE/$f")" = "$(git hash-object "$f")" ] || { echo "SYNC: $f after checkout differs from the set-aside copy (by digest)"; exit 22; }
+done
+echo "SYNC OK: HEAD $(git rev-parse HEAD), tree clean; G-F0m-OLMo (p)'s 15 outputs set aside in $ASIDE, each identical by digest to the commit's"

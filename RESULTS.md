@@ -21,6 +21,101 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **PROPOSAL-p's three campaigns (p v0.2 §4.1, §6.3; m:192, m:330), each under its LOCK-p-OLMo-{ckpt}
+  v1.0 (`038bf3e`), on the box of record (`7ab4d2f`), in one pod session: COMPLETE ×3, exit 0, path uncached. Each
+  ran 112 launches, A0-OLMo-{ckpt} 80 and A0s-OLMo-{ckpt} 32, with each arm's domain at its floor. No look fired; no
+  pause, no STOP; (d) equal ×3. The VERDICTS sessions follow ADDENDUM-p1's commit (`fa27c45`).**
+  - **The words** (each verbatim):
+    - the seat's answers of 2026-11-14 (`fd74d3f6…e3ff`), §2 item 3:
+
+      > 3. The box repo by bundle; precheck ×3 at `campaign` with (a)'s line; the three campaigns at 2 h each, one pod session, looks every 40; (d)'s line in each campaign raw after each invocation; the seat adjudicates every pause on the excerpt.
+
+    - the PI's go, relayed by the coordinating session (PI date 2026-11-15): "Go for the pod whenever you need it."
+    - the PI's routing of 2026-11-15 (evening), "Route as given", its section B, item 5: "The campaigns as routed
+      (bundle; precheck x3 with (a)'s line; three campaigns, 2 h each; (d)'s line after each invocation; raws and
+      checkpoints committed before any pod stop). The pod stays up afterwards, for n [keep]."
+  - **The box,** `7ab4d2f`'s: pod `m43y3deb1gq3rp`, backend identifier `641ee466f4553b6a`. The repo was brought from
+    `eb3e08c` to `7ab4d2f` by a git bundle (sha256 `73c532d1…07a1`, identical at both ends), fetched from the bundle
+    file alone. First, G-F0m-OLMo (p)'s 15 untracked outputs, each identical by digest to its blob at `7ab4d2f`, were
+    set aside in `/workspace/qual_p/box-untracked-2026-11-15`; the sync exited 0.
+  - **One pod session** (the seat's §2 item 3; each lock's §5; rule 27): the three campaigns ran on pod
+    `m43y3deb1gq3rp` with no stop or restart (`get-pod`'s `startedAt` is unchanged since the create), each in one
+    invocation with no `--resume` (one provenance entry in each m report).
+  - **Before the launches: the precheck ×3 at `campaign`, ALL CLEAR, exit 0**
+    ([`_p-campaign_precheck`](results/raw/2026-11-15_p-campaign_precheck.txt)):
+    - each unit's stage precheck and the driver's weights-files check clear; `lock_sha256` `fafb786d…`, `25c52f56…`
+      and `f71c97c1…`; G-PWR (p)'s record `bc2b0909…`; (j)'s fresh closure equal to G-SHAPE-p's record;
+    - **(a), per unit:** respawn (ii)'s identifier `641ee466f4553b6a`, read from the three identifier lines of the
+      committed determinism raw (committed at `7ab4d2f` and unchanged at the box's HEAD), beside the lock's backend of
+      record `641ee466f4553b6a`: equal. Each line names the `BACKEND — characterization` entry's commit, `7ab4d2f`,
+      and the raw's path, as the seat's §1 (a) has it.
+  - **The runs:** `scripts/p_sessions.py campaign --unit OLMo-{ckpt}`, one invocation each with no `--resume`, on
+    DRIVER `9c641e19…a96d` at `7ab4d2f`, through `/workspace/campaign_p/run_campaign_p.sh` (sha256 `e10553e2…24db`).
+    One wrapper invocation ran per checkpoint, sft, dpo and instruct in turn, so that the coordinating session heard of
+    each launch and each end.
+    - The wrapper is in the seat's one-launch-stamp form: the batch's one launch stamp (sft's) and each run's exit
+      code (0, 0 and 0); the later invocations' launch lines carry no stamp, and there is no end, done or later launch
+      stamp. This entry gives no end time and no stage total.
+    - Its chain rule is declared in its own header, shipped before the first launch, and was dry-tested on 15
+      scenarios (16 checks: three sequential one-checkpoint invocations were also checked for exactly one stamp); no
+      halt line printed.
+    - Each end-wait was on the wrapper's PID alone (the list of record v2, item 5), and each end notice to the
+      coordinating session carried the outcome only. The dpo launch's first call refused itself: its guard's process
+      search matched the ssh shell's own command line. Nothing was launched; a separate check found no wrapper or stage
+      running and the GPU idle, and then dpo launched. Each campaign raw carries its launch calls, its end-wait's line
+      and the scripts.
+  - **Per checkpoint** (from m's campaign report and p's report; Code did not read the checkpoints or the call logs):
+
+    | | launches A0 / A0s | domain (floors 80 / 32) | pre-pick excluded | looks at 40, 80; end at 112 | hour cap (2 h) | hair trigger | sham counters (p's report) | sham proxy | contrast forced rounds' control characters | (d) |
+    |---|---|---|---|---|---|---|---|---|---|---|
+    | sft | 80 / 32 | 80 / 32 | 0 / 0 | none fired | not reached | 0 | cap_hits 1, the rest 0 | 320/320 attributed, 0 cuts | 0 | equal |
+    | dpo | 80 / 32 | 80 / 32 | 0 / 0 | none fired | not reached | 0 | all 0 | 320/320, 0 cuts | 0 | equal |
+    | instruct | 80 / 32 | 80 / 32 | 0 / 0 | none fired | not reached | 0 | all 0 | 320/320, 0 cuts | 0 | equal |
+
+    - The launch counts were G-PWR (p)'s projection, A0 96 and A0s 64. Each campaign ended COMPLETE at 112 launches,
+      when both arms had reached their floors.
+    - The domain is m's report's, given pooled as m:318 has it, not split into valid sessions and sessions excluded at
+      a free round. Each sham arm's 32 sessions are valid (the stdout's session lines).
+    - The sham counters run over the sham sessions' 320 rounds, except the corrupted-spelling counter, which covers
+      their forced rounds; its count over the sham free rounds is withheld to VERDICTS, since it reads the round's
+      item (the reports' withheld note). sft's one sham cap hit is session s=10's first forced round ("A0s-OLMo-sft
+      s=10 forced 0").
+    - Each m report's `pauses` is empty and its `stop` null; no adjudication excerpt was written. Register entries
+      (1), (2) and (6)–(9) were entered, and each identity carries its lock's sha256 and the backend identifier
+      `641ee466f4553b6a`. Term (d) at each stage's end: `single_threaded` false, with `tqdm_monitor` alive; recorded,
+      never raised.
+    - The contrast arms' counts other than the forced rounds' control characters are withheld to each unit's VERDICTS
+      (m:318).
+  - **Provenance** (ledger 27), each run's PROVENANCE record, equal ×3 (its path aside) and equal to `7ab4d2f`'s
+    characterization: torch 2.8.0+cu128, transformers 5.15.0, accelerate 1.14.0, safetensors 0.8.0, huggingface_hub
+    1.28.0, numpy 2.1.2, Python 3.12.3; CUDA 12.8 (torch's build), capability [8, 0]; bf16; deterministic true with
+    `CUBLAS_WORKSPACE_CONFIG` `:4096:8`; seed 20260818; declared choice window 8192; 64 layers.
+  - **(d), after each invocation ended** (the seat's §1 (d)): the campaign report's `identity.backend_identifier`
+    `641ee466f4553b6a` against the lock's `BACKEND OF RECORD` `641ee466f4553b6a`, equal for sft, dpo and instruct, the
+    identifier only; each campaign raw carries its line.
+  - **Committed with this entry,** each byte-identical to the box's (sha256 at both ends):
+    - per checkpoint: m's checkpoint `data/p/ckpt/OLMo-{ckpt}_campaign.json` (-diff; it may hold contrast picks; not
+      read); p's call log `…_campaign_p-calls.jsonl` (withheld; -diff; not read); m's campaign report and p's report
+      under `data/p/reports/`;
+    - the five raws: [`_p-campaign_precheck`](results/raw/2026-11-15_p-campaign_precheck.txt),
+      [`_p-campaign_OLMo-sft`](results/raw/2026-11-15_p-campaign_OLMo-sft.txt),
+      [`_p-campaign_OLMo-dpo`](results/raw/2026-11-15_p-campaign_OLMo-dpo.txt),
+      [`_p-campaign_OLMo-instruct`](results/raw/2026-11-15_p-campaign_OLMo-instruct.txt) and
+      [`_p-campaign_copyback`](results/raw/2026-11-15_p-campaign_copyback.txt), with the pod's address and port and the
+      local roots kept out;
+    - the values-check's raw.
+
+    Rule 27: the raws and checkpoints are committed here, before any pod stop. The pod stays up, for n.
+  - **The laptop:** this session ran no laptop model process; its laptop steps (the copy-back, the raws, the
+    values-check) were model-free.
+  - **Next** (section B, item 6, whose word "[go, after its commit]" is given): the three VERDICTS sessions with the
+    secondary DVs, fresh, after ADDENDUM-p1's commit (`fa27c45`).
+  - **Blind values-check:** 66 claims, 57 CONFIRMED, 3 IMPRECISE, 0 FAIL, 6 NOT CHECKABLE. Each IMPRECISE item and
+    each observation on the record is applied in the checker's terms; the additions after the check were checked
+    by tool, not by a second blind pass. Raw
+    [`2026-11-15_p-campaign_valuescheck.md`](results/raw/2026-11-15_p-campaign_valuescheck.md).
+  - Not pushed. Committed by path.
+
 - 2026-11-15 — **ADDENDUM-p1 v0.1 — COMMITTED: PROPOSAL-p v0.2's addendum, "a p checkpoint's outcome enters the
   posting its VERDICTS entry reaches", committed by path as the seat placed it, on the PI's routing of 2026-11-15
   ("Route as given"; section B, item 6 [adopt]). No `PROPOSAL-p OLMo-{ckpt} — VERDICTS` entry exists at this

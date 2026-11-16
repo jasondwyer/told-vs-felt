@@ -1,0 +1,292 @@
+# PROPOSAL-p campaign, unit OLMo-instruct (p v0.2 §4.1, §6.3; m:192, m:330; the campaign wiring's BUILD c0f1c69), under LOCK-p-OLMo-instruct.md v1.0 (038bf3e, sha256 f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67), on the seat's answers of 2026-11-14 (results/raw/2026-11-14_p-backend-line_design-to-code_answers.md, sha256 fd74d3f6…e3ff, §1 and §2 item 3) and the PI's go "Go for the pod whenever you need it" (PI date 2026-11-15, relayed by the coordinating session). PI-local date 2026-11-15.
+# BOX: pod m43y3deb1gq3rp (jspace-olmo-m), 1 x NVIDIA A100-SXM4-80GB, US-CA-2; backend identifier 641ee466f4553b6a (the BACKEND — characterization entry of 2026-11-15, 7ab4d2f; each lock's BACKEND OF RECORD line); box repo at 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a, brought from eb3e08c by a git bundle (eb3e08c..7ab4d2f, sha256 73c532d1…07a1, identical at both ends) fetched from the bundle file alone, G-F0m-OLMo (p)'s 15 untracked outputs set aside first, each identical by digest to its blob at 7ab4d2f; the pod not stopped or restarted across the three campaigns (get-pod's startedAt unchanged since the create).
+#   The precheck x3 at campaign: ALL CLEAR, (a) equal x3 (results/raw/2026-11-15_p-campaign_precheck.txt).
+# COMMAND (box, via /workspace/campaign_p/run_campaign_p.sh instruct, sha256 e10553e2…24db, appended below; env.sh sourced; cwd /workspace/repo/jspace-lab): /workspace/venv/bin/python scripts/p_sessions.py campaign --unit OLMo-instruct   (one invocation; no --resume)
+#   One wrapper invocation per checkpoint, sft, dpo, instruct in turn, each announced to the coordinating session before its launch and its outcome sent after its end. Chain rule, declared in the wrapper's own header (shipped before the first launch) and dry-tested on 15 scenarios (16 checks): continue on exit 0 with no STOP line, or on PAUSE (exit 3, its PAUSE line, no STOP line), each with its (d) line equal or absent by rule; halt on a STOP line, a refusal (2), a STOP (4), FAIL (5), NOT-DETERMINED (6), any other exit, exit 3 without its PAUSE line, or a (d) line NOT EQUAL or in error.
+#   Stamps (the seat's box stamp rule, its answers of 2026-11-10 on G-ID-F3, §6 and §9 item 8): the batch's one launch stamp, in the first invocation's launch line (sft's), and each run's exit code; no end, done or later launch stamp. This invocation is a later one of the batch: its launch line carries no stamp. m's PROVENANCE start stamp remains in the stdout and the report, the Q4 ruling's unavoidable record. No other stamp of the run is in this raw.
+#   The end-wait was on the wrapper's PID alone (the list of record v2, item 5; the laptop's script wait_campaign.sh, sha256 cfdc1119…9c90, appended below); nothing of the run was read until it had ended.
+# RESULT: COMPLETE, exit 0, path uncached: 112 launches, A0-OLMo-instruct 80 and A0s-OLMo-instruct 32, each arm's domain at its floor (80 and 32), no pre-pick exclusion; looks at 40 and 80 launches and the end look at 112, none fired; no pause, no STOP; the hour cap (2 h) not reached (from m's campaign report).
+# (d), after the invocation ended: (d) OLMo-instruct campaign invocation 1: the campaign report's identity.backend_identifier 641ee466f4553b6a against LOCK-p-OLMo-instruct.md's BACKEND OF RECORD 641ee466f4553b6a: equal
+# OUTPUTS (committed with this raw; byte-identical to the box's, sha256 compared at both ends; the checkpoint may hold contrast picks and is -diff, never read by Code; the call log is withheld, -diff, never read):
+#   data/p/ckpt/OLMo-instruct_campaign.json          1d77f0d09dce9e5a407b91d4541840dfe324c5ccc366fc31c887be1d9eccf592
+#   data/p/ckpt/OLMo-instruct_campaign_p-calls.jsonl f14ff99ffd5dd8fdea86a2dfd0959201662c405090ad04e643b12a4767c8acb8
+#   data/p/reports/OLMo-instruct_campaign_report.json c237be90cc8577c8e4446401b96e9425683cf58e5a78cfe74a3a7cf0452dbc1e
+#   data/p/reports/OLMo-instruct_campaign_p-report.json 5100fdcb6fedba0bb58ce4533340331280845d5ea6007d3b79236f93d12bad4b
+# What follows: Code's launch calls and their outputs; this invocation's lines of the wrapper's stamps.txt (whole file sha256 7f2d825d40249052552127a301bad5b96366c3bb0d7609d645a0f7cde88c0ddd); its stdout+stderr, verbatim (sha256 79effb323151ec7982866206f8d7b9c20de736074554cc2d11540585b43d2a84); its (d) line from d_lines.txt (whole file sha256 866d661fe37ef017fff74b977a65d21145dfb8e9133cb7f990a22d6062f1b943); the end-wait's line; the wrapper's own log wrapper-instruct.out (empty, sha256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855); the wrapper, box_d_line.py and wait_campaign.sh.
+# ==== the launch ====
+# Code's separate check (ssh: the wrapper's process by its args, p_sessions.py processes counted, the GPU), its output:
+no wrapper running
+0
+0 MiB, 0 %
+# Code's launch call (ssh: it refused if instruct's stdout file existed, then started the wrapper under nohup), its output:
+wrapper pid=4027
+# ==== stamps.txt, this invocation's lines (read only after the wrapper's PID had ended) ====
+launch (a later invocation of the batch: no stamp) HEAD=7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a RUNPOD_POD_ID=m43y3deb1gq3rp
+ran instruct invocation 1 exit=0
+ended
+# ==== campaign_p-instruct-1.txt (verbatim) ====
+INVOCATION: /workspace/venv/bin/python scripts/p_sessions.py campaign --unit OLMo-instruct
+DRIVER scripts/p_sessions.py 9c641e19bd2aaf6379eb3f57339139f54c651b13e0188e0aaa7f521361a6a96d: committed at HEAD 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a, working tree identical (campaign-OLMo-instruct (p)'s precheck)
+WEIGHTS instruct: allenai/Olmo-3.1-32B-Instruct revision ac0587e4a774, files_aggregate_sha256 0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643; 8 files at /workspace/models/instruct, each at the manifest's byte count (the full re-hash is the respawn protocol's step (i), in this box's BACKEND entry)
+GATE campaign-OLMo-instruct (p): proposal PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  16%|█▋        | 115/707 [00:00<00:00, 1103.59it/s]Loading weights:  32%|███▏      | 226/707 [00:00<00:00, 615.15it/s] Loading weights:  42%|████▏     | 299/707 [00:00<00:00, 494.51it/s]Loading weights:  50%|█████     | 356/707 [00:00<00:00, 481.40it/s]Loading weights:  58%|█████▊    | 408/707 [00:00<00:00, 399.43it/s]Loading weights:  64%|██████▍   | 451/707 [00:00<00:00, 400.20it/s]Loading weights:  70%|██████▉   | 494/707 [00:01<00:00, 398.39it/s]Loading weights:  76%|███████▌  | 536/707 [00:01<00:00, 397.10it/s]Loading weights:  82%|████████▏ | 577/707 [00:01<00:00, 392.39it/s]Loading weights:  87%|████████▋ | 617/707 [00:01<00:00, 379.59it/s]Loading weights:  93%|█████████▎| 658/707 [00:01<00:00, 381.49it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 440.49it/s]
+LICENCE campaign-OLMo-instruct: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-p-OLMo-instruct.md f71c97c175d8a219: committed at HEAD 7ab4d2fbeb9edac04559cafa73ef3e2cef17b42a, working tree identical; analyzer d347ea0c9b69f73c and package 7756dcf42532b222: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"olmo-hf","backend":"torch/cuda","capability":[8,0],"choice_window_declared":8192,"cublas_workspace_config":":4096:8","cuda":"12.8","deterministic":true,"device":"cuda","dtype":"bfloat16","gpu":"NVIDIA A100-SXM4-80GB","library_versions":{"accelerate":"1.14.0","huggingface_hub":"1.28.0","numpy":"2.1.2","safetensors":"0.8.0","torch":"2.8.0+cu128","transformers":"5.15.0"},"n_layers":64,"path":"/workspace/models/instruct","python":"3.12.3","seed":20260818},"stamp":"2026-11-16T03:48:52Z"}
+campaign A0-OLMo-instruct s=0 valid
+campaign A0s-OLMo-instruct s=0 valid
+campaign A0-OLMo-instruct s=1 valid
+campaign A0s-OLMo-instruct s=1 valid
+campaign A0-OLMo-instruct s=2 valid
+campaign A0s-OLMo-instruct s=2 valid
+campaign A0-OLMo-instruct s=3 valid
+campaign A0s-OLMo-instruct s=3 valid
+campaign A0-OLMo-instruct s=4 valid
+campaign A0s-OLMo-instruct s=4 valid
+campaign A0-OLMo-instruct s=5 valid
+campaign A0s-OLMo-instruct s=5 valid
+campaign A0-OLMo-instruct s=6 valid
+campaign A0s-OLMo-instruct s=6 valid
+campaign A0-OLMo-instruct s=7 valid
+campaign A0s-OLMo-instruct s=7 valid
+campaign A0-OLMo-instruct s=8 valid
+campaign A0s-OLMo-instruct s=8 valid
+campaign A0-OLMo-instruct s=9 valid
+campaign A0s-OLMo-instruct s=9 valid
+campaign A0-OLMo-instruct s=10 valid
+campaign A0s-OLMo-instruct s=10 valid
+campaign A0-OLMo-instruct s=11 valid
+campaign A0s-OLMo-instruct s=11 valid
+campaign A0-OLMo-instruct s=12 valid
+campaign A0s-OLMo-instruct s=12 valid
+campaign A0-OLMo-instruct s=13 valid
+campaign A0s-OLMo-instruct s=13 valid
+campaign A0-OLMo-instruct s=14 valid
+campaign A0s-OLMo-instruct s=14 valid
+campaign A0-OLMo-instruct s=15 valid
+campaign A0s-OLMo-instruct s=15 valid
+campaign A0-OLMo-instruct s=16 valid
+campaign A0s-OLMo-instruct s=16 valid
+campaign A0-OLMo-instruct s=17 valid
+campaign A0s-OLMo-instruct s=17 valid
+campaign A0-OLMo-instruct s=18 valid
+campaign A0s-OLMo-instruct s=18 valid
+campaign A0-OLMo-instruct s=19 valid
+campaign A0s-OLMo-instruct s=19 valid
+BAR round_degeneracy@campaign-OLMo-instruct silent template=A0s-OLMo-instruct look=1 0/200 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 8 at n=200
+BAR exclusion_guard_fisher@campaign-OLMo-instruct silent template=A0-OLMo-instruct look=1 contrast 0/20 vs sham 0/20 one-sided Fisher P=1.0000 > alpha 0.05
+BAR exclusion_guard_abs@campaign-OLMo-instruct reported (silent; not binding) template=A0-OLMo-instruct look=1 0/20 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 8 at n=20
+campaign A0-OLMo-instruct s=20 valid
+campaign A0s-OLMo-instruct s=20 valid
+campaign A0-OLMo-instruct s=21 valid
+campaign A0s-OLMo-instruct s=21 valid
+campaign A0-OLMo-instruct s=22 valid
+campaign A0s-OLMo-instruct s=22 valid
+campaign A0-OLMo-instruct s=23 valid
+campaign A0s-OLMo-instruct s=23 valid
+campaign A0-OLMo-instruct s=24 valid
+campaign A0s-OLMo-instruct s=24 valid
+campaign A0-OLMo-instruct s=25 valid
+campaign A0s-OLMo-instruct s=25 valid
+campaign A0-OLMo-instruct s=26 valid
+campaign A0s-OLMo-instruct s=26 valid
+campaign A0-OLMo-instruct s=27 valid
+campaign A0s-OLMo-instruct s=27 valid
+campaign A0-OLMo-instruct s=28 valid
+campaign A0s-OLMo-instruct s=28 valid
+campaign A0-OLMo-instruct s=29 valid
+campaign A0s-OLMo-instruct s=29 valid
+campaign A0-OLMo-instruct s=30 valid
+campaign A0s-OLMo-instruct s=30 valid
+campaign A0-OLMo-instruct s=31 valid
+campaign A0s-OLMo-instruct s=31 valid
+campaign A0-OLMo-instruct s=32 valid
+campaign A0-OLMo-instruct s=33 valid
+campaign A0-OLMo-instruct s=34 valid
+campaign A0-OLMo-instruct s=35 valid
+campaign A0-OLMo-instruct s=36 valid
+campaign A0-OLMo-instruct s=37 valid
+campaign A0-OLMo-instruct s=38 valid
+campaign A0-OLMo-instruct s=39 valid
+campaign A0-OLMo-instruct s=40 valid
+campaign A0-OLMo-instruct s=41 valid
+campaign A0-OLMo-instruct s=42 valid
+campaign A0-OLMo-instruct s=43 valid
+campaign A0-OLMo-instruct s=44 valid
+campaign A0-OLMo-instruct s=45 valid
+campaign A0-OLMo-instruct s=46 valid
+campaign A0-OLMo-instruct s=47 valid
+BAR round_degeneracy@campaign-OLMo-instruct silent template=A0s-OLMo-instruct look=2 0/320 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 12 at n=320
+BAR exclusion_guard_fisher@campaign-OLMo-instruct silent template=A0-OLMo-instruct look=2 contrast 0/48 vs sham 0/32 one-sided Fisher P=1.0000 > alpha 0.05
+BAR exclusion_guard_abs@campaign-OLMo-instruct reported (silent; not binding) template=A0-OLMo-instruct look=2 0/48 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 15 at n=48
+campaign A0-OLMo-instruct s=48 valid
+campaign A0-OLMo-instruct s=49 valid
+campaign A0-OLMo-instruct s=50 valid
+campaign A0-OLMo-instruct s=51 valid
+campaign A0-OLMo-instruct s=52 valid
+campaign A0-OLMo-instruct s=53 valid
+campaign A0-OLMo-instruct s=54 valid
+campaign A0-OLMo-instruct s=55 valid
+campaign A0-OLMo-instruct s=56 valid
+campaign A0-OLMo-instruct s=57 valid
+campaign A0-OLMo-instruct s=58 valid
+campaign A0-OLMo-instruct s=59 valid
+campaign A0-OLMo-instruct s=60 valid
+campaign A0-OLMo-instruct s=61 valid
+campaign A0-OLMo-instruct s=62 valid
+campaign A0-OLMo-instruct s=63 valid
+campaign A0-OLMo-instruct s=64 valid
+campaign A0-OLMo-instruct s=65 valid
+campaign A0-OLMo-instruct s=66 valid
+campaign A0-OLMo-instruct s=67 valid
+campaign A0-OLMo-instruct s=68 valid
+campaign A0-OLMo-instruct s=69 valid
+campaign A0-OLMo-instruct s=70 valid
+campaign A0-OLMo-instruct s=71 valid
+campaign A0-OLMo-instruct s=72 valid
+campaign A0-OLMo-instruct s=73 valid
+campaign A0-OLMo-instruct s=74 valid
+campaign A0-OLMo-instruct s=75 valid
+campaign A0-OLMo-instruct s=76 valid
+campaign A0-OLMo-instruct s=77 valid
+campaign A0-OLMo-instruct s=78 valid
+campaign A0-OLMo-instruct s=79 valid
+BAR round_degeneracy@campaign-OLMo-instruct silent template=A0s-OLMo-instruct look=end 0/320 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 12 at n=320
+BAR exclusion_guard_fisher@campaign-OLMo-instruct silent template=A0-OLMo-instruct look=end contrast 0/80 vs sham 0/32 one-sided Fisher P=1.0000 > alpha 0.05
+BAR exclusion_guard_abs@campaign-OLMo-instruct reported (silent; not binding) template=A0-OLMo-instruct look=end 0/80 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 23 at n=80
+STAGE campaign-OLMo-instruct COMPLETE path=uncached
+CHECKPOINT /workspace/repo/jspace-lab/data/p/ckpt/OLMo-instruct_campaign.json
+REPORT /workspace/repo/jspace-lab/data/p/reports/OLMo-instruct_campaign_report.json
+P-REPORT campaign-OLMo-instruct (p): COMPLETE; checkpoint ckpt/OLMo-instruct_campaign.json (sha256 1d77f0d09dce9e5a407b91d4541840dfe324c5ccc366fc31c887be1d9eccf592); p's report data/p/reports/OLMo-instruct_campaign_p-report.json (written), call log ckpt/OLMo-instruct_campaign_p-calls.jsonl (1 run(s), withheld)
+P-REPORT hair trigger line_break_in_stored_text over every round of every session: 0
+P-REPORT sham counters (320 rounds; decide nothing): control_chars 0 []; harness_first_line 0 []; cap_hits 0 []; refusals 0 []; corrupted_spelling 0 []
+P-REPORT contrast forced rounds' control characters (320 rounds): 0 []
+P-REPORT sham proxy: 320 of 320 rounds attributed, 0 cut(s) []; attribution complete True; contrast: withheld (m:318)
+P-REPORT withheld: the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint
+P-REPORT term (d) at stage end, before restoration: [{"active_count": 2, "on_main_thread": true, "single_threaded": false, "threads": ["MainThread", "tqdm_monitor"]}]
+P-REPORT register entries entered: [1, 2, 6, 7, 8, 9]
+P-REPORT runs: 1 first returned; call log well formed True
+# ==== d_lines.txt, this invocation's line ====
+(d) OLMo-instruct campaign invocation 1: the campaign report's identity.backend_identifier 641ee466f4553b6a against LOCK-p-OLMo-instruct.md's BACKEND OF RECORD 641ee466f4553b6a: equal
+# ==== the end-wait's output (wait_campaign.sh, on the wrapper's PID) ====
+the wrapper (PID 4027) has ended
+# ==== /workspace/campaign_p/run_campaign_p.sh (sha256 e10553e2adb49f60f6366910715d9c0a239e3683edee1141d005d2a808e124db) ====
+#!/bin/bash
+# The PROPOSAL-p campaign under each checkpoint's LOCK-p v1.0 (038bf3e), on the seat's answers of 2026-11-14
+# (results/raw/2026-11-14_p-backend-line_design-to-code_answers.md, s2 item 3: "the three campaigns at 2 h each, one pod
+# session, looks every 40; (d)'s line in each campaign raw after each invocation; the seat adjudicates every pause on the
+# excerpt"). The driver is the committed one; this wrapper only sequences it. Usage: run_campaign_p.sh <ckpt>... (sft dpo
+# instruct by default); the pod session runs one checkpoint per invocation, in that order, so that the coordinating
+# session hears of each launch and each end (outcome only).
+# Stamps (the box's stamp rule, the seat's answers of 2026-11-10 on G-ID-F3, s9 item 8): the batch's one launch stamp
+# (the first invocation's, when stamps.txt does not yet exist) and each run's exit code; no end, done or later launch
+# stamp. Each invocation's last line in stamps.txt is the word "ended".
+# One first invocation per checkpoint (no --resume). After each, item 7's (d) line (box_d_line.py, beside this file).
+# Chain rule: continue on exit 0 with no STOP line, or on PAUSE (exit 3, its PAUSE line, no STOP line), each with its
+# (d) line equal or absent by rule (no session launched); halt on a STOP line, a refusal (2), a STOP (4), FAIL (5),
+# NOT-DETERMINED (6), any other exit, exit 3 without its PAUSE line, or a (d) line NOT EQUAL or in error.
+source /workspace/env.sh
+cd /workspace/repo/jspace-lab || exit 9
+OUT=/workspace/campaign_p
+mkdir -p "$OUT"
+if [ ! -e "$OUT/stamps.txt" ]; then
+  echo "launch $(date -u +%Y-%m-%dT%H:%M:%SZ) HEAD=$(git rev-parse HEAD) RUNPOD_POD_ID=$RUNPOD_POD_ID" >> "$OUT/stamps.txt"
+else
+  echo "launch (a later invocation of the batch: no stamp) HEAD=$(git rev-parse HEAD) RUNPOD_POD_ID=$RUNPOD_POD_ID" >> "$OUT/stamps.txt"
+fi
+CKS="$*"
+[ -n "$CKS" ] || CKS="sft dpo instruct"
+for ck in $CKS; do
+  case "$ck" in sft|dpo|instruct) ;; *) echo "halt: $ck is not a p checkpoint" >> "$OUT/stamps.txt"; break;; esac
+  before=$(/workspace/venv/bin/python -I -B "$OUT/box_d_line.py" count "OLMo-$ck")
+  /workspace/venv/bin/python scripts/p_sessions.py campaign --unit "OLMo-$ck" > "$OUT/campaign_p-$ck-1.txt" 2>&1
+  rc=$?
+  echo "ran $ck invocation 1 exit=$rc" >> "$OUT/stamps.txt"
+  /workspace/venv/bin/python -I -B "$OUT/box_d_line.py" line "OLMo-$ck" "$before" 1 >> "$OUT/d_lines.txt" 2>&1
+  drc=$?
+  if grep -q "^STOP:" "$OUT/campaign_p-$ck-1.txt"; then echo "halt after $ck (exit=$rc): a STOP line" >> "$OUT/stamps.txt"; break; fi
+  if [ "$rc" -ne 0 ] && [ "$rc" -ne 3 ]; then echo "halt after $ck (exit=$rc): neither an end with exit 0 nor a PAUSE" >> "$OUT/stamps.txt"; break; fi
+  if [ "$rc" -eq 3 ] && ! grep -qE "^P-(CAMPAIGN|REPORT) campaign-OLMo-$ck \(p\): PAUSE" "$OUT/campaign_p-$ck-1.txt"; then
+    echo "halt after $ck (exit=3): no PAUSE line" >> "$OUT/stamps.txt"; break; fi
+  if [ "$drc" -ne 0 ]; then echo "halt after $ck (exit=$rc): its (d) line is not equal or in error" >> "$OUT/stamps.txt"; break; fi
+done
+echo "ended" >> "$OUT/stamps.txt"
+# ==== /workspace/campaign_p/box_d_line.py (sha256 05667288552eed54ac6c4713977572d2034ca1d41adc31da4135f7daaddb5d1d) ====
+"""Item 7's (d) line, model-free, on the box, once a campaign invocation has ended (the seat's answers of 2026-11-14,
+results/raw/2026-11-14_p-backend-line_design-to-code_answers.md, s1 (d) and s2 item 3; the list of record v2, item 5:
+nothing of a running stage is read). It reads the unit's campaign report (data/p/reports, the read domain) for
+identity.backend_identifier and the number of its provenance entries, and the unit's committed LOCK-p v1.0 for its one
+BACKEND OF RECORD line; it prints the identifier only, never a provenance record or stamp.
+
+Usage (box, cwd the repo):
+  box_d_line.py count OLMo-{ckpt}            the report's provenance entries now (0 with no report), printed alone
+  box_d_line.py line OLMo-{ckpt} <before> <k>  invocation k's (d) line, <before> being the count before it ran:
+      the count grew   -> "(d) ... equal" (exit 0) or "(d) ... NOT EQUAL -- a STOP for the seat" (exit 1)
+      the count did not grow -> no (d) line: the invocation launched no session (resume.py:324), said once (exit 0)
+      no report, or a lock without exactly one BACKEND OF RECORD line -> a problem line (exit 2)
+"""
+import json
+import os
+import re
+import sys
+
+mode, unit = sys.argv[1], sys.argv[2]
+if unit not in ("OLMo-sft", "OLMo-dpo", "OLMo-instruct"):
+    print(f"(d) {unit}: not a p unit")
+    sys.exit(2)
+ck = unit.split("-", 1)[1]
+rep_path = os.path.join("data", "p", "reports", f"{unit}_campaign_report.json")
+lock_path = f"LOCK-p-OLMo-{ck}.md"
+
+
+def report():
+    return json.load(open(rep_path, encoding="utf-8")) if os.path.exists(rep_path) else None
+
+
+if mode == "count":
+    r = report()
+    print(0 if r is None else len(r["provenance"]))
+    sys.exit(0)
+
+before, k = int(sys.argv[3]), int(sys.argv[4])
+r = report()
+if r is None:
+    print(f"(d) {unit} campaign invocation {k}: no campaign report after the invocation -- no (d) line")
+    sys.exit(2)
+lids = re.findall(r"^BACKEND OF RECORD ([0-9a-f]{16})$", open(lock_path, encoding="utf-8").read(), re.M)
+if len(lids) != 1:
+    print(f"(d) {unit} campaign invocation {k}: {lock_path} carries {len(lids)} BACKEND OF RECORD lines, not one")
+    sys.exit(2)
+lid, n = lids[0], len(r["provenance"])
+if n <= before:
+    print(f"(d) {unit} campaign invocation {k}: no line -- the invocation launched no session (the report's provenance "
+          f"entries {before} -> {n}; resume.py:324)")
+    sys.exit(0)
+bid = r["identity"]["backend_identifier"]
+eq = bid == lid
+print(f"(d) {unit} campaign invocation {k}: the campaign report's identity.backend_identifier {bid} against "
+      f"{lock_path}'s BACKEND OF RECORD {lid}: {'equal' if eq else 'NOT EQUAL -- a STOP for the seat'}")
+sys.exit(0 if eq else 1)
+# ==== wait_campaign.sh, the laptop's end-wait (sha256 cfdc111940f9b03d4866b6e84103796fe5745d01e9329a87a01e27fae8549c90) ====
+#!/bin/bash
+# The end-wait for the campaign batch on the wrapper's PID alone (the list of record v2, item 5; O2-2's fix: the PID
+# paired with its command so a reused PID cannot pass): no read of the stage's stamps, stdout, checkpoints or reports.
+# Prints nothing but its own end line. Usage: wait_campaign.sh <wrapper pid>; BOX_ADDR and BOX_PORT from the environment.
+# Its command text names none of the words the laptop's process checks look for. wait_qual.sh's form.
+set -u
+PID=$1
+: "${BOX_ADDR:?}" "${BOX_PORT:?}"
+fails=0
+while true; do
+  ssh -q -i "$HOME/.ssh/id_runpod" -p "$BOX_PORT" -o BatchMode=yes -o ConnectTimeout=20 "root@$BOX_ADDR" \
+    "ps -p $PID -o args= 2>/dev/null | grep -q '[r]un_campaign_p[.]sh'"
+  rc=$?
+  if [ "$rc" -eq 1 ]; then echo "the wrapper (PID $PID) has ended"; exit 0; fi
+  if [ "$rc" -ne 0 ]; then
+    fails=$((fails+1))
+    [ "$fails" -ge 30 ] && { echo "the box did not answer 30 times in a row; the wait stops, the run is not known to have ended"; exit 2; }
+    sleep 60
+    continue
+  fi
+  fails=0
+  sleep 120
+done

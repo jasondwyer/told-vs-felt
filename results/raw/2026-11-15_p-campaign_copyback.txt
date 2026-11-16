@@ -1,0 +1,57 @@
+# The copy-back of PROPOSAL-p's three campaigns' outputs from the box (rule 27), after the third campaign's end: the 12 files the campaigns left untracked under data/p in the box repo, by tar over ssh into the laptop repo, each sha256-compared at both ends (copyback_campaign.sh, sha256 8265a90b…0a34, appended below: it refuses any untracked name outside the campaign's names in data/p/ckpt and data/p/reports and any local file already present, prints names and digests only and opens no file's contents), and the wrapper outputs from /workspace/campaign_p to Code's scratch, with the box's own sha256 listing of them. PI-local date 2026-11-15.
+# RESULT: exit 0; 12 of 12 "identical"; each wrapper output equal to the box's listing (checked again by tool).
+# What follows, verbatim: the copy-back's output; the box's sha256 listing of the wrapper outputs; the script.
+# ==== copyback_campaign.sh's output ====
+identical 07bc2b8d092366f428bf33cc3103fd2a269a0751af7c8155632865a2f4b58141 data/p/ckpt/OLMo-dpo_campaign.json
+identical 3a9071e12c8882ec2e38cc2285edb67570dbff5e9342cd3f8418f44e200e2213 data/p/ckpt/OLMo-dpo_campaign_p-calls.jsonl
+identical 1d77f0d09dce9e5a407b91d4541840dfe324c5ccc366fc31c887be1d9eccf592 data/p/ckpt/OLMo-instruct_campaign.json
+identical f14ff99ffd5dd8fdea86a2dfd0959201662c405090ad04e643b12a4767c8acb8 data/p/ckpt/OLMo-instruct_campaign_p-calls.jsonl
+identical 28c52e58f46bdd3e6fb026ae0dd980a3852d693ecc655a51a51d7c15e82f9ed2 data/p/ckpt/OLMo-sft_campaign.json
+identical d9d7ef174f7c735aebc9d30b5069d66def4ba6b909f2658801671e4bdc9f59a5 data/p/ckpt/OLMo-sft_campaign_p-calls.jsonl
+identical 0884a9a09c79f7e257fd6a687b0acf6d3f155b52a829d31a453c43b171c4248e data/p/reports/OLMo-dpo_campaign_p-report.json
+identical ff43d3a667eb736dc76408e00ddcd9af6963707952101259484a9ac922b7d1a5 data/p/reports/OLMo-dpo_campaign_report.json
+identical 5100fdcb6fedba0bb58ce4533340331280845d5ea6007d3b79236f93d12bad4b data/p/reports/OLMo-instruct_campaign_p-report.json
+identical c237be90cc8577c8e4446401b96e9425683cf58e5a78cfe74a3a7cf0452dbc1e data/p/reports/OLMo-instruct_campaign_report.json
+identical 7803459eecef8bf3fef3b40f7780c36e84a67fd6fe0401da6cdd0070dd6466e8 data/p/reports/OLMo-sft_campaign_p-report.json
+identical a3fb2b4ae0c1f9a0a122a2f2b5f982bb7ba9b5d69e05f5a7dce32413ebfe3c9d data/p/reports/OLMo-sft_campaign_report.json
+# ==== the box's sha256 listing of /workspace/campaign_p's wrapper outputs (box_sha256.txt) ====
+7f2d825d40249052552127a301bad5b96366c3bb0d7609d645a0f7cde88c0ddd  stamps.txt
+866d661fe37ef017fff74b977a65d21145dfb8e9133cb7f990a22d6062f1b943  d_lines.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  wrapper-dpo.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  wrapper-instruct.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  wrapper-sft.out
+e12ca013a27008e2c31882150499504b4ab0ab96ae2d360e0fdc8987589567c7  campaign_p-dpo-1.txt
+79effb323151ec7982866206f8d7b9c20de736074554cc2d11540585b43d2a84  campaign_p-instruct-1.txt
+256cea9b90080a9a5cbd3e383f061598a0ade81a4d2244cd8a28ef528394d1fe  campaign_p-sft-1.txt
+256b2aa228dd1501cf7aa69413187ce6288bf0cfacc7e17c8e732bb14befba9c  precheck_campaign.txt
+19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061  precheck_campaign.exit
+# ==== copyback_campaign.sh (sha256 8265a90b124438a98037a109dd397a291a776e7e93590080cb54cb7417e20a34 as run; shown with its one local repository root replaced by <repo>) ====
+#!/bin/bash
+# Copy back the campaign batch's outputs (rule 27): the files the stage left untracked under data/p on the box, by tar over
+# ssh into the laptop repo, each sha256-compared. Refuses anything outside the campaign's names in data/p/ckpt and
+# data/p/reports, and any local file already present. Prints names and digests only; opens no file's contents (the
+# checkpoints are pick-bearing, the call logs withheld). The wrapper's own outputs go to the scratch directory $1, for
+# the raw. Usage: copyback_campaign.sh <scratch dir>; the pod's address and port come from the environment (BOX_ADDR,
+# BOX_PORT), never from a committed file.
+set -u
+SCR=$1
+REPO=<repo>
+: "${BOX_ADDR:?}" "${BOX_PORT:?}"
+SSH=(ssh -i "$HOME/.ssh/id_runpod" -p "$BOX_PORT" -o BatchMode=yes -o ConnectTimeout=20 "root@$BOX_ADDR")
+LIST=$("${SSH[@]}" 'cd /workspace/repo/jspace-lab && git status --porcelain --untracked-files=all | sed -n "s/^?? //p"') \
+  || { echo "COPYBACK: listing failed"; exit 10; }
+[ -n "$LIST" ] || { echo "COPYBACK: the box has no untracked output"; exit 11; }
+echo "$LIST" | grep -vE '^data/p/(ckpt|reports)/OLMo-(sft|dpo|instruct)_campaign(\.json|_p-calls\.jsonl|_p-STOPPED\.json|_adjudication\.json|_report\.json|_reads\.json|_p-report\.json)$' \
+  && { echo "COPYBACK: unexpected untracked files above"; exit 12; }
+for f in $LIST; do [ -e "$REPO/$f" ] && { echo "COPYBACK: $f already exists locally"; exit 13; }; done
+"${SSH[@]}" "cd /workspace/repo/jspace-lab && tar cf - $(echo $LIST)" | tar xmf - -C "$REPO" || { echo "COPYBACK: tar failed"; exit 14; }
+BOX=$("${SSH[@]}" "cd /workspace/repo/jspace-lab && sha256sum $(echo $LIST)") || { echo "COPYBACK: box hashes failed"; exit 15; }
+bad=0
+while read -r h f; do
+  l=$(shasum -a 256 "$REPO/$f" | awk '{print $1}')
+  if [ "$h" = "$l" ]; then echo "identical $h $f"; else echo "DIFFERS box $h laptop $l $f"; bad=1; fi
+done <<< "$BOX"
+mkdir -p "$SCR"
+"${SSH[@]}" 'cd /workspace/campaign_p && tar cf - stamps.txt d_lines.txt wrapper-*.out campaign_p-*.txt precheck_campaign.txt precheck_campaign.exit' | tar xmf - -C "$SCR" || { echo "COPYBACK: wrapper outputs failed"; exit 16; }
+"${SSH[@]}" 'cd /workspace/campaign_p && sha256sum stamps.txt d_lines.txt wrapper-*.out campaign_p-*.txt precheck_campaign.txt precheck_campaign.exit' > "$SCR/box_sha256.txt"
+exit $bad

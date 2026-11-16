@@ -1,0 +1,126 @@
+{
+ "call_log": {
+  "form": "withheld like the checkpoint (m:318); its runs' totals are in it",
+  "n_malformed_lines": 0,
+  "n_runs": 1,
+  "path": "ckpt/OLMo-instruct_campaign_p-calls.jsonl",
+  "runs": [
+   {
+    "exception_type": null,
+    "outcome": "returned",
+    "resume": false,
+    "run": 1,
+    "stop": false
+   }
+  ],
+  "sha256": "f14ff99ffd5dd8fdea86a2dfd0959201662c405090ad04e643b12a4767c8acb8",
+  "stale_reservations": [],
+  "well_formed": true
+ },
+ "checkpoint": {
+  "path": "ckpt/OLMo-instruct_campaign.json",
+  "sha256": "1d77f0d09dce9e5a407b91d4541840dfe324c5ccc366fc31c887be1d9eccf592"
+ },
+ "counters": {
+  "contrast_forced_control_chars": {
+   "keys": [],
+   "n": 0,
+   "n_forced_rounds": 320,
+   "texts": {}
+  },
+  "hair_trigger": {
+   "domain": "every round of every session",
+   "n": 0,
+   "name": "line_break_in_stored_text"
+  },
+  "n_sham_forced_rounds": 128,
+  "n_sham_rounds": 320,
+  "sham": {
+   "cap_hits": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   },
+   "control_chars": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0,
+    "texts": {}
+   },
+   "corrupted_spelling": {
+    "domain": "the sham sessions' forced rounds",
+    "keys": [],
+    "n": 0
+   },
+   "harness_first_line": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   },
+   "refusals": {
+    "domain": "every sham round",
+    "keys": [],
+    "n": 0
+   }
+  },
+  "withheld": "the contrast sessions' counters other than the forced rounds' control characters, every count over a contrast free round, and the corrupted-spelling counter over the sham sessions' free rounds (it reads the round's item, which the sham read withholds because it names the pick): withheld to the unit's VERDICTS (m:318; m's read rule, the seat's ruling (h)), recomputable from the checkpoint"
+ },
+ "declared_sentences": [],
+ "disclosure": "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session ran.",
+ "form": "the seat's read domain only (m:271, m:318, the seat's ruling (h)): the sham sessions' counters and proxy cuts, the contrast forced rounds' control characters, the hair trigger over every round; written once the campaign has ended (m's ended_status) -- its status m's: PAUSE, the terminal beside it, where the end look fired at a terminal end -- never while the campaign is open at a pause",
+ "identity_p": {
+  "p_package_sha256": "a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7",
+  "proposal": "PROPOSAL-p",
+  "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+  "renders_sha256_p": "1551c19997dc45419c496d7f64a61711735672f9388bab4be2e2c1a450f85722"
+ },
+ "m_outputs": {
+  "adjudication_excerpt": {
+   "path": "ckpt/OLMo-instruct_campaign_adjudication.json",
+   "sha256": null
+  },
+  "report": {
+   "path": "reports/OLMo-instruct_campaign_report.json",
+   "sha256": "c237be90cc8577c8e4446401b96e9425683cf58e5a78cfe74a3a7cf0452dbc1e"
+  }
+ },
+ "p_package_sha256": "a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7",
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "proxy": {
+  "attribution_complete": true,
+  "contrast": "withheld to the unit's VERDICTS or NOT-RUN record (m:318; the seat's ruling (h)): every proxy count over the contrast sessions -- the number of a session's calls is its free-round exclusion position",
+  "rule": "calls attributed to rounds by seed and stored-text sha256 (stage.attribute_calls); complete: every sham round attributed (N-3: the flag reads the sham sessions only)",
+  "sham": {
+   "cut_keys": [],
+   "n_attributed": 320,
+   "n_cuts": 0,
+   "n_rounds": 320,
+   "unattributed_keys": []
+  }
+ },
+ "register_entered": [
+  1,
+  2,
+  6,
+  7,
+  8,
+  9
+ ],
+ "root": "data/p",
+ "schema": "p-stage-report-v1",
+ "stage": "campaign-OLMo-instruct (p)",
+ "status": "COMPLETE",
+ "term_d_at_stage_end": [
+  {
+   "active_count": 2,
+   "on_main_thread": true,
+   "single_threaded": false,
+   "threads": [
+    "MainThread",
+    "tqdm_monitor"
+   ]
+  }
+ ],
+ "unit": "OLMo-instruct"
+}
