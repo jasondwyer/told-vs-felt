@@ -28,8 +28,13 @@ Code's readings are registered in PINS (each strikable by the seat until LOCK-n 
                         N-pod's NOT-RUN output (data/n/verdicts/N-pod_NOT-RUN.json, write-once) from a NOT-RUN
                         record (n §5 "Unit outcome first"), written of record only by the committed analyzer; --out DIR
                         outside the repository is a test run, never of record. Exit 0 written or identical, 2 refused.
-  The verdicts command reads the campaign's stage report and G-READ-n's artifact; it is added when their forms are
-  committed (n-build's package).
+  verdicts --campaign DIR --report R --lock L --date YYYY-MM-DD [--gread G] [--gvec C] [--out DIR]
+                        N-pod's VERDICTS and secondary DVs (data/n/verdicts/N-pod_VERDICTS.json, N-pod_secondary.json,
+                        write-once), or its NOT-RUN where the stage report has no arm complete before a STOP or the
+                        cap: from the campaign's cells, its stage report (n-report-v1) and G-READ-n's artifact
+                        (n-gread-v1), under the lock the campaign's identity names. Of record only from the committed
+                        analyzer under a committed lock; prints no margin (n §4 "Blinding"). Exit 0 written or
+                        identical, 2 refused, 4 STOP.
 """
 from __future__ import annotations
 
@@ -701,10 +706,12 @@ GREAD_SECTION5 = {("valence", "+1"): "N1 NOT-REPLICATED's label (§5 N1)",
 
 
 def gread_table(st: State) -> list[dict]:
-    """§3 G-READ-n per axis and dose point, as its artifact gives them; the cells that enter §5 (§0.6) marked."""
+    """§3 G-READ-n per axis and dose point, as its artifact gives them; the cells that enter §5 (§0.6) marked. The
+    valence points are +1, +1/2, d_20 and d_eq: the −1 reads enter +1's contrast (n §3; GREAD_AXES), so −1 has no
+    row."""
     r = st.dmap.resolved()
     rows = []
-    for lab in ("+1", "+1/2", "d_20", "d_eq", "-1"):
+    for lab in ("+1", "+1/2", "d_20", "d_eq"):
         s = st.gr("valence", r[lab])
         rows.append({"axis": "valence", "point": r[lab], "label": lab, "state": s,
                      "enters": GREAD_SECTION5.get(("valence", lab))})
@@ -856,7 +863,7 @@ def evaluations() -> list[tuple]:
 # =====================================================================================================================
 # 9. The battery (§3 G-ANL-n). Selftest-only helpers carry the `_bt` prefix.
 # =====================================================================================================================
-EXPECTED_CHECKS = 171
+EXPECTED_CHECKS = 185
 
 _REQ: list[str] = []
 _REQ += [f"N1-{x}" for x in ("REPLICATED", "PARTIAL-i", "PARTIAL-iv", "PARTIAL-i-iv", "NOTREP-ci+1", "NOTREP-ii",
@@ -894,6 +901,9 @@ _REQ += ["RD-POSITIVE", "RD-FILLED", "RD-NULL", "RD-SPECIFIC", "RD-PARTIAL", "RD
          "RD-SHADOW", "RD-ASYM", "RD-MERGED-DEQ", "RD-GREAD-MIXED", "CNT-COUNTERS", "RD-SECONDARY-FLOOR"]
 _REQ += ["NUM-DOSEMAP-SCHEMA", "NUM-MERGE-EDGE", "NUM-REACH-CLASS", "CMD-NOTRUN", "CMD-NOTRUN-REFUSE",
          "CMD-GANL-REFUSE", "STR-GANL-ARTIFACT"]
+_REQ += ["VD-COMPLETE", "VD-WRITE-ONCE", "VD-EXPOSURE", "VD-SENSITIVITY", "VD-STDOUT", "VD-PISTOP-STANDING",
+         "VD-NOTRUN-CAP", "VD-NOTRUN-PISTOP", "VD-NOTRUN-GVER", "VD-REFUSE", "VD-GREAD-MIXED", "VD-PRECHECK",
+         "VD-SOME-ARMS", "VD-MERGED-ROUTE-A", "VD-ONE-OUTCOME", "VD-PLAIN"]
 REQUIRED_COVERAGE = frozenset(_REQ)
 
 
@@ -1644,7 +1654,8 @@ PINS = {
                 "min(1.0, 2.0 * d_eq) exactly",
     "PIN-n-16": "the TAU/4 sensitivity row drops a read whose re-computation exceeds TAU/4; a shadow that exceeds drops "
                 "its session's Δm at every dose; a session missing a point drops out of the slopes; reads with no "
-                "re-computation are kept",
+                "re-computation are kept, and so are finite reads whose re-computation is non-finite (no comparison, "
+                "so not above TAU/4)",
     "PIN-n-17": "the label-mass counter counts restricted reads with two-label mass below .20 (n:99; m:283)",
     "PIN-n-18": "secondary (d) is Pearson's r between the retention interval and Δm at +1 over N1-V's sessions",
     "PIN-n-19": "(iv) is evaluated: the −1 pole is read under A1 'struck beyond d = −1' (routing 2026-11-06)",
@@ -1658,6 +1669,24 @@ PINS = {
                 "Δm groups by present order and by ordered cue pair (cue_S|cue_U), per arm and dose label, over "
                 "steered reads with a finite shadow (N4, unsteered, has none); (a), (c) and (d) report a figure at "
                 "n ≥ 20 only (rule 28(a)'s decidable-n floor, n §4)",
+    "PIN-n-23": "the exposure counts realised (§0.4's table; §8 step 15) are the campaign's reads on disk at d = −1, "
+                "finite or not: N1-V's and N1-P's negative valenced, N1-R's negative random, each with its fresh "
+                "re-computations beside; G-CAL-n's generations under negative steering are its own entry's",
+    "PIN-n-24": "verdicts binds the stage report to the cells on disk (the identity, the plan, every cell by its shas "
+                "and record count, each arm's planned, obtained and complete, the counters as n-build's runner "
+                "counts them, the launch indices exactly 0..m−1, at most one pause standing and it the stage's last "
+                "event, each pause against the reads, the cap's used time) and follows its end state: PAUSE refuses; "
+                "PI-STOP, G-VER-STOP or CAP with no arm complete is NOT-RUN no-arm:<end>, an arm's full read set "
+                "being the report's complete (every planned read produced, finite or not: a non-finite read makes "
+                "its arm INDETERMINATE, PIN-n-20, never the unit NOT-RUN); any other end is analyzed, a pause "
+                "standing (under PI-STOP only) making the arms in its scope INDETERMINATE; one outcome per unit",
+    "PIN-n-25": "G-READ-n's artifact binds the campaign (its plan and identity shas, exactly the campaign's cells by "
+                "both shas, the campaign's n package, exactly its capture layers, each result at a kept point with "
+                "the labels merged into it); a status is read per (axis, point) by the point's value, an absent one "
+                "NOT-COMPUTED; the dose sentence's AUC is the band median at d_eq's kept label",
+    "PIN-n-26": "LOCK-n v1.0 says what it is in the whole line 'lock: LOCK-n v1.0' and states its direction of record "
+                "as one whole line, 'direction of record: Route A' or 'direction of record: Route B'; verdicts "
+                "checks the first and reads the route from the second (Code's form for the lock)",
 }
 #: The seat's open questions (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9): what the code
 #: carries meanwhile, each pending the seat; G-ANL-n's canonical run waits for the answers.
@@ -1953,7 +1982,7 @@ def load_campaign(cdir: Path, sm=None) -> Campaign:
             cell = json.loads(data.decode("utf-8"))
             sm.check_cell(cell, where=n)
         except (OSError, ValueError) as e:
-            raise AnlRefusal(f"REFUSED: cell {n}: {type(e).__name__}: {e}"[:400])
+            raise AnlRefusal(f"REFUSED: cell {n}: {_err_where(e)}")
         if n != sm.cell_filename(cell["arm"], cell["direction_id"], cell["dose_label"]):
             raise AnlRefusal(f"REFUSED: cell {n} is named for another cell")
         if cell["capture_file"] not in names:
@@ -2148,7 +2177,7 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
                             for pt in v_pts]
                 est, n_c, sl = slope_est("N1-R", v_pts, pts_vecs)
                 slopes[d_] = float(sl.mean()) if sl is not None else float("nan")
-                fig["dir_slopes"][d_] = slopes[d_]
+                fig["dir_slopes"][d_] = slopes[d_] if sl is not None else None    # no NaN in a figure
             if any(math.isnan(x) for x in slopes.values()):
                 emptied("N1-R", [])
             else:
@@ -2349,7 +2378,9 @@ def counters(camp: Campaign) -> dict:
 
 def tau4_drop(camp: Campaign) -> Callable[[str], bool]:
     """PIN-n-16's filter for the sensitivity row: a read whose re-computation exceeds TAU/4 (a shadow that exceeds
-    drops its session at every point through build_state); a read with no re-computation is kept."""
+    drops its session at every point through build_state); a read with no re-computation is kept, and so is a finite
+    read whose re-computation is non-finite (its exceeds_tau4 null: no comparison, so not above TAU/4; Code's
+    reading, flagged at the verdicts BUILD)."""
     def drop(rid: str) -> bool:
         r = camp.records.get(rid)
         return bool(r is not None and r["fidelity"] is not None and r["fidelity"]["exceeds_tau4"])
@@ -2419,14 +2450,17 @@ def _bt_write_campaign(root: Path, sm, *, R_ell: float = 23.90625, delta: Callab
                        sham: Callable[[int, str], float] = lambda r, z: 0.02 * ((r % 5) - 2),
                        omit: Sequence[tuple] = (), nonfinite: Sequence[str] = (), fresh_shift: Mapping[str, float] = {},
                        mutate: Callable[[dict], None] | None = None,
-                       first_is_s: Callable[[int], bool] = lambda r: r % 3 == 0) -> Path:
+                       first_is_s: Callable[[int], bool] = lambda r: r % 3 == 0,
+                       lock_sha256: str | None = None) -> Path:
     """Write a synthetic campaign (every cell of the plan over the example identity's dose map) to ``root``: shadows
     m0(run) = 0.1 + 0.01 (run % 7); each steered read m0 + delta(arm, direction, label, run); N4-T's margin toward its
     told zone told(run, zone) and N4-Ts's toward its referent zone sham(run, zone), the zone S for even runs;
     ``omit``: (arm, direction, label) cells left out; ``nonfinite``: read_ids written non-finite; ``fresh_shift``:
-    read_id -> fresh shift; ``first_is_s``: a run's present order (S first)."""
+    read_id -> fresh shift; ``first_is_s``: a run's present order (S first); ``lock_sha256``: the identity's lock."""
     root.mkdir(parents=True, exist_ok=True)
     ident = sm.example_identity(R_ell=R_ell)
+    if lock_sha256 is not None:
+        ident = dict(ident, lock_sha256=lock_sha256)
     kept = sm.dose_point_values(ident)
     launch = 0
     for arm, rows in PLAN_TABLE.items():
@@ -2881,7 +2915,22 @@ NOT_RUN_OUT_SCHEMA = "n-not-run-out-v1"
 
 
 def json_text(obj: Any) -> str:
-    return json.dumps(obj, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
+    """An output's text: sorted keys, one-space indent, UTF-8; a non-finite number STOPs (no NaN is ever written)."""
+    try:
+        return json.dumps(obj, indent=1, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\n"
+    except ValueError as e:
+        raise AnlStop(f"STOP: an output holds a non-finite number ({type(e).__name__})")
+
+
+def _err_where(e: BaseException) -> str:
+    """A refusal's cause without its values (n §4 "Blinding": nothing from a read reaches the terminal): a schema
+    error by its field path alone, any other error by its type, and a file-system error with its message."""
+    s = str(e)
+    if type(e).__name__ == "SchemaError":
+        return "SchemaError at " + s.split(": ", 1)[0]
+    if isinstance(e, OSError):
+        return f"{type(e).__name__}: {e.strerror or s}"
+    return type(e).__name__
 
 
 def write_once(path: Path, text: str) -> str:
@@ -2905,24 +2954,667 @@ def write_once(path: Path, text: str) -> str:
     return how
 
 
+def write_all_once(items: Sequence[tuple[Path, str]]) -> list[str]:
+    """write_once over several outputs, refused before any of them is written when one exists with other bytes, so a
+    refusal never leaves a new output beside an old one."""
+    for path, text in items:
+        if path.exists() and path.read_bytes() != text.encode("utf-8"):
+            raise AnlRefusal(f"REFUSED: {path.name} exists with other bytes (write-once)")
+    return [write_once(path, text) for path, text in items]
+
+
 def analyzer_sha256() -> str:
     return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
-def run_not_run(record: Path, out_dir: Path) -> tuple[Path, str]:
-    """`not-run`: N-pod's NOT-RUN output from a NOT-RUN record (n §5 "Unit outcome first"), with its sentence set."""
-    try:
-        rec = json.loads(Path(record).read_text(encoding="utf-8"))
-    except (OSError, ValueError) as e:
-        raise AnlRefusal(f"REFUSED: the NOT-RUN record: {type(e).__name__}")
+def not_run_doc(rec: Mapping[str, Any], record_ref: Mapping[str, Any],
+                extra: Mapping[str, Any] | None = None) -> dict:
+    """N-pod's NOT-RUN output from a NOT-RUN record, which not_run_reason validates (n §5 "Unit outcome first"), with
+    its sentence set; ``record_ref`` names the record (a file, or the stage report it was derived from); ``extra``
+    adds bindings (a derived NOT-RUN's lock and schema module)."""
     reason = not_run_reason(rec)
     sset = {k: dict(v, text=v["text"].replace("[reason]", reason)) for k, v in sentence_set(NOT_RUN).items()}
-    doc = {"schema": NOT_RUN_OUT_SCHEMA, "unit": UNIT, "outcome": NOT_RUN, "cause": rec["cause"], "reason": reason,
-           "record": {"name": Path(record).name, "sha256": hashlib.sha256(Path(record).read_bytes()).hexdigest()},
-           "date": rec["date"], "sentences": sset,
-           "proposal_sha256": PROPOSAL_SHA256, "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN}
+    return {"schema": NOT_RUN_OUT_SCHEMA, "unit": UNIT, "outcome": NOT_RUN, "cause": rec["cause"], "reason": reason,
+            "record": dict(record_ref), "date": rec["date"], "sentences": sset,
+            "proposal_sha256": PROPOSAL_SHA256, "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN,
+            **dict(extra or {})}
+
+
+def run_not_run(record: Path, out_dir: Path) -> tuple[Path, str]:
+    """`not-run`: N-pod's NOT-RUN output from a NOT-RUN record file, write-once. It takes a Clock cause only: a no-arm
+    NOT-RUN is derived from the stage report by `verdicts` (the schema's docstring). It refuses beside VERDICTS: a unit
+    has one outcome."""
+    try:
+        data = Path(record).read_bytes()
+        rec = json.loads(data.decode("utf-8"))
+    except (OSError, ValueError) as e:
+        raise AnlRefusal(f"REFUSED: the NOT-RUN record: {type(e).__name__}")
+    if not (isinstance(rec, dict) and isinstance(rec.get("cause"), str) and rec["cause"].startswith("clock:")):
+        raise AnlRefusal("REFUSED: not-run takes a Clock cause; a no-arm NOT-RUN is derived from the stage report by "
+                         "verdicts")
+    doc = not_run_doc(rec, {"name": Path(record).name, "sha256": hashlib.sha256(data).hexdigest()})
+    one_outcome(Path(out_dir), "NOT-RUN")
     path = Path(out_dir) / f"{UNIT}_NOT-RUN.json"
     return path, write_once(path, json_text(doc))
+
+
+def one_outcome(out_dir: Path, writing: str) -> None:
+    """A unit has one outcome: a NOT-RUN is never written beside VERDICTS, nor VERDICTS beside a NOT-RUN."""
+    other = {"NOT-RUN": f"{UNIT}_VERDICTS.json", "VERDICTS": f"{UNIT}_NOT-RUN.json"}[writing]
+    if (out_dir / other).exists():
+        raise AnlRefusal(f"REFUSED: {other} is already in the output directory; a unit has one outcome")
+
+
+# --- the battery's verdicts path: reports, G-READ-n artifacts and locks to the schema, around written campaigns ---
+def _bt_lock_text(*, route: str | None = "B", names_analyzer: bool = True, routes: int = 1,
+                  v10: bool = True) -> bytes:
+    """A literal LOCK-n v1.0 for the battery: PIN-n-26's line saying what it is (left out when ``v10`` is false, so
+    only the title names v1.0), the analyzer's sha256 between backticks (or not), and its direction of record as
+    PIN-n-26's whole line, ``routes`` times."""
+    lines = ["# LOCK-n v1.0 (a battery literal)", ""] + ([LOCK_V10_LINE, ""] if v10 else [])
+    lines += [f"`{analyzer_sha256() if names_analyzer else '0' * 64}`", ""]
+    lines += [f"{ROUTE_LINE}{route}"] * (routes if route is not None else 0)
+    return ("\n".join(lines) + "\n").encode("utf-8")
+
+
+def _bt_files(cdir: Path | None) -> tuple[dict, dict]:
+    """The battery's own count of a campaign written at ``cdir``, from its files (not load_campaign or report_counters,
+    which the reader checks a report against; the review's B2): the cells as a report names them (both shas, of the
+    files' bytes, and the record count), and the counters as n-build's runner counts them (its answer of 2026-11-16):
+    per 'arm|dose_label' the records re-computed and those above TAU and TAU/4 (``is True``); the records non-finite
+    on either path; the records outside the identity bound; per 'arm|dose_label' the finite records whose label mass
+    is under .20; and the records' duration_ms sum, the cap's used time."""
+    cells: dict = {}
+    fid: dict = {}
+    lm: dict = {}
+    nonfin = oob = used = 0
+    for f in (sorted(Path(cdir).glob("*.json")) if cdir is not None else []):
+        cell = json.loads(f.read_text(encoding="utf-8"))
+        cells[f.name] = {"json_sha256": hashlib.sha256(f.read_bytes()).hexdigest(),
+                         "capture_sha256": hashlib.sha256((f.parent / cell["capture_file"]).read_bytes()).hexdigest(),
+                         "records": len(cell["records"])}
+        key = f"{cell['arm']}|{cell['dose_label']}"
+        for r in cell["records"]:
+            used += r["duration_ms"]
+            fb = r["fidelity"]
+            if fb is not None:
+                x = fid.setdefault(key, {"trials": 0, "exceed_tau": 0, "exceed_tau4": 0})
+                x["trials"] += 1
+                x["exceed_tau"] += fb["exceeds_tau"] is True
+                x["exceed_tau4"] += fb["exceeds_tau4"] is True
+            nonfin += r["finite"] is False or (fb is not None and fb["finite"] is False)
+            oob += r["identity"] is not None and r["identity"]["within"] is False
+            if r["finite"] is True and r["restricted"]["label_mass"] < 0.20:
+                lm[key] = lm.get(key, 0) + 1
+    return cells, {"fidelity": fid, "nonfinite_reads": nonfin, "identity_out_of_bound": oob,
+                   "label_mass_below_floor": lm, "used_ms": used}
+
+
+def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state: str = "COMPLETE",
+                   pauses: Sequence[dict] = (), stop: dict | None = None, hour_cap_ms: int | None = None,
+                   used_ms: int | None = None, label_mass: bool = False,
+                   counters_over: Mapping[str, Any] | None = None) -> dict:
+    """A stage report of the campaign written at ``cdir`` (None: a report of no record), as n-build's runner writes
+    one, from the battery's own count of the files (_bt_files): its cells, per-arm counts against the schema's plan,
+    counters and used time (``used_ms`` overrides it); the label-mass counter null, as the runner leaves it, or the
+    files' count with ``label_mass``; ``counters_over`` replaces counters. Checked by the schema's check_report."""
+    plan = sm.read_plan(ident)
+    cells, cnt = _bt_files(cdir)
+    per_arm = {}
+    for a in ARMS:
+        got = sum(c["records"] for n, c in cells.items() if n.split("__")[0] == a)
+        planned = sum(1 for x in plan if x.split("|")[0] == a)
+        per_arm[a] = {"planned": planned, "obtained": got, "complete": got == planned}
+    named = [[q["kind"]] + list(q["also_fired"]) for q in pauses]
+    batches = [q["binomial"] for q in pauses if q["binomial"] is not None]
+    used = cnt["used_ms"] if used_ms is None else used_ms
+    ctr = {"fidelity": cnt["fidelity"], "nonfinite_reads": cnt["nonfinite_reads"],
+           "identity_out_of_bound": cnt["identity_out_of_bound"],
+           "rendering_mismatches": 1 if end_state == "G-VER-STOP" else sum(1 for ks in named if ks[0] == "rendering"),
+           "label_mass_below_floor": cnt["label_mass_below_floor"] if label_mass else None}
+    ctr.update(counters_over or {})
+    rep = {"schema": sm.REPORT_SCHEMA, "stage_identity": dict(ident),
+           "stage_identity_sha256": sm.identity_sha256(ident),
+           "read_plan_sha256": sm.read_plan_sha256(ident), "end_state": end_state, "per_arm": per_arm, "cells": cells,
+           "pauses": [dict(q) for q in pauses],
+           "binomial_state": {"trials": sum(x["trials"] for x in cnt["fidelity"].values()),
+                              "exceed_tau": sum(x["exceed_tau"] for x in cnt["fidelity"].values()),
+                              "evaluations": len(batches), "fires": len(batches)},
+           "stop": stop, "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used,
+                                 "hit": hour_cap_ms is not None and used >= hour_cap_ms},
+           "counters": ctr}
+    sm.check_report(rep)
+    return rep
+
+
+def _bt_gread_for(camp: Campaign, sm, *, statuses: Mapping | None = None, drop: Sequence[str] = (),
+                  layers: Sequence[int] | None = None) -> dict:
+    """A G-READ-n artifact bound to the campaign as n-build's probe writes one: the report's shas, every cell of the
+    campaign by both shas, the campaign's n package and its capture layers (or ``layers``), one result per kept
+    (axis, point) with its merged labels, PASS unless ``statuses`` says otherwise; ``drop``: 'axis|label' results
+    left out. Checked by the schema's check_gread."""
+    ident = camp.identity
+    art = sm.example_gread(statuses=statuses, layers=tuple(ident["capture_layers"] if layers is None else layers))
+    kept = {p["label"]: p["merged"] for p in ident["dose_map"]["points"]}
+    art["results"] = [dict(r, merged=list(kept[r["dose_label"]])) for r in art["results"]
+                      if r["dose_label"] in kept and f"{r['axis']}|{r['dose_label']}" not in drop]
+    art["campaign"] = {"read_plan_sha256": sm.read_plan_sha256(ident),
+                       "stage_identity_sha256": sm.identity_sha256(ident),
+                       "cells": {n: {"json_sha256": c["json_sha256"], "capture_sha256": c["capture_sha256"]}
+                                 for n, c in camp.cells.items()}}
+    art["probe"]["package_sha256"] = ident["package_sha256"]
+    sm.check_gread(art)
+    return art
+
+
+def _bt_dig(d: Any, *keys: Any) -> Any:
+    """d[k1][k2]..., or None where a key is missing (a battery check reads a mutant's output without raising)."""
+    for k in keys:
+        if not isinstance(d, dict) or k not in d:
+            return None
+        d = d[k]
+    return d
+
+
+def _bt_verdicts(B: _Battery) -> None:
+    """The `verdicts` command end to end on written campaigns: a complete campaign (TAU/4-only re-computations, one
+    re-computation non-finite on the fresh path alone under an adjudicated pause), write-once, the exposure and
+    sensitivity rows, the printed line; a PI-STOP with a pause standing, then adjudicated; a PI-STOP with some arms
+    complete; a merged dose map under a Route A lock; the three NOT-RUNs a report derives; one outcome per unit; every
+    refusal by its message; G-READ-n's states reaching the tuple; _plain's STOPs; the precheck."""
+    import re
+    import tempfile
+    sm = schema_module()
+    dig = _bt_dig
+    with tempfile.TemporaryDirectory(prefix="n_anl_vd_") as td:
+        base = Path(td)
+
+        def put(name: str, obj: Any, raw: bytes | None = None) -> Path:
+            p = base / name
+            p.write_bytes(raw if raw is not None else json.dumps(obj).encode("utf-8"))
+            return p
+
+        def sha(p: Path) -> str:
+            return hashlib.sha256(p.read_bytes()).hexdigest()
+
+        def doc_of(d: Path, name: str = "N-pod_VERDICTS.json") -> dict:
+            p = d / name
+            return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+        def run(cd: Path, rp: Path, gp: Path | None, lk: Path, out_: Path, gv: Path | None = None,
+                date: str = "2026-12-20") -> tuple[dict | None, str]:
+            try:
+                return run_verdicts(cd, rp, gp, lk, date, gv, out_), ""
+            except (AnlRefusal, AnlStop) as e:
+                return None, str(e)[:90]
+
+        def expect(camp_: Campaign, art_: Mapping[str, Any], route: str) -> tuple[dict, dict]:
+            g_, auc_, _rows = gread_states(art_, camp_)
+            st_, _fig = build_state(camp_, paused={}, gread=g_)
+            o_ = outcomes(st_)
+            return o_, json.loads(json.dumps(sentence_set_filled(o_, st_, route=route, auc=auc_)))
+        lock = put("LOCK-n.md", None, _bt_lock_text())
+        lsha = sha(lock)
+        # The complete campaign. Re-computed above TAU/4 and not TAU (a fresh shift of 0.015 nats): N1-V's +1 reads of
+        # runs 0-39; rand_00's +1 reads of runs 20-39 and its −1 reads of runs 0-19 (so in the TAU/4 row its slope has
+        # no common session: the dir_slopes fix, then N1-R tau4-emptied). N1-V's +1 read of run 100 is non-finite on
+        # the fresh path alone, under an adjudicated nonfinite pause after which the run resumed.
+        shift = {f"N1-V|valence|+1|{session_key(r)}": 0.015 for r in range(40)}
+        shift |= {f"N1-R|rand_00|+1|{session_key(r)}": 0.015 for r in range(20, 40)}
+        shift |= {f"N1-R|rand_00|-1|{session_key(r)}": 0.015 for r in range(20)}
+        fresh_bad = f"N1-V|valence|+1|{session_key(100)}"
+
+        def fresh_nonfinite(cell: dict) -> None:
+            for r in cell["records"]:
+                if r["read_id"] == fresh_bad:
+                    r["fidelity"].update({k: None for k in ("fresh_logprob_S", "fresh_logprob_U", "fresh_margin",
+                                                            "fresh_capture_sha16", "fresh_capture_sha16_U", "absdiff",
+                                                            "scale", "rel", "exceeds_tau", "exceeds_tau4")},
+                                         finite=False)
+        cdir = _bt_write_campaign(base / "c", sm, delta=_bt_delta_positive, lock_sha256=lsha, fresh_shift=shift,
+                                  mutate=fresh_nonfinite)
+        camp = load_campaign(cdir, sm)
+        cells_main, cnt_main = _bt_files(cdir)
+        li_bad = camp.records[fresh_bad]["launch_index"]
+        pz_adj = dict(sm.example_pause(1, kind="nonfinite", launch_index=li_bad, adjudicated=True,
+                                       resumed_at=li_bad + 1), read_id=fresh_bad)
+        rep_obj = _bt_report_for(camp.identity, cdir, sm, pauses=[pz_adj], label_mass=True)
+        rep = put("report.json", rep_obj)
+        art_obj = _bt_gread_for(camp, sm)
+        art = put("gread.json", art_obj)
+        pairs = [f"{x}|{y}" for i, x in enumerate(GVEC_DIRS) for y in GVEC_DIRS[i + 1:]]
+        cos_vals = {p: 0.125 * (k + 1) for k, p in enumerate(pairs)}
+        gvf = put("gvec.json", {"cosines": cos_vals})
+        out = base / "out"
+        res, err = run(cdir, rep, art, lock, out, gvf)
+        verd = doc_of(out)
+        sec = doc_of(out, "N-pod_secondary.json")
+        o, sset = expect(camp, art_obj, "B")
+        table = [(r.get("label"), r.get("state")) for r in (dig(verd, "gread", "table") or [])]
+        ok = {"ran": res is not None,
+              "tuple": verd.get("tuple") == list(o["tuple"]) == ["REPLICATED", "DETECTABLE", "SHARED", "PASS", "PASS"]
+              and res is not None and res["tuple"] == verd["tuple"],
+              "sentences": verd.get("sentences") == sset,
+              "bindings": verd.get("lock") == {"name": "LOCK-n.md", "sha256": lsha}
+              and verd.get("analyzer_sha256") == analyzer_sha256()
+              and verd.get("report") == {"name": "report.json", "sha256": sha(rep), "end_state": "COMPLETE"}
+              and dig(verd, "gread", "artifact") == {"name": "gread.json", "sha256": sha(art)}
+              and verd.get("proposal_sha256") == PROPOSAL_SHA256 and verd.get("date") == "2026-12-20"
+              and verd.get("schema_module") == {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
+              "campaign": verd.get("campaign") == {"stage_identity_sha256": sm.identity_sha256(camp.identity),
+                                                   "read_plan_sha256": sm.read_plan_sha256(camp.identity),
+                                                   "cells": cells_main},
+              "route": verd.get("route") == "B" and ROUTE_TEXT["B"] in (dig(verd, "sentences", "7.1", "text") or ""),
+              "auc": dig(verd, "gread", "auc") == {"d_eq": 0.96},
+              "gread-table": table == [("+1", "PASS"), ("+1/2", "PASS"), ("d_20", "PASS"), ("d_eq", "PASS"),
+                                       (F10, "PASS"), (F20, "PASS")],
+              "counters": dig(verd, "counters", "report") == rep_obj["counters"]
+              and dig(verd, "counters", "report", "fidelity", "N1-V|+1") == {"trials": 160, "exceed_tau": 0,
+                                                                              "exceed_tau4": 40}
+              and dig(verd, "counters", "report", "nonfinite_reads") == 1
+              and dig(verd, "counters", "records", "N1-V|+1", "fidelity exceedances at TAU/4") == 40
+              and dig(verd, "counters", "records", "N1-V|+1", "non-finite re-computations") == 1
+              and dig(verd, "counters", "pauses") == [pz_adj]
+              and dig(verd, "counters", "cap", "used_ms") == cnt_main["used_ms"],
+              "secondary": sec.get("schema") == SECONDARY_SCHEMA and str(sec.get("claim")).startswith("none")
+              and "a_first_pick_share" in (sec.get("secondaries") or {})
+              and verd.get("secondary") == {"name": "N-pod_secondary.json",
+                                            "sha256": sha(out / "N-pod_secondary.json") if sec else None},
+              "cosines": verd.get("cosines") == sec.get("cosines") == {"source": {"name": "gvec.json",
+                                                                                  "sha256": sha(gvf)},
+                                                                       "values": cos_vals}
+              and dig(sec, "secondaries", "e_directions", "cosines") == cos_vals,
+              "outputs": res is not None and [(n, h) for n, h, _s in res["outputs"]]
+              == [("N-pod_secondary.json", "written"), ("N-pod_VERDICTS.json", "written")]
+              and all(s == sha(out / n) for n, _h, s in res["outputs"])}
+        B.chk("verdicts on a complete campaign (an adjudicated pause in it) writes the secondary DVs and VERDICTS: the "
+              "tuple and the filled sentences those of the reader path under the artifact's states, every input bound "
+              "by sha256 (the secondary by its own), the route read from the lock, the dose sentence's AUC from the "
+              "artifact, the G-READ-n table's six rows, the report's counters and n §4's, the cosines in both",
+              all(ok.values()), [k for k, v in ok.items() if not v] or verd.get("tuple") or err, cover=["VD-COMPLETE"])
+        res2, _e2 = run(cdir, rep, art, lock, out, gvf)
+        r3 = _bt_raises(lambda: run_verdicts(cdir, rep, art, lock, "2026-12-21", gvf, out), (AnlRefusal,))
+        wa = base / "wa"
+        wa.mkdir()
+        (wa / "b.json").write_text("old\n", encoding="utf-8")
+        r_wa = _bt_raises(lambda: write_all_once([(wa / "a.json", "new a\n"), (wa / "b.json", "new b\n")]),
+                          (AnlRefusal,))
+        # the pair through verdicts: VERDICTS of another date present and no secondary; refused, nothing written
+        out_p = base / "out_pair"
+        run(cdir, rep, art, lock, out_p, gvf)
+        (out_p / "N-pod_secondary.json").unlink()
+        r_pair = _bt_raises(lambda: run_verdicts(cdir, rep, art, lock, "2026-12-21", gvf, out_p), (AnlRefusal,))
+        B.chk("verdicts is write-once: the same inputs again leave identical bytes; another date refuses; with two "
+              "outputs, the second existing with other bytes refuses before the first is written, directly and "
+              "through verdicts (VERDICTS present, the secondary absent: no secondary written)",
+              res2 is not None and [h for _n, h, _s in res2["outputs"]] == ["identical", "identical"] and r3[0]
+              and "write-once" in r3[1] and r_wa[0] and "b.json exists with other bytes" in r_wa[1]
+              and not (wa / "a.json").exists() and r_pair[0] and "N-pod_VERDICTS.json exists with other bytes"
+              in r_pair[1] and not (out_p / "N-pod_secondary.json").exists(),
+              (res2 and res2["outputs"], r3[1][:60], r_wa[1][:60], r_pair[1][:60]), cover=["VD-WRITE-ONCE"])
+        ex = verd.get("exposure") or {}
+        B.chk("verdicts reports §0.4's exposure realised (PIN-n-23): 160 N1-V and 160 N1-P reads at −1 (negative "
+              "valenced), 960 N1-R (negative random), each re-computed fresh",
+              ex.get("N1-V") == {"class": "negative valenced", "planned": 160, "reads": 160,
+                                 "fresh_recomputations": 160}
+              and dig(ex, "N1-P", "reads") == 160 and ex.get("N1-R") == {"class": "negative random", "planned": 960,
+                                                                       "reads": 960, "fresh_recomputations": 960}
+              and dig(ex, "totals", "negative valenced") == 320 and dig(ex, "totals", "negative random") == 960, ex,
+              cover=["VD-EXPOSURE"])
+        g_m, _a, _r = gread_states(art_obj, camp)
+        st_s, _fs = build_state(camp, paused={}, gread=g_m, drop=tau4_drop(camp))
+        sens = verd.get("sensitivity") or {}
+        ds = dig(sens, "figures", "per_arm", "dir_slopes") or {}
+        ok_s = {"shift TAU/4 only": all(camp.records[r]["fidelity"]["exceeds_tau4"] is True
+                                        and camp.records[r]["fidelity"]["exceeds_tau"] is False for r in shift),
+                "tuple": sens.get("tuple") == list(outcomes(st_s)["tuple"]) and sens.get("tuple") != verd.get("tuple")
+                and (sens.get("tuple") or [None])[0] == "INDETERMINATE",
+                "n": dig(verd, "figures", "per_arm", "n", "N1-V|+1") == 160
+                and dig(sens, "figures", "per_arm", "n", "N1-V|+1") == 120
+                and dig(sens, "figures", "per_arm", "n", "N1-V|+1/2") == 160,
+                "emptied": dig(sens, "figures", "unusable", "N1-R") == "tau4-emptied" and "rand_00" in ds
+                and ds["rand_00"] is None and isinstance(ds.get("rand_01"), float)}
+        B.chk("verdicts reports the TAU/4 sensitivity row (PIN-n-16) beside the primary: 40 N1-V reads at +1 dropped "
+              "(n 120 against the primary's 160), rand_00 left with no common session (its slope null, no NaN), so "
+              "N1-R tau4-emptied and the row's N1 INDETERMINATE; its tuple the reader path's under the filter",
+              all(ok_s.values()), [k for k, v in ok_s.items() if not v] or sens.get("tuple"), cover=["VD-SENSITIVITY"])
+        line = verdicts_line(res) if res is not None else ""
+        B.chk("verdicts prints one line and no margin (§4 'Blinding'): the tuple, and each output's name, how and "
+              "sha256", re.fullmatch(r"VERDICTS: \(REPLICATED, DETECTABLE, SHARED, PASS, PASS\) -> "
+                                     r"N-pod_secondary\.json \(written; sha256 [0-9a-f]{64}\); "
+                                     r"N-pod_VERDICTS\.json \(written; sha256 [0-9a-f]{64}\)", line) is not None,
+              line[:100], cover=["VD-STDOUT"])
+        # PI-STOP with a pause standing on the last read (N4-Ts, non-finite), every arm complete; then that pause
+        # adjudicated, under COMPLETE
+        last = f"N4-Ts|none|0|{session_key(159)}"
+        cdir2 = _bt_write_campaign(base / "c2", sm, delta=_bt_delta_positive, lock_sha256=lsha, nonfinite=[last])
+        camp2 = load_campaign(cdir2, sm)
+        li = camp2.records[last]["launch_index"]
+        stop_pi = {"kind": "PI-STOP", "record_sha256": "7" * 64, "detail": "the PI stopped the unit"}
+        pz = dict(sm.example_pause(1, kind="nonfinite", launch_index=li, arms=("N4-Ts",)), read_id=last)
+        rep2 = put("report_pistop.json", _bt_report_for(camp2.identity, cdir2, sm, end_state="PI-STOP", pauses=[pz],
+                                                        stop=stop_pi))
+        art2 = put("gread2.json", _bt_gread_for(camp2, sm))
+        run(cdir2, rep2, art2, lock, base / "out2")
+        v2 = doc_of(base / "out2")
+        pz_done = dict(pz, adjudicated=True, ruling_sha256="f" * 64)
+        run(cdir2, put("report_adj.json", _bt_report_for(camp2.identity, cdir2, sm, pauses=[pz_done])), art2, lock,
+            base / "out2b")
+        v2b = doc_of(base / "out2b")
+        B.chk("verdicts under PI-STOP with a pause standing on N4-Ts analyzes the unit (PIN-n-24): N1, dose and N2 "
+              "decided, N4 INDETERMINATE by pause:N4-Ts, then nonfinite:N4-Ts; the same pause adjudicated (COMPLETE) "
+              "stands no more: nonfinite:N4-Ts alone",
+              (v2.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
+              and dig(v2, "outcomes", "N4", "causes") == ["pause:N4-Ts", "nonfinite:N4-Ts"]
+              and (v2b.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
+              and dig(v2b, "outcomes", "N4", "causes") == ["nonfinite:N4-Ts"],
+              (v2.get("tuple"), dig(v2, "outcomes", "N4", "causes"), dig(v2b, "outcomes", "N4", "causes")),
+              cover=["VD-PISTOP-STANDING"])
+        # PI-STOP with some arms complete: N1-P without its −1 reads, N4-Ts with none
+        cdir4 = _bt_write_campaign(base / "c4", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                   omit=[("N1-P", "valence", "-1"), ("N4-Ts", "none", "0")])
+        camp4 = load_campaign(cdir4, sm)
+        art4_obj = _bt_gread_for(camp4, sm)
+        r4, err4 = run(cdir4, put("report_some.json", _bt_report_for(camp4.identity, cdir4, sm, end_state="PI-STOP",
+                                                                     stop=stop_pi)),
+                       put("gread4.json", art4_obj), lock, base / "out4")
+        v4 = doc_of(base / "out4")
+        o4, _s4 = expect(camp4, art4_obj, "B")
+        ex4 = v4.get("exposure") or {}
+        B.chk("verdicts under PI-STOP with some arms complete analyzes the unit (§5: a locked unit that completes any "
+              "arm is analyzed): N1 and N4 INDETERMINATE by their incomplete arms, the tuple the reader path's; the "
+              "exposure row counts the −1 reads alone: N1-P 0 of 160, the negative valenced total N1-V's 160",
+              r4 is not None and r4["tuple"] == v4.get("tuple") == list(o4["tuple"])
+              and v4["tuple"][0] == v4["tuple"][3] == "INDETERMINATE"
+              and not (base / "out4" / "N-pod_NOT-RUN.json").exists()
+              and ex4.get("N1-P") == {"class": "negative valenced", "planned": 160, "reads": 0,
+                                      "fresh_recomputations": 0}
+              and dig(ex4, "N1-V", "reads") == 160 and dig(ex4, "totals", "negative valenced") == 160,
+              (v4.get("tuple"), ex4.get("N1-P"), dig(ex4, "totals", "negative valenced"), err4),
+              cover=["VD-SOME-ARMS"])
+        # a merged dose map (R_ell 40.0: +d_20 into +1, +d_eq into +1/2) under a Route A lock, FAIL at +1/2
+        lk_a = put("LOCK-A.md", None, _bt_lock_text(route="A"))
+        cdir5 = _bt_write_campaign(base / "c5", sm, R_ell=40.0, delta=_bt_delta_positive, lock_sha256=sha(lk_a))
+        camp5 = load_campaign(cdir5, sm)
+        art5_obj = _bt_gread_for(camp5, sm, statuses={"valence|+1/2": "FAIL"})
+        r5, err5 = run(cdir5, put("report5.json", _bt_report_for(camp5.identity, cdir5, sm)),
+                       put("gread5.json", art5_obj), lk_a, base / "out5")
+        v5 = doc_of(base / "out5")
+        o5, s5 = expect(camp5, art5_obj, "A")
+        merged5 = {r["dose_label"]: r["merged"] for r in art5_obj["results"] if r["axis"] == "valence"}
+        B.chk("verdicts on a merged dose map (R_ell 40.0) under a Route A lock: the artifact's results at the kept "
+              "points, listing the labels merged into them, are accepted; the tuple's G-READ-n coordinate is d_eq's, "
+              "read at +1/2 (FAIL there: FAIL, AUC 0.62); N1's sentence names their direction",
+              merged5 == {"+1": ["+d_20"], "+1/2": ["+d_eq"]} and r5 is not None
+              and r5["tuple"] == v5.get("tuple") == list(o5["tuple"]) and v5["tuple"][4] == "FAIL"
+              and dig(v5, "gread", "auc") == {"d_eq": 0.62} and v5.get("route") == "A" and v5.get("sentences") == s5
+              and ROUTE_TEXT["A"] in (dig(v5, "sentences", "7.1", "text") or ""),
+              (v5.get("tuple"), dig(v5, "gread", "auc"), v5.get("route"), err5), cover=["VD-MERGED-ROUTE-A"])
+        # the NOT-RUNs a report derives: no arm complete before the cap, a PI-STOP, a G-VER-STOP
+        keep = {("N1-V", "none", "0"), ("N1-V", "valence", "+1")}
+        omit = [(arm, d_, lab) for arm, rows in PLAN_TABLE.items() for dirs, labels in rows for d_ in dirs
+                for lab in labels if (arm, d_, lab) not in keep]
+        cdir3 = _bt_write_campaign(base / "c3", sm, delta=_bt_delta_positive, lock_sha256=lsha, omit=omit)
+        camp3 = load_campaign(cdir3, sm)
+        used3 = _bt_files(cdir3)[1]["used_ms"]
+        rc3 = _bt_report_for(camp3.identity, cdir3, sm, end_state="CAP", hour_cap_ms=used3)
+        rep_cap = put("report_cap.json", rc3)
+        rep_pis = put("report_pis.json", _bt_report_for(camp3.identity, cdir3, sm, end_state="PI-STOP", stop=stop_pi))
+        empty = base / "empty"
+        empty.mkdir()
+        stop_gv = {"kind": "G-VER-STOP", "record_sha256": "6" * 64, "detail": "G-VER: a session's tokens differ"}
+        rep_gv = put("report_gver.json", _bt_report_for(camp.identity, None, sm, end_state="G-VER-STOP",
+                                                        stop=stop_gv))
+        nr = {}
+        for k, (cd, rp) in {"cap": (cdir3, rep_cap), "pi-stop": (cdir3, rep_pis), "gver-stop": (empty, rep_gv)}.items():
+            rr, _er = run(cd, rp, None, lock, base / f"out_{k}")
+            doc = doc_of(base / f"out_{k}", "N-pod_NOT-RUN.json")
+            nr[k] = (rr and rr["tuple"], doc.get("cause"), dig(doc, "record", "sha256") == sha(rp), doc.get("date"),
+                     dig(doc, "record", "derived_from"), dig(doc, "record", "end_state"),
+                     dig(doc, "record", "stop_record_sha256"), doc.get("lock") == {"name": "LOCK-n.md", "sha256": lsha},
+                     doc.get("schema_module") == {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256})
+        want = {k: (NOT_RUN, f"no-arm:{k}", True, "2026-12-20", "the stage report", e, s, True, True)
+                for k, e, s in (("cap", "CAP", None), ("pi-stop", "PI-STOP", "7" * 64),
+                                ("gver-stop", "G-VER-STOP", "6" * 64))}
+        B.chk("verdicts derives N-pod's NOT-RUN where no arm is complete: before the cap (no-arm:cap), a PI stop "
+              "(no-arm:pi-stop) and a G-VER STOP with no record (no-arm:gver-stop), each bound to its report, its end "
+              "state, the STOP's record, the lock and the schema module",
+              nr == want, nr, cover=["VD-NOTRUN-CAP", "VD-NOTRUN-PISTOP", "VD-NOTRUN-GVER"])
+        # one outcome per unit
+        rec_clock = {"schema": NOT_RUN_RECORD_SCHEMA, "unit": UNIT, "cause": "clock:pi-declined", "date": "2026-12-16",
+                     "detail": "a synthetic record"}
+        one = {"verdicts beside a NOT-RUN": (_bt_raises(lambda: run_verdicts(cdir, rep, art, lock, "2026-12-20", None,
+                                                                             base / "out_cap"), (AnlRefusal,)),
+                                             "already in the output directory"),
+               "a derived NOT-RUN beside VERDICTS": (_bt_raises(lambda: run_verdicts(cdir3, rep_cap, None, lock,
+                                                                                     "2026-12-20", None, out),
+                                                                (AnlRefusal,)), "already in the output directory"),
+               "not-run beside VERDICTS": (_bt_raises(lambda: run_not_run(put("rec_clock.json", rec_clock), out),
+                                                      (AnlRefusal,)), "already in the output directory"),
+               "not-run on a no-arm cause": (_bt_raises(lambda: run_not_run(
+                   put("rec_noarm.json", dict(rec_clock, cause="no-arm:cap")), base / "out_noarm"), (AnlRefusal,)),
+                   "takes a Clock cause")}
+        bad1 = {k: m[:70] for k, ((okr, m), want_m) in one.items() if not (okr and want_m in m)}
+        B.chk("one outcome per unit (§5): verdicts refuses beside a NOT-RUN; a derived NOT-RUN and not-run refuse "
+              "beside VERDICTS; not-run takes a Clock cause only (a no-arm NOT-RUN is derived from the stage report)",
+              not bad1 and not (base / "out_cap" / "N-pod_VERDICTS.json").exists()
+              and not (out / "N-pod_NOT-RUN.json").exists() and not (base / "out_noarm").exists(), bad1,
+              cover=["VD-ONE-OUTCOME"])
+        # refusals, each by its message
+        def rv(cd: Path, rp: Path, gp: Path | None = art, lk: Path = lock, date: str = "2026-12-20",
+               gv: Path | None = None) -> tuple[bool, str]:
+            return _bt_raises(lambda: run_verdicts(cd, rp, gp, lk, date, gv, base / "out_refused"), (AnlRefusal,))
+
+        def report_with(**over: Any) -> Path:
+            obj = json.loads(json.dumps(rep_obj))
+            for k, v in over.items():
+                obj[k] = v
+            return put(f"rep_{len(list(base.glob('rep_*')))}.json", obj)
+
+        def counters_with(**over: Any) -> dict:
+            return dict(json.loads(json.dumps(rep_obj["counters"])), **over)
+
+        def on_main(name: str, pauses: Sequence[dict], **kw: Any) -> Path:
+            return put(name, _bt_report_for(camp.identity, cdir, sm, pauses=pauses, **kw))
+        r_cells = json.loads(json.dumps(rep_obj["cells"]))
+        r_cells[sorted(r_cells)[0]]["json_sha256"] = "1" * 64
+        ident_pod = dict(camp.identity, pod_id="another-pod")
+        per_lie = json.loads(json.dumps(rep_obj["per_arm"]))
+        per_lie["N2-C"]["complete"] = False
+        cnt = json.loads(json.dumps(rep_obj["counters"]))
+        cnt["fidelity"]["N1-V|+1"]["exceed_tau4"] += 1
+        rc3_cells = json.loads(json.dumps(rc3))
+        rc3_cells["cells"][sorted(rc3_cells["cells"])[0]]["json_sha256"] = "1" * 64
+        rc3_arm = json.loads(json.dumps(rc3))
+        rc3_arm["per_arm"]["N1-V"]["complete"] = True
+        bz = sm.example_pause(1, kind="fidelity-binomial", launch_index=500, adjudicated=True, resumed_at=501)
+        bz["binomial"]["k"] = 0
+        bz["read_id"] = "N1-V|valence|-1/2|floor_b0/3"
+        rid3 = f"N1-V|valence|+1|{session_key(3)}"
+        L3 = camp.records[rid3]["launch_index"]
+        L0 = camp.records[f"N1-V|none|0|{session_key(3)}"]["launch_index"]
+        rz = dict(sm.example_pause(1, kind="rendering", launch_index=L3, adjudicated=True), read_id=rid3)
+        kz = dict(sm.example_pause(1, kind="nonfinite", launch_index=L3, adjudicated=True, resumed_at=L3 + 1),
+                  read_id=rid3)
+        iz = dict(sm.example_pause(1, kind="identity-bound", launch_index=L0, adjudicated=True, resumed_at=L0 + 1),
+                  read_id=f"N1-V|none|0|{session_key(3)}")
+        rs = dict(sm.example_pause(1, kind="rendering", launch_index=len(camp.records) + 2),
+                  read_id="N1-V|valence|-1/2|floor_b0/3")
+        rn = dict(pz_adj, resumed_at_launch_index=len(camp.records) + 100)
+        rid_early = next(r for r, x in camp2.records.items() if x["launch_index"] == li - 5)
+        pz_early = dict(pz, read_id=rid_early, launch_index=li - 5, arms_in_scope=[rid_early.split("|")[0]])
+        lk_other = put("LOCK-other.md", None, _bt_lock_text(route="A"))
+        lk_noan = put("LOCK-noan.md", None, _bt_lock_text(names_analyzer=False))
+        lk_noroute = put("LOCK-noroute.md", None, _bt_lock_text(route=None))
+        lk_two = put("LOCK-two.md", None, _bt_lock_text(routes=2))
+        lk_c = put("LOCK-c.md", None, _bt_lock_text(route="C"))
+        lk_v09 = put("LOCK-v09.md", None, _bt_lock_text(v10=False))
+
+        def gver_with(lk: Path) -> Path:
+            ident_l = dict(camp.identity, lock_sha256=sha(lk))
+            return put(f"gv_{lk.stem}.json", _bt_report_for(ident_l, None, sm, end_state="G-VER-STOP", stop=stop_gv))
+        art_plan = json.loads(json.dumps(art_obj))
+        art_plan["campaign"]["read_plan_sha256"] = "a" * 64
+        art_ident = json.loads(json.dumps(art_obj))
+        art_ident["campaign"]["stage_identity_sha256"] = "b" * 64
+        art_cap = json.loads(json.dumps(art_obj))
+        art_cap["campaign"]["cells"][sorted(art_cap["campaign"]["cells"])[0]]["capture_sha256"] = "3" * 64
+        art_json = json.loads(json.dumps(art_obj))
+        art_json["campaign"]["cells"][sorted(art_json["campaign"]["cells"])[-1]]["json_sha256"] = "3" * 64
+        art_less = json.loads(json.dumps(art_obj))
+        del art_less["campaign"]["cells"][sorted(art_less["campaign"]["cells"])[-1]]
+        art_pkg = json.loads(json.dumps(art_obj))
+        art_pkg["probe"]["package_sha256"] = "5" * 64 if camp.identity["package_sha256"] != "5" * 64 else "6" * 64
+        art_merged = json.loads(json.dumps(art_obj))
+        next(r for r in art_merged["results"] if r["dose_label"] == "+1")["merged"] = ["+d_20"]
+        dm_m = dict(camp.identity["dose_map"])
+        dm_m["points"] = [p for p in dm_m["points"] if p["label"] != "+d_eq"]
+        notkept = gread_problems(art_obj, replace(camp, identity=dict(camp.identity, dose_map=dm_m)), rep_obj)
+        five = dict(list(cos_vals.items())[:5])
+        refs = {
+            "date": (rv(cdir, rep, date="20261220"), "ISO calendar date"),
+            "schema-report": (rv(cdir, report_with(end_state="DONE")),
+                              "the stage report: SchemaError at report.end_state"),
+            "schema-gread": (rv(cdir, rep, put("g_bar.json", dict(art_obj, probe=dict(art_obj["probe"], bar=0.5)))),
+                             "G-READ-n's artifact: SchemaError at gread.probe"),
+            "pause": (rv(cdir, put("rep_pause.json", _bt_report_for(
+                camp.identity, cdir, sm, end_state="PAUSE", pauses=[sm.example_pause(1, kind="rendering")]))), "PAUSE"),
+            "not-campaign": (rv(cdir, put("rep_time.json", sm.example_report(
+                sm.example_identity("time"), end_state="CAP", hour_cap_ms=1000, used_ms=1000))), "not a campaign"),
+            "lock-other": (rv(cdir, rep, lk=lk_other), "lock_sha256"),
+            "lock-analyzer": (rv(empty, gver_with(lk_noan), None, lk_noan), "does not name this analyzer"),
+            "lock-version": (rv(empty, gver_with(lk_v09), None, lk_v09), "does not say it is LOCK-n v1.0"),
+            "lock-no-route": (rv(empty, gver_with(lk_noroute), None, lk_noroute), "direction of record"),
+            "lock-two-routes": (rv(empty, gver_with(lk_two), None, lk_two), "direction of record"),
+            "lock-route-C": (rv(empty, gver_with(lk_c), None, lk_c), "direction of record"),
+            "cells": (rv(cdir, report_with(cells=r_cells)), "not the files on disk"),
+            "identity": (rv(cdir, report_with(stage_identity=ident_pod,
+                                              stage_identity_sha256=sm.identity_sha256(ident_pod))),
+                         "stage identity is not the cells'"),
+            # a per-arm lie the schema's per_arm rule refuses first (complete is obtained == planned): report_problems'
+            # own per-arm check cannot fire alone (round-2 M08, equivalent)
+            "per-arm": (rv(cdir, report_with(per_arm=per_lie, end_state="PI-STOP", stop=stop_pi)),
+                        "SchemaError at report.per_arm.N2-C"),
+            "per-arm-no-arm": (rv(cdir3, put("rep_c3_arm.json", rc3_arm), None), "SchemaError at report.per_arm.N1-V"),
+            "cells-no-arm": (rv(cdir3, put("rep_c3_cells.json", rc3_cells), None), "not the files on disk"),
+            "counters": (rv(cdir, report_with(counters=cnt)), "counters.fidelity"),
+            "nonfinite-count": (rv(cdir, report_with(counters=counters_with(nonfinite_reads=2))),
+                                "counters.nonfinite_reads"),
+            "oob-count": (rv(cdir, report_with(counters=counters_with(identity_out_of_bound=1))),
+                          "counters.identity_out_of_bound"),
+            "label-mass": (rv(cdir, report_with(counters=counters_with(label_mass_below_floor={"N1-V|+1": 1}))),
+                           "counters.label_mass_below_floor"),
+            "cap-used": (rv(cdir, report_with(cap={"hour_cap_ms": None, "used_ms": cnt_main["used_ms"] + 1,
+                                                   "hit": False})), "cap.used_ms"),
+            "pause-read": (rv(cdir, on_main("rep_bz.json", [bz])), "is not on disk"),
+            "rendering-on-disk": (rv(cdir, on_main("rep_rz.json", [rz])), "a rendering pause not resumed"),
+            "kind-nonfinite": (rv(cdir, on_main("rep_kz.json", [kz])), "a non-finite pause at a finite read"),
+            "kind-identity": (rv(cdir, on_main("rep_iz.json", [iz], counters_over={"identity_out_of_bound": 1})),
+                              "an identity-bound pause at a read within the bound"),
+            "resumed-nowhere": (rv(cdir, on_main("rep_rn.json", [rn])), "resumed where no read was launched"),
+            "standing-not-last": (rv(cdir, on_main("rep_snl.json", [rs], end_state="PI-STOP", stop=stop_pi)),
+                                  "not the stage's last event"),
+            "standing-later": (rv(cdir2, put("rep_early.json", _bt_report_for(
+                camp2.identity, cdir2, sm, end_state="PI-STOP", pauses=[pz_early], stop=stop_pi)), art2),
+                "launched after this standing pause"),
+            "gread-missing": (rv(cdir, rep, None), "--gread"),
+            "gread-plan": (rv(cdir, rep, put("g_plan.json", art_plan)), "plan or identity sha256"),
+            "gread-identity": (rv(cdir, rep, put("g_ident.json", art_ident)), "plan or identity sha256"),
+            "gread-capture": (rv(cdir, rep, put("g_cap.json", art_cap)), "not the campaign's files"),
+            "gread-json": (rv(cdir, rep, put("g_json.json", art_json)), "not the campaign's files"),
+            "gread-cells-missing": (rv(cdir, rep, put("g_less.json", art_less)), "not the campaign's files"),
+            "gread-package": (rv(cdir, rep, put("g_pkg.json", art_pkg)), "another n package"),
+            "gread-layers": (rv(cdir, rep, put("g_layers.json", _bt_gread_for(camp, sm, layers=(63,)))),
+                             "capture layers"),
+            "gread-merged": (rv(cdir, rep, put("g_merged.json", art_merged)), "merged; the dose map"),
+            "gread-not-kept": ((bool(notkept), "; ".join(notkept)), "a point the dose map does not keep"),
+            "cosines": (rv(cdir, rep, gv=put("cos.json", {"cosines": {"a|b": "x"}})), "cosines"),
+            "cosines-five": (rv(cdir, rep, gv=put("cos5.json", {"cosines": five})), "the six pairs"),
+            "dir-not-empty": (rv(cdir, rep_gv, None), "not empty"),
+        }
+
+        def gap(cell: dict) -> None:
+            if cell["arm"] == "N4-Ts" and cell["dose_label"] == "0":
+                cell["records"][-1]["launch_index"] += 5
+        cdir_gap = _bt_write_campaign(base / "cgap", sm, delta=_bt_delta_positive, lock_sha256=lsha, mutate=gap)
+        camp_gap = load_campaign(cdir_gap, sm)
+        refs["launch-gap"] = (rv(cdir_gap, put("rep_gap.json", _bt_report_for(camp_gap.identity, cdir_gap, sm)),
+                                 put("g_gap.json", _bt_gread_for(camp_gap, sm))), "launch indices are not exactly")
+        p2 = sm.example_pause(2, kind="fidelity-binomial", launch_index=None, arms=("N1-V",))
+        p2["binomial"]["k"] = 0
+        refs["two-standing"] = (rv(cdir2, put("rep_two.json", _bt_report_for(
+            camp2.identity, cdir2, sm, end_state="PI-STOP", pauses=[pz, p2], stop=stop_pi)), art2),
+            "more than one pause stands")
+        bad = {k: m[:70] for k, ((okr, m), want_m) in refs.items() if not (okr and want_m in m)}
+        if "DONE" in refs["schema-report"][0][1] or "§3" in refs["schema-gread"][0][1]:
+            bad["schema-blind"] = "a schema refusal printed the schema's text, not its field path alone"
+        B.chk(f"verdicts refuses, each by its message ({len(refs)} cases): a date; a report or an artifact the schema "
+              "refuses (by its field path alone); a PAUSE; a stage not a campaign; a "
+              "lock not the identity's, not naming this analyzer, not saying it is LOCK-n v1.0, or without one "
+              "direction of record A or B; a report not the cells on disk (cells, identity, per-arm counts, on a "
+              "complete campaign and on one with no arm complete; the counters, label mass and used time), a pause's "
+              "read not on disk or not of its kind, a rendering pause not resumed whose read is on disk, a resumption "
+              "where nothing was launched, a read after a standing pause, a standing pause not the last event, launch "
+              "indices not 0..m−1, two pauses standing; G-READ-n's artifact missing, or not the campaign's (plan, "
+              "identity, a cell's capture or json sha, a cell left out, the package, the layers, merged labels, a "
+              "point not kept); a malformed "
+              "cosines file or one without the six pairs; a report of no record beside a non-empty campaign directory",
+              not bad, bad, cover=["VD-REFUSE"])
+        # G-READ-n's states reach the tuple and the labels
+        mixed = {}
+        for k, (stt, drop) in {"FAIL": ({"valence|+d_eq": "FAIL"}, ()), "absent": (None, ("valence|+d_eq",)),
+                               "E-FAIL": ({"span_reward|f0.20": "FAIL"}, ())}.items():
+            gp = put(f"g_{k}.json", _bt_gread_for(camp, sm, statuses=stt, drop=drop))
+            run(cdir, rep, gp, lock, base / f"out_g{k}")
+            vv = doc_of(base / f"out_g{k}")
+            mixed[k] = ((vv.get("tuple") or [None] * 5)[4], dig(vv, "gread", "auc", "d_eq"),
+                        dig(vv, "outcomes", "gread", "E"))
+        B.chk("G-READ-n's artifact reaches the tuple: valence at +d_eq FAIL gives the coordinate FAIL and the AUC "
+              "0.62; the result absent gives NOT-COMPUTED, so FAIL, and no AUC (PIN-n-11, PIN-n-25); span_reward at "
+              "f0.20 FAIL reaches N2's label state E, f0.10's PASS not",
+              mixed == {"FAIL": ("FAIL", 0.62, "PASS"), "absent": ("FAIL", None, "PASS"),
+                        "E-FAIL": ("PASS", 0.96, "FAIL")}, mixed, cover=["VD-GREAD-MIXED"])
+        nan_stop = _bt_raises(lambda: _plain({"x": [1.0, float("nan")]}), (AnlStop,))
+        key_stop = _bt_raises(lambda: _plain({1.0: 1, "1.0": 2}), (AnlStop,))
+        js_stop = _bt_raises(lambda: json_text({"x": float("inf")}), (AnlStop,))
+        # a STOP while VERDICTS is formed writes nothing: G-LEAK-n's table made to carry a NaN for one call
+        g_orig = globals()["gleak_table"]
+        globals()["gleak_table"] = lambda st_: [{"x": float("nan")}]
+        try:
+            v_stop = _bt_raises(lambda: run_verdicts(cdir, rep, art, lock, "2026-12-20", None, base / "out_stop"),
+                                (AnlStop,))
+        finally:
+            globals()["gleak_table"] = g_orig
+        B.chk("VERDICTS' form STOPs rather than write a non-finite figure or fold two keys into one: _plain on a NaN, "
+              "_plain on two keys that write alike (1.0 and '1.0'), json_text on an inf; a STOP while VERDICTS is "
+              "formed leaves no output, the secondary included",
+              nan_stop[0] and "non-finite" in nan_stop[1] and key_stop[0] and "write alike" in key_stop[1]
+              and js_stop[0] and "non-finite" in js_stop[1] and v_stop[0] and "non-finite" in v_stop[1]
+              and not (base / "out_stop").exists(),
+              (nan_stop[1][:50], key_stop[1][:50], js_stop[1][:50], v_stop[1][:50]), cover=["VD-PLAIN"])
+        never = REPO / "LOCK-n.__never_committed__.md"
+        pre = {"lock-outside": verdicts_precheck(None, str(lock)),
+               "report-outside": verdicts_precheck(None, str(REPO / "LOCK-n.md"), (str(rep), None, None), bound=()),
+               "uncommitted": verdicts_precheck(None, str(REPO / "LOCK-n.md"),
+                                                bound=("scripts/__n_analyze_never_committed__.py",)),
+               "lock-uncommitted": verdicts_precheck(None, str(never)),
+               "of-record": verdicts_precheck(None, str(REPO / "LOCK-n.md"), bound=()),
+               "repo-root": verdicts_precheck(str(REPO), str(lock)),
+               "repo-sub": verdicts_precheck(str(REPO / "data"), str(lock)),    # resolve() stats it: not under data/n
+               "outside": verdicts_precheck(str(base / "vo"), str(lock))}
+        ok_p = {"lock-outside": pre["lock-outside"][0] == 2 and "(LOCK-n.md is not)" in pre["lock-outside"][1],
+                "report-outside": pre["report-outside"][0] == 2 and "(report.json is not)" in pre["report-outside"][1],
+                "uncommitted": pre["uncommitted"][0] == 2 and "committed analyzer" in pre["uncommitted"][1],
+                "lock-uncommitted": pre["lock-uncommitted"][0] == 2 and never.name in pre["lock-uncommitted"][1],
+                "of-record": pre["of-record"] == (0, "", REPO / VERDICTS_REL),
+                "repo-root": pre["repo-root"][0] == 2 and "inside the repository" in pre["repo-root"][1],
+                "repo-sub": pre["repo-sub"][0] == 2 and "inside the repository" in pre["repo-sub"][1],
+                "outside": pre["outside"] == (0, "", (base / "vo").resolve())}
+        B.chk("verdicts' refusals before any read: VERDICTS of record only from inputs in the repository (the lock, "
+              "the report), from the committed analyzer and a committed lock; a --out at the repository root or "
+              "inside it; with nothing left to check it names data/n/verdicts, and a --out outside the repository "
+              "proceeds", all(ok_p.values()), {k: pre[k][:2] for k, v in ok_p.items() if not v},
+              cover=["VD-PRECHECK"])
 
 
 def battery() -> dict:
@@ -2940,6 +3632,7 @@ def battery() -> dict:
         B.group("numerics", lambda: _bt_numerics(B))
         B.group("reader path", lambda: _bt_reader(B))
         B.group("commands", lambda: _bt_commands(B))
+        B.group("verdicts", lambda: _bt_verdicts(B))
         B.group("structure", lambda: _bt_structure(B, ptext, hook))
     snap1 = _bt_snapshot()
     B.chk("the battery wrote nothing under data/n (sha256 of every file outside ckpt / reports / verdicts, before = "
@@ -3166,16 +3859,19 @@ def _bt_commands(B: _Battery) -> None:
         rec = {"schema": NOT_RUN_RECORD_SCHEMA, "unit": UNIT, "cause": "clock:pi-declined", "date": "2026-12-16",
                "detail": "a synthetic record"}
         rp = base / "rec.json"
-        rp.write_text(json.dumps(rec), encoding="utf-8")
+        rp.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8")       # not json.dumps(rec)'s bytes
+        rsha = hashlib.sha256(rp.read_bytes()).hexdigest()
         p1, h1 = run_not_run(rp, base / "out")
         p2, h2 = run_not_run(rp, base / "out")
         doc = json.loads(p1.read_text(encoding="utf-8"))
         rp.write_text(json.dumps(dict(rec, cause="clock:no-box")), encoding="utf-8")
         ok3, msg3 = _bt_raises(lambda: run_not_run(rp, base / "out"), (AnlRefusal,))
-        B.chk("not-run writes N-pod_NOT-RUN.json once (written, then identical), refuses other bytes (write-once), and "
-              "carries the reason in all four sentence slots", (h1, h2) == ("written", "identical") and ok3
+        B.chk("not-run writes N-pod_NOT-RUN.json once (written, then identical), refuses other bytes (write-once), "
+              "carries the reason in all four sentence slots, and binds the record by its file's sha256",
+              (h1, h2) == ("written", "identical") and ok3
               and doc["outcome"] == NOT_RUN and all(doc["reason"] in v["text"] for v in doc["sentences"].values())
-              and doc["date"] == "2026-12-16", (h1, h2, msg3[:60]), cover=["CMD-NOTRUN"])
+              and doc["date"] == "2026-12-16" and doc["record"] == {"name": "rec.json", "sha256": rsha},
+              (h1, h2, msg3[:60], doc.get("record")), cover=["CMD-NOTRUN"])
         nr = {"uncommitted": not_run_precheck(None, bound=("scripts/__n_analyze_never_committed__.py",)),
               "of-record": not_run_precheck(None, bound=()),
               "repo-root": not_run_precheck(str(REPO)), "repo-sub": not_run_precheck(str(REPO / "data")),
@@ -3264,6 +3960,413 @@ def not_run_precheck(out: str | None, bound: Sequence[str] | None = None) -> tup
     return 0, "", d
 
 
+# =====================================================================================================================
+# 16. VERDICTS (n §8 step 15; §4 "Blinding": the analyzer computes VERDICTS before "the reads", m:318's form)
+# =====================================================================================================================
+VERDICTS_SCHEMA = "n-verdicts-v1"
+SECONDARY_SCHEMA = "n-secondary-v1"
+ROUTE_LINE = "direction of record: Route "
+LOCK_V10_LINE = "lock: LOCK-n v1.0"
+GVEC_DIRS = ("span_character", "span_reward", "span_sentiment", "valence")
+NO_ARM_CAUSE = {"PI-STOP": "no-arm:pi-stop", "G-VER-STOP": "no-arm:gver-stop", "CAP": "no-arm:cap"}
+GREAD_LABEL_F = {"f0.10": F10, "f0.20": F20}
+EXPOSURE_CLASSES = (("N1-V", "negative valenced"), ("N1-P", "negative valenced"), ("N1-R", "negative random"))
+
+
+def lock_route(text: str) -> str:
+    """PIN-n-26 (Code's form, flagged): LOCK-n v1.0 says what it is in the whole line 'lock: LOCK-n v1.0' (so no
+    earlier lock passes for it), and states the direction of record G-VEC declared as one whole line,
+    'direction of record: Route A' or 'direction of record: Route B'. Without the first line, or with no, two, or
+    another route line, it refuses."""
+    if not any(ln.strip() == LOCK_V10_LINE for ln in text.splitlines()):
+        raise AnlRefusal(f"REFUSED: the lock does not say it is LOCK-n v1.0 (the whole line '{LOCK_V10_LINE}')")
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip().startswith(ROUTE_LINE.strip())]
+    if len(lines) != 1 or lines[0] not in (ROUTE_LINE + "A", ROUTE_LINE + "B"):
+        raise AnlRefusal(f"REFUSED: the lock does not state one direction of record as a whole line '{ROUTE_LINE}A' "
+                         f"or '{ROUTE_LINE}B'")
+    return lines[0][-1]
+
+
+def _load_checked(path: Path, check: Callable[[Any], None], what: str) -> tuple[dict, str]:
+    """A JSON file through the schema's own check: (the object, the sha256 of the bytes parsed)."""
+    try:
+        data = Path(path).read_bytes()
+        obj = json.loads(data.decode("utf-8"))
+        check(obj)
+    except (OSError, ValueError) as e:
+        raise AnlRefusal(f"REFUSED: {what}: {_err_where(e)}")
+    return obj, hashlib.sha256(data).hexdigest()
+
+
+def report_counters(camp: Campaign) -> dict:
+    """The counters a stage report carries, recomputed from the records (PIN-n-24, n-build's counting, settled):
+    per 'arm|dose_label', the records with a fidelity block (trials) and those whose block exceeds TAU and TAU/4;
+    records non-finite on either path; records whose identity check is not within; and, per 'arm|dose_label', the
+    finite records whose restricted label mass is below PIN-n-17's .20."""
+    fid: dict = {}
+    lm: dict = {}
+    nonfin = oob = 0
+    for r in camp.records.values():
+        key = f"{r['arm']}|{r['dose_label']}"
+        f = r["fidelity"]
+        if f is not None:
+            x = fid.setdefault(key, {"trials": 0, "exceed_tau": 0, "exceed_tau4": 0})
+            x["trials"] += 1
+            x["exceed_tau"] += bool(f["exceeds_tau"])
+            x["exceed_tau4"] += bool(f["exceeds_tau4"])
+        if not r["finite"] or (f is not None and not f["finite"]):
+            nonfin += 1
+        if r["identity"] is not None and not r["identity"]["within"]:
+            oob += 1
+        if r["finite"] and label_mass_below([r["restricted"]["label_mass"]]):
+            lm[key] = lm.get(key, 0) + 1
+    return {"fidelity": dict(sorted(fid.items())), "nonfinite_reads": nonfin, "identity_out_of_bound": oob,
+            "label_mass_below_floor": dict(sorted(lm.items()))}
+
+
+def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
+    """PIN-n-24: the stage report bound to the campaign on disk, the properties check_report leaves to the reader:
+    the identity and the plan; every cell file by its shas and record count; each arm's planned, obtained and complete
+    against the records; the counters and the cap's used time against the records; and the launches and pauses as
+    n-build's runner makes them (its answer of 2026-11-16): the records' launch indices are exactly 0..m−1; at most
+    one pause stands, and it is the stage's last event (its launch index m for a rendering pause, whose read is not
+    launched, else m − 1); a pause with a read, other than a rendering pause, names a read on disk, non-finite where
+    it names nonfinite and outside the identity bound where it names identity-bound; a rendering pause not resumed
+    names a read not on disk; a resumption is where a read was launched or refused. A binomial batch is not checked
+    against the records (its counting is the runner's; no outcome reads it). Three checks here cannot fire alone and
+    are kept so the binding is stated whole: the two shas, which check_report ties to the report's identity, once the
+    identity is the cells'; and the per-arm counts, which the schema's per_arm rule (complete is obtained == planned)
+    and check_report's plan and cell-record checks imply once the identity is the cells' and the cells are the files
+    on disk."""
+    p = []
+    ident = camp.identity
+    if ident["stage"] != "campaign":
+        p.append("the cells are not a campaign's")
+    if _canon(rep["stage_identity"]) != _canon(ident):
+        p.append("the report's stage identity is not the cells'")
+    if rep["stage_identity_sha256"] != sm.identity_sha256(ident):
+        p.append("stage_identity_sha256 is not the cells' identity's")
+    if rep["read_plan_sha256"] != sm.read_plan_sha256(ident):
+        p.append("read_plan_sha256 is not the cells' plan's")
+    if rep["cells"] != camp.cells:
+        odd = sorted(set(rep["cells"]) ^ set(camp.cells)) or sorted(n for n in rep["cells"]
+                                                                    if rep["cells"][n] != camp.cells[n])
+        p.append(f"the report's cells are not the files on disk, e.g. {odd[:2]}")
+    for a in ARMS:
+        want = {"planned": len(camp.planned[a]), "obtained": len(camp.present[a]),
+                "complete": camp.present[a] == camp.planned[a]}
+        if rep["per_arm"].get(a) != want:
+            p.append(f"per_arm.{a} is {rep['per_arm'].get(a)}; the records give {want}")
+    got = report_counters(camp)
+    c = rep["counters"]
+    for k in ("fidelity", "nonfinite_reads", "identity_out_of_bound"):
+        if c[k] != got[k]:
+            p.append(f"counters.{k} is not the records' count")
+    if c["label_mass_below_floor"] is not None and c["label_mass_below_floor"] != got["label_mass_below_floor"]:
+        p.append("counters.label_mass_below_floor is not the records' count at PIN-n-17's .20")
+    if rep["cap"]["used_ms"] != sum(r["duration_ms"] for r in camp.records.values()):
+        p.append("cap.used_ms is not the records' duration_ms sum")
+    m = len(camp.records)
+    if sorted(r["launch_index"] for r in camp.records.values()) != list(range(m)):
+        p.append(f"the records' launch indices are not exactly 0..{m - 1}")
+    last = m - 1
+    if sum(1 for q in rep["pauses"] if not q["adjudicated"]) > 1:
+        p.append("more than one pause stands")
+    attempted = ({r["launch_index"] for r in camp.records.values()}
+                 | {q["launch_index"] for q in rep["pauses"] if q["kind"] == "rendering"})
+    for q in rep["pauses"]:
+        ra = q["resumed_at_launch_index"]
+        if ra is not None and ra not in attempted:
+            p.append(f"{q['pause_id']}: it resumed where no read was launched or refused")
+        rid = q["read_id"]
+        if rid is None:
+            continue
+        kinds = [q["kind"]] + list(q["also_fired"])
+        rec = camp.records.get(rid)
+        if q["kind"] == "rendering":
+            if ra is None and rec is not None:
+                p.append(f"{q['pause_id']}: a rendering pause not resumed names a read on disk")
+        elif rec is None:
+            p.append(f"{q['pause_id']}: its read {rid} is not on disk")
+        else:
+            if "nonfinite" in kinds and rec["finite"] and (rec["fidelity"] is None or rec["fidelity"]["finite"]):
+                p.append(f"{q['pause_id']}: a non-finite pause at a finite read")
+            if "identity-bound" in kinds and not (rec["identity"] is not None and not rec["identity"]["within"]):
+                p.append(f"{q['pause_id']}: an identity-bound pause at a read within the bound")
+        if not q["adjudicated"]:
+            if last > q["launch_index"]:
+                p.append(f"{q['pause_id']}: a read was launched after this standing pause")
+            elif q["launch_index"] != (m if q["kind"] == "rendering" else m - 1):
+                p.append(f"{q['pause_id']}: a standing pause is not the stage's last event")
+    return p
+
+
+def gread_problems(art: Mapping[str, Any], camp: Campaign, rep: Mapping[str, Any]) -> list[str]:
+    """PIN-n-25: G-READ-n's artifact bound to the campaign: its plan and identity shas are the report's; the cells it
+    read are exactly the campaign's files, by both shas (n-build's probe lists every cell); its probe ran under the
+    campaign's n package, on exactly the capture layers; each result is at a point the dose map keeps, listing the
+    labels merged into it (the reader's check, the schema's docstring)."""
+    p = []
+    ident = camp.identity
+    ca = art["campaign"]
+    if ca["read_plan_sha256"] != rep["read_plan_sha256"] or ca["stage_identity_sha256"] != rep["stage_identity_sha256"]:
+        p.append("its campaign's plan or identity sha256 is not the report's")
+    want = {n: {"json_sha256": c["json_sha256"], "capture_sha256": c["capture_sha256"]} for n, c in camp.cells.items()}
+    if ca["cells"] != want:
+        odd = sorted(set(ca["cells"]) ^ set(want)) or sorted(n for n in ca["cells"] if ca["cells"][n] != want[n])
+        p.append(f"the cells it read are not the campaign's files, e.g. {odd[:2]}")
+    if art["probe"]["package_sha256"] != ident["package_sha256"]:
+        p.append("its probe ran under another n package than the campaign's")
+    if list(art["probe"]["layers"]) != list(ident["capture_layers"]):
+        p.append("its layers are not the campaign's capture layers")
+    kept = {pt["label"]: pt["merged"] for pt in ident["dose_map"]["points"]}
+    for r in art["results"]:
+        lab = r["dose_label"]
+        if lab not in kept:
+            p.append(f"a result at {r['axis']} {lab}, a point the dose map does not keep")
+        elif r["merged"] != kept[lab]:
+            p.append(f"the result at {r['axis']} {lab} lists {r['merged']} merged; the dose map, {kept[lab]}")
+    return p
+
+
+def gread_states(art: Mapping[str, Any], camp: Campaign) -> tuple[dict, dict, list]:
+    """G-READ-n's results as the outcome layer reads them (PIN-n-25): (axis, point) -> status, by the point's value,
+    so a merged point carries its keeper's result, and an (axis, point) with no result is NOT-COMPUTED (PIN-n-11);
+    the dose sentence's AUC, the band median of the result at d_eq's kept label; and the results as reported."""
+    lv = label_values(camp.identity)
+    g: dict = {}
+    rows = []
+    for r in sorted(art["results"], key=lambda r: (r["axis"], r["dose_label"])):
+        key = (("valence", lv[r["dose_label"]]) if r["axis"] == "valence"
+               else ("span_reward", GREAD_LABEL_F[r["dose_label"]]))
+        g[key] = r["status"]
+        rows.append({"axis": r["axis"], "label": r["dose_label"], "merged": list(r["merged"]), "status": r["status"],
+                     "band_median_auc": r["band_median_auc"], "comparator_max": r["comparator"]["max"],
+                     "per_layer": r["per_layer"]})
+    deq = camp.dmap.kept_label("d_eq")
+    auc = {"d_eq": next((r["band_median_auc"] for r in art["results"]
+                         if r["axis"] == "valence" and r["dose_label"] == deq), None)}
+    return g, auc, rows
+
+
+def paused_from(rep: Mapping[str, Any]) -> dict[str, bool]:
+    """An arm is paused while an unadjudicated pause holds it in scope (n-report-v1)."""
+    return {a: any(not q["adjudicated"] and a in q["arms_in_scope"] for q in rep["pauses"]) for a in ARMS}
+
+
+def exposure(camp: Campaign) -> dict:
+    """PIN-n-23: §0.4's table realised in the campaign: per arm, the reads on disk at d = −1 (finite or not) against
+    the plan, with the fresh re-computations they carry (§2.1; two more forwards each). G-CAL-n's generations under
+    negative steering are its own entry's; the campaign generates nothing."""
+    out: dict = {}
+    for arm, cls in EXPOSURE_CLASSES:
+        planned = [r for r in camp.planned[arm] if r.split("|")[2] == "-1"]
+        got = [r for r in planned if r in camp.present[arm]]
+        out[arm] = {"class": cls, "planned": len(planned), "reads": len(got),
+                    "fresh_recomputations": sum(1 for r in got if camp.records[r]["fidelity"] is not None)}
+    out["totals"] = {"negative valenced": out["N1-V"]["reads"] + out["N1-P"]["reads"],
+                     "negative random": out["N1-R"]["reads"],
+                     "generations under negative steering": "none in the campaign; G-CAL-n's are its entry's"}
+    return out
+
+
+def _plain(x: Any) -> Any:
+    """JSON-native and finite (a non-finite figure STOPs): an Est as its JSON, dict keys as strings (a tuple key
+    joined by '|', a float key by repr), tuples as lists, numpy scalars as Python numbers."""
+    if isinstance(x, Est):
+        return _plain(x.as_json())
+    if isinstance(x, dict):
+        def key(k: Any) -> str:
+            if isinstance(k, str):
+                return k
+            if isinstance(k, tuple):
+                return "|".join(map(str, k))
+            return repr(float(k)) if isinstance(k, (float, np.floating)) else str(k)
+        out = {key(k): _plain(v) for k, v in x.items()}
+        if len(out) != len(x):
+            raise AnlStop("STOP: two keys of a VERDICTS mapping write alike")
+        return out
+    if isinstance(x, (list, tuple)):
+        return [_plain(v) for v in x]
+    if x is None or isinstance(x, (bool, str)):
+        return x
+    if isinstance(x, (int, np.integer)):
+        return int(x)
+    if isinstance(x, (float, np.floating)):
+        if not math.isfinite(float(x)):
+            raise AnlStop("STOP: a non-finite figure in VERDICTS")
+        return float(x)
+    raise AnlStop(f"STOP: a value of type {type(x).__name__} in VERDICTS")
+
+
+def state_figures(st: State, fig: Mapping[str, Any]) -> dict:
+    """§4's figures behind the outcomes: the estimates, the floor, L and P, E, the guards, m_told and E_sham, each
+    arm's usability, and build_state's per-arm figures."""
+    return _plain({"V": st.V, "slope_V": st.slope_V, "floor_V": st.floor_V, "L": st.L, "P": st.P, "E": st.E,
+                   "S": st.S, "C": st.C, "told": st.told, "e_sham": st.e_sham, "complete": st.complete,
+                   "paused": st.paused, "missing": st.missing, "nonfinite": st.nonfinite, "unusable": st.unusable,
+                   "per_arm": dict(fig)})
+
+
+def _load_gvec(path: Path) -> tuple[dict, str]:
+    """The cosines between the four directions (§8 step 15; secondary (e)), from G-VEC's output given to the command:
+    {"cosines": {"x|y": float}} with exactly the six pairs of GVEC_DIRS, x before y in that order, each finite,
+    bound by sha256 (the file's form is G-VEC's)."""
+    try:
+        data = Path(path).read_bytes()
+        obj = json.loads(data.decode("utf-8"))
+    except (OSError, ValueError) as e:
+        raise AnlRefusal(f"REFUSED: the cosines file: {type(e).__name__}")
+    pairs = {f"{x}|{y}" for i, x in enumerate(GVEC_DIRS) for y in GVEC_DIRS[i + 1:]}
+    cos = obj.get("cosines") if isinstance(obj, dict) else None
+    if not (isinstance(cos, dict) and set(cos) == pairs
+            and all(isinstance(v, float) and math.isfinite(v) for v in cos.values())):
+        raise AnlRefusal("REFUSED: the cosines file is not {\"cosines\": {...}} with the six pairs of "
+                         f"{', '.join(GVEC_DIRS)}, each a finite float")
+    return obj, hashlib.sha256(data).hexdigest()
+
+
+def verdicts_precheck(out: str | None, lock: str, inputs: Sequence[str | None] = (),
+                      bound: Sequence[str] | None = None) -> tuple[int, str, Path | None]:
+    """`verdicts`' refusals before any read. VERDICTS of record (no --out: data/n/verdicts) come only from the
+    committed analyzer, under a committed lock, from a committed stage report, G-READ-n artifact and cosines file
+    (``inputs``; those given), each a file in the repository, so none can be edited before the run (the cells are
+    bound by the committed report's shas); ``bound`` replaces the list of committed paths (the battery's handle). A
+    --out goes only outside the repository. Returns (code, message, output directory)."""
+    root = REPO.resolve()
+    if out is None:
+        rels = [ANALYZER_REL]
+        for x in [lock] + [y for y in inputs if y is not None]:
+            xp = Path(x).expanduser().resolve()
+            if root not in xp.parents:
+                return 2, ("REFUSED: VERDICTS of record take the lock, the report, G-READ-n's artifact and the cosines "
+                           f"file from the repository ({Path(x).name} is not)"), None
+            rels.append(str(xp.relative_to(root)))
+        probs = committed_problems(tuple(rels) if bound is None else tuple(bound))
+        if probs:
+            return 2, ("REFUSED: VERDICTS of record are written by the committed analyzer from committed inputs "
+                       f"only: {probs}"), None
+        return 0, "", REPO / VERDICTS_REL
+    d = Path(out).expanduser().resolve()
+    if d == root or root in d.parents:
+        return 2, (f"REFUSED: a --out directory inside the repository (the output of record goes to {VERDICTS_REL}, "
+                   "with no --out)"), None
+    return 0, "", d
+
+
+def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, date: str, gvec: Path | None,
+                 out_dir: Path) -> dict:
+    """`verdicts` (n §8 step 15): N-pod's VERDICTS and secondary DVs, or its NOT-RUN where the report says no arm's
+    full read set was produced before a STOP or the cap (§5 "Unit outcome first"; PIN-n-24's end-state rules). An
+    arm's full read set is the report's ``complete``, every planned read produced, finite or not: a non-finite read
+    makes its arm INDETERMINATE (PIN-n-20), never the unit NOT-RUN (PIN-n-24). It refuses (AnlRefusal, exit 2),
+    before any output, on: a date that is not an ISO calendar date; a report the schema refuses, a PAUSE (the seat
+    rules first), or one not a campaign's; a lock not the identity's lock_sha256, not naming this analyzer's sha256,
+    not saying it is LOCK-n v1.0, or stating no direction of record (PIN-n-26); a report not bound to the cells on
+    disk (PIN-n-24); an output of the other outcome already in the output directory; and, when it analyzes, a
+    G-READ-n artifact missing, refused by the schema or not bound to the campaign (PIN-n-25), or a malformed cosines
+    file (on the NOT-RUN path neither is read). It writes, write-once, the secondary DVs and then VERDICTS, which
+    names the secondary by sha256, both formed before either is written (a STOP while forming them writes nothing,
+    and a write-once refusal of either comes before either is written), or the NOT-RUN output. It returns
+    {'outputs': [(name, how, sha256)], 'tuple': the outcome tuple or 'NOT-RUN'}, and prints no margin (§4
+    "Blinding")."""
+    if not _iso_date(date):
+        raise AnlRefusal(f"REFUSED: the date {date!r} is not an ISO calendar date (the PI date of the run)")
+    sm = schema_module()
+    rep, rep_sha = _load_checked(report, sm.check_report, "the stage report")
+    end = rep["end_state"]
+    if end == "PAUSE":
+        raise AnlRefusal("REFUSED: the stage report ends in PAUSE: an unadjudicated pause stands, and the seat "
+                         "rules first")
+    ident = rep["stage_identity"]
+    if ident["stage"] != "campaign" or ident["proposal_sha256"] != PROPOSAL_SHA256:
+        raise AnlRefusal("REFUSED: the stage report is not a campaign of PROPOSAL-n v0.2")
+    try:
+        lbytes = Path(lock).read_bytes()
+    except OSError as e:
+        raise AnlRefusal(f"REFUSED: the lock: {type(e).__name__}")
+    lock_sha = hashlib.sha256(lbytes).hexdigest()
+    if lock_sha != ident["lock_sha256"]:
+        raise AnlRefusal("REFUSED: the lock is not the one the campaign's identity names (lock_sha256)")
+    asha = analyzer_sha256()
+    ltext = lbytes.decode("utf-8", "replace")
+    if not lock_names(ltext, asha):
+        raise AnlRefusal("REFUSED: the lock does not name this analyzer's sha256")
+    route = lock_route(ltext)
+    base = {"unit": UNIT, "date": date, "proposal_sha256": PROPOSAL_SHA256, "analyzer_sha256": asha,
+            "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
+            "lock": {"name": Path(lock).name, "sha256": lock_sha},
+            "report": {"name": Path(report).name, "sha256": rep_sha, "end_state": end}, "pins": PINS, "open": OPEN}
+    camp = None
+    if rep["cells"]:
+        camp = load_campaign(campaign, sm)
+        probs = report_problems(rep, camp, sm)
+        if probs:
+            raise AnlRefusal(f"REFUSED: the stage report is not the campaign on disk: {probs[:3]}")
+    elif Path(campaign).is_dir() and any(Path(campaign).iterdir()):
+        raise AnlRefusal("REFUSED: the stage report holds no cell, but the campaign directory is not empty")
+    out_dir = Path(out_dir)
+    if end in NO_ARM_CAUSE and not any(x["complete"] for x in rep["per_arm"].values()):
+        rec = {"schema": NOT_RUN_RECORD_SCHEMA, "unit": UNIT, "cause": NO_ARM_CAUSE[end], "date": date,
+               "detail": f"derived from the stage report: {end}, no arm complete"}
+        doc = not_run_doc(rec, {"name": Path(report).name, "sha256": rep_sha, "derived_from": "the stage report",
+                                "end_state": end, "stop_record_sha256": (rep["stop"] or {}).get("record_sha256")},
+                          {"lock": base["lock"], "schema_module": base["schema_module"]})
+        one_outcome(out_dir, "NOT-RUN")
+        path = out_dir / f"{UNIT}_NOT-RUN.json"
+        how = write_once(path, json_text(doc))
+        return {"outputs": [(path.name, how, hashlib.sha256(path.read_bytes()).hexdigest())], "tuple": NOT_RUN}
+    if gread is None:
+        raise AnlRefusal("REFUSED: VERDICTS bind G-READ-n's artifact (--gread)")
+    art, art_sha = _load_checked(gread, sm.check_gread, "G-READ-n's artifact")
+    probs = gread_problems(art, camp, rep)
+    if probs:
+        raise AnlRefusal(f"REFUSED: G-READ-n's artifact is not the campaign's: {probs[:3]}")
+    gv, gv_sha = (None, None) if gvec is None else _load_gvec(gvec)
+    paused = paused_from(rep)
+    g, auc, gres = gread_states(art, camp)
+    st, fig = build_state(camp, paused=paused, gread=g)
+    o = outcomes(st)
+    sset = sentence_set_filled(o, st, route=route, auc=auc)
+    st_s, fig_s = build_state(camp, paused=paused, gread=g, drop=tau4_drop(camp))
+    o_s = outcomes(st_s)
+    cos = None if gv is None else {"source": {"name": Path(gvec).name, "sha256": gv_sha}, "values": gv["cosines"]}
+    sec = dict(base, schema=SECONDARY_SCHEMA, claim="none: descriptive, issuing no claim (n §4; rule 11)",
+               cosines=cos, secondaries=_plain(secondaries(camp, st, gv)))
+    sec_path, v_path = out_dir / f"{UNIT}_secondary.json", out_dir / f"{UNIT}_VERDICTS.json"
+    sec_text = json_text(sec)                      # both outputs are formed before either is written
+    sec_sha = hashlib.sha256(sec_text.encode("utf-8")).hexdigest()
+    verd = dict(base, schema=VERDICTS_SCHEMA, route=route, tuple=list(o["tuple"]), cosines=cos,
+                outcomes=_plain({k: o[k] for k in ("N1", "dose", "N2", "N4", "gread")}), sentences=sset,
+                figures=state_figures(st, fig), gleak=_plain(gleak_table(st)),
+                gread={"artifact": {"name": Path(gread).name, "sha256": art_sha}, "auc": auc, "results": gres,
+                       "table": _plain(gread_table(st))},
+                counters={"records": counters(camp), "report": rep["counters"],
+                          "binomial_state": rep["binomial_state"], "cap": rep["cap"], "stop": rep["stop"],
+                          "pauses": rep["pauses"]},
+                exposure=exposure(camp),
+                sensitivity={"rule": "PIN-n-16 (n §4 (f)): reads re-computed above TAU/4 dropped",
+                             "tuple": list(o_s["tuple"]),
+                             "outcomes": _plain({k: o_s[k] for k in ("N1", "dose", "N2", "N4")}),
+                             "figures": state_figures(st_s, fig_s)},
+                campaign={"stage_identity_sha256": rep["stage_identity_sha256"],
+                          "read_plan_sha256": rep["read_plan_sha256"], "cells": camp.cells},
+                secondary={"name": sec_path.name, "sha256": sec_sha})
+    v_text = json_text(verd)
+    one_outcome(out_dir, "VERDICTS")
+    sec_how, v_how = write_all_once([(sec_path, sec_text), (v_path, v_text)])
+    return {"outputs": [(sec_path.name, sec_how, hashlib.sha256(sec_path.read_bytes()).hexdigest()),
+                        (v_path.name, v_how, hashlib.sha256(v_path.read_bytes()).hexdigest())],
+            "tuple": list(o["tuple"])}
+
+
+def verdicts_line(res: Mapping[str, Any]) -> str:
+    """The one line `verdicts` prints (§4 "Blinding": no margin): the outcome tuple, and each output's name, how it
+    was written and its sha256."""
+    t = res["tuple"] if isinstance(res["tuple"], str) else "(" + ", ".join(res["tuple"]) + ")"
+    return "VERDICTS: " + t + " -> " + "; ".join(f"{n} ({how}; sha256 {h})" for n, how, h in res["outputs"])
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
@@ -3276,6 +4379,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     n = sub.add_parser("not-run", help="N-pod's NOT-RUN output from a NOT-RUN record")
     n.add_argument("--record", required=True)
     n.add_argument("--out", default=None, help="a test directory outside the repository (never of record); "
+                                               "without it, data/n/verdicts")
+    v = sub.add_parser("verdicts", help="N-pod's VERDICTS and secondary DVs, or its NOT-RUN, from the campaign, its "
+                                        "stage report, G-READ-n's artifact and the lock (n §8 step 15)")
+    v.add_argument("--campaign", required=True, help="the campaign's cell directory")
+    v.add_argument("--report", required=True, help="the campaign's stage report (n-report-v1)")
+    v.add_argument("--gread", default=None, help="G-READ-n's artifact (n-gread-v1); required unless NOT-RUN")
+    v.add_argument("--lock", required=True, help="LOCK-n v1.0, the lock the campaign's identity names")
+    v.add_argument("--date", required=True, help="the PI date of the run, YYYY-MM-DD")
+    v.add_argument("--gvec", default=None, help="secondary (e)'s cosines, from G-VEC: {\"cosines\": {\"x|y\": float}}")
+    v.add_argument("--out", default=None, help="a test directory outside the repository (never of record); "
                                                "without it, data/n/verdicts")
     a = ap.parse_args(argv)
     if a.selftest:
@@ -3293,6 +4406,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(str(e), file=sys.stderr)
             return 2
         print(f"NOT-RUN: {path.name} ({how})", flush=True)
+        return 0
+    if a.cmd == "verdicts":
+        code, msg, out_dir = verdicts_precheck(a.out, a.lock, (a.report, a.gread, a.gvec))
+        if code:
+            print(msg, file=sys.stderr)
+            return code
+        try:
+            res = run_verdicts(Path(a.campaign), Path(a.report), Path(a.gread) if a.gread else None, Path(a.lock),
+                               a.date, Path(a.gvec) if a.gvec else None, out_dir)
+        except AnlRefusal as e:
+            print(str(e), file=sys.stderr)
+            return 2
+        except AnlStop as e:
+            print(str(e), file=sys.stderr)
+            return 4
+        print(verdicts_line(res), flush=True)
         return 0
     ap.print_usage(sys.stderr)
     return 2

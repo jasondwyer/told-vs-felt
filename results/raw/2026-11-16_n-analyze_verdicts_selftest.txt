@@ -1,0 +1,188 @@
+# n package, scripts/n_analyze.py, the verdicts command: the battery of record on the committed bytes (scripts/n_analyze.py --selftest, sha256 34a513f9985453d9da980b8a48d7b318d7d5b908521cff797d7e3756264a98b6, run from the repository root at nice -n 19 in a window the coordinating session granted; PI date 2026-11-16), 185/185, exit 0. The repository root is shown as <repo>.
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/n_analyze.py --selftest
+  [PASS] N1 REPLICATED: (i) Δm(+1) 1.0 ≥ 0.545, CI [0.9, 1.1]; (ii) slope 0.9 > floor 0.3; (iii) 1.0 > max(L 0.05, P 0.04); (iv) Δm(−1) −0.7, CI [−0.8, −0.6]
+  [PASS] N1 PARTIAL failing ['i']
+  [PASS] N1 PARTIAL failing ['iv']
+  [PASS] N1 PARTIAL failing ['i', 'iv']
+  [PASS] N1 NOT-REPLICATED failing ['ci+1']
+  [PASS] N1 NOT-REPLICATED failing ['ii']
+  [PASS] N1 NOT-REPLICATED failing ['iii']
+  [PASS] N1 NOT-REPLICATED failing ['ci+1', 'ii']
+  [PASS] N1 NOT-REPLICATED failing ['ci+1', 'iii']
+  [PASS] N1 NOT-REPLICATED failing ['ii', 'iii']
+  [PASS] N1 NOT-REPLICATED failing ['ci+1', 'ii', 'iii']
+  [PASS] N1 INDETERMINATE by pause:N1-V
+  [PASS] N1 INDETERMINATE by pause:N1-R
+  [PASS] N1 INDETERMINATE by pause:N1-P
+  [PASS] N1 INDETERMINATE by incomplete:N1-V (OPEN-Q6, pending the seat)
+  [PASS] N1 INDETERMINATE by incomplete:N1-R
+  [PASS] N1 INDETERMINATE by incomplete:N1-P
+  [PASS] boundary: Δm(+1) exactly 0.545 meets (i) (≥)
+  [PASS] boundary: Δm(+1) one ulp below 0.545 fails (i)
+  [PASS] boundary: a CI with lower bound exactly 0 does not exclude 0
+  [PASS] boundary: a CI with upper bound exactly 0 does not exclude 0 ((iv) fails)
+  [PASS] boundary: |Δm(+1)| equal to the ceiling is not certified (strict >)
+  [PASS] boundary: a slope equal to its floor does not exceed it ((ii) fails)
+  [PASS] boundary: Δm(−1) exactly 0 fails (iv) (< 0)
+  [PASS] ceiling: P(+1) 0.95 above L(+1) 0.5 governs (0.9 uncertified)
+  [PASS] ceiling (OPEN-Q2, pending the seat): at d_eq, where N1-P is not read, the ceiling is L(d_eq) alone (0.08 > 0.06 certified)
+  [PASS] a negative Δm(+1) beyond the ceiling is certified (|mean|); (i) fails, (ii)-(iii) hold, CI excludes 0 -> PARTIAL (PIN-n-8, as §5 is written)
+  [PASS] dose DETECTABLE: Δm(d_eq) 0.3 [0.2, 0.4] against L 0.05
+  [PASS] dose DETECTABLE: Δm(d_eq) -0.3 [-0.4, -0.2] against L 0.05
+  [PASS] dose NOT-DETECTABLE: Δm(d_eq) 0.3 [-0.01, 0.6] against L 0.05
+  [PASS] dose NOT-DETECTABLE: Δm(d_eq) 0.04 [0.02, 0.06] against L 0.05
+  [PASS] dose INDETERMINATE whenever N1 is, under each of N1's six causes
+  [PASS] dose INDETERMINATE names 'incomplete:points' beside N1's (subsumed; OPEN-Q6, pending the seat)
+  [PASS] dose reports d_20 beside (point, estimate, ceiling, certification)
+  [PASS] N2 SPECIFIC (N2-SPECIFIC)
+  [PASS] N2 SHARED (N2-SHARED-V-CERT)
+  [PASS] N2 SHARED (N2-SHARED-V-UNCERT)
+  [PASS] N2 NULL (N2-NULL)
+  [PASS] N2 INDETERMINATE by pause:N2-E (§5, n:140: 'an unadjudicated pause stands on N2's reads'; the guards' reads are N2's reads)
+  [PASS] N2 INDETERMINATE by pause:N2-S (§5, n:140: 'an unadjudicated pause stands on N2's reads'; the guards' reads are N2's reads)
+  [PASS] N2 INDETERMINATE by pause:N2-C (§5, n:140: 'an unadjudicated pause stands on N2's reads'; the guards' reads are N2's reads)
+  [PASS] N2 INDETERMINATE by incomplete:N2-E (OPEN-Q6, pending the seat)
+  [PASS] N2 INDETERMINATE by incomplete:N1-V (OPEN-Q6, pending the seat)
+  [PASS] N2 INDETERMINATE by incomplete:N1-R (OPEN-Q6, pending the seat)
+  [PASS] a pause on N1-V's or N1-R's reads, or on N1-P's where d_20 sits at +1 (shape b), alone leaves N2 evaluated (§5's N2 reads are N2-E's, N2-S's and N2-C's; OPEN-Q6, pending the seat: those N1 arms' incompleteness is a cause, their pauses are not)
+  [PASS] N2 INDETERMINATE by incomplete:N1-P where d_20 sits at +1 (shape b: the ceiling takes P(+1)); with every point distinct (shape a) N1-P enters no N2 certification and N2 is evaluated (OPEN-Q6, pending the seat)
+  [PASS] N2's guards decide nothing (span_sentiment, span_character varied over nine pairs, the outcome fixed)
+  [PASS] N2 reports f = 0.10 beside (its own certification at d_eq's point), deciding nothing
+  [PASS] N2 reports the norm match: ratio 1 on shape (a); 2·0.72/1 = 1.44 when the cap binds (shape b; OPEN-Q7, pending the seat)
+  [PASS] N4 PASS
+  [PASS] N4 REVERSE
+  [PASS] N4 DEAD
+  [PASS] N4 INDETERMINATE
+  [PASS] N4 INDETERMINATE, no read obtained, by incomplete:N4-T
+  [PASS] N4 INDETERMINATE, no read obtained, by incomplete:N4-Ts
+  [PASS] N4 INDETERMINATE, no read obtained, by pause:N4-T (OPEN-Q6, pending the seat)
+  [PASS] N4 INDETERMINATE, no read obtained, by pause:N4-Ts (OPEN-Q6, pending the seat)
+  [PASS] N4 INDETERMINATE, no read obtained, by E-undefined
+  [PASS] N4 order: REVERSE before DEAD (mean −0.3 < −E, CI excludes 0, upper −0.2 < 0.5)
+  [PASS] N4 order: PASS before DEAD (mean 0.3 > E, CI excludes 0, upper 0.4 < 0.5)
+  [PASS] N4 boundary: mean equal to E is not PASS (strict >)
+  [PASS] N4 boundary: mean equal to −E is not REVERSE (strict <); upper −0.05 < 0.5 -> DEAD
+  [PASS] N4 boundary: an upper bound equal to 0.5 is not DEAD (strict <)
+  [PASS] N4 boundary: a 98% CI with lower bound exactly 0 does not exclude 0 (not PASS)
+  [PASS] NOT-RUN by clock:no-box: 'LOCK-n v1.0 was not committed by its Clock date (2026-12-15): no box'
+  [PASS] NOT-RUN by clock:gate-stopped: 'LOCK-n v1.0 was not committed by its Clock date (2026-12-15): G-CAL-n STOPPED and no re-specification was locked'
+  [PASS] NOT-RUN by clock:pi-declined: 'LOCK-n v1.0 was not committed by its Clock date (2026-12-15): the PI declined v1.0'
+  [PASS] NOT-RUN by clock:not-locked: 'LOCK-n v1.0 was not committed by its Clock date (2026-12-15)'
+  [PASS] NOT-RUN by no-arm:pi-stop: 'locked, and no arm's full read set was produced before a PI stop'
+  [PASS] NOT-RUN by no-arm:gver-stop: 'locked, and no arm's full read set was produced before a G-VER STOP'
+  [PASS] NOT-RUN by no-arm:cap: 'locked, and no arm's full read set was produced before its cap'
+  [PASS] NOT-RUN record refused (PREMATURE)
+  [PASS] NOT-RUN record refused (STAGE)
+  [PASS] NOT-RUN record refused (UNIT)
+  [PASS] NOT-RUN record refused (CAUSE)
+  [PASS] NOT-RUN record refused (KEYS)
+  [PASS] G-LEAK-n table: N1-V cert reached
+  [PASS] G-LEAK-n table: N1-V uncert reached
+  [PASS] G-LEAK-n table: N1-V incomplete reached
+  [PASS] G-LEAK-n table: N2-E cert reached
+  [PASS] G-LEAK-n table: N2-E uncert reached
+  [PASS] G-LEAK-n table: N2-E incomplete reached
+  [PASS] G-LEAK-n table: N2-S cert reached
+  [PASS] G-LEAK-n table: N2-S uncert reached
+  [PASS] G-LEAK-n table: N2-S incomplete reached
+  [PASS] G-LEAK-n table: N2-C cert reached
+  [PASS] G-LEAK-n table: N2-C uncert reached
+  [PASS] G-LEAK-n table: N2-C incomplete reached
+  [PASS] G-READ-n table: a PASS cell is reported as such
+  [PASS] G-READ-n table: a FAIL cell is reported as such
+  [PASS] G-READ-n table: a NOT-COMPUTED cell is reported as such
+  [PASS] G-READ-n table: exactly three cells enter §5 -- valence +1 (N1), valence d_eq (dose), span_reward f = 0.20 (N2)
+  [PASS] §5's four sentences and two labels are the proposal's italic spans at n:136 and n:138, character for character; Code's expansion of the ellipsis ends in the span's own words
+  [PASS] N1 PARTIAL names its failing conjuncts (OPEN-Q8, pending the seat): three forms, each naming exactly its conjuncts, no slot left
+  [PASS] N1 NOT-REPLICATED names its failing conjuncts (OPEN-Q8, pending the seat): seven forms, each naming exactly its own
+  [PASS] INDETERMINATE sentences carry their causes (OPEN-Q8, pending the seat)
+  [PASS] the sentence layer refuses a value outside the outcome space (three cases)
+  [PASS] Code's 31 sentence forms (OPEN-Q8) are pinned by digest (CODE_FORMS_SHA256), pairwise distinct, and use declared slots only
+  [PASS] tuples T1: 1921/1921 evaluations: one sentence set: the four slots 7.1, 7.2, 7.3, N4, each a non-empty text, each state the tuple's coordinate (NOT-RUN: all four)
+  [PASS] tuples T2: 1921/1921 evaluations: the set equals the oracle's (§5's verbatim cells read from the proposal file)
+  [PASS] tuples T3: 1921/1921 evaluations: 7.1 depends on (N1, G-READ-n valence +1, N4) only
+  [PASS] tuples T4: 1921/1921 evaluations: 7.2 depends on (dose, G-READ-n valence d_eq, N4) only
+  [PASS] tuples T5: 1921/1921 evaluations: 7.3 depends on (N2, G-READ-n span_reward f = 0.20, N4) only
+  [PASS] tuples T6: 1921/1921 evaluations: N4's line depends on (N4, no read obtained) only
+  [PASS] tuples T7: 1921/1921 evaluations: (OPEN-Q3, pending the seat) a §0.6 label exactly on the null outcomes (NOT-REPLICATED, NOT-DETECTABLE, SPECIFIC, NULL); answered iff N4 PASS and the slot's G-READ-n cell PASS
+  [PASS] tuples T8: 1921/1921 evaluations: §5's verbatim sentences exactly in their cells (REPLICATED; DETECTABLE; NOT-DETECTABLE answered) and nowhere else
+  [PASS] tuples T9: 1921/1921 evaluations: no bracketed token outside the declared slots (BK's '[1.00, 1.19]' is text)
+  [PASS] tuples T10: the forms tally as derived by hand -- 7.1 480 each (NOT-REPLICATED 48 answered / 432 CNA); 7.2 640 each (NOT-DETECTABLE 64 / 320 / 256); 7.3 480 each (SPECIFIC and NULL 48 / 432); N4 384 x 5; NOT-RUN 1
+  [PASS] the outcome space (OPEN-Q4, pending the seat): 385 tuples (4 x 3 x 4 x 4 x 2 = 384, + NOT-RUN), 1921 evaluations (384 x 4 G-READ inputs + 96 x 4 for N4's second INDETERMINATE form + NOT-RUN)
+  [PASS] two passes over the 1,921 evaluations give byte-identical canonical JSON
+  [PASS] reachability: on every enumerated state of the three shapes, dose is INDETERMINATE iff N1 is (so 160 of the 384 product tuples are unreachable on any map: 64 with N1 INDETERMINATE and dose decided, 96 the reverse)
+  [PASS] reachability: the outcome layer raised on no enumerated state
+  [PASS] reachability, shape (a) all points distinct: 28 (N1, dose, N2) triples, the hand-derived 28; x N4 (4) x G-READ-n at d_eq (2) = 224 reachable tuples + NOT-RUN
+  [PASS] reachability, shape (b) d_20 merged into +1 (the cap binds): 24 (N1, dose, N2) triples, the hand-derived 24; x N4 (4) x G-READ-n at d_eq (2) = 192 reachable tuples + NOT-RUN
+  [PASS] reachability, shape (d) d_20 and d_eq merged into +1: 17 (N1, dose, N2) triples, the hand-derived 17; x N4 (4) x G-READ-n at d_eq (2) = 136 reachable tuples + NOT-RUN
+  [PASS] reachability: N4 reads its own arms only -- each of its five forms beside N1 REPLICATED and N1 INDETERMINATE
+  [PASS] key_stream is m:159's key-to-generator function (equal to valence_core.m.keys.stream on four keys)
+  [PASS] numpy's stream known answer: f|CORR|0's permutation(16) is m's pinned value
+  [PASS] the resample matrix is PIN-n-12's stream, re-derived literally from its words for N1-V, N1-R (40) and N4-T: equal on a repeat, different across arms, 4,000 x n indices in [0, n)
+  [PASS] a constant vector's estimate is (c, c, c)
+  [PASS] mean_est equals a loop over the resamples with a hand percentile (linear interpolation), to 1e-12
+  [PASS] percentile intervals use linear interpolation (numpy's 'linear' equals the hand rule at 1, 2.5, 97.5, 99)
+  [PASS] the per-session slope is OLS with an intercept (equal to polyfit and to the closed form; an exact line of slope 2 gives 2; a flat session 0)
+  [PASS] on an asymmetric grid OLS with an intercept and a fit through the origin differ, so OPEN-Q1 (pending the seat) decides a figure (here 0.8114 vs 0.8444)
+  [PASS] sd0 is the population SD (ddof 0), C6
+  [PASS] a nonfinite value in a statistic's input STOPs (never a silent drop)
+  [PASS] §4's statistics on BK's 160 neutral sessions reproduce G-DATA (iii): Panel D means 1.0900 / 0.5072 / −0.3841 / −0.7554; SDs (ddof 0) 0.6233 / 0.3703 / 0.4546; slope 0.9164, SD 0.4466; the 24 random slopes −0.2880 to +0.3641, so the floor on BK's five points is 0.3641
+  [PASS] fidelity_ratio on BK's 2,400 neutral re-computed reads reproduces G-DATA (vi): 0 above TAU (p0 = 0/2,400), 570 above TAU/4, largest ratio 0.012143
+  [PASS] the dose map: shapes (a), (b), (d) and the merge rule at clear distances (0.03125 merges, 0.0625 does not; d_20 = 2·0.25 = 0.5 is BK's +1/2)
+  [PASS] the dose map refuses d_20 above or below min(1.0, 2.0 * d_eq), a non-positive or nonfinite d_eq, a fold into 0, rho above or below 0.3 (each with d_eq computed from it where that matters), R or R_ell not a positive float, and d_eq ≠ (0.10 * R_ell) / (rho * R) (PIN-n-14); it passes shapes (a), (b), (d) and an exact identity (R_ell 23.90625, R 25.5: d_eq 0.3125)
+  [PASS] the dose map lists its points as n-build's schema does (order, values, merged lists in fold order) for shapes (a), (b), (d); d_20 and d_eq are read under their keepers' labels
+  [PASS] secondary (d)'s Pearson r (PIN-n-18): equal to the hand formula and to numpy's corrcoef; None when one side has no spread
+  [PASS] the label-mass counter (PIN-n-17) counts reads strictly below .20 (0.19 counts; 0.20 and 0.9 do not)
+  [PASS] N2's slope points (OPEN-Q9, pending the seat): (0, d_eq, 2·d_eq) on BK's scale, its floor at (0, d_eq's point, d_20's point) -- equal on shape (a); 2·0.72 against +1 when the cap binds (shape b)
+  [PASS] reader path: a campaign written with the schema's builders (7,360 reads, 136 cells, nothing merged) reads back through check_cell to (REPLICATED, DETECTABLE, SHARED, PASS, PASS)
+  [PASS] reader path: the filled sentence set keeps no slot; N1's sentence is §5's with the figures and 'on a reconstructed direction'
+  [PASS] reader path: the filled set (REPLICATED, DETECTABLE, SHARED, PASS) equals the battery's literal text, figure for figure: Δm, CIs, slope, floor, the ceilings max(L, P) at +1, d_eq and the norm-matched point, m_told's 98% CI and E
+  [PASS] reader path: nothing moves -> (NOT-REPLICATED, NOT-DETECTABLE, NULL, DEAD)
+  [PASS] reader path: span_reward still, the valence direction moving -> N2 SPECIFIC; the told line pulling the other way -> N4 REVERSE
+  [PASS] reader path: Δm(+1) near 0.3 -> N1 PARTIAL failing (i); a told margin split +2 / -1.5 -> N4 INDETERMINATE (terminal)
+  [PASS] reader path: Code's forms filled, against the battery's literal text: N2 SPECIFIC with its label, N4 REVERSE with −E printed negative (E = 0.1), N1 PARTIAL with its failing conjunct and Δm(−1), N4's terminal INDETERMINATE
+  [PASS] reader path: a missing N1-R cell -> N1, dose and N2 INDETERMINATE (incomplete:N1-R); a missing N4-Ts cell -> N4 INDETERMINATE, no read obtained
+  [PASS] reader path: one non-finite read in N1-V at +1 -> N1-V not usable (PIN-n-20) -> N1 INDETERMINATE (nonfinite:N1-V), every planned read counted present; the counter tabulates it
+  [PASS] reader path: a non-finite shadow at run 100 -> N1, dose and N2 INDETERMINATE, N1's causes (nonfinite:N1-V, shadow:N1-P), N2's (shadow:N2-E, nonfinite:N1-V); N1-R (40 floor sessions) keeps its floor and L; N4 PASS
+  [PASS] reader path: R_ell 50 merges +d_20 into +1 -> 6,240 reads; N2's norm-matched point is +1, the ratio 2·d_eq reported; N1-P at −0.9 there puts P(+1) above L(+1), and N2's reported ceiling is max(L, P) = P(+1), the one its certification used (E 0.625 below it: SPECIFIC)
+  [PASS] reader path (F11): an asymmetric campaign -- a random direction with a negative slope and offset, N1-P at −0.9 / +0.2, N2-E at 1.0 / 0.1 by f with spreads in the ratio 1:2, a negative sham mean, a session offset of mean +0.045 -- reads to the hand computation: the slope with its d = 0 point, the floor as max |mean slope|, L and P as |mean| at their own points, the ceilings, E by f, N2's per-f n and SD, N2's slope, E, and m_told's 98% CI (whose 95% would have excluded 0)
+  [PASS] reader path: d_eq ≈ 0.52 merged into +1/2 -> the dose question reads +1/2, and its sentence prints d_eq's value with the point read beside it
+  [PASS] reader path: unadjudicated pauses on N1-R and N2-E -> N1 and dose INDETERMINATE (pause:N1-R), N2 INDETERMINATE (pause:N2-E), N4 PASS
+  [PASS] reader path: G-READ-n FAIL everywhere -> the tuple's coordinate FAIL; the NOT-REPLICATED and NULL labels concluded, not answered
+  [PASS] reader path (F12): G-READ-n FAIL at d_eq only -> the coordinate FAIL, N1's label answered, the dose sentence not readable; FAIL at +1 only -> the coordinate PASS, N1's label concluded, the dose sentence answered with its AUC; N2's label follows span_reward at f = 0.20; a readable dose sentence without an AUC, and a route other than A or B, STOP
+  [PASS] reader path (F14): the TAU/4 row (PIN-n-16) drops the 40 reads above TAU/4 at +1 (none above TAU), the 40 above both at −1, and run 2 everywhere (its shadow above TAU/4), from those points and the slopes (79 sessions left), the primary keeping all 160; the counters, through `counters`, tell TAU/4 from TAU, count two identity-bound exceedances and the three label masses strictly below .20
+  [PASS] reader path: the secondaries compute -- (a) first-pick shares per arm and dose, (c) groups count-only below 20, (d) r over 160 sessions, (e) six cosines and the matched means -- and (b) reads 'not recorded'
+  [PASS] reader path: secondary (c) reports a group's mean at exactly 20 events (the decidable-n floor, rule 28(a)) and withholds it at 19
+  [PASS] reader path refuses: a file no cell names; a stage identity that differs between cells; a read whose ids_sha differs from its shadow's; N4-T and N4-Ts zones that differ; a record the schema's check_cell refuses; a session whose cues differ between reads; a schedule of 81 S and 79 U on both N4 arms; a capture array whose bytes are not its recorded sha256, or absent; steered reads whose shadows are not on disk
+  [PASS] the merge rule (PIN-n-14) agrees with the schema's dose_points on 400 maps (d_eq 0.003 to 1.2): 384 derived alike, 16 refused alike (a fold into 0)
+  [PASS] the merge rule at a decimal distance of exactly 0.05 (IEEE decides): 0.45 folds into +1/2 (as d_eq and as d_20), 0.55 is kept (as d_eq and as d_20), and d_eq = 0.05 beside a kept d_20 = 0.1 ties between 0 and 0.1, goes to 0 and is refused; the schema's dose_points agrees on all five
+  [PASS] the pinned map's coupling class: d_20 at +1/2 is (a) (28 triples), d_eq at +1/2 with d_20 at +1 is (b) (24), both at +1 is (d) (17), each agreeing with the hand derivation
+  [PASS] not-run writes N-pod_NOT-RUN.json once (written, then identical), refuses other bytes (write-once), carries the reason in all four sentence slots, and binds the record by its file's sha256
+  [PASS] not-run's refusals before any write: the output of record only from the committed analyzer; a --out at the repository root or inside it; with nothing left to check it names data/n/verdicts, and a --out outside the repository proceeds
+  [PASS] ganl's 18 refusals before any battery run, each by name (a canonical run whose bound files are not committed, or with no pinned map; --out at the repository root or inside it; a map unreadable, not exactly five finite floats, or off §2.3's formulas, a fold into 0 included), and a consistent map outside the repository proceeds
+  [PASS] G-ANL-n's artifact names the analyzer, proposal and schema by sha256, the tuple space (385; 1,921 evaluations), the pinned map's points and reach, the PIN and OPEN registers, and no time
+  [PASS] verdicts on a complete campaign (an adjudicated pause in it) writes the secondary DVs and VERDICTS: the tuple and the filled sentences those of the reader path under the artifact's states, every input bound by sha256 (the secondary by its own), the route read from the lock, the dose sentence's AUC from the artifact, the G-READ-n table's six rows, the report's counters and n §4's, the cosines in both
+  [PASS] verdicts is write-once: the same inputs again leave identical bytes; another date refuses; with two outputs, the second existing with other bytes refuses before the first is written, directly and through verdicts (VERDICTS present, the secondary absent: no secondary written)
+  [PASS] verdicts reports §0.4's exposure realised (PIN-n-23): 160 N1-V and 160 N1-P reads at −1 (negative valenced), 960 N1-R (negative random), each re-computed fresh
+  [PASS] verdicts reports the TAU/4 sensitivity row (PIN-n-16) beside the primary: 40 N1-V reads at +1 dropped (n 120 against the primary's 160), rand_00 left with no common session (its slope null, no NaN), so N1-R tau4-emptied and the row's N1 INDETERMINATE; its tuple the reader path's under the filter
+  [PASS] verdicts prints one line and no margin (§4 'Blinding'): the tuple, and each output's name, how and sha256
+  [PASS] verdicts under PI-STOP with a pause standing on N4-Ts analyzes the unit (PIN-n-24): N1, dose and N2 decided, N4 INDETERMINATE by pause:N4-Ts, then nonfinite:N4-Ts; the same pause adjudicated (COMPLETE) stands no more: nonfinite:N4-Ts alone
+  [PASS] verdicts under PI-STOP with some arms complete analyzes the unit (§5: a locked unit that completes any arm is analyzed): N1 and N4 INDETERMINATE by their incomplete arms, the tuple the reader path's; the exposure row counts the −1 reads alone: N1-P 0 of 160, the negative valenced total N1-V's 160
+  [PASS] verdicts on a merged dose map (R_ell 40.0) under a Route A lock: the artifact's results at the kept points, listing the labels merged into them, are accepted; the tuple's G-READ-n coordinate is d_eq's, read at +1/2 (FAIL there: FAIL, AUC 0.62); N1's sentence names their direction
+  [PASS] verdicts derives N-pod's NOT-RUN where no arm is complete: before the cap (no-arm:cap), a PI stop (no-arm:pi-stop) and a G-VER STOP with no record (no-arm:gver-stop), each bound to its report, its end state, the STOP's record, the lock and the schema module
+  [PASS] one outcome per unit (§5): verdicts refuses beside a NOT-RUN; a derived NOT-RUN and not-run refuse beside VERDICTS; not-run takes a Clock cause only (a no-arm NOT-RUN is derived from the stage report)
+  [PASS] verdicts refuses, each by its message (43 cases): a date; a report or an artifact the schema refuses (by its field path alone); a PAUSE; a stage not a campaign; a lock not the identity's, not naming this analyzer, not saying it is LOCK-n v1.0, or without one direction of record A or B; a report not the cells on disk (cells, identity, per-arm counts, on a complete campaign and on one with no arm complete; the counters, label mass and used time), a pause's read not on disk or not of its kind, a rendering pause not resumed whose read is on disk, a resumption where nothing was launched, a read after a standing pause, a standing pause not the last event, launch indices not 0..m−1, two pauses standing; G-READ-n's artifact missing, or not the campaign's (plan, identity, a cell's capture or json sha, a cell left out, the package, the layers, merged labels, a point not kept); a malformed cosines file or one without the six pairs; a report of no record beside a non-empty campaign directory
+  [PASS] G-READ-n's artifact reaches the tuple: valence at +d_eq FAIL gives the coordinate FAIL and the AUC 0.62; the result absent gives NOT-COMPUTED, so FAIL, and no AUC (PIN-n-11, PIN-n-25); span_reward at f0.20 FAIL reaches N2's label state E, f0.10's PASS not
+  [PASS] VERDICTS' form STOPs rather than write a non-finite figure or fold two keys into one: _plain on a NaN, _plain on two keys that write alike (1.0 and '1.0'), json_text on an inf; a STOP while VERDICTS is formed leaves no output, the secondary included
+  [PASS] verdicts' refusals before any read: VERDICTS of record only from inputs in the repository (the lock, the report), from the committed analyzer and a committed lock; a --out at the repository root or inside it; with nothing left to check it names data/n/verdicts, and a --out outside the repository proceeds
+  [PASS] proposal: PROPOSAL-n v0.2's sha256 is the pinned 30a3d0f5...04f4
+  [PASS] every verbatim constant is on its declared proposal line (n:136, n:138, n:142)
+  [PASS] TAU is BK's prereg.json 'tau', and prereg.json is the SHA256SUMS copy
+  [PASS] module-level imports are numpy and the standard library only (no repository module, no model library)
+  [PASS] no model library is imported by the battery (torch, transformers, mlx, mlx_lm, accelerate, safetensors)
+  [PASS] the battery's hook refuses, before any filesystem call or process start, 9 probes: opens (positional, file=, os.open) under data/n/ckpt, data/n/reports and results/raw, a stat, a listing and a scan under data/n's ckpt, reports and verdicts, a process naming data/mf3 by a repository-relative path, and data/mf3 by string; nothing else was refused during the battery
+  [PASS] every PIN-n and OPEN-Q cited outside the registers is registered, and every registered one is cited
+  [PASS] the battery wrote nothing under data/n (sha256 of every file outside ckpt / reports / verdicts, before = after)
+  [PASS] coverage: every one of the 188 required ids reached
+  [PASS] check count 185 == EXPECTED_CHECKS 185 (a skipped assertion is a failure)
+  185/185 n_analyze battery checks pass

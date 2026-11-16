@@ -21,6 +21,167 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — `scripts/n_analyze.py`, the `verdicts` command (PROPOSAL-n v0.2 §8 step 15, on n-build's
+  `n-report-v1` and `n-gread-v1` at `14e65d8`). It gives N-pod's VERDICTS and secondary DVs, or the unit's NOT-RUN
+  derived from the stage report. Its battery passes 185/185; it was reviewed blind and mutation-tested (68 of 69
+  mutants killed; the survivor is equivalent). Four PINs (PIN-n-23 to PIN-n-26) and an amendment to PIN-n-16 are
+  Code's readings, flagged for the seat. Model-free: nothing ran on a model or on the box, and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256
+    `34a513f9985453d9da980b8a48d7b318d7d5b908521cff797d7e3756264a98b6` (`4f63903f…5d73` at `2822721`). It is still
+    pinned to the schema at `14e65d8` (`4bed3f9a…4665`) and binds PROPOSAL-n v0.2 by sha256 (`30a3d0f5…04f4`). Its
+    commands:
+    - `--selftest`;
+    - `ganl [--out DIR] [--dose-map FILE]`;
+    - `not-run --record FILE [--out DIR]`;
+    - new: `verdicts --campaign DIR --report FILE --lock FILE --date YYYY-MM-DD [--gread FILE] [--gvec FILE] [--out DIR]`.
+
+    Its battery, run from this path on these bytes (the run of record): 185/185 checks, every one of the 188 coverage
+    ids reached, exit 0. The raw:
+    [`2026-11-16_n-analyze_verdicts_selftest.txt`](results/raw/2026-11-16_n-analyze_verdicts_selftest.txt).
+  - **What `verdicts` does.**
+    - **Its refusals, all before anything is written** (exit 2), in the order they are checked:
+      - the precheck: an output of record (no `--out`) only from the committed analyzer, with the lock and every input
+        given (the report, G-READ-n's artifact, the cosines file) in the repository and committed as it stands; and
+        no `--out` inside the repository;
+      - a date that is not an ISO calendar date;
+      - a schema module that is not the pinned bytes;
+      - a stage report that cannot be read, or that the schema's `check_report` refuses (by its field path alone); a
+        PAUSE (the seat rules first); or a report that is not a campaign of PROPOSAL-n v0.2;
+      - a lock that cannot be read, is not the identity's `lock_sha256`, does not name this analyzer's sha256, does not
+        say it is LOCK-n v1.0, or does not state exactly one direction of record, Route A or Route B, as a whole line
+        (PIN-n-26);
+      - cells the reader refuses (the schema's cell checks, their bytes, the plan, the cross-record checks); a report
+        not bound to the cells on disk (PIN-n-24): the identity, every cell by both shas and record count, the counters
+        and the cap's used time against the records, and the launches and pauses as n-build's runner makes them; or a
+        report with no cell beside a campaign directory that is not empty;
+      - where it analyzes: G-READ-n's artifact missing, unreadable, refused by the schema or not bound to the
+        campaign (PIN-n-25), and a cosines file that cannot be read or is malformed;
+      - an output of the other outcome already in the output directory, or an output there with other bytes
+        (write-once).
+    - **NOT-RUN.** If the report ends in PI-STOP, G-VER-STOP or the cap with no arm complete, it writes the unit's
+      NOT-RUN (`no-arm:pi-stop`, `no-arm:gver-stop` or `no-arm:cap`). The NOT-RUN is bound to the report, its end
+      state, the STOP record, the lock and the schema module.
+    - **VERDICTS.** Otherwise it computes the state, the outcomes and the filled sentences on the reader path, with
+      the route read from the lock. It forms both outputs before writing either, so a STOP while forming them (a
+      non-finite figure, exit 4) writes nothing. It then writes, write-once, the secondary DVs and then VERDICTS.
+      VERDICTS carries:
+      - the tuple, the outcomes, the sentences and §4's figures;
+      - G-LEAK-n's and G-READ-n's tables;
+      - both counter forms;
+      - §0.4's exposure realised (PIN-n-23);
+      - the TAU/4 sensitivity row (PIN-n-16);
+      - the cosines, when G-VEC's file is given;
+      - every input, and the secondary, by sha256.
+    - **One outcome per unit.** Neither output is written beside the other, in either command.
+    - **What it prints:** besides the INVOCATION line every command prints, one line: the tuple, and each output's
+      name, how it was written and its sha256. No margin is printed (§4 "Blinding").
+  - **The review.** The raw is
+    [`2026-11-16_n-analyze_verdicts_review.md`](results/raw/2026-11-16_n-analyze_verdicts_review.md).
+    - **The blind read.** A reviewer read the draft frozen at sha256 `0b555476…843c`. It was a subagent of this
+      session, under a brief quoting the list of record v2's items 1–5. It returned production findings F1–F12 and
+      battery findings B1–B4, with 38 mutants and its predictions: 10 killed, 28 surviving. It found nothing in the
+      production path that gives a wrong output on what n-build's runner and probe write today. Its main finding was
+      the battery.
+      Its 38 mutants were not run on the frozen copy.
+    - **The dispositions** (the raw's §3):
+      - fixed: F1, F3, F4 (except the binomial batch), F6–F10, F12, and F5's lock version, whose line form is
+        registered as PIN-n-26; B1–B3;
+      - registered as Code's reading: F2, in PIN-n-24;
+      - kept, with reasons: F11 (now documented), F5's D_n half, and B4.
+    - **Round 2.** Code's mutants:
+      - M01–M38 re-express the reviewer's 38;
+      - M39–M66 are new: 21 on code new since the frozen copy (M39, M42–M46, M48–M50, M53–M62, M65, M66: the fixes,
+        and the three pause rules added while the review ran), and 7 on checks the frozen copy already had that the
+        reviewer's mutants did not reach (M40, M41, M47, M51, M52, M63, M64);
+      - M67 and M68 are on values-check pass 1's code finding, and M69 on pass 2's battery finding.
+
+      They ran three times:
+      - **First run,** on the fixed draft (sha256 `b5328332…78c2`): 66 mutants, 65 killed, each by the check expected
+        to kill it (M65 by an exception its precheck raised inside the verdicts group). M08 survived.
+      - **Second run,** on the draft after pass 1's code finding (sha256 `56c9b788…5b5b`): 68 mutants, 67 killed in
+        the same way. M08 survived again.
+      - **Third run,** on the draft after pass 2's battery finding (sha256 `0e82b54c…358f`): 69 mutants, 68
+        killed, each by its expected check (M65 again by its exception, M69 by VD-WRITE-ONCE's new case). For six of
+        them (M05, M06, M37, M41, M43, M48), VD-COMPLETE failed and the new case then raised inside the verdicts
+        group, so 173 checks ran (the raw's §4). M08 survived again.
+      - **M08 is equivalent,** as the reviewer said of V08. Before `report_problems`' per-arm check can see a per-arm
+        lie, the schema's per_arm rule (complete is obtained == planned), with `check_report`'s plan and cell-record
+        checks and `report_problems`' own identity and cells checks, refuses it.
+    - **The values-check's findings on the code.**
+      - Pass 1: the secondary was written before VERDICTS was formed, so a STOP while forming VERDICTS would have
+        left the secondary on disk alone. Both outputs are now formed before either is written, and `write_all_once`
+        checks both write-once targets before writing either. VD-WRITE-ONCE and VD-PLAIN test it (M67, M68).
+      - Pass 2: no battery case reached `write_all_once`'s refusal through `verdicts` (VERDICTS with other bytes
+        while the secondary was absent), so going back to two separate write-once calls would have survived.
+        VD-WRITE-ONCE now runs `verdicts` with VERDICTS present and the secondary absent: refused, and no secondary
+        written (M69).
+    - **The committed bytes** differ from the third run's base in the repository line only (the raw's §7).
+  - **Readings, Code's, flagged for the seat.** They are strikable until LOCK-n v1.0, as the question block's §3
+    readings are (`8e3bf91`).
+    - **PIN-n-23:** §0.4's exposure as realised is, per arm at d = −1, the reads on disk (finite or not) against the
+      plan, with the fresh re-computations they carry. The campaign generates nothing; G-CAL-n's generations under
+      negative steering belong to its own entry.
+    - **PIN-n-24:** the stage report's binding and its end-state rules:
+      - a PAUSE is refused;
+      - PI-STOP, G-VER-STOP or CAP with no arm complete gives NOT-RUN `no-arm:<end>`;
+      - any other end is analyzed, and a pause standing (possible only under PI-STOP) makes the arms in its scope
+        INDETERMINATE;
+      - a unit has one outcome.
+
+      **F2's reading, new in it from the review:** for NOT-RUN, an arm's full read set is the report's `complete`,
+      meaning every planned read was produced, finite or not. A non-finite read makes its arm INDETERMINATE
+      (PIN-n-20); it never makes the unit NOT-RUN. Under the other reading, an arm complete but for a non-finite read
+      would count as not complete, so a cap or STOP could give NOT-RUN `no-arm:<end>` where this code writes VERDICTS.
+    - **PIN-n-25:** G-READ-n's artifact binds the campaign: its plan and identity shas, exactly the campaign's cells by
+      both shas, the campaign's n package, exactly its capture layers, and each result at a kept point with the labels
+      merged into it. Its statuses are read per (axis, point) by the point's value, and an absent one is NOT-COMPUTED.
+      The dose sentence's AUC is the band median at d_eq's kept label.
+    - **PIN-n-26:** Code's form for the lock is two whole lines: `lock: LOCK-n v1.0`, and `direction of record: Route A`
+      or `direction of record: Route B`. LOCK-n v1.0 must carry both for `verdicts` to accept it.
+    - **PIN-n-16, amended:** a finite read whose re-computation is non-finite stays in the TAU/4 sensitivity row. With
+      no comparison, it is not above TAU/4.
+  - **Flagged, and not readings:**
+    - A binomial batch in a pause is not checked against the records. Its counting is the runner's, and no outcome
+      reads it.
+    - The analyzer does not check that LOCK-n v1.0 was committed by D_n. Whether a unit runs is the Clock's, and a
+      Clock NOT-RUN comes as a record through `not-run`.
+    - Every stage report the battery reads is built by the battery to n-build's counting (the not-campaign case uses
+      the schema's own `example_report`): n-build's runner writes no STOP report yet. The first stage report that
+      n-build's code writes is the first independent input.
+  - **Not in this BUILD:**
+    - G-ANL-n's canonical run, which waits for the seat's answers (G-ANL-n's Q1–Q9, `8e3bf91`) and for G-CAL-n's
+      dose map;
+    - N-pod's VERDICTS of record, which come after the campaign.
+  - **Windows and declarations.** Every Python run in this work was inside a battery window the coordinating session
+    granted: one process at a time at `nice -n 19`, in the foreground, with temp folders outside the repository.
+    - Before the review, a window for up to three runs of the draft's battery: two ran (179/181, then 181/181 after a
+      battery fix).
+    - After the fixes, a window for one battery run and then the 66 round-2 mutant runs: two battery runs (183/185,
+      then 185/185 after the fix in the review raw's §6), then the 66 runs.
+    - After values-check pass 1, a window for one battery run and the 68 mutant runs on the fixed draft: one battery
+      run (185/185), then the 68 runs; it held exactly that.
+    - After values-check pass 2, a window for one battery run and the 69 mutant runs: one battery run
+      (185/185), then the 69 runs; it held exactly that.
+    - The run of record from `scripts/`, in a window of its own before the commit.
+
+    One departure, told to the coordinating session when that window was released: the window after the fixes named
+    one battery run before the mutants, and it held two.
+  - **Values-check:** three blind passes over this entry and the review raw, each under a brief quoting the list of
+    record v2's items 1–5 and allowing no Python.
+    - The first: 189 claims, 137 CONFIRMED, 19 IMPRECISE, 2 FAIL, 31 UNVERIFIABLE. Outside its claims, it found the
+      write order, fixed in the code.
+    - The second, on the revised texts and the first pass's dispositions: 270 claims, 212 CONFIRMED, 7 IMPRECISE,
+      6 FAIL, 45 UNVERIFIABLE. Outside its claims, it found the battery gap, closed with a case.
+    - The third, on the texts revised again and the second pass's dispositions: 290 claims, 238 CONFIRMED,
+      7 IMPRECISE, 0 FAIL, 45 UNVERIFIABLE.
+
+    Every item of every pass was accepted. The edits after the third pass, all wording, were checked by tool. The
+    raw, with the three reports whole and every disposition:
+    [`2026-11-16_n-analyze_verdicts_valuescheck.md`](results/raw/2026-11-16_n-analyze_verdicts_valuescheck.md).
+  - **Committed by path:** `scripts/n_analyze.py`, the review raw, the selftest raw, the values-check raw, and this
+    entry. Not pushed. **Next:** the coordinating session verifies this commit. G-ANL-n's canonical run waits for the
+    seat's answers and for G-CAL-n.
+
 - 2026-11-16 — **n package — BUILD held at its post-build site check: on the box, the renderer of record does not
   reproduce BK's token ids (the G-VER trial: ids 0 of 160). STOP for the seat on two questions: how n gets BK's ids
   on the box (Q1), and which tokenization governs text BK did not record (Q2). Block:
