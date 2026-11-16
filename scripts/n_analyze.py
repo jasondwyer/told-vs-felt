@@ -13,9 +13,10 @@ and G-READ-n's states as inputs; (3) the sentence layer -- one §7 sentence set 
 (4) the reader -- the campaign's cell files through the schema's own checks, the cross-record checks the schema leaves
 to the analyzer, the declared read plan re-derived; (5) counters (rule 23) and secondaries (§4 (a)-(f)).
 
-Code's readings are registered in PINS (each strikable by the seat until LOCK-n v1.0); the seat's open questions
-(results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in OPEN, each carried meanwhile and tagged
-"pending the seat" in the battery's lines that test it. G-ANL-n's canonical run waits for the seat's answers.
+Code's readings are registered in PINS (PIN-n-7 to PIN-n-26 accepted by the seat; later ones strikable until LOCK-n
+v1.0); the seat's rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in
+OPEN, as results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1 (bound by sha256) give them.
+G-ANL-n's canonical run waits for G-CAL-n's dose map.
 
   --selftest            the battery (model-free); prints "  [PASS|FAIL] name got" per check; exit 0 iff every check
                         passes, the count equals EXPECTED_CHECKS and every coverage id is reached (n §3: "a skipped
@@ -58,6 +59,8 @@ REPO = Path(__file__).resolve().parents[1]                     # scripts/n_analy
 # =====================================================================================================================
 PROPOSAL_REL = "PROPOSAL-n-bk-reconciliation-v0_2.md"
 PROPOSAL_SHA256 = "30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4"
+ADDENDUM_REL = "ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md"     # the seat's rulings of 2026-11-16 (v0.1)
+ADDENDUM_SHA256 = "e979f8f2af08ddb1f32e3054c002b1d0a3278e49a24b4f6df2cb6c042de95e03"
 ANALYZER_REL = "scripts/n_analyze.py"
 UNIT = "N-pod"
 D_N = "2026-12-15"                    # §7.4; the routing of 2026-11-06 ("Everything else as the 11-05 routing had it")
@@ -77,7 +80,6 @@ BK_FULL = (1.0, 0.5, 0.0, -1.0)       # N1-V's BK-grid points under A1 "struck b
 ARMS = ("N1-V", "N1-R", "N1-P", "N2-E", "N2-S", "N2-C", "N4-T", "N4-Ts")
 N1_ARMS = ("N1-V", "N1-R", "N1-P")
 N4_ARMS = ("N4-T", "N4-Ts")
-N1P_POINTS = (1.0, -1.0)                   # §2.4: N1-P reads +1 and −1 only
 N2_ARMS = ("N2-E", "N2-S", "N2-C")
 N1_STATES = ("REPLICATED", "PARTIAL", "NOT-REPLICATED", "INDETERMINATE")
 DOSE_STATES = ("DETECTABLE", "NOT-DETECTABLE", "INDETERMINATE")
@@ -89,6 +91,7 @@ ANSWERED = "answered"                       # §5 (n:136, n:138, n:142), verbati
 CNA = "concluded, not answered"            # §0.6, §5, verbatim
 NO_READ = "no read obtained"                # §5 N4, verbatim
 F10, F20 = "f=0.10", "f=0.20"
+F_TEXT = {F10: "0.10", F20: "0.20"}       # N2's [f] slot (ADDENDUM-n1 §7.6: "at f = [f]")
 
 # NOT-RUN causes (§5 "Unit outcome first"): LOCK v1.0 not committed by D_n -- "(no box; a gate STOPPED and no
 # re-specification was locked; the PI declined v1.0 for any reason)" -- or locked and "produces no arm's full read set
@@ -176,10 +179,23 @@ def sd0(values: Sequence[float]) -> float:
     return float(np.asarray(values, float).std(ddof=0))
 
 
+def session_slopes_origin(points: Sequence[float], dm: np.ndarray) -> np.ndarray:
+    """§4 as ruled (OPEN-Q1 (b); ADDENDUM-n1 §7.1): per session, the OLS slope of Δm on d through the origin over the
+    arm's nonzero dose points, Σ d·Δm / Σ d², BK's construction (its prereg: d "is identically zero at dose 0 by
+    construction"). A zero point is refused: the construction fixes it, so it is never an observation."""
+    x = np.asarray(points, float)
+    y = np.asarray(dm, float)
+    if y.ndim != 2 or y.shape[1] != x.shape[0] or x.shape[0] < 1:
+        raise AnlStop(f"STOP: a slope over {x.shape[0]} points for values of shape {y.shape}")
+    if np.any(x == 0.0):
+        raise AnlStop("STOP: a slope through the origin given the point d = 0")
+    return y @ x / float(x @ x)
+
+
 def session_slopes(points: Sequence[float], dm: np.ndarray) -> np.ndarray:
-    """§4: per session, the OLS slope of Δm on d over the arm's own dose points. OPEN-Q1 (pending the seat): OLS with an
-    intercept, over every point the arm lists, d = 0 included where it is listed with Δm(0) = 0 by construction (BK's
-    prereg "primary": "over the five points ... d is identically zero at dose 0"; no source says "intercept")."""
+    """The with-intercept slope reported beside the slope of record, descriptive (OPEN-Q1 as ruled: "the with-intercept
+    slope is reported beside, labelled descriptive"): per session, OLS with an intercept over the points given, d = 0
+    with Δm(0) = 0 included where the arm lists it."""
     x = np.asarray(points, float)
     y = np.asarray(dm, float)
     if y.ndim != 2 or y.shape[1] != x.shape[0] or x.shape[0] < 2:
@@ -312,18 +328,34 @@ class DoseMap:
         return {F10: self.d_eq, F20: 2.0 * self.d_eq}[f]
 
     def norm_matched(self, f: str) -> float:
-        """OPEN-Q7: N1-V's (and N1-R's) point matched to N2's f: d_eq's resolved point for f = 0.10, d_20's for
-        f = 0.20 -- exact iff 2·d_eq ≤ 1 and no merge moved it; the analyzer reports the ratio."""
+        """N1-V's (and N1-R's) point matched to N2's f: d_eq's resolved point for f = 0.10, d_20's for f = 0.20 --
+        exact iff 2·d_eq ≤ 1 and no merge moved it; the ratio is reported."""
         return self.resolved()["d_eq" if f == F10 else "d_20"]
 
     def match_ratio(self, f: str) -> float:
         return self.f_point(f) / self.norm_matched(f)
 
-    def n2_slope_points(self) -> tuple[tuple[float, float, float], tuple[float, float, float]]:
-        """OPEN-Q9 (pending the seat): N2's slope over its points on BK's scale, (0, d_eq, 2·d_eq) with Δm(0) = 0, and
-        the points its floor's random reads are taken at, (0, d_eq's point, d_20's point) -- equal unless the cap
-        binds or a merge moved a point (reported only; no §5 outcome reads N2's slope)."""
-        return ((0.0, self.d_eq, 2.0 * self.d_eq), (0.0, self.norm_matched(F10), self.norm_matched(F20)))
+    def cap_binds(self) -> bool:
+        """OPEN-Q7 as ruled (ADDENDUM-n1 §5.3): the cap binds iff 2·d_eq > 1, so d_20 = 1 by §2.3's cap."""
+        return 2.0 * self.d_eq > 1.0
+
+    def n2_decision_f(self) -> str:
+        """OPEN-Q7 as ruled: N2 is decided at f = 0.10 when the cap binds (against N1-V at d_eq, where the norms are
+        equal exactly), else at f = 0.20 as §5 writes it; the other f is reported beside."""
+        return F10 if self.cap_binds() else F20
+
+    def n1p_points(self) -> tuple[float, ...]:
+        """OPEN-Q2 as ruled (ADDENDUM-n1 §5.2): the points N1-P reads, the kept points of +1, +d_20, +d_eq and −1,
+        descending."""
+        r = self.resolved()
+        return tuple(sorted({1.0, -1.0, r["d_20"], r["d_eq"]}, reverse=True))
+
+    def n2_slope_points(self) -> tuple[tuple[float, float], tuple[float, float]]:
+        """OPEN-Q9 as ruled ((a) through the origin; ADDENDUM-n1 §7.5): N2's slope over its two points on BK's scale,
+        (d_eq, 2·d_eq), and the points its floor's random reads are taken at, d_eq's and d_20's kept points -- equal
+        unless the cap binds or a merge moved a point, the mismatch then printed beside (reported only; no §5
+        outcome reads N2's slope)."""
+        return ((self.d_eq, 2.0 * self.d_eq), (self.norm_matched(F10), self.norm_matched(F20)))
 
 
 # =====================================================================================================================
@@ -332,9 +364,19 @@ class DoseMap:
 
 
 def ceiling(L: float, P: float | None) -> float:
-    # OPEN-Q2: G-LEAK-n's ceiling max(L(d), P(d)); P(d) exists only where N1-P is read (+1, −1, §2.4), and where it is
-    # not read the ceiling is L(d) alone (dose's d_eq, N2's norm-matched point). FLAG for the seat.
+    # G-LEAK-n's ceiling max(L(d), P(d)). OPEN-Q2 as ruled (c): N1-P reads +1, +d_20, +d_eq and −1 under the merge
+    # (ADDENDUM-n1 §5.2), so P(d) exists at every point a certification is made (ceiling_cert requires it there);
+    # where N1-P is not read (+1/2 unless a point merges there) the ceiling G-LEAK-n's table reports is L(d) alone.
     return float(L) if P is None else max(float(L), float(P))
+
+
+def ceiling_cert(st: "State", pt: float) -> float:
+    """The ceiling at a point where §5 certifies or reports a certification beside (N1 at +1; dose at d_eq's point,
+    d_20's beside; N2 at its norm-matched points): N1-P reads every such point (OPEN-Q2 as ruled, ADDENDUM-n1 §5.2),
+    so P(d) is required there, and its absence STOPs -- a plan the reader did not refuse cannot produce it."""
+    if pt not in st.P:
+        raise AnlStop(f"STOP: no P(d) at d = {pt!r}, a point where G-LEAK-n certifies (ADDENDUM-n1 §5.2)")
+    return ceiling(st.L[pt], st.P[pt])
 
 
 def above(mean: float, ceil: float) -> bool:
@@ -358,7 +400,7 @@ class State:
     slope_V: Est | None = None
     floor_V: float | None = None
     L: dict[float, float] = field(default_factory=dict)      # N1-R: max_i |mean Δm_i(d)| per point
-    P: dict[float, float] = field(default_factory=dict)      # N1-P: |mean Δm_P(d)| at +1, −1
+    P: dict[float, float] = field(default_factory=dict)      # N1-P: |mean Δm_P(d)| at each point it reads
     E: dict[str, Est] = field(default_factory=dict)          # N2-E per f label
     S: dict[str, Est] = field(default_factory=dict)          # N2-S (guard)
     C: dict[str, Est] = field(default_factory=dict)          # N2-C (guard)
@@ -390,80 +432,94 @@ def _causes(st: State, arms: Sequence[str]) -> list[str]:
 
 
 def n1_outcome(st: State) -> dict:
-    """§5 N1. INDETERMINATE iff an unadjudicated pause stands on N1's reads, or N1-R or N1-P is incomplete; OPEN-Q6:
-    N1-V incomplete too (§5: "An arm with a partial read set is INDETERMINATE"); then REPLICATED / PARTIAL /
-    NOT-REPLICATED on conjuncts (i)-(iv)."""
+    """§5 N1. INDETERMINATE iff an unadjudicated pause stands on N1's reads, or N1-R or N1-P is incomplete, or N1-V is
+    (OPEN-Q6 as ruled: §5's "An arm with a partial read set is INDETERMINATE"); then REPLICATED / PARTIAL /
+    NOT-REPLICATED on conjuncts (i)-(iv), PARTIAL also needing the mean at +1 above 0 (OPEN-Q8 as ruled, ADDENDUM-n1
+    §7.3: the sign). `against`: a certified movement against the conditioned zone at +1 (its CI excluding 0, G-LEAK-n
+    certifying it, the mean below 0), which N1's NOT-REPLICATED sentence names."""
     causes = _causes(st, N1_ARMS)
     if causes:
         return {"state": "INDETERMINATE", "causes": causes}
     v1, vm1 = st.V[1.0], st.V[-1.0]
-    ceil1 = ceiling(st.L[1.0], st.P.get(1.0))
+    ceil1 = ceiling_cert(st, 1.0)
     c = {"i": v1.mean >= BAR_I and v1.excludes0(),
          "ii": st.slope_V.mean > st.floor_V,                 # PIN-n-7: signed "exceeds" (floor ≥ 0)
          "iii": above(v1.mean, ceil1),
          "iv": vm1.mean < 0.0 and vm1.excludes0(),           # PIN-n-19: the −1 pole is read (A1), so (iv) is evaluated
-         "ci+1": v1.excludes0()}
+         "ci+1": v1.excludes0(),
+         "sign": v1.mean > 0.0}                              # ADDENDUM-n1 §7.3: PARTIAL requires the mean at +1 > 0
     if c["i"] and c["ii"] and c["iii"] and c["iv"]:
         state, failing = "REPLICATED", []
-    elif c["ii"] and c["iii"] and c["ci+1"]:
+    elif c["ii"] and c["iii"] and c["ci+1"] and c["sign"]:
         state, failing = "PARTIAL", [k for k in ("i", "iv") if not c[k]]
     else:
-        state, failing = "NOT-REPLICATED", [k for k in ("ci+1", "ii", "iii") if not c[k]]
-    return {"state": state, "conjuncts": c, "failing": failing, "ceiling": ceil1}
+        state, failing = "NOT-REPLICATED", [k for k in ("ci+1", "ii", "iii", "sign") if not c[k]]
+    against = c["ci+1"] and c["iii"] and v1.mean < 0.0
+    return {"state": state, "conjuncts": c, "failing": failing, "ceiling": ceil1, "against": against}
 
 
 def dose_outcome(st: State, n1: Mapping) -> dict:
-    """§5 Dose. INDETERMINATE iff N1 is INDETERMINATE or the points are incomplete; DETECTABLE iff the CI at d_eq
-    excludes 0 and G-LEAK-n certifies it there; else NOT-DETECTABLE (its §0.6 label set by the sentence layer)."""
+    """§5 Dose. INDETERMINATE iff N1 is INDETERMINATE or the points are incomplete (OPEN-Q6 as ruled: N1-V's, N1-R's or
+    N1-P's reads; the d_20 figure beside is then not computed); DETECTABLE iff the CI at d_eq excludes 0, G-LEAK-n
+    certifies it there and the mean is above 0 (OPEN-Q8 as ruled, ADDENDUM-n1 §7.3: the sign); else NOT-DETECTABLE (its
+    §0.6 label set by the sentence layer), `against` when the movement certified there is against the conditioned
+    zone."""
     r = st.dmap.resolved()
     causes = []
     if n1["state"] == "INDETERMINATE":
         causes.append("N1-INDETERMINATE")
-    if not (st.complete.get("N1-V") and st.complete.get("N1-R")):
+    if not (st.complete.get("N1-V") and st.complete.get("N1-R") and st.complete.get("N1-P")):
         causes.append("incomplete:points")                   # subsumed by N1's causes (OPEN-Q6): reported beside
     if causes:
-        return {"state": "INDETERMINATE", "causes": causes}
+        return {"state": "INDETERMINATE", "causes": causes, "d_20_beside": "not computed"}   # OPEN-Q6 as ruled
     deq, d20 = r["d_eq"], r["d_20"]
     v = st.V[deq]
-    ceq = ceiling(st.L[deq], st.P.get(deq))
+    ceq = ceiling_cert(st, deq)
     cert = above(v.mean, ceq)
-    c20 = ceiling(st.L[d20], st.P.get(d20))
-    state = "DETECTABLE" if (v.excludes0() and cert) else "NOT-DETECTABLE"
+    c20 = ceiling_cert(st, d20)
+    state = "DETECTABLE" if (v.excludes0() and cert and v.mean > 0.0) else "NOT-DETECTABLE"
+    against = v.excludes0() and cert and v.mean < 0.0
     beside = {"point": d20, "est": st.V[d20], "ceiling": c20, "certified": above(st.V[d20].mean, c20)}
-    return {"state": state, "point": deq, "ci_excludes0": v.excludes0(), "certified": cert,
+    return {"state": state, "point": deq, "ci_excludes0": v.excludes0(), "certified": cert, "against": against,
             "ceiling": ceq, "d_20_beside": beside}
 
 
 def n2_outcome(st: State) -> dict:
-    """§5 N2, at f = 0.20 (f = 0.10 beside): INDETERMINATE iff an unadjudicated pause stands on N2's reads -- N2-E's,
-    N2-S's or N2-C's, as written; OPEN-Q6 (pending the seat): also N2-E, N1-V or N1-R not usable -- and N1-P where the
-    norm-matched point is one N1-P reads (d_20 at +1: the cap binds, or 2·d_eq within 0.05 of 1), whose P(+1) the
-    ceiling then takes: the arms whose figures its certification reads. SPECIFIC iff span_reward's effect is not
-    certified while N1-V's at the norm-matched point is; SHARED iff span_reward's is certified; NULL iff neither. The
-    guards decide nothing; a pause on their reads is a pause on N2's reads."""
-    m20 = st.dmap.norm_matched(F20)
-    reads = ("N2-E", "N1-V", "N1-R") + (("N1-P",) if m20 in N1P_POINTS else ())
+    """§5 N2, at its decision f (OPEN-Q7 as ruled, ADDENDUM-n1 §5.3: f = 0.10 against N1-V at d_eq when the cap binds,
+    else f = 0.20; the other f beside, with its ratio): INDETERMINATE iff an unadjudicated pause stands on N2's reads
+    -- N2-E's, N2-S's or N2-C's, as written -- or (OPEN-Q6 as ruled) N2-E, N1-V, N1-R or N1-P is not usable: the arms
+    whose figures its certification at the norm-matched point reads, each judged as an arm (PIN-n-29). A pause on
+    N1-V's, N1-R's or N1-P's reads alone leaves N2 evaluable (those arms complete). SPECIFIC iff span_reward's effect is
+    not certified while N1-V's at the norm-matched point is; SHARED iff span_reward's is certified; NULL iff neither --
+    each certification unsigned, as §3 states it (PIN-n-30). The guards decide nothing; a pause on their reads is a
+    pause on N2's reads."""
+    f_dec = st.dmap.n2_decision_f()
+    f_bes = F20 if f_dec == F10 else F10
+    reads = ("N2-E", "N1-V", "N1-R", "N1-P")
     causes = [f"pause:{a}" for a in N2_ARMS if st.paused.get(a)] + \
              [c for c in _causes(st, reads) if not c.startswith("pause:")]
     if causes:
-        return {"state": "INDETERMINATE", "causes": causes}
-    ceil20 = ceiling(st.L[m20], st.P.get(m20))
-    cert_e = above(st.E[F20].mean, ceil20)
-    cert_v = above(st.V[m20].mean, ceil20)
+        return {"state": "INDETERMINATE", "f": f_dec, "causes": causes}
+    m = st.dmap.norm_matched(f_dec)
+    ceil_m = ceiling_cert(st, m)
+    cert_e = above(st.E[f_dec].mean, ceil_m)
+    cert_v = above(st.V[m].mean, ceil_m)
     state = "SPECIFIC" if (not cert_e and cert_v) else "SHARED" if cert_e else "NULL"
-    m10 = st.dmap.norm_matched(F10)
-    c10 = ceiling(st.L[m10], st.P.get(m10))
-    beside = {"f=0.10": {"point": m10, "E": st.E.get(F10), "ceiling": c10,
-                         "certified": above(st.E[F10].mean, c10) if F10 in st.E else None},
+    mb = st.dmap.norm_matched(f_bes)
+    cb = ceiling_cert(st, mb)
+    beside = {f_bes: {"point": mb, "E": st.E.get(f_bes), "V": st.V.get(mb), "ceiling": cb,       # ADDENDUM-n1 §5.3
+                      "certified": above(st.E[f_bes].mean, cb) if f_bes in st.E else None,
+                      "certified_V": above(st.V[mb].mean, cb) if mb in st.V else None,
+                      "match_ratio": st.dmap.match_ratio(f_bes)},
               "guards": {g: {f: est for f, est in d.items()} for g, d in (("span_sentiment", st.S),
                                                                           ("span_character", st.C))}}
-    return {"state": state, "point": m20, "ceiling": ceil20, "certified_E": cert_e, "certified_V": cert_v,
-            "match_ratio": st.dmap.match_ratio(F20), "beside": beside}
+    return {"state": state, "f": f_dec, "point": m, "ceiling": ceil_m, "certified_E": cert_e, "certified_V": cert_v,
+            "match_ratio": st.dmap.match_ratio(f_dec), "cap_binds": st.dmap.cap_binds(), "beside": beside}
 
 
 def n4_outcome(st: State) -> dict:
-    """§5 N4: INDETERMINATE with no read obtained iff the arm is incomplete or E undefined (OPEN-Q6: or a pause stands
-    on N4's reads); else REVERSE, PASS, DEAD, INDETERMINATE (terminal), in that order."""
+    """§5 N4: INDETERMINATE with no read obtained iff the arm is incomplete or E undefined, or (OPEN-Q6 as ruled) a
+    pause stands on N4's reads; else REVERSE, PASS, DEAD, INDETERMINATE (terminal), in that order."""
     causes = _causes(st, N4_ARMS)
     if not causes and (st.e_sham is None or not math.isfinite(st.e_sham)):
         causes.append("E-undefined")
@@ -482,13 +538,15 @@ def n4_outcome(st: State) -> dict:
 
 
 def outcomes(st: State) -> dict:
-    """§5 in order: N1, dose (reads N1), N2, N4; the tuple's G-READ-n coordinate is valence at d_eq."""
+    """§5 in order: N1, dose (reads N1), N2, N4; the tuple's G-READ-n coordinate is valence at d_eq. The inputs that
+    label nulls (§0.6): G-READ-n for valence at +1 (N1) and for span_reward at N2's decision f (OPEN-Q7 as ruled)."""
     n1 = n1_outcome(st)
     dose = dose_outcome(st, n1)
     n2 = n2_outcome(st)
     n4 = n4_outcome(st)
     r = st.dmap.resolved()
-    grs = {"d_eq": st.gr("valence", r["d_eq"]), "+1": st.gr("valence", 1.0), "E": st.gr("span_reward", F20)}
+    grs = {"d_eq": st.gr("valence", r["d_eq"]), "+1": st.gr("valence", 1.0),
+           "E": st.gr("span_reward", st.dmap.n2_decision_f())}
     return {"N1": n1, "dose": dose, "N2": n2, "N4": n4, "gread": grs,
             "tuple": (n1["state"], dose["state"], n2["state"], n4["state"], "PASS" if grs["d_eq"] == "PASS" else "FAIL")}
 
@@ -510,9 +568,31 @@ VERBATIM = {"T_N1_REPLICATED": (136, T_N1_REPLICATED), "T_DOSE_DETECTABLE": (138
             "T_DOSE_ND_ANSWERED": (138, T_DOSE_ND_ANSWERED), "T_DOSE_ND_NOT_ANSWERED": (138, T_DOSE_ND_NOT_ANSWERED),
             "ANSWERED": (138, ANSWERED), "CNA": (136, CNA), "NO_READ": (142, NO_READ)}
 
-# Code's forms (OPEN-Q8; each a FLAG for the seat's wording, strikable until LOCK-n v1.0): §5 words the cells above
-# only; "PARTIAL and NOT-REPLICATED name the failing conjunct and the figures"; INDETERMINATE, NOT-RUN, N2 and N4 carry
-# no sentence in §5.
+# ADDENDUM-n1 §7.6's forms (OPEN-Q8 as ruled; the battery asserts each against the addendum's italic spans, as §5's are
+# asserted against the proposal's). The three NOT-DETECTABLE forms carry a movement clause where §5 said OLD_MOVE (the
+# addendum's quotation): MOVE_NOT_CERTIFIED, or MOVE_AGAINST under the sign rule (§7.3), in the [movement] slot filled
+# at VERDICTS. A6_DOSE_ND_READABLE_N4 is the cell of §7.2 (N4 not PASS, G-READ-n PASS); N2's sentences say F_AT.
+OLD_MOVE = "the margin does not move beyond the leak ceiling"
+MOVE_NOT_CERTIFIED = "the margin's movement is not certified (Δm(d_eq) = [x] nats [CI] against a leak ceiling of [c])"
+MOVE_AGAINST = ("the margin moves against the conditioned zone beyond the leak ceiling (Δm = [x] nats [CI], ceiling "
+                "[c])")
+A6_DOSE_ND_READABLE_N4 = ("at this program's dose the state is readable at the decision (AUC [a]) and the margin's "
+                          "movement is not certified (Δm(d_eq) = [x] nats [CI] against a leak ceiling of [c]), but "
+                          "BK's apparatus has not registered an instructed preference on this checkpoint (N4 [n4]): "
+                          "dose is an explanation of record, unresolved")
+F_AT = "at f = [f]"
+ADDENDUM_FORMS = {"MOVE_NOT_CERTIFIED": MOVE_NOT_CERTIFIED, "A6_DOSE_ND_READABLE_N4": A6_DOSE_ND_READABLE_N4,
+                  "MOVE_AGAINST": MOVE_AGAINST, "F_AT": F_AT}
+MOVE_SLOT = "[movement]"
+#: secondary (b) in the secondary DVs' output: ADDENDUM-n1 §4 ("is struck; the VERDICTS entry says so"), in its words
+B_STRUCK = ("struck (ADDENDUM-n1 §4): nothing is generated in the campaign; §0.4's table stands as the welfare "
+            "report")
+D_ND_ANSWERED = T_DOSE_ND_ANSWERED.replace(OLD_MOVE, MOVE_SLOT)          # §5's answered form, amended
+D_ND_READABLE_N4 = A6_DOSE_ND_READABLE_N4.replace(MOVE_NOT_CERTIFIED, MOVE_SLOT)
+
+# Code's forms (Appendix A of the question block, adopted with the seat's amendments: OPEN-Q8 as ruled): §5 words the
+# cells above only; "PARTIAL and NOT-REPLICATED name the failing conjunct and the figures"; INDETERMINATE, NOT-RUN, N2
+# and N4 carry no sentence in §5.
 ROUTE_SLOT = "[on their / on a reconstructed direction]"
 C_N1_PARTIAL = ("PARTIAL: BK's fixed-text effect on OLMo-2-32B Instruct, in this program's implementation [on their / on "
                 "a reconstructed direction], meets (ii) and (iii) and its CI at d = +1 excludes 0, but [failing] fails: "
@@ -524,19 +604,17 @@ C_N1_NOT_REPLICATED = ("NOT-REPLICATED: BK's fixed-text effect does not replicat
                        "[max(L, P)] — [label]")
 C_N1_INDET = "INDETERMINATE: N1 is not evaluated ([causes])"
 C_DOSE_ND_NOT_READABLE = ("at this program's dose the margin does not move beyond the leak ceiling and the state is not "
-                          "readable at the decision: dose is an explanation of record, unresolved")
-C_DOSE_ND_READABLE_N4 = ("at this program's dose the state is readable at the decision (AUC [a]) and the margin does not "
-                         "move beyond the leak ceiling, but BK's apparatus has not registered an instructed preference "
-                         "on this checkpoint (N4 [n4]): dose is an explanation of record, unresolved")
+                          "readable at the decision: dose is an explanation of record, unresolved")   # A.5, as written
+D_ND_NOT_READABLE = C_DOSE_ND_NOT_READABLE.replace(OLD_MOVE, MOVE_SLOT)  # A.5, amended
 C_DOSE_INDET = "INDETERMINATE: the dose question is not evaluated ([causes])"
 N2_HEAD = "N2, descriptive (§7.3; it licenses no thesis sentence): "
-C_N2 = {"SPECIFIC": N2_HEAD + ("SPECIFIC: at f = 0.20 this program's evaluative axis (span_reward) does not move BK's "
+C_N2 = {"SPECIFIC": N2_HEAD + ("SPECIFIC: at f = [f] this program's evaluative axis (span_reward) does not move BK's "
                                "apparatus beyond the leak ceiling (Δm = [xE] nats against [c]) while the valence direction "
                                "of record at the norm-matched point does (Δm = [xV] nats) — [label]"),
-        "SHARED": N2_HEAD + ("SHARED: at f = 0.20 this program's evaluative axis (span_reward) moves BK's apparatus beyond "
+        "SHARED": N2_HEAD + ("SHARED: at f = [f] this program's evaluative axis (span_reward) moves BK's apparatus beyond "
                              "the leak ceiling (Δm = [xE] nats [CIE] against [c]); the valence direction of record at the "
                              "norm-matched point: Δm = [xV] nats"),
-        "NULL": N2_HEAD + ("NULL: at f = 0.20 neither this program's evaluative axis (span_reward, Δm = [xE] nats) nor "
+        "NULL": N2_HEAD + ("NULL: at f = [f] neither this program's evaluative axis (span_reward, Δm = [xE] nats) nor "
                            "the valence direction of record at the norm-matched point (Δm = [xV] nats) moves BK's "
                            "apparatus beyond the leak ceiling ([c]) — [label]"),
         "INDETERMINATE": N2_HEAD + "INDETERMINATE: N2 is not evaluated ([causes])"}
@@ -550,27 +628,32 @@ C_N4 = {"PASS": ("PASS: BK's apparatus registers an instructed preference on thi
 C_NOT_RUN = "NOT-RUN: [reason]; no question of PROPOSAL-n v0.2 §1 is answered on N-pod"
 SLOTS = ("[on their / on a reconstructed direction]", "[x]", "[CI]", "[y]", "[z]", "[max(L, P)]", "[value]", "[c]",
          "[a]", "[failing]", "[x−]", "[CI−]", "[label]", "[causes]", "[n4]", "[xE]", "[CIE]", "[xV]", "[CI98]", "[e]",
-         "[-e]", "[reason]")
+         "[-e]", "[reason]", "[movement]", "[f]")
 CONJUNCT_TEXT = {"i": "conjunct (i) (Δm(+1) ≥ 0.545 nats with its 95% CI excluding 0)",
                  "iv": "conjunct (iv) (Δm(−1) < 0 with its 95% CI excluding 0)",
                  "ci+1": "the 95% CI at d = +1 excluding 0",
                  "ii": "conjunct (ii) (the valenced mean slope above its floor)",
-                 "iii": "conjunct (iii) (G-LEAK-n certification at d = +1)"}
+                 "iii": "conjunct (iii) (G-LEAK-n certification at d = +1)",
+                 "sign": "the mean Δm at d = +1 above 0",
+                 "sign-against": "the mean Δm at d = +1 above 0 (" + MOVE_AGAINST + ")"}
 
 
 def label(n4_state: str, gread_state: str) -> str:
-    # OPEN-Q3: §0.6 -- a null read is answered only if (i) the told positive control (N4) PASSED and (ii) G-READ-n
-    # PASSED for that axis and dose; else concluded, not answered. Applied to N1 NOT-REPLICATED (valence, +1), dose
-    # NOT-DETECTABLE (valence, d_eq) and N2's span_reward null (SPECIFIC, NULL; span_reward, f = 0.20). FLAG.
+    # OPEN-Q3 as ruled (§0.6; ADDENDUM-n1 §7.2): a null read is answered only if (i) the told positive control (N4)
+    # PASSED and (ii) G-READ-n PASSED for that axis and dose; else concluded, not answered. Applied to N1 NOT-REPLICATED
+    # (valence, +1), dose NOT-DETECTABLE (valence, d_eq) and N2's span_reward null (SPECIFIC, NULL; span_reward at the
+    # decision f).
     return ANSWERED if (n4_state == "PASS" and gread_state == "PASS") else CNA
 
 
-def failing_text(keys: Sequence[str]) -> str:
-    return "; ".join(CONJUNCT_TEXT[k] for k in keys)
+def failing_text(keys: Sequence[str], against: bool = False) -> str:
+    """The failing conditions, by name; the sign's names the certified movement against the conditioned zone when
+    there is one (ADDENDUM-n1 §7.3: "with its sentence naming it"; the place in the sentence is Code's form)."""
+    return "; ".join(CONJUNCT_TEXT["sign-against" if (k == "sign" and against) else k] for k in keys)
 
 
 def sentence_n1(state: str, *, n4: str, gr1: str, failing: Sequence[str] | None = None,
-                causes: Sequence[str] | None = None) -> dict:
+                causes: Sequence[str] | None = None, against: bool = False) -> dict:
     if state == "REPLICATED":
         return {"question": "N1", "state": state, "text": T_N1_REPLICATED, "label": None, "form": "§5"}
     if state == "PARTIAL":
@@ -580,7 +663,7 @@ def sentence_n1(state: str, *, n4: str, gr1: str, failing: Sequence[str] | None 
         lab = label(n4, gr1)
         t = C_N1_NOT_REPLICATED.replace("[label]", lab)
         if failing is not None:
-            t = t.replace("[failing]", failing_text(failing))
+            t = t.replace("[failing]", failing_text(failing, against=against))
         return {"question": "N1", "state": state, "text": t, "label": lab, "form": "Code"}
     if state == "INDETERMINATE":
         t = C_N1_INDET if causes is None else C_N1_INDET.replace("[causes]", ", ".join(causes))
@@ -594,11 +677,11 @@ def sentence_dose(state: str, *, n4: str, gr: str, causes: Sequence[str] | None 
     if state == "NOT-DETECTABLE":
         lab = label(n4, gr)
         if lab == ANSWERED:
-            t, form = T_DOSE_ND_ANSWERED, "§5"
+            t, form = D_ND_ANSWERED, "§5, amended by ADDENDUM-n1 §7.6"
         elif gr != "PASS":
-            t, form = C_DOSE_ND_NOT_READABLE, "§5, its ellipsis expanded by Code"
+            t, form = D_ND_NOT_READABLE, "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6"
         else:
-            t, form = C_DOSE_ND_READABLE_N4.replace("[n4]", n4), "Code"
+            t, form = D_ND_READABLE_N4.replace("[n4]", n4), "ADDENDUM-n1 §7.6"
         return {"question": "dose", "state": state, "text": t, "label": lab, "form": form}
     if state == "INDETERMINATE":
         t = C_DOSE_INDET if causes is None else C_DOSE_INDET.replace("[causes]", ", ".join(causes))
@@ -635,10 +718,10 @@ SLOT_KEYS = ("7.1", "7.2", "7.3", "N4")
 
 def sentence_set(t: Sequence[str] | str, *, gr1: str = "FAIL", gre: str = "FAIL", n4_no_read: bool = False) -> dict:
     """One §7 sentence set for an outcome tuple (template form: figures, causes and the failing conjuncts are slots).
-    t = (N1, dose, N2, N4, G-READ-n valence at d_eq) or "NOT-RUN". OPEN-Q4: three inputs that are not coordinates
-    change a sentence -- gr1 = G-READ-n (valence, +1), gre = G-READ-n (span_reward, f = 0.20), and n4_no_read (N4's
-    INDETERMINATE "with no read obtained" against the terminal one); the battery runs every tuple under each (m's flag
-    precedent: an input, not a coordinate)."""
+    t = (N1, dose, N2, N4, G-READ-n valence at d_eq) or "NOT-RUN". OPEN-Q4 as ruled (confirmed): three inputs that
+    are not coordinates change a sentence -- gr1 = G-READ-n (valence, +1), gre = G-READ-n (span_reward, at N2's
+    decision f), and n4_no_read (N4's INDETERMINATE "with no read obtained" against the terminal one); the battery runs
+    every tuple under each (m's flag precedent: an input, not a coordinate)."""
     if t == NOT_RUN:
         s = {"question": "unit", "state": NOT_RUN, "text": C_NOT_RUN, "label": None, "form": "Code"}
         return {k: dict(s) for k in SLOT_KEYS}
@@ -672,8 +755,8 @@ def gleak_table(st: State) -> list[dict]:
         labels.setdefault(r[lab], []).append(lab)
 
     def needs(arm: str, pt: float) -> list[str]:
-        """The arms whose figures a certification at pt reads (N1-P only where it is read: +1, −1)."""
-        return [arm, "N1-R"] + (["N1-P"] if pt in N1P_POINTS else [])
+        """The arms whose figures a certification at pt reads (N1-P where it is read: OPEN-Q2 as ruled)."""
+        return [arm, "N1-R"] + (["N1-P"] if pt in st.dmap.n1p_points() else [])
     for pt in sorted(labels, reverse=True):
         miss = [a for a in needs("N1-V", pt) if not st.complete.get(a)]
         if miss:
@@ -701,8 +784,8 @@ def gleak_table(st: State) -> list[dict]:
 
 
 GREAD_SECTION5 = {("valence", "+1"): "N1 NOT-REPLICATED's label (§5 N1)",
-                  ("valence", "d_eq"): "the dose sentence's label (§5 Dose); the tuple's coordinate",
-                  ("span_reward", F20): "N2's span_reward null label (OPEN-Q3)"}
+                  ("valence", "d_eq"): "the dose sentence's label (§5 Dose); the tuple's coordinate"}
+GREAD_N2_LABEL = "N2's span_reward null label (§0.6, at N2's decision f: OPEN-Q7 as ruled)"
 
 
 def gread_table(st: State) -> list[dict]:
@@ -717,7 +800,7 @@ def gread_table(st: State) -> list[dict]:
                      "enters": GREAD_SECTION5.get(("valence", lab))})
     for f in (F10, F20):
         rows.append({"axis": "span_reward", "point": st.dmap.f_point(f), "label": f, "state": st.gr("span_reward", f),
-                     "enters": GREAD_SECTION5.get(("span_reward", f))})
+                     "enters": GREAD_N2_LABEL if f == st.dmap.n2_decision_f() else None})
     return rows
 
 
@@ -780,32 +863,48 @@ def not_run_reason(rec: Mapping) -> str:
 # =====================================================================================================================
 
 
+def italic_spans(s: str) -> list[str]:
+    """A line's single-asterisk italic spans, in order (bold's double asterisks skipped)."""
+    out, i = [], 0
+    while True:
+        a = s.find("*", i)
+        if a < 0:
+            break
+        if s.startswith("**", a):
+            i = a + 2
+            continue
+        b = s.find("*", a + 1)
+        if b < 0:
+            break
+        if s.startswith("**", b):
+            i = b + 2
+            continue
+        out.append(s[a + 1:b])
+        i = b + 1
+    return out
+
+
 def proposal_spans(text: str) -> dict[str, str]:
     """§5's italic spans at n:136 and n:138, by position, from the proposal's bytes."""
     lines = text.splitlines()
-
-    def spans(n: int) -> list[str]:
-        out, s = [], lines[n - 1]
-        i = 0
-        while True:
-            a = s.find("*", i)
-            if a < 0:
-                break
-            if s.startswith("**", a):
-                i = a + 2
-                continue
-            b = s.find("*", a + 1)
-            if b < 0:
-                break
-            if s.startswith("**", b):
-                i = b + 2
-                continue
-            out.append(s[a + 1:b])
-            i = b + 1
-        return out
-    s136, s138 = spans(136), spans(138)
+    s136, s138 = italic_spans(lines[135]), italic_spans(lines[137])
     return {"rep": s136[0], "cna": s136[1], "ans": s138[0], "cna138": s138[1], "det": s138[2], "nd_ans": s138[3],
             "nd_cna": s138[4]}
+
+
+def addendum_spans(text: str) -> dict[str, str]:
+    """ADDENDUM-n1 §7.6's italic spans, by position, from the addendum's bytes, with its quotation of the clause §5's
+    NOT-DETECTABLE forms said: the movement not certified and the clause it replaces (its first bullet), the cell of
+    §7.2 (its second), the movement against the conditioned zone (its third), N2's f and the two labels (its fourth);
+    and §4's paragraph, secondary (b) struck."""
+    lines = text.splitlines()
+    i = next(k for k, s in enumerate(lines) if s.startswith("**7.6 Sentences.**"))
+    b = lines[i + 1:i + 5]
+    s0, s1, s2, s3 = (italic_spans(x) for x in b)
+    q = b[0].split('"')
+    j = next(k for k, s in enumerate(lines) if s.startswith("## §4 Secondary (b) struck"))
+    return {"add_not_cert": s0[0], "add_old": q[1], "add_a6": s1[0], "add_against": s2[0], "add_f": s3[0],
+            "add_ans": s3[1], "add_cna": s3[2], "add_b4": lines[j + 2]}
 
 
 def oracle_set(t, *, gr1: str, gre: str, n4_no_read: bool, verb: Mapping[str, str]) -> dict:
@@ -825,12 +924,15 @@ def oracle_set(t, *, gr1: str, gre: str, n4_no_read: bool, verb: Mapping[str, st
     if dose == "DETECTABLE":
         s2 = (verb["det"], None, "§5")
     elif dose == "NOT-DETECTABLE":
+        # ADDENDUM-n1 §7.6 from its own bytes: §5's clause, as the addendum quotes it, becomes the movement slot
         if n4 == "PASS" and grd == "PASS":
-            s2 = (verb["nd_ans"], verb["ans"], "§5")
+            s2 = (verb["nd_ans"].replace(verb["add_old"], "[movement]"), verb["ans"], "§5, amended by ADDENDUM-n1 §7.6")
         elif grd == "FAIL":
-            s2 = (C_DOSE_ND_NOT_READABLE, verb["cna"], "§5, its ellipsis expanded by Code")
+            s2 = (C_DOSE_ND_NOT_READABLE.replace(verb["add_old"], "[movement]"), verb["cna"],
+                  "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6")
         else:
-            s2 = (C_DOSE_ND_READABLE_N4.replace("[n4]", n4), verb["cna"], "Code")
+            s2 = (verb["add_a6"].replace(verb["add_not_cert"], "[movement]").replace("[n4]", n4), verb["cna"],
+                  "ADDENDUM-n1 §7.6")
     else:
         s2 = (C_DOSE_INDET, None, "Code")
     if n2 in ("SPECIFIC", "NULL"):
@@ -863,21 +965,23 @@ def evaluations() -> list[tuple]:
 # =====================================================================================================================
 # 9. The battery (§3 G-ANL-n). Selftest-only helpers carry the `_bt` prefix.
 # =====================================================================================================================
-EXPECTED_CHECKS = 185
+EXPECTED_CHECKS = 207
 
 _REQ: list[str] = []
 _REQ += [f"N1-{x}" for x in ("REPLICATED", "PARTIAL-i", "PARTIAL-iv", "PARTIAL-i-iv", "NOTREP-ci+1", "NOTREP-ii",
-                             "NOTREP-iii", "NOTREP-ci+1-ii", "NOTREP-ci+1-iii", "NOTREP-ii-iii", "NOTREP-ci+1-ii-iii")]
+                             "NOTREP-iii", "NOTREP-ci+1-ii", "NOTREP-ci+1-iii", "NOTREP-ii-iii", "NOTREP-ci+1-ii-iii",
+                             "NOTREP-sign", "NOTREP-ci+1-sign", "NOTREP-iii-sign")]
 _REQ += [f"N1-INDET-{k}:{a}" for k in ("pause", "incomplete") for a in N1_ARMS]
 _REQ += ["BND-I-EXACT", "BND-I-BELOW", "BND-CI-LO-ZERO", "BND-CI-HI-ZERO", "BND-CERT-EQUAL", "BND-SLOPE-EQ-FLOOR",
-         "BND-IV-ZERO", "BND-P-ABOVE-L", "BND-P-ABSENT", "BND-NEG-CERT"]
-_REQ += ["DOSE-DET-POS", "DOSE-DET-NEG", "DOSE-ND-CI", "DOSE-ND-UNCERT", "DOSE-INDET-N1", "DOSE-INDET-POINTS",
+         "BND-IV-ZERO", "BND-P-ABOVE-L", "BND-P-DEQ", "BND-NEG-CERT", "BND-P-REQUIRED"]
+_REQ += ["DOSE-DET-POS", "DOSE-ND-AGAINST", "DOSE-ND-CI", "DOSE-ND-UNCERT", "DOSE-ND-NEG-CI", "DOSE-ND-NEG-UNCERT",
+         "DOSE-INDET-N1", "DOSE-INDET-POINTS",
          "DOSE-BESIDE-D20"]
 _REQ += ["N2-SPECIFIC", "N2-SHARED-V-CERT", "N2-SHARED-V-UNCERT", "N2-NULL", "N2-INDET-pause:N2-E",
          "N2-INDET-pause:N2-S", "N2-INDET-pause:N2-C", "N2-NOT-PAUSED-BY-N1",
          "N2-INDET-incomplete:N2-E", "N2-INDET-incomplete:N1-V", "N2-INDET-incomplete:N1-R",
          "N2-INDET-incomplete:N1-P", "N2-GUARDS-DECIDE-NOTHING",
-         "N2-F10-BESIDE", "N2-MATCH-RATIO"]
+         "N2-F10-BESIDE", "N2-MATCH-RATIO", "N2-CAP-F10", "N2-UNSIGNED", "N2-BESIDE-FIELDS"]
 _REQ += ["N4-PASS", "N4-REVERSE", "N4-DEAD", "N4-INDET-TERMINAL", "N4-NOREAD-incomplete:N4-T",
          "N4-NOREAD-incomplete:N4-Ts", "N4-NOREAD-pause:N4-T", "N4-NOREAD-pause:N4-Ts", "N4-NOREAD-E-undefined",
          "N4-ORD-REV-OVER-DEAD", "N4-ORD-PASS-OVER-DEAD", "N4-BND-MEAN-EQ-E", "N4-BND-MEAN-EQ-NEGE",
@@ -886,19 +990,23 @@ _REQ += [f"NR-{c}" for c in NOT_RUN_CAUSES] + ["NR-REFUSE-PREMATURE", "NR-REFUSE
                                                 "NR-REFUSE-CAUSE", "NR-REFUSE-KEYS"]
 _REQ += [f"GLEAK-{a}-{c}" for a in ("N1-V", "N2-E", "N2-S", "N2-C") for c in ("CERT", "UNCERT", "INCOMPLETE")]
 _REQ += [f"GREAD-{c}" for c in ("PASS", "FAIL", "NOT-COMPUTED", "ENTERS-N1", "ENTERS-DOSE", "ENTERS-N2")]
+_REQ += ["GLEAK-N1P-INCOMPLETE"]
 _REQ += ["SENT-VERBATIM", "SENT-FAILING-PARTIAL", "SENT-FAILING-NOTREP", "SENT-CAUSES", "SENT-REFUSES",
-         "SENT-CODE-FORMS"]
+         "SENT-CODE-FORMS", "SENT-ADDENDUM", "SENT-FILLED-DOSE-ND", "SENT-FILLED-N1-AGAINST", "SENT-FILLED-N2-CAP"]
 _REQ += [f"TUP-T{i}" for i in range(1, 11)] + ["TUP-DETERMINISM", "TUP-COUNT"]
-_REQ += ["REACH-DOSE-IFF-N1", "REACH-SHAPE-a", "REACH-SHAPE-b", "REACH-SHAPE-d", "REACH-N4-FREE", "REACH-NO-RAISE"]
+_REQ += ["REACH-DOSE-IFF-N1", "REACH-SHAPE-a", "REACH-SHAPE-b", "REACH-SHAPE-c", "REACH-SHAPE-d", "REACH-N4-FREE",
+         "REACH-NO-RAISE"]
 _REQ += ["NUM-KEYSTREAM-M159", "NUM-KNOWN-ANSWER", "NUM-BOOT-DETERMINISM", "NUM-BOOT-CONSTANT", "NUM-BOOT-LOOP",
-         "NUM-PCT-METHOD", "NUM-SLOPE-CLOSED-FORM", "NUM-SLOPE-INTERCEPT", "NUM-SD0", "NUM-NONFINITE-STOP",
+         "NUM-PCT-METHOD", "NUM-SLOPE-CLOSED-FORM", "NUM-SLOPE-BESIDE", "NUM-SLOPE-INTERCEPT", "NUM-SD0",
+         "NUM-NONFINITE-STOP", "NUM-BK-FITS-COINCIDE", "NUM-CAP-DECISION-F", "NUM-N1P-POINTS",
          "NUM-BK-REPRO", "NUM-BK-FIDELITY", "NUM-DOSEMAP-SHAPES", "NUM-DOSEMAP-REFUSE",
          "NUM-DOSEMAP-POINTS", "NUM-PEARSON", "CNT-LABEL-MASS", "NUM-N2-POINTS"]
-_REQ += ["STR-PROPOSAL-SHA", "STR-VERBATIM-IN-PROPOSAL", "STR-TAU-PREREG", "STR-NO-REPO-IMPORT", "STR-NO-HEAVY",
-         "STR-OPEN-HOOK", "STR-NO-CANONICAL-WRITE", "STR-PINS"]
+_REQ += ["STR-PROPOSAL-SHA", "STR-ADDENDUM-SHA", "STR-VERBATIM-IN-PROPOSAL", "STR-TAU-PREREG", "STR-NO-REPO-IMPORT",
+         "STR-NO-HEAVY", "STR-OPEN-HOOK", "STR-NO-CANONICAL-WRITE", "STR-PINS"]
 _REQ += ["RD-POSITIVE", "RD-FILLED", "RD-NULL", "RD-SPECIFIC", "RD-PARTIAL", "RD-INDET", "RD-NONFINITE", "RD-MERGED",
          "RD-PAUSE", "RD-GREAD", "RD-SENSITIVITY", "RD-SECONDARY", "RD-REFUSE", "RD-FILLED-FIGURES", "RD-FILLED-FORMS",
-         "RD-SHADOW", "RD-ASYM", "RD-MERGED-DEQ", "RD-GREAD-MIXED", "CNT-COUNTERS", "RD-SECONDARY-FLOOR"]
+         "RD-SHADOW", "RD-ASYM", "RD-MERGED-DEQ", "RD-GREAD-MIXED", "CNT-COUNTERS", "RD-SECONDARY-FLOOR",
+         "RD-CAP-BINDS", "RD-CAP-SLOPES"]
 _REQ += ["NUM-DOSEMAP-SCHEMA", "NUM-MERGE-EDGE", "NUM-REACH-CLASS", "CMD-NOTRUN", "CMD-NOTRUN-REFUSE",
          "CMD-GANL-REFUSE", "STR-GANL-ARTIFACT"]
 _REQ += ["VD-COMPLETE", "VD-WRITE-ONCE", "VD-EXPOSURE", "VD-SENSITIVITY", "VD-STDOUT", "VD-PISTOP-STANDING",
@@ -950,7 +1058,8 @@ def _bt_raises(fn: Callable[[], Any], exc=(ValueError,)) -> tuple[bool, str]:
 
 
 MAP_A = DoseMap(1 / 3, 2 / 3)          # all points distinct (shape a)
-MAP_B = DoseMap(0.72, 1.0)             # d_20 merged into +1 (shape b)
+MAP_B = DoseMap(0.72, 1.0)             # the cap binds: d_20 merged into +1, N2 decided at d_eq (shape b)
+MAP_C = DoseMap(0.49, 2 * 0.49)        # d_20 merged into +1 without the cap, d_eq into +1/2 (shape c)
 MAP_D = DoseMap(0.97, 1.0)             # d_20 and d_eq merged into +1 (shape d)
 _X = Est(1.0, 0.9, 1.1)                # large positive, CI excludes 0, certified at the battery's L 0.05
 _Z = Est(0.0, -0.05, 0.05)             # null: CI includes 0, uncertified
@@ -958,14 +1067,15 @@ _Z = Est(0.0, -0.05, 0.05)             # null: CI includes 0, uncertified
 
 def literal_state(dmap: DoseMap = MAP_A, **over) -> State:
     """A complete, unpaused state with every outcome at its 'positive' value (N1 REPLICATED, dose DETECTABLE, N2
-    SHARED, N4 PASS) at L = 0.05 everywhere and P = 0.04 at ±1; keyword overrides replace fields. Used by the battery
-    and by map_reach, which the canonical `ganl` run calls on the pinned map (hence no `_bt` prefix)."""
+    SHARED, N4 PASS) at L = 0.05 everywhere and P = 0.04 at each point N1-P reads (±1, d_20's and d_eq's: OPEN-Q2 as
+    ruled); keyword overrides replace fields. Used by the battery and by map_reach, which the canonical `ganl` run calls
+    on the pinned map (hence no `_bt` prefix)."""
     pts = dmap.points()
     st = State(dmap=dmap, complete={a: True for a in ARMS}, paused={a: False for a in ARMS},
                V={p: (Est(-0.7, -0.8, -0.6) if p < 0 else Est(max(p, 0.3), max(p, 0.3) - 0.1, max(p, 0.3) + 0.1))
                   for p in pts if p != 0.0},
                slope_V=Est(0.9, 0.8, 1.0), floor_V=0.3, L={p: 0.05 for p in pts if p != 0.0},
-               P={1.0: 0.04, -1.0: 0.04}, E={F10: Est(0.2, 0.1, 0.3), F20: Est(0.3, 0.2, 0.4)},
+               P={p: 0.04 for p in dmap.n1p_points()}, E={F10: Est(0.2, 0.1, 0.3), F20: Est(0.3, 0.2, 0.4)},
                S={F10: Est(0.0, -0.1, 0.1), F20: Est(0.0, -0.1, 0.1)}, C={F10: Est(0.0, -0.1, 0.1),
                                                                            F20: Est(0.0, -0.1, 0.1)},
                told=Est(1.0, 0.8, 1.2, 98), e_sham=0.1,
@@ -996,15 +1106,23 @@ def _bt_outcomes(B: _Battery) -> None:
              ("NOTREP-ci+1-iii", {"V": {1.0: Est(0.6, -0.1, 1.3)}, "L": {1.0: 2.0}}, "NOT-REPLICATED", ["ci+1", "iii"]),
              ("NOTREP-ii-iii", {"floor_V": 0.95, "L": {1.0: 2.0}}, "NOT-REPLICATED", ["ii", "iii"]),
              ("NOTREP-ci+1-ii-iii", {"V": {1.0: Est(0.6, -0.1, 1.3)}, "floor_V": 0.95, "L": {1.0: 2.0}},
-              "NOT-REPLICATED", ["ci+1", "ii", "iii"])]
+              "NOT-REPLICATED", ["ci+1", "ii", "iii"]),
+             # the sign (OPEN-Q8 as ruled, ADDENDUM-n1 §7.3): PARTIAL needs the mean at +1 above 0
+             ("NOTREP-sign", {"V": {1.0: Est(-0.6, -0.7, -0.5)}}, "NOT-REPLICATED", ["sign"]),
+             ("NOTREP-ci+1-sign", {"V": {1.0: Est(-0.3, -0.6, 0.1)}}, "NOT-REPLICATED", ["ci+1", "sign"]),
+             # a negative mean whose CI excludes 0 but within the ceiling: not against (PIN-n-27 needs (iii))
+             ("NOTREP-iii-sign", {"V": {1.0: Est(-0.03, -0.04, -0.02)}}, "NOT-REPLICATED", ["iii", "sign"])]
     for cid, over, want, failing in cases:
         g = n1_outcome(literal_state(**over))
-        B.chk(f"N1 {want} failing {failing}", g["state"] == want and g["failing"] == failing, g, cover=[f"N1-{cid}"])
+        against = cid == "NOTREP-sign"                       # PIN-n-27: CI excluding 0, certified, the mean below 0
+        B.chk(f"N1 {want} failing {failing}" + (" (a certified movement against the conditioned zone, PIN-n-27)"
+                                                  if against else ""),
+              g["state"] == want and g["failing"] == failing and g["against"] is against, g, cover=[f"N1-{cid}"])
     for kind in ("pause", "incomplete"):
         for a in N1_ARMS:
             over = {"paused": {a: True}} if kind == "pause" else {"complete": {a: False}}
             g = n1_outcome(literal_state(**over))
-            tag = " (OPEN-Q6, pending the seat)" if (kind, a) == ("incomplete", "N1-V") else ""
+            tag = " (OPEN-Q6 as ruled)" if (kind, a) == ("incomplete", "N1-V") else ""
             B.chk(f"N1 INDETERMINATE by {kind}:{a}{tag}",
                   g["state"] == "INDETERMINATE" and g["causes"] == [f"{kind}:{a}"],
                   g, cover=[f"N1-INDET-{kind}:{a}"])
@@ -1034,22 +1152,41 @@ def _bt_outcomes(B: _Battery) -> None:
           and g["ceiling"] == 0.95, g, cover=["BND-P-ABOVE-L"])
     st = literal_state()
     deq = st.dmap.resolved()["d_eq"]
-    d = dose_outcome(literal_state(V={deq: Est(0.08, 0.04, 0.12)}, L={deq: 0.06}), n1_outcome(st))
-    B.chk("ceiling (OPEN-Q2, pending the seat): at d_eq, where N1-P is not read, the ceiling is L(d_eq) alone (0.08 > "
-          "0.06 certified)",
-          d["state"] == "DETECTABLE" and d["ceiling"] == 0.06 and deq not in st.P, d, cover=["BND-P-ABSENT"])
+    d = dose_outcome(literal_state(V={deq: Est(0.08, 0.04, 0.12)}, L={deq: 0.06}, P={deq: 0.07}), n1_outcome(st))
+    d2 = dose_outcome(literal_state(V={deq: Est(0.08, 0.04, 0.12)}, L={deq: 0.06}, P={deq: 0.09}), n1_outcome(st))
+    B.chk("ceiling (OPEN-Q2 as ruled: N1-P read at d_eq): max(L, P) at d_eq -- P(d_eq) 0.07 over L 0.06 leaves 0.08 "
+          "certified; P(d_eq) 0.09 governs and 0.08 is not",
+          d["state"] == "DETECTABLE" and d["ceiling"] == 0.07 and d2["state"] == "NOT-DETECTABLE"
+          and d2["ceiling"] == 0.09, (d["ceiling"], d2["ceiling"]), cover=["BND-P-DEQ"])
+    n1_full = n1_outcome(literal_state())
+    req = {}
+    for name, pt, fn in (("N1 at +1", 1.0, n1_outcome), ("dose at d_eq", deq, lambda s: dose_outcome(s, n1_full)),
+                         ("N2 at d_20's point", MAP_A.resolved()["d_20"], n2_outcome)):
+        s_ = literal_state()
+        del s_.P[pt]
+        req[name] = _bt_raises(lambda: fn(s_), (AnlStop,))[0]
+    half = [r for r in gleak_table(literal_state()) if r["arm"] == "N1-V" and r["point"] == 0.5]
+    req["+1/2 row L alone"] = len(half) == 1 and half[0]["P"] is None and half[0]["ceiling"] == half[0]["L"]
+    B.chk("P(d) is required where G-LEAK-n certifies (OPEN-Q2 as ruled: N1-P reads every such point): its absence at "
+          "+1 (N1), at d_eq (dose) or at N2's norm-matched point STOPs; G-LEAK-n's table reports L alone at +1/2, "
+          "which N1-P does not read", all(req.values()), req, cover=["BND-P-REQUIRED"])
     g = n1_outcome(literal_state(V={1.0: Est(-1.0, -1.1, -0.9)}))
-    B.chk("a negative Δm(+1) beyond the ceiling is certified (|mean|); (i) fails, (ii)-(iii) hold, CI excludes 0 -> "
-          "PARTIAL (PIN-n-8, as §5 is written)", g["state"] == "PARTIAL" and g["conjuncts"]["iii"] is True
-          and g["failing"] == ["i"], g, cover=["BND-NEG-CERT"])
+    B.chk("a negative Δm(+1) beyond the ceiling is certified (|mean|) and against the conditioned zone: (ii)-(iii) "
+          "hold, CI excludes 0, the sign fails -> NOT-REPLICATED (ADDENDUM-n1 §7.3; PIN-n-27)",
+          g["state"] == "NOT-REPLICATED" and g["conjuncts"]["iii"] is True and g["failing"] == ["sign"]
+          and g["against"] is True, g, cover=["BND-NEG-CERT"])
     # dose
     n1 = n1_outcome(literal_state())
-    for cid, v, Ld, want in (("DOSE-DET-POS", Est(0.3, 0.2, 0.4), 0.05, "DETECTABLE"),
-                             ("DOSE-DET-NEG", Est(-0.3, -0.4, -0.2), 0.05, "DETECTABLE"),
-                             ("DOSE-ND-CI", Est(0.3, -0.01, 0.6), 0.05, "NOT-DETECTABLE"),
-                             ("DOSE-ND-UNCERT", Est(0.04, 0.02, 0.06), 0.05, "NOT-DETECTABLE")):
+    for cid, v, Ld, want, ag in (("DOSE-DET-POS", Est(0.3, 0.2, 0.4), 0.05, "DETECTABLE", False),
+                                 ("DOSE-ND-AGAINST", Est(-0.3, -0.4, -0.2), 0.05, "NOT-DETECTABLE", True),
+                                 ("DOSE-ND-CI", Est(0.3, -0.01, 0.6), 0.05, "NOT-DETECTABLE", False),
+                                 ("DOSE-ND-UNCERT", Est(0.04, 0.02, 0.06), 0.05, "NOT-DETECTABLE", False),
+                                 ("DOSE-ND-NEG-CI", Est(-0.3, -0.6, 0.1), 0.05, "NOT-DETECTABLE", False),
+                                 ("DOSE-ND-NEG-UNCERT", Est(-0.03, -0.04, -0.02), 0.05, "NOT-DETECTABLE", False)):
         dd = dose_outcome(literal_state(V={deq: v}, L={deq: Ld}), n1)
-        B.chk(f"dose {want}: Δm(d_eq) {v.mean} [{v.lo}, {v.hi}] against L {Ld}", dd["state"] == want, dd, cover=[cid])
+        B.chk(f"dose {want}: Δm(d_eq) {v.mean} [{v.lo}, {v.hi}] against L {Ld}" + (
+            " (certified against the conditioned zone: the sign, ADDENDUM-n1 §7.3)" if ag else ""),
+            dd["state"] == want and dd["against"] is ag, dd, cover=[cid])
     ok = True
     for kind in ("pause", "incomplete"):
         for a in N1_ARMS:
@@ -1058,15 +1195,24 @@ def _bt_outcomes(B: _Battery) -> None:
             dd = dose_outcome(s_, n1_outcome(s_))
             ok &= dd["state"] == "INDETERMINATE" and "N1-INDETERMINATE" in dd["causes"]
     B.chk("dose INDETERMINATE whenever N1 is, under each of N1's six causes", ok, cover=["DOSE-INDET-N1"])
-    s_ = literal_state(complete={"N1-R": False})
-    dd = dose_outcome(s_, n1_outcome(s_))
-    B.chk("dose INDETERMINATE names 'incomplete:points' beside N1's (subsumed; OPEN-Q6, pending the seat)",
-          dd["causes"] == ["N1-INDETERMINATE", "incomplete:points"], dd, cover=["DOSE-INDET-POINTS"])
+    pts_ok = {}
+    for a in ("N1-R", "N1-P"):
+        s_ = literal_state(complete={a: False})
+        dd_i = dose_outcome(s_, n1_outcome(s_))
+        pts_ok[a] = (dd_i["causes"], dd_i.get("d_20_beside"))
+    B.chk("dose INDETERMINATE names 'incomplete:points' beside N1's, for N1-R and N1-P alike (subsumed), and reports "
+          "the d_20 figure beside as not computed (OPEN-Q6 as ruled)",
+          all(c == (["N1-INDETERMINATE", "incomplete:points"], "not computed") for c in pts_ok.values()), pts_ok,
+          cover=["DOSE-INDET-POINTS"])
     s_ = literal_state()
     dd = dose_outcome(s_, n1_outcome(s_))
     d20 = s_.dmap.resolved()["d_20"]
-    B.chk("dose reports d_20 beside (point, estimate, ceiling, certification)", dd["d_20_beside"]["point"] == d20
-          and dd["d_20_beside"]["certified"] is True, dd["d_20_beside"], cover=["DOSE-BESIDE-D20"])
+    s_p = literal_state(V={d20: Est(0.06, 0.04, 0.08)}, L={d20: 0.05}, P={d20: 0.07})
+    dp = dose_outcome(s_p, n1_outcome(s_p))["d_20_beside"]
+    B.chk("dose reports d_20 beside (point, estimate, ceiling, certification), its ceiling max(L, P): 0.06 against "
+          "P(d_20) 0.07 over L 0.05 is not certified", dd["d_20_beside"]["point"] == d20
+          and dd["d_20_beside"]["certified"] is True and dp["ceiling"] == 0.07 and dp["certified"] is False,
+          (dd["d_20_beside"], dp), cover=["DOSE-BESIDE-D20"])
     # N2
     m20 = MAP_A.norm_matched(F20)
     for cid, over, want in (("N2-SPECIFIC", {"E": {F20: Est(0.01, -0.02, 0.04)}}, "SPECIFIC"),
@@ -1085,20 +1231,20 @@ def _bt_outcomes(B: _Battery) -> None:
         why = cid.split("N2-INDET-", 1)[1]
         B.chk(f"N2 INDETERMINATE by {why}" + (" (§5, n:140: 'an unadjudicated pause stands on N2's reads'; the "
                                               "guards' reads are N2's reads)" if why.startswith("pause:")
-                                              else " (OPEN-Q6, pending the seat)"),
+                                              else " (OPEN-Q6 as ruled)"),
               g["state"] == "INDETERMINATE" and g["causes"] == [why], g, cover=[cid])
-    g_np = n2_outcome(literal_state(paused={"N1-V": True, "N1-R": True}))
+    g_np = n2_outcome(literal_state(paused={"N1-V": True, "N1-R": True, "N1-P": True}))
     g_npb = n2_outcome(literal_state(MAP_B, paused={"N1-P": True}))
-    B.chk("a pause on N1-V's or N1-R's reads, or on N1-P's where d_20 sits at +1 (shape b), alone leaves N2 "
-          "evaluated (§5's N2 reads are N2-E's, N2-S's and N2-C's; OPEN-Q6, pending the seat: those N1 arms' "
-          "incompleteness is a cause, their pauses are not)", g_np["state"] == "SHARED" and g_npb["state"] == "SHARED",
+    B.chk("a pause on N1-V's, N1-R's or N1-P's reads alone leaves N2 evaluated, on shape (a) and when the cap binds "
+          "(§5's N2 reads are N2-E's, N2-S's and N2-C's; OPEN-Q6 as ruled: those N1 arms' incompleteness is a cause, "
+          "their pauses are not)", g_np["state"] == "SHARED" and g_npb["state"] == "SHARED",
           (g_np["state"], g_npb["state"]), cover=["N2-NOT-PAUSED-BY-N1"])
     gb = n2_outcome(literal_state(MAP_B, complete={"N1-P": False}))
     ga = n2_outcome(literal_state(MAP_A, complete={"N1-P": False}))
-    B.chk("N2 INDETERMINATE by incomplete:N1-P where d_20 sits at +1 (shape b: the ceiling takes P(+1)); with every "
-          "point distinct (shape a) N1-P enters no N2 certification and N2 is evaluated (OPEN-Q6, pending the seat)",
-          gb["state"] == "INDETERMINATE" and gb["causes"] == ["incomplete:N1-P"] and ga["state"] == "SHARED",
-          (gb, ga["state"]), cover=["N2-INDET-incomplete:N1-P"])
+    B.chk("N2 INDETERMINATE by incomplete:N1-P on every shape: N1-P reads the norm-matched point (OPEN-Q6 as ruled, "
+          "amended for N1-P's points; ADDENDUM-n1 §7.4)",
+          gb["state"] == ga["state"] == "INDETERMINATE" and gb["causes"] == ga["causes"] == ["incomplete:N1-P"],
+          (gb, ga), cover=["N2-INDET-incomplete:N1-P"])
     base = n2_outcome(literal_state(E={F20: Est(0.01, -0.02, 0.04)}))["state"]
     same = all(n2_outcome(literal_state(E={F20: Est(0.01, -0.02, 0.04)}, S={F20: s}, C={F20: c}))["state"] == base
                for s in (_X, _Z, Est(-1, -1.1, -0.9)) for c in (_X, _Z, Est(-1, -1.1, -0.9)))
@@ -1108,11 +1254,41 @@ def _bt_outcomes(B: _Battery) -> None:
     B.chk("N2 reports f = 0.10 beside (its own certification at d_eq's point), deciding nothing",
           g["state"] == "SHARED" and g["beside"]["f=0.10"]["certified"] is False, g["beside"]["f=0.10"],
           cover=["N2-F10-BESIDE"])
-    gb = n2_outcome(literal_state(MAP_B))
-    B.chk("N2 reports the norm match: ratio 1 on shape (a); 2·0.72/1 = 1.44 when the cap binds (shape b; OPEN-Q7, "
-          "pending the seat)",
-          n2_outcome(literal_state())["match_ratio"] == 1.0 and abs(gb["match_ratio"] - 1.44) < 1e-12, gb["match_ratio"],
+    ga, gb = n2_outcome(literal_state()), n2_outcome(literal_state(MAP_B))
+    B.chk("N2's decision f and the norm match (OPEN-Q7 as ruled, ADDENDUM-n1 §5.3): shape (a) decided at f = 0.20, "
+          "ratio 1, f = 0.10 beside; when the cap binds (shape b, 2·0.72 > 1) decided at f = 0.10 against d_eq, ratio "
+          "1, with f = 0.20 beside against d = 1 at the ratio 1.44",
+          ga["f"] == F20 and ga["match_ratio"] == 1.0 and ga["cap_binds"] is False and F10 in ga["beside"]
+          and gb["f"] == F10 and gb["point"] == 0.72 and gb["match_ratio"] == 1.0 and gb["cap_binds"] is True
+          and gb["beside"][F20]["point"] == 1.0 and abs(gb["beside"][F20]["match_ratio"] - 1.44) < 1e-12,
+          (ga["f"], gb["f"], gb["match_ratio"], gb["beside"].get(F20, {}).get("match_ratio")),
           cover=["N2-MATCH-RATIO"])
+    e_unc = {F10: Est(0.01, -0.02, 0.04)}
+    sa, sb = n2_outcome(literal_state(E=e_unc))["state"], n2_outcome(literal_state(MAP_B, E=e_unc))["state"]
+    B.chk("the decision f decides: span_reward uncertified at f = 0.10 and certified at f = 0.20 gives SHARED on "
+          "shape (a), decided at 0.20, and SPECIFIC when the cap binds, decided at 0.10 (OPEN-Q7 as ruled)",
+          sa == "SHARED" and sb == "SPECIFIC", (sa, sb), cover=["N2-CAP-F10"])
+    neg = Est(-0.3, -0.4, -0.2)
+    un = {"E-negative": n2_outcome(literal_state(E={F20: neg}))["state"],
+          "V-negative": n2_outcome(literal_state(E={F20: Est(0.01, -0.02, 0.04)}, V={2 / 3: neg}))["state"]}
+    B.chk("N2's certifications are unsigned (PIN-n-30; §3's |mean|): span_reward at −0.3 beyond the ceiling is "
+          "SHARED; span_reward still and the valence direction at −0.3 at the norm-matched point is SPECIFIC",
+          un == {"E-negative": "SHARED", "V-negative": "SPECIFIC"}, un, cover=["N2-UNSIGNED"])
+    sa_, sb_ = literal_state(), literal_state(MAP_B)
+    ga_, gb_ = n2_outcome(sa_), n2_outcome(sb_)
+    ia_ = n2_outcome(literal_state(complete={"N2-E": False}))
+    ib_ = n2_outcome(literal_state(MAP_B, complete={"N2-E": False}))
+    bf = {"a": ga_["beside"][F10]["E"] == sa_.E[F10] and ga_["beside"][F10]["V"] == sa_.V[1 / 3]
+          and ga_["beside"][F10]["certified_V"] is True and ga_["beside"][F10]["point"] == 1 / 3,
+          "b": gb_["beside"][F20]["E"] == sb_.E[F20] and gb_["beside"][F20]["V"] == sb_.V[1.0]
+          and gb_["beside"][F20]["certified_V"] is True and gb_["beside"][F20]["point"] == 1.0,
+          "indet-f": (ia_["state"], ia_["f"], ib_["state"], ib_["f"]) == ("INDETERMINATE", F20, "INDETERMINATE", F10)}
+    gu_ = n2_outcome(literal_state(E={F10: Est(0.01, -0.02, 0.04)}))["beside"][F10]
+    bf["a-E-uncertified"] = gu_["certified"] is False and gu_["certified_V"] is True
+    B.chk("N2's beside carries the other f's span_reward estimate and N1-V at its point with that certification "
+          "(ADDENDUM-n1 §5.3: 'against N1-V at d = 1' when the cap binds), on shapes (a) and (b), each certified on "
+          "its own (span_reward uncertified beside a certified valence); an INDETERMINATE N2 names its decision f",
+          all(bf.values()), bf, cover=["N2-BESIDE-FIELDS"])
     # N4
     for cid, told, e, want in (("N4-PASS", Est(1.0, 0.8, 1.2, 98), 0.1, "PASS"),
                                ("N4-REVERSE", Est(-1.0, -1.2, -0.8, 98), 0.1, "REVERSE"),
@@ -1126,7 +1302,7 @@ def _bt_outcomes(B: _Battery) -> None:
                       ("N4-NOREAD-pause:N4-Ts", {"paused": {"N4-Ts": True}}),
                       ("N4-NOREAD-E-undefined", {"e_sham": float("nan")})):
         g = n4_outcome(literal_state(**over))
-        tag = " (OPEN-Q6, pending the seat)" if "pause" in cid else ""
+        tag = " (OPEN-Q6 as ruled)" if "pause" in cid else ""
         B.chk(f"N4 INDETERMINATE, no read obtained, by {cid[10:]}{tag}", g["state"] == "INDETERMINATE" and g["no_read"]
               and g["causes"] == [cid[10:]], g, cover=[cid])
     g = n4_outcome(literal_state(told=Est(-0.3, -0.4, -0.2, 98), e_sham=0.1))
@@ -1179,6 +1355,15 @@ def _bt_tables(B: _Battery) -> None:
     for a in ("N1-V", "N2-E", "N2-S", "N2-C"):
         for c in ("CERT", "UNCERT", "INCOMPLETE"):
             B.chk(f"G-LEAK-n table: {a} {c.lower()} reached", (a, c) in seen, sorted(seen), cover=[f"GLEAK-{a}-{c}"])
+    gi = gleak_table(literal_state(complete={"N1-P": False}))
+    rows_v = {r["point"]: r for r in gi if r["arm"] == "N1-V"}
+    rows_e = [r for r in gi if r["arm"] == "N2-E"]
+    gi_ok = (all(rows_v[p]["certified"] is None and "N1-P" in rows_v[p]["why"] for p in MAP_A.n1p_points())
+             and rows_v[0.5]["certified"] is not None and len(rows_e) == 2
+             and all(r["certified"] is None and "N1-P" in r["why"] for r in rows_e))
+    B.chk("G-LEAK-n's table with N1-P incomplete: every row at a point N1-P reads (±1, d_20's and d_eq's; N2's "
+          "matched points) is not computed, naming N1-P, and +1/2, which N1-P does not read, is computed (OPEN-Q2 as "
+          "ruled)", gi_ok, {p: r.get("why") for p, r in rows_v.items()}, cover=["GLEAK-N1P-INCOMPLETE"])
     st3 = literal_state(gread={("valence", 1.0): "FAIL", ("span_reward", F10): "PASS"})
     del st3.gread[("valence", MAP_A.resolved()["d_eq"])]
     gt = gread_table(st3)
@@ -1186,8 +1371,10 @@ def _bt_tables(B: _Battery) -> None:
     for c in ("PASS", "FAIL", "NOT-COMPUTED"):
         B.chk(f"G-READ-n table: a {c} cell is reported as such", c in states, sorted(states), cover=[f"GREAD-{c}"])
     ent = {r["label"]: r["enters"] for r in gt if r["enters"]}
-    B.chk("G-READ-n table: exactly three cells enter §5 -- valence +1 (N1), valence d_eq (dose), span_reward f = 0.20 "
-          "(N2)", sorted(ent) == sorted(["+1", "d_eq", F20]), ent,
+    ent_b = {r["label"]: r["enters"] for r in gread_table(literal_state(MAP_B)) if r["enters"]}
+    B.chk("G-READ-n table: exactly three cells enter §5 -- valence +1 (N1), valence d_eq (dose), span_reward at N2's "
+          "decision f (N2): f = 0.20 on shape (a), f = 0.10 when the cap binds (OPEN-Q7 as ruled)",
+          sorted(ent) == sorted(["+1", "d_eq", F20]) and sorted(ent_b) == sorted(["+1", "d_eq", F10]), (ent, ent_b),
           cover=["GREAD-ENTERS-N1", "GREAD-ENTERS-DOSE", "GREAD-ENTERS-N2"])
 
 
@@ -1197,22 +1384,45 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
           and C_DOSE_ND_NOT_READABLE.endswith(verb["nd_cna"].lstrip("…").split("and ", 1)[1]))
     B.chk("§5's four sentences and two labels are the proposal's italic spans at n:136 and n:138, character for "
           "character; Code's expansion of the ellipsis ends in the span's own words", ok, cover=["SENT-VERBATIM"])
+    add = {"MOVE_NOT_CERTIFIED": MOVE_NOT_CERTIFIED == verb["add_not_cert"], "OLD_MOVE": OLD_MOVE == verb["add_old"],
+           "A6": A6_DOSE_ND_READABLE_N4 == verb["add_a6"], "MOVE_AGAINST": MOVE_AGAINST == verb["add_against"],
+           "F_AT": F_AT == verb["add_f"], "labels": ANSWERED == verb["add_ans"] and CNA == verb["add_cna"],
+           "once": T_DOSE_ND_ANSWERED.count(OLD_MOVE) == C_DOSE_ND_NOT_READABLE.count(OLD_MOVE) == 1
+           and A6_DOSE_ND_READABLE_N4.count(MOVE_NOT_CERTIFIED) == 1
+           and all(C_N2[s].count(F_AT) == 1 for s in ("SPECIFIC", "SHARED", "NULL")),
+           "slotted": MOVE_SLOT in D_ND_ANSWERED and MOVE_SLOT in D_ND_NOT_READABLE and MOVE_SLOT in D_ND_READABLE_N4
+           and OLD_MOVE not in D_ND_ANSWERED + D_ND_NOT_READABLE and MOVE_NOT_CERTIFIED not in D_ND_READABLE_N4,
+           "b struck": B_STRUCK.startswith("struck (ADDENDUM-n1 §4): ")
+           and all(c[:1].upper() + c[1:] in verb["add_b4"] or c in verb["add_b4"]
+                   for c in B_STRUCK.split(": ", 1)[1].split("; "))
+           and "is struck; the VERDICTS entry says so" in verb["add_b4"]}
+    B.chk("ADDENDUM-n1 §7.6's forms are its italic spans, character for character (the movement not certified, the "
+          "cell of §7.2, the movement against the conditioned zone, 'at f = [f]', the two labels) and §5's clause is "
+          "its quotation; each replaced exactly once, leaving the [movement] slot (OPEN-Q8 as ruled); secondary (b) "
+          "reads struck in §4's own clauses",
+          all(add.values()), [k for k, v in add.items() if not v], cover=["SENT-ADDENDUM"])
     forms = {tuple(f) for f in (["i"], ["iv"], ["i", "iv"])}
     txt = {f: sentence_n1("PARTIAL", n4="PASS", gr1="PASS", failing=list(f))["text"] for f in forms}
-    B.chk("N1 PARTIAL names its failing conjuncts (OPEN-Q8, pending the seat): three forms, each naming exactly its "
+    B.chk("N1 PARTIAL names its failing conjuncts (OPEN-Q8 as ruled): three forms, each naming exactly its "
           "conjuncts, no slot left",
           len(set(txt.values())) == 3 and all("[failing]" not in t for t in txt.values())
           and all(all(CONJUNCT_TEXT[k] in t for k in f) and all(CONJUNCT_TEXT[k] not in t for k in ("i", "iv")
                                                                 if k not in f) for f, t in txt.items()),
           cover=["SENT-FAILING-PARTIAL"])
-    sets = [list(c) for r in (1, 2, 3) for c in itertools.combinations(("ci+1", "ii", "iii"), r)]
+    sets = [list(c) for r in (1, 2, 3, 4) for c in itertools.combinations(("ci+1", "ii", "iii", "sign"), r)]
     txt = [sentence_n1("NOT-REPLICATED", n4="PASS", gr1="FAIL", failing=f)["text"] for f in sets]
-    B.chk("N1 NOT-REPLICATED names its failing conjuncts (OPEN-Q8, pending the seat): seven forms, each naming "
-          "exactly its own", len(set(txt)) == 7
-          and all(all(CONJUNCT_TEXT[k] in t for k in f) for f, t in zip(sets, txt)), cover=["SENT-FAILING-NOTREP"])
+    t_ag = sentence_n1("NOT-REPLICATED", n4="PASS", gr1="FAIL", failing=["ii", "sign"], against=True)["text"]
+    B.chk("N1 NOT-REPLICATED names its failing conditions (OPEN-Q8 as ruled; the sign, ADDENDUM-n1 §7.3): fifteen "
+          "forms, each naming exactly its own; with a certified movement against the conditioned zone, the sign names "
+          "it (PIN-n-28)", len(set(txt)) == 15
+          and all(all(CONJUNCT_TEXT[k] in t for k in f) and all(CONJUNCT_TEXT[k] not in t for k in ("ci+1", "ii", "iii",
+                                                                                                 "sign") if k not in f)
+                  for f, t in zip(sets, txt))
+          and all(MOVE_AGAINST not in t for t in txt) and MOVE_AGAINST in t_ag and CONJUNCT_TEXT["ii"] in t_ag,
+          cover=["SENT-FAILING-NOTREP"])
     t = sentence_n1("INDETERMINATE", n4="PASS", gr1="PASS", causes=["pause:N1-R", "incomplete:N1-P"])["text"]
     t2 = sentence_n4("INDETERMINATE", no_read=True, causes=["incomplete:N4-T"])["text"]
-    B.chk("INDETERMINATE sentences carry their causes (OPEN-Q8, pending the seat)",
+    B.chk("INDETERMINATE sentences carry their causes (OPEN-Q8 as ruled)",
           "pause:N1-R, incomplete:N1-P" in t and "incomplete:N4-T" in t2
           and "no read obtained" in t2, (t, t2), cover=["SENT-CAUSES"])
     bad = [("N1", lambda: sentence_n1("PASS", n4="PASS", gr1="PASS")),
@@ -1236,9 +1446,80 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
             i = b + 1
         return out
     stray = sorted({t for v in cf.values() for t in brackets(v) if t not in SLOTS})
-    B.chk(f"Code's {len(cf)} sentence forms (OPEN-Q8) are pinned by digest (CODE_FORMS_SHA256), pairwise distinct, "
-          "and use declared slots only", dig == CODE_FORMS_SHA256 and len(set(cf.values())) == len(cf) and not stray,
+    B.chk(f"the module's {len(cf)} sentence forms beyond §5's verbatim cells (Code's, OPEN-Q8 as ruled, and "
+          "ADDENDUM-n1 §7.6's) are pinned by digest (CODE_FORMS_SHA256), pairwise distinct, and use declared slots "
+          "only", dig == CODE_FORMS_SHA256 and len(set(cf.values())) == len(cf) and not stray,
           (dig, stray), cover=["SENT-CODE-FORMS"])
+    # ADDENDUM-n1 §7.6's forms filled, against literal text written here (the v3 review's B1-B3)
+    def s4(x): return f"{x:+.4f}"
+    def p4(x): return f"{x:.4f}"
+    def c4(e): return f"[{e.lo:+.4f}, {e.hi:+.4f}]"
+    deq_a = MAP_A.resolved()["d_eq"]
+    nc, ag = Est(0.03, -0.01, 0.07), Est(-0.3, -0.4, -0.2)
+    mv = {"nc": f"the margin's movement is not certified (Δm(d_eq) = {s4(nc.mean)} nats {c4(nc)} against a leak "
+                f"ceiling of {p4(0.05)})",
+          "ag": f"the margin moves against the conditioned zone beyond the leak ceiling (Δm = {s4(ag.mean)} nats "
+                f"{c4(ag)}, ceiling {p4(0.05)})"}
+    got_d, want_d = {}, {}
+    for mk, v in (("nc", nc), ("ag", ag)):
+        for form, over in (("answered", {}), ("not readable", {"gread": {("valence", deq_a): "FAIL"}}),
+                           ("A.6", {"told": Est(0.2, 0.1, 0.3, 98), "e_sham": 0.5})):
+            st_f = literal_state(V={deq_a: v}, **over)
+            o_f = outcomes(st_f)
+            got_d[(mk, form)] = (o_f["dose"]["state"], o_f["dose"]["against"],
+                                 sentence_set_filled(o_f, st_f, route="B", auc={"d_eq": 0.9})["7.2"]["text"])
+            if form == "answered":
+                t_w = ("at this program's dose the state is readable at the decision (AUC 0.900) and " + mv[mk]
+                       + ": dose is an explanation of record for the program's null")
+            elif form == "not readable":
+                t_w = ("at this program's dose " + mv[mk] + " and the state is not readable at the decision: dose is "
+                       "an explanation of record, unresolved")
+            else:
+                t_w = ("at this program's dose the state is readable at the decision (AUC 0.900) and " + mv[mk]
+                       + ", but BK's apparatus has not registered an instructed preference on this checkpoint (N4 "
+                       "DEAD): dose is an explanation of record, unresolved")
+            want_d[(mk, form)] = ("NOT-DETECTABLE", mk == "ag", t_w)
+    B.chk("the dose NOT-DETECTABLE sentence, filled, equals literal text in each of its three forms (answered; not "
+          "readable; N4 not PASS), with the movement not certified and certified against the conditioned zone "
+          "(ADDENDUM-n1 §7.6; six sentences)", got_d == want_d, [k for k in want_d if got_d.get(k) != want_d[k]],
+          cover=["SENT-FILLED-DOSE-ND"])
+    got_1, want_1 = {}, {}
+    for k1, v in (("against", Est(-0.6, -0.7, -0.5)), ("within", Est(-0.03, -0.04, -0.02))):
+        st_f = literal_state(V={1.0: v})
+        o_f = outcomes(st_f)
+        got_1[k1] = sentence_set_filled(o_f, st_f, route="B", auc={"d_eq": 0.9})["7.1"]["text"]
+        failing = ("the mean Δm at d = +1 above 0 (the margin moves against the conditioned zone beyond the leak "
+                   f"ceiling (Δm = {s4(v.mean)} nats {c4(v)}, ceiling {p4(0.05)}))" if k1 == "against" else
+                   "conjunct (iii) (G-LEAK-n certification at d = +1); the mean Δm at d = +1 above 0")
+        want_1[k1] = ("NOT-REPLICATED: BK's fixed-text effect does not replicate on OLMo-2-32B Instruct in this "
+                      f"program's implementation on a reconstructed direction; {failing} fails: Δm(+1) = {s4(v.mean)} "
+                      f"nats {c4(v)}, theirs 1.09 [1.00, 1.19]; slope {s4(0.9)} against a floor of {p4(0.3)}; leak "
+                      f"ceiling {p4(0.05)} — answered")
+    B.chk("N1's NOT-REPLICATED sentence, filled, equals literal text: a certified movement against the conditioned "
+          "zone named in the sign's place with the seat's clause (PIN-n-28), and a negative mean within the ceiling "
+          "named as (iii) and the sign, no clause", got_1 == want_1, [k for k in want_1 if got_1.get(k) != want_1[k]],
+          cover=["SENT-FILLED-N1-AGAINST"])
+    head = "N2, descriptive (§7.3; it licenses no thesis sentence): "
+    e_lo = Est(0.01, -0.02, 0.04)
+    spec = (head + "SPECIFIC: at f = 0.10 this program's evaluative axis (span_reward) does not move BK's apparatus "
+            f"beyond the leak ceiling (Δm = {s4(0.01)} nats against {p4(0.05)}) while the valence direction of record "
+            f"at the norm-matched point does (Δm = {s4(0.72)} nats) — ")
+    want_2 = {"SHARED": head + "SHARED: at f = 0.10 this program's evaluative axis (span_reward) moves BK's apparatus "
+                               f"beyond the leak ceiling (Δm = {s4(0.2)} nats {c4(Est(0.2, 0.1, 0.3))} against "
+                               f"{p4(0.05)}); the valence direction of record at the norm-matched point: Δm = "
+                               f"{s4(0.72)} nats",
+              "SPECIFIC": spec + "answered", "SPECIFIC, f0.10 FAIL": spec + "concluded, not answered",
+              "SPECIFIC, f0.20 FAIL": spec + "answered"}
+    got_2 = {}
+    for k2, over in (("SHARED", {}), ("SPECIFIC", {"E": {F10: e_lo}}),
+                     ("SPECIFIC, f0.10 FAIL", {"E": {F10: e_lo}, "gread": {("span_reward", F10): "FAIL"}}),
+                     ("SPECIFIC, f0.20 FAIL", {"E": {F10: e_lo}, "gread": {("span_reward", F20): "FAIL"}})):
+        st_f = literal_state(MAP_B, **over)
+        got_2[k2] = sentence_set_filled(outcomes(st_f), st_f, route="B", auc={"d_eq": 0.9})["7.3"]["text"]
+    B.chk("N2's sentence where the cap binds (2·0.72 > 1), filled, equals literal text: 'at f = 0.10', span_reward's "
+          "figures at f = 0.10, the valence direction's at d_eq, the ceiling there; its label from span_reward's "
+          "G-READ-n at f = 0.10 alone (OPEN-Q7 as ruled)", got_2 == want_2,
+          [k for k in want_2 if got_2.get(k) != want_2[k]], cover=["SENT-FILLED-N2-CAP"])
 
 
 def _canon(x: Any) -> str:
@@ -1280,11 +1561,13 @@ def _bt_tuple_pass(verb: Mapping[str, str]) -> tuple[dict, str, dict, dict]:
             r["T7"] = all((out[k]["label"] is None) if not isnull else
                           out[k]["label"] == (ANSWERED if (n4 == "PASS" and g == "PASS") else CNA)
                           for k, (isnull, g) in nulls.items())
+            nd_am = verb["nd_ans"].replace(verb["add_old"], "[movement]")   # §5's cell as ADDENDUM-n1 §7.6 amends it
             v8 = {"7.1": verb["rep"] if n1 == "REPLICATED" else None,
                   "7.2": verb["det"] if dose == "DETECTABLE" else
-                  verb["nd_ans"] if (dose == "NOT-DETECTABLE" and n4 == "PASS" and grd == "PASS") else None}
+                  nd_am if (dose == "NOT-DETECTABLE" and n4 == "PASS" and grd == "PASS") else None}
             r["T8"] = all((out[k]["text"] == v) if v is not None else
-                          (out[k]["text"] not in (verb["rep"], verb["det"], verb["nd_ans"])) for k, v in v8.items())
+                          (out[k]["text"] not in (verb["rep"], verb["det"], verb["nd_ans"], nd_am))
+                          for k, v in v8.items())
         toks = {m for v in out.values() for m in re.findall(r"\[[^\[\]]*\]", v["text"])}
         r["T9"] = toks <= allowed
         for kk in names:
@@ -1303,9 +1586,10 @@ def _bt_expected_tallies() -> dict:
     t = {"7.1": {("REPLICATED", "§5", None, False): 480, ("PARTIAL", "Code", None, False): 480,
                  ("NOT-REPLICATED", "Code", ANSWERED, False): 48, ("NOT-REPLICATED", "Code", CNA, False): 432,
                  ("INDETERMINATE", "Code", None, False): 480},
-         "7.2": {("DETECTABLE", "§5", None, False): 640, ("NOT-DETECTABLE", "§5", ANSWERED, False): 64,
-                 ("NOT-DETECTABLE", "§5, its ellipsis expanded by Code", CNA, False): 320,
-                 ("NOT-DETECTABLE", "Code", CNA, False): 256, ("INDETERMINATE", "Code", None, False): 640},
+         "7.2": {("DETECTABLE", "§5", None, False): 640,
+                 ("NOT-DETECTABLE", "§5, amended by ADDENDUM-n1 §7.6", ANSWERED, False): 64,
+                 ("NOT-DETECTABLE", "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6", CNA, False): 320,
+                 ("NOT-DETECTABLE", "ADDENDUM-n1 §7.6", CNA, False): 256, ("INDETERMINATE", "Code", None, False): 640},
          "7.3": {("SPECIFIC", "Code", ANSWERED, False): 48, ("SPECIFIC", "Code", CNA, False): 432,
                  ("SHARED", "Code", None, False): 480, ("NULL", "Code", ANSWERED, False): 48,
                  ("NULL", "Code", CNA, False): 432, ("INDETERMINATE", "Code", None, False): 480},
@@ -1322,15 +1606,16 @@ def _bt_tuples(B: _Battery, verb: Mapping[str, str]) -> None:
     n_ev = len(evaluations())
     names = {"T1": "one sentence set: the four slots 7.1, 7.2, 7.3, N4, each a non-empty text, each state the "
                    "tuple's coordinate (NOT-RUN: all four)",
-             "T2": "the set equals the oracle's (§5's verbatim cells read from the proposal file)",
+             "T2": "the set equals the oracle's (§5's verbatim cells read from the proposal file, ADDENDUM-n1 §7.6's "
+                   "from the addendum's)",
              "T3": "7.1 depends on (N1, G-READ-n valence +1, N4) only",
              "T4": "7.2 depends on (dose, G-READ-n valence d_eq, N4) only",
-             "T5": "7.3 depends on (N2, G-READ-n span_reward f = 0.20, N4) only",
+             "T5": "7.3 depends on (N2, G-READ-n span_reward at N2's decision f, N4) only",
              "T6": "N4's line depends on (N4, no read obtained) only",
-             "T7": "(OPEN-Q3, pending the seat) a §0.6 label exactly on the null outcomes (NOT-REPLICATED, "
+             "T7": "(OPEN-Q3 as ruled) a §0.6 label exactly on the null outcomes (NOT-REPLICATED, "
                    "NOT-DETECTABLE, SPECIFIC, NULL); answered iff N4 PASS and the slot's G-READ-n cell PASS",
-             "T8": "§5's verbatim sentences exactly in their cells (REPLICATED; DETECTABLE; NOT-DETECTABLE answered) "
-                   "and nowhere else",
+             "T8": "§5's sentences exactly in their cells (REPLICATED; DETECTABLE; NOT-DETECTABLE answered, as "
+                   "ADDENDUM-n1 §7.6 amends it) and nowhere else",
              "T9": "no bracketed token outside the declared slots (BK's '[1.00, 1.19]' is text)"}
     for kk, nm in names.items():
         c = counts[kk]
@@ -1341,7 +1626,7 @@ def _bt_tuples(B: _Battery, verb: Mapping[str, str]) -> None:
           "640 each (NOT-DETECTABLE 64 / 320 / 256); 7.3 480 each (SPECIFIC and NULL 48 / 432); N4 384 x 5; NOT-RUN 1",
           tal == want, {k: tal[k] for k in tal if tal[k] != want.get(k)}, cover=["TUP-T10"])
     n_t = len(tuple_space())
-    B.chk(f"the outcome space (OPEN-Q4, pending the seat): {n_t} tuples (4 x 3 x 4 x 4 x 2 = 384, + NOT-RUN), {n_ev} "
+    B.chk(f"the outcome space (OPEN-Q4 as ruled: confirmed): {n_t} tuples (4 x 3 x 4 x 4 x 2 = 384, + NOT-RUN), {n_ev} "
           f"evaluations (384 x 4 G-READ inputs + 96 x 4 for N4's second INDETERMINATE form + NOT-RUN)",
           n_t == 385 and n_ev == 1921,
           (n_t, n_ev), cover=["TUP-COUNT"])
@@ -1360,18 +1645,19 @@ _N2_PATTERNS = ({}, {"paused": {"N2-E": True}}, {"complete": {"N2-E": False}})
 
 def map_reach(dmap: DoseMap) -> tuple[set, bool, bool]:
     """The (N1, dose, N2) triples the outcome layer produces over a grid of states on one dose map: six estimates at
-    each distinct point of +1, −1, d_eq, d_20, the slope above or not above its floor, span_reward's f = 0.20 effect
-    certified or not, and every completeness / pause pattern; returns the set, whether dose INDETERMINATE <=> N1
-    INDETERMINATE held throughout, and whether nothing raised."""
+    each distinct point of +1, −1, d_eq, d_20, the slope above or not above its floor, span_reward's effect at N2's
+    decision f certified or not, and every completeness / pause pattern; returns the set, whether dose INDETERMINATE
+    <=> N1 INDETERMINATE held throughout, and whether nothing raised."""
     r = dmap.resolved()
     pts = sorted({1.0, -1.0, r["d_eq"], r["d_20"]}, reverse=True)
+    fd = dmap.n2_decision_f()
     seen, iff, clean = set(), True, True
     for combo in itertools.product(_MENU, repeat=len(pts)):
         V = dict(zip(pts, combo))
         for slope_ok, e_cert in itertools.product((True, False), (True, False)):
             for pat, pat2 in itertools.product(_PATTERNS, _N2_PATTERNS):
                 over = {"V": V, "floor_V": 0.3 if slope_ok else 1.5,
-                        "E": {F20: Est(0.3, 0.2, 0.4) if e_cert else Est(0.01, -0.02, 0.04)}}
+                        "E": {fd: Est(0.3, 0.2, 0.4) if e_cert else Est(0.01, -0.02, 0.04)}}
                 st = literal_state(dmap, **over)
                 for k in ("paused", "complete"):
                     getattr(st, k).update(pat.get(k, {}))
@@ -1388,13 +1674,21 @@ def map_reach(dmap: DoseMap) -> tuple[set, bool, bool]:
 
 
 def map_reach_by_hand(shape: str) -> set:
-    """Hand-derived reachable (N1, dose, N2) triples per merge shape (the question block's Q5 gives the derivation:
-    results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md)."""
+    """Hand-derived reachable (N1, dose, N2) triples per coupling shape: which of N1's +1, dose's d_eq point and N2's
+    decision point coincide (the question block's Q5 derivation,
+    results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, with N2's decision f as OPEN-Q7 is ruled). (a) none; (b)
+    the cap binds and d_eq's point is not +1: N2 is decided at dose's point, so no DETECTABLE beside NULL; (c) d_20's
+    point is +1 without the cap: N2 is decided at N1's +1, which REPLICATED and PARTIAL certify, so no NULL beside them;
+    (d) d_eq's point is +1: all three meet there."""
     det = ("DETECTABLE", "NOT-DETECTABLE")
+    dec = ("REPLICATED", "PARTIAL", "NOT-REPLICATED")
     if shape == "a":
-        return {(a, d, c) for a in ("REPLICATED", "PARTIAL", "NOT-REPLICATED") for d in det for c in N2_STATES} | \
+        return {(a, d, c) for a in dec for d in det for c in N2_STATES} | \
                {("INDETERMINATE", "INDETERMINATE", c) for c in N2_STATES}
     if shape == "b":
+        return ({(a, d, c) for a in dec for d in det for c in N2_STATES if (d, c) != ("DETECTABLE", "NULL")}
+                | {("INDETERMINATE", "INDETERMINATE", c) for c in N2_STATES})
+    if shape == "c":
         return ({(a, d, c) for a in ("REPLICATED", "PARTIAL") for d in det for c in ("SPECIFIC", "SHARED",
                                                                                     "INDETERMINATE")}
                 | {("NOT-REPLICATED", d, c) for d in det for c in N2_STATES}
@@ -1410,18 +1704,19 @@ def map_reach_by_hand(shape: str) -> set:
 
 def _bt_reachability(B: _Battery) -> None:
     res = {}
-    for shape, dm in (("a", MAP_A), ("b", MAP_B), ("d", MAP_D)):
+    for shape, dm in (("a", MAP_A), ("b", MAP_B), ("c", MAP_C), ("d", MAP_D)):
         seen, iff, clean = map_reach(dm)
         res[shape] = (seen, iff, clean)
-    B.chk("reachability: on every enumerated state of the three shapes, dose is INDETERMINATE iff N1 is (so 160 of the "
+    B.chk("reachability: on every enumerated state of the four shapes, dose is INDETERMINATE iff N1 is (so 160 of the "
           "384 product tuples are unreachable on any map: 64 with N1 INDETERMINATE and dose decided, 96 the reverse)",
           all(v[1] for v in res.values()), cover=["REACH-DOSE-IFF-N1"])
     B.chk("reachability: the outcome layer raised on no enumerated state", all(v[2] for v in res.values()),
           cover=["REACH-NO-RAISE"])
-    for shape, n in (("a", 28), ("b", 24), ("d", 17)):
+    for shape, n in (("a", 28), ("b", 25), ("c", 24), ("d", 17)):
         seen = res[shape][0]
         want = map_reach_by_hand(shape)
-        what = {"a": "all points distinct", "b": "d_20 merged into +1 (the cap binds)",
+        what = {"a": "all points distinct", "b": "the cap binds, N2 decided at d_eq's point (OPEN-Q7 as ruled)",
+                "c": "d_20 merged into +1 without the cap, N2 decided there",
                 "d": "d_20 and d_eq merged into +1"}[shape]
         B.chk(f"reachability, shape ({shape}) {what}: "
               f"{len(seen)} (N1, dose, N2) triples, the hand-derived {n}; x N4 (4) x G-READ-n at d_eq (2) = "
@@ -1503,23 +1798,34 @@ def _bt_numerics(B: _Battery) -> None:
           all(abs(pct_interval(np.array(arr), (p, 100 - p))[0] - _bt_hand_pct(arr, p)) <= 1e-12
               for p in (1.0, 2.5)) and all(abs(pct_interval(np.array(arr), (100 - p, p))[1] - _bt_hand_pct(arr, p))
                                            <= 1e-12 for p in (97.5, 99.0)), cover=["NUM-PCT-METHOD"])
+    xo = (1.0, 0.5, 2 / 3, 1 / 3, -1.0)
+    yo = np.array([[1.1, 0.4, 0.7, 0.2, -0.9], [0.0, 0.0, 0.0, 0.0, 0.0], [2.0, 1.0, 4 / 3, 2 / 3, -2.0]])
+    so = session_slopes_origin(xo, yo)
+    want_o = [float(np.linalg.lstsq(np.array(xo)[:, None], row, rcond=None)[0][0]) for row in yo]
+    closed_o = [sum(xi * yi for xi, yi in zip(xo, row)) / sum(xi * xi for xi in xo) for row in yo.tolist()]
+    ok0, msg0 = _bt_raises(lambda: session_slopes_origin((1.0, 0.0, -1.0), np.array([[1.0, 0.0, -1.0]])), (AnlStop,))
+    B.chk("the per-session slope of record is OLS through the origin over the nonzero points (OPEN-Q1 as ruled (b)): "
+          "equal to a no-intercept least squares and to Σ d·Δm / Σ d²; an exact line of slope 2 gives 2, a flat "
+          "session 0; the point d = 0 refused", all(abs(a - b) <= 1e-12 and abs(a - c) <= 1e-12
+                                                   for a, b, c in zip(so, want_o, closed_o))
+          and abs(so[2] - 2.0) <= 1e-12 and so[1] == 0.0 and ok0, (list(so), msg0), cover=["NUM-SLOPE-CLOSED-FORM"])
     x = (1.0, 0.5, 2 / 3, 1 / 3, 0.0, -1.0)
     y = np.array([[1.1, 0.4, 0.7, 0.2, 0.0, -0.9], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [2.0, 1.0, 4 / 3, 2 / 3, 0.0, -2.0]])
     s = session_slopes(x, y)
     want = [float(np.polyfit(np.array(x), row, 1)[0]) for row in y]
     xm = sum(x) / 6
     closed = [sum((xi - xm) * yi for xi, yi in zip(x, row)) / sum((xi - xm) ** 2 for xi in x) for row in y.tolist()]
-    B.chk("the per-session slope is OLS with an intercept (equal to polyfit and to the closed form; an exact line of "
-          "slope 2 gives 2; a flat session 0)", all(abs(a - b) <= 1e-12 and abs(a - c) <= 1e-12
-                                                     for a, b, c in zip(s, want, closed))
-          and abs(s[2] - 2.0) <= 1e-12 and s[1] == 0.0, list(s), cover=["NUM-SLOPE-CLOSED-FORM"])
+    B.chk("the with-intercept slope reported beside is OLS with an intercept over the points with d = 0, Δm(0) = 0 "
+          "(equal to polyfit and to the closed form; an exact line of slope 2 gives 2; a flat session 0)",
+          all(abs(a - b) <= 1e-12 and abs(a - c) <= 1e-12 for a, b, c in zip(s, want, closed))
+          and abs(s[2] - 2.0) <= 1e-12 and s[1] == 0.0, list(s), cover=["NUM-SLOPE-BESIDE"])
     xa = (1.0, 0.5, 0.0, -1.0)
     ya = np.array([[1.0, 0.6, 0.0, -0.6]])
     s_int = float(session_slopes(xa, ya)[0])
-    s_org = float(sum(a * b for a, b in zip(xa, ya[0])) / sum(a * a for a in xa))
-    B.chk("on an asymmetric grid OLS with an intercept and a fit through the origin differ, so OPEN-Q1 (pending the "
-          "seat) decides a figure (here %.4f vs %.4f)" % (s_int, s_org), abs(s_int - s_org) > 1e-3,
-          cover=["NUM-SLOPE-INTERCEPT"])
+    s_org = float(session_slopes_origin((1.0, 0.5, -1.0), np.array([[1.0, 0.6, -0.6]]))[0])
+    B.chk("on an asymmetric grid the two fits differ, so OPEN-Q1's ruling decides a figure: through the origin %.4f "
+          "(the slope of record; by hand 1.9 / 2.25), with an intercept %.4f (beside)" % (s_org, s_int),
+          abs(s_int - s_org) > 1e-3 and abs(s_org - 1.9 / 2.25) <= 1e-12, cover=["NUM-SLOPE-INTERCEPT"])
     v = [1.0, 2.0, 4.0]
     m_ = sum(v) / 3
     B.chk("sd0 is the population SD (ddof 0), C6", abs(sd0(v) - math.sqrt(sum((a - m_) ** 2 for a in v) / 3)) <= 1e-15,
@@ -1532,12 +1838,15 @@ def _bt_numerics(B: _Battery) -> None:
     shp = {"a": MAP_A.points() == (1.0, 2 / 3, 0.5, 1 / 3, 0.0, -1.0) and MAP_A.merged() == {"d_20": False,
                                                                                                "d_eq": False},
            "b": MAP_B.points() == (1.0, 0.72, 0.5, 0.0, -1.0) and MAP_B.merged() == {"d_20": True, "d_eq": False},
+           "c": MAP_C.points() == (1.0, 0.5, 0.0, -1.0) and MAP_C.merged() == {"d_20": True, "d_eq": True}
+           and (MAP_C.resolved()["d_20"], MAP_C.resolved()["d_eq"]) == (1.0, 0.5),
            "d": MAP_D.points() == (1.0, 0.5, 0.0, -1.0) and MAP_D.merged() == {"d_20": True, "d_eq": True},
            "merge-1/2": DoseMap(0.53125, 1.0).resolved()["d_eq"] == 0.5,
            "no-merge": DoseMap(0.5625, 1.0).resolved()["d_eq"] == 0.5625,
            "d_20-into-1/2": DoseMap(0.25, 0.5).resolved()["d_20"] == 0.5}
-    B.chk("the dose map: shapes (a), (b), (d) and the merge rule at clear distances (0.03125 merges, 0.0625 does not; "
-          "d_20 = 2·0.25 = 0.5 is BK's +1/2)", all(shp.values()), shp, cover=["NUM-DOSEMAP-SHAPES"])
+    B.chk("the dose map: shapes (a), (b), (c), (d) and the merge rule at clear distances (0.03125 merges, 0.0625 does "
+          "not; d_20 = 2·0.25 = 0.5 is BK's +1/2; on (c) d_20 = 0.98 folds into +1 and d_eq = 0.49 into +1/2)",
+          all(shp.values()), shp, cover=["NUM-DOSEMAP-SHAPES"])
     good = DoseMap((0.10 * 23.90625) / (0.3 * 25.5), min(1.0, 2.0 * ((0.10 * 23.90625) / (0.3 * 25.5))), 0.3, 25.5,
                    23.90625)
     d_r2 = (0.10 * 23.90625) / (0.2 * 25.5)                                  # d_eq computed from a rho of 0.2
@@ -1550,28 +1859,34 @@ def _bt_numerics(B: _Battery) -> None:
            "R-null": replace(good, R=None).problems(), "d_eq": replace(good, R_ell=24.0).problems()}
     B.chk("the dose map refuses d_20 above or below min(1.0, 2.0 * d_eq), a non-positive or nonfinite d_eq, a fold "
           "into 0, rho above or below 0.3 (each with d_eq computed from it where that matters), R or R_ell not a "
-          "positive float, and d_eq ≠ (0.10 * R_ell) / (rho * R) (PIN-n-14); it passes shapes (a), (b), (d) and an "
+          "positive float, and d_eq ≠ (0.10 * R_ell) / (rho * R) (PIN-n-14); it passes shapes (a) to (d) and an "
           "exact identity (R_ell 23.90625, R 25.5: d_eq 0.3125)", all(bad.values()) and not MAP_A.problems()
-          and not MAP_B.problems() and not MAP_D.problems() and not good.problems() and good.d_eq == 0.3125,
+          and not MAP_B.problems() and not MAP_C.problems() and not MAP_D.problems() and not good.problems()
+          and good.d_eq == 0.3125,
           {k: v[:1] for k, v in bad.items()}, cover=["NUM-DOSEMAP-REFUSE"])
-    pa, pb, pd = MAP_A.expected_points(), MAP_B.expected_points(), MAP_D.expected_points()
+    pa, pb, pc, pd = MAP_A.expected_points(), MAP_B.expected_points(), MAP_C.expected_points(), MAP_D.expected_points()
     f_pts = [{"label": "f0.10", "value": 0.10, "merged": []}, {"label": "f0.20", "value": 0.20, "merged": []}]
     want = {"a": [{"label": "+1", "value": 1.0, "merged": []}, {"label": "+1/2", "value": 0.5, "merged": []},
                   {"label": "+d_20", "value": 2 / 3, "merged": []}, {"label": "+d_eq", "value": 1 / 3, "merged": []},
                   {"label": "-1", "value": -1.0, "merged": []}] + f_pts,
             "b": [{"label": "+1", "value": 1.0, "merged": ["+d_20"]}, {"label": "+1/2", "value": 0.5, "merged": []},
                   {"label": "+d_eq", "value": 0.72, "merged": []}, {"label": "-1", "value": -1.0, "merged": []}] + f_pts,
+            "c": [{"label": "+1", "value": 1.0, "merged": ["+d_20"]},
+                  {"label": "+1/2", "value": 0.5, "merged": ["+d_eq"]}, {"label": "-1", "value": -1.0, "merged": []}]
+            + f_pts,
             "d": [{"label": "+1", "value": 1.0, "merged": ["+d_20", "+d_eq"]},
                   {"label": "+1/2", "value": 0.5, "merged": []}, {"label": "-1", "value": -1.0, "merged": []}] + f_pts}
     both = DoseMap(0.29, 0.58)                      # d_20 0.58 and d_eq 0.29 both kept (no candidate within 0.05)
     kl = {"a": (MAP_A.kept_label("d_20"), MAP_A.kept_label("d_eq")), "b": (MAP_B.kept_label("d_20"),
                                                                           MAP_B.kept_label("d_eq")),
-          "d": (MAP_D.kept_label("d_20"), MAP_D.kept_label("d_eq"))}
+          "c": (MAP_C.kept_label("d_20"), MAP_C.kept_label("d_eq")), "d": (MAP_D.kept_label("d_20"),
+                                                                          MAP_D.kept_label("d_eq"))}
     B.chk("the dose map lists its points as n-build's schema does (order, values, merged lists in fold order) for "
-          "shapes (a), (b), (d); d_20 and d_eq are read under their keepers' labels", pa == want["a"] and pb == want["b"]
-          and pd == want["d"] and kl == {"a": ("+d_20", "+d_eq"), "b": ("+1", "+d_eq"), "d": ("+1", "+1")}
+          "shapes (a) to (d); d_20 and d_eq are read under their keepers' labels", pa == want["a"] and pb == want["b"]
+          and pc == want["c"] and pd == want["d"]
+          and kl == {"a": ("+d_20", "+d_eq"), "b": ("+1", "+d_eq"), "c": ("+1", "+1/2"), "d": ("+1", "+1")}
           and [p["label"] for p in both.expected_points()][:4] == ["+1", "+1/2", "+d_20", "+d_eq"],
-          {"a": pa == want["a"], "b": pb == want["b"], "d": pd == want["d"], "labels": kl},
+          {"a": pa == want["a"], "b": pb == want["b"], "c": pc == want["c"], "d": pd == want["d"], "labels": kl},
           cover=["NUM-DOSEMAP-POINTS"])
     xr, yr = [3.0, 1.0, 4.0, 1.0, 5.0], [2.0, 7.0, 1.0, 8.0, 2.0]
     mx, my = sum(xr) / 5, sum(yr) / 5
@@ -1583,11 +1898,24 @@ def _bt_numerics(B: _Battery) -> None:
           pearson_r(xr, yr), cover=["NUM-PEARSON"])
     B.chk("the label-mass counter (PIN-n-17) counts reads strictly below .20 (0.19 counts; 0.20 and 0.9 do not)",
           label_mass_below([0.19, 0.20, 0.9, 0.0]) == 2 and LABEL_MASS_FLOOR == 0.20, cover=["CNT-LABEL-MASS"])
-    n2a, n2b = MAP_A.n2_slope_points(), MAP_B.n2_slope_points()
-    B.chk("N2's slope points (OPEN-Q9, pending the seat): (0, d_eq, 2·d_eq) on BK's scale, its floor at (0, d_eq's "
-          "point, d_20's point) -- equal on shape (a); 2·0.72 against +1 when the cap binds (shape b)",
-          n2a == ((0.0, 1 / 3, 2 / 3), (0.0, 1 / 3, 2 / 3)) and n2b == ((0.0, 0.72, 1.44), (0.0, 0.72, 1.0)),
-          (n2a, n2b), cover=["NUM-N2-POINTS"])
+    n2a, n2b, n2c = MAP_A.n2_slope_points(), MAP_B.n2_slope_points(), MAP_C.n2_slope_points()
+    B.chk("N2's slope points (OPEN-Q9 as ruled (a), through the origin): (d_eq, 2·d_eq) on BK's scale, its floor at "
+          "(d_eq's point, d_20's point) -- equal on shape (a); 2·0.72 against +1 when the cap binds (shape b); both "
+          "moved by a merge on shape (c) (0.49 to +1/2, 0.98 to +1)",
+          n2a == ((1 / 3, 2 / 3), (1 / 3, 2 / 3)) and n2b == ((0.72, 1.44), (0.72, 1.0))
+          and n2c == ((0.49, 2 * 0.49), (0.5, 1.0)), (n2a, n2b, n2c), cover=["NUM-N2-POINTS"])
+    caps = {"a": (MAP_A.cap_binds(), MAP_A.n2_decision_f()), "b": (MAP_B.cap_binds(), MAP_B.n2_decision_f()),
+            "c": (MAP_C.cap_binds(), MAP_C.n2_decision_f()), "d": (MAP_D.cap_binds(), MAP_D.n2_decision_f()),
+            "edge": (DoseMap(0.5, 1.0).cap_binds(), DoseMap(0.5, 1.0).n2_decision_f())}
+    B.chk("OPEN-Q7 as ruled: the cap binds iff 2·d_eq > 1 (shapes b and d; not at d_eq = 0.5 exactly, where 2·d_eq = "
+          "1 and the norms match at f = 0.20), and N2 is then decided at f = 0.10, else at f = 0.20",
+          caps == {"a": (False, F20), "b": (True, F10), "c": (False, F20), "d": (True, F10), "edge": (False, F20)},
+          caps, cover=["NUM-CAP-DECISION-F"])
+    n1p = {"a": MAP_A.n1p_points(), "b": MAP_B.n1p_points(), "c": MAP_C.n1p_points(), "d": MAP_D.n1p_points()}
+    B.chk("OPEN-Q2 as ruled (c): N1-P's points are the kept points of +1, +d_20, +d_eq and −1, descending -- four on "
+          "shape (a), three where d_20 folds into +1 (b), +1/2 where d_eq folds there (c), two where both fold into +1 "
+          "(d)", n1p == {"a": (1.0, 2 / 3, 1 / 3, -1.0), "b": (1.0, 0.72, -1.0), "c": (1.0, 0.5, -1.0),
+                         "d": (1.0, -1.0)}, n1p, cover=["NUM-N1P-POINTS"])
 
 
 def _bt_bk(B: _Battery) -> None:
@@ -1601,18 +1929,28 @@ def _bt_bk(B: _Battery) -> None:
         if x["arm"] == "neutral" and x["direction_kind"] != "none":
             by.setdefault((x["direction_kind"], x["dir_index"], x["cell"], x["run"]), {})[x["point"]] = \
                 x["margin"] - sh[(x["cell"], x["run"])]
-    pts = (-1.0, -0.5, 0.0, 0.5, 1.0)
+    pts = (-1.0, -0.5, 0.5, 1.0)               # BK's nonzero points: the slope of record, through the origin
+    pts0 = (-1.0, -0.5, 0.0, 0.5, 1.0)         # with d = 0, Δm(0) = 0: the with-intercept figure beside
     vk = sorted(k for k in by if k[0] == "valenced")
-    dm = np.array([[0.0 if p == 0.0 else by[k][p] for p in pts] for k in vk])
-    sl = session_slopes(pts, dm)
-    means = {p: float(dm[:, i].mean()) for i, p in enumerate(pts) if p != 0.0}
+    dm = np.array([[by[k][p] for p in pts] for k in vk])
+    sl = session_slopes_origin(pts, dm)
+    sl0 = session_slopes(pts0, np.array([[0.0 if p == 0.0 else by[k][p] for p in pts0] for k in vk]))
+    means = {p: float(dm[:, i].mean()) for i, p in enumerate(pts)}
     sds = {p: sd0(dm[:, i]) for i, p in enumerate(pts) if p in (1.0, 0.5, -1.0)}
     rnd = {}
     for k in by:
         if k[0] == "random":
             rnd.setdefault(k[1], []).append(k)
-    rs = {i: float(session_slopes(pts, np.array([[0.0 if p == 0.0 else by[k][p] for p in pts] for k in sorted(ks)])).mean())
+    rs = {i: float(session_slopes_origin(pts, np.array([[by[k][p] for p in pts] for k in sorted(ks)])).mean())
           for i, ks in rnd.items()}
+    rs0 = {i: float(session_slopes(pts0, np.array([[0.0 if p == 0.0 else by[k][p] for p in pts0]
+                                                   for k in sorted(ks)])).mean()) for i, ks in rnd.items()}
+    gap = max([float(np.max(np.abs(sl - sl0)))] + [abs(rs[i] - rs0[i]) for i in rs])
+    B.extra["bk_fits_gap"] = gap
+    B.chk("on BK's symmetric grid the two fits coincide (OPEN-Q1 as ruled: \"0.9164 either way\"): per session and per "
+          "random direction, through the origin over the four nonzero points and with an intercept over the five, to "
+          "1e-12 (largest gap %.2e)" % gap, gap <= 1e-12 and round(float(sl0.mean()), 4) == 0.9164,
+          cover=["NUM-BK-FITS-COINCIDE"])
     L1 = max(abs(float(np.mean([by[k][1.0] for k in ks]))) for ks in rnd.values())
     got = {"n": len(vk), "dirs": len(rnd), "mean+1": round(means[1.0], 4), "mean+1/2": round(means[0.5], 4),
            "mean-1/2": round(means[-0.5], 4), "mean-1": round(means[-1.0], 4), "sd+1": round(sds[1.0], 4),
@@ -1626,7 +1964,7 @@ def _bt_bk(B: _Battery) -> None:
                                                                   ["ci"]))
     B.chk("§4's statistics on BK's 160 neutral sessions reproduce G-DATA (iii): Panel D means 1.0900 / 0.5072 / "
           "−0.3841 / −0.7554; SDs (ddof 0) 0.6233 / 0.3703 / 0.4546; slope 0.9164, SD 0.4466; the 24 random slopes "
-          "−0.2880 to +0.3641, so the floor on BK's five points is 0.3641", got == want,
+          "−0.2880 to +0.3641, so the floor through the origin on BK's four nonzero points is 0.3641", got == want,
           {k: (got[k], want[k]) for k in want if got[k] != want[k]}, cover=["NUM-BK-REPRO"])
     fid = [fidelity_ratio(x["margin"], x["fresh_margin"], x["logprob_S"], x["logprob_U"]) for x in rows
            if x["arm"] == "neutral" and x.get("fresh_margin") is not None]
@@ -1640,7 +1978,8 @@ def _bt_bk(B: _Battery) -> None:
 
 
 # --- structure ---------------------------------------------------------------------------------------------------------
-#: Code's readings, declared (each strikable by the seat until LOCK-n v1.0).
+#: Code's readings: PIN-n-7 to PIN-n-26 accepted by the seat (results/raw/2026-11-16_n-ganl_design-to-code_answers.md
+#: §2); PIN-n-27 to PIN-n-32 declared since, each strikable by the seat until LOCK-n v1.0.
 PINS = {
     "PIN-n-7": "'exceeds its floor' is the signed mean slope above the floor (floor ≥ 0)",
     "PIN-n-8": "'its CI excluding 0' is lo > 0 or hi < 0; an endpoint at 0 does not exclude; either side",
@@ -1687,26 +2026,65 @@ PINS = {
     "PIN-n-26": "LOCK-n v1.0 says what it is in the whole line 'lock: LOCK-n v1.0' and states its direction of record "
                 "as one whole line, 'direction of record: Route A' or 'direction of record: Route B'; verdicts "
                 "checks the first and reads the route from the second (Code's form for the lock)",
+    "PIN-n-27": "a certified movement against the conditioned zone (ADDENDUM-n1 §7.3) mirrors DETECTABLE with the mean "
+                "below 0: the CI excludes 0 and G-LEAK-n certifies |mean| (at +1 for N1, at d_eq for dose)",
+    "PIN-n-28": "N1's NOT-REPLICATED sentence names a certified movement against the conditioned zone in its failing "
+                "list, as the sign's condition with MOVE_AGAINST beside it in parentheses (ADDENDUM-n1 §7.3 'with its "
+                "sentence naming it'; the place is Code's form). The sign's name, 'the mean Δm at d = +1 above 0', is "
+                "Code's form too (CONJUNCT_TEXT); the seat's clause repeats Δm(+1) and its CI, which the sentence "
+                "states again after 'fails:'",
+    "PIN-n-29": "OPEN-Q6 as ruled is applied per arm, as reading (a) carried it and n:134 states it ('An arm with a "
+                "partial read set is INDETERMINATE'): a question is INDETERMINATE when an arm its certification reads "
+                "is incomplete anywhere in its plan -- N2 when N2-E, N1-V, N1-R or N1-P is, the norm-matched point's "
+                "reads among them; dose's 'points' when N1-V, N1-R or N1-P is (subsumed by N1's causes). So a read "
+                "missing or non-finite elsewhere in those arms (an N1-P read at −1; an N1-R cell at +1/2) makes N2 "
+                "INDETERMINATE although its certification reads none of it; read point by point, N2 would be evaluated",
+    "PIN-n-30": "N2's certifications stay unsigned, as n §3's G-LEAK-n states them (|mean| against the ceiling): "
+                "ADDENDUM-n1 §7.3's sign rule names DETECTABLE and PARTIAL only, so a span_reward or valence movement "
+                "against the conditioned zone beyond the ceiling counts as moving in N2 (SHARED / SPECIFIC), its sign "
+                "in the figure. So N1-V moving against the zone at the norm-matched point, span_reward not certified, "
+                "gives SPECIFIC, whose sentence says the valence direction 'does' move BK's apparatus. Nor has "
+                "G-LEAK-n's certification a CI condition: N1-V beyond the ceiling with a CI that includes 0 gives "
+                "SPECIFIC too. When the cap binds that point is d_eq; there the dose sentence, if the dose question is "
+                "evaluated, names the same movement as against the zone (its CI excluding 0) or as not certified (its "
+                "CI including 0)",
+    "PIN-n-31": "the capture arrays are bound by the per-layer row hashes their cells record (check_cell holds their "
+                "names and layers to the band), which must equal the stage report's and G-READ-n's artifact's for the "
+                "cell; the reader reads no array and needs none present -- they are G-READ-n's input, never in git "
+                "(ADDENDUM-n1 §6.2), whose rows n-build's loader checks against those hashes before any fit (G-READ-n "
+                "reads captures only through it: n-build's PIN, declared at its BUILD, 83a50a0) -- and refuses a file "
+                "beside the cells that no cell names",
+    "PIN-n-32": "where d_eq merges into another point (+1/2 or +1), the three NOT-DETECTABLE forms -- verbatim, "
+                "ADDENDUM-n1 §7.6, with no [value] slot -- print the figure of the point read as Δm(d_eq) (as Δm under "
+                "the sign rule) with no 'read at d = ...' note; the merge is reported in the dose outcome's point, in "
+                "G-LEAK-n's table and in the DETECTABLE sentence's [value] (VALUE_MERGED). Whether the forms take the "
+                "note (§5.1) is the seat's",
 }
-#: The seat's open questions (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9): what the code
-#: carries meanwhile, each pending the seat; G-ANL-n's canonical run waits for the answers.
+#: The seat's rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9), in
+#: results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1, as the code carries them.
 OPEN = {
-    "OPEN-Q1": "the slope fit: OLS with an intercept over the arm's dose points, d = 0 with Δm(0) = 0 included where "
-               "listed (or through the origin)",
-    "OPEN-Q2": "the leak ceiling where N1-P is not read: L(d) alone",
-    "OPEN-Q3": "'answered' needs N4 PASS and G-READ-n PASS (§0.6) for N1 NOT-REPLICATED, dose NOT-DETECTABLE and N2's "
-               "null; the (G-READ-n PASS, N4 not PASS) dose cell's sentence",
-    "OPEN-Q4": "three inputs that change a sentence are not coordinates: G-READ-n (valence, +1), G-READ-n "
-               "(span_reward, f = 0.20), N4's no-read INDETERMINATE; the tuple pass runs every tuple under each",
-    "OPEN-Q5": "the impossible tuples carry a sentence set (total functions); reachability reported separately, per "
-               "merge shape",
-    "OPEN-Q6": "INDETERMINATE causes §5 does not name: N1-V incomplete (N1); dose's 'points incomplete' as N1-V's or "
-               "N1-R's reads, beside N1's causes; N2-E, N1-V or N1-R incomplete, and N1-P where d_20 sits at +1 (N2), "
-               "while a pause on those N1 arms alone leaves N2 evaluated, as written; a pause on N4's reads (N4)",
-    "OPEN-Q7": "the norm-matched point is d_20's (f = 0.20) and d_eq's (f = 0.10), the ratio reported",
-    "OPEN-Q8": "Code's sentence forms where §5 words none",
-    "OPEN-Q9": "N2's slope over {0, d_eq, 2·d_eq} on BK's scale, its floor on the random reads at d_eq's and d_20's "
-               "points",
+    "OPEN-Q1": "ruled (b), ADDENDUM-n1 §7.1: per session, OLS through the origin over the arm's nonzero dose points; "
+               "the floor refit the same way; the with-intercept slope reported beside, descriptive",
+    "OPEN-Q2": "ruled (c), ADDENDUM-n1 §5.2: N1-P reads +1, +d_20, +d_eq and −1 under the merge, so P(d) exists at "
+               "every point a certification is made; the ceiling max(L, P) unchanged",
+    "OPEN-Q3": "ruled (a), ADDENDUM-n1 §7.2: answered iff N4 PASS and G-READ-n PASS for the axis and dose (N1 at +1, "
+               "dose at d_eq, N2 for span_reward at its decision f); the cell (G-READ-n PASS, N4 not PASS) has its "
+               "own sentence (A.6, as §7.6 amends it)",
+    "OPEN-Q4": "confirmed: three inputs that change a sentence are not coordinates: G-READ-n (valence, +1), G-READ-n "
+               "(span_reward, at N2's decision f), N4's no-read INDETERMINATE; 385 tuples, 1,921 evaluations",
+    "OPEN-Q5": "confirmed: the sentence functions are total; reachability reported per merge shape; no tuple refused",
+    "OPEN-Q6": "ruled (a), amended for N1-P, ADDENDUM-n1 §7.4: N1 INDETERMINATE when N1-V is incomplete; dose when N1 "
+               "is, or N1-V's, N1-R's or N1-P's reads at d_eq are incomplete (the d_20 figure beside then reported as "
+               "not computed); N2 when N2-E, N1-V, N1-R or N1-P at the "
+               "norm-matched point is incomplete (applied per arm: PIN-n-29); N4, no read obtained, when a pause "
+               "stands on its reads",
+    "OPEN-Q7": "ruled, ADDENDUM-n1 §5.3: when the cap binds (2·d_eq > 1), N2 is decided at f = 0.10 against N1-V at "
+               "d_eq, with f = 0.20 beside against N1-V at d = 1 and the ratio 2·d_eq; otherwise at f = 0.20, f = 0.10 "
+               "beside",
+    "OPEN-Q8": "ruled: Appendix A adopted with the amendments of ADDENDUM-n1 §7.6 (the movement clause in the three "
+               "NOT-DETECTABLE forms, the sign clause, the labels by §0.6, 'at f = [f]')",
+    "OPEN-Q9": "ruled (a), through the origin, ADDENDUM-n1 §7.5: N2's slope over (d_eq, 2·d_eq), its floor on the "
+               "random reads at d_eq's and d_20's kept points, the mismatch printed beside where they differ",
 }
 _HEAVY = ("torch", "transformers", "mlx", "mlx_lm", "accelerate", "safetensors")
 
@@ -1808,10 +2186,12 @@ def _bt_snapshot() -> dict:
     return out
 
 
-def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook) -> None:
+def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes) -> None:
     import ast
     B.chk("proposal: PROPOSAL-n v0.2's sha256 is the pinned 30a3d0f5...04f4", hashlib.sha256(ptext).hexdigest()
           == PROPOSAL_SHA256, hashlib.sha256(ptext).hexdigest()[:16], cover=["STR-PROPOSAL-SHA"])
+    B.chk("addendum: ADDENDUM-n1 v0.1's sha256 is the pinned e979f8f2...5e03", hashlib.sha256(atext).hexdigest()
+          == ADDENDUM_SHA256, hashlib.sha256(atext).hexdigest()[:16], cover=["STR-ADDENDUM-SHA"])
     lines = ptext.decode("utf-8").splitlines()
     miss = [k for k, (n, s) in VERBATIM.items() if s not in lines[n - 1]]
     B.chk("every verbatim constant is on its declared proposal line (n:136, n:138, n:142)", miss == [], miss,
@@ -1870,8 +2250,8 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook) -> None:
 
 
 # =====================================================================================================================
-# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at 14e65d8, sha256 4bed3f9a...4665; its record and
-#     cell checks as at 5a97527 but for check_record's rendering-mismatch message)
+# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at d791bd9, sha256 0ea39600...0db6: the schema's
+#     follow-up commit, ADDENDUM-n1 §5-§6 -- keepers, the capture band per layer, kfold10, the cap's loads)
 # =====================================================================================================================
 # The schema module is imported lazily, on the verdicts path and in the battery only (LAZY_SCHEMA), and bound by its
 # sha256 in every output; its checks run on every cell the analyzer loads ("the checks both sides run"). What the
@@ -1879,7 +2259,7 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook) -> None:
 # each steered read's shadow exists with its ids_sha; a session's cues and present order agree across its reads; N4-T
 # and N4-Ts carry the same schedule_zone per session, 80 S and 80 U (n §2.4).
 SCHEMA_REL = "valence_core/n/schema.py"
-SCHEMA_SHA256 = "4bed3f9a63110ffc9b1906752950b1195f419296bbb1c454daf821b0309b4665"     # 14e65d8
+SCHEMA_SHA256 = "0ea39600919aceb43ee25962314e4239f609ef8da7536b12063372dfdfb30db6"     # d791bd9
 LAZY_SCHEMA = "valence_core.n.schema"
 N_SESSIONS, N_FLOOR = 160, 40
 #: n §2.4's table, independently of the schema's ARM_CELLS (the reader cross-checks the two): arm -> (directions,
@@ -1887,7 +2267,7 @@ N_SESSIONS, N_FLOOR = 160, 40
 PLAN_TABLE = {
     "N1-V": ((("valence",), ("+1", "+1/2", "+d_20", "+d_eq", "-1")), (("none",), ("0",))),
     "N1-R": ((tuple(f"rand_{i:02d}" for i in range(N_RANDOM)), ("+1", "+1/2", "+d_20", "+d_eq", "-1")),),
-    "N1-P": ((("valence",), ("+1", "-1")),),
+    "N1-P": ((("valence",), ("+1", "+d_20", "+d_eq", "-1")),),        # ADDENDUM-n1 §5.2 (OPEN-Q2 as ruled)
     "N2-E": ((("span_reward",), ("f0.10", "f0.20")),),
     "N2-S": ((("span_sentiment",), ("f0.10", "f0.20")),),
     "N2-C": ((("span_character",), ("f0.10", "f0.20")),),
@@ -1898,7 +2278,7 @@ GUARD_DIRS = {"N2-E": "span_reward", "N2-S": "span_sentiment", "N2-C": "span_cha
 
 
 def schema_module():
-    """The record schema, imported lazily; refused unless its bytes are the pinned ones (14e65d8)."""
+    """The record schema, imported lazily; refused unless its bytes are the pinned ones (d791bd9)."""
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     got = hashlib.sha256((REPO / SCHEMA_REL).read_bytes()).hexdigest()
@@ -1919,20 +2299,29 @@ def session_key(run: int) -> str:
     return f"floor_b{run // 5}/{run}" if run < N_FLOOR else f"neu_b{(run - N_FLOOR) // 20}/{run}"
 
 
-def own_plan(kept_labels: Sequence[str]) -> list[str]:
-    """§2.4's declared read set over the kept dose labels, derived without the schema (the reader asserts it equals
-    the schema's read_plan): N1-R on the 40 floor sessions, every other arm on all 160; a folded label is read under
-    its keeper, so only kept labels appear."""
-    kept = set(kept_labels) | {"0"}
+def plan_cells(dmap: DoseMap) -> list[tuple[str, str, str]]:
+    """The declared cells (arm, direction, record label), in PLAN_TABLE's order: each arm reads the keeper of every
+    label it lists, in its listed order, a keeper read once (ADDENDUM-n1 §5.1: a merged point is read once, under the
+    kept label; §5.2: N1-P's +d_20 and +d_eq at their keepers, +1/2 where d_20 or d_eq folds there). Derived from the
+    analyzer's own dose map, not the schema's."""
+    keeper = {"+1": "+1", "+1/2": "+1/2", "-1": "-1", "0": "0", "f0.10": "f0.10", "f0.20": "f0.20",
+              "+d_20": dmap.kept_label("d_20"), "+d_eq": dmap.kept_label("d_eq")}
     out = []
     for arm, rows in PLAN_TABLE.items():
-        runs = range(N_FLOOR) if arm == "N1-R" else range(N_SESSIONS)
         for dirs, labels in rows:
             for d in dirs:
+                labs: list[str] = []
                 for lab in labels:
-                    if lab in kept:
-                        out.extend(f"{arm}|{d}|{lab}|{session_key(r)}" for r in runs)
-    return sorted(out)
+                    if keeper[lab] not in labs:
+                        labs.append(keeper[lab])
+                out.extend((arm, d, lab) for lab in labs)
+    return out
+
+
+def own_plan(dmap: DoseMap) -> list[str]:
+    """§2.4's declared read set, as ADDENDUM-n1 §5 amends it, derived without the schema (the reader asserts it equals
+    the schema's read_plan): N1-R on the 40 floor sessions, every other arm on all 160, each cell of plan_cells."""
+    return sorted(f"{arm}|{d}|{lab}|{session_key(r)}" for arm, d, lab in plan_cells(dmap) for r in runs_of(arm))
 
 
 def dose_map_of(identity: Mapping[str, Any]) -> DoseMap:
@@ -1965,10 +2354,11 @@ class Campaign:
 
 def load_campaign(cdir: Path, sm=None) -> Campaign:
     """Load a campaign's cell files (every file beside them named by a cell), run the schema's checks on each, and the
-    cross-record checks the schema leaves to the analyzer. Refuses (exit 2) on a cell that fails a check, a cell or
-    capture file whose bytes are not those the cell records, an identity that differs between cells, a dose map whose
-    points the analyzer derives differently, a plan the analyzer derives differently, a read outside the plan or a
-    broken cross-record property."""
+    cross-record checks the schema leaves to the analyzer. Refuses (exit 2) on a cell that fails a check, a file beside
+    the cells that is neither a cell nor one of their capture arrays by name, an identity that differs between cells, a
+    dose map whose points the analyzer derives differently, a plan the analyzer derives differently, a read outside the
+    plan or a broken cross-record property. The capture arrays are bound by the per-layer row hashes their cells
+    record, and are not read (PIN-n-31): an absent array is no refusal."""
     sm = sm or schema_module()
     cdir = Path(cdir)
     if not cdir.is_dir():
@@ -1976,6 +2366,7 @@ def load_campaign(cdir: Path, sm=None) -> Campaign:
     names = sorted(p.name for p in cdir.iterdir())
     jsons = [n for n in names if n.endswith(".json")]
     cells, ident0, records = {}, None, {}
+    captures: set[str] = set()
     for n in jsons:
         try:
             data = (cdir / n).read_bytes()
@@ -1985,11 +2376,10 @@ def load_campaign(cdir: Path, sm=None) -> Campaign:
             raise AnlRefusal(f"REFUSED: cell {n}: {_err_where(e)}")
         if n != sm.cell_filename(cell["arm"], cell["direction_id"], cell["dose_label"]):
             raise AnlRefusal(f"REFUSED: cell {n} is named for another cell")
-        if cell["capture_file"] not in names:
-            raise AnlRefusal(f"REFUSED: cell {n}'s capture array {cell['capture_file']} is absent")
-        cap = hashlib.sha256((cdir / cell["capture_file"]).read_bytes()).hexdigest()
-        if cap != cell["capture_sha256"]:
-            raise AnlRefusal(f"REFUSED: cell {n}'s capture array does not hash to its recorded capture_sha256")
+        # PIN-n-31: check_cell holds capture_files to capture_filename(n, layer) and capture_sha256 to the identity's
+        # capture layers; the arrays are G-READ-n's input, never in git (ADDENDUM-n1 §6.2), bound here by those hashes
+        captures |= set(cell["capture_files"].values())
+        cap = dict(cell["capture_sha256"])
         if ident0 is None:
             ident0 = cell["stage_identity"]
         elif _canon(cell["stage_identity"]) != _canon(ident0):
@@ -2000,7 +2390,7 @@ def load_campaign(cdir: Path, sm=None) -> Campaign:
             records[rec["read_id"]] = rec
         cells[n] = {"json_sha256": hashlib.sha256(data).hexdigest(), "capture_sha256": cap,
                     "records": len(cell["records"])}
-    extra = sorted(set(names) - set(jsons) - {n[:-5] + ".npy" for n in jsons})
+    extra = sorted(set(names) - set(jsons) - captures)
     if ident0 is None:
         raise AnlRefusal(f"REFUSED: no cell file in {cdir.name!r}")
     if extra:
@@ -2011,9 +2401,8 @@ def load_campaign(cdir: Path, sm=None) -> Campaign:
     probs = dmap.problems()
     if probs or dmap.expected_points() != ident0["dose_map"]["points"]:
         raise AnlRefusal(f"REFUSED: the dose map: {probs or 'its points differ from the analyzer derivation'}")
-    kept = [p["label"] for p in ident0["dose_map"]["points"]]
     plan = sm.read_plan(ident0)
-    if plan != own_plan(kept):
+    if plan != own_plan(dmap):
         raise AnlRefusal("REFUSED: the schema's read plan differs from the analyzer's own derivation of n §2.4")
     planned: dict = {a: set() for a in ARMS}
     for rid in plan:
@@ -2105,8 +2494,10 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
 
     An arm's statistics are computed only when it is usable (PIN-n-20) and, for a steered arm, when the shadows (N1-V's
     d = 0 reads) of every session it reads are usable (N1-R's 40 floor sessions, the others' 160); a steered arm whose
-    own reads are usable but whose shadows are not is marked `shadow`. In the TAU/4 row an arm left with no session at some point is marked `tau4-emptied` (never a STOP), and
-    each statistic's matrix is drawn from its arm's stream for that statistic's session count (PIN-n-12)."""
+    own reads are usable but whose shadows are not is marked `shadow`. In the TAU/4 row an arm left with no session at
+    some point is marked `tau4-emptied` (never a STOP), and each statistic's matrix is drawn from its arm's stream for
+    that statistic's session count (PIN-n-12). Slopes are fitted through the origin over the nonzero points (OPEN-Q1
+    and OPEN-Q9 as ruled), N1-V's with-intercept slope beside, descriptive; N1-P's P(d) at each point it reads."""
     ident, dmap = camp.identity, camp.dmap
     lv = label_values(ident)
     v_pts = sorted({lv[x] for x in lv}, reverse=True)                     # N1-V's points, 0 included
@@ -2140,14 +2531,16 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
             return True
         return False
 
-    def slope_est(arm, pts, vecs):
+    def slope_est(arm, pts, vecs, fit=session_slopes_origin):
         common = sorted(set.intersection(*[set(v) for v in vecs]))
         if not common:
             return None, 0, None
         Y = np.array([[vv[r] for vv in vecs] for r in common])
-        sl = session_slopes(pts, Y)
+        sl = fit(pts, Y)
         return mean_est(sl, boot_index(arm, len(common))), len(common), sl
 
+    nz_pts = [pt for pt in v_pts if pt != 0.0]                            # the nonzero points, the fits' (OPEN-Q1)
+    lab_of = {p: lab for lab, p in labels_v.items()}
     if st.complete["N1-V"]:
         vecs = {pt: dm("N1-V", "valence", lab) for lab, pt in labels_v.items()}
         if not emptied("N1-V", *vecs.values()):
@@ -2155,12 +2548,15 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
                 st.V[pt] = mean_est(_vec(vecs[pt]), boot_index("N1-V", len(vecs[pt])))
                 fig["n"][("N1-V", lab)] = len(vecs[pt])
                 fig["sd0"][("N1-V", lab)] = sd0(_vec(vecs[pt]))
-            zero = {r: 0.0 for r in range(N_SESSIONS)}
-            est, n_c, sl = slope_est("N1-V", v_pts, [zero if pt == 0.0 else vecs[pt] for pt in v_pts])
+            est, n_c, sl = slope_est("N1-V", nz_pts, [vecs[pt] for pt in nz_pts])
             if est is None:
                 emptied("N1-V", [])
             else:
                 st.slope_V, fig["slope_V_n"], fig["slope_V_sd0"] = est, n_c, sd0(sl)
+                zero = {r: 0.0 for r in range(N_SESSIONS)}                # beside, descriptive: with an intercept
+                est_i, _, _ = slope_est("N1-V", v_pts, [zero if pt == 0.0 else vecs[pt] for pt in v_pts],
+                                        fit=session_slopes)
+                fig["slope_V_with_intercept"] = dict(est_i.as_json(), descriptive=True)   # OPEN-Q1 as ruled
     if st.complete["N1-R"]:
         dirs = tuple(f"rand_{i:02d}" for i in range(N_RANDOM))
         dv = {(d_, lab): dm("N1-R", d_, lab) for d_ in dirs for lab in labels_v}
@@ -2170,12 +2566,9 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
                 for d_ in dirs:
                     fig["dir_means"][(d_, lab)] = means[d_]
                 st.L[pt] = max(abs(x) for x in means.values())
-            zero = {r: 0.0 for r in range(N_FLOOR)}
             slopes = {}
             for d_ in dirs:
-                pts_vecs = [zero if pt == 0.0 else dv[(d_, next(l for l, p in labels_v.items() if p == pt))]
-                            for pt in v_pts]
-                est, n_c, sl = slope_est("N1-R", v_pts, pts_vecs)
+                est, n_c, sl = slope_est("N1-R", nz_pts, [dv[(d_, lab_of[pt])] for pt in nz_pts])
                 slopes[d_] = float(sl.mean()) if sl is not None else float("nan")
                 fig["dir_slopes"][d_] = slopes[d_] if sl is not None else None    # no NaN in a figure
             if any(math.isnan(x) for x in slopes.values()):
@@ -2183,18 +2576,21 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
             else:
                 st.floor_V = max(abs(x) for x in slopes.values())
                 fig["floor_dir"] = max(slopes, key=lambda k: (abs(slopes[k]), k))
-                # OPEN-Q9 (pending the seat): N2's floor on the random reads at d_eq's and d_20's points
-                p10, p20 = dmap.norm_matched(F10), dmap.norm_matched(F20)
-                lab_of = {p: l for l, p in labels_v.items()}
+                # OPEN-Q9 as ruled: N2's floor on the random reads at d_eq's and d_20's kept points, through the origin
+                n2_pts, (p10, p20) = dmap.n2_slope_points()
                 n2_slopes = {}
                 for d_ in dirs:
-                    _, _, sl = slope_est("N1-R", (0.0, p10, p20), [zero, dv[(d_, lab_of[p10])], dv[(d_, lab_of[p20])]])
+                    _, _, sl = slope_est("N1-R", (p10, p20), [dv[(d_, lab_of[p10])], dv[(d_, lab_of[p20])]])
                     n2_slopes[d_] = float(sl.mean())
-                fig["floors_N2"] = {"points": [0.0, p10, p20], "floor": max(abs(x) for x in n2_slopes.values())}
+                fig["floors_N2"] = {"points": [p10, p20], "floor": max(abs(x) for x in n2_slopes.values()),
+                                    "n2_points": list(n2_pts), "mismatch": [p10, p20] != list(n2_pts)}
     if st.complete["N1-P"]:
-        pv = {pt: dm("N1-P", "valence", lab) for lab, pt in (("+1", 1.0), ("-1", -1.0))}
+        # OPEN-Q2 as ruled (ADDENDUM-n1 §5.2): P(d) at each point N1-P reads, as the plan has them
+        p_labels = sorted({rid.split("|")[2] for rid in camp.planned["N1-P"]}, key=lambda lab: -lv[lab])
+        pv = {lv[lab]: dm("N1-P", "valence", lab) for lab in p_labels}
         if not emptied("N1-P", *pv.values()):
-            for lab, pt in (("+1", 1.0), ("-1", -1.0)):
+            for lab in p_labels:
+                pt = lv[lab]
                 e = mean_est(_vec(pv[pt]), boot_index("N1-P", len(pv[pt])))
                 st.P[pt] = abs(e.mean)
                 fig["P_signed"][lab] = e.as_json()
@@ -2210,9 +2606,11 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
             tgt[f] = mean_est(_vec(fv[f]), boot_index(arm, len(fv[f])))
             fig["n"][(arm, lab)] = len(fv[f])
             fig["sd0"][(arm, lab)] = sd0(_vec(fv[f]))
-        pts, _ = dmap.n2_slope_points()                                   # OPEN-Q9 (pending the seat)
-        est, n_c, _ = slope_est(arm, pts, [{r: 0.0 for r in range(N_SESSIONS)}, fv[F10], fv[F20]])
-        fig["slopes_N2"][arm] = None if est is None else dict(est.as_json(), n=n_c, points=list(pts))
+        pts, fl_pts = dmap.n2_slope_points()                              # OPEN-Q9 as ruled: through the origin
+        est, n_c, _ = slope_est(arm, pts, [fv[F10], fv[F20]])
+        fig["slopes_N2"][arm] = None if est is None else dict(est.as_json(), n=n_c, points=list(pts),
+                                                               floor_points=list(fl_pts),
+                                                               mismatch=list(pts) != list(fl_pts))
     if st.complete["N4-T"] and st.complete["N4-Ts"]:
         told, sham = [], []
         for run in range(N_SESSIONS):
@@ -2233,7 +2631,7 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
 # 12. Filling the sentences (VERDICTS)
 # =====================================================================================================================
 # Figures: nats to four decimals with their sign (Δm, slopes, m_told); ceilings, floors and E unsigned to four; an AUC
-# to three; d_eq's value to four (Code's form, under OPEN-Q8).
+# to three; d_eq's value to four (Code's form, adopted with Appendix A: OPEN-Q8 as ruled).
 
 
 def _n(x: float) -> str:
@@ -2256,7 +2654,8 @@ VALUE_MERGED = "{value} (read at d = {point}, the point it merges into under §2
 
 def value_text(dm: DoseMap, point: float) -> str:
     """The dose sentence's [value]: d_eq to four decimals; where §2.3's merge moved d_eq onto another point, that point
-    beside it, since [x] and [CI] are read there (VALUE_MERGED, Code's form, under OPEN-Q8)."""
+    beside it, since [x] and [CI] are read there (VALUE_MERGED, Code's form, adopted with Appendix A: OPEN-Q8 as
+    ruled)."""
     if point == dm.d_eq:
         return _u(dm.d_eq)
     lab = BK_LABEL.get(point)
@@ -2264,19 +2663,20 @@ def value_text(dm: DoseMap, point: float) -> str:
 
 
 def code_forms() -> dict[str, str]:
-    """Every sentence form Code wrote where §5 words none (OPEN-Q8: the question block's Appendix A, and
-    VALUE_MERGED), by name; the battery pins them by digest (CODE_FORMS_SHA256), so that none changes unseen."""
+    """Every sentence form the module writes beyond §5's verbatim cells, by name: Code's (the question block's Appendix
+    A with VALUE_MERGED, adopted with the seat's amendments: OPEN-Q8 as ruled) and ADDENDUM-n1 §7.6's, with the clause
+    of §5 the addendum replaces; the battery pins them by digest (CODE_FORMS_SHA256), so that none changes unseen."""
     f = {"C_N1_PARTIAL": C_N1_PARTIAL, "C_N1_NOT_REPLICATED": C_N1_NOT_REPLICATED, "C_N1_INDET": C_N1_INDET,
-         "C_DOSE_ND_NOT_READABLE": C_DOSE_ND_NOT_READABLE, "C_DOSE_ND_READABLE_N4": C_DOSE_ND_READABLE_N4,
-         "C_DOSE_INDET": C_DOSE_INDET, "C_NOT_RUN": C_NOT_RUN, "VALUE_MERGED": VALUE_MERGED}
+         "C_DOSE_ND_NOT_READABLE": C_DOSE_ND_NOT_READABLE, "C_DOSE_INDET": C_DOSE_INDET, "C_NOT_RUN": C_NOT_RUN,
+         "VALUE_MERGED": VALUE_MERGED, "OLD_MOVE": OLD_MOVE, "B_STRUCK": B_STRUCK}
     for fam, d in (("C_N2", C_N2), ("C_N4", C_N4), ("CONJUNCT_TEXT", CONJUNCT_TEXT),
-                   ("NOT_RUN_CAUSES", NOT_RUN_CAUSES), ("ROUTE_TEXT", ROUTE_TEXT)):
+                   ("NOT_RUN_CAUSES", NOT_RUN_CAUSES), ("ROUTE_TEXT", ROUTE_TEXT), ("ADDENDUM", ADDENDUM_FORMS)):
         f |= {f"{fam}[{k}]": v for k, v in d.items()}
     return f
 
 
 #: sha256 of _canon(code_forms()) -- a changed form fails the battery until this pin is moved, in the open
-CODE_FORMS_SHA256 = "50d78c1c06d8fdc5e011e92b2c48714f744f7c1f6c6e9db51c123e7ec5b16a8b"
+CODE_FORMS_SHA256 = "209d7b4623ff0e3c24dbc7116d3b7d2453580252af4c2c957fcaefb1e09492f5"
 
 
 def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str, auc: Mapping[str, float | None],
@@ -2298,7 +2698,8 @@ def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str
             v1, vm1 = st.V[1.0], st.V[-1.0]
             sub.update({ROUTE_SLOT: ROUTE_TEXT[route], "[x]": _n(v1.mean), "[CI]": _ci(v1),
                         "[y]": _n(st.slope_V.mean), "[z]": _u(st.floor_V), "[max(L, P)]": _u(n1["ceiling"]),
-                        "[x−]": _n(vm1.mean), "[CI−]": _ci(vm1), "[failing]": failing_text(n1["failing"])})
+                        "[c]": _u(n1["ceiling"]), "[x−]": _n(vm1.mean), "[CI−]": _ci(vm1),
+                        "[failing]": failing_text(n1["failing"], against=n1["against"])})
     elif q == "dose":
         d = o["dose"]
         if d["state"] == "INDETERMINATE":
@@ -2309,16 +2710,17 @@ def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str
             if a is None and "[a]" in t:
                 raise AnlStop("STOP: a dose sentence that calls the state readable carries no AUC (G-READ-n's band "
                               "median at d_eq)")
+            # PIN-n-32: only DETECTABLE's form has [value] (VALUE_MERGED); the NOT-DETECTABLE forms print Δm(d_eq)
             sub.update({"[value]": value_text(st.dmap, d["point"]), "[x]": _n(v.mean), "[CI]": _ci(v),
-                        "[c]": _u(d["ceiling"]),
-                        "[a]": "not computed" if a is None else f"{a:.3f}"})
+                        "[c]": _u(d["ceiling"]), "[a]": "not computed" if a is None else f"{a:.3f}",
+                        MOVE_SLOT: MOVE_AGAINST if d["against"] else MOVE_NOT_CERTIFIED})
     elif q == "N2":
         n2 = o["N2"]
         if n2["state"] == "INDETERMINATE":
             sub["[causes]"] = ", ".join(n2["causes"])
         else:
-            e20 = st.E[F20]
-            sub.update({"[xE]": _n(e20.mean), "[CIE]": _ci(e20), "[c]": _u(n2["ceiling"]),
+            e = st.E[n2["f"]]
+            sub.update({"[xE]": _n(e.mean), "[CIE]": _ci(e), "[c]": _u(n2["ceiling"]), "[f]": F_TEXT[n2["f"]],
                         "[xV]": _n(st.V[n2["point"]].mean)})
     elif q == "N4":
         n4 = o["N4"]
@@ -2401,7 +2803,7 @@ def secondaries(camp: Campaign, st: State, gvec: Mapping[str, Any] | None) -> di
         x["pick_S"] += r["restricted"]["pick"] == "S"
     out["a_first_pick_share"] = {k: dict(v, share=(v["pick_S"] / v["n"] if v["n"] >= FLOOR_EVENTS else None),
                                          below_floor=v["n"] < FLOOR_EVENTS) for k, v in sorted(a.items())}
-    out["b_free_text"] = "not recorded: n §2.1 'No new text is generated for N1, N2 or N4' (the schema's reading 7)"
+    out["b_free_text"] = B_STRUCK
     c: dict = {}
     for r in camp.records.values():
         if r["shadow_read_id"] is None or not r["finite"]:
@@ -2451,52 +2853,54 @@ def _bt_write_campaign(root: Path, sm, *, R_ell: float = 23.90625, delta: Callab
                        omit: Sequence[tuple] = (), nonfinite: Sequence[str] = (), fresh_shift: Mapping[str, float] = {},
                        mutate: Callable[[dict], None] | None = None,
                        first_is_s: Callable[[int], bool] = lambda r: r % 3 == 0,
-                       lock_sha256: str | None = None) -> Path:
+                       lock_sha256: str | None = None, capture_cells: Sequence[tuple] = ()) -> Path:
     """Write a synthetic campaign (every cell of the plan over the example identity's dose map) to ``root``: shadows
     m0(run) = 0.1 + 0.01 (run % 7); each steered read m0 + delta(arm, direction, label, run); N4-T's margin toward its
     told zone told(run, zone) and N4-Ts's toward its referent zone sham(run, zone), the zone S for even runs;
     ``omit``: (arm, direction, label) cells left out; ``nonfinite``: read_ids written non-finite; ``fresh_shift``:
-    read_id -> fresh shift; ``first_is_s``: a run's present order (S first); ``lock_sha256``: the identity's lock."""
+    read_id -> fresh shift; ``first_is_s``: a run's present order (S first); ``lock_sha256``: the identity's lock;
+    ``capture_cells``: the (arm, direction, label) cells whose capture arrays are written (empty, by name only: the
+    reader never reads one, PIN-n-31). Each cell records its per-layer row hashes as sha256 of 'name|layer'."""
     root.mkdir(parents=True, exist_ok=True)
     ident = sm.example_identity(R_ell=R_ell)
     if lock_sha256 is not None:
         ident = dict(ident, lock_sha256=lock_sha256)
-    kept = sm.dose_point_values(ident)
     launch = 0
-    for arm, rows in PLAN_TABLE.items():
-        for dirs, labels in rows:
-            for d_ in dirs:
-                for lab in labels:
-                    if lab not in kept or (arm, d_, lab) in omit:
-                        continue
-                    recs = []
-                    for i, run in enumerate(runs_of(arm)):
-                        zone = "S" if run % 2 == 0 else "U"
-                        m0 = 0.1 + 0.01 * (run % 7)
-                        if arm == "N4-T":
-                            m = told(run, zone) * (1 if zone == "S" else -1)
-                        elif arm == "N4-Ts":
-                            m = sham(run, zone) * (1 if zone == "S" else -1)
-                        elif d_ == "none":
-                            m = m0
-                        else:
-                            m = m0 + delta(arm, d_, lab, run)
-                        ts, tu = _bt_margin_tokens(m)
-                        rid = f"{arm}|{d_}|{lab}|{session_key(run)}"
-                        rec = sm.example_record(ident, arm, d_, lab, run, launch=launch, row=i, zone=zone,
-                                                logprob_S_tokens=ts, logprob_U_tokens=tu,
-                                                present_first_is_S=first_is_s(run), finite=rid not in nonfinite,
-                                                fresh_shift=fresh_shift.get(rid, 0.0))
-                        launch += 1
-                        recs.append(rec)
-                    name = sm.cell_filename(arm, d_, lab)
-                    cell = {"schema": sm.CELL_SCHEMA, "stage_identity": ident, "arm": arm, "direction_id": d_,
-                            "dose_label": lab, "records": recs, "capture_file": name[:-5] + ".npy",
-                            "capture_rows": len(recs), "capture_sha256": hashlib.sha256(b"").hexdigest()}
-                    if mutate is not None:
-                        mutate(cell)
-                    (root / name).write_text(json.dumps(cell), encoding="utf-8")
-                    (root / (name[:-5] + ".npy")).write_bytes(b"")
+    for arm, d_, lab in plan_cells(dose_map_of(ident)):
+        if (arm, d_, lab) in omit:
+            continue
+        recs = []
+        for i, run in enumerate(runs_of(arm)):
+            zone = "S" if run % 2 == 0 else "U"
+            m0 = 0.1 + 0.01 * (run % 7)
+            if arm == "N4-T":
+                m = told(run, zone) * (1 if zone == "S" else -1)
+            elif arm == "N4-Ts":
+                m = sham(run, zone) * (1 if zone == "S" else -1)
+            elif d_ == "none":
+                m = m0
+            else:
+                m = m0 + delta(arm, d_, lab, run)
+            ts, tu = _bt_margin_tokens(m)
+            rid = f"{arm}|{d_}|{lab}|{session_key(run)}"
+            rec = sm.example_record(ident, arm, d_, lab, run, launch=launch, row=i, zone=zone,
+                                    logprob_S_tokens=ts, logprob_U_tokens=tu,
+                                    present_first_is_S=first_is_s(run), finite=rid not in nonfinite,
+                                    fresh_shift=fresh_shift.get(rid, 0.0))
+            launch += 1
+            recs.append(rec)
+        name = sm.cell_filename(arm, d_, lab)
+        band = ident["capture_layers"]
+        cell = {"schema": sm.CELL_SCHEMA, "stage_identity": ident, "arm": arm, "direction_id": d_,
+                "dose_label": lab, "records": recs,
+                "capture_files": {str(x): sm.capture_filename(name, x) for x in band}, "capture_rows": len(recs),
+                "capture_sha256": {str(x): hashlib.sha256(f"{name}|{x}".encode()).hexdigest() for x in band}}
+        if mutate is not None:
+            mutate(cell)
+        (root / name).write_text(json.dumps(cell), encoding="utf-8")
+        if (arm, d_, lab) in capture_cells:
+            for x in band:
+                (root / sm.capture_filename(name, x)).write_bytes(b"")
     return root
 
 
@@ -2516,8 +2920,10 @@ _BT_RAND_NEG = "rand_05"
 
 def _bt_asym(arm: str, d_: str, lab: str, run: int) -> float:
     """F11's asymmetric campaign (the example map: d_eq 0.3125, d_20 0.625): N1-V moves with the dose plus a session
-    offset of mean +0.045 (so the slope's d = 0 point moves the slope); rand_05 has a negative slope and an offset
-    (−0.8·d + 0.05; L = its |mean|, the floor its |slope|); N1-P is −0.9 at +1 and +0.2 at −1 (P(+1) above L(+1));
+    offset of mean +0.045 (so the fit through the origin and the with-intercept fit, whose d = 0 point is not offset,
+    differ); rand_05 has a negative slope and an offset
+    (−0.8·d + 0.05; L = its |mean|, the floor its |slope|); N1-P is −0.9 at +1 (P(+1) above L(+1)), +0.3 at +d_eq
+    (P(d_eq) above L(d_eq) = 0.2, so the dose ceiling is P's) and +0.2 at +d_20 and −1;
     N2-E is +1.0 plus the offset at f = 0.10 and +0.1 plus twice the offset at f = 0.20 (so the two f labels' means
     and SDs differ); the rest stay near 0."""
     w = 0.03 * (run % 4)
@@ -2526,7 +2932,7 @@ def _bt_asym(arm: str, d_: str, lab: str, run: int) -> float:
     if arm == "N1-R" and d_ == _BT_RAND_NEG:
         return -0.8 * _BT_PTS[lab] + 0.05
     if arm == "N1-P":
-        return (-0.9 if lab == "+1" else 0.2) + 0.01 * ((run % 3) - 1)
+        return {"+1": -0.9, "+d_eq": 0.3}.get(lab, 0.2) + 0.01 * ((run % 3) - 1)
     if arm == "N2-E":
         return (1.0 + w) if lab == "f0.10" else (0.1 + 2.0 * w)
     return 0.01 * ((run % 3) - 1)
@@ -2561,10 +2967,12 @@ def _bt_reader(B: _Battery) -> None:
         base = Path(td)
         pos = _bt_write_campaign(base / "pos", sm, delta=_bt_delta_positive)
         camp, st, fig, o = _bt_eval(pos, sm)
-        B.chk("reader path: a campaign written with the schema's builders (7,360 reads, 136 cells, nothing merged) "
-              "reads back through check_cell to (REPLICATED, DETECTABLE, SHARED, PASS, PASS)",
-              o["tuple"] == ("REPLICATED", "DETECTABLE", "SHARED", "PASS", "PASS") and len(camp.records) == 7360
-              and len(camp.cells) == 136, (o["tuple"], len(camp.records), len(camp.cells)), cover=["RD-POSITIVE"])
+        B.chk("reader path: a campaign written with the schema's builders (7,680 reads, 138 cells, nothing merged; "
+              "N1-P at +1, +d_20, +d_eq and −1, ADDENDUM-n1 §5.2) reads back through check_cell to (REPLICATED, "
+              "DETECTABLE, SHARED, PASS, PASS)",
+              o["tuple"] == ("REPLICATED", "DETECTABLE", "SHARED", "PASS", "PASS") and len(camp.records) == 7680
+              and len(camp.cells) == 138 and len(camp.planned["N1-P"]) == 640,
+              (o["tuple"], len(camp.records), len(camp.cells)), cover=["RD-POSITIVE"])
         sset = sentence_set_filled(o, st, route="B", auc={"d_eq": 0.95})
         B.chk("reader path: the filled sentence set keeps no slot; N1's sentence is §5's with the figures and 'on a "
               "reconstructed direction'", all(not any(s in v["text"] for s in SLOTS) for v in sset.values())
@@ -2662,57 +3070,112 @@ def _bt_reader(B: _Battery) -> None:
                                  nonfinite=[f"N1-V|none|0|{session_key(100)}"])
         camp10, st10, fig10, o10 = _bt_eval(nfs, sm)
         B.chk("reader path: a non-finite shadow at run 100 -> N1, dose and N2 INDETERMINATE, N1's causes "
-              "(nonfinite:N1-V, shadow:N1-P), N2's (shadow:N2-E, nonfinite:N1-V); N1-R (40 floor sessions) keeps its "
-              "floor and L; N4 PASS", o10["tuple"][:4] == ("INDETERMINATE",) * 3 + ("PASS",)
+              "(nonfinite:N1-V, shadow:N1-P), N2's (shadow:N2-E, nonfinite:N1-V, shadow:N1-P: N1-P reads N2's "
+              "norm-matched point, OPEN-Q6 as ruled); N1-R (40 floor sessions) keeps its floor and L; N4 PASS",
+              o10["tuple"][:4] == ("INDETERMINATE",) * 3 + ("PASS",)
               and o10["N1"]["causes"] == ["nonfinite:N1-V", "shadow:N1-P"]
-              and o10["N2"]["causes"] == ["shadow:N2-E", "nonfinite:N1-V"]
+              and o10["N2"]["causes"] == ["shadow:N2-E", "nonfinite:N1-V", "shadow:N1-P"]
               and st10.unusable == {"N1-P": "shadow", "N2-E": "shadow", "N2-S": "shadow", "N2-C": "shadow"}
               and st10.floor_V is not None and len(st10.L) == len(camp10.dmap.points()) - 1,
               (o10["tuple"], o10["N1"].get("causes"), o10["N2"].get("causes"), st10.unusable), cover=["RD-SHADOW"])
-        mg = _bt_write_campaign(base / "mg", sm, R_ell=50.0,
-                                delta=lambda a, d, l, r: (-0.9 if (a == "N1-P" and l == "+1")
-                                                          else _bt_delta_positive(a, d, l, r)))
+        p_minus = lambda a, d, l, r: (-0.9 if (a == "N1-P" and l == "+1")             # noqa: E731
+                                      else _bt_delta_positive(a, d, l, r))
+        mg = _bt_write_campaign(base / "mg", sm, R_ell=37.485, delta=p_minus)
         camp7, st7, fig7, o7 = _bt_eval(mg, sm)
-        B.chk("reader path: R_ell 50 merges +d_20 into +1 -> 6,240 reads; N2's norm-matched point is +1, the ratio "
-              "2·d_eq reported; N1-P at −0.9 there puts P(+1) above L(+1), and N2's reported ceiling is max(L, P) = "
-              "P(+1), the one its certification used (E 0.625 below it: SPECIFIC)", len(camp7.records) == 6240
-              and o7["N2"]["point"] == 1.0 and abs(o7["N2"]["match_ratio"] - 2.0 * camp7.dmap.d_eq) <= 1e-12
+        B.chk("reader path (shape c): R_ell 37.485 gives d_eq ≈ 0.49, folded into +1/2, and d_20 ≈ 0.98, folded into "
+              "+1 with the cap not binding -> 5,280 reads (N1-P at +1, +1/2 and −1); N2 is decided at f = 0.20 "
+              "against +1, the ratio 2·d_eq "
+              "reported; N1-P at −0.9 there puts P(+1) above L(+1), and N2's reported ceiling is max(L, P) = P(+1), "
+              "the one its certification used (E 0.625 below it: SPECIFIC)", len(camp7.records) == 5280
+              and sorted({rid.split("|")[2] for rid in camp7.planned["N1-P"]}) == ["+1", "+1/2", "-1"]
+              and not camp7.dmap.cap_binds() and o7["N2"]["f"] == F20 and o7["N2"]["point"] == 1.0
+              and camp7.dmap.resolved()["d_eq"] == 0.5
+              and abs(o7["N2"]["match_ratio"] - 2.0 * camp7.dmap.d_eq) <= 1e-12
               and st7.P[1.0] > st7.L[1.0] and o7["N2"]["ceiling"] == st7.P[1.0] and o7["N2"]["state"] == "SPECIFIC",
-              (len(camp7.records), o7["N2"]["point"], o7["N2"].get("ceiling"), o7["N2"]["state"]),
-              cover=["RD-MERGED"])
+              (len(camp7.records), o7["N2"].get("f"), o7["N2"].get("point"), o7["N2"].get("ceiling"),
+               o7["N2"]["state"]), cover=["RD-MERGED"])
+        cb = _bt_write_campaign(base / "cb", sm, R_ell=50.0, delta=p_minus)
+        camp7b, st7b, fig7b, o7b = _bt_eval(cb, sm)
+        bes = o7b["N2"].get("beside", {}).get(F20, {})
+        B.chk("reader path (shape b): R_ell 50 gives 2·d_eq ≈ 1.31 > 1, so the cap binds and +d_20 merges into +1 -> "
+              "6,400 reads (N1-P at +1, +d_eq and −1); N2 is decided at f = 0.10 against N1-V at d_eq (ratio 1; E "
+              "0.3125 above its ceiling max(L, P)(d_eq): SHARED) "
+              "and f = 0.20 is reported beside against +1 at the ratio 2·d_eq, where N1-P at −0.9 puts P(+1) above "
+              "L(+1) and the beside's ceiling is max(L, P) = P(+1) (E 0.625 below it: not certified); the label's "
+              "input reads span_reward's G-READ-n at f = 0.10 (OPEN-Q7 as ruled; the label itself: "
+              "SENT-FILLED-N2-CAP)", len(camp7b.records) == 6400
+              and sorted({rid.split("|")[2] for rid in camp7b.planned["N1-P"]}) == ["+1", "+d_eq", "-1"]
+              and camp7b.dmap.cap_binds() and o7b["N2"]["f"] == F10 and o7b["N2"]["point"] == camp7b.dmap.d_eq
+              and o7b["N2"]["match_ratio"] == 1.0 and o7b["N2"]["state"] == "SHARED"
+              and o7b["N2"]["ceiling"] == max(st7b.L[camp7b.dmap.d_eq], st7b.P[camp7b.dmap.d_eq])
+              and bes.get("point") == 1.0 and abs(bes.get("match_ratio", 0.0) - 2.0 * camp7b.dmap.d_eq) <= 1e-12
+              and st7b.P[1.0] > st7b.L[1.0] and bes.get("ceiling") == st7b.P[1.0] and bes.get("certified") is False
+              and _bt_eval(cb, sm, gread=_bt_gread_all(camp7b.dmap) | {("span_reward", F10): "FAIL"})[3]["gread"]["E"]
+              == "FAIL",
+              (len(camp7b.records), o7b["N2"].get("f"), o7b["N2"].get("point"), o7b["N2"]["state"], bes),
+              cover=["RD-CAP-BINDS"])
+        deq_b = camp7b.dmap.d_eq
+
+        def org_b(xs, ys):                                                  # through the origin, by hand
+            return sum(a * b for a, b in zip(xs, ys)) / sum(a * a for a in xs)
+        hand_e = float(np.mean([org_b([deq_b, 2 * deq_b], [0.3125 + 0.03 * ((r % 4) - 1.5),
+                                                           0.625 + 0.03 * ((r % 4) - 1.5)]) for r in range(160)]))
+        hand_fl = abs(float(np.mean([org_b([deq_b, 1.0], [0.01 * ((r % 3) - 1)] * 2) for r in range(40)])))
+        sn2, fn2 = fig7b["slopes_N2"]["N2-E"], fig7b["floors_N2"]
+        B.chk("reader path (shape b): N2's slope through the origin over (d_eq, 2·d_eq) and its floor at the kept "
+              "points (d_eq, +1), the mismatch printed beside each (OPEN-Q9 as ruled; ADDENDUM-n1 §7.5), to the hand "
+              "computation", sn2["points"] == [deq_b, 2 * deq_b] and sn2["floor_points"] == [deq_b, 1.0]
+              and sn2["mismatch"] is True and abs(sn2["mean"] - hand_e) <= 1e-9 and fn2["points"] == [deq_b, 1.0]
+              and fn2["n2_points"] == [deq_b, 2 * deq_b] and fn2["mismatch"] is True
+              and abs(fn2["floor"] - hand_fl) <= 1e-9, (sn2.get("mean"), hand_e, fn2.get("floor"), hand_fl),
+              cover=["RD-CAP-SLOPES"])
         # F11: the asymmetric campaign; every statistic against a hand computation from the deltas as written
         asym = _bt_write_campaign(base / "asym", sm, delta=_bt_asym, told=_bt_asym_told, sham=_bt_asym_sham)
         camp11, st11, fig11, o11 = _bt_eval(asym, sm)
         lv = label_values(camp11.identity)
         vpts = sorted(set(lv.values()), reverse=True)                       # 0 included
         labs = {p: l for l, p in lv.items()}
+        nzp = [p for p in vpts if p != 0.0]
+
         def y_of(arm, d_, run):
             return [0.0 if p == 0.0 else _bt_asym(arm, d_, labs[p], run) for p in vpts]
-        hand_slope_v = float(np.mean([np.polyfit(vpts, y_of("N1-V", "valence", r), 1)[0] for r in range(160)]))
+
+        def org(xs, ys):                                                    # through the origin, by hand
+            return sum(a * b for a, b in zip(xs, ys)) / sum(a * a for a in xs)
+        hand_slope_v = float(np.mean([org(nzp, [_bt_asym("N1-V", "valence", labs[p], r) for p in nzp])
+                                      for r in range(160)]))
+        hand_slope_v_int = float(np.mean([np.polyfit(vpts, y_of("N1-V", "valence", r), 1)[0] for r in range(160)]))
         dirs = [f"rand_{i:02d}" for i in range(N_RANDOM)]
-        hand_floor = max(abs(float(np.mean([np.polyfit(vpts, y_of("N1-R", d_, r), 1)[0] for r in range(40)])))
-                         for d_ in dirs)
+        hand_floor = max(abs(float(np.mean([org(nzp, [_bt_asym("N1-R", d_, labs[p], r) for p in nzp])
+                                            for r in range(40)]))) for d_ in dirs)
         hand_L = {p: max(abs(float(np.mean([_bt_asym("N1-R", d_, labs[p], r) for r in range(40)]))) for d_ in dirs)
                   for p in vpts if p != 0.0}
         hand_P = {p: abs(float(np.mean([_bt_asym("N1-P", "valence", lab, r) for r in range(160)])))
-                  for lab, p in (("+1", 1.0), ("-1", -1.0))}
-        p_deq = camp11.dmap.d_eq
-        hand_n2 = float(np.mean([np.polyfit([0.0, p_deq, 2.0 * p_deq],
-                                            [0.0, _bt_asym("N2-E", "span_reward", "f0.10", r),
-                                             _bt_asym("N2-E", "span_reward", "f0.20", r)], 1)[0] for r in range(160)]))
+                  for lab, p in (("+1", 1.0), ("+d_20", 0.625), ("+d_eq", 0.3125), ("-1", -1.0))}
+        p_deq, p_d20 = camp11.dmap.d_eq, camp11.dmap.resolved()["d_20"]
+        hand_n2 = float(np.mean([org([p_deq, 2.0 * p_deq], [_bt_asym("N2-E", "span_reward", "f0.10", r),
+                                                             _bt_asym("N2-E", "span_reward", "f0.20", r)])
+                                 for r in range(160)]))
+        hand_n2_floor = max(abs(float(np.mean([org([p_deq, p_d20], [_bt_asym("N1-R", d_, labs[p_deq], r),
+                                                                     _bt_asym("N1-R", d_, labs[p_d20], r)])
+                                               for r in range(40)]))) for d_ in dirs)
         tv = np.array([_bt_asym_told(r, "") for r in range(160)])
         tmeans = tv[boot_index("N4-T", 160)].mean(axis=1)
         hand_98 = (_bt_hand_pct(tmeans, 1.0), _bt_hand_pct(tmeans, 99.0))
         close = lambda a, b: abs(a - b) <= 1e-9                              # noqa: E731
         asym_ok = {
             "tuple": o11["tuple"] == ("REPLICATED", "DETECTABLE", "SPECIFIC", "INDETERMINATE", "PASS"),
-            "slope_V (d = 0 in the fit)": close(st11.slope_V.mean, hand_slope_v),
+            "slope_V through the origin": close(st11.slope_V.mean, hand_slope_v),
+            "with-intercept slope beside (d = 0 in the fit), differing": close(
+                fig11["slope_V_with_intercept"]["mean"], hand_slope_v_int)
+            and abs(hand_slope_v - hand_slope_v_int) > 1e-3 and fig11["slope_V_with_intercept"]["descriptive"] is True,
             "floor (|slope|, rand_05 negative)": close(st11.floor_V, hand_floor) and fig11["floor_dir"] == _BT_RAND_NEG,
             "L (|mean|)": all(close(st11.L[p], hand_L[p]) for p in hand_L) and len(st11.L) == len(hand_L),
-            "P (+1 and −1 apart, |mean|)": close(st11.P[1.0], hand_P[1.0]) and close(st11.P[-1.0], hand_P[-1.0])
-            and fig11["P_signed"]["+1"]["mean"] < 0.0,
+            "P (|mean| at each of N1-P's four points)": all(close(st11.P[p], hand_P[p]) for p in hand_P)
+            and len(st11.P) == 4 and fig11["P_signed"]["+1"]["mean"] < 0.0,
             "N1 ceiling max(L, P) = P(+1)": hand_P[1.0] > hand_L[1.0] and close(o11["N1"]["ceiling"], hand_P[1.0]),
-            "dose ceiling L(d_eq) alone": close(o11["dose"]["ceiling"], hand_L[p_deq]),
+            "dose ceiling max(L, P) at d_eq, P's": hand_P[p_deq] > hand_L[p_deq]
+            and close(o11["dose"]["ceiling"], hand_P[p_deq]),
             "E by f": close(st11.E[F10].mean, 1.045) and close(st11.E[F20].mean, 0.19),
             "N2's per-f n and SD (ddof 0)": fig11["n"][("N2-E", "f0.10")] == fig11["n"][("N2-E", "f0.20")] == 160
             and close(fig11["sd0"][("N2-E", "f0.10")],
@@ -2720,15 +3183,20 @@ def _bt_reader(B: _Battery) -> None:
             and close(fig11["sd0"][("N2-E", "f0.20")],
                       float(np.std([_bt_asym("N2-E", "span_reward", "f0.20", r) for r in range(160)])))
             and fig11["sd0"][("N2-E", "f0.20")] > 1.5 * fig11["sd0"][("N2-E", "f0.10")],
-            "N2 slope (0, d_eq, 2 d_eq)": close(fig11["slopes_N2"]["N2-E"]["mean"], hand_n2),
+            "N2 slope (d_eq, 2 d_eq) through the origin": close(fig11["slopes_N2"]["N2-E"]["mean"], hand_n2)
+            and fig11["slopes_N2"]["N2-E"]["points"] == [p_deq, 2.0 * p_deq]
+            and fig11["slopes_N2"]["N2-E"]["mismatch"] is False,
+            "N2's floor at d_eq's and d_20's points": close(fig11["floors_N2"]["floor"], hand_n2_floor)
+            and fig11["floors_N2"]["points"] == [p_deq, p_d20] and fig11["floors_N2"]["mismatch"] is False,
             "E_sham |negative mean|": close(st11.e_sham, 0.3),
             "m_told 98%": close(st11.told.lo, hand_98[0]) and close(st11.told.hi, hand_98[1])
             and _bt_hand_pct(tmeans, 2.5) > 0.0 > hand_98[0] and st11.told.level == 98}
         B.chk("reader path (F11): an asymmetric campaign -- a random direction with a negative slope and offset, N1-P "
               "at −0.9 / +0.2, N2-E at 1.0 / 0.1 by f with spreads in the ratio 1:2, a negative sham mean, a session "
-              "offset of mean +0.045 -- reads to the hand computation: the slope with its d = 0 point, the floor as "
-              "max |mean slope|, L and P as |mean| at their own points, the ceilings, E by f, N2's per-f n and SD, "
-              "N2's slope, E, and m_told's 98% CI (whose 95% would have excluded 0)", all(asym_ok.values()),
+              "offset of mean +0.045 -- reads to the hand computation: the slope through the origin and the "
+              "with-intercept slope beside (they differ here), the floor as max |mean slope|, L and P as |mean| at "
+              "their own points, the ceilings, E by f, N2's per-f n and SD, N2's slope and its floor through the "
+              "origin, E, and m_told's 98% CI (whose 95% would have excluded 0)", all(asym_ok.values()),
               [k for k, v in asym_ok.items() if not v] or o11["tuple"], cover=["RD-ASYM"])
         # F3: d_eq merged into +1/2 (R_ell 39.78: d_eq ≈ 0.52, d_20 at the cap) -- the dose sentence reads +1/2
         mdq = _bt_write_campaign(base / "mdq", sm, R_ell=39.78, delta=_bt_delta_positive)
@@ -2755,7 +3223,7 @@ def _bt_reader(B: _Battery) -> None:
               o8[3]["tuple"], cover=["RD-GREAD"])
         # F12: mixed G-READ-n states on a campaign where N4 PASSES and nothing else moves; each label and the tuple's
         # coordinate must read its own cell (valence at +1 for N1, at d_eq for dose and the coordinate, span_reward
-        # at f = 0.20 for N2)
+        # at N2's decision f for N2: f = 0.20 on this map, the cap not binding; the binding case is RD-CAP-BINDS)
         null2 = _bt_write_campaign(base / "null2", sm, delta=lambda a, d, l, r: 0.01 * ((r % 3) - 1))
         camp13 = load_campaign(null2, sm)
         pts13 = camp13.dmap.resolved()
@@ -2769,14 +3237,16 @@ def _bt_reader(B: _Battery) -> None:
             mix[name] = (o_m["tuple"], s_m["7.1"]["label"], s_m["7.2"]["label"], s_m["7.2"]["form"],
                          s_m["7.3"]["label"], "AUC 0.810" in s_m["7.2"]["text"])
         want_mix = {"d_eq-fails": (("NOT-REPLICATED", "NOT-DETECTABLE", "NULL", "PASS", "FAIL"), ANSWERED, CNA,
-                                   "§5, its ellipsis expanded by Code", ANSWERED, False),
-                    "+1-fails": (("NOT-REPLICATED", "NOT-DETECTABLE", "NULL", "PASS", "PASS"), CNA, ANSWERED, "§5",
+                                   "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6", ANSWERED, False),
+                    "+1-fails": (("NOT-REPLICATED", "NOT-DETECTABLE", "NULL", "PASS", "PASS"), CNA, ANSWERED,
+                                 "§5, amended by ADDENDUM-n1 §7.6",
                                  CNA, True)}
         stop_auc = _bt_raises(lambda: sentence_set_filled(o_m, st_m, route="B", auc={"d_eq": None}), (AnlStop,))
         stop_route = _bt_raises(lambda: sentence_set_filled(o_m, st_m, route="C", auc={"d_eq": 0.81}), (AnlStop,))
         B.chk("reader path (F12): G-READ-n FAIL at d_eq only -> the coordinate FAIL, N1's label answered, the dose "
               "sentence not readable; FAIL at +1 only -> the coordinate PASS, N1's label concluded, the dose sentence "
-              "answered with its AUC; N2's label follows span_reward at f = 0.20; a readable dose sentence without an "
+              "answered with its AUC; N2's label follows span_reward at its decision f (0.20 here, OPEN-Q7 as ruled); "
+              "a readable dose sentence without an "
               "AUC, and a route other than A or B, STOP", mix == want_mix and stop_auc[0] and stop_route[0],
               (mix, stop_auc[1][:50], stop_route[1][:50]), cover=["RD-GREAD-MIXED"])
         # F14: at +1 a fresh shift of 0.02 (rel ≈ 0.009: above TAU/4, below TAU) on runs 0, 4, ...; at −1 a shift of
@@ -2822,9 +3292,9 @@ def _bt_reader(B: _Battery) -> None:
                                                  "span_character|valence": 0.3, "span_reward|span_sentiment": 0.4,
                                                  "span_reward|valence": 0.5, "span_sentiment|valence": 0.6}})
         B.chk("reader path: the secondaries compute -- (a) first-pick shares per arm and dose, (c) groups count-only "
-              "below 20, (d) r over 160 sessions, (e) six cosines and the matched means -- and (b) reads 'not recorded'",
-              sec["d_retention_r"]["n"] == 160 and len(sec["e_directions"]["cosines"]) == 6
-              and sec["b_free_text"].startswith("not recorded") and all(
+              "below 20, (d) r over 160 sessions, (e) six cosines and the matched means -- and (b) reads struck, by "
+              "ADDENDUM-n1 §4", sec["d_retention_r"]["n"] == 160 and len(sec["e_directions"]["cosines"]) == 6
+              and sec["b_free_text"] == B_STRUCK and "struck" in B_STRUCK and all(
                   ("mean" in g) == (g["n"] >= FLOOR_EVENTS) for gs in sec["c_groups"].values() for g in gs.values()),
               sec["d_retention_r"], cover=["RD-SECONDARY"])
         # M38: secondary (c)'s floor at exactly 20 events (S first in runs 0-19), and at 19 (one of them non-finite)
@@ -2882,27 +3352,50 @@ def _bt_reader(B: _Battery) -> None:
         refs["balance"] = _bt_raises(lambda: load_campaign(_bt_write_campaign(base / "ub", sm,
                                                                                delta=_bt_delta_positive,
                                                                                mutate=unbalanced), sm), (AnlRefusal,))
-        capx = _bt_write_campaign(base / "capx", sm, delta=_bt_delta_positive)
-        (capx / sm.cell_filename("N2-S", "span_sentiment", "f0.20").replace(".json", ".npy")).write_bytes(b"x")
-        refs["capture"] = _bt_raises(lambda: load_campaign(capx, sm), (AnlRefusal,))
-        capa = _bt_write_campaign(base / "capa", sm, delta=_bt_delta_positive)
-        (capa / sm.cell_filename("N1-P", "valence", "-1").replace(".json", ".npy")).unlink()
-        refs["capture-absent"] = _bt_raises(lambda: load_campaign(capa, sm), (AnlRefusal,))
+        n2s = sm.cell_filename("N2-S", "span_sentiment", "f0.20")
+        capx = _bt_write_campaign(base / "capx", sm, delta=_bt_delta_positive,
+                                  capture_cells=[("N2-S", "span_sentiment", "f0.20")])
+        site = sm.example_identity()["layer"]
+        (capx / sm.capture_filename(n2s, site)).write_bytes(b"x")          # the site's layer: outside the band
+        refs["capture-layer"] = _bt_raises(lambda: load_campaign(capx, sm), (AnlRefusal,))
+        capo = _bt_write_campaign(base / "capo", sm, delta=_bt_delta_positive, omit=[("N2-S", "span_sentiment",
+                                                                                      "f0.20")])
+        (capo / sm.capture_filename(n2s, site + 1)).write_bytes(b"")       # a band layer of a cell not present
+        refs["capture-cell"] = _bt_raises(lambda: load_campaign(capo, sm), (AnlRefusal,))
+        capk = _bt_write_campaign(base / "capk", sm, delta=_bt_delta_positive,
+                                  capture_cells=[("N2-S", "span_sentiment", "f0.20"), ("N1-P", "valence", "-1")])
+        (capk / sm.capture_filename(sm.cell_filename("N1-P", "valence", "-1"), site + 1)).unlink()
+        camp_k = load_campaign(capk, sm)
+
+        class _SmPlan:                          # the schema with a read plan one read short of the analyzer's
+            def __init__(self, base_sm):
+                self._b = base_sm
+
+            def __getattr__(self, k):
+                return getattr(self._b, k)
+
+            def read_plan(self, ident):
+                return self._b.read_plan(ident)[1:]
+        refs["plan"] = _bt_raises(lambda: load_campaign(capk, _SmPlan(sm)), (AnlRefusal,))
+        cap_ok = (len(camp_k.cells) == 138 and camp_k.cells[n2s]["capture_sha256"]
+                  == {str(x): hashlib.sha256(f"{n2s}|{x}".encode()).hexdigest() for x in range(site + 1, 64)})
         refs["shadow-absent"] = _bt_raises(lambda: load_campaign(_bt_write_campaign(base / "sa", sm,
                                                                                      delta=_bt_delta_positive,
                                                                                      omit=[("N1-V", "none", "0")]), sm),
                                            (AnlRefusal,))
         want = {"stray": "beside the cells", "identity": "stage identity differs", "shadow": "shadow",
                 "zones": "schedule zones", "schema": "margin", "cues": "cues or present order differ",
-                "balance": "80 S and 80 U", "capture": "capture_sha256", "capture-absent": "is absent",
-                "shadow-absent": "is not on disk"}
+                "balance": "80 S and 80 U", "capture-layer": "beside the cells", "capture-cell": "beside the cells",
+                "shadow-absent": "is not on disk", "plan": "differs from the analyzer's own derivation"}
         B.chk("reader path refuses: a file no cell names; a stage identity that differs between cells; a read whose "
               "ids_sha differs from its shadow's; N4-T and N4-Ts zones that differ; a record the schema's check_cell "
               "refuses; a session whose cues differ between reads; a schedule of 81 S and 79 U on both N4 arms; a "
-              "capture array whose bytes are not its recorded sha256, or absent; steered reads whose shadows are not on "
-              "disk",
-              all(refs[k][0] and want[k] in refs[k][1] for k in want),
-              {k: (v[0], v[1][:80]) for k, v in refs.items()}, cover=["RD-REFUSE"])
+              "capture array named for the site's layer (outside the band) or for a cell not present; steered reads "
+              "whose shadows are not on disk; a schema whose read plan differs from the analyzer's own derivation. It "
+              "accepts capture arrays named for a present cell's band layers, one of "
+              "them absent, reading none and binding each cell by the row hashes it records (PIN-n-31)",
+              all(refs[k][0] and want[k] in refs[k][1] for k in want) and cap_ok,
+              {k: (v[0], v[1][:80]) for k, v in refs.items()} | {"accepted": cap_ok}, cover=["RD-REFUSE"])
 
 
 # =====================================================================================================================
@@ -2976,8 +3469,8 @@ def not_run_doc(rec: Mapping[str, Any], record_ref: Mapping[str, Any],
     sset = {k: dict(v, text=v["text"].replace("[reason]", reason)) for k, v in sentence_set(NOT_RUN).items()}
     return {"schema": NOT_RUN_OUT_SCHEMA, "unit": UNIT, "outcome": NOT_RUN, "cause": rec["cause"], "reason": reason,
             "record": dict(record_ref), "date": rec["date"], "sentences": sset,
-            "proposal_sha256": PROPOSAL_SHA256, "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN,
-            **dict(extra or {})}
+            "proposal_sha256": PROPOSAL_SHA256, "addendum_sha256": ADDENDUM_SHA256,
+            "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN, **dict(extra or {})}
 
 
 def run_not_run(record: Path, out_dir: Path) -> tuple[Path, str]:
@@ -3031,7 +3524,7 @@ def _bt_files(cdir: Path | None) -> tuple[dict, dict]:
     for f in (sorted(Path(cdir).glob("*.json")) if cdir is not None else []):
         cell = json.loads(f.read_text(encoding="utf-8"))
         cells[f.name] = {"json_sha256": hashlib.sha256(f.read_bytes()).hexdigest(),
-                         "capture_sha256": hashlib.sha256((f.parent / cell["capture_file"]).read_bytes()).hexdigest(),
+                         "capture_sha256": dict(cell["capture_sha256"]),
                          "records": len(cell["records"])}
         key = f"{cell['arm']}|{cell['dose_label']}"
         for r in cell["records"]:
@@ -3053,7 +3546,7 @@ def _bt_files(cdir: Path | None) -> tuple[dict, dict]:
 def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state: str = "COMPLETE",
                    pauses: Sequence[dict] = (), stop: dict | None = None, hour_cap_ms: int | None = None,
                    used_ms: int | None = None, label_mass: bool = False,
-                   counters_over: Mapping[str, Any] | None = None) -> dict:
+                   counters_over: Mapping[str, Any] | None = None, loads_ms: Sequence[int] = (5000,)) -> dict:
     """A stage report of the campaign written at ``cdir`` (None: a report of no record), as n-build's runner writes
     one, from the battery's own count of the files (_bt_files): its cells, per-arm counts against the schema's plan,
     counters and used time (``used_ms`` overrides it); the label-mass counter null, as the runner leaves it, or the
@@ -3081,7 +3574,7 @@ def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state
                               "exceed_tau": sum(x["exceed_tau"] for x in cnt["fidelity"].values()),
                               "evaluations": len(batches), "fires": len(batches)},
            "stop": stop, "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used,
-                                 "hit": hour_cap_ms is not None and used >= hour_cap_ms},
+                                 "hit": hour_cap_ms is not None and used >= hour_cap_ms, "loads_ms": list(loads_ms)},
            "counters": ctr}
     sm.check_report(rep)
     return rep
@@ -3199,7 +3692,8 @@ def _bt_verdicts(B: _Battery) -> None:
               and verd.get("analyzer_sha256") == analyzer_sha256()
               and verd.get("report") == {"name": "report.json", "sha256": sha(rep), "end_state": "COMPLETE"}
               and dig(verd, "gread", "artifact") == {"name": "gread.json", "sha256": sha(art)}
-              and verd.get("proposal_sha256") == PROPOSAL_SHA256 and verd.get("date") == "2026-12-20"
+              and verd.get("proposal_sha256") == PROPOSAL_SHA256 and verd.get("addendum_sha256") == ADDENDUM_SHA256
+              and verd.get("date") == "2026-12-20"
               and verd.get("schema_module") == {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
               "campaign": verd.get("campaign") == {"stage_identity_sha256": sm.identity_sha256(camp.identity),
                                                    "read_plan_sha256": sm.read_plan_sha256(camp.identity),
@@ -3215,7 +3709,8 @@ def _bt_verdicts(B: _Battery) -> None:
               and dig(verd, "counters", "records", "N1-V|+1", "fidelity exceedances at TAU/4") == 40
               and dig(verd, "counters", "records", "N1-V|+1", "non-finite re-computations") == 1
               and dig(verd, "counters", "pauses") == [pz_adj]
-              and dig(verd, "counters", "cap", "used_ms") == cnt_main["used_ms"],
+              and dig(verd, "counters", "cap", "used_ms") == cnt_main["used_ms"]
+              and dig(verd, "counters", "cap", "loads_ms") == rep_obj["cap"]["loads_ms"] == [5000],
               "secondary": sec.get("schema") == SECONDARY_SCHEMA and str(sec.get("claim")).startswith("none")
               and "a_first_pick_share" in (sec.get("secondaries") or {})
               and verd.get("secondary") == {"name": "N-pod_secondary.json",
@@ -3458,7 +3953,8 @@ def _bt_verdicts(B: _Battery) -> None:
         art_ident = json.loads(json.dumps(art_obj))
         art_ident["campaign"]["stage_identity_sha256"] = "b" * 64
         art_cap = json.loads(json.dumps(art_obj))
-        art_cap["campaign"]["cells"][sorted(art_cap["campaign"]["cells"])[0]]["capture_sha256"] = "3" * 64
+        cap0 = art_cap["campaign"]["cells"][sorted(art_cap["campaign"]["cells"])[0]]["capture_sha256"]
+        cap0[sorted(cap0)[0]] = "3" * 64                                    # one layer's row hash differs
         art_json = json.loads(json.dumps(art_obj))
         art_json["campaign"]["cells"][sorted(art_json["campaign"]["cells"])[-1]]["json_sha256"] = "3" * 64
         art_less = json.loads(json.dumps(art_obj))
@@ -3505,7 +4001,7 @@ def _bt_verdicts(B: _Battery) -> None:
             "label-mass": (rv(cdir, report_with(counters=counters_with(label_mass_below_floor={"N1-V|+1": 1}))),
                            "counters.label_mass_below_floor"),
             "cap-used": (rv(cdir, report_with(cap={"hour_cap_ms": None, "used_ms": cnt_main["used_ms"] + 1,
-                                                   "hit": False})), "cap.used_ms"),
+                                                   "hit": False, "loads_ms": [5000]})), "cap.used_ms"),
             "pause-read": (rv(cdir, on_main("rep_bz.json", [bz])), "is not on disk"),
             "rendering-on-disk": (rv(cdir, on_main("rep_rz.json", [rz])), "a rendering pause not resumed"),
             "kind-nonfinite": (rv(cdir, on_main("rep_kz.json", [kz])), "a non-finite pause at a finite read"),
@@ -3622,7 +4118,8 @@ def battery() -> dict:
     snap0 = _bt_snapshot()
     with _Hook() as hook:
         ptext = (REPO / PROPOSAL_REL).read_bytes()
-        verb = proposal_spans(ptext.decode("utf-8"))
+        atext = (REPO / ADDENDUM_REL).read_bytes()
+        verb = proposal_spans(ptext.decode("utf-8")) | addendum_spans(atext.decode("utf-8"))
         B.group("outcomes", lambda: _bt_outcomes(B))
         B.group("not-run", lambda: _bt_notrun(B))
         B.group("tables", lambda: _bt_tables(B))
@@ -3633,7 +4130,7 @@ def battery() -> dict:
         B.group("reader path", lambda: _bt_reader(B))
         B.group("commands", lambda: _bt_commands(B))
         B.group("verdicts", lambda: _bt_verdicts(B))
-        B.group("structure", lambda: _bt_structure(B, ptext, hook))
+        B.group("structure", lambda: _bt_structure(B, ptext, hook, atext))
     snap1 = _bt_snapshot()
     B.chk("the battery wrote nothing under data/n (sha256 of every file outside ckpt / reports / verdicts, before = "
           "after)", snap0 == snap1, sorted(set(snap0) ^ set(snap1))[:2], cover=["STR-NO-CANONICAL-WRITE"])
@@ -3652,7 +4149,7 @@ def battery() -> dict:
 # =====================================================================================================================
 # 15. G-ANL-n's run (n §3 "G-ANL-n"): the battery, then the artifact, write-once, against committed blobs
 # =====================================================================================================================
-BOUND_RELS = (PROPOSAL_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json", f"{BK_NP_REL}/reduced.json")
+BOUND_RELS = (PROPOSAL_REL, ADDENDUM_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json", f"{BK_NP_REL}/reduced.json")
 
 
 def committed_problems(rels: Sequence[str]) -> list[str]:
@@ -3676,8 +4173,10 @@ def pinned_map_reach(dmap: DoseMap) -> dict:
     """The (N1, dose, N2) triples the outcome layer produces on the pinned map (the battery's enumeration), its merge
     shape, and, where the shape is one the battery derives by hand, the agreement with that derivation."""
     r = dmap.resolved()
-    # the coupling classes: N2 reads N1-V at +1 when d_20 sits there (b); dose reads +1 too when d_eq does (d)
-    shape = "d" if r["d_eq"] == 1.0 else "b" if r["d_20"] == 1.0 else "a"
+    # the coupling shapes (map_reach_by_hand): dose and N2 meet N1 at +1 when d_eq sits there (d); N2 is decided at
+    # dose's point when the cap binds (b), at N1's +1 when d_20 sits there without the cap (c); else none (a)
+    m = dmap.norm_matched(dmap.n2_decision_f())
+    shape = "d" if r["d_eq"] == 1.0 else "b" if dmap.cap_binds() else "c" if m == 1.0 else "a"
     seen, iff, clean = map_reach(dmap)
     return {"shape": shape, "triples": len(seen), "tuples": len(seen) * 8 + 1, "dose_iff_n1": iff, "raised": not clean,
             "agrees_with_hand": seen == map_reach_by_hand(shape)}
@@ -3686,9 +4185,11 @@ def pinned_map_reach(dmap: DoseMap) -> dict:
 def ganl_artifact(res: Mapping[str, Any], dmap: DoseMap | None) -> dict:
     sha = analyzer_sha256()
     return {"schema": GANL_SCHEMA, "stage": "G-ANL-n", "verdict": "PASS",
-            "spec": "PROPOSAL-n v0.2 §3 G-ANL-n, §8 step 9; the seat's answers of 2026-11-15 §5.1",
+            "spec": "PROPOSAL-n v0.2 §3 G-ANL-n, §8 step 9; the seat's answers of 2026-11-15 §5.1 and of 2026-11-16 "
+                    "(results/raw/2026-11-16_n-ganl_design-to-code_answers.md); ADDENDUM-n1 v0.1 §4-§7",
             "analyzer": {"path": ANALYZER_REL, "sha256": sha, "sha16": sha[:16]},
             "proposal": {"path": PROPOSAL_REL, "sha256": PROPOSAL_SHA256},
+            "addendum": {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256},
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "battery": {k: res.get(k) for k in ("checks_pass", "checks_total", "expected_checks", "coverage_ids",
                                                  "outputs_sha256", "reachability", "bk_repro", "bk_fidelity")},
@@ -3848,12 +4349,13 @@ def _bt_commands(B: _Battery) -> None:
           "0.1, goes to 0 and is refused; the schema's dose_points agrees on all five", edge_ok, edge_got,
           cover=["NUM-MERGE-EDGE"])
     cls = {k: pinned_map_reach(m) for k, m in (("a", DoseMap(0.25, 0.5)), ("b", DoseMap(0.52, 1.0)),
-                                               ("d", DoseMap(0.97, 1.0)))}
-    B.chk("the pinned map's coupling class: d_20 at +1/2 is (a) (28 triples), d_eq at +1/2 with d_20 at +1 is (b) "
-          "(24), both at +1 is (d) (17), each agreeing with the hand derivation", {k: (v["shape"], v["triples"],
-                                                                                     v["agrees_with_hand"])
-                                                                                for k, v in cls.items()}
-          == {"a": ("a", 28, True), "b": ("b", 24, True), "d": ("d", 17, True)}, cls, cover=["NUM-REACH-CLASS"])
+                                               ("c", DoseMap(0.49, 2 * 0.49)), ("d", DoseMap(0.97, 1.0)))}
+    B.chk("the pinned map's coupling shape: d_20 at +1/2 is (a) (28 triples); d_eq at +1/2 with the cap binding is "
+          "(b) (25: N2 decided at dose's point, OPEN-Q7 as ruled); d_eq at +1/2 with d_20 merged into +1 without the "
+          "cap is (c) (24); both at +1 is (d) (17); each agreeing with the hand derivation",
+          {k: (v["shape"], v["triples"], v["agrees_with_hand"]) for k, v in cls.items()}
+          == {"a": ("a", 28, True), "b": ("b", 25, True), "c": ("c", 24, True), "d": ("d", 17, True)}, cls,
+          cover=["NUM-REACH-CLASS"])
     with tempfile.TemporaryDirectory(prefix="n_anl_cmd_") as td:
         base = Path(td)
         rec = {"schema": NOT_RUN_RECORD_SCHEMA, "unit": UNIT, "cause": "clock:pi-declined", "date": "2026-12-16",
@@ -3867,10 +4369,11 @@ def _bt_commands(B: _Battery) -> None:
         rp.write_text(json.dumps(dict(rec, cause="clock:no-box")), encoding="utf-8")
         ok3, msg3 = _bt_raises(lambda: run_not_run(rp, base / "out"), (AnlRefusal,))
         B.chk("not-run writes N-pod_NOT-RUN.json once (written, then identical), refuses other bytes (write-once), "
-              "carries the reason in all four sentence slots, and binds the record by its file's sha256",
-              (h1, h2) == ("written", "identical") and ok3
+              "carries the reason in all four sentence slots, and binds the record by its file's sha256 and the "
+              "proposal and ADDENDUM-n1 by theirs", (h1, h2) == ("written", "identical") and ok3
               and doc["outcome"] == NOT_RUN and all(doc["reason"] in v["text"] for v in doc["sentences"].values())
-              and doc["date"] == "2026-12-16" and doc["record"] == {"name": "rec.json", "sha256": rsha},
+              and doc["date"] == "2026-12-16" and doc["record"] == {"name": "rec.json", "sha256": rsha}
+              and doc["proposal_sha256"] == PROPOSAL_SHA256 and doc["addendum_sha256"] == ADDENDUM_SHA256,
               (h1, h2, msg3[:60], doc.get("record")), cover=["CMD-NOTRUN"])
         nr = {"uncommitted": not_run_precheck(None, bound=("scripts/__n_analyze_never_committed__.py",)),
               "of-record": not_run_precheck(None, bound=()),
@@ -3935,9 +4438,12 @@ def _bt_commands(B: _Battery) -> None:
               or (passed.code, passed.refusal), cover=["CMD-GANL-REFUSE"])
         art = ganl_artifact({"checks_pass": 1, "checks_total": 1, "expected_checks": 1, "coverage_ids": [],
                              "outputs_sha256": "0" * 64}, DoseMap(0.97, 1.0))
-        B.chk("G-ANL-n's artifact names the analyzer, proposal and schema by sha256, the tuple space (385; 1,921 "
-              "evaluations), the pinned map's points and reach, the PIN and OPEN registers, and no time",
+        B.chk("G-ANL-n's artifact names the analyzer, proposal, ADDENDUM-n1 and schema by sha256, the tuple space "
+              "(385; 1,921 evaluations), the pinned map's points and reach, the PIN and OPEN registers, and no time",
               art["proposal"]["sha256"] == PROPOSAL_SHA256 and art["schema_module"]["sha256"] == SCHEMA_SHA256
+              and art["addendum"] == {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256}
+              and BOUND_RELS == (PROPOSAL_REL, ADDENDUM_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
+                                 f"{BK_NP_REL}/reduced.json")
               and art["tuple_space"] == {"tuples": 385, "evaluations": 1921} and art["dose_map"]["reach"]["shape"] == "d"
               and art["pins"] == PINS and art["open"] == OPEN and not any(k in json.dumps(art) for k in ("UTC", "T00:")),
               sorted(art), cover=["STR-GANL-ARTIFACT"])
@@ -4293,7 +4799,8 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     if not lock_names(ltext, asha):
         raise AnlRefusal("REFUSED: the lock does not name this analyzer's sha256")
     route = lock_route(ltext)
-    base = {"unit": UNIT, "date": date, "proposal_sha256": PROPOSAL_SHA256, "analyzer_sha256": asha,
+    base = {"unit": UNIT, "date": date, "proposal_sha256": PROPOSAL_SHA256, "addendum_sha256": ADDENDUM_SHA256,
+            "analyzer_sha256": asha,
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "lock": {"name": Path(lock).name, "sha256": lock_sha},
             "report": {"name": Path(report).name, "sha256": rep_sha, "end_state": end}, "pins": PINS, "open": OPEN}

@@ -21,6 +21,121 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — `scripts/n_analyze.py`, the seat's answers to G-ANL-n's nine questions (`8e3bf91`; the
+  answers raw at `52b2c97`) and ADDENDUM-n1 v0.1 (`a61f13d`) carried in, and the schema pin moved from `14e65d8` to
+  n-build's follow-up commit `d791bd9`. Battery 207/207; reviewed blind and mutation-tested (62 of 62 mutants killed).
+  PIN-n-27 to PIN-n-32 are Code's readings, flagged for the seat. Model-free: nothing ran on a model or on the box,
+  and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256
+    `97097ce0381c0d98c51726be8ff23929b6b0d8a7fc4b5182a88297ac18ac251e` (`34a513f9…98b6` at `bedc198`). It is pinned
+    to the schema at `d791bd9` (`0ea39600…0db6`; it was `4bed3f9a…4665` at `14e65d8`) and binds PROPOSAL-n v0.2
+    (`30a3d0f5…04f4`) and, new, ADDENDUM-n1 v0.1 (`e979f8f2…5e03`) by sha256: in VERDICTS, in a NOT-RUN output and in
+    G-ANL-n's artifact, and among the files G-ANL-n's canonical run requires committed. Its commands are unchanged.
+    Its battery, run from this path on these bytes (the run of record): 207/207 checks, every one of the 210 coverage
+    ids reached, exit 0. The raw:
+    [`2026-11-16_n-analyze_v3_selftest.txt`](results/raw/2026-11-16_n-analyze_v3_selftest.txt).
+  - **The rulings, as carried** (the answers raw's §1, ADDENDUM-n1 §4, §5.2–§5.3 and §7; the OPEN register now
+    records each ruling):
+    - **Q1 (b) and Q9 (a): slopes through the origin.** Per session, OLS through the origin over the arm's nonzero
+      dose points: N1-V's slope, the 24 random slopes of its floor, N2's slope over (d_eq, 2·d_eq) and its floor at
+      d_eq's and d_20's kept points, the mismatch printed where those differ. A point at d = 0 is refused. N1-V's
+      with-intercept slope is reported beside, marked descriptive. On BK's symmetric grid the two fits coincide, per
+      session and per random direction, to 1e-12; BK's reproduction (slope 0.9164, floor 0.3641) is unchanged.
+    - **Q2 (c): N1-P at +1, +d_20, +d_eq and −1.** The analyzer derives the read plan itself, each arm reading the
+      kept label of every label it lists, and refuses a schema plan that differs; 7,680 reads in 138 cells with
+      nothing merged. P(d) is computed at each point N1-P reads and required wherever G-LEAK-n certifies (N1 at +1;
+      dose at d_eq and its d_20 beside; N2 at both its points): its absence STOPs, which no plan the reader accepts can
+      produce. At +1/2, which N1-P reads only where d_20 or d_eq sits there, G-LEAK-n's table otherwise keeps L alone.
+    - **Q3 (a) with A.6:** *answered* by §0.6 for N1 (valence at +1), dose (valence at d_eq) and N2 (span_reward at
+      its decision f).
+    - **Q4 and Q5, confirmed:** 385 tuples and 1,921 evaluations; the sentence functions total; reachability reported
+      per coupling shape, now four with Q7: 28, 25, 24 and 17 (N1, dose, N2) triples for shapes (a)–(d).
+    - **Q6 (a), amended for N1-P:** N1-P among N2's and dose's causes; an INDETERMINATE dose reports its d_20 figure
+      beside as not computed.
+    - **Q7: the decision f.** The cap binds iff 2·d_eq > 1. N2 is then decided at f = 0.10 against N1-V at d_eq,
+      with f = 0.20 beside against N1-V at d = 1 and the ratio 2·d_eq; otherwise at f = 0.20, f = 0.10 beside. The
+      beside carries span_reward's and N1-V's estimates at its point, each certified on its own.
+    - **Q8: the sentences.** ADDENDUM-n1 §7.6's forms, asserted character for character against the addendum's italic
+      spans: the movement clause in the three NOT-DETECTABLE forms (not certified, or, under the sign rule, against
+      the conditioned zone), the cell of §7.2, and N2's "at f = [f]". The sign rule: DETECTABLE needs the mean at
+      d_eq above 0, PARTIAL the mean at +1; a certified movement against the conditioned zone is NOT-DETECTABLE or
+      NOT-REPLICATED, its sentence naming it. The forms' digest is `209d7b46…92f5`.
+    - **ADDENDUM-n1 §4:** secondary (b) reads "struck (ADDENDUM-n1 §4): nothing is generated in the campaign; §0.4's
+      table stands as the welfare report".
+  - **The schema at `d791bd9`** (n-build's forms, settled with this session): the read plan's keepers, N1-P's row,
+    the capture band per layer, `kfold10` with `cv_seed` in G-READ-n's artifact, and the cap's `loads_ms`, which
+    VERDICTS carries in its counters. The capture arrays are bound by the per-layer row hashes their cells record,
+    which must equal the stage report's and G-READ-n's artifact's; the reader reads no array and needs none present,
+    and refuses a file beside the cells that no cell names (PIN-n-31).
+  - **The review.** The raw is
+    [`2026-11-16_n-analyze_v3_review.md`](results/raw/2026-11-16_n-analyze_v3_review.md).
+    - **The blind read.** A reviewer read the draft frozen at sha256 `1316f93a…dd06` (198/198), a subagent of this
+      session under a brief quoting the list of record v2's items 1–5. It found every ruling implemented as ruled and
+      no MAJOR defect in the production code: F5 MINOR, and NOTEs F1–F4 and F6–F11. In the battery it found B1–B3
+      MAJOR: no filled sentence of the new forms (a dose NOT-DETECTABLE; N1's NOT-REPLICATED against the zone; N2's
+      where the cap binds) was compared with literal text. With them came B4–B8 MINOR and B9–B10 NOTEs, and 40 mutants
+      with its predictions: 19 surviving, 21 killed.
+    - **The dispositions** (the raw's §2): fixed, F4–F6, F8–F10 and B1–B10 (nine new checks, three of which compare
+      filled sentences with literal text: six dose sentences, two N1 and four N2); registered as Code's readings,
+      F1, F2 and F7 (their PINs' texts amended) and F3 (PIN-n-32); kept, for the seat, F11. Code also added a refusal
+      case no case reached: a schema whose read plan differs from the analyzer's.
+    - **The mutants:** M01–M40 re-express V01–V40 (M17 on its changed line); M41–M62 are Code's, on the fixes and on
+      changed code, mostly lines the reviewer's mutants did not touch (M54 and M62 mutate V38's and V27's lines
+      another way). One run, on the fixed draft (sha256 `9e7faea1…e4ce`, 207/207): 62 of 62 killed (the raw's §3).
+      M20–M62 each by its predicted check, directly or through the exception its group raised; M01–M19, which the
+      reviewer predicted would survive the frozen copy, each by a check the dispositions added or extended.
+    - **The committed bytes** differ from the mutant base in the repository line and in text only (the raw's §5): the
+      register texts of PIN-n-30 and PIN-n-32 and `plan_cells`'s docstring, which the values-check found imprecise,
+      and PIN-n-31's, which now cites n-build's BUILD (`83a50a0`).
+  - **The values-check.** The raw is
+    [`2026-11-16_n-analyze_v3_valuescheck.md`](results/raw/2026-11-16_n-analyze_v3_valuescheck.md). Blind passes, each
+    a subagent of this session under a brief quoting the list of record v2's items 1–5 and allowing no Python, over
+    this entry, the two close lines and the review raw; each pass after the first also checked the last pass's
+    dispositions. Every IMPRECISE and FAIL was applied.
+    - **Pass 1:** 161 claims, 136 CONFIRMED, 8 IMPRECISE, 2 FAIL, 15 NOT CHECKABLE. The FAILs: the review raw's
+      mutant table, whose kill-table script read a group's name as one word, dropping the "reader path" group's
+      exceptions from seven rows, and its account of run 1's count check.
+    - **Pass 2:** 176 claims, 155 CONFIRMED, 4 IMPRECISE, 1 FAIL, 16 NOT CHECKABLE; all 15 of pass 1's dispositions
+      carried. The FAIL: this entry's +1/2 wording, which still missed d_20 at +1/2.
+    - **Pass 3:** 182 claims, 160 CONFIRMED, 3 IMPRECISE, 0 FAIL, 19 NOT CHECKABLE; pass 2's dispositions carried and
+      true, one (the old table script's cause) not checkable. Its three IMPRECISE and three of its observations were
+      applied after it, with PIN-n-31's citation of `83a50a0`; those edits were checked by tool (the values-check
+      raw lists them).
+  - **Readings, Code's, flagged for the seat** (strikable until LOCK-n v1.0; the sixteen PINs registered from
+    PIN-n-7 to PIN-n-26 are accepted, the answers raw's §2):
+    - **PIN-n-27:** a certified movement against the conditioned zone mirrors DETECTABLE with the mean below 0: the
+      CI excludes 0 and G-LEAK-n certifies |mean| (at +1 for N1, at d_eq for dose).
+    - **PIN-n-28:** N1's NOT-REPLICATED sentence names that movement in its failing list, as the sign's condition with
+      the seat's clause beside it in parentheses; the sign's name is Code's form, and the clause repeats Δm(+1) and
+      its CI.
+    - **PIN-n-29:** OPEN-Q6 as ruled is applied per arm, as reading (a) carried it: a read missing or non-finite
+      elsewhere in N2's arms (an N1-P read at −1; an N1-R cell at +1/2) makes N2 INDETERMINATE although its
+      certification reads none of it. Read point by point, N2 would be evaluated.
+    - **PIN-n-30:** N2's certifications stay unsigned, as n §3 states G-LEAK-n's, with no CI condition; the sign rule
+      names DETECTABLE and PARTIAL only. So N1-V beyond the ceiling at the norm-matched point, span_reward not
+      certified, gives SPECIFIC, whose sentence says the valence direction "does" move BK's apparatus, whether it moves
+      against the zone or its CI includes 0. Where the cap binds that point is d_eq, and the dose sentence, if the dose
+      question is evaluated, names the same movement as against the zone (its CI excluding 0) or as not certified (its
+      CI including 0).
+    - **PIN-n-31:** the captures bound by their recorded per-layer hashes, no array read (above). It rests on n-build's
+      PIN that G-READ-n reads every capture through its row-checking loader, declared at n-build's BUILD (`83a50a0`).
+    - **PIN-n-32:** where d_eq merges into another point, the three NOT-DETECTABLE forms (verbatim; no [value] slot)
+      print the figure of the point read as Δm(d_eq) (as Δm under the sign rule) with no "read at d = …" note; the
+      merge is reported in the dose outcome, in G-LEAK-n's table and in DETECTABLE's [value]. Whether the forms take
+      the note is the seat's.
+    - **For the seat, no reading (F11):** an answered NOT-DETECTABLE whose movement is against the zone still ends
+      "dose is an explanation of record for the program's null", the seat's form; a certified movement at d_eq may
+      read otherwise.
+  - **Runs.** Every Python run was in a battery window the coordinating session granted, one process at a time,
+    `nice -n 19`, `-I`, temp folders outside the repository, in the foreground but for one batch: the first mutant
+    batch (M01–M09), which the harness moved to the background at the tool's 10-minute limit, during M08 (the raw's
+    §4). Step 1, 2 runs (192/197, then 197/197); step 2, 2 runs (197/198, then 198/198); the mutant window, 1 run and
+    the 62 mutants; the run of record, 1. Q-F3's campaign ran on the laptop beside them, as the coordinating session's
+    windows allow; by its grants, no other battery window was open during any of them.
+  - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
+    session's close lines on `8e3bf91`'s entry and on ADDENDUM-n1's (`a61f13d`). Not pushed. **Next:** G-ANL-n's
+    canonical run, when G-CAL-n pins d_eq; its artifact's sha256 goes into LOCK-n v0.1, drafted to the seat.
+
 - 2026-11-16 — **n package — BUILD (PROPOSAL-n v0.2 §8 step 6; ADDENDUM-n1 v0.1; the seat's answers of 2026-11-16,
   second sitting, §5 step 3): `valence_core/n/` and its driver `scripts/n_sessions.py`, committed by path.**
   - **Headline:**
@@ -1672,6 +1787,21 @@ applied to CLAUDE.md.
     that carries this line (`n — ids of record`, at the top of this log): 160 of 160, the tokenizer files checked
     against the manifest, nothing downloaded. Next of §8.3 (3): the follow-up schema commit, G-VER asserting data, the
     site check re-run, and the BUILD entry.
+  - **Close (PI date 2026-11-16; the n-analyzer session's line, per the addendum's header): the analyzer carries
+    ADDENDUM-n1 v0.1.** `scripts/n_analyze.py` (sha256 `97097ce0…251e`, committed with this line) binds the addendum
+    by its sha256 (`e979f8f2…5e03`) in VERDICTS, in a NOT-RUN output and in G-ANL-n's artifact, and lists it among
+    the files G-ANL-n's canonical run requires committed. It carries:
+    - §4: secondary (b) struck, in the section's words;
+    - §5.2–§5.3: N1-P's points (the analyzer derives the read plan's keepers itself and asserts the schema's plan
+      equal), and the decision f when the cap binds;
+    - §6, through the schema at `d791bd9`: the capture band per layer, bound by the cells' per-layer hashes, and
+      `kfold10` with its seed in G-READ-n's artifact;
+    - §7.1–§7.6: the slopes through the origin, *answered* by §0.6, the sign, the causes, N2's slope, and §7.6's
+      sentence forms, asserted character for character against the addendum's italic spans.
+
+    Its readings on what the addendum leaves to Code are flagged for the seat in this commit's entry: of form,
+    PIN-n-28 and PIN-n-32; of content, PIN-n-27 (the sign's movement against the zone), PIN-n-29 (§7.4's causes per
+    arm), PIN-n-30 (N2's certification) and PIN-n-31 (the captures' binding).
 
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the `verdicts` command (PROPOSAL-n v0.2 §8 step 15, on n-build's
   `n-report-v1` and `n-gread-v1` at `14e65d8`). It gives N-pod's VERDICTS and secondary DVs, or the unit's NOT-RUN
@@ -2752,6 +2882,23 @@ applied to CLAUDE.md.
     given". Its item 9 is relayed verbatim to the n-analyzer session with items 5 and 6, and so is the addendum's
     hold, in its own words: "Nothing of it runs before Code's commit (rules 9 and 11)". The n-analyzer session adds its
     close line here.
+  - **Close (PI date 2026-11-16, second sitting; the n-analyzer session's line, per the n-ganl raw's header): the
+    seat's answers carried into the analyzer.** The seat's answers of 2026-11-16 (second sitting),
+    [`2026-11-16_n-ganl_design-to-code_answers.md`](results/raw/2026-11-16_n-ganl_design-to-code_answers.md)
+    (sha256 `ff2e5d894442c48d281aa87c2be49cdd97396d2c41c5e7a40d0c012f8d08ebec`, committed at `52b2c97`), rule this
+    block's nine questions. The PI's routing item 9, verbatim from
+    [`2026-11-16_second-sitting_pi-routing.md`](results/raw/2026-11-16_second-sitting_pi-routing.md) (committed at
+    `a61f13d`):
+
+    > 9. n-analyzer, Q1 (b) and Q9 (a) through the origin; Q2 (c) N1-P at +1, +d_20, +d_eq, −1; Q3 (a) with A.6; Q4, Q5 confirmed; Q6 (a) amended for N1-P; Q7 the f = 0.10 decision when the cap binds; Q8 Appendix A with the amendments; the §3 readings and PIN-n-20 to -26 accepted; the order of its §3; close lines on 8e3bf91's entry [as ruled; go].
+
+    The analyzer carries every ruling at this commit, in the order of the raw's §3 (the analyzer changes; the reader
+    on n-build's follow-up schema commit, `d791bd9`, and the pin moved; one blind review round with mutants, the
+    battery and the values-check; this commit): `scripts/n_analyze.py`, sha256 `97097ce0…251e`. Its OPEN register
+    records each ruling, and its PINS register the sixteen PINs from PIN-n-7 to PIN-n-26 as accepted. Six readings
+    registered since, PIN-n-27 to PIN-n-32, are Code's, flagged for the seat in this commit's entry ("n package —
+    `scripts/n_analyze.py`, the seat's answers to G-ANL-n's nine questions"). The raw's §3 step 4, G-ANL-n's
+    canonical run, waits for G-CAL-n's dose map.
 
 - 2026-11-16 — **Dated note (coordinating session), for the seat: the push of 2026-11-15, its pre-push screen, the
   halts of item 4 it met and two departures of mine; and the `data/mf3` hazard of five paths while Q-F3's campaign
