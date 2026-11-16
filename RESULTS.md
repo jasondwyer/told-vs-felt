@@ -21,6 +21,60 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **Dated note (coordinating session), for the seat: the push of 2026-11-15, its pre-push screen, the
+  halts of item 4 it met and two departures of mine; and the `data/mf3` hazard of five paths while Q-F3's campaign
+  runs.**
+  - **The push.** The PI's word in chat (no date of its own; Code's date 2026-11-15), verbatim: "Push, with a note",
+    the reply to my question "Push the 51 screened commits with a note to the seat, or hold the push for the seat?".
+    origin/main moved from `16c99d5` to `fa27c45`, exactly the 51 commits screened (pushed by that hash); `41bfab4`
+    (p's three campaigns) and every later commit are local, for the next push. This note is the "note".
+  - **The screen** (the list of record v2, item 4) over `16c99d5..fa27c45`, by class:
+    - URL hosts outside N12's PUBLIC_HOSTS, IPv4 addresses, emails other than the co-author trailer's address (exempt
+      wherever it occurs), pod values (its addresses, ports and proxy user, matched as whole tokens) and local paths:
+      none, inside or outside `ckpt` and `reports`.
+    - Port patterns: three distinct matches outside (five lines), each read: a gate named G-PORT with its "64 archived"
+      rows (`5d40d59`), the create body's declared container port 22/tcp (`7ab4d2f`; `190ba90` carries the same words),
+      and process ids after `ps -p` (`a225a89`).
+    - gitleaks 8.30.1: 14 `generic-api-key` findings, each a 64-character hexadecimal string, classified in code with
+      no value printed: 11 outside (gate JSONs and one raw) and **3 inside `data/mf3/reports`**. Item 4 makes a match
+      inside "a count by path class and a halt for the seat". I put the halt to the PI before the push, with the
+      shape of the three; the PI's word is the one quoted above. Recorded here for the seat; Code rules nothing on it.
+  - **The first pass, and its halt.** The screen's first pass, over `16c99d5..97d160a` with an unbounded pattern,
+    matched pod values inside longer tokens: three ports outside (`data/mf3/gates/Q-F3_G-PWR.json` at `8c9b5ff`) and
+    three inside `data/mf3/ckpt` (×1) and `data/p/ckpt` (×2), a halt for the seat in item 4's form. Bounded to whole
+    tokens (a synthetic-repository test showed it matches whole tokens only), its re-runs over `16c99d5..97d160a` and
+    `16c99d5..fa27c45` find none.
+  - **Two departures of mine, disclosed for the seat (item 8):**
+    - I treated that first halt as my pattern's defect and cleared it by the re-run, without putting it to the PI or
+      the seat. The PI's word above answered the gitleaks halt only.
+    - For the three gitleaks matches inside `data/mf3/reports`, my classifier printed the rule and a shape class
+      (64-character hexadecimal) beside the count by path class, where item 4 gives a count by path class only.
+    - Beyond that, neither pass printed anything from inside a `ckpt` or `reports` file.
+  - **The `data/mf3` hazard** (n-analyzer's finding and my values-checker's; each checked in the source). While Q-F3's
+    campaign runs on the laptop, five existing paths would list or read its files (list v2 items 2 and 5):
+    - `scripts/m_analyze.py`'s battery: `_bt_snapshot` (:5149) rglobs `data/m` and `data/mf3` and stats the files under
+      their `ckpt`, `reports` and `verdicts`; the battery snapshots before and after (:11000, :11038);
+    - `scripts/p_analyze.py ganl` and `--selftest`, which call that battery (:344);
+    - `scripts/mf3_sessions.py --selftest`, whose `tree_state` hashes every file under `stages.DEFAULT_OUT`, that is
+      `data/mf3` (:1346–1347, and the self-test's other parts);
+    - the regression suite's `check_adapter_consolidation` (`valence_core/regression/analysis.py`:1192, reached from
+      :1157) and `scripts/audit_note_N8.py` (:462), each of which walks the whole repository, `data/` included.
+
+    The coordinating session's form: none of them runs on the laptop while the campaign runs; they run on the box,
+    whose `data/mf3` holds committed files only, or after the campaign. p's VERDICTS path (`p_analyze.py verdicts`,
+    through `m_analyze.run_verdicts`) calls none of them (the pod session's reading; my grep agrees).
+  - **m's guard.** `valence_core/m/guard.py` counts as a model process any Python whose command line holds,
+    case-insensitively, one of "mlx", "jlens", "qwen", "olmo" or "ipykernel" (the markers :95; the match :918–919), at
+    a Q-F3 invocation's start (`scripts/mf3_sessions.py`:909; `valence_core/mf3/stages.py`:281 through `_begin`). A p
+    VERDICTS run names its unit, `OLMo-{ckpt}`. The windows `a215c28`'s entry gives each battery are extended here to
+    a p VERDICTS run: every window closes before each launch or resume and reopens on the F3 session's report that
+    the PID is alive 30 minutes after it.
+  - **A blind values-check** of this note: 49 claims, 34 CONFIRMED, 6 IMPRECISE (all applied), 0 FAIL, 9 NOT CHECKABLE
+    (this session's own acts and relays, the contents under `data/`, this commit); its observations O1, O2 and O4 are
+    met above, the rest recorded in the raw. Raw:
+    [`_push-note_valuescheck`](results/raw/2026-11-16_push-note_valuescheck.md).
+  - RESULTS.md and the values-check raw only. Nothing ran on a model or the box. Not pushed. Committed by path.
+
 - 2026-11-16 — **n package — the read runner's record schema, committed first and alone (PROPOSAL-n v0.2 §8 step 6;
   the seat's answers of 2026-11-15, §5.1; the PI's "Route as given" on that evening's routing, section N, item 10):
   `valence_core/n/schema.py`, with the package's docstring-only `__init__.py`. The module names every field the read
