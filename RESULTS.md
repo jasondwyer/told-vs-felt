@@ -21,6 +21,116 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — `scripts/n_analyze.py`, BUILD (PROPOSAL-n v0.2 §3 "G-ANL-n", §8 step 9; the seat's
+  answers of 2026-11-15, §5.1–§5.2): N-pod's analyzer and its battery, 171/171, reviewed blind (round 1) and
+  mutation-tested in two rounds. Without the `verdicts` command, which waits for n-build's stage-report and G-READ-n
+  forms, and without G-ANL-n's canonical run, which waits for the seat's answers and for G-CAL-n's dose map.
+  Model-free: nothing ran on a model or on the box, and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256 `2598908d2b8af38f06d7603f6e563da4b53ff2af3c4b747e59e5cfd5110d6155`. It is built on the record schema at `5a97527`
+    (`valence_core/n/schema.py`, sha256 `77c12d6d…94bc`), which it pins, and binds PROPOSAL-n v0.2 by sha256
+    (`30a3d0f5…04f4`). Its commands: `--selftest`; `ganl [--out DIR] [--dose-map FILE]`; `not-run --record FILE
+    [--out DIR]`. Its battery, run from this path on these bytes (the run of record; earlier runs from this path
+    were of earlier bytes): 171/171 checks, every one of the 172 coverage ids reached, exit 0. The raw:
+    [`2026-11-16_n-analyze_build_selftest.txt`](results/raw/2026-11-16_n-analyze_build_selftest.txt).
+  - **What it does.** It reads a campaign's cell files through the schema's own checks and the cross-record checks
+    the schema leaves to the analyzer. It computes §4's statistics: Δm against the shadow, the session bootstrap, the
+    per-session slopes and the floor, and L(d) and P(d). It gives §5's outcomes in order: the unit's NOT-RUN by
+    cause, from a NOT-RUN record; then, from those statistics, N1, dose, N2 and N4, with G-LEAK-n's certification and
+    G-READ-n's states as inputs. For each outcome tuple it writes one §7 sentence set, from §5's four verbatim
+    sentences and Code's 31 forms. It also gives the counters (rule 23) and the secondaries. The battery runs all 385
+    tuples (1,921 evaluations) against an oracle that reads §5's verbatim cells from the proposal file; Code's forms
+    are pinned by digest. It also reports reachability per merge shape.
+  - **The review.** The raw is
+    [`2026-11-16_n-analyze_build_review.md`](results/raw/2026-11-16_n-analyze_build_review.md).
+    - **Round 1, blind.** A reviewer read the draft frozen at sha256 `4db3a206…ed46`. It was a subagent of this
+      session, under a brief quoting the list of record v2's items 1–5. It returned findings F1–F15 and notes N1–N15,
+      with forty mutants. Two findings were MAJOR: a crash on a non-finite or absent shadow, and N2's pauses read from
+      N2-E only. On the frozen copy (159/159 unmutated) 12 mutants were killed and 28 survived, each as the reviewer
+      predicted.
+    - **The dispositions.** The raw's §3 disposes of every finding and note: fixed, registered as a reading, or kept
+      with its reason (N12; and, under N2, `lock_names`, `kept_label`, `gleak_table` and `gread_table`, kept for the
+      `verdicts` command).
+    - **Round 2, Code's mutants.** Fifty mutants: each of round 1's 28 survivors re-expressed on the new code (R01–R03,
+      R05–R29; R04 re-expresses M05, which round 1 killed), and new mutants on the fixes (R30–R50). A first run, on
+      the fixed draft before the values-check (sha256 `fc479b81…ef5f`), killed 50 of its 51 runs. R07 survived
+      because no check could see its swap: no check read N2's per-f SDs, and the one per-f count a check read
+      (RD-SENSITIVITY's) is equal at both f. With a check of N2's per-f counts and SDs added, all 51 runs on the
+      amended draft (sha256 `cc0fa5b1…3ea8`, 171/171) were killed.
+    - **Appendix A.** The committed block's Appendix A against the code's forms, by tool: 28 of 28 equal.
+    - **The committed bytes** differ from the mutation-tested draft in two places (the raw's §6): the repository
+      line, derived from `__file__` instead of an absolute path; and one string of the OPEN register, OPEN-Q6's text,
+      corrected after the second values-check pass. No check reads that string's content.
+  - **Readings registered since the block (`8e3bf91`).** PIN-n-20 to PIN-n-22 and PIN-n-12's amendment are Code's
+    readings, declared as the block's §3 readings are (strikable by the seat until LOCK-n v1.0). The addition to
+    OPEN-Q8 is carried pending the seat, like Q1–Q9.
+    - PIN-n-20: a non-finite read is present but is no read for the statistics, so its arm is not usable (cause
+      `nonfinite:<arm>`). A steered arm is usable only when the shadows of every session it reads are present and
+      finite (cause `shadow:<arm>`). An arm the TAU/4 row empties at a point is not usable in that row (cause
+      `tau4-emptied:<arm>`).
+    - PIN-n-21: a NOT-RUN record is dated the PI date it is made. A Clock cause is refused on or before D_n, which is
+      inclusive (§7.4).
+    - PIN-n-22: the readings of secondaries (a) and (c), and a floor of n ≥ 20 for (a), (c) and (d).
+    - PIN-n-12, amended: in the TAU/4 row, where an arm's statistics differ in session count, each draws the arm's
+      stream at its own count.
+    - OPEN-Q8 gains three forms in the code that the block's Appendix A does not list: the two fills of §5's route
+      slot, "on their direction" and "on a reconstructed direction" (in the draft at the block's time, unlisted
+      there); and the dose sentence's [value] when §2.3's merge moved d_eq, "{value} (read at d = {point}, the point
+      it merges into under §2.3)" (VALUE_MERGED, new since, F3).
+    - OPEN-Q6 is not extended. The block's Q6 already carries the reading that a pause on N1-V's, N1-R's or N1-P's
+      reads leaves N2 evaluable, "as written", and the code's register now says it in those words. What is new since
+      the block is F2's fix (a pause on N2-S's or N2-C's reads makes N2 INDETERMINATE) and the battery's case for the
+      N1 pauses.
+  - **The seat's answers** to the block are not in yet. The PI's routing of 2026-11-16
+    (`results/raw/2026-11-16_p-verdicts-decisions_design-to-code_answers.md`, committed at `18102d0`; "N. n", item
+    9): "The seat's answers on `718c48e`, `8e3bf91` and `e5aba51` come at its next sitting; the build proceeds on
+    Code's interim readings as its entries have it [noted]."
+  - **Not in this BUILD.**
+    - The `verdicts` command. It is built after n-build commits its stage-report and G-READ-n forms, in an entry of
+      its own. Its rules, as n-build's schema sets them from v4.1 on, are agreed with n-build: a PAUSE end is
+      refused; a STOP or a cap with no arm complete gives NOT-RUN no-arm; any other end is analyzed. A pause can stand
+      at an analyzed end only under PI-STOP, and it makes its in-scope arms INDETERMINATE.
+    - G-ANL-n's canonical run (`data/n/gates/G-ANL-n.json`). It waits for the seat's answers and for G-CAL-n's pinned
+      dose map.
+    - The schema pin's move. The analyzer's reader and battery refuse any `valence_core/n/schema.py` but the bytes at
+      `5a97527`, so `--selftest` fails and `ganl` stops (`not-run` loads no schema). n-build's schema commit, which
+      the coordinating session orders after this one, changes that file. The pin then moves in its own entry: what
+      the reader calls in the schema re-checked, and the battery re-run in a window.
+  - **Windows and declarations.** Since the block (`8e3bf91`), apart from the departures below, every Python run in
+    this BUILD was inside a battery window the coordinating session granted: one process at a time at `nice -n 19`,
+    in the foreground, with temp folders outside the repository. The processes before the block are declared in
+    `8e3bf91`'s entry ("Declarations, by date"), which asks that they be repeated in G-ANL-n's entry. The windows
+    since the review:
+    - the frozen copy's baseline and its 40 mutants, and one battery run of the fixed draft before its two pins
+      (168/171: the forms digest and the check count, then pinned);
+    - a confirming run, the Appendix A check, and the 51 round-2 mutant runs;
+    - the first run of record from `scripts/`;
+    - after the first values-check pass's code findings: a battery run of the amended draft, round 2's 51 runs on
+      it, and a second run of record;
+    - after the second pass's register fix: the run of record of these bytes.
+
+    The departures, each told to the coordinating session at the time:
+    - Two starts of the system interpreter outside any window during Q-F3's campaign: `/usr/bin/python3 -c "print('no
+      python')"`, and `python3 -` with an empty heredoc inside a backup command. Neither read a file or imported
+      beyond startup, neither command line named a model marker, and no Q-F3 invocation was starting. The coordinating
+      session called the second harmless and asked that both be declared here.
+    - One process beyond a window's wording: the frozen copy's unmutated baseline, declared when the window was
+      released.
+  - **Values-check:** two blind passes over this entry, the review raw and the selftest raw, each under a brief
+    quoting the list of record v2's items 1–5 and allowing no Python.
+    - The first pass: 171 claims, 130 CONFIRMED, 17 IMPRECISE, 6 FAIL, 18 UNVERIFIABLE. Every item was accepted:
+      three as code changes (R07's check, the rename of `_bt_state`, the battery's quotations of §5), the rest as
+      text.
+    - The second pass, on the revised texts: 172 claims, 137 CONFIRMED, 12 IMPRECISE, 0 FAIL, 23 UNVERIFIABLE. It
+      found every disposition of the first pass carried. Every item was accepted: one as a code change (OPEN-Q6's
+      register text), the rest as text.
+
+    The raw, with both reports whole and every disposition:
+    [`2026-11-16_n-analyze_build_valuescheck.md`](results/raw/2026-11-16_n-analyze_build_valuescheck.md).
+  - **Committed by path:** `scripts/n_analyze.py`, the review raw, the selftest raw, the values-check raw, and this
+    entry. Not pushed. **Next:** the coordinating session verifies this commit. Then n-build commits its schema, and
+    the pin moves. The `verdicts` command follows n-build's forms. G-ANL-n's canonical run waits for the seat's
+    answers and G-CAL-n.
+
 - 2026-11-16 — **p's counters at VERDICTS: the counters script and its self-test, committed before the script reads
   any released record (the seat's answers of 2026-11-16, §3, §4 and §5 step 3), and two readings of "the counts the
   record names" put to the seat. STOP for the seat's read on R1 and R2, which hold the counters step for the three
