@@ -1,10 +1,11 @@
-"""PROPOSAL-n -- the read runner's record schema (n v0.2 §8 step 6, its first commit).
+"""PROPOSAL-n -- the read runner's record schema (n v0.2 §8 step 6; first committed at `5a97527`).
 
 The seat's answers of 2026-11-15 (``results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md``),
 §5.1: "**n-build**, n §8 step 6 (the package), whose first commit is the read runner's record schema;
 **n-analyzer**, step 9's `n_analyze.py` and its battery (385 tuples), built from that schema." This module is that
-schema: every field the read runner writes, its type, when it is null, and the checks both sides run -- the runner
-before every write, the analyzer on every load. A change to it is a commit of this file with its reason.
+schema: every field the read runner, its stages and G-READ-n write, its type, when it is null, and the checks both
+sides run -- the writer before every write, the analyzer on every load. A change to it is a commit of this file with
+its reason.
 
 It imports the standard library only (the package's parent imports numpy). It reads no file, touches no model and
 writes nothing; ``python -m valence_core.n.schema`` runs its self-test on literal records.
@@ -13,8 +14,10 @@ WHAT A RECORD IS (Code's reading of n §2.4, "each read counted once"). One reco
 (arm, direction, dose point, session). The fidelity re-computation (§2.1) and the d = 0 identity check ride inside
 that record and are never records of their own. Records are written by three stages: ``campaign`` (§2.4's arms,
 §8 step 14), ``time`` (G-TIME-n's timed reads, §3) and ``backend-ext`` (the BACKEND extension's fresh-versus-cached
-reads, §3 G-ACQ; G-ACQ's dated note GA-5). G-CAL-n's generations, G-VEC's captures, G-VER's reconstructions and the
-stages' reports are other records, not specified here.
+reads, §3 G-ACQ; G-ACQ's dated note GA-5). G-CAL-n's generations, G-VEC's captures and G-VER's reconstructions are
+other records, not specified here; the stage report and G-READ-n's artifact are specified below. A NOT-RUN on the
+clock is a record in the analyzer's own schema (n-analyzer's `n-not-run-v1`); a NOT-RUN for no arm complete is derived
+from a report's end state and completeness.
 
 THE TWO PATHS (Code's construction, declared here; LOCK-n v0.1 pins it). BK's ``prereg.precondition_cache``
 (``data/n/bk/.../neutral_passages/analysis.json``) states the check n §2.1 adopts: "the
@@ -123,12 +126,88 @@ merge for N1-V's points; that it reaches every arm reading BK-scale points (N1-V
 ceilings are taken point by point, C12), and that a merged point is read once under the label kept, are Code's
 readings, flagged for the seat. An arm is complete exactly when its obtained read_ids are its plan's.
 
-EXAMPLES. ``example_identity``, ``example_record`` and ``example_cell`` build valid objects from literals, for this
-module's self-test and for the analyzer's battery; no production path calls them.
+THE STAGE REPORT (``n-report-v1``), settled with n-analyzer. Written at the end of every invocation that ends by the
+rules below. An invocation that ends otherwise (an exception, a refused write, a kill, a lost box) writes none; the
+next one's replay of the records on disk finds what it left (the runner's design). The report holds no margin or
+other per-read model output: the identity, counts, states, read ids, launch indices, ms figures and sha256s. It
+carries:
+  * the stage identity and its sha256 (``identity_sha256``), and the plan's sha256 at the campaign;
+  * planned, obtained and complete for every arm of the stage's plan. Obtained counts the records on disk, finite or
+    not, so an arm with a non-finite read can be complete; the analyzer treats such a read as unusable (Code's
+    reading, flagged);
+  * each cell file's sha256s and record count. Every cell is at a point the stage's dose map keeps, and its arm has
+    a per-arm entry;
+  * every pause of the stage, in launch order, its id ``p01``, ``p02``, ... by its place in the list. A pause stands
+    on the arms in its scope while it is unadjudicated. Its scope holds its read's arm, with no arm twice; which
+    other arms it holds, and a read-less fire's scope, are the runner's (its SCOPE pin, flagged). An adjudicated
+    pause is cleared, whatever the ruling, and the report records no ruling's effect on reads. A fired monitor ends
+    the invocation, every arm with it (Code's design, flagged: n §6 stops "the arm's launches"), and the runner
+    launches in the stage's run order, so every read after a pause's own was launched after its ruling.
+    ``resumed_at_launch_index`` is the first read attempted after the ruling, launched or refused as a rendering
+    mismatch. The schema checks that it follows its own pause; that pauses and resumptions interleave as the runner
+    launches them is the runner's to keep and the reader's to check. A read that fires two triggers is one pause:
+    its ``kind`` by the precedence rendering, nonfinite, identity-bound, fidelity-binomial, and the rest in
+    ``also_fired`` (Code's reading, flagged: n §6 gives no precedence). An identity-bound trigger is a d = 0 read's
+    (n §6: "the identity bound exceeded at d = 0"). A pause at which the binomial fired, as its kind or in
+    ``also_fired``, carries the batch (first <= last, 0 <= k <= n, n > 0, 0 < alpha < 1), which ends at the pause's
+    read where it has one;
+  * a rendering mismatch during a stage is a pause; G-VER's, before any read, is a G-VER-STOP (Code's reading,
+    flagged: n §6 lists "a rendering mismatch" among its pause-and-adjudicate triggers, and n §3 gives G-VER
+    "mismatch → STOP"). A rendering pause's read is not launched, so nothing else fires with it. It names the read's
+    place; after the ruling the read is attempted there, so its ``resumed_at_launch_index`` may equal its own launch
+    index and a later pause may share that place. A binomial fire at the run's end has a batch and no read: it is
+    the stage's last pause and resumes nothing. A G-VER-STOP comes before any read: its report holds no record and
+    no pause;
+  * the fidelity binomial's running state over the stage: its trials and exceedances, which are the fidelity
+    counters' totals; its evaluations; and its fires, each a pause's batch, whose k and n are within the stage's
+    exceedances and trials;
+  * the STOP's record, its detail one line of at most 200 characters; the cap, whose ``used_ms`` is the sum of the
+    records' ``duration_ms``, model work only (Code's reading, flagged; whether a cap counts loads is the lock's);
+  * n §4's counters and the identity-bound count, over the stage. ``rendering_mismatches`` is the number of the
+    stage's rendering pauses, or at a G-VER-STOP the number of G-VER's mismatches, at least one; nothing resumes
+    after a STOP. ``nonfinite_reads`` and ``identity_out_of_bound`` count at least the pauses that name their kinds.
+    ``label_mass_below_floor`` is null where no floor is set.
+
+The end state is one of COMPLETE, PAUSE, PI-STOP, G-VER-STOP, CAP, by these rules (Code's, settled with n-analyzer):
+  * PAUSE iff an unadjudicated pause stands and the unit is not stopped, whether or not the cap is hit: the seat
+    rules on the pause first. A standing pause otherwise ends only by a ruling, or under PI-STOP: the PI may stop a
+    unit whose pause stands;
+  * CAP iff the cap is hit, no pause stands and no STOP is recorded, so a stage whose last read reaches the cap ends
+    as CAP with its arms complete. A hit cap is otherwise allowed only under PAUSE, PI-STOP or G-VER-STOP;
+  * PI-STOP and G-VER-STOP iff the report carries that STOP's record;
+  * COMPLETE iff no pause stands, the cap is not hit, no STOP is recorded and, at the campaign, every arm is
+    complete.
+
+G-READ-n'S ARTIFACT (``n-gread-v1``), settled with n-analyzer. It carries:
+  * the campaign it read: plan, identity and cells, by sha256;
+  * the probe's package sha256 and settings: k's ``fit_lr`` hyperparameters, pinned in ``GREAD_LR`` (Code's reading
+    of n §0.10's B3, "k's form and bar", flagged); the CV form, n §3's grouped leave-one-session-out ("loso"; a
+    grouped k-fold, if the seat allows one for G-READ-n's cost, enters with its fold seed in its own schema
+    commit); the shuffles and their seed; the layers and the bar;
+  * at least one result, and at most one per (axis, point) of ``GREAD_AXES``: valence +1, +1/2, +d_20, +d_eq;
+    span_reward f0.10, f0.20. The -1 reads enter +1's contrast; that the points are the kept ones is the reader's
+    check. A result's
+    ``merged`` lists the labels merged into its point: on valence only +d_20 and +d_eq, on span_reward none. Each
+    result gives the contrast (the - pole at valence +1, else the shadow; n §3), the per-layer AUCs against the
+    shuffle null in the probe's layer order, the band median, the comparator's 24 band medians, and PASS, FAIL or
+    NOT-COMPUTED. The comparator is the 24 random directions at the point norm-matched to the result's; for
+    span_reward's f0.10 and f0.20 that is +d_eq and +d_20, or the points they merged into. The dose map norm-matches
+    them where they are kept, and to within the merge distance (0.05 on BK's scale) where they merged; not where
+    d_20 is capped at 1 (Code's reading, flagged).
+
+The PASS rule is Code's reading of n §3, flagged at the BUILD: the band median is at least .90, above the
+comparator's largest (n §3: "above the comparator's band"), and every layer is above its shuffle null (the last
+clause k §1.4 G3's form). A computed result without a comparator is a FAIL; a NOT-COMPUTED one carries neither a
+comparator nor AUCs.
+
+EXAMPLES. ``example_identity``, ``example_record``, ``example_cell``, ``example_report``, ``example_pause`` and
+``example_gread`` build valid objects from literals, for this module's self-test and for the analyzer's battery; no
+production path calls them.
 """
 from __future__ import annotations
 
 import hashlib
+import json
 import math
 import re
 from typing import Any, Mapping
@@ -206,8 +285,8 @@ _SESSION = re.compile(r"(floor_b[0-7]|neu_b[0-5])/([0-9]{1,3})")
 
 
 class SchemaError(ValueError):
-    """A record, cell or identity that does not match this schema. The runner refuses to write it; the analyzer
-    refuses to load it."""
+    """A record, cell, identity, report or G-READ-n artifact that does not match this schema. Its writer refuses to
+    write it; the analyzer refuses to load it."""
 
 
 # --- field tables -------------------------------------------------------------------------------------------
@@ -793,7 +872,8 @@ def check_record(rec: Any, identity: Mapping[str, Any], where: str = "record") -
         if rec["schedule_zone"] is not None or rec["told_line"] is not None:
             _fail(where, "schedule_zone / told_line are set off N4")
         if rec["ids_sha_bk"] != rec["ids_sha"]:
-            _fail(w("ids_sha_bk"), "differs from ids_sha: a rendering mismatch is a STOP, never a record")
+            _fail(w("ids_sha_bk"), "differs from ids_sha: a rendering mismatch is never a record (a pause during a "
+                                   "stage; a G-VER-STOP at G-VER)")
     # the cached read
     toks = (rec["logprob_S_tokens"], rec["logprob_U_tokens"], rec["logprob_S"], rec["logprob_U"], rec["margin"])
     if rec["finite"]:
@@ -910,6 +990,432 @@ def check_cell(cell: Any, where: str = "cell") -> None:
             _fail(f"{wi}.capture.row", f"should be {i}")
 
 
+# --- the stage report (n-report-v1) and G-READ-n's artifact (n-gread-v1), settled with n-analyzer ----------------
+REPORT_SCHEMA = "n-report-v1"
+GREAD_SCHEMA = "n-gread-v1"
+END_STATES = ("COMPLETE", "PAUSE", "PI-STOP", "G-VER-STOP", "CAP")
+#: In precedence order: a read that fires several triggers is one pause of the first kind, the rest in also_fired.
+PAUSE_KINDS = ("rendering", "nonfinite", "identity-bound", "fidelity-binomial")
+STOP_KINDS = ("G-VER-STOP", "PI-STOP")
+GREAD_AXES = {"valence": ("+1", "+1/2", "+d_20", "+d_eq"), "span_reward": ("f0.10", "f0.20")}
+GREAD_STATUSES = ("PASS", "FAIL", "NOT-COMPUTED")
+GREAD_BAR = 0.90
+#: k's fit_lr hyperparameters (valence_core/echo/probe.py's LR_SEED, LR_ITERS, LR_RATE, LR_L2), pinned.
+GREAD_LR = {"seed": 7, "iters": 300, "rate": 0.1, "l2": 0.01}
+#: Every cell file name a stage can hold: cell_filename over ARM_CELLS (136 names).
+VALID_CELL_NAMES = {cell_filename(a, d, x): a for a in ARMS for d, xs in ARM_CELLS[a] for x in xs}
+_CELL_KEYS = {cell_filename(a, d, x): (a, d, x) for a in ARMS for d, xs in ARM_CELLS[a] for x in xs}
+#: n §3's "grouped leave-one-session-out CV"; another form enters with its own seeds in its own schema commit.
+CV_FORMS = re.compile(r"loso")
+GREAD_MERGEABLE = {"valence": ("+d_20", "+d_eq"), "span_reward": ()}
+
+REPORT_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "schema": ("str", False, "REPORT_SCHEMA"),
+    "stage_identity": ("stage_identity", False, "the stage's identity, as every cell file carries it"),
+    "stage_identity_sha256": ("sha256", False, "identity_sha256(stage_identity)"),
+    "read_plan_sha256": ("sha256", True, "read_plan_sha256(stage_identity) at the campaign; null at other stages"),
+    "end_state": ("str", False, "END_STATES: the invocation's end"),
+    "per_arm": ("per_arm", False, "arm -> {planned, obtained, complete} for every arm of the stage's plan, planned "
+                                  "from the declared read set; non-empty, every cell's arm among them"),
+    "cells": ("cell_shas", False, "cell filename -> {json_sha256, capture_sha256, records}, every cell file of "
+                                  "the stage at the report's write: the file's sha256, the cell's own "
+                                  "capture_sha256, its record count"),
+    "pauses": ("pauses", False, "every pause of the stage, in launch order, adjudicated or not"),
+    "binomial_state": ("binomial_state", False, "the fidelity binomial's running state over the stage: trials, "
+                                                "exceedances, evaluations, fires"),
+    "stop": ("stop", True, "{kind, record_sha256, detail} at G-VER-STOP or PI-STOP; null otherwise"),
+    "cap": ("cap", False, "{hour_cap_ms, used_ms, hit}"),
+    "counters": ("counters", False, "n §4's counters and the identity-bound count, over the stage"),
+}
+PAUSE_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "pause_id": ("str", False, "'p01', 'p02', ... by its place in the list, which is in launch order"),
+    "kind": ("str", False, "PAUSE_KINDS"),
+    "read_id": ("str", True, "the read that fired; null for a binomial fire at the run's end"),
+    "launch_index": ("int", True, "that read's launch index; null with read_id"),
+    "arms_in_scope": ("strs", False, "the arms the pause stands on while unadjudicated: its read's arm among them, "
+                                     "no arm twice"),
+    "adjudicated": ("bool", False, "the seat has ruled on it"),
+    "ruling_sha256": ("sha256", True, "the ruling's raw, by sha256; null until adjudicated"),
+    "binomial": ("binomial", True, "on a fidelity-binomial pause, or one whose read also fired the binomial "
+                                   "(also_fired), the batch it was computed on, ending at the pause's read where it "
+                                   "has one; null otherwise"),
+    "also_fired": ("strs", False, "other kinds the same read fired, after kind in PAUSE_KINDS' precedence"),
+    "resumed_at_launch_index": ("int", True, "the first read launched after the ruling took effect; null until "
+                                             "then"),
+}
+BINOMIAL_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "first_launch_index": ("int", False, "the first read of the trials counted"),
+    "last_launch_index": ("int", False, "the last read of the trials counted"),
+    "k": ("int", False, "exceedances at TAU among the trials"),
+    "n": ("int", False, "re-computations counted"),
+    "p0_count": ("int", False, "the identity's fidelity_rule.p0_count"),
+    "p0_n": ("int", False, "the identity's fidelity_rule.p0_n"),
+    "alpha": ("float", False, "the lock's alpha for the binomial"),
+}
+STOP_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "kind": ("str", False, "STOP_KINDS"),
+    "record_sha256": ("sha256", False, "the STOP's record (G-VER's report; the PI's stop raw), by sha256"),
+    "detail": ("str", False, "one line of at most 200 characters, no margin, no id beyond a session's"),
+}
+BINOMIAL_STATE_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "trials": ("int", False, "re-computations counted by the binomial so far: the fidelity counters' total"),
+    "exceed_tau": ("int", False, "their exceedances at TAU: the fidelity counters' total"),
+    "evaluations": ("int", False, "cadence evaluations made, the end-of-run one included"),
+    "fires": ("int", False, "evaluations that fired; each is a pause's binomial (its kind or also_fired)"),
+}
+CAP_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "hour_cap_ms": ("int", True, "the lock's cap in ms; null where none is set"),
+    "used_ms": ("int", False, "the sum of the stage's records' duration_ms"),
+    "hit": ("bool", False, "hour_cap_ms is set and used_ms >= hour_cap_ms"),
+}
+COUNTERS_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "fidelity": ("fid_counts", False, "'arm|dose' -> {trials, exceed_tau, exceed_tau4}"),
+    "nonfinite_reads": ("int", False, "records with a non-finite margin, cached or fresh (finite false on either "
+                                      "path); at least the pauses that name nonfinite"),
+    "identity_out_of_bound": ("int", False, "records whose identity check is not within; at least the pauses that "
+                                            "name identity-bound"),
+    "rendering_mismatches": ("int", False, "token sequences refused before a read, never a record: the number of "
+                                           "the stage's rendering pauses, or at a G-VER-STOP G-VER's mismatches, at "
+                                           "least one"),
+    "label_mass_below_floor": ("int_by_key", True, "'arm|dose' -> count under the lock's floor; null where no floor "
+                                                   "is set"),
+}
+GREAD_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "schema": ("str", False, "GREAD_SCHEMA"),
+    "campaign": ("gread_campaign", False, "{read_plan_sha256, stage_identity_sha256, cells}: what it read"),
+    "probe": ("gread_probe", False, "{package_sha256, lr, shuffles, shuffle_seed, cv, layers, bar}"),
+    "results": ("gread_results", False, "at least one, and at most one per (axis, point) of GREAD_AXES"),
+}
+GREAD_CAMPAIGN_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "read_plan_sha256": ("sha256", False, "the campaign's"),
+    "stage_identity_sha256": ("sha256", False, "the campaign's"),
+    "cells": ("cell_shas2", False, "cell filename -> {json_sha256, capture_sha256}, the cells read"),
+}
+GREAD_PROBE_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "package_sha256": ("sha256", False, "the n package at the run"),
+    "lr": ("lr", False, "{seed, iters, rate, l2}: k's fit_lr hyperparameters, GREAD_LR"),
+    "shuffles": ("int", False, "200 (n §3)"),
+    "shuffle_seed": ("int", False, "the label-shuffle null's seed"),
+    "cv": ("str", False, "'loso': n §3's grouped leave-one-session-out"),
+    "layers": ("ints", False, "the capture layers probed"),
+    "bar": ("float", False, "0.90 (n §3)"),
+}
+GREAD_RESULT_FIELDS: dict[str, tuple[str, bool, str]] = {
+    "axis": ("str", False, "'valence' or 'span_reward'"),
+    "dose_label": ("str", False, "the kept label"),
+    "merged": ("strs", False, "the labels merged into it"),
+    "contrast": ("str", False, "'pole' (+ against -, valence at +1) or 'shadow' (+ against the shadow)"),
+    "status": ("str", False, "GREAD_STATUSES"),
+    "band_median_auc": ("float", True, "median over per_layer's AUCs; null when not computed"),
+    "per_layer": ("layer_results", False, "[{layer, auc, null_p95, above_null}] in the probe's layer order; [] when "
+                                          "not computed"),
+    "comparator": ("comparator", False, "{band_medians (24, the random directions'), max}; nulls when not computed, "
+                                        "and a computed result with nulls is a FAIL"),
+    "bar": ("float", False, "0.90"),
+}
+
+
+def identity_sha256(identity: Mapping[str, Any]) -> str:
+    """sha256 of the identity's canonical JSON (sort_keys, separators (",", ":"), ensure_ascii False, UTF-8), as
+    settled with n-analyzer; on a valid identity, byte-equal to m's ``resume._canon``."""
+    return hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                                     allow_nan=False).encode("utf-8")).hexdigest()
+
+
+def _check_report_nested(t: str, v: Any, where: str) -> None:
+    if t == "per_arm":
+        if type(v) is not dict or not v:
+            _fail(where, "expected a non-empty object")
+        for arm, x in v.items():
+            if arm not in ARMS or type(x) is not dict or sorted(x) != ["complete", "obtained", "planned"]:
+                _fail(f"{where}.{arm}", "is not an arm's {planned, obtained, complete}")
+            if not (_is_int(x["planned"]) and _is_int(x["obtained"]) and type(x["complete"]) is bool):
+                _fail(f"{where}.{arm}", "types")
+            if not 0 <= x["obtained"] <= x["planned"] or x["complete"] != (x["obtained"] == x["planned"]):
+                _fail(f"{where}.{arm}", "obtained exceeds planned, or complete is not obtained == planned")
+    elif t in ("cell_shas", "cell_shas2"):
+        keys = ["capture_sha256", "json_sha256"] + (["records"] if t == "cell_shas" else [])
+        if type(v) is not dict:
+            _fail(where, "expected an object")
+        for name, x in v.items():
+            if name not in VALID_CELL_NAMES:
+                _fail(f"{where}", f"{name!r} is not a cell file a stage can hold (cell_filename over ARM_CELLS)")
+            if type(x) is not dict or sorted(x) != sorted(keys):
+                _fail(f"{where}.{name}", f"keys are not {keys}")
+            for k in ("json_sha256", "capture_sha256"):
+                _check_type("sha256", x[k], f"{where}.{name}.{k}")
+            if t == "cell_shas" and not (_is_int(x["records"]) and x["records"] >= 0):
+                _fail(f"{where}.{name}.records", "is not a count")
+    elif t == "pauses":
+        if type(v) is not list:
+            _fail(where, "expected a list")
+        for i, p in enumerate(v):
+            _check_table(p, PAUSE_FIELDS, f"{where}[{i}]")
+    elif t == "binomial":
+        _check_table(v, BINOMIAL_FIELDS, where)
+    elif t == "binomial_state":
+        _check_table(v, BINOMIAL_STATE_FIELDS, where)
+        if not (0 <= v["exceed_tau"] <= v["trials"] and 0 <= v["fires"] <= v["evaluations"]):
+            _fail(where, "needs exceed_tau <= trials and fires <= evaluations")
+    elif t == "stop":
+        _check_table(v, STOP_FIELDS, where)
+    elif t == "cap":
+        _check_table(v, CAP_FIELDS, where)
+    elif t == "counters":
+        _check_table(v, COUNTERS_FIELDS, where)
+    elif t == "fid_counts":
+        if type(v) is not dict:
+            _fail(where, "expected an object")
+        for key, x in v.items():
+            if type(x) is not dict or sorted(x) != ["exceed_tau", "exceed_tau4", "trials"] or not all(
+                    _is_int(x[k]) and x[k] >= 0 for k in x):
+                _fail(f"{where}.{key}", "is not {trials, exceed_tau, exceed_tau4} counts")
+            if not x["exceed_tau"] <= x["exceed_tau4"] <= x["trials"]:
+                _fail(f"{where}.{key}", "needs exceed_tau <= exceed_tau4 <= trials (rel > TAU implies rel > TAU/4)")
+    elif t == "int_by_key":
+        if type(v) is not dict or not all(type(k) is str and _is_int(x) and x >= 0 for k, x in v.items()):
+            _fail(where, "expected 'arm|dose' -> count")
+    elif t == "strs":
+        if type(v) is not list or not all(type(x) is str for x in v):
+            _fail(where, "expected a list of strings")
+    elif t == "gread_campaign":
+        _check_table(v, GREAD_CAMPAIGN_FIELDS, where)
+    elif t == "gread_probe":
+        _check_table(v, GREAD_PROBE_FIELDS, where)
+    elif t == "lr":
+        if (type(v) is not dict or sorted(v) != ["iters", "l2", "rate", "seed"] or not _is_int(v["seed"])
+                or not _is_int(v["iters"]) or not _is_float(v["rate"]) or not _is_float(v["l2"])):
+            _fail(where, "expected {seed, iters, rate, l2}")
+    elif t == "gread_results":
+        if type(v) is not list or not v:
+            _fail(where, "expected a non-empty list")
+        for i, r in enumerate(v):
+            _check_table(r, GREAD_RESULT_FIELDS, f"{where}[{i}]")
+    elif t == "layer_results":
+        if type(v) is not list:
+            _fail(where, "expected a list")
+        for i, x in enumerate(v):
+            if (type(x) is not dict or sorted(x) != ["above_null", "auc", "layer", "null_p95"] or not _is_int(
+                    x["layer"]) or not _is_float(x["auc"]) or not _is_float(x["null_p95"])
+                    or type(x["above_null"]) is not bool):
+                _fail(f"{where}[{i}]", "is not {layer, auc, null_p95, above_null}")
+            if x["above_null"] != (x["auc"] > x["null_p95"]):
+                _fail(f"{where}[{i}].above_null", "is not auc > null_p95")
+    elif t == "comparator":
+        if type(v) is not dict or sorted(v) != ["band_medians", "max"]:
+            _fail(where, "expected {band_medians, max}")
+        bm, mx = v["band_medians"], v["max"]
+        if (bm is None) != (mx is None):
+            _fail(where, "band_medians and max are null together")
+        if bm is not None:
+            if type(bm) is not list or len(bm) != N_RANDOM or not all(_is_float(x) for x in bm):
+                _fail(f"{where}.band_medians", f"expected {N_RANDOM} floats")
+            if not _is_float(mx) or mx != max(bm):
+                _fail(f"{where}.max", "is not max(band_medians)")
+    else:
+        _fail(where, f"unknown type {t!r}")
+
+
+for _t in ("per_arm", "cell_shas", "cell_shas2", "pauses", "binomial", "binomial_state", "stop", "cap", "counters",
+           "fid_counts",
+           "int_by_key", "strs", "gread_campaign", "gread_probe", "lr", "gread_results", "layer_results",
+           "comparator"):
+    NESTED[_t] = (lambda t: (lambda v, w: _check_report_nested(t, v, w)))(_t)
+del _t
+
+
+def check_report(report: Any, where: str = "report") -> None:
+    """A stage report: every field, and the invariants one report carries on its own. That its cells and counts are
+    the cells' on disk is the reader's to check (n-analyzer's verdicts command binds them by sha256)."""
+    _check_table(report, REPORT_FIELDS, where)
+    w = lambda f: f"{where}.{f}"                                          # noqa: E731
+    if report["schema"] != REPORT_SCHEMA:
+        _fail(w("schema"), f"is {report['schema']!r}")
+    ident = report["stage_identity"]
+    check_stage_identity(ident, w("stage_identity"))
+    if report["stage_identity_sha256"] != identity_sha256(ident):
+        _fail(w("stage_identity_sha256"), "is not identity_sha256(stage_identity)")
+    campaign = ident["stage"] == "campaign"
+    want_plan = read_plan_sha256(ident) if campaign else None
+    if report["read_plan_sha256"] != want_plan:
+        _fail(w("read_plan_sha256"), "is the campaign's read_plan_sha256 there, null elsewhere")
+    end = report["end_state"]
+    if end not in END_STATES:
+        _fail(w("end_state"), f"{end!r} is not one of {END_STATES}")
+    per = report["per_arm"]
+    if campaign:
+        plan = read_plan(ident)
+        planned = {a: sum(1 for x in plan if x.startswith(a + "|")) for a in ARMS}
+        if sorted(per) != sorted(ARMS) or any(per[a]["planned"] != planned[a] for a in ARMS):
+            _fail(w("per_arm"), "is not the plan's arms and counts")
+    obtained: dict = {}
+    kept = dose_point_values(ident)
+    for name, x in report["cells"].items():
+        arm, _did, dl = _CELL_KEYS[name]
+        if arm not in per:
+            _fail(w("per_arm"), f"has no entry for {arm}, which cell {name} belongs to")
+        if dl not in kept:
+            _fail(w("cells"), f"{name} is at {dl}, a point the stage's dose map does not keep")
+        obtained[arm] = obtained.get(arm, 0) + x["records"]
+    for a, x in per.items():
+        if x["obtained"] != obtained.get(a, 0):
+            _fail(w(f"per_arm.{a}.obtained"), "is not the sum of its cells' records")
+    standing = False
+    binomial_pauses = 0
+    bs = report["binomial_state"]
+    last, last_rendering = -1, False
+    n_pauses = len(report["pauses"])
+    for i, p in enumerate(report["pauses"]):
+        wp = w(f"pauses[{i}]")
+        if p["pause_id"] != f"p{i + 1:02d}":
+            _fail(f"{wp}.pause_id", f"is not 'p{i + 1:02d}': pause ids run p01, p02, ... in the list's order")
+        if p["kind"] not in PAUSE_KINDS:
+            _fail(f"{wp}.kind", f"{p['kind']!r} is not one of {PAUSE_KINDS}")
+        also = p["also_fired"]
+        if (len(set(also)) != len(also) or any(k not in PAUSE_KINDS for k in also)
+                or any(PAUSE_KINDS.index(k) <= PAUSE_KINDS.index(p["kind"]) for k in also)):
+            _fail(f"{wp}.also_fired", "names a non-kind, a repeat, or a kind not after kind in PAUSE_KINDS' order")
+        if p["kind"] == "rendering" and also:
+            _fail(f"{wp}.also_fired", "a rendering pause's read is not launched, so nothing else fires with it")
+        if not p["arms_in_scope"] or any(a not in ARMS for a in p["arms_in_scope"]):
+            _fail(f"{wp}.arms_in_scope", "names no arm, or a non-arm")
+        if len(set(p["arms_in_scope"])) != len(p["arms_in_scope"]):
+            _fail(f"{wp}.arms_in_scope", "names an arm twice")
+        if p["read_id"] is not None and p["read_id"].split("|")[0] not in p["arms_in_scope"]:
+            _fail(f"{wp}.arms_in_scope", "does not hold the arm of the pause's read")
+        if ("identity-bound" in [p["kind"]] + list(also) and p["read_id"] is not None
+                and p["read_id"].split("|")[2:3] != ["0"]):
+            _fail(wp, "an identity-bound trigger is a d = 0 read's (n §6: \"the identity bound exceeded at d = 0\")")
+        if (p["read_id"] is None) != (p["launch_index"] is None):
+            _fail(wp, "read_id and launch_index are null together")
+        if p["read_id"] is None and p["kind"] != "fidelity-binomial":
+            _fail(wp, "only a binomial fire at the run's end has no read")
+        li = p["launch_index"]
+        if li is None and i != n_pauses - 1:
+            _fail(wp, "a binomial fire at the run's end is the stage's last pause")
+        if li is not None:
+            if li < last or (li == last and not last_rendering):
+                _fail(f"{wp}.launch_index", "pauses are not in launch order (only a rendering pause's place is "
+                                             "shared, by its read launched there after the ruling)")
+            last, last_rendering = li, p["kind"] == "rendering"
+        if (p["ruling_sha256"] is None) == p["adjudicated"]:
+            _fail(f"{wp}.ruling_sha256", "is set exactly when adjudicated")
+        ra = p["resumed_at_launch_index"]
+        if ra is not None and (not p["adjudicated"] or li is None or ra < li
+                               or (ra == li and p["kind"] != "rendering")):
+            _fail(f"{wp}.resumed_at_launch_index", "is set only after the ruling, at a launch after the pause's "
+                                                   "read (at it, for a rendering pause); never on a read-less pause")
+        fired_binomial = p["kind"] == "fidelity-binomial" or "fidelity-binomial" in also
+        if (p["binomial"] is None) == fired_binomial:
+            _fail(f"{wp}.binomial", "is set exactly when the pause's read fired the binomial (its kind or "
+                                    "also_fired)")
+        b = p["binomial"]
+        if b is not None:
+            binomial_pauses += 1
+            fr = ident["fidelity_rule"]
+            if not (b["first_launch_index"] <= b["last_launch_index"] and 0 <= b["k"] <= b["n"] and b["n"] > 0
+                    and b["p0_count"] == fr["p0_count"] and b["p0_n"] == fr["p0_n"] and 0.0 < b["alpha"] < 1.0):
+                _fail(f"{wp}.binomial", "is not a well-formed batch under the identity's p0")
+            if li is not None and b["last_launch_index"] != li:
+                _fail(f"{wp}.binomial.last_launch_index", "a fire at a read ends its batch at that read")
+            if b["k"] > bs["exceed_tau"] or b["n"] > bs["trials"]:
+                _fail(f"{wp}.binomial", "counts more exceedances or trials than the stage's binomial state")
+        standing = standing or not p["adjudicated"]
+    if bs["fires"] != binomial_pauses:
+        _fail(w("binomial_state.fires"), "is not the number of pauses whose read fired the binomial")
+    fid = report["counters"]["fidelity"]
+    if (bs["trials"] != sum(x["trials"] for x in fid.values())
+            or bs["exceed_tau"] != sum(x["exceed_tau"] for x in fid.values())):
+        _fail(w("binomial_state"), "its trials and exceedances are not the fidelity counters' totals")
+    stop = report["stop"]
+    if (stop is not None) != (end in STOP_KINDS) or (stop is not None and stop["kind"] != end):
+        _fail(w("stop"), "is set exactly at G-VER-STOP or PI-STOP, with that kind")
+    if stop is not None and ("\n" in stop["detail"] or len(stop["detail"]) > 200):
+        _fail(w("stop.detail"), "is one line of at most 200 characters")
+    cap = report["cap"]
+    if cap["used_ms"] < 0 or (cap["hour_cap_ms"] is not None and cap["hour_cap_ms"] < 0):
+        _fail(w("cap"), "a negative figure")
+    if cap["hit"] != (cap["hour_cap_ms"] is not None and cap["used_ms"] >= cap["hour_cap_ms"]):
+        _fail(w("cap.hit"), "is not used_ms >= hour_cap_ms")
+    # the end-state rules (the module docstring's THE STAGE REPORT)
+    if end == "PAUSE" and not standing:
+        _fail(w("end_state"), "is PAUSE only while an unadjudicated pause stands")
+    if standing and end not in ("PAUSE", "PI-STOP"):
+        _fail(w("end_state"), "a standing pause ends only by a ruling or under PI-STOP")
+    if end == "CAP" and not cap["hit"]:
+        _fail(w("end_state"), "is CAP only when the cap is hit")
+    if cap["hit"] and not standing and end not in ("CAP", "PI-STOP", "G-VER-STOP"):
+        _fail(w("end_state"), "a hit cap ends the stage as CAP, unless a pause stands or a STOP ended it")
+    if end == "COMPLETE" and campaign and not all(x["complete"] for x in per.values()):
+        _fail(w("end_state"), "COMPLETE with an incomplete arm")
+    c = report["counters"]
+    for k in ("nonfinite_reads", "identity_out_of_bound", "rendering_mismatches"):
+        if c[k] < 0:
+            _fail(w(f"counters.{k}"), "is negative")
+    named = [[p["kind"]] + list(p["also_fired"]) for p in report["pauses"]]
+    if end == "G-VER-STOP":
+        if (c["rendering_mismatches"] < 1 or report["pauses"]
+                or any(x["obtained"] for x in per.values())):
+            _fail(w("end_state"), "a G-VER-STOP comes before any read: G-VER's mismatches (at least one), no pause, "
+                                  "no record")
+    elif c["rendering_mismatches"] != sum(1 for ks in named if ks[0] == "rendering"):
+        _fail(w("counters.rendering_mismatches"), "is not the number of the stage's rendering pauses")
+    if (c["nonfinite_reads"] < sum(1 for ks in named if "nonfinite" in ks)
+            or c["identity_out_of_bound"] < sum(1 for ks in named if "identity-bound" in ks)):
+        _fail(w("counters"), "counts fewer non-finite or identity-bound reads than the pauses that name them")
+
+
+def check_gread(art: Any, where: str = "gread") -> None:
+    """G-READ-n's artifact: every field, and its PASS rule as Code reads n §3 (band median >= bar, above the
+    comparator's largest, above the shuffle null at every layer)."""
+    _check_table(art, GREAD_FIELDS, where)
+    w = lambda f: f"{where}.{f}"                                          # noqa: E731
+    if art["schema"] != GREAD_SCHEMA:
+        _fail(w("schema"), f"is {art['schema']!r}")
+    pr = art["probe"]
+    if pr["bar"] != GREAD_BAR or pr["shuffles"] != 200 or not pr["layers"]:
+        _fail(w("probe"), "n §3's bar (0.90) and shuffle count (200); at least one layer")
+    if pr["lr"] != GREAD_LR:
+        _fail(w("probe.lr"), f"is not k's fit_lr hyperparameters {GREAD_LR}")
+    if CV_FORMS.fullmatch(pr["cv"]) is None:
+        _fail(w("probe.cv"), f"{pr['cv']!r} is not 'loso' (n §3's grouped leave-one-session-out)")
+    seen = set()
+    for i, r in enumerate(art["results"]):
+        wr = w(f"results[{i}]")
+        if r["axis"] not in GREAD_AXES or r["dose_label"] not in GREAD_AXES[r["axis"]]:
+            _fail(wr, f"no G-READ-n result for ({r['axis']}, {r['dose_label']})")
+        if (r["axis"], r["dose_label"]) in seen:
+            _fail(wr, "repeats an (axis, dose point)")
+        seen.add((r["axis"], r["dose_label"]))
+        allowed_m = GREAD_MERGEABLE[r["axis"]]
+        if (len(set(r["merged"])) != len(r["merged"]) or r["dose_label"] in r["merged"]
+                or any(m not in allowed_m for m in r["merged"])):
+            _fail(f"{wr}.merged", f"may name only {allowed_m}, once each, never the kept label")
+        want_c = "pole" if (r["axis"], r["dose_label"]) == ("valence", "+1") else "shadow"
+        if r["contrast"] != want_c:
+            _fail(f"{wr}.contrast", f"should be {want_c!r} (n §3: the - pole where it is read, else the shadow)")
+        if r["status"] not in GREAD_STATUSES or r["bar"] != GREAD_BAR:
+            _fail(wr, "status or bar")
+        computed = r["status"] != "NOT-COMPUTED"
+        if not computed and r["comparator"]["band_medians"] is not None:
+            _fail(f"{wr}.comparator", "a NOT-COMPUTED result carries no comparator")
+        if computed != (r["band_median_auc"] is not None) or computed != bool(r["per_layer"]):
+            _fail(wr, "a computed result has a band median and per-layer AUCs; a NOT-COMPUTED one has neither")
+        if computed:
+            if [x["layer"] for x in r["per_layer"]] != list(pr["layers"]):
+                _fail(f"{wr}.per_layer", "is not the probe's layers, in order")
+            aucs = sorted(x["auc"] for x in r["per_layer"])
+            mid = len(aucs) // 2
+            med = aucs[mid] if len(aucs) % 2 else (aucs[mid - 1] + aucs[mid]) / 2.0
+            if r["band_median_auc"] != med:
+                _fail(f"{wr}.band_median_auc", "is not the median of per_layer's AUCs")
+            cm = r["comparator"]["max"]
+            passed = (cm is not None and med >= GREAD_BAR and med > cm
+                      and all(x["above_null"] for x in r["per_layer"]))
+            if r["status"] != ("PASS" if passed else "FAIL"):
+                _fail(f"{wr}.status", f"should be {'PASS' if passed else 'FAIL'}")
+
+
 __all__ = [
     "RECORD_SCHEMA", "CELL_SCHEMA", "UNIT", "STAGES", "PROPOSAL_SHA256", "SESSION_SET_SHA256", "TAU", "TAU4",
     "RHO", "MERGE_DISTANCE", "MAX_WINDOW", "DOSE_RULE_LABELS", "dose_points",
@@ -920,6 +1426,11 @@ __all__ = [
     "read_id", "session_id", "shadow_read_id", "cell_filename", "expected_alpha", "fidelity_numbers",
     "shared_prefix", "bk_cell_of", "read_plan", "read_plan_sha256", "dose_point_values", "check_stage_identity",
     "check_record", "check_cell", "example_identity", "example_record", "example_cell",
+    "REPORT_SCHEMA", "GREAD_SCHEMA", "END_STATES", "PAUSE_KINDS", "STOP_KINDS", "GREAD_AXES", "GREAD_STATUSES",
+    "GREAD_BAR", "REPORT_FIELDS", "PAUSE_FIELDS", "BINOMIAL_FIELDS", "STOP_FIELDS", "CAP_FIELDS", "COUNTERS_FIELDS",
+    "GREAD_FIELDS", "GREAD_CAMPAIGN_FIELDS", "GREAD_PROBE_FIELDS", "GREAD_RESULT_FIELDS", "identity_sha256",
+    "check_report", "check_gread", "example_report", "example_pause", "example_gread", "BINOMIAL_STATE_FIELDS",
+    "VALID_CELL_NAMES", "CV_FORMS", "GREAD_MERGEABLE", "GREAD_LR",
 ]
 
 
@@ -1039,6 +1550,98 @@ def example_cell(identity: Mapping[str, Any], arm: str, direction_id: str, dose_
     return {"schema": CELL_SCHEMA, "stage_identity": identity, "arm": arm, "direction_id": direction_id,
             "dose_label": dose_label, "records": recs, "capture_file": stem + ".npy", "capture_rows": len(recs),
             "capture_sha256": "c" * 64}
+
+
+def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", obtained_fraction: float = 1.0,
+                   pauses: list | None = None, stop: dict | None = None, hour_cap_ms: int | None = None,
+                   used_ms: int = 1000) -> dict:
+    """A valid report for ``identity``. At the campaign, every arm's cells carry ``obtained_fraction`` of its plan
+    (records split over the arm's cells as the plan has them); elsewhere one N1-V d = 0 cell of 24 reads. ``pauses``,
+    ``stop`` and the cap are taken as given; the end state must agree with them."""
+    campaign = identity["stage"] == "campaign"
+    cells: dict = {}
+    per_arm: dict = {}
+    if campaign:
+        plan = read_plan(identity)
+        by_cell: dict = {}
+        for rid in plan:
+            arm, did, dl, _sid = rid.split("|")
+            by_cell.setdefault((arm, did, dl), []).append(rid)
+        for (arm, did, dl), rids in sorted(by_cell.items()):
+            got = len(rids) if obtained_fraction >= 1.0 else int(len(rids) * obtained_fraction)
+            cells[cell_filename(arm, did, dl)] = {"json_sha256": "d" * 64, "capture_sha256": "e" * 64,
+                                                  "records": got}
+            pa = per_arm.setdefault(arm, {"planned": 0, "obtained": 0, "complete": False})
+            pa["planned"] += len(rids)
+            pa["obtained"] += got
+        for pa in per_arm.values():
+            pa["complete"] = pa["obtained"] == pa["planned"]
+    else:
+        cells[cell_filename("N1-V", "none", "0")] = {"json_sha256": "d" * 64, "capture_sha256": "e" * 64,
+                                                      "records": 24}
+        per_arm["N1-V"] = {"planned": 24, "obtained": 24, "complete": True}
+    hit = hour_cap_ms is not None and used_ms >= hour_cap_ms
+    batches = [p["binomial"] for p in (pauses or []) if p["binomial"] is not None]
+    exc = max([b["k"] for b in batches], default=0)
+    fid = {"N1-V|0": {"trials": 160, "exceed_tau": exc, "exceed_tau4": max(3, exc)}}
+    named = [[p["kind"]] + list(p["also_fired"]) for p in (pauses or [])]
+    counts = {"nonfinite_reads": sum(1 for ks in named if "nonfinite" in ks),
+              "identity_out_of_bound": sum(1 for ks in named if "identity-bound" in ks),
+              "rendering_mismatches": 1 if end_state == "G-VER-STOP" else sum(1 for ks in named
+                                                                            if ks[0] == "rendering")}
+    return {"schema": REPORT_SCHEMA, "stage_identity": dict(identity), "stage_identity_sha256":
+            identity_sha256(identity), "read_plan_sha256": read_plan_sha256(identity) if campaign else None,
+            "end_state": end_state, "per_arm": per_arm, "cells": cells, "pauses": list(pauses or []),
+            "binomial_state": {"trials": 160, "exceed_tau": exc, "evaluations": max(1, len(batches)),
+                               "fires": len(batches)},
+            "stop": stop,
+            "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used_ms, "hit": hit},
+            "counters": {"fidelity": fid, **counts, "label_mass_below_floor": None}}
+
+
+def example_pause(n: int, *, kind: str = "nonfinite", launch_index: int | None = 500, adjudicated: bool = False,
+                  arms: tuple = ("N1-V",), also_fired: tuple = (), resumed_at: int | None = None) -> dict:
+    """A valid pause record (for ``example_report``); its batch is set when the binomial fired at it, and its read is
+    a d = 0 read when it names identity-bound."""
+    binom = None
+    if kind == "fidelity-binomial" or "fidelity-binomial" in also_fired:
+        binom = {"first_launch_index": 0, "last_launch_index": 159 if launch_index is None else launch_index,
+                 "k": 1, "n": 160, "p0_count": 0, "p0_n": 2400, "alpha": 0.01}
+    d0 = "identity-bound" in (kind,) + tuple(also_fired)
+    return {"pause_id": f"p{n:02d}", "kind": kind,
+            "read_id": None if launch_index is None else ("N1-V|none|0|floor_b0/3" if d0
+                                                          else "N1-V|valence|+1|floor_b0/3"),
+            "launch_index": launch_index, "arms_in_scope": list(arms), "adjudicated": adjudicated,
+            "ruling_sha256": "f" * 64 if adjudicated else None, "binomial": binom, "also_fired": list(also_fired),
+            "resumed_at_launch_index": resumed_at}
+
+
+def example_gread(*, statuses: Mapping | None = None, layers: tuple = (31, 63)) -> dict:
+    """A valid G-READ-n artifact: one result per (axis, point) of GREAD_AXES, each PASS unless ``statuses`` gives
+    "FAIL" or "NOT-COMPUTED" for it (keyed "axis|label")."""
+    statuses = dict(statuses or {})
+    results = []
+    for axis, labels in GREAD_AXES.items():
+        for dl in labels:
+            st = statuses.get(f"{axis}|{dl}", "PASS")
+            if st == "NOT-COMPUTED":
+                per, med, comp = [], None, {"band_medians": None, "max": None}
+            else:
+                auc = 0.96 if st == "PASS" else 0.62
+                per = [{"layer": l, "auc": auc, "null_p95": 0.58, "above_null": auc > 0.58} for l in layers]
+                med = auc
+                comp = {"band_medians": [0.5 + 0.005 * i for i in range(N_RANDOM)], "max": 0.5 + 0.005 * 23}
+            results.append({"axis": axis, "dose_label": dl, "merged": [],
+                            "contrast": "pole" if (axis, dl) == ("valence", "+1") else "shadow", "status": st,
+                            "band_median_auc": med, "per_layer": per, "comparator": comp, "bar": GREAD_BAR})
+    return {"schema": GREAD_SCHEMA,
+            "campaign": {"read_plan_sha256": "a" * 64, "stage_identity_sha256": "b" * 64,
+                         "cells": {cell_filename("N1-V", "none", "0"): {"json_sha256": "d" * 64,
+                                                                         "capture_sha256": "e" * 64}}},
+            "probe": {"package_sha256": "2" * 64, "lr": {"seed": 7, "iters": 300, "rate": 0.1, "l2": 0.01},
+                      "shuffles": 200, "shuffle_seed": 20260905, "layers": list(layers), "bar": GREAD_BAR,
+                      "cv": "loso"},
+            "results": results}
 
 
 # --- self-test (literal records; no file, no model) ---------------------------------------------------------
@@ -1329,6 +1932,208 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
         "points", [{"label": "+1", "value": 1.0, "merged": []}, {"label": "+1/2", "value": 0.5, "merged": []},
                    {"label": "+d_20", "value": 1.0, "merged": []}] + o["dose_map"]["points"][2:]), si)
     refuse("points out of order", ident, lambda o: o["dose_map"]["points"].reverse(), si)
+    # the stage report (n-report-v1) and G-READ-n's artifact (n-gread-v1)
+    cr = lambda o: check_report(o)                                         # noqa: E731
+    cg = lambda o: check_gread(o)                                          # noqa: E731
+    rep = example_report(ident)
+    rep_pause = example_report(ident, end_state="PAUSE", obtained_fraction=0.5, pauses=[example_pause(1)])
+    rep_adj = example_report(ident, pauses=[example_pause(1, adjudicated=True)])
+    rep_cap = example_report(ident, end_state="CAP", obtained_fraction=0.5, hour_cap_ms=500, used_ms=600)
+    rep_gver = example_report(ident, end_state="G-VER-STOP", obtained_fraction=0.0,
+                              stop={"kind": "G-VER-STOP", "record_sha256": "9" * 64, "detail": "s=62 ids"})
+    rep_gver["counters"]["rendering_mismatches"] = 1
+    rep_end_binom = example_report(ident, end_state="PAUSE", pauses=[example_pause(1, kind="fidelity-binomial",
+                                                                                   launch_index=None)])
+    for name, r in (("a complete campaign report", rep), ("a paused campaign, arms incomplete", rep_pause),
+                    ("an adjudicated pause, cleared: COMPLETE", rep_adj), ("a CAP end", rep_cap),
+                    ("a G-VER-STOP end with its record", rep_gver),
+                    ("a binomial fire at the run's end (no read)", rep_end_binom),
+                    ("a backend-ext report", example_report(ext))):
+        accept(f"report: {name}", lambda r=r: check_report(r))
+    accept("report: the identity's sha256 is the canonical JSON's",
+           lambda: None if rep["stage_identity_sha256"] == hashlib.sha256(json.dumps(
+               ident, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+           else (_ for _ in ()).throw(SchemaError("identity sha")))
+    gr = example_gread()
+    gr_mixed = example_gread(statuses={"valence|+d_eq": "FAIL", "span_reward|f0.20": "NOT-COMPUTED"})
+    accept("gread: every result PASS", lambda: check_gread(gr))
+    accept("gread: a FAIL and a NOT-COMPUTED", lambda: check_gread(gr_mixed))
+
+    def first_pause(o):
+        return o["pauses"][0]
+    refuse("report: the identity's sha256 off", rep, lambda o: o.__setitem__("stage_identity_sha256", "0" * 64), cr)
+    refuse("report: no plan sha256 at the campaign", rep, lambda o: o.__setitem__("read_plan_sha256", None), cr)
+    refuse("report: an end state of no kind", rep, lambda o: o.__setitem__("end_state", "DONE"), cr)
+    refuse("report: planned not the plan's", rep, lambda o: o["per_arm"]["N1-P"].update(planned=319, obtained=319),
+           cr)
+    refuse("report: obtained not its cells' records", rep, lambda o: o["per_arm"]["N1-V"].update(
+        obtained=959, complete=False), cr)
+    refuse("report: complete with obtained under planned", rep_pause,
+           lambda o: o["per_arm"]["N1-V"].update(complete=True), cr)
+    refuse("report: a repeated pause id", rep_adj, lambda o: o["pauses"].append(dict(
+        first_pause(o), launch_index=900)), cr)
+    refuse("report: pauses out of launch order", rep_adj, lambda o: o["pauses"].append(dict(
+        first_pause(o), pause_id="p02", launch_index=100)), cr)
+    refuse("report: an adjudicated pause without its ruling", rep_adj,
+           lambda o: first_pause(o).update(ruling_sha256=None), cr)
+    refuse("report: a ruling on an unadjudicated pause", rep_pause,
+           lambda o: first_pause(o).update(ruling_sha256="f" * 64), cr)
+    refuse("report: a batch on a non-finite pause that did not fire it", rep_pause, lambda o: first_pause(o).update(
+        binomial=example_pause(1, kind="fidelity-binomial")["binomial"]), cr)
+    refuse("report: a binomial pause without its batch", rep_end_binom,
+           lambda o: first_pause(o).update(binomial=None), cr)
+    refuse("report: a batch under another p0", rep_end_binom,
+           lambda o: first_pause(o)["binomial"].update(p0_count=1), cr)
+    refuse("report: a non-binomial pause with no read", rep_pause,
+           lambda o: first_pause(o).update(read_id=None, launch_index=None), cr)
+    refuse("report: PAUSE with no standing pause", rep_adj, lambda o: o.__setitem__("end_state", "PAUSE"), cr)
+    refuse("report: COMPLETE over a standing pause", rep_pause, lambda o: o.__setitem__("end_state", "COMPLETE"), cr)
+    refuse("report: CAP with the cap unspent", rep, lambda o: o.__setitem__("end_state", "CAP"), cr)
+    refuse("report: the cap hit but the end not CAP", rep_cap, lambda o: o.__setitem__("end_state", "COMPLETE"), cr)
+    refuse("report: hit not used_ms >= hour_cap_ms", rep_cap, lambda o: o["cap"].update(hit=False), cr)
+    refuse("report: a STOP record at COMPLETE", rep, lambda o: o.__setitem__(
+        "stop", {"kind": "PI-STOP", "record_sha256": "9" * 64, "detail": "x"}), cr)
+    refuse("report: G-VER-STOP without its record", rep_gver, lambda o: o.__setitem__("stop", None), cr)
+    refuse("report: COMPLETE with an incomplete arm", rep_pause, lambda o: (
+        o.__setitem__("end_state", "COMPLETE"), o.__setitem__("pauses", [])), cr)
+    refuse("report: a rendering mismatch without a G-VER-STOP or a rendering pause", rep,
+           lambda o: o["counters"].__setitem__("rendering_mismatches", 1), cr)
+    refuse("report: exceed_tau above exceed_tau4", rep,
+           lambda o: o["counters"]["fidelity"]["N1-V|0"].update(exceed_tau=4), cr)
+    refuse("report: a cell name that is no cell file's", rep, lambda o: o["cells"].__setitem__(
+        "N1-V__valence__p9.jsn", {"json_sha256": "d" * 64, "capture_sha256": "e" * 64, "records": 0}), cr)
+    refuse("gread: PASS under the bar", gr, lambda o: (o["results"][1].update(band_median_auc=0.85), [
+        x.update(auc=0.85) for x in o["results"][1]["per_layer"]]), cg)
+    refuse("gread: the shadow contrast at valence +1", gr, lambda o: o["results"][0].update(contrast="shadow"), cg)
+    refuse("gread: a result at a point G-READ-n does not read", gr,
+           lambda o: o["results"][0].update(axis="span_reward"), cg)
+    refuse("gread: per-layer AUCs not at the probe's layers", gr, lambda o: o["probe"].update(layers=[33, 63]), cg)
+    refuse("gread: a band median not the median", gr, lambda o: o["results"][2].update(band_median_auc=0.97), cg)
+    refuse("gread: NOT-COMPUTED with a band median", gr_mixed, lambda o: [
+        r.update(band_median_auc=0.5) for r in o["results"] if r["status"] == "NOT-COMPUTED"], cg)
+    refuse("gread: the comparator's max not its largest", gr,
+           lambda o: o["results"][0]["comparator"].update(max=0.4), cg)
+    refuse("gread: a repeated (axis, point)", gr, lambda o: o["results"].append(dict(o["results"][0])), cg)
+    refuse("gread: above_null not auc > null_p95", gr,
+           lambda o: o["results"][0]["per_layer"][0].update(above_null=False), cg)
+    refuse("gread: a bar other than 0.90", gr, lambda o: o["probe"].update(bar=0.85), cg)
+    # the end-state precedence, rendering pauses, also_fired, resumed_at, the binomial's state, strict names
+    pi_stop = {"kind": "PI-STOP", "record_sha256": "9" * 64, "detail": "the PI stopped the unit"}
+    rep_pistop = example_report(ident, end_state="PI-STOP", obtained_fraction=0.5, pauses=[example_pause(1)],
+                                stop=pi_stop)
+    rep_render = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
+                                pauses=[example_pause(1, kind="rendering")])
+    rep_render["counters"]["rendering_mismatches"] = 1
+    rep_also = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
+                              pauses=[example_pause(1, also_fired=("identity-bound",))])
+    rep_resumed = example_report(ident, pauses=[example_pause(1, adjudicated=True, resumed_at=501)])
+    rep_pause_cap = example_report(ident, end_state="PAUSE", obtained_fraction=0.5, pauses=[example_pause(1)],
+                                   hour_cap_ms=500, used_ms=600)
+    gr_merged = example_gread()
+    gr_merged["results"][0]["merged"] = ["+d_20"]
+    gr_merged["results"] = [r for r in gr_merged["results"] if r["dose_label"] != "+d_20"]
+    for name, r in (("PI-STOP over a standing pause", rep_pistop), ("a rendering pause (n §6)", rep_render),
+                    ("a pause whose read fired two triggers", rep_also),
+                    ("an adjudicated pause with the launch it resumed at", rep_resumed),
+                    ("a pause standing when the cap is hit", rep_pause_cap)):
+        accept(f"report: {name}", lambda r=r: check_report(r))
+    accept("gread: +d_20 merged into +1", lambda: check_gread(gr_merged))
+    refuse("report: CAP over a standing pause", rep_pause, lambda o: (
+        o.__setitem__("end_state", "CAP"), o["cap"].update(hour_cap_ms=1, hit=True)), cr)
+    refuse("report: G-VER-STOP over a standing pause", rep_pause, lambda o: (
+        o.__setitem__("end_state", "G-VER-STOP"), o.__setitem__("stop", dict(pi_stop, kind="G-VER-STOP"))), cr)
+    refuse("report: also_fired naming its own kind", rep_also,
+           lambda o: first_pause(o).update(also_fired=["nonfinite"]), cr)
+    refuse("report: also_fired naming a kind of higher precedence", rep_also, lambda o: first_pause(o).update(
+        kind="identity-bound", also_fired=["nonfinite"]), cr)
+    refuse("report: resumed_at on an unadjudicated pause", rep_pause,
+           lambda o: first_pause(o).update(resumed_at_launch_index=501), cr)
+    refuse("report: resumed_at not after the pause's launch", rep_resumed,
+           lambda o: first_pause(o).update(resumed_at_launch_index=500), cr)
+    refuse("report: binomial fires not its pauses", rep, lambda o: o["binomial_state"].update(fires=1,
+                                                                                              evaluations=1), cr)
+    refuse("report: binomial exceedances above its trials", rep,
+           lambda o: o["binomial_state"].update(exceed_tau=161), cr)
+    refuse("report: a cell file no stage can hold", rep, lambda o: o["cells"].__setitem__(
+        "N4-T__valence__p1.json", {"json_sha256": "d" * 64, "capture_sha256": "e" * 64, "records": 0}), cr)
+    refuse("report: a STOP detail of two lines", rep_pistop,
+           lambda o: o["stop"].update(detail="line one\nline two"), cr)
+    refuse("report: a rendering mismatch under a nonfinite pause", rep_pause,
+           lambda o: o["counters"].__setitem__("rendering_mismatches", 1), cr)
+    refuse("gread: a merged label that cannot merge (+1/2)", gr,
+           lambda o: o["results"][0].update(merged=["+1/2"]), cg)
+    refuse("gread: a merge on span_reward", gr, lambda o: o["results"][4].update(merged=["+d_eq"]), cg)
+    refuse("gread: a NOT-COMPUTED result with a comparator", gr_mixed, lambda o: [
+        r.update(comparator={"band_medians": [0.5] * N_RANDOM, "max": 0.5})
+        for r in o["results"] if r["status"] == "NOT-COMPUTED"], cg)
+    refuse("gread: a CV form of no kind", gr, lambda o: o["probe"].update(cv="lopo"), cg)
+    refuse("report: a pause id out of sequence", rep_pause, lambda o: first_pause(o).update(pause_id="p02"), cr)
+    refuse("gread: lr not k's fit_lr", gr, lambda o: o["probe"]["lr"].update(iters=200), cg)
+    refuse("report: a cell whose arm has no per_arm entry", example_report(ext), lambda o: o.__setitem__(
+        "per_arm", {"N1-R": {"planned": 0, "obtained": 0, "complete": True}}), cr)
+    # a rendering pause's read is not launched; a read-less pause is the stage's last
+    rep_retry = example_report(ident, end_state="PAUSE", obtained_fraction=0.5, pauses=[
+        example_pause(1, kind="rendering", adjudicated=True, resumed_at=500), example_pause(2)])
+    rep_retry["counters"]["rendering_mismatches"] = 1
+    accept("report: a rendering pause's read launched at its place after the ruling, then pausing",
+           lambda: check_report(rep_retry))
+    refuse("report: a rendering pause that fired another kind", rep_render,
+           lambda o: first_pause(o).update(also_fired=["nonfinite"]), cr)
+    refuse("report: a second pause at a non-rendering pause's place", rep_resumed, lambda o: (
+        o["pauses"].append(dict(first_pause(o), pause_id="p02", adjudicated=False, ruling_sha256=None,
+                                resumed_at_launch_index=None)), o.__setitem__("end_state", "PAUSE")), cr)
+    refuse("report: a read-less pause that is not the last", rep_end_binom,
+           lambda o: o["pauses"].append(example_pause(2, launch_index=600)), cr)
+    refuse("report: a read-less pause with a resumed_at", rep_end_binom, lambda o: (
+        first_pause(o).update(adjudicated=True, ruling_sha256="f" * 64, resumed_at_launch_index=5),
+        o.__setitem__("end_state", "COMPLETE")), cr)
+    # a binomial fire in also_fired carries its batch, which ends at the read that fired it
+    rep_nf_binom = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
+                                  pauses=[example_pause(1, also_fired=("fidelity-binomial",))])
+    rep_binom_read = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
+                                    pauses=[example_pause(1, kind="fidelity-binomial")])
+    for name, r in (("a non-finite pause whose read also fired the binomial", rep_nf_binom),
+                    ("a binomial fire at a read", rep_binom_read)):
+        accept(f"report: {name}", lambda r=r: check_report(r))
+    refuse("report: a binomial in also_fired without its batch", rep_nf_binom,
+           lambda o: first_pause(o).update(binomial=None), cr)
+    refuse("report: a fire's batch not ending at its read", rep_binom_read,
+           lambda o: first_pause(o)["binomial"].update(last_launch_index=499), cr)
+    # a pause's scope holds its read's arm; the binomial's state is the counters' and holds its batches; every cell
+    # is at a kept point
+    ident_m = example_identity(R_ell=40.0)                  # +d_20 merges into +1, +d_eq into +1/2
+    rep_m = example_report(ident_m)
+    accept("report: a campaign whose dose map merged two points", lambda: check_report(rep_m))
+    refuse("report: a pause whose scope lacks its read's arm", rep_pause,
+           lambda o: first_pause(o).update(arms_in_scope=["N1-R"]), cr)
+    refuse("report: binomial_state not the fidelity counters' totals", rep,
+           lambda o: o["binomial_state"].update(trials=170), cr)
+    refuse("report: a batch beyond the stage's exceedances", rep_end_binom,
+           lambda o: first_pause(o)["binomial"].update(k=2), cr)
+    refuse("report: a cell at a point the dose map merged away", rep_m, lambda o: o["cells"].__setitem__(
+        cell_filename("N1-V", "valence", "+d_eq"), {"json_sha256": "d" * 64, "capture_sha256": "e" * 64,
+                                                    "records": 0}), cr)
+    # the rendering count is the rendering pauses'; a G-VER-STOP comes before any read; a scope names an arm once;
+    # an identity-bound trigger is a d = 0 read's; the counters cover the pauses that name them; n §3's CV form only
+
+    def gver_with_record(o):
+        name = sorted(o["cells"])[0]
+        o["cells"][name]["records"] = 1
+        o["per_arm"][VALID_CELL_NAMES[name]]["obtained"] = 1
+    refuse("report: a rendering pause counted twice", rep_render,
+           lambda o: o["counters"].__setitem__("rendering_mismatches", 2), cr)
+    refuse("report: a G-VER-STOP with no mismatch counted", rep_gver,
+           lambda o: o["counters"].__setitem__("rendering_mismatches", 0), cr)
+    refuse("report: a G-VER-STOP with a record", rep_gver, gver_with_record, cr)
+    refuse("report: a scope naming an arm twice", rep_pause,
+           lambda o: first_pause(o).update(arms_in_scope=["N1-V", "N1-V"]), cr)
+    refuse("report: an identity-bound trigger on a steered read", rep_also,
+           lambda o: first_pause(o).update(read_id="N1-V|valence|+1|floor_b0/3"), cr)
+    refuse("report: nonfinite_reads below its pauses", rep_pause,
+           lambda o: o["counters"].__setitem__("nonfinite_reads", 0), cr)
+    refuse("report: identity_out_of_bound below its pauses", rep_also,
+           lambda o: o["counters"].__setitem__("identity_out_of_bound", 0), cr)
+    refuse("gread: a grouped k-fold (not n §3's form)", gr, lambda o: o["probe"].update(cv="kfold-10"), cg)
     return ok, total
 
 

@@ -21,6 +21,144 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n — the schema's second commit: the stage report (`n-report-v1`) and G-READ-n's artifact
+  (`n-gread-v1`), settled with n-analyzer, added to `valence_core/n/schema.py` (sha256 `4bed3f9a…4665`; it was
+  `77c12d6d…94bc` at `5a97527`). Self-test 199/199. n-analyzer agreed both forms by message and builds its
+  verdicts command on them after this commit. Nothing ran on a model.**
+  - **What changed.** Against `5a97527` the diff only adds, except in six places, which are rewritten:
+    - the module's first line;
+    - its sentence on what the schema specifies;
+    - its sentence on the other records, which now names the report and the artifact and says where a NOT-RUN is
+      recorded;
+    - the EXAMPLES paragraph;
+    - `SchemaError`'s docstring;
+    - `check_record`'s refusal message for a rendering mismatch, which said "a rendering mismatch is a STOP, never a
+      record" and now says it is never a record (a pause during a stage; a G-VER-STOP at G-VER). The check is the
+      same.
+
+    Added:
+    - the two forms' constants and field tables;
+    - `identity_sha256`, the report's and the artifact's nested checks (registered into `NESTED`), `check_report` and
+      `check_gread`;
+    - the builders `example_report`, `example_pause` and `example_gread`, and the new `__all__` names;
+    - 20 accepted cases and 71 refusals in the self-test;
+    - the docstring's paragraphs on the two forms, and `import json`.
+
+    Apart from that message, the record, cell and identity forms and their checks are unchanged. Of the names
+    n-analyzer's reader and battery call, all but two are byte-identical to `5a97527`'s: `CELL_SCHEMA`, `TOLD_LINE`,
+    `cell_filename`, `check_cell`, `dose_point_values`, `dose_points`, `example_identity`, `example_record` and
+    `read_plan`. The two are `check_record`, by that message, and `SchemaError`, by its docstring. Code checked this
+    by tool and told n-analyzer.
+  - **The stage report** is written at the end of every invocation that ends by its rules. An invocation that ends
+    otherwise writes none, and the next one's replay of the records on disk finds what it left. The report holds no
+    margin or other per-read model output: the identity, counts, states, read ids, launch indices, ms figures and
+    sha256s. It carries:
+    - the stage identity and its sha256 (`identity_sha256`): the canonical JSON with sort_keys, separators
+      (",", ":") and ensure_ascii False, in UTF-8, the bytes m's `resume._canon` gives a valid identity;
+    - the plan's sha256 at the campaign;
+    - planned, obtained and complete for every arm of the stage's plan;
+    - each cell file's sha256s and record count, every cell at a point the stage's dose map keeps;
+    - every pause, in launch order, with:
+      - its kind and read; an identity-bound trigger is a d = 0 read's;
+      - the arms in its scope, which hold its read's arm, no arm twice;
+      - its adjudication state and the ruling's sha256;
+      - the read it resumed at: the first attempted after the ruling, launched or refused as a rendering mismatch;
+      - any other kinds the same read fired;
+      - when the binomial fired, as its kind or in `also_fired`, the batch, which ends at the pause's read (a fire
+        at the run's end has a batch and no read);
+    - the fidelity binomial's running state: trials and exceedances (the fidelity counters' totals), evaluations and
+      fires;
+    - the STOP's record and the cap;
+    - n §4's counters and the identity-bound count. `rendering_mismatches` is the number of the stage's rendering
+      pauses, or, at a G-VER-STOP, of G-VER's mismatches, at least one. The non-finite and identity-bound counts
+      cover at least the pauses that name them.
+
+    That pauses and resumptions interleave as the runner launches them is the runner's to keep and the reader's to
+    check; the schema checks that each resumption follows its own pause.
+  - **Its end state** is COMPLETE, PAUSE, PI-STOP, G-VER-STOP or CAP, by these rules, settled with n-analyzer:
+    - PAUSE iff an unadjudicated pause stands and the unit is not stopped, whether or not the cap is hit, so the seat
+      rules on the pause first. Otherwise a standing pause ends only by a ruling, or under PI-STOP;
+    - CAP iff the cap is hit, no pause stands and no STOP is recorded;
+    - PI-STOP or G-VER-STOP iff the report carries that STOP's record. A G-VER-STOP comes before any read: its report
+      holds no record and no pause;
+    - COMPLETE iff no pause stands, the cap is not hit and no STOP is recorded and, at the campaign, every arm is
+      complete.
+  - **Two kinds of pause have their own rules:**
+    - a rendering pause's read is not launched, so nothing else fires with it. After its ruling the read is
+      attempted at its own place, so its resumed read may be its own and a later pause may share that place;
+    - a binomial fire at the run's end has no read. It is the stage's last pause and resumes nothing.
+  - **Meanings settled with n-analyzer**, so that its verdicts command and the runner agree:
+    - `obtained` counts the records on disk, finite or not; `complete` means the obtained read_ids equal the plan's;
+    - a pause stands on the arms in its scope while it is unadjudicated;
+    - an adjudicated pause is cleared, whatever the ruling, and its ruling's sha256 is cited;
+    - the report records no effect a ruling has on reads. Recording one would need a new field, in its own schema
+      commit, agreed with n-analyzer first;
+    - a NOT-RUN on the clock is a record in n-analyzer's own schema (`n-not-run-v1`). A NOT-RUN because no arm is
+      complete is derived from a report. `5a97527`'s entry listed "the NOT-RUN record" among this schema's later
+      commits; that plan changed, by agreement with n-analyzer.
+  - **G-READ-n's artifact** names the campaign it read (plan, identity and cells, by sha256). It records the probe's
+    package sha256 and settings:
+    - k's `fit_lr` hyperparameters, pinned at seed 7, 300 iterations, rate 0.1 and l2 0.01
+      (`valence_core/echo/probe.py`);
+    - the CV form, n §3's grouped leave-one-session-out ("loso") only. A grouped k-fold, if the seat allows one for
+      G-READ-n's cost, enters with its fold seed in its own schema commit;
+    - the shuffles and their seed;
+    - the layers and the bar.
+
+    It holds at least one result, and at most one per axis and point of `GREAD_AXES`: valence +1, +1/2, +d_20 and
+    +d_eq; span_reward f0.10 and f0.20. Each result gives:
+    - the labels merged into its point;
+    - the contrast: the − pole at valence +1, else the shadow (n §3);
+    - the per-layer AUCs against the shuffle null, and the band median;
+    - the comparator's 24 band medians;
+    - PASS, FAIL or NOT-COMPUTED.
+  - **Code's readings in these forms, flagged for the seat at the BUILD.** Each is an interim reading, pending the
+    seat; by the PI's routing of 2026-11-16 (N.9), the build proceeds on Code's interim readings:
+    - the PASS rule. The band median must be at least .90 and above the comparator's band, and every layer's AUC
+      above its shuffle null. n §3 gives the first two conditions, and Code reads "above the comparator's band" as
+      above the largest of its 24 band medians. The every-layer clause is k §1.4 G3's form;
+    - the comparator for span_reward's f0.10 and f0.20 is the random directions at +d_eq and +d_20, or the points
+      they merged into. The dose map norm-matches them where they are kept, and to within the merge distance (0.05 on
+      BK's scale) where they merged; not where d_20 is capped at 1;
+    - a fired monitor ends the invocation for every arm, where n §6 stops "the arm's launches";
+    - a read that fires two triggers is one pause, its kind by a precedence n §6 does not give;
+    - a rendering mismatch during a stage is a pause (n §6). G-VER's, before any read, is a G-VER-STOP (n §3);
+    - an arm with a non-finite read can be complete: the read counts as obtained and is unusable;
+    - the cap's `used_ms` counts model work only. Whether a cap counts loads is for the lock to say;
+    - `GREAD_LR` pins k's `fit_lr` values as "k's form and bar" (n §0.10, B3).
+
+    Q5 of n-build's block of five early questions (`718c48e`) is on G-READ-n's capture layer. It can change the
+    probe's `layers` but not these fields. Its readings (a), (b) and (d) would change the identity's
+    `capture_layers` check, in a follow-up schema commit. Under the capture layers as encoded, the site layer's
+    residual is the shadow's, so the every-layer clause alone makes PASS unreachable, beyond Q5's 0.75 ceiling on the
+    band median.
+  - **Self-test: 199/199**, 46 accepted cases and 153 refusals. A `--verbose` run prints each refusal's message (each
+    cut at 220 characters), and each of the 71 new refusals was read against the check its case names. It ran once,
+    at `nice -n 19`, as `python3 -m valence_core.n.schema --verbose` under Python 3.12.9, in a battery window the
+    coordinating session granted, on a scratch copy of sha256 `4bed3f9a…4665`.
+    - Earlier drafts ran in earlier windows: v4 (`a1c85568…`) 173/173, v4.1 (`098ecefa…`) 177/177 and v4.3
+      (`6575c20a…`) 191/191.
+    - After the v4.1 run, two `--version` calls, of the system python3 and miniconda's, followed inside its window.
+      They were not declared, and Code disclosed them to the coordinating session when releasing that window.
+  - **Values-check: three blind passes, then a check by tool.** Each checker was briefed to run no Python, under the
+    list of record v2's items 1–5 and the coordinating session's lines. Pass 2 was blind to pass 1.
+    - Pass 1, on the v3 draft (`d9bdd15f…`): 39 items, 18 CONFIRMED, 12 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE and 3
+      CONFIRMED in part. The FAIL: the docstring still called the stages' reports "not specified here".
+    - Pass 2, on v4.1 (`098ecefa…`): 33 items, 22 CONFIRMED, 7 IMPRECISE, 2 FAIL, 1 NOT CHECKABLE and 1 CONFIRMED in
+      part. Both FAILs were gaps that Code had already found while syncing the runner, and fixed in the next draft: a
+      rendering pause could not be resumed at its own place, and a binomial fire in `also_fired` could not carry its
+      batch.
+    - Pass 3, on v4.3 (`6575c20a…`), with the entry and the dispositions of the first two passes: 31 items, 18
+      CONFIRMED, 8 IMPRECISE, no FAIL, 2 NOT CHECKABLE and 3 CONFIRMED in part.
+    - Every FAIL and IMPRECISE item is applied, in the checkers' terms where they gave them. The edits after pass 3
+      were checked by tool: Code's read of the diff, the self-test above, and the n package's self-test, 121/121. That
+      self-test ran from a scratch overlay of HEAD's `valence_core` and `data/n/bk` with the drafts on top, and its
+      runner writes these reports.
+    - Raw: [`2026-11-16_n-schema-v2_valuescheck.md`](results/raw/2026-11-16_n-schema-v2_valuescheck.md), with the
+      three reports as returned and every disposition.
+  - **Committed by path:** `valence_core/n/schema.py`, the values-check raw and this entry. Not pushed. Next: the rest
+    of step 6, its runner writing these reports, and its BUILD entry.
+
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, BUILD (PROPOSAL-n v0.2 §3 "G-ANL-n", §8 step 9; the seat's
   answers of 2026-11-15, §5.1–§5.2): N-pod's analyzer and its battery, 171/171, reviewed blind (round 1) and
   mutation-tested in two rounds. Without the `verdicts` command, which waits for n-build's stage-report and G-READ-n
