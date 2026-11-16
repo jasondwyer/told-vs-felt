@@ -1,0 +1,42 @@
+{
+ "schema": "m-decisions-v1",
+ "unit": "OLMo-dpo",
+ "decisions_with_other_outcomes_known": [
+  {
+   "decision": "ADDENDUM-m1 decision (16): the three OLMo units re-registered once, under a new Clock date D_O' = 2026-11-30 (ADDENDUM-m1 v0.1, committed at f26bc59)",
+   "date": "2026-11-06",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  },
+  {
+   "decision": "PROPOSAL-p adopted: PROPOSAL-p OLMo-{sft,dpo,instruct} pre-registered as the OLMo told controls at a frame-word corruption dose (PROPOSAL-p v0.2, committed at 18b0111; v0.1 routed 2026-11-06)",
+   "date": "2026-11-07",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  },
+  {
+   "decision": "the PI's cap share for PROPOSAL-p's three campaigns, \"2 h each\" (LOCK-p-OLMo-{sft,dpo,instruct} v1.0, §2, committed at 038bf3e)",
+   "date": "2026-11-14",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  },
+  {
+   "decision": "the PI's placement of LOCK-p-OLMo-{sft,dpo,instruct} v1.0, \"Place the locks\" (committed at 038bf3e)",
+   "date": "2026-11-14",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  },
+  {
+   "decision": "ADDENDUM-p1 decision (p-1): A p checkpoint's outcome enters the posting its `PROPOSAL-p OLMo-{ckpt} — VERDICTS` entry, or its `— NOT-RUN` record, reaches, v1 included (ADDENDUM-p1 v0.1, committed at fa27c45)",
+   "date": "2026-11-15",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  },
+  {
+   "decision": "the PI's go for PROPOSAL-p's three campaigns, given in steps: the routing of 2026-11-13, items 5-6; the routing of 2026-11-14 (evening), section B, item 4; \"Go for the pod whenever you need it.\" (2026-11-15); section B, item 5, of the routing of 2026-11-15 (evening), \"The campaigns as routed\" (the campaigns' entry, committed at 41bfab4)",
+   "date": "2026-11-15",
+   "other_unit": "Q-F0",
+   "other_state": "PASS"
+  }
+ ]
+}

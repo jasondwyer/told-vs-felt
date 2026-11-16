@@ -133,6 +133,63 @@ applied to CLAUDE.md.
       [`_p-verdicts-answers-close_valuescheck`](results/raw/2026-11-16_p-verdicts-answers-close_valuescheck.md).
     - The raw, RESULTS.md and the values-check raw only. Nothing in this session ran on a model or the box. Not
       pushed. Committed by path.
+  - **Close (PI date 2026-11-16).** The seat answered the block's four questions in
+    [`2026-11-16_p-verdicts-decisions_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-decisions_design-to-code_answers.md)
+    (sha256 `01ae2ae7a06574cf6d000e32ba86972425d2b86ec0b972ccb0715d5e5d701b0f`, 7,791 bytes), which the coordinating
+    session committed by path at `18102d0`. This close is the instruct session's. It is committed with the three inputs,
+    on the paste block's item 6; the seat's raw names the three VERDICTS sessions and the coordinating session for close
+    lines.
+    - **The PI's word,** on the seat's paste block "DESIGN → PI → CODE (master session) — PI date 2026-11-16", relayed
+      by the coordinating session: "Route as given". The paste block's section B, verbatim as relayed (the raw's §8 gives
+      items 1–5 in short form):
+
+      > 1. Q1 (c): each unit's --decisions input holds six items — the block's §2 two and §3 four, as drafted, one wording, identical but for unit. The gate stages' goes go in each entry's text [as ruled].
+      > 2. Q2 (a), with both procedures: (i) the three inputs committed before the first run; (ii) no session reads a sibling's output, and end notices carry the exit status alone, until the third run ends [as ruled].
+      > 3. Q3 (a): Code's own counters step; the script adds no definition and is committed, with a self-test reproducing G-F0m-OLMo (p)'s sham task_correct (159/160, 159/160, 160/160), before it reads a released record [as ruled].
+      > 4. Q4 (b): after the third run ends, each unit's three checkpoints by path, never listing data/p/ckpt, for the named counts only [as ruled].
+      > 5. The order: inputs committed → the three verdicts runs (nice -n 19, one per window; a non-zero exit is a STOP for the seat, message only), the counters script committed in parallel → the counters step → outputs, raws and entries committed, each entry open at "the reads" → the seat's reads [go].
+      > 6. Close lines on 9189623's entry citing the raw; ledger (75).
+
+    - **Ledger (75), the seat's** (its §7), verbatim: "`p6:`'s Q6 gave the input's members and no rule of membership.
+      It left out the run's go that the seat's own precedent of 2026-11-06 had put in m's records, and it said nothing
+      of decisions taken later; three sessions read it three ways, and the runs stopped. Fix: for an input that is
+      written once, the seat states the rule that admits an item, then the items."
+    - **The three briefs, amended for the raw's §4** by the coordinating session (C.7, as ruled), in its words:
+      - "Until the third run ends, no session opens any p checkpoint, call log or p output, its own unit's included."
+      - "After the third run ends, only the counters step reads each unit's three checkpoints: by path, never listing
+        `data/p/ckpt`, for the counts the record names and nothing beyond them."
+      - "Q-F0's extraction classes are not owed here and not opened."
+    - **At this commit** (the raw's §5 step 1; procedure (i)): the three inputs, six items each. They are built from the
+      block's own bytes at `9189623` (its §2 JSON and its §3 four items) and are identical but for `unit`:
+      - `data/p/verdicts/OLMo-sft_decisions.json`, sha256
+        `54df4b851b978adf78aa2e86e512d83e4b1a38be91229212d6fcf410d2f9e881`;
+      - `data/p/verdicts/OLMo-dpo_decisions.json`, sha256
+        `f8eac8898022cf59f723028d8b9f32deabeadcbf0872461c8a6c766d84abb5e2`;
+      - `data/p/verdicts/OLMo-instruct_decisions.json`, sha256
+        `70ac91f94db525b8847c82cc6fc47c37488d3058f8bb6ed8244ab76f501bca81`.
+
+      They were checked model-free, by a JXA script with no Python, against:
+      - m's validator rules (`scripts/m_analyze.py:690–718`, with the helpers it applies at `:157`, `:163`, `:514`,
+        `:666` and `:674–687`);
+      - the dates the seat's §1 rules (2026-11-06, -07, -14, -14, -15 and -15);
+      - `other_unit` Q-F0 and `other_state` PASS throughout;
+      - one list across the three files;
+      - item 1's text and date, equal to m's three not-run records.
+
+      A mutated date fails the check. The sft and dpo sessions each confirmed their unit's file, reading it only.
+    - **A blind values-check of this line:** 50 claims, 42 CONFIRMED, 2 IMPRECISE (both applied), 0 FAIL, 6 NOT
+      CHECKABLE (among them the commit hash then pending and the confirmations then to come). Its five observations are
+      applied or met: `18102d0` cited, "the paste block", the validator's helpers named, the dpo assignment's source, and
+      "then the close lines". Raw:
+      [`_p-verdicts-inputs-close_valuescheck`](results/raw/2026-11-16_p-verdicts-inputs-close_valuescheck.md).
+    - **Next** (the raw's §5):
+      - the three `verdicts` runs, one per window, at `nice -n 19`. Each end notice is the exit status alone, and a
+        non-zero exit is a STOP for the seat, with its message only;
+      - in parallel, the counters script and its self-test (§5 step 3), written and committed by the dpo session, by
+        the coordinating session's division of the work (its close, `18102d0`);
+      - after the third run ends, the counters step;
+      - then the outputs, the raws and the entries, each entry open at "the reads";
+      - then the seat's reads (§6), then the close lines.
 
 - 2026-11-16 — **n — five early questions for the seat, four on readings the committed schema encodes (`5a97527`)
   and one on the label convention it leaves to the lock, put now so that a ruling moves the schema before work is
