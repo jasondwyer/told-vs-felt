@@ -1841,7 +1841,8 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook) -> None:
 
 
 # =====================================================================================================================
-# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at 5a97527, sha256 77c12d6d...94bc)
+# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at 14e65d8, sha256 4bed3f9a...4665; its record and
+#     cell checks as at 5a97527 but for check_record's rendering-mismatch message)
 # =====================================================================================================================
 # The schema module is imported lazily, on the verdicts path and in the battery only (LAZY_SCHEMA), and bound by its
 # sha256 in every output; its checks run on every cell the analyzer loads ("the checks both sides run"). What the
@@ -1849,7 +1850,7 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook) -> None:
 # each steered read's shadow exists with its ids_sha; a session's cues and present order agree across its reads; N4-T
 # and N4-Ts carry the same schedule_zone per session, 80 S and 80 U (n §2.4).
 SCHEMA_REL = "valence_core/n/schema.py"
-SCHEMA_SHA256 = "77c12d6d0e7eee370291e0f5e587204f4ae613c65ce57f95c336f507273494bc"     # 5a97527
+SCHEMA_SHA256 = "4bed3f9a63110ffc9b1906752950b1195f419296bbb1c454daf821b0309b4665"     # 14e65d8
 LAZY_SCHEMA = "valence_core.n.schema"
 N_SESSIONS, N_FLOOR = 160, 40
 #: n §2.4's table, independently of the schema's ARM_CELLS (the reader cross-checks the two): arm -> (directions,
@@ -1868,7 +1869,7 @@ GUARD_DIRS = {"N2-E": "span_reward", "N2-S": "span_sentiment", "N2-C": "span_cha
 
 
 def schema_module():
-    """The record schema, imported lazily; refused unless its bytes are the pinned ones (5a97527)."""
+    """The record schema, imported lazily; refused unless its bytes are the pinned ones (14e65d8)."""
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     got = hashlib.sha256((REPO / SCHEMA_REL).read_bytes()).hexdigest()
@@ -2324,7 +2325,8 @@ COUNTER_NAMES = ("fidelity re-computations", "fidelity exceedances at TAU", "fid
 
 def counters(camp: Campaign) -> dict:
     """n §4's counters by arm and dose label, over every read in the campaign (rule 23); the rendering-mismatch
-    counter is the stage report's (a mismatch is a STOP, never a record; schema docstring)."""
+    counter is the stage report's (check_record: "a rendering mismatch is never a record (a pause during a stage; a
+    G-VER-STOP at G-VER)")."""
     out: dict = {}
     for r in camp.records.values():
         key = f"{r['arm']}|{r['dose_label']}"

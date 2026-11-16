@@ -21,6 +21,63 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — `scripts/n_analyze.py`, the schema pin moved from `5a97527` to `14e65d8` (n-build's
+  schema commit changed the file the analyzer pins; the coordinating session's order: BUILD `5c0ae6b`, then the
+  schema, then this). Four lines rewritten as six; battery 171/171 against the new schema. Model-free: nothing ran on
+  a model or on the box.**
+  - **Why.** The analyzer at `5c0ae6b` refuses any `valence_core/n/schema.py` but `5a97527`'s bytes (sha256
+    `77c12d6d…94bc`). n-build's `14e65d8` changed that file to sha256 `4bed3f9a…4665`, so from that commit the
+    analyzer's reader and battery refused.
+  - **The check behind the move.** The raw is
+    [`2026-11-16_n-analyze_pin-move.md`](results/raw/2026-11-16_n-analyze_pin-move.md), §1–§5.
+    - **Method.** Code verified the commit and the blob (§1). It split both blobs, from `git show
+      <commit>:valence_core/n/schema.py`, into top-level blocks with a short awk script, and compared each pair
+      present in both with `cmp` (§2). What the splitter discards (the module docstring's prose, the imports, a tuple
+      line, the NESTED loop with `del _t`, and the `__main__` block) it compared separately (§2b).
+    - **Of `5a97527`'s 77 blocks** (75 definitions and two docstring lines), none is gone and 70 are identical. Two
+      differ in comment or blank lines only (`check_cell`, `example_cell`). Five changed:
+      - `check_record`: one refusal message. A rendering mismatch "is never a record (a pause during a stage; a
+        G-VER-STOP at G-VER)", where it "is a STOP".
+      - `SchemaError`: its docstring.
+      - `__all__`, n-build's `_selftest`, and a line of the module docstring that the splitter takes for a block.
+    - **What the analyzer reaches.** Everything it calls in the schema (`sm.<name>`), and everything `check_cell` and
+      `check_record` reference by name, is identical but for three blocks:
+      - `check_record`: its message;
+      - `SchemaError`: its docstring;
+      - `check_cell`: the section comment that now follows its unchanged code.
+
+      These are the raw's §3. `NESTED`'s literal is identical. `14e65d8` registers 18 new keys in it, none of its 9
+      old ones. Of the 32 new blocks (31 definitions and `carries:`, a 38-line docstring passage), the
+      analyzer calls none.
+    - **What the splitter discards** changes only in docstring prose. It also gains `import json`, which only new code
+      uses, and the loop that registers NESTED's new keys.
+    - This confirms, for the committed bytes, the list of changes n-build sent before its commit: the definitions,
+      and its `import json`.
+  - **The edit** (the raw's §6):
+    - `SCHEMA_SHA256` to `4bed3f9a…4665`;
+    - its section comment to `14e65d8`'s commit and sha256, with a new line noting that the record and cell checks
+      are as at `5a97527` but for `check_record`'s message;
+    - `schema_module`'s docstring to `14e65d8`;
+    - `counters`' docstring, now quoting `check_record`'s new wording.
+
+    Six lines in, four out; `scripts/n_analyze.py` becomes sha256 `4f63903f161885a8bb16ea933157d6e0e609e3cfa91503ac3ef68b1af23c5d73`.
+  - **The battery** against the tree's `schema.py` at `14e65d8`: 171/171, every one of the 172 coverage ids reached,
+    exit 0 (the raw's §7). It ran in a window the coordinating session granted, one process at `nice -n 19`, in the
+    foreground. No other Python ran for this step.
+  - **Values-check:** two blind passes over this entry and the raw, each by a subagent under a brief quoting the list
+    of record v2's items 1–5, with no Python.
+    - The first: 92 claims, 69 CONFIRMED, 7 IMPRECISE, 2 FAIL, 14 UNVERIFIABLE. Every item was accepted as text, with
+      one comparison added to the raw (§2b, what the splitter discards).
+    - The second, on the revised texts and on the values-check raw: 124 claims, 99 CONFIRMED, 6 IMPRECISE, 0 FAIL, 19 UNVERIFIABLE. It found
+      all 9 of the first pass's dispositions applied. Every item was accepted as text.
+
+    The raw, with both reports whole and every disposition:
+    [`2026-11-16_n-analyze_pin-move_valuescheck.md`](results/raw/2026-11-16_n-analyze_pin-move_valuescheck.md).
+  - **Committed by path:** `scripts/n_analyze.py`, the raw, the values-check raw, and this entry. Not pushed.
+    **Next:** the `verdicts` command, in a BUILD of its own, now that the stage report's and G-READ-n's forms are
+    committed (n-report-v1 and n-gread-v1, at `14e65d8`). G-ANL-n's canonical run waits for the seat's answers and
+    G-CAL-n's dose map.
+
 - 2026-11-16 — **n — the schema's second commit: the stage report (`n-report-v1`) and G-READ-n's artifact
   (`n-gread-v1`), settled with n-analyzer, added to `valence_core/n/schema.py` (sha256 `4bed3f9a…4665`; it was
   `77c12d6d…94bc` at `5a97527`). Self-test 199/199. n-analyzer agreed both forms by message and builds its
