@@ -195,6 +195,26 @@ applied to CLAUDE.md.
     checkers' terms, the rest recorded; the edits after the second pass were checked by tool. Raw
     [`2026-11-15_respawn_valuescheck.md`](results/raw/2026-11-15_respawn_valuescheck.md).
   - Not pushed. Committed by path.
+  - **Close (PI date 2026-11-15), the pod session's: the seat's read of this box.** The seat's answers of 2026-11-15
+    (evening),
+    [`2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`](results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md)
+    (sha256 `1f3ce1f9c668a983632a7a57181fc626d2bf304e3d9e5f23e4df1ec5220df84b`, committed by path by the coordinating
+    session at `a215c28`), §0, fourth bullet, verbatim (bold markers aside): "The box (`7ab4d2f`): PASS ×2 stand;
+    the identifier is the locks'. The hook's order is inert, no strike; "29" was the seat's stale count, ledger (72).
+    The campaigns run as routed."
+    - Its §3.2 (bold markers aside) and §3.3 rule the two items this entry put to the seat: the hook's order, "a
+      departure from the seat's order, disclosed. Inert, no strike: the hook serves interactive shells, and every
+      measuring command sourced `env.sh` itself"; and the count, "The manifest had five checkpoints and 51 files when
+      `pq:` was written; 51/51 is the check of record."
+    - **Ledger (72), the seat's** (its §8), verbatim: "`pq:`§4.3 item 4 says "29 files against the manifest"; the
+      manifest had 51 when it was written. A count quoted from an earlier entry. Fix: a manifest's count is read from
+      the manifest at HEAD."
+    - **The pod stays up after p's campaigns,** for n (its §3.4 and §5.4).
+    - **The PI's word** on the paste block (its header: "DESIGN → PI → CODE (master session) — PI date 2026-11-15
+      (evening)"), relayed by the coordinating session: "Route as given". The block's section B, item 4, the pod
+      session's, so adopted, verbatim: "The box (7ab4d2f): respawn PASS x2 and the identifier stand; the hook's order
+      is inert, no strike; "29 files" was the seat's stale count, ledger (72). Close line on 7ab4d2f's entry [as
+      ruled]." The raw's own routing block (its §10, B item 4) gives the same item in short form.
 
 - 2026-11-15 — **The campaign wiring: `campaign` (Q-F3's campaign, m:298, m:361) is wired in `scripts/mf3_sessions.py`
   under LOCK-m-F3 v1.0, in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its
