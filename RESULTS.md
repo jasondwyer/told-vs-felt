@@ -320,6 +320,42 @@ applied to CLAUDE.md.
     - **Item 12, noted:** `data/n` holds only `bk`. The corpus's acceptance check runs when its parts land, as routed
       on 2026-11-15.
     - The n-build session adds its close lines here and on `718c48e`'s entry; the pod session adds one here.
+  - **Close (PI date 2026-11-16), the pod session's: the seat's answers on this STOP, and the two small tokenizer
+    files copied.** The seat's answers of 2026-11-16 (second sitting),
+    [`2026-11-16_n-build_design-to-code_answers.md`](results/raw/2026-11-16_n-build_design-to-code_answers.md)
+    (sha256 `a49801523a09d2a7afdfb3e71a2913d216f27b695305707a235bad225ba6151a`), were committed by path by the
+    coordinating session at `52b2c97`.
+    - **The PI's word,** on the paste block the coordinating session saved verbatim
+      ([`2026-11-16_second-sitting_pi-routing.md`](results/raw/2026-11-16_second-sitting_pi-routing.md), committed at
+      `a61f13d`): "Route as given". Its item 7 carries "the two small tokenizer files copied from the box and checked
+      against the manifest", with the bracket "[as ruled; a download only on a failed check — yours]"; its item 8
+      carries "the order of its §5".
+    - **The box receives ids.** The raw's §1.5, verbatim: "One rule: n's tokenizer of record is G-DATA's environment
+      on the laptop, and the box receives ids." G-VER then asserts the committed `sessions.jsonl` on the box against
+      BK's `seq_len`, `ids_sha` and spans (its §0 and §1.4).
+    - **This session's share is the box work** of the raw's §5 items 1 and 4. Its §6 names "the pod session for
+      items 1 and 4" in the header of section N; this session reads that in §5's numbering, as the coordinating
+      session's line above records for the seat.
+      - **Item 1, the two small tokenizer files.** The raw's §1.3, verbatim: "`tokenizer_config.json` and
+        `special_tokens_map.json` are copied from the box's model folder through the pod session and checked against
+        the manifest's sha256s (`fff5b944…3fc7`, `78afb564…e2f2`) before the render; `tokenizer.json` is the cache's,
+        at its pinned sha256 (`73fd5254…ecca`). A download at the pinned revision only if a check fails, on the PI's
+        word." **Done** after ADDENDUM-n1 v0.1's commit (`a61f13d`): both files went from the box's `olmo2_instruct`
+        folder by `cat` over ssh into a staging folder on the laptop, and from there by `cp -n` to the folder n-build
+        named, from which it assembles the render's tokenizer folder. On the box (this session's run record), staged
+        on the laptop and at the destination, each equals `data/olmo/manifest.json`'s `olmo2_instruct` pin at
+        `a61f13d`: `tokenizer_config.json` `fff5b9441e8fe1d696eebed3541e719776e5b096692ef38cea68b891fc4f3fc7`, 4,869
+        bytes; `special_tokens_map.json` `78afb564e81264029b25f9caf24bda2521d5bdaeff5cd3fdbc01d3da2e8ce2f2`, 581
+        bytes. The box ran only read-only commands. No check failed, so there was no download at the pinned revision.
+      - **Item 4,** verbatim: "The BACKEND extension on the box, then §2.4's comparison in the same session; its raw
+        with the four counts." In the order it follows §5's items 1–3: n-build's ids, the follow-up schema commit,
+        and the drafts, the site check's re-run and the BUILD entry. The raw's §2.4 binds the comparison's output:
+        "the stage prints, per candidate, its match count of 40 and nothing else — no value, no margin, nothing per
+        session", and "its forwards are a gate's, never of record, and no margin from them is written to any file."
+    - **The tar.** The raw's §1.4 ends: "The site check re-runs after the ids and the span fix land, from a tar packed
+      without AppleDouble twins." The finding reached the seat through the STOP block, which cites "the run file,
+      item 3": item 3 of [`2026-11-16_n-build_sitecheck_run.txt`](results/raw/2026-11-16_n-build_sitecheck_run.txt)
+      records the twins, the gate's refusal of the first extract, and the copy rebuilt without them.
 
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the schema pin moved from `5a97527` to `14e65d8` (n-build's
   schema commit changed the file the analyzer pins; the coordinating session's order: BUILD `5c0ae6b`, then the
