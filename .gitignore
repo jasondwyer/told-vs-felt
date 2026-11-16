@@ -263,6 +263,13 @@ __pycache__/
 /data/n/*
 !/data/n/bk/
 
+# PROPOSAL-n's ids of record (ADDENDUM-n1 §1; the seat's answers of 2026-11-16, second
+# sitting, §1.2): the 160 sessions' token ids, N4's 320 sequences and the label
+# candidates, rendered once in G-DATA's environment, with MANIFEST.json (each file's
+# sha256 and record count). Record, not cache (ledger 27): G-VER asserts them on
+# the box. Admitted as one folder that MANIFEST.json lists.
+!/data/n/ids/
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

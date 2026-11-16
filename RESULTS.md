@@ -21,6 +21,67 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n — ids of record: ADDENDUM-n1 §1.2 (i)–(iii), rendered once on the laptop in G-DATA's environment,
+  160 of 160, and committed under `data/n/ids/`. This follows the seat's answers of 2026-11-16 (second sitting), §1.2
+  and §5 item 1, and the PI's item 7, "as ruled". Raw:
+  [`2026-11-16_n-ids_render.md`](results/raw/2026-11-16_n-ids_render.md).**
+  - **The render** was one run in a battery window the coordinating session granted.
+    - It ran from Code's overlay of the n drafts, package `45c70818…6a98`.
+    - It ran under the jlens venv: Python 3.12.9, transformers 5.5.0, tokenizers 0.22.2. That is G-DATA's environment,
+      the only one `render-ids` accepts.
+    - It ran with the Hugging Face libraries offline (`HF_HUB_OFFLINE=1`, `TRANSFORMERS_OFFLINE=1`), model-free. It
+      exited 0, PASS.
+  - **What it rendered:**
+    - (i) `sessions.jsonl`: all 160 sessions reproduce BK's `seq_len` and `ids_sha`, with G-DATA's two re-splits
+      applied.
+    - (ii) `n4_variants.jsonl`: 320 sequences, 160 told and 160 sham, with BK's tokens before `n_pre` asserted on all.
+    - (iii) `labels.json`: all four of ADDENDUM-n1 §2's candidate conventions are kept. In each, the prefix holds with
+      one tail per label across all 960 contexts: the 160 sessions and the 320 N4 sequences, with both cues.
+      Counting N4's sequences among the contexts is Code's reading, beyond §1.2's words.
+    - `MANIFEST.json`: each file's sha256 and count, the environment, the tokenizer files' sha256s, the session set's
+      and N4's schedule's sha256s, and the PI date.
+  - **The tokenizer files** are each at the manifest's `olmo2_instruct` pin in full. `tokenizer.json` came from the
+    laptop's HF cache. `tokenizer_config.json` and `special_tokens_map.json` came from the box through the pod
+    session, checked on the box, in staging and at the destination; its log is in the raw. Nothing was downloaded.
+  - **The files, as committed:**
+    - `sessions.jsonl` `fd8bb234…a45a`;
+    - `n4_variants.jsonl` `e887f19e…b702`;
+    - `labels.json` `43a32a1b…49da`;
+    - `MANIFEST.json` `7f51bd91…821d`.
+
+    `.gitignore` admits `data/n/ids/` on a line of its own, as the comment at its BK rule asks of "any later n
+    artifact".
+  - **What follows.**
+    - G-VER asserts (i) on the box against BK's `seq_len`, `ids_sha` and the spans (ADDENDUM-n1 §1.3). The drafts'
+      G-VER also checks the other files against MANIFEST.json.
+    - §2's comparison decides the convention of record among the four candidates there, in the BACKEND extension's
+      session.
+    - Next in the seat's raw's §5: the follow-up schema commit.
+  - **Windows behind this commit** (the coordinating session's, 2026-11-16). Every run before the render was on drafts
+    with synthetic data.
+    - The ids and G-VER drafts' package self-test, under a character tokenizer: 179/179 (package `92dd7f69…f805`).
+    - The follow-up schema's own self-test: 213/213.
+      - Its first run stopped at the package's numpy import under miniconda's python3, before any test.
+      - The second ran the same file as a script, `python3 -I valence_core/n/schema.py --verbose`. That invocation
+        was not the granted one; the coordinating session found it harmless.
+    - The package self-test on the band and keeper drafts.
+      - Its first run gave 183/185: two tests were still keyed to the old capture layers and plan count.
+      - After those two were fixed, it gave 187/187 (package `45c70818…6a98`, the render's).
+    - The render, above.
+  - **Values-check:** one blind pass, 63 items: 50 CONFIRMED, 7 IMPRECISE, 0 FAIL and 6 NOT CHECKABLE.
+    - Every IMPRECISE item is applied in the checker's terms, and so are two of its observations.
+    - The largest was the windows list: the render's own drafts were tested at 183/185, then 187/187, which the entry
+      had not named.
+    - The edits after the check were checked by tool.
+    - Raw: [`2026-11-16_n-ids_valuescheck.md`](results/raw/2026-11-16_n-ids_valuescheck.md), with the report as
+      returned and every disposition.
+  - **Committed by path:**
+    - the four files under `data/n/ids/` and `.gitignore`'s admit block (a comment and the admit line);
+    - the raw, the values-check raw and this entry;
+    - the close lines on `645bd3f`'s and `a61f13d`'s entries.
+
+    Not pushed.
+
 - 2026-11-16 — **ADDENDUM-n1 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the rendering of record as committed ids;
   G-READ-n's capture band; the rulings of 2026-11-16", committed by path as the seat placed it, on the PI's routing of
   2026-11-16, second sitting ("Route as given"; items 5 and 6, decisions (n-1) and (n-2), [adopt]; item 10, [adopt]).
@@ -88,6 +149,10 @@ applied to CLAUDE.md.
     [`2026-11-16_addendum-n1_valuescheck.md`](results/raw/2026-11-16_addendum-n1_valuescheck.md).
   - **Committed by path:** the addendum, the PI-routing raw, the referent-check raw, the values-check raw and this
     entry. Nothing in this session ran on a model or the box. Not pushed.
+  - **Close (PI date 2026-11-16), n-build's.** ADDENDUM-n1 §1.2 (i)–(iii) are rendered and committed in the commit
+    that carries this line (`n — ids of record`, at the top of this log): 160 of 160, the tokenizer files checked
+    against the manifest, nothing downloaded. Next of §8.3 (3): the follow-up schema commit, G-VER asserting data, the
+    site check re-run, and the BUILD entry.
 
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the `verdicts` command (PROPOSAL-n v0.2 §8 step 15, on n-build's
   `n-report-v1` and `n-gread-v1` at `14e65d8`). It gives N-pod's VERDICTS and secondary DVs, or the unit's NOT-RUN
@@ -356,6 +421,24 @@ applied to CLAUDE.md.
       without AppleDouble twins." The finding reached the seat through the STOP block, which cites "the run file,
       item 3": item 3 of [`2026-11-16_n-build_sitecheck_run.txt`](results/raw/2026-11-16_n-build_sitecheck_run.txt)
       records the twins, the gate's refusal of the first extract, and the copy rebuilt without them.
+  - **Close (PI date 2026-11-16, second sitting), n-build's: the dated note the seat's raw, §5 item 1, asks for.**
+    - **The ruling.** The seat's answers of 2026-11-16 (second sitting),
+      [`2026-11-16_n-build_design-to-code_answers.md`](results/raw/2026-11-16_n-build_design-to-code_answers.md)
+      (sha256 `a49801523a09d2a7afdfb3e71a2913d216f27b695305707a235bad225ba6151a`, committed by path at `52b2c97`), rule
+      on this block:
+      - Q1 (b): the ids are rendered once on the laptop in G-DATA's environment and committed as data;
+      - Q2: BK's form everywhere, the box tokenizing nothing for n's inputs.
+    - **The PI's item 7,** verbatim from the routing raw committed at `a61f13d`
+      (`results/raw/2026-11-16_second-sitting_pi-routing.md`):
+
+      > 7. n-build, STOP Q1 (b) and Q2: the ids rendered once on the laptop and committed under data/n/ids/, 160/160 or STOP; the two small tokenizer files copied from the box and checked against the manifest; BK's form everywhere; the box tokenizes nothing for n's inputs [as ruled; a download only on a failed check — yours].
+
+    - **Done in the commit that carries this line:** the render, 160 of 160, committed under `data/n/ids/` (`n — ids of
+      record`, at the top of this log). Both small files' checks passed, so nothing was downloaded.
+    - **Ledger (79), the seat's** (its §4), verbatim: "(79) The rendering of record was pinned by its product (`ids_sha`
+      reproduced) in one environment, and the environment was not named as part of the rendering, so the pin did not
+      travel to the box. Fix: a rendering of record is a procedure and an environment, or its product committed as
+      data, and the gate that asserts it asserts data."
 
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the schema pin moved from `5a97527` to `14e65d8` (n-build's
   schema commit changed the file the analyzer pins; the coordinating session's order: BUILD `5c0ae6b`, then the
