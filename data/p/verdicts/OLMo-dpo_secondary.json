@@ -1,0 +1,632 @@
+{
+ "a": {
+  "A0-OLMo-dpo": {
+   "1": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0-OLMo-dpo sessions valid through position 1",
+    "floor": 20,
+    "interval": [
+     "0.9126",
+     "0.9970"
+    ],
+    "num": 78,
+    "share": "39/40",
+    "share_display": "0.9750"
+   },
+   "2": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0-OLMo-dpo sessions valid through position 2",
+    "floor": 20,
+    "interval": [
+     "0.7382",
+     "0.9105"
+    ],
+    "num": 67,
+    "share": "67/80",
+    "share_display": "0.8375"
+   },
+   "3": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0-OLMo-dpo sessions valid through position 3",
+    "floor": 20,
+    "interval": [
+     "0.7821",
+     "0.9384"
+    ],
+    "num": 70,
+    "share": "7/8",
+    "share_display": "0.8750"
+   },
+   "4": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0-OLMo-dpo sessions valid through position 4",
+    "floor": 20,
+    "interval": [
+     "0.8769",
+     "0.9862"
+    ],
+    "num": 76,
+    "share": "19/20",
+    "share_display": "0.9500"
+   },
+   "5": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0-OLMo-dpo sessions valid through position 5",
+    "floor": 20,
+    "interval": [
+     "0.6542",
+     "0.8505"
+    ],
+    "num": 61,
+    "share": "61/80",
+    "share_display": "0.7625"
+   },
+   "6": {
+    "count_only": false,
+    "den": 80,
+    "domain": "A0-OLMo-dpo sessions valid through position 6",
+    "floor": 20,
+    "interval": [
+     "0.7972",
+     "0.9472"
+    ],
+    "num": 71,
+    "share": "71/80",
+    "share_display": "0.8875"
+   }
+  },
+  "A0s-OLMo-dpo": {
+   "1": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s-OLMo-dpo sessions valid through position 1",
+    "floor": 20,
+    "interval": [
+     "0.1857",
+     "0.5319"
+    ],
+    "num": 11,
+    "share": "11/32",
+    "share_display": "0.3438"
+   },
+   "2": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s-OLMo-dpo sessions valid through position 2",
+    "floor": 20,
+    "interval": [
+     "0.4369",
+     "0.7890"
+    ],
+    "num": 20,
+    "share": "5/8",
+    "share_display": "0.6250"
+   },
+   "3": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s-OLMo-dpo sessions valid through position 3",
+    "floor": 20,
+    "interval": [
+     "0.2909",
+     "0.6526"
+    ],
+    "num": 15,
+    "share": "15/32",
+    "share_display": "0.4688"
+   },
+   "4": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s-OLMo-dpo sessions valid through position 4",
+    "floor": 20,
+    "interval": [
+     "0.3189",
+     "0.6811"
+    ],
+    "num": 16,
+    "share": "1/2",
+    "share_display": "0.5000"
+   },
+   "5": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s-OLMo-dpo sessions valid through position 5",
+    "floor": 20,
+    "interval": [
+     "0.2370",
+     "0.5936"
+    ],
+    "num": 13,
+    "share": "13/32",
+    "share_display": "0.4063"
+   },
+   "6": {
+    "count_only": false,
+    "den": 32,
+    "domain": "A0s-OLMo-dpo sessions valid through position 6",
+    "floor": 20,
+    "interval": [
+     "0.2909",
+     "0.6526"
+    ],
+    "num": 15,
+    "share": "15/32",
+    "share_display": "0.4688"
+   }
+  }
+ },
+ "b": {
+  "A0-OLMo-dpo": {
+   "clean": {
+    "count_only": false,
+    "den": 352,
+    "domain": "A0-OLMo-dpo transitions after a chosen clean round by sessions valid through the next choice",
+    "floor": 20,
+    "interval": [
+     "0.1149",
+     "0.1923"
+    ],
+    "num": 53,
+    "share": "53/352",
+    "share_display": "0.1506"
+   },
+   "corrupted": {
+    "count_only": false,
+    "den": 48,
+    "domain": "A0-OLMo-dpo transitions after a chosen corrupted round by sessions valid through the next choice",
+    "floor": 20,
+    "interval": [
+     "0.8575",
+     "0.9949"
+    ],
+    "num": 46,
+    "share": "23/24",
+    "share_display": "0.9583"
+   }
+  },
+  "scope": "contrast arm only (m:312)"
+ },
+ "claim": "none -- secondary DVs issue no claim (m:358)",
+ "d": {
+  "A0-OLMo-dpo": {
+   "habit": {
+    "b_plus": {
+     "breaks": 39,
+     "n": 41,
+     "rate": "39/41"
+    },
+    "b_sham": {
+     "breaks": 0,
+     "n": 39,
+     "rate": "0/1"
+    },
+    "delta_c": "19/40",
+    "delta_first_weighted_display": "+0.4750",
+    "delta_first_weighted_form": "19/40",
+    "forced_end_balance": {
+     "exactly_balanced": false,
+     "neg": 39,
+     "pos": 41
+    },
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance",
+    "identity_holds": true,
+    "n_undecidable": 0
+   },
+   "per_pair": {
+    "0": {
+     "count_only": false,
+     "den": 21,
+     "domain": "A0-OLMo-dpo domain sessions of pair 0, pooled over maps",
+     "floor": 20,
+     "interval": [
+      "0.8389",
+      "1.0000"
+     ],
+     "num": 21,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "1": {
+     "count_only": true,
+     "den": 19,
+     "domain": "A0-OLMo-dpo domain sessions of pair 1, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 19,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "2": {
+     "count_only": false,
+     "den": 21,
+     "domain": "A0-OLMo-dpo domain sessions of pair 2, pooled over maps",
+     "floor": 20,
+     "interval": [
+      "0.7618",
+      "0.9988"
+     ],
+     "num": 20,
+     "share": "20/21",
+     "share_display": "0.9524"
+    },
+    "3": {
+     "count_only": true,
+     "den": 19,
+     "domain": "A0-OLMo-dpo domain sessions of pair 3, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 18,
+     "share": "18/19",
+     "share_display": "0.9474"
+    }
+   },
+   "per_pair_start": {
+    "0|0": {
+     "count_only": true,
+     "den": 10,
+     "domain": "A0-OLMo-dpo domain sessions of pair 0, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 10,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "0|1": {
+     "count_only": true,
+     "den": 11,
+     "domain": "A0-OLMo-dpo domain sessions of pair 0, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 11,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "1|0": {
+     "count_only": true,
+     "den": 10,
+     "domain": "A0-OLMo-dpo domain sessions of pair 1, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 10,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "1|1": {
+     "count_only": true,
+     "den": 9,
+     "domain": "A0-OLMo-dpo domain sessions of pair 1, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 9,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "2|0": {
+     "count_only": true,
+     "den": 10,
+     "domain": "A0-OLMo-dpo domain sessions of pair 2, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 10,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "2|1": {
+     "count_only": true,
+     "den": 11,
+     "domain": "A0-OLMo-dpo domain sessions of pair 2, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 10,
+     "share": "10/11",
+     "share_display": "0.9091"
+    },
+    "3|0": {
+     "count_only": true,
+     "den": 9,
+     "domain": "A0-OLMo-dpo domain sessions of pair 3, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 9,
+     "share": "1/1",
+     "share_display": "1.0000"
+    },
+    "3|1": {
+     "count_only": true,
+     "den": 10,
+     "domain": "A0-OLMo-dpo domain sessions of pair 3, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 9,
+     "share": "9/10",
+     "share_display": "0.9000"
+    }
+   }
+  },
+  "A0s-OLMo-dpo": {
+   "habit": {
+    "b_plus": {
+     "breaks": 5,
+     "n": 16,
+     "rate": "5/16"
+    },
+    "b_sham": {
+     "breaks": 10,
+     "n": 16,
+     "rate": "5/8"
+    },
+    "delta_c": "-5/32",
+    "delta_first_weighted_display": "-0.1563",
+    "delta_first_weighted_form": "-5/32",
+    "forced_end_balance": {
+     "exactly_balanced": true,
+     "neg": 16,
+     "pos": 16
+    },
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance",
+    "identity_holds": true,
+    "n_undecidable": 0
+   },
+   "per_pair": {
+    "0": {
+     "count_only": true,
+     "den": 8,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 0, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 4,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "1": {
+     "count_only": true,
+     "den": 8,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 1, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "1/4",
+     "share_display": "0.2500"
+    },
+    "2": {
+     "count_only": true,
+     "den": 8,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 2, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 4,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "3": {
+     "count_only": true,
+     "den": 8,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 3, pooled over maps",
+     "floor": 20,
+     "interval": null,
+     "num": 1,
+     "share": "1/8",
+     "share_display": "0.1250"
+    }
+   },
+   "per_pair_start": {
+    "0|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 0, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "0|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 0, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "1|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 1, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 1,
+     "share": "1/4",
+     "share_display": "0.2500"
+    },
+    "1|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 1, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 1,
+     "share": "1/4",
+     "share_display": "0.2500"
+    },
+    "2|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 2, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "2|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 2, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 2,
+     "share": "1/2",
+     "share_display": "0.5000"
+    },
+    "3|0": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 3, start order 0",
+     "floor": 20,
+     "interval": null,
+     "num": 1,
+     "share": "1/4",
+     "share_display": "0.2500"
+    },
+    "3|1": {
+     "count_only": true,
+     "den": 4,
+     "domain": "A0s-OLMo-dpo domain sessions of pair 3, start order 1",
+     "floor": 20,
+     "interval": null,
+     "num": 0,
+     "share": "0/1",
+     "share_display": "0.0000"
+    }
+   }
+  }
+ },
+ "e": {
+  "A0-OLMo-dpo": {
+   "forced": {
+    "count_only": false,
+    "den": 320,
+    "domain": "A0-OLMo-dpo forced rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0000",
+     "0.0115"
+    ],
+    "num": 0,
+    "share": "0/1",
+    "share_display": "0.0000"
+   },
+   "free": {
+    "count_only": false,
+    "den": 480,
+    "domain": "A0-OLMo-dpo free rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0000",
+     "0.0077"
+    ],
+    "num": 0,
+    "share": "0/1",
+    "share_display": "0.0000"
+   }
+  },
+  "A0s-OLMo-dpo": {
+   "forced": {
+    "count_only": false,
+    "den": 128,
+    "domain": "A0s-OLMo-dpo forced rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0000",
+     "0.0284"
+    ],
+    "num": 0,
+    "share": "0/1",
+    "share_display": "0.0000"
+   },
+   "free": {
+    "count_only": false,
+    "den": 192,
+    "domain": "A0s-OLMo-dpo free rounds generated",
+    "floor": 20,
+    "interval": [
+     "0.0000",
+     "0.0190"
+    ],
+    "num": 0,
+    "share": "0/1",
+    "share_display": "0.0000"
+   }
+  }
+ },
+ "f1_crossing_note": "its comparison with f1 at positions 5–6 crosses f1's 512-token read tail (§2.7 (12)), stated beside",
+ "floor_events": 20,
+ "not_built": "(c) and (f) are [Q-F3] (G-ANL-F3)",
+ "p": {
+  "analyzers": {
+   "scripts/m_analyze.py": {
+    "sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48"
+   },
+   "scripts/p_analyze.py": {
+    "sha256": "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008"
+   },
+   "valence_core/p": {
+    "package_sha256": "a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7"
+   }
+  },
+  "d_p": {
+   "date": "2026-12-15",
+   "problems": [],
+   "where": "p:100"
+  },
+  "decisions_beside": [
+   {
+    "output": {
+     "path": "data/m/verdicts/OLMo-sft_NOT-RUN.json",
+     "sha256": "72745cb4328083373d9c9d482732c735dee28cc68c5f151ed2f3a9a35684b5b0"
+    },
+    "reason": "dose not completable",
+    "state": "NOT-RUN",
+    "unit": "PROPOSAL-m OLMo-sft"
+   },
+   {
+    "output": {
+     "path": "data/m/verdicts/OLMo-dpo_NOT-RUN.json",
+     "sha256": "94869b83758be62c835f16e4306787abcee9470544306cd5f530829d73ab8e96"
+    },
+    "reason": "dose not completable",
+    "state": "NOT-RUN",
+    "unit": "PROPOSAL-m OLMo-dpo"
+   },
+   {
+    "output": {
+     "path": "data/m/verdicts/OLMo-instruct_NOT-RUN.json",
+     "sha256": "e2ecef56d747681dbc7ff48e19634f35f5eac8e6bb9c932efae77bfcbe7587e8"
+    },
+    "reason": "dose not completable",
+    "state": "NOT-RUN",
+    "unit": "PROPOSAL-m OLMo-instruct"
+   }
+  ],
+  "declared_sentences": {},
+  "disclosure": "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session ran.",
+  "proposal": "PROPOSAL-p",
+  "register": [
+   {
+    "attrs": [
+     "clock_of_record",
+     "crosscheck_coordinate"
+    ],
+    "kind": "clock; roots",
+    "module": "m_analyze",
+    "n": 3,
+    "reason": "p §4.4: p's outputs through m's analyzer (scripts/m_analyze.py, imported by scripts/p_analyze.py), the proposal pin kept m's (proposal_p_sha256 beside it): (a) the Clock -- D_p for the OLMo units, m's own for Q-F0 and Q-F3; (c) the v2 posting's per-unit verdicts-dir resolution -- data/p/verdicts for the OLMo units, data/m/verdicts for Q-F0. (b) The roots are parameters wherever m takes them, not a site (the seat's Q9 (b))",
+    "replacement": "valence_core.p.analysis.{clock_of_record_p, crosscheck_coordinate_p}",
+    "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"
+   }
+  ],
+  "roots": "parameters wherever m takes them -- not a site (the seat's Q9 (b))",
+  "staging": "m's function wrote this output into a staging directory seeded with copies of the final directory's files (so its refusals saw p's state); p added proposal_p_sha256 and this block and wrote the file once (the seat's Q7, 2026-11-08); every occurrence of the staging directory m recorded names the final directory instead (a seeded copy's source). A p command re-run on unchanged inputs is refused (write-once), where m's own reports 'identical' (PIN-37): the seeded copy is p's file, with its two added keys, which m compares with its own form"
+ },
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "schema": "m-secondary-v1",
+ "unit": "OLMo-dpo"
+}

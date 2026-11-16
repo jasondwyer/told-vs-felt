@@ -1,0 +1,181 @@
+# PROPOSAL-p OLMo-dpo — the `verdicts` invocation (p v0.2 §8 step 7; ADDENDUM-p1 v0.1 §4 step 3; the seat's answers of 2026-11-16, §5 step 2)
+
+*Code, the dpo VERDICTS session; PI date 2026-11-16. One invocation of `scripts/p_analyze.py verdicts --unit OLMo-dpo` at `nice -n 19`, from the repository root on the laptop, in the battery window the coordinating session granted after instruct's run had ended (the runs' order: instruct, dpo, sft). Before it, the pre-run check, shell only (git, shasum, awk, /usr/bin/grep, jq; no Python). The run's stdout and stderr went to files in the session's scratchpad, which were not opened until the coordinating session's notice that the third run had ended (the seat's answers of 2026-11-16, §0 Q2 (ii)). The end notice to the coordinating session read, verbatim: "dpo verdicts ended, EXIT=0. Window released." (the release beside the exit status is disclosed in the VERDICTS entry's "For the seat"). The local repository root is shown as `<repo>` and the session's scratchpad as `<scratchpad>`; nothing else is changed. Calendar dates only; the commit hash is the record.*
+
+## 1. The pre-run check, in the window, at HEAD 645bd3f (`<scratchpad>/precheck_dpo.zsh`, §6 below), then the check that no earlier capture existed
+
+The command, as typed (one call):
+
+```zsh
+S=<scratchpad>; zsh "$S/precheck_dpo.zsh" || { print -r -- "PRECHECK FAIL"; exit 1; }; for f in run.stdout run.stderr run.exit; do [[ -e "$S/$f" || -L "$S/$f" ]] && { print -r -- "FAIL: a capture exists: $f"; exit 1; }; done; print -r -- "no prior capture in scratch"
+```
+
+Its output:
+
+```
+== 1. HEAD and the state of the paths the analyzer checks (git status --porcelain, scoped)
+  HEAD 645bd3fe07587c88de04361811553065476a984f
+  [OK]   no change and no untracked file on those paths
+== 2. sha256 of the pinned files (working tree), each against its value of record
+  [OK]   the lock v1.0 (038bf3e's entry; the campaign's lock_sha256 at the precheck): LOCK-p-OLMo-dpo.md 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf
+  [OK]   p's analyzer (LOCK v1.0 s4, s8.1): scripts/p_analyze.py d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008
+  [OK]   m's analyzer (LOCK v1.0 s4, s8.1): scripts/m_analyze.py d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48
+  [OK]   PROPOSAL-p v0.2 (proposal_p_sha256): PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32
+  [OK]   PROPOSAL-m v1.11 (m's pin): PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b
+  [OK]   ADDENDUM-m1 v0.1 (m's ADDENDUM_M1_SHA256): ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001
+  [OK]   ADDENDUM-p1 v0.1 (fa27c45's entry): ADDENDUM-p1-olmo-rows-at-the-posting-they-reach-v0_1.md 16cdbc11ec2afcdcb628e113bef799de2a328f6f709db2ea22b278c1faf3cb1b
+  [OK]   the campaign checkpoint (the copy-back raw, 41bfab4): data/p/ckpt/OLMo-dpo_campaign.json 07bc2b8d092366f428bf33cc3103fd2a269a0751af7c8155632865a2f4b58141
+== 3. the three checkpoints: working-tree blob id equal to HEAD's (digests only; not opened)
+  [OK]   data/p/ckpt/OLMo-dpo_campaign.json blob 4b970d28f4e8ba3f3f2a7210d55e6d246fd38938 = HEAD's
+         sha256 07bc2b8d092366f428bf33cc3103fd2a269a0751af7c8155632865a2f4b58141
+  [OK]   data/p/ckpt/OLMo-dpo_time.json blob 3704dee921d520921c35b75f0e026b41006594fb = HEAD's
+         sha256 51f98427ed2660a69604b7099a591be52f54d83bd17d95b2e3b41cb817343945
+  [OK]   data/p/ckpt/OLMo-dpo_qual.json blob 059d5bd45fec658e505143dbe1544f96197b3383 = HEAD's
+         sha256 d1e3b9f1b266aa1f568c8d08fa29706e4143a4e83796bbf1c5071d4d9f794a24
+== 4. the lock names the five values the analyzer asserts (PIN-14's three; p's two, lock_binding_problems)
+  [OK]   d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008 named on 5 line(s)
+  [OK]   a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7 named on 3 line(s)
+  [OK]   d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 named on 5 line(s)
+  [OK]   7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb named on 5 line(s)
+  [OK]   a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b named on 1 line(s)
+== 5. the outputs do not exist yet (write-once; m:324's exclusivity)
+  [OK]   data/p/verdicts/OLMo-dpo_VERDICTS.json absent
+  [OK]   data/p/verdicts/OLMo-dpo_secondary.json absent
+  [OK]   data/p/verdicts/OLMo-dpo_NOT-RUN.json absent
+== 6. the decisions input: committed at HEAD (the seat's Q2 procedure (i)), the sha256 confirmed to instruct, m's validator rules (jq)
+  [OK]   data/p/verdicts/OLMo-dpo_decisions.json committed at HEAD, working tree = HEAD's blob 2952e05cfc48cd4d089925529852bd07c266d2a7
+  [OK]   data/p/verdicts/OLMo-dpo_decisions.json sha256 f8eac8898022cf59f723028d8b9f32deabeadcbf0872461c8a6c766d84abb5e2 (as confirmed to instruct)
+  [OK]   data/p/verdicts/OLMo-dpo_decisions.json valid under m's rules; 6 decisions
+== RESULT: PASS
+no prior capture in scratch
+```
+
+## 2. The invocation, as typed (`<scratchpad>/run_dpo.zsh`, §6 below, from `<repo>`)
+
+```
+nice -n 19 jlens-qwen36/.venv/bin/python -B scripts/p_analyze.py verdicts --unit OLMo-dpo \
+  --lock LOCK-p-OLMo-dpo.md --decisions data/p/verdicts/OLMo-dpo_decisions.json \
+  --campaign data/p/ckpt/OLMo-dpo_campaign.json --time data/p/ckpt/OLMo-dpo_time.json \
+  --qual data/p/ckpt/OLMo-dpo_qual.json > "$S/run.stdout" 2> "$S/run.stderr"
+```
+
+## 3. stdout, verbatim (6 lines; the captured file's sha256 `7efea8ea74b50d14645f50e301fda05930f60d9237aaf9bf6583e159f1bdf8f3`, before the root in line 1 was shown as `<repo>`)
+
+```
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_analyze.py verdicts --unit OLMo-dpo --lock LOCK-p-OLMo-dpo.md --decisions data/p/verdicts/OLMo-dpo_decisions.json --campaign data/p/ckpt/OLMo-dpo_campaign.json --time data/p/ckpt/OLMo-dpo_time.json --qual data/p/ckpt/OLMo-dpo_qual.json
+GATE VERDICTS OLMo-dpo: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 645bd3fe07587c88de04361811553065476a984f
+VERDICTS OLMo-dpo: A0-OLMo-dpo (OLMo-dpo): PASS; n = 80 domain sessions of 80 launched (map 0: 40/40, map 1: 38/40 on the clean-role label); P = 78/80 = 0.9750; Δ_c = +0.4750, two-sided Clopper–Pearson 95% CI [+0.4126, +0.4970]; E = 0.1563 from A0s-OLMo-dpo (11/32 domain sessions, P_sham = 0.3438); P_arm − P_sham = +0.6313; exact one-sided binomial vs 0.5: p = 0.0000 toward clean, p = 1.0000 toward corrupted, α = .01; pre-pick exclusion rate 0/80 = 0.0000 beside A0s-OLMo-dpo's 0/32 = 0.0000; the guard at the unit's last look (the end look at 112 launches): Fisher one-sided vs A0s-OLMo-dpo p = 1.0000, not fired (binding); absolute vs .20 p = 1.0000, P > α (reported only).
+VERDICTS OLMo-dpo: written: OLMo-dpo_VERDICTS.json, OLMo-dpo_secondary.json
+P-OUTPUT data/p/verdicts/OLMo-dpo_VERDICTS.json (written; sha256 a68c1a40731d70c2ca3e38c641c6d3d669d2ba16c2308706555cb59cc5fff901)
+P-OUTPUT data/p/verdicts/OLMo-dpo_secondary.json (written; sha256 de363a204f470d2c261cf365575d1683ca589a504b1063dce209750c86dde0f0)
+```
+
+## 4. stderr: empty (0 bytes; sha256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`)
+
+## 5. Exit status (`run.exit`, sha256 `418a5c17f33c70e99b0cc0a07fce69191489cfedc94164bfa903785777c5bd4b`)
+
+```
+EXIT=0
+```
+
+## 6. The two scripts, verbatim
+
+### precheck_dpo.zsh
+
+```zsh
+#!/bin/zsh
+# precheck for p_analyze.py verdicts --unit OLMo-dpo -- shell only (no Python), digests and names only.
+# Nothing under data/mf3 is listed or read; no checkpoint under data/p/ckpt is opened (digests only:
+# shasum and git hash-object vs git rev-parse, the list of record v2, item 1).
+R=<repo>
+S=<scratchpad>
+cd "$R" || exit 1
+export GIT_OPTIONAL_LOCKS=0   # status computes without refreshing the index on disk: no index.lock contention with sibling sessions
+fail=0
+ok()  { print -r -- "  [OK]   $*"; }
+bad() { print -r -- "  [FAIL] $*"; fail=1; }
+
+print -r -- "== 1. HEAD and the state of the paths the analyzer checks (git status --porcelain, scoped)"
+print -r -- "  HEAD $(git rev-parse HEAD)"
+st=$(git status --porcelain -- scripts/p_analyze.py scripts/m_analyze.py scripts/p_sessions.py valence_core/p \
+     valence_core/m valence_core/adapters/olmo_hf.py LOCK-p-OLMo-dpo.md PROPOSAL-m-gating-campaign-v1_11.md \
+     PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md \
+     CLAUDE.md data/m/verdicts data/p/ckpt/OLMo-dpo_campaign.json data/p/ckpt/OLMo-dpo_time.json \
+     data/p/ckpt/OLMo-dpo_qual.json)
+if [[ -z "$st" ]]; then ok "no change and no untracked file on those paths"; else bad "not clean: $st"; fi
+
+print -r -- "== 2. sha256 of the pinned files (working tree), each against its value of record"
+chk_sha() {  # path expected what
+  local got; got=$(shasum -a 256 "$1" | awk '{print $1}')
+  if [[ "$got" == "$2" ]]; then ok "$3: $1 $got"; else bad "$3: $1 $got, expected $2"; fi
+}
+chk_sha LOCK-p-OLMo-dpo.md 25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf "the lock v1.0 (038bf3e's entry; the campaign's lock_sha256 at the precheck)"
+chk_sha scripts/p_analyze.py d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008 "p's analyzer (LOCK v1.0 s4, s8.1)"
+chk_sha scripts/m_analyze.py d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 "m's analyzer (LOCK v1.0 s4, s8.1)"
+chk_sha PROPOSAL-p-olmo-told-controls-frame-dose-v0_2.md 42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32 "PROPOSAL-p v0.2 (proposal_p_sha256)"
+chk_sha PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b "PROPOSAL-m v1.11 (m's pin)"
+chk_sha ADDENDUM-m1-olmo-reregistration-and-qf3-start-v0_1.md ea08322d601011923524021832d27d0ddf57b3e51ee4d88f265985c6c9bf9001 "ADDENDUM-m1 v0.1 (m's ADDENDUM_M1_SHA256)"
+chk_sha ADDENDUM-p1-olmo-rows-at-the-posting-they-reach-v0_1.md 16cdbc11ec2afcdcb628e113bef799de2a328f6f709db2ea22b278c1faf3cb1b "ADDENDUM-p1 v0.1 (fa27c45's entry)"
+chk_sha data/p/ckpt/OLMo-dpo_campaign.json 07bc2b8d092366f428bf33cc3103fd2a269a0751af7c8155632865a2f4b58141 "the campaign checkpoint (the copy-back raw, 41bfab4)"
+
+print -r -- "== 3. the three checkpoints: working-tree blob id equal to HEAD's (digests only; not opened)"
+for f in data/p/ckpt/OLMo-dpo_campaign.json data/p/ckpt/OLMo-dpo_time.json data/p/ckpt/OLMo-dpo_qual.json; do
+  w=$(git hash-object -- "$f"); h=$(git rev-parse "HEAD:$f")
+  if [[ -n "$w" && "$w" == "$h" ]]; then ok "$f blob $w = HEAD's"; else bad "$f blob $w, HEAD's $h"; fi
+  print -r -- "         sha256 $(shasum -a 256 "$f" | awk '{print $1}')"
+done
+
+print -r -- "== 4. the lock names the five values the analyzer asserts (PIN-14's three; p's two, lock_binding_problems)"
+for v in d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008 a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7 \
+         d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb \
+         a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b; do
+  n=$(/usr/bin/grep -c -F -- "$v" LOCK-p-OLMo-dpo.md)
+  if (( n > 0 )); then ok "$v named on $n line(s)"; else bad "$v not named in the lock"; fi
+done
+
+print -r -- "== 5. the outputs do not exist yet (write-once; m:324's exclusivity)"
+for f in data/p/verdicts/OLMo-dpo_VERDICTS.json data/p/verdicts/OLMo-dpo_secondary.json data/p/verdicts/OLMo-dpo_NOT-RUN.json; do
+  if [[ ! -e "$f" && ! -L "$f" ]]; then ok "$f absent"; else bad "$f exists"; fi
+done
+
+print -r -- "== 6. the decisions input: committed at HEAD (the seat's Q2 procedure (i)), the sha256 confirmed to instruct, m's validator rules (jq)"
+D=data/p/verdicts/OLMo-dpo_decisions.json
+DSHA=f8eac8898022cf59f723028d8b9f32deabeadcbf0872461c8a6c766d84abb5e2
+w=$(git hash-object -- "$D" 2>/dev/null); h=$(git rev-parse "HEAD:$D" 2>/dev/null)
+if [[ -n "$w" && "$w" == "$h" ]]; then ok "$D committed at HEAD, working tree = HEAD's blob $h"; else bad "$D not committed at HEAD as in the working tree (blob $w, HEAD's $h)"; fi
+got=$(shasum -a 256 "$D" 2>/dev/null | awk '{print $1}')
+if [[ "$got" == "$DSHA" ]]; then ok "$D sha256 $got (as confirmed to instruct)"; else bad "$D sha256 $got, expected $DSHA"; fi
+if jq -e '(keys == ["decisions_with_other_outcomes_known","schema","unit"]) and .schema == "m-decisions-v1" and .unit == "OLMo-dpo"
+   and (.decisions_with_other_outcomes_known | length == 6)
+   and all(.decisions_with_other_outcomes_known[]; (keys == ["date","decision","other_state","other_unit"])
+     and (.date | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))
+     and (.other_unit as $u | ["Q-F0","OLMo-sft","OLMo-instruct","Q-F3"] | index($u) != null)
+     and (.other_state as $s | ["PASS","REVERSE","DEAD","INDETERMINATE","NOT-RUN"] | index($s) != null))' "$D" >/dev/null 2>&1
+then ok "$D valid under m's rules; 6 decisions"
+else bad "$D fails m's validator rules or does not hold six items"; fi
+
+print -r -- "== RESULT: $([[ $fail == 0 ]] && print PASS || print FAIL)"
+exit $fail
+```
+
+### run_dpo.zsh
+
+```zsh
+#!/bin/zsh
+# The one invocation: p_analyze.py verdicts --unit OLMo-dpo, at nice -n 19, from the repository root.
+# stdout and stderr to the scratchpad (the raw is composed from them, local roots scrubbed); EXIT recorded.
+R=<repo>
+S=<scratchpad>
+cd "$R" || exit 1
+if [[ -e "$S/run.stdout" || -e "$S/run.stderr" || -e "$S/run.exit" ]]; then
+  print -r -- "REFUSED: a previous run's capture exists in the scratchpad; nothing launched"; exit 9
+fi
+nice -n 19 jlens-qwen36/.venv/bin/python -B scripts/p_analyze.py verdicts --unit OLMo-dpo \
+  --lock LOCK-p-OLMo-dpo.md --decisions data/p/verdicts/OLMo-dpo_decisions.json \
+  --campaign data/p/ckpt/OLMo-dpo_campaign.json --time data/p/ckpt/OLMo-dpo_time.json \
+  --qual data/p/ckpt/OLMo-dpo_qual.json > "$S/run.stdout" 2> "$S/run.stderr"
+rc=$?
+print -r -- "EXIT=$rc" > "$S/run.exit"
+print -r -- "EXIT=$rc"
+exit $rc
+```
