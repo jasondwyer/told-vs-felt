@@ -50,16 +50,70 @@ Q-F3's own driver (Q1: "A new driver, scripts/mf3_sessions.py"; scripts/m_sessio
                       G-ID-F3's artifact on disk at the cap (stages.prior_gate, require_real on). The order of the
                       refusals, the DRIVER and SNAPSHOT lines, the load and the re-read is time's. It writes
                       data/mf3/ckpt/Q-F3_qual.json, its report and reads. Exit 0 PASS, 4 STOP.
-
-and refuses ``campaign`` (the campaign): it is wired at its own step, on its own word, after its lock (m:361;
-the OLMo build's PIN O12 form). The stage driver it will call is built and stub-tested in
-valence_core.mf3.stages.
+  campaign --proposal-file F --lock-file L --analyzer-sha256 H --package-sha256 H --renders-sha16 H [--resume]
+           [--adjudication-file A] [--pi-stop-file P]
+                      Q-F3's campaign (m:298, m:361; ADDENDUM-m1 §4 step 5) on Qwen at the cap of record, 120,
+                      uncached, under LOCK-m-F3 v1.0 (wired at its step, after v1.0's commit: the seat's answers of
+                      2026-11-15, §5 item 2), whose committed text must carry v0.2's cap and path lines at a line's
+                      start (QUAL_LOCK_LINES) and v1.0's two lines as whole lines (CAMPAIGN_LOCK_LINES: "launch
+                      counts = A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96" and "hour cap = 480 h"; an earlier
+                      blob is refused): the six arms interleaved by §2.1's rule until each arm's domain count
+                      reaches its floor (schedule.FLOORS under the path: A1 80, A1s 32, A2 144, A2s 56, A3 144,
+                      A3s 56), the hour cap (480 h) or the PI's stop, the launch counts the projection (m:192),
+                      looks every 40 launches (m:330), through stages.run_campaign; its prior G-F3's checkpoint,
+                      data/mf3/ckpt/Q-F3_qual.json, ended PASS (stages.prior_gate, require_real on), G-ID-F3's
+                      artifact re-checked if on disk. --adjudication-file names the seat's ruling on the
+                      campaign's unadjudicated pause (a look's; an exhausted schedule's only beside the PI's stop),
+                      --pi-stop-file the PI's stop (each a UTF-8 file named for nothing it says, its path printed
+                      on the INVOCATION line; each text recorded in the checkpoint only, never printed; a RULING
+                      line before the load gives each text's sha16 and the pause it is offered for; the report
+                      gives a pause's recorded ruling the same digest, and a later NO PAUSE TO ADJUDICATE refusal
+                      names it). A campaign's exit 3 is one of three pauses: a look's, resumed only with --resume
+                      and the seat's adjudication, or ended by the PI's stop (with --resume); an exhausted
+                      schedule's, which only the PI's stop ends; or an end look's beside a terminal end
+                      (COMPLETE, CAP, PI-STOP), never resumed -- its ruling enters VERDICTS as the analyzer's
+                      declared --adjudication file. After an interrupted run that offered the seat's adjudication
+                      alone, re-run with --resume alone: a recorded adjudication resumes the campaign, or
+                      re-finishes an end its finish left pending; an unrecorded one shows the pause again; and
+                      where that finish completed before the kill, the re-run shows the new pause, or is refused
+                      as ended. After one that offered the PI's stop, re-run with --resume and the same ruling
+                      files: a recorded stop is accepted again and the campaign ends PI-STOP, an unrecorded one is
+                      applied, save where an end is left pending: a stop the checkpoint records re-finishes with
+                      it, and a terminal end or a STOP stands; a ruling the stage would not apply beside it (the
+                      seat's adjudication, or a PI stop the checkpoint does not record) is refused before the
+                      load (RULING BESIDE AN END PENDING), the re-run drops the flags that refusal names, and
+                      where the end is a look's or an exhausted schedule's pause a stop so refused is offered
+                      again once the re-finish has shown it (VC4-1); should NO PAUSE TO ADJUDICATE then refuse an
+                      adjudication offered with the stop, it was recorded -- drop --adjudication-file. An
+                      adjudication is offered only for the pause it rules on, which the shown pause and the
+                      RULING line name (its kind and launch count); one whose text is a ruling the checkpoint
+                      records for an earlier pause is refused before the load (RULING REUSED: O1-3); an
+                      adjudication the checkpoint already records is named as such on the RULING line (RM4-1)
+                      where one prints, and otherwise by the pre-load refusal that meets it first. Beside an end
+                      pending (a finish interrupted; the RULING line of an invocation that finds one says "beside
+                      an end pending") the end is re-finished first, and a ruling the stage would not apply with
+                      it is refused before the load (O4-1; where no precheck runs, the stage re-finishes the end
+                      and then refuses it, NOT APPLIED, exit 4); so beside one no adjudication is offered, and the
+                      PI's stop only where the checkpoint records it. An adjudication offered beside one is never
+                      offered again, whatever NOT APPLIED's "offer it again" says (it holds for the PI's stop
+                      alone): it rules on no pause shown when it was offered -- it is the previous pause's ruling,
+                      already recorded, or one written before the pause it would rule on was shown (VC4-2; the
+                      seat rules on a pause once shown). A re-finished pause that leaves the campaign open is then
+                      shown and takes the seat's own ruling on it (a look's; an exhausted schedule's only beside
+                      the PI's stop), or the PI's stop offered again. After a terminal end or a STOP that end
+                      stands: a pause it carries takes the seat's own ruling on it, once shown, through VERDICTS
+                      (the declared --adjudication file), and a PI's stop on a hair trigger the declared --pi-stop
+                      record, as NOT APPLIED's message says; an adjudication the checkpoint already records needs
+                      nothing. The order of the refusals, the DRIVER and SNAPSHOT lines, the load and the re-read
+                      is time's, the RULING line after the SNAPSHOT line. It writes data/mf3/ckpt/Q-F3_campaign.json
+                      and its report, with the adjudication excerpt beside the checkpoint when a pause or a STOP is
+                      recorded. Exit 0 COMPLETE, CAP or PI-STOP, 3 PAUSE, 4 STOP.
 
 Q6's forms (the seat: "scripts/mf3_sessions.py is written to the same forms from the start"): the
 CHECKPOINT STATE INCONSISTENT line is valence_core.m.resume's sealed form, imported by mf3.resume; the
 campaign-ruling refusals O4-1 (RULING BESIDE AN END PENDING), O1-3 (RULING REUSED), RM4-1's RULING-line note
 and the VC4-1 / VC4-2 help and docstring sentences are the campaign subcommand's, written in
-scripts/m_sessions.py's forms when that subcommand is wired; O2-3's listing forms (a bare git status
+scripts/m_sessions.py's forms at the campaign wiring; O2-3's listing forms (a bare git status
 --porcelain, a name-only ls, git ls-files, git diff --name-status, shasum; no size or time metadata of
 data/mf3/ckpt or data/mf3/reports) go into Q-F3's launch checklist until its VERDICTS -- from 2026-11-10 the list
 of record v2 (the seat's list ruling of that date, §2, which supersedes the sweeps ruling of 2026-11-09, §2), which
@@ -69,8 +123,8 @@ pre-load check (the MLXLM_USE_MODELSCOPE and local-path refusals, the hub's own 
 SNAPSHOT line, the post-load re-read with its model-id STOP) is the ``time`` wiring's (the routing of
 2026-11-07: "Build at time"), in scripts/m_sessions.py's forms.
 
-INVOCATION is the first line of every run. Nothing here loads a model except ``time``, ``id`` and ``qual``,
-through ``_load_qwen``, after every pre-load refusal.
+INVOCATION is the first line of every run. Nothing here loads a model except ``time``, ``id``, ``qual`` and
+``campaign``, through ``_load_qwen``, after every pre-load refusal.
 """
 from __future__ import annotations
 
@@ -105,9 +159,8 @@ STAGE_NAMES = {"time": "G-TIME-F3", "id": "G-ID-F3", "qual": "G-F3", "campaign":
 # of 2026-11-07, item 1 ("… → LOCK-m-F3 v0.1 → G-TIME-F3 [go]"). The edit touches no scoring-stack function. The
 # new blob's sha256 is printed by the DRIVER line and recorded in the G-TIME-F3 entry and in LOCK-m-F3 v0.2 (the
 # step-10 read's Q2 condition, which Code reads F-1's "with the same scope" as carrying; the routing of
-# 2026-11-07). campaign stays refused until its step; id and qual are wired at their own steps (the id and qual
-# wirings' PINs, below).
-WIRED_CMDS = ("time", "id", "qual")
+# 2026-11-07). id, qual and campaign are wired at their own steps (the id, qual and campaign wirings' PINs, below).
+WIRED_CMDS = ("time", "id", "qual", "campaign")
 REFUSED_CMDS = tuple(c for c in STAGE_CMDS if c not in WIRED_CMDS)
 # PIN (Code, declared at LOCK-m-F3 v0.2; the time wiring; m's TIME_* form carried, scripts/m_sessions.py): G-TIME-F3 cites
 # LOCK-m-F3.md (lock §1); one session per Q-F3 arm (m:293: "One session per Q-F3 arm (6), as G-TIME-F0"), the
@@ -171,6 +224,72 @@ QUAL_LOCKED_PATH = "uncached"
 QUAL_REASONING_CAP = 120
 QUAL_LOCK_LINES = ("- **`reasoning_cap = 120`.**", "- **`path = uncached`.**")
 QUAL_PRIOR_CKPT_NAME = TIME_CKPT_NAME
+# PIN (Code, declared at the Q-F3 campaign wiring; m's CAMPAIGN_* form carried, scripts/m_sessions.py): ``campaign`` is
+# wired for Q-F3 under LOCK-m-F3 v1.0, at its step -- the seat's answers of 2026-11-15, §5 item 2, routed by the PI on
+# 2026-11-15 ("Route as given"; section A item 6: "After v1.0's commit: the campaign wiring (F-1's kind; its entry names
+# the edit and the new DRIVER blob and notes that v1.0 §6's value is the driver at the lock; NOTE-7's gap closed;
+# G-SHAPE-F3 not re-run)"). The campaign (m:298, m:361): the six arms interleaved by §2.1's rule, uncached, at the cap
+# of record, until each arm's domain count reaches its floor, the hour cap or the PI's stop (stages.run_campaign). Its
+# values are LOCK-m-F3 v1.0's (m:286, by m:298's "as §3.1"): CAMPAIGN_LAUNCH_COUNTS, v1.0 §1's launch counts from
+# G-PWR (Q-F3)'s record, "a projection, not a bound" (m:192), and CAMPAIGN_HOUR_CAP, v1.0 §2's, the PI's cap in hours,
+# each passed to stages.run_campaign as given here. CAMPAIGN_LOCK_LINES is v1.0 §1's and §2's line forms, built from
+# these two values, which stage_identity_extra requires as whole lines of the governing lock's committed text (the
+# seat's answers of 2026-11-15, §2 (a): "the campaign wiring tests them as lines (the `qual` wiring's line test, not
+# m's substring test)"), beside QUAL_LOCK_LINES at a line's start (v0.2's cap and path lines, which v1.0 carries): so
+# the values the run passes are the values whose lines the governing lock carries, and a line that only begins with
+# one of them (other counts, "480 hours") is refused. Its identity is G-F3's: CAMPAIGN_REASONING_CAP, the cap of record,
+# and CAMPAIGN_LOCKED_PATH, "uncached" (v0.2 §3). Its floors are §2.4's under that path (m:184-186) as mf3's
+# schedule.FLOORS carries them, read by ``campaign_floors`` -- one source, the package the lock's package_sha256 pins.
+# Its prior is G-F3's checkpoint at the same out root, CAMPAIGN_PRIOR_CKPT_NAME, taken by path (stage_prior_checkpoint;
+# stages.PRIOR_STAGE["campaign"] is "qual"), ended PASS (stages.prior_gate, require_real on). Its checkpoint and report
+# are m's default stem for "campaign" (stages.out_paths), with the adjudication excerpt the stage writes beside the
+# checkpoint. The edit is of F-1's kind: the new blob's sha256 is printed by the DRIVER line and recorded in the
+# campaign wiring's entry; LOCK-m-F3 v1.0 §6 names the driver at the lock (the unit's convention since the time
+# wiring).
+CAMPAIGN_LOCK_FILE = TIME_LOCK_FILE
+CAMPAIGN_LAUNCH_COUNTS = (("A1", 128), ("A1s", 64), ("A2", 224), ("A2s", 96), ("A3", 224), ("A3s", 96))
+CAMPAIGN_HOUR_CAP = 480
+CAMPAIGN_LOCK_LINES = ("launch counts = " + ", ".join(f"{t} {n}" for t, n in CAMPAIGN_LAUNCH_COUNTS),
+                       f"hour cap = {CAMPAIGN_HOUR_CAP} h")
+CAMPAIGN_LOCKED_PATH = "uncached"
+CAMPAIGN_REASONING_CAP = 120
+CAMPAIGN_PRIOR_CKPT_NAME = f"{keys.UNIT}_qual.json"
+# PIN (Code, declared at the Q-F3 campaign wiring; m's camp_pauses carried, with VC4-1 and the review's missed item):
+# the campaign subcommand's help and description name its pauses and the re-run guidance in m's words, verbatim (the
+# declared --adjudication file and its C9(i) are m_analyze.py's, the analyzer Q-F3 runs: stages.ANALYZER_PATH); the
+# self-test compares the text with m's camp_pauses, read from scripts/m_sessions.py.
+CAMPAIGN_PAUSES = ("exit 3 is one of three pauses: a fired look's, resumed with --resume and the seat's adjudication "
+                   "(--adjudication-file) or ended by the PI's stop (--pi-stop-file, with --resume); an exhausted "
+                   "schedule's, which only the PI's stop ends; an end look's beside a terminal end (COMPLETE, CAP, "
+                   "PI-STOP), never resumed -- its ruling enters VERDICTS as the analyzer's declared --adjudication "
+                   "file (C9(i)). After an interrupted run that offered the seat's adjudication alone, re-run with "
+                   "--resume alone: recorded, it resumes the campaign or re-finishes an end its finish left pending; "
+                   "unrecorded, the pause is shown again; and where that finish completed before the kill, the re-run "
+                   "shows the new pause, or is refused as ended. After one that offered the PI's stop, re-run with "
+                   "--resume and the same ruling files: recorded or not, the campaign ends PI-STOP, save where an end "
+                   "is left pending -- a stop the checkpoint records re-finishes with it, and a terminal end or a STOP "
+                   "stands; a ruling the stage would not apply beside it (the seat's adjudication, or a PI stop the "
+                   "checkpoint does not record) is refused before the load (RULING BESIDE AN END PENDING), the re-run "
+                   "drops the flags that refusal names, and where the end is a look's or an exhausted schedule's pause "
+                   "a stop so refused is offered again once the re-finish has shown it (should NO PAUSE TO ADJUDICATE "
+                   "refuse an adjudication offered with the stop, it was recorded: drop --adjudication-file). An "
+                   "adjudication is offered only for the pause it rules on, which the shown pause and the RULING line "
+                   "name; one whose text is a ruling the checkpoint records for an earlier pause is refused before the "
+                   "load (RULING REUSED); an adjudication the checkpoint already records is named as such on the "
+                   "RULING line where one prints, and otherwise by the pre-load refusal that meets it first (RULING "
+                   "REUSED, RULING BESIDE AN END PENDING, or NO PAUSE TO ADJUDICATE by the last pause's ruling "
+                   "digest). Beside an end pending (the RULING line of an invocation that finds one says so) the end "
+                   "is re-finished first, and a ruling the stage would not apply with it (the seat's adjudication, or "
+                   "a PI stop not recorded with it) is refused before the load (RULING BESIDE AN END PENDING, exit 2; "
+                   "where no precheck runs the stage re-finishes the end and then refuses it, NOT APPLIED, exit 4), so "
+                   "beside one no adjudication is offered, and the PI's stop only where the checkpoint records it; an "
+                   "adjudication refused there is never offered again (NOT APPLIED's 'offer it again' holds for the "
+                   "PI's stop alone): a re-finished pause that leaves the campaign open is then shown and takes the "
+                   "seat's own ruling on it (a look's; an exhausted schedule's only beside the PI's stop) or the PI's "
+                   "stop again; after a terminal end or a STOP that end stands (a pause it carries takes the seat's "
+                   "own ruling on it, once shown, through VERDICTS as the declared --adjudication file; a PI's stop on "
+                   "a hair trigger, the declared --pi-stop record), and an adjudication the checkpoint already records "
+                   "needs nothing")
 STAGE_HELP = {"time": "G-TIME-F3 (m:293): six sessions on Qwen, uncached, under LOCK-m-F3 v0.1; the flags are the "
                       "lock's values (lock §1)",
               "id": "G-ID-F3 (m:295): A2s and A3s on Qwen, each index uncached then cached, at the cap of record, "
@@ -178,7 +297,11 @@ STAGE_HELP = {"time": "G-TIME-F3 (m:293): six sessions on Qwen, uncached, under 
                     "lock's values (lock §1)",
               "qual": "G-F3 (m:297): 40 sessions on Qwen, uncached, at the cap of record, under LOCK-m-F3 v0.2; its "
                       "prior is G-TIME-F3's re-run checkpoint, with G-ID-F3's artifact; the flags are the lock's values "
-                      "(lock §1)"}
+                      "(lock §1)",
+              "campaign": "the Q-F3 campaign (m:298, m:361): the six arms interleaved by §2.1's rule, uncached, at the "
+                          "cap of record, until each arm's domain count reaches its floor (A1 80, A1s 32, A2 144, A2s "
+                          "56, A3 144, A3s 56), the hour cap (480 h) or the PI's stop, on Qwen under LOCK-m-F3 v1.0; its "
+                          "prior is G-F3's checkpoint; the flags are the lock's values (lock §1)"}
 HF_OFFLINE_ENV = "HF_HUB_OFFLINE"
 # PIN (Code, declared at LOCK-m-F3 v0.2; the time wiring; m's PIN at LOCK v0.2 carried, scripts/m_sessions.py): the model id the
 # Qwen path loads -- QwenMLXAdapter's default, passed explicitly by _load_qwen; the model of record mf3.resume
@@ -299,9 +422,25 @@ def lock_weights(lock_text: str) -> tuple[tuple[str, str] | None, list[str]]:
     return (rev, sha), []
 
 
+def campaign_floors() -> dict[str, int]:
+    """The campaign's floors per arm, in CAMPAIGN_LAUNCH_COUNTS' order: mf3's schedule.FLOORS under
+    CAMPAIGN_LOCKED_PATH (a per-path entry, A1's) or as it stands (one floor for both paths) -- m's campaign_floors,
+    carried."""
+    fl = {t: schedule.FLOORS[t] for t, _ in CAMPAIGN_LAUNCH_COUNTS}
+    return {t: (v[CAMPAIGN_LOCKED_PATH] if isinstance(v, dict) else v) for t, v in fl.items()}
+
+
 def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, analyzer_sha256: str,
                          package_sha256: str, renders_sha16: str) -> tuple[dict | None, list[str]]:
     """A wired stage's identity_extra and the problems that stop it being built ((None, problems)).
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's stage_identity_extra for "campaign" carried): the campaign's
+    identity is built as G-F3's, below, citing CAMPAIGN_LOCK_FILE, with reasoning_cap CAMPAIGN_REASONING_CAP and
+    locked_path CAMPAIGN_LOCKED_PATH. Before the m files and the weights are read, the lock's committed text must carry
+    each of QUAL_LOCK_LINES at the start of a line, as at G-F3, and each of CAMPAIGN_LOCK_LINES as a whole line
+    (LOCK-m-F3 v1.0 §1's launch counts and §2's hour cap), else it is refused -- v0.2's blob, for one. A line test, as
+    qual's, not m's substring test (the seat's answers of 2026-11-15, §2 (a)), and a whole-line one: v1.0 writes each of
+    the two alone on its line, so a line that only begins with one (other counts, "480 hours") is refused too.
 
     PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's stage_identity_extra for "qual" carried): G-F3's identity
     is built as G-TIME-F3's, below, citing QUAL_LOCK_FILE, with reasoning_cap QUAL_REASONING_CAP and locked_path
@@ -330,7 +469,7 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
     which refuses any cap but 120 (A-m2 v0.5 §4.2: "the driver's `time` at any cap but 120 is refused")."""
     if stage not in WIRED_CMDS:
         raise ValueError(f"stage_identity_extra: {stage!r} is not one of {WIRED_CMDS}")
-    want_lock = {"time": TIME_LOCK_FILE, "id": ID_LOCK_FILE, "qual": QUAL_LOCK_FILE}[stage]
+    want_lock = {"time": TIME_LOCK_FILE, "id": ID_LOCK_FILE, "qual": QUAL_LOCK_FILE, "campaign": CAMPAIGN_LOCK_FILE}[stage]
     probs: list[str] = []
     extra: dict = {}
     lock_text = ""
@@ -358,23 +497,32 @@ def stage_identity_extra(stage: str, proposal_file: str, lock_file: str, *, anal
     if extra["proposal_sha256"] not in lock_text:
         return None, [f"--proposal-file {extra['proposal_file']}: its sha256 {extra['proposal_sha256'][:16]}... is "
                       f"not named in full in {TIME_LOCK_FILE}'s committed text (lock §1 binds the proposal of record)"]
-    if stage == "qual":
+    if stage in ("qual", "campaign"):
         lock_lines = lock_text.splitlines()
         absent = [x for x in QUAL_LOCK_LINES if not any(ln.startswith(x) for ln in lock_lines)]
         if absent:
             return None, [f"--lock-file {want_lock}: its committed text carries no line opening {absent} (LOCK-m-F3 "
-                          f"v0.2 §2-§3: the cap and the path G-F3 runs under; an earlier blob is refused)"]
+                          f"v0.2 §2-§3: the cap and the path {stages.stage_name(stage)} runs under; an earlier blob is "
+                          f"refused)"]
+        missing = [x for x in CAMPAIGN_LOCK_LINES if x not in lock_lines] if stage == "campaign" else []
+        if missing:
+            return None, [f"--lock-file {want_lock}: its committed text carries no whole line {missing} (LOCK-m-F3 "
+                          f"v1.0 §1-§2: the launch counts and the hour cap the campaign runs under; an earlier blob "
+                          f"is refused)"]
     mm, mprobs = lock_m_modules(lock_text)
     wb, wprobs = lock_weights(lock_text)
     if mprobs or wprobs or mm is None or wb is None:
         return None, mprobs + wprobs
     extra.update(analyzer_sha256=analyzer_sha256, package_sha256=package_sha256, renders_sha16=renders_sha16,
                  m_module_sha256=mm, weights_revision=wb[0], weights_sha256=wb[1],
-                 reasoning_cap={"time": TIME_REASONING_CAP, "id": ID_REASONING_CAP, "qual": QUAL_REASONING_CAP}[stage])
+                 reasoning_cap={"time": TIME_REASONING_CAP, "id": ID_REASONING_CAP, "qual": QUAL_REASONING_CAP,
+                                "campaign": CAMPAIGN_REASONING_CAP}[stage])
     if stage == "time":
         extra["locked_path"] = TIME_LOCKED_PATH
     elif stage == "qual":
         extra["locked_path"] = QUAL_LOCKED_PATH
+    elif stage == "campaign":
+        extra["locked_path"] = CAMPAIGN_LOCKED_PATH
     try:
         stages._extra(extra, stage=stage, stub=False)
     except ValueError as e:
@@ -410,14 +558,17 @@ def stage_prior_checkpoint(stage: str, paths: dict) -> Path:
     """G-ID-F3's or G-F3's prior: G-TIME-F3's re-run checkpoint, <out_root>/ckpt/ID_PRIOR_CKPT_NAME (id) or
     QUAL_PRIOR_CKPT_NAME (qual), through stages.checkpoint_path, taken by path; the first run's checkpoint name refused,
     also where the path resolves to it (A-m2 v0.5 §4.3: "the `id` and `qual` wirings take the re-run's checkpoint by
-    path and refuse the first")."""
-    if stage not in ("id", "qual"):
+    path and refuse the first"). The campaign's prior: G-F3's checkpoint, <out_root>/ckpt/CAMPAIGN_PRIOR_CKPT_NAME (m's
+    default stem for "qual", stages.PRIOR_STAGE), by path in the same form; G-TIME-F3's first run's name is refused
+    there too."""
+    if stage not in ("id", "qual", "campaign"):
         raise ValueError(f"stage_prior_checkpoint: {stage!r} takes no prior checkpoint here")
-    name = ID_PRIOR_CKPT_NAME if stage == "id" else QUAL_PRIOR_CKPT_NAME
+    name = {"id": ID_PRIOR_CKPT_NAME, "qual": QUAL_PRIOR_CKPT_NAME, "campaign": CAMPAIGN_PRIOR_CKPT_NAME}[stage]
     cpath = stages.checkpoint_path(Path(paths["root"]) / "ckpt" / name, paths)
     if cpath.name == FIRST_RUN_CKPT_NAME:
+        took = (f"G-F3's, {CAMPAIGN_PRIOR_CKPT_NAME}" if stage == "campaign" else f"the re-run's, {TIME_CKPT_NAME}")
         raise SystemExit(f"PRIOR PATH REFUSED: {cpath.name} is G-TIME-F3's first run's checkpoint; "
-                         f"{stages.stage_name(stage)} takes the re-run's, {TIME_CKPT_NAME}, by path (A-m2 v0.5 §4.3)")
+                         f"{stages.stage_name(stage)} takes {took}, by path (A-m2 v0.5 §4.3)")
     return cpath
 
 
@@ -426,8 +577,231 @@ def id_prior_checkpoint(paths: dict) -> Path:
     return stage_prior_checkpoint("id", paths)
 
 
-def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path) -> list[str]:
+def _campaign_state(cpath: Path) -> tuple[str, dict]:
+    """(state, summary) of the campaign checkpoint at ``cpath``, read tolerantly as JSON (no state check, so no total
+    is computed or printed).
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's _campaign_state carried, for Q-F3's arms): state: "absent";
+    "unreadable" -- not a regular file (a FIFO is never opened), not a JSON object, nested
+    past the recursion limit, its sessions, campaign block, pauses or recorded PI stop mistyped, a pause lacking kind,
+    at_launches or adjudication or carrying a value no write of the package gives it (a kind other than look, end_look
+    and schedule_exhausted, a launch count that is not an int, an adjudication that is not a text, an arm other than
+    keys.TEMPLATES'), a recorded text that cannot be encoded (the PI stop or any pause's adjudication, a lone
+    surrogate), or a path whose stat fails; "pending" (an end pending); "ended" (resume.ended_status); or "open".
+    summary, the only thing the mirror and the RULING line read (the checkpoint never leaves this function), free of
+    any recorded text: {"launched": a session is recorded, "pi_stop_sha256": the recorded PI stop's sha256 or None,
+    "last": None or the last pause's {"kind", "at_launches", "arm", "adjudicated", "adjudication_sha16"} -- the digest
+    the report gives a pause, "ruling_sha16s": the sha16 of every pause's recorded ruling, in pause order}; {} when
+    unreadable."""
+    p = Path(cpath)
+    try:
+        if not (p.exists() or p.is_symlink()):
+            return "absent", {"launched": False, "pi_stop_sha256": None, "last": None, "ruling_sha16s": []}
+        if not p.is_file():
+            return "unreadable", {}
+    except OSError:
+        return "unreadable", {}
+    try:
+        ck = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, ValueError, RecursionError):
+        return "unreadable", {}
+    camp = ck.get("campaign") if isinstance(ck, dict) else None
+    camp = {} if camp is None else camp
+    pauses = camp.get("pauses", []) if isinstance(camp, dict) else None
+    if (not isinstance(ck, dict) or type(ck.get("sessions", [])) is not list or not isinstance(camp, dict)
+            or type(pauses) is not list
+            or not all(isinstance(x, dict) and {"kind", "at_launches", "adjudication"} <= set(x)
+                       and x["kind"] in ("look", "end_look", "schedule_exhausted") and type(x["at_launches"]) is int
+                       and (x["adjudication"] is None or type(x["adjudication"]) is str)
+                       and x.get("arm") in (None,) + tuple(keys.TEMPLATES) for x in pauses)
+            or not (camp.get("pi_stop") is None or type(camp.get("pi_stop")) is str)):
+        return "unreadable", {}
+    last = pauses[-1] if pauses else None
+    try:
+        for x in pauses:
+            if x["adjudication"] is not None:
+                x["adjudication"].encode("utf-8")
+        summary = {"launched": bool(ck.get("sessions")),
+                   "pi_stop_sha256": (None if camp.get("pi_stop") is None
+                                      else hashlib.sha256(camp["pi_stop"].encode("utf-8")).hexdigest()),
+                   "last": None if last is None else {
+                       "kind": last["kind"], "at_launches": last["at_launches"], "arm": last.get("arm"),
+                       "adjudicated": last["adjudication"] is not None,
+                       "adjudication_sha16": (stages._sha16_text(last["adjudication"])
+                                              if type(last["adjudication"]) is str else None)},
+                   "ruling_sha16s": [stages._sha16_text(x["adjudication"]) for x in pauses
+                                     if type(x["adjudication"]) is str]}
+    except UnicodeEncodeError:
+        return "unreadable", {}
+    if rs.pending_end(ck) is not None:
+        return "pending", summary
+    if rs.ended_status(ck) is not None:
+        return "ended", summary
+    return "open", summary
+
+
+def campaign_ruling_problems(cpath: Path, adjudication: str | None, pi_stop: str | None) -> list[str]:
+    """The refusals stages.run_campaign makes, after the load and before its first write, of a ruling that does not
+    fit the campaign's state -- made here before the load, from ``_campaign_state``'s summary -- and two the stage does
+    not make (O4-1 and O1-3: RULING BESIDE AN END PENDING, where the stage would re-finish the end and then refuse the
+    ruling, NOT APPLIED; RULING REUSED, where it would apply it); [] when none applies.
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's campaign_ruling_problems carried, with its carry-overs O4-1,
+    O1-3 and RM4-1): mirrors run_campaign's order over the states the stage writes: a PI stop text other than the one
+    the checkpoint records (CHECKPOINT MISMATCH, made even beside an end pending); then, on a checkpoint neither pending
+    nor ended (a pending end re-finishes at any invocation; an ended one is refused as ended): a PI stop with no session
+    launched (PI STOP REFUSED); an adjudication on an exhausted schedule's unadjudicated pause with no PI stop (SCHEDULE
+    EXHAUSTED); an adjudication with no unadjudicated pause (NO PAUSE TO ADJUDICATE). Each message is the stage's own
+    words -- mf3's run_campaign's, which words three of the four otherwise than m's stage; the self-test reads them
+    from its source -- two with a declared suffix: CHECKPOINT MISMATCH's, that the stage makes it after the load, and
+    NO PAUSE TO ADJUDICATE's, where the last pause already carries a ruling, naming that pause and its ruling's sha16
+    and how the run resumes: with --resume alone, or, where this run also offers the PI's stop, with --resume and the
+    PI's stop alone. The recorded PI stop is compared by its sha256 (the summary carries no text). An invocation
+    offering no ruling reads nothing. An absent checkpoint is a campaign with no session and no pause. An unreadable
+    or malformed one is not refused here: stage_precheck refuses it before the load; the stage, which has no such
+    screen, refuses it with a refusal of its own, raises, or reads it as it stands."""
+    if adjudication is None and pi_stop is None:
+        return []
+    state, sm = _campaign_state(cpath)
+    if state in ("unreadable", "ended"):
+        return []
+    rec_pi = sm["pi_stop_sha256"]
+    if (pi_stop is not None and rec_pi is not None
+            and hashlib.sha256(pi_stop.strip().encode("utf-8")).hexdigest() != rec_pi):
+        return [f"CHECKPOINT MISMATCH: {cpath} records the PI's stop; this run offers another text -- "
+                f"refusing (the stage makes this refusal after the load)"]
+    if state == "pending":
+        # O4-1, carried (m's PIN at LOCK-m-OLMo-{ckpt} v0.1): the rulings refused are exactly the ones the stage would
+        # not apply beside an end pending (stages._refinish_campaign's NOT APPLIED): the seat's adjudication, and a PI
+        # stop the checkpoint does not record (a stop it records, passed by run_campaign as None, re-finishes with no
+        # refusal). An adjudication the checkpoint already records is named as such and needs nothing (RM4-1's
+        # information where no RULING line prints).
+        a16_ = stages._sha16_text(adjudication.strip()) if adjudication is not None else None
+        adj_w_ = "the seat's adjudication" + (
+            f", which the checkpoint already records as a pause's ruling (sha16 {a16_}) and which needs nothing"
+            if a16_ is not None and a16_ in sm.get("ruling_sha16s", []) else "")
+        skip_ = [(w_, f_) for w_, f_, v_ in ((adj_w_, "--adjudication-file", adjudication),
+                                             ("the PI's stop, which the checkpoint does not record", "--pi-stop-file",
+                                              pi_stop if rec_pi is None else None)) if v_ is not None]
+        if skip_:
+            return [f"RULING BESIDE AN END PENDING at {cpath}: the checkpoint carries an end pending, which the "
+                    f"stage re-finishes before it applies any ruling, and it would not apply "
+                    f"{' and '.join(w_ for w_, _f in skip_)} (NOT APPLIED, after the load) -- refused before the "
+                    f"load: re-run without {' and '.join(f_ for _w, f_ in skip_)}, with --resume, which re-finishes "
+                    f"the end; then offer a ruling for the pause the re-finish shows, if it leaves the campaign open"]
+        return []
+    pi = pi_stop is not None or rec_pi is not None
+    if pi and not sm["launched"]:
+        return [f"PI STOP REFUSED at {cpath}: no session has launched -- a unit that never launches is "
+                f"NOT-RUN by its Clock (m:192)"]
+    last = sm["last"]
+    open_pause = last is not None and not last["adjudicated"]
+    if open_pause and last["kind"] == "schedule_exhausted" and not pi and adjudication is not None:
+        return [f"SCHEDULE EXHAUSTED at {cpath}: {last['arm']} has no committed cell left below its floor; "
+                f"only the PI's stop ends this campaign (m:192, m:247)"]
+    # O1-3, carried (m's PIN at LOCK-m-OLMo-{ckpt} v0.1): an adjudication offered for an open pause whose text is a
+    # ruling the checkpoint already records for an earlier pause is refused here; the stage has no such rule.
+    if adjudication is not None and open_pause:
+        a16_ = stages._sha16_text(adjudication.strip())
+        if a16_ in sm.get("ruling_sha16s", []):
+            return [f"RULING REUSED at {cpath}: the seat's adjudication offered (sha16 {a16_}) is the text the "
+                    f"checkpoint records as an earlier pause's ruling; an adjudication is offered only for the pause "
+                    f"it rules on (this campaign's open pause, at {last['at_launches']} launches, {last['kind']}) -- "
+                    f"refused before the load"]
+    if adjudication is not None and not open_pause:
+        how = ("drop --adjudication-file: resume with --resume and the PI's stop alone" if pi_stop is not None
+               else "resume with --resume alone")
+        tail = ("" if last is None else
+                f" -- its last pause ({last['kind']}, at {last['at_launches']} launches) already carries a ruling "
+                f"(sha16 {last['adjudication_sha16']}); {how}")
+        return [f"NO PAUSE TO ADJUDICATE at {cpath}: the campaign is not paused{tail}"]
+    return []
+
+
+def ruling_line(name: str, cpath: Path, rulings: dict) -> str | None:
+    """The RULING line a campaign invocation offering a ruling prints before the load.
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's ruling_line carried, with RM4-1's note): pick-free, each
+    text's sha16 of the stripped text (the report gives a
+    pause's adjudication the same digest; the PI's stop's, where the stage records it only as the campaign's stop, and,
+    where no precheck runs, a ruling offered beside an end pending that the checkpoint does not record, which the stage
+    does not apply there (NOT APPLIED), stand here alone; on the Qwen path such a ruling is refused before the load and
+    before this line, O4-1), and the pause it is offered for (its kind and launch count, as the shown pause's line prints
+    them) or the checkpoint's state, from ``_campaign_state``'s summary, with RM4-1's note where the checkpoint already
+    records the adjudication offered as a pause's ruling (by digest; text-free); None when no ruling is offered."""
+    parts = [f"{who} (sha16 {stages._sha16_text(rulings[k].strip())})"
+             for k, who in (("adjudication", "the seat's adjudication"), ("pi_stop", "the PI's stop"))
+             if rulings.get(k) is not None]
+    if not parts:
+        return None
+    state, sm = _campaign_state(cpath)
+    last = sm.get("last") if state == "open" else None
+    if last is not None and not last["adjudicated"]:
+        where = f"for the pause at {last['at_launches']} launches ({last['kind']})"
+    else:
+        where = {"absent": "with no checkpoint on disk", "pending": "beside an end pending",
+                 "ended": "on an ended campaign", "unreadable": "on an unreadable checkpoint"}.get(
+            state, "with no pause unadjudicated")
+    note = ""
+    if rulings.get("adjudication") is not None and stages._sha16_text(rulings["adjudication"].strip()) in (
+            sm.get("ruling_sha16s") or []):
+        note = "; the checkpoint already records this adjudication as a pause's ruling"
+    return f"RULING {name}: {' and '.join(parts)} offered {where}{note}"
+
+
+def ruling_texts(adjudication_file: str | None, pi_stop_file: str | None) -> tuple[dict, list[str]]:
+    """({"adjudication": text or None, "pi_stop": text or None}, problems) of the campaign's two ruling files.
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's ruling_texts carried): stages.run_campaign takes the seat's
+    adjudication of a pending pause and the PI's stop as texts, recorded in the checkpoint only; the driver takes each
+    as a file named on the command line, so the text stands in no command line, launch line or raw, and prints neither
+    (its path does stand in the INVOCATION line, so the file is named for nothing it says). A file given must be a
+    regular file (a FIFO or a device is refused before it is opened), UTF-8 (a leading byte-order mark is dropped:
+    utf-8-sig) and not blank -- a text with no visible character (only whitespace, format characters such as a
+    zero-width space, or control characters); its text is passed as read (the stage strips it)."""
+    import unicodedata
+    texts: dict = {"adjudication": None, "pi_stop": None}
+    probs: list[str] = []
+    for key, flag, given in (("adjudication", "--adjudication-file", adjudication_file),
+                             ("pi_stop", "--pi-stop-file", pi_stop_file)):
+        if given is None:
+            continue
+        try:
+            if not Path(given).is_file():
+                probs.append(f"{flag} {given}: not a regular file")
+                continue
+            txt = Path(given).read_bytes().decode("utf-8-sig")
+        except (OSError, ValueError) as e:
+            probs.append(f"{flag} {given}: unreadable as UTF-8 text ({type(e).__name__})")
+            continue
+        if not any(not c.isspace() and unicodedata.category(c)[0] not in "CZ" for c in txt):
+            probs.append(f"{flag} {given}: blank (a ruling is a text with a visible character)")
+            continue
+        texts[key] = txt
+    return texts, probs
+
+
+def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path,
+                   rulings: dict | None = None) -> list[str]:
     """A wired stage's refusals that need no model, made before the Qwen load; [] = none fired.
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's stage_precheck for "campaign" carried, scripts/m_sessions.py):
+    at the campaign the checks are G-F3's, below, on the six committed campaign schedule files and the campaign's own
+    checkpoint (stages.out_paths("campaign")), with these differences, each m's: a paused campaign offered no ruling
+    (``rulings`` None, or both texts None) is not refused as existing -- the stage shows its pause with or without
+    --resume (stages._paused_unadjudicated, asked only of a checkpoint the screen reads as open); the prior is G-F3's
+    checkpoint at this out root (stage_prior_checkpoint for "campaign"), ended PASS under this proposal, not written on
+    the stub, at the run's cap (stages.prior_gate, require_real on); G-ID-F3's artifact is checked if on disk
+    (stages.gid_artifact_problems, require_real on, at the run's cap, as run_campaign re-checks it; absent, there is
+    nothing to check); a campaign checkpoint path that exists and that the driver cannot read as a campaign checkpoint
+    (``_campaign_state``'s "unreadable"), which only this precheck refuses (the stage would refuse it as existing, block
+    on a FIFO with --resume, refuse it as unreadable, raise, or read it as it stands); and a ruling's fit to the
+    campaign's state (campaign_ruling_problems: NO PAUSE TO ADJUDICATE, PI STOP REFUSED, SCHEDULE EXHAUSTED and a PI
+    stop text other than the one recorded, the stage making each again after the load; RULING BESIDE AN END PENDING and
+    RULING REUSED, which it does not). Not made here: the path the G-ID licence gives on the loaded backend (PATH
+    MISMATCH), the floors and the launch-count projection a checkpoint records (CHECKPOINT MISMATCH, the stage's), and
+    the stage's other refusals after the load. A pending end offered no ruling re-finishes at any invocation, so the
+    precheck lets it through.
 
     PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's stage_precheck for "qual" carried, scripts/m_sessions.py):
     at G-F3 the checks are G-TIME-F3's, below, on G-F3's six committed schedule files and its own checkpoint
@@ -472,7 +846,8 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path)
         probs.append(f"renders: {e}")
     paths = stages.out_paths(stage, out_root)
     wanted = {"time": [("time", t) for t, _ in TIME_COUNTS], "id": [("id", t) for t in keys.GID_TEMPLATES],
-              "qual": [("qual", t) for t, _ in QUAL_COUNTS]}[stage]
+              "qual": [("qual", t) for t, _ in QUAL_COUNTS],
+              "campaign": [("campaign", t) for t, _ in CAMPAIGN_LAUNCH_COUNTS]}[stage]
     try:
         stages.load_committed(wanted, paths["schedules"])
     except SystemExit as e:
@@ -484,14 +859,19 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path)
         # is_symlink: checkpoint_path resolve()s non-strictly; on Python 3.13+ a looping link comes back
         # unresolved, so the resolved path can still be a link, which only this precheck refuses; on 3.12
         # resolve() raises RuntimeError on the loop (caught below) -- m's comment, carried
-        if (cpath.exists() or cpath.is_symlink()) and not resume_run and not rs.pending_at(cpath):
+        # a paused campaign offered no ruling is shown its pause with or without --resume (the campaign PIN above);
+        # stages._paused_unadjudicated is asked only of a checkpoint the screen reads as open (m's form)
+        offered = rulings is not None and any(v is not None for v in rulings.values())
+        shown = (stage == "campaign" and not offered and _campaign_state(cpath)[0] == "open"
+                 and stages._paused_unadjudicated(cpath))
+        if (cpath.exists() or cpath.is_symlink()) and not resume_run and not rs.pending_at(cpath) and not shown:
             probs.append(f"checkpoint: CHECKPOINT EXISTS at {cpath}; pass --resume to continue it or move it aside "
                          f"(never overwritten)")
     except SystemExit as e:
         probs.append(f"checkpoint: {e}")
     except (RuntimeError, OSError) as e:
         probs.append(f"checkpoint: the checkpoint path does not resolve ({type(e).__name__})")
-    if stage in ("id", "qual"):
+    if stage in ("id", "qual", "campaign"):
         try:
             stages.prior_gate(stage, stage_prior_checkpoint(stage, paths), proposal_sha256=extra["proposal_sha256"],
                               prior_proposal_sha256s=extra.get("prior_proposal_sha256s") or [], require_real=True,
@@ -500,6 +880,24 @@ def stage_precheck(stage: str, extra: dict, *, resume_run: bool, out_root: Path)
             probs.append(f"prior: {e}")
         except (RuntimeError, OSError) as e:
             probs.append(f"prior: the prior checkpoint path does not resolve ({type(e).__name__})")
+    if stage == "campaign" and cpath is not None:
+        try:
+            exists_, regular_ = cpath.exists(), cpath.is_file()
+        except OSError:                                     # reported by the checkpoint block above
+            exists_ = regular_ = False
+        if exists_ and not regular_:
+            probs.append(f"checkpoint: {cpath} exists and is not a regular file (refused before it is opened)")
+        elif exists_ and _campaign_state(cpath)[0] == "unreadable":
+            probs.append(f"checkpoint: {cpath} cannot be read as a campaign checkpoint (not a JSON object, or a shape "
+                         f"or value no write of the package makes) -- refused before the load; a checkpoint is never "
+                         f"edited by hand")
+        if rulings is not None:
+            probs += [f"ruling: {p}" for p in campaign_ruling_problems(cpath, rulings.get("adjudication"),
+                                                                       rulings.get("pi_stop"))]
+    if stage == "campaign":
+        probs += [f"artifact: {p}" for p in stages.gid_artifact_problems(
+            accepted=stages.accepted_proposals(extra["proposal_sha256"], extra.get("prior_proposal_sha256s") or []),
+            require_real=True, reasoning_cap=extra["reasoning_cap"])]
     if stage == "id":
         gid_path = guard.gid_artifact_path()
         try:
@@ -628,12 +1026,31 @@ def snapshot_line(info: dict) -> str:
 
 def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, analyzer_sha256: str | None,
               package_sha256: str | None, renders_sha16: str | None, resume_run: bool, adapter_factory=None,
-              out_root: Path | None = None) -> int:
-    """G-TIME-F3 (m:293) and G-F3 (m:297) through stages.run_gate_stage, or G-ID-F3 (m:295) through
-    stages.run_gid_pair_f3. Exit: stages.EXIT_CODES for the stage's status (0 PASS, 4 STOP; at G-ID-F3 also 5 FAIL and
-    6 NOT-DETERMINED) and 4 STOP for any SystemExit from the loader or the stage, or the driver's own post-load
+              out_root: Path | None = None, adjudication_file: str | None = None,
+              pi_stop_file: str | None = None) -> int:
+    """G-TIME-F3 (m:293) and G-F3 (m:297) through stages.run_gate_stage, G-ID-F3 (m:295) through
+    stages.run_gid_pair_f3, or the Q-F3 campaign (m:298, m:361) through stages.run_campaign. Exit: stages.EXIT_CODES for
+    the stage's status (0 PASS, 4 STOP; at G-ID-F3 also 5 FAIL and 6 NOT-DETERMINED; at the campaign 0 COMPLETE, CAP and
+    PI-STOP, and 3 PAUSE) and 4 STOP for any SystemExit from the loader or the stage, or the driver's own post-load
     snapshot re-read or model-id check (each "STOP: " and its message); 2 refused before the load (nothing loaded or
     written); any other exception is uncaught (a traceback; exit 1, or 130 on Ctrl-C).
+
+    PIN (Code, declared at the Q-F3 campaign wiring; m's _run_stage "campaign" branch carried): the campaign runs the
+    Qwen path below as G-F3 does, its stage_identity_extra and stage_precheck for "campaign", and then
+    stages.run_campaign with campaign_floors(), CAMPAIGN_LAUNCH_COUNTS, CAMPAIGN_HOUR_CAP, the prior
+    stage_prior_checkpoint gives at this run's out root (G-F3's checkpoint, the path the precheck read; the stage's
+    prior_gate reads it again after the load, and the stage re-checks G-ID-F3's artifact with its own call of
+    gid_artifact_problems at the run's cap), its own checkpoint the stage's default, the resume flag, and the two
+    rulings as ruling_texts read them. ``adjudication_file`` / ``pi_stop_file`` are the campaign's alone (a ValueError
+    at any other stage); ruling_texts refuses them before the precheck when not a regular file, not UTF-8 or blank,
+    and their fit to the campaign's state is refused before the load (campaign_ruling_problems, in the precheck). An
+    invocation offering a ruling prints the RULING line (ruling_line) before the load: on the Qwen
+    path after the DRIVER and SNAPSHOT lines, on the stub path before the adapter is built. A campaign PAUSE (exit 3) is
+    escalated to the seat: a look's pause resumes only with --resume and the seat's adjudication, or ends by the PI's
+    stop (with --resume); an exhausted schedule's ends only by the PI's stop; an end look's pause beside a terminal end
+    is never resumed, its ruling entering VERDICTS as the analyzer's declared --adjudication file. A STOP naming NOT
+    APPLIED is the stage declining a ruling offered beside an end pending, after re-finishing that end; on the Qwen path
+    the precheck refuses such a ruling before the load (RULING BESIDE AN END PENDING).
 
     PIN (Code, declared at LOCK-m-F3 v1.0; the qual wiring; m's _run_stage "qual" branch carried): G-F3 runs the Qwen
     path below as G-TIME-F3 does, its stage_identity_extra and stage_precheck for "qual", and then
@@ -660,6 +1077,8 @@ def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, a
              "package_sha256": package_sha256, "renders_sha16": renders_sha16}
     if stage not in WIRED_CMDS:
         raise ValueError(f"run_stage: {stage!r} is not one of {WIRED_CMDS}")
+    if stage != "campaign" and (adjudication_file is not None or pi_stop_file is not None):
+        raise ValueError(f"run_stage: {stage!r} takes no adjudication or PI-stop file (the campaign's alone)")
     missing = ["--" + k.replace("_", "-") for k in TIME_FLAGS if given[k] is None]
     if missing:
         _say(f"REFUSED: {stage} needs {missing}: the lock's values (lock §1, \"How a stage cites this file\"); "
@@ -675,10 +1094,22 @@ def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, a
     if probs or extra is None:
         _say(f"REFUSED: {name}: {probs}; nothing loaded")
         return 2
+    rulings, rprobs = ruling_texts(adjudication_file, pi_stop_file)
+    if rprobs:
+        _say(f"REFUSED: {name}: {rprobs}; nothing loaded")
+        return 2
     root = Path(stages.DEFAULT_OUT if out_root is None else out_root)
+
+    def say_ruling() -> None:
+        # the RULING line (ruling_line): the texts' sha16 and the pause they are offered for, before the load
+        if stage == "campaign":
+            rline = ruling_line(name, stages.checkpoint_path(None, stages.out_paths(stage, root)), rulings)
+            if rline is not None:
+                print(rline, flush=True)
     try:
         if adapter_factory is None:
-            pre = stage_precheck(stage, extra, resume_run=resume_run, out_root=root)
+            pre = stage_precheck(stage, extra, resume_run=resume_run, out_root=root,
+                                 rulings=rulings if stage == "campaign" else None)
             dprobs, dsha = driver_problems()
             sprobs, snap = qwen_snapshot()
             # the snapshot's revision against the lock's (m's REVISION_STAGES refusal, carried): the licence's (g) read
@@ -694,6 +1125,7 @@ def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, a
             print(f"DRIVER {DRIVER_REL} {dsha}: committed at HEAD {stages._git_head()}, working tree identical",
                   flush=True)
             print(snapshot_line(snap), flush=True)
+            say_ruling()
             adapter = _load_qwen()
             # the snapshot re-read after the load (m's): a re-read that refuses, a moved refs/main or another
             # model id STOPs before any session (a SystemExit, exit 4 below). It narrows, not closes, the window
@@ -711,6 +1143,7 @@ def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, a
             print(f"SNAPSHOT re-read after the load: unchanged ({snap['revision']}); adapter model_id "
                   f"{snap['model_id']}", flush=True)
         else:
+            say_ruling()
             adapter = adapter_factory()
         if stage == "time":
             res = stages.run_gate_stage(adapter, gate="time", templates_counts=list(TIME_COUNTS), resume=resume_run,
@@ -719,10 +1152,17 @@ def run_stage(stage: str, *, proposal_file: str | None, lock_file: str | None, a
         elif stage == "id":
             res = stages.run_gid_pair_f3(adapter, resume=resume_run, identity_extra=extra,
                                          prior_ckpt=id_prior_checkpoint(stages.out_paths("id", root)), out_root=root)
-        else:
+        elif stage == "qual":
             res = stages.run_gate_stage(adapter, gate="qual", templates_counts=list(QUAL_COUNTS), resume=resume_run,
                                         identity_extra=extra, out_root=root,
                                         prior_ckpt=stage_prior_checkpoint("qual", stages.out_paths("qual", root)))
+        else:
+            res = stages.run_campaign(adapter, floors=campaign_floors(), launch_counts=dict(CAMPAIGN_LAUNCH_COUNTS),
+                                      hour_cap=CAMPAIGN_HOUR_CAP,
+                                      prior_ckpt=stage_prior_checkpoint("campaign",
+                                                                        stages.out_paths("campaign", root)),
+                                      resume=resume_run, identity_extra=extra, out_root=root,
+                                      adjudication=rulings["adjudication"], pi_stop=rulings["pi_stop"])
     except SystemExit as e:
         _say(f"STOP: {e}")
         return 4
@@ -744,9 +1184,20 @@ def run_qual(**kw) -> int:
     return run_stage("qual", **kw)
 
 
+def run_campaign(**kw) -> int:
+    """The Q-F3 campaign (m:298, m:361): run_stage for "campaign"."""
+    return run_stage("campaign", **kw)
+
+
 def _short(x, n: int = 160) -> str:
     s = x if isinstance(x, str) else repr(x)
     return s if len(s) <= n else s[:n] + "..."
+
+
+def _lines_prefixed(text: str, opening: str, pre: str) -> str:
+    """``text`` with ``pre`` put before every line that opens with ``opening``: the self-test's lock variants edit every
+    occurrence at a line's start, not only the first (NOTE-7, closed at the campaign wiring)."""
+    return "\n".join((pre + ln) if ln.startswith(opening) else ln for ln in text.split("\n"))
 
 
 def _selftest(chk) -> None:
@@ -782,12 +1233,11 @@ def _selftest(chk) -> None:
         "lines (counts and hashes, no label)",
         rcg == 0 and outg.startswith("INVOCATION: ") and "G-SHAPE-F3 PASS" in outg
         and "G-SHAPE-F3 test run" in outg and not any(re.search(rf"\b{w}\b", outg) for w in labels), outg[-300:])
-    refused = {c: run([c]) for c in REFUSED_CMDS}
-    chk("mf3_sessions: campaign is refused (exit 2), named; time, id and qual are wired (WIRED_CMDS) and the four are "
-        "STAGE_CMDS",
-        all(rc == 2 and refusal(c) in out for c, (rc, out) in refused.items())
-        and WIRED_CMDS == ("time", "id", "qual") and REFUSED_CMDS == ("campaign",)
-        and set(REFUSED_CMDS) | set(WIRED_CMDS) == set(STAGE_CMDS), {c: rc for c, (rc, _) in refused.items()})
+    helps = {c: run([c, "--help"]) for c in STAGE_CMDS}
+    chk("mf3_sessions: time, id, qual and campaign are wired (WIRED_CMDS), the four STAGE_CMDS, none refused "
+        "(REFUSED_CMDS empty); each subcommand's --help exits 0",
+        WIRED_CMDS == ("time", "id", "qual", "campaign") == STAGE_CMDS and REFUSED_CMDS == ()
+        and all(rc == 0 for rc, _ in helps.values()), {c: rc for c, (rc, _) in helps.items()})
     rc0, out0 = run([])
     chk("mf3_sessions: no action is refused (exit 2) and INVOCATION is the first line",
         rc0 == 2 and out0.startswith("INVOCATION: "))
@@ -816,6 +1266,7 @@ def _selftest(chk) -> None:
     _selftest_time(chk, labels, run)
     _selftest_id(chk, labels)
     _selftest_qual(chk, labels)
+    _selftest_campaign(chk, labels)
     chk("mf3_sessions: the quarantined state-present module is not loaded after the self-test",
         not any(m in sys.modules for m in guard.FORBIDDEN_MODULES))
 
@@ -1741,9 +2192,9 @@ def _selftest_id(chk, labels) -> None:
         st_u.enter_context(gpatch("_load_qwen", t_loader))
         st_u.enter_context(contextlib.redirect_stdout(io.StringIO()))
         st_u.enter_context(contextlib.redirect_stderr(io.StringIO()))
-        for fn in (lambda: stage_identity_extra("campaign", **tflags),
-                   lambda: stage_precheck("campaign", dict(ex_i or {}), resume_run=False, out_root=u_root),
-                   lambda: run_stage("campaign", **tflags, resume_run=False)):
+        for fn in (lambda: stage_identity_extra("gshape", **tflags),
+                   lambda: stage_precheck("gshape", dict(ex_i or {}), resume_run=False, out_root=u_root),
+                   lambda: run_stage("gshape", **tflags, resume_run=False)):
             try:
                 fn()
                 unwired.append(False)
@@ -1753,7 +2204,7 @@ def _selftest_id(chk, labels) -> None:
                 unwired.append(False)
     chk("mf3_sessions: id's identity refuses a reasoning cap other than 120 (stages._extra, a run on a model) and a lock "
         "other than LOCK-m-F3.md ('G-ID-F3 cites LOCK-m-F3.md'); stage_identity_extra, stage_precheck and run_stage "
-        "raise ValueError for a stage that is not wired (campaign), before anything is read or run (on a test root, with "
+        "raise ValueError for a name that is not a wired stage (gshape), before anything is read or run (on a test root, with "
         "the loader and both stages trapped)",
         ex60 is None and any("on a run on a model" in x for x in p60)
         and ex_ol is None and any("G-ID-F3 cites LOCK-m-F3.md" in x for x in p_ol) and unwired == [True, True, True],
@@ -2331,8 +2782,10 @@ def _selftest_qual(chk, labels) -> None:
     # moved off a line's start, indented, or removed (the review's NOTE-2: a line's start, not after whitespace)
     rule = "\n---\n\nWhere the re-issue's or v0.1's text below differs from v0.2"
     earlier = lock_text.split(rule, 1)[1].split("\n", 2)[2] if rule in lock_text else ""
-    moved = lock_text.replace(QUAL_LOCK_LINES[1], "x " + QUAL_LOCK_LINES[1], 1)
-    indented = lock_text.replace(QUAL_LOCK_LINES[1], "  " + QUAL_LOCK_LINES[1], 1)
+    # (NOTE-7, closed at the campaign wiring: each variant edits every line that opens with the path line, so a lock
+    # that restated that line would still lose it at every line's start; the check below asserts none is left)
+    moved = _lines_prefixed(lock_text, QUAL_LOCK_LINES[1], "x ")
+    indented = _lines_prefixed(lock_text, QUAL_LOCK_LINES[1], "  ")
     dropped = "\n".join(ln for ln in lock_text.splitlines() if not ln.startswith(QUAL_LOCK_LINES[0])) + "\n"
     got = {}
     for nm, txt in (("earlier", earlier), ("moved", moved), ("indented", indented), ("dropped", dropped)):
@@ -2340,13 +2793,30 @@ def _selftest_qual(chk, labels) -> None:
             got[nm] = (stage_identity_extra("qual", **tflags), stage_identity_extra("time", **tflags),
                        stage_identity_extra("id", **tflags))
     chk("mf3_sessions: qual refuses a lock whose committed text lacks v0.2's lines at a line's start -- the earlier blob "
-        "(the re-issue's part and v0.1's, as committed below v0.2's rule), v0.2 with its path line moved off the "
-        "line's start or indented, and v0.2 with its cap line removed -- each 'carries no line opening' the line; time "
-        "and id accept all four (they run under v0.1 and its re-issue)",
+        "(the re-issue's part and v0.1's, as committed below v0.2's rule), the lock with its path line moved off the "
+        "line's start or indented (every line opening with it: NOTE-7), and the lock with its cap line removed -- each "
+        "'carries no line opening' the line; time and id accept all four (they run under v0.1 and its re-issue)",
         earlier.startswith("# LOCK-m-F3.md — v0.1, re-issued")
+        and not any(ln.startswith(QUAL_LOCK_LINES[1]) for ln in (moved + indented).splitlines())
         and all(v[0][0] is None and any("carries no line opening" in x for x in v[0][1]) for v in got.values())
         and all(v[1][0] is not None and v[2][0] is not None for v in got.values()),
         {k: (v[0][1][:1], v[1][1][:1], v[2][1][:1]) for k, v in got.items()})
+    # NOTE-7, closed: on a lock that restates the path line at a line's start above v0.2's, the first-occurrence form
+    # would move the restatement alone and leave v0.2's line; the line-wise form moves both
+    restated = QUAL_LOCK_LINES[1] + " (a restatement above v0.2's, the self-test's)\n" + lock_text
+    r_moved = _lines_prefixed(restated, QUAL_LOCK_LINES[1], "x ")
+    first_only = restated.replace(QUAL_LOCK_LINES[1], "x " + QUAL_LOCK_LINES[1], 1)
+    with mock.patch.object(stages, "committed", committed_but(QUAL_LOCK_FILE, ([], restated.encode("utf-8")))):
+        ex_rs, p_rs = stage_identity_extra("qual", **tflags)
+    with mock.patch.object(stages, "committed", committed_but(QUAL_LOCK_FILE, ([], r_moved.encode("utf-8")))):
+        ex_rm, p_rm = stage_identity_extra("qual", **tflags)
+    chk("mf3_sessions: NOTE-7's gap is closed -- on a lock that restates the path line at a line's start above v0.2's, "
+        "qual accepts the lock, and the line-wise moved variant leaves no line opening with it and is refused ('carries "
+        "no line opening'), where the first-occurrence form would have left v0.2's line in place",
+        ex_rs is not None and p_rs == [] and ex_rm is None and any("carries no line opening" in x for x in p_rm)
+        and sum(ln.startswith(QUAL_LOCK_LINES[1]) for ln in restated.splitlines()) == 2
+        and not any(ln.startswith(QUAL_LOCK_LINES[1]) for ln in r_moved.splitlines())
+        and sum(ln.startswith(QUAL_LOCK_LINES[1]) for ln in first_only.splitlines()) == 1, (p_rs[:1], p_rm[:1]))
     # the order (the review's NOTE-3): an earlier blob that also names an m file with a second sha256 is refused for
     # its missing lines, the check the PIN says comes before the m files and the weights are read
     both_bad = earlier + "\n| `valence_core/m/corr.py` | `" + "c" * 64 + "` |\n"
@@ -2824,6 +3294,963 @@ def _selftest_qual(chk, labels) -> None:
         (len(loads), [c[0] for c in stage_calls], escapes, sorted(set(data_before) ^ set(data_after))[:3]))
 
 
+def _selftest_campaign(chk, labels) -> None:
+    """The campaign wiring's checks (model-free), in _selftest_qual's forms: the campaign's values; its identity and the
+    lock's two whole lines; its help; the ruling helpers (ruling_texts, _campaign_state, campaign_ruling_problems,
+    ruling_line) on synthetic files in a test directory; the stub path (``stub_run``: G-TIME-F3's re-run checkpoint, a
+    FAILed G-ID-F3 artifact and G-F3 written first on the stub at the same test root, then run_campaign) with the loader
+    trapped, stages.DEFAULT_OUT a test root and guard.GATES_DIR a test directory per run; and the Qwen path (``q_c``)
+    with _load_qwen a trap (in the post-load cases a stand-in carrying a model_id), stages.run_campaign,
+    stages.run_gate_stage and stages.run_gid_pair_f3 traps, stages.DEFAULT_OUT a test root and guard.GATES_DIR beside
+    it, m:267's laptop checklist stubbed, and build_schedules and run_selftest trapped. So no case can load the model,
+    run a session on it or write data/mf3. The last check asserts how often each trap was reached."""
+    import ast
+    import inspect
+    import textwrap
+    import threading
+    from unittest import mock
+
+    from valence_core.m import corr as m_corr
+    from valence_core.mf3 import scaffold as sc_mod
+    from valence_core.mf3 import testing
+
+    G = globals()
+    loads: list = []
+    stage_calls: list = []
+    escapes: list = []
+    ck_name, gid_name = f"{keys.UNIT}_campaign.json", f"{keys.UNIT}_G-ID.json"
+    name_c = stages.stage_name("campaign")
+    end_key = rs.m_resume.END_PENDING
+    sha16 = stages._sha16_text
+
+    def t_escape(name):
+        def f(*a, **k):
+            escapes.append(name)
+            raise SystemExit(f"selftest: {name} was reached from a campaign invocation")
+        return f
+
+    def t_loader():
+        loads.append(1)
+        raise SystemExit("selftest: the Qwen loader was reached")
+
+    def t_stage(tag):
+        def f(*a, **k):
+            stage_calls.append((tag, k))
+            raise SystemExit("selftest: the stage was reached")
+        return f
+
+    def gpatch(name, val):
+        return mock.patch.dict(G, {name: val})
+
+    def run3(argv):
+        buf, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(err):
+            try:
+                rc = main(argv)
+            except SystemExit as e:
+                rc = e.code if isinstance(e.code, int) else 2
+        return rc, buf.getvalue(), err.getvalue()
+
+    def tree_state(root: Path) -> dict:
+        out = {}
+        for q in sorted(root.rglob("*")):
+            k = str(q.relative_to(root))
+            out[k] = ("link", os.readlink(q)) if q.is_symlink() else (
+                ("file", hashlib.sha256(q.read_bytes()).hexdigest()) if q.is_file() else (
+                    ("dir", None) if q.is_dir() else ("other", None)))
+        return out
+
+    def labelled(text: str) -> bool:
+        return any(re.search(rf"\b{re.escape(w)}\b", text, re.IGNORECASE) for w in labels)
+
+    real_out, real_gates = stages.DEFAULT_OUT, guard.GATES_DIR
+    data_before = tree_state(real_out) if real_out.is_dir() else {}
+    _pool, renders = sc_mod.pool_and_renders()
+    prop_sha = hashlib.sha256(stages.PROPOSAL_PATH.read_bytes()).hexdigest()
+    tflags = {"proposal_file": stages.PROPOSAL_REL, "lock_file": TIME_LOCK_FILE,
+              "analyzer_sha256": hashlib.sha256(stages.ANALYZER_PATH.read_bytes()).hexdigest(),
+              "package_sha256": guard.package_sha256_of(guard.PACKAGE_DIR),
+              "renders_sha16": m_corr.renders_sha(renders)}
+    z64 = "0" * 64
+    real_committed = stages.committed
+
+    def committed_but(rel_x: str, ret):
+        return lambda rel, repo=stages.REPO: ret if rel == rel_x else real_committed(rel, repo)
+
+    # --- the campaign's values: LOCK-m-F3 v1.0's, G-PWR (Q-F3)'s record's, the committed schedules' ----------------
+    lock_cp, lock_blob = stages.committed(CAMPAIGN_LOCK_FILE)
+    lock_text = (lock_blob or b"").decode("utf-8", "replace")
+    lock_lines = lock_text.splitlines()
+    gp_cp, gp_blob = stages.committed("data/mf3/gates/Q-F3_G-PWR.json")
+    gpwr = json.loads(gp_blob or b"{}")
+    scheds = stages.load_committed([("campaign", t) for t in keys.TEMPLATES], schedule.DEFAULT_OUT)
+    fl = campaign_floors()
+    chk("mf3_sessions: the campaign's values are LOCK-m-F3 v1.0's -- CAMPAIGN_LAUNCH_COUNTS A1 128, A1s 64, A2 224, A2s 96, "
+        "A3 224, A3s 96 in keys.TEMPLATES' order (832 launches), G-PWR (Q-F3)'s record's L; CAMPAIGN_HOUR_CAP 480, an int; "
+        "CAMPAIGN_LOCK_LINES their two line forms, each a whole line of the committed lock (one or more, the qual "
+        "wiring's NOTE-7 form); the floors "
+        "schedule.FLOORS under the path, uncached (A1 80, A1s 32, A2 144, A2s 56, A3 144, A3s 56), the record's; each "
+        "floor at most its launch count and each launch count at most its committed campaign schedule's n; locked_path "
+        "uncached and cap 120; the prior G-F3's checkpoint name, stages.PRIOR_STAGE's 'qual'",
+        lock_cp == [] and gp_cp == []
+        and CAMPAIGN_LAUNCH_COUNTS == (("A1", 128), ("A1s", 64), ("A2", 224), ("A2s", 96), ("A3", 224), ("A3s", 96))
+        and tuple(t for t, _ in CAMPAIGN_LAUNCH_COUNTS) == tuple(keys.TEMPLATES)
+        and sum(n for _, n in CAMPAIGN_LAUNCH_COUNTS) == 832 and dict(CAMPAIGN_LAUNCH_COUNTS) == gpwr["launch"]["L"]
+        and type(CAMPAIGN_HOUR_CAP) is int and CAMPAIGN_HOUR_CAP == 480
+        and CAMPAIGN_LOCK_LINES == ("launch counts = A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96", "hour cap = 480 h")
+        and all(lock_lines.count(x) >= 1 for x in CAMPAIGN_LOCK_LINES)
+        and fl == {"A1": 80, "A1s": 32, "A2": 144, "A2s": 56, "A3": 144, "A3s": 56} == gpwr["inputs"]["floors"]
+        and all(fl[t] <= n <= int(scheds[t]["n"]) for t, n in CAMPAIGN_LAUNCH_COUNTS)
+        and CAMPAIGN_LOCKED_PATH == "uncached" and CAMPAIGN_REASONING_CAP == 120 and CAMPAIGN_LOCK_FILE == TIME_LOCK_FILE
+        and CAMPAIGN_PRIOR_CKPT_NAME == stages.out_paths("qual")["ckpt"].name and stages.PRIOR_STAGE["campaign"] == "qual",
+        (fl, CAMPAIGN_LOCK_LINES, sorted(gpwr)[:4]))
+
+    # --- the identity, from the committed lock: G-F3's; v1.0's two lines required as whole lines --------------------
+    ex_q, pq = stage_identity_extra("qual", **tflags)
+    ex_c, pc = stage_identity_extra("campaign", **tflags)
+    try:
+        x_ok = stages._extra(ex_c or {}, stage="campaign", stub=False) is not None
+    except ValueError:
+        x_ok = False
+    chk("mf3_sessions: the campaign's identity_extra from the committed LOCK-m-F3.md is G-F3's -- the same proposal, "
+        "lock, analyzer, package, renders, m files and weights, reasoning_cap 120 (CAMPAIGN_REASONING_CAP) and "
+        "locked_path uncached (CAMPAIGN_LOCKED_PATH); stages._extra accepts it for 'campaign'",
+        pq == pc == [] and ex_c is not None and ex_c == ex_q and ex_c["locked_path"] == "uncached"
+        and ex_c["reasoning_cap"] == 120 and x_ok, (pc, sorted(ex_c or {})))
+    v1_rule = "\n---\n\nWhere v0.2's text below, or the text it carries, differs from v1.0"
+    v02_text = lock_text.split(v1_rule, 1)[1].split("\n", 2)[2] if v1_rule in lock_text else ""
+    lc_, hc_ = CAMPAIGN_LOCK_LINES
+
+    def swap(text: str, old: str, new: str) -> str:
+        return "\n".join(new if ln == old else ln for ln in text.split("\n"))
+
+    def drop(text: str, old: str) -> str:
+        return "\n".join(ln for ln in text.split("\n") if ln != old)
+    variants = {
+        "v0.2's blob": v02_text,
+        "other launch counts": swap(lock_text, lc_, lc_.replace("A1 128", "A1 129")),
+        "the launch line with a tail": swap(lock_text, lc_, lc_ + " (a projection)"),
+        "the launch line indented": _lines_prefixed(lock_text, lc_, "  "),
+        "the launch line moved off its start": _lines_prefixed(lock_text, lc_, "x "),
+        "the launch line dropped": drop(lock_text, lc_),
+        "another hour cap": swap(lock_text, hc_, "hour cap = 481 h"),
+        "the hour cap in other words": swap(lock_text, hc_, "hour cap = 480 hours"),
+        "the cap line dropped": drop(lock_text, hc_),
+    }
+    got_c = {}
+    for nm, txt in variants.items():
+        with mock.patch.object(stages, "committed", committed_but(CAMPAIGN_LOCK_FILE, ([], txt.encode("utf-8")))):
+            got_c[nm] = (stage_identity_extra("campaign", **tflags), stage_identity_extra("qual", **tflags))
+    chk("mf3_sessions: the campaign refuses a lock whose committed text lacks either of v1.0's two lines as a whole line "
+        "-- v0.2's blob (as committed below v1.0's rule), other launch counts, the launch line with a tail, indented or "
+        "moved off its line's start (every line equal to it, NOTE-7's form), or dropped, another hour cap, '480 hours', "
+        "and the cap line dropped -- each 'carries no whole line'; qual accepts all nine (it runs under v0.2's lines, "
+        "which each keeps)",
+        v02_text.startswith("# LOCK-m-F3.md — v0.2") and len(variants) == 9
+        and all(v[0][0] is None and any("carries no whole line" in x for x in v[0][1]) for v in got_c.values())
+        and all(v[1][0] is not None for v in got_c.values()),
+        {k: v[0][1][:1] for k, v in got_c.items() if not (v[0][0] is None and v[1][0] is not None)})
+    q_moved = _lines_prefixed(lock_text, QUAL_LOCK_LINES[1], "x ")
+    both_bad = v02_text + "\n| `valence_core/m/corr.py` | `" + "c" * 64 + "` |\n"
+    with mock.patch.object(stages, "committed", committed_but(CAMPAIGN_LOCK_FILE, ([], q_moved.encode("utf-8")))):
+        ex_qm, p_qm = stage_identity_extra("campaign", **tflags)
+    with mock.patch.object(stages, "committed", committed_but(CAMPAIGN_LOCK_FILE, ([], both_bad.encode("utf-8")))):
+        ex_bb, p_bb = stage_identity_extra("campaign", **tflags)
+        ex_bt, p_bt = stage_identity_extra("time", **tflags)
+    chk("mf3_sessions: the campaign checks v0.2's lines first, at a line's start, as qual does (v1.0 with its path line "
+        "moved off every line's start: 'carries no line opening'), and both line checks come before the m files and the "
+        "weights are read (v0.2's blob that also names corr.py with a second sha256: refused for the missing whole "
+        "lines alone, where time refuses it for the doubled sha256)",
+        ex_qm is None and len(p_qm) == 1 and "carries no line opening" in p_qm[0] and "campaign-Q-F3" in p_qm[0]
+        and ex_bb is None and len(p_bb) == 1 and "carries no whole line" in p_bb[0]
+        and ex_bt is None and any("valence_core/m/corr.py with 2 sha256" in x for x in p_bt), (p_qm, p_bb, p_bt[:1]))
+    rc_h, out_h, _err_h = run3(["campaign", "--help"])
+    flat_h = "".join(out_h.split())
+    rc_t, out_t, _err_t = run3(["--help"])
+    # m's camp_pauses, read from its source, not imported (the constants check's form; this review's NOTE-2)
+    m_cp = [ast.literal_eval(n_.value) for n_ in ast.walk(ast.parse((REPO / "scripts" / "m_sessions.py").read_text(
+        encoding="utf-8"))) if isinstance(n_, ast.Assign) and any(isinstance(t_, ast.Name) and t_.id == "camp_pauses"
+                                                                  for t_ in n_.targets)]
+    chk("mf3_sessions: campaign --help lists time's five flags, each followed by its TIME_FLAG_HELP text, --resume "
+        "('continue the Q-F3 campaign's checkpoint'), --adjudication-file and --pi-stop-file with their texts, and the "
+        "pauses and re-run guidance (CAMPAIGN_PAUSES) in its description (exit 0); the top-level --help gives the "
+        "campaign's help with CAMPAIGN_PAUSES (exit 0); CAMPAIGN_PAUSES is m's camp_pauses verbatim, its one "
+        "assignment in scripts/m_sessions.py",
+        rc_h == 0 and "--resumecontinuetheQ-F3campaign'scheckpoint(skip-only)" in flat_h
+        and all(f"--{k.replace('_', '-')}{k.upper()}" + "".join(v.split()) in flat_h for k, v in TIME_FLAG_HELP.items())
+        and "--adjudication-fileADJUDICATION_FILEaUTF-8textfile" in flat_h and "--pi-stop-filePI_STOP_FILEaUTF-8textfile" in flat_h
+        and "".join(CAMPAIGN_PAUSES.split()) in flat_h and rc_t == 0
+        and "".join((STAGE_HELP["campaign"] + "; " + CAMPAIGN_PAUSES).split()) in "".join(out_t.split())
+        and m_cp == [CAMPAIGN_PAUSES], (out_h[-200:], rc_t, len(m_cp)))
+
+    # --- the ruling helpers, on synthetic files ---------------------------------------------------------------------
+    with tempfile.TemporaryDirectory() as td:
+        d = Path(td)
+
+        def wfile(nm: str, data) -> str:
+            p = d / nm
+            p.write_bytes(data if isinstance(data, bytes) else data.encode("utf-8"))
+            return str(p)
+        (d / "adir").mkdir()
+        os.mkfifo(d / "afifo")
+        fifo_ = d / "afifo"
+        res_ff: dict = {}
+
+        def fifo_runs():
+            # every call on the FIFO in a daemon thread joined with a timeout, m's form (its round 2's M2-2, round 3's
+            # O3-3, round 4's F4-9; this wiring's review, NOTE-5): a regressed guard blocks in open(), and the checks
+            # below then fail by name instead of hanging the self-test; a reader blocked in open() is released by a
+            # non-blocking writer's open
+            res_ff["texts"] = (ruling_texts(str(fifo_), None), ruling_texts(None, str(fifo_)))
+            res_ff["state"] = _campaign_state(fifo_)
+            reads_: list = []
+            with gpatch("_campaign_state", lambda p_: reads_.append(p_) or ("unreadable", {})):
+                res_ff["mirror"] = campaign_ruling_problems(fifo_, None, None)
+            res_ff["mirror_reads"] = reads_
+            res_ff["line"] = ruling_line(name_c, fifo_, {"adjudication": None, "pi_stop": "Stop."})
+        th_ff = threading.Thread(target=fifo_runs, daemon=True)
+        th_ff.start()
+        th_ff.join(20)
+        ff_hung = th_ff.is_alive()
+        if ff_hung:
+            try:
+                os.close(os.open(fifo_, os.O_WRONLY | os.O_NONBLOCK))
+            except OSError:
+                pass
+            th_ff.join(10)
+        ok_t, ok_p = ruling_texts(wfile("adj.txt", "The seat rules: resume.\n"), wfile("pi.txt", "﻿The PI stops."))
+        none_t, none_p = ruling_texts(None, None)
+        bad = {"blank": (wfile("b1.txt", "  \n\t "), "blank"), "format characters": (wfile("b2.txt", "​​"), "blank"),
+               "control characters": (wfile("b3.txt", "\x01\x02\n"), "blank"),
+               "a directory": (str(d / "adir"), "not a regular file"), "a FIFO": (str(d / "afifo"), "not a regular file"),
+               "absent": (str(d / "nothing.txt"), "not a regular file"),
+               "not UTF-8": (wfile("b4.txt", b"\xff\xfe\xfa"), "unreadable as UTF-8 text (UnicodeDecodeError)")}
+        hung_t = ({"adjudication": 0, "pi_stop": 0}, [])
+        got_r = {k: (res_ff.get("texts", (hung_t, hung_t)) if k == "a FIFO" else
+                     (ruling_texts(v[0], None), ruling_texts(None, v[0]))) for k, v in bad.items()}
+        two_t, two_p = ruling_texts(str(d / "adir"), wfile("b5.txt", " "))
+        chk("mf3_sessions: ruling_texts reads each ruling file as UTF-8 text, a leading byte-order mark dropped, passed as "
+            "read (unstripped), and refuses one that is blank (whitespace, format or control characters only), not a "
+            "regular file (a directory, a FIFO -- never opened: its calls return within 20 s -- or absent) or not "
+            "UTF-8, naming its flag; both files' "
+            "problems together; none given reads nothing",
+            ok_p == [] and ok_t == {"adjudication": "The seat rules: resume.\n", "pi_stop": "The PI stops."}
+            and none_t == {"adjudication": None, "pi_stop": None} and none_p == []
+            and all(v[0][0]["adjudication"] is None and len(v[0][1]) == 1 and v[0][1][0].startswith("--adjudication-file")
+                    and bad[k][1] in v[0][1][0] and v[1][0]["pi_stop"] is None and len(v[1][1]) == 1
+                    and v[1][1][0].startswith("--pi-stop-file") and bad[k][1] in v[1][1][0] for k, v in got_r.items())
+            and len(two_p) == 2 and two_t == {"adjudication": None, "pi_stop": None} and not ff_hung,
+            {k: (v[0][1], v[1][1]) for k, v in got_r.items()})
+
+        look = {"kind": "look", "at_launches": 40, "adjudication": None, "arm": None}
+
+        def ck_(*, sessions=1, pauses=(), pi_stop=None, terminal=None, pending=False) -> dict:
+            o = {"identity": {"unit": keys.UNIT, "stage": "campaign"},
+                 "sessions": [{"template": "A1", "s": i} for i in range(sessions)],
+                 "campaign": {"pauses": [dict(p) for p in pauses], "pi_stop": pi_stop, "terminal": terminal,
+                              "end_look": None}}
+            if pending:
+                o[end_key] = {"status": "PAUSE"}
+            return o
+
+        def wck(nm: str, obj=None, raw: str | None = None) -> Path:
+            p = d / nm
+            p.write_text(raw if raw is not None else json.dumps(obj), encoding="utf-8")
+            return p
+        st_open = wck("open.json", ck_(pauses=[dict(look, adjudication="Ruling one."), dict(look, at_launches=80)],
+                                       pi_stop="The PI stops."))
+        cases_st = {
+            "absent": (d / "none.json", "absent"), "a directory": (d / "adir", "unreadable"),
+            "a FIFO": (d / "afifo", "unreadable"), "not JSON": (wck("u1.json", raw="not json"), "unreadable"),
+            "a JSON list": (wck("u2.json", [1]), "unreadable"),
+            "sessions not a list": (wck("u3.json", {"sessions": {}, "campaign": {}}), "unreadable"),
+            "pauses not a list": (wck("u4.json", dict(ck_(), campaign={"pauses": {}})), "unreadable"),
+            "a pause of another kind": (wck("u5.json", ck_(pauses=[dict(look, kind="peek")])), "unreadable"),
+            "a launch count not an int": (wck("u6.json", ck_(pauses=[dict(look, at_launches="40")])), "unreadable"),
+            "an adjudication not a text": (wck("u7.json", ck_(pauses=[dict(look, adjudication=7)])), "unreadable"),
+            "an arm not Q-F3's": (wck("u8.json", ck_(pauses=[dict(look, kind="schedule_exhausted", arm="A0")])),
+                                  "unreadable"),
+            "a pause lacking its adjudication": (wck("u9.json", ck_(pauses=[{"kind": "look", "at_launches": 40}])),
+                                                 "unreadable"),
+            "a PI stop not a text": (wck("u10.json", ck_(pi_stop=3)), "unreadable"),
+            "a lone surrogate": (wck("u11.json", raw='{"sessions": [], "campaign": {"pauses": [{"kind": "look", '
+                                                     '"at_launches": 40, "adjudication": "\\ud800"}]}}'), "unreadable"),
+            "pending": (wck("p.json", ck_(pending=True)), "pending"),
+            "ended": (wck("e.json", ck_(terminal={"status": "COMPLETE", "at_launches": 832})), "ended"),
+            "ended, an end look's pause unruled": (wck("e2.json", ck_(
+                pauses=[dict(look, kind="end_look", at_launches=832)],
+                terminal={"status": "COMPLETE", "at_launches": 832})), "ended"),
+            "open": (st_open, "open"),
+        }
+        got_st = {k: (res_ff.get("state", ("hung", None)) if k == "a FIFO" else _campaign_state(v[0]))
+                  for k, v in cases_st.items()}
+        chk("mf3_sessions: _campaign_state reads a campaign checkpoint tolerantly -- absent; unreadable when not a "
+            "regular file (a directory, a FIFO, never opened: the FIFO calls return within 20 s), not JSON, not an "
+            "object, its sessions or pauses not "
+            "lists, a pause of another kind, with a launch count not an int, an adjudication not a text or no "
+            "adjudication key, an arm not one of Q-F3's six, a PI stop not a text, or a lone surrogate in a ruling "
+            "(summary {}); pending; ended (an end look's pause unruled with it); open -- the open summary text-free: "
+            "launched, the PI stop's sha256, the last "
+            "pause (kind, launches, arm, adjudicated, digest) and every recorded ruling's sha16",
+            not ff_hung and all(got_st[k][0] == v[1] for k, v in cases_st.items())
+            and all(got_st[k][1] == {} for k, v in cases_st.items() if v[1] == "unreadable")
+            and got_st["open"][1] == {"launched": True,
+                                      "pi_stop_sha256": hashlib.sha256(b"The PI stops.").hexdigest(),
+                                      "last": {"kind": "look", "at_launches": 80, "arm": None, "adjudicated": False,
+                                               "adjudication_sha16": None},
+                                      "ruling_sha16s": [sha16("Ruling one.")]}
+            and "Ruling one." not in json.dumps(got_st["open"][1]),
+            {k: got_st[k][0] for k, v in cases_st.items() if got_st[k][0] != v[1]})
+
+        c_ruled_last = wck("r1.json", ck_(pauses=[dict(look, adjudication="Ruling one."),
+                                                  dict(look, at_launches=80, adjudication="Ruling two.")]))
+        c_reuse = wck("r2.json", ck_(pauses=[dict(look, adjudication="Ruling one."), dict(look, at_launches=80)]))
+        c_exh = wck("r3.json", ck_(pauses=[dict(look, kind="schedule_exhausted", at_launches=120, arm="A1")]))
+        c_pend = wck("r4.json", ck_(pauses=[dict(look, adjudication="Ruling one.")], pending=True))
+        c_pend_pi = wck("r5.json", ck_(pending=True, pi_stop="The PI stops."))
+        c_open0 = wck("r6.json", ck_(sessions=0))
+        c_nopause = wck("r7.json", ck_())
+        c_look = wck("r8.json", ck_(pauses=[look]))
+        crp = campaign_ruling_problems
+        rp = {
+            "no ruling, a FIFO": (res_ff.get("mirror", ["hung"]), None),
+            "unreadable": (crp(cases_st["not JSON"][0], "A ruling.", None), None),
+            "ended": (crp(cases_st["ended"][0], "A ruling.", "Stop."), None),
+            "another PI stop": (crp(st_open, None, "Another stop."), "CHECKPOINT MISMATCH"),
+            "another PI stop beside an end pending": (crp(c_pend_pi, None, "Another stop."), "CHECKPOINT MISMATCH"),
+            "an adjudication beside an end pending": (crp(c_pend, "A ruling.", None), "RULING BESIDE AN END PENDING"),
+            "a recorded adjudication beside an end pending": (crp(c_pend, " Ruling one. ", None),
+                                                               "already records as a pause's ruling"),
+            "an unrecorded PI stop beside an end pending": (crp(c_pend, None, "Stop."), "--pi-stop-file"),
+            "the recorded PI stop beside an end pending": (crp(c_pend_pi, None, "The PI stops.\n"), None),
+            "a PI stop with no checkpoint": (crp(d / "none.json", None, "Stop."), "PI STOP REFUSED"),
+            "a PI stop with no session": (crp(c_open0, None, "Stop."), "PI STOP REFUSED"),
+            "an adjudication on an exhausted schedule": (crp(c_exh, "A ruling.", None), "SCHEDULE EXHAUSTED"),
+            "the PI's stop on an exhausted schedule": (crp(c_exh, "A ruling.", "Stop."), None),
+            "a ruling reused": (crp(c_reuse, "Ruling one.\n", None), "RULING REUSED"),
+            "no pause to adjudicate, the last ruled": (crp(c_ruled_last, "A ruling.", None),
+                                                       "already carries a ruling (sha16 " + sha16("Ruling two.")
+                                                       + "); resume with --resume alone"),
+            "no pause to adjudicate, with the PI's stop": (crp(c_ruled_last, "A ruling.", "Stop."),
+                                                          "drop --adjudication-file: resume with --resume and the PI's "
+                                                          "stop alone"),
+            "no pause at all": (crp(c_nopause, "A ruling.", None), "NO PAUSE TO ADJUDICATE at"),
+            "an open look's pause": (crp(c_look, "A ruling.", None), None),
+            "the PI's stop on an open look's pause": (crp(c_look, None, "Stop."), None),
+        }
+        bad_rp = {k: v[0] for k, v in rp.items()
+                  if not ((v[1] is None and v[0] == []) or (v[1] is not None and len(v[0]) == 1 and v[1] in v[0][0]))}
+        chk("mf3_sessions: campaign_ruling_problems mirrors the stage's refusals before the load -- nothing for no ruling "
+            "(a FIFO not read: _campaign_state not called), an unreadable or an ended checkpoint; CHECKPOINT MISMATCH "
+            "for another PI stop, beside an "
+            "end pending too; RULING BESIDE AN END PENDING for an adjudication there (naming one the checkpoint records) "
+            "or a PI stop it does not record, none for the stop it records; PI STOP REFUSED with no checkpoint or no "
+            "session; SCHEDULE EXHAUSTED unless the PI's stop is offered; RULING REUSED for an earlier pause's ruling "
+            "(stripped); NO PAUSE TO ADJUDICATE with the last ruling's digest and how to resume; nothing for a fit "
+            "ruling", not bad_rp and len(rp) == 19 and res_ff.get("mirror_reads") == [] and not ff_hung
+            and "NO PAUSE TO ADJUDICATE" in rp["no pause at all"][0][0]
+            and "already carries" not in rp["no pause at all"][0][0], bad_rp)
+        # the mirror's words are the stage's own (this review's MINOR-3): each refusal the stage makes again after the
+        # load, read from stages.run_campaign's source -- its f-strings' text, each placeholder by its expression --
+        # equals the mirror's message with the path and the arm put back as placeholders, the declared suffixes aside
+        tmpl = {"".join(v_.value if isinstance(v_, ast.Constant) else "{" + ast.unparse(v_.value) + "}"
+                        for v_ in n_.values)
+                for n_ in ast.walk(ast.parse(textwrap.dedent(inspect.getsource(stages.run_campaign))))
+                if isinstance(n_, ast.JoinedStr)}
+
+        def as_tmpl(msg, path: Path, arm: str | None = None) -> str:
+            t_ = str(msg).replace(str(path), "{cpath}")
+            return t_.replace(f": {arm} has", ": {last.get('arm')} has") if arm else t_
+
+        def stage_t(cls: str) -> list:
+            return [t_ for t_ in tmpl if t_.startswith(cls)]
+        first = lambda k: (rp[k][0] or [""])[0]
+        w_ok = {
+            "CHECKPOINT MISMATCH": as_tmpl(first("another PI stop"), st_open) in [
+                t_ + " (the stage makes this refusal after the load)"
+                for t_ in stage_t("CHECKPOINT MISMATCH: {cpath}")],
+            "PI STOP REFUSED": as_tmpl(first("a PI stop with no session"), c_open0) in stage_t("PI STOP REFUSED"),
+            "SCHEDULE EXHAUSTED": as_tmpl(first("an adjudication on an exhausted schedule"), c_exh, "A1")
+            in stage_t("SCHEDULE EXHAUSTED"),
+            "NO PAUSE TO ADJUDICATE": as_tmpl(first("no pause at all"), c_nopause) in stage_t("NO PAUSE TO ADJUDICATE")
+            and any(as_tmpl(first("no pause to adjudicate, the last ruled"), c_ruled_last).startswith(
+                t_ + " -- its last pause (") for t_ in stage_t("NO PAUSE TO ADJUDICATE")),
+        }
+        chk("mf3_sessions: campaign_ruling_problems' messages are the stage's own words -- CHECKPOINT MISMATCH, PI "
+            "STOP REFUSED, SCHEDULE EXHAUSTED and NO PAUSE TO ADJUDICATE each equal a refusal in stages.run_campaign's "
+            "source (its f-string, each placeholder by its expression) with the path and the arm put back, beside "
+            "only the declared suffixes (CHECKPOINT MISMATCH's 'the stage makes this refusal after the load'; NO PAUSE "
+            "TO ADJUDICATE's last pause)",
+            all(w_ok.values()) and len(w_ok) == 4, {k: v for k, v in w_ok.items() if not v})
+        rl_ = {
+            "none": (ruling_line(name_c, c_look, {"adjudication": None, "pi_stop": None}), None),
+            "absent": (ruling_line(name_c, d / "none.json", {"adjudication": "A ruling.", "pi_stop": None}),
+                       f"RULING {name_c}: the seat's adjudication (sha16 {sha16('A ruling.')}) offered with no "
+                       f"checkpoint on disk"),
+            "open look": (ruling_line(name_c, c_look, {"adjudication": " A ruling.\n", "pi_stop": "Stop."}),
+                          f"RULING {name_c}: the seat's adjudication (sha16 {sha16('A ruling.')}) and the PI's stop "
+                          f"(sha16 {sha16('Stop.')}) offered for the pause at 40 launches (look)"),
+            "pending": (ruling_line(name_c, c_pend, {"adjudication": None, "pi_stop": "Stop."}),
+                        f"RULING {name_c}: the PI's stop (sha16 {sha16('Stop.')}) offered beside an end pending"),
+            "ended": (ruling_line(name_c, cases_st["ended"][0], {"pi_stop": "Stop."}), "offered on an ended campaign"),
+            "ended, its last pause unruled": (ruling_line(name_c, cases_st["ended, an end look's pause unruled"][0],
+                                                       {"pi_stop": "Stop."}), "offered on an ended campaign"),
+            "a FIFO": (res_ff.get("line"), "offered on an unreadable checkpoint"),
+            "unreadable": (ruling_line(name_c, cases_st["not JSON"][0], {"pi_stop": "Stop."}),
+                           "offered on an unreadable checkpoint"),
+            "no pause": (ruling_line(name_c, c_nopause, {"pi_stop": "Stop."}), "offered with no pause unadjudicated"),
+            "recorded (RM4-1)": (ruling_line(name_c, c_ruled_last, {"adjudication": "Ruling two."}),
+                                 "offered with no pause unadjudicated; the checkpoint already records this adjudication "
+                                 "as a pause's ruling"),
+        }
+        bad_rl = {k: v[0] for k, v in rl_.items() if not ((v[1] is None and v[0] is None) or (
+            v[1] is not None and v[0] is not None and (v[0] == v[1] or v[0].endswith(v[1]))))}
+        chk("mf3_sessions: the RULING line gives each offered text's sha16 (of the stripped text, never the text) and the "
+            "pause it is offered for or the checkpoint's state -- none offered, no line; no checkpoint; a look's open "
+            "pause; beside an end pending; an ended campaign, its last pause unruled too; an unreadable checkpoint, a "
+            "FIFO among them; no pause unadjudicated -- with "
+            "RM4-1's note where the checkpoint already records the adjudication offered",
+            not bad_rl and not ff_hung and "A ruling." not in str(rl_["open look"][0]), bad_rl)
+
+    # --- the stub path: time, a FAILed id and G-F3 on the stub, then the campaign at the same root ------------------
+    def cells(gate):
+        if gate == "campaign":
+            return {(t, s): schedule.campaign_schedule(t, 1)[s] for t in keys.TEMPLATES for s in range(16)}
+        return {(t, j): schedule.gate_schedule(gate, t, schedule.GATE_PLAN_COUNTS[(gate, t)])[j]
+                for t in (keys.GID_TEMPLATES if gate == "id" else keys.TEMPLATES)
+                for j in range(schedule.GATE_PLAN_COUNTS[(gate, t)])}
+    made_ad: list = []
+
+    def stub(gate, rule=None, interrupt=None):
+        def f():
+            a = testing.F3Adapter()
+            a.load(stages._script_policy(gate, cells(gate), rule, interrupt), None)
+            made_ad.append(a)
+            return a
+        return f
+
+    def stub_run(fn, root, factory, resume_run=False, *, gates, camp_stage=None, **rul):
+        buf, err = io.StringIO(), io.StringIO()
+        with contextlib.ExitStack() as st:
+            st.enter_context(mock.patch.object(guard, "GATES_DIR", gates))
+            st.enter_context(mock.patch.object(stages, "DEFAULT_OUT", root.parent / "default-out"))
+            st.enter_context(gpatch("_load_qwen", t_loader))
+            if camp_stage is not None:
+                st.enter_context(mock.patch.object(stages, "run_campaign", camp_stage))
+            st.enter_context(contextlib.redirect_stdout(buf))
+            st.enter_context(contextlib.redirect_stderr(err))
+            try:
+                rc = fn(**tflags, resume_run=resume_run, adapter_factory=factory, out_root=root, **rul)
+            except stages._Interrupt as e:
+                rc = e
+        return rc, buf.getvalue(), err.getvalue()
+
+    div = lambda t, s, kind, i, call: "Eight." if (call["cached"] and t == "A3s" and kind == "forced" and i == 1) else None
+
+    with tempfile.TemporaryDirectory() as td:
+        base = Path(td)
+
+        def fresh(nm: str) -> Path:
+            r = base / nm / "mf3"
+            schedule.write_schedule_files(r / "schedules")
+            (base / nm / "gates").mkdir()
+            return r
+        r_c = fresh("chain")
+        g_c = r_c.parent / "gates"
+        pre_c = (stub_run(run_time, r_c, stub("time"), gates=g_c)[0], stub_run(run_id, r_c, stub("id", div), gates=g_c)[0],
+                 stub_run(run_qual, r_c, stub("qual"), gates=g_c)[0])
+        pi_f, adj_f = base / "pi_stop.txt", base / "adjudication.txt"
+        pi_f.write_text("The PI stops the campaign (selftest).\n", encoding="utf-8")
+        adj_f.write_text("The seat's ruling (selftest).\n", encoding="utf-8")
+        ckc = r_c / "ckpt" / ck_name
+        rc_p0, out_p0, err_p0 = stub_run(run_campaign, r_c, stub("campaign"), gates=g_c, pi_stop_file=str(pi_f))
+        p0_absent = not ckc.exists()
+        stop_a2 = lambda t, s, kind, i: t == "A2" and s == 0 and kind == "forced" and i == 0
+        made_ad.clear()
+        rc_i, _o, _e = stub_run(run_campaign, r_c, stub("campaign", None, stop_a2), gates=g_c)
+        ck_i = rs.read_checkpoint(ckc) if ckc.is_file() else {"sessions": []}
+        bytes_i = ckc.read_bytes() if ckc.is_file() else b""
+        rc_n, out_n, err_n = stub_run(run_campaign, r_c, stub("campaign"), True, gates=g_c, adjudication_file=str(adj_f))
+        n_same = ckc.is_file() and ckc.read_bytes() == bytes_i
+        rc_s, out_s, err_s = stub_run(run_campaign, r_c, stub("campaign"), True, gates=g_c, pi_stop_file=str(pi_f))
+        ck_s = rs.read_checkpoint(ckc) if ckc.is_file() else {}
+        ident_s, camp_s = ck_s.get("identity") or {}, ck_s.get("campaign") or {}
+        rep_s = r_c / "reports" / f"{keys.UNIT}_campaign_report.json"
+        rc_e, _o, err_e = stub_run(run_campaign, r_c, stub("campaign"), True, gates=g_c)
+        sl = out_s.splitlines()
+        ri = next((i for i, x in enumerate(sl) if x.startswith("RULING ")), None)
+        si = next((i for i, x in enumerate(sl) if x.startswith(f"STAGE {name_c} ")), None)
+        chk("mf3_sessions: on the stub factory after time, a FAILed id and G-F3 PASS at the same root, the campaign runs "
+            "through stages.run_campaign -- the PI's stop with no session is the stage's PI STOP REFUSED (exit 4; the "
+            "RULING line 'with no checkpoint on disk'; no checkpoint written); a run interrupted at A2's first session "
+            "keeps the sessions before it; the seat's adjudication with no pause is the stage's NO PAUSE TO ADJUDICATE "
+            "(exit 4; the checkpoint unchanged); --resume with the PI's stop ends it PI-STOP (exit 0) -- the RULING line "
+            "before the STAGE line, the stop recorded in the checkpoint only (stripped), the identity the campaign's "
+            "(uncached, cap 120, hour cap 480, the committed lock's and proposal's sha256, the committed schedules' n), "
+            "the floors and launch-count projection the driver's, G-F3's checkpoint the prior, the report written; and "
+            "a later --resume is refused as ended (exit 4); no label printed",
+            pre_c == (0, 5, 0) and rc_p0 == 4 and "PI STOP REFUSED" in err_p0 and p0_absent
+            and f"RULING {name_c}: the PI's stop (sha16 {sha16(pi_f.read_text(encoding='utf-8').strip())}) offered with "
+                f"no checkpoint on disk" in out_p0
+            and isinstance(rc_i, stages._Interrupt) and len(ck_i["sessions"]) >= 1
+            and ("A2", 0) not in [(r["template"], r["s"]) for r in ck_i["sessions"]]
+            and rc_n == 4 and "NO PAUSE TO ADJUDICATE" in err_n and n_same
+            and "offered with no pause unadjudicated" in out_n
+            and rc_s == 0 and ri is not None and si is not None and ri < si and f"STAGE {name_c} PI-STOP path=uncached" in out_s
+            and (camp_s.get("terminal") or {}).get("status") == "PI-STOP"
+            and camp_s.get("pi_stop") == pi_f.read_text(encoding="utf-8").strip()
+            and pi_f.read_text(encoding="utf-8").strip() not in out_s + err_s
+            and ident_s.get("stage") == "campaign" and ident_s.get("path") == "uncached"
+            and ident_s.get("reasoning_cap") == 120 and ident_s.get("hour_cap") == 480
+            and ident_s.get("lock_sha256") == (ex_c or {}).get("lock_sha256") and ident_s.get("proposal_sha256") == prop_sha
+            and ident_s.get("n") == {t: int(scheds[t]["n"]) for t in keys.TEMPLATES}
+            and camp_s.get("floors") == fl and camp_s.get("launch_counts_projection") == dict(CAMPAIGN_LAUNCH_COUNTS)
+            and str((ck_s.get("prior") or {}).get("checkpoint", "")).endswith("ckpt/" + CAMPAIGN_PRIOR_CKPT_NAME)
+            and rep_s.is_file() and rc_e == 4 and "CAMPAIGN ENDED" in err_e
+            and "DRIVER " not in out_s and "SNAPSHOT " not in out_s and not labelled(out_s + err_s + out_p0 + err_p0),
+            (pre_c, rc_p0, type(rc_i).__name__, rc_n, rc_s, rc_e, err_s[-200:]))
+        r_x = fresh("exit")
+        ex_codes = {st_: stub_run(run_campaign, r_x, stub("campaign"), gates=r_x.parent / "gates",
+                                  camp_stage=lambda *a, _s=st_, **k: {"status": _s})[0]
+                    for st_ in ("COMPLETE", "CAP", "PI-STOP", "PAUSE", "STOP")}
+        chk("mf3_sessions: the campaign's exit code is stages.EXIT_CODES of the stage's status (COMPLETE, CAP and PI-STOP "
+            "0, PAUSE 3, STOP 4)", ex_codes == {"COMPLETE": 0, "CAP": 0, "PI-STOP": 0, "PAUSE": 3, "STOP": 4}, ex_codes)
+
+    # --- the Qwen path with the loader and the stages trapped ------------------------------------------------------
+    with tempfile.TemporaryDirectory() as td:
+        base = Path(td)
+        rev = (ex_c or {}).get("weights_revision", "0" * 40)
+        fake_snap = {"model_id": QWEN_MODEL_ID, "revision": rev, "snapshot_dir": "<selftest>/snapshots/" + rev,
+                     "n_snapshots": 1, "offline": "1"}
+        no_prior = ((stages, "prior_gate", lambda *a, **k: {}),)
+        rul_dir = base / "rulings"
+        rul_dir.mkdir()
+
+        def rfile(nm: str, data) -> str:
+            p = rul_dir / nm
+            p.write_bytes(data if isinstance(data, bytes) else data.encode("utf-8"))
+            return str(p)
+        adj_ok, pi_ok = rfile("adj.txt", "The seat's ruling (selftest).\n"), rfile("pi.txt", "The PI's stop (selftest).\n")
+        adj_blank, adj_dir, pi_bad = rfile("blank.txt", " \n"), str(rul_dir), rfile("bad.txt", b"\xff\xfe")
+        adj_one = rfile("one.txt", "Ruling one.\n")
+
+        def fresh(nm: str) -> Path:
+            r = base / nm / "mf3"
+            schedule.write_schedule_files(r / "schedules")
+            (base / nm / "gates").mkdir()
+            return r
+
+        def q_c(nm: str, over: dict | None = None, *, setup=None, pre=(), lic=None, resume_flag=False, argv_pre=(),
+                drv=([], "d" * 64), snap=([], fake_snap), snapfn=None, loader=None, more=(), adj=None, pi=None):
+            root = fresh(nm)
+            if setup is not None:
+                setup(root)
+            before = tree_state(root.parent)
+            fl_ = {**tflags, **(over or {})}
+            argv = list(argv_pre) + ["campaign"] + [x for k, v in fl_.items() if v is not None
+                                                    for x in ("--" + k.replace("_", "-"), v)]
+            argv += (["--adjudication-file", adj] if adj is not None else []) + (["--pi-stop-file", pi] if pi else [])
+            n0, s0 = len(loads), len(stage_calls)
+            with contextlib.ExitStack() as st:
+                st.enter_context(mock.patch.object(stages, "DEFAULT_OUT", root))
+                st.enter_context(mock.patch.object(guard, "GATES_DIR", root.parent / "gates"))
+                st.enter_context(mock.patch.object(stages, "run_campaign", t_stage("campaign")))
+                st.enter_context(mock.patch.object(stages, "run_gate_stage", t_stage("gate")))
+                st.enter_context(mock.patch.object(stages, "run_gid_pair_f3", t_stage("gid")))
+                st.enter_context(mock.patch.object(guard, "preflight_laptop", lambda: list(pre)))
+                st.enter_context(gpatch("_load_qwen", t_loader if loader is None else loader))
+                st.enter_context(gpatch("build_schedules", t_escape("build_schedules")))
+                st.enter_context(gpatch("run_selftest", t_escape("run_selftest")))
+                if drv is not None:
+                    st.enter_context(gpatch("driver_problems", lambda: (list(drv[0]), drv[1])))
+                if snapfn is not None:
+                    st.enter_context(gpatch("qwen_snapshot", snapfn))
+                elif snap is not None:
+                    st.enter_context(gpatch("qwen_snapshot", lambda: (list(snap[0]), snap[1])))
+                if lic is not None:
+                    st.enter_context(mock.patch.object(stages, "licence_problems", lambda extra, **kw: list(lic)))
+                for obj, attr, val in more:
+                    st.enter_context(gpatch(attr, val) if obj is None else mock.patch.object(obj, attr, val))
+                rc_, out_, err_ = run3(argv + (["--resume"] if resume_flag else []))
+            return {"rc": rc_, "out": out_, "err": err_, "loads": len(loads) - n0, "calls": stage_calls[s0:],
+                    "same": before == tree_state(root.parent), "root": root}
+
+        def plant_qual(*, proposal=prop_sha, cap=120, status="PASS", stub_weights=False, stub_tag=False, stage_="qual"):
+            # a G-F3 checkpoint (by default) at the campaign's prior path, its provenance carrying no stub tag
+            def setup(root):
+                cp = root / "ckpt" / CAMPAIGN_PRIOR_CKPT_NAME
+                cp.parent.mkdir(parents=True, exist_ok=True)
+                w = dict(rs.STUB_WEIGHTS) if stub_weights else {"weights_revision": "a" * 40, "weights_sha256": "b" * 64}
+                ident = rs.Identity(stage=stage_, template_set=list(keys.TEMPLATES), lock_sha256="1" * 64,
+                                    schedule_sha256="3" * 64, path="uncached", hour_cap=None,
+                                    n=dict(QUAL_COUNTS) if stage_ == "qual" else {t: 1 for t in keys.TEMPLATES},
+                                    audit_v2_sha16="4" * 16, ban_sha="5" * 16, backend_identifier="6" * 16,
+                                    proposal_sha256=proposal, reasoning_cap=cap, **w)
+                ck = rs.load_or_init(cp, ident, False)
+                rs.append_provenance(ck, rs.provenance_record(
+                    {"adapter": "qwen3.6-27b-4bit-mlx",
+                     "apparatus": stages.STUB_MARK if stub_tag else "selftest-planted, no stub tag"}))
+                if status is not None:
+                    ck["stage_end"] = {"status": status, "fired": [], "adjudication": None}
+                rs.write_checkpoint(cp, ck)
+            return setup
+
+        def plant_art(*, verdict="FAIL", cap=120, proposal=prop_sha, stub_tag=False, raw=None):
+            def setup(root):
+                p = root.parent / "gates" / gid_name
+                if raw is not None:
+                    p.write_text(raw, encoding="utf-8")
+                    return
+                tag = stages.STUB_MARK if stub_tag else "selftest-planted, no stub tag"
+                p.write_text(json.dumps({"verdict": verdict, "identity": {"proposal_sha256": proposal,
+                                                                         "reasoning_cap": cap},
+                                         "provenance": [{"record": {"adapter": "qwen3.6-27b-4bit-mlx",
+                                                                    "apparatus": tag}, "stamp": "selftest"}]}),
+                             encoding="utf-8")
+            return setup
+
+        def camp(obj=None, *, raw=None, as_dir=False, as_fifo=False):
+            # a campaign checkpoint at the campaign's path: a synthetic JSON object (the screen's and the mirror's
+            # input), raw text, a directory or a FIFO
+            def setup(root):
+                cp = root / "ckpt" / ck_name
+                cp.parent.mkdir(parents=True, exist_ok=True)
+                if as_dir:
+                    cp.mkdir()
+                elif as_fifo:
+                    os.mkfifo(cp)
+                elif raw is not None:
+                    cp.write_text(raw, encoding="utf-8")
+                else:
+                    cp.write_text(json.dumps(obj), encoding="utf-8")
+            return setup
+
+        def both(*setups):
+            def setup(root):
+                for s_ in setups:
+                    s_(root)
+            return setup
+
+        def ck2(*, sessions=1, pauses=(), pi_stop=None, terminal=None, pending=False) -> dict:
+            o = {"identity": {"unit": keys.UNIT, "stage": "campaign"},
+                 "sessions": [{"template": "A1", "s": i} for i in range(sessions)],
+                 "campaign": {"pauses": [dict(p) for p in pauses], "pi_stop": pi_stop, "terminal": terminal,
+                              "end_look": None}}
+            if pending:
+                o[end_key] = {"status": "PAUSE"}
+            return o
+        look_ = {"kind": "look", "at_launches": 40, "adjudication": None, "arm": None}
+
+        def tamper(root):
+            f = root / "schedules" / f"{keys.UNIT}_campaign_A1s.json"
+            f.write_bytes(f.read_bytes() + b"\n")
+        v02_lock = ((stages, "committed", committed_but(CAMPAIGN_LOCK_FILE, ([], v02_text.encode("utf-8")))),)
+        msg_top = "campaign takes no --selftest / --build-schedules / --out"
+        P = plant_qual()
+
+        def first_link_c(root):
+            # the campaign's prior name a link to G-TIME-F3's first run's checkpoint (stage_prior_checkpoint refuses
+            # it by the name it resolves to)
+            d_ = root / "ckpt"
+            d_.mkdir(parents=True, exist_ok=True)
+            (d_ / FIRST_RUN_CKPT_NAME).write_text("{}", encoding="utf-8")
+            (d_ / CAMPAIGN_PRIOR_CKPT_NAME).symlink_to(d_ / FIRST_RUN_CKPT_NAME)
+        c_refused = {
+            "missing": (q_c("missing", {"lock_file": None}), "campaign needs ['--lock-file']"),
+            "other lock": (q_c("otherlock", {"lock_file": "CLAUDE.md"}), f"{name_c} cites LOCK-m-F3.md"),
+            "v0.2's blob (no v1.0 lines)": (q_c("v02lock", more=v02_lock), "carries no whole line"),
+            "malformed": (q_c("malformed", {"analyzer_sha256": "xyz"}), "analyzer_sha256 must be a sha256 hex digest"),
+            "licence (d)": (q_c("lic_d", {"analyzer_sha256": z64}, more=no_prior),
+                            "is not identity_extra's analyzer_sha256"),
+            "renders": (q_c("renders", {"renders_sha16": "0" * 16}, lic=[], more=no_prior), "renders: RENDERS MISMATCH"),
+            "preflight": (q_c("preflight", lic=[], pre=("ONE PROCESS: selftest",), more=no_prior),
+                          "preflight: ONE PROCESS: selftest"),
+            "an adjudication file blank": (q_c("adjblank", lic=[], setup=P, adj=adj_blank),
+                                           "--adjudication-file " + adj_blank + ": blank"),
+            "an adjudication file not a regular file": (q_c("adjdir", lic=[], setup=P, adj=adj_dir), "not a regular file"),
+            "a PI-stop file not UTF-8": (q_c("pibad", lic=[], setup=P, pi=pi_bad), "unreadable as UTF-8 text"),
+            "prior absent (real gate)": (q_c("noprior", lic=[]), "prior: PRIOR STAGE ABSENT"),
+            "prior on the stub (real gate)": (q_c("stubprior", lic=[], setup=plant_qual(stub_tag=True)),
+                                              "prior: PRIOR STAGE ON THE STUB"),
+            "prior under another proposal (real gate)": (q_c("otherprop", lic=[], setup=plant_qual(proposal="2" * 64)),
+                                                         "prior: PRIOR STAGE UNDER ANOTHER PROPOSAL"),
+            "prior not ended (real gate)": (q_c("notended", lic=[], setup=plant_qual(status=None)),
+                                            "prior: PRIOR STAGE NOT ENDED"),
+            "prior ended STOP (real gate)": (q_c("priorstop", lic=[], setup=plant_qual(status="STOP")),
+                                             "prior: PRIOR STAGE STOP"),
+            "prior not G-F3's (real gate)": (q_c("priortime", lic=[], setup=plant_qual(stage_="time")),
+                                             "prior: PRIOR STAGE MISMATCH"),
+            "prior at another cap (real gate)": (q_c("prior60", lic=[], setup=plant_qual(cap=60, stub_weights=True)),
+                                                 "prior: NOT THE FIXED CAP"),
+            "G-ID artifact on the stub": (q_c("artstub", lic=[], setup=both(P, plant_art(stub_tag=True))),
+                                          "artifact: G-ID ARTIFACT ON THE STUB"),
+            "G-ID artifact at another cap": (q_c("art60", lic=[], setup=both(P, plant_art(cap=60))),
+                                             "artifact: G-ID ARTIFACT AT ANOTHER CAP"),
+            "G-ID artifact under another proposal": (q_c("artprop", lic=[], setup=both(P, plant_art(proposal="2" * 64))),
+                                                     "artifact: G-ID ARTIFACT UNDER ANOTHER PROPOSAL"),
+            "G-ID artifact unreadable": (q_c("artbad", lic=[], setup=both(P, plant_art(raw="not json"))),
+                                         "artifact: G-ID ARTIFACT UNREADABLE"),
+            "exists": (q_c("exists", lic=[], setup=both(P, camp(ck2()))), "checkpoint: CHECKPOINT EXISTS"),
+            "ended": (q_c("ended", lic=[], setup=both(P, camp(ck2(terminal={"status": "CAP", "at_launches": 9})))),
+                      "checkpoint: CAMPAIGN ENDED"),
+            "ended --resume": (q_c("ended_r", lic=[], resume_flag=True,
+                                   setup=both(P, camp(ck2(terminal={"status": "CAP", "at_launches": 9})))),
+                               "checkpoint: CAMPAIGN ENDED"),
+            "a directory at the checkpoint path": (q_c("ckdir", lic=[], resume_flag=True, setup=both(P, camp(as_dir=True))),
+                                                   "exists and is not a regular file"),
+            "an unreadable checkpoint": (q_c("ckbad", lic=[], resume_flag=True, setup=both(P, camp(raw="not json"))),
+                                         "cannot be read as a campaign checkpoint"),
+            "a checkpoint with an arm not Q-F3's": (q_c("ckarm", lic=[], resume_flag=True, setup=both(P, camp(ck2(
+                pauses=[dict(look_, kind="schedule_exhausted", arm="A0")])))), "cannot be read as a campaign checkpoint"),
+            "no pause to adjudicate": (q_c("nopause", lic=[], resume_flag=True, setup=both(P, camp(ck2())), adj=adj_ok),
+                                       "ruling: NO PAUSE TO ADJUDICATE"),
+            "a PI stop with no session": (q_c("pinosess", lic=[], setup=P, pi=pi_ok), "ruling: PI STOP REFUSED"),
+            "an exhausted schedule": (q_c("exh", lic=[], resume_flag=True, adj=adj_ok, setup=both(P, camp(ck2(pauses=[
+                dict(look_, kind="schedule_exhausted", at_launches=120, arm="A1")])))), "ruling: SCHEDULE EXHAUSTED"),
+            "another PI stop": (q_c("otherpi", lic=[], resume_flag=True, pi=pi_ok,
+                                    setup=both(P, camp(ck2(pi_stop="Another stop.")))), "ruling: CHECKPOINT MISMATCH"),
+            "a ruling beside an end pending": (q_c("besidepend", lic=[], resume_flag=True, adj=adj_ok,
+                                                   setup=both(P, camp(ck2(pending=True)))),
+                                               "ruling: RULING BESIDE AN END PENDING"),
+            "a ruling reused": (q_c("reused", lic=[], resume_flag=True, adj=adj_one, setup=both(P, camp(ck2(pauses=[
+                dict(look_, adjudication="Ruling one."), dict(look_, at_launches=80)])))), "ruling: RULING REUSED"),
+            "a ruling offered on a paused campaign without --resume": (q_c("offered_nores", lic=[], adj=adj_ok,
+                setup=both(P, camp(ck2(pauses=[look_])))), "checkpoint: CHECKPOINT EXISTS"),
+            "a checkpoint whose pauses are an object": (q_c("ckpobj", lic=[], setup=both(P, camp(dict(
+                ck2(), campaign=dict(ck2()["campaign"], pauses={"x": 1}))))),
+                "cannot be read as a campaign checkpoint"),
+            "a checkpoint whose pauses are a number": (q_c("ckpint", lic=[], resume_flag=True, setup=both(P, camp(dict(
+                ck2(), campaign=dict(ck2()["campaign"], pauses=7))))), "cannot be read as a campaign checkpoint"),
+            "prior the first run's, its name a link to it": (q_c("priorlink", lic=[], setup=first_link_c),
+                f"prior: PRIOR PATH REFUSED: {FIRST_RUN_CKPT_NAME} is G-TIME-F3's first run's checkpoint; {name_c} "
+                f"takes G-F3's, {CAMPAIGN_PRIOR_CKPT_NAME}, by path"),
+            "schedules": (q_c("sched", lic=[], setup=tamper, more=no_prior), "schedules: SCHEDULES NOT CLEAN"),
+            "driver": (q_c("driver", lic=[], drv=(["selftest: uncommitted edits"], None), more=no_prior),
+                       "driver: selftest: uncommitted edits"),
+            "snapshot": (q_c("snapshot", lic=[], snap=(["selftest: no snapshot"], None), more=no_prior),
+                         "snapshot: selftest: no snapshot"),
+            "snapshot revision not the lock's": (q_c("snaprev", lic=[], snap=([], dict(fake_snap, revision="e" * 40)),
+                                                     more=no_prior), "not the lock's weights revision"),
+            "top-level --out": (q_c("topout", lic=[], argv_pre=("--out", str(base / "x"))), msg_top),
+            "--selftest": (q_c("topsel", lic=[], argv_pre=("--selftest",)), msg_top),
+            "--build-schedules": (q_c("topbuild", lic=[], argv_pre=("--build-schedules",)), msg_top),
+        }
+
+        def ref_ok(v, msg: str, ended: bool = False) -> bool:
+            return (v is not None and v["rc"] == 2 and msg in v["err"] and "refused" in v["err"].lower()
+                    and "refused" not in v["out"].lower() and v["loads"] == 0 and not v["calls"]
+                    and "DRIVER " not in v["out"] and "SNAPSHOT " not in v["out"]
+                    and "RULING " not in v["out"] and "Ruling one." not in v["out"] + v["err"]
+                    and "selftest)." not in v["out"] + v["err"]
+                    and not (ended and "CHECKPOINT EXISTS" in v["err"])
+                    and v["same"] and not labelled(v["out"] + v["err"]))
+        bad_c = {k: (v[0]["rc"], v[0]["err"][-240:]) for k, v in c_refused.items()
+                 if not ref_ok(v[0], v[1], k.startswith("ended"))}
+        chk(f"mf3_sessions: the campaign refuses before the load (exit 2, the refusal on stderr and not stdout, no DRIVER, "
+            f"SNAPSHOT or RULING line, no ruling text printed, the loader and the stages never reached, the test root and "
+            f"its gates directory unchanged, no label printed) in {len(c_refused)} cases: a flag missing; a lock other "
+            f"than LOCK-m-F3.md; v0.2's blob, without v1.0's lines; a malformed hash; the licence's (d); the renders; "
+            f"m:267's checklist; a ruling file blank, not a regular file, or not UTF-8; the prior (the real gate) absent, "
+            f"on the stub, under another proposal, not ended, ended STOP, not G-F3's, at another cap, or its name a "
+            f"link to G-TIME-F3's first run's checkpoint (G-F3's name given); G-ID-F3's "
+            f"artifact on the stub, at another cap, under another proposal, or unreadable; the campaign's checkpoint "
+            f"existing without --resume (a paused one offered a ruling too), ENDED with or without it (with no "
+            f"CHECKPOINT EXISTS advice), a directory, unreadable, naming an arm not Q-F3's, or its pauses an object or "
+            f"a number (with and without --resume); a ruling that does not fit -- no pause to adjudicate, a PI stop "
+            f"with no session, an exhausted schedule, another PI stop, beside an end pending, reused; a tampered "
+            f"schedule; the driver check; the snapshot check, and a snapshot revision not the lock's; a top-level --out, "
+            f"--selftest or --build-schedules beside campaign (m's form, exactly, on stderr; the schedules writer and the "
+            f"self-test never reached)",
+            not bad_c and len(c_refused) == 44 and not escapes
+            and all(c_refused[k][0]["err"] == f"refused: {msg_top}\n" for k in ("top-level --out", "--selftest",
+                                                                                "--build-schedules")), (bad_c, escapes))
+        ff_q: dict = {}
+
+        def fifo_q():
+            # m's O3-3 (its round 3) in m's form: a daemon thread joined with a timeout, released as above
+            fq = both(P, camp(as_fifo=True))
+            ff_q["adj"] = q_c("ckfifo_adj", lic=[], resume_flag=True, adj=adj_ok, setup=fq)
+            ff_q["none"] = q_c("ckfifo", lic=[], resume_flag=True, setup=fq)
+            ff_q["noresume"] = q_c("ckfifo_nr", lic=[], setup=fq)
+        th_q = threading.Thread(target=fifo_q, daemon=True)
+        streams_q = (sys.stdout, sys.stderr)
+        th_q.start()
+        th_q.join(30)
+        q_hung = th_q.is_alive()
+        if q_hung:
+            for nm_ in ("ckfifo_adj", "ckfifo", "ckfifo_nr"):
+                try:
+                    os.close(os.open(base / nm_ / "mf3" / "ckpt" / ck_name, os.O_WRONLY | os.O_NONBLOCK))
+                except OSError:
+                    pass
+            th_q.join(10)
+            # a thread still hung holds run3's redirected stdout and stderr: the checks below print to this
+            # self-test's own (round 2's S02 lost its later lines to the hung thread's buffer)
+            sys.stdout, sys.stderr = streams_q
+        ff_msg = "exists and is not a regular file (refused before it is opened)"
+        chk("mf3_sessions: a FIFO at the campaign's checkpoint path is never opened on the Qwen path (m's O3-3; the "
+            "three calls return within 30 s): the precheck refuses it before the load, in the refusal table's terms, "
+            "offered a ruling and not, with --resume and without (there beside CHECKPOINT EXISTS)",
+            not q_hung and all(ref_ok(ff_q.get(k_), ff_msg) for k_ in ("adj", "none", "noresume"))
+            and "checkpoint: CHECKPOINT EXISTS" in (ff_q.get("noresume") or {}).get("err", ""),
+            (q_hung, [((ff_q.get(k_) or {}).get("rc"), ((ff_q.get(k_) or {}).get("err") or "")[-160:])
+                      for k_ in ("adj", "none", "noresume")]))
+        multi = q_c("multi", {"renders_sha16": "0" * 16}, lic=["selftest licence"], pre=("ONE PROCESS: selftest",),
+                    resume_flag=True, setup=camp(raw="not json"), drv=(["selftest: uncommitted edits"], None),
+                    snap=(["selftest: no snapshot"], None))
+        ref_lines = [ln for ln in multi["err"].splitlines() if ln.startswith("REFUSED")]
+        chk("mf3_sessions: the campaign's precheck problems (the licence's, the renders', the prior gate's -- here G-F3's "
+            "checkpoint absent -- an unreadable campaign checkpoint's and m:267's checklist's), the driver check's and "
+            "the snapshot check's are refused together, in one REFUSED line naming the campaign (exit 2; no DRIVER or "
+            "SNAPSHOT line; nothing loaded)",
+            multi["rc"] == 2 and len(ref_lines) == 1 and multi["err"].count(f"REFUSED: {name_c}:") == 1
+            and all(x in ref_lines[0] for x in (
+                "licence: selftest licence", "renders: RENDERS MISMATCH", "prior: PRIOR STAGE ABSENT",
+                "cannot be read as a campaign checkpoint", "preflight: ONE PROCESS: selftest",
+                "driver: selftest: uncommitted edits", "snapshot: selftest: no snapshot"))
+            and "DRIVER " not in multi["out"] and "SNAPSHOT " not in multi["out"] and multi["loads"] == 0, ref_lines)
+        n0, s0 = len(loads), len(stage_calls)
+        e_ = io.StringIO()
+        seam_root = fresh("seam")
+        seam_before = tree_state(seam_root.parent)
+        bad_rx: list = []
+        with contextlib.ExitStack() as st:
+            st.enter_context(mock.patch.object(stages, "DEFAULT_OUT", fresh("seam_default")))
+            st.enter_context(mock.patch.object(guard, "GATES_DIR", seam_root.parent / "gates"))
+            st.enter_context(mock.patch.object(stages, "run_campaign", t_stage("campaign")))
+            st.enter_context(mock.patch.object(stages, "run_gate_stage", t_stage("gate")))
+            st.enter_context(mock.patch.object(stages, "run_gid_pair_f3", t_stage("gid")))
+            st.enter_context(mock.patch.object(guard, "preflight_laptop", lambda: []))
+            st.enter_context(gpatch("_load_qwen", t_loader))
+            st.enter_context(contextlib.redirect_stderr(e_))
+            st.enter_context(contextlib.redirect_stdout(io.StringIO()))
+            rc_or = run_campaign(**{**tflags, "lock_file": "CLAUDE.md"}, resume_run=False, out_root=seam_root,
+                                 pi_stop_file=pi_ok)
+            for st_ in ("time", "id", "qual"):
+                for kw_ in ({"adjudication_file": adj_ok}, {"pi_stop_file": pi_ok}):
+                    # m's form (its round 1's M1-7; this wiring's review, MINOR-1): a fresh test root and a stub
+                    # factory, inside the traps -- should the guard regress, the call reaches a trapped stage on the
+                    # stub in a test directory, never data/mf3 or Qwen
+                    try:
+                        run_stage(st_, **tflags, resume_run=False, out_root=fresh(f"rx_{st_}_{next(iter(kw_))}"),
+                                  adapter_factory=stub(st_), **kw_)
+                        bad_rx.append((st_, next(iter(kw_))))
+                    except ValueError:
+                        pass
+        ap_x = []
+        for st_ in ("time", "id", "qual"):
+            for fl_ in ("--adjudication-file", "--pi-stop-file"):
+                rc_ap, _o_ap, e_ap = run3([st_, fl_, adj_ok])
+                ap_x.append(rc_ap == 2 and "unrecognized arguments" in e_ap)
+        chk("mf3_sessions: run_campaign with an out root and no stub factory refuses before anything -- before the "
+            "identity and the ruling files -- exit 2, the loader and the stage never reached, the test root unchanged "
+            "(time's seam case, carried); the ruling files are the campaign's alone: run_stage raises ValueError on "
+            "either at time, id and qual, before anything (each call on a fresh test root with a stub factory, inside "
+            "the traps: m's form), and time, id and qual refuse either flag at the command line (argparse, exit 2)",
+            rc_or == 2 and "REFUSED: campaign: an out root names a test directory" in e_.getvalue()
+            and "cites" not in e_.getvalue() and len(loads) == n0 and len(stage_calls) == s0
+            and tree_state(seam_root.parent) == seam_before and not bad_rx and len(ap_x) == 6 and all(ap_x),
+            (e_.getvalue()[-200:], bad_rx, ap_x))
+        paused = camp(ck2(pauses=[look_]))
+        rl = q_c("reach_load", lic=[], setup=P)
+        rr = q_c("reach_ruling", lic=[], resume_flag=True, adj=adj_ok, setup=both(P, paused))
+        rsh = q_c("shown", lic=[], setup=both(P, paused))
+        rpd = q_c("pending_ok", lic=[], setup=both(P, camp(ck2(pending=True))))
+        rpi = q_c("pi_ok", lic=[], resume_flag=True, pi=pi_ok, setup=both(P, paused))
+
+        def order_of(res):
+            ls = res["out"].splitlines()
+            return [next((i for i, x in enumerate(ls) if x.startswith(p_)), None) for p_ in ("DRIVER ", "SNAPSHOT ",
+                                                                                            "RULING ")]
+        o_l, o_r, o_p = order_of(rl), order_of(rr), order_of(rpi)
+        want_r = (f"RULING {name_c}: the seat's adjudication (sha16 {sha16('The seat' + chr(39) + 's ruling (selftest).')})"
+                  f" offered for the pause at 40 launches (look)")
+        chk("mf3_sessions: with every pre-load check clear -- the real prior gate passing a G-F3 checkpoint ended PASS at "
+            "cap 120 that the stub did not write -- the campaign prints the DRIVER line, then the SNAPSHOT line, then, "
+            "when it offers a ruling, the RULING line (the seat's adjudication for the pause at 40 launches, a look's; or "
+            "the PI's stop), and only then reaches the loader (the trap: exit 4, no stage reached, the test root "
+            "unchanged); a paused campaign offered no ruling passes without --resume (shown), and so does an end "
+            "pending; each reaches the loader",
+            all(x["rc"] == 4 and x["loads"] == 1 and not x["calls"] and "the Qwen loader was reached" in x["err"]
+                and x["same"] for x in (rl, rr, rsh, rpd, rpi))
+            and o_l[0] is not None and o_l[1] is not None and o_l[0] < o_l[1] and o_l[2] is None
+            and None not in o_r and o_r[0] < o_r[1] < o_r[2] and want_r in rr["out"]
+            and None not in o_p and o_p[1] < o_p[2] and "the PI's stop (sha16 " in rpi["out"]
+            and order_of(rsh)[2] is None and order_of(rpd)[2] is None
+            and rl["out"].splitlines()[o_l[0]] == (f"DRIVER {DRIVER_REL} {'d' * 64}: committed at HEAD "
+                                                    f"{stages._git_head()}, working tree identical")
+            and "selftest)." not in rr["out"] + rr["err"] + rpi["out"] + rpi["err"],
+            [(x["rc"], x["err"][-160:]) for x in (rl, rr, rsh, rpd, rpi)])
+
+        class Stand:
+            def __init__(self, mid):
+                self.model_id = mid
+        order: list = []
+
+        def seq(*answers):
+            it = iter(answers)
+
+            def f():
+                order.append("snap")
+                return next(it)
+            return f
+
+        def stand_loader():
+            order.append("load")
+            return Stand(QWEN_MODEL_ID)
+
+        def stand_mid(mid):
+            def f():
+                order.append("load")
+                return Stand(mid)
+            return f
+        moved = dict(fake_snap, revision="e" * 40)
+        post = {
+            "re-read refuses": (q_c("post_refuse", lic=[], setup=P, loader=stand_loader,
+                                     snapfn=seq(([], fake_snap), (["selftest: gone"], None))),
+                                ("STOP: SNAPSHOT RE-READ REFUSED", "selftest: gone")),
+            "refs/main moved": (q_c("post_moved", lic=[], setup=P, loader=stand_loader,
+                                     snapfn=seq(([], fake_snap), ([], moved))),
+                                ("STOP: SNAPSHOT MOVED", f"before the load {rev}; after it {'e' * 40}")),
+            "another model id": (q_c("post_mid", lic=[], setup=P, loader=stand_mid("other/model"),
+                                      snapfn=seq(([], fake_snap), ([], fake_snap))),
+                                 ("STOP: MODEL ID", f"the adapter loaded 'other/model', the snapshot check read "
+                                                    f"'{QWEN_MODEL_ID}'")),
+        }
+        bad_post = {k: (v[0]["rc"], v[0]["err"][-200:]) for k, v in post.items()
+                    if not (v[0]["rc"] == 4 and all(x in v[0]["err"] for x in v[1]) and not v[0]["calls"]
+                            and v[0]["same"] and "SNAPSHOT re-read after the load: unchanged" not in v[0]["out"])}
+        chk("mf3_sessions: after the load, the campaign STOPs (exit 4) before the stage on a re-read that refuses, a moved "
+            "refs/main or another model id, each STOP naming its evidence, with no re-read line (time's post-load cases, "
+            "carried)", not bad_post and len(post) == 3, bad_post)
+        order.clear()
+        ru = q_c("post_ok", lic=[], resume_flag=True, adj=adj_ok, setup=both(P, paused), loader=stand_loader,
+                 snapfn=seq(([], fake_snap), ([], fake_snap)))
+        call = ru["calls"][0][1] if ru["calls"] else {}
+        want_prior = (ru["root"] / "ckpt" / CAMPAIGN_PRIOR_CKPT_NAME).resolve()
+        chk("mf3_sessions: after the load and the re-read (snapshot, load, snapshot), the campaign reaches "
+            "stages.run_campaign -- not run_gate_stage or run_gid_pair_f3 -- once, with campaign_floors(), "
+            "CAMPAIGN_LAUNCH_COUNTS and CAMPAIGN_HOUR_CAP (480), G-F3's checkpoint at its out root as the prior, by path, "
+            "the out root stages.DEFAULT_OUT, resume on, the identity with locked_path uncached at cap 120, the seat's "
+            "adjudication as the file holds it and no PI stop (here the trap: exit 4)",
+            ru["rc"] == 4 and [c[0] for c in ru["calls"]] == ["campaign"] and order == ["snap", "load", "snap"]
+            and call.get("floors") == fl and call.get("launch_counts") == dict(CAMPAIGN_LAUNCH_COUNTS)
+            and call.get("hour_cap") == 480 and type(call.get("hour_cap")) is int
+            and Path(call.get("prior_ckpt", "")) == want_prior and Path(call.get("out_root", "")) == ru["root"]
+            and call.get("resume") is True and (call.get("identity_extra") or {}).get("locked_path") == "uncached"
+            and (call.get("identity_extra") or {}).get("reasoning_cap") == 120
+            and call.get("adjudication") == "The seat's ruling (selftest).\n" and call.get("pi_stop") is None
+            and "STOP: selftest: the stage was reached" in ru["err"] and ru["same"], (ru["rc"], order, sorted(call)))
+    data_after = tree_state(real_out) if real_out.is_dir() else {}
+    chk("mf3_sessions: the campaign checks loaded nothing and wrote nothing under data/mf3 -- the loader trap was reached "
+        "5 times in all (each of the five cases that clear every pre-load check asserts its own one reach), the stage "
+        "trap once (run_campaign, the post-load case), the schedules writer and the self-test never from a campaign "
+        "invocation; data/mf3's file hashes are unchanged and stages.DEFAULT_OUT and guard.GATES_DIR are restored",
+        data_before == data_after and stages.DEFAULT_OUT == real_out and guard.GATES_DIR == real_gates
+        and len(loads) == 5 and [c[0] for c in stage_calls] == ["campaign"] and not escapes,
+        (len(loads), [c[0] for c in stage_calls], escapes, sorted(set(data_before) ^ set(data_after))[:3]))
+
+
 def run_selftest() -> int:
     results: list[bool] = []
 
@@ -2851,7 +4278,7 @@ def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
     ap = argparse.ArgumentParser(description="PROPOSAL-m Q-F3 driver (self-test, schedules, hashes, G-SHAPE-F3, "
-                                             "G-TIME-F3, G-ID-F3, G-F3; campaign is refused until its step)")
+                                             "G-TIME-F3, G-ID-F3, G-F3, the Q-F3 campaign)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of valence_core.mf3")
     ap.add_argument("--build-schedules", action="store_true", help="write Q-F3's schedule files + manifest")
     ap.add_argument("--out", default=None, help="output directory for --build-schedules")
@@ -2861,10 +4288,33 @@ def main(argv: list[str] | None = None) -> int:
     h = sub.add_parser("hashes", help="the hashes LOCK-m-F3 v0.1 names (Q1 (C2)) and the weights binding")
     h.add_argument("--snapshot-dir", default=None, help="the hub snapshot directory (default: the cache's of record)")
     for c in WIRED_CMDS:
-        t = sub.add_parser(c, help=STAGE_HELP[c])
+        if c == "campaign":
+            t = sub.add_parser(c, help=STAGE_HELP[c] + "; " + CAMPAIGN_PAUSES,
+                               description="The Q-F3 campaign (m:298, m:361) on Qwen under LOCK-m-F3 v1.0. "
+                                           + CAMPAIGN_PAUSES + ".")
+        else:
+            t = sub.add_parser(c, help=STAGE_HELP[c])
         for k in TIME_FLAGS:
             t.add_argument("--" + k.replace("_", "-"), default=None, help=TIME_FLAG_HELP[k])
         t.add_argument("--resume", action="store_true", help=f"continue {STAGE_NAMES[c]}'s checkpoint (skip-only)")
+        if c == "campaign":
+            t.add_argument("--adjudication-file", dest="adjudication_file", default=None,
+                           help="a UTF-8 text file, named for nothing it says (its path is printed): the seat's ruling "
+                                "on the campaign's unadjudicated pause (a look's; an exhausted schedule's only beside "
+                                "the PI's stop), for the invocation that resumes it -- after an interrupted run that "
+                                "offered it alone, re-run with --resume alone (its text recorded in the checkpoint "
+                                "only, never printed; the RULING line carries its sha16, and, where it is recorded as "
+                                "the pause's ruling, the report (the pause's adjudication_sha16) and a later NO PAUSE "
+                                "TO ADJUDICATE refusal); with --resume")
+            t.add_argument("--pi-stop-file", dest="pi_stop_file", default=None,
+                           help="a UTF-8 text file, named for nothing it says (its path is printed): the PI's stop -- "
+                                "terminal, analyzed as obtained; it ends a look's pause, and alone ends an exhausted "
+                                "schedule's; after an interrupted run that offered it, re-run with --resume and the "
+                                "same ruling files (beside an end pending, without the flags a RULING BESIDE AN END "
+                                "PENDING refusal names; its text recorded in the checkpoint only, never printed; the "
+                                "RULING line carries its sha16, and where its text is the pause's ruling (it ends a "
+                                "pause offered without --adjudication-file) the report (that pause's "
+                                "adjudication_sha16) and a later NO PAUSE TO ADJUDICATE refusal); with --resume")
     for c in REFUSED_CMDS:
         sub.add_parser(c, help=f"{STAGE_NAMES[c]}: refused until its step")
     try:
@@ -2883,13 +4333,15 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "hashes":
         return hashes(a.snapshot_dir)
     if a.cmd in WIRED_CMDS:
+        rul = ({"adjudication_file": a.adjudication_file, "pi_stop_file": a.pi_stop_file} if a.cmd == "campaign"
+               else {})
         return run_stage(a.cmd, proposal_file=a.proposal_file, lock_file=a.lock_file,
                          analyzer_sha256=a.analyzer_sha256, package_sha256=a.package_sha256,
-                         renders_sha16=a.renders_sha16, resume_run=a.resume)
+                         renders_sha16=a.renders_sha16, resume_run=a.resume, **rul)
     if a.cmd in REFUSED_CMDS:
         print(refusal(a.cmd), flush=True)
         return 2
-    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, time, id or qual)", flush=True)
+    print("REFUSED: no action (--selftest, --build-schedules, hashes, gshape, time, id, qual or campaign)", flush=True)
     return 2
 
 

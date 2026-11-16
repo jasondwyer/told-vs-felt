@@ -21,6 +21,151 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **The campaign wiring: `campaign` (Q-F3's campaign, m:298, m:361) is wired in `scripts/mf3_sessions.py`
+  under LOCK-m-F3 v1.0, in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its
+  blob moves from `285eed04…0e44` to `7bb6f7ca…28a4`. mf3's package, m's, the analyzer and the lock stand, and
+  G-SHAPE-F3 is not re-run. The self-test passes 235/235. A blind review with 50 mutants found no MAJOR; its three
+  MINORs and five of its NOTEs are applied, one NOTE is flagged for the seat, and round 2 kills every survivor.**
+  - **The routing.** The PI's word "Route as given" (PI date 2026-11-15) on the seat's answers of 2026-11-15
+    (`49b82ff0…0885`, committed at `a89a4fa`). The paste block's section A, item 6, verbatim:
+
+    > 6. After v1.0's commit: the campaign wiring (F-1's kind; its entry names the edit and the new DRIVER blob and notes that v1.0 §6's value is the driver at the lock; NOTE-7's gap closed; G-SHAPE-F3 not re-run) [go; order as given].
+
+    The seat's §5 item 2 and §2 (a), verbatim (bold markers aside):
+
+    > 2. The campaign wiring (F-1's kind): the driver's `campaign` subcommand, reading §1's and §2's lines from the committed lock as lines, closing NOTE-7's self-test gap, reviewed as the `qual` wiring was; its entry names the edit and the new DRIVER blob and says in one line that v1.0 §6's value is the driver at the lock and the campaign's DRIVER line prints the new one — the unit's convention since the `time` wiring; G-SHAPE-F3 is not re-run. (If the PI would rather the lock name the campaign's own driver, as p's locks do, the wiring goes first and the draft regenerates once more; the seat's default is the order above, which locks the unit now.)
+
+    > (a) Line forms. `launch counts = A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96` and `hour cap = 480 h`, whole lines, as LOCK-m-F0 v1.0 §4's and LOCK-p v1.0's; the campaign wiring tests them as lines (the `qual` wiring's line test, not m's substring test). Accepted.
+
+  - **The DRIVER line, in one line:** LOCK-m-F3 v1.0 §6's value, `285eed04…0e44`, is the driver at the lock; the
+    campaign's DRIVER line prints the new blob,
+    `7bb6f7ca9a545a49e625cd10115483aa6bdb616f5d8a443af36d21ec27ec28a4` (the unit's convention since the `time` wiring).
+  - **What `campaign` runs:**
+    - **The stage.** The stage library's `run_campaign`, unchanged: the six arms interleaved by §2.1's rule,
+      uncached, at the cap of record, 120, until each arm's domain count reaches its floor, the hour cap or the PI's
+      stop; looks every 40 launches (m:330).
+    - **Its values.** LOCK-m-F3 v1.0's, passed as the driver declares them:
+      - `CAMPAIGN_LAUNCH_COUNTS`, A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96 (v1.0 §1, G-PWR (Q-F3)'s record's L),
+        the projection (m:192);
+      - `CAMPAIGN_HOUR_CAP`, 480 (v1.0 §2);
+      - the floors, mf3's `schedule.FLOORS` under the path (`campaign_floors`): A1 80, A1s 32, A2 144, A2s 56,
+        A3 144, A3s 56.
+    - **The lock.** The campaign cites `LOCK-m-F3.md`. Its committed text must carry each of `QUAL_LOCK_LINES` at the
+      start of a line (v0.2's cap and path lines, as at G-F3), and each of `CAMPAIGN_LOCK_LINES` as a whole line
+      (v1.0's §1 and §2 lines, built from the two values above). v0.2's blob is refused. A whole line, as the seat's
+      §2 (a) has it: a line that only begins with one (other counts, "480 hours") is refused too.
+    - **The identity.** G-F3's: `reasoning_cap` 120 and `locked_path` "uncached".
+    - **The prior.** G-F3's checkpoint at the same out root, `data/mf3/ckpt/Q-F3_qual.json`, taken by path, ended PASS
+      (`prior_gate`, `require_real` on). G-ID-F3's artifact is re-checked if on disk.
+    - **The rulings.** `--adjudication-file` and `--pi-stop-file`, each a UTF-8 file named for nothing it says. Each
+      text is recorded in the checkpoint only and never printed; a RULING line before the load gives each text's sha16
+      and the pause it is offered for. m's carry-overs come with them: O4-1 (RULING BESIDE AN END PENDING), O1-3
+      (RULING REUSED), RM4-1's RULING-line note, and the VC4-1 and VC4-2 help and docstring sentences. The help's
+      pauses text is m's `camp_pauses`, verbatim.
+    - **Before the load,** beside G-F3's refusals: a campaign checkpoint the driver cannot read as one, and a ruling
+      that does not fit the campaign's state: NO PAUSE TO ADJUDICATE, PI STOP REFUSED, SCHEDULE EXHAUSTED and a PI
+      stop other than the one recorded, each in the stage's own words, two with a declared suffix, and O4-1's and
+      O1-3's, which the stage does not make. A paused campaign offered no ruling is not refused as existing: the stage
+      shows its pause.
+    - **The outputs.** m's default stem for "campaign": `data/mf3/ckpt/Q-F3_campaign.json` and its report, with the
+      adjudication excerpt beside the checkpoint when a pause or a STOP is recorded. No reads file.
+    - **Exit codes:** 0 COMPLETE, CAP or PI-STOP; 3 PAUSE; 4 STOP; 2 for a refusal before the load.
+  - **The edit, named:**
+    - `campaign` joins `WIRED_CMDS`, so no stage is refused. `stage_identity_extra`, `stage_prior_checkpoint`,
+      `stage_precheck` and `run_stage` gain their campaign branches; `run_stage` takes `adjudication_file` and
+      `pi_stop_file`, the campaign's alone.
+    - New: `campaign_floors`, `_campaign_state`, `campaign_ruling_problems`, `ruling_line`, `ruling_texts` and
+      `run_campaign`; the constants `CAMPAIGN_LOCK_FILE`, `CAMPAIGN_LAUNCH_COUNTS`, `CAMPAIGN_HOUR_CAP`,
+      `CAMPAIGN_LOCK_LINES`, `CAMPAIGN_LOCKED_PATH`, `CAMPAIGN_REASONING_CAP`, `CAMPAIGN_PRIOR_CKPT_NAME` and
+      `CAMPAIGN_PAUSES`; `STAGE_HELP["campaign"]`; the subparser's two ruling flags; the module docstring's campaign
+      paragraph; the self-test's helper `_lines_prefixed` (NOTE-7) and `_selftest_campaign`.
+    - **Also changed:**
+      - the module docstring's Q6 sentence (the forms written "at the campaign wiring") and its INVOCATION
+        sentence (`campaign` among the stages that load a model);
+      - `main`'s description and its no-action line, which name the campaign;
+      - `_selftest`'s wiring check, which asserted that `campaign` is refused, now asserts that none is
+        (`REFUSED_CMDS` empty);
+      - `_selftest_id`'s not-wired case now uses `gshape`.
+    - **One PIN text is revised,** the `time` wiring's WIRED_CMDS sentence, which v1.0 §6 quotes on the blob of record
+      (the PIN at `:102`, the sentence at `:108`). "campaign stays refused until its step; id and qual are wired at
+      their own steps (the id and qual wirings' PINs, below)." now reads "id, qual and campaign are wired at their own
+      steps (the id, qual and campaign wirings' PINs, below)." (the PIN at `:156` on the new blob, the sentence at
+      `:162`). The rest of `time`'s, `id`'s and `qual`'s PIN texts is unchanged, and so is what the three do, print
+      and refuse.
+    - **PIN sites on the new blob** (the review's NOTE-1), by grep:
+      - nine new, each declared "at the Q-F3 campaign wiring": `:227`, `:257`, `:437`, `:584`, `:649`, `:724`, `:755`,
+        `:788`, `:1038`;
+      - the 18 earlier ones, their texts unchanged but the one sentence above, moved from v1.0 §6's anchors:
+        - `time`: `:102`→`:156`, `:112`→`:165`, `:183`→`:306`, `:193`→`:316`, `:318`→`:457`, `:452`→`:826`,
+          `:529`→`:927`, `:554`→`:952`, `:650`→`:1067`;
+        - `id`: `:138`→`:191`, `:313`→`:452`, `:440`→`:814`, `:644`→`:1061`;
+        - the re-issue's: `:119`→`:172`;
+        - `qual`: `:154`→`:207`, `:306`→`:445`, `:432`→`:806`, `:638`→`:1055`.
+    - **F-1:** the edit touches no scoring-stack function; every change is in the driver. So G-SHAPE-F3 is not re-run.
+  - **NOTE-7, closed.** The `qual` self-test's "moved" and "indented" variants now edit every line that opens with the
+    path line (`_lines_prefixed`), not its first occurrence. A new check builds a lock that restates the path line
+    above v0.2's: `qual` accepts it, the line-wise moved variant leaves no such line and is refused, and the
+    first-occurrence form would have left v0.2's line in place.
+  - **Self-test:** 214 → 235, 235/235 on the final bytes at HEAD `a89a4fa`
+    ([`_mf3-campaign-wiring_selftest`](results/raw/2026-11-15_mf3-campaign-wiring_selftest.txt), local roots
+    scrubbed). The 21 new checks are `_selftest_campaign`'s 20 and NOTE-7's check in `_selftest_qual`. The campaign's
+    checks assert:
+    - **Its values and lock lines.** The values are v1.0's and G-PWR (Q-F3)'s record's, and the identity is G-F3's.
+      Nine lock variants lacking a whole v1.0 line are refused for the campaign and accepted for `qual`. The line
+      checks come first. `campaign --help` gives the flags and m's `camp_pauses` (read from m's source); the
+      top-level `--help` gives `camp_pauses` too.
+    - **The ruling helpers,** on synthetic files: `ruling_texts`, `_campaign_state`, the mirror (and, by its source,
+      that its messages are the stage's own words) and the RULING line. Every call on a FIFO runs in a daemon thread
+      joined with a timeout, m's form.
+    - **On the stub, at a test root:** time, a FAILed id and G-F3, then the campaign: PI STOP REFUSED, an interrupt,
+      NO PAUSE TO ADJUDICATE, PI-STOP, CAMPAIGN ENDED; the exit codes.
+    - **On the Qwen path, with the loader and the stages trapped:**
+      - 44 refusals before the load;
+      - a FIFO at the checkpoint path, never opened (m's O3-3);
+      - the problems refused together, in one line;
+      - the out-root seam, and the ruling files the campaign's alone (at `time`, `id` and `qual`, inside the traps,
+        and at the command line);
+      - five cases that reach the loader, in DRIVER, SNAPSHOT, RULING order;
+      - the three post-load STOPs;
+      - after the load, `run_campaign` with the lock's values, G-F3's checkpoint as the prior and the rulings as read.
+    - **Nothing is loaded,** and nothing is written under `data/mf3`.
+  - **Review:** one blind round, with Code's dispositions and round 2's mutant runs
+    ([`_mf3-campaign-wiring_review`](results/raw/2026-11-15_mf3-campaign-wiring_review.md)).
+    - Round 1: 0 MAJOR, 3 MINOR, 8 NOTEs. Of 50 mutants, 43 were killed (two only by hanging on a FIFO) and 7
+      survived: 2 behavior gaps and 5 message or help-text gaps.
+    - **The MINORs, applied:**
+      - the self-test's ruling-file guard calls now take m's form (fresh roots, a stub factory), and run inside the
+        traps;
+      - the two precheck behaviors are cases: a ruling offered on a paused campaign without `--resume`, and a
+        malformed pauses block;
+      - the mirror's messages are now mf3's stage's own words, checked against its source, and the PIN's stub-path
+        clause is struck.
+    - **The NOTEs:**
+      - applied: NOTE-2 (the help's text is m's verbatim, and checked), NOTE-3 and NOTE-7 (a PIN text and a
+        docstring sentence), NOTE-4 (the lock-line count is "one or more", the `qual` wiring's form), NOTE-5 (m's
+        daemon-thread form for every FIFO call, and m's O3-3 case);
+      - NOTE-1 is this entry's PIN map;
+      - not changed: NOTE-6 (`REFUSED_CMDS` stays derived; empty now).
+    - **Flagged for the seat, not applied (NOTE-8, outside the routed spec; m's form):** the campaign's checkpoint
+      binds the backend its first launch reports, and every resume must match it; neither the driver nor the stage
+      compares that backend with v1.0 §5's identifier, `a734dadec8f8ce9b`. The report's identity carries it.
+    - **Round 2** re-ran the seven survivors, X01, S02, T02 and one new mutant (W01) on the final bytes: all eleven
+      are killed, X01 inside the traps, and S02 and T02 by name within their timeouts.
+      - A first pass, on an intermediate candidate, killed all eleven too. Under S02, though, the self-test's later
+        lines went into a hung thread's redirected stdout.
+      - The self-test now restores its own streams after a hang, and round 2 was re-run in full.
+  - **Values-check:** one blind check of the entry, the review raw and the self-test raw
+    ([`_mf3-campaign-wiring_valuescheck`](results/raw/2026-11-15_mf3-campaign-wiring_valuescheck.md)): 79 items, 60
+    CONFIRMED, 10 IMPRECISE, 2 FAIL, 7 NOT CHECKABLE.
+    - Every FAIL and IMPRECISE item is applied. The two FAILs: round 2's count of round-1 kills not re-run (40, not
+      39), and five per-run temporary directory names left in the self-test raw, now `<run>`.
+    - NOT CHECKABLE item 43, the review raw's three `data/` commands, is answered by keeping Code's second scan of
+      the reviewer's transcript.
+  - **Committed by path:** the driver, its self-test output, the review raw, the values-check raw and this entry.
+    Nothing ran on a model. Not pushed.
+  - **Next** (section A, item 7): the campaign, on the PI's go at the PI's timing — announced to the coordinating
+    session, serialized, detached, checkpointed, uncached, `hour cap = 480 h`, looks every 40.
+
 - 2026-11-15 — **LOCK-m-F3 v1.0 — COMMITTED: `81a40b4`'s draft with the seat's one amendment, (A1), regenerated and
   placed byte for byte as `LOCK-m-F3.md`, sha256 `fe9518c7368fe1b34ee9e67f8ba663b1b3c7c02431b5f83d1b5d4b7e7b0c1aa6`.
   Its diff against the draft of record (`16a0c79e…f2db`) is exactly (A1), so there is no second STOP. It licenses
