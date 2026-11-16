@@ -21,6 +21,45 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n — five early questions for the seat, four on readings the committed schema encodes (`5a97527`)
+  and one on the label convention it leaves to the lock, put now so that a ruling moves the schema before work is
+  built on it. They do not stop the build. Next: the rest of
+  step 6 (PROPOSAL-n v0.2 §8). Block:
+  [`2026-11-16_n-schema_code-to-design_questions.md`](results/raw/2026-11-16_n-schema_code-to-design_questions.md).**
+  - **Why now.** The coordinating session suggested it by message, and the call was Code's. n-analyzer builds step
+    9's analyzer from the schema, so a ruling against Q1, Q2, Q3 or Q5 means a follow-up schema commit.
+    n-analyzer's own block (`results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md`, committed at `8e3bf91`) asks
+    none of these, and cites Q2, Q3 and Q5.
+  - **The questions**, each with the reading the schema encodes as built (for Q4, Code's proposal) and the readings
+    to weigh:
+    - **Q1, §2.1's restricted first-token read.** All 12 of BK's labels begin with "Zone". The schema takes the read
+      at the labels' first divergent token, without m:172's verifying re-forward.
+    - **Q2, §4 (b)'s "committed free-text reply".** §2.1 says no new text is generated; the runner generates none,
+      and the schema has no reply field. BK did generate replies, sampled under one seed per session. Generating them
+      here would put 1,280 replies under negatively steered caches (160 + 160 + 960, as Code counts them).
+    - **Q3, the merge's reach.** Whether §2.3's dose-point merge reaches N1-R, which moves the read plan's counts.
+    - **Q4, BK's label token convention.** BK's committed files do not record it. Code proposes recovering it on the
+      box, against BK's recorded d = 0 log-probabilities, printing match counts only. The question includes §4's
+      blinding.
+    - **Q5, G-READ-n's capture layer.** It comes from a finding of the n package's self-test, which is drafted and
+      not yet committed. An injection at a layer's output reaches the read position only from the next layer on, so
+      the read position's residual at the injection layer itself is the shadow's. Code proposes capturing at the
+      injection index + 1 and the last layer.
+  - **Each question says what it stops.** None stops step 6; each is needed before LOCK-n v0.1. Q4 is also needed
+    before the BACKEND extension runs, and Q1 and Q3 before n-analyzer's secondary (a) and its battery's plan counts.
+  - **Not questions:** the schema's other readings. The BUILD entry lists them.
+  - **Values-check: two blind passes, the second blind to the first.** Each checker was briefed to run no Python,
+    under the list of record v2's items 1–5 and the coordinating session's lines.
+    - Pass 1, on the four-question draft: 51 items, 43 CONFIRMED, 6 IMPRECISE, 1 FAIL, 1 NOT CHECKABLE. The FAIL
+      called a greedy reply BK's form, but BK sampled theirs.
+    - Pass 2, on the five-question draft: 56 items, 43 CONFIRMED, 7 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE. The FAIL
+      labelled Q5's encoded reading as §2.2's words, but it is Code's reading of them.
+    - Every FAIL and IMPRECISE item is applied in the checkers' terms, and the edits after pass 2 were checked by
+      tool.
+    - Raw: [`2026-11-16_n-schema-questions_valuescheck.md`](results/raw/2026-11-16_n-schema-questions_valuescheck.md),
+      with both reports as returned and every disposition.
+  - **Committed by path:** the block, the values-check raw and this entry. Not pushed.
+
 - 2026-11-16 — **n — G-ANL-n: nine questions for the seat before its canonical run (PROPOSAL-n v0.2 §3 "G-ANL-n",
   §8 step 9; the seat's answers of 2026-11-15, §5.1–§5.2; the coordinating session's go for one early block). STOP for
   the seat's read, at G-ANL-n's canonical run and LOCK-n v0.1; the build continues on Code's interim readings, each
