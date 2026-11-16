@@ -1,0 +1,47 @@
+# PROPOSAL-p OLMo-sft -- VERDICTS: the analyzer of record's one invocation (p v0.2 s4.4, s8 step 7; LOCK-p-OLMo-sft v1.0, 038bf3e; ADDENDUM-p1 v0.1 s4 step 3; the seat's answers of 2026-11-16, Q1 (c), Q2 (a) with (i) and (ii), s5 item 2, routed by the PI's "Route as given"). Code's raw (the sft VERDICTS session), PI date 2026-11-16.
+# Command, from the repository root, under nice -n 19, $PY = <repo>/jlens-qwen36/.venv/bin/python:
+#   $PY -B scripts/p_analyze.py verdicts --unit OLMo-sft --lock LOCK-p-OLMo-sft.md --decisions data/p/verdicts/OLMo-sft_decisions.json
+# --campaign, --time and --qual at p_analyze's defaults, data/p/ckpt/OLMo-sft_{campaign,time,qual}.json (the entries 41bfab4, 2258c52, a225a89); no --adjudication (no pause), no --pi-stop.
+# Inputs: the lock, sha256 fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4; the decisions input, sha256 54df4b851b978adf78aa2e86e512d83e4b1a38be91229212d6fcf410d2f9e881, six items (the seat's Q1 (c)), committed at db2e821; the checkpoints are read by the analyzer alone (this session opened, listed and hashed none).
+# In a battery window the coordinating session granted (Q-F3's campaign runs on this laptop).
+# The precheck, re-run by this script just before the command (shell, git, shasum and jq; no Python), its output verbatim:
+#   HEAD 645bd3fe07587c88de04361811553065476a984f
+#   ok   m_analyze
+#   ok   p_analyze
+#   ok   lock
+#   ok   proposal_p
+#   ok   proposal_m
+#   ok   addendum_m1
+#   ok   driver
+#   ok   olmo_hf
+#   ok   p_package
+#   ok   m_package
+#   ok   lock_committed
+#   ok   tracked_clean
+#   ok   untracked_none
+#   ok   absent OLMo-sft_VERDICTS.json
+#   ok   absent OLMo-sft_secondary.json
+#   ok   absent OLMo-sft_NOT-RUN.json
+#   ok   decisions_shape
+#   decisions sha256 54df4b851b978adf78aa2e86e512d83e4b1a38be91229212d6fcf410d2f9e881
+#   ok   decisions_sha
+#   ok   decisions_committed
+#   PRECHECK ALL CLEAR
+# Departure, disclosed (this session, before any window was asked): one run of the shell's python3 (a conda interpreter outside the repository) that read the committed data/m/verdicts/OLMo-sft_not-run-record.json with stdlib json, model-free, under a second; its command line held "OLMo-sft", so it counted under the window rule. The coordinating session's reply: "Noted. It's harmless: model-free, under a second, and no Q-F3 invocation was starting, so m's guard wasn't checking; the file it read is a committed m NOT-RUN record of a closed unit."
+# The stdout below is appended unread; stderr is kept apart. Post-run facts are in the closing section.
+#
+## stdout
+
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/p_analyze.py verdicts --unit OLMo-sft --lock LOCK-p-OLMo-sft.md --decisions data/p/verdicts/OLMo-sft_decisions.json
+GATE VERDICTS OLMo-sft: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 645bd3fe07587c88de04361811553065476a984f
+VERDICTS OLMo-sft: A0-OLMo-sft (OLMo-sft): PASS; n = 80 domain sessions of 80 launched (map 0: 38/40, map 1: 34/40 on the clean-role label); P = 72/80 = 0.9000; Δ_c = +0.4000, two-sided Clopper–Pearson 95% CI [+0.3124, +0.4558]; E = 0.0625 from A0s-OLMo-sft (14/32 domain sessions, P_sham = 0.4375); P_arm − P_sham = +0.4625; exact one-sided binomial vs 0.5: p = 0.0000 toward clean, p = 1.0000 toward corrupted, α = .01; pre-pick exclusion rate 0/80 = 0.0000 beside A0s-OLMo-sft's 0/32 = 0.0000; the guard at the unit's last look (the end look at 112 launches): Fisher one-sided vs A0s-OLMo-sft p = 1.0000, not fired (binding); absolute vs .20 p = 1.0000, P > α (reported only).
+VERDICTS OLMo-sft: written: OLMo-sft_VERDICTS.json, OLMo-sft_secondary.json
+P-OUTPUT data/p/verdicts/OLMo-sft_VERDICTS.json (written; sha256 2795b6109d6293d7dc6cd06154d7c3b1efa108c45280636fc582b104bb8c853c)
+P-OUTPUT data/p/verdicts/OLMo-sft_secondary.json (written; sha256 e9cfe52d023a105c003e10e9d629674e4d83cd14cf4b640e0bcc7a0aa7e0fa54)
+
+## Closing section (Code, after the invocation ended; PI date 2026-11-16)
+- EXIT=0: the run script's own exit line, read after the invocation ended. stderr: empty (kept in this session's scratch, not committed).
+- The window: the coordinating session granted it after dpo's run had ended, in these words: "Window granted now (coordinating session). The second run (dpo) has ended and released its window, so no other window is open." The end notice, this session's whole message: "sft verdicts ended, EXIT=0. Window released."
+- The outputs: data/p/verdicts/OLMo-sft_VERDICTS.json and data/p/verdicts/OLMo-sft_secondary.json, each equal by shasum to its P-OUTPUT line above.
+- The first opening: this run was the third of three. This raw's stdout and the two outputs were first opened after the invocation ended, the third run having ended. The amended brief: "Until the third run ends, no session opens any p checkpoint, call log or p output, its own unit's included." No sibling's output was opened. A git status --porcelain scoped to data/p/verdicts and this raw printed the dpo and instruct outputs' names (names only; the list of record v2, item 1).
+- The scrub: the INVOCATION line's interpreter path carried the repository's absolute root. It is replaced by <repo>, one occurrence, at line 35. The scrub changed nothing else. No sha256 was taken before the scrub; the sha256 an entry gives is the final file's.

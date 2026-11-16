@@ -1,0 +1,1372 @@
+{
+ "adjudication": null,
+ "analyzer_sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48",
+ "arm": {
+  "noread": null,
+  "pred": {
+   "dead": false,
+   "i_dn": false,
+   "i_up": true,
+   "ii_dn": false,
+   "ii_up": true,
+   "iii_dn": false,
+   "iii_up": true
+  },
+  "route": null,
+  "state": "PASS",
+  "stats": {
+   "E": {
+    "display": "0.0625",
+    "exact": "1/16"
+   },
+   "P": {
+    "display": "0.9000",
+    "exact": "9/10"
+   },
+   "PS": {
+    "display": "0.4375",
+    "exact": "7/16"
+   },
+   "dead_tail": {
+    "display": "1.0000",
+    "exact": "24178515081140563130257792182578602975142087050661426570706607034686480285967103398739088467767691971543/24178516392292583494123520000000000000000000000000000000000000000000000000000000000000000000000000000000"
+   },
+   "delta": {
+    "display": "+0.4000",
+    "exact": "2/5"
+   },
+   "j": 14,
+   "k": 72,
+   "k0": 38,
+   "k1": 34,
+   "mS": 32,
+   "n": 80,
+   "n0": 40,
+   "n1": 40,
+   "p_down": {
+    "display": "1.0000",
+    "exact": "1208925819614625671782579/1208925819614629174706176"
+   },
+   "p_up": {
+    "display": "0.0000",
+    "exact": "32490460747/1208925819614629174706176"
+   },
+   "share0": {
+    "display": "0.9500",
+    "exact": "19/20"
+   },
+   "share1": {
+    "display": "0.8500",
+    "exact": "17/20"
+   }
+  },
+  "template": "A0-OLMo-sft"
+ },
+ "beside": {
+  "A0-OLMo-sft": {
+   "prepick_pooled": {
+    "den": 80,
+    "domain": "A0-OLMo-sft campaign sessions launched",
+    "num": 0
+   },
+   "read_flags": {
+    "all_reads": {
+     "low_label_mass": 3,
+     "reads": 476,
+     "top1_not_label": 105
+    },
+    "first_reads_of_domain_sessions": {
+     "low_label_mass": 1,
+     "reads": 80,
+     "top1_not_label": 17
+    }
+   },
+   "round_degeneracy": {
+    "forced": {
+     "den": 320,
+     "domain": "A0-OLMo-sft forced rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 0
+    },
+    "free": {
+     "den": 476,
+     "domain": "A0-OLMo-sft free rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 1
+    }
+   },
+   "scaffold_absorption_sessions": {
+    "forced": 0,
+    "free": 0
+   },
+   "whole_session_validity": {
+    "launched": 80,
+    "valid_lenient": 79,
+    "valid_strict": 79
+   }
+  },
+  "A0s-OLMo-sft": {
+   "prepick_pooled": {
+    "den": 32,
+    "domain": "A0s-OLMo-sft campaign sessions launched",
+    "num": 0
+   },
+   "read_flags": {
+    "all_reads": {
+     "low_label_mass": 0,
+     "reads": 192,
+     "top1_not_label": 20
+    },
+    "first_reads_of_domain_sessions": {
+     "low_label_mass": 0,
+     "reads": 32,
+     "top1_not_label": 4
+    }
+   },
+   "round_degeneracy": {
+    "forced": {
+     "den": 128,
+     "domain": "A0s-OLMo-sft forced rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 0
+    },
+    "free": {
+     "den": 192,
+     "domain": "A0s-OLMo-sft free rounds generated (contrast free rounds released at VERDICTS)",
+     "num": 0
+    }
+   },
+   "scaffold_absorption_sessions": {
+    "forced": 0,
+    "free": 0
+   },
+   "whole_session_validity": {
+    "launched": 32,
+    "valid_lenient": 32,
+    "valid_strict": 32
+   }
+  }
+ },
+ "closure_sha256": "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b",
+ "counter_rates": [
+  {
+   "counter": "audit_degenerate",
+   "den": 135,
+   "domain": "A0-OLMo-sft free rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|free|frame|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "cap_hit",
+   "den": 160,
+   "domain": "A0-OLMo-sft forced rounds generated, property corrupted; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|forced|corrupted",
+   "num": 1
+  },
+  {
+   "counter": "cap_hit",
+   "den": 341,
+   "domain": "A0-OLMo-sft free rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|free|clean",
+   "num": 1
+  },
+  {
+   "counter": "cap_hit",
+   "den": 128,
+   "domain": "A0s-OLMo-sft forced rounds generated, property clean; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|forced|clean",
+   "num": 1
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 80,
+   "domain": "A0-OLMo-sft reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|1",
+   "num": 1
+  },
+  {
+   "counter": "low_label_mass",
+   "den": 80,
+   "domain": "A0-OLMo-sft reads taken at position 2; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|2",
+   "num": 2
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 80,
+   "domain": "A0-OLMo-sft reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|1",
+   "num": 17
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 80,
+   "domain": "A0-OLMo-sft reads taken at position 2; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|2",
+   "num": 18
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 79,
+   "domain": "A0-OLMo-sft reads taken at position 3; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|3",
+   "num": 15
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 79,
+   "domain": "A0-OLMo-sft reads taken at position 4; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|4",
+   "num": 22
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 79,
+   "domain": "A0-OLMo-sft reads taken at position 5; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|5",
+   "num": 14
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 79,
+   "domain": "A0-OLMo-sft reads taken at position 6; all campaign sessions, excluded included",
+   "key": "A0-OLMo-sft|6",
+   "num": 19
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s-OLMo-sft reads taken at position 1; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|1",
+   "num": 4
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s-OLMo-sft reads taken at position 2; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|2",
+   "num": 3
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s-OLMo-sft reads taken at position 3; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|3",
+   "num": 2
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s-OLMo-sft reads taken at position 4; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|4",
+   "num": 3
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s-OLMo-sft reads taken at position 5; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|5",
+   "num": 3
+  },
+  {
+   "counter": "top1_not_label",
+   "den": 32,
+   "domain": "A0s-OLMo-sft reads taken at position 6; all campaign sessions, excluded included",
+   "key": "A0s-OLMo-sft|6",
+   "num": 5
+  }
+ ],
+ "counters": {
+  "counters": {
+   "audit_degenerate": {
+    "by_key": {
+     "A0-OLMo-sft|free|frame|corrupted": 1
+    },
+    "total": 1
+   },
+   "cap_hit": {
+    "by_key": {
+     "A0-OLMo-sft|forced|corrupted": 1,
+     "A0-OLMo-sft|free|clean": 1,
+     "A0s-OLMo-sft|forced|clean": 1
+    },
+    "total": 3
+   },
+   "harness_echo": {
+    "by_key": {},
+    "total": 0
+   },
+   "lexical": {
+    "by_key": {},
+    "total": 0
+   },
+   "low_label_mass": {
+    "by_key": {
+     "A0-OLMo-sft|1": 1,
+     "A0-OLMo-sft|2": 2
+    },
+    "total": 3
+   },
+   "pre_pick_exclusion": {
+    "by_key": {},
+    "total": 0
+   },
+   "termination": {
+    "by_key": {},
+    "total": 0
+   },
+   "top1_not_label": {
+    "by_key": {
+     "A0-OLMo-sft|1": 17,
+     "A0-OLMo-sft|2": 18,
+     "A0-OLMo-sft|3": 15,
+     "A0-OLMo-sft|4": 22,
+     "A0-OLMo-sft|5": 14,
+     "A0-OLMo-sft|6": 19,
+     "A0s-OLMo-sft|1": 4,
+     "A0s-OLMo-sft|2": 3,
+     "A0s-OLMo-sft|3": 2,
+     "A0s-OLMo-sft|4": 3,
+     "A0s-OLMo-sft|5": 3,
+     "A0s-OLMo-sft|6": 5
+    },
+    "total": 125
+   }
+  },
+  "declared": [
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "cap_hit",
+    "numerator": "round.cap_hit",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "cap_hit",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "category",
+     "property"
+    ],
+    "name": "audit_degenerate",
+    "numerator": "audit.claim == 'audit'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "audit_degenerate (b3's `AuditSpec`)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "harness_echo",
+    "numerator": "audit.claim == 'echo'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "harness_echo",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "lexical",
+    "numerator": "audit.claim == 'lexical'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "lexical",
+    "unit": "round"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "low_label_mass",
+    "numerator": "choice.low_label_mass",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "low_label_mass",
+    "unit": "read"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "top1_not_label",
+    "numerator": "choice.top1_not_label",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "top1_not_label",
+    "unit": "read"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "termination",
+    "numerator": "round.termination (f's patterns, raw; not a claim)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "termination",
+    "unit": "round"
+   },
+   {
+    "denominator": "sessions launched",
+    "keys_verdicts": [
+     "arm",
+     "property of the excluding forced round"
+    ],
+    "name": "pre_pick_exclusion",
+    "numerator": "exclusion.phase == 'forced'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "pre-pick exclusions",
+    "unit": "session"
+   }
+  ],
+  "denominators": {
+   "free_rounds": {
+    "A0-OLMo-sft|clean": 341,
+    "A0-OLMo-sft|corrupted": 135,
+    "A0s-OLMo-sft|clean": 192
+   },
+   "reads": {
+    "A0-OLMo-sft|1": 80,
+    "A0-OLMo-sft|2": 80,
+    "A0-OLMo-sft|3": 79,
+    "A0-OLMo-sft|4": 79,
+    "A0-OLMo-sft|5": 79,
+    "A0-OLMo-sft|6": 79,
+    "A0s-OLMo-sft|1": 32,
+    "A0s-OLMo-sft|2": 32,
+    "A0s-OLMo-sft|3": 32,
+    "A0s-OLMo-sft|4": 32,
+    "A0s-OLMo-sft|5": 32,
+    "A0s-OLMo-sft|6": 32
+   },
+   "rounds": {
+    "A0-OLMo-sft|forced|clean": 160,
+    "A0-OLMo-sft|forced|corrupted": 160,
+    "A0-OLMo-sft|free|clean": 341,
+    "A0-OLMo-sft|free|corrupted": 135,
+    "A0s-OLMo-sft|forced|clean": 128,
+    "A0s-OLMo-sft|free|clean": 192
+   },
+   "sessions": {
+    "A0-OLMo-sft": 80,
+    "A0s-OLMo-sft": 32
+   }
+  },
+  "n_excluded_included": 1,
+  "n_sessions": 112,
+  "not_tabulated": [],
+  "scope": "all campaign sessions, excluded included",
+  "tabulated_over_excluded_too": true
+ },
+ "counts": {
+  "domain": {
+   "A0-OLMo-sft": 80,
+   "A0s-OLMo-sft": 32
+  },
+  "launched": {
+   "A0-OLMo-sft": 80,
+   "A0s-OLMo-sft": 32
+  },
+  "prepick": {
+   "A0-OLMo-sft": 0,
+   "A0s-OLMo-sft": 0
+  }
+ },
+ "decisions_with_other_outcomes_known": [
+  {
+   "date": "2026-11-06",
+   "decision": "ADDENDUM-m1 decision (16): the three OLMo units re-registered once, under a new Clock date D_O' = 2026-11-30 (ADDENDUM-m1 v0.1, committed at f26bc59)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  },
+  {
+   "date": "2026-11-07",
+   "decision": "PROPOSAL-p adopted: PROPOSAL-p OLMo-{sft,dpo,instruct} pre-registered as the OLMo told controls at a frame-word corruption dose (PROPOSAL-p v0.2, committed at 18b0111; v0.1 routed 2026-11-06)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  },
+  {
+   "date": "2026-11-14",
+   "decision": "the PI's cap share for PROPOSAL-p's three campaigns, \"2 h each\" (LOCK-p-OLMo-{sft,dpo,instruct} v1.0, §2, committed at 038bf3e)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  },
+  {
+   "date": "2026-11-14",
+   "decision": "the PI's placement of LOCK-p-OLMo-{sft,dpo,instruct} v1.0, \"Place the locks\" (committed at 038bf3e)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  },
+  {
+   "date": "2026-11-15",
+   "decision": "ADDENDUM-p1 decision (p-1): A p checkpoint's outcome enters the posting its `PROPOSAL-p OLMo-{ckpt} — VERDICTS` entry, or its `— NOT-RUN` record, reaches, v1 included (ADDENDUM-p1 v0.1, committed at fa27c45)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  },
+  {
+   "date": "2026-11-15",
+   "decision": "the PI's go for PROPOSAL-p's three campaigns, given in steps: the routing of 2026-11-13, items 5-6; the routing of 2026-11-14 (evening), section B, item 4; \"Go for the pod whenever you need it.\" (2026-11-15); section B, item 5, of the routing of 2026-11-15 (evening), \"The campaigns as routed\" (the campaigns' entry, committed at 41bfab4)",
+   "other_state": "PASS",
+   "other_unit": "Q-F0"
+  }
+ ],
+ "ended": "COMPLETE",
+ "floors": {
+  "A0-OLMo-sft": 80,
+  "A0s-OLMo-sft": 32
+ },
+ "gate_release": {
+  "qual": {
+   "contrast_first_picks": [
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 0
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 1
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 2
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": false,
+     "first_pick_role": "Q",
+     "s": 3
+    },
+    {
+     "domain": false,
+     "first_free_pick_P": null,
+     "first_pick_role": null,
+     "s": 4
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 5
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 6
+    },
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 7
+    }
+   ],
+   "counters_beside": {
+    "counters": {
+     "audit_degenerate": {
+      "by_key": {},
+      "total": 0
+     },
+     "cap_hit": {
+      "by_key": {
+       "A0s-OLMo-sft|forced|clean": 1
+      },
+      "total": 1
+     },
+     "harness_echo": {
+      "by_key": {},
+      "total": 0
+     },
+     "lexical": {
+      "by_key": {
+       "A0-OLMo-sft|forced|corrupted": 1
+      },
+      "total": 1
+     },
+     "low_label_mass": {
+      "by_key": {},
+      "total": 0
+     },
+     "pre_pick_exclusion": {
+      "by_key": {
+       "A0-OLMo-sft|corrupted": 1
+      },
+      "total": 1
+     },
+     "termination": {
+      "by_key": {},
+      "total": 0
+     },
+     "top1_not_label": {
+      "by_key": {
+       "A0-OLMo-sft|1": 1,
+       "A0-OLMo-sft|2": 1,
+       "A0-OLMo-sft|4": 2,
+       "A0-OLMo-sft|5": 1,
+       "A0-OLMo-sft|6": 1,
+       "A0s-OLMo-sft|1": 1,
+       "A0s-OLMo-sft|2": 4,
+       "A0s-OLMo-sft|3": 3,
+       "A0s-OLMo-sft|4": 1,
+       "A0s-OLMo-sft|5": 1,
+       "A0s-OLMo-sft|6": 2
+      },
+      "total": 18
+     }
+    },
+    "declared": [
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "cap_hit",
+      "numerator": "round.cap_hit",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "cap_hit",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "category",
+       "property"
+      ],
+      "name": "audit_degenerate",
+      "numerator": "audit.claim == 'audit'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "audit_degenerate (b3's `AuditSpec`)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "harness_echo",
+      "numerator": "audit.claim == 'echo'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "harness_echo",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "lexical",
+      "numerator": "audit.claim == 'lexical'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "lexical",
+      "unit": "round"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "low_label_mass",
+      "numerator": "choice.low_label_mass",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "low_label_mass",
+      "unit": "read"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "top1_not_label",
+      "numerator": "choice.top1_not_label",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "top1_not_label",
+      "unit": "read"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "termination",
+      "numerator": "round.termination (f's patterns, raw; not a claim)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "termination",
+      "unit": "round"
+     },
+     {
+      "denominator": "sessions launched",
+      "keys_verdicts": [
+       "arm",
+       "property of the excluding forced round"
+      ],
+      "name": "pre_pick_exclusion",
+      "numerator": "exclusion.phase == 'forced'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "pre-pick exclusions",
+      "unit": "session"
+     }
+    ],
+    "denominators": {
+     "free_rounds": {
+      "A0-OLMo-sft|clean": 35,
+      "A0-OLMo-sft|corrupted": 7,
+      "A0s-OLMo-sft|clean": 96
+     },
+     "reads": {
+      "A0-OLMo-sft|1": 7,
+      "A0-OLMo-sft|2": 7,
+      "A0-OLMo-sft|3": 7,
+      "A0-OLMo-sft|4": 7,
+      "A0-OLMo-sft|5": 7,
+      "A0-OLMo-sft|6": 7,
+      "A0s-OLMo-sft|1": 16,
+      "A0s-OLMo-sft|2": 16,
+      "A0s-OLMo-sft|3": 16,
+      "A0s-OLMo-sft|4": 16,
+      "A0s-OLMo-sft|5": 16,
+      "A0s-OLMo-sft|6": 16
+     },
+     "rounds": {
+      "A0-OLMo-sft|forced|clean": 14,
+      "A0-OLMo-sft|forced|corrupted": 15,
+      "A0-OLMo-sft|free|clean": 35,
+      "A0-OLMo-sft|free|corrupted": 7,
+      "A0s-OLMo-sft|forced|clean": 64,
+      "A0s-OLMo-sft|free|clean": 96
+     },
+     "sessions": {
+      "A0-OLMo-sft": 8,
+      "A0s-OLMo-sft": 16
+     }
+    },
+    "n_excluded_included": 2,
+    "n_sessions": 24,
+    "not_tabulated": [],
+    "scope": "all campaign sessions, excluded included",
+    "tabulated_over_excluded_too": true
+   },
+   "released_free_round_events": [],
+   "stage": "qual",
+   "stage_end": {
+    "adjudication": null,
+    "fired": [],
+    "status": "PASS"
+   }
+  },
+  "time": {
+   "contrast_first_picks": [
+    {
+     "domain": true,
+     "first_free_pick_P": true,
+     "first_pick_role": "P",
+     "s": 0
+    }
+   ],
+   "counters_beside": {
+    "counters": {
+     "audit_degenerate": {
+      "by_key": {},
+      "total": 0
+     },
+     "cap_hit": {
+      "by_key": {},
+      "total": 0
+     },
+     "harness_echo": {
+      "by_key": {},
+      "total": 0
+     },
+     "lexical": {
+      "by_key": {},
+      "total": 0
+     },
+     "low_label_mass": {
+      "by_key": {
+       "A0-OLMo-sft|1": 1
+      },
+      "total": 1
+     },
+     "pre_pick_exclusion": {
+      "by_key": {},
+      "total": 0
+     },
+     "termination": {
+      "by_key": {},
+      "total": 0
+     },
+     "top1_not_label": {
+      "by_key": {
+       "A0-OLMo-sft|1": 1,
+       "A0-OLMo-sft|2": 1,
+       "A0-OLMo-sft|3": 1,
+       "A0-OLMo-sft|4": 1,
+       "A0-OLMo-sft|5": 1,
+       "A0-OLMo-sft|6": 1
+      },
+      "total": 6
+     }
+    },
+    "declared": [
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "cap_hit",
+      "numerator": "round.cap_hit",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "cap_hit",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "category",
+       "property"
+      ],
+      "name": "audit_degenerate",
+      "numerator": "audit.claim == 'audit'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "audit_degenerate (b3's `AuditSpec`)",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "harness_echo",
+      "numerator": "audit.claim == 'echo'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "harness_echo",
+      "unit": "round"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "lexical",
+      "numerator": "audit.claim == 'lexical'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "lexical",
+      "unit": "round"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "low_label_mass",
+      "numerator": "choice.low_label_mass",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "low_label_mass",
+      "unit": "read"
+     },
+     {
+      "denominator": "reads taken",
+      "keys_verdicts": [
+       "arm",
+       "read position"
+      ],
+      "name": "top1_not_label",
+      "numerator": "choice.top1_not_label",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "top1_not_label",
+      "unit": "read"
+     },
+     {
+      "denominator": "rounds generated",
+      "keys_verdicts": [
+       "arm",
+       "phase",
+       "property"
+      ],
+      "name": "termination",
+      "numerator": "round.termination (f's patterns, raw; not a claim)",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "termination",
+      "unit": "round"
+     },
+     {
+      "denominator": "sessions launched",
+      "keys_verdicts": [
+       "arm",
+       "property of the excluding forced round"
+      ],
+      "name": "pre_pick_exclusion",
+      "numerator": "exclusion.phase == 'forced'",
+      "q_f3_only": false,
+      "scope": "all campaign sessions, excluded included",
+      "spec_name": "pre-pick exclusions",
+      "unit": "session"
+     }
+    ],
+    "denominators": {
+     "free_rounds": {
+      "A0-OLMo-sft|clean": 4,
+      "A0-OLMo-sft|corrupted": 2,
+      "A0s-OLMo-sft|clean": 6
+     },
+     "reads": {
+      "A0-OLMo-sft|1": 1,
+      "A0-OLMo-sft|2": 1,
+      "A0-OLMo-sft|3": 1,
+      "A0-OLMo-sft|4": 1,
+      "A0-OLMo-sft|5": 1,
+      "A0-OLMo-sft|6": 1,
+      "A0s-OLMo-sft|1": 1,
+      "A0s-OLMo-sft|2": 1,
+      "A0s-OLMo-sft|3": 1,
+      "A0s-OLMo-sft|4": 1,
+      "A0s-OLMo-sft|5": 1,
+      "A0s-OLMo-sft|6": 1
+     },
+     "rounds": {
+      "A0-OLMo-sft|forced|clean": 2,
+      "A0-OLMo-sft|forced|corrupted": 2,
+      "A0-OLMo-sft|free|clean": 4,
+      "A0-OLMo-sft|free|corrupted": 2,
+      "A0s-OLMo-sft|forced|clean": 4,
+      "A0s-OLMo-sft|free|clean": 6
+     },
+     "sessions": {
+      "A0-OLMo-sft": 1,
+      "A0s-OLMo-sft": 1
+     }
+    },
+    "n_excluded_included": 0,
+    "n_sessions": 2,
+    "not_tabulated": [],
+    "scope": "all campaign sessions, excluded included",
+    "tabulated_over_excluded_too": true
+   },
+   "released_free_round_events": [],
+   "stage": "time",
+   "stage_end": {
+    "adjudication": null,
+    "fired": [],
+    "status": "PASS"
+   }
+  }
+ },
+ "guard_last_look": {
+  "abs": {
+   "binding": false,
+   "exceeds": false,
+   "fired": false,
+   "name": "exclusion_guard_abs@campaign-OLMo-sft",
+   "p": "1/1"
+  },
+  "at_stop": false,
+  "fisher": {
+   "binding": true,
+   "fired": false,
+   "name": "exclusion_guard_fisher@campaign-OLMo-sft",
+   "p": "1/1"
+  },
+  "label": "the end look at 112 launches",
+  "reached": true,
+  "source": "end_look"
+ },
+ "inputs": {
+  "campaign": {
+   "path": "data/p/ckpt/OLMo-sft_campaign.json",
+   "sha256": "28c52e58f46bdd3e6fb026ae0dd980a3852d693ecc655a51a51d7c15e82f9ed2"
+  },
+  "decisions": {
+   "path": "data/p/verdicts/OLMo-sft_decisions.json",
+   "sha256": "54df4b851b978adf78aa2e86e512d83e4b1a38be91229212d6fcf410d2f9e881"
+  },
+  "lock": {
+   "path": "LOCK-p-OLMo-sft.md",
+   "sha256": "fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4"
+  },
+  "qual": {
+   "path": "data/p/ckpt/OLMo-sft_qual.json",
+   "sha256": "1dff86dfda9a136b84338d694e3afa8525fdf6bf69d99ca5058ad7a457b94af8"
+  },
+  "time": {
+   "path": "data/p/ckpt/OLMo-sft_time.json",
+   "sha256": "aa56d5cf0be83b3828fb42b1566685a5aaffc97edc962483951d555f370dd3e2"
+  }
+ },
+ "looks": [
+  {
+   "abs": {
+    "binding": false,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-OLMo-sft",
+    "p": "1/1"
+   },
+   "at_launches": 40,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-OLMo-sft",
+    "p": "1/1"
+   },
+   "look": 1
+  },
+  {
+   "abs": {
+    "binding": false,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-OLMo-sft",
+    "p": "1/1"
+   },
+   "at_launches": 80,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-OLMo-sft",
+    "p": "1/1"
+   },
+   "look": 2
+  },
+  {
+   "abs": {
+    "binding": false,
+    "exceeds": false,
+    "fired": false,
+    "name": "exclusion_guard_abs@campaign-OLMo-sft",
+    "p": "1/1"
+   },
+   "at_launches": 112,
+   "fired": false,
+   "fisher": {
+    "binding": true,
+    "fired": false,
+    "name": "exclusion_guard_fisher@campaign-OLMo-sft",
+    "p": "1/1"
+   },
+   "look": "end"
+  }
+ ],
+ "p": {
+  "analyzers": {
+   "scripts/m_analyze.py": {
+    "sha256": "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48"
+   },
+   "scripts/p_analyze.py": {
+    "sha256": "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008"
+   },
+   "valence_core/p": {
+    "package_sha256": "a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7"
+   }
+  },
+  "d_p": {
+   "date": "2026-12-15",
+   "problems": [],
+   "where": "p:100"
+  },
+  "decisions_beside": [
+   {
+    "output": {
+     "path": "data/m/verdicts/OLMo-sft_NOT-RUN.json",
+     "sha256": "72745cb4328083373d9c9d482732c735dee28cc68c5f151ed2f3a9a35684b5b0"
+    },
+    "reason": "dose not completable",
+    "state": "NOT-RUN",
+    "unit": "PROPOSAL-m OLMo-sft"
+   },
+   {
+    "output": {
+     "path": "data/m/verdicts/OLMo-dpo_NOT-RUN.json",
+     "sha256": "94869b83758be62c835f16e4306787abcee9470544306cd5f530829d73ab8e96"
+    },
+    "reason": "dose not completable",
+    "state": "NOT-RUN",
+    "unit": "PROPOSAL-m OLMo-dpo"
+   },
+   {
+    "output": {
+     "path": "data/m/verdicts/OLMo-instruct_NOT-RUN.json",
+     "sha256": "e2ecef56d747681dbc7ff48e19634f35f5eac8e6bb9c932efae77bfcbe7587e8"
+    },
+    "reason": "dose not completable",
+    "state": "NOT-RUN",
+    "unit": "PROPOSAL-m OLMo-instruct"
+   }
+  ],
+  "declared_sentences": {
+   "OLMo-sft": [
+    "G-CAL-p passed at the bar, 47/64 against 47"
+   ]
+  },
+  "disclosure": "pre-registered on 2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read, before any session ran.",
+  "proposal": "PROPOSAL-p",
+  "register": [
+   {
+    "attrs": [
+     "clock_of_record",
+     "crosscheck_coordinate"
+    ],
+    "kind": "clock; roots",
+    "module": "m_analyze",
+    "n": 3,
+    "reason": "p §4.4: p's outputs through m's analyzer (scripts/m_analyze.py, imported by scripts/p_analyze.py), the proposal pin kept m's (proposal_p_sha256 beside it): (a) the Clock -- D_p for the OLMo units, m's own for Q-F0 and Q-F3; (c) the v2 posting's per-unit verdicts-dir resolution -- data/p/verdicts for the OLMo units, data/m/verdicts for Q-F0. (b) The roots are parameters wherever m takes them, not a site (the seat's Q9 (b))",
+    "replacement": "valence_core.p.analysis.{clock_of_record_p, crosscheck_coordinate_p}",
+    "status": "built at p §8 step 6 (the seat's answer of 2026-11-08, de729c4)"
+   }
+  ],
+  "roots": "parameters wherever m takes them -- not a site (the seat's Q9 (b))",
+  "staging": "m's function wrote this output into a staging directory seeded with copies of the final directory's files (so its refusals saw p's state); p added proposal_p_sha256 and this block and wrote the file once (the seat's Q7, 2026-11-08); every occurrence of the staging directory m recorded names the final directory instead (a seeded copy's source). A p command re-run on unchanged inputs is refused (write-once), where m's own reports 'identical' (PIN-37): the seeded copy is p's file, with its two added keys, which m compares with its own form"
+ },
+ "package_sha256": "7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb",
+ "pauses": [],
+ "per_property_table": {
+  "by_arm": {
+   "A0-OLMo-sft": {
+    "clean": {
+     "rounds_claimed_by_class": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_excluding_by_class": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_generated": 501,
+     "sessions_excluded_any_phase": 0,
+     "sessions_excluded_prepick": 0
+    },
+    "corrupted": {
+     "rounds_claimed_by_class": {
+      "audit": 1,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_excluding_by_class": {
+      "audit": 1,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_generated": 295,
+     "sessions_excluded_any_phase": 1,
+     "sessions_excluded_prepick": 0
+    }
+   },
+   "A0s-OLMo-sft": {
+    "clean": {
+     "rounds_claimed_by_class": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_excluding_by_class": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_generated": 320,
+     "sessions_excluded_any_phase": 0,
+     "sessions_excluded_prepick": 0
+    },
+    "corrupted": {
+     "rounds_claimed_by_class": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_excluding_by_class": {
+      "audit": 0,
+      "echo": 0,
+      "lexical": 0
+     },
+     "rounds_generated": 0,
+     "sessions_excluded_any_phase": 0,
+     "sessions_excluded_prepick": 0
+    }
+   }
+  },
+  "reference": "f1 CORR's 7-vs-1 anomaly (archive:91-93) is the reference (m:314); the column it refers to is sessions_excluded_prepick, m's pre-pick column (sessions excluded before the first read, by property; the seat's C7 on G-PORT A5, 2026-10-10); sessions_excluded_any_phase is reported beside it"
+ },
+ "pi_stop_record": null,
+ "power": {
+  "of_record": {
+   "basis": "m:190's base case at the realised n: the arm split floor(n/2) / ceil(n/2) per map at clean share .70, the sham pooled at .5, alpha .01 (descriptive; the power figure of record)",
+   "display": "0.878",
+   "exact": "23580137590619550262453647860730650718860164320031952018772537889516328421138081855812111/26843545600000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "mS": 32,
+   "n": 80,
+   "split": [
+    40,
+    40
+   ]
+  },
+  "realised_split": {
+   "basis": "the realised per-map domain counts (beside; not of record)",
+   "display": "0.878",
+   "exact": "23580137590619550262453647860730650718860164320031952018772537889516328421138081855812111/26843545600000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "mS": 32,
+   "split": [
+    40,
+    40
+   ]
+  }
+ },
+ "proposal_p_sha256": "42f2977b941bc016d3155ba9e34828f1b050121d9f18a9e3307e3f7023cf3b32",
+ "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+ "quarantined": [],
+ "rates": [
+  {
+   "den": 80,
+   "domain": "A0-OLMo-sft domain sessions (m:308), coded on the P-role label at the first free choice (m:306)",
+   "num": 72,
+   "rate": "P"
+  },
+  {
+   "den": 32,
+   "domain": "A0s-OLMo-sft domain sessions (m:308)",
+   "num": 14,
+   "rate": "P_sham"
+  },
+  {
+   "den": 40,
+   "domain": "A0-OLMo-sft domain sessions on map 0",
+   "num": 38,
+   "rate": "share_map0"
+  },
+  {
+   "den": 40,
+   "domain": "A0-OLMo-sft domain sessions on map 1",
+   "num": 34,
+   "rate": "share_map1"
+  },
+  {
+   "den": 80,
+   "domain": "A0-OLMo-sft campaign session records (launched); numerator excluded at the forced phase (stages._prepick's definition)",
+   "num": 0,
+   "rate": "prepick_A0-OLMo-sft"
+  },
+  {
+   "den": 32,
+   "domain": "A0s-OLMo-sft campaign session records (launched); numerator excluded at the forced phase (stages._prepick's definition)",
+   "num": 0,
+   "rate": "prepick_A0s-OLMo-sft"
+  }
+ ],
+ "release": "readrule.release_full: the contrast picks are reported and the withheld free-round events are released (m:271)",
+ "rows": {
+  "olmo-sft": "Answered",
+  "state": "PASS"
+ },
+ "schema": "m-verdicts-v1",
+ "sentence": "A0-OLMo-sft (OLMo-sft): PASS; n = 80 domain sessions of 80 launched (map 0: 38/40, map 1: 34/40 on the clean-role label); P = 72/80 = 0.9000; Δ_c = +0.4000, two-sided Clopper–Pearson 95% CI [+0.3124, +0.4558]; E = 0.0625 from A0s-OLMo-sft (14/32 domain sessions, P_sham = 0.4375); P_arm − P_sham = +0.4625; exact one-sided binomial vs 0.5: p = 0.0000 toward clean, p = 1.0000 toward corrupted, α = .01; pre-pick exclusion rate 0/80 = 0.0000 beside A0s-OLMo-sft's 0/32 = 0.0000; the guard at the unit's last look (the end look at 112 launches): Fisher one-sided vs A0s-OLMo-sft p = 1.0000, not fired (binding); absolute vs .20 p = 1.0000, P > α (reported only).",
+ "sham": {
+  "by_map": {
+   "0": {
+    "j": 8,
+    "n": 16
+   },
+   "1": {
+    "j": 6,
+    "n": 16
+   }
+  },
+  "domain": 32,
+  "j": 14,
+  "role": "E only (tier sham, m:182-183)",
+  "template": "A0s-OLMo-sft"
+ },
+ "stop_bar": null,
+ "tests": {
+  "dead_tail": {
+   "display": "1.0000",
+   "p": "24178515081140563130257792182578602975142087050661426570706607034686480285967103398739088467767691971543/24178516392292583494123520000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "test": "P(X <= k), X ~ Bin(n, 13/20): DEAD iff < 1/40 and k < n (the two-sided Clopper-Pearson 95% upper bound on Delta_c < +0.15)"
+  },
+  "guard_abs": {
+   "p": "1/1",
+   "test": "exact one-sided binomial of the arm's pre-pick exclusions vs .20, alpha .05, at the unit's last look (m:316)"
+  },
+  "guard_fisher": {
+   "p": "1/1",
+   "test": "one-sided Fisher exact, the arm's pre-pick exclusions vs its sham's, alpha .05, at the unit's last look (m:316)"
+  },
+  "p_down": {
+   "display": "1.0000",
+   "p": "1208925819614625671782579/1208925819614629174706176",
+   "test": "exact one-sided binomial vs 0.5 toward corrupted, P(X <= k), X ~ Bin(n, 1/2); (iii) for REVERSE at alpha .01"
+  },
+  "p_up": {
+   "display": "0.0000",
+   "p": "32490460747/1208925819614629174706176",
+   "test": "exact one-sided binomial vs 0.5 toward clean, P(X >= k), X ~ Bin(n, 1/2); (iii) at alpha .01"
+  }
+ },
+ "unit": "OLMo-sft",
+ "unit_state": "ANALYZED"
+}

@@ -21,6 +21,397 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **PROPOSAL-p OLMo-sft — VERDICTS (p v0.2 §4.4, §8 step 7; LOCK-p-OLMo-sft v1.0, `038bf3e`; ADDENDUM-p1
+  v0.1, `fa27c45`; the seat's answers of 2026-11-16, `18102d0`): A0-OLMo-sft PASS. P = 72/80, Δ_c = +0.4000 (two-sided
+  Clopper–Pearson 95% CI [+0.3124, +0.4558]) against E = 0.0625 from A0s-OLMo-sft; exact one-sided p toward clean =
+  32490460747/2^80. The output's row: OLMo-sft *Answered*. The unit is ANALYZED, COMPLETE at its floors. G-CAL-p passed
+  at the bar, 47/64 against 47. "The reads" (m:318) are open: this entry closes at the seat's read.**
+  - **ADDENDUM-p1 §2.4, in m:318's form:** OLMo-sft's VERDICTS were computed with Q-F0's outcome known (A0 PASS,
+    `bfc179c`) and after ADDENDUM-p1's re-specification (decision (p-1), committed at `fa27c45`). The decisions input
+    records (p-1) as its fifth item, taken with Q-F0's PASS known (below).
+  - **The disclosure** (p §5.4, in the form the seat's F-p3 ruling gave it, `38f9974`; verbatim as the output's
+    `p.disclosure` carries it): *pre-registered on
+    2026-11-07 (PROPOSAL-p v0.2, `18b0111`; v0.1 routed 2026-11-06), after the shared dose of PROPOSAL-m failed
+    completability on this lineage at G-CAL-OLMo on 2026-11-06; the corruption rule changed once, from the gate's read,
+    before any session ran.* p §5.4: "The disclosure is a reported fact, not a caveat on a verdict."
+  - **The SFT sentence** (the seat's answer of 2026-11-08, `daca8b0` §0.1, declared for "every entry, lock line and
+    posted sentence that reports OLMo-SFT's A0 outcome"; the output's `p.declared_sentences`): *G-CAL-p passed at the
+    bar, 47/64 against 47*.
+  - **The words** (each verbatim, relayed by the coordinating session).
+    - The PI's routing of 2026-11-15 (evening), "Route as given", section B, item 6: "ADDENDUM-p1 v0.1: referent
+      check, the answer to its §2.2, then "ADDENDUM-p1 v0.1 — COMMITTED", before any p VERDICTS session [adopt]. Then
+      PROPOSAL-p OLMo-{sft,dpo,instruct} — VERDICTS and — secondary DVs, fresh sessions [go, after its commit]." Then
+      the PI's word in chat: "Start them" (undated in the record; relayed with this session's brief, which reached it
+      on 2026-11-16).
+    - The PI's "Route as given" (PI date 2026-11-16) on the seat's answers to the joint block of `9189623`. The paste
+      block's section B is quoted in full in the instruct session's close on that entry. This session's close line
+      there, for OLMo-sft, is in this commit.
+    - On the seat's item 8, the PI's word "Yes, push first". The coordinating session's close at `52b2c97` records the
+      push: "`fa27c45..645bd3f`, 13 commits, on the PI's word "Yes, push first"". `origin/main` was at `645bd3f`,
+      with the inputs' commit `db2e821` in its history, before this run.
+  - **The run** ([`_p-verdicts-OLMo-sft`](results/raw/2026-11-16_p-verdicts-OLMo-sft.txt), one raw, sha256
+    `db392ff4…e11a`).
+    - **The window.** A battery window the coordinating session granted, Q-F3's campaign running on this laptop. It was
+      the third of three, after instruct's and dpo's, one window at a time. Under procedure (ii) the end notice, this
+      session's whole message, was "sft verdicts ended, EXIT=0. Window released."
+    - **Preconditions**, Code's read-only script (shell, git, shasum and jq; no Python), ALL CLEAR at HEAD `645bd3f`
+      inside the run script, just before the command (its output verbatim in the raw's header). Before it, in the
+      window, it ran once as its own call, also ALL CLEAR; that output is in this session's record only. It asserts:
+      - each pinned file's sha256 against its value of record: m's analyzer `d347ea0c…5e48`, p's `d3758fc4…7008`,
+        m's `package_sha256` `7756dcf4…49bb` and p's `a38d93bb…a2d7` (recomputed in the shell by
+        `package_sha256_of`'s rule), the driver `9c641e19…a96d` and `olmo_hf.py` `df80b79b…92dc` (each named in the
+        lock), PROPOSAL-m `42ab36ec…6c6b`, PROPOSAL-p `42f2977b…3b32` and ADDENDUM-m1 `ea08322d…9001` (the values
+        m's analyzer and p's package pin);
+      - the lock `fafb786d…2bc4`, equal to its blob at HEAD; the code paths without a tracked change or an untracked
+        file; no sft output present;
+      - the decisions input `54df4b85…e881`, in m-decisions-v1's shape (keys, unit, no PENDING, no own unit) and equal
+        to its blob at HEAD. (`git log` names `db2e821` as the commit that added it.)
+    - **The command**, from the repository root, at `nice -n 19`, `$PY` the repository's
+      `jlens-qwen36/.venv/bin/python` (G-ANL-p's interpreter): `$PY -B scripts/p_analyze.py verdicts --unit OLMo-sft
+      --lock LOCK-p-OLMo-sft.md --decisions data/p/verdicts/OLMo-sft_decisions.json`. `--campaign`, `--time` and
+      `--qual` stayed at their defaults, `data/p/ckpt/OLMo-sft_{campaign,time,qual}.json`. There was no `--adjudication`
+      (no pause) and no `--pi-stop`. The paths are typed relative; the analyzer resolves a relative CLI path against the
+      repository root (`_cli_path`, `m_analyze.py:11254`; PIN-V2-8).
+    - **EXIT=0, stderr empty.** The analyzer printed its INVOCATION line, the gate line (V0), the §5 sentence,
+      `VERDICTS OLMo-sft: written: OLMo-sft_VERDICTS.json, OLMo-sft_secondary.json`, and two `P-OUTPUT` lines.
+    - **No battery** ran at this step. The brief bars `p_analyze.py --selftest`, `ganl` and m's battery on the laptop
+      while Q-F3 runs; G-ANL-p's run of record is `82c3c44`'s.
+    - **The outputs**, written once (the output's `p.staging`): `data/p/verdicts/OLMo-sft_VERDICTS.json`
+      `2795b6109d6293d7dc6cd06154d7c3b1efa108c45280636fc582b104bb8c853c` and `data/p/verdicts/OLMo-sft_secondary.json`
+      `e9cfe52d023a105c003e10e9d629674e4d83cd14cf4b640e0bcc7a0aa7e0fa54`, each equal by `shasum` to its `P-OUTPUT`
+      line. Their schemas are `m-verdicts-v1` and `m-secondary-v1`, each with `proposal_p_sha256` `42f2977b…3b32`.
+      `.gitignore` admits `data/p/verdicts/*.json` already (:311–313), with no `-diff`. Committed by path in this
+      commit, with the raw.
+  - **The inputs** (the output's `inputs`, each path repository-relative with its sha256):
+    - the lock, `fafb786d…2bc4`;
+    - the decisions input, `54df4b85…e881`;
+    - the campaign checkpoint `data/p/ckpt/OLMo-sft_campaign.json`, `28c52e58…9ed2`, equal to the copy-back raw's
+      (`41bfab4`);
+    - G-TIME-OLMo (p)'s `data/p/ckpt/OLMo-sft_time.json`, `aa56d5cf…d3e2`, equal to its stage raw's (`2258c52`);
+    - G-F0m-OLMo (p)'s `data/p/ckpt/OLMo-sft_qual.json`, `1dff86df…4af8`, equal to its stage raw's (`a225a89`).
+
+    At this run, the analyzer alone read the three checkpoints (the brief: "read only by the analyzer (list v2 item
+    2)"); this session opened, listed and hashed none of them, and no call log. After the third run, the amended brief
+    gives the checkpoints and the call logs to the counters step alone (below).
+  - **The pins** (the output's): `proposal_sha256` m's, `42ab36ec…6c6b` (the proposal pin kept m's, p §4.4), with
+    `proposal_p_sha256` `42f2977b…3b32` beside it; `analyzer_sha256` `d347ea0c…5e48`, `package_sha256`
+    `7756dcf4…49bb`, `closure_sha256` `a3bc7bb9…b22b`. p's block names `scripts/p_analyze.py` `d3758fc4…7008` and
+    `valence_core/p`'s `package_sha256` `a38d93bb…a2d7`; D_p 2026-12-15 (p:100) with no problem; the register's entry
+    (3), `clock_of_record` and `crosscheck_coordinate`.
+  - **The decisions with other outcomes known** (m:318's record, PIN-35; the seat's Q1 (c)). Six items, verbatim from
+    the input as the output carries them, each `other_unit` Q-F0 and `other_state` PASS:
+    1. 2026-11-06: "ADDENDUM-m1 decision (16): the three OLMo units re-registered once, under a new Clock date D_O' =
+       2026-11-30 (ADDENDUM-m1 v0.1, committed at f26bc59)";
+    2. 2026-11-07: "PROPOSAL-p adopted: PROPOSAL-p OLMo-{sft,dpo,instruct} pre-registered as the OLMo told controls at
+       a frame-word corruption dose (PROPOSAL-p v0.2, committed at 18b0111; v0.1 routed 2026-11-06)";
+    3. 2026-11-14: "the PI's cap share for PROPOSAL-p's three campaigns, "2 h each" (LOCK-p-OLMo-{sft,dpo,instruct}
+       v1.0, §2, committed at 038bf3e)";
+    4. 2026-11-14: "the PI's placement of LOCK-p-OLMo-{sft,dpo,instruct} v1.0, "Place the locks" (committed at
+       038bf3e)";
+    5. 2026-11-15: "ADDENDUM-p1 decision (p-1): A p checkpoint's outcome enters the posting its `PROPOSAL-p
+       OLMo-{ckpt} — VERDICTS` entry, or its `— NOT-RUN` record, reaches, v1 included (ADDENDUM-p1 v0.1, committed at
+       fa27c45)";
+    6. 2026-11-15: "the PI's go for PROPOSAL-p's three campaigns, given in steps: the routing of 2026-11-13, items 5-6;
+       the routing of 2026-11-14 (evening), section B, item 4; "Go for the pod whenever you need it." (2026-11-15);
+       section B, item 5, of the routing of 2026-11-15 (evening), "The campaigns as routed" (the campaigns' entry,
+       committed at 41bfab4)".
+    - **Beside them** (the output's `p.decisions_beside`): m's three NOT-RUN outputs, each "dose not completable",
+      committed at `0f35954`: `data/m/verdicts/OLMo-sft_NOT-RUN.json` `72745cb4…b5b0`, `…/OLMo-dpo_NOT-RUN.json`
+      `94869b83…8e96` and `…/OLMo-instruct_NOT-RUN.json` `e2ecef56…87e8`. Item 1 is in m's three records too. Items
+      2–6 and the goes below came after them (`0f35954` is an ancestor of `18b0111` and of `ec0d9d3`).
+    - **The goes in this entry's text** (the seat's Q1 (c)). Each was taken with Q-F0's PASS and m's three NOT-RUNs
+      known, and each is listed as the joint block's (iv) gathers it:
+      - G-CAL-p: the PI's routing of 2026-11-07, item 1, "1. The five rulings [confirmed] → Code applies them, the
+        coordinating session gives the box go, G-CAL-p runs [go]." (the G-CAL-p entry, `ec0d9d3`);
+      - LOCK-p v0.1 and G-TIME-OLMo (p): the PI's routing of 2026-11-08, item 2, "build → G-SHAPE-p re-run → G-ANL-p
+        → LOCK-p v0.1 ×3 → G-TIME-OLMo (p) on the box [go]" (each LOCK-p v0.1's header);
+      - LOCK-p v0.2 and G-F0m-OLMo (p): the PI's routing of 2026-11-10, B1, "... → LOCK-p v0.2 ×3 → G-F0m-OLMo (p) ×3
+        on the box, batched → STOP for the seat's read [go]" (each LOCK-p v0.2's header);
+      - G-PWR (p), the campaign wiring and LOCK-p v1.0: the PI's routing of 2026-11-13, item 4, "p's chain: G-PWR (p)
+        now — … → LOCK-p v1.0 ×3 by 2026-12-15, each read by the seat before its commit [go]" (`a2c354e`);
+      - these sessions: the routing of 2026-11-15 (evening), section B, item 6, "[go, after its commit]", and the PI's
+        "Start them" (undated; above).
+
+      (iv) also gathered the campaigns' go, which Q1 (c) put in the input as its item 6.
+
+      The seat's ruling beside them (its §1), verbatim: "The gate stages' goes stay out of the input. Each was the
+      seat's routed default for a registered step and settled nothing the pre-registration left open. Each entry's
+      text lists them with their routings' dates, as the block's (iv) gathers them, with this ruling beside them."
+    - **Q2 (a), with procedures (i) and (ii).** The three inputs were committed at `db2e821` before the first run.
+      This session opened no sibling's output, and its end notice was its exit status and the window's release. The
+      coordinating session's notice after the third run: "instruct, dpo and sft each EXIT=0"; the counters step's
+      gate 1 states the same three (`922d7a3`). The seat's §2: with both
+      procedures, "no decision about any unit can follow a sibling's VERDICTS". No such decision is recorded here.
+  - **A0-OLMo-sft, with its §5 sentence** (PIN-4's clauses in order), verbatim from the output: "A0-OLMo-sft
+    (OLMo-sft): PASS; n = 80 domain sessions of 80 launched (map 0: 38/40, map 1: 34/40 on the clean-role label); P =
+    72/80 = 0.9000; Δ_c = +0.4000, two-sided Clopper–Pearson 95% CI [+0.3124, +0.4558]; E = 0.0625 from A0s-OLMo-sft
+    (14/32 domain sessions, P_sham = 0.4375); P_arm − P_sham = +0.4625; exact one-sided binomial vs 0.5: p = 0.0000
+    toward clean, p = 1.0000 toward corrupted, α = .01; pre-pick exclusion rate 0/80 = 0.0000 beside A0s-OLMo-sft's
+    0/32 = 0.0000; the guard at the unit's last look (the end look at 112 launches): Fisher one-sided vs A0s-OLMo-sft p
+    = 1.0000, not fired (binding); absolute vs .20 p = 1.0000, P > α (reported only)."
+    - **m:326's order.** A domain exists and E is defined, so not INDETERMINATE-no-read. REVERSE needs (i)–(iii)
+      toward corrupted: none holds. PASS needs (i)–(iii) toward clean (m:310), at A0's α .01 (m:326):
+      - (i) Δ_c = +0.4000 = 2/5 > E = 0.0625 = 1/16 (E = |P_sham − .5|);
+      - (ii) each map's clean share ≥ .5: map 0 38/40 = 0.9500, map 1 34/40 = 0.8500;
+      - (iii) exact one-sided binomial vs 0.5 toward clean, P(X ≥ 72), X ~ Bin(80, 1/2): p = 32490460747/2^80 ≈
+        2.69 × 10^-14 < .01.
+
+      All three hold (the output's `pred`: `i_up`, `ii_up`, `iii_up` true; every `_dn` false), so **PASS**. DEAD is
+      not reached (`dead` false; its tail, P(X ≤ 72) under Bin(80, 13/20), is 1 − 5.42 × 10^-8, not < 1/40).
+    - **Every rate with its domain** (the output's `rates`; PIN-2's exact forms): P 72/80 (A0-OLMo-sft domain
+      sessions, m:308, coded on the P-role label at the first free choice, m:306); P_sham 14/32 (A0s-OLMo-sft domain
+      sessions); share on map 0 38/40 and on map 1 34/40 (A0-OLMo-sft domain sessions on that map); pre-pick
+      exclusions A0-OLMo-sft 0/80 and A0s-OLMo-sft 0/32 (the arm's campaign session records launched; numerator
+      excluded at the forced phase, `stages._prepick`'s definition).
+    - **Every p with its test** (the output's `tests`, exact): `p_up` 32490460747/1208925819614629174706176 ("exact
+      one-sided binomial vs 0.5 toward clean, P(X >= k), X ~ Bin(n, 1/2); (iii) at alpha .01"); `p_down`
+      1208925819614625671782579/1208925819614629174706176 (the same toward corrupted, P(X <= k); "(iii) for REVERSE at
+      alpha .01"); `dead_tail` 1 − 5.42 × 10^-8 (its exact fraction in the output; "DEAD iff < 1/40 and k < n");
+      `guard_fisher` 1/1 ("one-sided Fisher exact, the arm's pre-pick exclusions vs its sham's, alpha .05, at the
+      unit's last look (m:316)"); `guard_abs` 1/1 ("exact one-sided binomial of the arm's pre-pick exclusions vs .20,
+      alpha .05, at the unit's last look (m:316)").
+    - **Δ_c with its interval**: +0.4000, CP 95% on P [0.8124, 0.9558], on Δ_c [+0.3124, +0.4558].
+    - **The attained power of record at the realised n** (PIN-3; m:190's base case: the arm split floor(n/2) /
+      ceil(n/2) per map at clean share .70, the sham pooled at .5, α .01; descriptive): **0.878** (0.8784; split 40/40,
+      m_S 32), G-PWR (p)'s value at the floors (`3e1b614`). The realised split is also 40/40. PIN-4 puts power into
+      the sentence only when an arm is below its floor (m:247); neither is.
+    - **The pre-pick exclusion rate beside the sham's, and the guard at the last look** (m:316, m:326): A0-OLMo-sft
+      0/80, A0s-OLMo-sft 0/32. At the unit's last look, the end look at 112 launches: Fisher one-sided p = 1, not
+      fired, binding; absolute vs .20 p = 1, not fired, reported only (m:316: "on OLMo the absolute bar is reported
+      only, computed against the same .20"). No look fired.
+  - **The sham, A0s-OLMo-sft** (the output's `sham`; "E only (tier sham, m:182-183)"): domain 32 of 32 launched;
+    P_sham 14/32 = 0.4375 on the P-role label (map 0 8/16, map 1 6/16); E = |0.4375 − 0.5| = 0.0625. This is the
+    campaign's sham first-pick share, which the campaign reported nowhere (m:318).
+  - **The unit outcome**: **ANALYZED, COMPLETE at its floors** (A0-OLMo-sft 80 and A0s-OLMo-sft 32 domain sessions,
+    on 80 and 32 launches). The 2 h hour cap was not reached (the campaigns' entry, `41bfab4`). No pause, no STOP,
+    nothing quarantined, no adjudication and no PI-stop record (the output's `pauses` `[]`, `stop_bar` null,
+    `quarantined` `[]`, `adjudication` null, `pi_stop_record` null).
+  - **The row** (the output's `rows`): `olmo-sft` *Answered*, `state` PASS. p §5.2 makes p's unit "the told control
+    at this stage" in m:338's rule: *Answered* iff p's own L0-OLMo-c. ADDENDUM-p1's decision (p-1) puts it in the
+    posting this entry reaches, v1 included. At v1 (ADDENDUM-p1 §2.1): "the label by m:338 on p's L0-OLMo-c; §8.1's
+    status sentence (m:343) with p's outcome, then A-m1 §2.4 (b)'s sentence, then p §5.2's declared sentence"; and
+    "The ceiling does not move: "L0-OLMo-c never enters the ceiling" (m:341)". The postings are the PI's; nothing here
+    posts.
+  - **Counters by property** (rule 23; m:314): over all 112 campaign sessions, the one excluded session included (an
+    A0-OLMo-sft session excluded at the free phase; the output's `n_excluded_included`, 1, counts the counter
+    increments that session made, not sessions, `valence_core/session.py:359`). Each is a rate over units generated
+    (the output's `counters` and `counter_rates`). The declared set is the output's `counters.declared`, eight names:
+    `cap_hit`, `audit_degenerate`, `harness_echo`, `lexical`, `low_label_mass`, `top1_not_label`, `termination` and
+    `pre_pick_exclusion`. The gate stages carry the same eight under
+    `gate_release.{time,qual}.counters_beside.declared`. None is untabulated (`not_tabulated` `[]`).
+    - **rounds** (A0-OLMo-sft: forced clean 160, forced corrupted 160, free clean 341, free corrupted 135;
+      A0s-OLMo-sft: forced clean 128, free clean 192):
+      - `audit_degenerate`: A0-OLMo-sft free corrupted 1, category frame (1 in all);
+      - `cap_hit`: A0-OLMo-sft forced corrupted 1 and free clean 1; A0s-OLMo-sft forced clean 1 (3);
+      - `lexical`, `harness_echo` and `termination`: 0.
+    - **reads by position 1–6** (A0-OLMo-sft 80, 80, 79, 79, 79, 79; A0s-OLMo-sft 32 at each):
+      - `low_label_mass`: A0-OLMo-sft 1, 2, 0, 0, 0, 0; A0s-OLMo-sft 0 at each;
+      - `top1_not_label`: A0-OLMo-sft 17, 18, 15, 22, 14, 19; A0s-OLMo-sft 4, 3, 2, 3, 3, 5.
+    - **sessions**, `pre_pick_exclusion`: 0 in either arm (of 80 and 32 launched).
+  - **p's counters at VERDICTS** (p §2.3; the seat's answers of 2026-11-16, Q3 (a) and Q4 (b), `18102d0`; and of its
+    second sitting, R1 (c) and R2 (b),
+    [`2026-11-16_p-verdicts-counters_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md),
+    sha256 `aea918c5…0395`, committed at `52b2c97`; descriptive, deciding nothing, rule 23). The counters step's raw,
+    [`2026-11-16_p-verdicts-counters_run.txt`](results/raw/2026-11-16_p-verdicts-counters_run.txt) (sha256
+    `7360486a…d5e6`), was committed by the dpo session at `922d7a3`. It records one invocation for the three units in
+    one battery window: exit 0, no STOP, its self-test 44/44 in the same process. The step read each unit's three
+    checkpoints and three call logs by exact path. For OLMo-sft, from its three blocks:
+    - **The read domain**, recomputed by p's `session_counters` and by the step's own table, equals the committed p
+      report's at each stage. The hair trigger `line_break_in_stored_text`: 0 of 20, 0 of 231 and 0 of 1116 rounds.
+    - **p §2.3's five counters** (rounds counted of the recorded rounds in the cell). p §2.3's cells that the stage
+      reports withheld are counted here for the first time.
+      - G-TIME-OLMo (p), 20 rounds (sham 4 forced, 6 free; contrast 4 forced, 6 free): 0 in every cell.
+      - G-F0m-OLMo (p), 231 rounds (sham 64 forced, 96 free; contrast 29 forced, 42 free): `cap_hits` 1, sham forced
+        (A0s-OLMo-sft s=6 forced 0, reported at its stage); 0 in every other cell.
+      - The campaign, 1116 rounds (sham 128 forced, 192 free; contrast 320 forced, 476 free):
+        - `cap_hits` 1 in each of sham forced (A0s-OLMo-sft s=10 forced 0, reported at the campaign), contrast
+          forced (A0-OLMo-sft s=2 forced 0) and contrast free (s=37 free 5). These are the same counts per arm and
+          phase as the analyzer's `cap_hit` (above).
+        - `refusals` 1, contrast forced (s=28 forced 3).
+        - `corrupted_spelling` 5, contrast forced (s=44 forced 3, s=51 forced 1, s=72 forced 3, s=77 forced 1, s=78
+          forced 1), and 1, contrast free (s=78 free 2). It is 0 on the sham free rounds, the cell withheld at the
+          campaign.
+        - `control_chars` and `harness_first_line`: 0 in every cell.
+    - **The proxy** (R2 (b): p's `attribute_calls` over each stage's call log, the one its p report records). Each log
+      has one run and no malformed line, and no STOP mark is in its report's run rows. Every recorded round has one
+      attributed call; no round was cut.
+      - Sham rounds attributed: 10 of 10, 160 of 160 and 320 of 320, each equal to the committed p report's cells.
+      - Contrast rounds attributed: 10 of 10, 71 of 71 and 796 of 796.
+      - Calls per contrast session: G-TIME-OLMo (p) s=0, 10. G-F0m-OLMo (p): 10 for s=0–3 and 5–7, and 1 for s=4,
+        the session outside its domain (below). The campaign: 10 for s=0–73 and 75–79, and 6 for s=74.
+    - **`task_correct`** (R1 (c), every stage; the key table and match rule of the committed raw `57e9c7dc…56e2`, the
+      script `9aa0e2d9…4e0f`; k of n per stage, arm and phase). The ruling of 2026-11-09 §3: "it enters no bar, no
+      verdict sentence and no label".
+      - G-TIME-OLMo (p): sham forced 3 of 4 and free 6 of 6, equal to the committed figure; contrast forced 4 of 4
+        and free 6 of 6 (10 of 10).
+      - G-F0m-OLMo (p): sham forced 63 of 64 and free 96 of 96, equal to the committed figure; contrast forced 29 of
+        29 and free 39 of 42 (68 of 71).
+      - The campaign: sham forced 115 of 128 and free 187 of 192, its first figure, not asserted; contrast forced 280
+        of 320 and free 464 of 476 (744 of 796).
+      - The alternative reading (punctuation deleted, not spaced) changes no count at the gate stages. At the
+        campaign it gives contrast forced 279 of 320 and free 462 of 476, the sham rows unchanged.
+  - **The per-property exclusion table** (m:314; VERDICTS-only, m:318; the output's `per_property_table`). Per arm ×
+    property: rounds generated; rounds claimed, and rounds excluding, by class (audit, echo, lexical); sessions
+    excluded pre-pick, the column of record (the seat's C7); sessions excluded in any phase beside it.
+    - A0-OLMo-sft clean: 501 rounds; nothing claimed or excluding; **pre-pick 0**; any phase 0.
+    - A0-OLMo-sft corrupted: 295 rounds; claimed and excluding audit 1; **pre-pick 0**; any phase 1.
+    - A0s-OLMo-sft clean: 320 rounds; nothing claimed or excluding; **pre-pick 0**; any phase 0.
+    - A0s-OLMo-sft corrupted: no round (a sham session has none).
+    - The reference (m:314): f1 CORR's 7-vs-1 anomaly, as the output's `reference` names it. Descriptive here; no
+      criterion reads it.
+  - **Beside** (the output's `beside`; m:308, m:330): whole-session validity, lenient / strict (PIN-12): A0-OLMo-sft
+    79 / 79 of 80, A0s-OLMo-sft 32 / 32 of 32. Scaffold absorption: 0 sessions in either phase, both arms. Round
+    degeneracy: A0-OLMo-sft forced 0/320, free 1/476; A0s-OLMo-sft forced 0/128, free 0/192. Read flags over all
+    reads, low label mass / top-1-not-a-label: A0-OLMo-sft 3/476 and 105/476, A0s-OLMo-sft 0/192 and 20/192; over the
+    first reads of domain sessions, 1/80 and 17/80, and 0/32 and 4/32.
+  - **The release** (m:271; V3, `readrule.release_full`). The output: "the contrast picks are reported and the
+    withheld free-round events are released (m:271)". The campaign's A0-OLMo-sft picks are the analysis itself
+    (above).
+    - **The gate stages' contrast picks** (PIN-32, the output's `gate_release`; tabulated apart from the counters of
+      record and never merged into them):
+      - G-TIME-OLMo (p)'s A0-OLMo-sft session (s = 0): in the domain; first pick on the P role. No released
+        free-round event.
+      - G-F0m-OLMo (p)'s 8 A0-OLMo-sft sessions (s = 0–7): 7 in the domain; s = 4 is outside it. First picks are on
+        the P role at s = 0, 1, 2, 5, 6 and 7, and on the Q role at s = 3: **6 of 7**. No released free-round event.
+        The stage's counters beside count one pre-pick exclusion, keyed corrupted, and one lexical claim on a forced
+        corrupted round; the stage's entry has "1 (lexical)" excluded at a forced round (`a225a89`).
+      - Both stages ended PASS, nothing fired, no adjudication (each `stage_end`). Their counters are in the output
+        beside each stage, apart:
+        - G-TIME-OLMo (p), 2 sessions, none excluded: `low_label_mass` 1 (A0-OLMo-sft, position 1); `top1_not_label`
+          6 (A0-OLMo-sft, one at each position); the rest 0.
+        - G-F0m-OLMo (p), 24 sessions, 2 increments from excluded sessions: `cap_hit` 1 (A0s-OLMo-sft, forced clean);
+          `lexical` 1 (A0-OLMo-sft, forced corrupted); `pre_pick_exclusion` 1 (A0-OLMo-sft, corrupted);
+          `top1_not_label` 18 (A0-OLMo-sft 6: positions 1, 2, 4, 4, 5, 6; A0s-OLMo-sft 12: positions 1, 2 ×4, 3 ×3,
+          4, 5, 6 ×2); the rest 0.
+      - The output carries first picks only (PIN-32).
+    - **The sham first-pick shares**: the campaign's A0s-OLMo-sft 14/32 (above). The gate stages' were reported at
+      their stages under m:318's exception (2): G-TIME-OLMo (p)'s A0s-OLMo-sft 1/1 (its entry, `2258c52`), and
+      G-F0m-OLMo (p)'s A0s-OLMo-sft 9/16, "9 of 16 (9/16)" in the block committed with that stage's entry
+      (`results/raw/2026-11-11_p-qual_code-to-design_read.md`, `a225a89`). The output carries none.
+    - **Not owed here** (the seat's Q4 (b), the amended brief): Q-F0's extraction classes, among them the seconds
+      and stage durations, the reads after the first by look, the looks' contrast columns and the later picks: "Q-F0's
+      extraction classes are not owed here and not opened."
+  - **The looks** (m:330; the output's `looks`; the guard at each): at 40 and 80 launches and at the end, 112:
+    Fisher one-sided p = 1, binding, and absolute p = 1, reported only; none fired. The printed side stands as the
+    campaigns' entry gave it: "No look fired" (`41bfab4`). **The guard at the last look** is the end look's.
+  - **`CHECKPOINT STATE INCONSISTENT`**: 0 lines in this unit's VERDICTS raw. No V2 or V4 finding against any
+    checkpoint (exit 0).
+  - **For the seat** (Code's readings and disclosures; none moves a figure).
+    - **The departure**, disclosed before any window was asked (the raw's header): one run of the shell's `python3`
+      (a conda interpreter outside the repository) read the committed `data/m/verdicts/OLMo-sft_not-run-record.json`
+      with stdlib json, model-free, under a second; its command line held "OLMo-sft", so it counted under the window
+      rule. The coordinating session's word: "Noted. It's harmless: model-free, under a second, and no Q-F3 invocation
+      was starting, so m's guard wasn't checking; the file it read is a committed m NOT-RUN record of a closed unit."
+      Every later JSON read in this session was `jq`.
+    - **The first opening.** This run was the third. Code opened this unit's stdout and outputs after its own end
+      notice, the third run having ended, before any word from the coordinating session. The amended brief: "Until
+      the third run ends, no session opens any p checkpoint, call log or p output, its own unit's included." The
+      coordinating session's reading, told of it: "Q2 (ii) holds "until the third run ends", which is an event, and
+      yours was the third run. My message announced the lift; it didn't set it. So there's no STOP item from me. Keep
+      the disclosure as you wrote it, so the seat can see the sequence."
+    - **The end notice.** Procedure (ii) has end notices "carry the exit status alone". This session's notice, its
+      whole message, was "sft verdicts ended, EXIT=0. Window released." The coordinating session's grant had asked for
+      "sft verdicts ended, EXIT=n" "and nothing else, and release". Beside the exit status, the notice carried the
+      window's release and no count, verdict or state.
+    - **Names only.** After the third run, a `git status --porcelain` scoped to `data/p/verdicts` and this raw printed
+      the dpo and instruct outputs' names (names, list v2 item 1). No sibling's output was opened.
+    - **The raw's provenance.** The analyzer's stdout went straight to the raw's path, unread. After capture the raw
+      was scrubbed, the repository root to `<repo>` (one occurrence, its INVOCATION line), and its closing section was
+      appended. No sha256 was taken before the scrub; the sha256 above is the final file's.
+    - **The order of the reads.** m:318 has "the reads" "performed after the analyzer's output exists and before the
+      entry is committed". The seat's §5 item 5 orders this entry committed open at "the reads", "as Q-F0's was
+      (`0fa8539`)", and its §6 has the read close it. Code follows the seat's order.
+  - **The values-check**
+    ([`_p-verdicts-OLMo-sft_valuescheck`](results/raw/2026-11-16_p-verdicts-OLMo-sft_valuescheck.md), this commit):
+    two blind passes, each by a fresh checker with shell tools only (no Python; no checkpoint, call log or report
+    opened), and Code's dispositions.
+    - Pass 1, the two entries, the close line and the raw's header and closing section, in full: 248 claims, 216
+      CONFIRMED, 5 IMPRECISE, 1 FAIL, 26 NOT CHECKABLE.
+    - Pass 2, the counters bullet, every passage changed after pass 1, the rewritten close line and the raw's scrub
+      item: 144 claims, 128 CONFIRMED, 2 IMPRECISE, 2 FAIL, 12 NOT CHECKABLE.
+    - Every FAIL and IMPRECISE is applied in the checker's terms. The edits after pass 2 were checked by tool, not by
+      a third blind pass.
+  - **The reads (m:318): OPEN.** The seat's full read of the unit's sessions, campaign and gate-stage, unredacted,
+    made after the analyzer's output exists (the seat's §6): one seat thread for this unit, reading its three
+    checkpoints by path after the counters step (§5 step 4), in the form of Q-F0's read:
+    1. A0-OLMo-sft's verdict against its bar;
+    2. the A0s-OLMo-sft sham figures;
+    3. the contrast side;
+    4. every session: 138, 112 of the campaign (80 A0-OLMo-sft, 32 A0s-OLMo-sft), the 24 of G-F0m-OLMo (p) and the 2
+       of G-TIME-OLMo (p), with the attractor tally carried forward.
+
+    The read is placed as its own raw and closes this entry (§6).
+  - **What follows.**
+    - The seat's reads, then the close lines (the seat's §5 step 6).
+    - The postings take p's unit by ADDENDUM-p1's rule (above). Q-F3 is untouched (ADDENDUM-p1 §1).
+    - A decision about another unit taken from now is taken with this unit's outcome known; m:318 records it "in that
+      unit's VERDICTS entry or NOT-RUN record as taken with the other unit's outcome known". The seat's §2 case of a
+      run that "refuses or stops" did not arise: the three runs exited 0 (the coordinating session's notice; the
+      counters step's gate 1).
+  - Not pushed. Committed by path.
+
+- 2026-11-16 — **PROPOSAL-p OLMo-sft — secondary DVs (p v0.2 §4.4, §8 step 7; m:312; PIN-13): issuing no claim.**
+  Secondaries (a), (b), (d) and (e), computed by the analyzer of record in the same invocation as OLMo-sft's VERDICTS
+  (the entry above) and written to `data/p/verdicts/OLMo-sft_secondary.json`
+  (`e9cfe52d023a105c003e10e9d629674e4d83cd14cf4b640e0bcc7a0aa7e0fa54`, schema `m-secondary-v1`, `proposal_p_sha256`
+  `42f2977b…3b32`, committed in this commit). The output's own line: "none -- secondary DVs issue no claim (m:358)".
+  (c) and (f) are Q-F3's (G-ANL-F3); the output: "(c) and (f) are [Q-F3] (G-ANL-F3)". The disclosure (p §5.4) and the
+  SFT sentence, *G-CAL-p passed at the bar, 47/64 against 47* (`daca8b0` §0.1), are in the VERDICTS entry.
+  - **Form** (m:312; rule 28(a)). (a), (b) and (d) are each defined against the exclusion rule on its post-exclusion
+    domain. (e) is the analyzer's reading of m:312's round event (built under PIN-13, which the seat accepted at C6; no
+    PIN states its domain): every round generated in the campaign's 112 sessions, the one excluded session included
+    (the counters' denominators). It counts no event, so the domain moves no numerator. m's decidable-n floor is 20
+    events (the output's `floor_events`). At or above it a rate carries a two-sided Clopper–Pearson 95% interval (the
+    analyzer's `rate()`, `m_analyze.py:1272`); below it, a count without an interval (`count_only`). Every rate is
+    num/den with its domain. The output's `share` field prints the reduced fraction (72/80 as 9/10, 44/80 as 11/20,
+    0/320 as 0/1), and its num and den carry the counts given here.
+  - **(a) Clean-label share by position 1–6, by arm** (the P-role label chosen at free choice p, over sessions valid
+    through position p: the choice at p was made and no exclusion-bearing event preceded it):
+
+    | position | A0-OLMo-sft | A0s-OLMo-sft |
+    |---|---|---|
+    | 1 | 72/80 = 0.9000 [0.8124, 0.9558] | 14/32 = 0.4375 [0.2636, 0.6234] |
+    | 2 | 44/80 = 0.5500 [0.4347, 0.6615] | 16/32 = 0.5000 [0.3189, 0.6811] |
+    | 3 | 60/79 = 0.7595 [0.6502, 0.8486] | 11/32 = 0.3438 [0.1857, 0.5319] |
+    | 4 | 58/79 = 0.7342 [0.6228, 0.8273] | 16/32 = 0.5000 [0.3189, 0.6811] |
+    | 5 | 51/79 = 0.6456 [0.5299, 0.7500] | 18/32 = 0.5625 [0.3766, 0.7364] |
+    | 6 | 56/79 = 0.7089 [0.5958, 0.8057] | 18/32 = 0.5625 [0.3766, 0.7364] |
+
+    Position 1 is the primary's domain and share (the VERDICTS entry). Every denominator is at or above the floor. The
+    output, verbatim: "its comparison with f1 at positions 5–6 crosses f1's 512-token read tail (§2.7 (12)), stated
+    beside".
+  - **(b) Lose-shift, contrast arm only** (m:312: "a sham session has no corrupted round"; the output's scope
+    "contrast arm only (m:312)"). P(the next free pick switches label | the previous chosen round was corrupted)
+    against P(switch | it was clean), over transitions in sessions valid through the next choice:
+    - after a chosen corrupted round: **80/111 = 0.7207** [0.6276, 0.8017];
+    - after a chosen clean round: **96/285 = 0.3368** [0.2822, 0.3949].
+  - **(d) Per-pair first-pick shares pooled over maps, the order-counterbalanced contrast within pairs, and
+    `e2d/habit.py`'s within-arm identity.**
+    - **A0-OLMo-sft, per pair** (pooled over maps): pair 0 20/21 = 0.9524 [0.7618, 0.9988]; pair 1 19/20 = 0.9500
+      [0.7513, 0.9987]; pair 2 15/20 = 0.7500 [0.5090, 0.9134]; pair 3 18/19, count only (m:312: "a contrast arm's
+      pair is count-only when below it"). **Per pair and start order** (all count only): 0|0 10/10, 0|1 10/11, 1|0
+      11/11, 1|1 8/9, 2|0 9/11, 2|1 6/9, 3|0 10/10, 3|1 8/9.
+    - **A0s-OLMo-sft, per pair** (all count only at the planned floor, m:312: 32 gives 8 per pair): pair 0 4/8, pair 1
+      2/8, pair 2 4/8, pair 3 4/8. Per pair and start order: 0|0 2/4, 0|1 2/4, 1|0 2/4, 1|1 0/4, 2|0 2/4, 2|1 2/4, 3|0
+      2/4, 3|1 2/4.
+    - **The within-arm identity** (`habit.break_rates` over the arm's domain sessions, in Fractions, PIN-13). b+ is
+      the rate of breaking the forced habit when the forced phase ended on the + pole, which picks the + label;
+      b_sham is the same when it ended on the − pole, which picks the sham label. The weighted form (n+/N)·b+ +
+      (n_s/N)·(1 − b_s) − 1/2 equals the arm's measured Δ_c at any balance:
+      - A0-OLMo-sft: b+ 32/38 = 16/19, b_sham 2/42 = 1/21; forced ends 38 + and 42 −, not exactly balanced; weighted
+        form 2/5 = +0.4000 = Δ_c; the identity holds; 0 undecidable;
+      - A0s-OLMo-sft: b+ 6/16 = 3/8, b_sham 8/16 = 1/2; forced ends 16 + and 16 −, exactly balanced; weighted form
+        −1/16 = −0.0625; the identity holds; 0 undecidable.
+  - **(e) Termination attempts per round** (rounds generated):
+    - A0-OLMo-sft: forced 0/320 [0.0000, 0.0115]; free 0/476 [0.0000, 0.0077];
+    - A0s-OLMo-sft: forced 0/128 [0.0000, 0.0284]; free 0/192 [0.0000, 0.0190].
+
+    These are the counters' `termination` rounds, none in either arm (the VERDICTS entry).
+  - **Not built here:** (c), the "noticed, not wanted" counter on A3's first reasoning lines, and (f), the
+    reasoning-line statistics, both [Q-F3] (m:312).
+  - Nothing in this entry is a verdict or licenses one. Any analysis beyond m:312's list is post-hoc, labeled, and
+    licenses at most a new pre-registration (m:320; rule 11). The values-check is the VERDICTS entry's raw.
+
 - 2026-11-16 — **PROPOSAL-p OLMo-dpo — VERDICTS (p v0.2 §8 step 7, §4.4; ADDENDUM-p1 v0.1 §4 step 3; m:358;
   LOCK-p-OLMo-dpo v1.0; the seat's answers of 2026-11-16, §5): A0-OLMo-dpo PASS. P = 78/80, Δ_c = +0.4750 (two-sided
   Clopper–Pearson 95% CI [+0.4126, +0.4970]) against E = 0.1563 (5/32) from A0s-OLMo-dpo; exact one-sided p toward clean
@@ -1495,6 +1886,23 @@ applied to CLAUDE.md.
         record.
       - Two readings of "the counts the record names", R1 and R2, go to the seat in the same commit's block. The
         entry of this commit, above, gives them.
+    - **Ledger (75), the seat's,** its fix verbatim: "for an input that is written once, the seat states the rule that
+      admits an item, then the items."
+  - **Close (PI date 2026-11-16): the sft VERDICTS session's.** The seat's raw names the three VERDICTS sessions for
+    close lines, and this is the sft session's. It cites
+    [`2026-11-16_p-verdicts-decisions_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-decisions_design-to-code_answers.md)
+    (sha256 `01ae2ae7a06574cf6d000e32ba86972425d2b86ec0b972ccb0715d5e5d701b0f`), which the coordinating session
+    committed by path at `18102d0`, on the PI's "Route as given" (PI date 2026-11-16). It is committed with OLMo-sft's
+    outputs, raws and entries, on the paste block's item 6.
+    - **For OLMo-sft:**
+      - Q1 (c), which was this session's reading. The input `data/p/verdicts/OLMo-sft_decisions.json` holds the six
+        items (sha256 `54df4b85…e881`), committed by the instruct session at `db2e821`; this session confirmed the file
+        by reading it only.
+      - Q2 (a), with procedures (i) and (ii): the inputs were committed at `db2e821` before the first run; this
+        session opened no sibling's output; its end notice is quoted in the VERDICTS entry. On Q2 this session had
+        given no reading (the block: "The sft session gave no reading on Q2.").
+      - Q3 (a) and Q4 (b): the counters are the dpo session's step, and the read after the third run is Q4 (b)'s.
+      - The gate stages' goes and `daca8b0` §0.1's sentence are in the unit's VERDICTS entry's text.
     - **Ledger (75), the seat's,** its fix verbatim: "for an input that is written once, the seat states the rule that
       admits an item, then the items."
 
