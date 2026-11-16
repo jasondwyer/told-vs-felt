@@ -21,6 +21,74 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **ADDENDUM-n1 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the rendering of record as committed ids;
+  G-READ-n's capture band; the rulings of 2026-11-16", committed by path as the seat placed it, on the PI's routing of
+  2026-11-16, second sitting ("Route as given"; items 5 and 6, decisions (n-1) and (n-2), [adopt]; item 10, [adopt]).
+  No n stage has produced a read at this commit.**
+  - **The file.** `ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md` at root, sha256
+    `e979f8f2af08ddb1f32e3054c002b1d0a3278e49a24b4f6df2cb6c042de95e03`, 15,804 bytes, re-hashed before the commit. It
+    is an addendum, not a new version: PROPOSAL-n v0.2 (`30a3d0f5…04f4`) stays the proposal of record (its header). The
+    seat placed it with its two n answer raws of this date, committed by path at `52b2c97`.
+  - **The record of decisions (n-1) and (n-2): the PI's routing, verbatim** (the addendum's §8.2 and §8.3 (2)). The
+    whole paste block, with the PI's word, is committed here as a raw,
+    [`2026-11-16_second-sitting_pi-routing.md`](results/raw/2026-11-16_second-sitting_pi-routing.md), byte for byte as
+    saved on receipt. From it:
+    - its header, "DESIGN → PI → CODE (master session) — PI date 2026-11-16 (second sitting)". The routing thus
+      confirms the date the addendum's header asks the PI to confirm at routing, 2026-11-16;
+    - the PI's word on the block, "Route as given";
+    - its items 5, 6 and 10, verbatim:
+
+      > 5. Decision (n-1): the rendering of record as committed ids (ADDENDUM-n1 §1) [adopt].
+
+      > 6. Decision (n-2): G-READ-n's capture band past the site, 10-fold CV, the two-condition PASS (§6) [adopt].
+
+      > 10. The four files committed by path; the three p briefs amended ("three checkpoints and three call logs"); ADDENDUM-n1 v0.1 after its referent check (§8.4), before LOCK-n v0.1 [adopt].
+
+    - its items 7–9, "the rest as the seat's rulings on Code's blocks" (§8.2 (4)), relayed to the n-build and
+      n-analyzer sessions and recorded in the close lines at `52b2c97`.
+  - **Referent check** (§8.4; §8.3 (1)), by a fresh blind checker against every referent §8.4 lists and the other
+    sources the addendum cites: 101 items, 93 CONFIRMED, 6 IMPRECISE (one graded substantive by the checker, five
+    minor), 0 FAIL, 2 NOT CHECKABLE.
+    - **The substantive item:** §1.2 (iii) gives no disposition for a label candidate whose sequence does not keep the
+      session's prefix. The seat's n-build answers raw, §1.2 (iii), gives it: "a candidate whose sequence does not keep
+      that prefix is reported and dropped". The PI's item 7 routes that raw's rulings on the STOP (Q1 (b) and Q2: its
+      §1, where §1.2 (iii) sits) "as ruled". The addendum's header names the seat's answer raws as the place of its
+      reasoning, and its §8.4 lists them among the referents. Code's grading: resolved by that ruling, so no STOP under
+      §8.3 (1). The seat may regrade it.
+    - The five minor items and the checker's fourteen observations are recorded for the seat in the raw, unapplied,
+      since the addendum is committed as placed. Four bear on what runs next:
+      - §2's tolerance is in practice the backend's identity bound, across two implementations;
+      - the pause precedence and the cap clause reach Code through §8.2 (4), not §8.3 (3);
+      - G-READ-n's shadow contrast tests the state's presence, where rule 5(f)(ii) names the sign;
+      - the seat's n-build raw says "the `14e65d8` entry left it to the lock", where the words that did, "the exact
+        join is the lock's", are `5a97527`'s entry's.
+    - Raw: [`2026-11-16_addendum-n1_referent-check.md`](results/raw/2026-11-16_addendum-n1_referent-check.md), the
+      report whole and Code's grading.
+  - **No n stage has produced a read at this commit** (§8.3 (2); the addendum's header):
+    - `data/n` holds only `bk` (names).
+    - G-TIME-n, G-VER of record, the BACKEND extension, G-VEC, G-CAL-n, G-READ-n and the campaign are all still to run.
+    - The box's site check (`645bd3f`) ran a G-VER trial, never of record, that rendered tokens. Its block says "No
+      checkpoint's weights were loaded" (`results/raw/2026-11-16_n-build_code-to-design_STOP.md`:9), and so does its
+      commit message.
+    - Since the routing, the n sessions' battery runs ran drafts on synthetic data only, in windows the coordinating
+      session granted.
+  - **What runs now** (§1.5; §8.3 (3)–(5)), as relayed:
+    - The pod session copies the two small tokenizer files to n-build's folder, each checked against the manifest. A
+      failed check comes to the PI through the coordinating session, and nothing is downloaded without the PI's word.
+    - The n-build session renders (i)–(iii) in a battery window and commits them as `n — ids of record`, with a dated
+      note on `645bd3f`'s entry (the n-build raw's §5 item 1). Then come the follow-up schema commit, settled with
+      n-analyzer; G-VER asserting data; the site check re-run; and the BUILD entry.
+    - The n-analyzer session makes §7's changes before the canonical run.
+    - Then the chain as n §8 steps 7–15. LOCK-n v0.1 comes after this commit.
+    - The n-build and n-analyzer sessions add their close lines here (the addendum's header).
+  - **Values-check:** a blind checker, under a brief quoting the list of record v2's items 1–5, checked this entry, the
+    PI-routing raw and the referent-check raw's §2: 92 claims, 72 CONFIRMED, 4 IMPRECISE, 1 FAIL, 15 NOT CHECKABLE.
+    The FAIL was a quotation this entry gave to `645bd3f`'s entry that is in its block and its commit message. Every
+    item is applied, and so are the checker's ten observations; the edits after it were checked by tool. Raw:
+    [`2026-11-16_addendum-n1_valuescheck.md`](results/raw/2026-11-16_addendum-n1_valuescheck.md).
+  - **Committed by path:** the addendum, the PI-routing raw, the referent-check raw, the values-check raw and this
+    entry. Nothing in this session ran on a model or the box. Not pushed.
+
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the `verdicts` command (PROPOSAL-n v0.2 §8 step 15, on n-build's
   `n-report-v1` and `n-gread-v1` at `14e65d8`). It gives N-pod's VERDICTS and secondary DVs, or the unit's NOT-RUN
   derived from the stage report. Its battery passes 185/185; it was reviewed blind and mutation-tested (68 of 69
