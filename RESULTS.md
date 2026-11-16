@@ -340,6 +340,25 @@ applied to CLAUDE.md.
     Nothing ran on a model. Not pushed.
   - **Next** (section A, item 7): the campaign, on the PI's go at the PI's timing — announced to the coordinating
     session, serialized, detached, checkpointed, uncached, `hour cap = 480 h`, looks every 40.
+  - **Close (PI date 2026-11-15, evening): the seat's read, routed; the wiring accepted as built; NOTE-8 ruled.** The
+    seat's answers,
+    [`2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`](results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md)
+    (sha256 `1f3ce1f9c668a983632a7a57181fc626d2bf304e3d9e5f23e4df1ec5220df84b`), were committed by path by the
+    coordinating session at `a215c28`. They were routed by the PI's "Route as given" (PI date 2026-11-15, evening),
+    relayed verbatim by the coordinating session. The routing's section A, item 2, verbatim:
+
+    > 2. The campaign wiring (3f017d8) accepted as built. NOTE-8: (a') before the launch, the laptop's backend provenance now against G-F3's report identity, field by field for every field derivable without a load, beside v1.0 §5's a734dadec8f8ce9b; a differing field is a STOP for the seat. (d) after each invocation ends, the campaign report's identity.backend_identifier against v1.0 §5's line, identifier only; "not equal" is a STOP for the seat. No edit to the driver. Close line on 3f017d8's entry [as ruled].
+
+    The raw's §2.2, its ruling, verbatim (bold markers aside):
+
+    > (a′) Before the launch, in the launch's raw: Code compares the laptop's backend provenance as it is now with G-F3's report identity (`data/mf3/reports/Q-F3_qual_report.json`, the read domain), field by field, for every field it can derive without loading the model; it names any field it cannot; and it writes the result beside v1.0 §5's line, `a734dadec8f8ce9b`. A differing field is a STOP for the seat before the launch.
+    >
+    > (d) After each invocation ends (the list of record v2, item 5): the campaign report's `identity.backend_identifier` against v1.0 §5's line, the identifier only, in the campaign's raw. "Not equal" is a STOP for the seat.
+    >
+    > A comparison in the driver rides along if the driver moves for another reason before the launch. The seat opens no edit for it.
+
+    The driver is not edited. (a′)'s line goes in the launch's raw, before the launch; (d)'s goes in the campaign's raw,
+    after each invocation ends (the raw's §2.2; the routing's section A, items 2 and 3).
 
 - 2026-11-15 — **LOCK-m-F3 v1.0 — COMMITTED: `81a40b4`'s draft with the seat's one amendment, (A1), regenerated and
   placed byte for byte as `LOCK-m-F3.md`, sha256 `fe9518c7368fe1b34ee9e67f8ba663b1b3c7c02431b5f83d1b5d4b7e7b0c1aa6`.
@@ -459,6 +478,22 @@ applied to CLAUDE.md.
     asks the coordinating session for RESULTS.md before that entry. The campaign waits for the PI's go (item 7).
   - **Committed by path:** `LOCK-m-F3.md`, the seat's raw, the check raw, the values-check raw and this entry, with
     the close lines on `81a40b4`'s entry and on `8c9b5ff`'s. Not pushed.
+  - **Close (PI date 2026-11-15, evening): the seat's read, routed; nothing owed.** The seat's answers,
+    [`2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`](results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md)
+    (sha256 `1f3ce1f9c668a983632a7a57181fc626d2bf304e3d9e5f23e4df1ec5220df84b`), were committed by path by the
+    coordinating session at `a215c28`. They were routed by the PI's "Route as given" (PI date 2026-11-15, evening),
+    relayed verbatim by the coordinating session. The routing's section A, item 1, verbatim:
+
+    > 1. LOCK-m-F3 v1.0 as committed (a89a4fa): nothing owed; close line on its entry [as ruled].
+
+    The raw's own routing block (its §10, A) gives it in short form.
+
+    The raw's §0, first bullet, verbatim (bold markers aside):
+
+    > LOCK-m-F3 v1.0 (`a89a4fa`): nothing owed. The seat's own check: the draft of record (`16a0c79e…f2db`, the seat's verified copy) with the entry's two hunks applied is 155,664 bytes, 1,483 lines, sha256 `fe9518c7368fe1b34ee9e67f8ba663b1b3c7c02431b5f83d1b5d4b7e7b0c1aa6` — the entry's value, and the placed file's size on the laptop. The diff is exactly (A1).
+
+    Its §1 ends, verbatim: "With the commit the three strike windows of v1.0 §11 closed with nothing struck. No second
+    read was owed and none is."
 
 - 2026-11-15 — **LOCK-m-F3 v1.0: the draft, for the seat's read (the seat's answers of 2026-11-14, §A.7 and §D item
   5, routed by the PI on 2026-11-14), on the PI's cap: "Hour cap: 480 h". Code STOPS for the seat's read: nothing
