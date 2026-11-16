@@ -21,6 +21,63 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n — G-ANL-n: nine questions for the seat before its canonical run (PROPOSAL-n v0.2 §3 "G-ANL-n",
+  §8 step 9; the seat's answers of 2026-11-15, §5.1–§5.2; the coordinating session's go for one early block). STOP for
+  the seat's read, at G-ANL-n's canonical run and LOCK-n v0.1; the build continues on Code's interim readings, each
+  marked pending the seat. Model-free: nothing ran on a model or on the box, and nothing of record ran.**
+  - **The block:**
+    [`2026-11-16_n-ganl_code-to-design_prebuild.md`](results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md).
+  - **The routing.** The PI's word "Route as given" on the seat's paste block "DESIGN → PI → CODE (master session) —
+    PI date 2026-11-15 (evening)", item 10, in full as the coordinating session relayed it: "Start now. n-build:
+    PROPOSAL-n §8 step 6, first commit the read runner's record schema. n-analyzer: step 9's n_analyze.py and its
+    battery (385 tuples), from that schema. One session instead if Code judges the coupling too tight. Then steps 7–15
+    as written; drafted locks to the seat [go]." The seat's raw (`1f3ce1f9…df84b`, committed at `a215c28`) gives the
+    sessions and the order in §5.1–§5.2. The early block is the coordinating session's go: one committed block, its
+    questions numbered with readings and consequences, and stating what it stops.
+  - **What it stops:** G-ANL-n's canonical run, which fixes the analyzer sha256 that LOCK-n v0.1 binds (n:117), and
+    LOCK-n v0.1, until the seat's answers are routed; and anything else that would bind a pending answer. **What it
+    does not stop:** the build of `n_analyze.py` and its battery, and n-build's steps.
+  - **The questions** (the block's §1): Q1 the slope fit, with an intercept or through the origin (no source says;
+    on N1-V's grid restricted to BK's points, BK's sessions give 0.9114 against 0.9329 [C]); Q2 the leak ceiling at
+    d_eq and at N2's point, where N1-P is not read; Q3 "answered" (§0.6 against §5's dose clause), and a sentence §5
+    lacks for G-READ-n PASS with N4 not PASS; Q4 three inputs that change a sentence but are not coordinates; Q5 the
+    160 of 384 tuples that cannot occur, and the merges' further reductions; Q6 INDETERMINATE causes §5 does not
+    name; Q7 the norm-matched point when the cap binds; Q8 the sentence forms Code wrote (Appendix A, verbatim); Q9
+    N2's slope.
+  - **Facts declared** (the block's §2): through the draft's own functions BK's figures reproduce G-DATA (iii) and
+    (vi) [C]; secondary (b) has no free text to read, and G-READ-n's capture layer changes what G-READ-n computes,
+    not the analyzer's inputs (both asked in n-build's block).
+  - **The schema** the reader is built from: `valence_core/n/schema.py` at `5a97527`, sha256 `77c12d6d…94bc`, re-hashed
+    by Code from the commit and the working tree. n-build's block of the same date,
+    `results/raw/2026-11-16_n-schema_code-to-design_questions.md`, asks its own questions; this block cites its Q2
+    (secondary (b)), Q3 (the merge's reach to N1-R, a merged point read once) and Q5 (G-READ-n's capture layer)
+    rather than ask them again.
+  - **Declarations, by date** (to be repeated in the G-ANL-n entry, as the coordinating session asked):
+    - 2026-11-15: Code declared to the coordinating session, which acknowledged it the same day, that step 9's
+      schema-independent layers (the §5 outcome logic, the §7 sentence sets, the 385-tuple pass with its oracle) are
+      drafted in this session's scratch before n-build's schema commit. Nothing goes into the tree and nothing
+      commits before that commit; the reader is built only from the committed schema.
+    - 2026-11-15, before any window existed: Code ran short Python processes on the laptop. Four were run against
+      BK's files under `data/n/bk`: three read them (`prereg.json` twice, `reduced.json`'s structure once), and one
+      stopped at its numpy import before reading; its command text named the OLMo member. There were also interpreter
+      checks. None loaded a model, none touched a checkpoint, report or `data/mf3`, and no campaign was running. Code
+      disclosed them to the coordinating session on 2026-11-15: the session's closing text first counted three, and
+      Code's message gave the count of four. The Python runs since then were inside windows the coordinating session
+      granted, apart from short runs of the system Python, before Q-F3's launch, whose command lines name no model
+      marker: edits and syntax checks of Code's scratch files, and one run of the span parser on the proposal's text.
+  - **Values-check:** the block and this entry, side by side, blind, under a brief quoting the list of record v2's
+    items 1–5 and the coordinating session's lines on `data/mf3`: 148 claims, 115 CONFIRMED, 17 IMPRECISE, 0 FAIL, 16
+    UNVERIFIABLE (the processes before any window, messages between sessions, the PI's date, the future commit). Every
+    [C] figure was reproduced by the checker's own reruns and, independently, from BK's raw reads. One IMPRECISE item
+    was substantive: Q6 omitted N1-P from N2's causes where d_20 sits at +1, as the draft code did; both are
+    corrected. Every item is applied, the edits verified by tool; the raw, with the report and the dispositions:
+    [`2026-11-16_n-ganl_prebuild_valuescheck.md`](results/raw/2026-11-16_n-ganl_prebuild_valuescheck.md). A first
+    run of the check was stopped unfinished when the windows closed for Q-F3's launch; it wrote no report.
+  - **Committed by path:** the block, the values-check raw and this entry. Not pushed. **Next:** the coordinating
+    session verifies this commit and tells the PI to nudge the seat, naming it. The build goes on under the
+    coordinating session's windows. G-ANL-n's canonical run waits for the seat's answers and for its inputs
+    (G-CAL-n's dose map).
+
 - 2026-11-16 — **Dated note (coordinating session), for the seat: the push of 2026-11-15, its pre-push screen, the
   halts of item 4 it met and two departures of mine; and the `data/mf3` hazard of five paths while Q-F3's campaign
   runs.**
