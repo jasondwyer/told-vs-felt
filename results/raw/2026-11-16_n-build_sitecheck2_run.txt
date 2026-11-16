@@ -1,0 +1,71 @@
+n BUILD -- the second box site check, as run by the pod session (the seat's section 5 step 3 in the n-build answers
+committed at 52b2c97, routed by the PI's "Route as given" (second sitting); n-build's request as the coordinating
+session relayed it; PI date 2026-11-16). No pod address or port in this file. The run's own output is
+site_check_out.txt (all of stdout and stderr, unedited, 62 lines); its exit status is site_check.exit. This file is the
+pod session's record of how the run was set up.
+
+1. FILES. n_drafts.tar, n_manifest.txt and site_check.sh, from n-build's scratchpad/site2/. On the laptop their sha256
+   equal n-build's stated values:
+     n_drafts.tar    8379566e08cba016f7cf607b116c35a2bd3b7ccbc2a3c77242d4f97d63d0a1bd
+     n_manifest.txt  92a587de9540240435480ef76f7861a1ebe4f11026e8b9480960a26f065d6bb8
+     site_check.sh   6fef5e6ad1fa9ac35af37d35c9cd427121262c63fe831b93882b94de797c5f24
+   site_check.sh (109 lines) was read in full before it ran. On the laptop, before the bundle: the tar lists exactly
+   the 13 draft paths, with no "Mac OS X" AppleDouble magic and no xattr record in it; all 19 manifest lines equal
+   the tar's members (read to stdout, nothing extracted) or HEAD's blobs (schema.py, __init__.py and the four files
+   under data/n/ids/); none of the 13 drafts is committed at HEAD.
+
+2. SYNC. The laptop's HEAD at bundle time was 966246830751de6fc515d26059620e0493a2baa4. The box repo went from
+   14e65d8 to it (13 commits) by git bundle (14e65d8..main, sha256
+   ebfbafe88d2e6454c04050d516cddd35ebc6f23c5f490ea9a22a42fa41c93038, equal at both ends), fetched into
+   refs/bundles/n-site2 and fast-forwarded. The box checkout was clean, with no untracked file, before the fetch, and
+   clean after. The range touches no data/mf3 path (checked on the laptop and again on the box); d76f34f (data/n/ids/)
+   and d791bd9 (the schema) are in it.
+
+3. SHIP. The bundle and the pod session's two scripts went to /workspace/nsite/sync2, n-build's three files to
+   /workspace/nsite/nbuild2 (both new), by tar over ssh packed without Mac metadata and extracted without ownership.
+   Each folder holds exactly its three names, none dotted, and the six sha256 equal the laptop's.
+
+4. SCRATCH COPY. /workspace/nsite/copy-9662468: a local git clone of the box checkout (--no-checkout
+   --no-hardlinks), origin removed, sparse (non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'),
+   detached at 9662468 and clean. Nothing under data/mf3 and no data/*/ckpt or data/*/reports directory exists in it;
+   data/n/bk and data/n/ids (4 files) are present. GNU tar on the box listed n_drafts.tar as exactly the 13 declared
+   paths, printing nothing else (no AppleDouble member, no unknown pax keyword). The extract kept --exclude='._*', ran
+   with --no-same-owner and printed nothing. After it, the copy's changed set is exactly the 13 drafts, all new to git.
+
+5. RUN. In a plain non-interactive ssh shell, without /workspace/env.sh: PYTHONPATH, RUNPOD_POD_ID, HF_HOME,
+   HF_HUB_OFFLINE, TRANSFORMERS_OFFLINE and TMPDIR unset. Python /workspace/venv/bin/python: 3.12.3, torch
+   2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2. No other interpreter job and no GPU compute app ran on the box.
+     bash /workspace/nsite/nbuild2/site_check.sh /workspace/nsite/copy-9662468 /workspace/venv/bin/python
+          /workspace/nsite/work2-9662468
+   under nohup in the background, all of stdout and stderr to site_check_out.txt, its exit status to site_check.exit
+   (both in /workspace/nsite/out2). The work folder did not exist before; the script made it. The end-wait was on the
+   PID alone. site_check.sh exit 0.
+
+6. OUTCOMES (the pod session's reading; n-build reads the whole output):
+   step 0 the copy     HEAD 9662468; the changed set exactly the 13 drafts, all new to git    -- as expected
+   step 1 manifest     19/19 OK                                                               -- as expected
+   step 2 selftest     228/228 pass, selftest exit=0; its temporary folder on /workspace (mount type nfs4), removed
+                       empty after it                                                         -- as expected
+   step 3 m05          226/228, exit=1, KILLED by its named check; its two hftiny FAILs carry the first run's
+                       values (0.3080568388104439 and 0.04177891197475619)                    -- as expected
+          b02          227/228, exit=1, KILLED by its named check, "hftiny: AT THE SITE (layer 1) ...":
+                       (False, 3.803896903991699)                                             -- as expected
+   step 4 G-VER trial  status PASS: sessions 160, ids_ok 160, n4_ok 160, spans_ok 160, labels_ok 4 of labels_kept 4,
+                       manifest_ok true, first_problems []; gver-trial exit=0                 -- as expected
+   step 5 hashes       package_sha256 60d892dc7f98f85ba049486ddffb4c336cce78c83fde99bce19ae5ebde51cc66, equal to
+                       n-build's stated value; the 11 imported_sha256 lines identical to the first run's, and each
+                       equal to the sha256 of 9662468's committed file at that path (checked by the pod session);
+                       hashes exit=0                                                          -- as expected
+   last line           "site check PASS: changed set OK, manifest OK, selftest exit=0, m05 KILLED, b02 KILLED,
+                       gver-trial exit=0, hashes exit=0"
+   Library messages: the first run's two transformers warnings, verbatim, once in step 2 and once in each mutant's
+   output (6 lines, 2 distinct): the tiny config's eos_token_id outside its 128-token vocabulary, and crop with a
+   positive value deprecated. No other library message. The three FAIL lines are the mutants' kills, inside their
+   printed outputs.
+   After the run: the copy's changed set is still exactly the 13 drafts; the box checkout is at 9662468 and clean; the
+   work folder holds m05.txt and b02.txt only; no interpreter job runs.
+
+7. LEFT ON THE BOX: /workspace/nsite/sync2 (the bundle, the two scripts, two empty tar stderr files),
+   /workspace/nsite/nbuild2, /workspace/nsite/copy-9662468, /workspace/nsite/work2-9662468 and /workspace/nsite/out2;
+   refs/bundles/n-site2 in the box checkout; the first run's folders as before. n-build's request allows removing the
+   work folder and the copy; nothing is removed unless the coordinating session asks.

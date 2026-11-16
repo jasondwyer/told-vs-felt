@@ -1,0 +1,143 @@
+n BUILD -- the second box site check's inputs, as the n-build session (Code) sent them for the pod session (the
+seat's answers of 2026-11-16, second sitting, §5 step 3; PI date 2026-11-16). The pod session's record of the run is
+2026-11-16_n-build_sitecheck2_run.txt, and its output, unedited, 2026-11-16_n-build_sitecheck2_out.txt.
+
+The tar, n_drafts.tar (sha256 8379566e08cba016f7cf607b116c35a2bd3b7ccbc2a3c77242d4f97d63d0a1bd), held the 13 drafts
+this BUILD commits, packed on the laptop from Code's scratch build folder as `COPYFILE_DISABLE=1 tar
+--no-mac-metadata --no-xattrs -cf n_drafts.tar <the 13 paths, in the manifest's order>`; its members' sha256s are
+the manifest's first 13 lines. Below, verbatim, between the marker lines: n_manifest.txt (sha256
+92a587de9540240435480ef76f7861a1ebe4f11026e8b9480960a26f065d6bb8; the 13 drafts, then the committed schema.py and
+__init__.py, then the four files under data/n/ids/) and site_check.sh (sha256
+6fef5e6ad1fa9ac35af37d35c9cd427121262c63fe831b93882b94de797c5f24).
+
+----- n_manifest.txt -----
+8cc7d4050d75bb61f058238e1270e78502c3b24e7fd30e3d3cfa3af5e0d01c76  valence_core/n/cells.py
+f0608a2613d683f7600808b2bdd9f61b6c3c7ba904ee39644be6eefef1deab12  valence_core/n/directions.py
+014c518f1baecb980b1ba1cd1040771455f94d0c008cf01a5d4495ffc7e4aaa7  valence_core/n/guard.py
+7594f81507088a1ff0fcacbb371a6f321fcbc286a94b1d2ac0aa0faaa4ecc08c  valence_core/n/hftiny.py
+0e19723a0268347bb5e50ce0ab4cca9e0bf79e582f3ba0d986e27170d1a8a7c8  valence_core/n/ids.py
+5c6f382616ac7abb593af4c29b499e5a504e257580dba32dd587f1ee1a7a9fb3  valence_core/n/keys.py
+7e7bb0a09f8405f007d81b34a1c5b1f984e3414b852f42840f1282c2cfeb0b0c  valence_core/n/primitive.py
+5fe409d845390fe6315d501b9e2b7e8d9f98e973286d9cfec3235ad35ba354aa  valence_core/n/probe.py
+69d73d7748a0374eae4514414f547c80406d4d50c21396f8f6f3a0352af9d896  valence_core/n/runner.py
+e974d4bdd4e9b498d73d7c500ae83c650ad766a112bf384f79a3ce9dc6acf13f  valence_core/n/sessions.py
+3fd9aed3d66c9f31d4470fbda9116226b9cfaed7151ecb5a25daaa31a4c4dbdd  valence_core/n/testing.py
+ee32a71fd02b3ecb39a0e4a73d9473f33bce255451b06d0ee3ad9d400d70b33b  valence_core/n/verify.py
+aa0b540474995cc91c097d448f9f733cda3be6c0471cc1f4f3b0c09275dbe05f  scripts/n_sessions.py
+0ea39600919aceb43ee25962314e4239f609ef8da7536b12063372dfdfb30db6  valence_core/n/schema.py
+427f58ccf531d2d98bd76004e2ff8b2ece9514248328e12844156a659e711cfd  valence_core/n/__init__.py
+fd8bb2341aaf7d4b1365873564d1e858a3cace4fb5cc578e4bd827c4ee14a45a  data/n/ids/sessions.jsonl
+e887f19ede4a1b2ca42cfeffe41f4ee81f67774b5bfcd58e0f3765739834b702  data/n/ids/n4_variants.jsonl
+43a32a1b7dec52f239020fb916e5ae9e2758be10ed232d762edcd5d048a549da  data/n/ids/labels.json
+7f51bd914eb03510442f01bfbf7cad7ba74c7e9fb98edb307db350d9772a821d  data/n/ids/MANIFEST.json
+----- site_check.sh -----
+#!/bin/bash
+# n package -- the BUILD's post-build site check on the box, second run (the first, on 14e65d8 with the drafts of the
+# render's time, stopped at its G-VER trial: 645bd3f). Run by the pod session in a SCRATCH COPY of the box's checkout
+# at the synced HEAD, with n_drafts.tar extracted over it (--exclude='._*'); never in the box's own checkout.
+# Writes only in the scratch copy (the extract, before this runs) and under <work>, a new folder on /workspace
+# outside the copy, made here.
+#   0  the copy: its HEAD, and its changed set asserted to be exactly the 13 draft files (all new to git)
+#   1  the drafts, and the files G-VER reads, against n_manifest.txt beside this script
+#   2  the package self-test with its temporary directory on /workspace (the step-3 review's RISK 3: cells writes
+#      capture rows through writable shared mmap and fsync, and the stage root is on this filesystem); hftiny runs
+#      here (torch present), the band-premise check included (RISK 7). If it fails, it runs again with the default
+#      temporary directory, for diagnosis only.
+#   3  two box-only mutants, each in its own copy of valence_core, scripts, data/n/bk and the model manifest:
+#      m05, the HF backend's fresh path without its injection; b02, the adapter's injection hook one layer early.
+#      hftiny must kill each with its named check; each mutant's output is printed in full.
+#   4  G-VER on the committed ids (data/n/ids/, d76f34f) with the instruct checkpoint's tokenizer files, decode
+#      only: the BUILD's site-check trial, never of record. Expected PASS.
+#   5  hashes: the package hash and every closure line, to compare with the laptop's.
+# Exit 0 iff 0-5 all hold as expected; the last line says which held.
+set -u
+HERE=$(cd "$(dirname "$0")" && pwd -P)
+REPO=${1:?usage: site_check.sh <scratch copy> <python> <work folder, new, on /workspace>}
+PY=${2:?usage: site_check.sh <scratch copy> <python> <work folder, new, on /workspace>}
+WORK=${3:?usage: site_check.sh <scratch copy> <python> <work folder, new, on /workspace>}
+case "$WORK" in
+    /workspace/*) ;;
+    *) echo "REFUSED: the work folder is not under /workspace"; exit 2 ;;
+esac
+[ -e "$WORK" ] && { echo "REFUSED: the work folder exists"; exit 2; }
+cd "$REPO" || exit 2
+R=$(pwd -P)
+mkdir "$WORK" || exit 2
+W=$(cd "$WORK" && pwd -P)
+case "$W/" in
+    "$R"/*) echo "REFUSED: the work folder is inside the copy"; exit 2 ;;
+esac
+export PYTHONDONTWRITEBYTECODE=1
+
+echo "== 0 the copy"
+echo "HEAD $(git rev-parse HEAD)"
+EXPECT='?? scripts/n_sessions.py
+?? valence_core/n/cells.py
+?? valence_core/n/directions.py
+?? valence_core/n/guard.py
+?? valence_core/n/hftiny.py
+?? valence_core/n/ids.py
+?? valence_core/n/keys.py
+?? valence_core/n/primitive.py
+?? valence_core/n/probe.py
+?? valence_core/n/runner.py
+?? valence_core/n/sessions.py
+?? valence_core/n/testing.py
+?? valence_core/n/verify.py'
+GOT=$(git status --porcelain | LC_ALL=C sort)
+if [ "$GOT" = "$EXPECT" ]; then
+    echo "changed set: exactly the 13 draft files, all new to git"
+else
+    echo "CHANGED SET FAIL: the copy's status is not exactly the 13 drafts:"; echo "$GOT"; exit 1
+fi
+
+echo "== 1 manifest"
+shasum -a 256 -c "$HERE/n_manifest.txt" || { echo "MANIFEST FAIL"; exit 1; }
+
+echo "== 2 selftest, its temporary directory on /workspace"
+awk '$2 == "/workspace" {print "the /workspace mount type: " $3}' /proc/mounts
+mkdir "$W/tmp_selftest" || exit 2
+TMPDIR="$W/tmp_selftest" "$PY" scripts/n_sessions.py --selftest; ST=$?
+echo "selftest exit=$ST"
+rmdir "$W/tmp_selftest" 2>/dev/null || echo "note: the self-test's temporary folder was not empty after it"
+if [ "$ST" -ne 0 ]; then
+    echo "== 2b selftest again, the default temporary directory (diagnosis only)"
+    "$PY" scripts/n_sessions.py --selftest; echo "selftest (2b) exit=$?"
+fi
+
+echo "== 3 box-only mutants"
+mutant() {                              # tag, file, OLD, NEW, the FAIL line that must appear
+    local tag=$1 rel=$2 M="$W/$1" rc
+    mkdir -p "$M/data/n" "$M/data/olmo" || return 9
+    cp -R valence_core scripts "$M"/ && cp -R data/n/bk "$M/data/n/" \
+        && cp data/olmo/manifest.json "$M/data/olmo/" || { echo "$tag: COPY FAIL"; return 9; }
+    OLD=$3 NEW=$4 perl -0pi -e '$c = () = /\Q$ENV{OLD}\E/g; die "APPLY: $c matches\n" unless $c == 1; s/\Q$ENV{OLD}\E/$ENV{NEW}/' "$M/$rel" \
+        || { echo "$tag: APPLY FAIL"; return 9; }
+    mkdir "$W/tmp_$tag" || return 9
+    (cd "$M" && TMPDIR="$W/tmp_$tag" "$PY" scripts/n_sessions.py --selftest) > "$W/$tag.txt" 2>&1; rc=$?
+    echo "$tag selftest exit=$rc (expected non-zero); its output in full:"
+    cat "$W/$tag.txt"
+    rm -rf "$M"; rmdir "$W/tmp_$tag" 2>/dev/null
+    if [ "$rc" -ne 0 ] && grep -q -F "FAIL $5" "$W/$tag.txt"; then
+        echo "$tag: KILLED by its named check"; return 0
+    fi
+    echo "$tag: NOT KILLED by its named check"; return 1
+}
+mutant m05 valence_core/n/primitive.py 'self._run(seq, injections, capture_layers' 'self._run(seq, (), capture_layers' \
+    'hftiny: steered: cached continuation rows == the full forward' ; M05=$?
+mutant b02 valence_core/adapters/olmo_hf.py 'by_layer.setdefault(int(inj.layer), [])' \
+    'by_layer.setdefault(int(inj.layer) - 1, [])' 'hftiny: AT THE SITE (layer 1)' ; B02=$?
+
+echo "== 4 G-VER trial on the committed ids"
+"$PY" scripts/n_sessions.py gver-trial --model-dir /workspace/models/olmo2_instruct; GV=$?
+echo "gver-trial exit=$GV"
+
+echo "== 5 hashes (compare with the laptop's: the package hash and every closure line)"
+"$PY" scripts/n_sessions.py hashes; HS=$?
+echo "hashes exit=$HS"
+
+V=PASS
+[ "$ST" -eq 0 ] && [ "$M05" -eq 0 ] && [ "$B02" -eq 0 ] && [ "$GV" -eq 0 ] && [ "$HS" -eq 0 ] || V=FAIL
+echo "site check $V: changed set OK, manifest OK, selftest exit=$ST, m05 $([ "$M05" -eq 0 ] && echo KILLED || echo NOT-KILLED), b02 $([ "$B02" -eq 0 ] && echo KILLED || echo NOT-KILLED), gver-trial exit=$GV, hashes exit=$HS"
+[ "$V" = PASS ]
+----- end -----

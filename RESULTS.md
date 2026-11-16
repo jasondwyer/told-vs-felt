@@ -21,6 +21,233 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — BUILD (PROPOSAL-n v0.2 §8 step 6; ADDENDUM-n1 v0.1; the seat's answers of 2026-11-16,
+  second sitting, §5 step 3): `valence_core/n/` and its driver `scripts/n_sessions.py`, committed by path.**
+  - **Headline:**
+    - package sha256 `60d892dc…cc66`, in m's form, over the package's 14 modules, with `schema.py` and
+      `__init__.py` as committed;
+    - self-test 217/217 on the laptop and 228/228 at the box, where the second site check PASSed;
+    - two blind reviews with mutants, one of the step-6 drafts with schema v4.4 and one of the step-3 changes, every
+      finding disposed;
+    - Code's session-count call: two sessions;
+    - no checkpoint's weights were loaded anywhere.
+  - **What is built** (n §8 step 6's list, with step 3's changes):
+    - **The OLMo 5(f) primitive** (`primitive.py`, quarantined):
+      - the mask, built from the record's spans and asserted zero at the read and outside them;
+      - the paired shadow, over identical token ids;
+      - the cached read: a prefill under the mask, with each label's tokens as its continuation;
+      - the fresh re-computation: one full forward per label under the same mask;
+      - the restricted read, at the labels' first divergent token;
+      - the captures over the band past the site, `range(layer + 1, n_layers)` (ADDENDUM-n1 §6.2);
+      - the HF backend over `OLMoHFAdapter`, imported unchanged.
+    - **The ids of record** (`ids.py`):
+      - the render: the code that produced `data/n/ids/` (`d76f34f`), changed since only as the second review's
+        dispositions 6, 10 and 12 state, which leave what a PASS render writes as it was;
+      - its load, which checks each file's sha256 and record count against MANIFEST.json;
+      - `ids_of` and `label_ids`, the runner's inputs.
+
+      The box tokenizes nothing for n's inputs.
+    - **The renderer** (`sessions.py`): BK's sessions and rendering as text, kept for the decode checks; the two
+      recorded re-splits; N4's told line and its join.
+    - **G-VER** (`verify.py`), on the committed ids. It checks:
+      - `seq_len` and `ids_sha` against BK's;
+      - each sequence's decode against the rendering;
+      - the spans under G-DATA's note G-2, tiling [0, n_pre);
+      - the N4 sequences' prefixes and records;
+      - each kept label candidate's cue set and decodes;
+      - the manifest's environment and tokenizer pins;
+      - MANIFEST.json's sha256 against the committed render's.
+    - **The direction builders** (`directions.py`), and **the keyed draws** (`keys.py`): the fidelity sample and
+      N4's schedule.
+    - **The read runner** (`runner.py`):
+      - the launch order through `schema.arm_cells`: a merged dose point is read once, under its kept label
+        (ADDENDUM-n1 §5.1);
+      - the fidelity re-computation, with capture on;
+      - the monitors;
+      - pause and resume with rulings, and the replay;
+      - the stage report (`n-report-v1`), with `cap.loads_ms` beside the cap.
+    - **The cells** (`cells.py`):
+      - one float32 array per capture layer per cell;
+      - rows written in place and fsynced before the JSON;
+      - a per-layer sha256 over the written rows;
+      - no memory map held between reads.
+    - **The probe code for G-READ-n** (`probe.py`):
+      - grouped kfold10 on the folds of `cv_seed`, with the shuffle null on the same folds;
+      - ADDENDUM-n1 §6.4's PASS rule;
+      - the artifact (`n-gread-v1`), checked by `check_gread` and refused unless its layers are the identity's band.
+    - **The guard** (`guard.py`), **the test doubles** (`testing.py`, `hftiny.py`), and **the driver**:
+      `--selftest`, `hashes`, `gver-trial` and `render-ids`.
+
+    Not built here: the stage commands (the BACKEND extension, G-VEC, G-CAL-n, G-TIME-n, G-VER, the campaign) and
+    G-READ-n's assembly from the campaign's cells. Each is wired at its own step.
+  - **The package hash and its closure.** They were measured by `scripts/n_sessions.py hashes` from a scratch overlay
+    of HEAD's `valence_core`, `data/n/bk` and the model manifest, with the drafts on top:
+    - `package_sha256 valence_core/n 60d892dc7f98f85ba049486ddffb4c336cce78c83fde99bce19ae5ebde51cc66`;
+    - 11 closure files: `valence_core/__init__.py`, `adapters/__init__.py`, `adapters/base.py`,
+      `adapters/olmo_hf.py`, `discrim.py`, `echo/__init__.py`, `echo/probe.py`, `m/__init__.py`, `m/keys.py`,
+      `m/resume.py` and `session_e2a.py`.
+
+    Each closure file's sha256 equals the line both box site checks printed. The second printed the same package
+    hash and the same 11 closure lines as the laptop.
+  - **Since the render.** The render raw (`d76f34f`, Appendix A) lists the drafts the render ran and says this entry
+    states any difference from them. The package went from `45c70818…6a98` to `60d892dc…cc66`.
+    - Changed: `schema.py`, from draft `33419938…111d` to `0ea39600…0db6`, committed at `d791bd9`.
+    - Changed by the second review's fixes and the tests for its surviving mutants: `cells.py`, `hftiny.py`,
+      `primitive.py`, `probe.py`, `runner.py` and `verify.py`. The step-3 changes themselves were already in the
+      drafts the render ran.
+    - Changed by the second review's dispositions 6, 10 and 12, and by the tests for its surviving mutants M1, M2, M3
+      and M5: `ids.py`, from `bea4b333…07fa` to `0e19723a…a7c8`.
+    - Changed by the second review's disposition 11: the driver, `scripts/n_sessions.py`.
+    - Unchanged: `__init__.py`, `directions.py`, `guard.py`, `keys.py`, `sessions.py` and `testing.py`.
+
+    The ids depend on schema constants (`TOLD_LINE`, `SHAM_LINE`, `N_SESSIONS`, `N_FLOOR`, `BK_CELLS`,
+    `SESSION_SET_SHA256`), and these are unchanged between the two schema drafts. G-VER, in the BUILD's code, PASSed
+    on the committed ids at the box.
+  - **Self-tests.**
+    - On the laptop: `scripts/n_sessions.py --selftest` gave 217/217. It ran under the jlens venv at `nice -n 19`,
+      from the scratch overlay, in a battery window the coordinating session granted. hftiny was skipped there, for
+      want of torch.
+    - At the box: 228/228, with its temporary folder on `/workspace` (nfs4). Cells' in-place row writes, flushes,
+      fsyncs and reloads therefore pass on the volume the stage root lies on, which was the second review's RISK 3.
+      hftiny's 12 checks run there in place of the laptop's one skip line.
+  - **Two blind reviews with mutants** (`results/raw/2026-11-16_n-build_review-drafts.md`;
+    `results/raw/2026-11-16_n-build_review-step3.md`). Each reviewer was briefed to run no Python, and
+    each brief quoted the list of record v2's items 1–5.
+    - **The first review** read the step-6 drafts with schema v4.4 (`4bed3f9a…4665`, the bytes `14e65d8` committed
+      while the review ran).
+      - 21 findings, 2 of them DEFECT. Its DEFECT on G-READ-n's capture layers matched Q5 of `718c48e`, already
+        before the seat, and since ruled: the band.
+      - 25 mutants. 24 were killed on the laptop. m05 was killed at the box, in the first site check.
+    - **The second review** read the step-3 changes, at `d791bd9`'s schema v5.
+      - 13 findings: 1 BUG, 6 RISK, 6 NIT. The BUG (a crash before a cell's first JSON blocked every resume) is
+        fixed, with a test. Each RISK is applied or flagged.
+      - 20 mutants. By the reviewer's reading, 8 were killed and 12 survived, and it gave each survivor a test.
+        Run after the fixes, in their own window and against a passing unmutated baseline (217/217): 20 of 20
+        killed. 18 were killed by the check that names the invariant they break, and M4 and M12 by their module's
+        self-test raising. Two more mutants, m05 and b02, ran at the box, where only the HF path can kill them.
+  - **The box site checks.**
+    - **The first** (`645bd3f`'s three raws), on HEAD `14e65d8` with the drafts:
+      - self-test 166/166; m05 killed; the hashes equal;
+      - the G-VER trial STOPped: under the box's transformers 5.15.0, the renderer of record did not reproduce BK's
+        ids. The STOP block went to the seat, which ruled Q1 (b): the ids were rendered once on the laptop, in
+        G-DATA's environment, and committed (`d76f34f`).
+    - **The second** (`results/raw/2026-11-16_n-build_sitecheck2_inputs.txt`, `_run.txt` and `_out.txt`), on HEAD
+      `9662468` with the drafts: **PASS**.
+      - The copy's changed set was exactly the 13 drafts, and the manifest checked 19/19.
+      - The self-test gave 228/228, with its temporary folder on `/workspace`.
+      - m05 was killed at 226/228, with the first run's values. b02 was killed at 227/228, by "AT THE SITE
+        (layer 1)".
+      - The G-VER trial on the committed ids PASSed. It is the BUILD's trial, never of record. It covered 160/160
+        sessions' ids, spans and N4 sequences, 4 of 4 label candidates, and the manifest.
+      - The hashes equal the laptop's.
+      - The pod session's record gives the software: Python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0 and
+        tokenizers 0.22.2.
+      - Library messages: transformers' two warnings, word for word as at the first site check, once in the
+        self-test and once in each mutant.
+        - The tiny OLMo-2 config's `eos_token_id` lies outside its 128-token vocabulary. hftiny never generates, so
+          no check depends on it.
+        - `crop` with a positive value is deprecated, which is flagged below.
+
+        Code's request had named "a library message" as unexpected without excepting these two. Code reads them as
+        expected. The pod session, finding them to be the first run's, did not stop.
+  - **The session-count call** ("One session instead if Code judges the coupling too tight: Code's call, stated in
+    the BUILD entry"): two sessions, n-build and n-analyzer, as routed.
+    - The coupling ran through the schema's commits (`5a97527`, `14e65d8`, `d791bd9`) and through messages.
+    - n-analyzer's BUILD (`5c0ae6b`) pinned the first, and `2822721` moved its pin to the second. n-analyzer moves it
+      to `d791bd9` in its own commit.
+  - **Departures, recorded:**
+    - **Untracked drafts.** The step-6 drafts went into the tree untracked after `5a97527`, on 2026-11-16: the 11
+      modules and `scripts/n_sessions.py`. Code replaced `verify.py` there once more, before the STOP's commit, with
+      its draft carrying G-2's span fix (`36b4d0cd…4bb7`). The drafts then stayed in the tree, stale, through the
+      STOP.
+      This commit replaces them with the drafts tested here. From step 3 on, drafts stayed in Code's scratch until
+      this commit window.
+    - **An early self-test.** It ran from the tree rather than a scratch copy. The coordinating session found
+      nothing owed.
+    - **Mutant batch 1.** It used a symlinked `data/`; its verdicts are void (the first review raw).
+    - **A wrong sha256** (`7c42cb4b…17a8`) was quoted for `diag_render.py` in a routing request, before the hash had
+      returned; the file's is `e115d4d9…6291`. The pod session found the mismatch and held the job, and nothing ran
+      on the wrong value. The STOP block records it too.
+    - **AppleDouble twins.** The first site check's tar carried macOS AppleDouble twins. The pod session's gate
+      refused the first extract, and nothing ran on it. This BUILD's tar was packed with `COPYFILE_DISABLE=1`,
+      `--no-mac-metadata` and `--no-xattrs`.
+    - **Guard markers in argv.**
+      - Five `shasum` processes ran with HF-cache paths in their argv, two of them carrying m's guard markers.
+      - The coordinating session found this harmless. m's guard counts only processes whose executable is Python
+        (`valence_core/m/guard.py`:917–919), and, on its reading, only at a Q-F3 invocation's start.
+      - Code has reached such paths by `cd` since.
+    - **A search outside scope.** The same search went through `~/Downloads`, outside the scope the coordinating
+      session then set for file searches: the repository, the HF cache and the scratch folders.
+
+    Departures already recorded in their own entries are not repeated here: the two `--version` calls at `14e65d8`,
+    and, at `d76f34f`, the schema self-test's script invocation, which was not the granted one.
+  - **Flags for the seat.** Each is Code's interim reading. By the PI's routing of 2026-11-16 (N.9), the build
+    proceeds on them.
+
+    No longer flags, because they were ruled after the first draft of this entry:
+    - `718c48e`'s Q1–Q5, and the readings of `5a97527` and `14e65d8` that the seat's §3 lists (`52b2c97`);
+    - the schema's three refuse cases, made single-defect at `d791bd9`.
+
+    Open:
+    - **ORDER.** The shadows first, then arm-major in `ARMS` order, cells by `arm_cells`, and sessions in the set's
+      order. So the primary arm completes first if the cap binds.
+    - **SCOPE, in its specifics.** A pause stands on its read's arm; a binomial fire stands on its batch's arms; a
+      pause on a shadow also stands on the steered arms that pair with it. The seat's §3 has the pause standing "on
+      its scope's arms".
+    - **The fidelity binomial.** It is counted in batches that a ruling clears, and evaluated every 160 reads at the
+      next re-computation, with an end-of-run evaluation.
+    - **N4's schedule.** Told-S 40 in each present-order group and told-U 39 and 41, 80/80 in all. v0.2's B5 has
+      "(40/39 and 41/40)", and its N4-T row "40/40 by `present` order as near as 79/81 allows".
+    - **The retention interval.** It is recorded per session, against 5(f)(iii)'s "declared and held fixed within a
+      cell".
+    - **N2-E's read** at exactly f = 0.20, against 5(f)(iv)'s "below dose 0.20".
+    - **The keyed fidelity sample.** The identity binds its key (`fidelity_rule.sample_key`) and the package hash
+      binds its fraction, but no digest of the realized sample is bound. The labels and N4's schedule are bound
+      through MANIFEST.json's pin.
+    - **Cap and alpha.** They are the runner's inputs, read from the lock by each stage command at its step (the first
+      review's disposition 10). A resume is refused under a cap other than the report's, or under an alpha other
+      than the one any binomial pause in the report records.
+    - **The label-mass floor.** The report's `label_mass_below_floor` is written null, because no floor is
+      declared.
+    - **`loads_ms`.** It holds the invocations that wrote a report; a crashed invocation's load is absent (the
+      second review's RISK 5). Persisting each load is a schema change, for the lock.
+    - **A G-VER-STOP that is not a token mismatch.** How it counts in `rendering_mismatches` (the second review's
+      NIT 8).
+    - **`addendum_sha256`.** Whether the stage identity carries it beside `proposal_sha256`. The BACKEND extension
+      runs before the lock, whose `lock_sha256` binds ADDENDUM-n1 for every later stage.
+    - **G-READ-n's fits in the cap** where they run on the box (ADDENDUM-n1 §6.3). The schema's cap covers a stage's
+      reads; G-READ-n's timing and cap clause are for its stage and the lock.
+    - **The comparator's medians.** They are over 40 sessions against the axis's 160: conservative, and worth a line
+      in the lock.
+    - **The reads' I/O**, outside the cap: 31–32 row writes with fsync per read, and the cell JSON rewritten per
+      append. G-TIME-n times it on the volume.
+    - **`cache.crop(n)`.** The primitive's call is deprecated in transformers 5.15.0 and announced for removal in
+      5.18. The backend's transformers stays below 5.18, or the call changes.
+    - **The schema's own flagged readings** at `d791bd9` stand as flagged there.
+
+    PINs declared to n-analyzer:
+    - G-READ-n's driver reads captures only through `cells.load_cell(..., keep_arrays=True)`. That call checks each
+      layer's written rows against the cell's `capture_sha256`, and each row against its record's sha16, before a
+      fit. n-analyzer's PIN-n-31: VERDICTS reads no capture file.
+    - The stage drivers assert that `manifest_sha256` equals the identity's `rendering_id`.
+    - One `cv_seed`, the lock's, is passed to both `probe.result` and `probe.artifact`.
+  - **Values-check** (`results/raw/2026-11-16_n-build_valuescheck.md`). It ran as two blind passes by fresh agents,
+    each briefed with the list of record v2's items 1–5:
+    - **Pass 1** covered this entry and the two review raws. Of 147 claims: 120 CONFIRMED, 17 IMPRECISE, 3 FAIL,
+      7 NOT CHECKABLE. Every FAIL and IMPRECISE item was applied.
+    - **Pass 2** covered the edits after pass 1, the site-check lines, the "Since the render" block and the inputs
+      raw. Of 80 claims: 72 CONFIRMED, 2 IMPRECISE, 0 FAIL, 6 NOT CHECKABLE. Both IMPRECISE items were applied.
+    - The edits after pass 2 were checked by tool.
+  - **Committed by path:**
+    - the 13 drafts: `valence_core/n/` less the committed `schema.py` and `__init__.py`, plus `scripts/n_sessions.py`;
+    - the two review raws;
+    - the second site check's three raws (inputs, run, output);
+    - the values-check raw;
+    - this entry.
+
+    Not pushed. Next: step 4, the BACKEND extension and §2.4's comparison on the box, through the coordinating
+    session and the pod session.
+
 - 2026-11-16 — **PROPOSAL-p OLMo-instruct — VERDICTS (p v0.2 §8 step 7, §4.4; ADDENDUM-p1 v0.1 §2.4, §4 step 3;
   LOCK-p-OLMo-instruct v1.0; the seat's answers of 2026-11-16, §5): A0-OLMo-instruct PASS. P = 76/80, Δ_c = +0.4500
   (two-sided Clopper–Pearson 95% CI [+0.3769, +0.4862]) against E = 0.0313 from A0s-OLMo-instruct; exact one-sided p
