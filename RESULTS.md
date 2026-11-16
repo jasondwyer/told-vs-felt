@@ -21,6 +21,86 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **BACKEND — characterization (CLAUDE.md's respawn protocol; m:251; the seat's answers of 2026-11-12,
+  `pq:`§4.3 item 4, and of 2026-11-14, `fd74d3f6…e3ff`, §2 item 2), on the PI's go of 2026-11-15 ("Go for the pod
+  whenever you need it"): the respawn protocol on the replacement box, pod `m43y3deb1gq3rp`, for PROPOSAL-p's three
+  campaigns. (i) INTEGRITY PASS, 51/51 files. (ii) BACKEND PASS: A, B and C are all exact at 0.0, and the new artifact
+  is byte-identical to the committed one. Backend identifier `641ee466f4553b6a`, each LOCK-p v1.0's identifier of
+  record; the dated note on their v1.0 entry records this box (this commit).**
+  - **The seat's words.** `pq:` is the seat's answers of 2026-11-12
+    ([`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md),
+    sha256 `a32d4d17…1112`). Its §4.3 item 4, after the spec of record: "then respawn (i) INTEGRITY (29 files against
+    the manifest) and (ii) BACKEND (A, B, C; the identifier), a `BACKEND — characterization` entry; the dated note at
+    each lock if the identifier is `641ee466f4553b6a`, the STOP of §4.2 if not." The answers of 2026-11-14
+    ([`2026-11-14_p-backend-line_design-to-code_answers.md`](results/raw/2026-11-14_p-backend-line_design-to-code_answers.md),
+    sha256 `fd74d3f6…e3ff`), §2 item 2: "respawn (i) INTEGRITY, (ii) BACKEND → `641ee466f4553b6a` → the dated note in
+    RESULTS.md on the v1.0 entries (`gl:`§B.3); a differing identifier → STOP".
+  - **The box.**
+    - Pod `m43y3deb1gq3rp`, named `jspace-olmo-m`, made by the RunPod MCP's `create-pod` on the spec of record, with
+      `qny1x4v8padeke`'s create body of 2026-11-06, field for field: Secure, data center US-CA-2, 1 × NVIDIA
+      A100-SXM4-80GB, image `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`, network volume `o73qvy742n` at
+      `/workspace`, container disk 30 GB, one declared container port (22/tcp). nvidia-smi on the box reads 81,920 MiB,
+      driver 595.91.07, driver CUDA 13.2.
+    - A stock watch read the GPU type's secure availability 15 times, at intervals of about 21 minutes after the first
+      two; its 15th read was the first to list US-CA-2. The hourly price was read and stated in the session before the
+      create; after it, the coordinating session relayed the pod id and the price to the PI. No money figure is
+      recorded here. `list-pods` before the create showed no pod of this session's; the August pod `uimuzt7d890y5b`
+      (EXITED) was not touched.
+    - The rest of the spec of record, in `pq:`'s words "the `~/.bashrc` hook restored, `RUNPOD_POD_ID` exported for
+      ssh shells (the `190ba90` FLAG), the venv's library versions untouched":
+      - the `~/.bashrc` hook (`source /workspace/env.sh`) was absent on the new container disk and is restored. **A
+        departure from `pq:`'s order, disclosed:** it was restored after the respawn runs, where `pq:` lists it before
+        them. The hook serves interactive shells; every measuring command on the box sources `env.sh` itself, so the
+        order changes nothing measured;
+      - `env.sh` (sha16 `f5174faa745eca6e`) exports `RUNPOD_POD_ID` by C4's line: `m43y3deb1gq3rp` in a
+        non-interactive ssh shell, and in an interactive one once the hook was back;
+      - the venv's library versions are untouched as far as the provenance records them (six libraries and Python):
+        the run's printed provenance equals the committed one (below).
+  - **Step (i) INTEGRITY — PASS.** `box_respawn_check.py` re-hashed the manifest's files under `/workspace/models/`:
+    **51 files match across 5 checkpoints** (base, sft, dpo, instruct, olmo2_instruct), exit 0. `pq:` says 29: the
+    manifest gained its fifth entry, olmo2_instruct's 22 files, at `0415438`, after 2026-11-06's 29/29 and before
+    `pq:` was written. An observation for the seat, changing nothing here. Raw
+    [`2026-11-15_respawn_integrity.txt`](results/raw/2026-11-15_respawn_integrity.txt) (sha256 `308d6020…3b8c`).
+  - **Step (ii) BACKEND — PASS**, run only after (i) passed (`box_determinism.py --stage base --repeats 5`, `env.sh`
+    sourced, exit 0). Raw [`2026-11-15_respawn_determinism.txt`](results/raw/2026-11-15_respawn_determinism.txt)
+    (sha256 `faca18c6…7f96`).
+
+    | measurement | result |
+    |---|---|
+    | A. repeat determinism (det ON) | exact, max\|d\| **0.000e+00**, symKL 0 |
+    | B. deterministic-algorithms OFF | repeat-exact, and **identical to ON** (max\|d\| 0.000e+00, symKL 0) |
+    | C. kernel path, cached vs uncached | exact, worst symKL **0.000e+00** vs the 1e-3 bar |
+
+    - The new `/workspace/models/determinism_base.json` was compared field by field with the committed
+      `data/olmo/determinism_base.json`: 108 leaf fields each, **0 differences**, byte-identical (sha256
+      `61f160ea…5434`). As at the earlier respawns (2026-08-23, 2026-08-24, 2026-11-06), the committed artifact is left
+      as it stands.
+  - **Backend identifier (m:251): `641ee466f4553b6a`.** `valence_core.m.resume.backend_identifier` gives it on the
+    provenance block the run printed, on the new artifact's and on the committed one's (Code's laptop check, appended
+    to the determinism raw: 2026-11-06's check, rewritten after scratch cleanup; the raw says how it was tested).
+    - Provenance (ledger 27), equal to 2026-11-06's: torch 2.8.0+cu128, transformers 5.15.0, accelerate 1.14.0,
+      safetensors 0.8.0, huggingface_hub 1.28.0, numpy 2.1.2, Python 3.12.3; CUDA 12.8 (torch's build), capability
+      [8, 0]; bf16; deterministic ON with `CUBLAS_WORKSPACE_CONFIG` `:4096:8`; seed 20260818; declared choice window
+      8192; 64 layers.
+  - **Code on the box.** The box repo is at `eb3e08c` (G-F0m-OLMo (p)'s sync), tracked files unmodified, untracked
+    only that stage's 15 outputs (by name, the 15 committed at `a225a89`). Both respawn scripts, the OLMo adapter,
+    `resume.py` and the manifest are identical at `eb3e08c` and at this commit. The bundle that brings the box repo to
+    the campaigns' commit comes next; it sets the 15 aside by digest first.
+  - **What follows.** Both gates PASS, so experimental forwards may run on this box, and the consistency clause binds:
+    each campaign completes on this one backend. A box change mid-campaign has no restart route in this build; the
+    restart is the seat's to route (each lock's §5). The identifier equals each LOCK-p v1.0's `BACKEND OF RECORD`
+    line, so this box is the campaigns' (the dated note on their v1.0 entry, this commit). Next, the seat's answers of
+    2026-11-14 (`fd74d3f6…e3ff`), §2 item 3, verbatim:
+
+    > 3. The box repo by bundle; precheck ×3 at `campaign` with (a)'s line; the three campaigns at 2 h each, one pod session, looks every 40; (d)'s line in each campaign raw after each invocation; the seat adjudicates every pause on the excerpt.
+
+  - **Blind values-check,** two passes. The first: 84 claims, 69 CONFIRMED, 5 IMPRECISE, 0 FAIL, 10 NOT CHECKABLE.
+    The second, blind to the first, on the revised texts: 99 claims, 86 CONFIRMED, 2 IMPRECISE, 0 FAIL, 11 NOT
+    CHECKABLE, nothing asked missing. Every IMPRECISE and every observation on the wording is applied in the
+    checkers' terms, the rest recorded; the edits after the second pass were checked by tool. Raw
+    [`2026-11-15_respawn_valuescheck.md`](results/raw/2026-11-15_respawn_valuescheck.md).
+  - Not pushed. Committed by path.
+
 - 2026-11-15 — **The campaign wiring: `campaign` (Q-F3's campaign, m:298, m:361) is wired in `scripts/mf3_sessions.py`
   under LOCK-m-F3 v1.0, in `scripts/m_sessions.py`'s forms. This is an edit of F-1's kind. Only the driver changes: its
   blob moves from `285eed04…0e44` to `7bb6f7ca…28a4`. mf3's package, m's, the analyzer and the lock stand, and
@@ -463,6 +543,20 @@ applied to CLAUDE.md.
     The dated note goes on this entry. It names the pod id, the identifier, the respawn raws (i) and (ii), and each
     lock's path and sha256 (each lock's §5).
   - Not pushed. Committed by path.
+  - **Dated note (PI date 2026-11-15), the pod session's: the campaigns' box (each lock's §5; `gl:`§B.3; the seat's
+    answers of 2026-11-14, `fd74d3f6…e3ff`, §2 item 2; `pq:`§4.3 item 4).** The replacement box of the spec of record
+    is pod `m43y3deb1gq3rp`, made on the PI's go "Go for the pod whenever you need it" (PI date 2026-11-15, relayed by
+    the coordinating session). Its `BACKEND — characterization` entry of 2026-11-15 (this commit) gives the backend
+    identifier **`641ee466f4553b6a`**, equal to each lock's one `BACKEND OF RECORD` line. The respawn raws: (i)
+    [`2026-11-15_respawn_integrity.txt`](results/raw/2026-11-15_respawn_integrity.txt) (sha256 `308d6020…3b8c`) and
+    (ii) [`2026-11-15_respawn_determinism.txt`](results/raw/2026-11-15_respawn_determinism.txt) (sha256
+    `faca18c6…7f96`). So this box is the campaign's under each lock, and no lock is edited:
+    - `LOCK-p-OLMo-sft.md`, `fafb786d31e079c890212c0aaac9039ade81a17b897944e651b41836fbdc2bc4`;
+    - `LOCK-p-OLMo-dpo.md`, `25c52f56cac4ca4c31f28828b0fbe5d5e0f25ed011b7f13b7db4d9f3259d3dcf`;
+    - `LOCK-p-OLMo-instruct.md`, `f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67`.
+
+    (a)'s line in the precheck ×3 raw at `campaign` will cite this commit as the `BACKEND — characterization` entry's
+    hash, with the determinism raw's path. Committed by path with that entry, the two raws and the values-check raw.
 
 - 2026-11-14 — **G-PWR (Q-F3), its run of record (PROPOSAL-m v1.11 m:285, m:298; F-5; the seat's answers of
   2026-11-14, §A.7 and §D items 3–4, routed by the PI on 2026-11-14, `cdccc66`), from the program's commit
