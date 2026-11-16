@@ -21,6 +21,107 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — the read runner's record schema, committed first and alone (PROPOSAL-n v0.2 §8 step 6;
+  the seat's answers of 2026-11-15, §5.1; the PI's "Route as given" on that evening's routing, section N, item 10):
+  `valence_core/n/schema.py`, with the package's docstring-only `__init__.py`. The module names every field the read
+  runner will write, its type and when it is null. It holds the checks both sides run on a record, a cell file and a
+  stage's identity, the dose map's merge rule, the campaign's declared read plan, and builders of valid example
+  objects. n-analyzer builds step 9's analyzer from this commit. Self-test 108/108 on literal records. Nothing
+  ran on a model, and the module reads no file.**
+  - **The routing, verbatim** (the PI's paste block of 2026-11-15 (evening), section N, item 10, as the coordinating
+    session relayed it to this session; the seat's raw §10 carries the item in its own shorter words): "Start now.
+    n-build: PROPOSAL-n §8 step 6, first commit the read runner's record schema. n-analyzer: step 9's n_analyze.py
+    and its battery (385 tuples), from that schema. One session instead if Code judges the coupling too tight. Then
+    steps 7–15 as written; drafted locks to the seat [go]." The seat's §5.1
+    (`results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`): "**n-build**, n §8 step 6 (the
+    package), whose first commit is the read runner's record schema; **n-analyzer**, step 9's `n_analyze.py` and its
+    battery (385 tuples), built from that schema."
+  - **What a record is** (Code's reading of §2.4's "each read counted once"). One record per read of n §2.4's table:
+    one (arm, direction, dose point, session). The fidelity re-computation (§2.1) and the d = 0 identity check ride
+    inside that read's record, never records of their own (§2.4 counts re-computations separately, as forwards).
+    Records are grouped by cell, one file per (arm, direction, dose point); §2.4's table gives 136 cells
+    before §2.3's merges. Each cell file names a capture array (a `.npy` beside it) of the read position's residuals,
+    for G-READ-n. G-TIME-n and the BACKEND extension's fresh-versus-cached reads (G-ACQ's dated note GA-5) write
+    records too.
+  - **Settled with n-analyzer before this commit** (by message; each side checks the same rule):
+    - **The read plan.** `read_plan(identity)` is the campaign's declared read set: §2.4's arms over the stage's dose
+      map, N1-R on the 40 floor sessions, every other arm on all 160. That is 7,360 reads with nothing merged, 6,240
+      with +d_20 merged into +1, 5,120 with +d_eq also merged into +1/2. §2.3 states the merge for N1-V's points;
+      that it reaches N1-R too, whose floors are taken point by point (C12), and that a merged point is read once
+      under the label kept, are Code's readings, flagged. An arm is complete exactly when its obtained reads are its
+      plan's (§5: "An arm with a partial read set is INDETERMINATE").
+    - **The dose map.** `check_stage_identity` requires, exactly, ρ = 0.3,
+      `d_eq == (0.10 * R_ell) / (rho * R)`, `d_20 == min(1.0, 2.0 * d_eq)` (§2.3), and the points `dose_points`
+      derives. §2.3 says "a point within 0.05 of an existing one is merged". Code's reading, flagged for the seat at
+      the BUILD:
+      - +d_20 first, against +1, +1/2, 0 and −1; then +d_eq, against those and +d_20 if kept;
+      - a point folds into the nearest candidate at an IEEE-double distance of at most 0.05, a tie going to the
+        earlier candidate;
+      - a fold into 0 is refused.
+  - **Code's readings, declared in the module's docstring.** Two change a design term, both flagged: reading 2 moves
+    §2.1's first-token read to the labels' first divergent token, without m:172's verifying re-forward; reading 7
+    leaves §4 (b)'s secondary without data. LOCK-n v0.1 pins each, and the BUILD entry lists them for the seat:
+    1. **The two paths** follow BK's `prereg.precondition_cache` (`analysis.json`): "the
+       prefill-plus-cached-continuation margin against a fresh full forward over the identical ids under the identical
+       additive mask".
+       `cached` is the read of record (one prefill under the mask, each label's tokens as the continuation); `fresh`
+       is one full forward per label under the same mask, and at d = 0 it is §2.1's vanilla forward.
+    2. **The restricted read** (§2.1's secondary, m:172's form): all 12 of BK's labels begin with the word "Zone", so
+       the read is taken at the first label token where the two labels' token sequences differ, the shared prefix
+       teacher-forced; m's verifying re-forward is not repeated, §2.1's re-computation being n's.
+    3. **The shadow** is referenced, not copied: every steered record names the N1-V d = 0 read of its session
+       ("the 160 at d = 0 are the shadows for every arm", §2.4), whose `ids_sha` equals its own. Δm is the
+       analyzer's; no record stores it.
+    4. **Captures** are float32, at the site's layer and the last decoder layer (before the final norm), one array
+       per cell; each record carries its row and each layer's `sha16_arr`.
+    5. **Fidelity** is `rel = |margin − fresh_margin| / max(|logprob_S|, |logprob_U|)` (G-DATA (vi)'s scale), with
+       `rel > TAU` and `rel > TAU/4` recorded beside it. Every read at d ∈ {0, +1, −1} carries it at the campaign and
+       the BACKEND extension (§2.1; N4's d = 0 reads included, as the step-3 entry's dated note N2 reads it). At other
+       points it is the campaign's 10% sample, keyed per session, or a re-computation G-TIME-n takes to time it.
+    6. **N4's lines** are §2.4's words as the record's `told_line`: "Prefer [zone X]." and "Either is fine.". §2.4
+       puts them in the choice prompt before "Reply with ONLY…"; the exact join is the lock's.
+    7. **Not recorded:** the free-text reply that §4 (b)'s secondary names. §2.1 says "No new text is generated for N1,
+       N2 or N4". The BUILD entry puts this to the seat.
+  - **Also:** the stage identity's declared `read_window`, at most 4,096 (rule 28(d)(c); GA-4), checked against every
+    read's longest forward; and, in each record, `duration_ms_fresh`, so G-TIME-n can time the re-computation apart
+    from the read, and the hashes of both fresh forwards' read-position residuals (§2.2: "on every forward").
+  - **Not in this commit:** the stage report (end state, pauses and their adjudication state, counters, the fidelity
+    binomial's state), G-READ-n's output and the NOT-RUN record. Each is a later commit, settled with n-analyzer.
+  - **Declared to the coordinating session on 2026-11-15, before any of it was written:** while this commit was
+    pending, the rest of step 6 was drafted in Code's scratch only. The drafts cover:
+    - the sessions and renderer;
+    - the 5(f) primitive and its HF backend;
+    - the cell writer, n's keys, the read runner, the verifier, G-READ-n's probe and the direction builders;
+    - the guard and the test doubles;
+    - the driver `scripts/n_sessions.py`.
+
+    Nothing of it is in the tree, and none of it commits before this schema. The BUILD entry states the
+    session-count call.
+  - **Self-test: 108/108.**
+    - 26 accepted cases and 82 refusals. Each refusal is one targeted defect in a valid object, made by one mutation
+      step; some steps edit several coordinated fields, so that only the targeted check can refuse.
+    - A `--verbose` run prints each refusal's message, and each was read against the check its case names.
+    - It ran at `nice -n 19` as `python3 -m valence_core.n.schema` under Python 3.12.9, in battery windows the
+      coordinating session granted, on a scratch copy byte-identical to the committed file (sha256 `77c12d6d…94bc`).
+    - The module imports the standard library only. In that scratch copy the parent folder has no package
+      `__init__`, so nothing else loaded. In the tree, `valence_core/__init__.py` imports numpy.
+  - **Values-check: two blind passes, the second blind to the first.** Each checker was briefed to run no Python,
+    under a brief quoting the list of record v2's items 1–5 and the coordinating session's lines on `data/mf3`.
+    - Pass 1, on the first drafts: 60 items, 40 CONFIRMED, 11 IMPRECISE, 2 FAIL, 7 NOT CHECKABLE.
+    - Pass 2, on the revised drafts: 48 items, 39 CONFIRMED, 6 IMPRECISE, 1 FAIL, 2 NOT CHECKABLE.
+    - The three FAILs:
+      - pass 1, the told line's placement, which §2.4 fixes;
+      - pass 1, a docstring that contradicted its code on merged dose labels;
+      - pass 2, the retention interval's sameness across arms, which N1-P breaks.
+    - Every FAIL and IMPRECISE item is applied in the checkers' terms. The observations are applied where they name
+      a gap in this commit's scope, and recorded otherwise. Pass 1's first observation led to the dose rule being
+      checked.
+    - The edits after pass 2 were checked by tool and by the self-test's re-run.
+    - Raw: [`2026-11-16_n-schema_valuescheck.md`](results/raw/2026-11-16_n-schema_valuescheck.md), with both reports
+      as returned and every disposition.
+  - **Committed by path:** `valence_core/n/__init__.py`, `valence_core/n/schema.py`, the values-check raw and this
+    entry. Not pushed. Next: the rest of step 6 (the n package), then the BUILD entry with the session-count call.
+
 - 2026-11-15 — **PROPOSAL-p's three campaigns (p v0.2 §4.1, §6.3; m:192, m:330), each under its LOCK-p-OLMo-{ckpt}
   v1.0 (`038bf3e`), on the box of record (`7ab4d2f`), in one pod session: COMPLETE ×3, exit 0, path uncached. Each
   ran 112 launches, A0-OLMo-{ckpt} 80 and A0s-OLMo-{ckpt} 32, with each arm's domain at its floor. No look fired; no
