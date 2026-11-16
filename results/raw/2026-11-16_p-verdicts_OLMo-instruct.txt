@@ -1,0 +1,70 @@
+# PROPOSAL-p OLMo-instruct -- VERDICTS (p v0.2 §8 step 7; ADDENDUM-p1 v0.1 §4 step 3; the seat's answers of 2026-11-16, §5 step 2): the analyzer of record's one invocation, with Code's pre-run check before it. Code's (the instruct VERDICTS session), on the laptop, PI date 2026-11-16.
+# Run in the coordinating session's battery window (Q-F3's campaign runs on the laptop): one background call at nice -n 19 on <repo>/jlens-qwen36/.venv/bin/python with -B, every path absolute. Stdout and stderr went to one capture file, which this session opened only after the coordinating session's notice that the third run had ended (the seat's §5 step 2; the briefs as amended).
+# The capture's sha256 as written, before the scrub below: b3ba4ecbdc4d17f9c0e69e8e278b8a8a9dff7426aef0baa6ac899ba1c7084b16 (6 lines).
+# Local absolute paths scrubbed: the repository's prefix shown as <repo>, this session's scratch directory as <scratch>; nothing else changed.
+# Sections: 1 the pre-run check and its output; 2 the invocation's stdout and stderr verbatim, then the wrapper's own line; 3 the two scripts as they ran.
+
+==== 1. THE PRE-RUN CHECK, in its own call, read-only: zsh <scratch>/prerun_check.sh ====
+# The script prints this line only when every check has passed; a failed check prints "PRE-RUN CHECK FAILED: ..." and exits 1.
+PRE-RUN CHECK PASS: HEAD 645bd3f and origin/main 645bd3f hold db2e821; input, lock and analyzers at their pins; no instruct output; no verdicts running
+
+==== 2. THE INVOCATION, one background call: zsh <scratch>/run_verdicts_instruct.sh ====
+---- the analyzer's stdout and stderr (the capture), verbatim ----
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/p_analyze.py verdicts --unit OLMo-instruct --lock <repo>/LOCK-p-OLMo-instruct.md --decisions <repo>/data/p/verdicts/OLMo-instruct_decisions.json --campaign <repo>/data/p/ckpt/OLMo-instruct_campaign.json --time <repo>/data/p/ckpt/OLMo-instruct_time.json --qual <repo>/data/p/ckpt/OLMo-instruct_qual.json
+GATE VERDICTS OLMo-instruct: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 645bd3fe07587c88de04361811553065476a984f
+VERDICTS OLMo-instruct: A0-OLMo-instruct (OLMo-instruct): PASS; n = 80 domain sessions of 80 launched (map 0: 40/40, map 1: 36/40 on the clean-role label); P = 76/80 = 0.9500; Δ_c = +0.4500, two-sided Clopper–Pearson 95% CI [+0.3769, +0.4862]; E = 0.0313 from A0s-OLMo-instruct (17/32 domain sessions, P_sham = 0.5313); P_arm − P_sham = +0.4188; exact one-sided binomial vs 0.5: p = 0.0000 toward clean, p = 1.0000 toward corrupted, α = .01; pre-pick exclusion rate 0/80 = 0.0000 beside A0s-OLMo-instruct's 0/32 = 0.0000; the guard at the unit's last look (the end look at 112 launches): Fisher one-sided vs A0s-OLMo-instruct p = 1.0000, not fired (binding); absolute vs .20 p = 1.0000, P > α (reported only).
+VERDICTS OLMo-instruct: written: OLMo-instruct_VERDICTS.json, OLMo-instruct_secondary.json
+P-OUTPUT data/p/verdicts/OLMo-instruct_VERDICTS.json (written; sha256 73b66e9a76e90b991baf75937de7dae7ddd4b4e04b112e82d95c5d6858a4c8f4)
+P-OUTPUT data/p/verdicts/OLMo-instruct_secondary.json (written; sha256 57c35d9e324a564a6dc80a5d82c629c15ec6bd64ec0448afee2cc83e846214c7)
+---- the wrapper's own stdout ----
+EXIT=0
+
+==== 3. THE SCRIPTS, as they ran (local paths scrubbed) ====
+---- <scratch>/run_verdicts_instruct.sh ----
+#!/bin/zsh
+# instruct's one verdicts invocation (the seat's answers of 2026-11-16, §5 step 2): nice -n 19, every path absolute,
+# stdout and stderr to a file this session does not open until the third run ends; prints the exit status alone.
+REPO=<repo>
+SC=<scratch>
+OUT="$SC/verdicts_instruct_stdout.txt"
+EXITF="$SC/verdicts_instruct_exit.txt"
+cd "$REPO" || { echo "EXIT=cd-failed"; exit 1; }
+if [ -e "$OUT" ] || [ -e "$EXITF" ]; then echo "EXIT=refused-capture-exists"; exit 1; fi
+nice -n 19 "$REPO/jlens-qwen36/.venv/bin/python" -B "$REPO/scripts/p_analyze.py" verdicts --unit OLMo-instruct \
+  --lock "$REPO/LOCK-p-OLMo-instruct.md" \
+  --decisions "$REPO/data/p/verdicts/OLMo-instruct_decisions.json" \
+  --campaign "$REPO/data/p/ckpt/OLMo-instruct_campaign.json" \
+  --time "$REPO/data/p/ckpt/OLMo-instruct_time.json" \
+  --qual "$REPO/data/p/ckpt/OLMo-instruct_qual.json" > "$OUT" 2>&1
+rc=$?
+echo "$rc" > "$EXITF"
+echo "EXIT=$rc"
+---- <scratch>/prerun_check.sh ----
+#!/bin/zsh
+# Before instruct's verdicts run: assert the inputs' commit is in HEAD, the inputs and lock are the committed bytes,
+# the analyzers are at their pins, no instruct output exists, and no other p_analyze or verdicts run is going.
+# Opens no p checkpoint, call log or output: existence tests by name only.
+set -u
+REPO=<repo>
+cd "$REPO" || exit 1
+fail() { echo "PRE-RUN CHECK FAILED: $1"; exit 1; }
+git merge-base --is-ancestor db2e821 HEAD || fail "db2e821 (the inputs' commit) is not in HEAD"
+# The push came first (the PI's "Yes, push first"): db2e821 is also in origin/main's local history.
+# This reads the local remote-tracking ref only; no fetch is made.
+git rev-parse --verify -q refs/remotes/origin/main >/dev/null || fail "no local refs/remotes/origin/main"
+git merge-base --is-ancestor db2e821 refs/remotes/origin/main || fail "db2e821 is not in origin/main's local history"
+D=data/p/verdicts/OLMo-instruct_decisions.json
+[ "$(git show "HEAD:$D" | shasum -a 256 | cut -c1-64)" = "70ac91f94db525b8847c82cc6fc47c37488d3058f8bb6ed8244ab76f501bca81" ] || fail "committed input sha"
+[ "$(shasum -a 256 "$D" | cut -c1-64)" = "70ac91f94db525b8847c82cc6fc47c37488d3058f8bb6ed8244ab76f501bca81" ] || fail "working-tree input sha"
+[ "$(shasum -a 256 LOCK-p-OLMo-instruct.md | cut -c1-64)" = "f71c97c175d8a219abd2e205b6ee25a7ff0e12c05be6f11f9047fa2cea8b0e67" ] || fail "lock sha"
+git diff --quiet HEAD -- LOCK-p-OLMo-instruct.md "$D" scripts/p_analyze.py scripts/m_analyze.py || fail "an input, the lock or an analyzer differs from HEAD"
+[ "$(shasum -a 256 scripts/p_analyze.py | cut -c1-64)" = "d3758fc4543b174bd8e923781f094a55c56c19cecee08e091a92c9eadf577008" ] || fail "p's analyzer sha"
+[ "$(shasum -a 256 scripts/m_analyze.py | cut -c1-64)" = "d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48" ] || fail "m's analyzer sha"
+for s in VERDICTS secondary NOT-RUN; do
+  [ ! -e "data/p/verdicts/OLMo-instruct_${s}.json" ] || fail "OLMo-instruct_${s}.json exists"
+  [ ! -e "data/p/verdicts/OLMo-instruct_${s}.json.tmp" ] || fail "a temp OLMo-instruct_${s}.json.tmp exists"
+done
+[ -x jlens-qwen36/.venv/bin/python ] || fail "the interpreter of record is missing"
+RUNNING=$(pgrep -f "p_analyze.py verdicts" | wc -l | tr -d ' ')
+[ "$RUNNING" -eq 0 ] || fail "another p_analyze verdicts process is running"
+echo "PRE-RUN CHECK PASS: HEAD $(git rev-parse --short HEAD) and origin/main $(git rev-parse --short refs/remotes/origin/main) hold db2e821; input, lock and analyzers at their pins; no instruct output; no verdicts running"
