@@ -1,0 +1,104 @@
+# p's counters at VERDICTS — the self-test of the script as changed for R1 (c) and R2 (b) (Code, the dpo VERDICTS session; PI date 2026-11-16)
+
+*`jlens-qwen36/.venv/bin/python -B scripts/p_verdicts_counters.py --selftest`, from the repository root at `nice -n 19`, each run in a battery window the coordinating session granted. Run 2 is the run of record, on the script as committed (sha256 `a87749e9c296ddc7c8e79ab3a50a74138ccec83d42b4217d6805bfef1d53d6f6`): 44/44, exit 0, stderr empty. Run 1 was on the change before its review (sha256 `f148bf3fc2ae1c182dd9ae7db51d1afad891683b36e30a7da6da18f035179996`, the version the review names): 43/43, exit 0, stderr empty. The self-test reads no checkpoint, call log or p output (it reads the qual and time reads files and p reports, the read domain, as its docstring lists); its call logs are synthetic, in a temporary directory outside the repository. Each run's stdout is reproduced verbatim. Calendar dates only; the commit hash is the record.*
+
+## Run 2, of record (stdout sha256 `58062a6459f4272c7438927d2ea787c3e13f7a6ba8b229be18ec02a5435a7591`)
+
+```
+  [PASS] task_correct.py loaded from results/raw/2026-11-11_p-qual_task-correct.txt: the raw's sha256 57e9c7dca305096d…, the script's 9aa0e2d9155d1093…, one header line; it defines the names this step uses
+  [PASS] a raw whose bytes differ from the pinned ones is refused before anything is loaded
+selftest: 19/19 rule cases as declared
+  [PASS] task_correct.py's own rule cases pass (its selftest, imported unchanged)
+  [PASS] CORR_clean: m's loader and task_correct's agree (16 items); the key table maps each item to one key
+  [PASS] the packages are the lock's: p's package_sha256 and m's equal the values every LOCK-p v1.0 names
+  [PASS] p's renders of record are its sha256 of record (p §1.2), the source a corrupted round is checked against
+  [PASS] the seat's second ruling: results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md at its sha256 (aea918c5f6f37452…), other bytes refused; RULING_R1 and RULING_R2 verbatim in it; TC_STAGES every stage, the asserted ones G-TIME's and G-F0m's
+  [PASS] qual OLMo-sft: the reads file is the one the task_correct raw printed (sha256 cad7da75e077c663…)
+  [PASS] qual OLMo-sft: the sham task_correct from the reads file, 63/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-sft: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] qual OLMo-dpo: the reads file is the one the task_correct raw printed (sha256 92c1cc85da421de1…)
+  [PASS] qual OLMo-dpo: the sham task_correct from the reads file, 63/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-dpo: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] qual OLMo-instruct: the reads file is the one the task_correct raw printed (sha256 afbcfb35c44a1757…)
+  [PASS] qual OLMo-instruct: the sham task_correct from the reads file, 64/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-instruct: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-sft: the reads file is the one the task_correct raw printed (sha256 294361ed8e736241…)
+  [PASS] time OLMo-sft: the sham task_correct from the reads file, 3/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-sft: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-dpo: the reads file is the one the task_correct raw printed (sha256 b44035beba9a3ab4…)
+  [PASS] time OLMo-dpo: the sham task_correct from the reads file, 4/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-dpo: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-instruct: the reads file is the one the task_correct raw printed (sha256 c7045474cad63d1e…)
+  [PASS] time OLMo-instruct: the sham task_correct from the reads file, 4/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-instruct: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] synthetic released records: p §2.3's cells by arm and phase, one hit per named cell and none elsewhere
+  [PASS] synthetic released records: the hair trigger counts the one stored line break; the control-character texts are listed by key
+  [PASS] synthetic released records: this step's read-domain cells equal p's own session_counters' over the same records
+  [PASS] synthetic released records: task_correct by arm and phase (77; Januwy; Cold.; 12 against 2; Seven; three; March; Shut against closed; Twenty-four against 24)
+  [PASS] a released round not as the rule reads it STOPs: a clean round off its item's task, a corrupted round in a sham session, an item outside CORR_clean, a bool item, a corrupted round off its item's render
+  [PASS] the run's gate 1 refuses, printing nothing, unless the three exit statuses are stated and each is 0
+  [PASS] gate 2: closed with no output and with two of three, open once each unit has its VERDICTS or NOT-RUN output
+  [PASS] the run reads nine checkpoints and nine call logs by exact path, each unit's time, qual and campaign
+  [PASS] the run's two passes on synthetic checkpoints: nine stages checked, then printed, each with its counts, its withheld cells and task_correct at every stage (R1 (c)): the contrast rows (2 of 2 forced, 0 of 2 free) at all nine, the sham rows asserted at time and qual and printed unasserted at the campaign
+  [PASS] the proxy (R2 (b)) on synthetic call logs in p's form, through p's attribute_calls: at all nine stages the log bound to its report by sha256, the sham cells equal the report's (written by hand), the contrast cells in the sham's form (4 of 4, the cut by key), the calls per contrast session, no STOP mark; no call's number, seed, digest or returned text printed
+  [PASS] proxy_cells on the synthetic records against the hand-computed sham cells (build_report's rule): the sham cells equal SYN_SHAM_PROXY; the contrast 4 of 4 with one cut; one contrast session with 4 calls
+  [PASS] calls_by_count groups the sessions by their number of calls, every index kept: 10 calls for s=0-3 and 5, 7 for s=4; a run ending at the last index stays one run (4 calls for s=0-1)
+  [PASS] pass 1 STOPs, printing nothing, when this step's table differs from a report p's session_counters reproduces (the step-table branch)
+  [PASS] after the gates, a failure that is not a STOP -- m's reader's own refusal, a missing file -- is a STOP, never a refusal
+  [PASS] pass 1 STOPs before anything is printed, each with its own message: a p report not recording its checkpoint's sha256, a read-domain cell that differs, a checkpoint naming another stage, a sham task_correct row off its committed figure, a campaign report built by another p package
+  [PASS] pass 1 STOPs before anything is printed on a call log not as the rule reads it, each with its own message: a log its report does not record, a call attributed to no round (an orphan; a proxy STOP line), a call matching an attributed round, a run line of another stage, a malformed line the report does not record, an absent log, runs under a p package the report does not name, a sham cell or run count or attribution flag the report records otherwise, two rounds sharing a seed, a round with no int seed, a contrast session index not an int or twice; no message carries a log line's position or a returned text
+  [PASS] pass 1 STOPs, printing nothing, when a call log's bytes change while p's read_calls reads it (p's read_calls restored after)
+  [PASS] printed, not stopped (Code's reading of the sham cells' form): a contrast round with no call -- at that stage the contrast cell reads 3 of 4 attributed with the round's key, and its session 3 calls; a malformed line the report records -- its count printed; every other stage as before
+  [PASS] this script's source makes no directory-listing call: it reads files by exact path (the package hashes it imports list their own package directories; nothing under data/p/ckpt is listed)
+  44/44 selftest checks pass
+```
+
+## Run 1, before the review (stdout sha256 `4a551675ce3983bb4e36479584af5baae2bb6b03636d177741cb6012fac565fd`)
+
+```
+  [PASS] task_correct.py loaded from results/raw/2026-11-11_p-qual_task-correct.txt: the raw's sha256 57e9c7dca305096d…, the script's 9aa0e2d9155d1093…, one header line; it defines the names this step uses
+  [PASS] a raw whose bytes differ from the pinned ones is refused before anything is loaded
+selftest: 19/19 rule cases as declared
+  [PASS] task_correct.py's own rule cases pass (its selftest, imported unchanged)
+  [PASS] CORR_clean: m's loader and task_correct's agree (16 items); the key table maps each item to one key
+  [PASS] the packages are the lock's: p's package_sha256 and m's equal the values every LOCK-p v1.0 names
+  [PASS] p's renders of record are its sha256 of record (p §1.2), the source a corrupted round is checked against
+  [PASS] the seat's second ruling: results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md at its sha256 (aea918c5f6f37452…); RULING_R1 and RULING_R2 verbatim in it; TC_STAGES every stage, the asserted ones G-TIME's and G-F0m's
+  [PASS] qual OLMo-sft: the reads file is the one the task_correct raw printed (sha256 cad7da75e077c663…)
+  [PASS] qual OLMo-sft: the sham task_correct from the reads file, 63/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-sft: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] qual OLMo-dpo: the reads file is the one the task_correct raw printed (sha256 92c1cc85da421de1…)
+  [PASS] qual OLMo-dpo: the sham task_correct from the reads file, 63/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-dpo: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] qual OLMo-instruct: the reads file is the one the task_correct raw printed (sha256 afbcfb35c44a1757…)
+  [PASS] qual OLMo-instruct: the sham task_correct from the reads file, 64/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-instruct: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-sft: the reads file is the one the task_correct raw printed (sha256 294361ed8e736241…)
+  [PASS] time OLMo-sft: the sham task_correct from the reads file, 3/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-sft: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-dpo: the reads file is the one the task_correct raw printed (sha256 b44035beba9a3ab4…)
+  [PASS] time OLMo-dpo: the sham task_correct from the reads file, 4/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-dpo: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-instruct: the reads file is the one the task_correct raw printed (sha256 c7045474cad63d1e…)
+  [PASS] time OLMo-instruct: the sham task_correct from the reads file, 4/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-instruct: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] synthetic released records: p §2.3's cells by arm and phase, one hit per named cell and none elsewhere
+  [PASS] synthetic released records: the hair trigger counts the one stored line break; the control-character texts are listed by key
+  [PASS] synthetic released records: this step's read-domain cells equal p's own session_counters' over the same records
+  [PASS] synthetic released records: task_correct by arm and phase (77; Januwy; Cold.; 12 against 2; Seven; three; March; Shut against closed; Twenty-four against 24)
+  [PASS] a released round not as the rule reads it STOPs: a clean round off its item's task, a corrupted round in a sham session, an item outside CORR_clean, a bool item, a corrupted round off its item's render
+  [PASS] the run's gate 1 refuses, printing nothing, unless the three exit statuses are stated and each is 0
+  [PASS] gate 2: closed with no output and with two of three, open once each unit has its VERDICTS or NOT-RUN output
+  [PASS] the run reads nine checkpoints and nine call logs by exact path, each unit's time, qual and campaign
+  [PASS] the run's two passes on synthetic checkpoints: nine stages checked, then printed, each with its counts, its withheld cells and task_correct at every stage (R1 (c)): the contrast rows (2 of 2 forced, 0 of 2 free) at all nine, the sham rows asserted at time and qual and printed unasserted at the campaign
+  [PASS] the proxy (R2 (b)) on synthetic call logs through p's attribute_calls: at all nine stages the sham cells equal the report's (written by hand), the contrast cells in the sham's form (4 of 4, the cut by key), the calls per contrast session, no proxy STOP; no call's index, seed or digest printed
+  [PASS] proxy_cells on the synthetic records, as p's build_report computes the sham's: the sham cells equal the hand-written ones; the contrast 4 of 4 with one cut; one contrast session with 4 calls
+  [PASS] calls_by_count groups the sessions by their number of calls, every index kept: 10 calls for s=0-3 and 5, 7 for s=4
+  [PASS] pass 1 STOPs, printing nothing, when this step's table differs from a report p's session_counters reproduces (the step-table branch)
+  [PASS] after the gates, a failure that is not a STOP -- m's reader's own refusal, a missing file -- is a STOP, never a refusal
+  [PASS] pass 1 STOPs before anything is printed: a p report not recording its checkpoint's sha256, a read-domain cell that differs, a checkpoint naming another stage, a sham task_correct row off its committed figure, a campaign report built by another p package
+  [PASS] pass 1 STOPs before anything is printed on a call log not as the rule reads it: a call attributed to no round, a call matching an attributed round, a run line of another stage, a malformed line, an absent log, runs under a p package the report does not name, a sham cell or run count or attribution flag the report records otherwise, two recorded rounds sharing a seed
+  [PASS] a contrast round with no call is printed, not stopped: at that stage the contrast cell reads 3 of 4 attributed with the round's key, and its session 3 calls; every other stage as before
+  [PASS] this script's source makes no directory-listing call: it reads files by exact path (the package hashes it imports list their own package directories; nothing under data/p/ckpt is listed)
+  43/43 selftest checks pass
+```

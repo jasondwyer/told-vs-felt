@@ -725,6 +725,40 @@ applied to CLAUDE.md.
       OLMo-instruct=0`, its stdout committed in a raw;
     - then each unit's outputs and entries, each entry open at "the reads".
   - Not pushed. Committed by path.
+  - **Dated note (PI date 2026-11-16): the script changed for the seat's answer on R1 and R2** (the dpo VERDICTS
+    session; the seat's raw §3 item 3; the PI's routing, "Route as given", section B, items 1–3). The answer is
+    [`2026-11-16_p-verdicts-counters_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md)
+    (sha256 `aea918c5f6f374522ad780ce29685c8c3f950b7457a46933022c090e74680395`), which the coordinating session
+    committed by path at `52b2c97`. Committed with this note: the script as changed, its self-test raw and its review
+    raw.
+    - **R1 (c), every stage:** `TC_STAGES` is now `("time", "qual", "campaign")`. The gate stages' sham rows are still
+      asserted against their committed figures. The campaign's sham row is counted and printed with no assertion.
+    - **R2 (b), computed:** each stage's call log is read by exact path, through p's `read_calls`,
+      `log_consistency_problems` and `attribute_calls`, unchanged. For each arm the step gives the cells p's report
+      gives the sham arm, and the calls per contrast session; nothing per call.
+      - The sham arm's cells are asserted equal to the committed report's.
+      - A STOP, with its line and never a log line's position:
+        - a log its report does not record by sha256 and path, an absent or unreadable log, or one whose bytes
+          change while it is read;
+        - a log of another stage, or one run by a p package its report does not name;
+        - malformed lines the report does not record, or a run count or attribution flag it records otherwise;
+        - a call attributed to no round;
+        - a call matching a round already attributed;
+        - a problem p's `attribute_calls` reports (two rounds sharing a seed, a round with no int seed), or a
+          contrast session index not an int, or twice.
+    - **The script:** sha256 `a87749e9c296ddc7c8e79ab3a50a74138ccec83d42b4217d6805bfef1d53d6f6`.
+      - **Self-test:** 44/44, exit 0, the run of record; the change before its review passed 43/43
+        ([`_p-verdicts-counters-r1r2_selftest`](results/raw/2026-11-16_p-verdicts-counters-r1r2_selftest.txt)).
+      - **One blind review round** (the raw's §3 item 2): no MAJOR, 4 MINOR and 6 NOTE, each applied but one NOTE
+        answered with no change.
+      - **Its 16 mutants:** each run once through the self-test on the script as committed; all killed, the baseline
+        passing ([`_p-verdicts-counters-r1r2_review`](results/raw/2026-11-16_p-verdicts-counters-r1r2_review.md)).
+    - **Code's reading, for the seat** (declared in the script's docstring): a contrast round with no attributed call
+      is printed, not stopped, as the sham arm's cells print one. It bears only where a contrast round has no call,
+      and the step's output would show any such round.
+    - **Next** (the raw's §3 items 4–5 and §6 block B item 4): the counters step for the three units, in one window,
+      its stdout committed as a raw; then each unit's outputs and entries, each open at "the reads"; and this
+      session's close line on `9464f61`'s entry, citing the raw, with ledger (76).
 
 - 2026-11-16 — **p's VERDICTS ×3, held before any run: STOP for the seat on the `--decisions` input, m:318's list of
   the decisions taken with another unit's outcome known (PIN-35), and on two things the three VERDICTS entries must
