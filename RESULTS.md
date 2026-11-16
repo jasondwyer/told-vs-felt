@@ -105,6 +105,34 @@ applied to CLAUDE.md.
   - **Next:** the seat's answer and the PI's routing. Then the three runs, one invocation per unit in the coordinating
     session's windows, and the six entries, each VERDICTS entry with ADDENDUM-p1 §2.4's sentence.
   - Not pushed. Committed by path.
+  - **Close (PI date 2026-11-16; the coordinating session's line, per the raw's header and its §8 C.7): the seat's
+    answers, routed.** The seat's answers of 2026-11-16,
+    [`2026-11-16_p-verdicts-decisions_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-decisions_design-to-code_answers.md)
+    (sha256 `01ae2ae7a06574cf6d000e32ba86972425d2b86ec0b972ccb0715d5e5d701b0f`, 7,791 bytes), committed by path here:
+    Q1 (c), Q2 (a) with both procedures, Q3 (a), Q4 (b) (its §0). The PI's word on the paste block (PI date
+    2026-11-16), verbatim: "Route as given". I re-hashed the placed raw (equal), read it in full, and matched the paste
+    block's sections B, C and N to its §8 item by item (items 1–5 in fuller words; 6–9 the same in substance).
+    - **Section B,** relayed verbatim to the three VERDICTS sessions, with this session's division of the work: the
+      instruct session writes the three inputs and commits them in one commit, with its close line here (B.6, ledger
+      (75)); the dpo session writes the counters script and its self-test and runs the counters step after the third
+      run; each session runs its own unit's `verdicts` in a window and commits its own outputs and entries. B.6's close
+      lines are plural, as the raw's header has all three VERDICTS sessions adding theirs: the sft and dpo sessions add
+      theirs here in their own commits.
+    - **Item 7, as ruled:** the three briefs are amended for §4. Until the third run ends no session opens any p
+      checkpoint, call log or p output; after it, in the briefs, only the counters step reads each unit's three
+      checkpoints, by path, never listing `data/p/ckpt`, for the counts the record names and nothing beyond them, and
+      Q-F0's extraction classes are neither owed nor opened (the seat's own reads are §6's). The end notices of §2
+      carry the exit status alone until the third run ends, to this session and, as its own relay, from it to the PI;
+      a non-zero exit is a STOP for the seat, with the message and no state (§5 item 2).
+    - **Item 8,** a push of the inputs' commit before the first run, behind the screen, is the PI's; it is put to the
+      PI, and it is not a condition of the runs.
+    - **Item 9** (the seat's answers on `718c48e`, `8e3bf91` and `e5aba51` at its next sitting; the build proceeds on
+      Code's interim readings) is relayed to the two n sessions [noted].
+    - A blind values-check of this line: 39 claims, 24 CONFIRMED, 3 IMPRECISE (all applied), 0 FAIL, 12 NOT CHECKABLE (this session's own acts
+      and relays, and this commit); its four observations are met above. Raw:
+      [`_p-verdicts-answers-close_valuescheck`](results/raw/2026-11-16_p-verdicts-answers-close_valuescheck.md).
+    - The raw, RESULTS.md and the values-check raw only. Nothing in this session ran on a model or the box. Not
+      pushed. Committed by path.
 
 - 2026-11-16 — **n — five early questions for the seat, four on readings the committed schema encodes (`5a97527`)
   and one on the label convention it leaves to the lock, put now so that a ruling moves the schema before work is
