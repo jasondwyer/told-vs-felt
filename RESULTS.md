@@ -21,6 +21,86 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-15 — **ADDENDUM-p1 v0.1 — COMMITTED: PROPOSAL-p v0.2's addendum, "a p checkpoint's outcome enters the
+  posting its VERDICTS entry reaches", committed by path as the seat placed it, on the PI's routing of 2026-11-15
+  ("Route as given"; section B, item 6 [adopt]). No `PROPOSAL-p OLMo-{ckpt} — VERDICTS` entry exists at this
+  commit.**
+  - **The file.** `ADDENDUM-p1-olmo-rows-at-the-posting-they-reach-v0_1.md` at root, sha256
+    `16cdbc11ec2afcdcb628e113bef799de2a328f6f709db2ea22b278c1faf3cb1b`, 7,415 bytes, re-hashed before the commit. It
+    is an addendum, not a new version: PROPOSAL-p v0.2 stays the proposal of record, and no hash moves (its header).
+    The seat placed it with its answers of 2026-11-15 (evening)
+    ([`2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`](results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md),
+    sha256 `1f3ce1f9…f84b`, committed by the coordinating session at `a215c28`): their §4 recommends it, and their
+    routing block's item B6 (§10) routes it.
+  - **The record of decision (p-1): the PI's routing, verbatim** (the addendum's §3 and §4 step 2), relayed by the
+    coordinating session:
+    - the paste block's header, "DESIGN → PI → CODE (master session) — PI date 2026-11-15 (evening)". The routing
+      thus confirms the date the addendum's header asks the PI to confirm at routing, 2026-11-15;
+    - the PI's word on the block, "Route as given", and the PI's words to the seat carried with it, "Pods are a go.
+      Everything that's waiting on me is a Go.";
+    - the paste block's section B, item 6, which records (p-1) adopted and the word for the three VERDICTS sessions
+      (the raw's own routing block gives the item in short form):
+
+      > ADDENDUM-p1 v0.1: referent check, the answer to its §2.2, then "ADDENDUM-p1 v0.1 — COMMITTED", before any p VERDICTS session [adopt]. Then PROPOSAL-p OLMo-{sft,dpo,instruct} — VERDICTS and — secondary DVs, fresh sessions [go, after its commit].
+
+    - section B's items 4 and 5 (the box; the campaigns) are quoted in the entries they rule: the close on `7ab4d2f`'s
+      entry, and the campaigns' entry;
+    - the PI's target for v1, in the PI's words (the addendum's §3 item 2). The routing block did not carry them; the PI
+      gave them in a chat reply to the coordinating session's question "What's your target for v1, in your own
+      words?", relayed verbatim (the reply has no date of its own; by the convention, Code's date 2026-11-15): "The
+      most solid paper I could drop on Arxiv early Dec. I care most about it being a meaningful contribution rather
+      than semi-arbitrary v1 vs v2 nomenclature". The addendum's §3 gives the first sentence's words as said to the
+      seat; the coordinating session's message says the addendum quotes what the PI told the seat earlier that day.
+  - **An observation for the seat, not a STOP** (the coordinating session's instruction, verbatim: "If the second
+    sentence of the PI's reply raises anything for the seat, record it as an observation for the seat in your entry,
+    not a STOP. The words are the record as they stand."): the PI's second sentence speaks of the paper's
+    contribution and of "semi-arbitrary v1 vs v2 nomenclature", and this addendum's one decision is the posting at
+    which a p outcome is used. Recorded for the seat's reading, without a reading of Code's.
+  - **Referent check** (the addendum's §5; §4 step 1), by a fresh checker against every referent §5 lists and the
+    other sources the addendum cites: 44 claims, 38 CONFIRMED, 5 IMPRECISE (each MINOR), 0 FAIL, 1 NOT CHECKABLE
+    (the PI's v1-target words, which the PI's chat reply, above, now carries). No substantive item, so no STOP under §4
+    step 1. The MINOR items and four internal inconsistencies the checker lists are recorded for the seat in the raw,
+    unapplied, since the addendum is committed as placed. Two of the inconsistencies: §2.1 fixes the v1 sentences
+    for a row with a VERDICTS entry but not for a p row with a `— NOT-RUN` record; and a checkpoint with neither
+    keeps p §5.1's sentence, which has no member for m:324's PENDING state "awaiting its VERDICTS session". **An
+    observation for the seat:** by the campaigns' state below, all three p checkpoints are in that state now. Raw
+    [`2026-11-15_addendum-p1_referent-check.md`](results/raw/2026-11-15_addendum-p1_referent-check.md).
+  - **§2.2, Code's statement: the analyzers of record do not resolve p's states at the v1 posting as they stand.**
+    - `scripts/p_analyze.py` (`d3758fc4…7008`) takes `posting --posting v2` only (the argument's one choice), and its
+      docstring says: "v1 is m's posting (p's units enter none)".
+    - `scripts/m_analyze.py` (`d347ea0c…5e48`), at its v1 posting (`run_posting`), cross-checks each coordinate of
+      the declared tuple, Q-F0's and the three OLMo units', against one verdicts directory (`crosscheck_coordinate`,
+      PIN-23), and reads Q-F0's output from that same directory (PIN-40). In m's directory the OLMo units are NOT-RUN
+      (`0f35954`), so an outcome coordinate there is refused, and neither analyzer declares a path that brings p's
+      VERDICTS into m's v1 posting.
+    - So the addendum's §2.2 governs: no hash-moving change is licensed. For the OLMo rows, the abstract's OLMo clause
+      and §8.1's sentences, the v1 enumeration is derived by hand from the p VERDICTS entries under m:338 and m:343
+      and values-checked by Code at the `POSTING v1` entry; the analyzer's own v1 output for those rows is recorded
+      beside it as superseded by the addendum.
+  - **No p outcome exists at this commit** (the addendum's §0.4 and §4 step 2). No `PROPOSAL-p OLMo-{ckpt} —
+    VERDICTS` entry and no p `— NOT-RUN` record exists. Each campaign's state at this commit:
+    - OLMo-sft, OLMo-dpo and OLMo-instruct: each campaign's one invocation ended COMPLETE (m's terminal state,
+      m:247), exit 0, path uncached, with (d)'s line equal;
+    - no read of a p campaign's pick-bearing artifacts under any of m:318's four exceptions has happened. No campaign
+      paused or stopped, so no adjudication read (exception (1)) was required; exceptions (2)–(4) concern gate-stage
+      first-pick shares, the pre-VERDICTS reads files and NOT-RUN or PENDING closures, none of which a p campaign has
+      produced or required;
+    - the outputs were copied back from the box by tar, byte-identical by sha256 at both ends; the copy-back moved
+      and hashed bytes, and no content of a campaign checkpoint or call log has been read. The outputs are committed
+      with the campaigns' own entry, after this commit.
+
+    The outcomes are computed at VERDICTS from the checkpoints, which no seat and no PI reads before then outside
+    m:318's four exceptions.
+  - **Next** (the addendum's §4 step 3; section B, item 6, whose word "[go, after its commit]" is given): the three
+    VERDICTS sessions with the secondary DVs, fresh, after this commit, each VERDICTS entry carrying §2.4's sentence;
+    then the seat's reads. The entries this addendum adds to p §8's list: `ADDENDUM-p1 v0.1 — COMMITTED`. The
+    addendum's header has the pod session add its close line; that is this session's close on `7ab4d2f`'s entry
+    (section B, item 4), committed just before this one.
+  - **Blind values-check:** 66 claims, 52 CONFIRMED, 6 IMPRECISE, 0 FAIL, 8 NOT CHECKABLE. Each IMPRECISE item and
+    each observation on the wording is applied in the checker's terms; the edits were checked by tool. Raw
+    [`2026-11-15_addendum-p1_valuescheck.md`](results/raw/2026-11-15_addendum-p1_valuescheck.md).
+  - Not pushed. Committed by path.
+
 - 2026-11-15 — **The seat's answers of 2026-11-15 (evening), committed by path, and PROPOSAL-q v0.0 — COMMITTED** (the
   coordinating session; the raw's §10 items 7–9, routed by the PI as given). Q-F3's campaign has its go after (a′)'s
   line, and launches after the push; p's box read stands and ADDENDUM-p1 is adopted; n starts with two sessions; the
