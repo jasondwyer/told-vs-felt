@@ -1,0 +1,236 @@
+# p's counters at VERDICTS — the counters step for the three units (the seat's answers of 2026-11-16, second sitting, §3 item 4) (Code, the dpo VERDICTS session; PI date 2026-11-16)
+
+*One invocation, from the repository root at `nice -n 19`, in the battery window the coordinating session granted after the script's commit (`1ceebbf`): `jlens-qwen36/.venv/bin/python -B scripts/p_verdicts_counters.py run --exit OLMo-sft=0 --exit OLMo-dpo=0 --exit OLMo-instruct=0`. The script is at sha256 `a87749e9c296ddc7c8e79ab3a50a74138ccec83d42b4217d6805bfef1d53d6f6`, its blob at HEAD (gate 4). The three exit statuses stated are those of the three VERDICTS runs' end notices.*
+
+*Exit 0; stderr empty; no STOP. The step passed its five gates, gate 5 being the self-test, run in-process (44/44). It then read, by exact path and never by a listing, each unit's three checkpoints and three call logs, and each stage's committed p report.*
+
+*Besides its gates, the self-test's lines, its imports and the seat's two rulings, it prints counts, round keys and digests: no pick, and no call's text, number or timing. Descriptive (rule 23): it decides nothing.*
+
+*Its stdout follows verbatim (224 lines, sha256 `d77e1c46cbb4e2c3c5ffe9b20f5ab1103c6fab2eb0a93b73f7e19d82eef69c96`) and holds no local path. Calendar dates only; the commit hash is the record.*
+
+```
+p's counters at VERDICTS (Code's own step; the seat's answers of 2026-11-16, §3 and §4) -- descriptive (rule 23): no bar, no verdict sentence, no label
+gate 1: the end notices' exit statuses, as stated: OLMo-sft=0, OLMo-dpo=0, OLMo-instruct=0
+gate 2: each unit's VERDICTS or NOT-RUN output exists (existence only, none opened)
+gate 3: p's package_sha256 a38d93bb83b64400c2663aee7f26cbe299300cc8a982935cce9b1187ed5ba2d7 and m's 7756dcf42532b222b50e3bd8f41e2dc20053fa0a7a2b60e033dda559666349bb, the lock's
+gate 4: scripts/p_verdicts_counters.py sha256 a87749e9c296ddc7c8e79ab3a50a74138ccec83d42b4217d6805bfef1d53d6f6 and results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md sha256 aea918c5f6f374522ad780ce29685c8c3f950b7457a46933022c090e74680395, each its blob at HEAD
+gate 5: the self-test, in this process:
+  [PASS] task_correct.py loaded from results/raw/2026-11-11_p-qual_task-correct.txt: the raw's sha256 57e9c7dca305096d…, the script's 9aa0e2d9155d1093…, one header line; it defines the names this step uses
+  [PASS] a raw whose bytes differ from the pinned ones is refused before anything is loaded
+selftest: 19/19 rule cases as declared
+  [PASS] task_correct.py's own rule cases pass (its selftest, imported unchanged)
+  [PASS] CORR_clean: m's loader and task_correct's agree (16 items); the key table maps each item to one key
+  [PASS] the packages are the lock's: p's package_sha256 and m's equal the values every LOCK-p v1.0 names
+  [PASS] p's renders of record are its sha256 of record (p §1.2), the source a corrupted round is checked against
+  [PASS] the seat's second ruling: results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md at its sha256 (aea918c5f6f37452…), other bytes refused; RULING_R1 and RULING_R2 verbatim in it; TC_STAGES every stage, the asserted ones G-TIME's and G-F0m's
+  [PASS] qual OLMo-sft: the reads file is the one the task_correct raw printed (sha256 cad7da75e077c663…)
+  [PASS] qual OLMo-sft: the sham task_correct from the reads file, 63/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-sft: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] qual OLMo-dpo: the reads file is the one the task_correct raw printed (sha256 92c1cc85da421de1…)
+  [PASS] qual OLMo-dpo: the sham task_correct from the reads file, 63/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-dpo: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] qual OLMo-instruct: the reads file is the one the task_correct raw printed (sha256 afbcfb35c44a1757…)
+  [PASS] qual OLMo-instruct: the sham task_correct from the reads file, 64/64 forced and 96/96 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] qual OLMo-instruct: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-sft: the reads file is the one the task_correct raw printed (sha256 294361ed8e736241…)
+  [PASS] time OLMo-sft: the sham task_correct from the reads file, 3/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-sft: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-dpo: the reads file is the one the task_correct raw printed (sha256 b44035beba9a3ab4…)
+  [PASS] time OLMo-dpo: the sham task_correct from the reads file, 4/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-dpo: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] time OLMo-instruct: the reads file is the one the task_correct raw printed (sha256 c7045474cad63d1e…)
+  [PASS] time OLMo-instruct: the sham task_correct from the reads file, 4/4 forced and 6/6 free -- by the imported tally_file and by this step's count over the same rounds, the alternative reading beside equal to the imported one
+  [PASS] time OLMo-instruct: p's own session_counters over the reads file's sham records gives the committed p report's sham cells (round counts, the five counters' keys, the control-character texts); no withheld cell is computed here
+  [PASS] synthetic released records: p §2.3's cells by arm and phase, one hit per named cell and none elsewhere
+  [PASS] synthetic released records: the hair trigger counts the one stored line break; the control-character texts are listed by key
+  [PASS] synthetic released records: this step's read-domain cells equal p's own session_counters' over the same records
+  [PASS] synthetic released records: task_correct by arm and phase (77; Januwy; Cold.; 12 against 2; Seven; three; March; Shut against closed; Twenty-four against 24)
+  [PASS] a released round not as the rule reads it STOPs: a clean round off its item's task, a corrupted round in a sham session, an item outside CORR_clean, a bool item, a corrupted round off its item's render
+  [PASS] the run's gate 1 refuses, printing nothing, unless the three exit statuses are stated and each is 0
+  [PASS] gate 2: closed with no output and with two of three, open once each unit has its VERDICTS or NOT-RUN output
+  [PASS] the run reads nine checkpoints and nine call logs by exact path, each unit's time, qual and campaign
+  [PASS] the run's two passes on synthetic checkpoints: nine stages checked, then printed, each with its counts, its withheld cells and task_correct at every stage (R1 (c)): the contrast rows (2 of 2 forced, 0 of 2 free) at all nine, the sham rows asserted at time and qual and printed unasserted at the campaign
+  [PASS] the proxy (R2 (b)) on synthetic call logs in p's form, through p's attribute_calls: at all nine stages the log bound to its report by sha256, the sham cells equal the report's (written by hand), the contrast cells in the sham's form (4 of 4, the cut by key), the calls per contrast session, no STOP mark; no call's number, seed, digest or returned text printed
+  [PASS] proxy_cells on the synthetic records against the hand-computed sham cells (build_report's rule): the sham cells equal SYN_SHAM_PROXY; the contrast 4 of 4 with one cut; one contrast session with 4 calls
+  [PASS] calls_by_count groups the sessions by their number of calls, every index kept: 10 calls for s=0-3 and 5, 7 for s=4; a run ending at the last index stays one run (4 calls for s=0-1)
+  [PASS] pass 1 STOPs, printing nothing, when this step's table differs from a report p's session_counters reproduces (the step-table branch)
+  [PASS] after the gates, a failure that is not a STOP -- m's reader's own refusal, a missing file -- is a STOP, never a refusal
+  [PASS] pass 1 STOPs before anything is printed, each with its own message: a p report not recording its checkpoint's sha256, a read-domain cell that differs, a checkpoint naming another stage, a sham task_correct row off its committed figure, a campaign report built by another p package
+  [PASS] pass 1 STOPs before anything is printed on a call log not as the rule reads it, each with its own message: a log its report does not record, a call attributed to no round (an orphan; a proxy STOP line), a call matching an attributed round, a run line of another stage, a malformed line the report does not record, an absent log, runs under a p package the report does not name, a sham cell or run count or attribution flag the report records otherwise, two rounds sharing a seed, a round with no int seed, a contrast session index not an int or twice; no message carries a log line's position or a returned text
+  [PASS] pass 1 STOPs, printing nothing, when a call log's bytes change while p's read_calls reads it (p's read_calls restored after)
+  [PASS] printed, not stopped (Code's reading of the sham cells' form): a contrast round with no call -- at that stage the contrast cell reads 3 of 4 attributed with the round's key, and its session 3 calls; a malformed line the report records -- its count printed; every other stage as before
+  [PASS] this script's source makes no directory-listing call: it reads files by exact path (the package hashes it imports list their own package directories; nothing under data/p/ckpt is listed)
+  44/44 selftest checks pass
+imports: valence_core/p/report.py sha256 e807c5adc6d43cd97d3822a76f3d3fcc8b97e33e7beff01f223f0b6c321a5af1; task_correct.py from results/raw/2026-11-11_p-qual_task-correct.txt (raw sha256 57e9c7dca305096d007507584b7b5e94d95c05b64fb7c2375e51bbd5c05656e2; script sha256 9aa0e2d9155d1093ab260d90abc4dc9c8aeb3cd630b0edf49628561628014e0f)
+pools data/f/pools.json (CORR_clean, 16 items) sha256 8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0; lexicon data/p/lexicon/web2.txt sha256 be41ad97963bf8dabedd5871d5d691596175269d540956b0f9965a885c2bbab9
+key table (task_correct.py's KEYS, the seat's, verbatim): 3, 24, 44, 12, down, 77, 64, cold, 7, 45, 2, closed, 28, march, january, iron
+match rule (task_correct.py's MATCH_RULE, the seat's, verbatim): a response is correct iff its whitespace- and punctuation-normalized, case-folded text contains the item's declared key as a whole token (word-boundary match, so `12` does not satisfy the key `2`), with number words `one` … `twelve` mapped to digits before the match
+Code's reading of "punctuation-normalized": every character that is not a letter or a digit (str.isalnum) becomes a space, then the text splits on whitespace; the tokens are compared whole
+the seat's second ruling (results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md, sha256 aea918c5f6f374522ad780ce29685c8c3f950b7457a46933022c090e74680395), §0, verbatim:
+  R1: (c), every stage. At the unit's VERDICTS, `task_correct` runs over every recorded round of every recorded session of the unit — G-TIME-OLMo (p)'s, G-F0m-OLMo (p)'s and the campaign's; sham and contrast; forced and free. The gate stages' sham rows are recounted and asserted against their committed figures, as Code built it; the campaign's sham row has no committed figure, and the step's is its first. Reported as k of n per stage, arm and phase, beside the bar; it decides nothing.
+  R2: (b), computed. The reports withheld the proxy's contrast counts "to the unit's VERDICTS", which is a promise to report them there. The step reads each unit's three call logs by exact path, applies p's `attribute_calls` unchanged, and prints for the contrast arm the cells p's report gives the sham arm. Nothing per call, no text.
+== OLMo-sft / time: checkpoint data/p/ckpt/OLMo-sft_time.json sha256 aa56d5cf0be83b3828fb42b1566685a5aaffc97edc962483951d555f370dd3e2; its p report data/p/reports/OLMo-sft_time_p-report.json sha256 2070c00ce555f62ff66649f03864b8f8b15bca4a78458b2b0f9bb3a63d679083 records that sha256 (built by p package 7a08dbfad83aab44…)
+   recorded sessions: sham 1, contrast 1; recorded rounds 20
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 4): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 4): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+   the hair trigger line_break_in_stored_text: 0 of 20 rounds
+   counted: no round in any cell
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 4): harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; contrast free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; sham free (n = 6): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-sft_time_p-calls.jsonl sha256 bbf49d67efdb8b90da3c9c8695bcf71361d8eff6a843c0a87c24ea117de85ad1, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 20 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 10 of 10 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 10 of 10 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-sft s=0 (1 session)
+   task_correct (R1 (c)): sham forced 3 of 4, free 6 of 6 (the committed figure: equal); contrast forced 4 of 4, free 6 of 6, all 10 of 10
+   the alternative reading (punctuation deleted, not spaced): no count changes
+== OLMo-sft / qual: checkpoint data/p/ckpt/OLMo-sft_qual.json sha256 1dff86dfda9a136b84338d694e3afa8525fdf6bf69d99ca5058ad7a457b94af8; its p report data/p/reports/OLMo-sft_qual_p-report.json sha256 3f91b661eb64f873aef398a631d791f5bf342091133e929ccfe135677e7c49a0 records that sha256 (built by p package 08bfa6932597b09d…)
+   recorded sessions: sham 16, contrast 8; recorded rounds 231
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 64): control_chars 0, harness_first_line 0, cap_hits 1, refusals 0, corrupted_spelling 0
+     sham free (n = 96): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 29): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast free (n = 42): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+   the hair trigger line_break_in_stored_text: 0 of 231 rounds
+   counted, cap_hits, sham forced: A0s-OLMo-sft s=6 forced 0
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 29): harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; contrast free (n = 42): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; sham free (n = 96): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-sft_qual_p-calls.jsonl sha256 e1c3467a6654948fc19e35b8457a887db3b79b86a8ff537aca7cb17a6f622fb7, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 231 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 160 of 160 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 71 of 71 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-sft s=0-3, 5-7 (7 sessions); 1 call: A0-OLMo-sft s=4 (1 session)
+   task_correct (R1 (c)): sham forced 63 of 64, free 96 of 96 (the committed figure: equal); contrast forced 29 of 29, free 39 of 42, all 68 of 71
+   the alternative reading (punctuation deleted, not spaced): no count changes
+== OLMo-sft / campaign: checkpoint data/p/ckpt/OLMo-sft_campaign.json sha256 28c52e58f46bdd3e6fb026ae0dd980a3852d693ecc655a51a51d7c15e82f9ed2; its p report data/p/reports/OLMo-sft_campaign_p-report.json sha256 7803459eecef8bf3fef3b40f7780c36e84a67fd6fe0401da6cdd0070dd6466e8 records that sha256 (built by p package a38d93bb83b64400…)
+   recorded sessions: sham 32, contrast 80; recorded rounds 1116
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 128): control_chars 0, harness_first_line 0, cap_hits 1, refusals 0, corrupted_spelling 0
+     sham free (n = 192): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 320): control_chars 0, harness_first_line 0, cap_hits 1, refusals 1, corrupted_spelling 5
+     contrast free (n = 476): control_chars 0, harness_first_line 0, cap_hits 1, refusals 0, corrupted_spelling 1
+   the hair trigger line_break_in_stored_text: 0 of 1116 rounds
+   counted, cap_hits, sham forced: A0s-OLMo-sft s=10 forced 0
+   counted, cap_hits, contrast forced: A0-OLMo-sft s=2 forced 0
+   counted, refusals, contrast forced: A0-OLMo-sft s=28 forced 3
+   counted, corrupted_spelling, contrast forced: A0-OLMo-sft s=44 forced 3, A0-OLMo-sft s=51 forced 1, A0-OLMo-sft s=72 forced 3, A0-OLMo-sft s=77 forced 1, A0-OLMo-sft s=78 forced 1
+   counted, cap_hits, contrast free: A0-OLMo-sft s=37 free 5
+   counted, corrupted_spelling, contrast free: A0-OLMo-sft s=78 free 2
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 320): harness_first_line 0, cap_hits 1, refusals 1, corrupted_spelling 5; contrast free (n = 476): control_chars 0, harness_first_line 0, cap_hits 1, refusals 0, corrupted_spelling 1; sham free (n = 192): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-sft_campaign_p-calls.jsonl sha256 d9d7ef174f7c735aebc9d30b5069d66def4ba6b909f2658801671e4bdc9f59a5, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 1116 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 320 of 320 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 796 of 796 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-sft s=0-73, 75-79 (79 sessions); 6 calls: A0-OLMo-sft s=74 (1 session)
+   task_correct (R1 (c)): sham forced 115 of 128, free 187 of 192 (no committed figure: this is its first, not asserted); contrast forced 280 of 320, free 464 of 476, all 744 of 796
+   the alternative reading (punctuation deleted, not spaced): counts differ -- {'sham': {'forced': [115, 128], 'free': [187, 192]}, 'contrast': {'forced': [279, 320], 'free': [462, 476]}}
+== OLMo-dpo / time: checkpoint data/p/ckpt/OLMo-dpo_time.json sha256 51f98427ed2660a69604b7099a591be52f54d83bd17d95b2e3b41cb817343945; its p report data/p/reports/OLMo-dpo_time_p-report.json sha256 1623f1cb52c59c8fc29320bdac4271c89ce1a36f7bc6602fc3433b0926afe912 records that sha256 (built by p package 7a08dbfad83aab44…)
+   recorded sessions: sham 1, contrast 1; recorded rounds 20
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 4): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 4): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+   the hair trigger line_break_in_stored_text: 0 of 20 rounds
+   counted: no round in any cell
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 4): harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; contrast free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; sham free (n = 6): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-dpo_time_p-calls.jsonl sha256 cc391b3ca15b013708001b9679ce2eb8f1d1cd50ca1654997ca15297078ab377, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 20 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 10 of 10 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 10 of 10 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-dpo s=0 (1 session)
+   task_correct (R1 (c)): sham forced 4 of 4, free 6 of 6 (the committed figure: equal); contrast forced 4 of 4, free 6 of 6, all 10 of 10
+   the alternative reading (punctuation deleted, not spaced): no count changes
+== OLMo-dpo / qual: checkpoint data/p/ckpt/OLMo-dpo_qual.json sha256 d1e3b9f1b266aa1f568c8d08fa29706e4143a4e83796bbf1c5071d4d9f794a24; its p report data/p/reports/OLMo-dpo_qual_p-report.json sha256 9b1eb4581d84d563f0c73482ef78a94b23de419e43fcc31f6bda0cbf7e1b17f8 records that sha256 (built by p package 08bfa6932597b09d…)
+   recorded sessions: sham 16, contrast 8; recorded rounds 240
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 64): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 96): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 32): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 1
+     contrast free (n = 48): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+   the hair trigger line_break_in_stored_text: 0 of 240 rounds
+   counted, corrupted_spelling, contrast forced: A0-OLMo-dpo s=2 forced 0
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 32): harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 1; contrast free (n = 48): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; sham free (n = 96): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-dpo_qual_p-calls.jsonl sha256 ac41779d76a0c19a89492143654763629696a71ccbf365919b105260cc8229c4, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 240 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 160 of 160 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 80 of 80 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-dpo s=0-7 (8 sessions)
+   task_correct (R1 (c)): sham forced 63 of 64, free 96 of 96 (the committed figure: equal); contrast forced 29 of 32, free 47 of 48, all 76 of 80
+   the alternative reading (punctuation deleted, not spaced): no count changes
+== OLMo-dpo / campaign: checkpoint data/p/ckpt/OLMo-dpo_campaign.json sha256 07bc2b8d092366f428bf33cc3103fd2a269a0751af7c8155632865a2f4b58141; its p report data/p/reports/OLMo-dpo_campaign_p-report.json sha256 0884a9a09c79f7e257fd6a687b0acf6d3f155b52a829d31a453c43b171c4248e records that sha256 (built by p package a38d93bb83b64400…)
+   recorded sessions: sham 32, contrast 80; recorded rounds 1120
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 128): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 192): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 320): control_chars 0, harness_first_line 0, cap_hits 5, refusals 1, corrupted_spelling 9
+     contrast free (n = 480): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 1
+   the hair trigger line_break_in_stored_text: 0 of 1120 rounds
+   counted, cap_hits, contrast forced: A0-OLMo-dpo s=9 forced 0, A0-OLMo-dpo s=24 forced 0, A0-OLMo-dpo s=39 forced 0, A0-OLMo-dpo s=39 forced 2, A0-OLMo-dpo s=68 forced 0
+   counted, refusals, contrast forced: A0-OLMo-dpo s=24 forced 2
+   counted, corrupted_spelling, contrast forced: A0-OLMo-dpo s=0 forced 0, A0-OLMo-dpo s=12 forced 2, A0-OLMo-dpo s=19 forced 3, A0-OLMo-dpo s=33 forced 0, A0-OLMo-dpo s=42 forced 1, A0-OLMo-dpo s=42 forced 3, A0-OLMo-dpo s=51 forced 0, A0-OLMo-dpo s=70 forced 2, A0-OLMo-dpo s=74 forced 3
+   counted, corrupted_spelling, contrast free: A0-OLMo-dpo s=46 free 3
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 320): harness_first_line 0, cap_hits 5, refusals 1, corrupted_spelling 9; contrast free (n = 480): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 1; sham free (n = 192): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-dpo_campaign_p-calls.jsonl sha256 3a9071e12c8882ec2e38cc2285edb67570dbff5e9342cd3f8418f44e200e2213, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 1120 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 320 of 320 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 800 of 800 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-dpo s=0-79 (80 sessions)
+   task_correct (R1 (c)): sham forced 127 of 128, free 191 of 192 (no committed figure: this is its first, not asserted); contrast forced 288 of 320, free 466 of 480, all 754 of 800
+   the alternative reading (punctuation deleted, not spaced): counts differ -- {'sham': {'forced': [127, 128], 'free': [191, 192]}, 'contrast': {'forced': [288, 320], 'free': [465, 480]}}
+== OLMo-instruct / time: checkpoint data/p/ckpt/OLMo-instruct_time.json sha256 426e4812f9dd5a145f15ab407bd14375dca5309f7526c54f7fad6afcd419d213; its p report data/p/reports/OLMo-instruct_time_p-report.json sha256 edf90bc2c10df8a629e10d90ffeacb1fffeeb07fb7be0ec945af8f5851a16504 records that sha256 (built by p package 7a08dbfad83aab44…)
+   recorded sessions: sham 1, contrast 1; recorded rounds 20
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 4): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 4): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+   the hair trigger line_break_in_stored_text: 0 of 20 rounds
+   counted: no round in any cell
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 4): harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; contrast free (n = 6): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; sham free (n = 6): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-instruct_time_p-calls.jsonl sha256 0f97a8502513008a3dbf0b9db725483131f29a67474ef350908e0d0c44f2a464, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 20 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 10 of 10 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 10 of 10 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-instruct s=0 (1 session)
+   task_correct (R1 (c)): sham forced 4 of 4, free 6 of 6 (the committed figure: equal); contrast forced 3 of 4, free 6 of 6, all 9 of 10
+   the alternative reading (punctuation deleted, not spaced): no count changes
+== OLMo-instruct / qual: checkpoint data/p/ckpt/OLMo-instruct_qual.json sha256 60103d81b55b66378cbc95fde0357a2d7e09e8ac33018c939d6ad2bfe88f29d1; its p report data/p/reports/OLMo-instruct_qual_p-report.json sha256 57c7e5e350628d29c599784b74377081618dddf2e8458174c449cb8062b52f96 records that sha256 (built by p package 08bfa6932597b09d…)
+   recorded sessions: sham 16, contrast 8; recorded rounds 240
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 64): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 96): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 32): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast free (n = 48): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+   the hair trigger line_break_in_stored_text: 0 of 240 rounds
+   counted: no round in any cell
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 32): harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; contrast free (n = 48): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0; sham free (n = 96): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-instruct_qual_p-calls.jsonl sha256 4ce8c428c05115da9139f6c1fbb12c072a25d3f6ee7ec4e0fea2515adbbd2ab6, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 240 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 160 of 160 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 80 of 80 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-instruct s=0-7 (8 sessions)
+   task_correct (R1 (c)): sham forced 64 of 64, free 96 of 96 (the committed figure: equal); contrast forced 30 of 32, free 48 of 48, all 78 of 80
+   the alternative reading (punctuation deleted, not spaced): no count changes
+== OLMo-instruct / campaign: checkpoint data/p/ckpt/OLMo-instruct_campaign.json sha256 1d77f0d09dce9e5a407b91d4541840dfe324c5ccc366fc31c887be1d9eccf592; its p report data/p/reports/OLMo-instruct_campaign_p-report.json sha256 5100fdcb6fedba0bb58ce4533340331280845d5ea6007d3b79236f93d12bad4b records that sha256 (built by p package a38d93bb83b64400…)
+   recorded sessions: sham 32, contrast 80; recorded rounds 1120
+   p §2.3, rounds counted of the recorded rounds in the cell, by arm and phase:
+     sham forced (n = 128): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     sham free (n = 192): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 0
+     contrast forced (n = 320): control_chars 0, harness_first_line 0, cap_hits 2, refusals 1, corrupted_spelling 10
+     contrast free (n = 480): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 2
+   the hair trigger line_break_in_stored_text: 0 of 1120 rounds
+   counted, cap_hits, contrast forced: A0-OLMo-instruct s=24 forced 0, A0-OLMo-instruct s=35 forced 0
+   counted, refusals, contrast forced: A0-OLMo-instruct s=49 forced 0
+   counted, corrupted_spelling, contrast forced: A0-OLMo-instruct s=4 forced 1, A0-OLMo-instruct s=10 forced 3, A0-OLMo-instruct s=15 forced 1, A0-OLMo-instruct s=15 forced 3, A0-OLMo-instruct s=16 forced 2, A0-OLMo-instruct s=27 forced 1, A0-OLMo-instruct s=36 forced 0, A0-OLMo-instruct s=38 forced 1, A0-OLMo-instruct s=61 forced 1, A0-OLMo-instruct s=75 forced 1
+   counted, corrupted_spelling, contrast free: A0-OLMo-instruct s=75 free 1, A0-OLMo-instruct s=75 free 3
+   the read domain (the sham rounds' five counters, the corrupted-spelling counter on the sham forced rounds, the contrast forced rounds' control characters, the hair trigger), by p's session_counters and by this step's table, equals the committed p report's: yes
+   withheld at the stage report, counted here: contrast forced (n = 320): harness_first_line 0, cap_hits 2, refusals 1, corrupted_spelling 10; contrast free (n = 480): control_chars 0, harness_first_line 0, cap_hits 0, refusals 0, corrupted_spelling 2; sham free (n = 192): corrupted_spelling 0
+   the proxy (R2 (b)): call log data/p/ckpt/OLMo-instruct_campaign_p-calls.jsonl sha256 f14ff99ffd5dd8fdea86a2dfd0959201662c405090ad04e643b12a4767c8acb8, the one its p report records; 1 run(s), 0 malformed line(s) as the report records, 1120 calls, each attributed to one recorded round (p's attribute_calls); STOP marks in the p report's run rows: none
+     sham: 320 of 320 rounds attributed, 0 cut(s); the committed p report's cells: equal
+     contrast: 800 of 800 rounds attributed, 0 cut(s)
+     calls per contrast session (calls attributed to its rounds): 10 calls: A0-OLMo-instruct s=0-79 (80 sessions)
+   task_correct (R1 (c)): sham forced 122 of 128, free 183 of 192 (no committed figure: this is its first, not asserted); contrast forced 293 of 320, free 472 of 480, all 765 of 800
+   the alternative reading (punctuation deleted, not spaced): counts differ -- {'sham': {'forced': [122, 128], 'free': [183, 192]}, 'contrast': {'forced': [292, 320], 'free': [471, 480]}}
+```
