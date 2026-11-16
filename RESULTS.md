@@ -21,6 +21,54 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-16 — **n package — BUILD held at its post-build site check: on the box, the renderer of record does not
+  reproduce BK's token ids (the G-VER trial: ids 0 of 160). STOP for the seat on two questions: how n gets BK's ids
+  on the box (Q1), and which tokenization governs text BK did not record (Q2). Block:
+  [`2026-11-16_n-build_code-to-design_STOP.md`](results/raw/2026-11-16_n-build_code-to-design_STOP.md).**
+  - **The site check** (PROPOSAL-n v0.2 §8 step 6) ran in p's pod session on the drafts at package sha256
+    `d406fa49…1bad`, over `14e65d8`. Four of its five steps came out as expected:
+    - the manifest, 14/14;
+    - the self-test, 166/166;
+    - mutant m05, killed;
+    - the package hash and the 11 closure lines, byte-identical to the laptop's.
+
+    Step 4, the G-VER trial (never of record), returned STOP.
+  - **The diagnosis** loaded the tokenizer and BK's committed sessions, no weights, and wrote nothing.
+    - On sessions 0, 62 and 113 the text equals the chat template's; the tokenizer files are G-DATA's pins.
+    - The tokenizers library is G-DATA's 0.22.2. Transformers is 5.15.0 on the box, against 5.5.0 at G-DATA.
+    - Four encodings on the box agree with one another, among them the raw library reading `tokenizer.json`: 1,233,
+      1,231 and 1,225 tokens for sessions 0, 62 and 113, against BK's 1,273.
+    - In the diagnostic's probes on the box, a newline merges with the punctuation before it (`>Ċ`, `.Ċ`). BK's ids
+      keep it apart at the assistant's opening (G-DATA's raw); Code's hypothesis is that 5.5.0 keeps it apart
+      throughout.
+  - **Code's readings, pending the seat:**
+    - Q1 (b): render BK's ids once in G-DATA's environment on the laptop and commit them, with G-VER asserting them on
+      the box;
+    - Q2: BK's form, with generated turns fed back as their emitted ids.
+  - **What waits:**
+    - the BUILD entry;
+    - every n stage that tokenizes on the box: G-VEC, G-CAL-n, G-TIME-n, G-VER, the campaign, and the BACKEND
+      extension's reads;
+    - LOCK-n v0.1;
+    - Q4 of `718c48e`.
+
+    Work that tokenizes nothing does not wait.
+  - **Code's error, recorded in the block:** a wrong sha256 quoted for the diagnostic before the hash had returned.
+    The pod session caught it, and nothing ran on it.
+  - **The box's outputs** are committed as the pod session returned them: `2026-11-16_n-build_sitecheck_out.txt`,
+    `_run.txt` and `_diag.txt`.
+  - **Values-check:** one blind pass, 81 items: 73 CONFIRMED, 5 IMPRECISE, 1 FAIL and 2 NOT CHECKABLE.
+    - The FAIL: the block put BK's neutral sessions among G-VEC's inputs for R and U. R and U come from the
+      program's own 96 neutral passages (§0.8).
+    - Every FAIL, IMPRECISE and NOT CHECKABLE item is applied in the checker's terms, and so are four of its
+      observations.
+    - The block's guard-marker item, a departure the coordinating session found harmless, moved to the BUILD entry
+      on its direction.
+    - The edits after the check were checked by tool.
+    - Raw: [`2026-11-16_n-build-stop_valuescheck.md`](results/raw/2026-11-16_n-build-stop_valuescheck.md), with the
+      report as returned and every disposition.
+  - **Committed by path:** the block, the three site-check raws, the values-check raw and this entry. Not pushed.
+
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the schema pin moved from `5a97527` to `14e65d8` (n-build's
   schema commit changed the file the analyzer pins; the coordinating session's order: BUILD `5c0ae6b`, then the
   schema, then this). Four lines rewritten as six; battery 171/171 against the new schema. Model-free: nothing ran on

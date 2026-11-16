@@ -1,0 +1,45 @@
+== 1 manifest
+valence_core/n/__init__.py: OK
+valence_core/n/cells.py: OK
+valence_core/n/directions.py: OK
+valence_core/n/guard.py: OK
+valence_core/n/hftiny.py: OK
+valence_core/n/keys.py: OK
+valence_core/n/primitive.py: OK
+valence_core/n/probe.py: OK
+valence_core/n/runner.py: OK
+valence_core/n/schema.py: OK
+valence_core/n/sessions.py: OK
+valence_core/n/testing.py: OK
+valence_core/n/verify.py: OK
+scripts/n_sessions.py: OK
+== 2 selftest
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+  166/166 n selftest checks pass
+selftest exit=0
+== 3 mutant m05
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+FAIL hftiny: steered: cached continuation rows == the full forward's under the same injection (tol 1e-4): 0.3080568388104439
+FAIL hftiny: the steered read's re-computation agrees with its cached read (below TAU): 0.04177891197475619
+  164/166 n selftest checks pass
+m05 selftest exit=1 (expected non-zero: KILLED)
+== 4 G-VER trial
+G-VER trial (the BUILD's site check; never of record):
+{"first_problems": ["s=0 ids: floor_b0/0: rendering mismatch (length 1233 vs 1273; ids_sha d19c18b98a1ec63b vs 0576163c2e573d78)", "s=1 ids: floor_b0/1: rendering mismatch (length 1232 vs 1273; ids_sha 3d42329e9f3558c3 vs b2ec1fe1410b5c0c)", "s=2 ids: floor_b0/2: rendering mismatch (length 1230 vs 1273; ids_sha 2b22b6d481238163 vs 899acdb2153454c0)", "s=3 ids: floor_b0/3: rendering mismatch (length 1231 vs 1273; ids_sha 861711e75ca3c9dd vs 384f182ef3042d2d)", "s=4 ids: floor_b0/4: rendering mismatch (length 1232 vs 1273; ids_sha 983531491df491d9 vs 8673014a3b20165b)"], "ids_ok": 0, "n4_ok": 0, "sessions": 160, "spans_ok": 0, "status": "STOP"}
+gver-trial exit=1
+== 5 hashes (compare with the laptop's: the package hash and every closure line)
+package_sha256 valence_core/n d406fa4953f5972b881c7c261cb2d7f4c482909175dc3709c28d93ad20391bad
+imported_sha256 valence_core/__init__.py 620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604
+imported_sha256 valence_core/adapters/__init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a
+imported_sha256 valence_core/adapters/base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf
+imported_sha256 valence_core/adapters/olmo_hf.py df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc
+imported_sha256 valence_core/discrim.py 7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89
+imported_sha256 valence_core/echo/__init__.py 71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43
+imported_sha256 valence_core/echo/probe.py d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81
+imported_sha256 valence_core/m/__init__.py b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4
+imported_sha256 valence_core/m/keys.py a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb
+imported_sha256 valence_core/m/resume.py 78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7
+imported_sha256 valence_core/session_e2a.py f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71
+hashes exit=0

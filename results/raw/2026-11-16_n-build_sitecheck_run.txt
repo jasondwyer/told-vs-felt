@@ -1,0 +1,52 @@
+n BUILD -- the box site check, as run by the pod session (the coordinating session's steps 1-4; PI date 2026-11-16).
+No pod address or port in this file. The run's own output is site_check_out.txt (all of stdout and stderr, unedited);
+its exit status is site_check.exit. This file is the pod session's record of how the run was set up.
+
+1. SYNC. The box repo went from 7ab4d2f to 14e65d812fe5e1a1e311150c7e1bf0d31b745899 by git bundle (7ab4d2f..main,
+   sha256 0a731dd7093084d3a49d74bf89c1da0ea4f014fde021156356a42ca81749e9f7, equal at both ends), fetched into
+   refs/bundles/n-site and fast-forwarded. Its only untracked files, the p campaign's 12 outputs, were each compared by
+   digest with 14e65d8's blob (git hash-object against git rev-parse 14e65d8:<path>; all equal; committed at 41bfab4)
+   and set aside in /workspace/campaign_p/box-untracked-2026-11-16 before the fast-forward. Tree clean after.
+   Sync exit 0. The range 7ab4d2f..14e65d8 touches no data/mf3 path.
+
+2. FILES. n_drafts.tar, n_manifest.txt and site_check.sh went to /workspace/nsite/nbuild by tar over ssh; their sha256
+   on the box equal n-build's stated values (3982854977e8...a9da, 1fe92878698376db...ec34, 65f49ca6a85a44fd...0737).
+   site_check.sh was read in full before it ran, and the drafts' code paths for steps 2, 4 and 5 were read for what
+   they touch: data/n/bk and the code only; the tokenizer through AutoTokenizer.from_pretrained, no weights; hftiny
+   from a config on the CPU, no download.
+
+3. SCRATCH COPY. /workspace/nsite/copy-14e65d8: a local git clone of the box checkout (--no-checkout --no-hardlinks),
+   origin removed, sparse (non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'), so that nothing under
+   data/mf3 and no data/*/ckpt or data/*/reports directory exists in it (the coordinating session's rule: nothing of
+   the p checkpoints or data/mf3 is involved; the driver declares it reads none of them). Detached at 14e65d8, clean.
+   Filters: .gitattributes names filter= only for *.ipynb, and the box checkout configures no filter driver.
+   THE TAR'S APPLEDOUBLE MEMBERS. Listed by GNU tar on the box, n_drafts.tar holds 28 members: the 14 declared paths
+   plus one macOS AppleDouble twin each ("._<name>", magic 00 05 16 07 "Mac OS X"); macOS tar writes them and hides
+   them when listing, so the laptop sees 14. The first extract (attempt 1) wrote all 28, and the copy's gate refused
+   (12 new files expected; "._x.py" also matches the package hash's "*.py"). Nothing ran on it. That copy was
+   removed, and the copy was rebuilt with the extract gated on the listing being exactly the 14 paths plus their 14
+   twins, extracting with --exclude='._*'. After the extract, the copy's changed set is exactly the 12 new draft files;
+   __init__.py and schema.py are byte-identical to 14e65d8's. Step 1's manifest check covers all 14 files.
+
+4. RUN. In a plain non-interactive ssh shell, without /workspace/env.sh: PYTHONPATH, RUNPOD_POD_ID, HF_HOME,
+   HF_HUB_OFFLINE and TMPDIR unset (temporary directories under /tmp), as on the laptop. Python
+   /workspace/venv/bin/python: 3.12.3, torch 2.8.0+cu128, transformers 5.15.0. No other job ran on the box.
+     bash /workspace/nsite/nbuild/site_check.sh /workspace/nsite/copy-14e65d8 /workspace/venv/bin/python
+   under nohup in the background, all of stdout and stderr to site_check_out.txt, its exit status to site_check.exit;
+   the end-wait was on the PID alone. site_check.sh exit 0.
+
+5. OUTCOMES (the pod session's reading; n-build reads the whole output):
+   step 1 manifest     14/14 OK                                                    -- as expected
+   step 2 selftest     166/166 pass, selftest exit=0                               -- as expected
+   step 3 mutant m05   164/166, two hftiny FAILs, exit=1 (KILLED)                  -- as expected
+   step 4 G-VER trial  status STOP, sessions 160, ids_ok 0, n4_ok 0, spans_ok 0, gver-trial exit=1
+                                                                                   -- NOT as expected (PASS expected)
+   step 5 hashes       package_sha256 d406fa4953f5972b881c7c261cb2d7f4c482909175dc3709c28d93ad20391bad, equal to
+                       the laptop's stated value; 11 imported_sha256 lines, each equal to the sha256 of 14e65d8's
+                       committed file at that path (checked by the pod session); hashes exit=0
+   Two transformers warnings appear at steps 2 and 3 (the tiny config's eos_token_id outside its 128-token vocabulary;
+   crop with a positive value deprecated).
+
+6. LEFT ON THE BOX: /workspace/nsite (the bundle, the pod session's scripts and outputs, the scratch copy, the three
+   files); step 3's mutant copy under /tmp (mktemp -d); refs/bundles/n-site in the box checkout. Nothing is removed
+   unless the coordinating session asks.

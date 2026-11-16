@@ -1,0 +1,25 @@
+transformers 5.15.0 | tokenizers 0.22.2
+tokenizer.json 73fd5254624f39a88e3faac6a8e11300fc3c735ed37880d4f4f08db898eaecca
+tokenizer_config.json fff5b9441e8fe1d696eebed3541e719776e5b096692ef38cea68b891fc4f3fc7
+special_tokens_map.json 78afb564e81264029b25f9caf24bda2521d5bdaeff5cd3fdbc01d3da2e8ce2f2
+tokenizer class TokenizersBackend
+'<|user|>' | transformers: ['<', '|', 'user', '|', '>'] | raw: ['<', '|', 'user', '|', '>']
+'<|assistant|>' | transformers: ['<', '|', 'assistant', '|', '>'] | raw: ['<', '|', 'assistant', '|', '>']
+'<|endoftext|>' | transformers: ['<|endoftext|>'] | raw: ['<|endoftext|>']
+'\n<|user|>\n' | transformers: ['Ċ', '<', '|', 'user', '|', '>Ċ'] | raw: ['Ċ', '<', '|', 'user', '|', '>Ċ']
+'here.\n<|assistant|>\nAs I' | transformers: ['here', '.Ċ', '<', '|', 'assistant', '|', '>Ċ', 'As', 'ĠI'] | raw: ['here', '.Ċ', '<', '|', 'assistant', '|', '>Ċ', 'As', 'ĠI']
+s=0 seq_len=1273 n_pre=1234 texts_equal=True chars_template=5756 chars_renderer=5756
+  tok(template text): n=1233 ids_sha_match=False
+  tok.encode(renderer text): n=1233 ids_sha_match=False
+  raw(renderer text): n=1233 ids_sha_match=False
+  apply_chat_template(tokenize=True): n=1233 ids_sha_match=False
+s=62 seq_len=1273 n_pre=1234 texts_equal=True chars_template=5606 chars_renderer=5606
+  tok(template text): n=1231 ids_sha_match=False
+  tok.encode(renderer text): n=1231 ids_sha_match=False
+  raw(renderer text): n=1231 ids_sha_match=False
+  apply_chat_template(tokenize=True): n=1231 ids_sha_match=False
+s=113 seq_len=1273 n_pre=1234 texts_equal=True chars_template=5798 chars_renderer=5798
+  tok(template text): n=1225 ids_sha_match=False
+  tok.encode(renderer text): n=1225 ids_sha_match=False
+  raw(renderer text): n=1225 ids_sha_match=False
+  apply_chat_template(tokenize=True): n=1225 ids_sha_match=False
