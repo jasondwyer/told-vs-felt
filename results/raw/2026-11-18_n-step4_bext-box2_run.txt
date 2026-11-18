@@ -1,0 +1,106 @@
+n step 4 v2 -- the BACKEND extension's driver v2d on n's box, pod emw1e4embiwe9b (H100 SXM; BACKEND entry d5d08fa),
+before its commit: the box self-test and the 2-read smoke (never of record), as run by the pod session (the seat's box
+answers of 2026-11-18, §2 items 4-5; the coordinating session's relay of n-build's request; PI date 2026-11-18). No pod
+address or port in this file. The run's own output is bext_box_v2_out.txt (all of stdout and stderr, unedited); its
+exit status is bext_box_v2.exit. This file is the pod session's record of how the run was set up, and of what it found.
+
+RESULT: bext box v2 FAIL, exit 1. Steps 0-3 held. The smoke ran to its end and exited 1 with a PAUSE: G-VER PASS, the
+weights loaded, R6's bridge held (the characterization's 4ed3f2c70fe8afbf under the default window), and 2 of 2 reads
+ran. Then the driver printed "PAUSE fidelity-binomial at the run's end": read 1's fidelity 0.086070 is above TAU, read
+0's 0.014660 is at or below it. Its next line was "BACKEND extension: PAUSE; no distribution and no comparison until it
+completes", so no discordance line and no comparison over the 2 floor sessions printed. The smoke's report was written,
+and its identity lines equal step 3's. Nothing was retried or adjusted.
+
+1. FILES. From n-build's scratchpad/step4b/box/, re-hashed on the laptop before shipping and on the box after:
+     bext_drafts_v2.tar    f0bc9dac90d9d74202a73e27080550fa05805d58edb27af2e0919429be943b0a (one member,
+                           scripts/n_sessions.py = v2d 18f19b8e7a49f1ddacacfb286938431f56a9f8f5534b38fcc9d4d9db8a1b4f5c,
+                           extracted on the laptop into an empty folder and hashed; no "Mac OS X" AppleDouble magic, no
+                           xattr record)
+     bext_manifest_v2.txt  18b4c6193e0f9adb23cf12622d0989f30a5779107a9cfaed8257bb2a12e0c986 (23 lines)
+     bext_box_v2.sh        2bde09d9e728401411893afca29ae0ed6b261d399b648c16dccef99471e0af51 (95 lines)
+   All three equal the coordinating session's relayed values. bext_box_v2.sh was read in full before it ran. On the
+   laptop at d5d08fa the manifest gives 22 OK and 1 FAILED, the driver line, which equals the tar's member.
+
+2. SYNC. The laptop's HEAD at bundle time was d5d08fae51f1b16c625f7af5cb2be77e4dff9468 (main = HEAD). The box repo went
+   from 977b78b to it (6 commits) by git bundle (977b78b..main, sha256
+   99bdc7b8bf41b8e3928107c4f8fc8b1c3ff3abdac07cc6cb33f9e37fa1d628ae, equal at both ends), fetched into
+   refs/bundles/n-site4 and fast-forwarded. The box checkout was clean, with no untracked file, before the fetch, and
+   clean after. The range touches no data/mf3 path (checked on the laptop and on the box) and holds d5d08fa.
+
+3. SHIP. The bundle and the pod session's two scripts went to /workspace/nsite/sync4, n-build's three files to
+   /workspace/nsite/bext2 (both new), by tar over ssh, packed without Mac metadata and extracted without ownership.
+   Each folder holds exactly its three names, none dotted, and the six sha256 equal the laptop's.
+
+4. SCRATCH COPY. /workspace/nsite/copy-bext2-d5d08fa is a local git clone of the box checkout:
+   - cloned with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - checked out at d5d08fa, the laptop's HEAD at bundle time, and clean.
+   Nothing under data/mf3 and no data/*/ckpt or data/*/reports directory exists in it. Present: data/n/bk, data/n/ids
+   (6 files), results/raw/2026-11-18_respawn_determinism.txt and data/olmo/determinism_base_h100-sxm.json.
+   GNU tar on the box listed bext_drafts_v2.tar as exactly scripts/n_sessions.py and printed nothing else. The extract
+   kept --exclude='._*', ran with --no-same-owner and printed nothing. The extracted driver hashes to 18f19b8e…4f5c.
+   After the extract, git status is exactly " M scripts/n_sessions.py".
+
+5. RUN. Before the launch: no other interpreter job and no GPU compute app on the box; the GPU (NVIDIA H100 80GB HBM3)
+   at 0 MiB of 81559 MiB. /workspace/env.sh, sourced inside the wrapper as p's stages ran it, assigns HF_HOME,
+   HF_HUB_CACHE, HF_XET_HIGH_PERFORMANCE, TORCH_HOME, PIP_CACHE_DIR, JSPACE, PYTHONPATH, CUBLAS_WORKSPACE_CONFIG and
+   RUNPOD_POD_ID (one other non-comment line). With it, RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   HF_HUB_OFFLINE, TRANSFORMERS_OFFLINE and TMPDIR are unset. Python /workspace/venv/bin/python: 3.12.3, torch
+   2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2. The command:
+     ( source /workspace/env.sh; bash /workspace/nsite/bext2/bext_box_v2.sh /workspace/nsite/copy-bext2-d5d08fa
+          /workspace/venv/bin/python /workspace/nsite/work-bext2-d5d08fa )
+   It ran under nohup in the background, all of stdout and stderr to bext_box_v2_out.txt and its exit status to
+   bext_box_v2.exit, both in /workspace/nsite/out-bext2. The work folder did not exist before; the script made it. The
+   end-wait was on the PID alone.
+
+6. OUTCOMES (the pod session's reading; n-build reads the whole output):
+   step 0 the copy     HEAD d5d08fa; "changed set: exactly the driver, modified"                -- as expected
+   step 1 manifest     23/23 OK                                                                  -- as expected
+   step 2 selftest     344/344 pass, selftest exit=0; the site checks' two transformers warnings, verbatim (2 lines)
+                                                                                                 -- as expected
+   step 3 hashes       package_sha256 f927608c…3c03 and 11 imported_sha256 lines; hashes exit=0  -- the package as
+                       expected; the 11 lines are n-build's to compare with the laptop's
+   step 4 the smoke    NOT as expected. In order:
+                       - the SMOKE line; the WEIGHTS line (allenai/OLMo-2-0325-32B-Instruct revision b96024342a77,
+                         files_aggregate_sha256 36f05404…0fdb, 22 files at the instruct path, each at the manifest's
+                         byte count); the DRIVER line, "(unchecked)"                            -- as expected
+                       - G-VER: "status": "PASS" (160 sessions, ids_ok 160, spans_ok 160, n4_ok 160, labels_ok 4,
+                         labels_kept 4, manifest_ok true, first_problems [])                    -- as expected
+                       - the weights loaded (707/707), one transformers warning (the crop deprecation)
+                       - "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's
+                         4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12722 ms"
+                         -- R6's bridge held on hardware, its first run there
+                       - "read 0 s=0 N1-V none 0 fid=0.014660 <= TAU ms=973"
+                       - "read 1 s=5 N1-V none 0 fid=0.086070 > TAU ms=712"
+                       - "PAUSE fidelity-binomial at the run's end"
+                       - "end PAUSE: 2/2 reads; report smoke-report.json"
+                       - "BACKEND extension: PAUSE; no distribution and no comparison until it completes"
+                       - "smoke exit=1"; "smoke identity: its package and closure lines equal step 3's"
+   last line           "bext box v2 FAIL: copy OK, manifest OK, selftest exit=0, hashes exit=0, smoke exit=1, smoke
+                       identity 0"
+   Not seen, against n-build's expectations: the discordance line, and the comparison over 2 floor sessions with the
+   medians (the PAUSE line says none comes until the extension completes).
+
+7. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB
+   HBM3, driver 595.112.07) at 0 MiB of 81559 MiB. The work folder holds hashes.txt, smoke-identity.txt,
+   smoke-report.json and smoke-root, listed by name only, with nothing inside smoke-root listed or read. The copy is
+   at d5d08fa with git status still exactly " M scripts/n_sessions.py". The box checkout is at d5d08fa, clean.
+
+8. COPIED BACK to n-build's step4b/box/out/, sha256 equal at the box, in staging and at the destination:
+   bext_box_v2_out.txt, bext_box_v2.exit, hashes.txt, smoke-identity.txt and smoke-report.json, with this file. The
+   smoke report was copied without being read, beyond a count of the pod's address and port in it (0, as in every
+   copied file). Nothing from smoke-root was copied, listed or read.
+   The pod session's first copy script stopped at its own check, before any file reached the destination. Its ssh,
+   inside the copy loop, consumed the loop's list, so only the stdout was staged, and the box-versus-staged sha256
+   comparison refused. It had made the empty out/ folder. The copy was then made by a corrected script, under a new
+   name and with a new staging folder, in which each ssh in the loop reads /dev/null. The run itself was not touched
+   or repeated.
+
+9. LEFT ON THE BOX, nothing removed unless n-build or the coordinating session asks:
+   - /workspace/nsite/sync4 (the bundle, the two scripts, two empty tar stderr files);
+   - /workspace/nsite/bext2 (n-build's three files);
+   - /workspace/nsite/copy-bext2-d5d08fa;
+   - /workspace/nsite/work-bext2-d5d08fa (the four names above);
+   - /workspace/nsite/out-bext2;
+   - refs/bundles/n-site4 in the box checkout;
+   - the earlier runs' folders, as before.

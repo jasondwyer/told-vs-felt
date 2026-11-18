@@ -21,6 +21,58 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n step 4 — the BACKEND extension's smoke on n's box paused on n §2.1's fidelity rule (code → design;
+  the n-build session). STOP for the seat's read.** Block:
+  [`2026-11-18_n-step4-smoke-pause_code-to-design_STOP.md`](results/raw/2026-11-18_n-step4-smoke-pause_code-to-design_STOP.md).
+  - **The box check v2.** The pod session ran it on pod `emw1e4embiwe9b`, the H100 SXM of the BACKEND entry
+    `d5d08fa`.
+    - It ran the step-4 driver v2d (`18f19b8e…4f5c`), uncommitted: the coordinating session's order is the smoke,
+      then the driver's commit, then the run of record from the commit.
+    - It ran with HEAD `d5d08fa`'s n package (`f927608c…3c03`). No lock was in force.
+    - Steps 0–3 held: the manifest, 23/23; the self-test, 344/344; the package and the 11 closure lines, equal to the
+      laptop's.
+  - **The smoke** (2 of the 24 reads, never of record):
+    - R6's bridge, as retargeted, held on its first run: n's identifier `8264f719efd347a9` under the 4,096-token
+      window, and the characterization's `4ed3f2c70fe8afbf` under the default window;
+    - G-VER PASS; the weights loaded;
+    - read 0: fid 0.014660, at or below TAU. Read 1: fid 0.086070, above TAU (0.0178835444), about 4.8 × TAU;
+    - the fidelity binomial's end-of-run evaluation fired under p0 = 0/2400, G-DATA (vi)'s figure: pause `p01`. So
+      there was no distribution and no comparison. The box script's last line reads FAIL, on the smoke's exit 1.
+  - **The extension's first run with reads on any box.** The A100's smoke of 2026-11-16 refused before the load, at
+    R6 (`e48c7d0`'s block, §1 item 1).
+  - **Declared, without adjudicating:**
+    - R1–R6, unchanged;
+    - p0 carried from G-DATA (vi) before LOCK v0.1 declares it;
+    - the end-of-run evaluation, an open flag of the n package's BUILD (`83a50a0`) and the evaluation that fired;
+    - two departures, with their class.
+  - **Questions for the seat:**
+    - Q1, how step 4's run of record proceeds: (a) as pre-registered, the run pausing at its end and the seat ruling
+      with every read's fidelity value in hand; (b) the extension's rule amended first; (c) a diagnostic first. Code
+      recommends (a);
+    - Q2, whether the driver's commit may go on this smoke.
+  - **Model:** the smoke loaded the weights once, on the box. Nothing ran on a model on the laptop.
+  - **Values-check:** one blind pass over the block and this entry.
+    - 60 items: 46 CONFIRMED, 6 IMPRECISE, 2 FAIL, 6 NOT CHECKABLE; and 12 observations.
+    - Every IMPRECISE and FAIL item was applied, and 10 of the observations. Observation 3 (the run record's relative
+      scratch fragments) asks for no change. Observation 12 does not hold: both drafts end with a newline, by tool.
+      The edits were checked by tool.
+    - Raw: [`2026-11-18_n-step4-smoke-pause_valuescheck.md`](results/raw/2026-11-18_n-step4-smoke-pause_valuescheck.md).
+  - **Departures,** the values-checker's, model-free, as its report states them:
+    - one names-only `ls` whose argv carried a guard marker, through a glob in Code's scratch overlay. The checker
+      stopped there;
+    - one `git log --all --find-object` without list of record item 3's pathspec. It matched one blob id and named no
+      commit. For the seat to class.
+
+    Code's two, from the driver's build, are in the block's §6.
+  - **Committed by path:**
+    - the block;
+    - the box's output and the pod session's run record
+      (`results/raw/2026-11-18_n-step4_bext-box2_{out,run}.txt`);
+    - the values-check raw and this entry.
+
+    The driver is not committed. Not pushed. The driver's commit and step 4's run of record wait for the seat's
+    ruling and the PI's word.
+
 - 2026-11-18 — **BACKEND — characterization (CLAUDE.md's respawn protocol; m:251, m:302, n:161; the seat's box
   answers of 2026-11-18, §2 items 1–3), on the PI's "Route as given" (2026-11-18): n's box, pod `emw1e4embiwe9b`,
   an H100 SXM, characterized fresh as a new class. The CUDA probe passed. (i) INTEGRITY PASS, 51/51 files. (ii)
