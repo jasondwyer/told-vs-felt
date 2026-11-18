@@ -1,0 +1,121 @@
+n step 4 -- the BACKEND extension's resume on n's box, pod emw1e4embiwe9b (H100 SXM): the run of record's stage resumed
+skip-only under the seat's ruling on p01, by bext_resume_v4.sh from driver v2f's commit 1272702 (the texts' "v2e"), in
+a fresh sparse copy, as run by the pod session (the seat's answers of 2026-11-18, third sitting, s1.4; the PI's
+routing, item 1 of "N. n-build (and the pod session on the box)"; the coordinating session's relay of v4; PI date
+2026-11-18). The first attempt, bext_resume_v2.sh, failed at its copy-in; its record is in n-build's
+step4b/resume2/out/. v3 was never run. No pod address or port in this file. The run's own output is
+bext_resume_v4_out.txt (all of stdout and stderr, unedited); its exit status is bext_resume_v4.exit. The launch was
+announced to the coordinating session, naming v4 and its sha256, before it started.
+
+RESULT: bext resume v4 COMPLETE (pass), exit 0. The stage resumed skip-only under the ruling: no read line, and "end
+COMPLETE: 24/24 reads; report backend-ext.json". The report is COMPLETE with one pause, p01, adjudicated under the
+ruling's sha256. Its identity lines equal step 4's. The cell file and its 31 arrays are unchanged, and the run copy's
+report and cell file are still the committed bytes. The label-convention comparison names no candidate at 40 of 40:
+"0 candidates at 40 of 40: to the seat with the four counts and the four medians".
+
+1. FILES. From n-build's scratchpad/step4b/resume4/frozen/, re-hashed on the laptop before shipping and on the box after:
+     bext_resume_v4.sh             4fec8670bac7a73dc03561479f1f3424d4fc0b05210765742451b7cdcc3edd78 (216 lines; read as
+                                   its diffs from v3 and from v2, on top of the pod session's full read of v2: the
+                                   copy-in by plain cp with an absent count and a sha256 mismatch count, and the
+                                   after-resume array check by sha256; COMMIT and RUN_COMMIT as in v2)
+     bext_resume_manifest_v2.txt   508b0b16976ac86827e09a10b8708efb7ad3a72faef422c486d7a297879a552b (v2's bytes)
+     bext_resume_hashes_v2.txt     93783db0a83d81e59c660758a65a2aa2e34b421f3f8b41a7f0baa083c03f7b36 (v2's bytes)
+     2026-11-18_n-step4-p01_ruling.md
+                                   e2b1c77a3026dd40be659168397826cd60397f514b243cb6279234058d2e2a8a (v2's bytes)
+   All four equal the coordinating session's relayed values. They went to /workspace/nsite/resume4, a new folder, by tar
+   over ssh, with no Mac metadata on the laptop side and no ownership and no '._*' on the box side. The folder holds
+   exactly its four names.
+
+2. THE SYNC. Nothing new: the box repo has held 1272702 under refs/bundles/n-site7 since v2's sync (its record), and
+   the box checkout stays unmoved at ad856f0.
+
+3. THE PROBE AND THE COPY.
+   - Between the two attempts, at the coordinating session's request, the pod session ran one cp probe (probe_cp.sh,
+     cb9f4e95…b86b; shell only, no interpreter) in a new folder, /workspace/nsite/probe-cp, away from every stage
+     folder and copy. A plain cp exited 0, and cmp -s of the two files exited 0. cp -p exited 1 with "cp: preserving
+     permissions for ‘dummy_cp_p.txt’: Operation not permitted" and still created its destination file. The folder holds
+     dummy.txt, dummy_cp.txt and dummy_cp_p.txt and is left in place.
+   - /workspace/nsite/copy-resume4-1272702 is v4's fresh copy, new, never the run copy or the failed run's copy
+     (make_copy8.sh, 1be92dde…f0a6):
+     - a local clone of the box checkout with --no-checkout and --no-hardlinks, origin removed;
+     - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+     - detached at 1272702 from refs/bundles/n-site7, clean, with nothing extracted over it.
+     The globs data/*/ckpt and data/*/reports expanded to themselves (no match), and neither stage's root or report was
+     present. data/n/bk, data/n/ids (6 files) and the characterization's raw and artifact were present. The driver
+     hashed to e29839c8…1152. /workspace had 157G available of 466G before the clone and after it.
+
+4. RUN. Before the launch (launch_resume4.sh, 29f08b7e…7536):
+   - no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at 0 MiB of 81559 MiB;
+   - the four files on the box at the relayed hashes; the fresh copy at 1272702 and clean; the run copy's HEAD at ad856f0
+     (HEAD only; no status was taken there);
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+   The command ran under nohup in the background, all of stdout and stderr to bext_resume_v4_out.txt and its exit status
+   to bext_resume_v4.exit, both in /workspace/nsite/out-resume4 (new):
+     ( source /workspace/env.sh || { echo "env.sh returned non-zero"; exit 97; }; bash /workspace/nsite/resume4/bext_resume_v4.sh
+          /workspace/nsite/copy-run3-ad856f0 /workspace/nsite/copy-resume4-1272702 /workspace/venv/bin/python
+          /workspace/nsite/work-resume4-1272702 )
+   The work folder did not exist before; the script made it. The wrapper's PID was 4112, and the end-wait was on the
+   PID alone.
+
+5. OUTCOMES (the pod session's reading; n-build reads the whole output, 74 lines):
+   step 0, the copies and the ruling    held, as in v2's run
+   step 1, the copy-in                  "copied and compared: 33 files (the report, the cell file, 31 capture arrays),
+                                        each equal to the run copy's by sha256 (mismatches: 0); the report and the cell
+                                        file at the committed sha256s"
+   step 2, the manifest                 23 of 23 OK
+   step 3, the self-test                "389/389 n selftest checks pass", selftest exit=0. Two library warnings came
+                                        before it: the model config's eos_token_id note and the crop deprecation.
+   step 4, the hashes                   hashes exit=0; "hashes: equal to the laptop's"
+   step 5, the resume                   in order:
+                                        - the STAGE line;
+                                        - the WEIGHTS line (22 files, each at the manifest's byte count);
+                                        - DRIVER "HEAD's committed bytes";
+                                        - G-VER PASS;
+                                        - the weights loaded (707/707);
+                                        - the backend line: n's identifier 8264f719efd347a9 (window 4096) and the
+                                          characterization's 4ed3f2c70fe8afbf under the default window (R6), load
+                                          12150 ms;
+                                        - "end COMPLETE: 24/24 reads; report backend-ext.json";
+                                        - the discordance distribution, one line in s1.4's form (24 reads; exceed_tau
+                                          10, exceed_tau4 15);
+                                        - "in-band: 6 of 6 floor reads' fresh values, both labels, equal the
+                                          comparison's vanilla score";
+                                        - the label-convention line: bare 0/40 (median 9.73594), space 16/40
+                                          (0.0382264), bare+eot 0/40 (9.73506), space+eot 16/40 (0.0388117);
+                                        - "0 candidates at 40 of 40: to the seat with the four counts and the four
+                                          medians (ADDENDUM-n1 §2; the seat's answers of 2026-11-18, §5.5)";
+                                        - resume exit=0
+   the script's checks                  - read lines 0, and the end line once;
+                                        - each of the five prints once;
+                                        - the report: end_state COMPLETE, one pause, p01, fidelity-binomial,
+                                          adjudicated, with ruling_sha256 e2b1c77a…2a8a;
+                                        - its identity lines equal step 4's;
+                                        - the report's sha256 after the resume dd217d78…ce79;
+                                        - the cell file and its 31 arrays unchanged;
+                                        - the run copy's report and cell file still the committed bytes
+   last line                            "bext resume v4 COMPLETE (pass): copies OK, ruling OK, copy-in 33 files,
+                                        manifest OK, selftest exit=0, hashes exit=0 and equal 0, resume exit=0, read
+                                        lines 0 (0 wanted), end line 1 (1 wanted), checks (0 = held, 9 = not run): prints
+                                        0, report 0, identity 0, cell 0, run copy 0"
+
+6. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU at 0 MiB. The exit
+   file reads 0. The run copy's HEAD is ad856f0 (HEAD only). The pod session took no look inside the fresh copy, which
+   now holds the stage's root and the resumed report, or inside the work folder beyond the three files copied back
+   by name.
+
+7. COPIED BACK to n-build's step4b/resume4/out/ (a new folder), by explicit name, sha256 equal at the box, in staging and
+   at the destination, with this file:
+   - bext_resume_v4_out.txt and bext_resume_v4.exit (out-resume4);
+   - resume.txt, hashes.txt and resume-identity.txt (the work folder).
+   The address and port were counted in each copied file (0). The resumed report is not copied: it goes later, by hash
+   only, through the coordinating session.
+
+8. LEFT ON THE BOX, nothing removed unless n-build or the coordinating session asks:
+   - /workspace/nsite/resume4 (n-build's four files);
+   - /workspace/nsite/copy-resume4-1272702 (the fresh copy, with the stage's root and the resumed report);
+   - /workspace/nsite/work-resume4-1272702 and /workspace/nsite/out-resume4;
+   - /workspace/nsite/probe-cp (the cp probe's three files);
+   - v2's paths, untouched: copy-resume-1272702, work-resume2-1272702, out-resume2, resume2 and sync7;
+   - the box repo's side ref refs/bundles/n-site7, with the box checkout unmoved at ad856f0;
+   - the run copy and its outputs, untouched.

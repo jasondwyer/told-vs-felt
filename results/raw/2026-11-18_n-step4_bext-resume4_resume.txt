@@ -1,0 +1,12 @@
+STAGE backend-ext: label convention bare; root data/n/ckpt/backend-ext, report data/n/reports/backend-ext.json
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py e29839c85e3a3ee23786a7f2ddd286fc17bc2aeb25729fbbcbb64e28b1561152: HEAD's committed bytes
+G-VER (the BACKEND extension's start; ADDENDUM-n1 §1.3):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 7225.85it/s]
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12150 ms
+end COMPLETE: 24/24 reads; report backend-ext.json
+discordance over 24 reads (absdiff and label in nats, rel = absdiff / the read's scale; fidelity values, no margin; R3's bound is label.max): {"absdiff": {"max": 0.06250021525822458, "median": 0.031249837805753522, "min": 6.65146862033339e-08, "p90": 0.053124039978558434, "q1": 3.6012615489688926e-07, "q3": 0.03125030038608245}, "exceed_tau": 10, "exceed_tau4": 15, "finite": 24, "label": {"max": 0.04924420372226734, "median": 0.007755042120141997}, "reads": 24, "rel": {"max": 0.08606975666735853, "median": 0.013228265542717183, "min": 2.2010351289568807e-08, "q1": 3.339193281467121e-07, "q3": 0.029509094837152826}}
+in-band: 6 of 6 floor reads' fresh values, both labels, equal the comparison's vanilla score
+label convention (ADDENDUM-n1 §2; per candidate, the count of 40 and the median |value - BK's| over its 80 values, nats): bare 0/40, median 9.73594; space 16/40, median 0.0382264; bare+eot 0/40, median 9.73506; space+eot 16/40, median 0.0388117
+0 candidates at 40 of 40: to the seat with the four counts and the four medians (ADDENDUM-n1 §2; the seat's answers of 2026-11-18, §5.5)

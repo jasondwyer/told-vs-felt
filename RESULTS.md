@@ -21,6 +21,93 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n step 4 — the BACKEND extension resumed under the seat's ruling on `p01` (`e2b1c77a…2a8a`; the seat's
+  answers of 2026-11-18, third sitting, §1.4): the stage COMPLETE, §1.4's list printed, and A-n1 §2's comparison names
+  no candidate at 40 of 40. STOP for the seat's read: the label convention of record.** Block:
+  [`2026-11-18_n-step4-resume_code-to-design_STOP.md`](results/raw/2026-11-18_n-step4-resume_code-to-design_STOP.md).
+  - **The pause and the ruling.** `p01` was the fidelity binomial's end-of-run fire at `6df2131`: 10 of 24 above TAU,
+    under p0 = 0 of 2,400. The seat cleared it as the measurement, by the ruling raw
+    [`2026-11-18_n-step4-p01_ruling.md`](results/raw/2026-11-18_n-step4-p01_ruling.md) (sha256
+    `e2b1c77a3026dd40be659168397826cd60397f514b243cb6279234058d2e2a8a`, committed at `3b2b855`). The resumed report
+    records `p01` adjudicated under that sha256.
+  - **The resume,** on n's box (pod `emw1e4embiwe9b`, the H100 SXM of `d5d08fa`), by the pod session, on the
+    coordinating session's relay:
+    - the box script v4 (`4fec8670…dd78`), from driver v2f's commit `1272702`;
+    - in a fresh sparse copy at `1272702`, holding byte copies of the run copy's stage report, cell file and 31 capture
+      arrays, taken by name from the committed record and checked by sha256 against the run copy's (0 mismatches);
+    - `backend-ext --resume --ruling p01=<the ruling raw>`.
+
+    Every step held: the manifest 23/23, the self-test 389/389, the hashes equal to the laptop's, G-VER PASS, R6's
+    bridge, and no read re-launched. The stage is COMPLETE. The cell and its arrays are unchanged, and the run copy was
+    only read. The resumed report is `dd217d78…ce79`.
+  - **Model:** one load on the box, the resume's, for the comparison's and the in-band check's forwards. None at the
+    first attempt, and none on the laptop.
+  - **What Code read of the report:** its `cells` record and its pauses, after it came back by hash. The one cell is at
+    its committed `80770a19…78ea`, with 24 records and 31 capture digests equal to `6df2131`'s. The one pause is `p01`,
+    adjudicated under the ruling's sha256, its batch k = 10 of n = 24.
+  - **The figures** (§1.4), as printed; the output's lines 61–65 are in the block's §1:
+    - the distribution, under "bare":
+      - absdiff in nats: min 6.65e-08, q1 3.60e-07, median 0.03125, q3 0.03125, p90 0.0531, max 0.0625;
+      - rel: min 2.20e-08, q1 3.34e-07, median 0.0132, q3 0.0295, max 0.0861;
+      - label: median 0.00776, and max 0.0492, R3's bound;
+      - 10 above TAU and 15 above TAU/4, of 24 reads, all finite;
+    - the in-band count: 6 of 6;
+    - A-n1 §2's comparison: bare 0/40 (median 9.73594), space 16/40 (0.0382264), bare+eot 0/40 (9.73506) and space+eot
+      16/40 (0.0388117). The convention line: "0 candidates at 40 of 40: to the seat with the four counts and the four
+      medians".
+  - **The STOP.** No candidate is at 40 of 40, so by A-n1 §2's words the four counts go to the seat, with the four
+    medians (the seat's corpus answers of 2026-11-18, §5.5).
+    - Q1: the convention of record. Q2: backend-ext-2 under it. Q3: the comparison's tolerance, R3's bound as run
+      against ADDENDUM-n2's C.
+    - backend-ext-2 does not run now, and nothing more runs on the box.
+    - ADDENDUM-n2's figures of record wait for Q1. Under "bare" they would be: k = 10 of n = 24, the largest absdiff
+      0.0625 nats and the median rel 0.0132; its formulas then give p0 = 11/26 and C = 0.25 (arithmetic only).
+    - The schema's follow-up for the `fidelity-ceiling` kind, and LOCK-n v0.1, wait for the ruling.
+  - **The box at the end:** idle, with the GPU at 0 MiB. The fresh copy (with the resumed stage), the work and out
+    folders, the probe's folder and the failed attempt's paths stay on it, as the pod session's record lists
+    them. Its state from here is the PI's word.
+  - **Departures:**
+    - 2026-11-18, Code: the first attempt, the box script v2 (`f166e7ce…19f2`), failed at its copy-in. Its first
+      `cp -p` was refused by the box's network volume ("Operation not permitted").
+      - Nothing of the stage ran, and no model loaded.
+      - It was a launch-script defect, fixed in v4 by a plain `cp`; a probe on the volume confirmed that a plain `cp`
+        works there.
+      - The laptop's stand-in harness had not modelled the volume's refusal. It now runs every case under a stand-in
+        `cp` that refuses `-p`, and v3, which also used `cp -p`, fails under it as v2 did on the box.
+      - The failed run's copy and work folder stay on the box, unread. Its output, exit file and the pod session's
+        record are committed here.
+    - 2026-11-18, Code, at `1272702`'s commit, declared here for the first time (that commit's message names one
+      departure):
+      - the gate's first run failed on its own check, a byte-count `cut` against a line with multi-byte em-dashes. The
+        check became a prefix match, and the second run passed;
+      - the pre-commit check that the message is ASCII, a `grep -P` that BSD grep lacks, errored. It was chained with
+        ";", so the commit ran without it. A check after the commit found 0 non-ASCII bytes.
+
+      From here, every pre-commit check asserts, in a call of its own.
+    - The guard marker in one git argv, of 2026-11-18, is declared in v2f's entry (`1272702`).
+    - The pod session's records state no departure of its own.
+    - The values-checker's, as its report states them, for the seat to class: a `git log` of one commit's body, piped
+      to a count of non-ASCII bytes; a name-only `ls results/raw` piped to a grep; reads beyond its named sources (the
+      corpus answers, the v2f self-test raw, `valence_core/n/ids.py`, `.gitignore`, and `git blame` on `RESULTS.md`);
+      `wc -c` on the committed ruling raw; an option test of `/usr/bin/grep -P`; and `sed`, `diff` and `cmp` on named
+      scratch files.
+  - **Values-check:** one blind pass over the block and this entry.
+    - 140 items: 121 CONFIRMED, 8 IMPRECISE, 3 FAIL, 8 NOT CHECKABLE; and 17 observations.
+    - The three FAILs: v2's copy check was `cmp -s`, not sha256; "within 3e-7" is 3.1e-7; and one line read as
+      committing the cell again. All three are applied, with every IMPRECISE item and every observation. The report
+      was read after it arrived, as the check's observation 1 asked.
+    - The edits were checked by tool.
+    - Raw: [`2026-11-18_n-step4-resume_valuescheck.md`](results/raw/2026-11-18_n-step4-resume_valuescheck.md).
+  - **Committed by path:**
+    - the block;
+    - the resume's six files: its output, exit file and three work files, and the pod session's record;
+    - the first attempt's three files: its output, exit file and the pod session's record;
+    - the resumed report `data/n/reports/backend-ext.json`, which `6df2131`'s admit covers; its cell is unchanged and
+      not committed again;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff (the answers' §5.2) is 0. Not pushed.
+
 - 2026-11-18 — **n — the BACKEND extension's driver v2f, committed by path before the resume: §1.4's distribution
   printed whole, and `backend-ext-2` wired to ADDENDUM-n2 §4.1. This is the coordinating session's choice (b),
   declared for the seat to strike (the seat's answers of 2026-11-18, third sitting, §1.4; ADDENDUM-n2 v0.1, committed

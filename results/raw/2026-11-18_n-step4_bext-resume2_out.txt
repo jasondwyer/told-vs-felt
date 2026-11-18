@@ -1,0 +1,9 @@
+== 0 the copies and the ruling
+the run copy: HEAD ad856f06cdbc58bc3c64bc4b23e47a2006c66cb0
+the run copy's report and cell file: the bytes committed at 6df2131 (sha256 27bc906a26ec7dbca0388314b5f9aae0d2e4addb1a11855559dc195cfb4d2496, 80770a19284b9384e588f9b30c9769a3889671d1f2b8260dbd8b402a61c778ea)
+the fresh copy: HEAD 127270276f6d263e72c080e5294da1ad0c8b4e9c
+the fresh copy: changed set none; neither stage's root or report present
+the ruling: 2026-11-18_n-step4-p01_ruling.md beside this script, sha256 e2b1c77a3026dd40be659168397826cd60397f514b243cb6279234058d2e2a8a, 2515 bytes (committed at 3b2b855)
+== 1 the copy-in (by name, from the committed record; no listing)
+cp: preserving permissions for ‘/workspace/nsite/copy-resume-1272702/data/n/reports/backend-ext.json’: Operation not permitted
+COPY-IN FAIL: data/n/reports/backend-ext.json

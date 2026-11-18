@@ -1,0 +1,74 @@
+== 0 the copies and the ruling
+the run copy: HEAD ad856f06cdbc58bc3c64bc4b23e47a2006c66cb0
+the run copy's report and cell file: the bytes committed at 6df2131 (sha256 27bc906a26ec7dbca0388314b5f9aae0d2e4addb1a11855559dc195cfb4d2496, 80770a19284b9384e588f9b30c9769a3889671d1f2b8260dbd8b402a61c778ea)
+the fresh copy: HEAD 127270276f6d263e72c080e5294da1ad0c8b4e9c
+the fresh copy: changed set none; neither stage's root or report present
+the ruling: 2026-11-18_n-step4-p01_ruling.md beside this script, sha256 e2b1c77a3026dd40be659168397826cd60397f514b243cb6279234058d2e2a8a, 2515 bytes (committed at 3b2b855)
+== 1 the copy-in (by name, from the committed record; no listing)
+copied and compared: 33 files (the report, the cell file, 31 capture arrays), each equal to the run copy's by sha256 (mismatches: 0); the report and the cell file at the committed sha256s
+== 2 manifest
+scripts/n_sessions.py: OK
+valence_core/n/__init__.py: OK
+valence_core/n/cells.py: OK
+valence_core/n/directions.py: OK
+valence_core/n/guard.py: OK
+valence_core/n/hftiny.py: OK
+valence_core/n/ids.py: OK
+valence_core/n/keys.py: OK
+valence_core/n/primitive.py: OK
+valence_core/n/probe.py: OK
+valence_core/n/runner.py: OK
+valence_core/n/schema.py: OK
+valence_core/n/sessions.py: OK
+valence_core/n/testing.py: OK
+valence_core/n/verify.py: OK
+data/n/ids/sessions.jsonl: OK
+data/n/ids/n4_variants.jsonl: OK
+data/n/ids/labels.json: OK
+data/n/ids/gvec_passages.jsonl: OK
+data/n/ids/a3_contexts.jsonl: OK
+data/n/ids/MANIFEST.json: OK
+results/raw/2026-11-18_respawn_determinism.txt: OK
+data/olmo/determinism_base_h100-sxm.json: OK
+== 3 selftest, its temporary directory under the work folder
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+  389/389 n selftest checks pass
+selftest exit=0
+== 4 hashes (they must equal the laptop's, bext_resume_hashes_v2.txt, before the resume)
+package_sha256 valence_core/n f927608c33d12b34c2bef728966038dac1ecfbb041cbd992b7ffd4cf01a73c03
+imported_sha256 valence_core/__init__.py 620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604
+imported_sha256 valence_core/adapters/__init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a
+imported_sha256 valence_core/adapters/base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf
+imported_sha256 valence_core/adapters/olmo_hf.py df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc
+imported_sha256 valence_core/discrim.py 7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89
+imported_sha256 valence_core/echo/__init__.py 71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43
+imported_sha256 valence_core/echo/probe.py d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81
+imported_sha256 valence_core/m/__init__.py b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4
+imported_sha256 valence_core/m/keys.py a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb
+imported_sha256 valence_core/m/resume.py 78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7
+imported_sha256 valence_core/session_e2a.py f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71
+hashes exit=0
+hashes: equal to the laptop's
+== 5 the resume (skip-only, under the ruling), in the fresh copy
+STAGE backend-ext: label convention bare; root data/n/ckpt/backend-ext, report data/n/reports/backend-ext.json
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py e29839c85e3a3ee23786a7f2ddd286fc17bc2aeb25729fbbcbb64e28b1561152: HEAD's committed bytes
+G-VER (the BACKEND extension's start; ADDENDUM-n1 §1.3):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 7225.85it/s]
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12150 ms
+end COMPLETE: 24/24 reads; report backend-ext.json
+discordance over 24 reads (absdiff and label in nats, rel = absdiff / the read's scale; fidelity values, no margin; R3's bound is label.max): {"absdiff": {"max": 0.06250021525822458, "median": 0.031249837805753522, "min": 6.65146862033339e-08, "p90": 0.053124039978558434, "q1": 3.6012615489688926e-07, "q3": 0.03125030038608245}, "exceed_tau": 10, "exceed_tau4": 15, "finite": 24, "label": {"max": 0.04924420372226734, "median": 0.007755042120141997}, "reads": 24, "rel": {"max": 0.08606975666735853, "median": 0.013228265542717183, "min": 2.2010351289568807e-08, "q1": 3.339193281467121e-07, "q3": 0.029509094837152826}}
+in-band: 6 of 6 floor reads' fresh values, both labels, equal the comparison's vanilla score
+label convention (ADDENDUM-n1 §2; per candidate, the count of 40 and the median |value - BK's| over its 80 values, nats): bare 0/40, median 9.73594; space 16/40, median 0.0382264; bare+eot 0/40, median 9.73506; space+eot 16/40, median 0.0388117
+0 candidates at 40 of 40: to the seat with the four counts and the four medians (ADDENDUM-n1 §2; the seat's answers of 2026-11-18, §5.5)
+resume exit=0
+read lines: 0 (skip-only: 0); the line 'end COMPLETE: 24/24 reads; report backend-ext.json': 1
+prints: the STAGE line 1, the distribution 1 (its q1 2, q3 2, min 2: 2 each), the in-band count 1, the comparison 1, the convention 1 (each line must be 1)
+the report: end_state COMPLETE; 1 pause(s): p01 fidelity-binomial launch_index None adjudicated True ruling_sha256 e2b1c77a3026dd40be659168397826cd60397f514b243cb6279234058d2e2a8a
+resume identity: the report's package and closure lines equal step 4's
+the report after the resume: sha256 dd217d78228bb7108c3ebc2b0b80fe9ea8080de4fa2d55fcd634a4d01b15ce79
+the cell file and its 31 arrays: unchanged (the cell file at 80770a19284b9384e588f9b30c9769a3889671d1f2b8260dbd8b402a61c778ea; the arrays equal the run copy's by sha256)
+the run copy's report and cell file: still the committed bytes
+bext resume v4 COMPLETE (pass): copies OK, ruling OK, copy-in 33 files, manifest OK, selftest exit=0, hashes exit=0 and equal 0, resume exit=0, read lines 0 (0 wanted), end line 1 (1 wanted), checks (0 = held, 9 = not run): prints 0, report 0, identity 0, cell 0, run copy 0
