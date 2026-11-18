@@ -21,6 +21,80 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-17 — **n — the corpus's acceptance check and assembly (PROPOSAL-n v0.2 §0.8 Route B, §3 G-VEC; the seat's
+  answers of 2026-11-15, §5.3, the PI's item 11; the PI's routing of 2026-11-17, N.1 and N.3, "route as given"): every
+  gate PASS, not a STOP. `data/n/passages.jsonl` is assembled in the brief's order: 544 lines, 157,520 bytes, sha256
+  `ef6b00dc…3cc3`, the block's expected file. Raw, for the seat's adoption read:
+  [`2026-11-17_n-corpus_acceptance.md`](results/raw/2026-11-17_n-corpus_acceptance.md).**
+  - **For the seat's ruling: the scope of "roster token of this program".**
+    - Under Code's reading (CR6: the two rosters of record, the twelve tokens the record's own specification
+      forbids), G8 holds.
+    - Under a broader reading, every roster the program has used, e2a's earlier rosters add lattice, cedar and gravel.
+      Cedar is a word in one passage (serenity-17) and gravel in six, so G8 would hold seven hits.
+    - The values-check found gravel, beyond D5's declared list of earlier tokens (lattice, cedar).
+  - **The inputs:**
+    - the seat thread's nine part files under `data/n/passages.parts/` and its prompt record
+      `data/n/passages.prompt.md`, placed untracked;
+    - BK's 160 session records (`data/n/bk`);
+    - the two rosters of record.
+
+    Model-free: the standard library only, no model and no tokenizer.
+  - **The gates** (§5.3's terms; Code's readings CR1–CR10 are in the raw's §2, flagged):
+    - **G1, the thread's report.** The prompt record (sha256 `323cf9d8…44b5`, 18,167 bytes) equals the PI's block,
+      and so do its §4 table, its stated order and its stated concatenation. Each part's sha256, bytes and lines equal
+      them.
+    - **G2** 544 lines. **G3** 544 distinct ids. **G4** 56 for each of the eight states and 96 neutral; every line
+      parses, with its file's state and that state's pole.
+    - **G5** every text 2–4 sentences by the declared splitter (whitespace after ".", "!" or "?"). **G6** 1,632
+      sentences, 1,632 distinct after normalization, none shared.
+    - **G7** none of BK's twelve zone labels (B8, D7, H0, K7, L4, M2, N1, Q3, R9, T5, V3, W6), by code or by full
+      label. **G8** none of the twelve roster tokens of Qwen's and OLMo's rosters of record, plurals included.
+    - **G9** the nine parts concatenated in the brief's order equal the block's expected file. The file was written
+      once, by exclusive create, then read back equal. A shell `cat` of the nine gives the same sha256.
+  - **Per-state figures.** Every passage has three sentences (two/three/four: 0/544/0).
+    - Words: 30–63, mean 44.3. The eight states' means run 41.4–49.4; neutral's is 38.3.
+    - Characters: 161–304, mean 220.1.
+  - **Descriptive counts (no verdict).**
+    - D5 has eight hits, none a G8 match: "ridge" inside fridge, bridge or cartridge (six), "amber" inside chambers
+      (one), and the earlier roster token cedar (serenity-17).
+    - D1–D4 and D6 are 0. D6 is rule 18's check against BK's 1,920 session passages.
+    - The seat's validator was extracted from the record (sha256 `cc1fad61…f269`, as stated) and run unedited on the
+      laptop's bytes: `PROBLEMS: 0`.
+  - **Observations for the seat** (the raw's §3):
+    - the record names Z1 among BK's codes, from the paper's transcripts. Z1 is not among BK's twelve labels and G7
+      does not test it; D4 shows no letter-digit token in the corpus;
+    - the record's "mostly three", where every passage has three;
+    - the corpus spells `flow_engagement` and the package "flow engagement" (`directions.py`). Code proposes that
+      G-VEC's wiring, when built, map the one to the other, with no corpus edit;
+    - neutral-71 has the word "neutral" (a car's gear), the only one of the 544;
+    - for N.2: the record's validator sets `ROOT` to a local root that names the laptop's user.
+  - **Every tenth passage** (the assembled order's lines 10, 20, …, 540; 54 passages) is printed in the raw's §6.
+  - **The run.** One battery window, the coordinating session's of 2026-11-17, now closed. Each run was `nice -n 19
+    /usr/bin/python3 -I`, in this order:
+    1. an exploration of BK's records (no corpus line);
+    2. the check's self-test, 35/35;
+    3. its preflight, the record against the block (no part file);
+    4. the check of record, once, exit 0 (script sha256 `3db93584…36f6`, verbatim in the raw);
+    5. the seat's validator.
+  - **Departures.** Before the check was written, four commands carried a guard marker in their argv:
+    - `ls data/olmo`;
+    - a stray `-c 1` call of the venv interpreter by its path;
+    - two `python3 -c` one-liners naming the OLMo roster files.
+
+    The last three ran outside `nice -n 19`. None touched `data/mf3`, a `ckpt` or `reports` path, the corpus or a
+    model. They were disclosed to the coordinating session at the time.
+  - **Values-check:** one blind pass, 102 items: 76 CONFIRMED, 7 IMPRECISE, 1 FAIL and 18 NOT CHECKABLE.
+    - Every IMPRECISE item and the FAIL are applied in the checker's terms. The FAIL: the raw had said the corpus's
+      `flow_engagement` followed the record's working specification, which writes "flow engagement".
+    - Of its eleven observations, ten are applied and one is noted. The noted one: the script's docstring, verbatim as
+      run, keeps its G9 line, and CR9 now states what the code does. The largest applied is gravel, above.
+    - The edits after the check were checked by tool.
+    - Raw: [`2026-11-17_n-corpus_valuescheck.md`](results/raw/2026-11-17_n-corpus_valuescheck.md), with the report as
+      returned and every disposition.
+  - **Committed by path:** the raw, the values-check raw and this entry. The nine parts, `data/n/passages.jsonl` and the
+    prompt record stay untracked until N.2. On the seat's adoption they are committed by path, re-hashing each first,
+    with `.gitignore`'s admit line as for `data/n/ids/`. Not pushed.
+
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the seat's answers to G-ANL-n's nine questions (`8e3bf91`; the
   answers raw at `52b2c97`) and ADDENDUM-n1 v0.1 (`a61f13d`) carried in, and the schema pin moved from `14e65d8` to
   n-build's follow-up commit `d791bd9`. Battery 207/207; reviewed blind and mutation-tested (62 of 62 mutants killed).
