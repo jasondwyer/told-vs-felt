@@ -21,6 +21,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **Dated note (coordinating session), for the seat: push #9 and its one gitleaks halt, pushed on the
+  PI's "Push, with a note". Not a STOP.**
+  - **The push.** `ad856f0..1272702`, 6 commits (`6df2131`, `bfc869f`, `3b2b855`, `7a54eb9`, `f3e7190` and
+    `1272702`). The coordinating session asked "Push ad856f0..1272702 (6 commits, the cell included) with a note on
+    the gitleaks halt?", and the PI answered "Push, with a note" (2026-11-18). The push carried `6df2131`'s stage report
+    and cell, as the third sitting's §4 ruled: "the cell and the report are pushed with their commit, under the
+    `.gitattributes` line of `6df2131`".
+  - **C.5, for the push** (gitleaks 8.30.1, the one on the laptop's path, under its default rule set: the command passed
+    no configuration, `GITLEAKS_CONFIG` was unset, and no `.gitleaks.toml` is tracked or at the repo root; its output
+    does not print its version): `ad856f0..1272702`, 6 commits, on the PI's word "Push, with a note" (2026-11-18).
+    The screen's classes (C.2 form) were CLEAR, with nothing matched inside `ckpt` or `reports`. gitleaks found one
+    `generic-api-key` match, inside `data/n/reports`: a halt, below. There was no other halt.
+    - The screen and gitleaks ran over `ad856f0..7a54eb9` first and again over the whole range before the push, each
+      time with one match of the same class. The second run is offered as the re-run C.1 asks to see beside a halt;
+      whether it, or the helper below, serves is the seat's.
+  - **The halt, for the seat to class.** C.3, in the seat's answers of 2026-11-16
+    ([`2026-11-16_p-verdicts-counters_design-to-code_answers.md`](results/raw/2026-11-16_p-verdicts-counters_design-to-code_answers.md)):
+    "From here the screen classifies a 64-hex token under a key whose name carries `sha` as a digest and reports it as
+    a count; any other 64-hex match inside stays a halt."
+    - The match is a 64-hex value in `data/n/reports/backend-ext.json` at `6df2131`, whose key, the one immediately
+      before it (the screen's form of C.3's test; see the reading below), carries no "sha", so it stayed a halt.
+    - A helper of the screen's found that its key is a tracked repository path at that commit, and that its value
+      equals that file's sha256 there. The helper prints the rule's name, the path class, the commit and two yes/no
+      classes, never a value, a key, a path's content or a line. Its commit and its yes/no classes go beyond C.2's rule
+      name and shape class: a departure of the coordinating session's, for the seat to class, as the 2026-11-16 note
+      disclosed its classifier's shape class.
+    - By the schema (`valence_core/n/schema.py`'s `STAGE_IDENTITY_FIELDS`), `imported_sha256` is "repo path -> sha256
+      of each module n imports unchanged": a module digest keyed by its path.
+    - The helper prints no key, so which path matched is an inference. n imports `valence_core.m.keys`
+      (`valence_core/n/keys.py`; `valence_core/n/runner.py`), and of the eleven imported modules the hashes raw of
+      `6e3474d` lists (the resume's closure, which the resume's identity check required equal to the report's)
+      ([`2026-11-18_n-step4_bext-resume4_hashes.txt`](results/raw/2026-11-18_n-step4_bext-resume4_hashes.txt)), only
+      `valence_core/m/keys.py` holds generic-api-key's keyword "key".
+    - The third sitting's §4 cleared the screen's halt on `data/n/ckpt/**` only. The PI's word, with this note, carried
+      the push, as the PI's "Push, with a note" carried the three matches of C.3's own origin.
+  - **The same class recurs** in the resumed report committed at `6e3474d`: one match, with the same helper result.
+    That commit is not pushed, and its push needs the PI's word.
+  - **A reading for the seat, Code's.** C.3's words, "under a key whose name carries `sha`", read two ways here.
+    - By nesting, the value sits under `imported_sha256`, whose name carries "sha". C.3 then already classes it as a
+      digest, and only the screen's form would change.
+    - By the immediate key, the screen's form, which reads the name of the key just before the value, a digest keyed
+      by a repository path that carries no "sha", inside a map whose field does, fails the test. A new digest class
+      would then be needed: "a 64-hex value equal to the sha256 of the tracked file its key names". It clears this
+      class so long as the module's bytes at the report's commit equal those hashed at the run, and the helper already
+      computes it.
+    - Which reading, and whether to adopt the class, is the seat's.
+  - **A tooling reading, widened** (`7a54eb9`'s entry gave the `results/raw` case). This note's first values-checker
+    found it for `valence_core/m/gshape.py` (it put it as any literal path, which is too wide), and Code re-ran it at
+    HEAD `303953c` on git 2.39.5, names and counts only: under item 3's exclusions, `git ls-files`
+    with a lone named tracked file printed nothing for `valence_core/m/gshape.py`, `valence_core/n/runner.py` and
+    `results/raw/2026-11-18_n-step4-p01_ruling.md`, and listed `scripts/n_sessions.py` and `CLAUDE.md`. So a
+    tracked-and-clean check of any named file takes `git rev-parse HEAD:<path>` against `git hash-object`.
+  - **Values-check:** two blind passes. Each brief quoted the list of record v2's items 1–5 with C.2's amendment, the
+    briefs' two lines and the `data/mf3` exclusion, and barred the gitleaks reports.
+    - Pass 1 found 37 items: 30 CONFIRMED, 4 IMPRECISE, 0 FAIL and 3 NOT CHECKABLE, with 7 observations. Its IMPRECISE
+      items, its observations 3–7 and its suggestion to cite the import are applied.
+    - Pass 2, over the whole revised note, found 50 items: 42 CONFIRMED, 3 IMPRECISE, 0 FAIL and 5 NOT CHECKABLE, with
+      8 observations. Its IMPRECISE items and its observations 1, 3, 5 and 7 are applied; the rest are recorded in the
+      raw.
+    - The edits after pass 2 were checked by tool.
+    - Raw: [`2026-11-18_push9-note_valuescheck.md`](results/raw/2026-11-18_push9-note_valuescheck.md).
+  - **Committed by path:** this note and its values-check raw. Nothing ran on a model. Not pushed.
+
 - 2026-11-18 — **n step 4 — the BACKEND extension resumed under the seat's ruling on `p01` (`e2b1c77a…2a8a`; the seat's
   answers of 2026-11-18, third sitting, §1.4): the stage COMPLETE, §1.4's list printed, and A-n1 §2's comparison names
   no candidate at 40 of 40. STOP for the seat's read: the label convention of record.** Block:
