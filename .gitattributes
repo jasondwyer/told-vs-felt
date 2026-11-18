@@ -15,3 +15,7 @@
 # The corrupted-spelling counter's lexicon (web2, 235,976 lines): a frozen word list, kept out of diffs for its size
 # and out of line-ending conversion, so its bytes -- and the sha256 every stage checks -- are the same in every checkout.
 /data/p/lexicon/** -diff -text
+
+# PROPOSAL-n (valence_core/n): everything under data/n/ckpt/ (the stages' cells, whose records carry each read's
+# margin and the restricted read's pick) never renders in a diff or a log -p (n §4's blinding, n :130; m:318's form).
+/data/n/ckpt/** -diff

@@ -1,0 +1,26 @@
+n step 4 -- the per-token diagnostic n_bext_diag.py: its self-test, on the laptop and at the box, committed with the
+diagnostic as a raw (the seat's answers of 2026-11-18, second sitting, s1.3 item 3). PI date 2026-11-18. Code (the
+n-build session).
+
+The diagnostic: scripts/n_bext_diag.py in Code's scratch, sha256
+             c0ac67e4b9a3d2013a6fab08fe27362cec957f9885e37d3fac224d7ac78308d1,
+             committed with this raw as results/raw/2026-11-18_n-step4-diag_n_bext_diag.py.txt. Never of record; no
+             package change.
+
+1. THE LAPTOP. Model-free, over the numpy double (valence_core.n.testing). One run, in a battery window the
+   coordinating session granted for these bytes, with the driver v2d (18f19b8e...4f5c).
+   The overlay: git archive of HEAD dc6a1cf on the driver self-test's paths (the model folder by a quoted pathspec
+   glob), with v2d as scripts/n_sessions.py and the diagnostic as scripts/n_bext_diag.py, where 5(f)'s quarantine
+   admits the primitive's import. Its package is f927608c...3c03.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/diagov/scripts/n_bext_diag.py --selftest
+   Its whole output; exit 0:
+       30/30 n_bext_diag selftest checks pass
+
+2. THE BOX. Pod emw1e4embiwe9b, on 2026-11-18: step 2 of bext_diag_v1.sh, in the diagnostic's own copy at ad856f0.
+   Its lines, verbatim from results/raw/2026-11-18_n-step4_bext-diag_out.txt, lines 27-29:
+     == 2 the diagnostic's selftest, its temporary directory under the work folder
+       30/30 n_bext_diag selftest checks pass
+     selftest exit=0

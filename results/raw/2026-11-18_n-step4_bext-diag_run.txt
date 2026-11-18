@@ -1,0 +1,84 @@
+n step 4 -- the per-token diagnostic of the BACKEND extension's cached-versus-fresh discordance, never of record, on n's
+box, pod emw1e4embiwe9b (H100 SXM), after the run of record had ended and before any resume, as run by the pod session
+(the seat's answers of 2026-11-18, second sitting, §1.3 item 3; the coordinating session's relay; PI date 2026-11-18).
+No pod address or port in this file. The run's own output is bext_diag_v1_out.txt (all of stdout and stderr,
+unedited); its exit status is bext_diag_v1.exit. The launch was announced to the coordinating session before it
+started.
+
+RESULT: bext diag v1 PASS, exit 0; never of record. Steps 0-3 held, and the diagnostic ran its 24 reads after one load. By its
+lines, the first label token's |cached - fresh| is 0 in all 24 reads for both labels (min, median and max 0), and the
+discordance sits in the continuation tokens. Its rel equals the run of record's fid line, to six decimals, in 24 of 24
+reads. Nothing was resumed, and the run of record's copy was not touched.
+
+1. FILES. From n-build's scratchpad/step4b/diag/frozen/, re-hashed on the laptop before shipping and on the box after:
+     bext_diag_v1.sh            64384fa467d3fbf13068dd3ad09a436681e842e2fef7fbef264eef0a259f8e55 (76 lines, read in full)
+     bext_diag_v1.tar           9b55e23efc0e85e3251ae8029a2a7ce02c0e924055663ccb28919d4d67e760bf (one member,
+                                scripts/n_bext_diag.py = c0ac67e4b9a3d2013a6fab08fe27362cec957f9885e37d3fac224d7ac78308d1,
+                                extracted on the laptop into an empty folder and hashed; no "Mac OS X" AppleDouble magic,
+                                no xattr record)
+     bext_diag_manifest_v1.txt  6d44369c006b130168247e6ac61b0689ba98cbe80534069555537641d5bd9c3e (22 lines; on the
+                                laptop at ad856f0, 21 OK, the 22nd line being the diagnostic, which is not in the commit)
+   All three equal the coordinating session's relayed values. They went to /workspace/nsite/bdiag, a new folder. The
+   pod session's first ship stopped at its own check, with nothing sent, because /workspace/nsite/diag already existed:
+   it holds the pod session's site-check diagnosis files of 2026-11-16, which were left untouched. The folder name was
+   changed in the pod session's three scripts before any file went to the box.
+
+2. THE COPY. /workspace/nsite/copy-diag-ad856f0 is the diagnostic's own copy, never the run of record's. It is a fresh
+   local git clone of the box checkout (at ad856f0, clean):
+   - cloned with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - detached at ad856f0 and clean before the extract.
+   GNU tar on the box listed bext_diag_v1.tar as exactly scripts/n_bext_diag.py and printed nothing else. The extract
+   kept --exclude='._*', ran with --no-same-owner and printed nothing. The extracted diagnostic hashes to c0ac67e4…08d1.
+   After the extract, the changed set is exactly "?? scripts/n_bext_diag.py".
+
+3. RUN. Before the launch:
+   - the run of record's exit file read 0; no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at
+     0 MiB of 81559 MiB;
+   - the run's run.txt, by path, sha256 e4e1c810b6bc9ef96146f9abb027e2890584b8cceda0c8a0fbfa4b9ffd02e378, equal to
+     the copy delivered to n-build;
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+   The command:
+     ( source /workspace/env.sh; bash /workspace/nsite/bdiag/bext_diag_v1.sh /workspace/nsite/copy-diag-ad856f0
+          /workspace/venv/bin/python /workspace/nsite/work-diag-ad856f0 /workspace/nsite/work-run3-ad856f0/run.txt )
+   It ran under nohup in the background, all of stdout and stderr to bext_diag_v1_out.txt and its exit status to
+   bext_diag_v1.exit, both in /workspace/nsite/out-diag. The work folder did not exist before; the script made it. The
+   end-wait was on the PID alone. The run of record's copy and work folder were not written.
+
+4. OUTCOMES (the pod session's reading; n-build reads the whole output):
+   step 0 the copy     HEAD ad856f0; "changed set: exactly the diagnostic, untracked"         -- as expected
+   step 1 manifest     22/22 OK                                                                -- as expected
+   step 2 selftest     "30/30 n_bext_diag selftest checks pass", selftest exit=0               -- as expected
+   step 3 run.txt      e4e1c810…e378, the run of record's stdout by path                       -- as expected
+   step 4 the diag     diag exit=0. Its lines, in order:
+                       - "DIAG, never of record: the BACKEND extension's 24 reads (labels 'bare', d = 0), per label
+                         token, cached against fresh; pod emw1e4embiwe9b"
+                       - the weights loaded (707/707); the crop deprecation warning
+                       - "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's
+                         4ed3f2c70fe8afbf under the default window (R6); load 31053 ms"
+                       - per label (S, U), per label token (0, 1, 2), the first token alone and the rest summed: n 24,
+                         |cached - fresh| min, median and max in nats. Token 0 is 0, 0, 0 for both labels, and so is the
+                         first token alone; tokens 1 and 2 and the rest summed are not (the output's lines 37-46)
+                       - "first token: shared by both labels in 24 of 24 reads; its fresh log-probability identical in
+                         the two full forwards in 24 of 24"
+                       - "identity: the rel computed here equals the run of record's fid line, to six decimals, in 24
+                         of 24 reads"
+                       - the timing line over the 24 reads (the cached read; the fresh pair)
+   last line           "bext diag v1 PASS: copy OK, manifest OK, selftest exit=0, diag exit=0"
+
+5. AFTER THE RUN (read-only looks, nothing run): no interpreter job; the GPU at 0 MiB. Neither the diagnostic's copy nor
+   the run of record's copy was written by the pod session; the run's copy and its outputs are left for the resume.
+
+6. COPIED BACK to n-build's step4b/diag/out/, sha256 equal at the box, in staging and at the destination:
+   bext_diag_v1_out.txt and bext_diag_v1.exit, with this file. The address and port were counted in each copied file
+   (0).
+
+7. LEFT ON THE BOX, nothing removed unless n-build or the coordinating session asks:
+   - /workspace/nsite/sync6 (the copy script and two empty tar stderr files);
+   - /workspace/nsite/bdiag (n-build's three files);
+   - /workspace/nsite/copy-diag-ad856f0;
+   - /workspace/nsite/work-diag-ad856f0;
+   - /workspace/nsite/out-diag;
+   - /workspace/nsite/diag, the pod session's site-check diagnosis files of 2026-11-16, untouched;
+   - the run of record's folders, as its own record lists them.

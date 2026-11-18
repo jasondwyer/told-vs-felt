@@ -1,0 +1,51 @@
+== 0 the copy
+HEAD ad856f06cdbc58bc3c64bc4b23e47a2006c66cb0
+changed set: exactly the diagnostic, untracked
+== 1 manifest
+scripts/n_bext_diag.py: OK
+scripts/n_sessions.py: OK
+valence_core/n/__init__.py: OK
+valence_core/n/cells.py: OK
+valence_core/n/directions.py: OK
+valence_core/n/guard.py: OK
+valence_core/n/hftiny.py: OK
+valence_core/n/ids.py: OK
+valence_core/n/keys.py: OK
+valence_core/n/primitive.py: OK
+valence_core/n/probe.py: OK
+valence_core/n/runner.py: OK
+valence_core/n/schema.py: OK
+valence_core/n/sessions.py: OK
+valence_core/n/testing.py: OK
+valence_core/n/verify.py: OK
+data/n/ids/sessions.jsonl: OK
+data/n/ids/n4_variants.jsonl: OK
+data/n/ids/labels.json: OK
+data/n/ids/gvec_passages.jsonl: OK
+data/n/ids/a3_contexts.jsonl: OK
+data/n/ids/MANIFEST.json: OK
+== 2 the diagnostic's selftest, its temporary directory under the work folder
+  30/30 n_bext_diag selftest checks pass
+selftest exit=0
+== 3 the run of record's stdout
+e4e1c810b6bc9ef96146f9abb027e2890584b8cceda0c8a0fbfa4b9ffd02e378  /workspace/nsite/work-run3-ad856f0/run.txt
+== 4 the diagnostic (one load; never of record)
+DIAG, never of record: the BACKEND extension's 24 reads (labels 'bare', d = 0), per label token, cached against fresh; pod emw1e4embiwe9b
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  96%|█████████▌| 677/707 [00:00<00:00, 6757.62it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 6728.35it/s]
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); load 31053 ms
+label S, token 0: n 24, |cached - fresh| min 0, median 0, max 0 (nats)
+label S, token 1: n 24, |cached - fresh| min 1.38117e-07, median 0.00314801, max 0.0375112 (nats)
+label S, token 2: n 24, |cached - fresh| min 3.14713e-09, median 1.73785e-07, max 1.44522e-06 (nats)
+label S, the first token alone: n 24, |cached - fresh| min 0, median 0, max 0 (nats)
+label S, the rest summed: n 24, |cached - fresh| min 7.28231e-08, median 0.00314837, max 0.0375097 (nats)
+label U, token 0: n 24, |cached - fresh| min 0, median 0, max 0 (nats)
+label U, token 1: n 24, |cached - fresh| min 1.38117e-07, median 0.00860631, max 0.0492441 (nats)
+label U, token 2: n 24, |cached - fresh| min 1.06959e-09, median 1.34173e-07, max 1.81453e-06 (nats)
+label U, the first token alone: n 24, |cached - fresh| min 0, median 0, max 0 (nats)
+label U, the rest summed: n 24, |cached - fresh| min 6.30844e-09, median 0.00860649, max 0.0492442 (nats)
+first token: shared by both labels in 24 of 24 reads; its fresh log-probability identical in the two full forwards in 24 of 24
+identity: the rel computed here equals the run of record's fid line, to six decimals, in 24 of 24 reads
+timing over the 24 reads (ms): the cached read (one prefill, two continuations) median 309.0, max 601.4; the fresh pair (two full forwards) median 357.1, max 387.2
+diag exit=0
+bext diag v1 PASS: copy OK, manifest OK, selftest exit=0, diag exit=0

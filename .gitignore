@@ -280,6 +280,19 @@ __pycache__/
 !/data/n/passages.jsonl
 !/data/n/passages.prompt.md
 
+# PROPOSAL-n's BACKEND extension (n v0.2 §3 G-ACQ; the seat's answers of 2026-11-18, second sitting,
+# §1.3 item 2): the stage's report and its one cell's JSON, written on the box by the run of record and
+# copied back by hash. Record, not cache (ledger 27). The cell's capture arrays (.npy) stay on the box's
+# volume, their digests in the committed cell, as v1's plan had it, on the coordinating session's word.
+!/data/n/ckpt/
+/data/n/ckpt/*
+!/data/n/ckpt/backend-ext/
+/data/n/ckpt/backend-ext/*
+!/data/n/ckpt/backend-ext/N1-V__none__0.json
+!/data/n/reports/
+/data/n/reports/*
+!/data/n/reports/backend-ext.json
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

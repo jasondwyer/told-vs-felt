@@ -1,0 +1,94 @@
+n step 4 -- the BACKEND extension's run of record on n's box, pod emw1e4embiwe9b (H100 SXM; BACKEND entry d5d08fa),
+from the driver's commit ad856f0, as run by the pod session (the seat's answers of 2026-11-18, second sitting, §1.3
+item 2; the PI's "Route as given"; the coordinating session's relay; PI date 2026-11-18). No pod address or port in this
+file. The run's own output is bext_run_v3_out.txt (all of stdout and stderr, unedited); its exit status is
+bext_run_v3.exit. This file is the pod session's record of how the run was set up, and of what it found. The run was
+announced to the coordinating session before it started.
+
+RESULT: bext run of record v3 PAUSE (pass), exit 0, the end the seat's answers expect: the run paused at its end on the
+fidelity binomial as pre-registered. Steps 0-3 held. All 24 reads ran, each line in the stage's form, 24 distinct
+launch indices; 10 of the 24 are above TAU and 14 at or below (counted by tool). The run's end line and the report's
+end_state both read PAUSE, and the report's identity lines equal step 3's. Nothing was resumed.
+
+1. FILES. From n-build's scratchpad/step4b/run3/frozen/, re-hashed on the laptop before shipping and on the box after:
+     bext_run_v3.sh        f56fd61d555d9b4062596b85e91ffd2b50e7c481f35c3bc29f1697b276245369 (120 lines)
+     bext_manifest_v3.txt  18b4c6193e0f9adb23cf12622d0989f30a5779107a9cfaed8257bb2a12e0c986 (23 lines; byte-equal to
+                           v2's manifest)
+     bext_hashes_v3.txt    93783db0a83d81e59c660758a65a2aa2e34b421f3f8b41a7f0baa083c03f7b36 (12 lines; byte-equal to
+                           the v2 box check's hashes.txt)
+   All three equal the coordinating session's relayed values. bext_run_v3.sh was read in full before it ran. On the
+   laptop at ad856f0 the manifest gives 23/23 OK.
+
+2. SYNC. The laptop's HEAD at bundle time was ad856f06cdbc58bc3c64bc4b23e47a2006c66cb0 (main = HEAD). The box repo went
+   from d5d08fa to it (5 commits) by git bundle (d5d08fa..main, sha256
+   338c222460d9d0f880ac3fefbe890a7e322dbfe8307e4641a8b1d509b13f0591, equal at both ends), fetched into refs/bundles/n-site5 and fast-forwarded. The box checkout
+   was clean, with no untracked file, before the fetch, and clean after. The range touches no data/mf3 path and no
+   data/*/ckpt or data/*/reports path, and it holds ad856f0.
+
+3. SHIP. The bundle and the pod session's two scripts went to /workspace/nsite/sync5, n-build's three files to
+   /workspace/nsite/run3 (both new), by tar over ssh, packed without Mac metadata and extracted without ownership.
+   Each folder holds exactly its three names, none dotted, and the six sha256 equal the laptop's.
+
+4. THE COPY. /workspace/nsite/copy-run3-ad856f0, fresh, is a local git clone of the box checkout:
+   - cloned with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - checked out at ad856f0 and clean, with nothing extracted over it.
+   Absent: anything under data/mf3, every data/*/ckpt and data/*/reports directory, and the stage's root and report.
+   Present: data/n/bk, data/n/ids (6 files), results/raw/2026-11-18_respawn_determinism.txt and
+   data/olmo/determinism_base_h100-sxm.json. Its committed driver hashes to 18f19b8e…4f5c, equal to the laptop's at
+   ad856f0.
+
+5. RUN. Before the launch: no other interpreter job and no GPU compute app on the box; the GPU (NVIDIA H100 80GB HBM3)
+   at 0 MiB of 81559 MiB. /workspace/env.sh, sourced inside the wrapper as p's stages ran it, assigns HF_HOME,
+   HF_HUB_CACHE, HF_XET_HIGH_PERFORMANCE, TORCH_HOME, PIP_CACHE_DIR, JSPACE, PYTHONPATH, CUBLAS_WORKSPACE_CONFIG and
+   RUNPOD_POD_ID (one other non-comment line). With it, RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   HF_HUB_OFFLINE, TRANSFORMERS_OFFLINE and TMPDIR are unset. Python /workspace/venv/bin/python: 3.12.3, torch
+   2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2. The command:
+     ( source /workspace/env.sh; bash /workspace/nsite/run3/bext_run_v3.sh /workspace/nsite/copy-run3-ad856f0
+          /workspace/venv/bin/python /workspace/nsite/work-run3-ad856f0 )
+   It ran under nohup in the background, all of stdout and stderr to bext_run_v3_out.txt and its exit status to
+   bext_run_v3.exit, both in /workspace/nsite/out-run3. The work folder did not exist before; the script made it. The
+   end-wait was on the PID alone; nothing of the run was listed or read until the invocation had ended.
+
+6. OUTCOMES (the pod session's reading; n-build reads the whole output):
+   step 0 the copy     HEAD ad856f0; "changed set: none (the copy is the commit)"; the stage's root and report absent
+                                                                                                 -- as expected
+   step 1 manifest     23/23 OK                                                                  -- as expected
+   step 2 selftest     344/344 pass, selftest exit=0; the two transformers warnings as before      -- as expected
+   step 3 hashes       package_sha256 f927608c…3c03 and 11 imported_sha256 lines; "hashes: equal to the laptop's"
+                                                                                                 -- as expected
+   step 4 the run      as expected. In order:
+                       - WEIGHTS as in the smoke; "DRIVER scripts/n_sessions.py 18f19b8e…4f5c: HEAD's committed bytes"
+                       - G-VER: "status": "PASS" (160 sessions, ids_ok 160, spans_ok 160, n4_ok 160, labels_ok 4,
+                         labels_kept 4, manifest_ok true, first_problems [])
+                       - the weights loaded (707/707); the crop deprecation warning
+                       - "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's
+                         4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12804 ms"
+                       - 24 read lines, read 0 to read 23, each "read <i> s=<s> N1-V none 0 fid=<6 decimals>
+                         <=|> TAU ms=<ms>"; reads 0 and 1 (s=0, s=5) repeat the smoke's fid values exactly
+                       - "PAUSE fidelity-binomial at the run's end"; "end PAUSE: 24/24 reads; report backend-ext.json";
+                         "BACKEND extension: PAUSE; no distribution and no comparison until it completes"
+                       - "run exit=1"; "read lines: 24 of the stage's form, 24 distinct launch indices; the run's end
+                         line: PAUSE"; "the report's end_state: PAUSE"; "run identity: the report's package and closure
+                         lines equal step 3's"
+   last line           "bext run of record v3 PAUSE (pass): copy OK, manifest OK, selftest exit=0, hashes exit=0 and
+                       equal 0, run exit=1, end PAUSE (report PAUSE), read lines 24/24, identity 0"
+
+7. AFTER THE RUN (read-only looks, nothing run): no interpreter job; the GPU at 0 MiB. The work folder holds hashes.txt,
+   run-identity.txt and run.txt. The copy, with the stage's root data/n/ckpt/backend-ext/ and its report
+   data/n/reports/backend-ext.json, is left in place for the resume: neither was listed or read here, and nothing was
+   copied from them.
+
+8. COPIED BACK to n-build's step4b/run3/out/, sha256 equal at the box, in staging and at the destination:
+   bext_run_v3_out.txt, bext_run_v3.exit, hashes.txt, run-identity.txt and run.txt, with this file. The address and
+   port were counted in each copied file (0). The stage's report and cell files were not copied; they go later, by
+   hash only, after n-build's request through the coordinating session.
+
+9. LEFT ON THE BOX, nothing removed unless n-build or the coordinating session asks:
+   - /workspace/nsite/sync5 (the bundle and the two scripts);
+   - /workspace/nsite/run3 (n-build's three files);
+   - /workspace/nsite/copy-run3-ad856f0, with the stage's root and report, for the resume;
+   - /workspace/nsite/work-run3-ad856f0, whose run.txt the diagnostic reads;
+   - /workspace/nsite/out-run3;
+   - refs/bundles/n-site5 in the box checkout, which is at ad856f0 and clean;
+   - the earlier runs' folders, as before.

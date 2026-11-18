@@ -21,6 +21,64 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n step 4 — the BACKEND extension's run of record on n's box, from the driver's commit `ad856f0`: the
+  24 reads ran and the stage paused at its end on the fidelity binomial, as pre-registered; nothing was resumed. The
+  per-token diagnostic, never of record, ran beside it (the seat's answers of 2026-11-18, second sitting, §1.3 items
+  2–3; the PI's "Route as given"). STOP for the seat's read: `p01`'s adjudication and the read of record. Block:
+  [`2026-11-18_n-step4-run-pause_code-to-design_STOP.md`](results/raw/2026-11-18_n-step4-run-pause_code-to-design_STOP.md).**
+  - **The run of record.** The pod session ran the box script v3 on pod `emw1e4embiwe9b`, in a fresh copy at
+    `ad856f0`, clean, with nothing extracted over it.
+    - Every step before the reads held: the manifest 23/23, the self-test 344/344, the hashes equal to the laptop's;
+      DRIVER "HEAD's committed bytes"; G-VER PASS; R6's bridge.
+    - The 24 reads ran, each line printed: 10 above TAU and 14 at or below, 7 of those at 0.000000. Reads 0 and 1
+      repeat the smoke's values exactly.
+    - "PAUSE fidelity-binomial at the run's end": pause `p01`. The report's end_state is PAUSE. The box script's
+      summary reads "PAUSE (pass)".
+  - **The diagnostic** ran in its own copy at `ad856f0`, with one load:
+    - the first label token's |cached − fresh| is 0 in all 24 reads, for both labels;
+    - token 1, the continuation's first position, carries the discordance: medians 0.0031 and 0.0086 nats, maxima
+      0.0375 and 0.0492;
+    - token 2 is below 2e-06 nats;
+    - its rel reproduces the run's fid lines to six decimals in 24 of 24 reads;
+    - its timing, a declared addition: the cached read's median is 309.0 ms and the fresh pair's 357.1 ms.
+  - **Questions for the seat** (the block): Q1, `p01`'s adjudication (§1.3 item 4); Q2, the read of record (§1.4).
+  - **The report** is the read domain. Code read only its `cells` record: the copied cell is the one it records, equal
+    `json_sha256` (`80770a19…78ea`), 24 records.
+  - **Departures:** Code's one, an unpruned `find` over its scratch folder holding the copied report and cell. It
+    printed their two names only, with no size or time; item 2 lists the form. Disclosed to the coordinating session.
+  - **Model:** two loads on the box, the run's and the diagnostic's. On the laptop, nothing ran on a model; the
+    diagnostic's self-test there is model-free.
+  - **The cell's diffs.** The cell's records carry each read's margin and the restricted read's pick, which n :130
+    keeps from everyone before VERDICTS. This commit adds `/data/n/ckpt/** -diff` to `.gitattributes`, as m, mf3 and
+    p have (m:318's form). Whether the cell may be pushed before VERDICTS is the seat's and the PI's; the pre-push
+    screen halts on it.
+  - **Values-check:** one blind pass over the block, this entry, the diagnostic's self-test raw and the `.gitignore`
+    block.
+    - 63 items: 54 CONFIRMED, 3 IMPRECISE, 2 FAIL, 4 NOT CHECKABLE; and 9 observations.
+    - The two FAILs are two sentences of the block: "within 1e-06", now 2e-06, token 2's size; and "seven reads have
+      no discordance at all", now "seven reads print fid 0.000000", the per-token values being nonzero in every read.
+    - Both FAILs and every IMPRECISE item are applied, with observations 1, 2, 4, 5, 6, 7, 8 and 9. Observation 2, that
+      `data/n/ckpt/` had no `-diff` rule, is the `.gitattributes` line above. Observation 3, that `origin/main` is at
+      `ad856f0`, needs no text: this commit is not pushed.
+    - The edits were checked by tool.
+    - The `.gitattributes` line came after the check, from its observation 2, so the checker did not read it. `git
+      check-attr` gives the cell `diff: unset` and the report no attribute, in a scratch repository and in the gate.
+    - The checker's departures, model-free, as its report states them, for the seat to class: a loop over a glob it
+      had not seen expand (14 package module names); path-taking git commands without item 3's pathspec, each on named
+      non-data paths, counts or attributes; a wider exclusion than needed; and its reading of one long command's output
+      from the harness's own tool-results folder.
+    - Raw:
+      [`2026-11-18_n-step4-run-pause_valuescheck.md`](results/raw/2026-11-18_n-step4-run-pause_valuescheck.md).
+  - **Committed by path:**
+    - the block;
+    - the run's output and the pod session's record of it;
+    - the stage report and its one cell's JSON, with `.gitignore` admits for exactly those two (the capture arrays
+      stay on the box's volume), and the `.gitattributes` line;
+    - the diagnostic's output and the pod session's record of it, the script as a raw, and its self-test raw;
+    - the values-check raw and this entry.
+
+    Not pushed. The resume waits for the seat's ruling and the PI's word; the box stays up.
+
 - 2026-11-18 — **n — the BACKEND extension's driver, committed by path before its run of record, on the smoke of this
   date, which ended PAUSE on the fidelity binomial, as the rule requires: `scripts/n_sessions.py backend-ext`,
   re-pinned to n's box (the seat's answers of 2026-11-18, second sitting, §1.3 item 1 and §2: Q2 yes; the PI's "Route
