@@ -333,6 +333,99 @@ applied to CLAUDE.md.
     - the values-check raw and this entry.
 
     Not pushed. The resume waits for the seat's ruling and the PI's word; the box stays up.
+  - **Close (PI date 2026-11-18, third sitting), the pod session's: the seat's answers on `p01`, this session's
+    part.** This session read the seat's answers,
+    [`2026-11-18_n-step4-run-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md)
+    (sha256 `d51279ec…0bf4`, 14,167 bytes), and the ruling raw,
+    [`2026-11-18_n-step4-p01_ruling.md`](results/raw/2026-11-18_n-step4-p01_ruling.md) (sha256
+    `e2b1c77a3026dd40be659168397826cd60397f514b243cb6279234058d2e2a8a`, 2,515 bytes; its full sha256 is the pause's
+    `ruling_sha256`), in full. The coordinating session committed both by path at `3b2b855`. This session re-hashed
+    each one equal to its committed blob there and to the coordinating session's relay, which gave the ruling raw's
+    full sha256 and bytes and the answers raw's tail.
+    - **This session's share** is the box side of the PI's routing items 1 and 3, under "N. n-build (and the pod
+      session on the box)", as the coordinating session relayed them:
+      - item 1's resume with the ruling raw, skip-only. On the route the coordinating session chose after its
+        third-sitting relay, it runs from driver v2e's commit in a fresh sparse copy, by n-build's `bext_resume_v2`.
+        The stage root and report are copied in by name and checked by `cmp` and the committed digests. The run's
+        copy, `/workspace/nsite/copy-run3-ad856f0`, stays untouched as the run of record's copy.
+      - item 3's `backend-ext-2`, if the convention of record is not "bare": one more run of the 24 reads under that
+        convention, with one load, with its own root and report and the first stage kept (ADDENDUM-n2 v0.1 §4.1;
+        this session read the addendum in full). It is built into v2e, does not chain, and runs only on the
+        coordinating session's relay, after the resume's outputs are read.
+
+      Both run from v2e's commit with n-build's files, frozen and relayed by the coordinating session with their
+      hashes, and each launch is announced to it first. Their record is n-build's entry for the resume, which carries
+      the ruling's sha256 and the figures.
+    - **The run, as the ruling leaves it:** no read is excluded, no record changes and no defect is named. From the
+      run's end to this line's drafting, nothing this session ran wrote to the run's copy on the box or to its
+      outputs:
+      - every command that touched them only read them: `cat`, `sha256sum`, tar, file tests, one `git rev-parse` of
+        the copy's HEAD, and name-only `ls` of their parent `/workspace/nsite`, of the run's work folder after its end
+        and of the stage root at the copy-back;
+      - the diagnostic ran in its own copy and read the run's `run.txt` by path;
+      - nothing ran on the box after the diagnostic's copy-back.
+
+      The diagnostic's record (`61e73ce4…07c5`) says "the run of record's copy was not touched". Read it as not
+      written: the copy-back of the report and the cell had read from the copy before that record was written.
+    - **The copy-back of the report and the cell,** after the diagnostic's end. Neither of this session's records in
+      this entry carries it. It was n-build's request, as the coordinating session relayed it: "by hash only, with
+      nothing read".
+      - Two files, sha256 equal at the box, in staging and at the destination (n-build's `step4b/run3/rec/`):
+        `data/n/reports/backend-ext.json`, `27bc906a…2496`, and `data/n/ckpt/backend-ext/N1-V__none__0.json`,
+        `80770a19…78ea`.
+      - The address/port count was 0 and 0 in each. Nothing else was taken from either file.
+      - The cell's 31 capture arrays were not copied; they stay on the volume.
+      - The stage root's name-only `ls` on the box (the request's "a name-only ls, no sizes or times"; list of record
+        v2 item 1's form) gave 32 names: the JSON and its 31 arrays, nothing else.
+    - **Departures, for the seat to class.** Each was disclosed to the coordinating session on being found. The first
+      two ran before the third sitting.
+      - **Two unpruned `find . -type f`** in the copy-back script, each over a copy of the report and the cell in a
+        scratch folder on the laptop, outside the checkout. Nothing from either reached the terminal, and neither
+        took a size or a time:
+        - one over this session's staging folder: the two names, written to a scratch file and compared in the
+          shell with the two paths;
+        - one over the destination: a count, compared in the shell with 2.
+
+        They are of the class of Code's departure at `6df2131`, which the seat's §7 rules inert, restating item 2's
+        form: "a listing over a copied ckpt or report is pruned or not run". That form binds this session from here.
+      - **One content search over a copied ckpt file,** in the same script: the address/port count (`grep -cF`,
+        `grep -cwF`) over both staged copies, the cell's included. It printed the two counts and nothing else. The
+        coordinating session's relay of n-build's request added the count ("Report each file's address/port count"),
+        beside its own "The ckpt file is never opened, catted or searched; its digest and the count are all that is
+        taken". List of record v2 item 2 bars any "search over them". The departure is the coordinating session's as
+        well as this session's, and it discloses it in its own close line.
+      - **One Python start on the laptop without a battery window,** while this line was drafted: a stray
+        `/usr/bin/python3 --version` in a shell command that edited this session's scratch check script, after its
+        `cd` and `cp` and before its `sed`. Its output and exit status were discarded. It ran in a scratch folder,
+        not the checkout (`3b2b855`), loaded no model and carried no marker word in its argv.
+    - **The raw's standing rules** (§5.2, §5.3 and §7), as the coordinating session relayed them, bind this session:
+      - at any commit of this session's, inside its window, the count of the home-folder prefix over the staged diff,
+        the pattern never printed; above zero, the commit halts;
+      - the `data/mf3` exclusion beside item 3's pathspec in every git command over the laptop tree while Q-F3 runs;
+      - §7's form above, and its glob line ("a glob is expanded and read before it is looped over") in this
+        session's checkers' briefs.
+
+      Two more come from the coordinating session's word on these departures. Every Python start on the laptop, a
+      version query included, needs a battery window first. And: "Any later copy check runs by digest or cmp on names
+      from a committed record."
+    - **The box,** pod `emw1e4embiwe9b`, stays up through the resume, on the PI's standing word.
+    - **A blind values-check of this line:** 49 items: 40 CONFIRMED, 3 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE; and 11
+      observations.
+      - The FAIL (item 17: the run bullet's list missed the name-only `ls` of the run's work folder) and the three
+        IMPRECISE items (8, 13 and 39) are applied.
+      - Observations 1 to 9 are applied. Observation 1 is the content-search departure above; 2 is the reading of
+        the diagnostic's record; 3 is met by naming the class, Python; 7 is the citation of ADDENDUM-n2 v0.1 §4.1.
+        Observations 10 and 11 ask for nothing.
+      - Two NOT CHECKABLE items were checked by tool after the pass, over this session's transcript, to this line's
+        drafting. No box command and no runpod tool ran after the diagnostic's copy-back (item 16). In the
+        drafting's Bash commands, every mention of python but the slip is a grep pattern or prose (item 37).
+      - The edits were checked by tool. After the coordinating session read the line, two more edits followed,
+        checked the same way: the count's instruction attributed to its relay, and item 1's bullet set to the route.
+      - The checker's departures, as its report states them, for the seat to class: a name-only `ls` of this
+        session's scratch run folder (30 names, one of them the staging folder's, nothing inside it listed); two
+        `git ls-files` on named raw paths without the pathspec; a grep of one committed raw beyond its sources; and
+        `wc -c` on two digest strings from a pipe, no file's size.
+      - Raw: [`2026-11-18_n-step4-run-pause-pod-close_valuescheck.md`](results/raw/2026-11-18_n-step4-run-pause-pod-close_valuescheck.md).
 
 - 2026-11-18 — **n — the BACKEND extension's driver, committed by path before its run of record, on the smoke of this
   date, which ended PAUSE on the fidelity binomial, as the rule requires: `scripts/n_sessions.py backend-ext`,
