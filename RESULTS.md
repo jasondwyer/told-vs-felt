@@ -21,6 +21,91 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n — ids of record, second commit: ADDENDUM-n1 §1.2 (iv), rendered once on the laptop in G-DATA's
+  environment — `gvec_passages.jsonl` (the 544 passages of `data/n/passages.jsonl`) and `a3_contexts.jsonl` (A3's
+  frozen 1,344 contexts) — with `MANIFEST.json` extended. G-VER's pin and the n package move with it. This follows the
+  seat's answers of 2026-11-18, §3 item 3, and the PI's item 4 of that date. Raw:
+  [`2026-11-18_n-ids-iv_render.md`](results/raw/2026-11-18_n-ids-iv_render.md).**
+  - **The render** was run 3 of four, in the coordinating session's battery windows of 2026-11-18. It ran from Code's
+    scratch overlay of HEAD's files with the drafts in place, under the jlens venv (Python 3.12.9, transformers 5.5.0,
+    tokenizers 0.22.2: G-DATA's environment, the only one `render-ids-iv` accepts). The Hugging Face libraries were
+    offline, Python was in UTF-8 mode, and the run was at `nice -n 19`; model-free. Exit 0, PASS:
+    - 544 of 544 passages, each encoded alone, with no special tokens and no template;
+    - 1,344 of 1,344 contexts, in A3's order, each full encoded whole. Its span starts at `extract.span_start`'s
+      boundary, which the render computes itself and asserts equal to the function's own on all 1,344; no span starts
+      before the prefix's own token count (`prefix_differs` 0);
+    - on every encode (3,232 in all: the 544 passages, and each context's prefix and full, a task's prefix once per
+      context), adding special tokens changes no id, so A3's convention (the adapter's default) and n's coincide here;
+    - A3's inputs are frozen. The two files that build its texts are recorded by sha256 (`scripts/box_e0_corpus.py`
+      `66c18554…ab57`, `valence_core/extract.py` `2405b1a6…07fe`, both HEAD's). The contexts' digest is
+      `9cfd90aa…4802`.
+  - **The files under `data/n/ids/`:**
+    - `gvec_passages.jsonl` `444352c1…33a5` (544 records);
+    - `a3_contexts.jsonl` `757026e8…d84c` (1,344);
+    - `MANIFEST.json` `fdf73d85…ef38`. It keeps (i)–(iii)'s fields and entries and adds the two files and an `iv`
+      block: the date, the base, the corpus, A3's provenance and the conventions.
+
+    (i)–(iii)'s files are unchanged.
+  - **The code,** in the same commit as the files (the review's O9: in separate commits, HEAD between them would have
+    G-VER STOP on the pin):
+    - `valence_core/n/ids.py`: `render_iv`. `load` accepts (i)–(iii), or (i)–(iv) under an `iv` block whose base it
+      re-derives byte for byte. `MANIFEST_OF_RECORD` moves to `fdf73d85…ef38` from `7f51bd91…821d`, which is now
+      `MANIFEST_I_III`;
+    - `valence_core/n/verify.py`: its docstring's sentence on the pin;
+    - `scripts/n_sessions.py`: the `render-ids-iv` command.
+
+    The n package moves from `60d892dc…cc66` (the BUILD's) to `f927608c…3c03`, and the closure is unchanged. The
+    step-4 driver is rebased onto this commit; the box carries this package.
+  - **Tests:**
+    - the self-test: 236/236 on the reviewed drafts, 266/266 after the review's fixes (F11's two comments excepted),
+      267/267 after the pin's move and F11;
+    - `gver-trial` on the assembled folder: PASS. It covers 160 sessions, ids, N4 pairs and spans; 4 of 4 candidates
+      are kept; and PASS requires the manifest at the pin (its printed `manifest_ok` covers the environment, the
+      tokenizer files and the session set).
+  - **The review** was blind: 12 findings (0 BUG, 5 RISK, 7 NIT) and 25 surviving mutants. Every finding is applied
+    (F11, two comments, at the pin's move; the others before the render), and every mutant has a test written to kill
+    it; the mutants themselves were not run. Raw:
+    [`2026-11-18_n-ids-iv_review.md`](results/raw/2026-11-18_n-ids-iv_review.md).
+  - **Code's readings, flagged for the seat** (R-iv1–R-iv6 in the raw):
+    - the passages are encoded alone, with no special tokens;
+    - A3's spans start at `extract.span_start`'s boundary;
+    - the conventions' coincidence is asserted, not assumed;
+    - the manifest is extended in place, and the pin moves;
+    - UTF-8 mode is required;
+    - the render runs from the overlay.
+  - **For the seat:**
+    - the pin moves again at (v), and LOCK-n v0.1 names whichever is committed when it is drafted;
+    - the A3 ids are G-DATA's rendering of A3's texts (ADDENDUM-n1 §1.1), not a record of a box run.
+  - **Departures.** While Code built the overlay and read the adapter, three shell commands carried a guard marker in
+    their argv:
+    - a `grep` over the HF adapter file;
+    - a name-only `ls`;
+    - a `git archive` of the model manifest's path.
+
+    None ran Python or touched a model, `data/mf3`, `ckpt` or `reports`. They were disclosed at the time.
+
+    The values-checker disclosed one of its own: 36 git calls (`hash-object`, and `rev-parse HEAD:<path>`) with
+    marker-carrying relative paths in their argv. They were model-free, with no interpreter and no `data/mf3`, `ckpt` or
+    `reports` path. Its report records them, verbatim in the values-check raw, and Code relayed them to the
+    coordinating session.
+  - **Values-check:** one blind pass, 138 items: 112 CONFIRMED, 11 IMPRECISE, 1 FAIL and 14 NOT CHECKABLE.
+    - The FAIL: the review raw said every finding was applied in the drafts the render ran, where F11's two comments
+      came with the pin's move. It and every IMPRECISE item are applied in the checker's terms, among them a hash tail
+      mistyped here (`…d84c`).
+    - Of its 11 observations, 7 are applied and 4 are noted. One applied: `.gitignore`'s comment over `data/n/ids/`
+      now names (iv).
+    - The checker's own departure is under Departures.
+    - The edits after the check were checked by tool.
+    - Raw: [`2026-11-18_n-ids-iv_valuescheck.md`](results/raw/2026-11-18_n-ids-iv_valuescheck.md), with the report as
+      returned and every disposition.
+  - **Committed by path:**
+    - in `data/n/ids/`: `gvec_passages.jsonl`, `a3_contexts.jsonl` and `MANIFEST.json`;
+    - `valence_core/n/ids.py` and `verify.py`, and `scripts/n_sessions.py`;
+    - `.gitignore` (the comment over `data/n/ids/`);
+    - the render raw, the review raw, the values-check raw and this entry.
+
+    Not pushed.
+
 - 2026-11-18 — **n — the passage corpus of record committed (N.2): the nine part files, `data/n/passages.jsonl`
   (`ef6b00dc…3cc3`) and the prompt record as corrected, by path, with `.gitignore`'s three admit lines. The adoption is
   the seat's answers of 2026-11-18,

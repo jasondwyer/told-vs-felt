@@ -264,10 +264,11 @@ __pycache__/
 !/data/n/bk/
 
 # PROPOSAL-n's ids of record (ADDENDUM-n1 §1; the seat's answers of 2026-11-16, second
-# sitting, §1.2): the 160 sessions' token ids, N4's 320 sequences and the label
-# candidates, rendered once in G-DATA's environment, with MANIFEST.json (each file's
-# sha256 and record count). Record, not cache (ledger 27): G-VER asserts them on
-# the box. Admitted as one folder that MANIFEST.json lists.
+# sitting, §1.2, and of 2026-11-18, §3 item 3): the 160 sessions' token ids, N4's 320
+# sequences, the label candidates, and (iv)'s 544 passages and 1,344 A3 contexts,
+# rendered once in G-DATA's environment, with MANIFEST.json (each file's sha256 and
+# record count). Record, not cache (ledger 27): G-VER asserts them on the box.
+# Admitted as one folder that MANIFEST.json lists.
 !/data/n/ids/
 
 # PROPOSAL-n's passage corpus (Route B; n v0.2 §0.8 and §3 G-VEC; the seat's answers of

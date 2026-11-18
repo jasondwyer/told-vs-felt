@@ -17,8 +17,9 @@ tokenizes nothing; a tokenizer is loaded only to decode (ADDENDUM-n1 §1.1). For
 Then every kept label candidate holds exactly the sessions' cues and its ids decode to the candidate's text, and the
 manifest names G-DATA's environment, the manifest's three tokenizer sha256s and the session set of record. The
 loaded MANIFEST.json's own sha256 must be the pin (``manifest_pin``; by default ``ids.MANIFEST_OF_RECORD``, the
-committed render's at ``d76f34f``; ADDENDUM-n1 §1.5 puts MANIFEST.json's sha256 in LOCK-n v0.1's "rendering and
-spans"), so a re-rendered folder, however consistent within itself, does not PASS. A session count other than the
+committed manifest's: (i)-(iii)'s at ``d76f34f``, (i)-(iv)'s since the ids of record's second commit; ADDENDUM-n1
+§1.5 puts MANIFEST.json's sha256 in LOCK-n v0.1's "rendering and spans"), so a re-rendered folder, however consistent
+within itself, does not PASS. A session count other than the
 expected STOPs with its own line. A decoder is required: without one nothing textual can be checked, and G-VER does
 not PASS.
 

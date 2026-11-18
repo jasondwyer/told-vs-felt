@@ -22,7 +22,17 @@ THE FILES (§1.2):
         split's pair counted a prefix failure. No candidate kept is a STOP.
   ``MANIFEST.json`` -- each file's sha256 and record count, the environment, the tokenizer files' sha256s, the
         session set's sha256 (measured from the skeleton files), N4's schedule's sha256, the PI date.
-(iv) and (v) are rendered when their texts exist, by the same procedure.
+  (iv)  ``gvec_passages.jsonl`` and ``a3_contexts.jsonl`` (``render_iv``; the seat's answers of 2026-11-18, §3 item
+        3), rendered by the same procedure once the corpus of record was committed: the 544 passages of
+        ``data/n/passages.jsonl`` (its adopted sha256 asserted), each encoded alone with no special tokens and no
+        template (directions.py's reading), and A3's frozen 1,344 contexts (``scripts/box_e0_corpus.py``'s
+        ``e0_contexts``, its inputs asserted frozen), each ``full`` encoded whole with the span starting at the first id
+        where it leaves ``prefix``'s ids (``extract.span_start``'s rule), the prefix's own count beside it. Special
+        tokens: A3 ran through the adapter's ``encode``, whose default adds them; the render asserts on every text
+        that adding them changes no id, so the two conventions coincide here (a difference is a STOP). The render
+        extends (i)-(iii)'s manifest (``MANIFEST_I_III``): its fields unchanged, the two files added to ``files``,
+        and an ``iv`` block (its PI date, the base manifest's sha256, the inputs' sha256s, the conventions).
+(v) is rendered when its texts exist, by the same procedure.
 
 The render's report and the driver print versions, sha256s and counts, never an id; the report keeps its first
 ``FIRST_PROBLEMS`` problem lines. ``load`` reads the files back for G-VER and the runner, each file's sha256 and record
@@ -52,9 +62,22 @@ ENV_OF_RECORD = {"python": "3.12.9", "transformers": "5.5.0", "tokenizers": "0.2
 TOKENIZER_FILES = ("special_tokens_map.json", "tokenizer.json", "tokenizer_config.json")
 SESSIONS_FILE, N4_FILE, LABELS_FILE, MANIFEST_FILE = ("sessions.jsonl", "n4_variants.jsonl", "labels.json",
                                                       "MANIFEST.json")
-#: The committed render's MANIFEST.json sha256 (``data/n/ids/`` at ``d76f34f``, the ids of record's commit): G-VER's
-#: pin (``verify.verify``'s ``manifest_pin``); ADDENDUM-n1 §1.5 puts it in LOCK-n v0.1's "rendering and spans".
-MANIFEST_OF_RECORD = "7f51bd914eb03510442f01bfbf7cad7ba74c7e9fb98edb307db350d9772a821d"
+GVEC_FILE, A3_FILE = "gvec_passages.jsonl", "a3_contexts.jsonl"
+FILES_I_III = (SESSIONS_FILE, N4_FILE, LABELS_FILE)
+FILES_IV = (GVEC_FILE, A3_FILE)
+#: (i)-(iii)'s MANIFEST.json sha256 (``data/n/ids/`` at ``d76f34f``, the ids of record's first commit): the manifest
+#: ``render_iv`` extends.
+MANIFEST_I_III = "7f51bd914eb03510442f01bfbf7cad7ba74c7e9fb98edb307db350d9772a821d"
+#: The committed MANIFEST.json's sha256: (i)-(iv)'s, as (iv)'s render wrote it (the ids of record's second commit;
+#: (i)-(iii)'s, ``MANIFEST_I_III``, before it). G-VER's pin (``verify.verify``'s ``manifest_pin``); ADDENDUM-n1 §1.5
+#: puts it in LOCK-n v0.1's "rendering and spans".
+MANIFEST_OF_RECORD = "fdf73d854ebd6fbe02ced28a0c49af1c9658763627aaaa55afd781084f80ef38"
+#: The corpus of record (the seat's answers of 2026-11-18, §0): its file, sha256 and passage count, and A3's frozen
+#: context count (``scripts/box_e0_corpus.py``: 48 tasks x 7 conditions x 4 paraphrases).
+PASSAGES_FILE = REPO / "data" / "n" / "passages.jsonl"
+PASSAGES_SHA256 = "ef6b00dc56f28678dce0cf7f81b2ae198862e5a83120037cca37f3c8fc533cc3"
+N_PASSAGES, N_A3_CONTEXTS = 544, 1344
+PASSAGE_KEYS = ["id", "state", "pole", "text"]
 #: The render report's problem lines, at most (a full STOP would carry about 480).
 FIRST_PROBLEMS = 20
 #: ADDENDUM-n1 §2's four candidates, in this order: name -> the text after the generation prompt.
@@ -243,15 +266,30 @@ def printable(rep: Mapping) -> dict:
     return dict(rep)
 
 
+def _base_of(manifest: Mapping) -> bytes:
+    """The (i)-(iii) manifest an (i)-(iv) manifest extends, as ``render`` wrote it: its fields without ``iv``, its files
+    without (iv)'s, in ``_dumps`` form with the trailing newline (``_dumps`` is canonical, so these are its bytes)."""
+    base = {k: v for k, v in manifest.items() if k != "iv"}
+    base["files"] = {k: v for k, v in manifest["files"].items() if k in FILES_I_III}
+    return (_dumps(base) + "\n").encode("utf-8")
+
+
 def load(ids_dir=IDS_DIR) -> dict:
-    """The committed files, each checked against MANIFEST.json (sha256 and record count)."""
+    """The committed files, each checked against MANIFEST.json (sha256 and record count): (i)-(iii), or (i)-(iii) and
+    (iv) under an ``iv`` block whose base is the manifest's own (i)-(iii) part, byte for byte."""
     d = Path(ids_dir)
     manifest = json.loads((d / MANIFEST_FILE).read_text(encoding="utf-8"))
-    if manifest.get("schema") != IDS_SCHEMA or sorted(manifest.get("files", {})) != sorted(
-            (SESSIONS_FILE, N4_FILE, LABELS_FILE)):
-        raise SystemExit(f"{MANIFEST_FILE}: not an {IDS_SCHEMA} manifest of the three files")
+    names = sorted(manifest.get("files", {}))
+    if manifest.get("schema") != IDS_SCHEMA or names not in (sorted(FILES_I_III), sorted(FILES_I_III + FILES_IV)) \
+            or (names == sorted(FILES_I_III + FILES_IV)) != ("iv" in manifest):
+        raise SystemExit(f"{MANIFEST_FILE}: not an {IDS_SCHEMA} manifest of (i)-(iii), or of (i)-(iv) with its iv "
+                         f"block")
+    if "iv" in manifest and _sha256_bytes(_base_of(manifest)) != manifest["iv"].get("base_manifest_sha256"):
+        raise SystemExit(f"{MANIFEST_FILE}: its (i)-(iii) part is not the base manifest its iv block names")
     out: dict = {"manifest": manifest, "manifest_sha256": _sha256_bytes((d / MANIFEST_FILE).read_bytes())}
     for fname, meta in manifest["files"].items():
+        if not (d / fname).is_file():
+            raise SystemExit(f"{fname}: listed in {MANIFEST_FILE} but absent")
         data = (d / fname).read_bytes()
         if _sha256_bytes(data) != meta["sha256"]:
             raise SystemExit(f"{fname}: its sha256 is not the manifest's")
@@ -264,7 +302,165 @@ def load(ids_dir=IDS_DIR) -> dict:
     out["by_session"] = {r["session_id"]: r for r in out[SESSIONS_FILE]}
     out["by_variant"] = {(r["session_id"], r["line"]): r for r in out[N4_FILE]}
     out["candidates"] = {c["name"]: c for c in out[LABELS_FILE][0]["candidates"]}
+    if GVEC_FILE in out:
+        out["by_passage"] = {r["id"]: r for r in out[GVEC_FILE]}
     return out
+
+
+def a3_digest(contexts: Sequence[tuple]) -> str:
+    """sha256 of A3's contexts as rendered, in their order: ``_dumps`` of the rows [prefix, full, condition, item_id,
+    variant]."""
+    return _sha256_bytes(_dumps([[p, f, c, i, int(v)] for p, f, c, i, v in contexts]).encode("utf-8"))
+
+
+def render_iv(passages_bytes: bytes, contexts: Sequence[tuple], encode: Encode, encode_special: Encode,
+              env: Mapping[str, str], tokenizer_sha256s: Mapping[str, str], pi_date: str, base_dir, out_dir, *,
+              a3_provenance: Mapping, span_starts: Sequence[int] | None = None,
+              passages_sha256: str = PASSAGES_SHA256, expect_passages: int = N_PASSAGES,
+              expect_contexts: int = N_A3_CONTEXTS, base_pin: str = MANIFEST_I_III) -> dict:
+    """Render (iv) into ``out_dir``, a folder that must not exist yet, as a complete ids folder. It is built in a
+    staging folder beside it: (i)-(iii)'s three files copied from ``base_dir`` (their manifest at ``base_pin``, each
+    file's bytes re-checked against it as copied), the two (iv) files, and the extended MANIFEST.json. The staging
+    folder is read back by ``load`` (every (iv) record's ``ids_sha`` re-derived, the base re-derived from the new
+    manifest) and then renamed into place; on any failure it is removed, and nothing is left. ``contexts`` are
+    (prefix, full, condition, item_id, variant) in A3's order; ``span_starts``, when given, are
+    ``extract.span_start``'s own boundaries, each asserted equal to the render's. ``a3_provenance`` (A3's input
+    digests, and the code that builds its texts) goes into the ``iv`` block with the contexts' digest
+    (``a3_digest``). Returns the report: counts and sha256s, no id, and its first ``FIRST_PROBLEMS`` problem lines. A
+    STOP writes nothing."""
+    import shutil
+    problems: list = []
+    rep: dict = {"status": "STOP", "passages": {"n": 0, "ok": 0}, "a3_contexts": {"n": len(contexts), "ok": 0,
+                 "prefix_differs": 0}, "special_tokens_differ": 0, "files": {}, "first_problems": problems}
+
+    def note(line: str) -> None:
+        if len(problems) < FIRST_PROBLEMS:
+            problems.append(line)
+    out = Path(out_dir)
+    stage = out.with_name(out.name + ".staging")
+    if out.exists() or stage.exists():
+        raise SystemExit(f"{out.name}: it or its staging folder exists -- the render writes once, into a new folder")
+    base = load(base_dir)
+    bman = base["manifest"]
+    if base["manifest_sha256"] != base_pin or sorted(bman["files"]) != sorted(FILES_I_III):
+        note(f"the base manifest is not (i)-(iii)'s of record ({base['manifest_sha256'][:8]})")
+        return rep
+    if bman["environment"] != dict(env) or bman["tokenizer_files"] != dict(tokenizer_sha256s):
+        note("the environment or the tokenizer files are not the base manifest's")
+        return rep
+    if _sha256_bytes(passages_bytes) != passages_sha256:
+        note("the passages file is not the corpus of record")
+        return rep
+    lines = passages_bytes.decode("utf-8").splitlines()
+    rep["passages"]["n"] = len(lines)
+    if len(lines) != expect_passages or len(contexts) != expect_contexts:
+        note(f"{len(lines)} passages and {len(contexts)} contexts, not {expect_passages} and {expect_contexts}")
+        return rep
+    if span_starts is not None and len(span_starts) != len(contexts):
+        note(f"{len(span_starts)} span starts for {len(contexts)} contexts")
+        return rep
+
+    def ids_both(text: str, where: str):
+        ids = [int(x) for x in encode(text)]
+        if [int(x) for x in encode_special(text)] != ids:
+            rep["special_tokens_differ"] += 1
+            note(f"{where}: special tokens change its ids")
+            return None
+        return ids
+    p_recs = []
+    for i, line in enumerate(lines):
+        try:
+            r = json.loads(line)
+        except ValueError:
+            note(f"passage line {i + 1}: not JSON")
+            continue
+        if not isinstance(r, dict) or list(r) != PASSAGE_KEYS or not all(isinstance(r[k], str) for k in PASSAGE_KEYS):
+            note(f"passage line {i + 1}: not a record of exactly {PASSAGE_KEYS}, all strings")
+            continue
+        ids = ids_both(r["text"], r["id"])
+        if ids is None:
+            continue
+        if not ids:
+            note(f"{r['id']}: no tokens")
+            continue
+        p_recs.append({"index": i, "id": r["id"], "state": r["state"], "pole": r["pole"],
+                       "text_sha256": _sha256_bytes(r["text"].encode("utf-8")), "n_tokens": len(ids),
+                       "ids_sha": ids_sha(ids), "ids": ids})
+    rep["passages"]["ok"] = len(p_recs)
+    if len({r["id"] for r in p_recs}) != len(p_recs):
+        note("passage ids are not unique")
+        return rep
+    c_recs = []
+    for j, (prefix, full, condition, item_id, variant) in enumerate(contexts):
+        where = f"context {j} ({item_id}/{condition}/{variant})"
+        if not full.startswith(prefix) or full == prefix:
+            note(f"{where}: full does not extend prefix")
+            continue
+        a, b = ids_both(prefix, where + " prefix"), ids_both(full, where)
+        if a is None or b is None:
+            continue
+        k = 0                                           # extract.span_start's rule, on these ids
+        while k < len(a) and k < len(b) and a[k] == b[k]:
+            k += 1
+        if not 0 < k < len(b):
+            note(f"{where}: degenerate span, boundary {k} of {len(b)} tokens")
+            continue
+        if span_starts is not None and int(span_starts[j]) != k:
+            note(f"{where}: extract.span_start gives {int(span_starts[j])}, the render {k}")
+            continue
+        if k != len(a):
+            rep["a3_contexts"]["prefix_differs"] += 1
+        c_recs.append({"index": j, "item_id": item_id, "condition": condition, "variant": int(variant),
+                       "prefix_sha256": _sha256_bytes(prefix.encode("utf-8")),
+                       "full_sha256": _sha256_bytes(full.encode("utf-8")), "seq_len": len(b), "span_start": k,
+                       "prefix_tokens": len(a), "ids_sha": ids_sha(b), "ids": b})
+    rep["a3_contexts"]["ok"] = len(c_recs)
+    if rep["passages"]["ok"] != expect_passages or rep["a3_contexts"]["ok"] != expect_contexts:
+        return rep
+    by_state: dict = {}
+    for r in p_recs:
+        by_state.setdefault(r["state"], []).append(r["n_tokens"])
+    rep["passages"]["n_tokens"] = {s: [min(v), round(sum(v) / len(v), 1), max(v)] for s, v in by_state.items()}
+    spans = [r["seq_len"] - r["span_start"] for r in c_recs]
+    rep["a3_contexts"]["seq_len"] = [min(r["seq_len"] for r in c_recs), max(r["seq_len"] for r in c_recs)]
+    rep["a3_contexts"]["span_len"] = [min(spans), round(sum(spans) / len(spans), 2), max(spans)]
+    digest = a3_digest(contexts)
+    rep["a3_contexts"]["contexts_sha256"] = digest
+    blobs = {fname: "".join(_dumps(r) + "\n" for r in recs).encode("utf-8")
+             for fname, recs in ((GVEC_FILE, p_recs), (A3_FILE, c_recs))}
+    manifest = dict(bman)
+    manifest["files"] = {**bman["files"], **{f: {"sha256": _sha256_bytes(b), "records": len(b.splitlines())}
+                                            for f, b in blobs.items()}}
+    manifest["iv"] = {"pi_date": pi_date, "base_manifest_sha256": base["manifest_sha256"],
+                      "passages_sha256": passages_sha256,
+                      "a3": {**dict(a3_provenance), "contexts_sha256": digest, "contexts": len(contexts)},
+                      "conventions": {"passages": "each passage alone; no special tokens; no template",
+                                      "a3_contexts": "full encoded whole; span_start = the first id where full's ids "
+                                                     "leave prefix's (extract.span_start); prefix_tokens beside it",
+                                      "special_tokens_change_no_id": True}}
+    mdata = (_dumps(manifest) + "\n").encode("utf-8")
+    stage.mkdir(parents=True)
+    try:
+        for fname in FILES_I_III:
+            data = (Path(base_dir) / fname).read_bytes()
+            if _sha256_bytes(data) != bman["files"][fname]["sha256"]:
+                raise SystemExit(f"{fname}: not the base manifest's bytes as copied")
+            _atomic_write(stage / fname, data)
+        for fname, data in blobs.items():
+            _atomic_write(stage / fname, data)
+        _atomic_write(stage / MANIFEST_FILE, mdata)
+        back = load(stage)
+        bad = sum(1 for f in FILES_IV for r in back[f] if ids_sha(r["ids"]) != r["ids_sha"])
+        if bad or _sha256_bytes(_base_of(back["manifest"])) != base_pin:
+            raise SystemExit(f"{out.name}: the staging folder does not read back as rendered")
+        os.replace(stage, out)
+    except BaseException:
+        shutil.rmtree(stage, ignore_errors=True)
+        raise
+    files_rep = {fname: dict(back["manifest"]["files"][fname]) for fname in FILES_I_III + FILES_IV}
+    files_rep[MANIFEST_FILE] = {"sha256": _sha256_bytes(mdata), "records": len(manifest["files"])}
+    rep.update(status="PASS", files=files_rep)
+    return rep
 
 
 def ids_of(loaded: Mapping) -> Callable:
@@ -485,3 +681,208 @@ def _selftest(chk, tmp) -> None:
     chk("ids: the pins are the manifest's olmo2_instruct entry (G-DATA's three)",
         (pins["tokenizer.json"][:8], pins["tokenizer_config.json"][:8], pins["special_tokens_map.json"][:8])
         == ("73fd5254", "fff5b944", "78afb564"), "")
+
+    # (iv): render_iv on a synthetic (i)-(iii) folder under the character tokenizer
+    import shutil
+    base_iv = tmp / "base_iv"
+    render(ss, enc, sched, env, shas, "2026-11-16", base_iv, expect_n=3)
+    bpin = _sha256_bytes((base_iv / MANIFEST_FILE).read_bytes())
+    plines = [{"id": f"s-{i:02d}", "state": "s", "pole": "+", "text": f"I walk to stop {i}. I wait. I go home{'.' * i}"}
+              for i in range(3)]
+
+    def pb(rows) -> bytes:
+        return "".join(json.dumps(p) + "\n" for p in rows).encode("utf-8")
+    pbytes = pb(plines)
+    psha = _sha256_bytes(pbytes)
+    pre = "Task: t\nResponse: r\n"
+    ctx = [(pre, pre + "Reviewer: good.\n", "self_pos", "e01", 0),
+           (pre, pre + "Reviewer: bad.\n", "self_neg", "e01", 1)]
+    prov = {"input_shas": {"corpus_sha": "c" * 16}, "code_sha256": {"scripts/box_e0_corpus.py": "d" * 64}}
+    kw_iv = dict(a3_provenance=prov, passages_sha256=psha, expect_passages=3, expect_contexts=2, base_pin=bpin)
+
+    def run_iv(name, pbytes_=None, ctx_=None, enc_=enc, encs_=None, env_=None, shas_=None, base=None, **over):
+        return render_iv(pbytes if pbytes_ is None else pbytes_, ctx if ctx_ is None else ctx_, enc_,
+                         enc_ if encs_ is None else encs_, env if env_ is None else env_,
+                         shas if shas_ is None else shas_, "2026-11-18", base or base_iv, tmp / name,
+                         **dict(kw_iv, **over))
+
+    def stops(name, *a, **k):
+        r = run_iv(name, *a, **k)
+        return (r["status"] == "STOP" and not (tmp / name).exists() and not (tmp / (name + ".staging")).exists(),
+                r["first_problems"][:1], r)
+    k_pre = len(enc(pre))
+    rep_iv = run_iv("iv_ok", span_starts=[k_pre, k_pre])
+    ok_dir = tmp / "iv_ok"
+    written = sorted(p.name for p in ok_dir.iterdir()) if ok_dir.exists() else []
+    chk("ids (iv): a render whose passages and contexts all render (extract.span_start's boundaries given, and equal) "
+        "PASSes and writes a complete ids folder of six files, its staging folder gone",
+        rep_iv["status"] == "PASS" and written == sorted(FILES_I_III + FILES_IV + (MANIFEST_FILE,))
+        and not (tmp / "iv_ok.staging").exists(), (rep_iv["status"], written, rep_iv["first_problems"][:2]))
+    ld_iv = load(ok_dir)
+    man_iv = ld_iv["manifest"]
+    bman = json.loads((base_iv / MANIFEST_FILE).read_text(encoding="utf-8"))
+    chk("ids (iv): the extended manifest keeps (i)-(iii)'s fields and file entries, adds the two files and the iv "
+        "block (its date, base, corpus, A3's provenance with the contexts' digest and count, the conventions)",
+        {k: v for k, v in man_iv.items() if k not in ("files", "iv")} == {k: v for k, v in bman.items() if k != "files"}
+        and {k: man_iv["files"][k] for k in FILES_I_III} == bman["files"]
+        and sorted(man_iv["files"]) == sorted(FILES_I_III + FILES_IV) and man_iv["iv"]["base_manifest_sha256"] == bpin
+        and man_iv["iv"]["passages_sha256"] == psha and man_iv["iv"]["pi_date"] == "2026-11-18"
+        and man_iv["iv"]["a3"] == {**prov, "contexts_sha256": a3_digest(ctx), "contexts": 2}
+        and man_iv["iv"]["conventions"]["special_tokens_change_no_id"] is True and man_iv["pi_date"] == "2026-11-16",
+        man_iv.get("iv"))
+    chk("ids (iv): the new manifest's (i)-(iii) part is the base manifest byte for byte",
+        _sha256_bytes(_base_of(man_iv)) == bpin and _base_of(man_iv) == (base_iv / MANIFEST_FILE).read_bytes(), "")
+    chk("ids (iv): (i)-(iii)'s files are copied byte for byte",
+        all((ok_dir / f).read_bytes() == (base_iv / f).read_bytes() for f in FILES_I_III), "")
+    p0, c1 = ld_iv[GVEC_FILE][0], ld_iv[A3_FILE][1]
+    chk("ids (iv): a passage's ids are its text alone; its record carries index, id, state, pole, the text's sha256, "
+        "the token count and ids_sha", p0["ids"] == enc(plines[0]["text"]) and p0["n_tokens"] == len(p0["ids"])
+        and p0["ids_sha"] == ids_sha(p0["ids"]) and p0["text_sha256"] == _sha256_bytes(plines[0]["text"].encode())
+        and (p0["index"], p0["id"], p0["state"], p0["pole"]) == (0, "s-00", "s", "+")
+        and ld_iv["by_passage"]["s-02"]["index"] == 2, "")
+    chk("ids (iv): a context's ids are full's, its span starts where full leaves prefix (here at the prefix's own "
+        "count), and it carries the prefix's and the full's sha256",
+        c1["ids"] == enc(ctx[1][1]) and c1["span_start"] == c1["prefix_tokens"] == k_pre
+        and (c1["index"], c1["item_id"], c1["condition"], c1["variant"], c1["seq_len"])
+        == (1, "e01", "self_neg", 1, len(enc(ctx[1][1])))
+        and c1["prefix_sha256"] == _sha256_bytes(pre.encode())
+        and c1["full_sha256"] == _sha256_bytes(ctx[1][1].encode())
+        and rep_iv["a3_contexts"]["prefix_differs"] == 0, "")
+    chk("ids (iv): every record of both (iv) files carries the ids_sha of its own ids",
+        all(ids_sha(r["ids"]) == r["ids_sha"] for f in FILES_IV for r in ld_iv[f]) and len(ld_iv[A3_FILE]) == 2, "")
+    lens = [len(enc(c[1])) for c in ctx]
+    spans = [n - k_pre for n in lens]
+    chk("ids (iv): the report carries counts, figures and sha256s, no id: the token counts per state, seq_len and "
+        "span_len (min, mean, max), the contexts' digest, no special-token difference",
+        '"ids"' not in _dumps(rep_iv) and printable(rep_iv) == rep_iv
+        and rep_iv["passages"]["n_tokens"]["s"] == [len(plines[0]["text"]), round(sum(len(p["text"]) for p in plines)
+                                                                                  / 3, 1), len(plines[2]["text"])]
+        and rep_iv["a3_contexts"]["seq_len"] == [min(lens), max(lens)]
+        and rep_iv["a3_contexts"]["span_len"] == [min(spans), round(sum(spans) / 2, 2), max(spans)]
+        and rep_iv["a3_contexts"]["contexts_sha256"] == a3_digest(ctx) and rep_iv["special_tokens_differ"] == 0,
+        (rep_iv["passages"], rep_iv["a3_contexts"]))
+    chk("ids (iv): the report's files are the six files on disk, each sha256 and count (MANIFEST.json's its own)",
+        all(rep_iv["files"][f]["sha256"] == _sha256_bytes((ok_dir / f).read_bytes())
+            for f in FILES_I_III + FILES_IV + (MANIFEST_FILE,))
+        and rep_iv["files"][MANIFEST_FILE]["records"] == 5 and rep_iv["files"][A3_FILE]["records"] == 2, "")
+    try:
+        run_iv("iv_ok")
+        chk("ids (iv): the render writes once, into a new folder", False, "no refusal")
+    except SystemExit:
+        chk("ids (iv): the render writes once, into a new folder", True, "")
+    (tmp / "iv_st.staging").mkdir()
+    try:
+        run_iv("iv_st")
+        chk("ids (iv): a leftover staging folder is refused", False, "no refusal")
+    except SystemExit:
+        chk("ids (iv): a leftover staging folder is refused", True, "")
+    me = sys.modules[__name__]
+    saved_w = me._atomic_write
+
+    def boom(path, data):
+        if path.name == MANIFEST_FILE:
+            raise OSError("synthetic write failure")
+        saved_w(path, data)
+    me._atomic_write = boom
+    try:
+        try:
+            run_iv("iv_boom")
+            raised = False
+        except OSError:
+            raised = True
+    finally:
+        me._atomic_write = saved_w
+    chk("ids (iv): a failure after the first write leaves nothing: no folder and no staging folder",
+        raised and not (tmp / "iv_boom").exists() and not (tmp / "iv_boom.staging").exists(), raised)
+
+    def chk_stop(name, label, *a, problem=None, **k):
+        ok, first, r = stops(name, *a, **k)
+        chk(f"ids (iv): {label} STOPs, and nothing is written", ok and (problem is None or (first and problem
+                                                                                              in first[0])), first)
+        return r
+    chk_stop("iv_sha", "a passages file that is not the corpus of record", passages_sha256="0" * 64)
+    chk_stop("iv_pin", "a base manifest that is not (i)-(iii)'s of record", base_pin="0" * 64)
+    chk_stop("iv_five", "a base folder of (i)-(iv), its own manifest given as the pin", base=ok_dir,
+             base_pin=_sha256_bytes((ok_dir / MANIFEST_FILE).read_bytes()))
+    chk_stop("iv_env", "an environment other than the base manifest's", env_={**env, "transformers": "5.15.0"})
+    chk_stop("iv_tok", "a tokenizer file other than the base manifest's", shas_={**shas, TOKENIZER_FILES[0]: "1" * 64})
+    ptexts = {p["text"] for p in plines}
+    r_all = chk_stop("iv_spec", "special tokens that change every text's ids", encs_=lambda t: [1] + enc(t))
+    chk("ids (iv): ...and the count is every encode that differs: three passages, two prefixes, two fulls",
+        r_all["special_tokens_differ"] == 7, r_all["special_tokens_differ"])
+    for nm, f_, n_ in (("passages", lambda t: [1] + enc(t) if t in ptexts else enc(t), 3),
+                       ("prefixes", lambda t: [1] + enc(t) if t == pre else enc(t), 2),
+                       ("fulls", lambda t: [1] + enc(t) if t != pre and t.startswith(pre) else enc(t), 2)):
+        r_c = chk_stop(f"iv_spec_{nm}", f"special tokens that change the {nm}' ids alone", encs_=f_)
+        chk(f"ids (iv): ...the {nm} alone counted ({n_})", r_c["special_tokens_differ"] == n_,
+            r_c["special_tokens_differ"])
+    chk_stop("iv_noext", "a context whose full does not start with its prefix",
+             ctx_=[ctx[0], (pre, "Task: u\nResponse: r\nReviewer: x.\n", "self_neg", "e01", 1)], problem="extend")
+    chk_stop("iv_same", "a context whose full is its prefix", ctx_=[ctx[0], (pre, pre, "self_neg", "e01", 1)],
+             problem="extend")
+    k0 = lambda t: [999] + enc(t) if t == ctx[1][1] else enc(t)                     # noqa: E731
+    chk_stop("iv_k0", "a span that would start at token 0", enc_=k0, problem="degenerate")
+    kf = lambda t: enc(pre) if t == ctx[1][1] else enc(t)                           # noqa: E731
+    chk_stop("iv_kfull", "a span that would start at the full's end", enc_=kf, problem="degenerate")
+    chk_stop("iv_count", "a context count other than the expected", expect_contexts=3, problem="2 contexts")
+    chk_stop("iv_starts", "an extract.span_start boundary other than the render's", span_starts=[k_pre, k_pre + 1],
+             problem="extract.span_start gives")
+    chk_stop("iv_nstarts", "a span-start list of the wrong length", span_starts=[k_pre], problem="span starts")
+    for nm, old, new in (("missing", b'"pole": "+", ', b""), ("extra", b'"text": ', b'"x": "y", "text": '),
+                         ("nonstr", b'"pole": "+"', b'"pole": 1')):
+        b_ = pbytes.replace(old, new, 1)
+        chk_stop(f"iv_keys_{nm}", f"a passage line with a {nm} key or value", pbytes_=b_,
+                 passages_sha256=_sha256_bytes(b_), problem="not a record")
+    b_ = b"not json\n" + b"".join(pbytes.splitlines(keepends=True)[1:])
+    chk_stop("iv_json", "a passage line that is not JSON", pbytes_=b_, passages_sha256=_sha256_bytes(b_),
+             problem="not JSON")
+    b_ = pb([plines[0], dict(plines[1], id="s-00"), plines[2]])
+    chk_stop("iv_dup", "two passages with one id", pbytes_=b_, passages_sha256=_sha256_bytes(b_), problem="unique")
+    b_ = pb([plines[0], dict(plines[1], text=""), plines[2]])
+    chk_stop("iv_empty", "a passage with no tokens", pbytes_=b_, passages_sha256=_sha256_bytes(b_), problem="no tokens")
+    rep_mg = run_iv("iv_merge", enc_=enc_merge)
+    cmg = load(tmp / "iv_merge")[A3_FILE][0] if rep_mg["status"] == "PASS" else {}
+    chk("ids (iv): a merge across the boundary starts the span at the first divergent id, one before the prefix's own "
+        "count, and is counted (prefix_differs)", rep_mg["status"] == "PASS"
+        and rep_mg["a3_contexts"]["prefix_differs"] == 2 and cmg.get("span_start") == cmg.get("prefix_tokens", 0) - 1,
+        (rep_mg["a3_contexts"], cmg.get("span_start"), cmg.get("prefix_tokens")))
+
+    def refused_load(folder, edit, label, word):
+        dst = tmp / ("load_" + folder)
+        shutil.copytree(ok_dir, dst)
+        edit(dst)
+        try:
+            load(dst)
+            chk(f"ids (iv): {label} is refused", False, "no refusal")
+        except SystemExit as e:
+            chk(f"ids (iv): {label} is refused", word in str(e), str(e)[:100])
+
+    def man_edit(fn):
+        def go(dst):
+            m = json.loads((dst / MANIFEST_FILE).read_text(encoding="utf-8"))
+            fn(m)
+            (dst / MANIFEST_FILE).write_text(_dumps(m) + "\n", encoding="utf-8")
+        return go
+    refused_load("noiv", man_edit(lambda m: m.pop("iv")), "a manifest of the five files without its iv block",
+                 "iv block")
+    refused_load("four", man_edit(lambda m: (m.pop("iv"), m["files"].pop(A3_FILE))),
+                 "a manifest of (i)-(iii) and one (iv) file, no iv block", "iv block")
+    refused_load("threeiv", man_edit(lambda m: [m["files"].pop(f) for f in FILES_IV]),
+                 "a manifest of (i)-(iii) with an iv block", "iv block")
+    refused_load("absent", lambda dst: (dst / A3_FILE).unlink(), "a listed file that is absent", "absent")
+    refused_load("basebad", man_edit(lambda m: m.update(pi_date="2026-11-17")),
+                 "a manifest whose (i)-(iii) part is not the base its iv block names", "base manifest")
+    chk("ids (iv): the pins: (iv)'s two file names; (i)-(iii)'s manifest the one (iv) extends; the corpus the one "
+        "adopted", FILES_IV == ("gvec_passages.jsonl", "a3_contexts.jsonl") and MANIFEST_I_III.startswith("7f51bd91")
+        and PASSAGES_SHA256.startswith("ef6b00dc") and (N_PASSAGES, N_A3_CONTEXTS) == (544, 1344), "")
+    try:
+        ld_rec = load(IDS_DIR)
+        rec_ok = (ld_rec["manifest_sha256"] == MANIFEST_OF_RECORD != MANIFEST_I_III
+                  and sorted(ld_rec["manifest"]["files"]) == sorted(FILES_I_III + FILES_IV)
+                  and ld_rec["manifest"]["iv"]["base_manifest_sha256"] == MANIFEST_I_III
+                  and len(ld_rec[GVEC_FILE]) == N_PASSAGES and len(ld_rec[A3_FILE]) == N_A3_CONTEXTS)
+        rec_d = ld_rec["manifest_sha256"][:8]
+    except SystemExit as e:
+        rec_ok, rec_d = False, str(e)[:80]
+    chk("ids: the committed data/n/ids/ is (i)-(iv), its MANIFEST.json at MANIFEST_OF_RECORD, extending (i)-(iii)'s",
+        rec_ok, rec_d)
