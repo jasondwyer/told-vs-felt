@@ -13,9 +13,11 @@ and G-READ-n's states as inputs; (3) the sentence layer -- one §7 sentence set 
 (4) the reader -- the campaign's cell files through the schema's own checks, the cross-record checks the schema leaves
 to the analyzer, the declared read plan re-derived; (5) counters (rule 23) and secondaries (§4 (a)-(f)).
 
-Code's readings are registered in PINS (PIN-n-7 to PIN-n-26 accepted by the seat; later ones strikable until LOCK-n
-v1.0); the seat's rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in
-OPEN, as results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1 (bound by sha256) give them.
+Code's readings are registered in PINS (PIN-n-7 to PIN-n-32 ruled by the seat, PIN-n-29 and -32 amended and PIN-n-30's
+sentences amended by its answers of 2026-11-18, §5; later ones strikable until LOCK-n v1.0); the seat's rulings on the
+question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in OPEN, as
+results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1 (bound by sha256) give them, with the
+answers of 2026-11-18 (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md, §5) where they amend them.
 G-ANL-n's canonical run waits for G-CAL-n's dose map.
 
   --selftest            the battery (model-free); prints "  [PASS|FAIL] name got" per check; exit 0 iff every check
@@ -92,6 +94,7 @@ CNA = "concluded, not answered"            # §0.6, §5, verbatim
 NO_READ = "no read obtained"                # §5 N4, verbatim
 F10, F20 = "f=0.10", "f=0.20"
 F_TEXT = {F10: "0.10", F20: "0.20"}       # N2's [f] slot (ADDENDUM-n1 §7.6: "at f = [f]")
+F_LABEL = {F10: "f0.10", F20: "f0.20"}    # the record labels of N2's reads (n-build's schema)
 
 # NOT-RUN causes (§5 "Unit outcome first"): LOCK v1.0 not committed by D_n -- "(no box; a gate STOPPED and no
 # re-specification was locked; the PI declined v1.0 for any reason)" -- or locked and "produces no arm's full read set
@@ -311,6 +314,16 @@ class DoseMap:
             return SCHEMA_LABEL["d_20"]
         return BK_LABEL[r[which]]
 
+    def label_of(self, value: float) -> str:
+        """The record label of N1-V's realised point at ``value`` ('0', or the kept label of +1, +1/2, +d_20, +d_eq or
+        −1 whose value it is: a merged point carries its keeper's label), for naming a point (PIN-n-36)."""
+        if value == 0.0:
+            return "0"
+        for p in self.expected_points():
+            if not p["label"].startswith("f") and p["value"] == value:
+                return p["label"]
+        raise ValueError(f"no realised point at d = {value!r}")
+
     def resolved(self) -> dict[str, float]:
         return self._resolve()[0]
 
@@ -411,10 +424,25 @@ class State:
     missing: dict[str, int] = field(default_factory=dict)             # planned reads absent
     nonfinite: dict[str, int] = field(default_factory=dict)           # PIN-n-20: present reads that are not finite
     unusable: dict[str, str] = field(default_factory=dict)            # another reason: "shadow", "tau4-emptied"
+    # PIN-n-29 as amended (point by point) and PIN-n-36: why a steered arm's reads at one point are not usable, by
+    # (arm, the point's value; N2's arms: the f) -- "incomplete", "nonfinite", "shadow", "tau4-emptied" -- [] when
+    # usable. The reader records every point it reads; a point not recorded answers from the arm's own `complete`.
+    at: dict[tuple[str, Any], list[str]] = field(default_factory=dict)
 
     def gr(self, axis: str, key: Any) -> str:
         # PIN-n-11: a G-READ-n cell absent or not computed is "not PASS" for §0.6 (reported as NOT-COMPUTED).
         return self.gread.get((axis, key), "NOT-COMPUTED")
+
+    def causes_at(self, arm: str, key: Any) -> list[str]:
+        """Why the arm's reads at one point are not usable ([] when they are): PIN-n-29 as amended, PIN-n-36."""
+        if (arm, key) in self.at:
+            return list(self.at[(arm, key)])
+        return [] if self.complete.get(arm) else ["incomplete"]
+
+    def named_at(self, arm: str, key: Any) -> list[str]:
+        """causes_at, each named with its arm and the point's record label ('incomplete:N1-P@+d_20'; PIN-n-36)."""
+        lab = F_LABEL[key] if key in F_LABEL else self.dmap.label_of(key)
+        return [f"{c}:{arm}@{lab}" for c in self.causes_at(arm, key)]
 
 
 def _causes(st: State, arms: Sequence[str]) -> list[str]:
@@ -484,20 +512,31 @@ def dose_outcome(st: State, n1: Mapping) -> dict:
             "ceiling": ceq, "d_20_beside": beside}
 
 
+NOT_COMPUTED = "not computed"               # a figure whose reads are not usable (OPEN-Q6 as ruled; PIN-n-29)
+
+
+def n2_reads(st: State, f: str) -> list[tuple[str, Any]]:
+    """The reads N2's certification at f reads, point by point (PIN-n-29 as amended; the seat's answers of 2026-11-18
+    §5.2): N2-E at f, and N1-V, N1-R's 24 directions and N1-P at f's norm-matched point, as (arm, point or f)."""
+    m = st.dmap.norm_matched(f)
+    return [("N2-E", f), ("N1-V", m), ("N1-R", m), ("N1-P", m)]
+
+
 def n2_outcome(st: State) -> dict:
     """§5 N2, at its decision f (OPEN-Q7 as ruled, ADDENDUM-n1 §5.3: f = 0.10 against N1-V at d_eq when the cap binds,
-    else f = 0.20; the other f beside, with its ratio): INDETERMINATE iff an unadjudicated pause stands on N2's reads
-    -- N2-E's, N2-S's or N2-C's, as written -- or (OPEN-Q6 as ruled) N2-E, N1-V, N1-R or N1-P is not usable: the arms
-    whose figures its certification at the norm-matched point reads, each judged as an arm (PIN-n-29). A pause on
-    N1-V's, N1-R's or N1-P's reads alone leaves N2 evaluable (those arms complete). SPECIFIC iff span_reward's effect is
-    not certified while N1-V's at the norm-matched point is; SHARED iff span_reward's is certified; NULL iff neither --
-    each certification unsigned, as §3 states it (PIN-n-30). The guards decide nothing; a pause on their reads is a
-    pause on N2's reads."""
+    else f = 0.20; the other f beside, with its ratio). INDETERMINATE iff one of the reads its certification reads is
+    not usable -- missing, non-finite, its sessions' shadows not usable, or emptied in the TAU/4 row -- or a pause stands
+    on one of them (OPEN-Q6 as ruled; PIN-n-29 as amended, ADDENDUM-n1 §7.4's N2 clause read point by point: N2-E at the
+    decision f, N1-V, N1-R's 24 directions and N1-P at the norm-matched point; PIN-n-36). A pause stands on its scope's
+    arms, so a pause on N2-E, N1-V, N1-R or N1-P stands on those reads, and one on a guard's alone on none of them
+    (PIN-n-33). An incompleteness elsewhere in those arms leaves N2 evaluated. SPECIFIC iff span_reward's effect is not
+    certified while N1-V's at the norm-matched point is; SHARED iff span_reward's is certified; NULL iff neither --
+    each certification unsigned, as §3 states it (PIN-n-30: the sign enters no N2 outcome). The guards decide nothing.
+    The other f's figures beside are each 'not computed' where their reads are not usable."""
     f_dec = st.dmap.n2_decision_f()
     f_bes = F20 if f_dec == F10 else F10
-    reads = ("N2-E", "N1-V", "N1-R", "N1-P")
-    causes = [f"pause:{a}" for a in N2_ARMS if st.paused.get(a)] + \
-             [c for c in _causes(st, reads) if not c.startswith("pause:")]
+    reads = n2_reads(st, f_dec)
+    causes = [f"pause:{a}" for a, _ in reads if st.paused.get(a)] + [c for a, k in reads for c in st.named_at(a, k)]
     if causes:
         return {"state": "INDETERMINATE", "f": f_dec, "causes": causes}
     m = st.dmap.norm_matched(f_dec)
@@ -506,13 +545,18 @@ def n2_outcome(st: State) -> dict:
     cert_v = above(st.V[m].mean, ceil_m)
     state = "SPECIFIC" if (not cert_e and cert_v) else "SHARED" if cert_e else "NULL"
     mb = st.dmap.norm_matched(f_bes)
-    cb = ceiling_cert(st, mb)
-    beside = {f_bes: {"point": mb, "E": st.E.get(f_bes), "V": st.V.get(mb), "ceiling": cb,       # ADDENDUM-n1 §5.3
-                      "certified": above(st.E[f_bes].mean, cb) if f_bes in st.E else None,
-                      "certified_V": above(st.V[mb].mean, cb) if mb in st.V else None,
-                      "match_ratio": st.dmap.match_ratio(f_bes)},
-              "guards": {g: {f: est for f, est in d.items()} for g, d in (("span_sentiment", st.S),
-                                                                          ("span_character", st.C))}}
+    ok = {a: not st.causes_at(a, k) for a, k in n2_reads(st, f_bes)}
+    e_b = st.E[f_bes] if ok["N2-E"] else NOT_COMPUTED
+    v_b = st.V[mb] if ok["N1-V"] else NOT_COMPUTED
+    c_b = ceiling_cert(st, mb) if (ok["N1-R"] and ok["N1-P"]) else NOT_COMPUTED
+
+    def cert_b(x: Any) -> Any:
+        return NOT_COMPUTED if NOT_COMPUTED in (x, c_b) else above(x.mean, c_b)
+    beside = {f_bes: {"point": mb, "E": e_b, "V": v_b, "ceiling": c_b,                          # ADDENDUM-n1 §5.3
+                      "certified": cert_b(e_b), "certified_V": cert_b(v_b), "match_ratio": st.dmap.match_ratio(f_bes)},
+              "guards": {g: {f: (d[f] if (f in d and not st.causes_at(a, f)) else NOT_COMPUTED) for f in (F10, F20)}
+                         | {"paused": bool(st.paused.get(a))}
+                         for g, a, d in (("span_sentiment", "N2-S", st.S), ("span_character", "N2-C", st.C))}}
     return {"state": state, "f": f_dec, "point": m, "ceiling": ceil_m, "certified_E": cert_e, "certified_V": cert_v,
             "match_ratio": st.dmap.match_ratio(f_dec), "cap_binds": st.dmap.cap_binds(), "beside": beside}
 
@@ -569,9 +613,10 @@ VERBATIM = {"T_N1_REPLICATED": (136, T_N1_REPLICATED), "T_DOSE_DETECTABLE": (138
             "ANSWERED": (138, ANSWERED), "CNA": (136, CNA), "NO_READ": (142, NO_READ)}
 
 # ADDENDUM-n1 §7.6's forms (OPEN-Q8 as ruled; the battery asserts each against the addendum's italic spans, as §5's are
-# asserted against the proposal's). The three NOT-DETECTABLE forms carry a movement clause where §5 said OLD_MOVE (the
-# addendum's quotation): MOVE_NOT_CERTIFIED, or MOVE_AGAINST under the sign rule (§7.3), in the [movement] slot filled
-# at VERDICTS. A6_DOSE_ND_READABLE_N4 is the cell of §7.2 (N4 not PASS, G-READ-n PASS); N2's sentences say F_AT.
+# asserted against the proposal's). The three NOT-DETECTABLE forms carry MOVE_NOT_CERTIFIED where §5 said OLD_MOVE (the
+# addendum's quotation); §7.3's clause, MOVE_AGAINST, names a certified movement against the conditioned zone in N1's
+# NOT-REPLICATED sentence (PIN-n-28), while at d_eq such a movement takes the seat's fourth form (FOURTH, below).
+# A6_DOSE_ND_READABLE_N4 is the cell of §7.2 (N4 not PASS, G-READ-n PASS); N2's sentences say F_AT.
 OLD_MOVE = "the margin does not move beyond the leak ceiling"
 MOVE_NOT_CERTIFIED = "the margin's movement is not certified (Δm(d_eq) = [x] nats [CI] against a leak ceiling of [c])"
 MOVE_AGAINST = ("the margin moves against the conditioned zone beyond the leak ceiling (Δm = [x] nats [CI], ceiling "
@@ -583,12 +628,34 @@ A6_DOSE_ND_READABLE_N4 = ("at this program's dose the state is readable at the d
 F_AT = "at f = [f]"
 ADDENDUM_FORMS = {"MOVE_NOT_CERTIFIED": MOVE_NOT_CERTIFIED, "A6_DOSE_ND_READABLE_N4": A6_DOSE_ND_READABLE_N4,
                   "MOVE_AGAINST": MOVE_AGAINST, "F_AT": F_AT}
-MOVE_SLOT = "[movement]"
 #: secondary (b) in the secondary DVs' output: ADDENDUM-n1 §4 ("is struck; the VERDICTS entry says so"), in its words
 B_STRUCK = ("struck (ADDENDUM-n1 §4): nothing is generated in the campaign; §0.4's table stands as the welfare "
             "report")
-D_ND_ANSWERED = T_DOSE_ND_ANSWERED.replace(OLD_MOVE, MOVE_SLOT)          # §5's answered form, amended
-D_ND_READABLE_N4 = A6_DOSE_ND_READABLE_N4.replace(MOVE_NOT_CERTIFIED, MOVE_SLOT)
+
+# The seat's answers of 2026-11-18, §5 (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md, sha256
+# 5843a9bd...7165), transcribed: the battery reads no raw (its hook bars results/raw), so the literal-text checks and the
+# values-check hold these to the raw's words. §5.3 (PIN-n-30): each figure of N2's three forms carries its CI and, where
+# its mean is below 0, ZONE_WORDS (PIN-n-34). §5.4 (PIN-n-32): where d_eq merges into another point, the NOT-DETECTABLE
+# forms print their figure with MERGE_NOTE after it (DETECTABLE's [value] keeps VALUE_MERGED). §5.6 (F11): a movement at
+# d_eq certified against the conditioned zone is NOT-DETECTABLE in FOURTH, its readability clause by G-READ-n's state
+# (READ_ALT's two branches), labelled by §0.6.
+ZONE_WORDS = ", against the conditioned zone"
+MERGE_NOTE = " (read at d = [point], the point d_eq merges into under §2.3)"
+FOURTH = ("at this program's dose the margin moves against the conditioned zone beyond the leak ceiling (Δm(d_eq) = [x] "
+          "nats [CI], ceiling [c])[; the state is readable at the decision (AUC [a]) | ; the state is not readable at "
+          "the decision]: dose alone does not account for the program's null on the echo channel, and the effect at "
+          "this dose is reversed in sign")
+READABLE = "; the state is readable at the decision (AUC [a])"
+NOT_READABLE = "; the state is not readable at the decision"
+READ_ALT = "[" + READABLE + " | " + NOT_READABLE + "]"
+F4 = {"readable": FOURTH.replace(READ_ALT, READABLE), "not readable": FOURTH.replace(READ_ALT, NOT_READABLE)}
+RULING_FORMS = {"ZONE_WORDS": ZONE_WORDS, "MERGE_NOTE": MERGE_NOTE} | {f"FOURTH, {k}": v for k, v in F4.items()}
+MERGE_SLOT, ZONE_E, ZONE_V = "[merge]", "[zoneE]", "[zoneV]"
+DEQ_FIGURE = "Δm(d_eq) = [x] nats [CI]"                                 # §5.4's figure; MERGE_SLOT follows it
+MOVE_NC = MOVE_NOT_CERTIFIED.replace(DEQ_FIGURE, DEQ_FIGURE + MERGE_SLOT)
+D_ND_ANSWERED = T_DOSE_ND_ANSWERED.replace(OLD_MOVE, MOVE_NC)            # §5's answered form, amended
+D_ND_READABLE_N4 = A6_DOSE_ND_READABLE_N4.replace(MOVE_NOT_CERTIFIED, MOVE_NC)
+D_FOURTH = {k: v.replace(DEQ_FIGURE, DEQ_FIGURE + MERGE_SLOT) for k, v in F4.items()}
 
 # Code's forms (Appendix A of the question block, adopted with the seat's amendments: OPEN-Q8 as ruled): §5 words the
 # cells above only; "PARTIAL and NOT-REPLICATED name the failing conjunct and the figures"; INDETERMINATE, NOT-RUN, N2
@@ -605,18 +672,22 @@ C_N1_NOT_REPLICATED = ("NOT-REPLICATED: BK's fixed-text effect does not replicat
 C_N1_INDET = "INDETERMINATE: N1 is not evaluated ([causes])"
 C_DOSE_ND_NOT_READABLE = ("at this program's dose the margin does not move beyond the leak ceiling and the state is not "
                           "readable at the decision: dose is an explanation of record, unresolved")   # A.5, as written
-D_ND_NOT_READABLE = C_DOSE_ND_NOT_READABLE.replace(OLD_MOVE, MOVE_SLOT)  # A.5, amended
+D_ND_NOT_READABLE = C_DOSE_ND_NOT_READABLE.replace(OLD_MOVE, MOVE_NC)    # A.5, amended
 C_DOSE_INDET = "INDETERMINATE: the dose question is not evaluated ([causes])"
 N2_HEAD = "N2, descriptive (§7.3; it licenses no thesis sentence): "
+# A.7's three forms as the seat's answers of 2026-11-18 §5.3 amend them (PIN-n-30, PIN-n-34): every figure with its CI
+# and, where its mean is below 0, ZONE_WORDS in [zoneE] / [zoneV], closing the figure's parenthetical, or the sentence
+# where the figure has none (SHARED's valence figure).
 C_N2 = {"SPECIFIC": N2_HEAD + ("SPECIFIC: at f = [f] this program's evaluative axis (span_reward) does not move BK's "
-                               "apparatus beyond the leak ceiling (Δm = [xE] nats against [c]) while the valence direction "
-                               "of record at the norm-matched point does (Δm = [xV] nats) — [label]"),
-        "SHARED": N2_HEAD + ("SHARED: at f = [f] this program's evaluative axis (span_reward) moves BK's apparatus beyond "
-                             "the leak ceiling (Δm = [xE] nats [CIE] against [c]); the valence direction of record at the "
-                             "norm-matched point: Δm = [xV] nats"),
-        "NULL": N2_HEAD + ("NULL: at f = [f] neither this program's evaluative axis (span_reward, Δm = [xE] nats) nor "
-                           "the valence direction of record at the norm-matched point (Δm = [xV] nats) moves BK's "
-                           "apparatus beyond the leak ceiling ([c]) — [label]"),
+                               "apparatus beyond the leak ceiling (Δm = [xE] nats [CIE] against [c][zoneE]) while the "
+                               "valence direction of record at the norm-matched point does (Δm = [xV] nats [CIV][zoneV]) "
+                               "— [label]"),
+        "SHARED": N2_HEAD + ("SHARED: at f = [f] this program's evaluative axis (span_reward) moves BK's apparatus "
+                             "beyond the leak ceiling (Δm = [xE] nats [CIE] against [c][zoneE]); the valence direction "
+                             "of record at the norm-matched point: Δm = [xV] nats [CIV][zoneV]"),
+        "NULL": N2_HEAD + ("NULL: at f = [f] neither this program's evaluative axis (span_reward, Δm = [xE] nats "
+                           "[CIE][zoneE]) nor the valence direction of record at the norm-matched point (Δm = [xV] nats "
+                           "[CIV][zoneV]) moves BK's apparatus beyond the leak ceiling ([c]) — [label]"),
         "INDETERMINATE": N2_HEAD + "INDETERMINATE: N2 is not evaluated ([causes])"}
 C_N4 = {"PASS": ("PASS: BK's apparatus registers an instructed preference on this checkpoint: m_told = [x] nats [CI98] "
                  "against E = [e]; it licenses the answered reading of nulls in this format on this checkpoint (§0.6, "
@@ -628,7 +699,7 @@ C_N4 = {"PASS": ("PASS: BK's apparatus registers an instructed preference on thi
 C_NOT_RUN = "NOT-RUN: [reason]; no question of PROPOSAL-n v0.2 §1 is answered on N-pod"
 SLOTS = ("[on their / on a reconstructed direction]", "[x]", "[CI]", "[y]", "[z]", "[max(L, P)]", "[value]", "[c]",
          "[a]", "[failing]", "[x−]", "[CI−]", "[label]", "[causes]", "[n4]", "[xE]", "[CIE]", "[xV]", "[CI98]", "[e]",
-         "[-e]", "[reason]", "[movement]", "[f]")
+         "[-e]", "[reason]", "[f]", "[CIV]", "[zoneE]", "[zoneV]", "[merge]", "[point]")
 CONJUNCT_TEXT = {"i": "conjunct (i) (Δm(+1) ≥ 0.545 nats with its 95% CI excluding 0)",
                  "iv": "conjunct (iv) (Δm(−1) < 0 with its 95% CI excluding 0)",
                  "ci+1": "the 95% CI at d = +1 excluding 0",
@@ -671,17 +742,31 @@ def sentence_n1(state: str, *, n4: str, gr1: str, failing: Sequence[str] | None 
     raise ValueError(f"N1 state {state!r}")
 
 
-def sentence_dose(state: str, *, n4: str, gr: str, causes: Sequence[str] | None = None) -> dict:
+FORM_FOURTH = "the seat's answers of 2026-11-18 §5.6, with §5.4's note"
+FORM_ND = {"answered": "§5, amended by ADDENDUM-n1 §7.6 and the seat's answers of 2026-11-18 §5.4",
+           "not readable": "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6 and the seat's answers of "
+                           "2026-11-18 §5.4",
+           "A.6": "ADDENDUM-n1 §7.6, amended by the seat's answers of 2026-11-18 §5.4"}
+
+
+def sentence_dose(state: str, *, n4: str, gr: str, causes: Sequence[str] | None = None, against: bool = False) -> dict:
+    """The dose sentence. ``against``: the movement at d_eq is certified against the conditioned zone (its CI excluding
+    0, G-LEAK-n certifying it, the mean below 0; PIN-n-27), so NOT-DETECTABLE takes the seat's fourth form (F11 as
+    ruled, §5.6), its readability clause by G-READ-n's state and its label by §0.6 as the others."""
+    if against and state != "NOT-DETECTABLE":
+        raise ValueError(f"a movement against the conditioned zone at d_eq is NOT-DETECTABLE, not {state!r}")
     if state == "DETECTABLE":
         return {"question": "dose", "state": state, "text": T_DOSE_DETECTABLE, "label": None, "form": "§5"}
     if state == "NOT-DETECTABLE":
         lab = label(n4, gr)
-        if lab == ANSWERED:
-            t, form = D_ND_ANSWERED, "§5, amended by ADDENDUM-n1 §7.6"
+        if against:
+            t, form = D_FOURTH["readable" if gr == "PASS" else "not readable"], FORM_FOURTH
+        elif lab == ANSWERED:
+            t, form = D_ND_ANSWERED, FORM_ND["answered"]
         elif gr != "PASS":
-            t, form = D_ND_NOT_READABLE, "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6"
+            t, form = D_ND_NOT_READABLE, FORM_ND["not readable"]
         else:
-            t, form = D_ND_READABLE_N4.replace("[n4]", n4), "ADDENDUM-n1 §7.6"
+            t, form = D_ND_READABLE_N4.replace("[n4]", n4), FORM_ND["A.6"]
         return {"question": "dose", "state": state, "text": t, "label": lab, "form": form}
     if state == "INDETERMINATE":
         t = C_DOSE_INDET if causes is None else C_DOSE_INDET.replace("[causes]", ", ".join(causes))
@@ -716,21 +801,26 @@ def sentence_n4(state: str, *, no_read: bool = False, causes: Sequence[str] | No
 SLOT_KEYS = ("7.1", "7.2", "7.3", "N4")
 
 
-def sentence_set(t: Sequence[str] | str, *, gr1: str = "FAIL", gre: str = "FAIL", n4_no_read: bool = False) -> dict:
+def sentence_set(t: Sequence[str] | str, *, gr1: str = "FAIL", gre: str = "FAIL", n4_no_read: bool = False,
+                 dose_against: bool = False) -> dict:
     """One §7 sentence set for an outcome tuple (template form: figures, causes and the failing conjuncts are slots).
     t = (N1, dose, N2, N4, G-READ-n valence at d_eq) or "NOT-RUN". OPEN-Q4 as ruled (confirmed): three inputs that
     are not coordinates change a sentence -- gr1 = G-READ-n (valence, +1), gre = G-READ-n (span_reward, at N2's
-    decision f), and n4_no_read (N4's INDETERMINATE "with no read obtained" against the terminal one); the battery runs
-    every tuple under each (m's flag precedent: an input, not a coordinate)."""
+    decision f), and n4_no_read (N4's INDETERMINATE "with no read obtained" against the terminal one); the seat's fourth
+    NOT-DETECTABLE form (F11 as ruled) adds a fourth, dose_against (a movement at d_eq certified against the
+    conditioned zone, which only a NOT-DETECTABLE dose carries: PIN-n-35); the battery runs every tuple under each
+    (m's flag precedent: an input, not a coordinate)."""
     if t == NOT_RUN:
         s = {"question": "unit", "state": NOT_RUN, "text": C_NOT_RUN, "label": None, "form": "Code"}
         return {k: dict(s) for k in SLOT_KEYS}
     n1, dose, n2, n4, grd = t
     if n1 not in N1_STATES or dose not in DOSE_STATES or n2 not in N2_STATES or n4 not in N4_STATES \
             or grd not in GREAD_STATES or gr1 not in GREAD_STATES or gre not in GREAD_STATES \
-            or not isinstance(n4_no_read, bool) or (n4_no_read and n4 != "INDETERMINATE"):
-        raise ValueError(f"not a tuple of the outcome space: {t!r} (inputs {gr1!r}, {gre!r}, {n4_no_read!r})")
-    return {"7.1": sentence_n1(n1, n4=n4, gr1=gr1), "7.2": sentence_dose(dose, n4=n4, gr=grd),
+            or not isinstance(n4_no_read, bool) or (n4_no_read and n4 != "INDETERMINATE") \
+            or not isinstance(dose_against, bool) or (dose_against and dose != "NOT-DETECTABLE"):
+        raise ValueError(f"not a tuple of the outcome space: {t!r} (inputs {gr1!r}, {gre!r}, {n4_no_read!r}, "
+                         f"{dose_against!r})")
+    return {"7.1": sentence_n1(n1, n4=n4, gr1=gr1), "7.2": sentence_dose(dose, n4=n4, gr=grd, against=dose_against),
             "7.3": sentence_n2(n2, n4=n4, gre=gre), "N4": sentence_n4(n4, no_read=n4_no_read)}
 
 
@@ -747,21 +837,24 @@ def tuple_space() -> list:
 def gleak_table(st: State) -> list[dict]:
     """§3 G-LEAK-n, per dose point: L(d), P(d) where N1-P is read, the ceiling, and each valenced arm's certification
     there -- N1-V at each of its realised points (a merged point under every label it carries), N2-E/S/C at their
-    norm-matched points. Uncertified effects are reported as such and license no sentence (§3)."""
+    norm-matched points. Uncertified effects are reported as such and license no sentence (§3). Each row is read point
+    by point (PIN-n-29 as amended; PIN-n-36): computed iff the arm's reads there, N1-R's and, where N1-P reads the
+    point, N1-P's are usable, so that the table agrees with N2's outcome."""
     r = st.dmap.resolved()
     rows = []
     labels: dict[float, list[str]] = {}
     for lab in ("+1", "+1/2", "d_20", "d_eq", "-1"):
         labels.setdefault(r[lab], []).append(lab)
 
-    def needs(arm: str, pt: float) -> list[str]:
-        """The arms whose figures a certification at pt reads (N1-P where it is read: OPEN-Q2 as ruled)."""
-        return [arm, "N1-R"] + (["N1-P"] if pt in st.dmap.n1p_points() else [])
+    def needs(arm: str, key: Any, pt: float) -> list[str]:
+        """Why the reads a certification at pt reads are not usable (N1-P where it is read: OPEN-Q2 as ruled)."""
+        reads = [(arm, key), ("N1-R", pt)] + ([("N1-P", pt)] if pt in st.dmap.n1p_points() else [])
+        return [c for a, k in reads for c in st.named_at(a, k)]
     for pt in sorted(labels, reverse=True):
-        miss = [a for a in needs("N1-V", pt) if not st.complete.get(a)]
+        miss = needs("N1-V", pt, pt)
         if miss:
             rows.append({"arm": "N1-V", "point": pt, "labels": labels[pt], "certified": None,
-                         "why": f"incomplete: {', '.join(miss)}"})
+                         "why": f"not usable: {', '.join(miss)}"})
             continue
         P = st.P.get(pt)
         c = ceiling(st.L[pt], P)
@@ -770,10 +863,10 @@ def gleak_table(st: State) -> list[dict]:
     for arm, d in (("N2-E", st.E), ("N2-S", st.S), ("N2-C", st.C)):
         for f in (F10, F20):
             pt = st.dmap.norm_matched(f)
-            miss = [a for a in needs(arm, pt) if not st.complete.get(a)]
+            miss = needs(arm, f, pt)
             if miss or f not in d:
                 rows.append({"arm": arm, "point": pt, "labels": [f], "certified": None,
-                             "why": f"incomplete: {', '.join(miss) or arm}"})
+                             "why": f"not usable: {', '.join(miss) or arm}"})
                 continue
             P = st.P.get(pt)
             c = ceiling(st.L[pt], P)
@@ -907,7 +1000,17 @@ def addendum_spans(text: str) -> dict[str, str]:
             "add_ans": s3[1], "add_cna": s3[2], "add_b4": lines[j + 2]}
 
 
-def oracle_set(t, *, gr1: str, gre: str, n4_no_read: bool, verb: Mapping[str, str]) -> dict:
+#: The oracle's own transcription of the seat's answers of 2026-11-18, §5.4's figure with its note and §5.6's fourth
+#: form (the battery reads no raw, so a second copy, made apart from the module's: a slip in either fails T2, for the
+#: fourth form and the figure, or SENT-RULING, for the note's words).
+_ORC_NOTE = "Δm(d_eq) = [x] nats [CI] (read at d = [point], the point d_eq merges into under §2.3)"
+_ORC_FOURTH = ("at this program's dose the margin moves against the conditioned zone beyond the leak ceiling "
+               "(Δm(d_eq) = [x] nats [CI], ceiling [c])[; the state is readable at the decision (AUC [a]) | ; the "
+               "state is not readable at the decision]: dose alone does not account for the program's null on the "
+               "echo channel, and the effect at this dose is reversed in sign")
+
+
+def oracle_set(t, *, gr1: str, gre: str, n4_no_read: bool, verb: Mapping[str, str], dose_against: bool = False) -> dict:
     if t == NOT_RUN:
         return {k: {"question": "unit", "state": NOT_RUN, "text": C_NOT_RUN, "label": None, "form": "Code"}
                 for k in SLOT_KEYS}
@@ -924,15 +1027,26 @@ def oracle_set(t, *, gr1: str, gre: str, n4_no_read: bool, verb: Mapping[str, st
     if dose == "DETECTABLE":
         s2 = (verb["det"], None, "§5")
     elif dose == "NOT-DETECTABLE":
-        # ADDENDUM-n1 §7.6 from its own bytes: §5's clause, as the addendum quotes it, becomes the movement slot
-        if n4 == "PASS" and grd == "PASS":
-            s2 = (verb["nd_ans"].replace(verb["add_old"], "[movement]"), verb["ans"], "§5, amended by ADDENDUM-n1 §7.6")
+        # ADDENDUM-n1 §7.6 from its own bytes (§5's clause, as the addendum quotes it, becomes the movement not
+        # certified), the [merge] slot after the figure §5.4's note follows; the fourth form from the oracle's copy
+        fig = _ORC_NOTE[:_ORC_NOTE.index(" (read at d = ")]
+        merged = (lambda s: s.replace(fig, fig + "[merge]"))
+        lb2 = verb["ans"] if (n4 == "PASS" and grd == "PASS") else verb["cna"]
+        if dose_against:
+            a, b = _ORC_FOURTH.index("[; "), _ORC_FOURTH.index("]: dose alone")
+            readable, not_readable = _ORC_FOURTH[a + 1:b].split(" | ")
+            s2 = (merged(_ORC_FOURTH[:a] + (readable if grd == "PASS" else not_readable) + _ORC_FOURTH[b + 1:]), lb2,
+                  "the seat's answers of 2026-11-18 §5.6, with §5.4's note")
+        elif n4 == "PASS" and grd == "PASS":
+            s2 = (verb["nd_ans"].replace(verb["add_old"], merged(verb["add_not_cert"])), lb2,
+                  "§5, amended by ADDENDUM-n1 §7.6 and the seat's answers of 2026-11-18 §5.4")
         elif grd == "FAIL":
-            s2 = (C_DOSE_ND_NOT_READABLE.replace(verb["add_old"], "[movement]"), verb["cna"],
-                  "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6")
+            s2 = (C_DOSE_ND_NOT_READABLE.replace(verb["add_old"], merged(verb["add_not_cert"])), lb2,
+                  "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6 and the seat's answers of 2026-11-18 "
+                  "§5.4")
         else:
-            s2 = (verb["add_a6"].replace(verb["add_not_cert"], "[movement]").replace("[n4]", n4), verb["cna"],
-                  "ADDENDUM-n1 §7.6")
+            s2 = (merged(verb["add_a6"]).replace("[n4]", n4), lb2,
+                  "ADDENDUM-n1 §7.6, amended by the seat's answers of 2026-11-18 §5.4")
     else:
         s2 = (C_DOSE_INDET, None, "Code")
     if n2 in ("SPECIFIC", "NULL"):
@@ -949,23 +1063,25 @@ def oracle_set(t, *, gr1: str, gre: str, n4_no_read: bool, verb: Mapping[str, st
 
 
 def evaluations() -> list[tuple]:
-    """Every (tuple, gr1, gre, n4_no_read) the tuple pass evaluates: 384 tuples x 4 G-READ inputs, x 2 where N4 is
-    INDETERMINATE (no read / terminal), + NOT-RUN once = 1,921."""
+    """Every (tuple, gr1, gre, n4_no_read, dose_against) the tuple pass evaluates: 384 tuples x 4 G-READ inputs, x 2
+    where N4 is INDETERMINATE (no read / terminal), x 2 where dose is NOT-DETECTABLE (the seat's fourth form: a movement
+    at d_eq certified against the conditioned zone, or not; PIN-n-35), + NOT-RUN once = 2,561."""
     out = []
     for t in tuple_space():
         if t == NOT_RUN:
-            out.append((t, None, None, False))
+            out.append((t, None, None, False, False))
             continue
         for gr1, gre in itertools.product(GREAD_STATES, GREAD_STATES):
             for nr in ((False, True) if t[3] == "INDETERMINATE" else (False,)):
-                out.append((t, gr1, gre, nr))
+                for ag in ((False, True) if t[1] == "NOT-DETECTABLE" else (False,)):
+                    out.append((t, gr1, gre, nr, ag))
     return out
 
 
 # =====================================================================================================================
 # 9. The battery (§3 G-ANL-n). Selftest-only helpers carry the `_bt` prefix.
 # =====================================================================================================================
-EXPECTED_CHECKS = 207
+EXPECTED_CHECKS = 217
 
 _REQ: list[str] = []
 _REQ += [f"N1-{x}" for x in ("REPLICATED", "PARTIAL-i", "PARTIAL-iv", "PARTIAL-i-iv", "NOTREP-ci+1", "NOTREP-ii",
@@ -978,10 +1094,10 @@ _REQ += ["DOSE-DET-POS", "DOSE-ND-AGAINST", "DOSE-ND-CI", "DOSE-ND-UNCERT", "DOS
          "DOSE-INDET-N1", "DOSE-INDET-POINTS",
          "DOSE-BESIDE-D20"]
 _REQ += ["N2-SPECIFIC", "N2-SHARED-V-CERT", "N2-SHARED-V-UNCERT", "N2-NULL", "N2-INDET-pause:N2-E",
-         "N2-INDET-pause:N2-S", "N2-INDET-pause:N2-C", "N2-NOT-PAUSED-BY-N1",
+         "N2-INDET-pause:N1-V", "N2-INDET-pause:N1-R", "N2-INDET-pause:N1-P", "N2-GUARD-PAUSE",
          "N2-INDET-incomplete:N2-E", "N2-INDET-incomplete:N1-V", "N2-INDET-incomplete:N1-R",
-         "N2-INDET-incomplete:N1-P", "N2-GUARDS-DECIDE-NOTHING",
-         "N2-F10-BESIDE", "N2-MATCH-RATIO", "N2-CAP-F10", "N2-UNSIGNED", "N2-BESIDE-FIELDS"]
+         "N2-INDET-incomplete:N1-P", "N2-GUARDS-DECIDE-NOTHING", "N2-POINT-ELSEWHERE", "N2-POINT-CAUSES",
+         "N2-F10-BESIDE", "N2-MATCH-RATIO", "N2-CAP-F10", "N2-UNSIGNED", "N2-BESIDE-FIELDS", "N2-BESIDE-NOT-COMPUTED"]
 _REQ += ["N4-PASS", "N4-REVERSE", "N4-DEAD", "N4-INDET-TERMINAL", "N4-NOREAD-incomplete:N4-T",
          "N4-NOREAD-incomplete:N4-Ts", "N4-NOREAD-pause:N4-T", "N4-NOREAD-pause:N4-Ts", "N4-NOREAD-E-undefined",
          "N4-ORD-REV-OVER-DEAD", "N4-ORD-PASS-OVER-DEAD", "N4-BND-MEAN-EQ-E", "N4-BND-MEAN-EQ-NEGE",
@@ -990,12 +1106,13 @@ _REQ += [f"NR-{c}" for c in NOT_RUN_CAUSES] + ["NR-REFUSE-PREMATURE", "NR-REFUSE
                                                 "NR-REFUSE-CAUSE", "NR-REFUSE-KEYS"]
 _REQ += [f"GLEAK-{a}-{c}" for a in ("N1-V", "N2-E", "N2-S", "N2-C") for c in ("CERT", "UNCERT", "INCOMPLETE")]
 _REQ += [f"GREAD-{c}" for c in ("PASS", "FAIL", "NOT-COMPUTED", "ENTERS-N1", "ENTERS-DOSE", "ENTERS-N2")]
-_REQ += ["GLEAK-N1P-INCOMPLETE"]
+_REQ += ["GLEAK-N1P-INCOMPLETE", "GLEAK-POINTWISE"]
 _REQ += ["SENT-VERBATIM", "SENT-FAILING-PARTIAL", "SENT-FAILING-NOTREP", "SENT-CAUSES", "SENT-REFUSES",
-         "SENT-CODE-FORMS", "SENT-ADDENDUM", "SENT-FILLED-DOSE-ND", "SENT-FILLED-N1-AGAINST", "SENT-FILLED-N2-CAP"]
+         "SENT-CODE-FORMS", "SENT-ADDENDUM", "SENT-FILLED-DOSE-ND", "SENT-FILLED-N1-AGAINST", "SENT-FILLED-N2-CAP",
+         "SENT-RULING", "SENT-FILLED-DOSE-FOURTH", "SENT-FILLED-N2-ZONE"]
 _REQ += [f"TUP-T{i}" for i in range(1, 11)] + ["TUP-DETERMINISM", "TUP-COUNT"]
 _REQ += ["REACH-DOSE-IFF-N1", "REACH-SHAPE-a", "REACH-SHAPE-b", "REACH-SHAPE-c", "REACH-SHAPE-d", "REACH-N4-FREE",
-         "REACH-NO-RAISE"]
+         "REACH-NO-RAISE", "REACH-FOURTH"]
 _REQ += ["NUM-KEYSTREAM-M159", "NUM-KNOWN-ANSWER", "NUM-BOOT-DETERMINISM", "NUM-BOOT-CONSTANT", "NUM-BOOT-LOOP",
          "NUM-PCT-METHOD", "NUM-SLOPE-CLOSED-FORM", "NUM-SLOPE-BESIDE", "NUM-SLOPE-INTERCEPT", "NUM-SD0",
          "NUM-NONFINITE-STOP", "NUM-BK-FITS-COINCIDE", "NUM-CAP-DECISION-F", "NUM-N1P-POINTS",
@@ -1006,7 +1123,7 @@ _REQ += ["STR-PROPOSAL-SHA", "STR-ADDENDUM-SHA", "STR-VERBATIM-IN-PROPOSAL", "ST
 _REQ += ["RD-POSITIVE", "RD-FILLED", "RD-NULL", "RD-SPECIFIC", "RD-PARTIAL", "RD-INDET", "RD-NONFINITE", "RD-MERGED",
          "RD-PAUSE", "RD-GREAD", "RD-SENSITIVITY", "RD-SECONDARY", "RD-REFUSE", "RD-FILLED-FIGURES", "RD-FILLED-FORMS",
          "RD-SHADOW", "RD-ASYM", "RD-MERGED-DEQ", "RD-GREAD-MIXED", "CNT-COUNTERS", "RD-SECONDARY-FLOOR",
-         "RD-CAP-BINDS", "RD-CAP-SLOPES"]
+         "RD-CAP-BINDS", "RD-CAP-SLOPES", "RD-POINTWISE"]
 _REQ += ["NUM-DOSEMAP-SCHEMA", "NUM-MERGE-EDGE", "NUM-REACH-CLASS", "CMD-NOTRUN", "CMD-NOTRUN-REFUSE",
          "CMD-GANL-REFUSE", "STR-GANL-ARTIFACT"]
 _REQ += ["VD-COMPLETE", "VD-WRITE-ONCE", "VD-EXPOSURE", "VD-SENSITIVITY", "VD-STDOUT", "VD-PISTOP-STANDING",
@@ -1082,12 +1199,30 @@ def literal_state(dmap: DoseMap = MAP_A, **over) -> State:
                gread={("valence", p): "PASS" for p in pts if p != 0.0} | {("span_reward", F10): "PASS",
                                                                          ("span_reward", F20): "PASS"})
     for k, v in over.items():
-        if k in ("complete", "paused"):
+        if k in ("complete", "paused", "at"):
             getattr(st, k).update(v)
         elif k in ("V", "L", "P", "E", "S", "C", "gread"):
             getattr(st, k).update(v)
         else:
             setattr(st, k, v)
+    return st
+
+
+def pointwise(dmap: DoseMap, bad: Mapping[tuple[str, Any], Sequence[str]]) -> dict:
+    """State overrides for arms not usable at the points in ``bad`` alone ((arm, point or f) -> causes): each such
+    arm incomplete, every one of its points recorded (PIN-n-36), [] where usable. For map_reach and the battery."""
+    keys = {"N1-V": [p for p in dmap.points() if p != 0.0], "N1-R": [p for p in dmap.points() if p != 0.0],
+            "N1-P": list(dmap.n1p_points())}
+    arms = sorted({a for a, _ in bad})
+    return {"complete": {a: False for a in arms},
+            "at": {(a, k): list(bad.get((a, k), [])) for a in arms for k in keys.get(a, [F10, F20])}}
+
+
+def _apply(st: State, *pats: Mapping[str, Any]) -> State:
+    """Update a state's completeness, pauses and point-wise causes from patterns (map_reach's and the battery's)."""
+    for pat in pats:
+        for k in ("paused", "complete", "at"):
+            getattr(st, k).update(pat.get(k, {}))
     return st
 
 
@@ -1221,30 +1356,70 @@ def _bt_outcomes(B: _Battery) -> None:
                             ("N2-NULL", {"E": {F20: Est(0.01, -0.02, 0.04)}, "V": {m20: _Z}}, "NULL")):
         g = n2_outcome(literal_state(**over))
         B.chk(f"N2 {want} ({cid})", g["state"] == want, g, cover=[cid])
-    for cid, over in (("N2-INDET-pause:N2-E", {"paused": {"N2-E": True}}),
-                      ("N2-INDET-pause:N2-S", {"paused": {"N2-S": True}}),
-                      ("N2-INDET-pause:N2-C", {"paused": {"N2-C": True}}),
-                      ("N2-INDET-incomplete:N2-E", {"complete": {"N2-E": False}}),
-                      ("N2-INDET-incomplete:N1-V", {"complete": {"N1-V": False}}),
-                      ("N2-INDET-incomplete:N1-R", {"complete": {"N1-R": False}})):
-        g = n2_outcome(literal_state(**over))
-        why = cid.split("N2-INDET-", 1)[1]
-        B.chk(f"N2 INDETERMINATE by {why}" + (" (§5, n:140: 'an unadjudicated pause stands on N2's reads'; the "
-                                              "guards' reads are N2's reads)" if why.startswith("pause:")
-                                              else " (OPEN-Q6 as ruled)"),
-              g["state"] == "INDETERMINATE" and g["causes"] == [why], g, cover=[cid])
-    g_np = n2_outcome(literal_state(paused={"N1-V": True, "N1-R": True, "N1-P": True}))
-    g_npb = n2_outcome(literal_state(MAP_B, paused={"N1-P": True}))
-    B.chk("a pause on N1-V's, N1-R's or N1-P's reads alone leaves N2 evaluated, on shape (a) and when the cap binds "
-          "(§5's N2 reads are N2-E's, N2-S's and N2-C's; OPEN-Q6 as ruled: those N1 arms' incompleteness is a cause, "
-          "their pauses are not)", g_np["state"] == "SHARED" and g_npb["state"] == "SHARED",
-          (g_np["state"], g_npb["state"]), cover=["N2-NOT-PAUSED-BY-N1"])
-    gb = n2_outcome(literal_state(MAP_B, complete={"N1-P": False}))
-    ga = n2_outcome(literal_state(MAP_A, complete={"N1-P": False}))
-    B.chk("N2 INDETERMINATE by incomplete:N1-P on every shape: N1-P reads the norm-matched point (OPEN-Q6 as ruled, "
-          "amended for N1-P's points; ADDENDUM-n1 §7.4)",
-          gb["state"] == ga["state"] == "INDETERMINATE" and gb["causes"] == ga["causes"] == ["incomplete:N1-P"],
-          (gb, ga), cover=["N2-INDET-incomplete:N1-P"])
+    # PIN-n-29 as amended: N2's causes point by point -- N2-E at the decision f (f = 0.20 on shape (a), 0.10 when the
+    # cap binds), N1-V, N1-R and N1-P at its norm-matched point (+d_20 on shape (a), +d_eq on shape (b))
+    for arm in ("N2-E", "N1-V", "N1-R", "N1-P"):
+        ga, gb = n2_outcome(literal_state(paused={arm: True})), n2_outcome(literal_state(MAP_B, paused={arm: True}))
+        B.chk(f"N2 INDETERMINATE by pause:{arm}, on shape (a) and when the cap binds: a pause stands on its scope's "
+              "arms, so on the reads N2's certification reads (n:140; PIN-n-29 as amended)",
+              ga["state"] == gb["state"] == "INDETERMINATE" and ga["causes"] == gb["causes"] == [f"pause:{arm}"],
+              (ga, gb), cover=[f"N2-INDET-pause:{arm}"])
+    gs = {(sh, a): n2_outcome(literal_state(dm_, paused={a: True})) for sh, dm_ in (("a", MAP_A), ("b", MAP_B))
+          for a in ("N2-S", "N2-C")}
+    gname = {"N2-S": "span_sentiment", "N2-C": "span_character"}
+    B.chk("a pause on a guard's reads alone (N2-S, N2-C) leaves N2 evaluated, on shape (a) and when the cap binds, the "
+          "guard's figures reported beside with its pause (PIN-n-33)",
+          all(g["state"] == "SHARED" and g["beside"]["guards"][gname[a]]["paused"] is True
+              and g["beside"]["guards"][gname["N2-C" if a == "N2-S" else "N2-S"]]["paused"] is False
+              for (sh, a), g in gs.items()), {k: g["state"] for k, g in gs.items()}, cover=["N2-GUARD-PAUSE"])
+    for arm in ("N2-E", "N1-V", "N1-R", "N1-P"):
+        ga, gb = (n2_outcome(literal_state(complete={arm: False})),
+                  n2_outcome(literal_state(MAP_B, complete={arm: False})))
+        wa = f"incomplete:{arm}@" + ("f0.20" if arm == "N2-E" else "+d_20")
+        wb = f"incomplete:{arm}@" + ("f0.10" if arm == "N2-E" else "+d_eq")
+        B.chk(f"N2 INDETERMINATE by an incomplete {arm}, the cause naming the point its certification reads ({wa}; "
+              f"{wb} when the cap binds: OPEN-Q6 as ruled, PIN-n-29 as amended, PIN-n-36)",
+              ga["state"] == gb["state"] == "INDETERMINATE" and ga["causes"] == [wa] and gb["causes"] == [wb],
+              (ga, gb), cover=[f"N2-INDET-incomplete:{arm}"])
+    el = {}
+    bes_k = ("E", "V", "ceiling", "certified", "certified_V")
+    for sh, dm_, fb in (("a", MAP_A, F10), ("b", MAP_B, F20)):
+        for name, bad in (("N1-P at -1", {("N1-P", -1.0): ["incomplete"]}),
+                          ("N1-R at +1/2", {("N1-R", 0.5): ["nonfinite"]}),
+                          ("N1-V at -1", {("N1-V", -1.0): ["tau4-emptied"]}),
+                          ("N1-P at +1", {("N1-P", 1.0): ["shadow"]}),
+                          ("N2-E at the other f", {("N2-E", fb): ["incomplete"]})):
+            s_ = literal_state(dm_, **pointwise(dm_, bad))
+            o_ = outcomes(s_)
+            arm = next(iter(bad))[0]
+            bes = o_["N2"].get("beside", {}).get(fb, {})
+            got = (o_["N1"]["state"], o_["N1"].get("causes"), o_["dose"]["state"], o_["N2"]["state"],
+                   tuple(k for k in bes_k if bes.get(k) == "not computed"))
+            want_n1 = (("REPLICATED", None, "DETECTABLE") if arm == "N2-E"
+                       else ("INDETERMINATE", [f"incomplete:{arm}"], "INDETERMINATE"))
+            # the beside's figures not computed only where a read of its own point is the one not usable: N2-E at the
+            # other f (span_reward's figure and its certification); N1-P at +1 when the cap binds (+1 is the beside's
+            # point there: the ceiling and both certifications)
+            want_nc = (("E", "certified") if arm == "N2-E" else
+                       ("ceiling", "certified", "certified_V") if (sh, name) == ("b", "N1-P at +1") else ())
+            el[(sh, name)] = got == want_n1 + ("SHARED", want_nc)
+    B.chk("an incompleteness elsewhere in N2's arms (N1-P at −1 and at +1, N1-R at +1/2, N1-V at −1, N2-E at the "
+          "other f) leaves N2 evaluated, while N1 and dose are INDETERMINATE by their own rules (N1 per arm, n:134), on "
+          "shape (a) and when the cap binds; its beside's figures are each computed unless a read at the beside's own "
+          "point is the one not usable (the seat's answers of 2026-11-18 §5.2)", all(el.values()),
+          [k for k, v in el.items() if not v], cover=["N2-POINT-ELSEWHERE"])
+    m_a = MAP_A.norm_matched(F20)
+    bad_a = {("N2-E", F20): ["incomplete", "nonfinite"], ("N1-V", m_a): ["nonfinite"],
+             ("N1-R", m_a): ["tau4-emptied"], ("N1-P", m_a): ["shadow"]}
+    pc = {"a": n2_outcome(literal_state(**(pointwise(MAP_A, bad_a) | {"paused": {"N1-R": True}})))["causes"],
+          "c": n2_outcome(literal_state(MAP_C, **pointwise(MAP_C, {("N1-P", 1.0): ["incomplete"]})))["causes"],
+          "d": n2_outcome(literal_state(MAP_D, **pointwise(MAP_D, {("N1-V", 1.0): ["shadow"]})))["causes"]}
+    want_pc = {"a": ["pause:N1-R", "incomplete:N2-E@f0.20", "nonfinite:N2-E@f0.20", "nonfinite:N1-V@+d_20",
+                     "tau4-emptied:N1-R@+d_20", "shadow:N1-P@+d_20"],
+               "c": ["incomplete:N1-P@+1"], "d": ["shadow:N1-V@+1"]}
+    B.chk("N2's causes at its own reads, in order: pauses by arm first, then each read's causes by kind, the point named "
+          "by its record label, a merged point by its keeper's (+1 on shapes (c) and (d); PIN-n-36)", pc == want_pc, pc,
+          cover=["N2-POINT-CAUSES"])
     base = n2_outcome(literal_state(E={F20: Est(0.01, -0.02, 0.04)}))["state"]
     same = all(n2_outcome(literal_state(E={F20: Est(0.01, -0.02, 0.04)}, S={F20: s}, C={F20: c}))["state"] == base
                for s in (_X, _Z, Est(-1, -1.1, -0.9)) for c in (_X, _Z, Est(-1, -1.1, -0.9)))
@@ -1289,6 +1464,19 @@ def _bt_outcomes(B: _Battery) -> None:
           "(ADDENDUM-n1 §5.3: 'against N1-V at d = 1' when the cap binds), on shapes (a) and (b), each certified on "
           "its own (span_reward uncertified beside a certified valence); an INDETERMINATE N2 names its decision f",
           all(bf.values()), bf, cover=["N2-BESIDE-FIELDS"])
+    m_b10 = MAP_A.norm_matched(F10)
+    nc = {}
+    for name, bad in (("N2-E", {("N2-E", F10): ["incomplete"]}), ("N1-V", {("N1-V", m_b10): ["nonfinite"]}),
+                      ("N1-R", {("N1-R", m_b10): ["shadow"]}), ("N1-P", {("N1-P", m_b10): ["incomplete"]})):
+        g_ = n2_outcome(literal_state(**pointwise(MAP_A, bad)))
+        b_ = g_.get("beside", {}).get(F10, {})
+        nc[name] = (g_["state"], *(b_.get(k) == "not computed" for k in ("E", "V", "ceiling", "certified",
+                                                                         "certified_V")))
+    want_nc = {"N2-E": ("SHARED", True, False, False, True, False), "N1-V": ("SHARED", False, True, False, False, True),
+               "N1-R": ("SHARED", False, False, True, True, True), "N1-P": ("SHARED", False, False, True, True, True)}
+    B.chk("N2's beside (the other f) reports each figure 'not computed' where its reads are not usable -- span_reward's "
+          "estimate (N2-E), N1-V's, the ceiling (N1-R, N1-P) and the certifications that read them -- while N2 is "
+          "decided at its own f (PIN-n-29 as amended)", nc == want_nc, nc, cover=["N2-BESIDE-NOT-COMPUTED"])
     # N4
     for cid, told, e, want in (("N4-PASS", Est(1.0, 0.8, 1.2, 98), 0.1, "PASS"),
                                ("N4-REVERSE", Est(-1.0, -1.2, -0.8, 98), 0.1, "REVERSE"),
@@ -1364,6 +1552,17 @@ def _bt_tables(B: _Battery) -> None:
     B.chk("G-LEAK-n's table with N1-P incomplete: every row at a point N1-P reads (±1, d_20's and d_eq's; N2's "
           "matched points) is not computed, naming N1-P, and +1/2, which N1-P does not read, is computed (OPEN-Q2 as "
           "ruled)", gi_ok, {p: r.get("why") for p, r in rows_v.items()}, cover=["GLEAK-N1P-INCOMPLETE"])
+    gp = gleak_table(literal_state(**pointwise(MAP_A, {("N1-P", -1.0): ["incomplete"], ("N1-R", 0.5): ["nonfinite"],
+                                                       ("N2-E", F10): ["shadow"]})))
+    why = {(r["arm"], r["labels"][0]): r.get("why") for r in gp if r["certified"] is None}
+    done = {(r["arm"], r["labels"][0]) for r in gp if r["certified"] is not None}
+    want_why = {("N1-V", "-1"): "not usable: incomplete:N1-P@-1", ("N1-V", "+1/2"): "not usable: nonfinite:N1-R@+1/2",
+                ("N2-E", F10): "not usable: shadow:N2-E@f0.10"}
+    B.chk("G-LEAK-n's table is read point by point (PIN-n-29 as amended, PIN-n-36), as N2 is: N1-P incomplete at −1, "
+          "N1-R non-finite at +1/2 and N2-E's shadows at f = 0.10 leave exactly those rows not computed, each naming "
+          "its cause and point, and every other row computed", why == want_why
+          and {("N1-V", "+1"), ("N1-V", "d_20"), ("N1-V", "d_eq"), ("N2-E", F20), ("N2-S", F10), ("N2-S", F20),
+               ("N2-C", F10), ("N2-C", F20)} == done, (why, sorted(done)), cover=["GLEAK-POINTWISE"])
     st3 = literal_state(gread={("valence", 1.0): "FAIL", ("span_reward", F10): "PASS"})
     del st3.gread[("valence", MAP_A.resolved()["d_eq"])]
     gt = gread_table(st3)
@@ -1390,17 +1589,47 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
            "once": T_DOSE_ND_ANSWERED.count(OLD_MOVE) == C_DOSE_ND_NOT_READABLE.count(OLD_MOVE) == 1
            and A6_DOSE_ND_READABLE_N4.count(MOVE_NOT_CERTIFIED) == 1
            and all(C_N2[s].count(F_AT) == 1 for s in ("SPECIFIC", "SHARED", "NULL")),
-           "slotted": MOVE_SLOT in D_ND_ANSWERED and MOVE_SLOT in D_ND_NOT_READABLE and MOVE_SLOT in D_ND_READABLE_N4
-           and OLD_MOVE not in D_ND_ANSWERED + D_ND_NOT_READABLE and MOVE_NOT_CERTIFIED not in D_ND_READABLE_N4,
+           "replaced": all(f.count(MOVE_NC) == 1 for f in (D_ND_ANSWERED, D_ND_NOT_READABLE, D_ND_READABLE_N4))
+           and OLD_MOVE not in D_ND_ANSWERED + D_ND_NOT_READABLE and MOVE_NOT_CERTIFIED not in D_ND_READABLE_N4
+           and MOVE_NC == MOVE_NOT_CERTIFIED.replace(DEQ_FIGURE, DEQ_FIGURE + MERGE_SLOT) != MOVE_NOT_CERTIFIED,
            "b struck": B_STRUCK.startswith("struck (ADDENDUM-n1 §4): ")
            and all(c[:1].upper() + c[1:] in verb["add_b4"] or c in verb["add_b4"]
                    for c in B_STRUCK.split(": ", 1)[1].split("; "))
            and "is struck; the VERDICTS entry says so" in verb["add_b4"]}
     B.chk("ADDENDUM-n1 §7.6's forms are its italic spans, character for character (the movement not certified, the "
           "cell of §7.2, the movement against the conditioned zone, 'at f = [f]', the two labels) and §5's clause is "
-          "its quotation; each replaced exactly once, leaving the [movement] slot (OPEN-Q8 as ruled); secondary (b) "
-          "reads struck in §4's own clauses",
-          all(add.values()), [k for k, v in add.items() if not v], cover=["SENT-ADDENDUM"])
+          "its quotation; each replaced exactly once by the movement not certified, the [merge] slot after its "
+          "figure (OPEN-Q8 as ruled; the seat's answers of 2026-11-18 §5.4); secondary (b) reads struck in §4's own "
+          "clauses", all(add.values()), [k for k, v in add.items() if not v], cover=["SENT-ADDENDUM"])
+    # The seat's answers of 2026-11-18 §5 (transcribed: the battery reads no raw), each against words written here
+    spec_v = ("while the valence direction of record at the norm-matched point does (Δm = [xV] nats "
+              "[CIV][, against the conditioned zone])")                       # §5.3's quotation, its "…" dropped
+    n2f = {s: C_N2[s] for s in ("SPECIFIC", "SHARED", "NULL")}
+    rul = {"zone words": ZONE_WORDS == ", against the conditioned zone",
+           "SPECIFIC's quoted clause": spec_v in n2f["SPECIFIC"].replace(ZONE_V, "[, against the conditioned zone]"),
+           "every figure, its CI and the words (PIN-n-34)": all(
+               f.count(t) == 1 for f in n2f.values() for t in ("[xE]", "[CIE]", ZONE_E, "[xV]", "[CIV]", ZONE_V))
+           and all(f.index("[xE]") < f.index("[CIE]") < f.index(ZONE_E) and f.index("[xV]") < f.index("[CIV]")
+                   < f.index(ZONE_V) for f in n2f.values())
+           and all(f[f.index(z) + len(z):][:1] in (")", "") for f in n2f.values() for z in (ZONE_E, ZONE_V)),
+           "the note (§5.4), against the oracle's copy": DEQ_FIGURE + MERGE_NOTE == _ORC_NOTE,
+           "the figure once in each NOT-DETECTABLE form": all(f.count(DEQ_FIGURE) == 1 for f in (
+               MOVE_NOT_CERTIFIED, A6_DOSE_ND_READABLE_N4, FOURTH)),
+           "the fourth form (§5.6) and its alternation": FOURTH == _ORC_FOURTH and FOURTH.count(READ_ALT) == 1
+           and READ_ALT == "[; the state is readable at the decision (AUC [a]) | ; the state is not readable at the "
+                           "decision]",
+           "its branches, the [merge] slot after the figure": all(
+               D_FOURTH[k] == F4[k].replace(DEQ_FIGURE, DEQ_FIGURE + MERGE_SLOT) and READ_ALT not in F4[k]
+               and F4[k].count(DEQ_FIGURE + ", ceiling [c])") == 1 for k in ("readable", "not readable"))
+           and "AUC [a]" in F4["readable"] and "[a]" not in F4["not readable"],
+           "'an explanation of record' in the three forms only": all(
+               "dose is an explanation of record" in f for f in (D_ND_ANSWERED, D_ND_NOT_READABLE, D_ND_READABLE_N4))
+           and not any("explanation of record" in f for f in D_FOURTH.values())}
+    B.chk("the seat's forms of 2026-11-18 (§5.3, §5.4, §5.6) as transcribed: the zone's words; SPECIFIC's quoted "
+          "clause; each figure of N2's three forms with its CI and the words closing its parenthetical; the merge note "
+          "after the figure Δm(d_eq) = [x] nats [CI], once in each NOT-DETECTABLE form; the fourth form equal to the "
+          "oracle's copy, its two readability branches; 'dose is an explanation of record' only where no movement is "
+          "certified", all(rul.values()), [k for k, v in rul.items() if not v], cover=["SENT-RULING"])
     forms = {tuple(f) for f in (["i"], ["iv"], ["i", "iv"])}
     txt = {f: sentence_n1("PARTIAL", n4="PASS", gr1="PASS", failing=list(f))["text"] for f in forms}
     B.chk("N1 PARTIAL names its failing conjuncts (OPEN-Q8 as ruled): three forms, each naming exactly its "
@@ -1428,10 +1657,15 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
     bad = [("N1", lambda: sentence_n1("PASS", n4="PASS", gr1="PASS")),
            ("set", lambda: sentence_set(("REPLICATED", "DETECTABLE", "SHARED", "PASS", "MAYBE"))),
            ("no-read on PASS", lambda: sentence_set(("REPLICATED", "DETECTABLE", "SHARED", "PASS", "PASS"),
-                                                     n4_no_read=True))]
+                                                     n4_no_read=True)),
+           ("against on DETECTABLE", lambda: sentence_set(("REPLICATED", "DETECTABLE", "SHARED", "PASS", "PASS"),
+                                                          dose_against=True)),
+           ("dose sentence: against on INDETERMINATE", lambda: sentence_dose("INDETERMINATE", n4="PASS", gr="PASS",
+                                                                             against=True))]
     res = [(n, _bt_raises(f)) for n, f in bad]
-    B.chk("the sentence layer refuses a value outside the outcome space (three cases)", all(r[0] for _, r in res), res,
-          cover=["SENT-REFUSES"])
+    B.chk("the sentence layer refuses a value outside the outcome space (five cases; a movement against the "
+          "conditioned zone at d_eq on a dose not NOT-DETECTABLE among them, in the set and in the dose sentence: "
+          "PIN-n-35)", all(r[0] for _, r in res), res, cover=["SENT-REFUSES"])
     cf = code_forms()
     dig = hashlib.sha256(_canon(cf).encode("utf-8")).hexdigest()
 
@@ -1446,43 +1680,57 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
             i = b + 1
         return out
     stray = sorted({t for v in cf.values() for t in brackets(v) if t not in SLOTS})
-    B.chk(f"the module's {len(cf)} sentence forms beyond §5's verbatim cells (Code's, OPEN-Q8 as ruled, and "
-          "ADDENDUM-n1 §7.6's) are pinned by digest (CODE_FORMS_SHA256), pairwise distinct, and use declared slots "
-          "only", dig == CODE_FORMS_SHA256 and len(set(cf.values())) == len(cf) and not stray,
+    B.chk(f"the module's {len(cf)} sentence forms beyond §5's verbatim cells (Code's, OPEN-Q8 as ruled, ADDENDUM-n1 "
+          "§7.6's and the seat's of 2026-11-18) are pinned by digest (CODE_FORMS_SHA256), pairwise distinct, and use "
+          "declared slots only", dig == CODE_FORMS_SHA256 and len(set(cf.values())) == len(cf) and not stray,
           (dig, stray), cover=["SENT-CODE-FORMS"])
     # ADDENDUM-n1 §7.6's forms filled, against literal text written here (the v3 review's B1-B3)
     def s4(x): return f"{x:+.4f}"
     def p4(x): return f"{x:.4f}"
     def c4(e): return f"[{e.lo:+.4f}, {e.hi:+.4f}]"
-    deq_a = MAP_A.resolved()["d_eq"]
     nc, ag = Est(0.03, -0.01, 0.07), Est(-0.3, -0.4, -0.2)
-    mv = {"nc": f"the margin's movement is not certified (Δm(d_eq) = {s4(nc.mean)} nats {c4(nc)} against a leak "
-                f"ceiling of {p4(0.05)})",
-          "ag": f"the margin moves against the conditioned zone beyond the leak ceiling (Δm = {s4(ag.mean)} nats "
-                f"{c4(ag)}, ceiling {p4(0.05)})"}
-    got_d, want_d = {}, {}
+    note = " (read at d = +1/2, the point d_eq merges into under §2.3)"          # §5.4, shape (c): d_eq into +1/2
+    got_d, want_d, got_4, want_4 = {}, {}, {}, {}
     for mk, v in (("nc", nc), ("ag", ag)):
-        for form, over in (("answered", {}), ("not readable", {"gread": {("valence", deq_a): "FAIL"}}),
-                           ("A.6", {"told": Est(0.2, 0.1, 0.3, 98), "e_sham": 0.5})):
-            st_f = literal_state(V={deq_a: v}, **over)
-            o_f = outcomes(st_f)
-            got_d[(mk, form)] = (o_f["dose"]["state"], o_f["dose"]["against"],
-                                 sentence_set_filled(o_f, st_f, route="B", auc={"d_eq": 0.9})["7.2"]["text"])
-            if form == "answered":
-                t_w = ("at this program's dose the state is readable at the decision (AUC 0.900) and " + mv[mk]
-                       + ": dose is an explanation of record for the program's null")
-            elif form == "not readable":
-                t_w = ("at this program's dose " + mv[mk] + " and the state is not readable at the decision: dose is "
-                       "an explanation of record, unresolved")
-            else:
-                t_w = ("at this program's dose the state is readable at the decision (AUC 0.900) and " + mv[mk]
-                       + ", but BK's apparatus has not registered an instructed preference on this checkpoint (N4 "
-                       "DEAD): dose is an explanation of record, unresolved")
-            want_d[(mk, form)] = ("NOT-DETECTABLE", mk == "ag", t_w)
+        for sh, dm_ in (("unmerged", MAP_A), ("merged", MAP_C)):
+            deq_ = dm_.resolved()["d_eq"]
+            nt = note if sh == "merged" else ""
+            for form, over in (("answered", {}), ("not readable", {"gread": {("valence", deq_): "FAIL"}}),
+                               ("A.6", {"told": Est(0.2, 0.1, 0.3, 98), "e_sham": 0.5})):
+                st_f = literal_state(dm_, V={deq_: v}, **over)
+                o_f = outcomes(st_f)
+                s_f = sentence_set_filled(o_f, st_f, route="B", auc={"d_eq": 0.9})["7.2"]
+                got = (o_f["dose"]["state"], o_f["dose"]["against"], s_f["label"], s_f["text"])
+                lab_w = "answered" if form == "answered" else "concluded, not answered"
+                if mk == "nc":
+                    mv = (f"the margin's movement is not certified (Δm(d_eq) = {s4(nc.mean)} nats {c4(nc)}{nt} against a "
+                          f"leak ceiling of {p4(0.05)})")
+                    t_w = {"answered": "at this program's dose the state is readable at the decision (AUC 0.900) and "
+                                       + mv + ": dose is an explanation of record for the program's null",
+                           "not readable": "at this program's dose " + mv + " and the state is not readable at the "
+                                           "decision: dose is an explanation of record, unresolved",
+                           "A.6": "at this program's dose the state is readable at the decision (AUC 0.900) and " + mv
+                                  + ", but BK's apparatus has not registered an instructed preference on this "
+                                    "checkpoint (N4 DEAD): dose is an explanation of record, unresolved"}[form]
+                    got_d[(sh, form)], want_d[(sh, form)] = got, ("NOT-DETECTABLE", False, lab_w, t_w)
+                else:
+                    rd_ = ("; the state is not readable at the decision" if form == "not readable"
+                           else "; the state is readable at the decision (AUC 0.900)")
+                    t_w = ("at this program's dose the margin moves against the conditioned zone beyond the leak "
+                           f"ceiling (Δm(d_eq) = {s4(ag.mean)} nats {c4(ag)}{nt}, ceiling {p4(0.05)}){rd_}: dose alone "
+                           "does not account for the program's null on the echo channel, and the effect at this dose "
+                           "is reversed in sign")
+                    got_4[(sh, form)], want_4[(sh, form)] = got, ("NOT-DETECTABLE", True, lab_w, t_w)
     B.chk("the dose NOT-DETECTABLE sentence, filled, equals literal text in each of its three forms (answered; not "
-          "readable; N4 not PASS), with the movement not certified and certified against the conditioned zone "
-          "(ADDENDUM-n1 §7.6; six sentences)", got_d == want_d, [k for k in want_d if got_d.get(k) != want_d[k]],
+          "readable; N4 not PASS) with the movement not certified, on shape (a) and with d_eq merged into +1/2 (shape "
+          "c), where the figure carries the seat's note (ADDENDUM-n1 §7.6; the seat's answers of 2026-11-18 §5.4; "
+          "six sentences)", got_d == want_d, [k for k in want_d if got_d.get(k) != want_d[k]],
           cover=["SENT-FILLED-DOSE-ND"])
+    B.chk("a movement at d_eq certified against the conditioned zone takes the seat's fourth NOT-DETECTABLE form, "
+          "filled, equal to literal text: its readability clause by G-READ-n (readable in the answered and N4-not-PASS "
+          "cells, not readable in the third), its label by §0.6, the note where d_eq merges (F11 as ruled, §5.6; "
+          "§5.4; six sentences)", got_4 == want_4, [k for k in want_4 if got_4.get(k) != want_4[k]],
+          cover=["SENT-FILLED-DOSE-FOURTH"])
     got_1, want_1 = {}, {}
     for k1, v in (("against", Est(-0.6, -0.7, -0.5)), ("within", Est(-0.03, -0.04, -0.02))):
         st_f = literal_state(V={1.0: v})
@@ -1501,13 +1749,14 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
           cover=["SENT-FILLED-N1-AGAINST"])
     head = "N2, descriptive (§7.3; it licenses no thesis sentence): "
     e_lo = Est(0.01, -0.02, 0.04)
+    v72 = Est(0.72, 0.62, 0.82)
     spec = (head + "SPECIFIC: at f = 0.10 this program's evaluative axis (span_reward) does not move BK's apparatus "
-            f"beyond the leak ceiling (Δm = {s4(0.01)} nats against {p4(0.05)}) while the valence direction of record "
-            f"at the norm-matched point does (Δm = {s4(0.72)} nats) — ")
+            f"beyond the leak ceiling (Δm = {s4(0.01)} nats {c4(e_lo)} against {p4(0.05)}) while the valence direction "
+            f"of record at the norm-matched point does (Δm = {s4(0.72)} nats {c4(v72)}) — ")
     want_2 = {"SHARED": head + "SHARED: at f = 0.10 this program's evaluative axis (span_reward) moves BK's apparatus "
                                f"beyond the leak ceiling (Δm = {s4(0.2)} nats {c4(Est(0.2, 0.1, 0.3))} against "
                                f"{p4(0.05)}); the valence direction of record at the norm-matched point: Δm = "
-                               f"{s4(0.72)} nats",
+                               f"{s4(0.72)} nats {c4(v72)}",
               "SPECIFIC": spec + "answered", "SPECIFIC, f0.10 FAIL": spec + "concluded, not answered",
               "SPECIFIC, f0.20 FAIL": spec + "answered"}
     got_2 = {}
@@ -1517,9 +1766,49 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
         st_f = literal_state(MAP_B, **over)
         got_2[k2] = sentence_set_filled(outcomes(st_f), st_f, route="B", auc={"d_eq": 0.9})["7.3"]["text"]
     B.chk("N2's sentence where the cap binds (2·0.72 > 1), filled, equals literal text: 'at f = 0.10', span_reward's "
-          "figures at f = 0.10, the valence direction's at d_eq, the ceiling there; its label from span_reward's "
-          "G-READ-n at f = 0.10 alone (OPEN-Q7 as ruled)", got_2 == want_2,
+          "figures at f = 0.10, the valence direction's at d_eq, each with its CI (PIN-n-30, PIN-n-34), the ceiling "
+          "there; its label from span_reward's G-READ-n at f = 0.10 alone (OPEN-Q7 as ruled)", got_2 == want_2,
           [k for k in want_2 if got_2.get(k) != want_2[k]], cover=["SENT-FILLED-N2-CAP"])
+    zw = ", against the conditioned zone"
+    m23 = MAP_A.norm_matched(F20)
+    v23, e_n, v_neg, v_sub, e_neg = (Est(2 / 3, 2 / 3 - 0.1, 2 / 3 + 0.1), Est(-0.01, -0.04, 0.02),
+                                     Est(-0.3, -0.4, -0.2), Est(-0.03, -0.04, -0.02), Est(-0.3, -0.4, -0.2))
+    sp_ = head + "SPECIFIC: at f = 0.20 this program's evaluative axis (span_reward) does not move BK's apparatus beyond "
+    sh_ = head + "SHARED: at f = 0.20 this program's evaluative axis (span_reward) moves BK's apparatus beyond the leak "
+    want_z = {
+        "SPECIFIC, the valence direction against": sp_ + f"the leak ceiling (Δm = {s4(0.01)} nats {c4(e_lo)} against "
+        f"{p4(0.05)}) while the valence direction of record at the norm-matched point does (Δm = {s4(-0.3)} nats "
+        f"{c4(v_neg)}{zw}) — answered",
+        "SPECIFIC, span_reward below 0 within the ceiling": sp_ + f"the leak ceiling (Δm = {s4(-0.01)} nats {c4(e_n)} "
+        f"against {p4(0.05)}{zw}) while the valence direction of record at the norm-matched point does (Δm = "
+        f"{s4(2 / 3)} nats {c4(v23)}) — answered",
+        "SHARED, span_reward against": sh_ + f"ceiling (Δm = {s4(-0.3)} nats {c4(e_neg)} against {p4(0.05)}{zw}); the "
+        f"valence direction of record at the norm-matched point: Δm = {s4(2 / 3)} nats {c4(v23)}",
+        "SHARED, the valence direction below 0": sh_ + f"ceiling (Δm = {s4(0.3)} nats {c4(Est(0.3, 0.2, 0.4))} against "
+        f"{p4(0.05)}); the valence direction of record at the norm-matched point: Δm = {s4(-0.03)} nats {c4(v_sub)}{zw}",
+        "NULL, both below 0": head + "NULL: at f = 0.20 neither this program's evaluative axis (span_reward, Δm = "
+        f"{s4(-0.01)} nats {c4(e_n)}{zw}) nor the valence direction of record at the norm-matched point (Δm = "
+        f"{s4(-0.03)} nats {c4(v_sub)}{zw}) moves BK's apparatus beyond the leak ceiling ({p4(0.05)}) — answered",
+        "NULL, span_reward exactly 0": head + "NULL: at f = 0.20 neither this program's evaluative axis (span_reward, "
+        f"Δm = {s4(0.0)} nats {c4(_Z)}) nor the valence direction of record at the norm-matched point (Δm = "
+        f"{s4(-0.03)} nats {c4(v_sub)}{zw}) moves BK's apparatus beyond the leak ceiling ({p4(0.05)}) — answered",
+        "NULL, the valence direction exactly 0": head + "NULL: at f = 0.20 neither this program's evaluative axis "
+        f"(span_reward, Δm = {s4(-0.01)} nats {c4(e_n)}{zw}) nor the valence direction of record at the norm-matched "
+        f"point (Δm = {s4(0.0)} nats {c4(_Z)}) moves BK's apparatus beyond the leak ceiling ({p4(0.05)}) — answered"}
+    got_z = {}
+    for kz, over in (("SPECIFIC, the valence direction against", {"E": {F20: e_lo}, "V": {m23: v_neg}}),
+                     ("SPECIFIC, span_reward below 0 within the ceiling", {"E": {F20: e_n}}),
+                     ("SHARED, span_reward against", {"E": {F20: e_neg}}),
+                     ("SHARED, the valence direction below 0", {"V": {m23: v_sub}}),
+                     ("NULL, both below 0", {"E": {F20: e_n}, "V": {m23: v_sub}}),
+                     ("NULL, span_reward exactly 0", {"E": {F20: _Z}, "V": {m23: v_sub}}),
+                     ("NULL, the valence direction exactly 0", {"E": {F20: e_n}, "V": {m23: _Z}})):
+        st_f = literal_state(**over)
+        got_z[kz] = sentence_set_filled(outcomes(st_f), st_f, route="B", auc={"d_eq": 0.9})["7.3"]["text"]
+    B.chk("N2's three forms, filled, equal literal text with the seat's words where a figure's mean is below 0, "
+          "certified or not, on either figure, and on neither at a mean of exactly 0 (the seat's answers of 2026-11-18 "
+          "§5.3: PIN-n-30, PIN-n-34); the sign decides no N2 outcome (seven sentences)", got_z == want_z,
+          [k for k in want_z if got_z.get(k) != want_z[k]], cover=["SENT-FILLED-N2-ZONE"])
 
 
 def _canon(x: Any) -> str:
@@ -1536,11 +1825,14 @@ def _bt_tuple_pass(verb: Mapping[str, str]) -> tuple[dict, str, dict, dict]:
     h = hashlib.sha256()
     allowed = set(SLOTS) | {"[1.00, 1.19]"}
     import re
-    for (t, gr1, gre, nr) in evaluations():
-        kw = {} if t == NOT_RUN else {"gr1": gr1, "gre": gre, "n4_no_read": nr}
+    fig = _ORC_NOTE[:_ORC_NOTE.index(" (read at d = ")]
+    nd_am = verb["nd_ans"].replace(verb["add_old"], verb["add_not_cert"].replace(fig, fig + "[merge]"))  # §5's, amended
+    for (t, gr1, gre, nr, ag) in evaluations():
+        kw = {} if t == NOT_RUN else {"gr1": gr1, "gre": gre, "n4_no_read": nr, "dose_against": ag}
         out = sentence_set(t, **kw)
-        orc = oracle_set(t, gr1=gr1, gre=gre, n4_no_read=nr, verb=verb)
-        h.update((_canon({"t": t, "gr1": gr1, "gre": gre, "n4_no_read": nr, "set": out}) + "\n").encode("utf-8"))
+        orc = oracle_set(t, gr1=gr1, gre=gre, n4_no_read=nr, verb=verb, dose_against=ag)
+        h.update((_canon({"t": t, "gr1": gr1, "gre": gre, "n4_no_read": nr, "dose_against": ag, "set": out})
+                  + "\n").encode("utf-8"))
         r = {}
         r["T1"] = (list(out) == list(SLOT_KEYS) and all(isinstance(v.get("text"), str) and v["text"].strip()
                                                        for v in out.values())
@@ -1551,7 +1843,7 @@ def _bt_tuple_pass(verb: Mapping[str, str]) -> tuple[dict, str, dict, dict]:
             r["T3"] = r["T4"] = r["T5"] = r["T6"] = r["T7"] = r["T8"] = True
         else:
             n1, dose, n2, n4, grd = t
-            keys = {"7.1": (n1, gr1, n4), "7.2": (dose, grd, n4), "7.3": (n2, gre, n4), "N4": (n4, nr)}
+            keys = {"7.1": (n1, gr1, n4), "7.2": (dose, grd, n4, ag), "7.3": (n2, gre, n4), "N4": (n4, nr)}
             for kk, tk in zip(("T3", "T4", "T5", "T6"), SLOT_KEYS):
                 key = (tk,) + keys[tk]
                 first.setdefault(key, out[tk])
@@ -1561,10 +1853,9 @@ def _bt_tuple_pass(verb: Mapping[str, str]) -> tuple[dict, str, dict, dict]:
             r["T7"] = all((out[k]["label"] is None) if not isnull else
                           out[k]["label"] == (ANSWERED if (n4 == "PASS" and g == "PASS") else CNA)
                           for k, (isnull, g) in nulls.items())
-            nd_am = verb["nd_ans"].replace(verb["add_old"], "[movement]")   # §5's cell as ADDENDUM-n1 §7.6 amends it
             v8 = {"7.1": verb["rep"] if n1 == "REPLICATED" else None,
                   "7.2": verb["det"] if dose == "DETECTABLE" else
-                  nd_am if (dose == "NOT-DETECTABLE" and n4 == "PASS" and grd == "PASS") else None}
+                  nd_am if (dose == "NOT-DETECTABLE" and n4 == "PASS" and grd == "PASS" and not ag) else None}
             r["T8"] = all((out[k]["text"] == v) if v is not None else
                           (out[k]["text"] not in (verb["rep"], verb["det"], verb["nd_ans"], nd_am))
                           for k, v in v8.items())
@@ -1574,7 +1865,7 @@ def _bt_tuple_pass(verb: Mapping[str, str]) -> tuple[dict, str, dict, dict]:
             counts[kk][0] += bool(r[kk])
             counts[kk][1] += 1
             if not r[kk]:
-                fails.setdefault(kk, (t, gr1, gre, nr))
+                fails.setdefault(kk, (t, gr1, gre, nr, ag))
         for k in SLOT_KEYS:
             form = (out[k]["state"], out[k]["form"], out[k]["label"], out[k].get("no_read", False))
             tal[k][form] = tal[k].get(form, 0) + 1
@@ -1582,20 +1873,28 @@ def _bt_tuple_pass(verb: Mapping[str, str]) -> tuple[dict, str, dict, dict]:
 
 
 def _bt_expected_tallies() -> dict:
-    """Hand-derived (Code's arithmetic, re-derived in the BUILD raw): 1,920 evaluations of the 384 tuples + NOT-RUN."""
-    t = {"7.1": {("REPLICATED", "§5", None, False): 480, ("PARTIAL", "Code", None, False): 480,
-                 ("NOT-REPLICATED", "Code", ANSWERED, False): 48, ("NOT-REPLICATED", "Code", CNA, False): 432,
-                 ("INDETERMINATE", "Code", None, False): 480},
+    """Hand-derived (Code's arithmetic, derived in results/raw/2026-11-18_n-analyze_v4_review.md): 2,560 evaluations of
+    the 384 tuples + NOT-RUN. The 640 added by the dose's fourth input (PIN-n-35) repeat the 640 NOT-DETECTABLE
+    evaluations, a third of the 1,920, which hold a third of each N1, N2 and N4 form's count, so each of those gains a
+    third; 7.2's fourth form takes 64 answered (N4 PASS, G-READ-n PASS at d_eq) and 576 concluded, not answered."""
+    a = "the seat's answers of 2026-11-18 §5.4"
+    t = {"7.1": {("REPLICATED", "§5", None, False): 640, ("PARTIAL", "Code", None, False): 640,
+                 ("NOT-REPLICATED", "Code", ANSWERED, False): 64, ("NOT-REPLICATED", "Code", CNA, False): 576,
+                 ("INDETERMINATE", "Code", None, False): 640},
          "7.2": {("DETECTABLE", "§5", None, False): 640,
-                 ("NOT-DETECTABLE", "§5, amended by ADDENDUM-n1 §7.6", ANSWERED, False): 64,
-                 ("NOT-DETECTABLE", "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6", CNA, False): 320,
-                 ("NOT-DETECTABLE", "ADDENDUM-n1 §7.6", CNA, False): 256, ("INDETERMINATE", "Code", None, False): 640},
-         "7.3": {("SPECIFIC", "Code", ANSWERED, False): 48, ("SPECIFIC", "Code", CNA, False): 432,
-                 ("SHARED", "Code", None, False): 480, ("NULL", "Code", ANSWERED, False): 48,
-                 ("NULL", "Code", CNA, False): 432, ("INDETERMINATE", "Code", None, False): 480},
-         "N4": {("PASS", "Code", None, False): 384, ("REVERSE", "Code", None, False): 384,
-                ("DEAD", "Code", None, False): 384, ("INDETERMINATE", "Code", None, False): 384,
-                ("INDETERMINATE", "Code", None, True): 384}}
+                 ("NOT-DETECTABLE", f"§5, amended by ADDENDUM-n1 §7.6 and {a}", ANSWERED, False): 64,
+                 ("NOT-DETECTABLE", f"§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6 and {a}", CNA,
+                  False): 320,
+                 ("NOT-DETECTABLE", f"ADDENDUM-n1 §7.6, amended by {a}", CNA, False): 256,
+                 ("NOT-DETECTABLE", "the seat's answers of 2026-11-18 §5.6, with §5.4's note", ANSWERED, False): 64,
+                 ("NOT-DETECTABLE", "the seat's answers of 2026-11-18 §5.6, with §5.4's note", CNA, False): 576,
+                 ("INDETERMINATE", "Code", None, False): 640},
+         "7.3": {("SPECIFIC", "Code", ANSWERED, False): 64, ("SPECIFIC", "Code", CNA, False): 576,
+                 ("SHARED", "Code", None, False): 640, ("NULL", "Code", ANSWERED, False): 64,
+                 ("NULL", "Code", CNA, False): 576, ("INDETERMINATE", "Code", None, False): 640},
+         "N4": {("PASS", "Code", None, False): 512, ("REVERSE", "Code", None, False): 512,
+                ("DEAD", "Code", None, False): 512, ("INDETERMINATE", "Code", None, False): 512,
+                ("INDETERMINATE", "Code", None, True): 512}}
     for k in t:
         t[k][(NOT_RUN, "Code", None, False)] = 1
     return t
@@ -1607,32 +1906,36 @@ def _bt_tuples(B: _Battery, verb: Mapping[str, str]) -> None:
     names = {"T1": "one sentence set: the four slots 7.1, 7.2, 7.3, N4, each a non-empty text, each state the "
                    "tuple's coordinate (NOT-RUN: all four)",
              "T2": "the set equals the oracle's (§5's verbatim cells read from the proposal file, ADDENDUM-n1 §7.6's "
-                   "from the addendum's)",
+                   "from the addendum's, the seat's forms of 2026-11-18 from the oracle's own copy)",
              "T3": "7.1 depends on (N1, G-READ-n valence +1, N4) only",
-             "T4": "7.2 depends on (dose, G-READ-n valence d_eq, N4) only",
+             "T4": "7.2 depends on (dose, G-READ-n valence d_eq, N4, the dose's movement certified against the "
+                   "conditioned zone) only",
              "T5": "7.3 depends on (N2, G-READ-n span_reward at N2's decision f, N4) only",
              "T6": "N4's line depends on (N4, no read obtained) only",
              "T7": "(OPEN-Q3 as ruled) a §0.6 label exactly on the null outcomes (NOT-REPLICATED, "
                    "NOT-DETECTABLE, SPECIFIC, NULL); answered iff N4 PASS and the slot's G-READ-n cell PASS",
-             "T8": "§5's sentences exactly in their cells (REPLICATED; DETECTABLE; NOT-DETECTABLE answered, as "
-                   "ADDENDUM-n1 §7.6 amends it) and nowhere else",
+             "T8": "§5's sentences exactly in their cells (REPLICATED; DETECTABLE; NOT-DETECTABLE answered with no "
+                   "movement certified, as ADDENDUM-n1 §7.6 and the seat's answers of 2026-11-18 §5.4 amend it) and "
+                   "nowhere else",
              "T9": "no bracketed token outside the declared slots (BK's '[1.00, 1.19]' is text)"}
     for kk, nm in names.items():
         c = counts[kk]
         B.chk(f"tuples {kk}: {c[0]}/{c[1]} evaluations: {nm}", c[0] == c[1] == n_ev, fails.get(kk, ""),
               cover=[f"TUP-{kk}"])
     want = _bt_expected_tallies()
-    B.chk("tuples T10: the forms tally as derived by hand -- 7.1 480 each (NOT-REPLICATED 48 answered / 432 CNA); 7.2 "
-          "640 each (NOT-DETECTABLE 64 / 320 / 256); 7.3 480 each (SPECIFIC and NULL 48 / 432); N4 384 x 5; NOT-RUN 1",
+    B.chk("tuples T10: the forms tally as derived by hand -- 7.1 640 each (NOT-REPLICATED 64 answered / 576 CNA); 7.2 "
+          "DETECTABLE and INDETERMINATE 640 each, NOT-DETECTABLE 64 / 320 / 256 in the three forms and 64 / 576 in the "
+          "fourth; 7.3 640 each (SPECIFIC and NULL 64 / 576); N4 512 x 5; NOT-RUN 1",
           tal == want, {k: tal[k] for k in tal if tal[k] != want.get(k)}, cover=["TUP-T10"])
     n_t = len(tuple_space())
-    B.chk(f"the outcome space (OPEN-Q4 as ruled: confirmed): {n_t} tuples (4 x 3 x 4 x 4 x 2 = 384, + NOT-RUN), {n_ev} "
-          f"evaluations (384 x 4 G-READ inputs + 96 x 4 for N4's second INDETERMINATE form + NOT-RUN)",
-          n_t == 385 and n_ev == 1921,
+    B.chk(f"the outcome space (OPEN-Q4 as ruled: confirmed; PIN-n-35): {n_t} tuples (4 x 3 x 4 x 4 x 2 = 384, + "
+          f"NOT-RUN), {n_ev} evaluations (384 x 4 G-READ inputs + 96 x 4 for N4's second INDETERMINATE form + 128 x 4 "
+          f"+ 32 x 4 for the dose's movement certified against the conditioned zone, the seat's fourth form + NOT-RUN)",
+          n_t == 385 and n_ev == 2561,
           (n_t, n_ev), cover=["TUP-COUNT"])
     _, sha2, _, _ = _bt_tuple_pass(verb)
     B.extra["outputs_sha256"] = sha
-    B.chk("two passes over the 1,921 evaluations give byte-identical canonical JSON", sha == sha2, sha[:16],
+    B.chk("two passes over the 2,561 evaluations give byte-identical canonical JSON", sha == sha2, sha[:16],
           cover=["TUP-DETERMINISM"])
 
 
@@ -1643,25 +1946,27 @@ _PATTERNS = ([{}] + [{"paused": {a: True}} for a in N1_ARMS] + [{"complete": {a:
 _N2_PATTERNS = ({}, {"paused": {"N2-E": True}}, {"complete": {"N2-E": False}})
 
 
-def map_reach(dmap: DoseMap) -> tuple[set, bool, bool]:
+def map_reach(dmap: DoseMap, fourth: set | None = None) -> tuple[set, bool, bool]:
     """The (N1, dose, N2) triples the outcome layer produces over a grid of states on one dose map: six estimates at
     each distinct point of +1, −1, d_eq, d_20, the slope above or not above its floor, span_reward's effect at N2's
-    decision f certified or not, and every completeness / pause pattern; returns the set, whether dose INDETERMINATE
-    <=> N1 INDETERMINATE held throughout, and whether nothing raised."""
+    decision f certified or not, and every completeness / pause pattern, two point by point (N1-P at −1 and N1-R at
+    +1/2, which make N1 INDETERMINATE and leave N2 evaluated wherever its point is not +1/2: PIN-n-29 as amended);
+    returns the set, whether dose INDETERMINATE <=> N1 INDETERMINATE held throughout, and whether nothing raised.
+    ``fourth``, if given, collects (dose, its movement certified against the conditioned zone), the input of the seat's
+    fourth form (PIN-n-35)."""
     r = dmap.resolved()
     pts = sorted({1.0, -1.0, r["d_eq"], r["d_20"]}, reverse=True)
     fd = dmap.n2_decision_f()
+    pats = list(_PATTERNS) + [pointwise(dmap, {("N1-P", -1.0): ["incomplete"]}),
+                              pointwise(dmap, {("N1-R", 0.5): ["incomplete"]})]
     seen, iff, clean = set(), True, True
     for combo in itertools.product(_MENU, repeat=len(pts)):
         V = dict(zip(pts, combo))
         for slope_ok, e_cert in itertools.product((True, False), (True, False)):
-            for pat, pat2 in itertools.product(_PATTERNS, _N2_PATTERNS):
+            for pat, pat2 in itertools.product(pats, _N2_PATTERNS):
                 over = {"V": V, "floor_V": 0.3 if slope_ok else 1.5,
                         "E": {fd: Est(0.3, 0.2, 0.4) if e_cert else Est(0.01, -0.02, 0.04)}}
-                st = literal_state(dmap, **over)
-                for k in ("paused", "complete"):
-                    getattr(st, k).update(pat.get(k, {}))
-                    getattr(st, k).update(pat2.get(k, {}))
+                st = _apply(literal_state(dmap, **over), pat, pat2)
                 try:
                     o = outcomes(st)
                 except (Exception, SystemExit):                     # noqa: BLE001
@@ -1670,6 +1975,8 @@ def map_reach(dmap: DoseMap) -> tuple[set, bool, bool]:
                 n1, dose, n2 = o["N1"]["state"], o["dose"]["state"], o["N2"]["state"]
                 iff &= (n1 == "INDETERMINATE") == (dose == "INDETERMINATE")
                 seen.add((n1, dose, n2))
+                if fourth is not None:
+                    fourth.add((dose, bool(o["dose"].get("against"))))
     return seen, iff, clean
 
 
@@ -1703,9 +2010,10 @@ def map_reach_by_hand(shape: str) -> set:
 
 
 def _bt_reachability(B: _Battery) -> None:
-    res = {}
+    res, fourth = {}, {}
     for shape, dm in (("a", MAP_A), ("b", MAP_B), ("c", MAP_C), ("d", MAP_D)):
-        seen, iff, clean = map_reach(dm)
+        fourth[shape] = set()
+        seen, iff, clean = map_reach(dm, fourth[shape])
         res[shape] = (seen, iff, clean)
     B.chk("reachability: on every enumerated state of the four shapes, dose is INDETERMINATE iff N1 is (so 160 of the "
           "384 product tuples are unreachable on any map: 64 with N1 INDETERMINATE and dose decided, 96 the reverse)",
@@ -1722,14 +2030,17 @@ def _bt_reachability(B: _Battery) -> None:
               f"{len(seen)} (N1, dose, N2) triples, the hand-derived {n}; x N4 (4) x G-READ-n at d_eq (2) = "
               f"{n * 8} reachable tuples + NOT-RUN", seen == want and len(want) == n,
               (sorted(seen - want)[:3], sorted(want - seen)[:3]), cover=[f"REACH-SHAPE-{shape}"])
+    want4 = {("DETECTABLE", False), ("NOT-DETECTABLE", False), ("NOT-DETECTABLE", True), ("INDETERMINATE", False)}
+    B.chk("reachability: on each of the four shapes the dose is NOT-DETECTABLE both with a movement at d_eq certified "
+          "against the conditioned zone (the seat's fourth form) and without one, and no other dose carries one "
+          "(PIN-n-35)", all(f == want4 for f in fourth.values()), {s: sorted(f) for s, f in fourth.items()},
+          cover=["REACH-FOURTH"])
     st = literal_state()
     free = set()
     for told, e in ((Est(1.0, 0.8, 1.2, 98), 0.1), (Est(-1.0, -1.2, -0.8, 98), 0.1), (Est(0.05, -0.1, 0.2, 98), 0.1),
                     (Est(0.3, -0.1, 0.7, 98), 0.1), (Est(0.3, -0.1, 0.7, 98), float("nan"))):
         for pat in _PATTERNS + [{"paused": {"N2-E": True}}]:
-            s_ = literal_state(told=told, e_sham=e)
-            for k in ("paused", "complete"):
-                getattr(s_, k).update(pat.get(k, {}))
+            s_ = _apply(literal_state(told=told, e_sham=e), pat)
             o = outcomes(s_)
             free.add((o["N1"]["state"], o["N4"]["state"], o["N4"]["no_read"]))
     want = {(a, b, c) for a in ("REPLICATED", "INDETERMINATE") for b, c in (("PASS", False), ("REVERSE", False),
@@ -1979,7 +2290,9 @@ def _bt_bk(B: _Battery) -> None:
 
 # --- structure ---------------------------------------------------------------------------------------------------------
 #: Code's readings: PIN-n-7 to PIN-n-26 accepted by the seat (results/raw/2026-11-16_n-ganl_design-to-code_answers.md
-#: §2); PIN-n-27 to PIN-n-32 declared since, each strikable by the seat until LOCK-n v1.0.
+#: §2); PIN-n-27, -28 and -31 accepted, PIN-n-29 and -32 amended, PIN-n-30 accepted with its sentences amended
+#: (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md §5); PIN-n-33 to PIN-n-36 declared since, each
+#: strikable by the seat until LOCK-n v1.0.
 PINS = {
     "PIN-n-7": "'exceeds its floor' is the signed mean slope above the floor (floor ≥ 0)",
     "PIN-n-8": "'its CI excluding 0' is lo > 0 or hi < 0; an endpoint at 0 does not exclude; either side",
@@ -2033,35 +2346,70 @@ PINS = {
                 "sentence naming it'; the place is Code's form). The sign's name, 'the mean Δm at d = +1 above 0', is "
                 "Code's form too (CONJUNCT_TEXT); the seat's clause repeats Δm(+1) and its CI, which the sentence "
                 "states again after 'fails:'",
-    "PIN-n-29": "OPEN-Q6 as ruled is applied per arm, as reading (a) carried it and n:134 states it ('An arm with a "
-                "partial read set is INDETERMINATE'): a question is INDETERMINATE when an arm its certification reads "
-                "is incomplete anywhere in its plan -- N2 when N2-E, N1-V, N1-R or N1-P is, the norm-matched point's "
-                "reads among them; dose's 'points' when N1-V, N1-R or N1-P is (subsumed by N1's causes). So a read "
-                "missing or non-finite elsewhere in those arms (an N1-P read at −1; an N1-R cell at +1/2) makes N2 "
-                "INDETERMINATE although its certification reads none of it; read point by point, N2 would be evaluated",
-    "PIN-n-30": "N2's certifications stay unsigned, as n §3's G-LEAK-n states them (|mean| against the ceiling): "
-                "ADDENDUM-n1 §7.3's sign rule names DETECTABLE and PARTIAL only, so a span_reward or valence movement "
-                "against the conditioned zone beyond the ceiling counts as moving in N2 (SHARED / SPECIFIC), its sign "
-                "in the figure. So N1-V moving against the zone at the norm-matched point, span_reward not certified, "
-                "gives SPECIFIC, whose sentence says the valence direction 'does' move BK's apparatus. Nor has "
-                "G-LEAK-n's certification a CI condition: N1-V beyond the ceiling with a CI that includes 0 gives "
-                "SPECIFIC too. When the cap binds that point is d_eq; there the dose sentence, if the dose question is "
-                "evaluated, names the same movement as against the zone (its CI excluding 0) or as not certified (its "
-                "CI including 0)",
+    "PIN-n-29": "as the seat amended it (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md §5.2), N2's "
+                "causes are read point by point: its certification reads N2-E at the decision f, and N1-V, N1-R's 24 "
+                "directions and N1-P at the norm-matched point; N2 is INDETERMINATE iff one of those reads is missing "
+                "or non-finite, or a pause stands on one of them; an incompleteness elsewhere in those arms (the "
+                "seat's examples, N1-P at −1 and N1-R at +1/2; Code's note: +1/2 is N2's own point where d_20 folds "
+                "into it, or d_eq does when the cap binds) makes N1 or dose INDETERMINATE by their own rules and "
+                "leaves N2 evaluated; N1 stays per arm (n:134); the other f's figures beside are 'not computed' where "
+                "their reads are missing. ADDENDUM-n1 §7.4's N2 clause is read as this (OPEN-Q6); the mechanics are "
+                "PIN-n-36's",
+    "PIN-n-30": "N2's certifications stay unsigned, as n §3's G-LEAK-n states them (|mean| against the ceiling, no CI "
+                "condition), and the sign enters no N2 outcome: ADDENDUM-n1 §7.3's sign rule names DETECTABLE and "
+                "PARTIAL only (accepted, the 2026-11-18 answers §5.3). So N1-V moving against the conditioned zone at "
+                "the norm-matched point, span_reward not certified, gives SPECIFIC, and so does N1-V beyond the ceiling "
+                "with a CI that includes 0; the sentences say which: in A.7's three forms each figure carries its CI "
+                "and, where its mean is below 0, the words 'against the conditioned zone' (§5.3; PIN-n-34). When the "
+                "cap binds that point is d_eq; there the dose sentence, if the dose question is evaluated, names the "
+                "same movement in the seat's fourth NOT-DETECTABLE form (its CI excluding 0; §5.6) or as not certified "
+                "(its CI including 0)",
     "PIN-n-31": "the capture arrays are bound by the per-layer row hashes their cells record (check_cell holds their "
                 "names and layers to the band), which must equal the stage report's and G-READ-n's artifact's for the "
                 "cell; the reader reads no array and needs none present -- they are G-READ-n's input, never in git "
                 "(ADDENDUM-n1 §6.2), whose rows n-build's loader checks against those hashes before any fit (G-READ-n "
                 "reads captures only through it: n-build's PIN, declared at its BUILD, 83a50a0) -- and refuses a file "
                 "beside the cells that no cell names",
-    "PIN-n-32": "where d_eq merges into another point (+1/2 or +1), the three NOT-DETECTABLE forms -- verbatim, "
-                "ADDENDUM-n1 §7.6, with no [value] slot -- print the figure of the point read as Δm(d_eq) (as Δm under "
-                "the sign rule) with no 'read at d = ...' note; the merge is reported in the dose outcome's point, in "
-                "G-LEAK-n's table and in the DETECTABLE sentence's [value] (VALUE_MERGED). Whether the forms take the "
-                "note (§5.1) is the seat's",
+    "PIN-n-32": "as the seat amended it (the 2026-11-18 answers §5.4): where d_eq merges into another point (+1/2 or "
+                "+1), the three NOT-DETECTABLE forms and the fourth print the figure as 'Δm(d_eq) = [x] nats [CI] "
+                "(read at d = [point], the point d_eq merges into under §2.3)' (MERGE_NOTE), as DETECTABLE's [value] "
+                "does (VALUE_MERGED); a sentence does not state a figure as d_eq's when the read was elsewhere. The "
+                "merge stays in the dose outcome's point and in G-LEAK-n's table",
+    "PIN-n-33": "pauses are read as the 2026-11-18 answers §5.2 write N2's rule, 'INDETERMINATE iff one of those "
+                "reads is missing or non-finite, or a pause stands on one of them', a pause standing on its scope's "
+                "arms (n-build's schema): one on N2-E, N1-V, N1-R or N1-P makes N2 INDETERMINATE, and one on a guard's "
+                "reads alone (N2-S's or N2-C's) leaves N2 evaluated, the guard's figures reported beside with its "
+                "pause. Both halves depart from rulings of record, and the seat is asked which stands: the answers of "
+                "2026-11-16 §1.6 ('A pause standing on N1-V's, N1-R's or N1-P's reads leaves N2 evaluable only in the "
+                "case the block names, where those arms are nonetheless complete'), which 977b78b carried; and n:140 "
+                "('INDETERMINATE iff an unadjudicated pause stands on N2's reads'), whose 'N2's reads' 977b78b read "
+                "as N2-E's, N2-S's and N2-C's",
+    "PIN-n-34": "§5.3's words go on every figure of A.7's three forms, SPECIFIC's span_reward figure and SHARED's "
+                "valence figure too, which the seat's text does not name (it names SPECIFIC's valence figure and "
+                "SHARED's and NULL's parentheticals, span_reward's included): each figure carries its CI ([CIE], "
+                "[CIV]; SHARED's span_reward figure had it already) and, where its mean is below 0, ', against the "
+                "conditioned zone' ([zoneE], [zoneV]), certified or not, closing its parenthetical (after 'against "
+                "[c]' where it has one, so that span_reward's reads '... against [c], against the conditioned zone' in "
+                "SPECIFIC and SHARED; SHARED's valence figure, outside any parenthesis, ends the sentence)",
+    "PIN-n-35": "the seat's fourth NOT-DETECTABLE form (F11 as ruled, the 2026-11-18 answers §5.6) is chosen by a "
+                "fourth input that is not a coordinate (OPEN-Q4): the dose's movement at d_eq certified against the "
+                "conditioned zone (PIN-n-27), which only a NOT-DETECTABLE dose carries; the tuple pass runs each "
+                "NOT-DETECTABLE tuple under it, 640 evaluations more, 2,561 in all; the label by §0.6 as the others",
+    "PIN-n-36": "point by point (PIN-n-29 as amended), the reader records why each steered arm's reads at each point "
+                "are not usable -- a planned read absent ('incomplete'), a read non-finite ('nonfinite'), a session's "
+                "shadow not usable ('shadow': PIN-n-20 per point, N1-V's d = 0 reads a cause of its other points), the "
+                "point left with no session in the TAU/4 row ('tau4-emptied') -- and computes each point's statistics "
+                "where its reads are usable. The per-arm statistics -- N1-V's slopes, N1-R's floor, N2's floor (N1-R "
+                "at d_eq's and d_20's points) and the N2 arms' slopes -- stay on a complete arm only; a slope with no "
+                "common session in the TAU/4 row marks its arm 'tau4-emptied' and not its points, so that row decides "
+                "N2 where 977b78b had it INDETERMINATE. G-LEAK-n's table reads each row the same way, so that it "
+                "agrees with N2. N2's causes name a point by its record label ('incomplete:N1-P@+d_20', "
+                "'shadow:N2-E@f0.20') and a pause by its arm ('pause:N1-V'). An INDETERMINATE N2 reports no beside, as "
+                "at 977b78b: §5.2's 'not computed where its reads are missing' is read for a decided N2's beside",
 }
 #: The seat's rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9), in
-#: results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1, as the code carries them.
+#: results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1, with the amendments of the answers of
+#: 2026-11-18 (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md §5), as the code carries them.
 OPEN = {
     "OPEN-Q1": "ruled (b), ADDENDUM-n1 §7.1: per session, OLS through the origin over the arm's nonzero dose points; "
                "the floor refit the same way; the with-intercept slope reported beside, descriptive",
@@ -2069,20 +2417,25 @@ OPEN = {
                "every point a certification is made; the ceiling max(L, P) unchanged",
     "OPEN-Q3": "ruled (a), ADDENDUM-n1 §7.2: answered iff N4 PASS and G-READ-n PASS for the axis and dose (N1 at +1, "
                "dose at d_eq, N2 for span_reward at its decision f); the cell (G-READ-n PASS, N4 not PASS) has its "
-               "own sentence (A.6, as §7.6 amends it)",
+               "own sentence (A.6, as §7.6 and the 2026-11-18 answers §5.4 amend it), unless the movement at d_eq is "
+               "certified against the conditioned zone, which takes the fourth form (§5.6)",
     "OPEN-Q4": "confirmed: three inputs that change a sentence are not coordinates: G-READ-n (valence, +1), G-READ-n "
-               "(span_reward, at N2's decision f), N4's no-read INDETERMINATE; 385 tuples, 1,921 evaluations",
+               "(span_reward, at N2's decision f), N4's no-read INDETERMINATE; 385 tuples, 1,921 evaluations. The "
+               "seat's fourth NOT-DETECTABLE form (the 2026-11-18 answers §5.6) adds a fourth input, the dose's movement "
+               "certified against the conditioned zone: 2,561 evaluations (PIN-n-35)",
     "OPEN-Q5": "confirmed: the sentence functions are total; reachability reported per merge shape; no tuple refused",
     "OPEN-Q6": "ruled (a), amended for N1-P, ADDENDUM-n1 §7.4: N1 INDETERMINATE when N1-V is incomplete; dose when N1 "
                "is, or N1-V's, N1-R's or N1-P's reads at d_eq are incomplete (the d_20 figure beside then reported as "
-               "not computed); N2 when N2-E, N1-V, N1-R or N1-P at the "
-               "norm-matched point is incomplete (applied per arm: PIN-n-29); N4, no read obtained, when a pause "
-               "stands on its reads",
+               "not computed); N2 when N2-E, N1-V, N1-R or N1-P at the norm-matched point is incomplete (read point "
+               "by point, the 2026-11-18 answers §5.2: PIN-n-29 as amended; the other f's figures beside reported as "
+               "not computed where their reads are missing); N4, no read obtained, when a pause stands on its reads",
     "OPEN-Q7": "ruled, ADDENDUM-n1 §5.3: when the cap binds (2·d_eq > 1), N2 is decided at f = 0.10 against N1-V at "
                "d_eq, with f = 0.20 beside against N1-V at d = 1 and the ratio 2·d_eq; otherwise at f = 0.20, f = 0.10 "
                "beside",
     "OPEN-Q8": "ruled: Appendix A adopted with the amendments of ADDENDUM-n1 §7.6 (the movement clause in the three "
-               "NOT-DETECTABLE forms, the sign clause, the labels by §0.6, 'at f = [f]')",
+               "NOT-DETECTABLE forms, the sign clause, the labels by §0.6, 'at f = [f]') and of the 2026-11-18 answers "
+               "§5.3, §5.4 and §5.6 (N2's figures with their CIs and the zone's words; the merge note in the "
+               "NOT-DETECTABLE forms; the fourth NOT-DETECTABLE form)",
     "OPEN-Q9": "ruled (a), through the origin, ADDENDUM-n1 §7.5: N2's slope over (d_eq, 2·d_eq), its floor on the "
                "random reads at d_eq's and d_20's kept points, the mismatch printed beside where they differ",
 }
@@ -2468,7 +2821,8 @@ def runs_of(arm: str) -> list[int]:
 
 def delta_m(camp: Campaign, arm: str, direction: str, label: str) -> dict[int, float]:
     """Δm(d) = m(c_steer(d)) − m(c_uns) per session (n §4), for one (arm, direction, kept label), keyed by BK's run.
-    Called only on a usable arm with usable shadows (build_state's guard): a missing or non-finite read here STOPs."""
+    Called only on a usable point with usable shadows (build_state's guard, PIN-n-36): a missing or non-finite read
+    here STOPs."""
     out = {}
     for run in runs_of(arm):
         sid = session_key(run)
@@ -2492,12 +2846,17 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
     unadjudicated pause stands on its reads (the stage report's). ``drop``: the TAU/4 sensitivity row's read filter
     (PIN-n-16), None for the primary (ungated, n §2.1).
 
-    An arm's statistics are computed only when it is usable (PIN-n-20) and, for a steered arm, when the shadows (N1-V's
-    d = 0 reads) of every session it reads are usable (N1-R's 40 floor sessions, the others' 160); a steered arm whose
-    own reads are usable but whose shadows are not is marked `shadow`. In the TAU/4 row an arm left with no session at
-    some point is marked `tau4-emptied` (never a STOP), and each statistic's matrix is drawn from its arm's stream for
-    that statistic's session count (PIN-n-12). Slopes are fitted through the origin over the nonzero points (OPEN-Q1
-    and OPEN-Q9 as ruled), N1-V's with-intercept slope beside, descriptive; N1-P's P(d) at each point it reads."""
+    Read point by point (PIN-n-29 as amended; PIN-n-36): a steered arm's reads at one point are usable iff every
+    planned read there is present and finite and the shadows (N1-V's d = 0 reads) of every session it reads are too
+    (PIN-n-20 per point: N1-R's 40 floor sessions, the others' 160); State.at records why not, per point, and each
+    point's statistics (V, L, P, N2's E, S, C) are computed where its reads are usable. An arm is complete only if every
+    point is (`shadow` when only its shadows fail it); the per-arm statistics -- N1-V's slope, N1-R's floor and N2's
+    floor, the N2 arms' slopes -- are computed on a complete arm only. In the TAU/4 row a point left with no session is
+    marked `tau4-emptied`, and its arm with it, and a slope with no common session marks its arm alone, its points
+    staying usable (never a STOP; PIN-n-36); each statistic's matrix is drawn from its arm's stream
+    for that statistic's session count (PIN-n-12). Slopes are fitted through the origin over the nonzero points
+    (OPEN-Q1 and OPEN-Q9 as ruled), N1-V's with-intercept slope beside, descriptive; N1-P's P(d) at each point it
+    reads."""
     ident, dmap = camp.identity, camp.dmap
     lv = label_values(ident)
     v_pts = sorted({lv[x] for x in lv}, reverse=True)                     # N1-V's points, 0 included
@@ -2514,6 +2873,18 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
     st = State(dmap=dmap, complete={a: camp.usable(a) and a not in unusable for a in ARMS},
                paused={a: bool(paused.get(a)) for a in ARMS}, gread=dict(gread), missing=missing, nonfinite=nonfin,
                unusable=unusable)
+    fkey = {"f0.10": F10, "f0.20": F20}
+    for a in STEERED_ARMS:                                     # PIN-n-29 as amended, PIN-n-36: why, point by point
+        by_label: dict[str, list[str]] = {}
+        for rid in camp.planned[a]:
+            by_label.setdefault(rid.split("|")[2], []).append(rid)
+        sh = [] if shadows_ok(a) else ["shadow"]
+        for lab, ids in by_label.items():
+            if a == "N1-V" and lab == "0":
+                continue                                       # the shadows themselves: a cause of the other points
+            why = (["incomplete"] if any(r not in camp.present[a] for r in ids) else []) \
+                + (["nonfinite"] if any(r in camp.present[a] and not camp.records[r]["finite"] for r in ids) else [])
+            st.at[(a, fkey.get(lab, lv.get(lab)))] = why + sh
     fig: dict = {"n": {}, "sd0": {}, "dir_means": {}, "dir_slopes": {}, "P_signed": {}, "slopes_N2": {},
                  "floors_N2": {}}
 
@@ -2524,10 +2895,25 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
         return {run: x for run, x in d.items() if not (drop(f"N1-V|none|0|{session_key(run)}")
                                                         or drop(f"{arm}|{direction}|{label}|{session_key(run)}"))}
 
+    def arm_emptied(arm) -> None:
+        st.complete[arm] = False
+        st.unusable[arm] = "tau4-emptied"
+
     def emptied(arm, *vecs) -> bool:
+        """The TAU/4 row, for an arm read at one point only (N4's): no session left marks it `tau4-emptied`."""
         if any(len(v) == 0 for v in vecs):
-            st.complete[arm] = False
-            st.unusable[arm] = "tau4-emptied"
+            arm_emptied(arm)
+            return True
+        return False
+
+    def usable_at(arm, key) -> bool:
+        return not st.at[(arm, key)]
+
+    def emptied_at(arm, key, *vecs) -> bool:
+        """The TAU/4 row: a point left with no session is `tau4-emptied`, and so is its arm (never a STOP)."""
+        if any(len(v) == 0 for v in vecs):
+            st.at[(arm, key)] = ["tau4-emptied"]
+            arm_emptied(arm)
             return True
         return False
 
@@ -2541,76 +2927,82 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
 
     nz_pts = [pt for pt in v_pts if pt != 0.0]                            # the nonzero points, the fits' (OPEN-Q1)
     lab_of = {p: lab for lab, p in labels_v.items()}
+    vecs = {}
+    for lab, pt in labels_v.items():
+        if usable_at("N1-V", pt):
+            v_ = dm("N1-V", "valence", lab)
+            if not emptied_at("N1-V", pt, v_):
+                vecs[pt] = v_
+                st.V[pt] = mean_est(_vec(v_), boot_index("N1-V", len(v_)))
+                fig["n"][("N1-V", lab)] = len(v_)
+                fig["sd0"][("N1-V", lab)] = sd0(_vec(v_))
     if st.complete["N1-V"]:
-        vecs = {pt: dm("N1-V", "valence", lab) for lab, pt in labels_v.items()}
-        if not emptied("N1-V", *vecs.values()):
-            for lab, pt in labels_v.items():
-                st.V[pt] = mean_est(_vec(vecs[pt]), boot_index("N1-V", len(vecs[pt])))
-                fig["n"][("N1-V", lab)] = len(vecs[pt])
-                fig["sd0"][("N1-V", lab)] = sd0(_vec(vecs[pt]))
-            est, n_c, sl = slope_est("N1-V", nz_pts, [vecs[pt] for pt in nz_pts])
-            if est is None:
-                emptied("N1-V", [])
-            else:
-                st.slope_V, fig["slope_V_n"], fig["slope_V_sd0"] = est, n_c, sd0(sl)
-                zero = {r: 0.0 for r in range(N_SESSIONS)}                # beside, descriptive: with an intercept
-                est_i, _, _ = slope_est("N1-V", v_pts, [zero if pt == 0.0 else vecs[pt] for pt in v_pts],
-                                        fit=session_slopes)
-                fig["slope_V_with_intercept"] = dict(est_i.as_json(), descriptive=True)   # OPEN-Q1 as ruled
-    if st.complete["N1-R"]:
-        dirs = tuple(f"rand_{i:02d}" for i in range(N_RANDOM))
-        dv = {(d_, lab): dm("N1-R", d_, lab) for d_ in dirs for lab in labels_v}
-        if not emptied("N1-R", *dv.values()):
-            for lab, pt in labels_v.items():
-                means = {d_: float(_vec(dv[(d_, lab)]).mean()) for d_ in dirs}
+        est, n_c, sl = slope_est("N1-V", nz_pts, [vecs[pt] for pt in nz_pts])
+        if est is None:
+            arm_emptied("N1-V")
+        else:
+            st.slope_V, fig["slope_V_n"], fig["slope_V_sd0"] = est, n_c, sd0(sl)
+            zero = {r: 0.0 for r in range(N_SESSIONS)}                    # beside, descriptive: with an intercept
+            est_i, _, _ = slope_est("N1-V", v_pts, [zero if pt == 0.0 else vecs[pt] for pt in v_pts],
+                                    fit=session_slopes)
+            fig["slope_V_with_intercept"] = dict(est_i.as_json(), descriptive=True)       # OPEN-Q1 as ruled
+    dirs = tuple(f"rand_{i:02d}" for i in range(N_RANDOM))
+    dv = {}
+    for lab, pt in labels_v.items():
+        if usable_at("N1-R", pt):
+            per = {d_: dm("N1-R", d_, lab) for d_ in dirs}
+            if not emptied_at("N1-R", pt, *per.values()):
+                means = {d_: float(_vec(per[d_]).mean()) for d_ in dirs}
                 for d_ in dirs:
+                    dv[(d_, lab)] = per[d_]
                     fig["dir_means"][(d_, lab)] = means[d_]
                 st.L[pt] = max(abs(x) for x in means.values())
-            slopes = {}
+    if st.complete["N1-R"]:
+        slopes = {}
+        for d_ in dirs:
+            est, n_c, sl = slope_est("N1-R", nz_pts, [dv[(d_, lab_of[pt])] for pt in nz_pts])
+            slopes[d_] = float(sl.mean()) if sl is not None else float("nan")
+            fig["dir_slopes"][d_] = slopes[d_] if sl is not None else None        # no NaN in a figure
+        if any(math.isnan(x) for x in slopes.values()):
+            arm_emptied("N1-R")
+        else:
+            st.floor_V = max(abs(x) for x in slopes.values())
+            fig["floor_dir"] = max(slopes, key=lambda k: (abs(slopes[k]), k))
+            # OPEN-Q9 as ruled: N2's floor on the random reads at d_eq's and d_20's kept points, through the origin
+            n2_pts, (p10, p20) = dmap.n2_slope_points()
+            n2_slopes = {}
             for d_ in dirs:
-                est, n_c, sl = slope_est("N1-R", nz_pts, [dv[(d_, lab_of[pt])] for pt in nz_pts])
-                slopes[d_] = float(sl.mean()) if sl is not None else float("nan")
-                fig["dir_slopes"][d_] = slopes[d_] if sl is not None else None    # no NaN in a figure
-            if any(math.isnan(x) for x in slopes.values()):
-                emptied("N1-R", [])
-            else:
-                st.floor_V = max(abs(x) for x in slopes.values())
-                fig["floor_dir"] = max(slopes, key=lambda k: (abs(slopes[k]), k))
-                # OPEN-Q9 as ruled: N2's floor on the random reads at d_eq's and d_20's kept points, through the origin
-                n2_pts, (p10, p20) = dmap.n2_slope_points()
-                n2_slopes = {}
-                for d_ in dirs:
-                    _, _, sl = slope_est("N1-R", (p10, p20), [dv[(d_, lab_of[p10])], dv[(d_, lab_of[p20])]])
-                    n2_slopes[d_] = float(sl.mean())
-                fig["floors_N2"] = {"points": [p10, p20], "floor": max(abs(x) for x in n2_slopes.values()),
-                                    "n2_points": list(n2_pts), "mismatch": [p10, p20] != list(n2_pts)}
-    if st.complete["N1-P"]:
-        # OPEN-Q2 as ruled (ADDENDUM-n1 §5.2): P(d) at each point N1-P reads, as the plan has them
-        p_labels = sorted({rid.split("|")[2] for rid in camp.planned["N1-P"]}, key=lambda lab: -lv[lab])
-        pv = {lv[lab]: dm("N1-P", "valence", lab) for lab in p_labels}
-        if not emptied("N1-P", *pv.values()):
-            for lab in p_labels:
-                pt = lv[lab]
-                e = mean_est(_vec(pv[pt]), boot_index("N1-P", len(pv[pt])))
+                _, _, sl = slope_est("N1-R", (p10, p20), [dv[(d_, lab_of[p10])], dv[(d_, lab_of[p20])]])
+                n2_slopes[d_] = float(sl.mean())
+            fig["floors_N2"] = {"points": [p10, p20], "floor": max(abs(x) for x in n2_slopes.values()),
+                                "n2_points": list(n2_pts), "mismatch": [p10, p20] != list(n2_pts)}
+    # OPEN-Q2 as ruled (ADDENDUM-n1 §5.2): P(d) at each point N1-P reads, as the plan has them
+    for lab in sorted({rid.split("|")[2] for rid in camp.planned["N1-P"]}, key=lambda lab: -lv[lab]):
+        pt = lv[lab]
+        if usable_at("N1-P", pt):
+            v_ = dm("N1-P", "valence", lab)
+            if not emptied_at("N1-P", pt, v_):
+                e = mean_est(_vec(v_), boot_index("N1-P", len(v_)))
                 st.P[pt] = abs(e.mean)
                 fig["P_signed"][lab] = e.as_json()
-                fig["n"][("N1-P", lab)] = len(pv[pt])
+                fig["n"][("N1-P", lab)] = len(v_)
     for arm, d_ in GUARD_DIRS.items():
-        if not st.complete[arm]:
-            continue
-        fv = {f: dm(arm, d_, lab) for lab, f in (("f0.10", F10), ("f0.20", F20))}
-        if emptied(arm, *fv.values()):
-            continue
         tgt = {"N2-E": st.E, "N2-S": st.S, "N2-C": st.C}[arm]
+        fv = {}
         for lab, f in (("f0.10", F10), ("f0.20", F20)):
-            tgt[f] = mean_est(_vec(fv[f]), boot_index(arm, len(fv[f])))
-            fig["n"][(arm, lab)] = len(fv[f])
-            fig["sd0"][(arm, lab)] = sd0(_vec(fv[f]))
-        pts, fl_pts = dmap.n2_slope_points()                              # OPEN-Q9 as ruled: through the origin
-        est, n_c, _ = slope_est(arm, pts, [fv[F10], fv[F20]])
-        fig["slopes_N2"][arm] = None if est is None else dict(est.as_json(), n=n_c, points=list(pts),
-                                                               floor_points=list(fl_pts),
-                                                               mismatch=list(pts) != list(fl_pts))
+            if usable_at(arm, f):
+                v_ = dm(arm, d_, lab)
+                if not emptied_at(arm, f, v_):
+                    fv[f] = v_
+                    tgt[f] = mean_est(_vec(v_), boot_index(arm, len(v_)))
+                    fig["n"][(arm, lab)] = len(v_)
+                    fig["sd0"][(arm, lab)] = sd0(_vec(v_))
+        if st.complete[arm]:
+            pts, fl_pts = dmap.n2_slope_points()                          # OPEN-Q9 as ruled: through the origin
+            est, n_c, _ = slope_est(arm, pts, [fv[F10], fv[F20]])
+            fig["slopes_N2"][arm] = None if est is None else dict(est.as_json(), n=n_c, points=list(pts),
+                                                                   floor_points=list(fl_pts),
+                                                                   mismatch=list(pts) != list(fl_pts))
     if st.complete["N4-T"] and st.complete["N4-Ts"]:
         told, sham = [], []
         for run in range(N_SESSIONS):
@@ -2662,21 +3054,33 @@ def value_text(dm: DoseMap, point: float) -> str:
     return VALUE_MERGED.format(value=_u(dm.d_eq), point=lab if lab is not None else _u(point))
 
 
+def merge_text(dm: DoseMap, point: float) -> str:
+    """The NOT-DETECTABLE forms' [merge] (PIN-n-32 as amended; the seat's answers of 2026-11-18 §5.4): nothing at
+    d_eq's own point; where §2.3's merge moved d_eq onto another point, MERGE_NOTE naming that point as value_text does,
+    since the figure printed as Δm(d_eq) is read there."""
+    if point == dm.d_eq:
+        return ""
+    lab = BK_LABEL.get(point)
+    return MERGE_NOTE.replace("[point]", lab if lab is not None else _u(point))
+
+
 def code_forms() -> dict[str, str]:
     """Every sentence form the module writes beyond §5's verbatim cells, by name: Code's (the question block's Appendix
-    A with VALUE_MERGED, adopted with the seat's amendments: OPEN-Q8 as ruled) and ADDENDUM-n1 §7.6's, with the clause
-    of §5 the addendum replaces; the battery pins them by digest (CODE_FORMS_SHA256), so that none changes unseen."""
+    A with VALUE_MERGED, adopted with the seat's amendments: OPEN-Q8 as ruled), ADDENDUM-n1 §7.6's, with the clause of
+    §5 the addendum replaces, and the seat's of 2026-11-18 §5 (RULING_FORMS: its fourth form's two branches, the merge
+    note and the zone's words); the battery pins them by digest (CODE_FORMS_SHA256), so that none changes unseen."""
     f = {"C_N1_PARTIAL": C_N1_PARTIAL, "C_N1_NOT_REPLICATED": C_N1_NOT_REPLICATED, "C_N1_INDET": C_N1_INDET,
          "C_DOSE_ND_NOT_READABLE": C_DOSE_ND_NOT_READABLE, "C_DOSE_INDET": C_DOSE_INDET, "C_NOT_RUN": C_NOT_RUN,
          "VALUE_MERGED": VALUE_MERGED, "OLD_MOVE": OLD_MOVE, "B_STRUCK": B_STRUCK}
     for fam, d in (("C_N2", C_N2), ("C_N4", C_N4), ("CONJUNCT_TEXT", CONJUNCT_TEXT),
-                   ("NOT_RUN_CAUSES", NOT_RUN_CAUSES), ("ROUTE_TEXT", ROUTE_TEXT), ("ADDENDUM", ADDENDUM_FORMS)):
+                   ("NOT_RUN_CAUSES", NOT_RUN_CAUSES), ("ROUTE_TEXT", ROUTE_TEXT), ("ADDENDUM", ADDENDUM_FORMS),
+                   ("RULING", RULING_FORMS)):
         f |= {f"{fam}[{k}]": v for k, v in d.items()}
     return f
 
 
 #: sha256 of _canon(code_forms()) -- a changed form fails the battery until this pin is moved, in the open
-CODE_FORMS_SHA256 = "209d7b4623ff0e3c24dbc7116d3b7d2453580252af4c2c957fcaefb1e09492f5"
+CODE_FORMS_SHA256 = "281c68271a8093b30fb8b278168989c72dd06fcaea2b316d9ff92baa5ef5bbe2"
 
 
 def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str, auc: Mapping[str, float | None],
@@ -2710,18 +3114,21 @@ def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str
             if a is None and "[a]" in t:
                 raise AnlStop("STOP: a dose sentence that calls the state readable carries no AUC (G-READ-n's band "
                               "median at d_eq)")
-            # PIN-n-32: only DETECTABLE's form has [value] (VALUE_MERGED); the NOT-DETECTABLE forms print Δm(d_eq)
-            sub.update({"[value]": value_text(st.dmap, d["point"]), "[x]": _n(v.mean), "[CI]": _ci(v),
-                        "[c]": _u(d["ceiling"]), "[a]": "not computed" if a is None else f"{a:.3f}",
-                        MOVE_SLOT: MOVE_AGAINST if d["against"] else MOVE_NOT_CERTIFIED})
+            # PIN-n-32 as amended (§5.4): where d_eq merges into another point, DETECTABLE's [value] (VALUE_MERGED)
+            # and the NOT-DETECTABLE forms' [merge] (MERGE_NOTE, after the figure printed as Δm(d_eq)) name the point
+            sub.update({"[value]": value_text(st.dmap, d["point"]), MERGE_SLOT: merge_text(st.dmap, d["point"]),
+                        "[x]": _n(v.mean), "[CI]": _ci(v), "[c]": _u(d["ceiling"]),
+                        "[a]": "not computed" if a is None else f"{a:.3f}"})
     elif q == "N2":
         n2 = o["N2"]
         if n2["state"] == "INDETERMINATE":
             sub["[causes]"] = ", ".join(n2["causes"])
         else:
-            e = st.E[n2["f"]]
+            e, v = st.E[n2["f"]], st.V[n2["point"]]
+            # PIN-n-30 as accepted, PIN-n-34: each figure with its CI, the zone's words where its mean is below 0
             sub.update({"[xE]": _n(e.mean), "[CIE]": _ci(e), "[c]": _u(n2["ceiling"]), "[f]": F_TEXT[n2["f"]],
-                        "[xV]": _n(st.V[n2["point"]].mean)})
+                        "[xV]": _n(v.mean), "[CIV]": _ci(v), ZONE_E: ZONE_WORDS if e.mean < 0.0 else "",
+                        ZONE_V: ZONE_WORDS if v.mean < 0.0 else ""})
     elif q == "N4":
         n4 = o["N4"]
         if n4["no_read"]:
@@ -2739,11 +3146,13 @@ def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str
 
 def sentence_set_filled(o: Mapping[str, Any], st: State, *, route: str, auc: Mapping[str, float | None]) -> dict:
     """The §7 sentence set for a VERDICTS: the tuple's template set (sentence_set, the same functions the battery's
-    tuple pass asserts), with its N1 failing conjuncts, its INDETERMINATE causes and every figure filled."""
+    tuple pass asserts), with its N1 failing conjuncts, its INDETERMINATE causes and every figure filled; a movement at
+    d_eq certified against the conditioned zone selects the seat's fourth NOT-DETECTABLE form (F11 as ruled)."""
     gr = o["gread"]
     t = o["tuple"]
     base = sentence_set(t, gr1="PASS" if gr["+1"] == "PASS" else "FAIL", gre="PASS" if gr["E"] == "PASS" else "FAIL",
-                        n4_no_read=bool(o["N4"].get("no_read")) and o["N4"]["state"] == "INDETERMINATE")
+                        n4_no_read=bool(o["N4"].get("no_read")) and o["N4"]["state"] == "INDETERMINATE",
+                        dose_against=bool(o["dose"].get("against")))
     return {k: fill(v, o, st, route=route, auc=auc) for k, v in base.items()}
 
 
@@ -2985,6 +3394,7 @@ def _bt_reader(B: _Battery) -> None:
         def u4(x): return f"{x:.4f}"
         def ci4(e): return f"[{e.lo:+.4f}, {e.hi:+.4f}]"
         def ceil_at(s, pt): return max(s.L[pt], s.P[pt]) if pt in s.P else s.L[pt]
+        def zone(e): return ", against the conditioned zone" if e.mean < 0 else ""      # §5.3, a mean below 0
         rd = "on a reconstructed direction"
         n2h = "N2, descriptive (§7.3; it licenses no thesis sentence): "
         deq, d20 = camp.dmap.resolved()["d_eq"], camp.dmap.resolved()["d_20"]
@@ -2997,8 +3407,8 @@ def _bt_reader(B: _Battery) -> None:
                     "alone does not account for the program's null on the echo channel"),
             "7.3": (n2h + "SHARED: at f = 0.20 this program's evaluative axis (span_reward) moves BK's apparatus "
                     f"beyond the leak ceiling (Δm = {f4(st.E[F20].mean)} nats {ci4(st.E[F20])} against "
-                    f"{u4(ceil_at(st, d20))}); the valence direction of record at the norm-matched point: Δm = "
-                    f"{f4(st.V[d20].mean)} nats"),
+                    f"{u4(ceil_at(st, d20))}{zone(st.E[F20])}); the valence direction of record at the norm-matched "
+                    f"point: Δm = {f4(st.V[d20].mean)} nats {ci4(st.V[d20])}{zone(st.V[d20])}"),
             "N4": (f"PASS: BK's apparatus registers an instructed preference on this checkpoint: m_told = "
                    f"{f4(st.told.mean)} nats {ci4(st.told)} against E = {u4(st.e_sham)}; it licenses the answered "
                    "reading of nulls in this format on this checkpoint (§0.6, with G-READ-n), nothing else")}
@@ -3031,9 +3441,10 @@ def _bt_reader(B: _Battery) -> None:
         s4 = sentence_set_filled(o4, st4, route="B", auc={"d_eq": 0.9})
         want_forms = {
             ("spec", "7.3"): (n2h + "SPECIFIC: at f = 0.20 this program's evaluative axis (span_reward) does not move "
-                              f"BK's apparatus beyond the leak ceiling (Δm = {f4(st3.E[F20].mean)} nats against "
-                              f"{u4(ceil_at(st3, d20))}) while the valence direction of record at the norm-matched "
-                              f"point does (Δm = {f4(st3.V[d20].mean)} nats) — concluded, not answered"),
+                              f"BK's apparatus beyond the leak ceiling (Δm = {f4(st3.E[F20].mean)} nats "
+                              f"{ci4(st3.E[F20])} against {u4(ceil_at(st3, d20))}{zone(st3.E[F20])}) while the valence "
+                              f"direction of record at the norm-matched point does (Δm = {f4(st3.V[d20].mean)} nats "
+                              f"{ci4(st3.V[d20])}{zone(st3.V[d20])}) — concluded, not answered"),
             ("spec", "N4"): (f"REVERSE: m_told = {f4(st3.told.mean)} nats {ci4(st3.told)} below −E = "
                              f"{f4(-st3.e_sham)}"),
             ("part", "7.1"): ("PARTIAL: BK's fixed-text effect on OLMo-2-32B Instruct, in this program's "
@@ -3051,11 +3462,15 @@ def _bt_reader(B: _Battery) -> None:
               [k for k in want_forms if got_forms[k] != want_forms[k]], cover=["RD-FILLED-FORMS"])
         ind = _bt_write_campaign(base / "ind", sm, delta=_bt_delta_positive,
                                  omit=[("N1-R", "rand_07", "+1/2"), ("N4-Ts", "none", "0")])
-        o5 = _bt_eval(ind, sm)[3]
-        B.chk("reader path: a missing N1-R cell -> N1, dose and N2 INDETERMINATE (incomplete:N1-R); a missing N4-Ts "
-              "cell -> N4 INDETERMINATE, no read obtained", o5["tuple"][:4] == ("INDETERMINATE",) * 4
+        _c5, st5, _f5, o5 = _bt_eval(ind, sm)
+        B.chk("reader path: a missing N1-R cell at +1/2 -> N1 and dose INDETERMINATE (incomplete:N1-R), N2 evaluated, "
+              "since its certification reads N1-R at +d_20 alone (SHARED; PIN-n-29 as amended); a missing N4-Ts cell -> "
+              "N4 INDETERMINATE, no read obtained", o5["tuple"][:4] == ("INDETERMINATE", "INDETERMINATE", "SHARED",
+                                                                       "INDETERMINATE")
               and o5["N1"]["causes"] == ["incomplete:N1-R"] and o5["N4"]["no_read"]
-              and o5["N4"]["causes"] == ["incomplete:N4-Ts"], (o5["N1"], o5["N4"]), cover=["RD-INDET"])
+              and o5["N4"]["causes"] == ["incomplete:N4-Ts"] and st5.at[("N1-R", 0.5)] == ["incomplete"]
+              and st5.at[("N1-R", d20)] == [] and 0.5 not in st5.L and d20 in st5.L and st5.floor_V is None,
+              (o5["tuple"], o5["N1"], o5["N4"]), cover=["RD-INDET"])
         nf = _bt_write_campaign(base / "nf", sm, delta=_bt_delta_positive,
                                 nonfinite=[f"N1-V|valence|+1|{session_key(17)}"])
         camp6, st6, fig6, o6 = _bt_eval(nf, sm)
@@ -3070,14 +3485,88 @@ def _bt_reader(B: _Battery) -> None:
                                  nonfinite=[f"N1-V|none|0|{session_key(100)}"])
         camp10, st10, fig10, o10 = _bt_eval(nfs, sm)
         B.chk("reader path: a non-finite shadow at run 100 -> N1, dose and N2 INDETERMINATE, N1's causes "
-              "(nonfinite:N1-V, shadow:N1-P), N2's (shadow:N2-E, nonfinite:N1-V, shadow:N1-P: N1-P reads N2's "
-              "norm-matched point, OPEN-Q6 as ruled); N1-R (40 floor sessions) keeps its floor and L; N4 PASS",
+              "(nonfinite:N1-V, shadow:N1-P), N2's at the points it reads (shadow:N2-E@f0.20, shadow:N1-V@+d_20, "
+              "shadow:N1-P@+d_20: the shadow a cause of every point, PIN-n-36); N1-R (40 floor sessions) keeps its "
+              "floor and L; N4 PASS",
               o10["tuple"][:4] == ("INDETERMINATE",) * 3 + ("PASS",)
               and o10["N1"]["causes"] == ["nonfinite:N1-V", "shadow:N1-P"]
-              and o10["N2"]["causes"] == ["shadow:N2-E", "nonfinite:N1-V", "shadow:N1-P"]
+              and o10["N2"]["causes"] == ["shadow:N2-E@f0.20", "shadow:N1-V@+d_20", "shadow:N1-P@+d_20"]
               and st10.unusable == {"N1-P": "shadow", "N2-E": "shadow", "N2-S": "shadow", "N2-C": "shadow"}
               and st10.floor_V is not None and len(st10.L) == len(camp10.dmap.points()) - 1,
               (o10["tuple"], o10["N1"].get("causes"), o10["N2"].get("causes"), st10.unusable), cover=["RD-SHADOW"])
+        # PIN-n-29 as amended: N1-P's −1 cell missing (elsewhere), then one N1-R read at N2's point non-finite
+        pw1 = _bt_write_campaign(base / "pw1", sm, delta=_bt_delta_positive, omit=[("N1-P", "valence", "-1")])
+        _cp1, stp1, _fp1, op1 = _bt_eval(pw1, sm)
+        pw2 = _bt_write_campaign(base / "pw2", sm, delta=_bt_delta_positive,
+                                 nonfinite=[f"N1-R|rand_03|+d_20|{session_key(5)}"])
+        _cp2, stp2, _fp2, op2 = _bt_eval(pw2, sm)
+        pw3 = _bt_write_campaign(base / "pw3", sm, delta=_bt_delta_positive, omit=[("N2-E", "span_reward", "f0.10")])
+        _cp3, stp3, fp3, op3 = _bt_eval(pw3, sm)
+        # every N1-P read at −1 re-computed above TAU/4 and below TAU: the TAU/4 row empties that point alone
+        pw4 = _bt_write_campaign(base / "pw4", sm, delta=_bt_delta_positive,
+                                 fresh_shift={f"N1-P|valence|-1|{session_key(r)}": 0.02 for r in range(N_SESSIONS)})
+        _cp4, stp4, _fp4, op4 = _bt_eval(pw4, sm)
+        _cs4, sts4, _fs4, os4 = _bt_eval(pw4, sm, drop=True)
+        # one random direction's +1 reads (its 40 floor sessions) above TAU/4: the TAU/4 row empties N1-R at +1 (the
+        # dose rule re-computes reads at 0 and ±1 only, so no other point can be emptied alone; N2's own point, emptied,
+        # is N2-POINT-CAUSES's literal case)
+        pw5 = _bt_write_campaign(base / "pw5", sm, delta=_bt_delta_positive,
+                                 fresh_shift={f"N1-R|rand_04|+1|{session_key(r)}": 0.02 for r in range(N_FLOOR)})
+        _cs5, sts5, _fs5, os5 = _bt_eval(pw5, sm, drop=True)
+        # two causes at one of N2's points: N1-P's +d_20 cell missing and the shadow of run 100 non-finite
+        pw6 = _bt_write_campaign(base / "pw6", sm, delta=_bt_delta_positive, omit=[("N1-P", "valence", "+d_20")],
+                                 nonfinite=[f"N1-V|none|0|{session_key(100)}"])
+        op6 = _bt_eval(pw6, sm)[3]
+        keys1 = ({f"{a}@{x}" for a in ("N1-V", "N1-R") for x in ("+1", "+1/2", "+d_20", "+d_eq", "-1")}
+                 | {f"N1-P@{x}" for x in ("+1", "+d_20", "+d_eq", "-1")}
+                 | {f"{a}@{x}" for a in ("N2-E", "N2-S", "N2-C") for x in ("f0.10", "f0.20")})
+        rows1 = {(r["arm"], r["labels"][0]): r for r in gleak_table(stp1)}
+        rows2 = {(r["arm"], r["labels"][0]): r for r in gleak_table(stp2)}
+        pc1 = state_figures(stp1, _fp1)["point_causes"]
+        pw_ok = {"N1-P at -1": op1["tuple"][:4] == ("INDETERMINATE", "INDETERMINATE", "SHARED", "PASS")
+                 and op1["N1"]["causes"] == ["incomplete:N1-P"] and sorted(stp1.P) == sorted([1.0, d20, deq])
+                 and rows1[("N1-V", "-1")]["why"] == "not usable: incomplete:N1-P@-1"
+                 and rows1[("N1-V", "d_20")]["certified"] is True and pc1["N1-P@-1"] == ["incomplete"]
+                 and set(pc1) == keys1 and all(v == [] for k, v in pc1.items() if k != "N1-P@-1")
+                 and all(op1["N2"]["beside"][F10][k] != "not computed"
+                         for k in ("E", "V", "ceiling", "certified", "certified_V")),
+                 "N1-R at +d_20": op2["tuple"][:4] == ("INDETERMINATE", "INDETERMINATE", "INDETERMINATE", "PASS")
+                 and op2["N1"]["causes"] == ["nonfinite:N1-R"] and op2["N2"]["causes"] == ["nonfinite:N1-R@+d_20"]
+                 and rows2[("N1-V", "d_20")]["why"] == "not usable: nonfinite:N1-R@+d_20"
+                 and rows2[("N2-E", F20)]["certified"] is None and rows2[("N2-E", F10)]["certified"] is not None
+                 and d20 not in stp2.L and 0.5 in stp2.L,
+                 "N2-E at f = 0.10": op3["tuple"][:4] == ("REPLICATED", "DETECTABLE", "SHARED", "PASS")
+                 and sorted(stp3.E) == [F20] and op3["N2"]["beside"][F10]["E"] == "not computed"
+                 and op3["N2"]["beside"][F10]["certified"] == "not computed"
+                 and op3["N2"]["beside"][F10]["certified_V"] is True and "N2-E" not in fp3["slopes_N2"]
+                 and ("N2-E", "f0.20") in fp3["n"],
+                 "the TAU/4 row empties N1-P at -1": op4["tuple"][:4] == ("REPLICATED", "DETECTABLE", "SHARED", "PASS")
+                 and stp4.at[("N1-P", -1.0)] == [] and sts4.at[("N1-P", -1.0)] == ["tau4-emptied"]
+                 and sts4.unusable.get("N1-P") == "tau4-emptied" and os4["N1"]["causes"] == ["tau4-emptied:N1-P"]
+                 and os4["tuple"][:3] == ("INDETERMINATE", "INDETERMINATE", "SHARED")
+                 and sorted(sts4.P) == sorted([1.0, d20, deq]),
+                 "the TAU/4 row empties N1-R at +1 (one direction)": sts5.at[("N1-R", 1.0)] == ["tau4-emptied"]
+                 and sts5.unusable.get("N1-R") == "tau4-emptied" and os5["N1"]["causes"] == ["tau4-emptied:N1-R"]
+                 and os5["tuple"][:3] == ("INDETERMINATE", "INDETERMINATE", "SHARED") and 1.0 not in sts5.L
+                 and sorted(sts5.L) == sorted([0.5, d20, deq, -1.0])
+                 and [r["why"] for r in gleak_table(sts5) if r["arm"] == "N1-V" and r["point"] == 1.0]
+                 == ["not usable: tau4-emptied:N1-R@+1"],
+                 "two causes at one point, in order": op6["N2"]["causes"] == [
+                     "shadow:N2-E@f0.20", "shadow:N1-V@+d_20", "incomplete:N1-P@+d_20", "shadow:N1-P@+d_20"]}
+        B.chk("reader path, point by point (PIN-n-29 as amended, PIN-n-36): N1-P's −1 cell missing leaves N2 SHARED "
+              "with N1 and dose INDETERMINATE, P computed at its other points, G-LEAK-n's −1 row not computed and its "
+              "+d_20 row computed, the point causes in VERDICTS' figures; one N1-R read at +d_20 non-finite makes N2 "
+              "INDETERMINATE (nonfinite:N1-R@+d_20), the rows at +d_20 not computed, L computed elsewhere; N2-E's "
+              "f = 0.10 cell missing leaves N2 decided at f = 0.20, its beside's span_reward figure not computed and "
+              "no N2 slope; the TAU/4 row emptying N1-P at −1 alone marks that point and its arm (tau4-emptied:N1-P), "
+              "N1 and dose INDETERMINATE and N2 SHARED in that row, P computed at N1-P's other points; emptying one "
+              "random direction at +1 marks N1-R's +1 and the arm (G-LEAK-n's +1 row not computed), N2 decided, L "
+              "computed at the other points; two causes at one point named in the reader's order (incomplete, then "
+              "shadow); N2's beside computed where no read of its own point is missing; VERDICTS' point causes, every "
+              "key",
+              all(pw_ok.values()),
+              [k for k, v in pw_ok.items() if not v] or (op1["tuple"], op2["tuple"], op3["tuple"], os4["tuple"]),
+              cover=["RD-POINTWISE"])
         p_minus = lambda a, d, l, r: (-0.9 if (a == "N1-P" and l == "+1")             # noqa: E731
                                       else _bt_delta_positive(a, d, l, r))
         mg = _bt_write_campaign(base / "mg", sm, R_ell=37.485, delta=p_minus)
@@ -3212,8 +3701,9 @@ def _bt_reader(B: _Battery) -> None:
               cover=["RD-MERGED-DEQ"])
         paused = _bt_eval(pos, sm, paused={"N1-R": True, "N2-E": True})[3]
         B.chk("reader path: unadjudicated pauses on N1-R and N2-E -> N1 and dose INDETERMINATE (pause:N1-R), N2 "
-              "INDETERMINATE (pause:N2-E), N4 PASS", paused["tuple"][:4] == ("INDETERMINATE",) * 3 + ("PASS",)
-              and paused["N1"]["causes"] == ["pause:N1-R"] and paused["N2"]["causes"] == ["pause:N2-E"],
+              "INDETERMINATE (pause:N2-E, pause:N1-R: both stand on its reads, PIN-n-29 as amended), N4 PASS",
+              paused["tuple"][:4] == ("INDETERMINATE",) * 3 + ("PASS",)
+              and paused["N1"]["causes"] == ["pause:N1-R"] and paused["N2"]["causes"] == ["pause:N2-E", "pause:N1-R"],
               paused["tuple"], cover=["RD-PAUSE"])
         gr = _bt_gread_all(camp.dmap, "FAIL")
         o8 = _bt_eval(null, sm, gread=gr)
@@ -3237,9 +3727,10 @@ def _bt_reader(B: _Battery) -> None:
             mix[name] = (o_m["tuple"], s_m["7.1"]["label"], s_m["7.2"]["label"], s_m["7.2"]["form"],
                          s_m["7.3"]["label"], "AUC 0.810" in s_m["7.2"]["text"])
         want_mix = {"d_eq-fails": (("NOT-REPLICATED", "NOT-DETECTABLE", "NULL", "PASS", "FAIL"), ANSWERED, CNA,
-                                   "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6", ANSWERED, False),
+                                   "§5, its ellipsis expanded by Code, amended by ADDENDUM-n1 §7.6 and the seat's "
+                                   "answers of 2026-11-18 §5.4", ANSWERED, False),
                     "+1-fails": (("NOT-REPLICATED", "NOT-DETECTABLE", "NULL", "PASS", "PASS"), CNA, ANSWERED,
-                                 "§5, amended by ADDENDUM-n1 §7.6",
+                                 "§5, amended by ADDENDUM-n1 §7.6 and the seat's answers of 2026-11-18 §5.4",
                                  CNA, True)}
         stop_auc = _bt_raises(lambda: sentence_set_filled(o_m, st_m, route="B", auc={"d_eq": None}), (AnlStop,))
         stop_route = _bt_raises(lambda: sentence_set_filled(o_m, st_m, route="C", auc={"d_eq": 0.81}), (AnlStop,))
@@ -3763,7 +4254,8 @@ def _bt_verdicts(B: _Battery) -> None:
         ok_s = {"shift TAU/4 only": all(camp.records[r]["fidelity"]["exceeds_tau4"] is True
                                         and camp.records[r]["fidelity"]["exceeds_tau"] is False for r in shift),
                 "tuple": sens.get("tuple") == list(outcomes(st_s)["tuple"]) and sens.get("tuple") != verd.get("tuple")
-                and (sens.get("tuple") or [None])[0] == "INDETERMINATE",
+                and sens.get("tuple") == ["INDETERMINATE", "INDETERMINATE", "SHARED", "PASS", "PASS"]
+                and all(v == [] for (a, _k), v in st_s.at.items() if a == "N1-R"),
                 "n": dig(verd, "figures", "per_arm", "n", "N1-V|+1") == 160
                 and dig(sens, "figures", "per_arm", "n", "N1-V|+1") == 120
                 and dig(sens, "figures", "per_arm", "n", "N1-V|+1/2") == 160,
@@ -3771,7 +4263,8 @@ def _bt_verdicts(B: _Battery) -> None:
                 and ds["rand_00"] is None and isinstance(ds.get("rand_01"), float)}
         B.chk("verdicts reports the TAU/4 sensitivity row (PIN-n-16) beside the primary: 40 N1-V reads at +1 dropped "
               "(n 120 against the primary's 160), rand_00 left with no common session (its slope null, no NaN), so "
-              "N1-R tau4-emptied and the row's N1 INDETERMINATE; its tuple the reader path's under the filter",
+              "N1-R tau4-emptied and the row's N1 INDETERMINATE, its points usable, so N2 decided (INDETERMINATE, "
+              "INDETERMINATE, SHARED, PASS, PASS: PIN-n-36); its tuple the reader path's under the filter",
               all(ok_s.values()), [k for k, v in ok_s.items() if not v] or sens.get("tuple"), cover=["VD-SENSITIVITY"])
         line = verdicts_line(res) if res is not None else ""
         B.chk("verdicts prints one line and no margin (§4 'Blinding'): the tuple, and each output's name, how and "
@@ -4185,15 +4678,16 @@ def pinned_map_reach(dmap: DoseMap) -> dict:
 def ganl_artifact(res: Mapping[str, Any], dmap: DoseMap | None) -> dict:
     sha = analyzer_sha256()
     return {"schema": GANL_SCHEMA, "stage": "G-ANL-n", "verdict": "PASS",
-            "spec": "PROPOSAL-n v0.2 §3 G-ANL-n, §8 step 9; the seat's answers of 2026-11-15 §5.1 and of 2026-11-16 "
-                    "(results/raw/2026-11-16_n-ganl_design-to-code_answers.md); ADDENDUM-n1 v0.1 §4-§7",
+            "spec": "PROPOSAL-n v0.2 §3 G-ANL-n, §8 step 9; the seat's answers of 2026-11-15 §5.1, of 2026-11-16 "
+                    "(results/raw/2026-11-16_n-ganl_design-to-code_answers.md) and of 2026-11-18 §5 "
+                    "(results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md); ADDENDUM-n1 v0.1 §4-§7",
             "analyzer": {"path": ANALYZER_REL, "sha256": sha, "sha16": sha[:16]},
             "proposal": {"path": PROPOSAL_REL, "sha256": PROPOSAL_SHA256},
             "addendum": {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256},
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "battery": {k: res.get(k) for k in ("checks_pass", "checks_total", "expected_checks", "coverage_ids",
                                                  "outputs_sha256", "reachability", "bk_repro", "bk_fidelity")},
-            "tuple_space": {"tuples": 385, "evaluations": 1921},
+            "tuple_space": {"tuples": 385, "evaluations": 2561},
             "dose_map": None if dmap is None else {"d_eq": dmap.d_eq, "d_20": dmap.d_20, "points": dmap.expected_points(),
                                                    "reach": pinned_map_reach(dmap)},
             "pins": PINS, "open": OPEN}
@@ -4439,12 +4933,14 @@ def _bt_commands(B: _Battery) -> None:
         art = ganl_artifact({"checks_pass": 1, "checks_total": 1, "expected_checks": 1, "coverage_ids": [],
                              "outputs_sha256": "0" * 64}, DoseMap(0.97, 1.0))
         B.chk("G-ANL-n's artifact names the analyzer, proposal, ADDENDUM-n1 and schema by sha256, the tuple space "
-              "(385; 1,921 evaluations), the pinned map's points and reach, the PIN and OPEN registers, and no time",
+              "(385; 2,561 evaluations, the tuple pass's own), the pinned map's points and reach, the PIN and OPEN "
+              "registers, and no time",
               art["proposal"]["sha256"] == PROPOSAL_SHA256 and art["schema_module"]["sha256"] == SCHEMA_SHA256
               and art["addendum"] == {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256}
               and BOUND_RELS == (PROPOSAL_REL, ADDENDUM_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
                                  f"{BK_NP_REL}/reduced.json")
-              and art["tuple_space"] == {"tuples": 385, "evaluations": 1921} and art["dose_map"]["reach"]["shape"] == "d"
+              and art["tuple_space"] == {"tuples": len(tuple_space()), "evaluations": len(evaluations())}
+              == {"tuples": 385, "evaluations": 2561} and art["dose_map"]["reach"]["shape"] == "d"
               and art["pins"] == PINS and art["open"] == OPEN and not any(k in json.dumps(art) for k in ("UTC", "T00:")),
               sorted(art), cover=["STR-GANL-ARTIFACT"])
 
@@ -4707,11 +5203,14 @@ def _plain(x: Any) -> Any:
 
 def state_figures(st: State, fig: Mapping[str, Any]) -> dict:
     """§4's figures behind the outcomes: the estimates, the floor, L and P, E, the guards, m_told and E_sham, each
-    arm's usability, and build_state's per-arm figures."""
+    arm's usability, as an arm and point by point ('arm@label': why not usable, [] when usable; PIN-n-36), and
+    build_state's per-arm figures."""
+    at = {f"{a}@{F_LABEL[k] if k in F_LABEL else st.dmap.label_of(k)}": v for (a, k), v in sorted(
+        st.at.items(), key=lambda kv: (kv[0][0], str(kv[0][1])))}
     return _plain({"V": st.V, "slope_V": st.slope_V, "floor_V": st.floor_V, "L": st.L, "P": st.P, "E": st.E,
                    "S": st.S, "C": st.C, "told": st.told, "e_sham": st.e_sham, "complete": st.complete,
                    "paused": st.paused, "missing": st.missing, "nonfinite": st.nonfinite, "unusable": st.unusable,
-                   "per_arm": dict(fig)})
+                   "point_causes": at, "per_arm": dict(fig)})
 
 
 def _load_gvec(path: Path) -> tuple[dict, str]:

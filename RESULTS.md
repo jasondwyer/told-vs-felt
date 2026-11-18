@@ -21,6 +21,122 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling on PIN-n-27 to PIN-n-32 and F11 carried in
+  (the answers of 2026-11-18, §5; the PI's routing item 6). Battery 217/217; reviewed blind and mutation-tested (54 of
+  54 mutants killed). PIN-n-33 to PIN-n-36 are Code's readings, flagged for the seat, and two questions go to the
+  seat. Model-free: nothing ran on a model or on the box, and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256
+    `509a62adf2e316c28c9a9873649c446a869b2f052b4cb1344b8cec4df15785f6`
+    (`97097ce0…251e` at `977b78b`). Its schema pin (`d791bd9`), its bound files (PROPOSAL-n v0.2, ADDENDUM-n1 v0.1)
+    and its commands are unchanged. The seat's answers of 2026-11-18,
+    [`2026-11-18_n-corpus-adoption_design-to-code_answers.md`](results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md)
+    (sha256 `5843a9bd…7165`, committed at `26cf7d2`), are cited by path. The battery cannot read them, since its file
+    hook bars `results/raw`. So the seat's words are transcribed in the module and again in the battery: in its
+    oracle (`_ORC_FOURTH`, `_ORC_NOTE`) and in SENT-RULING's literals. All of them were checked against the raw by
+    the blind review and the values-check. Its battery, run from this path on these bytes (the run of record):
+    217/217 checks, every one of the 220 coverage ids reached, exit 0. The raw:
+    [`2026-11-18_n-analyze_v4_selftest.txt`](results/raw/2026-11-18_n-analyze_v4_selftest.txt).
+  - **The PI's routing of 2026-11-18** ("Route as given"), its section N for n-analyzer, items 6 and 7, verbatim as the
+    coordinating session relayed them (the paste block is not committed; this is their record, and their wording
+    differs a little from the seat raw's §7 draft, the PI's block being the record):
+    > 6. PIN-n-27, -28, -31 accepted; PIN-n-29 N2's causes point by point; PIN-n-30 with the sign in A.7's words; PIN-n-32 the merge note on the dose forms; F11 a fourth NOT-DETECTABLE form; the literal-text checks extended; close lines on 977b78b's entry [as ruled].
+    > 7. ADDENDUM-n1 §2's check prints a median absolute difference per candidate beside its match count, for the BACKEND extension's wiring (n-build) [as ruled].
+
+    Item 7 is n-build's wiring: the analyzer reads nothing it changes.
+  - **The rulings, as carried** (the answers' §5):
+    - **§5.1:** PIN-n-27, PIN-n-28 and PIN-n-31 stand as registered and are marked accepted. The forms' digest
+      (CODE_FORMS_SHA256) moved from `209d7b46…92f5` to `281c6827…bbe2`, set from the first draft run's printed value.
+    - **§5.2, PIN-n-29 amended: N2's causes read point by point.**
+      - The seat's ruling:
+        - N2's certification reads N2-E at the decision f, and N1-V, N1-R's 24 directions and N1-P at the
+          norm-matched point.
+        - N2 is INDETERMINATE iff one of those reads is missing or non-finite, or a pause stands on one of them.
+        - An incompleteness elsewhere in those arms (the seat's examples, N1-P at −1 and N1-R at +1/2) leaves N2
+          decided, and makes N1 or dose INDETERMINATE by their own rules, N1 staying per arm (n:134). Code's note,
+          in PIN-n-29's text: +1/2 is N2's own point where d_20 folds into it, or d_eq does when the cap binds.
+        - The other f's figures beside are "not computed" where their reads are missing.
+
+        OPEN-Q6 records it.
+      - Code's carrying (PIN-n-36):
+        - a read is also not usable where a session's shadow is not, or where the TAU/4 row empties its point;
+        - N2's causes name the point (`incomplete:N1-P@+d_20`, `shadow:N2-E@f0.20`), a pause its arm (`pause:N1-V`);
+        - the reader computes each point's statistics where its reads are usable, and the per-arm ones (slopes,
+          floors) on a complete arm only;
+        - VERDICTS' figures carry the point causes;
+        - G-LEAK-n's table reads each row point by point, so that it agrees with N2.
+    - **§5.3, PIN-n-30 accepted, its sentences amended.** In A.7's three forms each movement carries its figure, its
+      CI and, where its mean is below 0, the words ", against the conditioned zone"; Code carries them on every figure
+      of the three forms (PIN-n-34). The sign enters no N2 outcome.
+    - **§5.4, PIN-n-32 amended.** Where d_eq merges into another point, the three NOT-DETECTABLE forms and the fourth
+      print the figure as "Δm(d_eq) = [x] nats [CI] (read at d = [point], the point d_eq merges into under §2.3)".
+    - **§5.6, F11 ruled.** A movement at d_eq certified against the conditioned zone takes the seat's fourth
+      NOT-DETECTABLE form:
+      - its readability clause follows G-READ-n's state at d_eq;
+      - its label follows §0.6, as for the other three forms;
+      - "dose is an explanation of record" stays in the three forms where no movement is certified.
+
+      The tuple pass enumerates the new input, giving 2,561 evaluations (1,921 at `977b78b`). The tallies are
+      re-derived by hand in the review raw's §6, and the reachability counts are unchanged (28, 25, 24, 17).
+  - **Code's readings, for the seat** (registered in PINS, each strikable until LOCK-n v1.0):
+    - **PIN-n-33, pauses.** §5.2's rule is carried as written: a pause on N2-E, N1-V, N1-R or N1-P makes N2
+      INDETERMINATE, and a pause on a guard alone (N2-S, N2-C) leaves it decided, the guard's figures reported beside
+      with its pause. Both halves depart from rulings of record (the question below).
+    - **PIN-n-34, §5.3's words on every N2 figure.** This includes SPECIFIC's span_reward figure and SHARED's valence
+      figure, which §5.3 does not name. The words close each parenthetical, so span_reward's reads "… against [c],
+      against the conditioned zone" in SPECIFIC and SHARED.
+    - **PIN-n-35, the fourth form as a fourth input.** The fourth form is chosen by a sentence input that is not a
+      coordinate (OPEN-Q4), as the G-READ-n inputs and N4's no-read are: 640 evaluations more.
+    - **PIN-n-36, the mechanics of the point-by-point reading.**
+      - The causes and their names.
+      - The per-arm statistics: N2's floor and slopes, reported only, stay per arm.
+      - A slope with no common session in the TAU/4 row marks its arm but not its points, so that row now decides N2
+        where `977b78b` had it INDETERMINATE.
+      - An INDETERMINATE N2 reports no beside, as at `977b78b`.
+  - **Questions for the seat:**
+    - **On PIN-n-33.** §5.2's "iff … or a pause stands on one of them" reverses the answers of 2026-11-16 §1.6 ("A
+      pause standing on N1-V's, N1-R's or N1-P's reads leaves N2 evaluable only in the case the block names, where
+      those arms are nonetheless complete"). For the guards, it departs from n:140 as `977b78b` read it ("an
+      unadjudicated pause stands on N2's reads", N2-S and N2-C among them). Which stands: §5.2 as written (carried);
+      or §1.6 and n:140 for pauses, with §5.2 for incompleteness alone?
+    - **On the fourth form (the review's F4).** Its text is the same in the answered cell and in the cell of
+      (G-READ-n PASS, N4 not PASS). The §0.6 label lives only in the record's `label` field, and N4's state is not
+      printed, as A.6's "(N4 [n4])" prints it. Does the field suffice?
+  - **Review** (raw:
+    [`2026-11-18_n-analyze_v4_review.md`](results/raw/2026-11-18_n-analyze_v4_review.md)):
+    - **Blind.** A reviewer read the draft frozen at `51396daf…fc41` (217/217). It found:
+      - in the production code, F1 MINOR (the question above) and NOTEs F2–F8, with no MAJOR;
+      - in the battery, B1–B2 MINOR and B3–B7 NOTEs;
+      - 35 mutants, 8 of them predicted to survive.
+    - **Dispositions.**
+      - F1 goes to the seat as the question above, with PIN-n-33's text quoting both rulings.
+      - F2, F3, F7 and F8 are registered in PIN-n-36's and PIN-n-34's texts.
+      - F5 and F6 are fixed (OPEN-Q3, OPEN-Q6, the comment above OPEN and two docstrings).
+      - F4 goes to the seat.
+      - B1–B7 are fixed: the beside's figures pinned where an incompleteness is elsewhere, two TAU/4 campaigns that
+        empty a point, the sensitivity row's tuple pinned literally, a valence figure at exactly 0, two causes at one
+        point, every point-cause key, and the tallies' derivation cited.
+    - **Mutants.** M01–M35 are the reviewer's; M36–M54 are 19 of Code's. They ran on the fixed draft
+      (`285c6168…87db`, 217/217), and 54 of 54 were killed, the reviewer's 8 predicted survivors among them, each by a
+      check the dispositions added or extended.
+    - **The committed bytes** differ from the mutant base in the repository line and, from the values-check, in nine
+      texts (four comments, a check's description, two register texts and two docstrings) and one battery comparand:
+      SENT-RULING compares the note with the oracle's copy (`_ORC_NOTE`) where it compared a third literal (the review
+      raw's §5).
+  - **Values-check** (raw:
+    [`2026-11-18_n-analyze_v4_valuescheck.md`](results/raw/2026-11-18_n-analyze_v4_valuescheck.md)): two blind passes. Pass 1: 170 claims, 1 FAIL (the review raw's account of how Code's mutants were chosen) and 11 IMPRECISE. Pass 2: 199 claims, 0 FAIL and 3 IMPRECISE. Every FAIL and IMPRECISE is applied, and the edits after pass 2 are checked by tool. Pass 2's checker disclosed one departure: an unscoped `git ls-files` piped to a name filter, which listed tracked names tree-wide inside the pipe, `data/mf3`'s among them, and printed only `results/raw` names (names only, momentary; for the seat).
+  - **Runs.** Each was a battery window the coordinating session granted: one process at a time, `nice -n 19`, `-I`,
+    temp folders outside the repository, in the foreground.
+    - The draft: 2 runs, 214/217 then 217/217. The first failed on the moved digest and one old form string.
+    - The mutant window: 2 runs of the fixed draft (215/217, a test that tried to empty +d_20 alone, whose reads the
+      dose rule never re-computes; then 217/217), then the 54 mutants in batches of five.
+    - The run of record: 1.
+
+    Q-F3's campaign ran on the laptop beside them, as the coordinating session's windows allow. By its grants, no
+    other battery window was open during any of them.
+  - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
+    session's close line on `977b78b`'s entry. Not pushed. **Next:** the seat's two answers. Then G-ANL-n's canonical
+    run, when G-CAL-n pins d_eq; its artifact's sha256 goes into LOCK-n v0.1, drafted to the seat.
+
 - 2026-11-18 — **n step 4 — the BACKEND extension's smoke on n's box paused on n §2.1's fidelity rule (code → design;
   the n-build session). STOP for the seat's read.** Block:
   [`2026-11-18_n-step4-smoke-pause_code-to-design_STOP.md`](results/raw/2026-11-18_n-step4-smoke-pause_code-to-design_STOP.md).
@@ -672,6 +788,21 @@ applied to CLAUDE.md.
   - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
     session's close lines on `8e3bf91`'s entry and on ADDENDUM-n1's (`a61f13d`). Not pushed. **Next:** G-ANL-n's
     canonical run, when G-CAL-n pins d_eq; its artifact's sha256 goes into LOCK-n v0.1, drafted to the seat.
+  - **Close (PI date 2026-11-18; the n-analyzer session's line, per the corpus raw's header and its §7 item 6): the
+    seat's ruling on PIN-n-27 to PIN-n-32 and F11, carried into the analyzer.** The seat's answers of 2026-11-18,
+    [`2026-11-18_n-corpus-adoption_design-to-code_answers.md`](results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md)
+    (sha256
+    `5843a9bdbd7e65ac43c3f99e74a2b6ceda648df5b637cba0ca51768752867165`,
+    committed at `26cf7d2`), §5, rule this entry's six readings and F11. The PI's routing of 2026-11-18 ("Route as
+    given") routed them as its section N's item 6 and gave item 7 to n-build's wiring; both items are quoted verbatim
+    in the entry of the commit that carries this line, their record.
+
+    The analyzer carries item 6 at this commit: `scripts/n_analyze.py`, sha256 `509a62ad…85f6`. PIN-n-27, PIN-n-28 and
+    PIN-n-31 stand as registered. PIN-n-29 and PIN-n-32 are re-registered as amended (§5.2, §5.4), and PIN-n-30 as
+    accepted with its sentences amended (§5.3). F11's fourth NOT-DETECTABLE form is in the sentence layer (§5.6). The
+    forms' digest moved from `209d7b46…92f5` to `281c6827…bbe2` (§5.1). Item 7 is n-build's wiring; the analyzer reads
+    nothing it changes. Four readings registered since, PIN-n-33 to PIN-n-36, are Code's, flagged for the seat in this
+    commit's entry, with two questions.
 
 - 2026-11-16 — **n package — BUILD (PROPOSAL-n v0.2 §8 step 6; ADDENDUM-n1 v0.1; the seat's answers of 2026-11-16,
   second sitting, §5 step 3): `valence_core/n/` and its driver `scripts/n_sessions.py`, committed by path.**
