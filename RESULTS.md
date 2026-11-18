@@ -21,6 +21,139 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling of the second sitting carried in: PIN-n-33
+  amended (pauses read point by point), the fourth form's label in its sentence, and PIN-n-34 to PIN-n-36 accepted (the
+  answers of 2026-11-18, second sitting, §3; the PI's routing item 6). Battery 222/222; reviewed blind and
+  mutation-tested (49 of 50 mutants killed). PIN-n-37, which points a pause stands on, is Code's reading,
+  flagged for the seat. Model-free: nothing ran on a model or on the box, and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256
+    `3d22da1d68ffd9cf667e0e9bf0733ae35040f3b2d3ec2175b720cdffc440d048`
+    (`509a62ad…85f6` at `a84833e`).
+    - Its schema pin (`d791bd9`), its bound files (PROPOSAL-n v0.2, ADDENDUM-n1 v0.1) and its commands are
+      unchanged.
+    - The seat's answers of the second sitting,
+      [`2026-11-18_n-step4-smoke-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md)
+      (sha256 `cdecf39e…01d3`, committed at `dc6a1cf`), are cited by path.
+    - The battery reads no raw. §3.2's words are therefore transcribed in the module and again in the battery: in its
+      oracle (`_ORC_TAIL`, `_ORC_N4`) and in the literal-text checks' filled tails. The blind review and the
+      values-check held them to the raw.
+    - The battery's run of record, from this path on these bytes: 222/222 checks, every one of the 225 coverage ids
+      reached, exit 0. The raw:
+      [`2026-11-18_n-analyze_v5_selftest.txt`](results/raw/2026-11-18_n-analyze_v5_selftest.txt).
+  - **The PI's routing of 2026-11-18, second sitting** ("Route as given"): its n-analyzer item, verbatim as the
+    coordinating session relayed it. The paste block is not committed; this is its record. Its wording differs a
+    little from the seat raw's §6 draft, and the PI's block is the record.
+    > 6. PIN-n-33 amended (a pause makes N2 INDETERMINATE only on a read N2 uses; a guard's pause leaves it decided); the fourth form ends " — [label]" with (N4 [n4]) where readable and N4 not PASS; PIN-n-34, -35, -36 accepted; close lines on a84833e's entry [as ruled].
+
+    Two standing rules came with it, from the answers' §4, as relayed. Both were kept:
+    - A battery window names the bytes it runs by sha256; newer bytes take a new window, or a line to the
+      coordinating session before the run. Every run below ran on bytes named to it first.
+    - A git command in a check takes the list of record's item 3 pathspec. The line is in both checkers' briefs.
+  - **The rulings, as carried** (the answers' §3):
+    - **§3.1, PIN-n-33 amended: pauses read point by point.**
+      - A standing pause makes N2 INDETERMINATE only where it stands on one of the reads N2 uses: N2-E at the
+        decision f, or N1-V, N1-R's 24 directions and N1-P at the norm-matched point.
+      - A pause on any other read (N1-V at −1, an N1-R cell elsewhere) leaves N2 decided. This supersedes the
+        sentence of the 2026-11-16 answers' §1.6.
+      - The half that stands: a guard's pause leaves N2 decided, and the guard's figures are reported beside with
+        its pause.
+      - In the code, `State.paused_on` reads a pause at one point, and `n2_outcome` takes its pause causes there.
+        A state with no point map (the battery's literal states, unless a case gives one) reads a pause at every
+        point of its arm, as before.
+      - N1, dose and N4 read pauses per arm, as before.
+    - **§3.2, the fourth form's label.** The fourth NOT-DETECTABLE form now ends " — [label]", as A.2 and A.7 do. It
+      is filled:
+      - "answered" iff G-READ-n is PASS at d_eq and N4 is PASS;
+      - "concluded, not answered (N4 [n4])" where the state is readable and N4 is not PASS;
+      - "concluded, not answered" otherwise.
+
+      The checks:
+      - The literal-text checks cover the three fills (SENT-FILLED-DOSE-FOURTH, now eight sentences).
+      - A new check reads the label on each of the 640 evaluations that carry the fourth form: 64, 256 and 320
+        (SENT-FOURTH-FILLS).
+      - The forms' digest moved from `281c6827…bbe2` to `41d0d654…b1da`, set by tool from the first draft run's
+        printed value.
+      - The tuple pass's 2,561 evaluations and the hand tallies are unchanged, except for the fourth form's form
+        string.
+    - **§3.3, accepted.** PIN-n-34, PIN-n-35 and PIN-n-36 are marked accepted in the register's header. Their texts
+      are unchanged.
+  - **Code's reading, for the seat: PIN-n-37, the points a pause stands on.** It is registered and strikable until
+    LOCK-n v1.0.
+    - **The points.** Each within the pause's scope, a standing pause stands on:
+      - its read (for a rendering pause, whose read is not on disk, the read its id names);
+      - its binomial batch's trials, the reads carrying a re-computation in the batch's launch range (the runner's
+        trials);
+      - and, through any shadow among those reads, every read of that session.
+
+      N1's and N4's pauses stay per arm, as their incompleteness does.
+    - **The shadow extension.** Its reach through a batch is Code's, capped by the scope. The runner's SCOPE applies
+      its shadow clause to the read that fired alone. So the floor shadows in a binomial fire's batch do not bring
+      N1-R into its scope; only the fired read's own shadow clause, or an N1-R trial in the batch, would. Code sent
+      this point to the coordinating session, which relayed it to n-build as information. It is flagged for the seat
+      in PIN-n-37 and applied nowhere. No outcome changes today.
+    - **The alternatives** for a batch are named: every read launched in its range, or every read of its scope's arms.
+      Under the runner's launch order and n §2.1's cadence, a batch from the stage's start stands on every read of its
+      scope's arms, as the per-arm reading would.
+    - **What the reader binds.** A standing batch must be the runner's:
+      - from the first trial after the last cleared batch, to the fire's read (or to the stage's last trial, for a
+        fire at the run's end);
+      - with its n, and its k above TAU;
+      - with a scope that holds its trials' arms.
+
+      Every pause's read must be one of the plan's.
+    - **PIN-n-24's per-arm clause** is read as N1's and N4's rules, and for N2 through these points.
+    - **The figures.** A decided N2's beside names the arms whose reads at the other f a pause stands on (`paused`),
+      its figures computed as before. VERDICTS' figures list the points (`pause_points`).
+  - **Review** (raw: [`2026-11-18_n-analyze_v5_review.md`](results/raw/2026-11-18_n-analyze_v5_review.md)):
+    - **Blind.** A reviewer read the draft frozen at `6f2dd349…301e` (221/221). It found no MAJOR:
+      - in the production code, F1 MINOR (a standing batch's start, and a run's-end batch's end, were not bound to
+        the runner's batch) and NOTEs F2–F6;
+      - in the battery, B1–B4 MINOR and B5–B7 NOTEs;
+      - 34 mutants, 10 of them predicted to survive. One of those, V03, is equivalent on reports the runner writes.
+    - **Dispositions.** All taken:
+      - F1: the reader binds a standing batch to the runner's.
+      - F2–F5: PIN-n-37's text, the registers and the module docstring.
+      - F6: parentheses.
+      - B1–B7: battery inputs — two new reader cases and a keyed-sample campaign, three accepted standing batches
+        each bound as the runner counts a batch, a rendering pause standing on a read not on disk, a guard paused at
+        either f, the beside's figures pinned, and two refusal inputs naming a planned read not on disk. VD-REFUSE
+        gains three refusals (batch-start, batch-scope, batch-read-count) and rebuilds three (batch-count,
+        batch-exceedances, batch-end).
+    - **Mutants.** The reviewer's 34 (five re-expressed on the fixed draft's text) and 16 of Code's ran on the fixed
+      draft (`83f54ec6…d04c`, 222/222): **49 of 50 killed.**
+      - V03 survived, as the reviewer predicted: it is equivalent on reports the runner writes.
+      - The other nine it predicted would survive are killed, each by a check the dispositions added or extended.
+    - **The committed bytes** differ from the mutant base in the repository line and, from the values-check, in ten
+      texts (the review raw's §5).
+  - **Values-check** (raw:
+    [`2026-11-18_n-analyze_v5_valuescheck.md`](results/raw/2026-11-18_n-analyze_v5_valuescheck.md)): two blind
+    passes.
+    - Pass 1: 188 claims, 1 FAIL and 12 IMPRECISE. The FAIL was the review raw's account of C19 as "as drafted"; it was
+      re-expressed.
+    - Pass 2: 201 claims, 0 FAIL and 4 IMPRECISE.
+    - Every FAIL and IMPRECISE is applied, and the edits after pass 2 are checked by tool. The passes changed ten texts
+      in the analyzer, none of them a form.
+    - **The checkers' departures,** each disclosed in its report, for the seat to class. Both checkers:
+      - ran git commands for digests, or a status scoped to named paths, without item 3's pathspec;
+      - wrote file modification times into their own scratch files and stripped them;
+      - used read-only tools beyond their briefs' lists.
+
+      None read anything under `data/`.
+  - **Runs.** Each was in a battery window the coordinating session granted, on bytes named to it first by sha256.
+    Every run was one process at a time, at `nice -n 19` with `-I`, with temp folders outside the repository, in the
+    foreground. The interpreter was reached by `cd` into the venv's bin by glob (n-build's form), so no argv named its
+    path.
+    - The draft: 2 runs, 219/221 then 221/221. The first failed on the moved digest alone, as expected.
+    - The mutant window: 1 run of the fixed draft (222/222), then the 50 mutants in four batches. Each file was
+      checked against a manifest named to the coordinating session first. The first manifest named, of 48 files, was
+      replaced by a line before any run, adding C14 and C15.
+    - The run of record: 1.
+
+    Q-F3's campaign ran on the laptop beside them, as the coordinating session's windows allow. By its grants, no
+    other battery window was open during any of them.
+  - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
+    session's close line on `a84833e`'s entry. Not pushed. **Next:** G-ANL-n's canonical run, when G-CAL-n pins d_eq.
+
 - 2026-11-18 — **n step 4 — the BACKEND extension's run of record on n's box, from the driver's commit `ad856f0`: the
   24 reads ran and the stage paused at its end on the fidelity binomial, as pre-registered; nothing was resumed. The
   per-token diagnostic, never of record, ran beside it (the seat's answers of 2026-11-18, second sitting, §1.3 items
@@ -390,6 +523,24 @@ applied to CLAUDE.md.
   - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
     session's close line on `977b78b`'s entry. Not pushed. **Next:** the seat's two answers. Then G-ANL-n's canonical
     run, when G-CAL-n pins d_eq; its artifact's sha256 goes into LOCK-n v0.1, drafted to the seat.
+  - **Close (PI date 2026-11-18; the n-analyzer session's line, per the second sitting's answers' §5 and its §6 item 6):
+    the seat's ruling on PIN-n-33 to PIN-n-36 and the two questions, carried into the analyzer.** The seat's answers of
+    the second sitting,
+    [`2026-11-18_n-step4-smoke-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md)
+    (sha256
+    `cdecf39ea8d2cd7453141e53ed5b01be4edba54664c8262cd540778f7ba701d3`,
+    committed at `dc6a1cf`), §3, rule this entry's PIN-n-33 to PIN-n-36 and its two questions. The PI's routing of that
+    sitting ("Route as given") routed them as its item 6. The item is quoted verbatim in the entry of the commit that
+    carries this line, which is its record.
+
+    The analyzer carries item 6 at this commit: `scripts/n_analyze.py`, sha256 `3d22da1d…d048`.
+    - PIN-n-33 is re-registered as amended. Pauses are read point by point (§3.1), and its guard half stands.
+    - The fourth form ends " — [label]", in three fills (§3.2).
+    - PIN-n-34, PIN-n-35 and PIN-n-36 stand as registered and are marked accepted (§3.3).
+    - The forms' digest moved from `281c6827…bbe2` to `41d0d654…b1da`.
+
+    One reading registered since is Code's: PIN-n-37, which points a pause stands on. It is flagged for the seat in this
+    commit's entry.
 
 - 2026-11-18 — **n step 4 — the BACKEND extension's smoke on n's box paused on n §2.1's fidelity rule (code → design;
   the n-build session). STOP for the seat's read.** Block:
