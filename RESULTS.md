@@ -21,6 +21,88 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **Dated note (coordinating session), for the seat: the laptop's home-folder path in the public tree,
+  counts only. On the PI's "Yes, and push", answering the coordinating session's offer of this note. Not a STOP.**
+  - **The origin.** n-build's values-check of N.2 (`b4522ae`; its raw
+    [`2026-11-18_n2_valuescheck.md`](results/raw/2026-11-18_n2_valuescheck.md), observation 13) found the laptop's
+    home-folder path in one older entry of this log.
+    - The pickaxe limited to RESULTS.md names `de6dfc5` (2026-10-19) as the commit that added it, in the Q-F0
+      campaign's entry.
+    - n-build confirmed it by count only, never displaying the line, and its commit does not touch that entry.
+      Observation 13 reads it as the class that ledger (81) addresses.
+  - **The scope, by count only.** The pattern is the absolute path of the laptop user's home folder, which carries the
+    user's name; that name is also the public repository's owner's. No line was displayed, and the pattern is not
+    reproduced here.
+    - The count: `git grep -c -F` over `dc6a1cf`, which equals origin/main, with the pathspec excluding `data/mf3`,
+      every `ckpt` and every `reports` directory.
+    - The result: **252 tracked files, 859 matching lines, 1,061 occurrences.**
+      - In `results/raw/`: 35 files dated 2026-08, 34 dated 2026-09, 157 dated 2026-10 and 22 dated 2026-11, the
+        last of 2026-11-06.
+      - Outside it: one file under `data/e0` (1 line), one under `data/e2d` (22 lines),
+        `PROPOSAL-n-bk-reconciliation-v0_2.md` (1 line) and RESULTS.md (1 line, 4 occurrences).
+    - All 252 were public before this note. The per-file counts are the same at every pushed boundary from `16c99d5`
+      (origin/main before the push of 2026-11-15) to `dc6a1cf`.
+  - **The release audit's precedent.** The note release's audit inventoried this class before the origin was made
+    public.
+    - [`2026-11-04_note-N12-history-tag.md`](results/raw/2026-11-04_note-N12-history-tag.md) counted the bare prefix,
+      any user, at the tag: 253 tracked files, 1,155 occurrences. It recommended "leave" for the raws ("verbatim run
+      records (rule 27)"), the data artifacts and the documents, and parameterizing code only where a path is used at
+      run time.
+    - The scrub index,
+      [`2026-10-08_note-N12-scrub.md`](results/raw/2026-10-08_note-N12-scrub.md), carries the earlier
+      recommendation: "none of these files needs a change before release".
+    - Those counts measure a different pattern at a different commit, so they are not comparable with this note's.
+  - **What already stands against new instances:**
+    - the pre-push screen's `local_path` class over every pushed range (the list of record v2, item 4). The screen
+      lives in the coordinating session's scratch, not in the tree. It has met no instance since `16c99d5`, so its
+      reach rests on its definition, not on a hit;
+    - the pre-commit scrub of a raw (item 7);
+    - the seat's ledger (81) for seat files meant for the tree.
+
+    None of them reaches files already in the history. WORKFLOW §5: "Git history is never rewritten; a wrong commit
+    is followed by a correcting one", and "The seat never edits a committed raw; a correction is the next raw or a
+    dated note." No guard stands at commit time for a RESULTS.md entry or a data artifact. Item 7 binds raws and (81)
+    binds seat files, and the `de6dfc5` instance came from a Code entry; that is for the seat, if it wants a Code-side
+    form.
+  - **The readings to weigh** (Code adjudicates nothing):
+    - (a) record and leave, as the release audit recommended. The name is the public owner's, and the paths show the
+      laptop's folder layout and nothing else. The layout names more than the checkout, though: the Python install
+      and three of its environments, the model cache, the Claude projects folder and one other folder beside the
+      checkout;
+    - (b) a correcting commit that replaces the path in the current tree's files with a placeholder. History keeps
+      every instance.
+      - (b) edits 248 committed raws as well as two data artifacts, a proposal and an older entry.
+      - §5 bars the seat from editing a committed raw, and none has been edited since WORKFLOW v1.0 (`dd0bb89`). The
+        record does hold earlier in-place edits of raws, among them `c2a6417` (2026-10-29): two third-party names
+        removed on the PI's word, the names left in history.
+      - (b) would need the seat's ruling on that rule;
+    - (c) another form the seat names.
+  - **A departure, the coordinating session's.** The first scope check of 2026-11-18 ran at HEAD `b4522ae`, with
+    origin/main at `fa96ccf`.
+    - It ran the same `git grep -c` over HEAD and origin/main, excluding `ckpt` and `reports` but not `data/mf3`. So
+      it read `data/mf3`'s other tracked files while Q-F3's campaign runs.
+    - That is against the coordination rule given at Q-F3's launch, that nothing under `data/mf3` is listed or read.
+      The nearest committed rule is WORKFLOW §7's "no whole-tree listing while a stage runs".
+    - It printed file names with counts for its first 20 files, then the totals, and named no `data/mf3` file. Its
+      total, 252 files, equals the recount above, which excludes `data/mf3`.
+    - For the seat to class.
+  - **C.5, the push since this log's last C.5 lines** (gitleaks 8.30.1, the one on the laptop's path; the runs' outputs
+    do not print its version):
+    - `fa96ccf..dc6a1cf`, 8 commits, on the PI's word "Yes, and push" (2026-11-18): every class CLEAR but `port`,
+      whose one match outside was read (the declared container port, in a values-check's text); nothing inside `ckpt`
+      or `reports`; gitleaks, 3 `generic-api-key` matches outside, read (`data/n/ids/MANIFEST.json`'s tokenizer
+      digests, equal to the model manifest's); no halt.
+  - **Values-check:** one blind pass, 36 items: 26 CONFIRMED, 4 IMPRECISE, 0 FAIL and 6 NOT CHECKABLE, with 10
+    observations.
+    - Every IMPRECISE item is applied in the checker's words.
+    - The observations are applied: the release audit's precedent, the screen's reach, the commit-time gap, the
+      departure's commits and printout, the occurrence count and the committed rule.
+    - The edits were checked by tool. One claim of the draft ("none was added since the release") was the coordinating
+      session's own overreach, caught at that check and removed: 22 of the files are dated after the release.
+    - Raw: [`2026-11-18_home-folder-note_valuescheck.md`](results/raw/2026-11-18_home-folder-note_valuescheck.md).
+  - **Committed by path:** this note, the coordinating session's close line on `e48c7d0`'s entry and their two
+    values-check raws. Not pushed.
+
 - 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling on PIN-n-27 to PIN-n-32 and F11 carried in
   (the answers of 2026-11-18, §5; the PI's routing item 6). Battery 217/217; reviewed blind and mutation-tested (54 of
   54 mutants killed). PIN-n-33 to PIN-n-36 are Code's readings, flagged for the seat, and two questions go to the
@@ -587,6 +669,49 @@ applied to CLAUDE.md.
     - **The retries' two ends.** With pod `emw1e4embiwe9b` created, the paste block's item 8 end, "the A100's retry
       ending when the Hopper pod is created", is met as well. Both ends that the coordinating session's line above
       parts are now met, and the retries stay ended.
+  - **Close (PI date 2026-11-18, second sitting; the coordinating session's line, per the step-4 raw's header and its
+    §6 items 7–8; on this entry, where item 8's reading was put): the seat's second answers, routed.**
+    - **The raw.** The step-4 raw, the seat's answers of 2026-11-18 (second sitting),
+      [`2026-11-18_n-step4-smoke-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md)
+      (sha256 `cdecf39ea8d2cd7453141e53ed5b01be4edba54664c8262cd540778f7ba701d3`, 15,015 bytes), is committed by path
+      at `dc6a1cf`, re-hashed equal to the paste block's figures.
+      - It answers `0eb7671`'s STOP and, for PIN-n-33 to PIN-n-36 and its two questions, `a84833e`'s entry.
+      - The n-build, pod and n-analyzer sessions add their own close lines (the raw's header): n-analyzer's on
+        `a84833e`'s entry (the paste block's item 6).
+    - **The PI's word** on the paste block of 2026-11-18 (second sitting), verbatim: "Route as given". Its section C,
+      verbatim:
+      > 7. This raw committed by path; Code's two departures and the three checkers' inert, no strike; the briefs' line that a git command in a check takes item 3's pathspec [as ruled].
+      > 8. The reference artifact's path data/olmo/determinism_base_h100-sxm.json and the "first listing" reading of "move now" accepted [as ruled].
+      > 9. The six unpushed commits plus these: push behind the screen when you say [yours].
+
+      These are the paste block's words, which the raw's §6 head makes the record; the raw's own §6 items 7–8 are
+      worded a little differently.
+    - **Item 8 closes this entry's reading of "move now".** The seat's §3.4 accepts the coordinating session's reading
+      that item 8 of the first sitting's block carried its "move now" to the first US-CA-2 listing (this entry's close
+      line of `26cf7d2`), and, from the BACKEND entry (`d5d08fa`), the reference artifact's path, "named by class".
+      - The other half of that reading ("at that moment", for the H200) and the retries' two ends get no ruling. Both
+        are moot: the H100 was taken (`d5d08fa`), and the pod session's close line above records both retry ends met.
+    - **Item 7: two standing rules,** in the raw's §4 words, relayed to the n-build, n-analyzer and pod sessions. The
+      first is restated there with Code's two departures; the second is the briefs' line.
+      - "a window names the bytes it runs by sha256, and newer bytes take a new window or a line to the coordinating
+        session before the run";
+      - in every checker's brief, beside the list of record v2's items 1–5 verbatim, "a git command in a check takes
+        item 3's pathspec".
+
+      The two departures of `0eb7671` §6 and the values-checkers' three (two by the STOP's checker, one by the analyzer
+      entry's pass-2 checker) are inert, no strike.
+    - **The box,** pod `emw1e4embiwe9b`, stays up through the resume, on the PI's standing word (the raw's §5).
+    - **Item 9, the push.** On the PI's word "Yes, and push" (2026-11-18), `fa96ccf..dc6a1cf`, 8 commits, is on
+      origin. By tool, seven commits were unpushed before `dc6a1cf`, not six. The screen's C.5 line is in this commit's
+      dated note at the Log's head.
+    - **A blind values-check of this line:** 29 items, 21 CONFIRMED, 6 IMPRECISE, 1 FAIL, 1 NOT CHECKABLE.
+      - The FAIL was this line's push bullet, drafted before the PI's word to push. It now carries the word and the
+        range.
+      - Every IMPRECISE item is applied in the checker's words, and so are the observations.
+      - The edits were checked by tool.
+      - Raw: [`2026-11-18_routing-second-sitting-close_valuescheck.md`](results/raw/2026-11-18_routing-second-sitting-close_valuescheck.md).
+
+      Committed by path. This line's commit is not pushed.
 
 - 2026-11-17 — **n — the corpus's acceptance check and assembly (PROPOSAL-n v0.2 §0.8 Route B, §3 G-VEC; the seat's
   answers of 2026-11-15, §5.3, the PI's item 11; the PI's routing of 2026-11-17, N.1 and N.3, "route as given"): every
