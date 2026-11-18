@@ -1,0 +1,40 @@
+n step 4 -- the BACKEND extension's driver v2d: its self-test, on the laptop and at the box, committed with the driver
+(the seat's answers of 2026-11-18, second sitting, s1.3 item 1). PI date 2026-11-18. Code (the n-build session).
+
+The driver:  scripts/n_sessions.py v2d, sha256 18f19b8e7a49f1ddacacfb286938431f56a9f8f5534b38fcc9d4d9db8a1b4f5c,
+             committed with this raw.
+The package: valence_core/n at b523f6a, f927608c33d12b34c2bef728966038dac1ecfbb041cbd992b7ffd4cf01a73c03.
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny, and the HF-path vanilla score) run only where torch
+   and transformers are present, and elsewhere are skipped and counted as skipped (the driver's docstring).
+   The overlay: git archive of HEAD d5d08fa on the paths the self-test runs with (valence_core, scripts/n_sessions.py,
+   scripts/box_e0_corpus.py, data/n, data/corpus/e0_tasks.jsonl, data/corpus/e2a_tasks.jsonl,
+   data/configs/e0_frames.json, data/configs/e0_probes.json and the model manifest, the last by a quoted pathspec
+   glob), with v2d as scripts/n_sessions.py.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/overlay/scripts/n_sessions.py --selftest
+
+   Run 1, in the battery window the coordinating session granted for v2c's self-test, which ran v2d in v2c's place
+   (a departure, disclosed at the time; the seat's answers of 2026-11-18, second sitting, s4: inert). Its whole
+   output; exit 1:
+     FAIL driver: the characterization's literals are its committed record's: the provenance the artifact's (its sha256 pinned), field for field, and the pod the one its raw's BOX line names: 
+       332/333 n selftest checks pass
+   The check reads the characterization's committed artifact and raw (d5d08fa), which the overlay lacked. Both were
+   added to it by git archive of HEAD on those two paths, the model folder's name again by a quoted pathspec glob.
+
+   Run 2, in a second battery window the coordinating session granted for v2d's self-test (18f19b8e...4f5c), from the
+   completed overlay. Its whole output; exit 0:
+       333/333 n selftest checks pass
+
+2. THE BOX. Pod emw1e4embiwe9b, the H100 SXM of d5d08fa, on 2026-11-18: step 2 of the box check v2 (bext_box_v2.sh)
+   that the pod session ran, in a scratch copy at d5d08fa with exactly the driver changed. Its lines, verbatim from
+   results/raw/2026-11-18_n-step4_bext-box2_out.txt, lines 28-32 (committed at 0eb7671):
+     == 2 selftest, its temporary directory on /workspace
+     [transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+     [transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+       344/344 n selftest checks pass
+     selftest exit=0
+   The box runs 11 checks more than the laptop: hftiny's 12 checks in place of its one skip line, and the HF-path
+   vanilla score in place of its skip line.

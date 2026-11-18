@@ -21,6 +21,120 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n — the BACKEND extension's driver, committed by path before its run of record, on the smoke of this
+  date, which ended PAUSE on the fidelity binomial, as the rule requires: `scripts/n_sessions.py backend-ext`,
+  re-pinned to n's box (the seat's answers of 2026-11-18, second sitting, §1.3 item 1 and §2: Q2 yes; the PI's "Route
+  as given"). It covers PROPOSAL-n v0.2 §3 G-ACQ and G-ACQ's dated note GA-5; ADDENDUM-n1 §2; the seat's answers of
+  2026-11-16, second sitting, §2.4 and §5 step 4; the corpus answers of 2026-11-18, §5.5; and the box answers of
+  2026-11-18, §2 items 4–5.**
+  - **Headline:**
+    - the driver `18f19b8e…4f5c`, on `b523f6a`'s `scripts/n_sessions.py`, which no commit since has changed; git's
+      numstat against it is +1040 −8; the n package is unchanged at `f927608c…3c03`;
+    - its self-test: 333/333 on the laptop and 344/344 at the box, in the raw
+      [`2026-11-18_n-step4-driver-v2d_selftest.txt`](results/raw/2026-11-18_n-step4-driver-v2d_selftest.txt);
+    - the smoke on n's box (two reads, never of record; the STOP `0eb7671`): every step before the monitor held, and
+      the stage ended PAUSE on the fidelity binomial at the run's end, as the rule requires at p0 = 0, read 1 being
+      above TAU. The seat: "The smoke passed for the commit's purpose" (§0);
+    - two blind reviews. The first, of v1's first draft (`80d30846…b03d`) on 2026-11-16, found 13 (6 RISK, 7 NIT, no
+      BUG), with 15 mutants, 12 surviving its reading. The second, of the delta on 2026-11-18, found 10 (2 RISK, 8
+      NIT, no BUG), with 10 surviving mutants. Every finding is applied, two of them as declared readings (the first
+      review's 3 and 9), and every surviving mutant has a test written to kill it;
+    - nothing of this driver ran on a checkpoint's weights before this commit except the smoke, which is never of
+      record.
+  - **What the command does** (one model load; everything that needs no model before it):
+    1. refusals: a run of record writes only `data/n/ckpt/backend-ext/` and `data/n/reports/backend-ext.json`; a
+       smoke writes outside the repository; the pod and the cuBLAS setting are the characterized ones; numpy's stream
+       has its known answer;
+    2. the weights of record: the committed model manifest's instruct entry, its folder holding exactly its files at
+       their byte counts. And the driver of record: a run of record runs only HEAD's committed bytes of this file, a
+       smoke any; a DRIVER line prints its sha256;
+    3. the ids of record (now (i)–(iv), the stage identity's `rendering_id` `fdf73d85…ef38`); the pre-load bridge
+       (R6); what is on disk (as the runner checks it); BK's d = 0 floor table; and every candidate's ids;
+    4. G-VER on the committed ids, with the tokenizer alone loaded; a STOP returns before the weights load;
+    5. the load. The adapter's own provenance must hash as the environment's did;
+    6. the 24 reads (N1-V, d = 0, each re-computed) through the BUILD's runner and 5(f) primitive;
+    7. on COMPLETE: the discordance distribution (fidelity values only); the in-band count; and ADDENDUM-n1 §2's
+       comparison. Per candidate it prints the count of 40 and, beside it, the median |value − BK's| over its 80
+       values (§5.5), and nothing else.
+  - **The re-pin** (the box answers' §2 items 4–5):
+    - `CHARACTERIZED_POD` is `emw1e4embiwe9b` and `CHARACTERIZED_IDENTIFIER` is `4ed3f2c70fe8afbf`;
+    - `CHARACTERIZED_PROVENANCE` is the H100 SXM's block, which `results/raw/2026-11-18_respawn_determinism.txt`
+      prints. It equals the committed artifact's, which the self-test checks with the artifact's sha256 pinned;
+    - the BACKEND entry `d5d08fa` is cited throughout;
+    - R6 is retargeted, not dropped. n's own identifier, under its 4,096-token window, prints beside the box's.
+  - **Item 7's conventions** (§5.5 leaves them open):
+    - the median of the 80 values is the mean of the middle two;
+    - a non-finite value enters as +inf and never matches;
+    - medians print to six significant digits, in nats.
+
+    §5.5 keeps the rule: exactly one candidate at 40 of 40 is the convention of record; otherwise the seat rules on the
+    four counts and the four medians.
+  - **Code's readings, as the seat ruled them** (the answers of this date, second sitting, §1.5: "R1–R6 stand"):
+    - R1: the 24 sessions are m's permutation of the set under `n-bext`, its first 24 (pinned `10f3a127…6b64`);
+    - R2: the 24 reads run under the "bare" convention, before the comparison that settles it;
+    - R3: the comparison's bound is the largest per-label |logprob − fresh_logprob| over the 24 reads (one maximum
+      over both labels), with the margin's distribution printed beside it for the lock. The smoke's two reads differ
+      between the paths and the run of record's plan begins with them, so if the box repeats them the bound is not 0;
+    - R4: the capture site 32 is declared, nothing is injected, and the band 33–63 is captured. The read window is
+      4,096 (GA-4; rule 28(d)(c)), which touches no read (BK's sequences run to 1,276 tokens with the longest label);
+    - R5: no cap; alpha 0.01, "moot at p0 = 0" and declared;
+    - R6: the bridge, retargeted by the box answers' §2 item 4 (above);
+    - p0, 0 of 2,400 from G-DATA (vi), carried before the lock: "right for this run";
+    - the end-of-run evaluation: "accepted as the rule's form".
+  - **Code's readings still flagged for the seat.** The run proceeds on them as the BUILD's flags do: Code reads the
+    PI's routing of 2026-11-16, N.9, "the build proceeds on Code's interim readings as its entries have it", as
+    covering the driver's.
+    - at a G-VER STOP, the raw is the STOP's record, with no stage report;
+    - a ruled non-finite read would leave the comparison refused on every later invocation;
+    - later n stages need the same bridge (that both identifiers stand in the record is the box answers' §2 item 4).
+  - **The box script's convention** (§2) is amended for this stage and for any stage whose smoke can reach a monitor:
+    "a smoke that ends PAUSE with every read's line printed and its identity lines equal is a pass", its summary saying
+    "PAUSE (pass)". The box scripts are Code's scratch files, never committed; the amendment binds the next one. No
+    second smoke.
+  - **The box checks:**
+    - v1 on the A100 pod, 2026-11-16
+      ([`2026-11-16_n-step4_bext-box1_out.txt`](results/raw/2026-11-16_n-step4_bext-box1_out.txt) and
+      [`2026-11-16_n-step4_bext-box1_run.txt`](results/raw/2026-11-16_n-step4_bext-box1_run.txt), committed here).
+      Steps 0–3 held. The smoke stopped before the load: CUDA error 802 on the box, and R6 refused before G-VER. No
+      weights loaded, and nothing was read or written.
+    - v2d on the H100 pod, 2026-11-18 (`results/raw/2026-11-18_n-step4_bext-box2_{out,run}.txt`, committed at
+      `0eb7671`): steps 0–3 held, and the smoke ended PAUSE on the fidelity binomial, as above.
+  - **Departures:**
+    - 2026-11-16: three read-only commands carried a guard marker in their argv (a grep with the model manifest's
+      path, a grep whose pattern held its entry's name, a `git diff --name-only` whose pathspec spelled the model
+      folder). Also, a box script was changed in place after its hash had gone for relay; nothing ran on the stale
+      version. None of these ran Python;
+    - 2026-11-18: one `sed` call carried the model folder's name in its argv while Code built the box manifest.
+      Read-only, model-free;
+    - 2026-11-18: the battery window granted for v2c's self-test ran v2d, the delta review's fixes applied, and Code
+      said so at the time. That run was 332/333: its overlay lacked the two committed files the new provenance check
+      reads. A second run, in a window granted for v2d and from the completed overlay, gave 333/333.
+
+    The seat ruled the two of 2026-11-18 inert (§4).
+  - **Values-check:** one blind pass over this entry, the close line, the self-test raw and the two review raws'
+    headers.
+    - 70 items: 52 CONFIRMED, 11 IMPRECISE, 2 FAIL, 5 NOT CHECKABLE; and 13 observations.
+    - The two FAILs are one miscount, repeated: the first review's surviving mutants are 12, not 11, in this entry and
+      in that raw's header. Both are applied, with every IMPRECISE item and observations 3, 4, 5, 7, 8, 9 and 10. The
+      others ask for no change. The edits were checked by tool.
+    - The checker's departures, model-free, as its report states them, for the seat to class:
+      - two scratch files it wrote by redirection for a `cmp`, then removed;
+      - path-taking git commands without item 3's pathspec, each scoped outside `data/` and printing names, but for
+        one `git grep -l` over `results/raw`;
+      - two recursive greps over `results/raw`, which holds no `ckpt` or `reports` folder, without the prune.
+    - Raw: [`2026-11-18_n-step4-driver_valuescheck.md`](results/raw/2026-11-18_n-step4-driver_valuescheck.md).
+  - **Committed by path:**
+    - `scripts/n_sessions.py` and its self-test raw;
+    - the first review's raw, [`2026-11-16_n-step4-driver_review.md`](results/raw/2026-11-16_n-step4-driver_review.md),
+      and the second's,
+      [`2026-11-18_n-step4-driver-v2_review.md`](results/raw/2026-11-18_n-step4-driver-v2_review.md);
+    - the A100 box check's two raws;
+    - the values-check raw;
+    - this entry, and n-build's close line on `0eb7671`'s entry.
+
+    Not pushed. **Next:** the run of record from this commit, on the box through the pod session, then the diagnostic
+    (§1.3 items 2–3).
+
 - 2026-11-18 — **Dated note (coordinating session), for the seat: the laptop's home-folder path in the public tree,
   counts only. On the PI's "Yes, and push", answering the coordinating session's offer of this note. Not a STOP.**
   - **The origin.** n-build's values-check of N.2 (`b4522ae`; its raw
@@ -270,6 +384,24 @@ applied to CLAUDE.md.
 
     The driver is not committed. Not pushed. The driver's commit and step 4's run of record wait for the seat's
     ruling and the PI's word.
+  - **Close (PI date 2026-11-18), n-build's: the seat's answers of the second sitting.** This session read the seat's
+    raw,
+    [`2026-11-18_n-step4-smoke-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md)
+    (sha256 `cdecf39e…01d3`), in full. The coordinating session committed it by path at `dc6a1cf`. The PI's word on
+    the paste block of 2026-11-18 (second sitting) was "Route as given", as the coordinating session's close line at
+    `25c9340` quotes it.
+    - **Q1, (a):** "The driver is committed, the 24 reads run from the commit under the rule as pre-registered, and
+      the stage pauses at its end. Nothing is amended before the measurement." Then one diagnostic on the same box,
+      never of record (§1.3 item 3), before the seat adjudicates the pause.
+    - **Q2, yes:** "The smoke passed for the commit's purpose" (§0). The box script's convention is amended so that "a
+      smoke that ends PAUSE with every read's line printed and its identity lines equal is a pass", its summary saying
+      "PAUSE (pass)" (§2). No second smoke.
+    - **The declared items:** "R1–R6 stand; R5's alpha is moot at p0 = 0 and stays declared; p0 carried from G-DATA
+      (vi) before the lock is right for this run; the end-of-run evaluation is accepted as the rule's form" (§1.5).
+      Ledger (82) is the seat's (§1.2). Code's two departures are inert (§4).
+    - **This session's part,** in §1.3's order: the driver's commit, at this commit (its entry heads the Log); the run
+      of record from it; the diagnostic; after the ruling, the resume and the extension's entry; and the fresh path's
+      cost estimate for G-TIME-n (§1.4).
 
 - 2026-11-18 — **BACKEND — characterization (CLAUDE.md's respawn protocol; m:251, m:302, n:161; the seat's box
   answers of 2026-11-18, §2 items 1–3), on the PI's "Route as given" (2026-11-18): n's box, pod `emw1e4embiwe9b`,

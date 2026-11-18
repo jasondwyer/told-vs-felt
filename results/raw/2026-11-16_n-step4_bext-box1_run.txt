@@ -1,0 +1,89 @@
+n step 4 -- the BACKEND extension's driver on the box, before its commit (the box self-test and the 2-read smoke;
+never of record), as run by the pod session (the seat's section 5 step 4 in the n-build answers committed at 52b2c97,
+routed by the PI's "Route as given" (second sitting); the coordinating session's relay and its confirmation; n-build's
+request; PI date 2026-11-16). No pod address or port in this file. The run's own output is bext_box_out.txt (all of
+stdout and stderr, unedited, 51 lines); its exit status is bext_box.exit. This file is the pod session's record of how
+the run was set up, and of what it found.
+
+RESULT: bext box FAIL, exit 1. Steps 0-3 held. The smoke stopped before the weights loaded: torch reported a CUDA
+initialization error (802, "system not yet initialized"), and the driver's R6 check refused -- the environment's
+provenance under the default window hashed to bcb9d44161b4a3d0, not the characterization's 641ee466f4553b6a. G-VER did
+not run, no weights loaded, nothing was read, and the smoke wrote no file. Nothing was retried.
+
+1. FILES. bext_drafts.tar, bext_manifest.txt and bext_box.sh, from n-build's scratchpad/step4/box/:
+     bext_drafts.tar    8c7a4630b064f35effa61d1e90a522d08cc63a6d7a39dd6cd3692b098f09ef9c (one member,
+                        scripts/n_sessions.py = 64cf6ee1002517303397620161c13fd7f618c7ce3ce74ddb80f2f7793c6916cb;
+                        no "Mac OS X" AppleDouble magic, no xattr record)
+     bext_manifest.txt  491243b5e7e4608f5023e8e40edb95d9dec6209ee28610eab082520e42e5c0ac (19 lines)
+     bext_box.sh        d27d6daafc245ace83fa9496bc5e9eee7336ad7134153ab517c18a69e3841527 (92 lines)
+   The relay first named bext_box.sh 6bf8351d...f9d7; the file on disk was d27d6daa...1527, so the pod session held
+   before anything reached the box. The coordinating session then confirmed d27d6daa...1527 and the copy at the
+   laptop's HEAD at bundle time; n-build confirmed the same file. 6bf8351d was never run. bext_box.sh was read in full
+   before it ran, and the draft driver's smoke path (run_backend_ext) was read on the laptop, not run. On the laptop,
+   all 19 manifest lines equal the tar's member (the driver) or 977b78b's blobs.
+
+2. SYNC. The laptop's HEAD at bundle time was 977b78b8d38fa749534ba21eda565dc5ceb58b0f. The box repo went from
+   9662468 to it (2 commits: 83a50a0, the n BUILD, and 977b78b) by git bundle (9662468..main, sha256
+   cbee2c351e46e9d87179160e2cba02126eda6736f4010b5691814405a890eef2, equal at both ends), fetched into
+   refs/bundles/n-site3 and fast-forwarded. The box checkout was clean, with no untracked file, before the fetch, and
+   clean after. The range touches no data/mf3 path (checked on the laptop and on the box) and holds 83a50a0.
+
+3. SHIP. The bundle and the pod session's two scripts went to /workspace/nsite/sync3, n-build's three files to
+   /workspace/nsite/bext (both new), by tar over ssh packed without Mac metadata and extracted without ownership.
+   Each folder holds exactly its three names, none dotted, and the six sha256 equal the laptop's.
+
+4. SCRATCH COPY. /workspace/nsite/copy-bext-977b78b: a local git clone of the box checkout (--no-checkout
+   --no-hardlinks), origin removed, sparse (non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'),
+   checked out at 977b78b (the laptop's HEAD at bundle time, not 83a50a0, on the coordinating session's word; it holds
+   83a50a0) and clean. Nothing under data/mf3 and no data/*/ckpt or data/*/reports directory exists in it; data/n/bk
+   and data/n/ids (4 files) are present. GNU tar on the box listed bext_drafts.tar as exactly scripts/n_sessions.py,
+   printing nothing else; the extract kept --exclude='._*', ran with --no-same-owner and printed nothing. After it,
+   git status is exactly " M scripts/n_sessions.py".
+
+5. RUN. Before the launch: no other interpreter job and no GPU compute app on the box; the GPU (NVIDIA
+   A100-SXM4-80GB) at 0 MiB of 81920 MiB. /workspace/env.sh, sourced inside the wrapper as p's stages ran it, assigns
+   HF_HOME, HF_HUB_CACHE, HF_XET_HIGH_PERFORMANCE, TORCH_HOME, PIP_CACHE_DIR, JSPACE, PYTHONPATH,
+   CUBLAS_WORKSPACE_CONFIG and RUNPOD_POD_ID (one other non-comment line); with it, RUNPOD_POD_ID=m43y3deb1gq3rp and
+   CUBLAS_WORKSPACE_CONFIG=:4096:8; HF_HUB_OFFLINE, TRANSFORMERS_OFFLINE and TMPDIR unset. Python
+   /workspace/venv/bin/python: 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+     ( source /workspace/env.sh; bash /workspace/nsite/bext/bext_box.sh /workspace/nsite/copy-bext-977b78b
+          /workspace/venv/bin/python /workspace/nsite/work-bext-977b78b )
+   under nohup in the background, all of stdout and stderr to bext_box_out.txt, its exit status to bext_box.exit (both
+   in /workspace/nsite/out-bext). The work folder did not exist before; the script made it. The end-wait was on the
+   PID alone. bext_box.sh exit 1.
+
+6. OUTCOMES (the pod session's reading; n-build reads the whole output):
+   step 0 the copy     HEAD 977b78b; "changed set: exactly the driver, modified"                -- as expected
+   step 1 manifest     19/19 OK                                                                  -- as expected
+   step 2 selftest     278/278 pass, selftest exit=0; the site checks' two transformers warnings, verbatim (2 lines)
+                                                                                                 -- as expected
+   step 3 hashes       package_sha256 60d892dc7f98f85ba049486ddffb4c336cce78c83fde99bce19ae5ebde51cc66 and the 11
+                       imported_sha256 lines, identical to the second site check's; hashes exit=0 -- as expected
+   step 4 the smoke    NOT as expected. In order:
+                       - a torch UserWarning from /usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:182:
+                         "CUDA initialization: Unexpected error from cudaGetDeviceCount() ... Error 802: system not
+                         yet initialized";
+                       - the SMOKE line and the WEIGHTS line as expected (allenai/OLMo-2-0325-32B-Instruct revision
+                         b96024342a77, files_aggregate_sha256 36f05404...0fdb, 22 files at the instruct path, each at
+                         the manifest's byte count);
+                       - "before the load: the environment's provenance under the default window hashes to
+                         bcb9d44161b4a3d0, not the characterization's 641ee466f4553b6a (R6)" -- the driver's refusal,
+                         before G-VER and before the load;
+                       - smoke exit=1; "SMOKE IDENTITY NOT CHECKED: no smoke report".
+   last line           "bext box FAIL: copy OK, manifest OK, selftest exit=0, hashes exit=0, smoke exit=1, smoke
+                       identity 9"
+   Library messages: the site checks' two transformers warnings, and the torch CUDA warning above (new; not printed
+   by either site check, which ran on the CPU).
+
+7. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU at 0 MiB, P0;
+   nvidia-smi reports driver 595.91.07 with driver CUDA 13.2 -- the same driver as the respawn raw of 2026-11-15
+   records -- and its Fabric state and status as N/A. The work folder holds hashes.txt only: no smoke-root, no
+   smoke-report.json, no smoke-identity.txt. The copy's git status is still exactly " M scripts/n_sessions.py", and
+   the box checkout is at 977b78b and clean. Code's reading, unverified: CUDA error 802 (cudaErrorSystemNotReady) on an SXM host
+   usually means a host-side service the container cannot see (on NVSwitch systems, the fabric manager) is not ready;
+   the GPU ran the p campaigns on this pod before.
+
+8. LEFT ON THE BOX: /workspace/nsite/sync3 (the bundle, the two scripts, two empty tar stderr files),
+   /workspace/nsite/bext, /workspace/nsite/copy-bext-977b78b, /workspace/nsite/work-bext-977b78b (hashes.txt) and
+   /workspace/nsite/out-bext; refs/bundles/n-site3 in the box checkout; the earlier runs' folders as before. Nothing is
+   removed unless n-build or the coordinating session asks.
