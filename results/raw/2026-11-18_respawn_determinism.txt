@@ -1,0 +1,83 @@
+# Respawn protocol step (ii) BACKEND (CLAUDE.md §Environment, respawn protocol; ledger rule 2) on n's box, pod emw1e4embiwe9b, as a fresh characterization of a new class, on the seat's box answers of 2026-11-18 (results/raw/2026-11-18_box-gpu_design-to-code_answers.md, committed at 26cf7d2; from §2 item 3: "Its pass criterion here is the box's own determinism — A, B and C exact on repetition within the box — and not identity with the A100's committed artifact, which a new class cannot reproduce; the artifact it writes becomes the committed reference for any later respawn of this class, and its identifier (the sha16 of the provenance, which carries the GPU's name and capability) is n's backend of record.") and the PI's "Route as given" (PI date 2026-11-18). PI-local date 2026-11-18. Run only after step (i) PASSED (exit=0; results/raw/2026-11-18_respawn_integrity.txt).
+# BOX: pod emw1e4embiwe9b (jspace-olmo-n); 1 x NVIDIA H100 80GB HBM3, the H100 SXM (81559 MiB, driver 595.112.07, driver CUDA 13.2); data center US-CA-2; image runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404; network volume o73qvy742n at /workspace.
+# CODE: box repo HEAD 977b78b8d38fa749534ba21eda565dc5ceb58b0f; scripts/box_determinism.py sha256 934e01d4b0c9b29b3cdab751a9f0cbafcd9ca96f6a51da814aeba260a60428aa, identical at 26cf7d2, the laptop's HEAD at the run, and at this commit; so are the files it loads, valence_core/__init__.py, valence_core/adapters/__init__.py, valence_core/adapters/base.py, valence_core/adapters/olmo_hf.py and valence_core/readout.py, and valence_core/m/resume.py, which Code's laptop check uses for the identifier.
+# ENV: `source /workspace/env.sh` first (env.sh sha16 f5174faa745eca6e, as on 2026-11-15: CUBLAS_WORKSPACE_CONFIG=:4096:8, PYTHONPATH, HF_HOME, the venv, and C4's RUNPOD_POD_ID line, which exported emw1e4embiwe9b).
+# COMMAND (box, cwd /workspace/repo/jspace-lab): /workspace/venv/bin/python scripts/box_determinism.py --stage base --repeats 5 > /workspace/respawn_2026-11-18/determinism.txt 2>&1
+#   It ran inside `nohup bash -c "<the command>; echo exit=$? > /workspace/respawn_2026-11-18/determinism.exit"` so its exit status is on record; that is the only addition. The launch script around the wrapper refuses unless (i)'s exit file reads exit=0 and its PASS line is present, refuses if another interpreter job runs or an output exists, and puts the wrapper in the background with the wrapper's own output to /dev/null. The adapter ran at its default window (no option passed). Before it, the box's existing /workspace/models/determinism_base.json (the A100's: byte-identical to the 2026-11-15 respawn's artifact) was copied aside (plain cp) to /workspace/respawn_2026-11-18/determinism_base.before.json (sha256 61f160ea43497735260949b9bdaf3dd88804bca96997fa101566943f30165434, equal to the committed data/olmo/determinism_base.json).
+# EXIT exit=0 (the .exit file). No launch or end stamp is recorded (no clock time or stamp in committed text).
+# ARTIFACT: /workspace/models/determinism_base.json (box), sha256 1dd9199fb58c2d8e3f4a1830cd2d8345ae0db77e2d8629fe410288ed9955d3c1, 2,819 bytes: this class's reference, committed byte-identical at data/olmo/determinism_base_h100-sxm.json. The committed data/olmo/determinism_base.json (the A100's) is left as it stands.
+# The box file's stdout+stderr follows verbatim (sha256 faa17ba6a35f45c76687faa912bf6e520beb6aeb17e11d0de5abf3728ceb22f8, byte-identical after transfer); Code's laptop check is appended after it.
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:   9%|▉         | 66/707 [00:00<00:00, 659.43it/s]Loading weights:  37%|███▋      | 260/707 [00:00<00:00, 1298.08it/s]Loading weights:  55%|█████▍    | 387/707 [00:00<00:00, 1007.71it/s]Loading weights:  70%|██████▉   | 492/707 [00:00<00:00, 801.71it/s] Loading weights:  82%|████████▏ | 578/707 [00:00<00:00, 686.19it/s]Loading weights:  92%|█████████▏| 651/707 [00:00<00:00, 640.58it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 761.16it/s]
+{
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/base",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA H100 80GB HBM3",
+ "cuda": "12.8",
+ "capability": [
+  9,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== A. repeat determinism (deterministic=True) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+
+=== C. kernel path: cached vs uncached (rule-2 gate) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  worst symKL 0.000e+00 vs 1e-3 bar -> PASS (cached path licensed)
+
+=== B. deterministic_algorithms OFF ===
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 7200.50it/s]
+  probe 0: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+
+wrote /workspace/models/determinism_base.json
+SUMMARY: repeat-exact(det ON)=True | cached==uncached exact=True maxKL=0.00e+00 | det-OFF repeat-exact=True
+# ---- Code's laptop check, run after the transfer (not box output) ----
+# INVOCATION: cd <repo> && cd jl*/.venv/bin && nice -n 19 ./python -I -B <scratch>/hopper/check_newclass.py <the box's new determinism_base.json, sha256 1dd9199fb58c2d8e3f4a1830cd2d8345ae0db77e2d8629fe410288ed9955d3c1> <the box stdout above, sha256 faa17ba6a35f45c76687faa912bf6e520beb6aeb17e11d0de5abf3728ceb22f8> <repo>   (in a battery window from the coordinating session, Q-F3 running on the laptop: the interpreter reached by cd + glob, so no guard marker is in any argv; the committed A100 artifact's path, data/olmo/determinism_base.json, is built inside the file)
+# What it does: the seat's criterion for a new class (the box answers' §2 item 3), read from the new artifact. A: all_exact, max_abs = max_kl = 0.0, every row exact. B: det-OFF repetition exact (repeat_all_exact, max_repeat_abs = 0.0, every row's repeat exact at kl 0.0). C: all_exact, max_kl = 0.0 (under the 1e-3 bar), every row exact. Also the artifact's shape (stage base, repeats 5, five rows each in A, B and C); the stdout's fixed line "wrote /workspace/models/determinism_base.json" present, and its SUMMARY line equal to what the artifact's values print; the provenance block the run printed equal to the artifact's; and valence_core.m.resume.backend_identifier (m:251, Code's definition) giving one identifier on both blocks. Reported for reading and not adjudicated (exit 3): B's det-OFF unlike det-ON (the A100 had it 0), a provenance difference from the committed A100 block beyond gpu and capability, or an identifier equal to the A100's. Descriptive: the field-by-field difference from the committed A100 artifact, and that block's identifier. Exit 0 = the criteria hold and nothing is to be read; 3 = the criteria hold and something is to be read; 1 = a criterion fails. check_newclass.py sha256 ee6e602f138df2bd428a8eb14bdcb745d60755c18257420c33d7c23b40bf16cb. Its dry test, before this run and in a battery window of its own, came out 9/9 as expected: the 2026-11-15 A100 outputs (exit 3: the identifier equal to the A100's); those outputs with gpu and capability set to the H100's (exit 0); one defect each in A, B and C (exit 1 each); B's det-OFF unlike det-ON (exit 3); a printed-vs-artifact provenance mismatch (exit 1); a library-version difference (exit 3); a SUMMARY/C mismatch (exit 1).
+# EXIT 0 (the check's exit status, as run_check.sh printed it). The laptop's HEAD was then b4522ae, where valence_core/m/resume.py and the committed A100 artifact are the same blobs as at 26cf7d2. The check's output follows verbatim.
+new artifact sha256: 1dd9199fb58c2d8e3f4a1830cd2d8345ae0db77e2d8629fe410288ed9955d3c1 2819 bytes
+shape: stage=base repeats=5 rows A/B/C=5/5/5; SUMMARY line equal to the artifact's values
+A repeat determinism (det ON): all_exact=True max_abs=0.0 max_kl=0.0 -> EXACT
+B det OFF, repetition: repeat_all_exact=True max_repeat_abs=0.0 -> EXACT
+B det OFF vs det ON (descriptive): max_vs_det_abs=0.0 max_vs_det_kl=0.0 -> IDENTICAL TO ON
+C kernel path, cached vs uncached: all_exact=True max_kl=0.0 bar_1e-3=True -> EXACT
+printed provenance == artifact provenance: True
+backend identifier (printed block): 4ed3f2c70fe8afbf
+backend identifier (artifact block): 4ed3f2c70fe8afbf
+GPU: 'NVIDIA H100 80GB HBM3', capability [9, 0], torch CUDA 12.8
+provenance fields differing from the committed A100 block: ['capability', 'gpu']
+the committed A100 block's identifier: 641ee466f4553b6a
+field-by-field against the committed A100 artifact (descriptive): 108 leaf fields there, 108 here; differences: 2
+  DIFF provenance/capability/0 8 -> 9
+  DIFF provenance/gpu NVIDIA A100-SXM4-80GB -> NVIDIA H100 80GB HBM3
+CHECK PASSED: A, B and C exact on repetition within the box; identifier 4ed3f2c70fe8afbf by both blocks

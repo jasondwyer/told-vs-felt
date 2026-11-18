@@ -21,6 +21,136 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **BACKEND — characterization (CLAUDE.md's respawn protocol; m:251, m:302, n:161; the seat's box
+  answers of 2026-11-18, §2 items 1–3), on the PI's "Route as given" (2026-11-18): n's box, pod `emw1e4embiwe9b`,
+  an H100 SXM, characterized fresh as a new class. The CUDA probe passed. (i) INTEGRITY PASS, 51/51 files. (ii)
+  BACKEND PASS on the box's own determinism: A, B and C are all exact at 0.0. Backend identifier
+  `4ed3f2c70fe8afbf`, n's backend of record. The new artifact is this class's committed reference,
+  [`data/olmo/determinism_base_h100-sxm.json`](data/olmo/determinism_base_h100-sxm.json), a path flagged for the
+  seat.**
+  - **The seat's words.** The box answers
+    ([`2026-11-18_box-gpu_design-to-code_answers.md`](results/raw/2026-11-18_box-gpu_design-to-code_answers.md),
+    sha256 `f46815fb…6d5a`, committed at `26cf7d2`), §2:
+    - from item 1: "The read-only CUDA probe first, as the block declares for the A100 (`torch.cuda.is_available()`, the
+      device count, `nvidia-smi`'s name, driver and CUDA); a box that fails it is stopped at once."
+    - item 2: "**Respawn (i) INTEGRITY** as on any box: the manifest's files on the volume, the count read from
+      `data/olmo/manifest.json` at HEAD (51 across five checkpoints at `7ab4d2f`, ledger (72)), the `olmo2_instruct`
+      entry among them."
+    - from item 3: "Its pass criterion here is the box's own determinism — A, B and C exact on repetition within
+      the box — and not identity with the A100's committed artifact, which a new class cannot reproduce; the
+      artifact it writes becomes the committed reference for any later respawn of this class, and its identifier
+      (the sha16 of the provenance, which carries the GPU's name and capability) is n's backend of record."
+  - **The box.**
+    - Pod `emw1e4embiwe9b`, named `jspace-olmo-n`. The coordinating session's watch created it at the first US-CA-2
+      listing, on the PI's "Route as given" (the box raw's §5 item 1, the paste block's item 8, "[move now —
+      yours]"). That item's "move now" was carried to the first listing on the coordinating session's reading, put
+      to the seat in its close line on `e48c7d0`'s entry.
+    - Spec: Secure, data center US-CA-2, 1 × NVIDIA H100 80GB HBM3 (the H100 SXM), image
+      `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`, network volume `o73qvy742n` at `/workspace`, container disk
+      30 GB (the pod's `disk` field), one declared port (22/tcp).
+    - nvidia-smi on the box reads 81,559 MiB, driver 595.112.07, driver CUDA 13.2.
+    - The H100 was taken, so §2 item 9 (the H200's dated note) does not apply. No money figure is recorded here.
+    - The A100 pod `m43y3deb1gq3rp` stays stopped and was not touched; neither was the August pod `uimuzt7d890y5b`.
+  - **Step 1, the read-only CUDA probe — PASS.**
+    - `torch.cuda.is_available()` True, device count 1, no CUDA warning.
+    - nvidia-smi names the NVIDIA H100 80GB HBM3, with driver 595.112.07 and driver CUDA 13.2.
+    - torch is 2.8.0+cu128, built for CUDA 12.8.
+    - The fabric state is Completed and its status Success.
+    - The output went verbatim to the coordinating session. It is committed in
+      [`2026-11-18_respawn-h100_probe-preflight.txt`](results/raw/2026-11-18_respawn-h100_probe-preflight.txt)
+      (sha256 `a685221e…38cb`), with the preflight's and the hook's outputs, the copy-back's comparison after (ii),
+      and the 2026-11-15 preflight's "models:" line.
+  - **Before (i): a read-only preflight, and the hook.**
+    - No interpreter job and no GPU compute app were running.
+    - `env.sh` (sha16 `f5174faa745eca6e`, as on 2026-11-15) exports `CUBLAS_WORKSPACE_CONFIG` `:4096:8`, and
+      `RUNPOD_POD_ID` = `emw1e4embiwe9b` by C4's line (the seat's answers of 2026-11-06: the pod id as PID 1
+      reports it, never typed).
+    - Python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0.
+    - The box repo is at `977b78b`: tracked files unmodified, no untracked file.
+    - The eight files (i) and (ii) run equal those at `26cf7d2`, the laptop's HEAD at the run, by git blob id: the
+      manifest, both respawn scripts, the OLMo adapter, `readout.py`, and the package and adapter `__init__`s and
+      `base.py`.
+    - The names under `/workspace/models` are unchanged since 2026-11-15's preflight.
+    - The `~/.bashrc` hook (`source /workspace/env.sh`) was absent on the new container disk. It was restored before
+      (i), in the order `pq:`§4.3 item 4 gives for p's replacement box
+      ([`2026-11-12_p-qual_design-to-code_answers.md`](results/raw/2026-11-12_p-qual_design-to-code_answers.md),
+      sha256 `a32d4d17…1112`), applied to n's box on a default the coordinating session accepted. On 2026-11-15 it
+      was restored after the runs, a disclosed departure; the seat's answers of 2026-11-15 (evening)
+      ([`2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md`](results/raw/2026-11-15_campaign-go-p1-n-spinup_design-to-code_answers.md),
+      sha256 `1f3ce1f9…f84b`, committed at `a215c28`), §0: "The hook's order is inert, no strike". An interactive
+      shell then exported `emw1e4embiwe9b` and `:4096:8`.
+  - **Step (i) INTEGRITY — PASS.** `box_respawn_check.py` re-hashed the manifest's files under `/workspace/models/`:
+    **51 files match across 5 checkpoints** (base 7, sft 7, dpo 7, instruct 8, olmo2_instruct 22, the count of
+    `data/olmo/manifest.json` at HEAD), no problem line, exit 0. The box file is byte-identical to 2026-11-15's. Raw
+    [`2026-11-18_respawn_integrity.txt`](results/raw/2026-11-18_respawn_integrity.txt) (sha256 `fec9abac…e6e6`).
+  - **Step (ii) BACKEND — PASS** on the box's own determinism, run only after (i) passed
+    (`box_determinism.py --stage base --repeats 5`, `env.sh` sourced, the adapter's default window, exit 0). Raw
+    [`2026-11-18_respawn_determinism.txt`](results/raw/2026-11-18_respawn_determinism.txt) (sha256 `a62a95f1…fc40`).
+
+    | measurement | result |
+    |---|---|
+    | A. repeat determinism (det ON) | exact, max\|d\| **0.000e+00**, symKL 0 |
+    | B. deterministic-algorithms OFF | repeat-exact, and **identical to ON** (max\|d\| 0.000e+00, symKL 0) |
+    | C. kernel path, cached vs uncached | exact, worst symKL **0.000e+00** vs the 1e-3 bar |
+
+    - The A100's artifact on the volume (`61f160ea…5434`, equal to the committed `data/olmo/determinism_base.json`)
+      was copied aside before the run. That committed file stays the A100's.
+    - The new artifact, `/workspace/models/determinism_base.json` (sha256 `1dd9199f…d3c1`, 2,819 bytes), is committed
+      byte-identical as this class's reference at `data/olmo/determinism_base_h100-sxm.json`. **For the seat:** the
+      path is Code's naming, which the coordinating session accepted.
+    - **The shared volume.** On `o73qvy742n`, `/workspace/models/determinism_base.json` now holds the H100's
+      artifact. The A100's bytes are in the committed file and in
+      `/workspace/respawn_2026-11-18/determinism_base.before.json`; the same folder holds the copy-back's
+      cmp-checked copy of the H100's, `determinism_base.new.json`. The stopped A100 pod mounts the same volume: a
+      respawn (ii) there would write the volume file again, and Code's laptop check would compare that run's
+      artifact with the committed file. No code in the repository reads the volume path.
+    - Field by field against the committed A100 artifact (descriptive): 2 of its 108 leaf fields differ, both in the
+      provenance: gpu (`NVIDIA A100-SXM4-80GB` → `NVIDIA H100 80GB HBM3`) and the first element of capability
+      (8 → 9). Every A, B and C value is the same.
+  - **Backend identifier (m:251): `4ed3f2c70fe8afbf`.** `valence_core.m.resume.backend_identifier` gives it on the
+    provenance block the run printed and on the new artifact's. The A100's block gives `641ee466f4553b6a`.
+    - Code's laptop check (`check_newclass.py`, sha256 `ee6e602f…16cb`) is appended to the determinism raw: exit 0,
+      nothing for reading.
+    - Its dry test on the 2026-11-15 outputs came out 9/9 as expected.
+    - The check and its dry test each ran in a battery window from the coordinating session.
+    - **For the seat:** the identifier is a function of the provenance alone. The dry test's H100 case (the A100's
+      outputs with gpu and capability set to the H100's) printed the same identifier before the run, and the real
+      check's output equals that case's line for line except its first line, the artifact's own sha256 and size.
+      The run's evidence is A, B and C.
+    - Provenance (ledger 27): equal to the A100's block in every field but gpu (`NVIDIA H100 80GB HBM3`) and
+      capability ([9, 0]). The rest:
+      - adapter `olmo-hf` on `/workspace/models/base`, backend torch/cuda, device cuda;
+      - torch 2.8.0+cu128, transformers 5.15.0, accelerate 1.14.0, safetensors 0.8.0, huggingface_hub 1.28.0,
+        numpy 2.1.2, Python 3.12.3;
+      - CUDA 12.8 (torch's build); bf16;
+      - deterministic ON with `CUBLAS_WORKSPACE_CONFIG` `:4096:8`; seed 20260818;
+      - declared choice window 8192 (the adapter's default); 64 layers.
+
+      The driver is not in the provenance; it is named under the box above.
+  - **What follows.** Both gates pass, so experimental forwards may run on this box. Under the consistency clause,
+    a campaign completes on this one backend.
+    - `4ed3f2c70fe8afbf` is n's backend of record (§2 item 3).
+    - The seat's §2 items 4–8 come next:
+      - item 4, the BACKEND extension under n's window with its provenance hash beside, and R6 (the driver's check
+        that n's provenance, its window reset to the adapter's default, hashes to the characterized identifier)
+        retargeted to `4ed3f2c70fe8afbf`;
+      - item 5, the driver's `CHARACTERIZED_POD` and `CHARACTERIZED_IDENTIFIER` re-pinned and committed before step
+        4's run of record (the seat's §2 heading: "n-build for the driver");
+      - item 6, the resume identity, where "nothing changes";
+      - item 7, LOCK-n v0.1 naming both backends;
+      - item 8, the budget: "G-TIME-n projects on the new box and the PI sets the cap at LOCK-n v1.0 in hours".
+    - With a Hopper pod created, the A100 is not used for n: §0, "One box for n: the A100's retry ends when a Hopper
+      pod is created" (§3.3 says the same for a healthy start).
+    - The box is idle and running; stopping it is the PI's call.
+  - **Blind values-check,** two passes.
+    - Pass 1: 120 claims; 106 CONFIRMED, 5 IMPRECISE, 0 FAIL, 9 NOT CHECKABLE.
+    - Pass 2, blind to the first, on the revised texts: 98 claims; 88 CONFIRMED, 2 IMPRECISE, 0 FAIL, 8 NOT
+      CHECKABLE.
+    - Every IMPRECISE item is applied. Of the 39 observations, 36 are applied, 2 needed no change and 1 is
+      declined, each with its reason in the raw. The edits after each pass were checked by tool.
+    - Raw [`2026-11-18_respawn-h100_valuescheck.md`](results/raw/2026-11-18_respawn-h100_valuescheck.md).
+  - Not pushed. Committed by path.
+
 - 2026-11-18 — **n — ids of record, second commit: ADDENDUM-n1 §1.2 (iv), rendered once on the laptop in G-DATA's
   environment — `gvec_passages.jsonl` (the 544 passages of `data/n/passages.jsonl`) and `a3_contexts.jsonl` (A3's
   frozen 1,344 contexts) — with `MANIFEST.json` extended. G-VER's pin and the n package move with it. This follows the
@@ -267,6 +397,28 @@ applied to CLAUDE.md.
       - Raw: [`2026-11-18_box-gpu-close_valuescheck.md`](results/raw/2026-11-18_box-gpu-close_valuescheck.md).
 
       Committed by path. Not pushed.
+  - **Close (PI date 2026-11-18), the pod session's: the seat's box answers, this session's part.** This session
+    read the box raw,
+    [`2026-11-18_box-gpu_design-to-code_answers.md`](results/raw/2026-11-18_box-gpu_design-to-code_answers.md)
+    (sha256 `f46815fb…6d5a`), in full. The coordinating session committed it by path at `26cf7d2`.
+    - **This session's share** is the raw's §2 from item 1's probe through item 3, and item 9 had the H200 been
+      taken. The PI's "Route as given" routed them: the paste block's section B, item 9 (the box raw's §5 item 2),
+      quoted in the coordinating session's line above.
+    - **Done,** in §2's order, on pod `emw1e4embiwe9b`, the H100 SXM that the coordinating session's watch created in
+      US-CA-2:
+      - the read-only CUDA probe passed;
+      - respawn (i) INTEGRITY passed, 51/51;
+      - respawn (ii) BACKEND passed as a fresh characterization of the new class, with A, B and C exact and backend
+        identifier `4ed3f2c70fe8afbf`.
+
+      The H100 was taken, so item 9 does not apply. The record is the `BACKEND — characterization` entry of
+      2026-11-18 (this commit), with its raws.
+    - **The A100.** Pod `m43y3deb1gq3rp` stays stopped and was not started, so §3's test for it did not run. With a
+      Hopper pod created, the A100 is not used for n: the raw's §0, "One box for n: the A100's retry ends when a
+      Hopper pod is created" (§3.3 says the same for a healthy start).
+    - **The retries' two ends.** With pod `emw1e4embiwe9b` created, the paste block's item 8 end, "the A100's retry
+      ending when the Hopper pod is created", is met as well. Both ends that the coordinating session's line above
+      parts are now met, and the retries stay ended.
 
 - 2026-11-17 — **n — the corpus's acceptance check and assembly (PROPOSAL-n v0.2 §0.8 Route B, §3 G-VEC; the seat's
   answers of 2026-11-15, §5.3, the PI's item 11; the PI's routing of 2026-11-17, N.1 and N.3, "route as given"): every

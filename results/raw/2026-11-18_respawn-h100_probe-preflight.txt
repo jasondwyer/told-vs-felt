@@ -1,0 +1,101 @@
+# Looks at n's box, pod emw1e4embiwe9b (jspace-olmo-n; 1 x NVIDIA H100 80GB HBM3), by the pod session, PI-local date 2026-11-18: the CUDA probe (the seat's box answers of 2026-11-18, results/raw/2026-11-18_box-gpu_design-to-code_answers.md, §2 item 1) and the preflight, both read-only, and the ~/.bashrc hook's restore (the one write outside the respawn folder), all before respawn (i); and the copy-back after respawn (ii), which first copies the new artifact into the respawn folder on the box and then compares hashes. A raw of the BACKEND — characterization entry of 2026-11-18. <scratch> is the pod session's scratch folder on the laptop.
+# Sections 1-3 are each command's stdout verbatim (one elision in section 3, marked). Each command was piped to `bash -s` over ssh in a plain shell, and its ssh stderr was empty. No section holds the pod's address or port (checked by grep, count 0). No launch or end stamp is recorded.
+# ---- 1. The CUDA probe: <scratch>/nsite/probe_cuda.sh (sha256 621113f42f1acf327462a732314781fd28ce9d78c91ac85b48466471a53020c9) ----
+== the probe (one python invocation, -B, plain shell)
+python 3.12.3
+torch 2.8.0+cu128 | built for CUDA 12.8
+torch.cuda.is_available(): True
+torch.cuda.device_count(): 1
+probe exit=0
+== nvidia-smi -q, top lines
+Driver Version                                         : 595.112.07
+CUDA Version                                           : 13.2
+Attached GPUs                                          : 1
+== nvidia-smi -q, state sections
+    Product Name                                       : NVIDIA H100 80GB HBM3
+    Persistence Mode                                   : Enabled
+    MIG Mode
+        Current                                        : Disabled
+        Pending                                        : Disabled
+    Compute Mode                                       : Default
+    ECC Mode
+        Current                                        : Enabled
+        Pending                                        : Enabled
+    Retired Pages
+        Single Bit ECC                                 : N/A
+        Double Bit ECC                                 : N/A
+        Pending Page Blacklist                         : N/A
+    Remapped Rows
+        Correctable Error                              : 0
+        Inactive Correctable Error                     : 0
+        Uncorrectable Error                            : 0
+        Inactive Uncorrectable Error                   : 0
+        Pending                                        : No
+        Remapping Failure Occurred                     : No
+        Bank Remap Availability Histogram
+            Max                                        : 2560 bank(s)
+            High                                       : 0 bank(s)
+            Partial                                    : 0 bank(s)
+            Low                                        : 0 bank(s)
+            None                                       : 0 bank(s)
+    Fabric
+        State                                          : Completed
+        Status                                         : Success
+        Health
+            Summary                                    : N/A
+            Bandwidth                                  : N/A
+            Route Recovery in progress                 : N/A
+            Route Unhealthy                            : N/A
+            Access Timeout Recovery                    : N/A
+            Incorrect Configuration                    : N/A
+            Partition Assigned                         : N/A
+== every nvidia-smi -q line naming Pending
+        Pending                                        : Disabled
+        Pending                                        : N/A
+        Pending                                        : N/A
+        Pending                                        : N/A
+        Pending                                        : Enabled
+        Channel Repair Pending                         : No
+        TPC Repair Pending                             : No
+        Pending Page Blacklist                         : N/A
+        Pending                                        : No
+== end
+# ---- 2. The preflight: <scratch>/hopper/preflight_hopper.sh (sha256 f8bb11fef690536549f97db8d948fe50884c44469a71d8223bc7f4b9232848fe). Its "== blob ids" lines equal `git ls-tree` at 26cf7d2, 8 of 8; its "models:" line equals the 2026-11-15 preflight's, section 5 ----
+interpreter jobs: 0
+GPU compute apps: 0
+pod=emw1e4embiwe9b cublas=:4096:8
+env.sh sha16 f5174faa745eca6e
+bashrc hook lines: 0
+python 3.12.3 | torch 2.8.0+cu128 | transformers 5.15.0 | cuda True 12.8
+NVIDIA H100 80GB HBM3, 595.112.07, 0 MiB, 81559 MiB, 0 %
+workspace: b2r_stdout.txt campaign_p env.sh env.sh.bak-2026-11-06 flock_probe flock_probe.py gcal_olmo gcal_p gtime_p hf-cache logs logs_arc_stdout.txt models nsite qual_p repo respawn_2026-11-15 respawn_determinism.exit respawn_determinism.launch respawn_determinism.txt respawn_integrity.exit respawn_integrity.launch respawn_integrity.txt run_bphase.sh runs smoke staging-n tmp_bundles venv 
+models: a1_repair_base.json a1_repair_dpo.json a1_repair_instruct.json a1_repair_sft.json a1_tagscreen_base.json a1_tagscreen_dpo.json a1_tagscreen_instruct.json a1_tagscreen_sft.json a2_baserates_base.json a2_baserates_dpo.json a2_baserates_instruct.json a2_baserates_sft.json a3_axes_base.json a3_axes_base.npz a3_axes_dpo.json a3_axes_dpo.npz a3_axes_instruct.json a3_axes_instruct.npz a3_axes_sft.json a3_axes_sft.npz a4_hijack_base.json a4_hijack_dpo.json a4_hijack_instruct.json a4_hijack_sft.json a4_instrument_base.json a4_instrument_base.npz a4_instrument_dpo.json a4_instrument_dpo.npz a4_instrument_instruct.json a4_instrument_instruct.npz a4_instrument_sft.json a4_instrument_sft.npz base cached_gen_dpo.json cached_gen_instruct.json cached_gen_sft.json cached_gen_smoke_base.json cached_gen_v3.json cached_gen_v3b.json cast_equality_sft.json checkpoint_hashes.txt determinism_base.json dpo instruct manifest.json olmo2_instruct rl_base.json rl_dpo.json rl_instruct.json rl_sft.json scaffold_base.json scaffold_dpo.json scaffold_instruct.json scaffold_sft.json sft 
+box HEAD 977b78b8d38fa749534ba21eda565dc5ceb58b0f
+tracked modified: 0
+untracked:
+== blob ids
+66174d4087d6de67f229b41c2f487a362a71cf72 data/olmo/manifest.json
+e086b7b200ecf2b02a048eb3606737d2f7460e4a scripts/box_determinism.py
+db80f1f47fea3471ecb9fbcc779b1f96b5a8d11e scripts/box_respawn_check.py
+31fb6e1b50f3a7980e8b349c245bb9e77f832305 valence_core/__init__.py
+2704a9de58a07c0ed83c28b800d43dc69bc655eb valence_core/adapters/__init__.py
+953eeddf51e226173c8d1c11d95c0b1b4a614e75 valence_core/adapters/base.py
+7e7dd3c1a44402f51aac3ec8c43d424bfb1c6fdf valence_core/adapters/olmo_hf.py
+4e5719030cfaa4bef2e72584f518be9a457987a7 valence_core/readout.py
+== end
+# ---- 3. The hook: <scratch>/hopper/bashrc_hook.sh (sha256 de8518f760f004c1ebf4e317756ac2c1d99eeefd659e5a5fba39eadf2d0d841c) ----
+(absent before restore)
+103:source /workspace/env.sh
+== interactive-shell check
+[lines 4-15 of this output: the image's login banner, which the interactive shell printed (12 lines, 2 of them blank), not reproduced]
+pod=emw1e4embiwe9b cublas=:4096:8
+# ---- 4. The copy-back after (ii): <scratch>/hopper/copyback_hopper.sh (sha256 4abc68673f3f0d16837c17c399be8fb4c3551081fe544a89fbfe3b2d2b9e804b). It compares the box's sha256sum of each file with the laptop copy's shasum, and it exited 0. Its printed lines follow, extracted by tool (grep) from the pod session's transcript. After the extraction, the six sha256 were re-computed on the laptop copies and equal these ----
+identical 39eca68c0e4f7e4d6939d32e75671feef9ed48e8182c10df59dec245d88b4d35 integrity.txt
+identical 19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061 integrity.exit
+identical faa17ba6a35f45c76687faa912bf6e520beb6aeb17e11d0de5abf3728ceb22f8 determinism.txt
+identical 19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061 determinism.exit
+identical 61f160ea43497735260949b9bdaf3dd88804bca96997fa101566943f30165434 determinism_base.before.json
+identical 1dd9199fb58c2d8e3f4a1830cd2d8345ae0db77e2d8629fe410288ed9955d3c1 determinism_base.new.json
+local dir holds: determinism.exit determinism.txt determinism_base.before.json determinism_base.new.json integrity.exit integrity.txt 
+# ---- 5. The 2026-11-15 preflight's "models:" line (pod m43y3deb1gq3rp), verbatim from the pod session's record of that preflight, for section 2's comparison ----
+models: a1_repair_base.json a1_repair_dpo.json a1_repair_instruct.json a1_repair_sft.json a1_tagscreen_base.json a1_tagscreen_dpo.json a1_tagscreen_instruct.json a1_tagscreen_sft.json a2_baserates_base.json a2_baserates_dpo.json a2_baserates_instruct.json a2_baserates_sft.json a3_axes_base.json a3_axes_base.npz a3_axes_dpo.json a3_axes_dpo.npz a3_axes_instruct.json a3_axes_instruct.npz a3_axes_sft.json a3_axes_sft.npz a4_hijack_base.json a4_hijack_dpo.json a4_hijack_instruct.json a4_hijack_sft.json a4_instrument_base.json a4_instrument_base.npz a4_instrument_dpo.json a4_instrument_dpo.npz a4_instrument_instruct.json a4_instrument_instruct.npz a4_instrument_sft.json a4_instrument_sft.npz base cached_gen_dpo.json cached_gen_instruct.json cached_gen_sft.json cached_gen_smoke_base.json cached_gen_v3.json cached_gen_v3b.json cast_equality_sft.json checkpoint_hashes.txt determinism_base.json dpo instruct manifest.json olmo2_instruct rl_base.json rl_dpo.json rl_instruct.json rl_sft.json scaffold_base.json scaffold_dpo.json scaffold_instruct.json scaffold_sft.json sft 
