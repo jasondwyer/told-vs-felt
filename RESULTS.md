@@ -60,6 +60,50 @@ applied to CLAUDE.md.
       and step 4's run of record wait for Q3.
 
     Committed by path: the block, its values-check raw and this entry. Not pushed.
+  - **Close (PI date 2026-11-18; the coordinating session's line, per the box raw's header and its §5, item 4 (the
+    paste block's item 11)): the seat's answers, routed.**
+    - **The raws.** Two seat raws are committed by path here, each re-hashed equal to the paste block's figures:
+      - the box raw,
+        [`2026-11-18_box-gpu_design-to-code_answers.md`](results/raw/2026-11-18_box-gpu_design-to-code_answers.md)
+        (sha256 `f46815fb850c606661f0eb2ec52c1c2b86cab38d18da41641d1eebcfb9d66d5a`, 11,243 bytes), which answers this
+        block;
+      - the corpus raw,
+        [`2026-11-18_n-corpus-adoption_design-to-code_answers.md`](results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md)
+        (sha256 `5843a9bdbd7e65ac43c3f99e74a2b6ceda648df5b637cba0ca51768752867165`, 16,470 bytes). It answers
+        `fa96ccf`'s block and, for PIN-n-27 to PIN-n-32 and F11, `977b78b`'s. The n-build, n-analyzer and coordinating
+        sessions add their close lines (its header): n-build's on `fa96ccf`'s entry (§3 item 5), n-analyzer's on
+        `977b78b`'s (§7 item 6).
+    - **The PI's word** on the paste block of 2026-11-18, verbatim: "Route as given". Its section B's items, verbatim:
+      > 8. Q1 (a): n's box is an H100 SXM in US-CA-2 on volume o73qvy742n, created on your word for the spend; the H200 SXM only if the H100 has no stock at that moment, with a dated note; one box for n, the A100's retry ending when the Hopper pod is created [move now — yours].
+      > 9. Q2 (a) with §2 items 1–9: the CUDA probe, respawn (i), (ii) as a fresh characterization passing on its own determinism, the BACKEND extension under n's window with its hash beside, R6 retargeted, the driver re-pinned and committed first, LOCK-n v0.1 naming both backends [as ruled].
+      > 10. Q3 (a): the restarted A100 is 7ab4d2f's backend for n iff (ii) is byte-identical and the identifier equal, the driver change a dated note; otherwise a new BACKEND entry and §2 [as ruled].
+      > 11. The report and the C.5 lines accepted; the retries as declared until your word or a healthy start; close lines on e48c7d0's entry [as ruled].
+    - **Q1 at the word.** Runpod's stock reads at the PI's word (2026-11-18; Secure cloud, as the block's §2) listed
+      neither the H100 SXM nor the H200 SXM in US-CA-2: the H100 in AP-JP-1, CA-MTL-1, EU-FR-1 and EUR-NO-2, the H200
+      in EUR-IS-4 and US-GA-2. Nothing was created.
+      - **The watch.** A session-only watch in the coordinating session reads both every 20 minutes. At the first
+        US-CA-2 listing it creates one pod on volume `o73qvy742n`: the H100 SXM ($4.39/h), or the H200 SXM ($5.29/h)
+        if the H100 is not listed at that read.
+      - **Code's reading of item 8, for the seat:** at the word neither was listed, so its "move now" is carried to the
+        first listing. Its "at that moment" (the box raw's §0: "at the moment of the word") is read as that read.
+      - **The pod session** then takes the box raw's §2 from item 1's probe through item 3, and item 9 if the H200 is
+        taken.
+    - **The A100's retries ended at the PI's word**, on item 11's "until your word or a healthy start".
+      - **Code's reading, for the seat.** Item 8 has "the A100's retry ending when the Hopper pod is created", as the
+        box raw's §0 and §4 do. Its §3.3, on a healthy start, sets the A100 aside for n "If a Hopper pod has been
+        created by then". With no Hopper pod created at the word, the two ends part.
+      - **What Code did.** Code took item 11's end, and no start is attempted. If the seat reads item 8's as governing,
+        the retries resume on the PI's routing; the question is put to the PI with this commit.
+      - Pod `m43y3deb1gq3rp` stays stopped, its volume mount unchanged.
+    - **The pod session** adds its close line here.
+    - **A blind values-check of this line:** 26 items: 15 CONFIRMED, 4 IMPRECISE, 1 FAIL, 6 NOT CHECKABLE.
+      - The FAIL and every IMPRECISE item are applied in the checker's words.
+      - The observations are applied, except two: 6 (the paste block is not committed; section B is quoted here) and
+        8 (no change asked).
+      - The edits were checked by tool.
+      - Raw: [`2026-11-18_box-gpu-close_valuescheck.md`](results/raw/2026-11-18_box-gpu-close_valuescheck.md).
+
+      Committed by path. Not pushed.
 
 - 2026-11-17 — **n — the corpus's acceptance check and assembly (PROPOSAL-n v0.2 §0.8 Route B, §3 G-VEC; the seat's
   answers of 2026-11-15, §5.3, the PI's item 11; the PI's routing of 2026-11-17, N.1 and N.3, "route as given"): every
