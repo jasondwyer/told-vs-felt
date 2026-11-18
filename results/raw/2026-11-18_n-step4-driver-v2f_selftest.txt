@@ -1,0 +1,35 @@
+n step 4 -- the BACKEND extension's driver v2f (v2e with its blind review's fixes): its self-test on the laptop,
+committed with the driver (the coordinating session's choice (b); the seat's answers of 2026-11-18, third sitting,
+s1.4; ADDENDUM-n2 v0.1 s4.1). PI date 2026-11-18. Code (the n-build session).
+
+The driver:  scripts/n_sessions.py v2f, sha256 e29839c85e3a3ee23786a7f2ddd286fc17bc2aeb25729fbbcbb64e28b1561152,
+             committed with this raw.
+The package: valence_core/n, unchanged since b523f6a, f927608c33d12b34c2bef728966038dac1ecfbb041cbd992b7ffd4cf01a73c03.
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny, and the HF-path vanilla score) run only where torch
+   and transformers are present, and elsewhere are skipped and counted as skipped (the driver's docstring).
+   The overlay: git archive of HEAD 3b2b855 on the paths the self-test runs with (valence_core, scripts/n_sessions.py,
+   scripts/box_e0_corpus.py, data/n, data/corpus/e0_tasks.jsonl, data/corpus/e2a_tasks.jsonl,
+   data/configs/e0_frames.json, data/configs/e0_probes.json, the model manifest and the characterization's artifact by
+   quoted pathspec globs, and results/raw/2026-11-18_respawn_determinism.txt), with item 3's exclusions and data/mf3's
+   (':!data/*/ckpt/**' ':!data/*/reports/**' ':!data/mf3/**'), so that no checkpoint or report file entered it; the
+   driver under test as scripts/n_sessions.py, cmp-equal. Its package digest, measured in it: f927608c...3c03.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/v2e/overlay/scripts/n_sessions.py --selftest
+
+   Run 1, v2e (43a01b36500eae1fe5490d412de62604857bf9ab172dbb55fff38a5c6b3e090d), before the blind review, in the
+   battery window the coordinating session granted for it, the driver re-hashed in the overlay just before the run.
+   Its whole output (sha256 383b54e138b00b6827d8167dba25f59d9930d8f178083b4a16d86a09b22fbd1e); exit 0:
+       356/356 n selftest checks pass
+
+   Run 2, v2f (e29839c85e3a3ee23786a7f2ddd286fc17bc2aeb25729fbbcbb64e28b1561152), after the review's fixes, in a
+   second battery window the coordinating session granted for it, the driver re-hashed in the overlay just before the
+   run. Its whole output (sha256 6d67d967e3af3dc11cae277283bea9fab953839978b1e95aae3a1a65ef0ef6a2); exit 0:
+       378/378 n selftest checks pass
+
+2. THE BOX. The box runs v2f's self-test at the resume's step 3, in the fresh copy at this commit; its lines go in the
+   resume's record. Its count, by arithmetic only: 389, the laptop's 378 plus the box's 11 more -- hftiny's 12 checks
+   in place of the laptop's one skip line, and the HF-path vanilla score in place of its skip line (v2d's raw: 344 at
+   the box against 333) -- since v2f touches no HF case.

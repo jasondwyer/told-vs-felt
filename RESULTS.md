@@ -21,6 +21,119 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n — the BACKEND extension's driver v2f, committed by path before the resume: §1.4's distribution
+  printed whole, and `backend-ext-2` wired to ADDENDUM-n2 §4.1. This is the coordinating session's choice (b),
+  declared for the seat to strike (the seat's answers of 2026-11-18, third sitting, §1.4; ADDENDUM-n2 v0.1, committed
+  at `7a54eb9`). Nothing in the read path changes, and the n package is unchanged.**
+  - **Headline:**
+    - the driver `e29839c8…1152` (v2f), on `ad856f0`'s `scripts/n_sessions.py` (`18f19b8e…4f5c`), which no commit
+      since has changed; git's numstat against it is +421 −45; the n package is unchanged at `f927608c…3c03`;
+    - its self-test: 378/378 on the laptop (v2e, before the review, 356/356), in the raw
+      [`2026-11-18_n-step4-driver-v2f_selftest.txt`](results/raw/2026-11-18_n-step4-driver-v2f_selftest.txt). The box
+      runs it at the resume's step 3;
+    - one blind review, of v2e (`43a01b36…090d`): 0 BUG, 7 RISK, 3 NIT, 12 surviving mutants and 10 observations.
+      Every finding is applied in v2f, and every mutant has a test written to kill it. Raw:
+      [`2026-11-18_n-step4-driver-v2e_review.md`](results/raw/2026-11-18_n-step4-driver-v2e_review.md);
+    - nothing of v2e or v2f ran on a checkpoint's weights before this commit. Both self-test runs were in battery
+      windows the coordinating session granted, one at a time across sessions, so no other battery ran in them; they
+      ran under Q-F3's standing rules for the laptop (model-free, `nice -n 19`).
+  - **Why (b).** The coordinating session's words: "The choice is Code's (mine). Declare it in v2e's entry for the seat
+    to strike." v2f is the driver that two committed texts call v2e: ADDENDUM-n2's entry at `7a54eb9` ("What runs
+    now") and the pod session's close line on `6df2131`'s entry at `f3e7190`. It is v2e with the blind review's fixes
+    and no change to the route, as v2d followed v2c; the coordinating session's "v2e's commit" is this commit.
+    - §1.4 names the quartiles and the min: the resume "prints the discordance distribution (absdiff in nats and rel:
+      min, quartiles, median, max; the counts above TAU and TAU/4; R3's bound), the in-band count and the comparison
+      (the four counts of 40 and the four medians)". The committed driver printed the absdiff's min, median, p90 and
+      max, and the rel's median and max.
+    - The absdiff's per-read values are printed nowhere else, and the cell is closed. The rel's are in the run's fid
+      lines, to six decimals.
+    - One driver commit covers both needs: `backend-ext-2` needs a driver change in any case, since the committed
+      driver fixes the stage's name, root and report and the convention "bare".
+    - Option (a), the resume from the committed driver, had its launch files drafted and frozen in Code's scratch. They
+      were not relayed.
+  - **What changes** (nothing in the read path):
+    1. The distribution line. It prints `absdiff` (|margin − fresh_margin|, nats) and `rel`, each as min, q1, median,
+       q3 and max (numpy's linear quantiles); the absdiff's p90 beside; `label`'s median and max, the max being R3's
+       bound; the counts above TAU and TAU/4; and the counts of reads and of finite reads. The key "margin" becomes
+       "absdiff", the seat's word. The prefix names the units: "(absdiff and label in nats, rel = absdiff / the read's
+       scale; fidelity values, no margin; R3's bound is label.max)". backend-ext-2's has no bound clause, since it runs
+       no comparison.
+    2. A STAGE line before the weights: the stage, its label convention, its root and its report.
+    3. `backend-ext-2 --convention NAME` (§4.1's letter, and the coordinating session's: "the same 24 reads under the
+       named convention; its own root and report, with the first stage kept; the fidelity rule as the first run carried
+       it (p0 = 0/2400, no ceiling, since C isn't set until the figures of record exist); the distribution printed. It
+       does NOT chain.").
+       - A run of record runs into `data/n/ckpt/backend-ext-2/` and `data/n/reports/backend-ext-2.json`; a smoke writes
+         where `--root` and `--report` name, outside the repository. On COMPLETE it prints the distribution alone: no
+         in-band count and no comparison.
+       - It refuses "bare" and any name that is not a candidate.
+       - For a run of record, before the load, it refuses unless the first stage's report is on disk and valid,
+         COMPLETE with 24 of 24 planned and obtained, under "bare", with a stage identity equal to its own in every
+         field but the convention, and every cell file the report records hashes to that record. It prints that
+         report's sha256.
+       - A smoke is not checked against the first stage.
+       - Its own lines: the first stage's report line (its path, its sha256 and what was checked), its PAUSE line, its
+         SMOKE line without the floor sessions, and its non-finite exit without the comparison's clause.
+    4. The CLI: `backend-ext-2` and `--convention`, which only it takes and which it needs.
+  - **Code's readings, new, for the seat:**
+    - R7: backend-ext-2's stage identity keeps `stage` "backend-ext" and differs from the first stage's in
+      `label_convention` alone. `schema.STAGES` is ("campaign", "time", "backend-ext"), and only "backend-ext" may carry
+      a null lock, dose map and bound. Adding a stage is a package change: it would move the package digest, and the
+      first stage's resume must run under the digest its report was written under. "backend-ext-2" names the root, the
+      report and the command. n-analyzer, told of R7: "backend-ext-2 never reaches the reader, so R7 needs nothing from
+      me: load_campaign and verdicts refuse any identity whose stage is not "campaign"."
+    - R8: numpy's linear quantiles and `np.median`. Beside §1.4's list, it prints the absdiff's p90 (printed before the
+      list was set), label's median, and the counts of reads and of finite reads. The coordinating session's line
+      covers the p90 ("Keeping p90 is fine if you declare it"); label's median and the two counts go beyond it,
+      declared for the seat to strike.
+  - **The order from here** (the coordinating session's):
+    1. the resume from this commit, in a fresh sparse copy at it. The copy holds byte copies of the run copy's stage
+       report, cell file and 31 capture arrays, taken by name from the committed record. Each is compared with the run
+       copy's by `cmp -s`, which prints nothing, in the coordinating session's form ("per-file cmp or shasum on names
+       taken from a committed record, or one aggregate digest"); the report and cell are at their committed sha256s;
+       nothing is listed (the answers' §7: "a listing over a copied ckpt or report is pruned or not run"). The run copy
+       stays untouched, as the run of record's copy;
+    2. its outputs read in full;
+    3. backend-ext-2's launch files only if A-n1 §2's rule names exactly one other candidate, sent to the coordinating
+       session, which relays them, in the same box session on the same characterized backend. If it names "bare",
+       there is no backend-ext-2. No candidate, or several, is a STOP for the seat;
+    4. the schema's follow-up for the `fidelity-ceiling` kind, after both, settled with n-analyzer. Names agreed so
+       far: `fidelity_rule.ceiling`, `fidelity_rule.median_rel` and `counters.fidelity_ceiling_exceeded`, with p0
+       entered as (k + 1, n + 2). The kind's place is after non-finite, as ADDENDUM-n2 §2.1 has it; directly after it,
+       ahead of identity-bound in `schema.PAUSE_KINDS`' order, is Code's reading, for the seat.
+  - **Departures:**
+    - 2026-11-18, Code: one `git show ad856f0:<the characterization artifact's path> | shasum -a 256` call held a
+      guard marker in its argv, in a loop checking the first resume draft's manifest against `ad856f0`'s blobs. It was
+      non-Python, model-free and read-only, and touched nothing under `data/mf3`, `data/*/ckpt` or `data/*/reports`.
+      The coordinating session logged it for Q-F3's run list;
+    - the reviewer's, as its report states them: its reading of one long diff from the harness's tool-results folder,
+      and three git commands with a narrower positive pathspec in place of `.`, each with all three exclusions;
+    - the values-checker's, as its report states them, for the seat to class: two `git log` commands without item 3's
+      pathspec; `git check-attr` and `git check-ignore --no-index` on named paths under `data/n/ckpt` and
+      `data/n/reports`, printing attributes and rules only; `git rev-parse --verify` on named data paths and
+      `git ls-files` on two quoted globs, without the pathspec; and a grep over a `git diff --no-index`'s output for
+      hunk headers.
+  - **Values-check:** one blind pass over this entry, the close line, the self-test raw and the review raw's head.
+    - 95 items: 79 CONFIRMED, 5 IMPRECISE, 1 FAIL, 10 NOT CHECKABLE; and 12 observations.
+    - The FAIL gave n-analyzer's own words as what it was told; R7 now quotes them. It and every IMPRECISE item are
+      applied, with every observation. On `cmp` (item 36), the text cites the coordinating session's form, which the
+      checker did not have.
+    - The edits were checked by tool. n-build's close line on ADDENDUM-n2's entry was written after the check, once
+      `7a54eb9` landed, and was checked by tool: its one quotation, the addendum's sha256 and the commit.
+    - Also after the check, at the coordinating session's request, one sentence was added to "Why (b)": v2f is the
+      driver the committed texts at `7a54eb9` and `f3e7190` call v2e. It was checked by tool against those texts'
+      mentions of v2e (four in ADDENDUM-n2's "What runs now", three in the pod session's close line) and against v2d
+      following v2c (the delta review's raw at `ad856f0`).
+    - Raw: [`2026-11-18_n-step4-driver-v2f_valuescheck.md`](results/raw/2026-11-18_n-step4-driver-v2f_valuescheck.md).
+  - **Committed by path:**
+    - `scripts/n_sessions.py` and its self-test raw;
+    - the review raw;
+    - the values-check raw;
+    - this entry, and n-build's close lines on `6df2131`'s entry and on ADDENDUM-n2's (`7a54eb9`).
+
+    The commit-time count of the home-folder prefix over the staged diff (the answers' §5.2) is 0. Not pushed.
+    **Next:** the resume's launch files to the coordinating session.
+
 - 2026-11-18 — **ADDENDUM-n2 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the fidelity rule, the identity bound
   and the read of record on the box of record", committed by path as the seat placed it, on the PI's routing of
   2026-11-18, third sitting ("Route as given"; item 3, decisions (n-3) and (n-4), [adopt]; item 7, [as ruled]). Its
@@ -142,6 +255,18 @@ applied to CLAUDE.md.
   - **Committed by path:** the addendum, the PI-routing raw, the referent-check raw, the values-check raw, this entry,
     and the coordinating session's close line on `25c9340`'s note. The commit-time count over the staged diff (the
     answers' §5.2) is 0. Nothing in this session ran on a model or the box. Not pushed.
+  - **Close (PI date 2026-11-18), n-build's: ADDENDUM-n2 v0.1.** This session read the addendum,
+    `ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md` (sha256 `41f76c49…bb3f`), in full. The coordinating session
+    committed it by path at `7a54eb9`. This session's part is §6.3 (3), with (5):
+    - the resume of `6df2131`'s run with the seat's ruling, and the comparison. Both run from driver v2f's commit
+      (its entry heads the Log), whose distribution prints §1.4's list and which carries `backend-ext-2` for §4.1's
+      second run;
+    - `backend-ext-2`, if the comparison names a candidate other than "bare";
+    - the `fidelity-ceiling` kind in the runner and the schema, in a follow-up commit settled with n-analyzer: the
+      kind, its place in the precedence, and the report's and the lock's fields for p0, C and the median, "the pin
+      moving as before";
+    - the extension's entry;
+    - LOCK-n v0.1 with §4.2's declarations, drafted to the seat.
 
 - 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling of the second sitting carried in: PIN-n-33
   amended (pauses read point by point), the fourth form's label in its sentence, and PIN-n-34 to PIN-n-36 accepted (the
@@ -426,6 +551,33 @@ applied to CLAUDE.md.
         `git ls-files` on named raw paths without the pathspec; a grep of one committed raw beyond its sources; and
         `wc -c` on two digest strings from a pipe, no file's size.
       - Raw: [`2026-11-18_n-step4-run-pause-pod-close_valuescheck.md`](results/raw/2026-11-18_n-step4-run-pause-pod-close_valuescheck.md).
+  - **Close (PI date 2026-11-18), n-build's: the seat's answers of the third sitting.** This session read the seat's
+    raw,
+    [`2026-11-18_n-step4-run-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md)
+    (sha256 `d51279ec…0bf4`), and the ruling raw,
+    [`2026-11-18_n-step4-p01_ruling.md`](results/raw/2026-11-18_n-step4-p01_ruling.md) (sha256 `e2b1c77a…2a8a`), in
+    full. The coordinating session committed both by path at `3b2b855`. The PI's word on the paste block of
+    2026-11-18 (third sitting) was "Route as given", as the coordinating session relayed it.
+    - **Q1:** "`p01` is cleared as the measurement" (§0). The ruling raw is the file for `--resume --ruling p01=PATH`;
+      "no read is excluded, no defect is named" (§0). The resume prints the distribution, the in-band count and A-n1
+      §2's comparison (§1.4). "The extension's entry carries the pause, the ruling's sha256 and the figures", and
+      "Code's R3 — the comparison's bound as the largest per-label discordance — is accepted as a printed measurement;
+      the lock's bound is ADDENDUM-n2's C" (§1.4).
+    - **Q2:** "the cached path stays the read of record" (§0). The fresh pair's cost is recorded for G-TIME-n and used
+      by nothing (§2).
+    - **ADDENDUM-n2 v0.1** (§3) sets p0 from the box's figures, the ceiling C, the second sensitivity row and the
+      figures of record, with `backend-ext-2` if the convention of record is not "bare".
+    - **The cell's push** under `-diff` is ruled (§4); the push itself is the PI's word. Code's departure at this
+      entry, the unpruned `find` over its scratch copies of the report and the cell, is inert, as are the checker's
+      (§7).
+    - **This session's part,** in order:
+      - driver v2f first, since the committed driver did not print all of §1.4's list (the coordinating session's
+        choice (b); its entry heads the Log);
+      - the resume from v2f's commit, in a fresh copy;
+      - `backend-ext-2` only if A-n1 §2's comparison names exactly one other candidate;
+      - the schema's follow-up for the `fidelity-ceiling` kind, settled with n-analyzer, after both;
+      - the extension's entry;
+      - LOCK-n v0.1, drafted to the seat.
 
 - 2026-11-18 — **n — the BACKEND extension's driver, committed by path before its run of record, on the smoke of this
   date, which ended PAUSE on the fidelity binomial, as the rule requires: `scripts/n_sessions.py backend-ext`,

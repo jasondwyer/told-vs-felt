@@ -44,7 +44,8 @@ At the n BUILD it wires:
                  1. refusals: the stage's own root and report (data/n/ckpt/backend-ext, data/n/reports/
                     backend-ext.json) for a run of record, a smoke's (``--smoke N --root R --report P``) outside the
                     repository; $RUNPOD_POD_ID the characterized pod's; CUBLAS_WORKSPACE_CONFIG the characterized
-                    setting (rule 2); numpy's stream known answer; each --ruling a file;
+                    setting (rule 2); numpy's stream known answer; each --ruling a file; then a STAGE line (the
+                    stage, its label convention, its root and its report), after a smoke's SMOKE line;
                  2. the weights of record: the committed model manifest's instruct entry (the working copy HEAD's
                     bytes), its folder holding exactly its files at their byte counts; a WEIGHTS line; and the driver
                     of record: a run of record runs only HEAD's committed bytes of this file (the box answers of
@@ -58,8 +59,11 @@ At the n BUILD it wires:
                  5. the load from the entry's path; the adapter's own provenance must hash as the environment's did;
                  6. the 24 reads: N1-V d = 0, each with its fresh re-computation (``dose-rule``), through the BUILD's
                     runner and 5(f) primitive into the stage's cells, the report at the end;
-                 7. on COMPLETE: the distribution (``discordance``: |margin - fresh_margin|, its ratio to the scale,
-                    and each label's |logprob - fresh_logprob| -- fidelity values, never a margin); the in-band
+                 7. on COMPLETE: the distribution (``discordance``: |margin - fresh_margin| as ``absdiff`` in nats
+                    and its ratio to the scale as ``rel``, each as min, quartiles, median and max -- the seat's answers
+                    of 2026-11-18, third sitting, §1.4 -- with the absdiff's p90 beside (R8); each label's |logprob -
+                    fresh_logprob| as median and max, the max R3's bound; the counts above TAU and TAU/4 -- fidelity
+                    values, never a margin); the in-band
                     count (the floor reads' fresh values against the vanilla score: counts only); the comparison
                     (``label_counts``): per candidate, the floor sessions whose S and U values on the vanilla forward
                     both match BK's ``reduced.json`` within half a unit of BK's last decimal plus the bound (R3),
@@ -68,7 +72,8 @@ At the n BUILD it wires:
                     and nothing else -- no value, no margin, nothing per session; nothing of it is written.
                Exit 0 iff the reads are COMPLETE and the comparison ran; a PAUSE ends the invocation with the report
                (the seat adjudicates; ``--resume`` with ``--ruling PAUSE_ID=PATH`` continues, skip-only).
-               Code's readings, declared (each flagged in the stage's entry, pending the seat):
+               Code's readings for the BACKEND extension, declared (each flagged in its entry, pending the seat; R1-R6
+               are backend-ext's, R7 is backend-ext-2's and R8 the distribution's in both):
                  R1 the 24 sessions: m's key-to-generator function's permutation of the session set's order under
                     ``BEXT_KEY``, its first 24, launched in the set's order (n v0.2 names no set);
                  R2 the reads' label convention ``BEXT_CONVENTION`` ("bare", the first candidate): the reads come
@@ -87,6 +92,26 @@ At the n BUILD it wires:
                     default window; the same provenance with ``choice_window_declared`` set to that default must hash
                     to its identifier -- the same GPU, CUDA, capability, flags, cuBLAS setting, libraries and Python
                     -- and the pod must be its pod. The field reset is a declaration, not a property of the backend.
+                 R7 backend-ext-2's stage identity keeps ``stage`` "backend-ext" (``schema.STAGES``' pre-lock kind:
+                    no lock, dose map, direction or bound) and differs from the first stage's in ``label_convention``
+                    alone; "backend-ext-2" names its root, its report and its command. Adding a stage to the schema
+                    would move the package digest, and the first stage's resume needs the digest its report was
+                    written under;
+                 R8 the distribution's quantiles are numpy's default (linear), the median ``np.median``. Beside §1.4's
+                    list it prints the absdiff's p90 (printed before the list was set), label's median beside its
+                    max, and the counts of reads and of finite reads, the list's denominators.
+  backend-ext-2  ADDENDUM-n2 §4.1's second stage, on the box, run only when A-n1 §2's comparison names a candidate
+               other than "bare": the same 24 reads under ``--convention NAME``, that candidate, into the stage's own
+               root and report (data/n/ckpt/backend-ext-2, data/n/reports/backend-ext-2.json), with the fidelity rule
+               as the first run carried it (p0 = 0 of 2,400 and no ceiling). The first stage's root and report are
+               kept, and nothing is written to either: for a run of record, before the load, its report must be on
+               disk, valid, COMPLETE with all 24 reads planned and obtained, under "bare", with a stage identity equal
+               to this stage's in every field but the convention -- the same package, closure, weights, backend, pod,
+               rendering and fidelity rule -- and each cell file its report records must hash to that record; the
+               report's sha256 is printed. The same steps 1-6 as backend-ext, with the STAGE line naming
+               backend-ext-2; then on COMPLETE the distribution alone, with no in-band count and no comparison. Exit 0
+               iff the reads are COMPLETE and every one is finite; a PAUSE as backend-ext's. ``--smoke``, ``--resume``
+               and ``--ruling`` as backend-ext's; a smoke is not checked against the first stage.
 
 Stages G-VEC, G-CAL-n, G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
 """
@@ -401,6 +426,9 @@ BEXT_ALPHA = 0.01                   # R5
 BEXT_SAMPLE_RULE = "every read is at d = 0 and re-computed (dose-rule); no sample"
 BEXT_ROOT = REPO / "data" / "n" / "ckpt" / BEXT_STAGE
 BEXT_REPORT = REPO / "data" / "n" / "reports" / f"{BEXT_STAGE}.json"
+BEXT2_STAGE = "backend-ext-2"       # ADDENDUM-n2 §4.1's second stage: its root's, report's and command's name (R7)
+BEXT2_ROOT = REPO / "data" / "n" / "ckpt" / BEXT2_STAGE
+BEXT2_REPORT = REPO / "data" / "n" / "reports" / f"{BEXT2_STAGE}.json"
 BK_REDUCED = (REPO / "data" / "n" / "bk" / "experiment_results_json" / "fixed_text_design" / "neutral_passages"
               / "reduced.json")
 BK_MEMBER = "olmo_32b"
@@ -542,16 +570,17 @@ def bridge_identifier(provenance) -> str:
 
 def bext_identity(*, package_sha256: str, imported_sha256: dict, weights: str, backend_identifier: str, pod_id: str,
                   rendering_id: str, n_layers: int = N_LAYERS, d_model: int = D_MODEL,
-                  layer: int = BEXT_LAYER) -> dict:
+                  layer: int = BEXT_LAYER, convention: str = BEXT_CONVENTION) -> dict:
     """The stage identity at backend-ext (``schema.STAGE_IDENTITY_FIELDS``): no lock, dose map, direction or bound;
-    the rendering and the label convention as this stage's entry names them (R2, R4, R5). Checked before return."""
+    the rendering and the label convention as this stage's entry names them (R2, R4, R5); backend-ext-2's the same
+    with its ``convention`` (R7). Checked before return."""
     from valence_core.n import schema
     ident = {
         "unit": schema.UNIT, "stage": BEXT_STAGE, "record_schema": schema.RECORD_SCHEMA,
         "proposal_sha256": schema.PROPOSAL_SHA256, "lock_sha256": None, "package_sha256": package_sha256,
         "imported_sha256": dict(imported_sha256), "weights_sha256": weights, "backend_identifier": backend_identifier,
         "pod_id": pod_id, "session_set_sha256": schema.SESSION_SET_SHA256, "rendering_id": rendering_id,
-        "label_convention": BEXT_CONVENTION, "layer_bk": 32, "layer": int(layer),
+        "label_convention": str(convention), "layer_bk": 32, "layer": int(layer),
         "capture_layers": list(range(int(layer) + 1, int(n_layers))), "n_layers": int(n_layers),
         "d_model": int(d_model), "read_window": schema.MAX_WINDOW, "dose_map": None, "directions": {},
         "fidelity_rule": {"tau": schema.TAU, "p0_count": 0, "p0_n": 2400, "cadence": 160,
@@ -562,17 +591,27 @@ def bext_identity(*, package_sha256: str, imported_sha256: dict, weights: str, b
     return ident
 
 
+def five(x) -> dict:
+    """min, quartiles, median and max of a non-empty array: numpy's default (linear) quantiles, the median
+    ``np.median`` (R8)."""
+    import numpy as np
+    return {"min": float(np.min(x)), "q1": float(np.quantile(x, 0.25)), "median": float(np.median(x)),
+            "q3": float(np.quantile(x, 0.75)), "max": float(np.max(x))}
+
+
 def discordance(records) -> dict:
     """The fresh-versus-cached distribution over the stage's reads (n v0.2 §3 G-ACQ), fidelity values only, never a
-    margin: ``margin`` is |margin - fresh_margin| (the record's ``absdiff``), ``rel`` that over the read's scale,
-    ``label`` each label's |logprob - fresh_logprob| (S and U, two per read), with the counts above TAU and TAU/4.
-    Every read must carry its re-computation."""
+    margin: ``absdiff`` is |margin - fresh_margin| in nats (the record's ``absdiff``) and ``rel`` that over the read's
+    scale, each as min, quartiles (``q1``, ``q3``), median and max (the seat's answers of 2026-11-18, third sitting,
+    §1.4), with the absdiff's ``p90`` beside (R8); ``label`` each label's |logprob - fresh_logprob| (S and U, two per
+    read) as median and max, the max being R3's bound; with the counts above TAU and TAU/4. Every read must carry its
+    re-computation."""
     import numpy as np
     fs = [r.get("fidelity") for r in records]
     if not records or any(f is None for f in fs):
         raise SystemExit("a BACKEND-extension read without its re-computation")
     fin = [(r, f) for r, f in zip(records, fs) if f["absdiff"] is not None and f["rel"] is not None]
-    out = {"reads": len(records), "finite": len(fin), "margin": None, "rel": None, "label": None,
+    out = {"reads": len(records), "finite": len(fin), "absdiff": None, "rel": None, "label": None,
            "exceed_tau": sum(1 for _r, f in fin if f["exceeds_tau"] is True),
            "exceed_tau4": sum(1 for _r, f in fin if f["exceeds_tau4"] is True)}
     if fin:
@@ -580,11 +619,19 @@ def discordance(records) -> dict:
         q = np.array([float(f["rel"]) for _r, f in fin])
         g = np.array([abs(float(r[f"logprob_{z}"]) - float(f[f"fresh_logprob_{z}"])) for r, f in fin
                       for z in ("S", "U")])
-        out["margin"] = {"min": float(a.min()), "median": float(np.median(a)), "p90": float(np.quantile(a, 0.9)),
-                         "max": float(a.max())}
-        out["rel"] = {"median": float(np.median(q)), "max": float(q.max())}
+        out["absdiff"] = dict(five(a), p90=float(np.quantile(a, 0.9)))
+        out["rel"] = five(q)
         out["label"] = {"median": float(np.median(g)), "max": float(g.max())}
     return out
+
+
+def distribution_line(disc: dict, bound: bool = True) -> str:
+    """The distribution as printed: one line, the dict's keys sorted. ``bound``: the first stage, whose comparison
+    takes label.max as R3's bound, says so; backend-ext-2, which runs no comparison, does not."""
+    head = "absdiff and label in nats, rel = absdiff / the read's scale; fidelity values, no margin"
+    if bound:
+        head += "; R3's bound is label.max"
+    return f"discordance over {disc['reads']} reads ({head}): {json.dumps(disc, sort_keys=True)}"
 
 
 def half_unit(text: str) -> float:
@@ -746,6 +793,40 @@ def prior_state(root_p: Path, report_p: Path, ident: dict, plan, resume: bool, r
         raise SystemExit(f"pauses {sorted(standing - set(rulings))} stand: a resume needs each one's ruling (rule 21)")
 
 
+def first_stage_check(first_report: Path, first_root: Path, ident: dict) -> str:
+    """backend-ext-2 follows the first stage (ADDENDUM-n2 §4.1): its report on disk and valid, COMPLETE with all its
+    reads planned and obtained, under "bare", and its stage identity this stage's in every field but the convention
+    (R7); each cell file it records hashing to its record. Returns the report's sha256. Nothing is written to the
+    first stage's root or report."""
+    import hashlib
+
+    from valence_core.n import cells, schema
+    p = Path(first_report)
+    if not p.is_file():
+        raise SystemExit("backend-ext-2 follows the first stage: the first stage's report is not on disk")
+    raw = p.read_bytes()
+    rep = cells.read_json(p)
+    try:
+        schema.check_report(rep, where=p.name)
+    except schema.SchemaError as e:
+        raise SystemExit(f"the first stage's report is not a valid report, at {str(e).split(': ', 1)[0][:160]}")
+    per = rep["per_arm"].get(schema.SHADOW_ARM, {})
+    if (rep["end_state"] != "COMPLETE" or per.get("obtained") != BEXT_N or per.get("planned") != BEXT_N
+            or rep["stage_identity"]["label_convention"] != BEXT_CONVENTION):
+        raise SystemExit(f"backend-ext-2 follows the first stage: its report is not a COMPLETE run of the "
+                         f"{BEXT_N} reads under {BEXT_CONVENTION!r}")
+    diff = sorted(k for k in set(ident) | set(rep["stage_identity"])
+                  if k != "label_convention" and rep["stage_identity"].get(k) != ident.get(k))
+    if diff:
+        raise SystemExit(f"the first stage was run under another stage identity ({diff}): backend-ext-2 runs as the "
+                         f"first run carried it")
+    for name, rec in sorted(rep["cells"].items()):
+        cp = Path(first_root) / name
+        if not cp.is_file() or hashlib.sha256(cp.read_bytes()).hexdigest() != rec["json_sha256"]:
+            raise SystemExit(f"the first stage's cell {name} is absent or does not hash to its report's record")
+    return hashlib.sha256(raw).hexdigest()
+
+
 @dataclass
 class BextEnv:
     """What ``run_backend_ext`` reaches outside itself, each a seam the self-test replaces (``production_env``)."""
@@ -763,6 +844,8 @@ class BextEnv:
     shape: tuple = (N_LAYERS, D_MODEL, BEXT_LAYER)
     root: Path = BEXT_ROOT
     report: Path = BEXT_REPORT
+    root2: Path = BEXT2_ROOT
+    report2: Path = BEXT2_REPORT
     printer: Callable = print
     clock: Callable = time.perf_counter
 
@@ -796,15 +879,24 @@ def production_env() -> BextEnv:
 
 
 def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = False, rulings=None,
-                    smoke: int | None = None) -> int:
+                    smoke: int | None = None, convention: str | None = None) -> int:
     """The stage, in order: refusals; the weights; the ids and the identity; what is on disk; the comparison's inputs;
     G-VER; the load and the bridge again; the reads; the distribution; the comparison. Everything that needs no
-    model happens before the load."""
+    model happens before the load. With ``convention`` -- a candidate other than "bare" -- it is backend-ext-2
+    (ADDENDUM-n2 §4.1; R7): its own root and report, the first stage's report checked before the load for a run of
+    record, and on COMPLETE the distribution alone."""
     from valence_core.m import resume as m_resume
     from valence_core.m.keys import stream_known_answer
     from valence_core.n import cells, guard, ids, runner, schema
     rulings = dict(rulings or {})
     say = env.printer
+    second = convention is not None
+    others = [n for n, _t in ids.CANDIDATES if n != BEXT_CONVENTION]
+    if second and convention not in others:
+        raise SystemExit(f"backend-ext-2 runs under a candidate other than {BEXT_CONVENTION!r} "
+                         f"({', '.join(others)}), not {convention!r} (ADDENDUM-n2 §4.1)")
+    conv = str(convention) if second else BEXT_CONVENTION
+    stage_name = BEXT2_STAGE if second else BEXT_STAGE
     if smoke is not None:
         if not 1 <= int(smoke) <= BEXT_N:
             raise SystemExit(f"--smoke takes 1..{BEXT_N} reads")
@@ -818,7 +910,8 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
         if root is not None or report is not None:
             raise SystemExit("a run of record writes only to the stage's own root and report (--root and --report are "
                              "a smoke's)")
-        root_p, report_p = guard.refuse_out(Path(env.root)), guard.refuse_out(Path(env.report))
+        root_p = guard.refuse_out(Path(env.root2 if second else env.root))
+        report_p = guard.refuse_out(Path(env.report2 if second else env.report))
     pod = env.pod()
     if pod is None:
         raise SystemExit("an n stage refuses to start without $RUNPOD_POD_ID (m's resume.pod_id)")
@@ -834,7 +927,9 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
         if not Path(path).is_file():
             raise SystemExit(f"the ruling for {pid} is not a file: {path}")
     if smoke is not None:
-        say(f"SMOKE: {smoke} of the {BEXT_N} reads and {smoke} floor sessions, outside the repository; never of record")
+        say(f"SMOKE: {smoke} of the {BEXT_N} reads"
+            + ("" if second else f" and {smoke} floor sessions") + ", outside the repository; never of record")
+    say(f"STAGE {stage_name}: label convention {conv}; root {_shown(root_p)}, report {_shown(report_p)}")
     w = env.weights()
     say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
         f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
@@ -860,9 +955,14 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
     ident = bext_identity(package_sha256=mods["guard"].package_sha256(),
                           imported_sha256=mods["guard"].closure_from_modules(dict(sys.modules)), weights=w["sha256"],
                           backend_identifier=bid, pod_id=pod, rendering_id=loaded["manifest_sha256"],
-                          n_layers=n_layers, d_model=d_model, layer=layer)
+                          n_layers=n_layers, d_model=d_model, layer=layer, convention=conv)
     plan = bext_plan(ss)[:smoke] if smoke is not None else bext_plan(ss)
     prior_state(root_p, report_p, ident, plan, resume, rulings)
+    if second and smoke is None:
+        fsha = first_stage_check(Path(env.report), Path(env.root), ident)
+        say(f"the first stage's report: {_shown(Path(env.report).resolve())}, sha256 {fsha}: COMPLETE at {BEXT_N} of "
+            f"{BEXT_N} under {BEXT_CONVENTION!r}, its stage identity this stage's but for the convention, its cells "
+            f"as it records them")
     floor_all = [s for s in ss if s.is_floor]
     bk = env.bk_table(floor_all)
     floor = floor_all[:smoke] if smoke is not None else floor_all
@@ -889,20 +989,24 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
         f"{CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {pod}; load {load_ms} ms")
     backend = env.make_backend(adapter)
     inputs = runner.StageInputs(root=root_p, report_path=report_p, identity=ident, sessions=ss, ids_of=ids_of,
-                                label_ids=cands[BEXT_CONVENTION], backend=backend, directions={}, alpha=BEXT_ALPHA,
+                                label_ids=cands[conv], backend=backend, directions={}, alpha=BEXT_ALPHA,
                                 hour_cap_ms=None, load_ms=load_ms, rulings=rulings, printer=say)
     rpt = runner.run(inputs, plan, resume=resume)
     if rpt["end_state"] != "COMPLETE":
-        say(f"BACKEND extension: {rpt['end_state']}; no distribution and no comparison until it completes")
+        if second:
+            say(f"BACKEND extension ({stage_name}): {rpt['end_state']}; no distribution until it completes")
+        else:
+            say(f"BACKEND extension: {rpt['end_state']}; no distribution and no comparison until it completes")
         return 1
     cell, _caps = cells.load_cell(root_p, schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE,
                                   identity=ident)
     disc = discordance(cell["records"])
-    say(f"discordance over {disc['reads']} reads (nats; fidelity values, no margin): "
-        f"{json.dumps(disc, sort_keys=True)}")
+    say(distribution_line(disc, bound=not second))
     if disc["label"] is None or disc["finite"] != disc["reads"]:
-        say("a read has no finite discordance: no comparison")
+        say("a read has no finite discordance" + ("" if second else ": no comparison"))
         return 1
+    if second:
+        return 0
     score = vanilla_score(backend)
     agree, of = in_band(score, cell["records"], {s.session_id: s for s in ss}, ids_of)
     say(f"in-band: {agree} of {of} floor reads' fresh values, both labels, equal the comparison's vanilla score")
@@ -912,8 +1016,16 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
     return 0
 
 
-def cmd_backend_ext(root=None, report=None, resume: bool = False, rulings=None, smoke: int | None = None) -> int:
-    return run_backend_ext(production_env(), root=root, report=report, resume=resume, rulings=rulings, smoke=smoke)
+def cmd_backend_ext(root=None, report=None, resume: bool = False, rulings=None, smoke: int | None = None,
+                    convention: str | None = None) -> int:
+    return run_backend_ext(production_env(), root=root, report=report, resume=resume, rulings=rulings, smoke=smoke,
+                           convention=convention)
+
+
+def _shown(p: Path) -> str:
+    """A stage path as the STAGE line prints it: relative to the repository when inside it."""
+    p = Path(p)
+    return p.relative_to(REPO.resolve()).as_posix() if _within(p, REPO.resolve()) else str(p)
 
 
 def _bext_selftest(chk, tmp: Path) -> None:
@@ -923,6 +1035,7 @@ def _bext_selftest(chk, tmp: Path) -> None:
     numpy double behind every seam, refusals first; on the box, the vanilla score on the HF path too."""
     import hashlib
     import re
+    import shutil
 
     from valence_core.m import resume as m_resume
     from valence_core.m.keys import stream
@@ -1021,16 +1134,40 @@ def _bext_selftest(chk, tmp: Path) -> None:
     d = discordance([frec(0.0, 0.0, False, False), frec(0.01, 0.001, False, False, fs=-10.2, fu=-12.21),
                      frec(0.02, 0.002, False, True), frec(0.05, 0.02, True, True, fu=-11.95)])
     near = lambda x, y: abs(x - y) < 1e-12                                          # noqa: E731
-    chk("driver: the discordance distribution, a known answer: the margin's (numpy's linear quantile), rel, and each "
-        "label's |logprob - fresh_logprob| (8 values)",
+    chk("driver: the discordance distribution, a known answer: the absdiff's and rel's min, quartiles, median and max "
+        "(numpy's linear quantiles; §1.4), the absdiff's p90, and each label's |logprob - fresh_logprob| (8 values)",
         d["reads"] == 4 and d["finite"] == 4 and d["exceed_tau"] == 1 and d["exceed_tau4"] == 2
-        and near(d["margin"]["min"], 0.0) and near(d["margin"]["median"], 0.015)
-        and near(d["margin"]["p90"], 0.041) and near(d["margin"]["max"], 0.05)
-        and near(d["rel"]["median"], 0.0015) and near(d["rel"]["max"], 0.02)
+        and near(d["absdiff"]["min"], 0.0) and near(d["absdiff"]["q1"], 0.0075)
+        and near(d["absdiff"]["median"], 0.015) and near(d["absdiff"]["q3"], 0.0275)
+        and near(d["absdiff"]["p90"], 0.041) and near(d["absdiff"]["max"], 0.05)
+        and near(d["rel"]["min"], 0.0) and near(d["rel"]["q1"], 0.00075) and near(d["rel"]["median"], 0.0015)
+        and near(d["rel"]["q3"], 0.0065) and near(d["rel"]["max"], 0.02)
         and near(d["label"]["max"], 0.21) and near(d["label"]["median"], 0.0), d)
+    chk("driver: ...and exactly those keys: the absdiff's six, rel's five, label's two, nothing per read",
+        sorted(d) == ["absdiff", "exceed_tau", "exceed_tau4", "finite", "label", "reads", "rel"]
+        and sorted(d["absdiff"]) == ["max", "median", "min", "p90", "q1", "q3"]
+        and sorted(d["rel"]) == ["max", "median", "min", "q1", "q3"] and sorted(d["label"]) == ["max", "median"], d)
+    odd = five([0.3, 0.1, 0.2, 0.5, 0.4])
+    chk("driver: ...an odd count, in no order: the quartiles fall on values (0.2 and 0.4), the median the middle one",
+        all(near(odd[k], v) for k, v in {"min": 0.1, "q1": 0.2, "median": 0.3, "q3": 0.4, "max": 0.5}.items()), odd)
+    dl = discordance([frec(0.0, 0.0, False, False, fs=-10.1, fu=-12.2),
+                      frec(0.0, 0.0, False, False, fs=-10.3, fu=-12.4)])
+    chk("driver: ...label's median is the middle of its values, not their least: 0.1, 0.2, 0.3 and 0.4 give 0.25",
+        near(dl["label"]["median"], 0.25) and near(dl["label"]["max"], 0.4), dl["label"])
+    unit = "absdiff and label in nats, rel = absdiff / the read's scale; fidelity values, no margin"
+    chk("driver: the distribution line: its units, then (the first stage's) R3's bound, then the dict, keys sorted",
+        distribution_line(d) == f"discordance over 4 reads ({unit}; R3's bound is label.max): "
+        + json.dumps(d, sort_keys=True), distribution_line(d)[:140])
+    chk("driver: ...backend-ext-2's, which runs no comparison, names no bound",
+        distribution_line(d, bound=False) == f"discordance over 4 reads ({unit}): " + json.dumps(d, sort_keys=True),
+        distribution_line(d, bound=False)[:140])
+    chk("driver: the two stages' roots and reports, as the STAGE line shows them, are their four repository paths",
+        (_shown(BEXT_ROOT), _shown(BEXT_REPORT), _shown(BEXT2_ROOT), _shown(BEXT2_REPORT))
+        == ("data/n/ckpt/backend-ext", "data/n/reports/backend-ext.json", "data/n/ckpt/backend-ext-2",
+            "data/n/reports/backend-ext-2.json"), "")
     d2 = discordance([frec(0.01, 0.001, False, False), frec(None, None, None, None)])
     chk("driver: a read whose re-computation is not finite is counted, not measured", d2["reads"] == 2
-        and d2["finite"] == 1 and near(d2["margin"]["max"], 0.01), d2)
+        and d2["finite"] == 1 and near(d2["absdiff"]["max"], 0.01) and near(d2["rel"]["min"], 0.001), d2)
     chk("driver: the distribution refuses a read without its re-computation",
         refused(lambda: discordance([{"fidelity": None}])) and refused(lambda: discordance([])), "")
 
@@ -1196,8 +1333,12 @@ def _bext_selftest(chk, tmp: Path) -> None:
                         env_provenance=lambda p: dict(prov_t), make_adapter=mk, adapter_shape=lambda a: (6, 12),
                         make_backend=lambda a: be, bk_table=lambda f_: cached_table(be, f_),
                         pod=lambda: CHARACTERIZED_POD, driver=lambda: (b"drv", b"drv"), shape=(6, 12, 2),
-                        root=tmp / tag / "root", report=tmp / tag / "report.json", printer=lines.append)
+                        root=tmp / tag / "root", report=tmp / tag / "report.json", root2=tmp / tag / "root2",
+                        report2=tmp / tag / "report2.json", printer=lines.append)
             base.update(over)
+            for k in ("root", "report", "root2", "report2"):            # a self-test writes only under tmp
+                if _within(Path(base[k]).resolve(), REPO.resolve()):
+                    raise SystemExit(f"a self-test environment points {k} into the repository: {base[k]}")
             return BextEnv(**base), lines
 
         env1, lines1 = env_for("run")
@@ -1220,7 +1361,11 @@ def _bext_selftest(chk, tmp: Path) -> None:
         chk("driver: ...the bound is each label's largest |cached - fresh| (R3), printed, and it is what lets the "
             "cached-path table match the fresh path (a margin bound would not)",
             printed.get("label", {}).get("max") == gap and gap > 0.1
-            and printed.get("margin", {}).get("max", 1.0) < 0.01, (gap, printed.get("margin")))
+            and printed.get("absdiff", {}).get("max", 1.0) < 0.01, (gap, printed.get("absdiff")))
+        chk("driver: ...the STAGE line first, then the distribution line in §1.4's form, the dict printed whole",
+            lines1[0] == f"STAGE backend-ext: label convention bare; root {env1.root.resolve()}, report "
+                         f"{env1.report.resolve()}"
+            and disc_line == distribution_line(discordance(recs1)), (lines1[:1], disc_line[:100]))
         chk("driver: ...in-band: every floor read's fresh values equal the vanilla score",
             "in-band: 24 of 24 floor reads' fresh values, both labels, equal the comparison's vanilla score" in lines1,
             "")
@@ -1244,6 +1389,199 @@ def _bext_selftest(chk, tmp: Path) -> None:
         env_p, _l = env_for("run", pod=lambda: "another-pod")
         chk("driver: ...a resume on another pod is refused (the pod is not the characterized one)",
             refused(lambda: run_backend_ext(env_p, resume=True)), "")
+
+        # backend-ext-2 (ADDENDUM-n2 §4.1; R7), after the first stage above (env1's root and report, COMPLETE)
+        firsts = [Path(env1.report)] + [Path(env1.root) / n for n in sorted(os.listdir(env1.root))]
+        before = {p: p.read_bytes() for p in firsts}
+        first_ident = cells.read_json(Path(env1.report))["stage_identity"]
+        two = dict(root=env1.root, report=env1.report)
+        env7, lines7 = env_for("second", root2=tmp / "second" / "root2", report2=tmp / "second" / "rep2.json", **two)
+        rc7 = run_backend_ext(env7, convention="space")
+        cell7, _c7 = cells.load_cell(env7.root2, schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)
+        rep7 = cells.read_json(Path(env7.report2))
+        chk("driver: backend-ext-2 under 'space': COMPLETE, 24 records in its own root and report, under the space "
+            "labels, one load; its identity the first stage's but for the convention (R7)",
+            rc7 == 0 and len(cell7["records"]) == BEXT_N and made.count("second") == 1
+            and all(r["label_ids_S"] == [6, 9, 17] and r["label_ids_U"] == [6, 11, 2] for r in cell7["records"])
+            and rep7["end_state"] == "COMPLETE" and rep7["stage_identity"]["label_convention"] == "space"
+            and rep7["stage_identity"]["stage"] == "backend-ext"
+            and {k: v for k, v in rep7["stage_identity"].items() if k != "label_convention"}
+            == {k: v for k, v in first_ident.items() if k != "label_convention"}, rep7["end_state"])
+        chk("driver: ...the first stage's root and report are byte for byte as they were",
+            all(p.read_bytes() == b for p, b in before.items())
+            and sorted(os.listdir(env1.root)) == sorted(p.name for p in firsts[1:]), "")
+        unit2 = "absdiff and label in nats, rel = absdiff / the read's scale; fidelity values, no margin"
+        fsha1 = hashlib.sha256(Path(env1.report).read_bytes()).hexdigest()
+        chk("driver: ...it prints its STAGE line, the first stage's report's sha256, and the distribution with no "
+            "bound named; no in-band count and no comparison",
+            lines7[0].startswith("STAGE backend-ext-2: label convention space; root ")
+            and any(x.startswith("the first stage's report: ") and f"sha256 {fsha1}: COMPLETE at 24 of 24" in x
+                    for x in lines7)
+            and any(x.startswith(f"discordance over 24 reads ({unit2}): ") for x in lines7)
+            and not any(x.startswith(("in-band:", "label convention (")) or "candidate" in x or "R3" in x
+                        for x in lines7), lines7[-2:])
+        chk("driver: ...a second run of backend-ext-2 without --resume is refused before the load",
+            refused(lambda: run_backend_ext(env7, convention="space")) and made.count("second") == 1, "")
+        rc7b = run_backend_ext(env7, convention="space", resume=True)
+        chk("driver: ...a resume of backend-ext-2 after COMPLETE launches nothing and prints the distribution again",
+            rc7b == 0 and made.count("second") == 2 and len(cells.load_cell(
+                env7.root2, schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)[0]["records"]) == BEXT_N
+            and sum(1 for x in lines7 if x.startswith("discordance over 24 reads")) == 2, "")
+        pf_env, lpf = env_for("pausefirst", make_backend=lambda a: testing.CausalDouble(fresh_bias=(9, 2.0)))
+        rc_pf = run_backend_ext(pf_env)
+        pf_end = cells.read_json(Path(pf_env.report))["end_state"] if Path(pf_env.report).is_file() else None
+        chk("driver: a first stage whose labels' second tokens are biased on the fresh path ends PAUSE at the run's "
+            "end, says so in its words, and prints no distribution (the case below too)",
+            rc_pf == 1 and pf_end == "PAUSE"
+            and "BACKEND extension: PAUSE; no distribution and no comparison until it completes" in lpf
+            and not any(x.startswith("discordance over") for x in lpf), pf_end)
+        env9, lines9 = env_for("pause2", make_backend=lambda a: testing.CausalDouble(fresh_bias=(9, 2.0)), **two)
+        rc9 = run_backend_ext(env9, convention="space")
+        rep9 = cells.read_json(Path(env9.report2)) if Path(env9.report2).is_file() else {}
+        chk("driver: backend-ext-2 whose space labels' second tokens are biased on the fresh path ends PAUSE at the "
+            "run's end, says so in its own words, and prints no distribution",
+            rc9 == 1 and rep9.get("end_state") == "PAUSE"
+            and "BACKEND extension (backend-ext-2): PAUSE; no distribution until it completes" in lines9
+            and not any(x.startswith("discordance over") for x in lines9), rep9.get("end_state"))
+        rc9b = run_backend_ext(env9, convention="space", resume=True, rulings={"p01": str(r_md)})
+        rep9b = cells.read_json(Path(env9.report2))
+        chk("driver: ...its resume under the ruling: COMPLETE, p01 adjudicated, one distribution line, exit 0; the "
+            "first stage's root and report byte for byte as they were",
+            rc9b == 0 and rep9b["end_state"] == "COMPLETE" and rep9b["pauses"][0]["adjudicated"] is True
+            and sum(1 for x in lines9 if x.startswith("discordance over 24 reads")) == 1
+            and all(p.read_bytes() == b for p, b in before.items()), rep9b["end_state"])
+        target = by_flow[fss[5].session_id]
+
+        def nan_backend(_a):                        # one read's cached path non-finite: a nonfinite pause at it
+            be_n = testing.CausalDouble()
+            orig_pre = be_n.prefill
+
+            def nan_prefill(ids, injections, capture_layers):
+                pre = orig_pre(ids, injections, capture_layers)
+                if list(ids) == target:
+                    pre.logits_last = pre.logits_last.copy()
+                    pre.logits_last[0] = float("nan")
+                return pre
+            be_n.prefill = nan_prefill
+            return be_n
+        for tag, conv_t, last in (("nan2", "space", "a read has no finite discordance"),
+                                  ("nan1", None, "a read has no finite discordance: no comparison")):
+            env_n, lines_n = env_for(tag, make_backend=nan_backend, **(two if conv_t else {}))
+            rc_n = run_backend_ext(env_n, convention=conv_t)
+            rp_n = Path(env_n.report2 if conv_t else env_n.report)
+            p_n = cells.read_json(rp_n)["pauses"]
+            rc_nb = run_backend_ext(env_n, convention=conv_t, resume=True, rulings={"p01": str(r_md)})
+            chk(f"driver: {'backend-ext-2' if conv_t else 'backend-ext'} with one non-finite read: a nonfinite pause "
+                f"at it; under its ruling the resume ends COMPLETE, prints the distribution over 23 finite of 24, and "
+                f"exits 1 saying \"{last}\"",
+                rc_n == 1 and len(p_n) == 1 and p_n[0]["kind"] == "nonfinite" and rc_nb == 1
+                and cells.read_json(rp_n)["end_state"] == "COMPLETE" and lines_n[-1] == last
+                and any(x.startswith("discordance over 24 reads") and '"finite": 23' in x for x in lines_n),
+                lines_n[-1:])
+        env10, lines10 = env_for("smoke2", root=tmp / "none-root", report=tmp / "none-first.json")
+        rc10 = run_backend_ext(env10, root=str(tmp / "smoke2" / "sroot"), report=str(tmp / "smoke2" / "srep.json"),
+                               smoke=2, convention="space")
+        chk("driver: a backend-ext-2 smoke of 2, no first stage on disk: COMPLETE, 2 records, its SMOKE line (no "
+            "floor sessions) before its STAGE line, the distribution alone; the first stage is not checked",
+            rc10 == 0 and len(cells.load_cell(tmp / "smoke2" / "sroot", schema.SHADOW_ARM, schema.SHADOW_DIRECTION,
+                                              schema.SHADOW_DOSE)[0]["records"]) == 2
+            and lines10[0] == "SMOKE: 2 of the 24 reads, outside the repository; never of record"
+            and lines10[1].startswith("STAGE backend-ext-2: label convention space; ")
+            and any(x.startswith(f"discordance over 2 reads ({unit2}): ") for x in lines10)
+            and not any(x.startswith(("in-band:", "label convention (", "the first stage's report:"))
+                        for x in lines10), lines10[:2])
+
+        def edited(tag, edit, resha=True) -> Path:              # the first stage's report, edited, under tmp
+            r = cells.read_json(Path(env1.report))
+            edit(r)
+            if resha:
+                r["stage_identity_sha256"] = schema.identity_sha256(r["stage_identity"])
+            out = tmp / f"first-{tag}.json"
+            m_resume.atomic_write_json(out, r)
+            return out
+        cname = schema.cell_filename(schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)
+
+        def short_arm(planned, obtained):
+            def e(r):
+                r["per_arm"][schema.SHADOW_ARM] = {"planned": planned, "obtained": obtained,
+                                                   "complete": planned == obtained}
+                r["cells"][cname] = dict(r["cells"][cname], records=obtained)
+            return e
+        stale = edited("stale", lambda r: r["stage_identity"].__setitem__("weights_sha256", "7" * 64), resha=False)
+        arm23, arm25 = edited("arm23", short_arm(24, 23)), edited("arm25", short_arm(25, 24))
+        id_cases = {"weights_sha256": "7" * 64, "package_sha256": "9" * 64,
+                    "imported_sha256": {"valence_core/m/resume.py": "8" * 64}, "backend_identifier": "f" * 16,
+                    "pod_id": "another-pod", "rendering_id": "8" * 64,
+                    "fidelity_rule": dict(first_ident["fidelity_rule"], p0_count=1)}
+        id_first = {k: edited(f"id-{k}", lambda r, k=k, v=v: r["stage_identity"].__setitem__(k, v))
+                    for k, v in id_cases.items()}
+        chk("driver: (the edited first-stage reports below are valid reports -- 23 of 24 and 24 of 25 obtained, "
+            "COMPLETE outside the campaign; another value in each identity field -- and the one with a stale identity "
+            "sha256 is not)",
+            all(not raises(lambda p=p: schema.check_report(cells.read_json(p)), schema.SchemaError)
+                for p in [arm23, arm25] + list(id_first.values()))
+            and raises(lambda: schema.check_report(cells.read_json(stale)), schema.SchemaError), "")
+        bad_root = tmp / "badcell" / "root"
+        shutil.copytree(env1.root, bad_root)
+        with open(bad_root / cname, "ab") as fh:
+            fh.write(b" ")
+        (tmp / "emptyroot").mkdir()
+        sh_env, _lsh = env_for("short")
+        rc_sh = run_backend_ext(sh_env, root=str(tmp / "short" / "sroot"), report=str(tmp / "short" / "srep.json"),
+                                smoke=2)
+        chk("driver: (a smoke of 2 ends COMPLETE, its report a valid one of 2 reads, the case below)",
+            rc_sh == 0 and cells.read_json(tmp / "short" / "srep.json")["per_arm"][schema.SHADOW_ARM]["obtained"] == 2,
+            "")
+
+        def refusal(fn) -> str:
+            try:
+                fn()
+            except SystemExit as e:
+                return str(e)
+            return "no refusal"
+        r2 = dict(root2=tmp / "refuse2" / "root2", report2=tmp / "refuse2" / "rep2.json")
+        cases2 = {
+            "the convention 'bare'": (lambda: run_backend_ext(env_for("refuse2", **r2, **two)[0], convention="bare"),
+                                      "runs under a candidate other than 'bare'"),
+            "a convention that is no candidate": (lambda: run_backend_ext(env_for("refuse2", **r2, **two)[0],
+                                                                          convention="nonesuch"),
+                                                  "not 'nonesuch'"),
+            "a first stage with no report on disk": (lambda: run_backend_ext(
+                env_for("refuse2", root=env1.root, report=tmp / "none.json", **r2)[0], convention="space"),
+                "the first stage's report is not on disk"),
+            "a first stage that ended PAUSE": (lambda: run_backend_ext(
+                env_for("refuse2", root=pf_env.root, report=pf_env.report, **r2)[0], convention="space"),
+                "its report is not a COMPLETE run of the 24 reads"),
+            "a first stage of fewer than 24 reads (a smoke's report)": (lambda: run_backend_ext(
+                env_for("refuse2", root=tmp / "short" / "sroot", report=tmp / "short" / "srep.json", **r2)[0],
+                convention="space"), "its report is not a COMPLETE run of the 24 reads"),
+            "a first stage whose report is not valid (its identity's sha256 stale)": (lambda: run_backend_ext(
+                env_for("refuse2", root=env1.root, report=stale, **r2)[0], convention="space"),
+                "the first stage's report is not a valid report"),
+            "a first stage of 23 obtained of 24 planned": (lambda: run_backend_ext(
+                env_for("refuse2", root=env1.root, report=arm23, **r2)[0], convention="space"),
+                "its report is not a COMPLETE run of the 24 reads"),
+            "a first stage of 24 obtained of 25 planned": (lambda: run_backend_ext(
+                env_for("refuse2", root=env1.root, report=arm25, **r2)[0], convention="space"),
+                "its report is not a COMPLETE run of the 24 reads"),
+            "a first stage under another convention (backend-ext-2's own report)": (lambda: run_backend_ext(
+                env_for("refuse2", root=env7.root2, report=env7.report2, **r2)[0], convention="space"),
+                "COMPLETE run of the 24 reads under 'bare'"),
+            "a first stage whose cell does not hash to its report's record": (lambda: run_backend_ext(
+                env_for("refuse2", root=bad_root, report=env1.report, **r2)[0], convention="space"),
+                f"the first stage's cell {cname} is absent or does not hash to its report's record"),
+            "a first stage whose root holds no cell": (lambda: run_backend_ext(
+                env_for("refuse2", root=tmp / "emptyroot", report=env1.report, **r2)[0], convention="space"),
+                f"the first stage's cell {cname} is absent"),
+        }
+        for k, p in id_first.items():
+            cases2[f"a first stage under another {k}"] = (
+                lambda p=p: run_backend_ext(env_for("refuse2", root=env1.root, report=p, **r2)[0], convention="space"),
+                f"another stage identity (['{k}'])")
+        for name, (fn, want) in cases2.items():
+            msg = refusal(fn)
+            chk(f"driver: backend-ext-2 refuses {name}, before the load, saying why", want in msg
+                and made.count("refuse2") == 0 and not (tmp / "refuse2" / "root2").exists(), msg[:160])
 
         env2, lines2 = env_for("smoke", driver=lambda: (b"drv", b"other"))
         rc2 = run_backend_ext(env2, root=str(tmp / "smoke" / "sroot"), report=str(tmp / "smoke" / "srep.json"),
@@ -1317,16 +1655,47 @@ def _bext_selftest(chk, tmp: Path) -> None:
                 return err.getvalue() if e.code == 2 else f"exit {e.code}"
             return "no error"
         t_, o_, d_ = str(tmp / "t"), str(tmp / "o"), "2026-11-18"
+        only = "the BACKEND extension's options only (backend-ext, backend-ext-2)"
         for argv, want in ((["render-ids-iv"], "render-ids-iv needs --tokenizer-dir, --out and --pi-date"),
-                           (["render-ids-iv", "--resume", "--tokenizer-dir", t_, "--out", o_, "--pi-date", d_],
-                            "backend-ext's options only"),
+                           (["render-ids-iv", "--resume", "--tokenizer-dir", t_, "--out", o_, "--pi-date", d_], only),
                            (["render-ids-iv", "--smoke", "0", "--tokenizer-dir", t_, "--out", o_, "--pi-date", d_],
-                            "backend-ext's options only"),
-                           (["hashes", "--root", ""], "backend-ext's options only"),
+                            only),
+                           (["hashes", "--root", ""], only),
                            (["backend-ext", "--out", o_], "takes no folder options"),
-                           (["backend-ext", "--ruling", "p01"], "--ruling takes PAUSE_ID=PATH")):
+                           (["backend-ext", "--ruling", "p01"], "--ruling takes PAUSE_ID=PATH"),
+                           (["backend-ext-2"], "backend-ext-2 needs --convention NAME"),
+                           (["backend-ext", "--convention", "space"], "--convention: backend-ext-2's option only"),
+                           (["hashes", "--convention", "space"], "--convention: backend-ext-2's option only"),
+                           (["backend-ext-2", "--convention", "space", "--out", o_], "takes no folder options"),
+                           (["backend-ext-2", "--convention", "space", "--ruling", "p01"],
+                            "--ruling takes PAUSE_ID=PATH")):
             got = argv_error(argv)
             chk(f"driver: main() refuses {' '.join(argv[:2])} … with \"{want}\"", want in got, got[-160:])
+        g = globals()
+        real_run = g["run_backend_ext"]
+        calls: list = []
+
+        def recorder(_env, **kw):
+            calls.append(kw)
+            return 0
+        g["run_backend_ext"] = recorder
+        try:
+            rcs = (main(["backend-ext-2", "--convention", "space", "--resume", "--ruling", f"p01={r_md}"]),
+                   main(["backend-ext"]),
+                   main(["backend-ext-2", "--convention", "bare+eot", "--smoke", "2", "--root", str(tmp / "r"),
+                         "--report", str(tmp / "p.json")]))
+        finally:
+            g["run_backend_ext"] = real_run
+        chk("driver: main() hands each stage option and backend-ext-2's convention to the stage (backend-ext none)",
+            rcs == (0, 0, 0) and calls == [
+                {"root": None, "report": None, "resume": True, "rulings": {"p01": str(r_md)}, "smoke": None,
+                 "convention": "space"},
+                {"root": None, "report": None, "resume": False, "rulings": {}, "smoke": None, "convention": None},
+                {"root": str(tmp / "r"), "report": str(tmp / "p.json"), "resume": False, "rulings": {}, "smoke": 2,
+                 "convention": "bare+eot"}], calls)
+        chk("driver: (the self-test's own guard) an environment pointing a stage path into the repository is refused",
+            refused(lambda: env_for("guard", root2=BEXT2_ROOT))
+            and refused(lambda: env_for("guard", report=BEXT_REPORT)), "")
         os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
         chk("driver: backend-ext refuses a cuBLAS setting other than the characterized one (rule 2), before the load",
             refused(lambda: run_backend_ext(env6)) and made.count("refuse") == 0, "")
@@ -1342,7 +1711,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("command", nargs="?",
-                    choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "backend-ext"))
+                    choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "backend-ext", "backend-ext-2"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -1353,17 +1722,24 @@ def main(argv=None) -> int:
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--ruling", action="append", default=[], metavar="PAUSE_ID=PATH")
     ap.add_argument("--smoke", type=int, default=None)
+    ap.add_argument("--convention", default=None)
     a = ap.parse_args(argv)
     if a.selftest:
         return cmd_selftest()
+    stage_cmds = ("backend-ext", "backend-ext-2")
     stage_only = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),
                                      ("--smoke", a.smoke is not None)) if given]
-    if a.command != "backend-ext" and stage_only:
-        ap.error(f"{', '.join(stage_only)}: backend-ext's options only")
-    if a.command == "backend-ext":
+    if a.command not in stage_cmds and stage_only:
+        ap.error(f"{', '.join(stage_only)}: the BACKEND extension's options only (backend-ext, backend-ext-2)")
+    if a.convention is not None and a.command != "backend-ext-2":
+        ap.error("--convention: backend-ext-2's option only")
+    if a.command in stage_cmds:
         if a.model_dir or a.tokenizer_dir or a.ids_dir or a.out or a.pi_date:
-            ap.error("backend-ext loads from the model manifest's instruct path and takes no folder options")
+            ap.error(f"{a.command} loads from the model manifest's instruct path and takes no folder options")
+        if a.command == "backend-ext-2" and a.convention is None:
+            ap.error("backend-ext-2 needs --convention NAME, the candidate A-n1 §2's comparison named "
+                     "(ADDENDUM-n2 §4.1)")
         rulings = {}
         for item in a.ruling:
             pid, sep, path = item.partition("=")
@@ -1372,7 +1748,7 @@ def main(argv=None) -> int:
             if pid in rulings:
                 ap.error(f"--ruling names {pid} twice")
             rulings[pid] = path
-        return cmd_backend_ext(a.root, a.report, a.resume, rulings, a.smoke)
+        return cmd_backend_ext(a.root, a.report, a.resume, rulings, a.smoke, a.convention)
     if a.command == "render-ids":
         if not (a.tokenizer_dir and a.out and a.pi_date):
             ap.error("render-ids needs --tokenizer-dir, --out and --pi-date")
