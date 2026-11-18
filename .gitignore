@@ -270,6 +270,15 @@ __pycache__/
 # the box. Admitted as one folder that MANIFEST.json lists.
 !/data/n/ids/
 
+# PROPOSAL-n's passage corpus (Route B; n v0.2 §0.8 and §3 G-VEC; the seat's answers of
+# 2026-11-18, §3 item 2): the nine part files the seat thread wrote, their concatenation in
+# the brief's order (544 passages, the corpus of record for G-VEC's direction) and the
+# thread's prompt record. Record, not cache (ledger 27): G-VEC builds the direction from the
+# 544; the parts and the record are their provenance.
+!/data/n/passages.parts/
+!/data/n/passages.jsonl
+!/data/n/passages.prompt.md
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

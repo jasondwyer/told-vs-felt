@@ -21,6 +21,84 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n — the passage corpus of record committed (N.2): the nine part files, `data/n/passages.jsonl`
+  (`ef6b00dc…3cc3`) and the prompt record as corrected, by path, with `.gitignore`'s three admit lines. The adoption is
+  the seat's answers of 2026-11-18,
+  [`2026-11-18_n-corpus-adoption_design-to-code_answers.md`](results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md)
+  (§0–§1, committed at `26cf7d2`; this commit carries its §3 items 1, 2 and 5); the check is `fa96ccf`'s raw,
+  [`2026-11-17_n-corpus_acceptance.md`](results/raw/2026-11-17_n-corpus_acceptance.md).**
+  - **The PI's routing of 2026-11-18,** "Route as given"; its section N for n-build, items 1–5, verbatim (the paste
+    block is not committed; this is its record for these items):
+    > 1. The corpus adopted on the every-tenth read; CR1–CR10 accepted; flow_engagement mapped to BK's words in G-VEC's wiring, no corpus edit [as ruled].
+    > 2. G8's set is the brief's twelve; G8 holds; the broader reading not adopted; ledger (80) [as ruled].
+    > 3. The record's two lines (§2.2), applied by the coordinating session as §2.4: one line beginning ROOT = " asserted and replaced, the §6 heading replaced; diff -u in the entry with the old value elided; the extracted validator asserted 95c93878…, 9008 B; the record re-hashed; ledger (81) [as ruled].
+    > 4. N.2: the nine parts, data/n/passages.jsonl (ef6b00dc…3cc3) and the corrected record committed by path with the three .gitignore admit lines; then the render of ADDENDUM-n1 §1.2 (iv) in a window (no box needed); G-VEC on the box ruling [go].
+    > 5. The four argv departures inert; G-DATA's venv started only inside a battery window [as ruled].
+  - **The files, re-hashed before this commit** (shell tools):
+    - the nine parts: each one's sha256, bytes and lines equal the block of 2026-11-17, as the acceptance raw's §6
+      (G1) and §8 carry it;
+    - `data/n/passages.jsonl`: sha256 `ef6b00dc…3cc3`, 157,520 bytes, 544 lines, the corpus adopted;
+    - `data/n/passages.prompt.md`, as committed: sha256 `6d64eaae…8781`, 18,591 bytes. As checked it was
+      `323cf9d8…44b5`, 18,167 bytes, G1's.
+  - **The record's correction** (the seat's §2.2, applied by the coordinating session under §2.4, routed as item 3;
+    the seat's ledger (81)).
+    - Its script asserted, before replacing: the file was the record as checked; exactly one line began `ROOT = "`,
+      and it was line 72; the old §6 heading occurred once, at line 54; and the validator, split out at the record's
+      two fences, was the one as run (`cc1fad61…f269`, 8,889 bytes). After replacing, it asserted the validator as
+      committed (`95c93878…0bc5`, 9,008 bytes) and that it parses.
+    - Two lines changed, each replaced whole by the seat's text. The diff below is the whole difference, so G1's
+      record half stands: the §4 table, the stated order and the stated concatenation are untouched. The record's
+      whole-file sha256 and bytes in G1 are the as-checked ones; the committed record differs from them by these two
+      lines. The old line 72's value is elided:
+
+      ```diff
+      --- data/n/passages.prompt.md (as checked, 323cf9d8…44b5, 18,167 B)
+      +++ data/n/passages.prompt.md (as committed)
+      @@ -51,7 +51,7 @@
+       - The near-synonym list is the seat's reading of "whether the state is named"; a reviewer who wants a different list edits the script's `STATE_WORDS` and re-runs it in plain-file mode: `python3 -I validate.py data/n/passages.parts/*.jsonl`.
+       - `.gitignore` admits `data/n/ids/` on its own line (`d76f34f`); `data/n/passages.parts/`, `data/n/passages.jsonl` and this file will need the same, which is Code's at the commit by path.
+       
+      -## 6. The validator, verbatim (sha256 `cc1fad61af67146541d734b2c44ed8ca53a2b6d0cd477b748910ffc769e5f269`, 8889 bytes)
+      +## 6. The validator, as run but for its `ROOT` line (line 72 of this file), which named the laptop's checkout and is neutralized before the commit (the list of record v2, item 4): as run, sha256 `cc1fad61af67146541d734b2c44ed8ca53a2b6d0cd477b748910ffc769e5f269`, 8889 bytes (the acceptance check's extraction, 2026-11-17); as committed, sha256 `95c93878af1ae7c96a2bcb815162fe792cd4dcf990c70c38e4424d4e14520bc5`, 9008 bytes
+       
+       ```python
+       #!/usr/bin/env python3 -I
+      @@ -69,7 +69,7 @@
+       """
+       import sys, re, json, hashlib, collections, os
+       
+      -ROOT = "<the laptop's checkout>"
+      +ROOT = os.environ.get("JSPACE_LAB_ROOT", "")  # recover mode's path prefix; as run it named the laptop's checkout, neutralized before the commit (list of record v2, item 4)
+       STATES = [("contentment", "+"), ("flow_engagement", "+"), ("relief", "+"), ("serenity", "+"),
+                 ("distress", "-"), ("frustration", "-"), ("weariness", "-"), ("dread", "-"),
+                 ("neutral", "0")]
+      ```
+    - Code's re-check of the validator, by the acceptance check's own `awk`: as run `cc1fad61…f269`, 8,889 bytes; as
+      committed `95c93878…0bc5`, 9,008 bytes, the seat's §2.3 values.
+    - Code's re-check, by tool: the record's sha256 and bytes; the extraction's; lines 54 and 72 equal to the seat's
+      §2.2 lines; the record identical to the as-checked copy outside those two lines; and a fresh elided `diff -u`
+      under the same labels equal to the one above, line for line.
+  - **`.gitignore`** admits `data/n/passages.parts/`, `data/n/passages.jsonl` and `data/n/passages.prompt.md`, each on
+    its own line under one comment, after the ids' block.
+  - **Next** (the corpus raw's §3 items 3 and 4):
+    - the render of ADDENDUM-n1 §1.2 (iv), `gvec_passages.jsonl` from the committed file and `a3_contexts.jsonl` (the
+      1,344), in G-DATA's environment in a battery window, `MANIFEST.json` extended, as `n — ids of record`'s second
+      commit;
+    - G-VEC, on the box raw's ruling;
+    - (v), G-CAL-n's prompts, when that stage's prompts are fixed in its wiring.
+  - **Model-free:** shell tools only; nothing ran on a model or in Python.
+  - **Values-check:** one blind pass, 79 items: 73 CONFIRMED, 2 IMPRECISE, 0 FAIL and 4 NOT CHECKABLE.
+    - Both IMPRECISE items are applied in the checker's terms: which sections of the corpus raw are the adoption, and
+      which section N the quote is.
+    - Of its 13 observations, 11 are applied, one is noted and one is relayed. The noted one: the admit lines'
+      effect, which this commit's gate checks with `git check-ignore`. The relayed one is outside this commit: an
+      older entry of this log carries a local path, sent to the coordinating session for the PI and the seat.
+    - The edits after the check were checked by tool.
+    - Raw: [`2026-11-18_n2_valuescheck.md`](results/raw/2026-11-18_n2_valuescheck.md), with the report as returned and
+      every disposition.
+  - **Committed by path:** the nine parts, `data/n/passages.jsonl`, `data/n/passages.prompt.md`, `.gitignore`, the
+    values-check raw, and RESULTS.md (this entry, and n-build's close line on `fa96ccf`'s entry). Not pushed.
+
 - 2026-11-17 — **The box: three questions for the seat on n's GPU if the A100 stays unavailable (code → design;
   the coordinating session).** On the PI's "Yes, draft it". Block:
   [`2026-11-17_box-gpu_code-to-design.md`](results/raw/2026-11-17_box-gpu_code-to-design.md). Not a STOP.
@@ -178,6 +256,18 @@ applied to CLAUDE.md.
   - **Committed by path:** the raw, the values-check raw and this entry. The nine parts, `data/n/passages.jsonl` and the
     prompt record stay untracked until N.2. On the seat's adoption they are committed by path, re-hashing each first,
     with `.gitignore`'s admit line as for `data/n/ids/`. Not pushed.
+  - **Close (PI date 2026-11-18), n-build's: the seat's adoption.** The seat's answers of 2026-11-18,
+    [`2026-11-18_n-corpus-adoption_design-to-code_answers.md`](results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md)
+    (sha256 `5843a9bd…7165`, committed by path at `26cf7d2`), routed by the PI's "Route as given":
+    - **the adoption:** the corpus is adopted on the every-tenth read; CR1–CR10 are accepted as written; Code's
+      proposal on the naming is adopted, so G-VEC's wiring maps `flow_engagement` to BK's words, with no corpus edit;
+    - **G8's ruling:** G8's set is the brief's twelve; CR6 stands and G8 holds; the broader reading (cedar ×1,
+      gravel ×6) is not adopted (the seat's ledger (80));
+    - **the record's correction:** its `ROOT` line and its §6 heading are replaced by the seat's lines before the
+      commit (the seat's ledger (81)); the four argv departures are inert, and G-DATA's venv is started only inside a
+      battery window.
+
+    N.2's commit carries the corpus of record (its entry at the top of this log).
 
 - 2026-11-16 — **n package — `scripts/n_analyze.py`, the seat's answers to G-ANL-n's nine questions (`8e3bf91`; the
   answers raw at `52b2c97`) and ADDENDUM-n1 v0.1 (`a61f13d`) carried in, and the schema pin moved from `14e65d8` to
