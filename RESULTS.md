@@ -21,6 +21,128 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **ADDENDUM-n2 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the fidelity rule, the identity bound
+  and the read of record on the box of record", committed by path as the seat placed it, on the PI's routing of
+  2026-11-18, third sitting ("Route as given"; item 3, decisions (n-3) and (n-4), [adopt]; item 7, [as ruled]). Its
+  figures are not computed at this commit: the resume of `6df2131`'s run has not run.**
+  - **The file.** `ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md` at root, sha256
+    `41f76c49d756e09481a70f398469d9febc96bb534f28cd18d265ea87add2bb3f`, 9,671 bytes, re-hashed before the commit.
+    - It is an addendum, not a new version: PROPOSAL-n v0.2 (`30a3d0f5…04f4`) stays the proposal of record, with
+      ADDENDUM-n1 v0.1 (its header).
+    - The seat placed it with its answers of the third sitting and its ruling raw on `p01`, both committed by path at
+      `3b2b855`.
+  - **The record of decisions (n-3) and (n-4): the PI's routing, verbatim** (the addendum's §6.2 and §6.3 (2)). The
+    whole paste block, with the PI's word, is committed here as a raw,
+    [`2026-11-18_third-sitting_pi-routing.md`](results/raw/2026-11-18_third-sitting_pi-routing.md), byte for byte as
+    saved on receipt. From it:
+    - its header, "DESIGN → PI → CODE (master session) — PI date 2026-11-18 (third sitting)". The routing thus
+      confirms the date the addendum's header asks the PI to confirm at routing, 2026-11-18;
+    - the PI's word on the block, "Route as given";
+    - its items 2, 3 and 7, verbatim:
+
+      > 2. Q2: the cached path stays the read of record; the fresh pair's cost (357.1 vs 309.0 ms) recorded for G-TIME-n and used by nothing [as ruled].
+
+      > 3. ADDENDUM-n2 v0.1: decision (n-3) p0 = (k+1)/(n+2) from the box's exceedances under the convention of record, BK's 0/2400 beside; decision (n-4) the ceiling C = max(0.25 nats, 2 × the box's largest discordance) as a pause kind and the identity bound [adopt]; backend-ext-2 if the convention of record is not "bare"; the schema's follow-up commit for the kind and the lock's fields; LOCK-n v0.1 with the figures, drafted to the seat [go].
+
+      > 7. The three files committed by path, the addendum after its referent check (§6.4); Code's and the checkers' departures of §7 inert; the briefs' glob line [as ruled].
+
+    - Item 2 carries §6.2 (4), the addendum's §5 as the seat's ruling.
+    - Items 1–4 went to the n-build and pod sessions, and item 5 to the n-analyzer session, as relayed.
+    - Items 6–8 are the coordinating session's. Item 7 is carried by `3b2b855` (its two raws) and by this commit (the
+      addendum after its referent check, with item 7's other rulings). Item 6 is in its close line on `25c9340`'s
+      note, in this commit. Item 8, the push, waits for the PI's word.
+  - **Item 7's other rulings** (the answers' §7):
+    - The departures are inert, with no strike: Code's at `6df2131` (an unpruned `find` over its scratch copies of the
+      report and the cell, printing two names), and the checkers' at `ad856f0`, `6df2131` and `bfc869f`, as their
+      reports state them.
+    - The list of record v2's item 2 is restated in its form: a listing over a copied ckpt or report is pruned or not
+      run.
+    - The briefs' line of the second sitting stands, with one addition: "a glob is expanded and read before it is
+      looped over". The referent check's brief below carried it, and so does every brief from here.
+    - **A tooling reading for the seat**, from this entry's values-check (its observation 10). Code tested it on the
+      laptop, with git 2.39.5 (the list of record v2's item 9):
+      - Under item 3's exclusions, in any of its three forms, `git ls-files` with a lone named file under
+        `results/raw` printed nothing for a tracked file.
+      - The same file named beside CLAUDE.md printed both. A lone root file, or a lone file under `scripts/`, was
+        listed. `git log` and `git diff --name-only` under the same pathspec found the file.
+      - So a tracked-and-clean check of a named file takes `git rev-parse HEAD:<path>` against `git hash-object`
+        (item 1), not `git ls-files` under the exclusions.
+      - The commit-time count's form, whose positive pathspec is `.`, is unaffected.
+  - **Referent check** (§6.4; §6.3 (1)), by a fresh blind checker against every referent §6.4 lists and the other
+    sources the addendum cites: 52 listings covering 49 distinct statements, three of them cross-listed. 36 are
+    CONFIRMED, 13 IMPRECISE (all minor), 1 FAIL and 2 NOT CHECKABLE, with 12 observations.
+    - **The FAIL, graded not substantive by Code, so no STOP under §6.3 (1).**
+      - §5's heading cites "A-n1 §1.4's reservation", and §6.4 lists A-n1 §1.4. A-n1 §1.4 is "Generated text
+        (G-CAL-n)".
+      - The reservation is the second sitting's own §1.4, which the heading names in its second citation. §5's ruling,
+        and what runs under it, are unaffected.
+      - The seat may regrade it.
+    - **The thirteen minor items and the twelve observations** are recorded for the seat in the raw, unapplied, since
+      the addendum is committed as placed. Six of the observations bear on what runs next, and went to the n sessions
+      as information:
+      - the comparison's tolerance. Code reads the answers' §1.4 as settling it for the resume: R3, as the committed
+        driver carries it, with C binding from the lock, since C is computed under the convention the comparison
+        names;
+      - the identity kind and the ceiling at d = 0, whose order the follow-up schema commit fixes. Whether "after
+        `non-finite`" means directly after it is the seat's;
+      - alpha, which p0 above 0 makes decisive, and which LOCK-n v0.1 must state;
+      - A-n1 §2's third outcome, which its own words send to the seat with the four counts: a STOP;
+      - the second row's trigger, which is §3's;
+      - p0, C and the median rel, which come from d = 0 reads alone.
+    - **The checker's three departures** are in the raw, for the seat to class: a scoped status without item 3's
+      pathspec, a name-only listing of `results/raw`, and shell arithmetic.
+    - Raw: [`2026-11-18_addendum-n2_referent-check.md`](results/raw/2026-11-18_addendum-n2_referent-check.md), the
+      report whole and Code's grading.
+  - **What the addendum sets** (its §1–§5). LOCK-n v0.1 declares the figures from the extension's figures of record
+    (§4.2):
+    - p0 = (k + 1)/(n + 2), from the extension's k exceedances of TAU in n reads under the convention of record, with
+      BK's 0 of 2,400 beside it (§1.1);
+    - C = max(0.25, 2 × the extension's largest |cached − fresh| margin discordance) nats (§2). It is a new pause
+      kind, `fidelity-ceiling`, after `non-finite` in the precedence, and the identity bound at d = 0, with "exact on
+      a deterministic backend" struck;
+    - the TAU/4 row kept, with a second, descriptive row at the extension's median rel where it drops more than half
+      of an arm's reads at a point (§3);
+    - the figures of record: from the resume if A-n1 §2's comparison names "bare", and, if it names another
+      candidate, from one more run of the 24 reads under that convention, `backend-ext-2` (§4.1);
+    - the cached path stays the read of record, and the fresh pair's cost is recorded for G-TIME-n and used by nothing
+      (§5).
+  - **What runs now** (§6.3 (3)–(5)), as relayed:
+    - n-build first commits its driver's v2e. The committed driver does not print the answers' §1.4 distribution to
+      the letter; v2e prints its min, quartiles, median and max, and carries `backend-ext-2`. The choice is Code's (the
+      coordinating session's), declared in v2e's entry for the seat to strike.
+    - The resume (`--resume --ruling p01=PATH`, with the ruling raw of `3b2b855`) then runs from v2e's commit in a
+      fresh copy on the box, and the run's copy stays untouched. n-build drafts the launch files; the coordinating
+      session checks them and relays them to the pod session.
+    - The resume prints the distribution, the in-band count and A-n1 §2's comparison.
+    - Then come:
+      - `backend-ext-2`, if needed, on the coordinating session's relay after the resume's outputs are read. It is a
+        separate invocation in the same box session, on the same characterized backend; that this is §4.1's "in the
+        same session" is Code's reading, for the seat;
+      - the `fidelity-ceiling` kind in the runner and the schema, in a follow-up commit settled with n-analyzer;
+      - the extension's entry;
+      - LOCK-n v0.1, drafted to the seat.
+    - n-analyzer puts §3's second row and the ceiling's kind in the reader before the canonical run, with PIN-n-37
+      amended (the answers' §6).
+    - The n-build and n-analyzer sessions add their close lines here (the addendum's header).
+  - **Values-check:** two blind passes. Each brief quoted the list of record v2's items 1–5 with C.2's amendment, the
+    briefs' two lines and the `data/mf3` exclusion.
+    - Pass 1 checked this entry, the close line on `25c9340`'s note, the PI-routing raw, and the referent-check raw's
+      header and §2, with §1's byte-identity to the report's copy. It found 95 items: 76 CONFIRMED, 7 IMPRECISE, 0
+      FAIL and 12 NOT CHECKABLE, with 12 observations.
+    - Every IMPRECISE item is applied, and so are observations 2–9 and 12. Observation 10 is the tooling reading
+      above. Observation 1 concerned the brief's own line number, and 11 pre-checked the commit-time count; neither
+      needed text.
+    - After pass 1, the coordinating session added its own departure to the close line and v2e's place to "What runs
+      now".
+    - Pass 2 checked the edits after pass 1, those additions, and the values-check raw's header and pass-1
+      dispositions. It found 71 items: 55 CONFIRMED, 6 IMPRECISE, 0 FAIL and 10 NOT CHECKABLE, with 8 observations.
+    - Every IMPRECISE item of pass 2 is applied, and so are its observations 1–5 and 7. Observation 6 pre-checked the
+      count, and 8 needed no text. The edits after pass 2 were checked by tool.
+    - Raw: [`2026-11-18_addendum-n2_valuescheck.md`](results/raw/2026-11-18_addendum-n2_valuescheck.md).
+  - **Committed by path:** the addendum, the PI-routing raw, the referent-check raw, the values-check raw, this entry,
+    and the coordinating session's close line on `25c9340`'s note. The commit-time count over the staged diff (the
+    answers' §5.2) is 0. Nothing in this session ran on a model or the box. Not pushed.
+
 - 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling of the second sitting carried in: PIN-n-33
   amended (pauses read point by point), the fourth form's label in its sentence, and PIN-n-34 to PIN-n-36 accepted (the
   answers of 2026-11-18, second sitting, §3; the PI's routing item 6). Battery 222/222; reviewed blind and
@@ -407,6 +529,52 @@ applied to CLAUDE.md.
     - Raw: [`2026-11-18_home-folder-note_valuescheck.md`](results/raw/2026-11-18_home-folder-note_valuescheck.md).
   - **Committed by path:** this note, the coordinating session's close line on `e48c7d0`'s entry and their two
     values-check raws. Not pushed.
+  - **Close (PI date 2026-11-18, third sitting), the coordinating session's: the seat's ruling on this note, and a
+    departure of this session's own.** The seat's answers of the third sitting,
+    [`2026-11-18_n-step4-run-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md)
+    (sha256 `d51279ec…0bf4`, committed at `3b2b855`), rule on this note in their §5. The PI routed that ruling as item 6
+    ("Route as given"). The paste block is committed as a raw,
+    [`2026-11-18_third-sitting_pi-routing.md`](results/raw/2026-11-18_third-sitting_pi-routing.md), with
+    `ADDENDUM-n2 v0.1 — COMMITTED`, in the commit that carries this line. Item 6, verbatim:
+
+    > 6. The home-folder path: (a), record and leave; the commit-time count over the staged diff as a standing rule and WORKFLOW v1.1's item; the git grep departure inert, the data/mf3 exclusion restated for every git command while Q-F3 runs; a close line on 25c9340's note [as ruled].
+
+    - **(a), record and leave** (§5.1). The 252 files stay as committed, and the history is not rewritten. Ledger (81)
+      stands for seat files, and this note is the record of the class.
+    - **The commit-time count** (§5.2). It is a standing rule from that raw until WORKFLOW v1.1 is routed, and v1.1's
+      item. This session carries it with every commit window.
+      - The rule: at every commit by any session, inside its window, the home-folder prefix is counted over the staged
+        diff, and the pattern is never printed. A count above zero halts the commit until the session neutralizes the
+        line.
+      - The form, as relayed to the n-build, n-analyzer and pod sessions:
+        `git diff --cached -- . ':!data/*/ckpt/**' ':!data/*/reports/**' ':!data/mf3/**' | /usr/bin/grep -cF -- "$HOME"`.
+        The prefix is the shell's `$HOME`, so neither the command nor its output holds it.
+      - Its test (the list of record v2's item 9), in a scratch repository: a staged RESULTS.md line holding the prefix
+        counted 1. With that line unstaged, the staged lines holding it under `data/x/ckpt`, `data/x/reports` and
+        `data/mf3` counted 0. The same diff without the pathspec counted 3.
+      - So under item 3's pathspec and the `data/mf3` exclusion, the form does not reach `data/*/ckpt`,
+        `data/*/reports` or `data/mf3`. There, the pre-push screen's `local_path` class reads at the push. That is a
+        reading for the seat.
+      - It was first applied in `3b2b855`'s window, before that commit, and again in this commit's window, counting 0
+        both times. The values-check re-ran it over `3b2b855`'s diff and counted 0.
+    - **The departure** (§5.3). The first count's `git grep`, run without the `data/mf3` exclusion, is inert, with no
+      strike. The rule is restated: while Q-F3's campaign runs, every git command over the tree takes the `data/mf3`
+      exclusion as well as item 3's pathspec. It is relayed to the n-build, n-analyzer and pod sessions and carried in
+      every brief.
+    - **A departure of the coordinating session's own**, found by the pod session's values-checker (its observation
+      1). The pod session's close line on `6df2131`'s entry, which lands in the commit after this one, describes it.
+      - Relaying n-build's copy-back request for the report and the cell, this session added "Report each file's
+        address/port count", beside its own "The ckpt file is never opened, catted or searched".
+      - The count is a content search over a copied ckpt file, which the list of record v2's item 2 bars.
+      - The pod session's copy-back script ran it once, over the two staged copies on the laptop, with the checkout at
+        `ad856f0`. It printed only the counts, each 0.
+      - For the seat to class. From here, this session's relays ask for no count or search over a ckpt file or a copy
+        of one.
+    - **C.5, the push since this note's C.5 line** (gitleaks 8.30.1, the one on the laptop's path; its output does not
+      print its version):
+      - `dc6a1cf..ad856f0`, 2 commits, on the PI's word "Push them" (2026-11-18). Every class was CLEAR but `port`,
+        whose one match outside was read: the declared container port, in this note's values-check raw. Nothing
+        matched inside `ckpt` or `reports`. gitleaks found nothing. There was no halt.
 
 - 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling on PIN-n-27 to PIN-n-32 and F11 carried in
   (the answers of 2026-11-18, §5; the PI's routing item 6). Battery 217/217; reviewed blind and mutation-tested (54 of
