@@ -21,6 +21,46 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-17 — **The box: three questions for the seat on n's GPU if the A100 stays unavailable (code → design;
+  the coordinating session).** On the PI's "Yes, draft it". Block:
+  [`2026-11-17_box-gpu_code-to-design.md`](results/raw/2026-11-17_box-gpu_code-to-design.md). Not a STOP.
+  - **The box.** n's planned box, pod `m43y3deb1gq3rp` (A100 SXM, US-CA-2, characterized at `641ee466f4553b6a`,
+    `7ab4d2f`), cannot be used now.
+    - Its GPU failed CUDA initialization with error 802 on 2026-11-16, before and after the PI's restart.
+    - It was stopped on the PI's word. On 2026-11-17 Runpod refused its start at every attempt, on the PI's "probe the
+      pod" and at each retry since "Yes, retry": its host had no free GPU.
+  - **The stock.** US-CA-2, the only data center that mounts the volume, lists no A100 SXM. It lists an H100 SXM
+    (80 GB, $4.39/h) and an H200 SXM (141 GB, $5.29/h).
+    - The backend identifier carries the GPU's name and capability, so on Code's reading either would be a new backend
+      for n.
+    - n's step-4 driver draft pins the A100 pod and identifier.
+  - **The questions.**
+    - **Q1:** may n move to one of them?
+    - **Q2:** if so, what does the new box need, and what becomes of step 4?
+    - **Q3:** if the A100 starts healthy on its new driver (595.112.07; the characterization's raw records 595.91.07),
+      is it still the characterized backend for n?
+
+    n's model-free work goes on.
+  - **C.5, the pushes since the push note's close line (`e5aba51`'s entry), one line each** (gitleaks 8.30.1, the one
+    on the laptop's path; the runs' outputs do not print its version):
+    - `bedc198..9662468`, 10 commits, on the PI's word "Push them" (2026-11-16): every class CLEAR but `port`, whose
+      one match outside was read (the container's SSH port, in a values-check's text); nothing inside `ckpt` or
+      `reports`; gitleaks, 3 `generic-api-key` matches outside, read (`data/n/ids/MANIFEST.json`'s tokenizer digests,
+      equal to `data/olmo/manifest.json`'s); no halt.
+    - `9662468..977b78b`, 2 commits, on the PI's word "Push them" (2026-11-17): every class CLEAR, nothing inside;
+      gitleaks found nothing; no halt.
+    - `977b78b..fa96ccf`, 1 commit, on the PI's word "push it, and probe the pod" (2026-11-17): every class CLEAR,
+      nothing inside; gitleaks found nothing; no halt.
+  - **Values-check:** one blind pass, 76 items: 50 CONFIRMED, 14 IMPRECISE, 0 FAIL, 12 NOT CHECKABLE. Every IMPRECISE
+    item is applied, and the twelve observations are applied, Q3 among them. The edits after the check were checked by
+    tool. Raw: [`2026-11-17_box-gpu_valuescheck.md`](results/raw/2026-11-17_box-gpu_valuescheck.md).
+  - **Next:** the A100 start is retried every 20 minutes. A start that succeeds runs the read-only CUDA probe first.
+    - On error 802 the pod is stopped at once.
+    - If the GPU is healthy, respawn (i) and (ii) run, then n's step-4 smoke (never of record). The driver's commit
+      and step 4's run of record wait for Q3.
+
+    Committed by path: the block, its values-check raw and this entry. Not pushed.
+
 - 2026-11-17 — **n — the corpus's acceptance check and assembly (PROPOSAL-n v0.2 §0.8 Route B, §3 G-VEC; the seat's
   answers of 2026-11-15, §5.3, the PI's item 11; the PI's routing of 2026-11-17, N.1 and N.3, "route as given"): every
   gate PASS, not a STOP. `data/n/passages.jsonl` is assembled in the brief's order: 544 lines, 157,520 bytes, sha256
