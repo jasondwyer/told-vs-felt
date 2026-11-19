@@ -1,0 +1,37 @@
+STAGE backend-ext-2: label convention space; root data/n/ckpt/backend-ext-2, report data/n/reports/backend-ext-2.json
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 7aefd06b8923f73a47feda94515ed5d75f8e4853bdc032d48aa3240bd5225b67: HEAD's committed bytes
+the first stage's report: data/n/reports/backend-ext.json, sha256 dd217d78228bb7108c3ebc2b0b80fe9ea8080de4fa2d55fcd634a4d01b15ce79: COMPLETE at 24 of 24 under 'bare', its stage identity this stage's but for the convention, its cells as it records them
+G-VER (the BACKEND extension's start; ADDENDUM-n1 §1.3):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 7791.99it/s]
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 11999 ms
+read 0 s=0 N1-V none 0 fid=0.002709 <= TAU ms=961
+read 1 s=5 N1-V none 0 fid=0.000000 <= TAU ms=630
+read 2 s=10 N1-V none 0 fid=0.002635 <= TAU ms=772
+read 3 s=22 N1-V none 0 fid=0.000000 <= TAU ms=688
+read 4 s=26 N1-V none 0 fid=0.006101 <= TAU ms=677
+read 5 s=27 N1-V none 0 fid=0.002605 <= TAU ms=689
+read 6 s=42 N1-V none 0 fid=0.000000 <= TAU ms=668
+read 7 s=44 N1-V none 0 fid=0.005706 <= TAU ms=711
+read 8 s=46 N1-V none 0 fid=0.003027 <= TAU ms=709
+read 9 s=59 N1-V none 0 fid=0.000000 <= TAU ms=660
+read 10 s=60 N1-V none 0 fid=0.000000 <= TAU ms=687
+read 11 s=61 N1-V none 0 fid=0.000000 <= TAU ms=715
+read 12 s=62 N1-V none 0 fid=0.000000 <= TAU ms=712
+read 13 s=65 N1-V none 0 fid=0.000000 <= TAU ms=650
+read 14 s=78 N1-V none 0 fid=0.002774 <= TAU ms=651
+read 15 s=81 N1-V none 0 fid=0.003166 <= TAU ms=645
+read 16 s=91 N1-V none 0 fid=0.002749 <= TAU ms=666
+read 17 s=92 N1-V none 0 fid=0.000000 <= TAU ms=631
+read 18 s=130 N1-V none 0 fid=0.002771 <= TAU ms=717
+read 19 s=135 N1-V none 0 fid=0.005547 <= TAU ms=677
+read 20 s=141 N1-V none 0 fid=0.000000 <= TAU ms=685
+read 21 s=147 N1-V none 0 fid=0.005964 <= TAU ms=671
+read 22 s=149 N1-V none 0 fid=0.000000 <= TAU ms=726
+read 23 s=152 N1-V none 0 fid=0.000000 <= TAU ms=700
+end COMPLETE: 24/24 reads; report backend-ext-2.json
+discordance over 24 reads (absdiff and label in nats, rel = absdiff / the read's scale; fidelity values, no margin): {"absdiff": {"max": 0.06250051725487715, "median": 0.015625584951419746, "min": 5.0383727412395274e-08, "p90": 0.0624997738208533, "q1": 3.9445948374350337e-07, "q3": 0.03125030976502963}, "exceed_tau": 0, "exceed_tau4": 4, "finite": 24, "label": {"max": 0.04607116519749255, "median": 0.0016011952745769165}, "reads": 24, "rel": {"max": 0.006100916905502489, "median": 0.0013026706058596332, "min": 4.573897063772003e-09, "q1": 3.6377144446130084e-08, "q3": 0.0028368990093050176}}
+BK's d = 0 margins (the seat's answers of 2026-11-18, fourth sitting, §2.3 (a); |cached margin - BK's recorded margin| in nats over the sessions compared; a discordance, no margin): {"compared": 24, "max": 0.0937508301700607, "median": 0.03125010212219692, "of": 24}
+BK's d = 0 label values (§2.3 (b); |cached log p - BK's recorded value| in nats over the values compared, per label, the two pooled beside (R8)): {"S": {"compared": 24, "max": 0.0629629056182921, "median": 0.031095387349396653, "of": 24}, "U": {"compared": 24, "max": 0.11527832851047748, "median": 0.03712253746793337, "of": 24}, "pooled": {"compared": 48, "max": 0.11527832851047748, "median": 0.032457661606258625, "of": 48}}

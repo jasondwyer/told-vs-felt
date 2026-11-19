@@ -284,6 +284,9 @@ __pycache__/
 # §1.3 item 2): the stage's report and its one cell's JSON, written on the box by the run of record and
 # copied back by hash. Record, not cache (ledger 27). The cell's capture arrays (.npy) stay on the box's
 # volume, their digests in the committed cell, as v1's plan had it, on the coordinating session's word.
+# Its second stage, backend-ext-2 (ADDENDUM-n2 v0.1 §4.1; the seat's answers of 2026-11-18, fourth sitting, §2),
+# the same 24 reads under the label convention of record, is admitted the same way: its report and its one cell's
+# JSON, copied back by hash, with its arrays on the box.
 !/data/n/ckpt/
 /data/n/ckpt/*
 !/data/n/ckpt/backend-ext/
@@ -292,6 +295,10 @@ __pycache__/
 !/data/n/reports/
 /data/n/reports/*
 !/data/n/reports/backend-ext.json
+!/data/n/ckpt/backend-ext-2/
+/data/n/ckpt/backend-ext-2/*
+!/data/n/ckpt/backend-ext-2/N1-V__none__0.json
+!/data/n/reports/backend-ext-2.json
 
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,

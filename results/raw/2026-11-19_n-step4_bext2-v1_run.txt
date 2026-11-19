@@ -1,0 +1,120 @@
+n step 4 -- backend-ext-2 on n's box, pod emw1e4embiwe9b (H100 SXM): the BACKEND extension's 24 reads once more, under
+the label convention of record, "space", by bext2_v1.sh from driver v2g's commit 732a58f, in a fresh sparse copy, as run
+by the pod session (the seat's answers of 2026-11-18, fourth sitting, s2; the PI's routing, item 2 of "N. n-build (and
+the pod session on the box)"; the coordinating session's relay; PI date 2026-11-19). No pod address or port in this
+file. The run's own output is bext2_v1_out.txt (all of stdout and stderr, unedited); its exit status is bext2_v1.exit.
+The launch was announced to the coordinating session, naming bext2_v1.sh and its sha256, before it started.
+
+RESULT: bext2 v1 COMPLETE (pass; complete), exit 0. backend-ext-2 ran its 24 reads under "space" and completed with no
+pause: "end COMPLETE: 24/24 reads; report backend-ext-2.json", and the report is COMPLETE with 0 pauses, so the
+conditional ruling was not used. No read was above TAU. The report's identity lines equal step 4's. The first stage's
+files in the fresh copy, and the source copy's report and cell file, are unchanged.
+
+1. FILES. From n-build's scratchpad/step4b/bext2/frozen/, re-hashed on the laptop before shipping and on the box after:
+     bext2_v1.sh                   bf1d6b77542823eceed56bebdf020fc73c239b81bda9c179f5cb964aa43a5b83 (340 lines, read in
+                                   full; COMMIT 732a58f98d2fdda427a78195dcfd41a6b92a9a1d, SRC_COMMIT
+                                   127270276f6d263e72c080e5294da1ad0c8b4e9c)
+     bext2_manifest_v1.txt         df697f626ca8f8db5b929a797316b20147822a76f330712562c87e1e33347c0a (24 lines: v4's with
+                                   the driver line set to 7aefd06b…5b67, the sha256 of scripts/n_sessions.py at 732a58f
+                                   on the laptop, plus BK's reduced.json)
+     bext2_hashes_v1.txt           93783db0a83d81e59c660758a65a2aa2e34b421f3f8b41a7f0baa083c03f7b36 (v4's bytes, by cmp)
+     2026-11-18_n-step4-bext2-p01_conditional-ruling.md
+                                   ba9f96322a580d1c6cb5d198fc1750328a6cabfb7a21aa3fba8f2860c5aacc32 (2,857 bytes; equal to
+                                   its blob at c7d0009)
+   All four equal the coordinating session's relayed values. They went to /workspace/nsite/bext2-v1, a new folder, by
+   tar over ssh, with no Mac metadata on the laptop side and no ownership and no '._*' on the box side. The folder holds
+   exactly its four names.
+   - The relay named /workspace/nsite/bext2 and /workspace/nsite/out-bext2. Both already existed, from the step-4 smoke,
+     found by existence tests only. The coordinating session accepted bext2-v1 and out-bext2-v1 in their place; the
+     script finds its siblings through its own folder. The smoke's folders stay untouched and unread.
+
+2. THE SYNC, as sync7's. A bundle of 1272702..main was made on the laptop, with main at 732a58f before and after it was
+   made (its head 732a58f refs/heads/main; sha256 73c4b5ca…9258). It was shipped with the pod session's sync and copy
+   scripts to /workspace/nsite/sync9 (new) and fetched into the box repo under a new side ref, refs/bundles/n-site9 ->
+   732a58f, 7 commits after 1272702, whose prerequisite the box repo held under refs/bundles/n-site7. There was no
+   fast-forward: the box checkout stayed at ad856f0 and clean (the bare form, git status --porcelain).
+
+3. THE COPY. /workspace/nsite/copy-bext2-732a58f is backend-ext-2's fresh copy, new:
+   - a local clone of the box checkout with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - detached at 732a58f from refs/bundles/n-site9, clean (the bare form), with nothing extracted over it.
+   The globs data/*/ckpt and data/*/reports matched nothing, each compared with its literal form, with no loop. Neither
+   stage's root or report was present. BK's reduced.json, data/n/ids (6 files) and the characterization's raw and
+   artifact were present. The driver hashed to 7aefd06b…5b67. /workspace had 156G available of 466G before the clone and
+   155G after. The source copy, copy-resume4-1272702, was not touched by the pod session.
+
+4. RUN. Before the launch (launch_bext2v1.sh, 680cea4a…17a7):
+   - no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at 0 MiB of 81559 MiB;
+   - the four files on the box at the relayed hashes; the fresh copy at 732a58f and clean; the source copy's HEAD at
+     1272702 (HEAD only; no status was taken there);
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+   The command ran under nohup in the background, all of stdout and stderr to bext2_v1_out.txt and its exit status to
+   bext2_v1.exit, both in /workspace/nsite/out-bext2-v1 (new):
+     ( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/bext2-v1/bext2_v1.sh
+          /workspace/nsite/copy-resume4-1272702 /workspace/nsite/copy-bext2-732a58f /workspace/venv/bin/python
+          /workspace/nsite/work-bext2-732a58f )
+   The work folder did not exist before; the script made it. The wrapper's PID was 5781, and the end-wait was on the
+   PID alone.
+
+5. OUTCOMES (the pod session's reading; n-build reads the whole output, 103 lines):
+   step 0, the copies and the ruling    held: the source copy at 1272702, its first-stage report and cell file at
+                                        dd217d78…ce79 and 80770a19…78ea; the fresh copy at 732a58f, "changed set none;
+                                        neither stage's root or report present"; the ruling beside the script at
+                                        ba9f9632…cc32, 2857 bytes
+   step 1, the copy-in                  "copied and compared: 33 files (the first stage's report, its cell file, 31
+                                        capture arrays), each equal to the source copy's by sha256 (mismatches: 0); the
+                                        report and the cell file at the committed sha256s"
+   step 2, the manifest                 24 of 24 OK
+   step 3, the self-test                "408/408 n selftest checks pass", selftest exit=0, "selftest: 408/408, as
+                                        expected". Two library warnings came before it, as in v4's run.
+   step 4, the hashes                   hashes exit=0; "hashes: equal to the laptop's"
+   step 5, the run                      in order:
+                                        - the STAGE line under "space";
+                                        - the WEIGHTS line;
+                                        - DRIVER "HEAD's committed bytes" at 7aefd06b…5b67;
+                                        - the first stage's report line (COMPLETE at 24 of 24 under 'bare');
+                                        - G-VER PASS;
+                                        - the weights loaded (707/707);
+                                        - the backend line: n's identifier 8264f719efd347a9 (window 4096) and the
+                                          characterization's 4ed3f2c70fe8afbf (R6), load 11999 ms;
+                                        - 24 read lines, every one at or below TAU (12 of them at fid 0.000000);
+                                        - "end COMPLETE: 24/24 reads; report backend-ext-2.json";
+                                        - the discordance distribution (exceed_tau 0, exceed_tau4 4; rel's maximum
+                                          0.0061);
+                                        - the seat's two aggregate lines: BK's d = 0 margins (24 compared) and BK's d = 0
+                                          label values (24 per label, 48 pooled);
+                                        - run exit=0
+   the script's checks                  - read lines 24, the COMPLETE end line once, no PAUSE end line;
+                                        - the report: end_state COMPLETE, N1-V planned 24 and obtained 24,
+                                          label_convention space, nonfinite_reads 0, 0 pauses;
+                                        - "the run: COMPLETE with no pause; the conditional ruling is not used";
+                                        - its identity lines equal step 4's;
+                                        - the report's sha256 a1499f77…734c;
+                                        - each print once (the STAGE line, the DRIVER line, the first stage's report
+                                          line, the distribution, and the two aggregate lines with their counts), and no
+                                          in-band, comparison or convention line;
+                                        - the first stage's report, cell file and 31 arrays in the fresh copy unchanged;
+                                        - the source copy's report and cell file still the committed bytes
+   last line                            "bext2 v1 COMPLETE (pass; complete)", with the scope, the four conditions and the
+                                        resume all at 9 (not run)
+
+6. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU at 0 MiB. The exit
+   file reads 0. The source copy's HEAD is 1272702 (HEAD only). The pod session took no look inside the fresh copy, which
+   now holds both stages' roots and reports, or inside the work folder beyond the files copied back by name.
+
+7. COPIED BACK to n-build's step4b/bext2/out/ (a new folder), by explicit name, sha256 equal at the box, in staging and
+   at the destination, with this file:
+   - bext2_v1_out.txt and bext2_v1.exit (out-bext2-v1);
+   - selftest.txt, hashes.txt, run.txt and report-identity.txt (the work folder).
+   run-identity.txt and resume.txt are absent: the run did not pause. The address and port were counted in each copied
+   file (0). The report and cell of backend-ext-2 are not copied: they go later, by hash only, through the coordinating
+   session.
+
+8. LEFT ON THE BOX, nothing removed; cleanup waits for the PI's word:
+   - /workspace/nsite/bext2-v1 (n-build's four files);
+   - /workspace/nsite/copy-bext2-732a58f (the fresh copy, with both stages' roots and reports);
+   - /workspace/nsite/work-bext2-732a58f and /workspace/nsite/out-bext2-v1;
+   - /workspace/nsite/sync9 (the pod session's sync and copy scripts and the bundle);
+   - the box repo's side ref refs/bundles/n-site9, with the box checkout unmoved at ad856f0;
+   - every earlier folder as before, the step-4 smoke's bext2 and out-bext2 among them, untouched and unread.

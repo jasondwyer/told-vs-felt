@@ -21,6 +21,123 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n step 4 — backend-ext-2 on n's box, from driver v2g's commit `732a58f`: the BACKEND extension's 24
+  reads under the label convention of record, "space", COMPLETE with no pause, so the conditional ruling was not used
+  (the seat's answers of 2026-11-18, fourth sitting, §2; ADDENDUM-n2 v0.1 §4.1; the PI's routing, item 2 of "N.
+  n-build (and the pod session on the box)", on "route as given"). The figures of record, as printed. The stage's
+  report and cell enter the repository here, under the package and the checker they ran with, before the schema
+  follow-up, on the coordinating session's order.**
+  - **Headline:**
+    - `bext2_v1.sh` (`bf1d6b77…5b83`) ended "bext2 v1 COMPLETE (pass; complete)", exit 0, on pod `emw1e4embiwe9b`,
+      run by the pod session on the coordinating session's relay;
+    - the stage printed 24 read lines, every one at or below TAU, and "end COMPLETE: 24/24 reads; report
+      backend-ext-2.json"; its report is COMPLETE under "space", with no pause;
+    - the figures of record (ADDENDUM-n2 §4.1 and §4.2; the answers' §2.4), from the distribution line as printed: k =
+      0 of 24 above TAU; the largest margin discordance 0.06250051725487715 nats; the median rel 0.0013026706058596332.
+      By arithmetic only, p0 = (k + 1)/(n + 2) = 1/26 and C = max(0.25, 2 × 0.0625005…) = 0.25, the floor binding.
+      BK's beside them, in the answers' §2.4 form: 0 of 2,400; 0.125; 0.031 (nats, the answers' §1.4) at a mean scale
+      of 11.15;
+    - the report (`a1499f77…734c`) and its cell (`e8c5a0db…f627`) were copied back by hash only, and the cell's
+      sha256 equals the report's own record of it.
+  - **The run** (the pod session's record and the script's output, both committed as raws):
+    - The launch files, from n-build's scratch, relayed by the coordinating session at their hashes: the script; its
+      manifest `df697f62…7c0a` (24 lines: v4's, with the driver line set to v2g's `7aefd06b…5b67`, plus BK's
+      `reduced.json`, which §2.3's lines read); its hashes file `93783db0…7b36` (v4's bytes); and the conditional
+      ruling `ba9f9632…cc32` (committed at `c7d0009`). They went to `/workspace/nsite/bext2-v1`, and the output to
+      `/workspace/nsite/out-bext2-v1`: the relayed `bext2` and `out-bext2` already held the step-4 smoke's folders
+      (`d5d08fa`'s box check), so the pod session proposed new names and the coordinating session accepted them. The
+      script finds its files through its own folder.
+    - The sync, as sync7's: a bundle of `1272702..main`, with main at `732a58f`, fetched under
+      `refs/bundles/n-site9`; the box checkout stayed at `ad856f0`.
+    - The fresh copy, `/workspace/nsite/copy-bext2-732a58f`: a local clone, `--no-checkout --no-hardlinks`, origin
+      removed, sparse non-cone (`'/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'`), detached at `732a58f`
+      and clean. The source copy, `copy-resume4-1272702`, was only read.
+    - The environment, pinned (ledger 27): python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2;
+      `CUBLAS_WORKSPACE_CONFIG=:4096:8` and `RUNPOD_POD_ID=emw1e4embiwe9b` from `/workspace/env.sh`. The backend's
+      identifier, `8264f719efd347a9`, is the one v4's resume printed, so both stages ran on one characterized backend.
+    - The model: one load on the box, the stage's (the loader printed 707 of 707), for the 24 reads.
+    - The script's steps, as printed:
+      - the copies and the ruling held, and "copied and compared: 33 files (the first stage's report, its cell file,
+        31 capture arrays), each equal to the source copy's by sha256 (mismatches: 0)";
+      - the manifest 24 of 24 OK; the self-test "408/408 n selftest checks pass", after the two library warnings
+        that v4's output also holds (the box runs 11 checks more than v2g's laptop 397, its HF cases, as v2f's 389 did
+        against 378); the hashes equal to the laptop's;
+      - the run: the STAGE line under "space"; the DRIVER line (`7aefd06b…5b67`, "HEAD's committed bytes"); the first
+        stage's report line (`dd217d78…ce79`, "COMPLETE at 24 of 24 under 'bare'"); G-VER PASS (`labels_ok` 4,
+        `ids_ok` 160); the backend's identifier `8264f719efd347a9`, bridged to the characterization's
+        `4ed3f2c70fe8afbf`, load 11999 ms; 24 read lines, 12 of them at `fid=0.000000`; the end line; the
+        distribution; §2.3's two lines; run exit 0;
+      - the report's identity lines equal to the script's step 4 (the hashes); each print once, with no in-band,
+        comparison or convention
+        line; the first stage's files in the fresh copy and the source copy's report and cell unchanged.
+    - The wrapper's PID was 5781, and the end-wait was on the PID alone.
+  - **The distribution, as printed** (fidelity values, no margin): absdiff min 5.0383727412395274e-08, q1
+    3.9445948374350337e-07, median 0.015625584951419746, q3 0.03125030976502963, p90 0.0624997738208533, max
+    0.06250051725487715; rel min 4.573897063772003e-09, q1 3.6377144446130084e-08, median 0.0013026706058596332, q3
+    0.0028368990093050176, max 0.006100916905502489; label median 0.0016011952745769165, max 0.04607116519749255;
+    exceed_tau 0, exceed_tau4 4; 24 of 24 reads finite.
+  - **§2.3's two lines, as printed** (nats; discordances, no margin):
+    - (a) the margins: 24 of 24 compared; median 0.03125010212219692, max 0.0937508301700607;
+    - (b) the label values: S 24 of 24, median 0.031095387349396653, max 0.0629629056182921; U 24 of 24, median
+      0.03712253746793337, max 0.11527832851047748; pooled beside (R8) 48 of 48, median 0.032457661606258625, max
+      0.11527832851047748.
+
+    They are reported as printed; reading them is the seat's.
+  - **The conditional ruling** (`ba9f9632…cc32`, committed at `c7d0009`) was not used: no pause fired, so the
+    script's step 6 never ran. Its condition (ii) was to be read from the stage's own records through the package's
+    reader; it never ran and read nothing. The raw stands as the record of what would have applied (its item 5).
+  - **The copy-back:**
+    - the out/ files by explicit name, sha256 equal at the box, in staging and at the destination, with an address and
+      port count of 0 (the pod session's record);
+    - the report and the cell later, by hash only, through the coordinating session, with the repository paths kept.
+      Code's one read of the report on the laptop, after it came back by hash: its cells record for
+      `N1-V__none__0.json` equals the cell's sha256, `e8c5a0db…f627`, which is also the pod session's value;
+    - the 31 arrays stay on the box.
+  - **The box at the end** (the pod session's record): no interpreter job and no GPU compute app, the GPU at 0 MiB.
+    Left on the box: the launch files' folder, the fresh copy (with both stages' roots and reports), the work and out
+    folders, the sync folder and the side ref. The box, its cleanup with the earlier leftovers, and the pod itself wait
+    for the PI's word, which the coordinating session has asked for.
+  - **Departures:**
+    - 2026-11-19, Code: one `git show 732a58f:data/n/reports/backend-ext.json | shasum -a 256`, while drafting the
+      launch files, printing only the report's known digest. The form for a committed reports file is `rev-parse`
+      against a known blob id; the reports folder is item 2's read domain;
+    - 2026-11-19, Code: an attempted name listing of this session group's shared notes folder, outside the
+      repository; the harness refused it, and nothing was listed or read;
+    - Code's script: its step 0 takes `git status --porcelain --untracked-files=all` of the fresh copy, not item 1's
+      bare form. It prints only on a failure branch, which did not fire; the seat's §7 ruled this class inert for the
+      pod session's scripts;
+    - the pod session's record states no departure of its own;
+    - the values-checker's, as its report states them, for the seat to class: two `git ls-files` with a narrower
+      positive pathspec glob over `results/raw/` (one with the exclusions, printing nothing; one without, printing five
+      raw names); and, not barred, `git check-attr diff` on three named data paths, `shasum -c` of the frozen manifest
+      from the repository root (24 named files, none under ckpt, reports or mf3), reads of RESULTS.md and the answers
+      raws beyond its named sources, `shasum` of three committed v4 raws, and `tr`, `sort`, `comm`, `uniq` and `wc -l`
+      on named scratch files.
+  - **Values-check:** one blind pass over this entry's draft and the `.gitignore` lines.
+    - 84 items: 78 CONFIRMED, 1 IMPRECISE, 0 FAIL, 5 NOT CHECKABLE; and 16 observations.
+    - The IMPRECISE item (75, the `.gitignore`'s description) is applied. Observations 1 to 13, 15 and 16 are applied;
+      observation 14 (parity hashes) adds nothing the committed raws' digests do not carry.
+    - The `.gitignore` text changed after the check, at the coordinating session's request: the two-line comment the
+      check read became a sentence added to the first stage's comment (three lines after its line 286). The four
+      rules are the checked ones, unchanged: checked by tool, and the gate rebuilds `.gitignore` from HEAD plus the two
+      insertions.
+    - The edits were checked by tool.
+    - Raw: [`2026-11-19_n-step4_bext2-v1_valuescheck.md`](results/raw/2026-11-19_n-step4_bext2-v1_valuescheck.md).
+  - **Committed by path:**
+    - `.gitignore`: a sentence added to the first stage's comment, naming backend-ext-2, and four rules after the
+      first stage's that admit exactly the second stage's report and its one cell's JSON (one of them ignoring the rest
+      of that stage's root); `.gitattributes`' `/data/n/ckpt/** -diff` already covers the cell, so it does not change;
+    - `data/n/reports/backend-ext-2.json` and `data/n/ckpt/backend-ext-2/N1-V__none__0.json`;
+    - the seven raws: the script's output and exit file, and the work folder's self-test, hashes, stage output and
+      report identity, as `2026-11-19_n-step4_bext2-v1_{out,exit,selftest,hashes,stage,report-identity}.txt`, and the
+      pod session's record as `…_run.txt`;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff (the third sitting's answers, §5.2) is 0. Not
+    pushed.
+    **Next:** the schema follow-up (ADDENDUM-n2 §6.3 (3)), then n-analyzer's pin move, then LOCK-n v0.1's draft with
+    these figures (§4.2).
+
 - 2026-11-18 — **n — the BACKEND extension's driver v2g, committed by path before backend-ext-2: the seat's two
   aggregate lines against BK's recorded d = 0 values, printed after the distribution line, with nothing in the read
   path (the seat's answers of 2026-11-18, fourth sitting, §2.3; the PI's "route as given"). The n package is
