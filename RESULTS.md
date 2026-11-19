@@ -21,6 +21,55 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — eleven starred readings for the seat before G-CAL-n's run: G-VEC's G1, G3, G6 and G9, and
+  G-CAL-n's GC3, GC4, GC5, GC6, GC8, GC11 and GC12 (code → design; the n-build session). STOP for the seat's read.**
+  Block:
+  [`2026-11-19_n-starred-eleven_code-to-design_STOP.md`](results/raw/2026-11-19_n-starred-eleven_code-to-design_STOP.md).
+  - **Where things stand:**
+    - G-VEC's BUILD is committed at `da7bdec`, on Code's readings G1–G14 routed as PINs; G-VEC has not run;
+    - G-CAL-n's readings GC1–GC22 were routed the same way; G-CAL-n's build is in Code's scratch, not committed;
+    - no lock is in force.
+  - **Why now,** on the coordinating session's routing: G-CAL-n's seven starred readings go to the seat before
+    G-CAL-n's run, not before its build, "GC6 above all: CLAUDE.md's rule 13, "chat templates never", against §0.7's
+    departure". The coordinating session put it to the PI that G-VEC's four go in the same sitting. Blocks to the seat
+    are committed first; the PI's word governs the nudge to the seat.
+  - **The block:**
+    - §1 and §2: each reading with its texts and what another answer would change, for G-VEC as built and for
+      G-CAL-n as Code will build it;
+    - §3: the dependencies. G-CAL-n's run waits for all eleven answers, for G-VEC's PASS committed and for the PI's
+      word on the box. G-VEC's run waits for its four, or runs on them as PINs, as the PI answers. G-CAL-n's other
+      pre-run items are carried: GC1 and GC2 on LOCK-n v0.1's list, GC14 a PAUSE;
+    - §4: the questions Q1–Q11, one per reading.
+  - **G-CAL-n's spec raw,** committed beside the block:
+    [`2026-11-19_n-gcal_spec.md`](results/raw/2026-11-19_n-gcal_spec.md). It holds Code's GC1–GC22 message (§1) and
+    the coordinating session's routing of it (§2), both verbatim, and G-CAL-n's survey report as returned (§3,
+    `235191c1…12a3`, compiled at `da7bdec`).
+  - **Model:** nothing ran on a model.
+  - **Values-check:** one blind pass over the block's draft and the spec raw's head.
+    - 80 items: 55 CONFIRMED, 21 IMPRECISE, 0 FAIL, 4 NOT CHECKABLE; and 11 observations.
+    - Every IMPRECISE item is applied, and observations 1 to 10. Observation 11, a five-character hash tail inside
+      §3's verbatim report, stays as returned.
+    - After the check, the block's header, §0 and §3 were reworded to the dependencies alone, at the coordinating
+      session's word. The edits were checked by tool, 58 of 58.
+    - Raw: [`2026-11-19_n-starred-eleven_valuescheck.md`](results/raw/2026-11-19_n-starred-eleven_valuescheck.md).
+  - **Departures:**
+    - 2026-11-19, Code: greps of this session's own transcript by `jq` (outside the repository, the HF cache and the
+      scratch folders), to take the spec raw's §1 and §2 verbatim;
+    - the values-checker's, as its report states them, for the seat to class:
+      - one `git ls-tree --name-only` over `valence_core/n/` without item 3's exclusions, which git's `ls-tree`
+        refuses; it printed 15 module names;
+      - BK's 14 skeleton files, whose folder path holds a guard marker, read by `git show` of relative blob names after
+        a `cd` through a glob, not by a redirect; no marker reached an argv;
+    - G-CAL-n's survey's three, in the spec raw's §3 (the report's last section), for the seat to class with G-CAL-n's
+      BUILD entry.
+  - **Committed by path:**
+    - the block;
+    - G-CAL-n's spec raw;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed: the seat reads the laptop
+    checkout. G-CAL-n's BUILD and G-VEC's launch files follow; G-CAL-n's run waits for the seat's answers.
+
 - 2026-11-19 — **n package — `scripts/n_analyze.py`, the seat's ruling of the third sitting and ADDENDUM-n2 carried
   in: PIN-n-37 amended to the conservative form, the `fidelity-ceiling` kind and the second sensitivity row in the
   reader, and the schema pin moved to `003ae7d` (the answers of 2026-11-18, third sitting, §6, the PI's routing item 5;
