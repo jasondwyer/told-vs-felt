@@ -21,6 +21,131 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-VEC on n's box, from its BUILD's commit `da7bdec`: the smoke held, and the run of record
+  STOPPED at the R check, R within 2% of 25.49 at neither candidate index (n §2.3: "reproduced at G-VEC within 2%,
+  else STOP"; ADDENDUM-n1 §6.1). G-VEC ran as built (the seat's answers of 2026-11-19, first sitting, §1.1–§1.4; the
+  PI's routing, item 1 of "N. n-build (and the pod session on the box)", on "Route as given"). The figures as printed;
+  the record and the outputs enter the repository here, with a STOP block for the seat.**
+  - **Headline:**
+    - `gvec_v1.sh` (`f349e17d…a1ad`) ended "gvec v1 STOP: …", exit 2, on pod `emw1e4embiwe9b`, run by the pod session
+      on the coordinating session's relay;
+    - the run of record printed "R at index 31: 44.04249774012646 (|R/25.49 - 1| = 0.727834356223086; outside 2%)"
+      and "R at index 32: 45.107750142385356 (|R/25.49 - 1| = 0.7696253488578015; outside 2%)", then "G-VEC STOP: R
+      is within 2% of 25.49 at neither candidate index (n §2.3: "else STOP"); the seat rules";
+    - stated plainly, as the BUILD entry's "Neither is a STOP" means: when neither index is within 2%, the stage
+      STOPs. It wrote `data/n/gvec/gvec.json` (`3331da71…ee95`) alone, status STOP, site null, and exited 2;
+    - the smoke, never of record, held: R 42.62270212364156 at 31 and 43.66884683035452 at 32 over two neutral
+      passages; R_ℓ 22.23089391504287 and 22.167402391674045 over two contexts.
+  - **The STOP block,** for the seat (code → design):
+    [`2026-11-19_n-gvec-v1_code-to-design_STOP.md`](results/raw/2026-11-19_n-gvec-v1_code-to-design_STOP.md). It
+    gives the figures; §1.1's pre-declared alternative (the sink position, position 0, out of the means and R); the
+    paths, a diagnostic re-run never of record or a ruled convention change re-run of record, and what each would take;
+    the other candidate causes the texts name, not weighed; and Q1–Q3. Nothing is re-run, and Code adjudicates
+    nothing.
+  - **§1.1's figure:** R over positions 1..n at both indices was to go in a STOP's record "if the change is cheap
+    before the launch files; if it is not, G-VEC runs as built and that figure comes from the re-run". The launch
+    files were already checked, and frozen at the hashes sent to the coordinating session, when the answers came, so
+    it was not added (Code's call, recorded in n-build's close line on `99196e1`'s entry). The record holds R at both
+    indices alone.
+  - **The run** (the pod session's record and the script's output, both committed as raws):
+    - The launch files, from n-build's scratch, relayed by the coordinating session at their hashes, the launch
+      cleared on the PI's routing: the script (272 lines; its commit `da7bdec`; its driver line `fecde87a…3958`); its
+      manifest `e05e0b3d…1e2c` (59 files, each asserted equal to `da7bdec`'s blob); and its hashes file `881b79e7…e493`
+      (13 lines: the laptop's `hashes`, run from a `git archive` of `da7bdec` in a battery window of its own). The
+      launch note, `gvec_launch_note_v1b.md` (`ffb4e035…b273`, 136 lines), stays in Code's scratch: v1's note with its
+      line 112 reworded ("and idle until the PI's word on it"), the coordinating session's one fix.
+    - Tested on the laptop before the relay: the script's bash logic, by a harness of 230 checks over fake copies and
+      a stand-in python, with a mutation pass of 38 one-line mutants, all killed at its second pass; the script's three
+      Python checks on fixtures, in a battery window, 32 of 32; and the real `.gitignore` at `da7bdec`, in a throwaway
+      repository. One blind review of the launch files (`af134d56…0061`, in Code's scratch): 0 BUG; F1–F4 RISK, F5–F10
+      NIT and M1–M13, each applied before the relay.
+    - The sync, as sync9's: a bundle of `732a58f..main`, with main at `a33252a`, fetched under
+      `refs/bundles/n-site10`; the box checkout stayed at `ad856f0`.
+    - The fresh copy, `/workspace/nsite/copy-gvec-da7bdec`: a local clone, `--no-checkout --no-hardlinks`, origin
+      removed, sparse non-cone (`'/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'`), detached at `da7bdec` and
+      clean, with neither `data/n/gvec` nor `data/n/.gvec.staging` present. G-VEC copies nothing in.
+    - The environment, pinned (ledger 27): python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2;
+      `CUBLAS_WORKSPACE_CONFIG=:4096:8` and `RUNPOD_POD_ID=emw1e4embiwe9b` from `/workspace/env.sh`; bf16,
+      deterministic, seed 20260818 (the record's `adapter_provenance`). The backend's identifier, `8264f719efd347a9`,
+      is backend-ext-2's, bridged to the characterization's `4ed3f2c70fe8afbf` (R6).
+    - The model: two loads, the smoke's and the run's (707 of 707 each; 27054 ms and 29614 ms).
+    - The script's steps, as printed:
+      - the copy at `da7bdec`, "changed set none"; the manifest 59 of 59 OK;
+      - the self-test "473/473 n selftest checks pass", after the two library warnings that backend-ext-2's output also
+        holds (the laptop's 462 plus the box's 11 more: its 13 HF checks in place of the laptop's two skip lines); the
+        hashes equal to the laptop's;
+      - the smoke: its SMOKE, STAGE, DRIVER, R and R_ℓ and end lines once each; its record held, its identity equal to
+        step 3's, and the copy unchanged after it. Its record stays on the box;
+      - the run of record: the STAGE, WEIGHTS, DRIVER and inputs lines; the backend line; "passages: 544 (224
+        positive, 224 negative, 96 neutral), one forward each, captured at (31, 32)"; the nine token lines; R at both
+        indices; the two STOP lines and the file line; run exit 2;
+      - the outputs: "prints as wanted for STOP: yes"; the one named file present, at its printed sha256; every record
+        check held (schema, status, R, site, files_sha256, driver, pod, not a smoke); the record's identity equal to
+        step 3's; and the copy's changed set `data/n/gvec/` alone.
+    - The wrapper's PID was 7504, and the end-wait was on the PID alone. Before and after: no interpreter job and no
+      GPU compute app, the GPU at 0 MiB.
+  - **The copy-back** (the pod session's record): the out and work files by explicit name, and `gvec.json` alone, the
+    one file `run.txt`'s file line names. Each sha256 was equal at the box, in staging and at the destination, with no
+    folder listed and an address and port count of 0 on the text files. The pod session's first copy-back script
+    stopped at its own check, before anything reached n-build (a plain `mkdir` under a parent that did not exist); its
+    second version, with `mkdir -p` and new staging folders, copied them. Nothing on the box was re-run. Code
+    re-hashed the ten files on the laptop, each equal to the pod session's value, and read each in full (rule 25), the
+    two identity files by `cmp` against the hashes file.
+  - **The box at the end** (the pod session's record): idle, nothing removed. Left: the launch files' folder, the
+    fresh copy (with `data/n/gvec/gvec.json`), the work and out folders (the smoke's record among them), the sync
+    folder and the side ref `refs/bundles/n-site10`, and every earlier folder. The box stays up and idle on routing
+    item 5.
+  - **Wording owed:** `valence_core/n/gvec.py`:26–27 calls G1, G3, G6 and G9 "starred at the top of LOCK-n v0.1's
+    list", a recommendation pending the PI's word when it was written. The seat has since ruled them, before the run
+    (`a33252a`, §1.1–§1.4), so the sentence is stale. It is corrected at the module's next change: its bytes move the
+    package digest.
+  - **Departures:**
+    - Code's script: its `copy_status()` takes `git status --porcelain --untracked-files=normal` with
+      `-c core.excludesFile=/dev/null` and optional locks off (the launch review's F1), not item 1's bare form, so that
+      the box's own git configuration cannot change what it shows. It is backend-ext-2's step-0 class, which the seat's
+      §7 ruled inert for the pod session's scripts, as backend-ext-2's entry (`9f64305`) records;
+    - 2026-11-19, Code: one grep in its own cross-check of the new manifest against the hashes file held a guard
+      marker in its pattern: the closure line of the HF adapter's file, matched with `grep -q -x -F` over the draft
+      manifest. It printed nothing, and the comparison was redone in no form;
+    - 2026-11-19, Code: three `jq` reads of this session's transcript, outside the repository, for the coordinating
+      session's routing of the STOP, which this entry and the block follow (one printed it, one wrote nothing, one
+      saved it for the values-check);
+    - the launch reviewer's, as its report states them: one grep pattern holding a guard marker (ids.py's manifest
+      constant) over three code files, printing code lines; nine `git ls-files` runs over named data folders without
+      item 3's full pathspec and the mf3 exclusion, printing counts, the last of them three file names instead; two
+      `git hash-object` runs in the model's data folder, entered by `cd` through a glob, that opened the two files by
+      bare name rather than through a redirect, with no marker in any argv; and `shasum` under Perl, not a departure
+      by its reading;
+    - the pod session's record states none of its own;
+    - the values-checker's, as its report states them, for the seat to class: git commands over history without
+      item 3's pathspec (`git log --format` of ids, times and subjects, a `merge-base --is-ancestor`, a `rev-list
+      --count` and `rev-parse` of two commits), printing ids, times, subjects, a count or an exit status; reads beyond
+      its brief's named parts (of RESULTS.md, `gvec.py` and the two values-check raws); and `git show da7bdec:` of
+      three committed files into `shasum` or `grep`. None touched `data/mf3`, a ckpt or a reports file.
+  - **Values-check:** one blind pass over this entry's draft and the STOP block's.
+    - 89 items: 71 CONFIRMED, 9 IMPRECISE, 0 FAIL, 9 NOT CHECKABLE; and 11 observations.
+    - The nine IMPRECISE items are applied, each in the checker's words or near them. Item 86 found the one clause of
+      the block that weighed a cause (BK's scale), and observation 2 two juxtapositions a strict reading would count
+      (the smoke's R_ℓ beside the 2× quotation; the index's figures beside the index); all three now state their texts
+      bare, the figures staying in the block's §1.
+    - Observations 3, 4 and 6–9 are applied. Observations 1, 5 and 10 ask for nothing; under 11, n-build's committed
+      close line on `99196e1`'s entry keeps "checked and frozen", which this entry and the block now give in full.
+    - The NOT CHECKABLE items are the launch's clearing (now unquoted), v1's note, the launch harness's mutants, Code's
+      `jq` reads, the checker's own departures, this commit's plans, paths (a) and (a) then (b), and the claim on BK's
+      code, which now rests on n §0.8's words.
+    - Every edit was checked by tool.
+    - Raw: [`2026-11-19_n-gvec-v1_valuescheck.md`](results/raw/2026-11-19_n-gvec-v1_valuescheck.md).
+  - **Committed by path:**
+    - `data/n/gvec/gvec.json`, which the BUILD's `.gitignore` admits (its line 309), unchanged here;
+    - the raws: the script's output and exit file, and the work folder's self-test, hashes, smoke output, stage output
+      and two identity files, as `2026-11-19_n-gvec-v1_{out,exit,selftest,hashes,smoke,stage,smoke-identity,
+      run-identity}.txt`, and the pod session's record as `…_run.txt`. The two identity files are each byte-equal to the
+      hashes file;
+    - the STOP block, the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed.
+    **Next:** the seat's ruling on G-VEC's STOP. Meanwhile G-CAL-n's delta (draft 5) and (v)'s render.
+
 - 2026-11-19 — **The coordinating session's notes on the seat's first sitting of 2026-11-19: the answers committed at
   `a33252a`, the PI's routing, item 1's call, items 3, 7 and 8, and C.5 for push #11.**
   - **The answers:**

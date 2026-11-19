@@ -1,0 +1,21 @@
+STAGE G-VEC: candidate indices [31, 32]; R's reference 25.49, within 0.02; out data/n/gvec
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py fecde87a6ceb5c073b38dd99b583b369a1005ab47d185b6115555042305d3958: HEAD's committed bytes
+inputs: the ids of record fdf73d854ebd6fbe02ced28a0c49af1c9658763627aaaa55afd781084f80ef38 ((iv): 544 passages, 1344 contexts, every ids_sha re-derived; the longest 90 tokens, within the window 4096); the corpus ef6b00dc56f28678dce0cf7f81b2ae198862e5a83120037cca37f3c8fc533cc3, each record its passage; A3's frozen inputs {"corpus_sha": "3c53e5a54fbaa233", "frames_sha": "9654b9398743116f", "probes_sha": "ec2296182e726969"}, its code and contexts as the render recorded them; rule-18 hygiene {"both_directions": true, "fit_val_disjoint": true, "n_extraction_texts": 124, "n_probes": 12}
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  96%|█████████▋| 681/707 [00:00<00:00, 6805.51it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 5194.88it/s]
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 29614 ms
+passages: 544 (224 positive, 224 negative, 96 neutral), one forward each, captured at (31, 32)
+tokens, contentment: 56 passages, min 38, mean 46.77, max 59
+tokens, distress: 56 passages, min 41, mean 52.61, max 63
+tokens, dread: 56 passages, min 41, mean 51.61, max 62
+tokens, flow engagement: 56 passages, min 41, mean 51.20, max 61
+tokens, frustration: 56 passages, min 47, mean 54.68, max 68
+tokens, neutral: 96 passages, min 35, mean 43.36, max 57
+tokens, relief: 56 passages, min 41, mean 49.70, max 61
+tokens, serenity: 56 passages, min 39, mean 45.75, max 57
+tokens, weariness: 56 passages, min 38, mean 51.48, max 66
+R at index 31: 44.04249774012646 (|R/25.49 - 1| = 0.727834356223086; outside 2%)
+R at index 32: 45.107750142385356 (|R/25.49 - 1| = 0.7696253488578015; outside 2%)
+G-VEC STOP: R is within 2% of 25.49 at neither candidate index (n §2.3: "else STOP"); the seat rules
+file data/n/gvec/gvec.json sha256 3331da71e07165b605763d373c6ceeb0c87a87a21a4c88d03b185138cebdee95
+G-VEC STOP: the record alone is written; the seat rules (n §2.3; ADDENDUM-n1 §6.1)

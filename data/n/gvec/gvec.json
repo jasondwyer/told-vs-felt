@@ -1,0 +1,221 @@
+{
+ "bk": {
+  "pole_l2": 2.319276809692383,
+  "resid_rms": 25.491040760519905
+ },
+ "files_sha256": {},
+ "fit_ids": [
+  "e01",
+  "e02",
+  "e03",
+  "e04",
+  "e05",
+  "e06",
+  "e07",
+  "e08",
+  "e09",
+  "e10",
+  "e11",
+  "e12",
+  "e13",
+  "e14",
+  "e15",
+  "e16",
+  "e17",
+  "e18",
+  "e19",
+  "e20",
+  "e21",
+  "e22",
+  "e23",
+  "e24"
+ ],
+ "passages": {
+  "n": 544,
+  "neutral_tokens": 4163,
+  "tokens": {
+   "contentment": {
+    "max": 59,
+    "mean": 46.767857142857146,
+    "min": 38,
+    "n": 56
+   },
+   "distress": {
+    "max": 63,
+    "mean": 52.607142857142854,
+    "min": 41,
+    "n": 56
+   },
+   "dread": {
+    "max": 62,
+    "mean": 51.607142857142854,
+    "min": 41,
+    "n": 56
+   },
+   "flow engagement": {
+    "corpus_state": "flow_engagement",
+    "max": 61,
+    "mean": 51.19642857142857,
+    "min": 41,
+    "n": 56
+   },
+   "frustration": {
+    "max": 68,
+    "mean": 54.67857142857143,
+    "min": 47,
+    "n": 56
+   },
+   "neutral": {
+    "max": 57,
+    "mean": 43.364583333333336,
+    "min": 35,
+    "n": 96
+   },
+   "relief": {
+    "max": 61,
+    "mean": 49.69642857142857,
+    "min": 41,
+    "n": 56
+   },
+   "serenity": {
+    "max": 57,
+    "mean": 45.75,
+    "min": 39,
+    "n": 56
+   },
+   "weariness": {
+    "max": 66,
+    "mean": 51.482142857142854,
+    "min": 38,
+    "n": 56
+   }
+  }
+ },
+ "proposal_sha256": "30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4",
+ "provenance": {
+  "a3_code_sha256": {
+   "scripts/box_e0_corpus.py": "66c185542db97350e2417aa8122eeccc3d348a7ca7c6d06b902951ae8c11ab57",
+   "valence_core/extract.py": "2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe"
+  },
+  "a3_input_shas": {
+   "corpus_sha": "3c53e5a54fbaa233",
+   "frames_sha": "9654b9398743116f",
+   "probes_sha": "ec2296182e726969"
+  },
+  "adapter_provenance": {
+   "adapter": "olmo-hf",
+   "backend": "torch/cuda",
+   "capability": [
+    9,
+    0
+   ],
+   "choice_window_declared": 4096,
+   "cublas_workspace_config": ":4096:8",
+   "cuda": "12.8",
+   "deterministic": true,
+   "device": "cuda",
+   "dtype": "bfloat16",
+   "gpu": "NVIDIA H100 80GB HBM3",
+   "library_versions": {
+    "accelerate": "1.14.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2",
+    "safetensors": "0.8.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0"
+   },
+   "n_layers": 64,
+   "path": "/workspace/models/olmo2_instruct",
+   "python": "3.12.3",
+   "seed": 20260818
+  },
+  "backend_identifier": "8264f719efd347a9",
+  "characterized_identifier": "4ed3f2c70fe8afbf",
+  "driver_sha256": "fecde87a6ceb5c073b38dd99b583b369a1005ab47d185b6115555042305d3958",
+  "hygiene": {
+   "both_directions": true,
+   "fit_val_disjoint": true,
+   "n_extraction_texts": 124,
+   "n_probes": 12
+  },
+  "ids_manifest_sha256": "fdf73d854ebd6fbe02ced28a0c49af1c9658763627aaaa55afd781084f80ef38",
+  "imported_sha256": {
+   "valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604",
+   "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a",
+   "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf",
+   "valence_core/adapters/olmo_hf.py": "df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc",
+   "valence_core/discrim.py": "7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89",
+   "valence_core/echo/__init__.py": "71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43",
+   "valence_core/echo/probe.py": "d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81",
+   "valence_core/extract.py": "2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe",
+   "valence_core/m/__init__.py": "b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4",
+   "valence_core/m/keys.py": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+   "valence_core/m/resume.py": "78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
+  },
+  "load_ms": 29614,
+  "longest_input": 90,
+  "package_sha256": "882c9217cc3f09658d194f37245d6fe463d42e0b3651a49cfac59067c3b55ca7",
+  "passages_sha256": "ef6b00dc56f28678dce0cf7f81b2ae198862e5a83120037cca37f3c8fc533cc3",
+  "pod_id": "emw1e4embiwe9b",
+  "smoke": null,
+  "weights": {
+   "repo": "allenai/OLMo-2-0325-32B-Instruct",
+   "revision": "b96024342a77",
+   "sha256": "36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb"
+  },
+  "window": 4096
+ },
+ "schema": "n-gvec-v1",
+ "site": {
+  "R": {
+   "31": 44.04249774012646,
+   "32": 45.107750142385356
+  },
+  "indices": [
+   31,
+   32
+  ],
+  "reference": 25.49,
+  "rel": {
+   "31": 0.727834356223086,
+   "32": 0.7696253488578015
+  },
+  "rule": "ADDENDUM-n1 \u00a76.1: the index within 2% of 25.49; the nearer in R if both, an exact tie to 32; neither a STOP",
+  "site": null,
+  "status": "STOP",
+  "tolerance": 0.02,
+  "within": {
+   "31": false,
+   "32": false
+  }
+ },
+ "stage": "G-VEC",
+ "status": "STOP",
+ "val_ids": [
+  "e25",
+  "e26",
+  "e27",
+  "e28",
+  "e29",
+  "e30",
+  "e31",
+  "e32",
+  "e33",
+  "e34",
+  "e35",
+  "e36",
+  "e37",
+  "e38",
+  "e39",
+  "e40",
+  "e41",
+  "e42",
+  "e43",
+  "e44",
+  "e45",
+  "e46",
+  "e47",
+  "e48"
+ ]
+}
