@@ -140,6 +140,46 @@ applied to CLAUDE.md.
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed: the seat reads the laptop
     checkout. Next: the seat's answers on the twelve; G-VEC's run, its launch files held for the PI's answer on its
     run order; (v)'s render commit, after the seat's answers on GC5 and GC6; then G-CAL-n's launch files.
+  - **Close (PI date 2026-11-19, first sitting), n-build's: the seat's answers on the twelve starred readings.** This
+    session read the seat's raw,
+    [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+    (sha256 `e6ff066d…6d5a`), in full. The coordinating session committed it by path at `a33252a`, on the PI's "Route
+    as given". This is n-build's line of its routing block's item 4: "close lines on `99196e1`, `d7d5e5b`, `89a55c3`,
+    `003ae7d` citing this raw".
+    - **The BUILD:** "G-CAL-n runs after three changes to the build, each small, in one delta before its launch files"
+      (§0): the whole turn steered (Q9, §1.9); the baseline generated second, with a STOP and no −ρ turn at a +ρ fail
+      (Q12 (d), §1.12); and a baseline below 36 of 48 coherent a PAUSE (O7, §5). The delta is n-build's next code
+      change, "self-tested, one blind review on the delta, committed" (§8 item 2). The wording owed at each file's next
+      change rides with it, the driver's included (its `gcal` docstring names a PAUSE at +ρ/2 alone), with the
+      values-check's observation 3 (the mid-run failure check's count pinned).
+    - **Departures:** every one the entry declared is inert, no strike (§6, "Departures: inert, no strike"): (1)–(9)
+      from the readings' words; Code's `ls data/*`; the reviewer's three, the survey's three and the values-checker's
+      `cmp` loop; and the BUILD's failed first commit window. "Code's wording owed at each file's next change is
+      accepted as declared" (§6).
+    - **Dated note (2026-11-19), on the coordinating session's two low items:**
+      - the values-check raw's verbatim report gives the brief's sha256 as "a2763e8b…abfa", the checker's own slip. The
+        brief is `a2763e8b…bafa`, as the raw's head says, and the verbatim text stands;
+      - `gcal-decode` also prints each differing turn's two decoded texts, beside the flags this entry names. Its raw
+        goes under `results/raw/` with the stage's entry (§5, GC1).
+    - **A blind values-check of the four close lines** (this one and n-build's lines on `d7d5e5b`'s, `99196e1`'s and
+      `003ae7d`'s entries) and of where they are placed: 70 items: 59 CONFIRMED, 2 IMPRECISE, 0 FAIL, 9 NOT CHECKABLE;
+      and 12 observations.
+      - The two IMPRECISE items are applied: 16 in the checker's words, 49 with the coordinating session's relay,
+        which the checker did not have.
+      - Observations 1–6 and 8–10 are applied. Observation 7 asks whether the PI's "Route as given" confirmed A2's
+        extension; that is the coordinating session's item 7 (§8), and this line states nothing on it. Observations
+        11 and 12 ask for nothing.
+      - The nine NOT CHECKABLE items are this session's four reads in full, three plans of its own, Code's call on
+        G-VEC's figure, and the coordinating session's two low items.
+      - Every edit was checked by tool.
+      - This session's departures: two `jq` reads of its own transcript, outside the repository, for the relay on the
+        cap quoted in the line on `99196e1`'s entry.
+      - The checker's departures, as its report states them, for the seat to class: HEAD blob ids of six non-data
+        files printed beside the shell's comparison; reads of RESULTS.md beyond the four entries, with `git blame -s`;
+        `d7d5e5b`'s commit subject; one grep of a proposal's headings whose output line held a guard-marker word; and
+        filters on named files. None touched `data/`.
+      - Raw:
+        [`2026-11-19_n-close-lines-twelve_valuescheck.md`](results/raw/2026-11-19_n-close-lines-twelve_valuescheck.md).
 
 - 2026-11-19 — **n — a supplement to the eleven starred readings: G-CAL-n's GC23 (Q12), three notes on Q1 and Q11 from
   G-CAL-n's review, and three items for LOCK-n v0.1's list (code → design; the n-build session). STOP for the seat's
@@ -182,6 +222,22 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed: the seat reads the laptop
     checkout. G-CAL-n's BUILD follows.
+  - **Close (PI date 2026-11-19, first sitting), n-build's: the seat's answers on Q12 and the six notes.** The seat's
+    raw,
+    [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+    (sha256 `e6ff066d…6d5a`, committed at `a33252a` on the PI's "Route as given"), read in full, rules Q12 in its
+    §1.12: "(a)–(c) stand as built; (d) is amended".
+    - **(d):** "the generation order is +ρ, the baseline, +ρ/2, −ρ", and "a coherence or arrival fail at +ρ ends the run
+      as a STOP (exit 2) with the record, the turns and the dose map written and no −ρ turn generated". The fallback,
+      the order alone with the early STOP declared not built, is for an early STOP larger than the order line and the
+      status logic; "the seat prefers the change made".
+    - **The failed-run folder:** "A kept failed-run folder enters the record as a raw folder under `results/raw/` with
+      the stage's entry — its log and the run's output, by hash — never under `data/n/`".
+    - **The notes:** O5 and O6 are settled at the read, without a code change (§1.11). O7 is a PAUSE and O8 is accepted
+      (§5). `gcal-decode`'s raw (O12) goes under `results/raw/` with the stage's entry (§5, GC1). O3 asks for nothing
+      now: G1 stands (§1.1).
+    - **Departures:** this entry's are inert, no strike (§6).
+    - **Values-check:** with n-build's close line on `89a55c3`'s entry, which gives the check and its raw.
 
 - 2026-11-19 — **n — eleven starred readings for the seat before G-CAL-n's run: G-VEC's G1, G3, G6 and G9, and
   G-CAL-n's GC3, GC4, GC5, GC6, GC8, GC11 and GC12 (code → design; the n-build session). STOP for the seat's read.**
@@ -231,6 +287,21 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed: the seat reads the laptop
     checkout. G-CAL-n's BUILD and G-VEC's launch files follow; G-CAL-n's run waits for the seat's answers.
+  - **Close (PI date 2026-11-19, first sitting), n-build's: the seat's answers on the eleven.** The seat's raw,
+    [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+    (sha256 `e6ff066d…6d5a`, committed at `a33252a` on the PI's "Route as given"), read in full, rules Q1–Q11 in its
+    §1.1–§1.11.
+    - **G-VEC's four** stand as built (Q1–Q4), and "G-VEC runs as built" (§0). §1.1 asked for one more figure in a
+      STOP's record, R over positions 1..n at both indices, "if the change is cheap before the launch files; if it is
+      not, G-VEC runs as built and that figure comes from the re-run". Code's call (§8 item 1: "if cheap, else as
+      built"): the launch files were already checked and frozen, so G-VEC runs as built.
+    - **G-CAL-n's seven:** the cap of 80 (Q5, §1.5, as ruled; the coordinating session's relay adds: "The PI may still
+      name a cap from BK's Appendix E; I've asked."), TEMP 0.7 (Q6), the 48 prompts (Q7), the coherence heuristic
+      (Q10) and the arrival's form (Q11) stand. n §0.7's departure reaches G-CAL-n's generations (Q8, §1.8). The whole
+      turn is steered (Q9, §1.9), the one change among the seven.
+    - **The carried items:** GC1, GC2 and GC14 are cleared from LOCK-n v0.1's list (§5).
+    - **Departures:** this entry's are inert, no strike (§6).
+    - **Values-check:** with n-build's close line on `89a55c3`'s entry, which gives the check and its raw.
 
 - 2026-11-19 — **n package — `scripts/n_analyze.py`, the seat's ruling of the third sitting and ADDENDUM-n2 carried
   in: PIN-n-37 amended to the conservative form, the `fidelity-ceiling` kind and the second sensitivity row in the
@@ -736,6 +807,20 @@ applied to CLAUDE.md.
     coordinating session; G-CAL-n wired while G-VEC waits for the box; LOCK-n v0.1 kept in scratch as its figures
     land, and sent to the seat once, complete, after step 9, with ADDENDUM-n2 §4.2's declarations, R10 to R14, F7
     and F5.
+  - **Close (PI date 2026-11-19, first sitting), n-build's: the seat's answers on R10–R14, F5 and F7.** The seat's
+    raw,
+    [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+    (sha256 `e6ff066d…6d5a`, committed at `a33252a` on the PI's "Route as given"), read in full, rules them in its §3:
+    - R10, R11, R13, R14 and F7 are accepted. Under R10, the extension's reports and cells "stand as committed, under
+      the package they were written with" (§2). R13's two runner texts are corrected at the runner's next change;
+    - F5 is accepted: after the lock `p0_count` is at least 1 and `p0_n` at least 3, "asserted in the schema", and
+      n-analyzer moves its fixtures in its own commit, "before the canonical run";
+    - R12: "the window is the tile", a runner change, self-tested and reviewed on the delta, before G-TIME-n. In the
+      seat's words, "it moves the package digest, so it lands after G-CAL-n's run or in G-CAL-n's own delta, Code's
+      call by the launch order". Code's call: after G-CAL-n's run, in one commit with F5's assertions and R13's two
+      texts; n-analyzer's fixtures, and its schema pin, follow that commit.
+    - **Departures:** this entry's are inert, no strike (§6).
+    - **Values-check:** with n-build's close line on `89a55c3`'s entry, which gives the check and its raw.
 - 2026-11-19 — **n step 4 — backend-ext-2 on n's box, from driver v2g's commit `732a58f`: the BACKEND extension's 24
   reads under the label convention of record, "space", COMPLETE with no pause, so the conditional ruling was not used
   (the seat's answers of 2026-11-18, fourth sitting, §2; ADDENDUM-n2 v0.1 §4.1; the PI's routing, item 2 of "N.
