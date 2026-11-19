@@ -3,11 +3,16 @@ figures, computed on the box from the committed ids, before G-CAL-n.
 
 What it computes (n §0.8, §2.3; ADDENDUM-n1 §6.1-§6.2 and §1.1):
   * the 544 passages of record (``data/n/ids/gvec_passages.jsonl``, (iv)), each forwarded alone from its committed
-    ids, their residuals captured at the candidate indices 31 and 32; per passage and index, the mean over its tokens,
-    the sum of its tokens' squared norms, and its token count (``passage_captures``);
-  * R at each index, the RMS residual norm over the 96 neutral passages' tokens (``directions.rms_norm``). The site is
-    the index whose R is within 2% of 25.49, the nearer if both are (ADDENDUM-n1 §6.1); neither is a STOP for the
-    seat (n §2.3: "reproduced at G-VEC within 2%, else STOP");
+    ids, their residuals captured at the candidate indices 31 and 32; per passage and index, the mean over its tokens
+    at positions 1..n, the sum of those tokens' squared norms and their count, position 0 left out of all three (the
+    convention of record, ``directions.CAPTURE_FROM``), with the per-position figures the diagnostic block reads
+    (``passage_captures``);
+  * R at each index, the RMS residual norm over the 96 neutral passages' tokens at positions 1..n
+    (``directions.rms_norm``). The site is the index whose R is within 2% of 25.49, the nearer if both are
+    (ADDENDUM-n1 §6.1); neither is a STOP, which goes to the PI with the diagnostic block, on the seat's stated
+    default (n §2.3: "reproduced at G-VEC within 2%, else STOP"; the second sitting, §1.5);
+  * beside R at each index, descriptive and no decision, the record's ``diagnostic`` block over the 96 neutral
+    passages (``diagnostic_at``; the seat's answers of 2026-11-19, second sitting, §1.3), on a STOP as on a PASS;
   * at each index, U and v by BK's recipe (``directions.valence_direction``);
   * N2's three directions by A3's recipe (g:164-170) on the 1,344 contexts of record (``a3_contexts.jsonl``, (iv)):
     one forward per context from its committed ids, the span from its committed ``span_start``, and
@@ -23,12 +28,16 @@ A stored direction is a float32 row that the Injection's own normalization leave
 sha16 is the Injection's (``adapters.base.Injection``: u / ||u|| in float64, hashed as float32): the fingerprint the
 campaign's ``Injection.at_frac(..., expect_sha=...)`` checks it against (the schema's ``direction_sha16``).
 
-Code's readings (G1-G14, declared at G-VEC's BUILD for the seat; the coordinating session's routing of 2026-11-19;
-G1, G3, G6 and G9 starred at the top of LOCK-n v0.1's list):
+Code's readings (G1-G14, declared at G-VEC's BUILD for the seat; the coordinating session's routing of 2026-11-19).
+The four starred ones, G1, G3, G6 and G9, the seat ruled standing before the run (its answers of 2026-11-19, first
+sitting, §0 and §1.1-§1.4: "G-VEC runs as built"); after the run it changed one clause of G1 (the second sitting,
+§1.2: position 0 left out):
   G1* the capture convention is ``directions``' (each passage alone, from its committed ids, with no special token and
-      no template; every token in its mean and in R; the neutral PCA centred; R the pooled RMS). The R check tests the
-      clauses that bear on R (the passage alone, no special token, every token, the pooled RMS); it cannot test the
-      centring, so v under an uncentred U is recorded and stored beside, descriptive (the review's O1).
+      no template; position 0 of every passage left out of its mean and out of R, the squared norms and the count
+      both; the neutral PCA centred; R the pooled RMS over the neutral tokens at positions 1..n; at the BUILD and the
+      first run, every token in its mean and in R, the convention ``R_all`` keeps beside). The R check tests
+      the clauses that bear on R (the passage alone, no special token, positions 1..n, the pooled RMS); it cannot test
+      the centring, so v under an uncentred U is recorded and stored beside, descriptive (the review's O1).
   G2  one forward per passage captures both candidate indices; R at both; the site by ADDENDUM-n1 §6.1, "the nearer"
       read as nearer in R to 25.49 and an exact tie going to 32, the index BK's "layer 32" names; U, h̄± and v at
       both, the site's of record.
@@ -63,6 +72,20 @@ Departures from G1-G14's words as routed (the review's F10, O3): G7's single ``d
 files, two of them ``ALT``'s, and A3's freeze_sha sits in ``gvec.json`` per index; G2's tie rule; G5's guard profile at
 both indices, not the site alone; G6's fit-only family stored as rows, not figures alone; G1's uncentred variant; the
 record's ``of_record`` block (the site's R, R_ℓ and directions together).
+
+The passages block carries the token counts as now and the count entering R beside them, ``neutral_tokens_in_R`` (the
+seat's §1.2: "The record carries the token counts as now and the count entering R beside").
+
+Code's readings at the second sitting's delta (declared for the seat): the record's schema is ``n-gvec-v2``, its R not
+the first run's quantity; beside each ``rms_by_position`` figure, its token count (``n_by_position``): a count, not a
+figure, so §1.3's "Nothing else" is not read against it, there so that "each over the 96 passages" can be read off the
+record; a position no passage reaches has no figure (null; no passage of record is that short, the shortest having 35
+tokens); a non-finite diagnostic figure is recorded as null and named in its index's ``nonfinite`` list, so that no
+descriptive figure ends a run (§1.3: "none a decision"; R stays a raise); the site block names the convention
+(``R_CONVENTION``); the stage prints, beside §1.3's figures, the count entering R ("R over positions 1..n: ...") and
+each diagnostic line's token counts ("; tokens ..."), and the R lines before the diagnostic block is computed; the
+driver refuses, before the load, a passage with no token at positions 1..n (the review's O7), and
+``passage_captures`` refuses it again before its forward.
 """
 from __future__ import annotations
 
@@ -79,7 +102,7 @@ from .. import extract
 from ..adapters.base import Injection, sha16_arr
 from . import directions, keys, schema
 
-RECORD_SCHEMA = "n-gvec-v1"
+RECORD_SCHEMA = "n-gvec-v2"                  # v2: position 0 out of the means and R (the second sitting, §1.2)
 STAGE = "G-VEC"
 CANDIDATE_INDICES = (31, 32)                 # ADDENDUM-n1 §6.1
 R_REFERENCE = 25.49                          # n §2.3: "R ≈ 25.49 there [C] -- reproduced at G-VEC within 2%"
@@ -97,6 +120,13 @@ POLES = ("+", "-", "0")
 OUT_RECORD, OUT_COSINES = "gvec.json", "gvec_cosines.json"
 SITE_RULE = ("ADDENDUM-n1 §6.1: the index within 2% of 25.49; the nearer in R if both, an exact tie to 32; neither a "
              "STOP")
+R_CONVENTION = ("the pooled RMS over the neutral tokens at positions 1..n: position 0 of every passage left out of its "
+                "mean and of R, the squared norms and the count both (the seat's answers of 2026-11-19, second "
+                "sitting, §1.2)")
+DIAG_HEAD = 5                                # §1.3: the RMS norm at positions 0-4 one by one, then 5..n pooled
+DIAG_KEYS = ("0", "1", "2", "3", "4", "5..n")
+STOP_LINE = ("G-VEC STOP: R is within 2% of 25.49 at neither candidate index (n §2.3: \"else STOP\"); for the PI with "
+             "the diagnostic block, on the seat's stated default (the second sitting, §1.5)")
 
 
 def directions_file(index: int) -> str:
@@ -125,37 +155,114 @@ def passage_groups(records: Sequence[Mapping]) -> dict:
     return {p: poles == p for p in POLES}
 
 
+_PER_INDEX = ("means", "sq", "sq_all", "pos_sq", "tail_sq", "norm0", "max_rest")
+
+
 def passage_captures(forward: Callable, records: Sequence[Mapping], indices: Sequence[int]) -> dict:
-    """One forward per passage over its committed ids, capturing ``indices``: per index, the passages' token means
-    [N, D] (float64), the sums of their tokens' squared norms [N] and their token counts [N]."""
+    """One forward per passage over its committed ids, capturing ``indices``. Per index, under the convention of
+    record (positions 1..n, ``directions.passage_rows``): the passages' means [N, D] (float64) and the sums of their
+    tokens' squared norms [N]; beside them, for the diagnostic block, the sums over every position as the first run
+    took them [N], the squared norm at each of positions 0-4 [N, 5] (NaN past a passage's end), the sums over 5..n
+    [N], the norm at position 0 [N] and the largest norm over 1..n [N]. Across the indices: the token counts [N]
+    (every position, as recorded), the counts entering R [N] and the counts over 5..n [N]. A passage of one id, with
+    no token at positions 1..n, is refused before its forward."""
     idx = tuple(int(i) for i in indices)
-    means: dict = {i: [] for i in idx}
-    sq: dict = {i: [] for i in idx}
-    ntok = []
+    per: dict = {k: {i: [] for i in idx} for k in _PER_INDEX}
+    ntok, nr, ntail = [], [], []
     for rec in records:
         ids = [int(t) for t in rec["ids"]]
-        if not ids:
-            raise SystemExit(f"passage {rec['id']}: no ids")
+        if len(ids) <= directions.CAPTURE_FROM:
+            raise SystemExit(f"passage {rec['id']}: {len(ids)} id(s), none at positions 1..n (the convention of "
+                             f"record)")
         acts = forward(ids, idx)
         for i in idx:
             h = np.asarray(acts[i]).astype(np.float64)
             if h.shape[0] != len(ids):
                 raise SystemExit(f"passage {rec['id']}: {h.shape[0]} captured rows for {len(ids)} ids at {i}")
-            means[i].append(directions.passage_mean(h))
-            sq[i].append(float(np.sum(h * h)))
+            rows = directions.passage_rows(h)
+            norms = np.linalg.norm(h, axis=1)
+            head = np.full(DIAG_HEAD, np.nan)
+            k = min(DIAG_HEAD, h.shape[0])
+            head[:k] = np.sum(h[:k] * h[:k], axis=1)
+            tail = h[DIAG_HEAD:]
+            per["means"][i].append(directions.passage_mean(h))
+            per["sq"][i].append(float(np.sum(rows * rows)))
+            per["sq_all"][i].append(float(np.sum(h * h)))
+            per["pos_sq"][i].append(head)
+            per["tail_sq"][i].append(float(np.sum(tail * tail)))
+            per["norm0"][i].append(float(norms[0]))
+            per["max_rest"][i].append(float(np.max(norms[directions.CAPTURE_FROM:])))
         ntok.append(len(ids))
-    return {"indices": idx, "means": {i: np.stack(means[i]) for i in idx},
-            "sq": {i: np.asarray(sq[i], np.float64) for i in idx}, "ntok": np.asarray(ntok, np.int64)}
+        nr.append(len(ids) - directions.CAPTURE_FROM)
+        ntail.append(max(0, len(ids) - DIAG_HEAD))
+    out: dict = {"indices": idx, "ntok": np.asarray(ntok, np.int64), "nr": np.asarray(nr, np.int64),
+                 "ntail": np.asarray(ntail, np.int64)}
+    for k in _PER_INDEX:
+        out[k] = {i: (np.stack(per[k][i]) if k in ("means", "pos_sq") else np.asarray(per[k][i], np.float64))
+                  for i in idx}
+    return out
 
 
 def r_at(cap: Mapping, neutral: np.ndarray, index: int) -> float:
-    """R at ``index``: the RMS residual norm over the neutral passages' tokens (n §0.8; ``directions.rms_norm``)."""
-    return directions.rms_norm(cap["sq"][int(index)][neutral], cap["ntok"][neutral])
+    """R at ``index``: the RMS residual norm over the neutral passages' tokens at positions 1..n (n §0.8;
+    ``directions.rms_norm``; the convention of record)."""
+    return directions.rms_norm(cap["sq"][int(index)][neutral], cap["nr"][neutral])
+
+
+def diagnostic_at(cap: Mapping, mask: np.ndarray, index: int) -> dict:
+    """§1.3's figures at ``index`` over the passages ``mask`` selects (the seat's answers of 2026-11-19, second
+    sitting), descriptive, none a decision: ``R_all``, the pooled RMS over every position (the first run's R);
+    ``rms_by_position``, the RMS norm at positions 0, 1, 2, 3 and 4, each over the passages that reach it, and pooled
+    over 5..n, with ``n_by_position`` the token count of each; ``max_norm``, the largest per-token norm at position 0
+    and over 1..n; ``R_mean_of_passage_rms``, the mean over the passages of the per-passage RMS over 1..n. A figure
+    that is not finite is recorded as None and its key named in ``nonfinite``: no descriptive figure raises (the
+    review's F1). A position's passages are those whose token count reaches it."""
+    i, m = int(index), np.asarray(mask, dtype=bool)
+    ps, nt = cap["pos_sq"][i][m], cap["ntok"][m]
+    bad: list = []
+
+    def fig(x, key):
+        f = float(x)
+        if math.isfinite(f):
+            return f
+        bad.append(key)
+        return None
+    rms: dict = {}
+    cnt: dict = {}
+    for p in range(DIAG_HEAD):
+        reach = nt > p
+        k = int(np.sum(reach))
+        rms[DIAG_KEYS[p]] = fig(math.sqrt(float(np.sum(ps[reach, p])) / k), f"rms_by_position.{DIAG_KEYS[p]}") \
+            if k else None
+        cnt[DIAG_KEYS[p]] = k
+    kt = int(np.sum(cap["ntail"][m]))
+    rms[DIAG_KEYS[-1]] = fig(math.sqrt(float(np.sum(cap["tail_sq"][i][m])) / kt), "rms_by_position.5..n") \
+        if kt else None
+    cnt[DIAG_KEYS[-1]] = kt
+    per_rms = np.sqrt(cap["sq"][i][m] / cap["nr"][m])
+    out = {"R_all": fig(directions.rms_norm(cap["sq_all"][i][m], nt), "R_all"), "rms_by_position": rms,
+           "n_by_position": cnt,
+           "max_norm": {"0": fig(np.max(cap["norm0"][i][m]), "max_norm.0"),
+                        "1..n": fig(np.max(cap["max_rest"][i][m]), "max_norm.1..n")},
+           "R_mean_of_passage_rms": fig(np.mean(per_rms), "R_mean_of_passage_rms")}
+    out["nonfinite"] = sorted(bad)
+    return out
+
+
+def diagnostic_line(index: int, d: Mapping) -> str:
+    """The diagnostic block's line at ``index``, which the run of record and the smoke print alike (§1.3)."""
+    rp = ", ".join(f"{k} {d['rms_by_position'][k]!r}" for k in DIAG_KEYS)
+    nn = ", ".join(f"{k} {d['n_by_position'][k]}" for k in DIAG_KEYS)
+    mx = d["max_norm"]
+    return (f"diagnostic at index {int(index)}, descriptive: R_all {d['R_all']!r}; rms_by_position {rp}; max_norm 0 "
+            f"{mx['0']!r}, 1..n {mx['1..n']!r}; R_mean_of_passage_rms {d['R_mean_of_passage_rms']!r}; tokens {nn}"
+            + (f"; not finite, recorded as null: {', '.join(d['nonfinite'])}" if d["nonfinite"] else ""))
 
 
 def choose_site(r_by_index: Mapping[int, float], reference: float = R_REFERENCE, tol: float = R_TOLERANCE) -> dict:
     """ADDENDUM-n1 §6.1: the index whose R is within ``tol`` of ``reference`` (|R / reference - 1| <= tol); the nearer
-    if more than one is, an exact tie to the higher index (G2); none within is a STOP for the seat."""
+    if more than one is, an exact tie to the higher index (G2); none within is a STOP (for the PI, on the seat's stated
+    default: the second sitting, §1.5)."""
     rel = {int(i): abs(float(r) / float(reference) - 1.0) for i, r in r_by_index.items()}
     within = {i: rel[i] <= tol for i in rel}
     ok = [i for i in rel if within[i]]
@@ -314,7 +421,9 @@ def compute(forward: Callable, passages: Sequence[Mapping], contexts: Sequence[M
             say: Callable = print) -> dict:
     """G-VEC's figures and rows. ``a3``: A3's ``axis_conditions``, ``axis_order``, ``fit_ids`` and ``val_ids`` (from
     scripts/box_e0_corpus.py). Returns {"status", "figures", "rows", "alt_rows"}: on a STOP (R within 2% at no index)
-    the figures end at R and nothing else is computed; the rows map index -> name -> float32 unit row."""
+    the figures end at R and the diagnostic block, and nothing else is computed; the rows map index -> name -> float32
+    unit row. The R lines print before the figures are checked finite and before the diagnostic block is computed, so
+    that a raise after them leaves R in the stage's output (the review's F1)."""
     idx = tuple(int(i) for i in indices)
     if tuple(a3["axis_order"]) != NAMED[1:]:
         raise SystemExit(f"A3's axis order {tuple(a3['axis_order'])} is not the named rows' {NAMED[1:]}")
@@ -324,22 +433,30 @@ def compute(forward: Callable, passages: Sequence[Mapping], contexts: Sequence[M
     r = {i: r_at(pc, groups["0"], i) for i in idx}
     site = choose_site(r, reference)
     tokens = token_table(passages, pc["ntok"].tolist())
-    figures: dict = {
-        "passages": {"n": len(passages), "tokens": tokens, "neutral_tokens": int(pc["ntok"][groups["0"]].sum())},
-        "site": {"indices": list(idx), "R": {str(i): _finite(r[i]) for i in idx},
-                 "rel": {str(i): _finite(site["rel"][i]) for i in idx},
-                 "within": {str(i): bool(site["within"][i]) for i in idx}, "reference": float(reference),
-                 "tolerance": R_TOLERANCE, "site": site["site"], "status": site["status"], "rule": SITE_RULE},
-        "bk": {"resid_rms": R_BK_RECORD, "pole_l2": POLE_L2_BK},
-        "fit_ids": list(a3["fit_ids"]), "val_ids": list(a3["val_ids"]),
-    }
+    n_all, n_r = int(pc["ntok"][groups["0"]].sum()), int(pc["nr"][groups["0"]].sum())
     for s, t in tokens.items():
         say(f"tokens, {s}: {t['n']} passages, min {t['min']}, mean {t['mean']:.2f}, max {t['max']}")
+    say(f"R over positions 1..n: {n_r} of the {n_all} neutral tokens, position 0 of each of the "
+        f"{int(groups['0'].sum())} neutral passages left out (the convention of record)")
     for i in idx:
         say(f"R at index {i}: {r[i]!r} (|R/{reference} - 1| = {site['rel'][i]!r}; "
             f"{'within' if site['within'][i] else 'outside'} 2%)")
+    figures: dict = {
+        "passages": {"n": len(passages), "tokens": tokens, "neutral_tokens": n_all, "neutral_tokens_in_R": n_r},
+        "site": {"indices": list(idx), "R": {str(i): _finite(r[i]) for i in idx},
+                 "rel": {str(i): _finite(site["rel"][i]) for i in idx},
+                 "within": {str(i): bool(site["within"][i]) for i in idx}, "reference": float(reference),
+                 "tolerance": R_TOLERANCE, "site": site["site"], "status": site["status"], "rule": SITE_RULE,
+                 "convention": R_CONVENTION},
+        "bk": {"resid_rms": R_BK_RECORD, "pole_l2": POLE_L2_BK},
+        "fit_ids": list(a3["fit_ids"]), "val_ids": list(a3["val_ids"]),
+    }
+    diag = {i: diagnostic_at(pc, groups["0"], i) for i in idx}
+    figures["diagnostic"] = {str(i): diag[i] for i in idx}
+    for i in idx:
+        say(diagnostic_line(i, diag[i]))
     if site["status"] != "PASS":
-        say("G-VEC STOP: R is within 2% of 25.49 at neither candidate index (n §2.3: \"else STOP\"); the seat rules")
+        say(STOP_LINE)
         return {"status": "STOP", "figures": figures, "rows": {}, "alt_rows": {}}
     s = site["site"]
     say(f"site: index {s} (ADDENDUM-n1 §6.1)")
@@ -513,17 +630,137 @@ def _selftest(chk, tmp) -> None:
     pc = passage_captures(fwd, ps, L)
     a0 = be.forward_all(ps[0]["ids"], L)
     h3 = a0[3].astype(np.float64)
-    chk("gvec: a passage's mean is its tokens' mean at the index, its squared-norm sum and its token count",
-        np.array_equal(pc["means"][3][0], h3.mean(axis=0)) and pc["ntok"][0] == len(ps[0]["ids"])
-        and abs(pc["sq"][3][0] - float(np.sum(np.linalg.norm(h3, axis=1) ** 2))) <= 1e-12 * pc["sq"][3][0], "")
+    chk("gvec: a passage's mean and squared-norm sum are over its tokens at positions 1..n (position 0 left out, the "
+        "convention of record); its token count is every position's, its count entering R one fewer, and its sum "
+        "over every position the first run's",
+        np.array_equal(pc["means"][3][0], h3[1:].mean(axis=0)) and pc["ntok"][0] == len(ps[0]["ids"])
+        and pc["nr"][0] == len(ps[0]["ids"]) - 1
+        and abs(pc["sq"][3][0] - float(np.sum(np.linalg.norm(h3[1:], axis=1) ** 2))) <= 1e-12 * pc["sq"][3][0]
+        and abs(pc["sq_all"][3][0] - float(np.sum(np.linalg.norm(h3, axis=1) ** 2))) <= 1e-12 * pc["sq_all"][3][0],
+        "")
     neu = groups["0"]
 
-    def r_direct(i):
-        acts = [be.forward_all(p["ids"], L)[i].astype(np.float64) for p, n in zip(ps, neu) if n]
+    def r_direct(i, frm=1):
+        acts = [be.forward_all(p["ids"], L)[i].astype(np.float64)[frm:] for p, n in zip(ps, neu) if n]
         return math.sqrt(sum(float(np.sum(a ** 2)) for a in acts) / sum(a.shape[0] for a in acts))
     want_r = {i: r_direct(i) for i in L}
-    chk("gvec: R is the RMS over the neutral passages' tokens (pooled; n §0.8), at each index",
-        all(abs(r_at(pc, neu, i) - want_r[i]) <= 1e-12 * want_r[i] for i in L), want_r)
+    chk("gvec: R is the RMS over the neutral passages' tokens at positions 1..n (pooled; n §0.8; the convention of "
+        "record), at each index",
+        all(abs(r_at(pc, neu, i) - want_r[i]) <= 1e-12 * want_r[i] for i in L)
+        and all(abs(r_at(pc, neu, i) - r_direct(i, 0)) > 1e-9 * want_r[i] for i in L), want_r)
+    n_calls = len(be.calls)
+    try:
+        passage_captures(fwd, [dict(ps[0], ids=ps[0]["ids"][:1])], L)
+        chk("gvec: a passage of one id (no token at positions 1..n) is refused, before its forward", False, "accepted")
+    except SystemExit:
+        chk("gvec: a passage of one id (no token at positions 1..n) is refused, before its forward",
+            len(be.calls) == n_calls, "")
+    two = passage_captures(fwd, [dict(ps[0], ids=ps[0]["ids"][:2])], L)
+    h2 = be.forward_all(ps[0]["ids"][:2], L)[3].astype(np.float64)
+    chk("gvec: a passage of two ids is captured: its count entering R 1, its mean and squared-norm sum its row 1's",
+        int(two["nr"][0]) == 1 and int(two["ntok"][0]) == 2 and np.array_equal(two["means"][3][0], h2[1])
+        and two["sq"][3][0] == float(np.sum(h2[1:] * h2[1:])), "")
+    chk("gvec: the convention's text names positions 1..n and position 0 left out of the mean and of R",
+        "positions 1..n" in R_CONVENTION and "position 0 of every passage left out of its mean and of R" in R_CONVENTION
+        and "the squared norms and the count both" in R_CONVENTION, R_CONVENTION)
+
+    def fwd_sink(ids, layers):                   # a sink at position 0: its row scaled fiftyfold, the others unchanged
+        acts = be.forward_all(ids, layers)
+        return {l: np.concatenate([acts[l][:1] * np.float32(50.0), acts[l][1:]]) for l in acts}
+    pcs = passage_captures(fwd_sink, ps, L)
+    dg = {i: (diagnostic_at(pcs, neu, i), diagnostic_at(pc, neu, i)) for i in L}
+    chk("gvec: a sink at position 0 leaves the means and R of record exactly as they are, and moves R over every "
+        "position and position 0's figures (the diagnostic block)",
+        all(np.array_equal(pcs["means"][i], pc["means"][i]) and np.array_equal(pcs["sq"][i], pc["sq"][i])
+            and r_at(pcs, neu, i) == r_at(pc, neu, i) for i in L)
+        and all(s_["R_all"] > 2.0 * p_["R_all"]
+                and s_["rms_by_position"]["0"] > 40.0 * p_["rms_by_position"]["0"]
+                and s_["rms_by_position"]["1"] == p_["rms_by_position"]["1"] for s_, p_ in dg.values()), "")
+
+    def diag_direct(i, mask, fw=None):           # §1.3's figures, computed apart from passage_captures
+        fw = fw or be.forward_all
+        acts = [np.asarray(fw(p["ids"], L)[i]).astype(np.float64) for p, n in zip(ps, mask) if n]
+        byp, cnt = {}, {}
+        for p_ in range(5):
+            v_ = [float(a[p_] @ a[p_]) for a in acts if a.shape[0] > p_]
+            byp[str(p_)] = math.sqrt(sum(v_) / len(v_)) if v_ else None
+            cnt[str(p_)] = len(v_)
+        tl = [a[5:] for a in acts]
+        tn = sum(t.shape[0] for t in tl)
+        byp["5..n"] = math.sqrt(sum(float(np.sum(t * t)) for t in tl) / tn) if tn else None
+        cnt["5..n"] = tn
+        nm = [np.linalg.norm(a, axis=1) for a in acts]
+        return {"R_all": math.sqrt(sum(float(np.sum(a * a)) for a in acts) / sum(a.shape[0] for a in acts)),
+                "rms_by_position": byp, "n_by_position": cnt,
+                "max_norm": {"0": max(float(x[0]) for x in nm), "1..n": max(float(x[1:].max()) for x in nm)},
+                "R_mean_of_passage_rms": float(np.mean([math.sqrt(float(np.sum(a[1:] * a[1:])) / (a.shape[0] - 1))
+                                                        for a in acts])), "nonfinite": []}
+
+    def close(a, b) -> bool:
+        if isinstance(a, dict):
+            return isinstance(b, dict) and set(a) == set(b) and all(close(a[k], b[k]) for k in a)
+        if isinstance(a, list):
+            return a == b
+        if a is None or b is None:
+            return a is None and b is None
+        if isinstance(a, int):
+            return isinstance(b, int) and a == b
+        return isinstance(a, float) and abs(a - b) <= 1e-12 * max(1.0, abs(b))
+
+    def fwd_far(ids, layers):                    # position 0 shrunk a hundredfold, the last row grown fiftyfold
+        acts = be.forward_all(ids, layers)
+        out_ = {}
+        for l_, a_ in acts.items():
+            b_ = a_.copy()
+            b_[0] = b_[0] * np.float32(0.01)
+            b_[-1] = b_[-1] * np.float32(50.0)
+            out_[l_] = b_
+        return out_
+    pcf = passage_captures(fwd_far, ps, L)
+    chk("gvec: max_norm against a computation apart when the largest norm is the last row's and position 0's is small: "
+        "position 0's own maximum, and the maximum over every row 1..n, the last included",
+        all(close(diagnostic_at(pcf, neu, i), diag_direct(i, neu, fwd_far)) for i in L)
+        and all(diagnostic_at(pcf, neu, i)["max_norm"]["1..n"] > 10.0 * diagnostic_at(pcf, neu, i)["max_norm"]["0"]
+                for i in L), "")
+
+    def fwd_inf(ids, layers):                    # position 0 not finite
+        acts = be.forward_all(ids, layers)
+        return {l_: np.concatenate([np.full_like(a_[:1], np.inf), a_[1:]]) for l_, a_ in acts.items()}
+    pci = passage_captures(fwd_inf, ps, L)
+    di = diagnostic_at(pci, neu, 3)
+    chk("gvec: a non-finite descriptive figure is recorded as null and named in nonfinite, never raised (the review's "
+        "F1); R over positions 1..n stays the finite figure of record, and the line names the nulls",
+        di["R_all"] is None and di["rms_by_position"]["0"] is None and di["max_norm"]["0"] is None
+        and di["nonfinite"] == ["R_all", "max_norm.0", "rms_by_position.0"]
+        and all(di["rms_by_position"][k] is not None for k in DIAG_KEYS[1:]) and di["max_norm"]["1..n"] is not None
+        and r_at(pci, neu, 3) == r_at(pc, neu, 3) and diagnostic_at(pc, neu, 3)["nonfinite"] == []
+        and diagnostic_line(3, di).endswith("; not finite, recorded as null: R_all, max_norm.0, rms_by_position.0"),
+        di["nonfinite"])
+    ntk = pc["ntok"]
+    short3 = neu & (ntk == 3)
+    chk("gvec: the diagnostic block (§1.3) at each index against a computation apart: R over every position, the RMS "
+        "norm at positions 0-4 each over the passages reaching it and pooled over 5..n, each with its token count, the "
+        "largest norm at position 0 and over 1..n, and the mean of the per-passage RMS over 1..n",
+        all(close(diagnostic_at(pc, neu, i), diag_direct(i, neu)) for i in L)
+        and diagnostic_at(pc, neu, 3)["n_by_position"]["0"] == 96
+        and 0 < diagnostic_at(pc, neu, 3)["n_by_position"]["4"] < 96
+        and diagnostic_at(pc, neu, 3)["n_by_position"]["5..n"] == int(np.sum(np.maximum(ntk[neu] - 5, 0)))
+        and diagnostic_at(pc, neu, 3)["R_all"] == directions.rms_norm(pc["sq_all"][3][neu], ntk[neu]),
+        diagnostic_at(pc, neu, 3)["n_by_position"])
+    d3 = diagnostic_at(pc, short3, 4) if short3.any() else None
+    chk("gvec: a position no selected passage reaches has no figure (null) and a count of 0; the others are figures",
+        d3 is not None and close(d3, diag_direct(4, short3))
+        and [d3["rms_by_position"][k] is None for k in DIAG_KEYS] == [False, False, False, True, True, True]
+        and [d3["n_by_position"][k] for k in ("3", "4", "5..n")] == [0, 0, 0] and d3["nonfinite"] == [],
+        None if d3 is None else d3["n_by_position"])
+    dl = diagnostic_line(4, diagnostic_at(pc, neu, 4))
+    d4 = diagnostic_at(pc, neu, 4)
+    chk("gvec: the diagnostic line names the index and prints each figure in full (repr) and each count",
+        dl.startswith(f"diagnostic at index 4, descriptive: R_all {d4['R_all']!r}; rms_by_position 0 ")
+        and all(f"{k} {d4['rms_by_position'][k]!r}" in dl for k in DIAG_KEYS)
+        and f"max_norm 0 {d4['max_norm']['0']!r}, 1..n {d4['max_norm']['1..n']!r}" in dl
+        and f"; R_mean_of_passage_rms {d4['R_mean_of_passage_rms']!r}; tokens " in dl
+        and dl.endswith("; tokens " + ", ".join(f"{k} {d4['n_by_position'][k]}" for k in DIAG_KEYS)), dl[:120])
     v = valence_at(pc, groups, 4)
     v2 = directions.valence_direction(pc["means"][4][groups["+"]], pc["means"][4][groups["-"]],
                                       pc["means"][4][groups["0"]])
@@ -646,6 +883,21 @@ def _selftest(chk, tmp) -> None:
     chk("gvec: the stage prints R, the site, each state's token counts and the cosines, never a passage or an id list",
         any(x.startswith("site: index 4") for x in lines) and any(x.startswith("tokens, flow engagement:")
                                                                  for x in lines) and not ids_seen, ids_seen[:2])
+    n_all_t, n_neu_t = int(ntk[neu].sum()), int(neu.sum())
+    want_d = {str(i): diagnostic_at(pc, neu, i) for i in L}
+    r_line = (f"R over positions 1..n: {n_all_t - n_neu_t} of the {n_all_t} neutral tokens, position 0 of each of the "
+              f"{n_neu_t} neutral passages left out (the convention of record)")
+    order_ok = [x.split(":")[0] for x in lines if x.startswith(("R over positions", "R at index", "diagnostic at",
+                                                                 "site: index"))]
+    chk("gvec: the record names the convention, carries the count entering R beside the token counts and the "
+        "diagnostic block at both indices; the stage prints the count, R, the diagnostic lines and the site, in order",
+        RECORD_SCHEMA == "n-gvec-v2" and f["site"]["convention"] == R_CONVENTION
+        and f["passages"]["neutral_tokens"] == n_all_t and f["passages"]["neutral_tokens_in_R"] == n_all_t - n_neu_t
+        and f["diagnostic"] == want_d and r_line in lines
+        and [x for x in lines if x.startswith("diagnostic at index ")] == [diagnostic_line(i, want_d[str(i)])
+                                                                           for i in L]
+        and order_ok == ["R over positions 1..n", "R at index 3", "R at index 4", "diagnostic at index 3, descriptive",
+                         "diagnostic at index 4, descriptive", "site"], order_ok)
     out = tmp / "out"
     out.mkdir(parents=True)
     rec = write(out, res, {"note": "selftest"})
@@ -667,7 +919,13 @@ def _selftest(chk, tmp) -> None:
     chk("gvec: the cosines file is the analyzer's form, its values the site's rows' as read back",
         list(cos) == ["cosines"] and cos["cosines"] == f["cosines"]["named"]
         == directions.cosines({n: back[4][j].astype(np.float64) for j, n in enumerate(NAMED) if n in GVEC_DIRS}), "")
-    res_stop = compute(fwd, ps, recs, a3=a3, d_model=be.d_model, indices=L, reference=1.0e6, say=lambda *_: None)
+    stop_lines: list = []
+    res_stop = compute(fwd, ps, recs, a3=a3, d_model=be.d_model, indices=L, reference=1.0e6, say=stop_lines.append)
+    chk("gvec: a STOP prints its line for the PI, on the seat's stated default (the second sitting, §1.5), after the "
+        "diagnostic lines, and no site line",
+        stop_lines[-1] == STOP_LINE and "for the PI" in STOP_LINE and "§1.5" in STOP_LINE
+        and sum(x.startswith("diagnostic at index ") for x in stop_lines) == 2
+        and not any(x.startswith("site: index") for x in stop_lines), stop_lines[-1:])
     out2 = tmp / "stop"
     out2.mkdir()
     rec2 = write(out2, res_stop, {"note": "selftest"})
@@ -675,6 +933,12 @@ def _selftest(chk, tmp) -> None:
         res_stop["status"] == "STOP" and res_stop["rows"] == {} and [p.name for p in out2.iterdir()] == [OUT_RECORD]
         and rec2["status"] == "STOP" and "valence" not in rec2
         and rec2["site"]["R"] == {"3": r_at(pc, neu, 3), "4": r4}, "")
+    stop_back = json.loads((out2 / OUT_RECORD).read_text(encoding="utf-8"))
+    chk("gvec: a STOP's record carries the diagnostic block at both indices (§1.5: the STOP goes to the PI with §1.3's "
+        "figures), the convention and the count entering R, as written",
+        stop_back["schema"] == "n-gvec-v2" and stop_back["diagnostic"] == want_d
+        and stop_back["site"]["convention"] == R_CONVENTION
+        and stop_back["passages"]["neutral_tokens_in_R"] == n_all_t - n_neu_t, "")
     try:
         compute(fwd, ps, recs, a3=dict(a3, axis_order=("span_sentiment", "span_reward", "span_character")),
                 d_model=be.d_model, indices=L, reference=r4, say=lambda *_: None)

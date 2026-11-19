@@ -5,13 +5,15 @@ v = (I − UᵀU)(h̄₊ − h̄₋), U the first ten principal components of th
 ṽ(d) = d·ρ·R·v/‖v‖₂ with R the RMS residual norm over the neutral corpus's tokens at layer 32". This module is the
 arithmetic, in float64 numpy, on captures the stage provides; it loads no model.
 
-Code's readings (declared at the BUILD for the seat; G-VEC's R check, within 2% of 25.49, tests the capture
-convention they sit on):
-  * a passage is encoded alone, with no special tokens and no template, and every one of its tokens counts in its
-    mean and in R (BK §3.1: "We represent each passage by the mean activation over its T_i tokens");
+The capture convention of record (Code's readings at the BUILD, as the seat ruled them; its answers of 2026-11-19,
+second sitting, §1.2, changed one clause after G-VEC's first run; G-VEC's R check, within 2% of 25.49, tests it):
+  * a passage is encoded alone, with no special tokens and no template; position 0 of every passage is left out of
+    its mean and out of R, the squared norms and the count both (``CAPTURE_FROM``): forwarded bare, a passage's first
+    position carries the residual stream's attention sink (the seat's §1.2), so the mean is over its tokens at
+    positions 1..n;
   * the principal components are those of the 96 neutral representations centred on their mean (standard PCA);
     U's rows are the top ten right singular vectors;
-  * R = sqrt(sum over neutral tokens of ||r||^2 / their count) (BK §3.1's RMS residual norm).
+  * R = sqrt(sum over the neutral tokens at positions 1..n of ||r||^2 / their count) (BK §3.1's RMS residual norm).
 
 The random directions are ``keys.random_directions``; N2's three directions are A3's, by ``valence_core.extract``'s
 arithmetic imported unchanged at G-VEC (``gvec``), on the committed ids (ADDENDUM-n1 §1.1: the box tokenizes nothing).
@@ -44,16 +46,27 @@ def bk_state(corpus_state: str) -> str:
     return _BK_STATE.get(corpus_state, corpus_state)
 
 
-def passage_mean(acts: np.ndarray) -> np.ndarray:
-    """[T, D] residuals of one passage -> its mean [D] (float64)."""
+#: The first position a passage's mean and R count: position 0 is left out of both (the convention of record).
+CAPTURE_FROM = 1
+
+
+def passage_rows(acts: np.ndarray) -> np.ndarray:
+    """[T, D] residuals of one passage -> the rows its mean and R count, positions 1..n (float64). A passage of one
+    token has none, and is refused."""
     a = np.asarray(acts, dtype=np.float64)
-    if a.ndim != 2 or a.shape[0] == 0:
-        raise ValueError(f"passage residuals must be [T>0, D], got {a.shape}")
-    return a.mean(axis=0)
+    if a.ndim != 2 or a.shape[0] <= CAPTURE_FROM:
+        raise ValueError(f"passage residuals must be [T>{CAPTURE_FROM}, D], got {a.shape}")
+    return a[CAPTURE_FROM:]
+
+
+def passage_mean(acts: np.ndarray) -> np.ndarray:
+    """[T, D] residuals of one passage -> its mean [D] over positions 1..n (float64; ``passage_rows``)."""
+    return passage_rows(acts).mean(axis=0)
 
 
 def rms_norm(token_sq_norm_sums: Sequence[float], token_counts: Sequence[int]) -> float:
-    """R from per-passage sums of squared token norms and token counts (the neutral corpus)."""
+    """R from per-passage sums of squared token norms and their token counts (the neutral corpus): for R, G-VEC passes
+    the sums and counts over positions 1..n (``passage_rows``); for the diagnostic block's R_all, every position's."""
     tot, n = float(np.sum(token_sq_norm_sums)), int(np.sum(token_counts))
     if n <= 0:
         raise ValueError("no neutral tokens")
@@ -119,6 +132,21 @@ def _selftest(chk, tmp) -> None:
     chk("directions: unit norm, removed fraction in [0, 1]",
         abs(float(np.linalg.norm(out["unit"])) - 1.0) < 1e-12 and 0.0 <= out["removed_fraction"] <= 1.0, "")
     chk("directions: R is the RMS over tokens", rms_norm([9.0, 16.0], [1, 1]) == float(np.sqrt(12.5)), "")
+    sink = np.array([[100.0, -100.0], [1.0, 2.0], [3.0, 4.0]])
+    chk("directions: the convention of record: a passage's mean and R rows are positions 1..n, position 0 left out "
+        "(CAPTURE_FROM 1)",
+        CAPTURE_FROM == 1 and np.array_equal(passage_mean(sink), np.array([2.0, 3.0]))
+        and np.array_equal(passage_rows(sink), sink[1:]) and np.array_equal(passage_mean(sink[:2]), sink[1]),
+        passage_mean(sink))
+    short = []
+    for a_ in (sink[:1], np.zeros((0, 2)), np.zeros(3)):
+        try:
+            passage_rows(a_)
+            short.append(False)
+        except ValueError:
+            short.append(True)
+    chk("directions: a passage of one token (no rows after position 0), or of none, or not [T, D], is refused",
+        short == [True, True, True], short)
     try:
         valence_direction(pos[:-1], neg, neutral)
         chk("directions: a corpus short of 224 per pole is refused", False, "accepted")

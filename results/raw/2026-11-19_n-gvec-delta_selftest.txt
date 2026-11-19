@@ -1,0 +1,56 @@
+n -- G-VEC's delta on the seat's second sitting (the answers of 2026-11-19, second sitting: s1.2, s1.3, s1.4 (ii)-(iv),
+s1.5): its self-test on the laptop, committed with the delta. PI date 2026-11-19. Code (the n-build session).
+
+The change, on f4b3e73's versions of these paths (each the same bytes at ab72d0f):
+  valence_core/n/gvec.py        e2f7a49ee6e9838ede63ea3baca6dfd42ec0a90451244e4228f0e6104c05be94  (+305 -41)
+  valence_core/n/directions.py  c63c8ea8c4b44cf75efbbdf091dd78261d151265a941aa6dd0cd89d6485de527  (+39 -11)
+  scripts/n_sessions.py         2728146e85a726850bbb0a3c4cca1ea650c9dd6a131a687960532e3d6c6f570c  (+58 -20)
+The package: valence_core/n's digest moves from
+  1bb0daeab853b4a848ed0afb8feac1010013048c2dc712d29a0723210bccaf51 (516b60f's, unchanged at every commit since) to
+  d3415b10f568a7a943353f92ac653bc6715b41ca18b38464e99436f98559a519,
+  both computed by shell in the form valence_core/m/resume.py's package_sha256_of states. The self-test prints no
+  digest; the package's own `hashes` runs when G-VEC's launch files v2 are made, in a battery window of its own.
+
+1. THE LAPTOP. Model-free, as at the BUILD: the HF cases run only where torch and transformers are present, and
+   elsewhere are skipped and counted as skipped; the schema module's own cases count as one aggregated line.
+   The overlay: 162 files, each equal to HEAD f4b3e73's index blob by a join on git hash-object, with each run's three
+   drafts in place.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/gvec2/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, each file re-hashed in the
+   overlay just before the run; the temporary folder was empty before and after.
+
+   Run 1, draft 1 (the bytes the blind review read):
+     valence_core/n/gvec.py        38743639fee0b22a44c4c07dcacd7e435204cc8c1e363dda266a68ef7cda8f1d (878 lines)
+     valence_core/n/directions.py  30b516d775607182efc7c17a045380e306814aff6e33e7dc336230b5e975aed2 (162 lines)
+     scripts/n_sessions.py         ba47050e070a3bfd55bd7fb27fe3db0509691ba153db6de5b06bf1ab1fc3f8b6 (3644 lines)
+     exit 0; output 1 line, sha256 e216c32f588afb6716551ceaf1cdbafe03a6a77c95943172658480e47b8e0314, verbatim:
+  555/555 n selftest checks pass
+   Draft 1 adds ten checks to HEAD's 545: seven in gvec.py's own self-test, two in directions.py's and one in the
+   driver's G-VEC self-test.
+
+   Run 2, draft 2 (the review applied):
+     valence_core/n/gvec.py        939c9f9cb697c6b7cc970806cced851ac6dae2bb4519471569170d907aca5b69 (956 lines)
+     valence_core/n/directions.py  c63c8ea8c4b44cf75efbbdf091dd78261d151265a941aa6dd0cd89d6485de527 (163 lines)
+     scripts/n_sessions.py         2728146e85a726850bbb0a3c4cca1ea650c9dd6a131a687960532e3d6c6f570c (3662 lines)
+     exit 0; output 1 line, sha256 13a28d93f36a035210ce731023d0825814db2d24fb17ef59b56f11bbdcb0edc0, verbatim:
+  560/560 n selftest checks pass
+   Draft 2 adds five checks to draft 1's 555, all in gvec.py's own self-test: a two-id passage (the review's M5), the
+   convention's words (M4), max_norm with position 0 shrunk and the last row grown (M2, M3), a non-finite descriptive
+   figure recorded as null (F1) and the STOP's line (F2). No other check is added or removed: draft 2's other
+   self-test changes extend existing checks.
+
+   Run 3, draft 3 (draft 2 with two clauses of gvec.py's readings paragraph changed, on the texts' values-check,
+   its observations 2 and 8; directions.py and the driver are draft 2's bytes; the bytes committed):
+     valence_core/n/gvec.py        e2f7a49ee6e9838ede63ea3baca6dfd42ec0a90451244e4228f0e6104c05be94 (958 lines)
+     valence_core/n/directions.py  c63c8ea8c4b44cf75efbbdf091dd78261d151265a941aa6dd0cd89d6485de527 (163 lines)
+     scripts/n_sessions.py         2728146e85a726850bbb0a3c4cca1ea650c9dd6a131a687960532e3d6c6f570c (3662 lines)
+     exit 0; output 1 line, sha256 13a28d93f36a035210ce731023d0825814db2d24fb17ef59b56f11bbdcb0edc0, verbatim:
+  560/560 n selftest checks pass
+   Draft 3 changes gvec.py's module docstring alone (+7 -5 on draft 2): no check is added or removed, and no line of
+   code changes.
+
+2. THE BOX, by arithmetic only: 571, the 560 plus the box's 11 checks more (its HF checks in place of the laptop's
+   skip lines, as at the BUILD and at 035947e); restated in G-VEC's launch files v2, where the box runs it.

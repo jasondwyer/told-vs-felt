@@ -139,14 +139,17 @@ At the n BUILD it wires:
                each, 96 neutral); A3's frozen inputs and rule-18 hygiene (``scripts/box_e0_corpus.py``), the (iv)
                render's record of A3 (the input digests, the code's sha256s, the contexts' digest, each context
                record's place and texts), and A3's axis order against the named rows'; the R6 bridge. The load and its
-               provenance, recorded whole; ``gvec.compute`` (R at 31 and 32 and the site, or the STOP; v at both, and
-               v under an uncentred U; A3's family, its fit-only family and R_ℓ at both; the cosines); the outputs into
-               data/n/gvec/ -- built in the staging folder and renamed into place -- each file's sha256 printed.
-               ``--smoke N`` (1..96): the first N neutral passages and the first N contexts in A3's order into
-               ``--out``, a new folder outside the repository, R and R_ℓ at both indices only, never of record; on
-               the box it is the first run of the HF forward seam, before the run of record. Exit 0 on PASS (or a
-               smoke), 2 on the R check's STOP (the record alone, for the seat): a later run needs data/n/gvec/ moved
-               aside first.
+               provenance, recorded whole; ``gvec.compute`` (R at 31 and 32 over positions 1..n, the convention of
+               record, the diagnostic block beside it, and the site, or the STOP; v at both, and v under an uncentred
+               U; A3's family, its fit-only family and R_ℓ at both; the cosines); the outputs into data/n/gvec/ --
+               built in the staging folder and renamed into place -- each file's sha256 printed. ``--smoke N``
+               (1..96): the first N neutral passages and the first N contexts in A3's order into ``--out``, a new
+               folder outside the repository, R and R_ℓ at both indices, with the diagnostic block over its passages,
+               its two token counts and the convention in its record (Code's reading, beside the seat's §1.3 "the
+               smoke prints the same lines"), never of record; on the box it is the first run of the HF forward
+               seam, before the run of record. Exit 0 on PASS (or a smoke), 2 on the R check's STOP (the record
+               alone, with the diagnostic block, for the PI on the seat's stated default: the second sitting,
+               §1.5): a later run needs data/n/gvec/ moved aside first.
   render-ids-v  ADDENDUM-n1 §1.2 (v) (``ids.render_v``): G-CAL-n's 48 prompts, ``gcal.plan`` over the (iii) file's
                labels and ``gcal.prompt_parts``' two texts, encoded on the laptop in G-DATA's environment (as
                render-ids-iv: the environment and the tokenizer files checked, ``--out`` a new folder outside the
@@ -2034,6 +2037,8 @@ def _bext_selftest(chk, tmp: Path) -> None:
 # --- G-VEC (n v0.2 §8 step 7; ``valence_core.n.gvec``) --------------------------------------------------------------
 GVEC_OUT = REPO / "data" / "n" / "gvec"
 GVEC_SMOKE_RECORD = "gvec_smoke.json"
+GVEC_STOP_END = ("G-VEC STOP: the record alone is written, with the diagnostic block; for the PI, on the seat's stated "
+                 "default (n §2.3; ADDENDUM-n1 §6.1; the second sitting, §1.5)")
 
 
 @dataclass
@@ -2128,8 +2133,9 @@ def run_gvec(env: GvecEnv, *, out=None, smoke: int | None = None) -> int:
     """G-VEC, in order: refusals; the weights and the driver; the ids of record, every ids_sha re-derived, held to the
     corpus of record and to A3's frozen inputs; the R6 bridge before the load; the load and its provenance;
     ``gvec.compute``; the outputs, built in a staging folder beside the out folder and renamed into place.
-    Everything that needs no model happens before the load. Exit 0 on PASS (or a smoke), 2 on the R check's STOP
-    (the record alone, for the seat); a refusal raises."""
+    Everything that needs no model happens before the load, the refusal of a passage with no token at positions 1..n
+    among it. Exit 0 on PASS (or a smoke), 2 on the R check's STOP (the record alone, with the diagnostic block, for
+    the PI on the seat's stated default: the second sitting, §1.5); a refusal raises."""
     import hashlib
     import shutil
 
@@ -2170,8 +2176,8 @@ def run_gvec(env: GvecEnv, *, out=None, smoke: int | None = None) -> int:
         raise SystemExit(ka[0])
     idx = tuple(int(i) for i in env.indices)
     if smoke is not None:
-        say(f"SMOKE: {smoke} neutral passages and {smoke} contexts, outside the repository; R and R_ell only; never "
-            f"of record")
+        say(f"SMOKE: {smoke} neutral passages and {smoke} contexts, outside the repository; R over positions 1..n, "
+            f"R_ell and the diagnostic block; never of record")
     say(f"STAGE G-VEC: candidate indices {list(idx)}; R's reference {env.reference!r}, within {gvec.R_TOLERANCE!r}; "
         f"out {_shown(out_p)}")
     w = env.weights()
@@ -2196,6 +2202,10 @@ def run_gvec(env: GvecEnv, *, out=None, smoke: int | None = None) -> int:
     longest = max(len(r["ids"]) for r in ps + cs)
     if longest > schema.MAX_WINDOW:
         raise SystemExit(f"an input of {longest} tokens is over the window {schema.MAX_WINDOW} (GA-4)")
+    shortest = min(len(r["ids"]) for r in ps)
+    if shortest <= directions.CAPTURE_FROM:
+        raise SystemExit(f"a passage of {shortest} id(s) has no token at positions 1..n (the convention of record), "
+                         f"before the load")
     gvec_passages_check(ps, env.passages, env.passages_sha256)
     gvec.passage_groups(ps)
     shas, code, hyg, a3 = gvec_a3_check(env.e0(), loaded, cs)
@@ -2242,12 +2252,17 @@ def run_gvec(env: GvecEnv, *, out=None, smoke: int | None = None) -> int:
             allneu = np.ones(len(neu), dtype=bool)
             rec = {"schema": gvec.RECORD_SCHEMA, "stage": gvec.STAGE, "status": "SMOKE", "smoke": int(smoke),
                    "R": {str(i): gvec.r_at(pc, allneu, i) for i in idx},
-                   "R_ell": {str(i): float(cap.resid_norms[i]) for i in idx}, "provenance": prov_rec}
+                   "R_ell": {str(i): float(cap.resid_norms[i]) for i in idx},
+                   "diagnostic": {str(i): gvec.diagnostic_at(pc, allneu, i) for i in idx},
+                   "neutral_tokens": int(pc["ntok"].sum()), "neutral_tokens_in_R": int(pc["nr"].sum()),
+                   "convention": gvec.R_CONVENTION, "provenance": prov_rec}
             (stage / GVEC_SMOKE_RECORD).write_text(json.dumps(rec, sort_keys=True, indent=1, allow_nan=False) + "\n",
                                                    encoding="utf-8")
             for i in idx:
                 say(f"SMOKE R at index {i} over the first {len(neu)} neutral passages: {rec['R'][str(i)]!r}; R_ell "
                     f"over the first {int(smoke)} contexts in A3's order: {rec['R_ell'][str(i)]!r}")
+            for i in idx:
+                say(gvec.diagnostic_line(i, rec["diagnostic"][str(i)]))
             status = "SMOKE"
         else:
             res = gvec.compute(fwd, ps, cs, a3=a3, d_model=d_model, indices=idx, reference=env.reference, say=say)
@@ -2260,7 +2275,7 @@ def run_gvec(env: GvecEnv, *, out=None, smoke: int | None = None) -> int:
     for p in sorted(out_p.iterdir()):
         say(f"file {_shown(p)} sha256 {hashlib.sha256(p.read_bytes()).hexdigest()}")
     if status == "STOP":
-        say("G-VEC STOP: the record alone is written; the seat rules (n §2.3; ADDENDUM-n1 §6.1)")
+        say(GVEC_STOP_END)
         return 2
     say(f"G-VEC {status}" + (", never of record" if status == "SMOKE" else ""))
     return 0
@@ -2405,10 +2420,12 @@ def _gvec_selftest(chk, tmp: Path) -> None:
             and pv["smoke"] is None and isinstance(pv["load_ms"], int) and len(pv["package_sha256"]) == 64
             and pv["backend_identifier"] == m_resume.backend_identifier(prov_t)
             and pv["adapter_provenance"] == m_resume.provenance_record(prov_t), "")
-        heads = ("STAGE G-VEC", "WEIGHTS:", "DRIVER", "inputs:", "backend:", "R at index 3", "R at index 4",
-                 "site: index 4", "file ", "G-VEC PASS")
-        chk("driver: G-VEC prints its lines in order -- STAGE, WEIGHTS, DRIVER, inputs, backend, R at both indices, "
-            "the site, each file's sha256, PASS -- and no passage, context or id",
+        heads = ("STAGE G-VEC", "WEIGHTS:", "DRIVER", "inputs:", "backend:", "R over positions 1..n:", "R at index 3",
+                 "R at index 4", "diagnostic at index 3,", "diagnostic at index 4,", "site: index 4", "file ",
+                 "G-VEC PASS")
+        chk("driver: G-VEC prints its lines in order -- STAGE, WEIGHTS, DRIVER, inputs, backend, R's token count, R at "
+            "both indices, the diagnostic line at both, the site, each file's sha256, PASS -- and no passage, context "
+            "or id",
             [next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads]
             == sorted(next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads)
             and all(any(x.startswith(h) for x in lines1) for h in heads)
@@ -2416,9 +2433,12 @@ def _gvec_selftest(chk, tmp: Path) -> None:
         chk("driver: the model loads once, after every check that needs none", made.count("run") == 1, made)
         env2, _l2 = env_for("stop", reference=1.0e6)
         rc2 = run_gvec(env2)
-        chk("driver: R within 2% at neither index is the STOP: exit 2, the record alone, for the seat",
+        chk("driver: R within 2% at neither index is the STOP: exit 2, the record alone with the diagnostic block, for "
+            "the PI on the seat's stated default (the second sitting, §1.5), its two STOP lines printed",
             rc2 == 2 and [p.name for p in env2.out.iterdir()] == [gvec.OUT_RECORD]
-            and json.loads((env2.out / gvec.OUT_RECORD).read_text())["status"] == "STOP", rc2)
+            and json.loads((env2.out / gvec.OUT_RECORD).read_text())["status"] == "STOP"
+            and sorted(json.loads((env2.out / gvec.OUT_RECORD).read_text())["diagnostic"]) == ["3", "4"]
+            and _l2[-1] == GVEC_STOP_END and gvec.STOP_LINE in _l2, (rc2, _l2[-1:]))
         env3, l3 = env_for("smoke", driver=lambda: (b"drv-new", b"drv"))
         rc3 = run_gvec(env3, out=tmp / "smoke-out", smoke=3)
         rec3 = json.loads((tmp / "smoke-out" / GVEC_SMOKE_RECORD).read_text())
@@ -2429,7 +2449,21 @@ def _gvec_selftest(chk, tmp: Path) -> None:
             "passages and R_ell over its first contexts, at both indices, never of record",
             rc3 == 0 and rec3["status"] == "SMOKE" and rec3["R"] == r_s and rec3["R_ell"] == rl_s
             and not env3.out.exists() and any(x.startswith("SMOKE:") for x in l3)
+            and any(x.startswith("SMOKE:") and x.endswith("; R over positions 1..n, R_ell and the diagnostic block; "
+                                                          "never of record") for x in l3)
             and any("a smoke's, not HEAD's committed bytes" in x for x in l3), (rec3.get("R"), r_s))
+        pc_s = gvec.passage_captures(fwd_of(None), first3, L)
+        d_s = {str(i): gvec.diagnostic_at(pc_s, np.ones(3, dtype=bool), i) for i in L}
+        chk("driver: the smoke records the diagnostic block over its passages, the convention and the two token "
+            "counts, and prints the run's diagnostic lines (the second sitting, §1.3: \"the smoke prints the same "
+            "lines\"), after its R lines",
+            rec3["schema"] == gvec.RECORD_SCHEMA and rec3["diagnostic"] == d_s
+            and rec3["convention"] == gvec.R_CONVENTION and rec3["neutral_tokens"] == int(pc_s["ntok"].sum())
+            and rec3["neutral_tokens_in_R"] == int(pc_s["nr"].sum())
+            and [x for x in l3 if x.startswith("diagnostic at index ")] == [gvec.diagnostic_line(i, d_s[str(i)])
+                                                                            for i in L]
+            and max(j for j, x in enumerate(l3) if x.startswith("SMOKE R at index "))
+            < min(j for j, x in enumerate(l3) if x.startswith("diagnostic at index ")), rec3.get("diagnostic"))
 
         def broken(_a):
             def f(ids_, layers):
@@ -2452,6 +2486,8 @@ def _gvec_selftest(chk, tmp: Path) -> None:
         long_p = [dict(r) for r in prec]
         long_p[7] = dict(long_p[7], ids=[3] * (schema.MAX_WINDOW + 1))
         long_p[7]["ids_sha"] = sessions.ids_sha(long_p[7]["ids"])
+        one_p = [dict(r) for r in prec]                 # the review's O7: refused before the load
+        one_p[6] = dict(one_p[6], ids=[3], ids_sha=sessions.ids_sha([3]))
         wrong_state = [dict(r) for r in prec]
         wrong_state[0]["state"] = "relief"
         swapped = [dict(r) for r in crec]
@@ -2497,6 +2533,8 @@ def _gvec_selftest(chk, tmp: Path) -> None:
             ("a record whose ids do not hash to its ids_sha",
              lambda: run_gvec(env_for("x10", load_ids=lambda: loaded_of(p_=tampered))[0])),
             ("an input over the window", lambda: run_gvec(env_for("x11", load_ids=lambda: loaded_of(p_=long_p))[0])),
+            ("a passage of one id (no token at positions 1..n)",
+             lambda: run_gvec(env_for("x11b", load_ids=lambda: loaded_of(p_=one_p))[0])),
             ("a corpus that is not of record", lambda: run_gvec(env_for("x12", passages_sha256="0" * 64)[0])),
             ("a passage record that is not its corpus passage",
              lambda: run_gvec(env_for("x13", load_ids=lambda: loaded_of(p_=wrong_state))[0])),

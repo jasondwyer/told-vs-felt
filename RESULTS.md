@@ -21,6 +21,82 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-VEC's delta on the seat's second sitting: the capture convention of record (position 0 of every
+  passage out of its mean and out of R) and the diagnostic block, with the stale sentence and `directions.py`'s
+  readings; G-VEC's first run's STOP record moved to `results/raw/`; committed by path (the answers of 2026-11-19,
+  second sitting, §1.2, §1.3, §1.4 (ii)–(iv) and §1.5, committed at `f4b3e73`; the PI's routing, item N.1, on "Route
+  as given"). Model-free, on the laptop.**
+  - **Headline:**
+    - the convention of record (§1.2): position 0 of every passage is left out of its mean (`passage_mean` over rows
+      1..n) and out of R (the squared norms and the count both), `directions.CAPTURE_FROM` = 1; every other clause of
+      G1 stands, and nothing is re-rendered. A passage with no token at positions 1..n is refused before the load
+      and again at `passage_captures`;
+    - the diagnostic block (§1.3) at both indices over the 96 neutral passages, descriptive, on a STOP as on a PASS:
+      `R_all`, `rms_by_position` (0–4, and 5..n pooled), `max_norm` (position 0, and 1..n) and
+      `R_mean_of_passage_rms`. `R_all` is the first run's R by the same arithmetic in the same order; the blind
+      review found it reproduces `355e3a2`'s 44.04249774012646 and 45.107750142385356 bit for bit on identical
+      forwards. The smoke prints the same lines over its passages;
+    - the record: schema `n-gvec-v2`; the passages block carries the token counts as now and the count entering R
+      beside them, `neutral_tokens_in_R` (§1.2's "the count entering R beside"); the site block names the convention;
+    - a STOP at both indices goes to the PI with the diagnostic block, on the seat's stated default (§1.5), and the
+      printed lines say so;
+    - `gvec.py`:26–27's stale sentence is corrected (§1.4 (ii)), as `355e3a2`'s entry owed it, and `directions.py`'s
+      readings are reworded to the convention of record (§1.4 (iii));
+    - `valence_core/n/gvec.py` `e2f7a49e…be94` (+305 −41), `valence_core/n/directions.py` `c63c8ea8…e527` (+39 −11),
+      `scripts/n_sessions.py` `2728146e…570c` (+58 −20); the n package's digest moves from `1bb0daea…af51` to
+      `d3415b10…a519`, by shell;
+    - the self-test: draft 1 555/555, draft 2 560/560, draft 3 560/560, each in a battery window the coordinating
+      session granted, under `nice -n 19`; 571 on the box by arithmetic.
+  - **The move:** `data/n/gvec/gvec.json`, G-VEC's first run's STOP record (`3331da71…ee95`), moves by `git mv`, byte
+    for byte, to [`2026-11-19_n-gvec-v1_gvec.json`](results/raw/2026-11-19_n-gvec-v1_gvec.json), on the coordinating
+    session's word. A fresh copy at this commit then holds no `data/n/gvec/`, which the re-run of record writes new
+    (G7: G-VEC never resumes; the driver refuses an out folder that exists). A dated note on `355e3a2`'s entry gives
+    the new path. The seat reads the move here; a later `git mv` reverses it if the seat rules otherwise.
+  - **Code's readings, for the seat** (`gvec.py`'s docstring):
+    - the schema `n-gvec-v2`, its R not the first run's quantity;
+    - beside each `rms_by_position` figure its token count, `n_by_position`: a count, not a figure, so §1.3's "Nothing
+      else" is not read against it; a position no passage reaches has no figure (null), no passage of record being
+      that short (the shortest has 35 tokens);
+    - a non-finite diagnostic figure is recorded as null and named in its index's `nonfinite` list, so that no
+      descriptive figure ends a run (§1.3: "none a decision"); R itself still raises;
+    - the site block's `convention`; the printed count line ("R over positions 1..n: …") and each diagnostic line's
+      token counts; the R lines printed before the diagnostic block is computed;
+    - the smoke's record carries the block, its two token counts and the convention (the driver's docstring);
+    - the refusal, before the load, of a passage with no token at positions 1..n (the review's O7).
+  - **The blind review** of draft 1: 0 BUG; 8 findings (1 RISK, 7 NIT); 6 surviving mutants; 3 box risks; 9
+    observations. Every finding is applied in draft 2, and each mutant meets a new or extended check. F1, the RISK: a
+    non-finite descriptive figure would have ended the run with no record; it is now null and listed, and the R lines
+    print first. B3 goes to launch files v2. Raw, with each disposition:
+    [`2026-11-19_n-gvec-delta_review.md`](results/raw/2026-11-19_n-gvec-delta_review.md).
+  - **The self-test raw:** [`2026-11-19_n-gvec-delta_selftest.txt`](results/raw/2026-11-19_n-gvec-delta_selftest.txt).
+  - **Departures**, for the seat to class:
+    - Code's: two `jq` reads of the subagents' task outputs, the final message only, to extract the review's report
+      and the values-check's;
+    - the reviewer's, as its report states them: two `git grep` runs with a narrower include than `.` (each with the
+      three exclusions; re-run in the brief's form, the same matches); one output the harness saved to its own
+      folder, outside the repository and the scratch folder, which it did not open; reads beyond its named files;
+    - the values-checker's, as its report states them: one `git log` over `valence_core/n` with that named folder as
+      its pathspec, not item 3's form (it printed nothing); three `git check-ignore -v` runs, the brief's own
+      instrument, which item 1 does not name (each printed nothing); one loop the harness refused, which ran
+      nothing; reads beyond its named sources.
+  - **Values-check:** one blind pass over the drafts of this entry, the self-test raw, the review raw and the note.
+    - 104 items: 84 CONFIRMED, 7 IMPRECISE, 0 FAIL, 13 NOT CHECKABLE; and 8 observations.
+    - The IMPRECISE items (2, 32, 38, 76, 83, 85 and 98) are applied in the checker's words or near them.
+    - Observations 2 and 8 are applied in the code, as draft 3: two clauses of `gvec.py`'s readings paragraph (the
+      token counts beside each `rms_by_position` figure; the refusal before the load declared), its self-test run 3.
+      Observation 1 is met by item 83's wording; 3–6 are applied; 7 is the placeholders, filled.
+    - The NOT CHECKABLE items are this session's acts and plans.
+    - Draft 3 came after the check. No second full pass was made; the claims it changed were re-checked by tool.
+    - Raw: [`2026-11-19_n-gvec-delta_valuescheck.md`](results/raw/2026-11-19_n-gvec-delta_valuescheck.md).
+  - **Committed by path:** `valence_core/n/gvec.py`, `valence_core/n/directions.py`, `scripts/n_sessions.py`;
+    `data/n/gvec/gvec.json` moved to `results/raw/2026-11-19_n-gvec-v1_gvec.json`; the self-test, review and
+    values-check raws; this entry; and the dated note on `355e3a2`'s entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    **Next:** launch files v2 and the `hashes` window; to the coordinating session, then the pod session; the smoke,
+    then the run of record, on "launch cleared". A PASS fills LOCK-n v0.1's holes 1–7 and opens G-CAL-n's launch
+    files, which also wait for ADDENDUM-n3's commit; G-CAL-n's delta is built meanwhile.
+
 - 2026-11-19 — **The coordinating session's notes on the seat's second sitting of 2026-11-19: the answers committed at
   `f4b3e73`, the PI's routing, the coordinating session's reading of item 2's slot, items 6–8, and five close lines.**
   - **The answers:**
@@ -519,6 +595,14 @@ applied to CLAUDE.md.
     - **Departures:** this entry's are inert (§6).
     - **Values-check:** with the coordinating session's notes on the second sitting, at the Log's head, which give the
       check and its raw.
+  - **Dated note (PI date 2026-11-19), Code's: the first run's record has a new path.** The commit that carries this
+    note, the `gvec` delta's (its entry at the Log's head), moves this entry's `data/n/gvec/gvec.json` (sha256
+    `3331da71…ee95`, status STOP) byte for byte to
+    [`results/raw/2026-11-19_n-gvec-v1_gvec.json`](results/raw/2026-11-19_n-gvec-v1_gvec.json), on the coordinating
+    session's word. The move lets G-VEC's re-run of record write a new `data/n/gvec/`: G-VEC never resumes (G7), and
+    the driver refuses an out folder that exists. From that commit on, `data/n/gvec/gvec.json` is free for the
+    re-run's record. Where this entry, its raws, its STOP block and the seat's answers of the second sitting name the
+    first run's record at the old path, its sha256 identifies it.
 
 - 2026-11-19 — **The coordinating session's notes on the seat's first sitting of 2026-11-19: the answers committed at
   `a33252a`, the PI's routing, item 1's call, items 3, 7 and 8, and C.5 for push #11.**
