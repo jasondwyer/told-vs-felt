@@ -21,6 +21,71 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **The coordinating session's notes on the seat's first sitting of 2026-11-19: the answers committed at
+  `a33252a`, the PI's routing, item 1's call, items 3, 7 and 8, and C.5 for push #11.**
+  - **The answers:**
+    [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+    (sha256 `e6ff066d…6d5a`, 18,598 bytes), on the blocks `99196e1` (Q1–Q11) and `d7d5e5b` (Q12), committed by path at
+    `a33252a`, re-hashed equal to the paste block first. The PI's word: "Route as given". The paste block, as the PI
+    gave it, is committed here as
+    [`2026-11-19_first-sitting_pi-routing.md`](results/raw/2026-11-19_first-sitting_pi-routing.md). Below, "item N" is
+    the paste block's item, and "§8" is the raw's own routing block, whose wording differs from the paste block's in
+    places.
+  - **Item 1, the coordinating session's call.** Item 1 reads "a STOP record carries R over positions 1..n beside R at
+    both indices if cheap, else as built [go]". §1.1 asks, in a STOP's record, for R over positions 1..n at both
+    indices, descriptive, beside R at both, "if the change is cheap before the launch files; if it is not, G-VEC runs as
+    built and that figure comes from the re-run".
+    - The launch files were already frozen and checked: `gvec_v1.sh` with its manifest and hashes file, and the launch
+      note's v1b. The figure would have meant new bytes, a `hashes` window and a second version of the launch files.
+    - G-VEC ran as built. The launch was relayed to the pod session as cleared. The box's smoke ran first (exit 0, its
+      checks held), then the run of record. The run STOPPED (exit 2), with R 44.04249774012646 at index 31 and
+      45.107750142385356 at index 32 against 25.49.
+    - Its entry and its STOP block for the seat are n-build's, and follow.
+  - **Items 2–6** were relayed: N.2–N.5 to n-build and the pod session, and A.6 to n-analyzer.
+    - Item 3 went with one note: "The PI may still name a cap from BK's Appendix E; I've asked." Its slot ("or a cap
+      from BK's Appendix E if my copy names one: ___") was left unfilled in "Route as given".
+    - Item 4's four close lines are committed, n-build's, at `1194982`.
+  - **Item 7, the coordinating session's:**
+    - the raw committed by path (`a33252a`);
+    - the departures of §6: "Inert; the standing lines stand. Code's wording owed at each file's next change is
+      accepted as declared";
+    - ledger (84), the seat's (§7): "a monitor is declared with its window (tile or cumulative), its statistic and its
+      cadence in one sentence, and the lock quotes the sentence";
+    - the rule-13 departure's scope, "the their-design arms and their gate G-CAL-n" (§1.8), to LOCK-n v0.1's draft,
+      routed to n-build.
+    - The item's slot "A2's extension confirmed: ___" was left unfilled in "Route as given", so the coordinating session
+      put it to the PI. §0 and §1.8 have the PI confirm it at routing. The raw's §8 item 7 sends the scope to the lock's
+      draft "for your confirmation there", words the paste block's item 7 does not carry. The PI's answer, when given,
+      is recorded in the coordinating session's next close line.
+  - **Item 8, the push** ("[yours]"): put to the PI, and not made on "Route as given". The PI's word, when given, and
+    the push's C.5 line go in the coordinating session's next close line.
+  - **Three questions are with the PI:** the push (item 8), A2's extension (item 7) and the cap (item 3).
+  - **C.5, push #11** (the line owed since that push): `cf318c5..ecf349d`, 3 commits, pushed 2026-11-18 on the PI's
+    "Push them". It was the first push behind the amended screen (`screen4.py` in C.2's amended form, with `gl5.py`).
+    The screen's classes were CLEAR, with nothing inside `ckpt` or `reports`; gitleaks 8.30.1 (default rules) found
+    nothing; no halts.
+  - **Departures, the coordinating session's, for the seat to class:**
+    - in the commit gate of `a33252a`, one `git diff --cached --name-only` over the whole index without item 3's
+      pathspec, piped to a count, to catch anything staged under the excluded folders. It printed nothing: the count, 1,
+      went to a shell variable and was compared, and no name reached the output. The gate's line that printed the staged
+      name used item 3's pathspec. Item 1 of the list of record permits name-only git forms; this is declared because it
+      ran over the whole index without the pathspec;
+    - the values-checker's, as its report states them: a `sed -n` piped to `cat -A`, which printed nothing; a
+      `git merge-base --is-ancestor`, exit status only; `git log` on the local tracking ref `origin/main` (no network)
+      and over the range `cf318c5..ecf349d` (ids, dates and subjects); `git ls-files` and a name-only `ls` of this
+      commit's routing raw's path, both empty; `git show --name-status a33252a` with a format adding the parent and the
+      author date; `wc`, `tail -c | od -c` and `shasum` on named files; on G-VEC's out file, a `head | tail | grep -cF`
+      whose `head` passed its first 114 lines into the pipe unseen; and `head -n 300 RESULTS.md | grep -n` for three
+      fixed strings. Nothing under `data/` was opened, listed or hashed, and no guard marker reached an argv.
+  - **Values-check:** one blind pass over this entry's draft and the routing raw's head.
+    - 52 items: 38 CONFIRMED, 4 IMPRECISE, 2 FAIL, 8 NOT CHECKABLE; and 11 observations.
+    - Both FAILs and every IMPRECISE item are applied, and so are observations 1, 2, 3, 4, 5, 7, 8, 10 and 11.
+      Observations 6 and 9 ask for nothing.
+    - The edits were checked by tool.
+    - Raw: [`2026-11-19_first-sitting-notes_valuescheck.md`](results/raw/2026-11-19_first-sitting-notes_valuescheck.md).
+  - **Committed by path:** the routing raw, the values-check raw and this entry. The commit-time count of the
+    home-folder prefix over the staged diff is 0. Not pushed.
+
 - 2026-11-19 — **n — G-CAL-n's BUILD, committed by path (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3;
   ADDENDUM-n1 §1.1, §1.2 (v) and §1.4): the stage in a new module, `valence_core/n/gcal.py`, and its commands, `gcal`,
   `gcal-decode` and `render-ids-v`, in the driver, on Code's readings GC1–GC23 as the coordinating session routed them.
