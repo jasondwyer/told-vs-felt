@@ -21,6 +21,47 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — LOCK-n v0.1's draft: five OPENs and two of Code's readings, for the seat (code → design; STOP
+  for the seat), committed by path for the one sitting that rules on G-VEC's STOP (`355e3a2`), on the coordinating
+  session's routing. The draft itself stays uncommitted until PROPOSAL-n v0.2 §8 step 10.**
+  - **The block:**
+    [`2026-11-19_n-lock-v0_1-opens_code-to-design_STOP.md`](results/raw/2026-11-19_n-lock-v0_1-opens_code-to-design_STOP.md).
+    It gives the draft's hash (`c29fabed…c039`, 688 lines, in Code's scratch) and its 18 holes by name, each with the
+    step that fills it; the five OPENs, each with its texts, its two readings and what each answer changes in the
+    lock, the texts, the step order, the design or the build; two of Code's readings (the pod ids in the box line,
+    and the lock's two lines in PIN-n-26's form); and Q1–Q7. Code chooses nothing.
+  - **OPENs 4 and 5 are rule 5(f) questions,** flagged at the n package's BUILD and unruled since: (iii)'s "declared
+    and held fixed within a cell" and (iv)'s "below dose 0.20 for the reward axis". They bear on the campaign's
+    design, not only on the lock's text.
+  - **The draft** was written by one drafting-survey subagent from n:117's list, the coordinating session's routing,
+    and every seat answer and addendum that routes an item into LOCK-n v0.1: every fixed value cited, and nothing
+    chosen where texts disagree. Its sources go to the lock's entry at step 10; its departures are below, for the seat
+    to class at this sitting, since this commit is the first to rest on it.
+  - **Departures:**
+    - Code's: two `jq` reads of this session's transcript, outside the repository, for the coordinating session's two
+      routings, of the draft (given verbatim to the survey) and of this block (given to the values-check's raw);
+    - the drafting survey's, as its report states them: two `/usr/bin/grep` runs whose argv held a seat raw's path
+      with a guard marker in it, printing counts and matched lines; one `git grep` over two code folders without item
+      3's exclusions, printing code lines; and, not barred by its reading, token ids and BK's session ids printed to
+      its own context, never into the draft, and reads beyond its named sources;
+    - the values-checker's, as its report states them: one `awk` filter, which its brief barred, whose output was
+      never printed (the step redone with `sed` and grep); three `git log -1 --format='%h %s'` runs without item 3's
+      pathspec, printing ids and subjects; and, not barred by its reading, content searches with item 3's pathspec
+      and the exclusion, and reads beyond its named sources.
+  - **Values-check:** one blind pass over the block's draft and this entry's.
+    - 87 items: 62 CONFIRMED, 9 IMPRECISE, 2 FAIL, 14 NOT CHECKABLE; and 14 observations.
+    - The two FAILs are fixed: rule 5(f)(iv) is quoted as "below dose 0.20"; and R-L1 now gives n's part of the box
+      line as the draft fills it, `emw1e4embiwe9b`, the characterization's identifier and entry, n's own identifier
+      beside it in the next bullet.
+    - The nine IMPRECISE items are applied, each in the checker's words or near them; observations 1–3, 5–10, 12–14
+      are applied; 4 and 11 go to the draft's next pass.
+    - The edits were checked by tool, each new quotation found in its source.
+    - Raw: [`2026-11-19_n-lock-v0_1-opens_valuescheck.md`](results/raw/2026-11-19_n-lock-v0_1-opens_valuescheck.md).
+  - **Committed by path:** the block, its values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    **Next:** the seat's one sitting on G-VEC's STOP and these OPENs; LOCK-n v0.1's holes as their steps fill them.
+
 - 2026-11-19 — **n — the ids of record, third commit: (v)'s render, G-CAL-n's 48 prompts in the rendering of record
   (ADDENDUM-n1 §1.2 (v) and §1.5; the seat's answers of 2026-11-19, first sitting, §1.7 and §1.8; the PI's routing,
   item 2, on "Route as given"), committed by path with G-VER's pin moved. Model-free, on the laptop.**
