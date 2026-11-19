@@ -83,6 +83,50 @@ applied to CLAUDE.md.
     - The edits after pass 2 were checked by tool.
     - Raw: [`2026-11-18_push9-note_valuescheck.md`](results/raw/2026-11-18_push9-note_valuescheck.md).
   - **Committed by path:** this note and its values-check raw. Nothing ran on a model. Not pushed.
+  - **Close (PI date 2026-11-18, fourth sitting), the coordinating session's: the seat's ruling on this note.** The
+    seat's answers of the fourth sitting,
+    [`2026-11-18_n-step4-resume_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md)
+    (sha256 `c265797f…61a5`, committed at `c7d0009`), rule on this note in their §6. The PI routed that ruling as item
+    6 ("route as given"; the paste block is committed as
+    [`2026-11-18_fourth-sitting_pi-routing.md`](results/raw/2026-11-18_fourth-sitting_pi-routing.md), in this commit):
+
+    > 6. C.3 read by nesting; the digest class adopted; the helper's prints as the screen's form (C.2 amended); the copy-back count inert; the tooling reading standing; a close line on cf318c5's note [as ruled].
+
+    - **C.3 read by nesting, and the digest class adopted** (§6.1). The screen's gitleaks classifier is amended to
+      both. A 64-hex match now clears as a digest when the key just before it carries "sha", when any key on its JSON
+      path does, or when it equals the sha256 of the tracked file its key names at the commit screened. Each is
+      counted by class.
+      - It was tested in a scratch repository on six cases with real gitleaks output. A digest nested under a map
+        named `imported_sha256` cleared by nesting and by file; a value under a sha-named key, by immediate key and by
+        nesting; a file digest in a map whose name carries no "sha", by file. A random value inside the reports folder
+        and one on a text line inside the ckpt folder halted, and a match outside was listed to read. The previous
+        classifier cleared only the immediate case.
+      - On push #9's and push #10's gitleaks reports, it classes both matches (`6df2131`'s and `6e3474d`'s reports) as
+        digests by nesting and by file, with no halt.
+      - Raw: [`2026-11-18_screen-amended_test.md`](results/raw/2026-11-18_screen-amended_test.md).
+    - **The re-run** (§6.1): the helper's examination serves as the re-run C.1 asks to see beside this halt, and the
+      second run over the whole range was the push's own screen.
+    - **The helper's prints as the screen's form** (§6.2). For a match inside a data file, the screen now prints the
+      rule's name, the path class, the commit and the yes/no classes, never a value, a key or a line: C.2 is amended
+      to include them, and the departure is inert.
+      - Declared for the seat: the amended classifier's line carries three yes/no classes (immediate, nesting, file)
+        where the helper printed two, and ends with the verdict. It is the form §6.2 adopted, carried to the amended
+        classes.
+    - **The copy-back count** (§6.3), an address-and-port count over copied files before their commit, counts only and
+      never a line, is inert and allowed.
+    - **The tooling reading** (§6.4) stands: a tracked-and-clean check of a named file takes `git rev-parse
+      HEAD:<path>` against `git hash-object`. `git ls-files` with a lone named file under item 3's exclusions is not
+      that check.
+    - **Item 7's other parts.** The departures of the answers' §7 are inert, and §7 adds one line to the list of record
+      v2's reading, for the pod session's transport: "a bundle of a committed range, verified and fetched under a side
+      ref with no checkout, is a transport, not a read; it is kept where the entry says". The §8 dated notes are on
+      `7a54eb9`'s entry, in this commit, with ledger (83).
+    - **C.5, push #10, the push since this note** (gitleaks 8.30.1, default rules): `1272702..cf318c5`, 3 commits, on
+      the PI's word "Push, with a note" (2026-11-18). The screen's classes were CLEAR, with no match inside `ckpt` or
+      `reports`.
+      gitleaks found one `generic-api-key` match inside `data/n/reports`, `6e3474d`'s resumed report's module digest:
+      a halt under C.3 as it then stood, pushed with a note. Under the amended classifier it is a digest by nesting
+      and by file.
 
 - 2026-11-18 — **n step 4 — the BACKEND extension resumed under the seat's ruling on `p01` (`e2b1c77a…2a8a`; the seat's
   answers of 2026-11-18, third sitting, §1.4): the stage COMPLETE, §1.4's list printed, and A-n1 §2's comparison names
@@ -503,6 +547,23 @@ applied to CLAUDE.md.
       moving as before";
     - the extension's entry;
     - LOCK-n v0.1 with §4.2's declarations, drafted to the seat.
+  - **Dated note (PI date 2026-11-18, fourth sitting), the coordinating session's: two corrections to the seat's
+    third-sitting figures, and this entry's referent-check FAIL regraded.** The seat's answers of the fourth sitting,
+    [`2026-11-18_n-step4-resume_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md)
+    (sha256 `c265797f…61a5`, committed at `c7d0009`), make the corrections by dated note in their §8. The PI routed
+    them as item 7 ("route as given"). The addendum is not edited (WORKFLOW §5); the answers' §8: "a later version
+    carries both".
+    - **The margin's largest discordance.** The third sitting's texts put it "at most about 0.09" nats: the answers of
+      the third sitting, §1.3; the ruling raw's item 3; ADDENDUM-n2 §0.2 and §5. That was an upper bound from the
+      per-token maxima, 0.0375 + 0.0492. The printed maximum under "bare" is 0.0625 nats (`6e3474d`'s block, §4
+      item 5).
+    - **"About three times."** ADDENDUM-n2 §2.1's "about three times this box's under "bare"" is four times on the
+      printed figure. C's formula is unchanged, and on the "bare" run's figure its floor binds at 0.25. Under the
+      convention of record, "space", C comes from backend-ext-2 (the answers' §1.3 and §2.4).
+    - **The referent check's FAIL** (this entry's claim 16, §5's heading citing "A-n1 §1.4's reservation") is
+      regraded by the seat as Code graded it: "a mis-citation, not substantive; the ruling and what runs under it are
+      unaffected".
+    - Ledger (83), on cross-hardware comparisons, is the seat's (the answers' §9).
 
 - 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling of the second sitting carried in: PIN-n-33
   amended (pauses read point by point), the fourth form's label in its sentence, and PIN-n-34 to PIN-n-36 accepted (the
