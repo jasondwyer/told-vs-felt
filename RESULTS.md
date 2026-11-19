@@ -21,6 +21,170 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n package — `scripts/n_analyze.py`, the seat's ruling of the third sitting and ADDENDUM-n2 carried
+  in: PIN-n-37 amended to the conservative form, the `fidelity-ceiling` kind and the second sensitivity row in the
+  reader, and the schema pin moved to `003ae7d` (the answers of 2026-11-18, third sitting, §6, the PI's routing item 5;
+  ADDENDUM-n2 v0.1 §2.1, §3 and §6.3 (4); the fourth sitting's §5). Battery 230/230; reviewed blind and
+  mutation-tested (44 of 45 mutants killed). Three readings in PIN-n-37, and PIN-n-38 and PIN-n-39, are
+  Code's, flagged for the seat. Model-free: nothing ran on a model or on the box, and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256
+    `418c2136fe4fc3875b6cc3e0e81221f0f4628fdc49e959fce38b2cc7d915072d`
+    (`3d22da1d…d048` at `bfc869f`).
+    - **The schema pin** moved from `d791bd9`'s `valence_core/n/schema.py` (`0ea39600…0db6`) to `003ae7d`'s
+      (`5cbf60db…574c`), n-build's follow-up for the ceiling's kind, settled with this session and accepted by the
+      seat's fourth sitting (§5).
+      - The new kind sits directly after `nonfinite` in `PAUSE_KINDS`.
+      - The fidelity rule gains `ceiling`, `median_rel` and `alpha`, and the report's counters gain
+        `fidelity_ceiling_exceeded`. The reader reads the first two and the counter.
+      - It reads neither `alpha` nor `label_convention` itself. The schema asserts each pause's batch alpha equal to
+        the identity's, beside its p0, and every stage report reaches the reader through the schema's check.
+    - **ADDENDUM-n2 v0.1** (`41f76c49…bb3f`, committed at `7a54eb9`) joins the bound files, by sha256 as ADDENDUM-n1
+      is: in VERDICTS, the NOT-RUN output and G-ANL-n's artifact, and checked by the battery. The commands are
+      unchanged.
+    - The seat's answers are cited by path: the third sitting's,
+      [`2026-11-18_n-step4-run-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md)
+      (sha256 `d51279ec…0bf4`, committed at `3b2b855`), and the fourth's,
+      [`2026-11-18_n-step4-resume_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md)
+      (sha256 `c265797f…61a5`, committed at `c7d0009`).
+    - The battery's run of record, from this path on these bytes: 230/230 checks, every one of the 233 coverage ids
+      reached, exit 0. The raw:
+      [`2026-11-19_n-analyze_v6_selftest.txt`](results/raw/2026-11-19_n-analyze_v6_selftest.txt).
+  - **The PI's routing of 2026-11-18, third sitting** ("Route as given"), committed verbatim as a raw at `7a54eb9`,
+    [`2026-11-18_third-sitting_pi-routing.md`](results/raw/2026-11-18_third-sitting_pi-routing.md). Its n-analyzer
+    item:
+    > 5. PIN-n-37 amended: a binomial pause stands on every read launched in its batch's range plus the shadow extension; single-read pauses on their read plus the shadow; the second sensitivity row and the ceiling's kind in the reader before the canonical run; close lines on bfc869f's entry [as ruled].
+  - **The rulings, as carried:**
+    - **§6, PIN-n-37 amended to the conservative form** (`paused_points`).
+      - A pause that fired the binomial stands on every read launched in its batch's range, the trials and the reads
+        between them, re-computed or not.
+      - Through any shadow among them, it stands on every planned steered read of that session, each read against
+        it.
+      - A single-read pause (non-finite, the ceiling, identity, rendering) stands on its read and, through a shadow,
+        on that session's reads.
+      - N1's and N4's pauses stay per arm.
+      - The trials-only form is struck. The binding of a standing batch to the runner's (its range, n, k and scope)
+        stands, unchanged.
+      - In the battery the change shows. The campaigns of VD-PAUSE-POINTS' scenarios A and C carry no keyed-sample
+        re-computation in N2's arms, so a batch from N1-P's −1 cell to the stage's end now stands on N2's six points.
+        A and C now leave N2 INDETERMINATE (pause:N2-E), where `bfc869f` left it decided. No campaign has run, so no
+        outcome of record changes (§6: "Nothing changes in any outcome today").
+    - **ADDENDUM-n2 §2.1, the `fidelity-ceiling` kind** (PIN-n-39).
+      - A re-computed read is above the ceiling where both paths are finite and its absdiff exceeds the identity's C,
+        strictly.
+      - A pause naming the kind must name a read above it. Every record above it must be the read of such a pause
+        (§2.1: "pauses at once"; the review's F3).
+      - The report's ceiling counter is bound to the records' count, and VERDICTS' record counters add "fidelity
+        ceiling exceeded" per arm and dose.
+      - The identity bound at d = 0 is C (§2.2). The schema asserts it and the records carry it, and the reader reads
+        it as before.
+    - **ADDENDUM-n2 §3, the second sensitivity row** (PIN-n-38).
+      - VERDICTS' sensitivity block now carries, per `arm@label`, the reads present and finite and those the TAU/4 row
+        drops (`drops`), and the points where it drops more than half (`over_half`).
+      - Only where such a point exists does it report the second row (`second_row`): the re-computations above the
+        identity's `median_rel` dropped, strictly, its outcomes, figures and drops beside, descriptive.
+      - A point the second row leaves with no session is `median-emptied`, as the TAU/4 row's is `tau4-emptied`.
+      - The trigger is §3's, which replaces the second sitting's "where it empties" (its §1.4).
+  - **Code's readings, for the seat.** They are registered and strikable until LOCK-n v1.0.
+    - **In PIN-n-37:**
+      - (a) The points are §6's whatever the pause's scope, since §6 states them without it. The scope binds the
+        batch.
+      - (b) The range is the report's, from the batch's first trial (`BINOMIAL_FIELDS`), after §6's "the trials and
+        the reads between them". Reads launched after a cleared batch and before the next batch's first trial
+        therefore lie in no range. The review's F1 shows this is reachable under PI-STOP: after a fire cleared at a
+        keyed-sample read mid-cell, N2 can be decided where the runner's batch, counted from the clear, would make it
+        INDETERMINATE. If the seat means the runner's batch, the range starts after the clear.
+      - (c) A guard's beside flag reads its points, as N2 does, since §6 names N1's and N4's pauses alone as per arm
+        (the review's F2). Before, it read the scope.
+    - **N2's pause causes** name an arm (`pause:N2-E`), as PIN-n-36 has them (accepted). Under (a) that arm need not
+      be in a standing pause's scope. In VD-PAUSE-POINTS A, N2-E is not.
+    - **The binding** follows the runner's batch, cumulative since the last cleared fire, which a ceiling ruling does
+      not clear (the runner's R12 and R13, Code's readings for the seat). It moves with their rulings.
+    - **PIN-n-38**, the second row's reading: per arm and record label, over the reads present and finite; the
+      shadows no point; drops by a read's own re-computation or, a steered read, its session's shadow's; "more than
+      half" strict; the second row only where a point is over half.
+    - **PIN-n-39**, the ceiling's reading, including the both-ways binding. The same converse for the non-finite and
+      identity-bound kinds is not applied: PIN-n-24 binds them one way, as the seat accepted it.
+  - **The battery:** 222 checks become 230, and 225 coverage ids become 233.
+    - New checks:
+      - STR-ADDENDUM2-SHA;
+      - RD-CEILING and RD-SECOND-ROW;
+      - VD-SECOND-ROW, VD-CEILING, VD-SECOND-ROW-TRIGGER, VD-SECOND-ROW-PAUSE and VD-BATCH-CLEARS.
+    - Rewritten or extended for the conservative form and the new kind:
+      - RD-PAUSE-POINTS (sixteen cases);
+      - VD-PAUSE-POINTS (A–D);
+      - VD-REFUSE (the ceiling's kind, its counter, and a read above C that no pause names);
+      - VD-SENSITIVITY and VD-PISTOP-STANDING;
+      - VD-COMPLETE, CMD-NOTRUN and STR-GANL-ARTIFACT (the addendum's binding).
+    - The schema's new example defaults (C and the identity bound 0.25, the median 0.01) moved one battery expectation
+      and one input:
+      - F14 (RD-SENSITIVITY), its inputs unchanged, now expects all 480 d = 0 identity checks within C, where it
+        counted two outside the bound of 0;
+      - scenario A's hot read is now 0.1 apart, above TAU and below C.
+  - **Review** (raw: [`2026-11-19_n-analyze_v6_review.md`](results/raw/2026-11-19_n-analyze_v6_review.md)):
+    - **Blind.** A reviewer read the draft frozen at `0e459d7d…fddc` (227/227). It found no MAJOR:
+      - in the production code, F1 and F2 MINOR, F3–F6 NOTEs;
+      - in the battery, B1–B4 MINOR, B5–B9 NOTEs;
+      - 35 mutants, 14 of them predicted to survive the frozen copy, V11 as equivalent on runner reports.
+    - **Dispositions.** All taken. F1 is kept as reading (b), with its scenario put to the seat, and the rest are
+      applied: F2 as reading (c), F3 for the ceiling (the other kinds' converse put to the seat), and F4–F6 in texts.
+      B1–B9 add the battery's new inputs and checks.
+    - **Mutants.** The reviewer's 35 (V35 re-expressed on the fixed draft) and ten of Code's ran on the fixed draft
+      (`b605b91f…4c2c`, 230/230): **44 of 45 killed.**
+      - V11 survived, as the reviewer predicted: it is equivalent on reports the runner writes.
+      - The other 13 it predicted would survive are killed, each by a check the dispositions added or extended.
+    - **The committed bytes** differ from the mutant base in the repository line and, from the values-check, in seven texts (the review raw's
+      §5).
+  - **Values-check** (raw: [`2026-11-19_n-analyze_v6_valuescheck.md`](results/raw/2026-11-19_n-analyze_v6_valuescheck.md)):
+    Two blind passes.
+    - Pass 1: 217 claims, 3 FAIL and 9 IMPRECISE. The FAILs were the close line on `bfc869f` counting one reading of
+      Code's, not three; the analyzer citing the fourth sitting's answers nowhere; and the review raw's account of the
+      reviewer's labels.
+    - Pass 2: 256 claims, 0 FAIL and 7 IMPRECISE.
+    - Every FAIL and IMPRECISE is applied, and the edits after pass 2 are checked by tool. The passes changed seven
+      texts in the analyzer, none of them code.
+    - **The checkers' departures,** each disclosed in its report, for the seat to class. None read anything under
+      `data/`.
+      - Pass 1 ran two `awk` line filters over RESULTS.md, an interpreter.
+      - Pass 2 ran two read-only loops over a glob it had not read first.
+      - Both ran git digests and blob shows in their briefs' forms without item 3's pathspec, and read-only tools beyond
+        their briefs' lists.
+      - Pass 1 wrote two scratch files' modification times into its own scratch files and rewrote them without;
+        pass 2 printed two to its own session only.
+      - Pass 2 read committed raws by path beyond its sources.
+  - **Runs.** Each was in a battery window the coordinating session granted, on bytes named to it first by sha256.
+    Every run was one process at a time, at `nice -n 19` with `-I`, with temp folders in Code's scratch, in the
+    foreground. The interpreter was reached by `cd` into the venv's bin by glob, so no argv named its path.
+    - The draft: 1 run, 227/227.
+    - The fixed draft: 1 run, 230/230. The coordinating session then closed the window for n-build's G-VEC
+      self-test and reopened it for the 45 mutants, which ran three per call, each checked against a manifest the
+      coordinating session checked first.
+    - The run of record: 1.
+
+    Q-F3's campaign ran on the laptop beside them, as the coordinating session's windows allow. By its grants, no
+    other battery window was open during any of them.
+  - **Departures, for the seat to class.** None read anything under `data/`, ran repository code or started a model
+    process.
+    - Code read this session's own transcript, the harness's record, which lies outside the repository, the HF cache
+      and the scratch folders. It did so by Perl scripts in its scratch, for its own earlier messages to the n-build
+      session (that session's id and the form of its last messages) and for an earlier version's battery-run commands,
+      and printed those messages, its own words, with their transcript times, and the commands, to this session alone.
+      Its compaction summary names the transcript for details from before the compaction.
+    - It read the n-build session's recent record twice through the session tool's event listing, to see whether its
+      message had arrived. The listing printed that session's one-line notes and the names of its tool calls.
+    - The reviewer's and the two checkers' reports were taken from their subagents' transcripts, in the session's task
+      folder beside its scratchpad, by script, as at `bfc869f`.
+    - Code's other tools ran over its scratch files, RESULTS.md and committed raws: Perl and shell for the mutant
+      specs, their application and the manifest, the drafts' assembly, and the briefs' fill, which read the list of
+      record's raw, C.2's and the fourth sitting's in place for the quoted rules; `awk`, as a line filter, over its
+      analyzer copies and once over RESULTS.md; and, at the commit, Perl to place the entry and the close lines in
+      RESULTS.md.
+  - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
+    session's three close lines: on `bfc869f`'s entry (the third sitting's §6 and §8 item 5), on the ADDENDUM-n2
+    COMMITTED entry (`7a54eb9`; the addendum's header), and on `6e3474d`'s entry (the fourth sitting's header and §10
+    item 4). The commit-time count
+    over the staged diff (the third sitting's §5.2) is 0. Not pushed. **Next:** G-ANL-n's canonical run, when G-CAL-n
+    pins d_eq.
+
 - 2026-11-19 — **n — G-VEC's BUILD, committed by path (n v0.2 §8 step 7; the G-VEC paragraph of n §3; ADDENDUM-n1
   §1.1 and §6.1–§6.2): the stage's arithmetic in a new module, `valence_core/n/gvec.py`, and its command, `gvec`, in
   the driver, on Code's readings G1–G14 as the coordinating session routed them. Nothing has run on the box. The run
@@ -988,6 +1152,21 @@ applied to CLAUDE.md.
       - LOCK-n v0.1's draft to the seat, with the figures of record (§2.4), the comparison as it ran (§3) and alpha
         (§4).
     - **Values-check and departures:** with driver v2g's entry.
+  - **Close (PI date 2026-11-19; the n-analyzer session's line, per the fourth sitting's answers' header and §10 item
+    4): the schema follow-up's names, accepted, carried into the reader.** The seat's answers of the fourth sitting,
+    [`2026-11-18_n-step4-resume_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md)
+    (sha256 `c265797f…61a5`, committed at `c7d0009`), §5, rule on ADDENDUM-n2's follow-up schema commit:
+    - they accept the names the n-build and n-analyzer sessions settled: `fidelity_rule.ceiling`,
+      `fidelity_rule.median_rel` and `counters.fidelity_ceiling_exceeded`, with p0 entered as (k + 1, n + 2);
+    - they add `fidelity_rule.alpha` (0.01) beside them, and name the convention of record as the identity's
+      `label_convention`;
+    - they place the `fidelity-ceiling` kind directly after `nonfinite` in `schema.PAUSE_KINDS`, "as Code reads it".
+
+    The analyzer reads the first three at this commit (`scripts/n_analyze.py`, sha256 `418c2136…072d`), on n-build's
+    schema at `003ae7d`: the ceiling (PIN-n-39), the median (PIN-n-38) and the counter. It reads neither
+    `fidelity_rule.alpha` nor `label_convention` itself. The schema asserts each pause's batch alpha equal to the
+    identity's, beside its p0 (that commit's note), and every stage report reaches the reader through the schema's
+    check.
 
 - 2026-11-18 — **n — the BACKEND extension's driver v2f, committed by path before the resume: §1.4's distribution
   printed whole, and `backend-ext-2` wired to ADDENDUM-n2 §4.1. This is the coordinating session's choice (b),
@@ -1252,6 +1431,15 @@ applied to CLAUDE.md.
       regraded by the seat as Code graded it: "a mis-citation, not substantive; the ruling and what runs under it are
       unaffected".
     - Ledger (83), on cross-hardware comparisons, is the seat's (the answers' §9).
+  - **Close (PI date 2026-11-19; the n-analyzer session's line, per the addendum's header and its §6.3 (4)): §3's
+    second row and §2.1's ceiling kind, carried into the reader.** `scripts/n_analyze.py` (sha256 `418c2136…072d`)
+    binds the addendum by its sha256, `41f76c49…bb3f`, as it binds ADDENDUM-n1: in VERDICTS, the NOT-RUN output and
+    G-ANL-n's artifact, and in its battery.
+    - §2.1: the `fidelity-ceiling` kind, read on n-build's schema at `003ae7d` (PIN-n-39).
+    - §3: the TAU/4 row's drops at each point, and the second row where that row drops more than half of an arm's
+      reads at a point (PIN-n-38).
+
+    Both readings are Code's, flagged for the seat in the entry of the commit that carries this line.
 
 - 2026-11-18 — **n package — `scripts/n_analyze.py`, the seat's ruling of the second sitting carried in: PIN-n-33
   amended (pauses read point by point), the fourth form's label in its sentence, and PIN-n-34 to PIN-n-36 accepted (the
@@ -1385,6 +1573,22 @@ applied to CLAUDE.md.
     other battery window was open during any of them.
   - **Committed by path:** the file, the review raw, the self-test raw and the values-check raw, this entry, and this
     session's close line on `a84833e`'s entry. Not pushed. **Next:** G-ANL-n's canonical run, when G-CAL-n pins d_eq.
+  - **Close (PI date 2026-11-19; the n-analyzer session's line, per the third sitting's answers' §6 and §8 item 5):
+    the seat's ruling on PIN-n-37, carried into the analyzer.** The seat's answers of the third sitting,
+    [`2026-11-18_n-step4-run-pause_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md)
+    (sha256 `d51279ec…0bf4`, committed at `3b2b855`), §6, amend this entry's PIN-n-37 to the conservative form. The PI's
+    routing of that sitting ("Route as given"), committed as a raw at `7a54eb9`, routed it as its item 5.
+
+    The analyzer carries item 5 at this commit: `scripts/n_analyze.py`, sha256 `418c2136…072d`.
+    - PIN-n-37 is re-registered as amended. A standing binomial pause stands on every read launched in its batch's
+      range, re-computed or not, and, through any shadow among those reads, on every planned steered read of that
+      session. A
+      single-read pause stands on its read and, through a shadow, on that session's reads. N1's and N4's pauses stay
+      per arm.
+    - The narrower form, the trials alone, is struck. The binding of a standing batch to the runner's stands.
+
+    The commit's entry flags three readings in PIN-n-37 as Code's, for the seat: the points are read whatever the
+    pause's scope; the range runs from the batch's first trial; and a guard's beside flag is read at its points.
 
 - 2026-11-18 — **n step 4 — the BACKEND extension's run of record on n's box, from the driver's commit `ad856f0`: the
   24 reads ran and the stage paused at its end on the fidelity binomial, as pre-registered; nothing was resumed. The

@@ -13,11 +13,13 @@ and G-READ-n's states as inputs; (3) the sentence layer -- one §7 sentence set 
 (4) the reader -- the campaign's cell files through the schema's own checks, the cross-record checks the schema leaves
 to the analyzer, the declared read plan re-derived; (5) counters (rule 23) and secondaries (§4 (a)-(f)).
 
-Code's readings are registered in PINS (PIN-n-7 to PIN-n-36 ruled by the seat: PIN-n-29 and -32 amended and PIN-n-30's
+Code's readings are registered in PINS (PIN-n-7 to PIN-n-37 ruled by the seat: PIN-n-29 and -32 amended and PIN-n-30's
 sentences amended by its answers of 2026-11-18, §5, PIN-n-33 amended and the fourth form labelled by those of its second
-sitting, results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3; later ones strikable until LOCK-n
-v1.0); the seat's rulings on the question block
-(results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in OPEN, as
+sitting, results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3, PIN-n-37 amended by those of its
+third, results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6, with three readings of Code's in it;
+those, and later ones, strikable until LOCK-n v1.0). ADDENDUM-n2 v0.1 (bound by sha256) adds the fidelity-ceiling
+pause kind (§2.1; PIN-n-39) and the second sensitivity row (§3; PIN-n-38), which the reader carries. The seat's
+rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in OPEN, as
 results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1 (bound by sha256) give them, with the
 answers of 2026-11-18 (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md, §5) and of its second
 sitting (§3) where they amend them. G-ANL-n's canonical run waits for G-CAL-n's dose map.
@@ -65,6 +67,8 @@ PROPOSAL_REL = "PROPOSAL-n-bk-reconciliation-v0_2.md"
 PROPOSAL_SHA256 = "30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4"
 ADDENDUM_REL = "ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md"     # the seat's rulings of 2026-11-16 (v0.1)
 ADDENDUM_SHA256 = "e979f8f2af08ddb1f32e3054c002b1d0a3278e49a24b4f6df2cb6c042de95e03"
+ADDENDUM2_REL = "ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md"          # the seat's, 2026-11-18 (third sitting)
+ADDENDUM2_SHA256 = "41f76c49d756e09481a70f398469d9febc96bb534f28cd18d265ea87add2bb3f"
 ANALYZER_REL = "scripts/n_analyze.py"
 UNIT = "N-pod"
 D_N = "2026-12-15"                    # §7.4; the routing of 2026-11-06 ("Everything else as the 11-05 routing had it")
@@ -425,10 +429,12 @@ class State:
     # why an arm is not usable, beside `complete` (the reader's; the battery's literal states set `complete` only):
     missing: dict[str, int] = field(default_factory=dict)             # planned reads absent
     nonfinite: dict[str, int] = field(default_factory=dict)           # PIN-n-20: present reads that are not finite
-    unusable: dict[str, str] = field(default_factory=dict)            # another reason: "shadow", "tau4-emptied"
+    unusable: dict[str, str] = field(default_factory=dict)            # another reason: "shadow", "tau4-emptied",
+                                                                      # "median-emptied" (the second row, PIN-n-38)
     # PIN-n-29 as amended (point by point) and PIN-n-36: why a steered arm's reads at one point are not usable, by
-    # (arm, the point's value; N2's arms: the f) -- "incomplete", "nonfinite", "shadow", "tau4-emptied" -- [] when
-    # usable. The reader records every point it reads; a point not recorded answers from the arm's own `complete`.
+    # (arm, the point's value; N2's arms: the f) -- "incomplete", "nonfinite", "shadow", "tau4-emptied" (in the
+    # second row, "median-emptied") -- [] when usable. The reader records every point it reads; a point not recorded
+    # answers from the arm's own `complete`.
     at: dict[tuple[str, Any], list[str]] = field(default_factory=dict)
     # PIN-n-33 as amended and PIN-n-37: the points an unadjudicated pause stands on, by (arm, point or f), the reader's
     # from the stage report's pauses; None (no point map: the battery's literal states, unless a case gives one) reads
@@ -459,8 +465,9 @@ class State:
 
 def _causes(st: State, arms: Sequence[str]) -> list[str]:
     """An arm's INDETERMINATE causes, in this order: a standing pause; then, for an arm not usable, what the reader
-    found -- reads absent (incomplete), reads non-finite (PIN-n-20), or another reason (its shadows, `shadow`; the
-    TAU/4 row emptying it, `tau4-emptied`) -- else `incomplete` (the battery's literal states)."""
+    found -- reads absent (incomplete), reads non-finite (PIN-n-20), or another reason (its shadows, `shadow`; a
+    sensitivity row emptying it, `tau4-emptied` or `median-emptied`) -- else `incomplete` (the battery's literal
+    states)."""
     out = [f"pause:{a}" for a in arms if st.paused.get(a)]
     for a in arms:
         if st.complete.get(a):
@@ -537,17 +544,17 @@ def n2_reads(st: State, f: str) -> list[tuple[str, Any]]:
 def n2_outcome(st: State) -> dict:
     """§5 N2, at its decision f (OPEN-Q7 as ruled, ADDENDUM-n1 §5.3: f = 0.10 against N1-V at d_eq when the cap binds,
     else f = 0.20; the other f beside, with its ratio). INDETERMINATE iff one of the reads its certification reads is
-    not usable -- missing, non-finite, its sessions' shadows not usable, or emptied in the TAU/4 row -- or a pause stands
-    on one of them (OPEN-Q6 as ruled; PIN-n-29 as amended, ADDENDUM-n1 §7.4's N2 clause read point by point: N2-E at the
-    decision f, N1-V, N1-R's 24 directions and N1-P at the norm-matched point; PIN-n-36). Pauses are read point by
-    point, as incompleteness is (PIN-n-33 as amended): a pause standing on one of those reads makes N2 INDETERMINATE,
-    and one standing on any other read (N1-V at −1, an N1-R cell elsewhere, a guard's) leaves it decided, the points a
-    pause stands on being PIN-n-37's. An incompleteness elsewhere in those arms leaves N2 evaluated. SPECIFIC iff
-    span_reward's effect is not certified while N1-V's at the norm-matched point is; SHARED iff span_reward's is
-    certified; NULL iff neither -- each certification unsigned, as §3 states it (PIN-n-30: the sign enters no N2
-    outcome). The guards decide nothing; each guard's figures are reported beside with its pause. The other f's
-    figures beside are each 'not computed' where their reads are not usable, and name the arms whose reads there a
-    pause stands on (PIN-n-37)."""
+    not usable -- missing, non-finite, its sessions' shadows not usable, or emptied in a sensitivity row -- or a pause
+    stands on one of them (OPEN-Q6 as ruled; PIN-n-29 as amended, ADDENDUM-n1 §7.4's N2 clause read point by point:
+    N2-E at the decision f, N1-V, N1-R's 24 directions and N1-P at the norm-matched point; PIN-n-36). Pauses are read
+    point by point, as incompleteness is (PIN-n-33 as amended): a pause standing on one of those reads makes N2
+    INDETERMINATE, and one standing on any other read (N1-V at −1, an N1-R cell elsewhere, a guard's) leaves it
+    decided, the points a pause stands on being PIN-n-37's. An incompleteness elsewhere in those arms leaves N2
+    evaluated. SPECIFIC iff span_reward's effect is not certified while N1-V's at the norm-matched point is; SHARED iff
+    span_reward's is certified; NULL iff neither -- each certification unsigned, as §3 states it (PIN-n-30: the sign
+    enters no N2 outcome). The guards decide nothing; each guard's figures are reported beside with its pause, read at
+    its points as N2's are (PIN-n-37's reading (c)). The other f's figures beside are each 'not computed' where their
+    reads are not usable, and name the arms whose reads there a pause stands on (PIN-n-37)."""
     f_dec = st.dmap.n2_decision_f()
     f_bes = F20 if f_dec == F10 else F10
     reads = n2_reads(st, f_dec)
@@ -571,7 +578,7 @@ def n2_outcome(st: State) -> dict:
                       "certified": cert_b(e_b), "certified_V": cert_b(v_b), "match_ratio": st.dmap.match_ratio(f_bes),
                       "paused": [a for a, k in n2_reads(st, f_bes) if st.paused_on(a, k)]},       # PIN-n-37
               "guards": {g: {f: (d[f] if (f in d and not st.causes_at(a, f)) else NOT_COMPUTED) for f in (F10, F20)}
-                         | {"paused": bool(st.paused.get(a))}
+                         | {"paused": any(st.paused_on(a, f) for f in (F10, F20))}
                          for g, a, d in (("span_sentiment", "N2-S", st.S), ("span_character", "N2-C", st.C))}}
     return {"state": state, "f": f_dec, "point": m, "ceiling": ceil_m, "certified_E": cert_e, "certified_V": cert_v,
             "match_ratio": st.dmap.match_ratio(f_dec), "cap_binds": st.dmap.cap_binds(), "beside": beside}
@@ -1111,7 +1118,7 @@ def evaluations() -> list[tuple]:
 # =====================================================================================================================
 # 9. The battery (§3 G-ANL-n). Selftest-only helpers carry the `_bt` prefix.
 # =====================================================================================================================
-EXPECTED_CHECKS = 222
+EXPECTED_CHECKS = 230
 
 _REQ: list[str] = []
 _REQ += [f"N1-{x}" for x in ("REPLICATED", "PARTIAL-i", "PARTIAL-iv", "PARTIAL-i-iv", "NOTREP-ci+1", "NOTREP-ii",
@@ -1149,17 +1156,18 @@ _REQ += ["NUM-KEYSTREAM-M159", "NUM-KNOWN-ANSWER", "NUM-BOOT-DETERMINISM", "NUM-
          "NUM-NONFINITE-STOP", "NUM-BK-FITS-COINCIDE", "NUM-CAP-DECISION-F", "NUM-N1P-POINTS",
          "NUM-BK-REPRO", "NUM-BK-FIDELITY", "NUM-DOSEMAP-SHAPES", "NUM-DOSEMAP-REFUSE",
          "NUM-DOSEMAP-POINTS", "NUM-PEARSON", "CNT-LABEL-MASS", "NUM-N2-POINTS"]
-_REQ += ["STR-PROPOSAL-SHA", "STR-ADDENDUM-SHA", "STR-VERBATIM-IN-PROPOSAL", "STR-TAU-PREREG", "STR-NO-REPO-IMPORT",
-         "STR-NO-HEAVY", "STR-OPEN-HOOK", "STR-NO-CANONICAL-WRITE", "STR-PINS"]
+_REQ += ["STR-PROPOSAL-SHA", "STR-ADDENDUM-SHA", "STR-ADDENDUM2-SHA", "STR-VERBATIM-IN-PROPOSAL", "STR-TAU-PREREG",
+         "STR-NO-REPO-IMPORT", "STR-NO-HEAVY", "STR-OPEN-HOOK", "STR-NO-CANONICAL-WRITE", "STR-PINS"]
 _REQ += ["RD-POSITIVE", "RD-FILLED", "RD-NULL", "RD-SPECIFIC", "RD-PARTIAL", "RD-INDET", "RD-NONFINITE", "RD-MERGED",
          "RD-PAUSE", "RD-PAUSE-POINTS", "RD-GREAD", "RD-SENSITIVITY", "RD-SECONDARY", "RD-REFUSE", "RD-FILLED-FIGURES",
          "RD-FILLED-FORMS", "RD-SHADOW", "RD-ASYM", "RD-MERGED-DEQ", "RD-GREAD-MIXED", "CNT-COUNTERS",
-         "RD-SECONDARY-FLOOR", "RD-CAP-BINDS", "RD-CAP-SLOPES", "RD-POINTWISE"]
+         "RD-SECONDARY-FLOOR", "RD-CAP-BINDS", "RD-CAP-SLOPES", "RD-POINTWISE", "RD-CEILING", "RD-SECOND-ROW"]
 _REQ += ["NUM-DOSEMAP-SCHEMA", "NUM-MERGE-EDGE", "NUM-REACH-CLASS", "CMD-NOTRUN", "CMD-NOTRUN-REFUSE",
          "CMD-GANL-REFUSE", "STR-GANL-ARTIFACT"]
 _REQ += ["VD-COMPLETE", "VD-WRITE-ONCE", "VD-EXPOSURE", "VD-SENSITIVITY", "VD-STDOUT", "VD-PISTOP-STANDING",
          "VD-PAUSE-POINTS", "VD-PAUSE-RENDERING", "VD-NOTRUN-CAP", "VD-NOTRUN-PISTOP", "VD-NOTRUN-GVER", "VD-REFUSE",
-         "VD-GREAD-MIXED", "VD-PRECHECK", "VD-SOME-ARMS", "VD-MERGED-ROUTE-A", "VD-ONE-OUTCOME", "VD-PLAIN"]
+         "VD-GREAD-MIXED", "VD-PRECHECK", "VD-SOME-ARMS", "VD-MERGED-ROUTE-A", "VD-ONE-OUTCOME", "VD-PLAIN",
+         "VD-SECOND-ROW", "VD-CEILING", "VD-SECOND-ROW-TRIGGER", "VD-SECOND-ROW-PAUSE", "VD-BATCH-CLEARS"]
 REQUIRED_COVERAGE = frozenset(_REQ)
 
 
@@ -2385,8 +2393,10 @@ def _bt_bk(B: _Battery) -> None:
 #: Code's readings: PIN-n-7 to PIN-n-26 accepted by the seat (results/raw/2026-11-16_n-ganl_design-to-code_answers.md
 #: §2); PIN-n-27, -28 and -31 accepted, PIN-n-29 and -32 amended, PIN-n-30 accepted with its sentences amended
 #: (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md §5); PIN-n-33 amended, PIN-n-34 to PIN-n-36
-#: accepted (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3); PIN-n-37 declared since,
-#: strikable by the seat until LOCK-n v1.0.
+#: accepted (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3); PIN-n-37 amended
+#: (results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6), its three readings (a)-(c) Code's;
+#: PIN-n-38 and PIN-n-39, ADDENDUM-n2's in the reader, declared since; Code's readings strikable by the seat until
+#: LOCK-n v1.0.
 PINS = {
     "PIN-n-7": "'exceeds its floor' is the signed mean slope above the floor (floor ≥ 0)",
     "PIN-n-8": "'its CI excluding 0' is lo > 0 or hi < 0; an endpoint at 0 does not exclude; either side",
@@ -2498,26 +2508,49 @@ PINS = {
                 "agrees with N2. N2's causes name a point by its record label ('incomplete:N1-P@+d_20', "
                 "'shadow:N2-E@f0.20') and a pause by its arm ('pause:N1-V'). An INDETERMINATE N2 reports no beside, as "
                 "at 977b78b: §5.2's 'not computed where its reads are missing' is read for a decided N2's beside",
-    "PIN-n-37": "for N2's rule (PIN-n-33 as amended), the points a standing pause stands on (paused_points), each "
-                "within its scope's arms (n-build's schema): its read, where it has one (a rendering pause's, not on "
-                "disk, by its id); its binomial batch's trials, the reads carrying a re-computation launched from the "
-                "batch's first_launch_index to its last (the runner's trials, the dose rule's and the keyed "
-                "sample's); and, where one of those reads is a session's shadow (N1-V's d = 0 read), every read of "
-                "that session, each read against it. That last is Code's extension, capped by the scope: the "
-                "runner's SCOPE applies its shadow clause to the read that fired alone (relayed to n-build), and "
-                "PIN-n-36's 'shadow' cause reads a shadow the same way. For a batch the seat may prefer every read "
-                "launched in its range, or every read of its scope's arms (the per-arm reading). Under the runner's "
-                "launch order (arm-major, the 160 shadows first: its ORDER pin) and n §2.1's cadence of 160 reads, a "
-                "batch from the stage's start holds every shadow launched, and so stands on every read of its "
-                "scope's arms, as the per-arm reading would; a later batch holds none, and its trials, the keyed "
-                "sample's among them, reach nearly every point its range reads, as the first alternative would. The "
-                "reader binds a standing batch to the records before reading it (the runner's batch: its ends, its n "
-                "and k, its scope holding its trials' arms) and holds every pause's read to the plan. N1's and N4's "
-                "pauses stay per arm, as their incompleteness is (n:134; §5 N4, OPEN-Q6 as ruled), and so does a "
-                "guard's beside flag: PIN-n-24's 'a pause standing (under PI-STOP only) making the arms in its scope "
-                "INDETERMINATE' is read as those per-arm rules, and for N2 through the points read here. The other "
-                "f's figures beside a decided N2 stay computed and name the arms whose reads there a pause stands on "
-                "('paused'), as the guards' carry theirs",
+    "PIN-n-37": "as the seat amended it (results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6, the "
+                "conservative form), for N2's rule (PIN-n-33 as amended), the points a standing pause stands on "
+                "(paused_points): its read, where it has one -- a single-read pause (non-finite, the ceiling, "
+                "identity, rendering) on that read, a rendering pause's, not on disk, by its id; a pause that fired "
+                "the binomial, also every read launched in its batch's range, 'the trials and the reads between them' "
+                "(§6), re-computed or not; and, where one of those reads is a session's shadow (N1-V's d = 0 read), "
+                "every planned steered read of that session, each read against it (the shadow extension). Code's "
+                "narrower form (the trials alone) is struck. Code's binding of a standing batch to the runner's -- its "
+                "range, its n and k, its scope holding its trials' arms -- stands as the ground the reading needs, "
+                "with every pause's read held to the plan (report_problems); it follows the runner's batch, cumulative "
+                "since the last cleared fire, which a ceiling ruling does not clear (the runner's R12 and R13, Code's "
+                "readings for the seat), and moves with their rulings. Three readings here are Code's, for the seat, "
+                "strikable until LOCK-n v1.0: (a) the points are §6's whatever the pause's scope, §6 stating them "
+                "without it; (b) the range is the report's, from the batch's first trial (BINOMIAL_FIELDS), so reads "
+                "launched after a cleared batch and before the next batch's first trial lie in no range; (c) a guard's "
+                "beside flag reads its points, as N2 does, §6 naming N1's and N4's pauses alone as per arm. N1's and "
+                "N4's pauses stay per arm, as their incompleteness is (n:134; §5 N4, OPEN-Q6 as ruled): PIN-n-24's 'a "
+                "pause standing (under PI-STOP only) making the arms in its scope INDETERMINATE' is read as those "
+                "per-arm rules, and for N2 and its guards through the points read here. The other f's figures beside a "
+                "decided N2 stay computed and name the arms whose reads there a pause stands on ('paused')",
+    "PIN-n-38": "ADDENDUM-n2 §3's second sensitivity row, its trigger replacing the second sitting's 'where it "
+                "empties' (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §1.4): 'Where it "
+                "drops more than half of an arm's reads at a point' is no emptied test, and is read per arm and "
+                "record label: of the arm's reads present and finite there (N1-V's d = 0 reads, the shadows, are no "
+                "point; N4's arms are read at their d = 0 label), more than half dropped in the TAU/4 row, by their "
+                "own re-computation or, a steered read, its session's shadow's, as build_state drops them (PIN-n-16; "
+                "row_drops). VERDICTS' sensitivity block carries those counts ('drops') and those points "
+                "('over_half'), and, only where one exists, the second row: the reads whose re-computation's rel is "
+                "above the identity's median_rel dropped, strictly, a read with no re-computation or with a path "
+                "non-finite kept and a shadow above it dropping its session at every point, as the TAU/4 row reads "
+                "TAU/4; its outcomes, figures and drops beside, descriptive, gating nothing (§3: 'Neither row gates "
+                "anything'). A point it leaves with no session, and an arm whose slope it leaves with no common "
+                "session (N1-V's, or an N1-R direction's; N2's slopes are descriptive and mark nothing), it marks "
+                "'median-emptied', as the TAU/4 row marks them 'tau4-emptied' (PIN-n-20, PIN-n-36)",
+    "PIN-n-39": "ADDENDUM-n2 §2.1's fidelity-ceiling pause kind in the reader: a re-computed read is above the ceiling "
+                "where its comparison is set (both paths finite) and its absdiff exceeds the identity's ceiling C, "
+                "strictly ('above C nats'). The reader binds the kind both ways: a stage report's pause naming it, as "
+                "its kind or in also_fired, names a read on disk above it, and every record above it is the read of a "
+                "pause naming it (§2.1: 'pauses at once'); the report's ceiling counter is the records' count above "
+                "it; VERDICTS' record counters add 'fidelity ceiling exceeded' per arm and dose; it is a single-read "
+                "pause for PIN-n-37's points. The identity bound at d = 0 is C (§2.2), read through the records' "
+                "identity block as before. The same converse for the non-finite and identity-bound kinds is not "
+                "applied: PIN-n-24 binds them one way, as accepted",
 }
 #: The seat's rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9), in
 #: results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1, with the amendments of the answers of
@@ -2654,12 +2687,14 @@ def _bt_snapshot() -> dict:
     return out
 
 
-def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes) -> None:
+def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes, a2text: bytes) -> None:
     import ast
     B.chk("proposal: PROPOSAL-n v0.2's sha256 is the pinned 30a3d0f5...04f4", hashlib.sha256(ptext).hexdigest()
           == PROPOSAL_SHA256, hashlib.sha256(ptext).hexdigest()[:16], cover=["STR-PROPOSAL-SHA"])
     B.chk("addendum: ADDENDUM-n1 v0.1's sha256 is the pinned e979f8f2...5e03", hashlib.sha256(atext).hexdigest()
           == ADDENDUM_SHA256, hashlib.sha256(atext).hexdigest()[:16], cover=["STR-ADDENDUM-SHA"])
+    B.chk("addendum: ADDENDUM-n2 v0.1's sha256 is the pinned 41f76c49...bb3f", hashlib.sha256(a2text).hexdigest()
+          == ADDENDUM2_SHA256, hashlib.sha256(a2text).hexdigest()[:16], cover=["STR-ADDENDUM2-SHA"])
     lines = ptext.decode("utf-8").splitlines()
     miss = [k for k, (n, s) in VERBATIM.items() if s not in lines[n - 1]]
     B.chk("every verbatim constant is on its declared proposal line (n:136, n:138, n:142)", miss == [], miss,
@@ -2718,8 +2753,9 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes) -> None:
 
 
 # =====================================================================================================================
-# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at d791bd9, sha256 0ea39600...0db6: the schema's
-#     follow-up commit, ADDENDUM-n1 §5-§6 -- keepers, the capture band per layer, kfold10, the cap's loads)
+# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at 003ae7d, sha256 5cbf60db...574c: the follow-up
+#     for ADDENDUM-n2 -- the fidelity-ceiling kind, alpha, the ceiling and the median rel in the fidelity rule, the
+#     ceiling counter -- on d791bd9's, ADDENDUM-n1 §5-§6: keepers, the capture band per layer, kfold10, the cap's loads)
 # =====================================================================================================================
 # The schema module is imported lazily, on the verdicts path and in the battery only (LAZY_SCHEMA), and bound by its
 # sha256 in every output; its checks run on every cell the analyzer loads ("the checks both sides run"). What the
@@ -2727,7 +2763,7 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes) -> None:
 # each steered read's shadow exists with its ids_sha; a session's cues and present order agree across its reads; N4-T
 # and N4-Ts carry the same schedule_zone per session, 80 S and 80 U (n §2.4).
 SCHEMA_REL = "valence_core/n/schema.py"
-SCHEMA_SHA256 = "0ea39600919aceb43ee25962314e4239f609ef8da7536b12063372dfdfb30db6"     # d791bd9
+SCHEMA_SHA256 = "5cbf60db8484da1e87fdd33bf84a65aeb2a06194113b266cbcefdec429c9574c"     # 003ae7d
 LAZY_SCHEMA = "valence_core.n.schema"
 N_SESSIONS, N_FLOOR = 160, 40
 #: n §2.4's table, independently of the schema's ARM_CELLS (the reader cross-checks the two): arm -> (directions,
@@ -2746,7 +2782,7 @@ GUARD_DIRS = {"N2-E": "span_reward", "N2-S": "span_sentiment", "N2-C": "span_cha
 
 
 def schema_module():
-    """The record schema, imported lazily; refused unless its bytes are the pinned ones (d791bd9)."""
+    """The record schema, imported lazily; refused unless its bytes are the pinned ones (003ae7d)."""
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     got = hashlib.sha256((REPO / SCHEMA_REL).read_bytes()).hexdigest()
@@ -2795,6 +2831,24 @@ def own_plan(dmap: DoseMap) -> list[str]:
 def dose_map_of(identity: Mapping[str, Any]) -> DoseMap:
     dm = identity["dose_map"]
     return DoseMap(dm["d_eq"], dm["d_20"], dm["rho"], dm["R"], dm["R_ell"])
+
+
+#: ADDENDUM-n2's figures of record as the identity carries them from the lock (n-build's schema, its fidelity rule,
+#: by the names the seat accepted: results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md §5): the ceiling
+#: C (§2.1; the identity bound at d = 0, §2.2) and the box's extension median rel (§3).
+CEILING_KEY, MEDIAN_KEY = "ceiling", "median_rel"
+CEILING_COUNTER = "fidelity_ceiling_exceeded"          # the stage report's counter of the records above C
+
+
+def ceiling_of(identity: Mapping[str, Any]) -> float | None:
+    """C, nats (ADDENDUM-n2 §2.1), from the identity's fidelity rule; None where none is set."""
+    return identity["fidelity_rule"][CEILING_KEY]
+
+
+def median_of(identity: Mapping[str, Any]) -> float | None:
+    """The box's extension median rel under the convention of record (ADDENDUM-n2 §3), from the identity's fidelity
+    rule; None where none is set."""
+    return identity["fidelity_rule"][MEDIAN_KEY]
 
 
 def lock_names(text: str, value: str) -> bool:
@@ -2957,20 +3011,24 @@ STEERED_ARMS = ("N1-V", "N1-R", "N1-P", "N2-E", "N2-S", "N2-C")
 
 def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tuple, str],
                 drop: Callable[[str], bool] | None = None,
-                paused_at: Mapping[tuple[str, Any], bool] | None = None) -> tuple[State, dict]:
+                paused_at: Mapping[tuple[str, Any], bool] | None = None,
+                emptied: str = "tau4-emptied") -> tuple[State, dict]:
     """The outcome layer's State from the campaign (n §4), and the figures beside it. ``paused``: per arm, whether an
     unadjudicated pause stands on its reads (the stage report's); ``paused_at``: the points they stand on (PIN-n-37:
-    paused_points), None reading ``paused`` at every point of a paused arm. ``drop``: the TAU/4 sensitivity row's read
-    filter (PIN-n-16), None for the primary (ungated, n §2.1).
+    paused_points), None reading ``paused`` at every point of a paused arm. ``drop``: a sensitivity row's read filter,
+    the TAU/4 row's (PIN-n-16) or ADDENDUM-n2 §3's second row's (PIN-n-38), None for the primary (ungated, n §2.1);
+    ``emptied``: the cause that row gives a point it leaves with no session (`tau4-emptied`; the second row's
+    `median-emptied`).
 
     Read point by point (PIN-n-29 as amended; PIN-n-36): a steered arm's reads at one point are usable iff every
     planned read there is present and finite and the shadows (N1-V's d = 0 reads) of every session it reads are too
     (PIN-n-20 per point: N1-R's 40 floor sessions, the others' 160); State.at records why not, per point, and each
     point's statistics (V, L, P, N2's E, S, C) are computed where its reads are usable. An arm is complete only if every
     point is (`shadow` when only its shadows fail it); the per-arm statistics -- N1-V's slope, N1-R's floor and N2's
-    floor, the N2 arms' slopes -- are computed on a complete arm only. In the TAU/4 row a point left with no session is
-    marked `tau4-emptied`, and its arm with it, and a slope with no common session marks its arm alone, its points
-    staying usable (never a STOP; PIN-n-36); each statistic's matrix is drawn from its arm's stream
+    floor, the N2 arms' slopes -- are computed on a complete arm only. In a sensitivity row a point left with no
+    session is marked ``emptied`` (`tau4-emptied` in the TAU/4 row), and its arm with it, and a slope with no common
+    session marks its arm alone, its points staying usable (never a STOP; PIN-n-36); each statistic's matrix is drawn
+    from its arm's stream
     for that statistic's session count (PIN-n-12). Slopes are fitted through the origin over the nonzero points
     (OPEN-Q1 and OPEN-Q9 as ruled), N1-V's with-intercept slope beside, descriptive; N1-P's P(d) at each point it
     reads."""
@@ -3014,10 +3072,10 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
 
     def arm_emptied(arm) -> None:
         st.complete[arm] = False
-        st.unusable[arm] = "tau4-emptied"
+        st.unusable[arm] = emptied
 
-    def emptied(arm, *vecs) -> bool:
-        """The TAU/4 row, for an arm read at one point only (N4's): no session left marks it `tau4-emptied`."""
+    def emptied_one(arm, *vecs) -> bool:
+        """A sensitivity row, for an arm read at one point only (N4's): no session left marks it ``emptied``."""
         if any(len(v) == 0 for v in vecs):
             arm_emptied(arm)
             return True
@@ -3027,9 +3085,9 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
         return not st.at[(arm, key)]
 
     def emptied_at(arm, key, *vecs) -> bool:
-        """The TAU/4 row: a point left with no session is `tau4-emptied`, and so is its arm (never a STOP)."""
+        """A sensitivity row: a point left with no session is ``emptied``, and so is its arm (never a STOP)."""
         if any(len(v) == 0 for v in vecs):
-            st.at[(arm, key)] = ["tau4-emptied"]
+            st.at[(arm, key)] = [emptied]
             arm_emptied(arm)
             return True
         return False
@@ -3129,7 +3187,7 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
                 if drop is not None and drop(r["read_id"]):
                     continue
                 acc.append(float(r["margin"]) if r["schedule_zone"] == "S" else -float(r["margin"]))
-        if not emptied("N4-T", told) and not emptied("N4-Ts", sham):
+        if not emptied_one("N4-T", told) and not emptied_one("N4-Ts", sham):
             st.told = mean_est(told, boot_index("N4-T", len(told)), PCT98)
             st.e_sham = abs(float(np.mean(sham)))
             fig["n"][("N4-T", "0")], fig["n"][("N4-Ts", "0")] = len(told), len(sham)
@@ -3278,13 +3336,15 @@ def sentence_set_filled(o: Mapping[str, Any], st: State, *, route: str, auc: Map
 # 13. Counters (rule 23: over every read, the non-finite included) and secondaries (n §4; rule 28(a); no claim)
 # =====================================================================================================================
 COUNTER_NAMES = ("fidelity re-computations", "fidelity exceedances at TAU", "fidelity exceedances at TAU/4",
-                 "non-finite re-computations", "non-finite margins", "label mass below .20", "identity bound exceeded")
+                 "non-finite re-computations", "non-finite margins", "label mass below .20", "identity bound exceeded",
+                 "fidelity ceiling exceeded")
 
 
 def counters(camp: Campaign) -> dict:
-    """n §4's counters by arm and dose label, over every read in the campaign (rule 23); the rendering-mismatch
-    counter is the stage report's (check_record: "a rendering mismatch is never a record (a pause during a stage; a
-    G-VER-STOP at G-VER)")."""
+    """n §4's counters by arm and dose label, over every read in the campaign (rule 23), with ADDENDUM-n2 §2.1's
+    ceiling beside the identity bound (PIN-n-39); the rendering-mismatch counter is the stage report's (check_record:
+    "a rendering mismatch is never a record (a pause during a stage; a G-VER-STOP at G-VER)")."""
+    ceil = ceiling_of(camp.identity)
     out: dict = {}
     for r in camp.records.values():
         key = f"{r['arm']}|{r['dose_label']}"
@@ -3302,6 +3362,7 @@ def counters(camp: Campaign) -> dict:
             c["label mass below .20"] += label_mass_below([r["restricted"]["label_mass"]])
         if r["identity"] is not None and not r["identity"]["within"]:
             c["identity bound exceeded"] += 1
+        c["fidelity ceiling exceeded"] += above_ceiling(r, ceil)
     return {k: out[k] for k in sorted(out)}
 
 
@@ -3316,9 +3377,52 @@ def tau4_drop(camp: Campaign) -> Callable[[str], bool]:
     return drop
 
 
+def median_drop(camp: Campaign, median_rel: float) -> Callable[[str], bool]:
+    """ADDENDUM-n2 §3's second row (PIN-n-38): a read whose re-computation's rel is above the box's extension median
+    (the identity's median_rel), strictly, as the TAU/4 row's filter reads TAU/4 (PIN-n-16): a read with no
+    re-computation is kept, and so is a read whose comparison is not set (a path non-finite); a shadow above it drops
+    its session at every point through build_state."""
+    def drop(rid: str) -> bool:
+        r = camp.records.get(rid)
+        f = None if r is None else r["fidelity"]
+        return bool(f is not None and f["rel"] is not None and f["rel"] > median_rel)
+    return drop
+
+
+def row_drops(camp: Campaign, drop: Callable[[str], bool]) -> dict[str, dict[str, int]]:
+    """PIN-n-38: what a sensitivity row drops, per 'arm@label' -- each steered arm's record labels (N1-V's d = 0 reads,
+    the shadows, being no point) and N4's arms at their d = 0 label: the arm's reads present and finite there, and how
+    many of them the row drops, by their own re-computation or, for a steered read, its session's shadow's, as
+    build_state drops them."""
+    out: dict[str, dict[str, int]] = {}
+    for a in ARMS:
+        for rid in sorted(camp.present[a]):
+            _arm, _d, lab, sid = rid.split("|")
+            if (a, lab) == ("N1-V", "0") or not camp.records[rid]["finite"]:
+                continue
+            x = out.setdefault(f"{a}@{lab}", {"reads": 0, "dropped": 0})
+            x["reads"] += 1
+            x["dropped"] += bool(drop(rid) or (a in STEERED_ARMS and drop(f"N1-V|none|0|{sid}")))
+    return dict(sorted(out.items()))
+
+
+def over_half(drops: Mapping[str, Mapping[str, int]]) -> list[str]:
+    """ADDENDUM-n2 §3: the points where a row 'drops more than half of an arm's reads' (PIN-n-38)."""
+    return [k for k, x in drops.items() if 2 * x["dropped"] > x["reads"]]
+
+
+def above_ceiling(rec: Mapping[str, Any], ceiling: float | None) -> bool:
+    """ADDENDUM-n2 §2.1 (PIN-n-39): a re-computed read whose |cached − fresh| margin discordance is above C nats, the
+    identity's ceiling: its comparison set (both paths finite) with absdiff > C, strictly; never where no ceiling is
+    set."""
+    f = rec["fidelity"]
+    return bool(ceiling is not None and f is not None and f["absdiff"] is not None and f["absdiff"] > ceiling)
+
+
 def secondaries(camp: Campaign, st: State, gvec: Mapping[str, Any] | None) -> dict:
-    """n §4's secondaries (a)-(e); (f) is the VERDICTS' sensitivity row. Descriptive, issuing no claim (rule 11). The
-    readings of (a), (c) and the n ≥ 20 floor of (a), (c) and (d) are PIN-n-22's; (d)'s r is PIN-n-18's."""
+    """n §4's secondaries (a)-(e); (f) is the VERDICTS' sensitivity rows (PIN-n-16; ADDENDUM-n2 §3's second,
+    PIN-n-38). Descriptive, issuing no claim (rule 11). The readings of (a), (c) and the n ≥ 20 floor of (a), (c) and
+    (d) are PIN-n-22's; (d)'s r is PIN-n-18's."""
     out: dict = {"floor_events": FLOOR_EVENTS}
     a = {}
     for r in camp.records.values():
@@ -3381,7 +3485,7 @@ def _bt_write_campaign(root: Path, sm, *, R_ell: float = 23.90625, delta: Callab
                        mutate: Callable[[dict], None] | None = None,
                        first_is_s: Callable[[int], bool] = lambda r: r % 3 == 0,
                        lock_sha256: str | None = None, capture_cells: Sequence[tuple] = (),
-                       sampled: Sequence[str] = ()) -> Path:
+                       sampled: Sequence[str] = (), rule: Mapping[str, Any] | None = None) -> Path:
     """Write a synthetic campaign (every cell of the plan over the example identity's dose map) to ``root``: shadows
     m0(run) = 0.1 + 0.01 (run % 7); each steered read m0 + delta(arm, direction, label, run); N4-T's margin toward its
     told zone told(run, zone) and N4-Ts's toward its referent zone sham(run, zone), the zone S for even runs;
@@ -3389,12 +3493,17 @@ def _bt_write_campaign(root: Path, sm, *, R_ell: float = 23.90625, delta: Callab
     read_id -> fresh shift; ``first_is_s``: a run's present order (S first); ``lock_sha256``: the identity's lock;
     ``capture_cells``: the (arm, direction, label) cells whose capture arrays are written (empty, by name only: the
     reader never reads one, PIN-n-31); ``sampled``: read_ids written with the campaign's keyed-sample re-computation
-    (at a point the dose rule does not re-compute). Each cell records its per-layer row hashes as sha256 of
-    'name|layer'."""
+    (at a point the dose rule does not re-compute); ``rule``: fields of the identity's fidelity rule replaced
+    (ADDENDUM-n2's ceiling and median), a ceiling also the identity bound (§2.2). Each cell records its per-layer row
+    hashes as sha256 of 'name|layer'."""
     root.mkdir(parents=True, exist_ok=True)
     ident = sm.example_identity(R_ell=R_ell)
     if lock_sha256 is not None:
         ident = dict(ident, lock_sha256=lock_sha256)
+    if rule:
+        ident = dict(ident, fidelity_rule=dict(ident["fidelity_rule"], **rule))
+        if CEILING_KEY in rule:
+            ident["identity_bound"] = rule[CEILING_KEY]
     launch = 0
     for arm, d_, lab in plan_cells(dose_map_of(ident)):
         if (arm, d_, lab) in omit:
@@ -3447,6 +3556,16 @@ def _bt_delta_positive(arm: str, d_: str, lab: str, run: int) -> float:
 
 _BT_PTS = {"+1": 1.0, "+1/2": 0.5, "-1": -1.0, "+d_20": 0.625, "+d_eq": 0.3125, "f0.10": 0.3125, "f0.20": 0.625}
 _BT_RAND_NEG = "rand_05"
+_BT_SEC_MEDIAN = 1e-6                  # the second row's campaign's median rel (PIN-n-38)
+
+
+def _bt_sec_shift() -> dict[str, float]:
+    """The second row's campaign's fresh shifts (PIN-n-38): N1-V's +1 reads of runs 79-159 and every N1-P −1 read
+    0.015 apart (rel above TAU/4, below TAU); N1-R rand_03's +1 read of run 5 0.004 apart and the shadow of run 2 1e-5
+    apart (rel below TAU/4, above _BT_SEC_MEDIAN)."""
+    out = {f"N1-V|valence|+1|{session_key(r)}": 0.015 for r in range(79, 160)}
+    out |= {f"N1-P|valence|-1|{session_key(r)}": 0.015 for r in range(160)}
+    return out | {f"N1-R|rand_03|+1|{session_key(5)}": 0.004, f"N1-V|none|0|{session_key(2)}": 1e-5}
 
 
 def _bt_asym(arm: str, d_: str, lab: str, run: int) -> float:
@@ -3827,8 +3946,8 @@ def _bt_reader(B: _Battery) -> None:
               paused["tuple"][:4] == ("INDETERMINATE",) * 3 + ("PASS",)
               and paused["N1"]["causes"] == ["pause:N1-R"] and paused["N2"]["causes"] == ["pause:N2-E", "pause:N1-R"],
               paused["tuple"], cover=["RD-PAUSE"])
-        # PIN-n-37: the points the report's standing pauses stand on (paused_points), against sets derived here from
-        # the dose map's points (State's), not from the plan's read ids
+        # PIN-n-37 as amended (the third sitting's §6): the points the report's standing pauses stand on
+        # (paused_points), against sets derived here from the dose map's points (State's), not from the plan's read ids
         nz = {p for p in camp.dmap.points() if p != 0.0}
         pts_ = {"N1-V": nz, "N1-R": nz, "N1-P": set(camp.dmap.n1p_points()), "N2-E": {F10, F20},
                 "N2-S": {F10, F20}, "N2-C": {F10, F20}}
@@ -3848,34 +3967,45 @@ def _bt_reader(B: _Battery) -> None:
         cases_pp = {
             "a read alone (N1-V at −1)": ([pq(read_id=f"N1-V|valence|-1|{session_key(7)}", arms_in_scope=["N1-V"])],
                                          {("N1-V", -1.0)}),
-            "a rendering pause's read (N2-E at f0.10)": (
+            "an N2-E read alone (f0.10)": (
                 [pq(read_id=f"N2-E|span_reward|f0.10|{session_key(7)}", arms_in_scope=["N2-E"])], {("N2-E", F10)}),
             "a floor session's shadow, the runner's scope": ([pq(read_id=sh3, arms_in_scope=steered)],
                                                              keys_(*steered)),
-            "the same shadow, its scope N1-V alone": ([pq(read_id=sh3, arms_in_scope=["N1-V"])], keys_("N1-V")),
+            "the same shadow, its scope N1-V alone (the scope caps nothing)": (
+                [pq(read_id=sh3, arms_in_scope=["N1-V"])], keys_(*steered)),
             "a neutral session's shadow (N1-R reads it not)": (
                 [pq(read_id=sh159, arms_in_scope=steered)], keys_(*(a for a in steered if a != "N1-R"))),
             "a binomial batch over N1-P's −1 cell": ([pq(arms_in_scope=["N1-P"], binomial=bat(m1p[0], m1p[-1]))],
                                                      {("N1-P", -1.0)}),
-            "the same batch outside its scope": ([pq(arms_in_scope=["N1-V"], binomial=bat(m1p[0], m1p[-1]))], set()),
-            "a binomial batch of one shadow": ([pq(arms_in_scope=["N1-V", "N2-E"], binomial=bat(li_[sh159],
-                                                                                                li_[sh159]))],
-                                               keys_("N1-V", "N2-E")),
+            "the same batch, its scope N1-V (the scope caps nothing)": (
+                [pq(arms_in_scope=["N1-V"], binomial=bat(m1p[0], m1p[-1]))], {("N1-P", -1.0)}),
+            "a binomial batch of one shadow, a neutral session's": (
+                [pq(arms_in_scope=["N1-V", "N2-E"], binomial=bat(li_[sh159], li_[sh159]))],
+                keys_(*(a for a in steered if a != "N1-R"))),
             "N4's pause (read per arm)": ([pq(read_id=f"N4-Ts|none|0|{session_key(9)}", arms_in_scope=["N4-Ts"])],
                                           set()),
             "an adjudicated pause": ([pq(read_id=sh3, arms_in_scope=steered, adjudicated=True)], set())}
         nt_v = min(li_[r] for r in camp.planned["N1-V"] if r.split("|")[2] == "+1/2"
                    and camp.records[r]["fidelity"] is None)                # a read the keyed sample does not hold
         n4t = li_[f"N4-Ts|none|0|{session_key(9)}"]                        # a d = 0 read, re-computed, not a shadow
-        cases_pp |= {"a range holding no trial": ([pq(arms_in_scope=["N1-V"], binomial=bat(nt_v, nt_v))], set()),
+        cases_pp |= {"a range of one read with no re-computation": (
+                         [pq(arms_in_scope=["N1-V"], binomial=bat(nt_v, nt_v))], {("N1-V", 0.5)}),
                      "an N4 trial is no shadow": ([pq(arms_in_scope=["N1-V", "N4-Ts"], binomial=bat(n4t, n4t))],
                                                   set())}
-        # the review's B1: a range over N1-P's +d_20, +d_eq and −1 cells, −1 alone re-computed by the dose rule; and
-        # the same range on a campaign with two +d_eq reads on the keyed sample (a re-computation at another point)
+        # the v5 review's B1: a range over N1-P's +d_20, +d_eq and −1 cells, −1 alone re-computed by the dose rule,
+        # and the same range on a campaign with two +d_eq reads on the keyed sample: every read launched in it counts
+        # (§6's conservative form), so the sample changes nothing; and a range from N1-P's −1 cell to N4-T's first read
+        # through N2's arms, which carry no re-computation here and are not in the scope
         lo_p = min(li_[r] for r in camp.planned["N1-P"] if r.split("|")[2] == "+d_20")
         hi_p = max(li_[r] for r in camp.planned["N1-P"] if r.split("|")[2] == "-1")
+        rs_ = camp.dmap.resolved()
+        p3 = {("N1-P", rs_["d_20"]), ("N1-P", rs_["d_eq"]), ("N1-P", -1.0)}
         cases_pp["a range over N1-P's +d_20 to −1 cells"] = ([pq(arms_in_scope=["N1-P"], binomial=bat(lo_p, hi_p))],
-                                                             {("N1-P", -1.0)})
+                                                             p3)
+        n4t0 = min(li_[r] for r in camp.planned["N4-T"])
+        cases_pp["a range from N1-P's −1 cell to N4-T's first read"] = (
+            [pq(arms_in_scope=["N1-P", "N4-T"], binomial=bat(m1p[0], n4t0))],
+            {("N1-P", -1.0)} | keys_("N2-E", "N2-S", "N2-C"))
         got_pp = {k: {kk for kk, v in paused_points({"pauses": qs}, camp).items() if v}
                   for k, (qs, _w) in cases_pp.items()}
         want_pp = {k: w for k, (_qs, w) in cases_pp.items()}
@@ -3885,14 +4015,81 @@ def _bt_reader(B: _Battery) -> None:
         k_s = "the same range, two +d_eq reads on the keyed sample"
         got_pp[k_s] = {kk for kk, v in paused_points({"pauses": [pq(arms_in_scope=["N1-P"],
                                                                      binomial=bat(lo_p, hi_p))]}, camp_s).items() if v}
-        want_pp[k_s] = {("N1-P", camp_s.dmap.resolved()["d_eq"]), ("N1-P", -1.0)}
-        B.chk("reader path: the points a standing pause stands on (PIN-n-37), within its scope: its read's point; a "
-              "shadow's every read of its session (N1-R's only on a floor session); a binomial batch's trials, the "
-              "reads carrying a re-computation in its range (the dose rule's and the keyed sample's, not every read "
-              "in it), and through a shadow among them its session's reads, a range holding no trial standing on "
-              "nothing and an N4 d = 0 trial being no shadow; nothing for N4's pause (per arm) or an adjudicated one "
-              "(fourteen cases)", got_pp == want_pp,
-              [k for k in want_pp if got_pp.get(k) != want_pp[k]], cover=["RD-PAUSE-POINTS"])
+        want_pp[k_s] = p3
+        om = _bt_write_campaign(base / "om", sm, delta=_bt_delta_positive, omit=[("N1-P", "valence", "-1")])
+        k_o = "a floor session's shadow, N1-P's −1 cell planned and not on disk"
+        got_pp[k_o] = {kk for kk, v in paused_points({"pauses": [pq(read_id=sh3, arms_in_scope=steered)]},
+                                                     load_campaign(om, sm)).items() if v}
+        want_pp[k_o] = keys_(*steered)
+        B.chk("reader path: the points a standing pause stands on (PIN-n-37 as amended, §6's conservative form), "
+              "whatever its scope: its read's point; a shadow's every planned read of its session (N1-R's only on a "
+              "floor session; a cell not on disk included); every read launched in a binomial batch's range, "
+              "re-computed or not (a range of one read with no re-computation; N1-P's +d_20 to −1 cells, with or "
+              "without the keyed sample; N2's arms between N1-P's −1 cell and N4-T, outside the scope), and through a "
+              "shadow among them its session's reads, an N4 d = 0 trial being no shadow; nothing for N4's pause (per "
+              "arm) or an adjudicated one (sixteen cases)",
+              got_pp == want_pp, [k for k in want_pp if got_pp.get(k) != want_pp[k]], cover=["RD-PAUSE-POINTS"])
+        # PIN-n-39 (ADDENDUM-n2 §2.1): the ceiling's test, strict and null-safe, and its counters on a campaign with
+        # C = 0.30 (above the schema's floor; the identity bound at d = 0, §2.2): N1-V's +1 read of run 4 re-computed
+        # 0.35 apart (above), its −1 read of run 6 0.27 apart (above the floor 0.25, not above C), the shadow of run 8
+        # 0.32 apart (above, and outside the identity bound)
+        ac = {"strict": not above_ceiling({"fidelity": {"absdiff": 0.25}}, 0.25)
+              and above_ceiling({"fidelity": {"absdiff": 0.2500001}}, 0.25),
+              "no comparison": not above_ceiling({"fidelity": {"absdiff": None}}, 0.25),
+              "no re-computation": not above_ceiling({"fidelity": None}, 0.25),
+              "no ceiling": not above_ceiling({"fidelity": {"absdiff": 9.0}}, None)}
+        cc_dir = _bt_write_campaign(base / "cc", sm, delta=_bt_delta_positive, rule={CEILING_KEY: 0.30},
+                                    fresh_shift={f"N1-V|valence|+1|{session_key(4)}": 0.35,
+                                                 f"N1-V|valence|-1|{session_key(6)}": 0.27,
+                                                 f"N1-V|none|0|{session_key(8)}": 0.32})
+        camp_c = load_campaign(cc_dir, sm)
+        cn_c, rc_c = counters(camp_c), report_counters(camp_c)
+        ac |= {"counters": [cn_c[k]["fidelity ceiling exceeded"] for k in ("N1-V|+1", "N1-V|-1", "N1-V|0")]
+               == [1, 0, 1] and sum(c["fidelity ceiling exceeded"] for c in cn_c.values()) == 2
+               and cn_c["N1-V|0"]["identity bound exceeded"] == 1,
+               "the report's": rc_c[CEILING_COUNTER] == 2 == _bt_files(cc_dir)[1]["ceiling"]}
+        B.chk("reader path: the ceiling (PIN-n-39, ADDENDUM-n2 §2.1) is above C strictly, never without a comparison, "
+              "a re-computation or a ceiling; at C = 0.30 the counters count N1-V's +1 read 0.35 apart and the shadow "
+              "0.32 apart (outside the identity bound C at d = 0, §2.2), not the −1 read 0.27 apart (above the "
+              "schema's floor, not above C), per arm and dose and in the report's counter, as the battery's own file "
+              "count has it",
+              all(ac.values()), [k for k, v in ac.items() if not v], cover=["RD-CEILING"])
+        # PIN-n-38 (ADDENDUM-n2 §3): the second row's filter (strict; null-safe), and what each row drops per arm and
+        # label on a campaign (cs) with the median 1e-6: N1-V's +1 reads of runs 79-159 and all 160 N1-P −1 reads
+        # re-computed 0.015 apart (rel above TAU/4, below TAU: both rows drop them), N1-R rand_03's +1 read of run 5
+        # 0.004 apart and the shadow of run 2 1e-5 apart (rel below TAU/4, above the median: the second row alone)
+        md = median_drop(replace(camp_c, records={"a": {"fidelity": {"rel": 0.5}},
+                                                  "b": {"fidelity": {"rel": 0.5000001}},
+                                                  "c": {"fidelity": {"rel": None}}, "d": {"fidelity": None}}), 0.5)
+        cs_dir = _bt_write_campaign(base / "cs", sm, delta=_bt_delta_positive, rule={MEDIAN_KEY: _BT_SEC_MEDIAN},
+                                    fresh_shift=_bt_sec_shift())
+        camp_cs = load_campaign(cs_dir, sm)
+        d4, d2 = row_drops(camp_cs, tau4_drop(camp_cs)), row_drops(camp_cs, median_drop(camp_cs, _BT_SEC_MEDIAN))
+
+        def dropped2(k: str) -> int:
+            a, lab = k.split("@")
+            if a.startswith("N4"):
+                return 0
+            own = {"N1-V@+1": 81, "N1-P@-1": 159, "N1-R@+1": 1}.get(k, 0)        # 159: run 2's is the shadow's too
+            return own + (24 if a == "N1-R" else 1)
+        sr = {"filter": [md(x) for x in "abcde"] == [False, True, False, False, False],
+              "more than half": over_half({"x": {"reads": 4, "dropped": 2}, "y": {"reads": 4, "dropped": 3}}) == ["y"],
+              "the points": sorted(d4) == sorted(d2) == sorted(
+                  [f"{a}@{x}" for a in ("N1-V", "N1-R") for x in ("+1", "+1/2", "+d_20", "+d_eq", "-1")]
+                  + [f"N1-P@{x}" for x in ("+1", "+d_20", "+d_eq", "-1")]
+                  + [f"{a}@{x}" for a in ("N2-E", "N2-S", "N2-C") for x in ("f0.10", "f0.20")]
+                  + ["N4-T@0", "N4-Ts@0"]),
+              "TAU/4 row": {k: v["dropped"] for k, v in d4.items() if v["dropped"]} == {"N1-P@-1": 160, "N1-V@+1": 81}
+              and all(v["reads"] == (960 if k.startswith("N1-R") else 160) for k, v in d4.items()),
+              "over half": over_half(d4) == ["N1-P@-1", "N1-V@+1"],
+              "second row": {k: v["dropped"] for k, v in d2.items()} == {k: dropped2(k) for k in d4}
+              and over_half(d2) == ["N1-P@-1", "N1-V@+1"]}
+        B.chk("reader path: the second row (PIN-n-38, ADDENDUM-n2 §3) drops a re-computation above the median "
+              "strictly, never without one or a comparison; 'more than half' is strict (2 of 4 is not); its 22 points "
+              "(the shadows none); per arm and label, the TAU/4 row drops N1-V's 81 +1 reads "
+              "and N1-P's 160 −1 reads (over half at those two points), and the second row also N1-R rand_03's +1 "
+              "read of run 5 and, through its shadow, run 2's reads at every steered point (24 of N1-R's at each), "
+              "N4's none", all(sr.values()), [k for k, v in sr.items() if not v], cover=["RD-SECOND-ROW"])
         gr = _bt_gread_all(camp.dmap, "FAIL")
         o8 = _bt_eval(null, sm, gread=gr)
         B.chk("reader path: G-READ-n FAIL everywhere -> the tuple's coordinate FAIL; the NOT-REPLICATED and NULL "
@@ -3930,8 +4127,9 @@ def _bt_reader(B: _Battery) -> None:
               (mix, stop_auc[1][:50], stop_route[1][:50]), cover=["RD-GREAD-MIXED"])
         # F14: at +1 a fresh shift of 0.02 (rel ≈ 0.009: above TAU/4, below TAU) on runs 0, 4, ...; at −1 a shift of
         # 0.5 (above both) on runs 1, 5, ...; the shadow of run 2 shifted by 0.01 (rel ≈ 0.009: its session drops at
-        # every point and in every arm), the shadow of run 3 by 1e-9 (above the identity bound 0, far below TAU/4);
-        # N2-S at f = 0.10 with five label masses of exactly .20 and three just below
+        # every point and in every arm), the shadow of run 3 by 1e-9 (far below TAU/4); both shadows within the
+        # identity bound, C = 0.25 (ADDENDUM-n2 §2.2; RD-CEILING counts one above it); N2-S at f = 0.10 with five
+        # label masses of exactly .20 and three just below
         shifted = {f"N1-V|valence|+1|{session_key(r)}": 0.02 for r in range(0, 160, 4)}
         shifted |= {f"N1-V|valence|-1|{session_key(r)}": 0.5 for r in range(1, 160, 4)}
         shifted[f"N1-V|none|0|{session_key(2)}"] = 0.01
@@ -3957,14 +4155,15 @@ def _bt_reader(B: _Battery) -> None:
             and cn["N1-V|-1"]["fidelity exceedances at TAU"] == 40,
             "shadows": cn["N1-V|0"]["fidelity exceedances at TAU/4"] == 1
             and cn["N1-V|0"]["fidelity exceedances at TAU"] == 0,
-            "identity bound": cn["N1-V|0"]["identity bound exceeded"] == 2
-            and sum(c["identity bound exceeded"] for c in cn.values()) == 2,
+            "identity bound": sum(c["identity bound exceeded"] for c in cn.values()) == 0
+            and sum(1 for r in camp9.records.values() if r["identity"] is not None) == 480,
             "label mass below .20 (strict)": cn["N2-S|f0.10"]["label mass below .20"] == 3
             and sum(c["label mass below .20"] for c in cn.values()) == 3}
         B.chk("reader path (F14): the TAU/4 row (PIN-n-16) drops the 40 reads above TAU/4 at +1 (none above TAU), the "
               "40 above both at −1, and run 2 everywhere (its shadow above TAU/4), from those points and the slopes "
               "(79 sessions left), the primary keeping all 160; the counters, through `counters`, tell TAU/4 from "
-              "TAU, count two identity-bound exceedances and the three label masses strictly below .20",
+              "TAU, find the 480 d = 0 reads' identity checks all within C = 0.25 (the two shadows shifted included; "
+              "ADDENDUM-n2 §2.2) and count the three label masses strictly below .20",
               all(sens_ok.values()), [k for k, v in sens_ok.items() if not v],
               cover=["RD-SENSITIVITY", "CNT-COUNTERS"])
         sec = secondaries(camp, st, {"cosines": {"span_character|span_reward": 0.1, "span_character|span_sentiment": 0.2,
@@ -4149,7 +4348,8 @@ def not_run_doc(rec: Mapping[str, Any], record_ref: Mapping[str, Any],
     return {"schema": NOT_RUN_OUT_SCHEMA, "unit": UNIT, "outcome": NOT_RUN, "cause": rec["cause"], "reason": reason,
             "record": dict(record_ref), "date": rec["date"], "sentences": sset,
             "proposal_sha256": PROPOSAL_SHA256, "addendum_sha256": ADDENDUM_SHA256,
-            "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN, **dict(extra or {})}
+            "addendum2_sha256": ADDENDUM2_SHA256, "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN,
+            **dict(extra or {})}
 
 
 def run_not_run(record: Path, out_dir: Path) -> tuple[Path, str]:
@@ -4194,21 +4394,25 @@ def _bt_files(cdir: Path | None) -> tuple[dict, dict]:
     which the reader checks a report against; the review's B2): the cells as a report names them (both shas, of the
     files' bytes, and the record count), and the counters as n-build's runner counts them (its answer of 2026-11-16):
     per 'arm|dose_label' the records re-computed and those above TAU and TAU/4 (``is True``); the records non-finite
-    on either path; the records outside the identity bound; per 'arm|dose_label' the finite records whose label mass
-    is under .20; and the records' duration_ms sum, the cap's used time."""
+    on either path; the records outside the identity bound; the records whose absdiff is above the identity's ceiling
+    (None where none is set); per 'arm|dose_label' the finite records whose label mass is under .20; and the records'
+    duration_ms sum, the cap's used time."""
     cells: dict = {}
     fid: dict = {}
     lm: dict = {}
-    nonfin = oob = used = 0
+    nonfin = oob = used = over_c = 0
+    ceil = None
     for f in (sorted(Path(cdir).glob("*.json")) if cdir is not None else []):
         cell = json.loads(f.read_text(encoding="utf-8"))
         cells[f.name] = {"json_sha256": hashlib.sha256(f.read_bytes()).hexdigest(),
                          "capture_sha256": dict(cell["capture_sha256"]),
                          "records": len(cell["records"])}
         key = f"{cell['arm']}|{cell['dose_label']}"
+        ceil = cell["stage_identity"]["fidelity_rule"][CEILING_KEY]
         for r in cell["records"]:
             used += r["duration_ms"]
             fb = r["fidelity"]
+            over_c += bool(ceil is not None and fb is not None and fb["absdiff"] is not None and fb["absdiff"] > ceil)
             if fb is not None:
                 x = fid.setdefault(key, {"trials": 0, "exceed_tau": 0, "exceed_tau4": 0})
                 x["trials"] += 1
@@ -4219,7 +4423,7 @@ def _bt_files(cdir: Path | None) -> tuple[dict, dict]:
             if r["finite"] is True and r["restricted"]["label_mass"] < 0.20:
                 lm[key] = lm.get(key, 0) + 1
     return cells, {"fidelity": fid, "nonfinite_reads": nonfin, "identity_out_of_bound": oob,
-                   "label_mass_below_floor": lm, "used_ms": used}
+                   "ceiling": None if ceil is None else over_c, "label_mass_below_floor": lm, "used_ms": used}
 
 
 def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state: str = "COMPLETE",
@@ -4242,6 +4446,7 @@ def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state
     used = cnt["used_ms"] if used_ms is None else used_ms
     ctr = {"fidelity": cnt["fidelity"], "nonfinite_reads": cnt["nonfinite_reads"],
            "identity_out_of_bound": cnt["identity_out_of_bound"],
+           CEILING_COUNTER: None if ceiling_of(ident) is None else (cnt["ceiling"] or 0),
            "rendering_mismatches": 1 if end_state == "G-VER-STOP" else sum(1 for ks in named if ks[0] == "rendering"),
            "label_mass_below_floor": cnt["label_mass_below_floor"] if label_mass else None}
     ctr.update(counters_over or {})
@@ -4372,7 +4577,7 @@ def _bt_verdicts(B: _Battery) -> None:
               and verd.get("report") == {"name": "report.json", "sha256": sha(rep), "end_state": "COMPLETE"}
               and dig(verd, "gread", "artifact") == {"name": "gread.json", "sha256": sha(art)}
               and verd.get("proposal_sha256") == PROPOSAL_SHA256 and verd.get("addendum_sha256") == ADDENDUM_SHA256
-              and verd.get("date") == "2026-12-20"
+              and verd.get("addendum2_sha256") == ADDENDUM2_SHA256 and verd.get("date") == "2026-12-20"
               and verd.get("schema_module") == {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
               "campaign": verd.get("campaign") == {"stage_identity_sha256": sm.identity_sha256(camp.identity),
                                                    "read_plan_sha256": sm.read_plan_sha256(camp.identity),
@@ -4448,11 +4653,16 @@ def _bt_verdicts(B: _Battery) -> None:
                 and dig(sens, "figures", "per_arm", "n", "N1-V|+1") == 120
                 and dig(sens, "figures", "per_arm", "n", "N1-V|+1/2") == 160,
                 "emptied": dig(sens, "figures", "unusable", "N1-R") == "tau4-emptied" and "rand_00" in ds
-                and ds["rand_00"] is None and isinstance(ds.get("rand_01"), float)}
+                and ds["rand_00"] is None and isinstance(ds.get("rand_01"), float),
+                "no second row": sens.get("over_half") == [] and "second_row" in sens and sens["second_row"] is None
+                and dig(sens, "drops", "N1-V@+1") == {"reads": 160, "dropped": 40}
+                and dig(sens, "drops", "N1-R@+1") == {"reads": 960, "dropped": 20}}
         B.chk("verdicts reports the TAU/4 sensitivity row (PIN-n-16) beside the primary: 40 N1-V reads at +1 dropped "
               "(n 120 against the primary's 160), rand_00 left with no common session (its slope null, no NaN), so "
               "N1-R tau4-emptied and the row's N1 INDETERMINATE, its points usable, so N2 decided (INDETERMINATE, "
-              "INDETERMINATE, SHARED, PASS, PASS: PIN-n-36); its tuple the reader path's under the filter",
+              "INDETERMINATE, SHARED, PASS, PASS: PIN-n-36); its tuple the reader path's under the filter; its drops "
+              "per point (40 of 160 at N1-V's +1, 20 of 960 at N1-R's), over half nowhere, so no second row "
+              "(PIN-n-38)",
               all(ok_s.values()), [k for k, v in ok_s.items() if not v] or sens.get("tuple"), cover=["VD-SENSITIVITY"])
         line = verdicts_line(res) if res is not None else ""
         B.chk("verdicts prints one line and no margin (§4 'Blinding'): the tuple, and each output's name, how and "
@@ -4479,22 +4689,29 @@ def _bt_verdicts(B: _Battery) -> None:
         v2b = doc_of(base / "out2b")
         B.chk("verdicts under PI-STOP with a pause standing on N4-Ts analyzes the unit (PIN-n-24): N1, dose and N2 "
               "decided, N4 INDETERMINATE by pause:N4-Ts, then nonfinite:N4-Ts; the same pause adjudicated (COMPLETE) "
-              "stands no more: nonfinite:N4-Ts alone",
+              "stands no more: nonfinite:N4-Ts alone; the TAU/4 row's drops count N4-Ts's 159 finite reads, not the "
+              "non-finite one (PIN-n-38)",
               (v2.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
               and dig(v2, "outcomes", "N4", "causes") == ["pause:N4-Ts", "nonfinite:N4-Ts"]
+              and dig(v2, "sensitivity", "drops", "N4-Ts@0") == {"reads": 159, "dropped": 0}
               and (v2b.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
               and dig(v2b, "outcomes", "N4", "causes") == ["nonfinite:N4-Ts"],
               (v2.get("tuple"), dig(v2, "outcomes", "N4", "causes"), dig(v2b, "outcomes", "N4", "causes")),
               cover=["VD-PISTOP-STANDING"])
-        # PIN-n-33 as amended and PIN-n-37: standing batches, each bound as the runner counts a batch (report_problems
-        # binds it; it binds a batch, not its fire, and the fires here are not ones the runner would write), under
-        # PI-STOP (the v5 review's B3, B6). A, on a campaign with one N1-P −1 read above TAU (ck): a fire adjudicated
-        # at N1-P's last +1 read, then the run's-end batch from the next trial (N1-P's first −1 read: its +d_20 and
-        # +d_eq carry none) to the stage's last (N4-Ts's), k = 1, standing on N1-P at −1 (N4's arms per arm), so N2
-        # decided. C: the same clear on c2, then the non-finite read at m − 1 also firing the binomial, its batch from
-        # the same trial to that read: the same point. B, on the main campaign: the run's-end batch from the stage's
-        # first trial, its 80 reads above TAU/4 not counted (k = 0), its re-computation non-finite on the fresh path a
-        # trial: through every shadow it stands on every read of its scope's steered arms, so N2 INDETERMINATE.
+        # PIN-n-33 as amended and PIN-n-37 as amended (§6's conservative form): standing batches, each bound as the
+        # runner counts a batch (report_problems binds it; it binds a batch, not its fire, and the fires here are not
+        # ones the runner would write), under PI-STOP (the v5 review's B3, B6). A, on a campaign with one N1-P −1 read
+        # above TAU (ck): a fire adjudicated at N1-P's last +1 read, then the run's-end batch from the next trial
+        # (N1-P's first −1 read: its +d_20 and +d_eq carry none, and lie in no range) to the stage's last (N4-Ts's),
+        # k = 1, standing on every read launched in it: N1-P at −1 and N2's arms, which carry no re-computation here,
+        # so N2 INDETERMINATE (N4's arms per arm). C: the same clear on c2, then the non-finite read at m − 1 also
+        # firing the binomial, its batch from the same trial to that read: the same points. B, on the main campaign:
+        # the run's-end batch from the stage's first trial, its 80 reads above TAU/4 not counted (k = 0), its
+        # re-computation non-finite on the fresh path a trial: it stands on every steered read. D, on a campaign with
+        # two keyed-sample reads (cg: N2-E's last read, N2-S's first): a fire adjudicated at N2-E's last read, then the
+        # run's-end batch from N2-S's first read: it stands on the guards alone, N2-C's reads in its range though no
+        # trial of N2-C's is, so N2 decided, both guards beside paused at their points (PIN-n-37 (c)), N1 and dose
+        # decided.
         def trials_of(c: Campaign) -> list[int]:
             return sorted(r["launch_index"] for r in c.records.values() if r["fidelity"] is not None)
 
@@ -4503,9 +4720,10 @@ def _bt_verdicts(B: _Battery) -> None:
             return ({"first_launch_index": lo, "last_launch_index": hi, "n": len(ins),
                      "k": sum(r["fidelity"]["exceeds_tau"] is True for r in ins)}, sorted({r["arm"] for r in ins}))
 
-        def clear_and_end(c: Campaign, end_read: str | None = None) -> list[dict]:
+        def clear_and_end(c: Campaign, end_read: str | None = None, clear_at: str | None = None) -> list[dict]:
             tl = trials_of(c)
-            l1 = max(r["launch_index"] for rid, r in c.records.items() if rid.startswith("N1-P|valence|+1|"))
+            l1 = (max(r["launch_index"] for rid, r in c.records.items() if rid.startswith("N1-P|valence|+1|"))
+                  if clear_at is None else c.records[clear_at]["launch_index"])
             p1 = sm.example_pause(1, kind="fidelity-binomial", launch_index=l1, adjudicated=True, resumed_at=l1 + 1)
             f1, a1 = batch_of(c, tl[0], l1)
             p1.update(read_id=next(rid for rid, r in c.records.items() if r["launch_index"] == l1), arms_in_scope=a1)
@@ -4518,9 +4736,9 @@ def _bt_verdicts(B: _Battery) -> None:
             p2["binomial"].update(f2)
             p2["arms_in_scope"] = sorted(set(a2) | ({end_read.split("|")[0]} if end_read else set()))
             return [p1, p2]
-        hot = f"N1-P|valence|-1|{session_key(5)}"
+        hot = f"N1-P|valence|-1|{session_key(5)}"          # 0.1 apart: above TAU (rel ≈ 0.09), not above C (0.25)
         cdir_k = _bt_write_campaign(base / "ck", sm, delta=_bt_delta_positive, lock_sha256=lsha,
-                                    fresh_shift={hot: 2.0})
+                                    fresh_shift={hot: 0.1})
         camp_k = load_campaign(cdir_k, sm)
         art_k = put("g_k.json", _bt_gread_for(camp_k, sm))
         pa = clear_and_end(camp_k)
@@ -4540,32 +4758,227 @@ def _bt_verdicts(B: _Battery) -> None:
                                                        pauses=[pz_adj, pb], stop=stop_pi, label_mass=True)),
             art, lock, base / "out_pb")
         vb = doc_of(base / "out_pb")
+        cells_ = plan_cells(camp.dmap)
+        first_of = {a: next(c for c in cells_ if c[0] == a) for a in ("N2-S", "N2-C")}
+        last_e = [c for c in cells_ if c[0] == "N2-E"][-1]
+        def rid_of(c: tuple, run_: int) -> str:
+            return f"{c[0]}|{c[1]}|{c[2]}|{session_key(run_)}"
+        e_last, s_first = rid_of(last_e, runs_of("N2-E")[-1]), rid_of(first_of["N2-S"], runs_of("N2-S")[0])
+        cdir_g = _bt_write_campaign(base / "cg", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    sampled=[e_last, s_first])
+        camp_g = load_campaign(cdir_g, sm)
+        art_g = put("g_g.json", _bt_gread_for(camp_g, sm))
+        pd = clear_and_end(camp_g, clear_at=e_last)
+        run(cdir_g, put("report_pd.json", _bt_report_for(camp_g.identity, cdir_g, sm, end_state="PI-STOP", pauses=pd,
+                                                         stop=stop_pi)), art_g, lock, base / "out_pd")
+        vd = doc_of(base / "out_pd")
         n1pts = sorted(f"{a}@{lab_}" for a in ("N1-V", "N1-R", "N1-P")
                        for lab_ in ("+1", "+1/2", "+d_20", "+d_eq", "-1") if not (a == "N1-P" and lab_ == "+1/2"))
-        ok_pp = {"A": (va.get("tuple") or [])[:4] == ["INDETERMINATE", "INDETERMINATE", "SHARED", "INDETERMINATE"]
+        n2pts = sorted(f"{a}@{f_}" for a in ("N2-E", "N2-S", "N2-C") for f_ in ("f0.10", "f0.20"))
+        gpts = sorted(p_ for p_ in n2pts if not p_.startswith("N2-E"))
+        g_bes = dig(vd, "outcomes", "N2", "beside", "guards") or {}
+        ok_pp = {"A": (va.get("tuple") or [])[:4] == ["INDETERMINATE"] * 4
                  and pa[-1]["binomial"]["k"] == 1 and dig(va, "outcomes", "N1", "causes") == ["pause:N1-P"]
+                 and dig(va, "outcomes", "N2", "causes") == ["pause:N2-E"]
                  and (dig(va, "outcomes", "N4", "causes") or [])[:2] == ["pause:N4-T", "pause:N4-Ts"]
-                 and dig(va, "figures", "pause_points") == ["N1-P@-1"]
-                 and (dig(va, "sensitivity", "tuple") or [])[:3] == ["INDETERMINATE", "INDETERMINATE", "SHARED"]
-                 and dig(va, "sensitivity", "figures", "pause_points") == ["N1-P@-1"],
-                 "C": (vc.get("tuple") or [])[:3] == ["INDETERMINATE", "INDETERMINATE", "SHARED"]
+                 and dig(va, "figures", "pause_points") == sorted(["N1-P@-1"] + n2pts)
+                 and (dig(va, "sensitivity", "tuple") or [])[:3] == ["INDETERMINATE"] * 3
+                 and dig(va, "sensitivity", "figures", "pause_points") == sorted(["N1-P@-1"] + n2pts),
+                 "C": (vc.get("tuple") or [])[:3] == ["INDETERMINATE"] * 3
                  and dig(vc, "outcomes", "N1", "causes") == ["pause:N1-P"]
-                 and dig(vc, "figures", "pause_points") == ["N1-P@-1"],
+                 and dig(vc, "outcomes", "N2", "causes") == ["pause:N2-E"]
+                 and dig(vc, "figures", "pause_points") == sorted(["N1-P@-1"] + n2pts),
                  "B": (fb["k"], fb["n"]) == (0, len(tl_m)) and dig(vb, "outcomes", "N2", "state") == "INDETERMINATE"
-                 and dig(vb, "outcomes", "N2", "causes") == ["pause:N1-V", "pause:N1-R", "pause:N1-P"]
-                 and dig(vb, "figures", "pause_points") == n1pts and len(n1pts) == 14}
+                 and dig(vb, "outcomes", "N2", "causes") == ["pause:N2-E", "pause:N1-V", "pause:N1-R", "pause:N1-P"]
+                 and dig(vb, "figures", "pause_points") == sorted(n1pts + n2pts) and len(n1pts) == 14,
+                 "D": (vd.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
+                 and pd[-1]["arms_in_scope"] == ["N2-S", "N4-T", "N4-Ts"]
+                 and dig(vd, "figures", "pause_points") == gpts
+                 and dig(g_bes, "span_sentiment", "paused") is True and dig(g_bes, "span_character", "paused") is True
+                 and (dig(vd, "outcomes", "N4", "causes") or [])[:2] == ["pause:N4-T", "pause:N4-Ts"]}
         B.chk("verdicts under PI-STOP with a standing batch, bound as the runner counts a batch (PIN-n-33 as amended, "
-              "PIN-n-37): A, after a "
-              "fire adjudicated at N1-P's last +1 read, the run's-end batch from N1-P's first −1 read to the stage's "
-              "last trial, k = 1, stands on N1-P at −1 alone: N1, dose and N4 INDETERMINATE (pause:N1-P; pause:N4-T, "
-              "pause:N4-Ts, per arm), N2 decided, SHARED, in the primary and the TAU/4 row, the figures naming the "
-              "point; C, the same clear, then a non-finite read at m − 1 that also fires the binomial: N1 and N2 the "
-              "same, and the same point; B, "
-              "the run's-end batch from the stage's first trial (its 80 reads above TAU/4 not counted, k = 0; its "
-              "re-computation non-finite on the fresh path a trial): through every shadow it stands on all 14 points "
-              "of N1-V, N1-R and N1-P, so N2 INDETERMINATE (pause:N1-V, pause:N1-R, pause:N1-P)",
+              "PIN-n-37 as amended): A, after a fire adjudicated at N1-P's last +1 read, the run's-end batch from "
+              "N1-P's first −1 read to the stage's last trial, k = 1, stands on every read launched in it, N1-P at −1 "
+              "and N2's six points, which carry no re-computation: N1, dose and N4 INDETERMINATE (pause:N1-P; "
+              "pause:N4-T, pause:N4-Ts, per arm), N2 INDETERMINATE (pause:N2-E), in the primary and the TAU/4 row, "
+              "the figures naming the points; C, the same clear, then a non-finite read at m − 1 that also fires the "
+              "binomial: N1 and N2 the same, and the same points; B, the run's-end batch from the stage's first trial "
+              "(its 80 reads above TAU/4 not counted, k = 0; its re-computation non-finite on the fresh path a trial): "
+              "all 20 steered points, N2 INDETERMINATE (pause:N2-E, pause:N1-V, pause:N1-R, pause:N1-P); D, after a "
+              "fire adjudicated at N2-E's last read (a keyed-sample trial), the run's-end batch from N2-S's first read "
+              "(a keyed-sample trial; N2-C holds none, so is not in the scope) stands on the guards' four points "
+              "alone: N2 decided, SHARED, both guards beside paused, read at their points (PIN-n-37 (c)), N1 and dose "
+              "decided, N4 INDETERMINATE (pause:N4-T, pause:N4-Ts)",
               all(ok_pp.values()), [k for k, v in ok_pp.items() if not v] or (va.get("tuple"), vc.get("tuple")),
               cover=["VD-PAUSE-POINTS"])
+        # PIN-n-38 (ADDENDUM-n2 §3): verdicts on the second row's campaign (cs2, the reader path's cs): the TAU/4 row
+        # drops over half at N1-P's −1 and N1-V's +1, so the second row is reported, its median the identity's; both
+        # rows empty N1-P at −1 (tau4-emptied, median-emptied), the second also dropping run 2 at every point through
+        # its shadow; the primary is ungated
+        cdir_s2 = _bt_write_campaign(base / "cs2", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                     rule={MEDIAN_KEY: _BT_SEC_MEDIAN}, fresh_shift=_bt_sec_shift())
+        camp_s2 = load_campaign(cdir_s2, sm)
+        rv_s, err_s = run(cdir_s2, put("report_s2.json", _bt_report_for(camp_s2.identity, cdir_s2, sm)),
+                          put("g_s2.json", _bt_gread_for(camp_s2, sm)), lock, base / "out_s2")
+        vs = doc_of(base / "out_s2")
+        s4, s2 = dig(vs, "sensitivity") or {}, dig(vs, "sensitivity", "second_row") or {}
+        ok_sr = {"primary": (vs.get("tuple") or [])[:3] == ["REPLICATED", "DETECTABLE", "SHARED"],
+                 "TAU/4 row": (s4.get("tuple") or [])[:3] == ["INDETERMINATE", "INDETERMINATE", "SHARED"]
+                 and dig(s4, "outcomes", "N1", "causes") == ["tau4-emptied:N1-P"]
+                 and dig(s4, "figures", "point_causes", "N1-P@-1") == ["tau4-emptied"],
+                 "over half": s4.get("over_half") == ["N1-P@-1", "N1-V@+1"],
+                 "second row": s2.get("median_rel") == _BT_SEC_MEDIAN
+                 and (s2.get("tuple") or [])[:3] == ["INDETERMINATE", "INDETERMINATE", "SHARED"]
+                 and dig(s2, "outcomes", "N1", "causes") == ["median-emptied:N1-P"]
+                 and dig(s2, "figures", "unusable", "N1-P") == "median-emptied"
+                 and dig(s2, "figures", "point_causes", "N1-P@-1") == ["median-emptied"]
+                 and dig(s2, "drops", "N1-V@+1") == {"reads": 160, "dropped": 82}
+                 and dig(s2, "drops", "N1-R@+1") == {"reads": 960, "dropped": 25}
+                 and dig(s2, "figures", "per_arm", "n", "N1-V|+1") == 78}
+        B.chk("verdicts reports ADDENDUM-n2 §3's second row (PIN-n-38) where the TAU/4 row drops more than half of an "
+              "arm's reads at a point (N1-P's 160 at −1, N1-V's 81 of 160 at +1): the row drops the re-computations "
+              "above the identity's median (1e-6), N1-V's +1 reads to 78 sessions, run 2 everywhere through its "
+              "shadow, N1-R's +1 reads 25 of 960; it empties N1-P at −1 (median-emptied, as the TAU/4 row's "
+              "tau4-emptied, for the arm and the point), N1 and dose INDETERMINATE, N2 decided, SHARED; the primary "
+              "ungated",
+              all(ok_sr.values()), [k for k, v in ok_sr.items() if not v] or (err_s, vs.get("tuple")),
+              cover=["VD-SECOND-ROW"])
+        # PIN-n-39 (ADDENDUM-n2 §2.1): verdicts under PI-STOP with a ceiling pause standing at a steered read (cvc: N4's
+        # cells omitted, so N2-C's last read is the stage's last; that read on the keyed sample 0.30 apart, C = 0.25),
+        # after an adjudicated ceiling pause at the shadow of run 8 (0.26 apart, identity-bound also fired): accepted,
+        # the standing pause on that read's point alone, a guard's, so N2 decided with that guard beside paused; the
+        # counters count both reads above C, and the shadow outside the identity bound C
+        last_c = [c for c in cells_ if c[0] == "N2-C"][-1]
+        rid_lc, sh8 = rid_of(last_c, runs_of("N2-C")[-1]), f"N1-V|none|0|{session_key(8)}"
+        cdir_v = _bt_write_campaign(base / "cvc", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    rule={CEILING_KEY: 0.25}, omit=[("N4-T", "none", "0"), ("N4-Ts", "none", "0")],
+                                    sampled=[rid_lc], fresh_shift={rid_lc: 0.30, sh8: 0.26})
+        camp_v = load_campaign(cdir_v, sm)
+        li8, lic = camp_v.records[sh8]["launch_index"], camp_v.records[rid_lc]["launch_index"]
+        k8 = sorted(("fidelity-ceiling", "identity-bound"), key=sm.PAUSE_KINDS.index)   # in the schema's precedence
+        pc1 = dict(sm.example_pause(1, kind=k8[0], launch_index=li8, adjudicated=True, resumed_at=li8 + 1,
+                                    also_fired=tuple(k8[1:])), read_id=sh8, arms_in_scope=sorted(STEERED_ARMS))
+        pc2 = dict(sm.example_pause(2, kind="fidelity-ceiling", launch_index=lic, arms=("N2-C",)), read_id=rid_lc)
+        rv_v, err_v = run(cdir_v, put("report_ceil.json", _bt_report_for(camp_v.identity, cdir_v, sm,
+                                                                         end_state="PI-STOP", pauses=[pc1, pc2],
+                                                                         stop=stop_pi)),
+                          put("g_v.json", _bt_gread_for(camp_v, sm)), lock, base / "out_ceil")
+        vv = doc_of(base / "out_ceil")
+        cr_ = dig(vv, "counters", "records") or {}
+        gb_ = dig(vv, "outcomes", "N2", "beside", "guards") or {}
+        ok_cv = {"accepted": rv_v is not None
+                 and (vv.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"],
+                 "points": dig(vv, "figures", "pause_points") == [f"N2-C@{last_c[2]}"],
+                 "guards": dig(gb_, "span_character", "paused") is True
+                 and dig(gb_, "span_sentiment", "paused") is False,
+                 "counters": dig(cr_, "N1-V|0", "fidelity ceiling exceeded") == 1
+                 and dig(cr_, "N1-V|0", "identity bound exceeded") == 1
+                 and dig(cr_, f"N2-C|{last_c[2]}", "fidelity ceiling exceeded") == 1
+                 and dig(vv, "counters", "report", CEILING_COUNTER) == 2}
+        B.chk("verdicts under PI-STOP with a fidelity-ceiling pause standing at N2-C's last read (PIN-n-39; "
+              "ADDENDUM-n2 §2.1), after one adjudicated at a shadow above C with identity-bound also fired: accepted, "
+              "the standing pause on that point alone (PIN-n-37: a single-read pause), so N2 decided, SHARED, the "
+              "span_character guard beside paused and span_sentiment not, N4 INDETERMINATE (its cells omitted); the "
+              "counters count the two reads above C per arm and dose, the shadow outside the identity bound, the "
+              "report's 2",
+              all(ok_cv.values()), [k for k, v in ok_cv.items() if not v] or (err_v, vv.get("tuple")),
+              cover=["VD-CEILING"])
+        # PIN-n-38's trigger, both ways (the v6 review's B1): ct1, N1-V's +1 reads of runs 79-159 0.015 apart (rel
+        # above TAU/4, below the example median 0.01): over half at that point, no point emptied, so the second row is
+        # reported and drops nothing; ct2, rand_04's 40 floor reads at +1 0.02 apart: the TAU/4 row empties N1-R at +1
+        # (40 of 960 dropped), not over half, so no second row
+        def verdicts_on(name: str, **kw: Any) -> dict:
+            cd_ = _bt_write_campaign(base / name, sm, delta=_bt_delta_positive, lock_sha256=lsha, **kw)
+            c_ = load_campaign(cd_, sm)
+            run(cd_, put(f"report_{name}.json", _bt_report_for(c_.identity, cd_, sm)),
+                put(f"g_{name}.json", _bt_gread_for(c_, sm)), lock, base / f"out_{name}")
+            return doc_of(base / f"out_{name}")
+        vt1 = verdicts_on("ct1", fresh_shift={f"N1-V|valence|+1|{session_key(r)}": 0.015 for r in range(79, 160)})
+        vt2 = verdicts_on("ct2", fresh_shift={f"N1-R|rand_04|+1|{session_key(r)}": 0.02 for r in range(N_FLOOR)})
+        t1, t2 = dig(vt1, "sensitivity") or {}, dig(vt2, "sensitivity") or {}
+        ok_tr = {"over half, none emptied": t1.get("over_half") == ["N1-V@+1"]
+                 and dig(t1, "figures", "unusable") == {}
+                 and dig(t1, "second_row", "median_rel") == 0.01
+                 and dig(t1, "second_row", "drops", "N1-V@+1") == {"reads": 160, "dropped": 0}
+                 and dig(t1, "second_row", "tuple") == vt1.get("tuple"),
+                 "emptied, not over half": t2.get("over_half") == [] and "second_row" in t2
+                 and t2["second_row"] is None
+                 and dig(t2, "figures", "point_causes", "N1-R@+1") == ["tau4-emptied"]
+                 and dig(t2, "drops", "N1-R@+1") == {"reads": 960, "dropped": 40}}
+        B.chk("verdicts reports the second row on §3's trigger, more than half of an arm's reads dropped at a point, "
+              "not where a point is emptied (PIN-n-38): N1-V's 81 of 160 at +1 dropped, nothing emptied -> the second "
+              "row, at the example median 0.01, dropping none of them; rand_04's 40 at +1 dropped, N1-R emptied there, "
+              "40 of 960 -> none",
+              all(ok_tr.values()), [k for k, v in ok_tr.items() if not v], cover=["VD-SECOND-ROW-TRIGGER"])
+        # the second row's pauses (the v6 review's B3): cs3, R_ell 50 (the cap binds: N2 decided at f = 0.10, f = 0.20
+        # beside), N2-S's, N2-C's and N4's cells omitted, so N2-E's last read (at f = 0.20, on the keyed sample, 0.30
+        # apart, above C) is the stage's last, its ceiling pause standing under PI-STOP; N1-V's +1 reads of runs
+        # 79-159 0.015 apart, so the second row is reported. In each row the pause stands on N2-E at f = 0.20 alone, so
+        # N2 decided, its beside naming N2-E paused
+        cells50 = plan_cells(dose_map_of(sm.example_identity(R_ell=50.0)))
+        e50 = [c for c in cells50 if c[0] == "N2-E"][-1]
+        rid_e = rid_of(e50, runs_of("N2-E")[-1])
+        cdir_p = _bt_write_campaign(base / "cs3", sm, R_ell=50.0, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    omit=[c for c in cells50 if c[0] in ("N2-S", "N2-C", "N4-T", "N4-Ts")],
+                                    sampled=[rid_e], fresh_shift={f"N1-V|valence|+1|{session_key(r)}": 0.015
+                                                                  for r in range(79, 160)} | {rid_e: 0.30})
+        camp_p = load_campaign(cdir_p, sm)
+        pp = dict(sm.example_pause(1, kind="fidelity-ceiling", launch_index=camp_p.records[rid_e]["launch_index"],
+                                   arms=("N2-E",)), read_id=rid_e)
+        rv_p, err_p = run(cdir_p, put("report_cs3.json", _bt_report_for(camp_p.identity, cdir_p, sm,
+                                                                        end_state="PI-STOP", pauses=[pp],
+                                                                        stop=stop_pi)),
+                          put("g_cs3.json", _bt_gread_for(camp_p, sm)), lock, base / "out_cs3")
+        vp = doc_of(base / "out_cs3")
+        rows_p = {"primary": vp, "TAU/4 row": dig(vp, "sensitivity") or {},
+                  "second row": dig(vp, "sensitivity", "second_row") or {}}
+        ok_pp3 = {"f": e50[2] == "f0.20" and rv_p is not None}
+        for k_, r_ in rows_p.items():
+            ok_pp3[k_] = (dig(r_, "outcomes", "N2", "state") not in (None, "INDETERMINATE")
+                          and dig(r_, "outcomes", "N2", "f") == F10
+                          and dig(r_, "outcomes", "N2", "beside", F20, "paused") == ["N2-E"]
+                          and dig(r_, "figures", "pause_points") == ["N2-E@f0.20"])
+        B.chk("verdicts under PI-STOP with a ceiling pause standing on N2-E at f = 0.20, the other f where the cap "
+              "binds: in the primary, the TAU/4 row and the second row alike, the pause stands on that point alone "
+              "(PIN-n-37), N2 is decided at f = 0.10 and its beside names N2-E paused",
+              all(ok_pp3.values()), [k for k, v in ok_pp3.items() if not v] or err_p, cover=["VD-SECOND-ROW-PAUSE"])
+        # what a ruling clears (the runner's R13) and a run's-end batch's end (the v6 review's B4, B7): cr, N4's cells
+        # omitted, one keyed-sample read (N2-C's first cell, run 7) the last trial, not the last read, and the shadow of
+        # run 8 0.26 apart (above C): after a ceiling pause adjudicated at that shadow, a run's-end batch from the
+        # stage's first trial to its last is the runner's (a ceiling ruling clears nothing), and one from the first
+        # trial after the shadow is not
+        rid_s7 = rid_of(next(c for c in cells_ if c[0] == "N2-C"), 7)
+        cdir_r = _bt_write_campaign(base / "cr", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    omit=[("N4-T", "none", "0"), ("N4-Ts", "none", "0")], sampled=[rid_s7],
+                                    fresh_shift={sh8: 0.26})
+        camp_r = load_campaign(cdir_r, sm)
+        tl_r, li8r = trials_of(camp_r), camp_r.records[sh8]["launch_index"]
+        pr1 = dict(sm.example_pause(1, kind=k8[0], launch_index=li8r, adjudicated=True, resumed_at=li8r + 1,
+                                    also_fired=tuple(k8[1:])), read_id=sh8, arms_in_scope=sorted(STEERED_ARMS))
+
+        def end_batch(lo: int) -> dict:
+            fb_, ab_ = batch_of(camp_r, lo, tl_r[-1])
+            p_ = sm.example_pause(2, kind="fidelity-binomial", launch_index=None)
+            p_["binomial"].update(fb_)
+            p_["arms_in_scope"] = ab_
+            return p_
+        g_r = put("g_cr.json", _bt_gread_for(camp_r, sm))
+        rv_r, err_r = run(cdir_r, put("report_cr.json", _bt_report_for(
+            camp_r.identity, cdir_r, sm, end_state="PI-STOP", pauses=[pr1, end_batch(tl_r[0])], stop=stop_pi)),
+            g_r, lock, base / "out_cr")
+        ref_r = _bt_raises(lambda: run_verdicts(cdir_r, put("report_cr2.json", _bt_report_for(
+            camp_r.identity, cdir_r, sm, end_state="PI-STOP",
+            pauses=[pr1, end_batch(next(i for i in tl_r if i > li8r))], stop=stop_pi)), g_r, lock, "2026-12-20", None,
+            base / "out_cr2"), (AnlRefusal,))
+        ok_cl = {"the last trial is not the last read": tl_r[-1] == camp_r.records[rid_s7]["launch_index"]
+                 < len(camp_r.records) - 1,
+                 "from the first trial: accepted": rv_r is not None,
+                 "from after the shadow: refused": ref_r[0] and "its batch is not the records' trials" in ref_r[1]}
+        B.chk("verdicts binds a standing batch after an adjudicated fidelity-ceiling pause from the stage's first "
+              "trial (a ceiling ruling clears nothing, the runner's R13), refusing one from the first trial after it; "
+              "and a run's-end batch ends at the stage's last trial, here not its last read (PIN-n-37's binding)",
+              all(ok_cl.values()), [k for k, v in ok_cl.items() if not v] or (err_r, ref_r[1][:90]),
+              cover=["VD-BATCH-CLEARS"])
         # PI-STOP with some arms complete: N1-P without its −1 reads, N4-Ts with none
         cdir4 = _bt_write_campaign(base / "c4", sm, delta=_bt_delta_positive, lock_sha256=lsha,
                                    omit=[("N1-P", "valence", "-1"), ("N4-Ts", "none", "0")])
@@ -4712,6 +5125,10 @@ def _bt_verdicts(B: _Battery) -> None:
                   read_id=rid3)
         iz = dict(sm.example_pause(1, kind="identity-bound", launch_index=L0, adjudicated=True, resumed_at=L0 + 1),
                   read_id=f"N1-V|none|0|{session_key(3)}")
+        rid50 = f"N1-V|valence|+1|{session_key(50)}"                # re-computed, absdiff 0: above no ceiling
+        L50 = camp.records[rid50]["launch_index"]
+        cz = dict(sm.example_pause(1, kind="fidelity-ceiling", launch_index=L50, adjudicated=True,
+                                   resumed_at=L50 + 1), read_id=rid50)                # PIN-n-39
         rs = dict(sm.example_pause(1, kind="rendering", launch_index=len(camp4.records) + 2, arms=("N1-P",)),
                   read_id=f"N1-P|valence|-1|{session_key(3)}")
         rn = dict(pz_adj, resumed_at_launch_index=len(camp.records) + 100)
@@ -4788,6 +5205,15 @@ def _bt_verdicts(B: _Battery) -> None:
             "kind-nonfinite": (rv(cdir, on_main("rep_kz.json", [kz])), "a non-finite pause at a finite read"),
             "kind-identity": (rv(cdir, on_main("rep_iz.json", [iz], counters_over={"identity_out_of_bound": 1})),
                               "an identity-bound pause at a read within the bound"),
+            "kind-ceiling": (rv(cdir, on_main("rep_cz.json", [cz],
+                                              counters_over={CEILING_COUNTER: cnt_main["ceiling"] + 1})),
+                             "a fidelity-ceiling pause at a read not above the ceiling"),
+            "ceiling-count": (rv(cdir, report_with(counters=counters_with(
+                **{CEILING_COUNTER: cnt_main["ceiling"] + 1}))), f"counters.{CEILING_COUNTER}"),
+            # PIN-n-39, both ways: cvc's report without the adjudicated pause at the shadow above C
+            "ceiling-unpaused": (rv(cdir_v, put("rep_cv1.json", _bt_report_for(
+                camp_v.identity, cdir_v, sm, end_state="PI-STOP", pauses=[dict(pc2, pause_id="p01")], stop=stop_pi)),
+                base / "g_v.json"), "above the ceiling are no fidelity-ceiling pause's read"),
             "resumed-nowhere": (rv(cdir, on_main("rep_rn.json", [rn])), "resumed where no read was launched"),
             "standing-not-last": (rv(cdir4, put("rep_snl.json", _bt_report_for(camp4.identity, cdir4, sm,
                                                                               end_state="PI-STOP", pauses=[rs],
@@ -4860,8 +5286,9 @@ def _bt_verdicts(B: _Battery) -> None:
               "refuses (by its field path alone); a PAUSE; a stage not a campaign; a "
               "lock not the identity's, not naming this analyzer, not saying it is LOCK-n v1.0, or without one "
               "direction of record A or B; a report not the cells on disk (cells, identity, per-arm counts, on a "
-              "complete campaign and on one with no arm complete; the counters, label mass and used time), a pause's "
-              "read not on disk or not of its kind, a rendering pause not resumed whose read is on disk, a resumption "
+              "complete campaign and on one with no arm complete; the counters, the ceiling's among them, label mass "
+              "and used time), a pause's read not on disk or not of its kind (the ceiling's included), a read above "
+              "the ceiling no pause's (PIN-n-39), a rendering pause not resumed whose read is on disk, a resumption "
               "where nothing was launched, a read after a standing pause, a standing pause not the last event, launch "
               "indices not 0..m−1, two pauses standing, a pause's read not of the plan, a standing batch not the "
               "runner's (its count, its exceedances, its start, its end, its scope, and one ending at a read: "
@@ -4933,6 +5360,7 @@ def battery() -> dict:
     with _Hook() as hook:
         ptext = (REPO / PROPOSAL_REL).read_bytes()
         atext = (REPO / ADDENDUM_REL).read_bytes()
+        a2text = (REPO / ADDENDUM2_REL).read_bytes()
         verb = proposal_spans(ptext.decode("utf-8")) | addendum_spans(atext.decode("utf-8"))
         B.group("outcomes", lambda: _bt_outcomes(B))
         B.group("not-run", lambda: _bt_notrun(B))
@@ -4944,7 +5372,7 @@ def battery() -> dict:
         B.group("reader path", lambda: _bt_reader(B))
         B.group("commands", lambda: _bt_commands(B))
         B.group("verdicts", lambda: _bt_verdicts(B))
-        B.group("structure", lambda: _bt_structure(B, ptext, hook, atext))
+        B.group("structure", lambda: _bt_structure(B, ptext, hook, atext, a2text))
     snap1 = _bt_snapshot()
     B.chk("the battery wrote nothing under data/n (sha256 of every file outside ckpt / reports / verdicts, before = "
           "after)", snap0 == snap1, sorted(set(snap0) ^ set(snap1))[:2], cover=["STR-NO-CANONICAL-WRITE"])
@@ -4963,7 +5391,8 @@ def battery() -> dict:
 # =====================================================================================================================
 # 15. G-ANL-n's run (n §3 "G-ANL-n"): the battery, then the artifact, write-once, against committed blobs
 # =====================================================================================================================
-BOUND_RELS = (PROPOSAL_REL, ADDENDUM_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json", f"{BK_NP_REL}/reduced.json")
+BOUND_RELS = (PROPOSAL_REL, ADDENDUM_REL, ADDENDUM2_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
+              f"{BK_NP_REL}/reduced.json")
 
 
 def committed_problems(rels: Sequence[str]) -> list[str]:
@@ -5001,11 +5430,14 @@ def ganl_artifact(res: Mapping[str, Any], dmap: DoseMap | None) -> dict:
     return {"schema": GANL_SCHEMA, "stage": "G-ANL-n", "verdict": "PASS",
             "spec": "PROPOSAL-n v0.2 §3 G-ANL-n, §8 step 9; the seat's answers of 2026-11-15 §5.1, of 2026-11-16 "
                     "(results/raw/2026-11-16_n-ganl_design-to-code_answers.md) and of 2026-11-18 §5 "
-                    "(results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md) and §3 of its second sitting "
-                    "(results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md); ADDENDUM-n1 v0.1 §4-§7",
+                    "(results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md), §3 of its second sitting "
+                    "(results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md) and §6 of its third "
+                    "(results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md); ADDENDUM-n1 v0.1 §4-§7; "
+                    "ADDENDUM-n2 v0.1 §2.1, §3",
             "analyzer": {"path": ANALYZER_REL, "sha256": sha, "sha16": sha[:16]},
             "proposal": {"path": PROPOSAL_REL, "sha256": PROPOSAL_SHA256},
             "addendum": {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256},
+            "addendum2": {"path": ADDENDUM2_REL, "sha256": ADDENDUM2_SHA256},
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "battery": {k: res.get(k) for k in ("checks_pass", "checks_total", "expected_checks", "coverage_ids",
                                                  "outputs_sha256", "reachability", "bk_repro", "bk_fidelity")},
@@ -5186,10 +5618,11 @@ def _bt_commands(B: _Battery) -> None:
         ok3, msg3 = _bt_raises(lambda: run_not_run(rp, base / "out"), (AnlRefusal,))
         B.chk("not-run writes N-pod_NOT-RUN.json once (written, then identical), refuses other bytes (write-once), "
               "carries the reason in all four sentence slots, and binds the record by its file's sha256 and the "
-              "proposal and ADDENDUM-n1 by theirs", (h1, h2) == ("written", "identical") and ok3
+              "proposal, ADDENDUM-n1 and ADDENDUM-n2 by theirs", (h1, h2) == ("written", "identical") and ok3
               and doc["outcome"] == NOT_RUN and all(doc["reason"] in v["text"] for v in doc["sentences"].values())
               and doc["date"] == "2026-12-16" and doc["record"] == {"name": "rec.json", "sha256": rsha}
-              and doc["proposal_sha256"] == PROPOSAL_SHA256 and doc["addendum_sha256"] == ADDENDUM_SHA256,
+              and doc["proposal_sha256"] == PROPOSAL_SHA256 and doc["addendum_sha256"] == ADDENDUM_SHA256
+              and doc["addendum2_sha256"] == ADDENDUM2_SHA256,
               (h1, h2, msg3[:60], doc.get("record")), cover=["CMD-NOTRUN"])
         nr = {"uncommitted": not_run_precheck(None, bound=("scripts/__n_analyze_never_committed__.py",)),
               "of-record": not_run_precheck(None, bound=()),
@@ -5254,12 +5687,13 @@ def _bt_commands(B: _Battery) -> None:
               or (passed.code, passed.refusal), cover=["CMD-GANL-REFUSE"])
         art = ganl_artifact({"checks_pass": 1, "checks_total": 1, "expected_checks": 1, "coverage_ids": [],
                              "outputs_sha256": "0" * 64}, DoseMap(0.97, 1.0))
-        B.chk("G-ANL-n's artifact names the analyzer, proposal, ADDENDUM-n1 and schema by sha256, the tuple space "
-              "(385; 2,561 evaluations, the tuple pass's own), the pinned map's points and reach, the PIN and OPEN "
-              "registers, and no time",
+        B.chk("G-ANL-n's artifact names the analyzer, proposal, ADDENDUM-n1, ADDENDUM-n2 and schema by sha256, the "
+              "tuple space (385; 2,561 evaluations, the tuple pass's own), the pinned map's points and reach, the PIN "
+              "and OPEN registers, and no time",
               art["proposal"]["sha256"] == PROPOSAL_SHA256 and art["schema_module"]["sha256"] == SCHEMA_SHA256
               and art["addendum"] == {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256}
-              and BOUND_RELS == (PROPOSAL_REL, ADDENDUM_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
+              and art["addendum2"] == {"path": ADDENDUM2_REL, "sha256": ADDENDUM2_SHA256}
+              and BOUND_RELS == (PROPOSAL_REL, ADDENDUM_REL, ADDENDUM2_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
                                  f"{BK_NP_REL}/reduced.json")
               and art["tuple_space"] == {"tuples": len(tuple_space()), "evaluations": len(evaluations())}
               == {"tuples": 385, "evaluations": 2561} and art["dose_map"]["reach"]["shape"] == "d"
@@ -5325,11 +5759,13 @@ def _load_checked(path: Path, check: Callable[[Any], None], what: str) -> tuple[
 def report_counters(camp: Campaign) -> dict:
     """The counters a stage report carries, recomputed from the records (PIN-n-24, n-build's counting, settled):
     per 'arm|dose_label', the records with a fidelity block (trials) and those whose block exceeds TAU and TAU/4;
-    records non-finite on either path; records whose identity check is not within; and, per 'arm|dose_label', the
-    finite records whose restricted label mass is below PIN-n-17's .20."""
+    records non-finite on either path; records whose identity check is not within; records above the identity's
+    ceiling (ADDENDUM-n2 §2.1; PIN-n-39); and, per 'arm|dose_label', the finite records whose restricted label mass is
+    below PIN-n-17's .20."""
     fid: dict = {}
     lm: dict = {}
-    nonfin = oob = 0
+    nonfin = oob = over_c = 0
+    ceil = ceiling_of(camp.identity)
     for r in camp.records.values():
         key = f"{r['arm']}|{r['dose_label']}"
         f = r["fidelity"]
@@ -5342,10 +5778,11 @@ def report_counters(camp: Campaign) -> dict:
             nonfin += 1
         if r["identity"] is not None and not r["identity"]["within"]:
             oob += 1
+        over_c += above_ceiling(r, ceil)
         if r["finite"] and label_mass_below([r["restricted"]["label_mass"]]):
             lm[key] = lm.get(key, 0) + 1
     return {"fidelity": dict(sorted(fid.items())), "nonfinite_reads": nonfin, "identity_out_of_bound": oob,
-            "label_mass_below_floor": dict(sorted(lm.items()))}
+            CEILING_COUNTER: None if ceil is None else over_c, "label_mass_below_floor": dict(sorted(lm.items()))}
 
 
 def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
@@ -5355,14 +5792,17 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
     n-build's runner makes them (its answer of 2026-11-16): the records' launch indices are exactly 0..m−1; at most
     one pause stands, and it is the stage's last event (its launch index m for a rendering pause, whose read is not
     launched, else m − 1); a pause with a read, other than a rendering pause, names a read on disk, non-finite where
-    it names nonfinite and outside the identity bound where it names identity-bound; a rendering pause not resumed
-    names a read not on disk; a resumption is where a read was launched or refused; every pause's read is a read of
-    the plan. A standing pause's binomial batch is bound to the records, since PIN-n-37 reads it: it is the runner's
-    batch -- the reads carrying a re-computation from the first after the last cleared batch (an adjudicated pause's
-    batch, which its ruling clears; else the stage's first) to the pause's read, or to the stage's last for a fire at
-    the run's end -- its n those trials and its k those above TAU, and its scope holds their arms (the v5 review's F1).
-    An adjudicated batch is not checked (its counting is the runner's; no outcome reads it). Three checks here cannot
-    fire alone and are kept so the binding is stated whole: the two shas, which check_report ties to the report's
+    it names nonfinite, above the identity's ceiling where it names fidelity-ceiling (ADDENDUM-n2 §2.1; PIN-n-39) and
+    outside the identity bound where it names identity-bound; every record above the ceiling is the read of a pause
+    naming fidelity-ceiling (the kind bound both ways, PIN-n-39); a rendering pause not resumed names a read not on
+    disk; a resumption is where a read was launched or refused; every pause's read is a read of the plan. A standing
+    pause's binomial batch is bound to the records, since PIN-n-37 reads it (its binding the ground the seat's §6
+    keeps): it is the runner's batch -- the reads carrying a re-computation from the first after the last cleared
+    batch (an adjudicated pause's batch, which its ruling clears; else the stage's first) to the pause's read, or to
+    the stage's last for a fire at the run's end -- its n those trials and its k those above TAU, and its scope holds
+    their arms (the v5 review's F1). An adjudicated batch is not checked (its counting is the runner's; no outcome
+    reads it). Three checks here cannot fire alone and are kept so the binding is stated whole: the two shas, which
+    check_report ties to the report's
     identity, once the identity is the cells'; and the per-arm counts, which the schema's per_arm rule (complete is
     obtained == planned) and check_report's plan and cell-record checks imply once the identity is the cells' and the
     cells are the files on disk."""
@@ -5387,7 +5827,7 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
             p.append(f"per_arm.{a} is {rep['per_arm'].get(a)}; the records give {want}")
     got = report_counters(camp)
     c = rep["counters"]
-    for k in ("fidelity", "nonfinite_reads", "identity_out_of_bound"):
+    for k in ("fidelity", "nonfinite_reads", "identity_out_of_bound", CEILING_COUNTER):
         if c[k] != got[k]:
             p.append(f"counters.{k} is not the records' count")
     if c["label_mass_below_floor"] is not None and c["label_mass_below_floor"] != got["label_mass_below_floor"]:
@@ -5437,6 +5877,8 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
         else:
             if "nonfinite" in kinds and rec["finite"] and (rec["fidelity"] is None or rec["fidelity"]["finite"]):
                 p.append(f"{q['pause_id']}: a non-finite pause at a finite read")
+            if "fidelity-ceiling" in kinds and not above_ceiling(rec, ceiling_of(ident)):
+                p.append(f"{q['pause_id']}: a fidelity-ceiling pause at a read not above the ceiling")
             if "identity-bound" in kinds and not (rec["identity"] is not None and not rec["identity"]["within"]):
                 p.append(f"{q['pause_id']}: an identity-bound pause at a read within the bound")
         if not q["adjudicated"]:
@@ -5444,6 +5886,12 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
                 p.append(f"{q['pause_id']}: a read was launched after this standing pause")
             elif q["launch_index"] != (m if q["kind"] == "rendering" else m - 1):
                 p.append(f"{q['pause_id']}: a standing pause is not the stage's last event")
+    named_c = {q["read_id"] for q in rep["pauses"] if "fidelity-ceiling" in [q["kind"]] + list(q["also_fired"])}
+    unpaused = sorted(rid for rid, r in camp.records.items() if above_ceiling(r, ceiling_of(ident))
+                      and rid not in named_c)
+    if unpaused:
+        p.append(f"{len(unpaused)} read(s) above the ceiling are no fidelity-ceiling pause's read, e.g. {unpaused[0]} "
+                 "(ADDENDUM-n2 §2.1: 'pauses at once'; PIN-n-39)")
     return p
 
 
@@ -5501,33 +5949,35 @@ def paused_from(rep: Mapping[str, Any]) -> dict[str, bool]:
 
 
 def paused_points(rep: Mapping[str, Any], camp: Campaign) -> dict[tuple[str, Any], bool]:
-    """PIN-n-37: the points the stage report's unadjudicated pauses stand on, for N2's rule (PIN-n-33 as amended), each
-    within its pause's scope (n-build's schema: a pause stands on the arms in its scope). A pause stands on its read,
-    where it has one (a rendering pause's is not on disk: its id names its point); on its binomial batch's trials, the
-    reads carrying a re-computation launched from the batch's first_launch_index to its last (the runner's trials,
-    bound to the records by report_problems); and, where one of those reads is a session's shadow (N1-V's d = 0 read),
-    on every read of that session, each read against it (Code's extension, capped by the scope: the runner's SCOPE
-    applies its shadow clause to the read that fired alone; PIN-n-37). Keyed as State.at is: (arm, the point's value),
-    N2's arms by the f; the steered arms only, N4's pauses being read per arm."""
+    """PIN-n-37 as amended (the seat's answers of 2026-11-18, third sitting, §6): the points the stage report's
+    unadjudicated pauses stand on, for N2's rule (PIN-n-33 as amended) and its guards. A pause stands on its read, where
+    it has one (a single-read pause -- non-finite, the ceiling, identity, rendering -- on that read, not a range; a
+    rendering pause's read is not on disk, and its id names its point); a pause that fired the binomial (its kind or
+    also_fired), also on every read launched in its batch's range, from first_launch_index to last_launch_index -- the
+    trials and the reads between them, re-computed or not (the batch bound to the runner's by report_problems: its
+    range, n, k and scope); and, where one of those reads is a session's shadow (N1-V's d = 0 read), on every planned
+    steered read of that session, each read against it (the shadow extension). The points are §6's whatever the
+    pause's scope: §6 states them without it, and the scope binds the batch (report_problems). Keyed as State.at is:
+    (arm, the point's value), N2's arms by the f; the steered arms only, N4's pauses being read per arm (N1's rule,
+    too, reads its pauses per arm, through `paused`; N2 reads N1's arms at these points)."""
     lv = label_values(camp.identity) | {"f0.10": F10, "f0.20": F20}
     out: dict[tuple[str, Any], bool] = {}
     for q in rep["pauses"]:
         if q["adjudicated"]:
             continue
-        scope = sorted(set(q["arms_in_scope"]) & set(STEERED_ARMS))
         rids = [] if q["read_id"] is None else [q["read_id"]]
         b = q["binomial"]
         if b is not None:
-            rids += sorted(rid for rid, r in camp.records.items() if r["fidelity"] is not None
-                           and b["first_launch_index"] <= r["launch_index"] <= b["last_launch_index"])
+            rids += sorted(rid for rid, r in camp.records.items()
+                           if b["first_launch_index"] <= r["launch_index"] <= b["last_launch_index"])
         for rid in rids:
             arm, _d, lab, sid = rid.split("|")
             if (arm, lab) == ("N1-V", "0"):                # a shadow (N1-V|none|0): its session's reads pair with it
-                for a in scope:
+                for a in STEERED_ARMS:
                     for pa, _pd, plab, psid in (p.split("|") for p in camp.planned[a]):
                         if psid == sid and (pa, plab) != ("N1-V", "0"):
                             out[(pa, lv[plab])] = True
-            elif arm in scope:
+            elif arm in STEERED_ARMS:
                 out[(arm, lv[lab])] = True
     return out
 
@@ -5649,10 +6099,12 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     not saying it is LOCK-n v1.0, or stating no direction of record (PIN-n-26); a report not bound to the cells on
     disk (PIN-n-24); an output of the other outcome already in the output directory; and, when it analyzes, a
     G-READ-n artifact missing, refused by the schema or not bound to the campaign (PIN-n-25), or a malformed cosines
-    file (on the NOT-RUN path neither is read). It writes, write-once, the secondary DVs and then VERDICTS, which
-    names the secondary by sha256, both formed before either is written (a STOP while forming them writes nothing,
-    and a write-once refusal of either comes before either is written), or the NOT-RUN output. It returns
-    {'outputs': [(name, how, sha256)], 'tuple': the outcome tuple or 'NOT-RUN'}, and prints no margin (§4
+    file (on the NOT-RUN path neither is read). Beside the primary, VERDICTS report the TAU/4 sensitivity row
+    (PIN-n-16) with what it drops at each point and, where it drops more than half of an arm's reads at a point,
+    ADDENDUM-n2 §3's second row (PIN-n-38), each descriptive. It writes, write-once, the secondary DVs and then
+    VERDICTS, which names the secondary by sha256, both formed before either is written (a STOP while forming them
+    writes nothing, and a write-once refusal of either comes before either is written), or the NOT-RUN output. It
+    returns {'outputs': [(name, how, sha256)], 'tuple': the outcome tuple or 'NOT-RUN'}, and prints no margin (§4
     "Blinding")."""
     if not _iso_date(date):
         raise AnlRefusal(f"REFUSED: the date {date!r} is not an ISO calendar date (the PI date of the run)")
@@ -5678,7 +6130,7 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
         raise AnlRefusal("REFUSED: the lock does not name this analyzer's sha256")
     route = lock_route(ltext)
     base = {"unit": UNIT, "date": date, "proposal_sha256": PROPOSAL_SHA256, "addendum_sha256": ADDENDUM_SHA256,
-            "analyzer_sha256": asha,
+            "addendum2_sha256": ADDENDUM2_SHA256, "analyzer_sha256": asha,
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "lock": {"name": Path(lock).name, "sha256": lock_sha},
             "report": {"name": Path(report).name, "sha256": rep_sha, "end_state": end}, "pins": PINS, "open": OPEN}
@@ -5715,6 +6167,19 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     sset = sentence_set_filled(o, st, route=route, auc=auc)
     st_s, fig_s = build_state(camp, paused=paused, gread=g, drop=tau4_drop(camp), paused_at=pat)
     o_s = outcomes(st_s)
+    drops = row_drops(camp, tau4_drop(camp))
+    over = over_half(drops)
+    second = None
+    if over:                                       # ADDENDUM-n2 §3: reported where the TAU/4 row drops over half
+        med = median_of(camp.identity)
+        st_m, fig_m = build_state(camp, paused=paused, gread=g, drop=median_drop(camp, med), paused_at=pat,
+                                  emptied="median-emptied")
+        o_m = outcomes(st_m)
+        second = {"rule": "PIN-n-38 (ADDENDUM-n2 §3): reads re-computed above the box's extension median rel dropped; "
+                          "descriptive, gating nothing", "median_rel": med,
+                  "drops": row_drops(camp, median_drop(camp, med)), "tuple": list(o_m["tuple"]),
+                  "outcomes": _plain({k: o_m[k] for k in ("N1", "dose", "N2", "N4")}),
+                  "figures": state_figures(st_m, fig_m)}
     cos = None if gv is None else {"source": {"name": Path(gvec).name, "sha256": gv_sha}, "values": gv["cosines"]}
     sec = dict(base, schema=SECONDARY_SCHEMA, claim="none: descriptive, issuing no claim (n §4; rule 11)",
                cosines=cos, secondaries=_plain(secondaries(camp, st, gv)))
@@ -5733,7 +6198,8 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
                 sensitivity={"rule": "PIN-n-16 (n §4 (f)): reads re-computed above TAU/4 dropped",
                              "tuple": list(o_s["tuple"]),
                              "outcomes": _plain({k: o_s[k] for k in ("N1", "dose", "N2", "N4")}),
-                             "figures": state_figures(st_s, fig_s)},
+                             "figures": state_figures(st_s, fig_s), "drops": drops, "over_half": over,
+                             "second_row": second},
                 campaign={"stage_identity_sha256": rep["stage_identity_sha256"],
                           "read_plan_sha256": rep["read_plan_sha256"], "cells": camp.cells},
                 secondary={"name": sec_path.name, "sha256": sec_sha})
