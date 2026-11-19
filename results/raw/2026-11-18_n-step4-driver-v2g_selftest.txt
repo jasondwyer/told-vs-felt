@@ -1,0 +1,42 @@
+n step 4 -- the BACKEND extension's driver v2g (v2f with the fourth sitting's two aggregate lines against BK's
+recorded d = 0 values): its self-test on the laptop, committed with the driver (the seat's answers of 2026-11-18,
+fourth sitting, s2.3; the PI's "route as given"). PI date 2026-11-18. Code (the n-build session).
+
+The driver:  scripts/n_sessions.py v2g, sha256 7aefd06b8923f73a47feda94515ed5d75f8e4853bdc032d48aa3240bd5225b67,
+             committed with this raw.
+The package: valence_core/n, unchanged since b523f6a (git diff --name-only b523f6a HEAD -- valence_core/n prints
+             nothing), so its digest is the one v2f's raw records,
+             f927608c33d12b34c2bef728966038dac1ecfbb041cbd992b7ffd4cf01a73c03; not measured again here.
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny, and the HF-path vanilla score) run only where torch
+   and transformers are present, and elsewhere are skipped and counted as skipped (the driver's docstring).
+   The overlay: git archive of HEAD c7d0009 on the paths the self-test runs with (valence_core, scripts/n_sessions.py,
+   scripts/box_e0_corpus.py, data/n, data/corpus/e0_tasks.jsonl, data/corpus/e2a_tasks.jsonl,
+   data/configs/e0_frames.json, data/configs/e0_probes.json, the model manifest and the characterization's artifact by
+   quoted pathspec globs, and results/raw/2026-11-18_respawn_determinism.txt), with item 3's exclusions and data/mf3's
+   (':!data/*/ckpt/**' ':!data/*/reports/**' ':!data/mf3/**'), so that no checkpoint or report file entered it; the
+   driver under test as scripts/n_sessions.py, its sha256 equal to the draft's. HEAD moved after the overlay was made,
+   to 8038c63 and then to ecf349d; neither changed any of the overlay's paths.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/v2g/overlay/scripts/n_sessions.py --selftest
+
+   Run 1, v2g's reviewed draft (b8ebc595a8e40f596048fff088313f56570c1883619b7b490689b100179a66b5), before the blind
+   review, in the battery window the coordinating session granted for it, the driver re-hashed in the overlay just
+   before the run. Its whole output (sha256 225dc44f78d40428bb9072f59c5707fb9865b42c11486577ceb00ec3040f8cc3);
+   exit 0:
+       394/394 n selftest checks pass
+
+   Run 2, v2g (7aefd06b8923f73a47feda94515ed5d75f8e4853bdc032d48aa3240bd5225b67), after the review's fixes, in a
+   second battery window the coordinating session granted for it, the driver re-hashed in the overlay just before the
+   run. Its whole output (sha256 1df0a04d19fba91bb60a761c0a8d92bc3fc9e638a3079dedfa302c25eac76b24); exit 0:
+       397/397 n selftest checks pass
+
+   A first draft (0a39852b2c9cddd30a6e9aa7617d160ee2122eac1e389c7aac75c8912ceac572), which pooled S and U in line (b),
+   was granted a window and never run: the per-label split replaced it before any run, and its grant lapsed unused.
+
+2. THE BOX. The box runs v2g's self-test at backend-ext-2's start, in the copy the launch files name; its lines go in
+   the stage's record. Its count, by arithmetic only: 408, the laptop's 397 plus the box's 11 more, since v2g touches
+   no HF case. For v2f the box printed "389/389 n selftest checks pass" at the resume (the resume's output,
+   results/raw/2026-11-18_n-step4_bext-resume4_out.txt, line 36), against the laptop's 378.

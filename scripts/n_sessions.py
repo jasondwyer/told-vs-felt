@@ -52,7 +52,8 @@ At the n BUILD it wires:
                     2026-11-18, §2 item 5), a smoke any, its sha256 printed either way; a DRIVER line;
                  3. the ids of record; the environment's provenance bridged to the characterization (R6) before the
                     load; the stage identity; what is on disk checked as the runner checks it (a resume's identity,
-                    its pauses and rulings); BK's d = 0 floor table and every candidate's ids checked;
+                    its pauses and rulings); BK's d = 0 floor table, BK's d = 0 values for the stage's sessions
+                    (``bk_d0_reads``) and every candidate's ids checked;
                  4. G-VER on the committed ids, the tokenizer alone loaded (local files only), decoding as
                     gver-trial does; a STOP returns 1 before the weights load (Code's reading: at backend-ext the
                     raw is the STOP's record; no stage report);
@@ -63,7 +64,13 @@ At the n BUILD it wires:
                     and its ratio to the scale as ``rel``, each as min, quartiles, median and max -- the seat's answers
                     of 2026-11-18, third sitting, §1.4 -- with the absdiff's p90 beside (R8); each label's |logprob -
                     fresh_logprob| as median and max, the max R3's bound; the counts above TAU and TAU/4 -- fidelity
-                    values, never a margin); the in-band
+                    values, never a margin); then the seat's two aggregate lines (the answers of 2026-11-18, fourth
+                    sitting, §2.3; ``bk_compare``): |the read's cached margin - BK's recorded d = 0 margin for the
+                    same session| over the sessions compared, and |the read's cached log p - BK's recorded value|
+                    per label, S and U, over the values compared, with the two labels pooled beside (R8), each as
+                    median and max with its count -- discordances, never a margin or a value, nothing per session;
+                    BK's value for a session (of any cell, floor or not) is its one d = 0 "none" read for the
+                    session's own cell and run, with the session's cues; the in-band
                     count (the floor reads' fresh values against the vanilla score: counts only); the comparison
                     (``label_counts``): per candidate, the floor sessions whose S and U values on the vanilla forward
                     both match BK's ``reduced.json`` within half a unit of BK's last decimal plus the bound (R3),
@@ -72,8 +79,9 @@ At the n BUILD it wires:
                     and nothing else -- no value, no margin, nothing per session; nothing of it is written.
                Exit 0 iff the reads are COMPLETE and the comparison ran; a PAUSE ends the invocation with the report
                (the seat adjudicates; ``--resume`` with ``--ruling PAUSE_ID=PATH`` continues, skip-only).
-               Code's readings for the BACKEND extension, declared (each flagged in its entry, pending the seat; R1-R6
-               are backend-ext's, R7 is backend-ext-2's and R8 the distribution's in both):
+               Code's readings for the BACKEND extension, declared (each flagged in its entry for the seat, which
+               accepted R7 and R8 at its fourth sitting, §5; R8's last sentence, added in v2g, is pending it; R1-R6
+               are backend-ext's, R7 is backend-ext-2's and R8 the printed extras' in both):
                  R1 the 24 sessions: m's key-to-generator function's permutation of the session set's order under
                     ``BEXT_KEY``, its first 24, launched in the set's order (n v0.2 names no set);
                  R2 the reads' label convention ``BEXT_CONVENTION`` ("bare", the first candidate): the reads come
@@ -99,7 +107,9 @@ At the n BUILD it wires:
                     written under;
                  R8 the distribution's quantiles are numpy's default (linear), the median ``np.median``. Beside §1.4's
                     list it prints the absdiff's p90 (printed before the list was set), label's median beside its
-                    max, and the counts of reads and of finite reads, the list's denominators.
+                    max, and the counts of reads and of finite reads, the list's denominators. Of the same kind (v2g):
+                    beside §2.3 (b)'s per-label figures, the two labels pooled (median, max and count), as the
+                    comparison's medians pool them -- a printed figure that binds nothing.
   backend-ext-2  ADDENDUM-n2 §4.1's second stage, on the box, run only when A-n1 §2's comparison names a candidate
                other than "bare": the same 24 reads under ``--convention NAME``, that candidate, into the stage's own
                root and report (data/n/ckpt/backend-ext-2, data/n/reports/backend-ext-2.json), with the fidelity rule
@@ -109,9 +119,10 @@ At the n BUILD it wires:
                to this stage's in every field but the convention -- the same package, closure, weights, backend, pod,
                rendering and fidelity rule -- and each cell file its report records must hash to that record; the
                report's sha256 is printed. The same steps 1-6 as backend-ext, with the STAGE line naming
-               backend-ext-2; then on COMPLETE the distribution alone, with no in-band count and no comparison. Exit 0
-               iff the reads are COMPLETE and every one is finite; a PAUSE as backend-ext's. ``--smoke``, ``--resume``
-               and ``--ruling`` as backend-ext's; a smoke is not checked against the first stage.
+               backend-ext-2; then on COMPLETE the distribution and §2.3's two aggregate lines (step 7) alone, with
+               no in-band count and no comparison. Exit 0 iff the reads are COMPLETE and every one is finite; a PAUSE
+               as backend-ext's. ``--smoke``, ``--resume`` and ``--ruling`` as backend-ext's; a smoke is not checked
+               against the first stage.
 
 Stages G-VEC, G-CAL-n, G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
 """
@@ -680,6 +691,81 @@ def bk_d0_floor(floor_sessions, path=BK_REDUCED) -> dict:
     return out
 
 
+def bk_d0_reads(sessions, path=BK_REDUCED) -> dict:
+    """BK's recorded d = 0 values for the given sessions, from ``reduced.json``'s OLMo reads (the seat's answers of
+    2026-11-18, fourth sitting, §2.3): session_id -> {"margin": float, "S": float, "U": float}, the recorded
+    ``margin``, ``logprob_S`` and ``logprob_U``. A session's read, for a session of any cell (floor or not), is the one
+    d = 0 read BK records for the session's own cell and run, a "none" read with the session's cues. Two d = 0 reads
+    for one cell and run, a session without its read, or a value absent, not a JSON number (a string or a boolean) or
+    not finite as recorded is a SystemExit that names the session and quotes no value."""
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    by: dict = {}
+    for r in doc["reads"][BK_MEMBER]:
+        if float(r["point"]) != 0.0:
+            continue
+        key = (str(r["cell"]), int(r["run"]))
+        if key in by:
+            raise SystemExit(f"BK records two d = 0 reads for {key}")
+        by[key] = r
+    out = {}
+    for s in sessions:
+        r = by.get((s.bk_cell, s.bk_run))
+        if (r is None or r.get("cue_S") != s.cue_S or r.get("cue_U") != s.cue_U
+                or r.get("direction_kind") != "none"):
+            raise SystemExit(f"{s.session_id}: BK's d = 0 read is missing or not this session's")
+        row = {}
+        for k, f in (("margin", "margin"), ("S", "logprob_S"), ("U", "logprob_U")):
+            v = r.get(f)
+            if type(v) not in (int, float) or not math.isfinite(v):         # bool's type is bool, not int
+                raise SystemExit(f"{s.session_id}: BK's recorded d = 0 {f} is absent or not a finite number")
+            row[k] = float(v)
+        out[s.session_id] = row
+    return out
+
+
+def bk_compare(records, bk) -> dict:
+    """§2.3's two aggregates over the stage's reads at d = 0 (the seat's answers of 2026-11-18, fourth sitting),
+    against ``bk_d0_reads``' table: ``margin``, |the read's cached margin - BK's recorded d = 0 margin for its
+    session|, over the sessions compared; ``S`` and ``U``, per label, |the read's cached log p - BK's recorded value|,
+    over the values compared; and ``pooled``, the two labels' values together (R8's kind: printed beside, binding
+    nothing). Each holds ``median`` (``np.median``), ``max``, ``compared`` and ``of`` (the reads; twice the reads for
+    ``pooled``). A value not finite on this box is not compared; with none compared, the median and the max are null.
+    A read whose session is not in the table is a SystemExit. Discordances only: no margin and no value leaves this
+    function."""
+    import numpy as np
+
+    def fin(x) -> bool:
+        return x is not None and math.isfinite(float(x))
+    m, per = [], {"S": [], "U": []}
+    for r in records:
+        b = bk.get(r["session_id"])
+        if b is None:
+            raise SystemExit(f"{r['session_id']}: a read whose session has no BK d = 0 value in the table")
+        if fin(r.get("margin")):
+            m.append(abs(float(r["margin"]) - b["margin"]))
+        for z in ("S", "U"):
+            if fin(r.get(f"logprob_{z}")):
+                per[z].append(abs(float(r[f"logprob_{z}"]) - b[z]))
+
+    def agg(x: list, of: int) -> dict:
+        return {"compared": len(x), "of": of, "median": float(np.median(x)) if x else None,
+                "max": float(max(x)) if x else None}
+    n = len(records)
+    return {"margin": agg(m, n), "S": agg(per["S"], n), "U": agg(per["U"], n),
+            "pooled": agg(per["S"] + per["U"], 2 * n)}
+
+
+def bk_lines(cmp: dict) -> list:
+    """§2.3's two lines as printed, after the distribution line: (a) the margins'; (b) the label values', per label
+    with the pooled figure beside; each printed whole, keys sorted."""
+    labels = {k: cmp[k] for k in ("S", "U", "pooled")}
+    return [f"BK's d = 0 margins (the seat's answers of 2026-11-18, fourth sitting, §2.3 (a); |cached margin - BK's "
+            f"recorded margin| in nats over the sessions compared; a discordance, no margin): "
+            f"{json.dumps(cmp['margin'], sort_keys=True)}",
+            f"BK's d = 0 label values (§2.3 (b); |cached log p - BK's recorded value| in nats over the values "
+            f"compared, per label, the two pooled beside (R8)): {json.dumps(labels, sort_keys=True)}"]
+
+
 def comparison_ids(s, ids_of, lab, window: int):
     """One floor session's ids and one candidate's two labels' ids, checked: the ids BK's, each forward in the
     window."""
@@ -839,6 +925,7 @@ class BextEnv:
     adapter_shape: Callable             # (adapter) -> (n_layers, d_model)
     make_backend: Callable              # (adapter) -> the 5(f) backend
     bk_table: Callable                  # (floor sessions) -> ``bk_d0_floor``'s table
+    bk_reads: Callable                  # (the stage's sessions) -> ``bk_d0_reads``' table (§2.3)
     pod: Callable                       # () -> the pod id or None
     driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path | None)
     shape: tuple = (N_LAYERS, D_MODEL, BEXT_LAYER)
@@ -875,16 +962,18 @@ def production_env() -> BextEnv:
     return BextEnv(weights=weights_of_record, load_sessions=sessions.load_sessions, load_ids=ids.load,
                    gver=_gver_tokenizer, env_provenance=environment_provenance, make_adapter=_load_adapter,
                    adapter_shape=lambda a: (int(a.n_layers), int(a._model.config.hidden_size)),
-                   make_backend=_hf_backend, bk_table=bk_d0_floor, pod=m_resume.pod_id, driver=driver_bytes)
+                   make_backend=_hf_backend, bk_table=bk_d0_floor, bk_reads=bk_d0_reads, pod=m_resume.pod_id,
+                   driver=driver_bytes)
 
 
 def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = False, rulings=None,
                     smoke: int | None = None, convention: str | None = None) -> int:
-    """The stage, in order: refusals; the weights; the ids and the identity; what is on disk; the comparison's inputs;
-    G-VER; the load and the bridge again; the reads; the distribution; the comparison. Everything that needs no
-    model happens before the load. With ``convention`` -- a candidate other than "bare" -- it is backend-ext-2
-    (ADDENDUM-n2 §4.1; R7): its own root and report, the first stage's report checked before the load for a run of
-    record, and on COMPLETE the distribution alone."""
+    """The stage, in order: refusals; the weights; the ids and the identity; what is on disk; the comparison's inputs
+    and BK's d = 0 values for the stage's sessions; G-VER; the load and the bridge again; the reads; the distribution
+    and §2.3's two aggregate lines; the comparison. Everything that needs no model happens before the load. With
+    ``convention`` -- a candidate other than "bare" -- it is backend-ext-2 (ADDENDUM-n2 §4.1; R7): its own root and
+    report, the first stage's report checked before the load for a run of record, and on COMPLETE the distribution
+    and the two lines alone."""
     from valence_core.m import resume as m_resume
     from valence_core.m.keys import stream_known_answer
     from valence_core.n import cells, guard, ids, runner, schema
@@ -965,6 +1054,7 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
             f"as it records them")
     floor_all = [s for s in ss if s.is_floor]
     bk = env.bk_table(floor_all)
+    bkr = env.bk_reads([p.session for p in plan])
     floor = floor_all[:smoke] if smoke is not None else floor_all
     ids_of = ids.ids_of(loaded)
     cands = {name: ids.label_ids(loaded, name) for name, _t in ids.CANDIDATES}
@@ -1002,6 +1092,8 @@ def run_backend_ext(env: BextEnv, *, root=None, report=None, resume: bool = Fals
                                   identity=ident)
     disc = discordance(cell["records"])
     say(distribution_line(disc, bound=not second))
+    for line in bk_lines(bk_compare(cell["records"], bkr)):
+        say(line)
     if disc["label"] is None or disc["finite"] != disc["reads"]:
         say("a read has no finite discordance" + ("" if second else ": no comparison"))
         return 1
@@ -1031,8 +1123,9 @@ def _shown(p: Path) -> str:
 def _bext_selftest(chk, tmp: Path) -> None:
     """backend-ext's checks, model-free: R1's draw (a pinned known answer), the plan, the identity, the weights entry
     and folder, R6's bridge against the characterization's recorded provenance, the distribution, BK's half unit and
-    d = 0 table, the comparison, the vanilla score against the read's fresh path, and the command's own flow over the
-    numpy double behind every seam, refusals first; on the box, the vanilla score on the HF path too."""
+    d = 0 table, §2.3's BK values and two aggregate lines, the comparison, the vanilla score against the read's fresh
+    path, and the command's own flow over the numpy double behind every seam, refusals first; on the box, the vanilla
+    score on the HF path too."""
     import hashlib
     import re
     import shutil
@@ -1207,6 +1300,98 @@ def _bext_selftest(chk, tmp: Path) -> None:
         and refused(lambda: bk_d0_floor(floor, synth(one_cue)))
         and refused(lambda: bk_d0_floor(floor, synth(valenced))), "")
 
+    # §2.3's two aggregate lines (the seat's answers of 2026-11-18, fourth sitting)
+    try:
+        r24, r_all, r_err = bk_d0_reads(b1), bk_d0_reads(ss), ""
+    except SystemExit as e:                                 # a FAIL line below, not an abort of the self-test
+        r24, r_all, r_err = {}, {}, str(e)[:80]
+    chk("driver: BK's d = 0 values for backend-ext's 24 sessions from the committed reduced.json (§2.3): one row "
+        "per session, its recorded margin, S and U, each finite, the margin S - U as recorded; floor sessions and "
+        "others among them; and a row for every session of the set",
+        sorted(r24) == sorted(s.session_id for s in b1)
+        and all(set(v) == {"margin", "S", "U"} and all(math.isfinite(x) for x in v.values())
+                and abs(v["margin"] - (v["S"] - v["U"])) <= 1e-9 for v in r24.values())
+        and any(s.is_floor for s in b1) and any(not s.is_floor for s in b1)
+        and sorted(r_all) == sorted(s.session_id for s in ss),
+        (len(r_all), sum(1 for s in b1 if s.is_floor), r_err))
+    mix = [s for s in ss if s.is_floor][:2] + [s for s in ss if not s.is_floor][:2]
+    brow = [{"cell": s.bk_cell, "run": s.bk_run, "point": 0.0, "direction_kind": "none", "cue_S": s.cue_S,
+             "cue_U": s.cue_U, "logprob_S": -9.5, "logprob_U": -11.25, "margin": 1.75} for s in mix]
+    brest = [dict(r, point=0.5, margin=7.0, logprob_S=-1.0) for r in brow] + [dict(brow[0], cell="ste_b0", margin=8.0)]
+    chk("driver: ...the session's own d = 0 read only (not another dose's, not another cell's at the same run), in any "
+        "cell (two floor sessions, two others), its values as recorded",
+        bk_d0_reads(mix, synth(brow + brest)) == {s.session_id: {"margin": 1.75, "S": -9.5, "U": -11.25} for s in mix},
+        "")
+
+    def bk_refusal(fn) -> str:
+        try:
+            fn()
+        except SystemExit as e:
+            return str(e) or "(empty)"
+        return ""
+
+    def with0(**kw) -> list:
+        return [dict(brow[0], **kw)] + brow[1:]
+
+    def text0(new: str) -> Path:                        # the first row's logprob_S replaced in the file's text
+        return synth(brow, lambda t: t.replace('"logprob_S": -9.5', f'"logprob_S": {new}', 1))
+    no_margin = [{k: v for k, v in brow[0].items() if k != "margin"}] + brow[1:]
+    cases = [brow + brow[1:2], brow[:3], with0(cue_S="Zone Q9"), with0(cue_U="Zone Q9"),
+             with0(direction_kind="valenced"), with0(direction_kind="random"), no_margin, with0(logprob_U=None),
+             with0(logprob_S="abc"), with0(margin="1.75"), with0(logprob_U=True)]
+    msgs = ([bk_refusal(lambda c=c: bk_d0_reads(mix, synth(c))) for c in cases]
+            + [bk_refusal(lambda t=t: bk_d0_reads(mix, text0(t))) for t in ("NaN", "-Infinity")])
+    chk("driver: ...it refuses two d = 0 reads of a cell and run, a session missing, either cue not the session's, a "
+        "d = 0 read that is not a \"none\" read (\"valenced\", \"random\"), a margin absent, and a value null, a "
+        "string (\"abc\", \"1.75\"), a boolean, NaN or -Infinity as recorded -- 13 cases, each message quoting no "
+        "value",
+        len(msgs) == 13 and all(m_ and not any(v in m_ for v in ("9.5", "11.25", "1.75", "Q9", "valenced", "random",
+                                                                  "abc", "True", "true", "NaN", "Infinity"))
+                                for m_ in msgs), [m_[:60] for m_ in msgs])
+    sid24 = [f"toy/{i}" for i in range(24)]
+    dl_ = [(i + 1) / 1024 for i in range(23)] + [0.5]
+    sg = [1 if i % 2 == 0 else -1 for i in range(24)]
+    recs_c = [{"session_id": sid24[i], "margin": 2.0, "logprob_S": -10.0, "logprob_U": -12.0,
+               "fidelity": {"fresh_margin": 99.0, "fresh_logprob_S": 0.0, "fresh_logprob_U": 0.0}} for i in range(24)]
+    tbl = {sid24[i]: {"margin": 2.0 + sg[i] * dl_[i], "S": -10.0 - 2 * sg[i] * dl_[i],
+                      "U": -12.0 - 3 * sg[i] * dl_[i]} for i in range(24)}
+    cmp_c = bk_compare(recs_c, tbl)
+    chk("driver: §2.3's aggregates, a known answer: |cached margin - BK's| over 24 sessions (median 12.5/1024, not "
+        "the mean; max 0.5); |cached log p - BK's| per label over 24 values each, S (median 25/1024; max 1.0) and U "
+        "(median 37.5/1024; max 1.5), and the two pooled beside over 48 (median 30/1024; max 1.5); differences of "
+        "either sign; the fresh path not read",
+        cmp_c == {"margin": {"compared": 24, "of": 24, "median": 12.5 / 1024, "max": 0.5},
+                  "S": {"compared": 24, "of": 24, "median": 25 / 1024, "max": 1.0},
+                  "U": {"compared": 24, "of": 24, "median": 37.5 / 1024, "max": 1.5},
+                  "pooled": {"compared": 48, "of": 48, "median": 30 / 1024, "max": 1.5}}, cmp_c)
+    recs_n = [dict(recs_c[0], margin=None, logprob_S=None, logprob_U=None), dict(recs_c[1], margin=float("nan")),
+              dict(recs_c[2], logprob_U=float("inf"))] + recs_c[3:]
+    cmp_n = bk_compare(recs_n, tbl)
+    cmp_e = bk_compare([recs_n[0]], tbl)
+    none1 = {"compared": 0, "of": 1, "median": None, "max": None}
+    chk("driver: ...a value not finite on this box is not compared and the counts say so (22 of 24 margins, 23 of 24 "
+        "S values, 22 of 24 U values, 45 of 48 pooled); with nothing compared the median and the max are null; a read "
+        "whose session is not in the table is refused",
+        [(cmp_n[k]["compared"], cmp_n[k]["of"]) for k in ("margin", "S", "U", "pooled")]
+        == [(22, 24), (23, 24), (22, 24), (45, 48)]
+        and cmp_e == {"margin": none1, "S": none1, "U": none1,
+                      "pooled": {"compared": 0, "of": 2, "median": None, "max": None}}
+        and refused(lambda: bk_compare([dict(recs_c[0], session_id="toy/x")], tbl)), (cmp_n, cmp_e))
+    chk("driver: §2.3's two lines: (a) the margins', (b) the label values' per label with the pooled figure beside, "
+        "each printed whole, keys sorted",
+        bk_lines(cmp_c) == [
+            "BK's d = 0 margins (the seat's answers of 2026-11-18, fourth sitting, §2.3 (a); |cached margin - BK's "
+            "recorded margin| in nats over the sessions compared; a discordance, no margin): "
+            + json.dumps(cmp_c["margin"], sort_keys=True),
+            "BK's d = 0 label values (§2.3 (b); |cached log p - BK's recorded value| in nats over the values "
+            "compared, per label, the two pooled beside (R8)): "
+            + json.dumps({"S": cmp_c["S"], "U": cmp_c["U"], "pooled": cmp_c["pooled"]}, sort_keys=True)]
+        and bk_lines(cmp_c)[0].endswith('{"compared": 24, "max": 0.5, "median": 0.01220703125, "of": 24}')
+        and bk_lines(cmp_c)[1].endswith('"pooled": {"compared": 48, "max": 1.5, "median": 0.029296875, "of": 48}}'),
+        [x[-70:] for x in bk_lines(cmp_c)])
+    chk("driver: the production environment reads BK's d = 0 values by bk_d0_reads and the floor table by bk_d0_floor",
+        production_env().bk_reads is bk_d0_reads and production_env().bk_table is bk_d0_floor, "")
+
     toys = [testing.toy_session(r) for r in (0, 1, 2)]
     tss = [s for s, _i in toys]
     by_id = {s.session_id: list(i) for s, i in toys}
@@ -1319,19 +1504,49 @@ def _bext_selftest(chk, tmp: Path) -> None:
             return out
         by_flow = {s.session_id: list(i) for s, i in flow}
 
-        def env_for(tag, **over):
+        def cached_reads(be, sess, conv):                   # §2.3's BK stand-in: the cached path's values
+            ls_, lu_ = labs[conv]
+            out = {}
+            for s in sess:
+                pre = be.prefill(by_flow[s.session_id], [], [])
+                v = {z: math.fsum(primitive.score_cached(pre, be.continue_label(pre, li), li))
+                     for li, z in ((ls_, "S"), (lu_, "U"))}
+                out[s.session_id] = {"margin": v["S"] - v["U"], "S": v["S"], "U": v["U"]}
+            return out
+
+        def bk_printed(lines) -> list:                      # every §2.3 pair printed: (index of (a), (a), (b))
+            out = []
+            for i, x in enumerate(lines[:-1]):
+                if x.startswith("BK's d = 0 margins (") and lines[i + 1].startswith("BK's d = 0 label values ("):
+                    out.append((i, json.loads(x[x.index("): {") + 3:]),
+                                json.loads(lines[i + 1][lines[i + 1].index("): {") + 3:])))
+            return out
+
+        def zero(n) -> dict:
+            return {"compared": n, "of": n, "median": 0.0, "max": 0.0}
+
+        def zeros(n) -> tuple:                              # both lines at 0.0 over n reads: (a), then (b)
+            return zero(n), {"S": zero(n), "U": zero(n), "pooled": zero(2 * n)}
+        bk_seen: dict = {}                                  # tag -> the session ids each bk_reads call was given
+
+        def env_for(tag, bk_conv="bare", **over):
             be = testing.CausalDouble(fresh_bias=(5, 0.3))
             lines: list = []
 
             def mk(p, prov=None):
                 made.append(tag)
                 return StubAdapter(prov or prov_t)
+
+            def bk_seam(sess):
+                bk_seen.setdefault(tag, []).append([s.session_id for s in sess])
+                return cached_reads(be, sess, bk_conv)
             base = dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": "5" * 64, "n_files": 1,
                                          "path": "(toy)"},
                         load_sessions=lambda: list(fss), load_ids=lambda: loaded_t,
                         gver=lambda s_, l_, p_: {"status": "PASS", "sessions": len(s_)},
                         env_provenance=lambda p: dict(prov_t), make_adapter=mk, adapter_shape=lambda a: (6, 12),
                         make_backend=lambda a: be, bk_table=lambda f_: cached_table(be, f_),
+                        bk_reads=bk_seam,
                         pod=lambda: CHARACTERIZED_POD, driver=lambda: (b"drv", b"drv"), shape=(6, 12, 2),
                         root=tmp / tag / "root", report=tmp / tag / "report.json", root2=tmp / tag / "root2",
                         report2=tmp / tag / "report2.json", printer=lines.append)
@@ -1369,6 +1584,14 @@ def _bext_selftest(chk, tmp: Path) -> None:
         chk("driver: ...in-band: every floor read's fresh values equal the vanilla score",
             "in-band: 24 of 24 floor reads' fresh values, both labels, equal the comparison's vanilla score" in lines1,
             "")
+        p1 = bk_printed(lines1)
+        chk("driver: ...§2.3's two lines directly after the distribution line and before the in-band count; with BK's "
+            "stand-in the cached path's own values, 0.0 over the 24 sessions and the 48 label values (the cached "
+            "margin and log p are what is compared, not the fresh path's)",
+            len(p1) == 1 and disc_line in lines1 and p1[0][0] == lines1.index(disc_line) + 1
+            and (p1[0][1], p1[0][2]) == zeros(24) and lines1[p1[0][0] + 2].startswith("in-band: "), p1[:1])
+        chk("driver: ...BK's d = 0 values are asked for once, for the plan's 24 sessions in launch order",
+            bk_seen.get("run") == [[s.session_id for s in fss]], [len(x) for x in bk_seen.get("run", [])])
         chk("driver: ...G-VER comes before the load, and the weights line before G-VER",
             [i for i, x in enumerate(lines1) if x.startswith("WEIGHTS")][0]
             < [i for i, x in enumerate(lines1) if x.startswith("G-VER")][0]
@@ -1395,7 +1618,8 @@ def _bext_selftest(chk, tmp: Path) -> None:
         before = {p: p.read_bytes() for p in firsts}
         first_ident = cells.read_json(Path(env1.report))["stage_identity"]
         two = dict(root=env1.root, report=env1.report)
-        env7, lines7 = env_for("second", root2=tmp / "second" / "root2", report2=tmp / "second" / "rep2.json", **two)
+        env7, lines7 = env_for("second", bk_conv="space", root2=tmp / "second" / "root2",
+                               report2=tmp / "second" / "rep2.json", **two)
         rc7 = run_backend_ext(env7, convention="space")
         cell7, _c7 = cells.load_cell(env7.root2, schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)
         rep7 = cells.read_json(Path(env7.report2))
@@ -1420,6 +1644,11 @@ def _bext_selftest(chk, tmp: Path) -> None:
             and any(x.startswith(f"discordance over 24 reads ({unit2}): ") for x in lines7)
             and not any(x.startswith(("in-band:", "label convention (")) or "candidate" in x or "R3" in x
                         for x in lines7), lines7[-2:])
+        p7 = bk_printed(lines7)
+        chk("driver: ...and §2.3's two lines directly after its distribution line, as its last two lines; 0.0 over 24 "
+            "sessions and 48 label values against the space labels' cached values",
+            len(p7) == 1 and lines7[p7[0][0] - 1].startswith(f"discordance over 24 reads ({unit2}): ")
+            and p7[0][0] == len(lines7) - 2 and (p7[0][1], p7[0][2]) == zeros(24), p7[:1])
         chk("driver: ...a second run of backend-ext-2 without --resume is refused before the load",
             refused(lambda: run_backend_ext(env7, convention="space")) and made.count("second") == 1, "")
         rc7b = run_backend_ext(env7, convention="space", resume=True)
@@ -1427,6 +1656,7 @@ def _bext_selftest(chk, tmp: Path) -> None:
             rc7b == 0 and made.count("second") == 2 and len(cells.load_cell(
                 env7.root2, schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)[0]["records"]) == BEXT_N
             and sum(1 for x in lines7 if x.startswith("discordance over 24 reads")) == 2, "")
+        chk("driver: ...and §2.3's two lines again after it", len(bk_printed(lines7)) == 2, "")
         pf_env, lpf = env_for("pausefirst", make_backend=lambda a: testing.CausalDouble(fresh_bias=(9, 2.0)))
         rc_pf = run_backend_ext(pf_env)
         pf_end = cells.read_json(Path(pf_env.report))["end_state"] if Path(pf_env.report).is_file() else None
@@ -1435,7 +1665,8 @@ def _bext_selftest(chk, tmp: Path) -> None:
             rc_pf == 1 and pf_end == "PAUSE"
             and "BACKEND extension: PAUSE; no distribution and no comparison until it completes" in lpf
             and not any(x.startswith("discordance over") for x in lpf), pf_end)
-        env9, lines9 = env_for("pause2", make_backend=lambda a: testing.CausalDouble(fresh_bias=(9, 2.0)), **two)
+        env9, lines9 = env_for("pause2", bk_conv="space",
+                               make_backend=lambda a: testing.CausalDouble(fresh_bias=(9, 2.0)), **two)
         rc9 = run_backend_ext(env9, convention="space")
         rep9 = cells.read_json(Path(env9.report2)) if Path(env9.report2).is_file() else {}
         chk("driver: backend-ext-2 whose space labels' second tokens are biased on the fresh path ends PAUSE at the "
@@ -1443,6 +1674,8 @@ def _bext_selftest(chk, tmp: Path) -> None:
             rc9 == 1 and rep9.get("end_state") == "PAUSE"
             and "BACKEND extension (backend-ext-2): PAUSE; no distribution until it completes" in lines9
             and not any(x.startswith("discordance over") for x in lines9), rep9.get("end_state"))
+        chk("driver: ...a PAUSE prints no §2.3 lines (the first stage's above, backend-ext-2's here)",
+            not bk_printed(lpf) and not bk_printed(lines9), "")
         rc9b = run_backend_ext(env9, convention="space", resume=True, rulings={"p01": str(r_md)})
         rep9b = cells.read_json(Path(env9.report2))
         chk("driver: ...its resume under the ruling: COMPLETE, p01 adjudicated, one distribution line, exit 0; the "
@@ -1450,6 +1683,9 @@ def _bext_selftest(chk, tmp: Path) -> None:
             rc9b == 0 and rep9b["end_state"] == "COMPLETE" and rep9b["pauses"][0]["adjudicated"] is True
             and sum(1 for x in lines9 if x.startswith("discordance over 24 reads")) == 1
             and all(p.read_bytes() == b for p, b in before.items()), rep9b["end_state"])
+        p9 = bk_printed(lines9)
+        chk("driver: ...and the resume prints §2.3's two lines once, directly after its distribution line",
+            len(p9) == 1 and lines9[p9[0][0] - 1].startswith("discordance over 24 reads"), p9[:1])
         target = by_flow[fss[5].session_id]
 
         def nan_backend(_a):                        # one read's cached path non-finite: a nonfinite pause at it
@@ -1466,7 +1702,8 @@ def _bext_selftest(chk, tmp: Path) -> None:
             return be_n
         for tag, conv_t, last in (("nan2", "space", "a read has no finite discordance"),
                                   ("nan1", None, "a read has no finite discordance: no comparison")):
-            env_n, lines_n = env_for(tag, make_backend=nan_backend, **(two if conv_t else {}))
+            env_n, lines_n = env_for(tag, bk_conv=conv_t or "bare", make_backend=nan_backend,
+                                     **(two if conv_t else {}))
             rc_n = run_backend_ext(env_n, convention=conv_t)
             rp_n = Path(env_n.report2 if conv_t else env_n.report)
             p_n = cells.read_json(rp_n)["pauses"]
@@ -1478,11 +1715,18 @@ def _bext_selftest(chk, tmp: Path) -> None:
                 and cells.read_json(rp_n)["end_state"] == "COMPLETE" and lines_n[-1] == last
                 and any(x.startswith("discordance over 24 reads") and '"finite": 23' in x for x in lines_n),
                 lines_n[-1:])
-        env10, lines10 = env_for("smoke2", root=tmp / "none-root", report=tmp / "none-first.json")
+            pn = bk_printed(lines_n)
+            chk(f"driver: ...{'backend-ext-2' if conv_t else 'backend-ext'}: its §2.3 lines, printed once, compare "
+                f"the finite reads alone: 23 of 24 margins, 23 of 24 per label, 46 of 48 pooled",
+                len(pn) == 1 and [(d_["compared"], d_["of"]) for d_ in (pn[0][1], pn[0][2]["S"], pn[0][2]["U"],
+                                                                        pn[0][2]["pooled"])]
+                == [(23, 24), (23, 24), (23, 24), (46, 48)], pn[:1])
+        env10, lines10 = env_for("smoke2", bk_conv="space", root=tmp / "none-root", report=tmp / "none-first.json")
         rc10 = run_backend_ext(env10, root=str(tmp / "smoke2" / "sroot"), report=str(tmp / "smoke2" / "srep.json"),
                                smoke=2, convention="space")
         chk("driver: a backend-ext-2 smoke of 2, no first stage on disk: COMPLETE, 2 records, its SMOKE line (no "
-            "floor sessions) before its STAGE line, the distribution alone; the first stage is not checked",
+            "floor sessions) before its STAGE line, the distribution and §2.3's lines alone; the first stage is not "
+            "checked",
             rc10 == 0 and len(cells.load_cell(tmp / "smoke2" / "sroot", schema.SHADOW_ARM, schema.SHADOW_DIRECTION,
                                               schema.SHADOW_DOSE)[0]["records"]) == 2
             and lines10[0] == "SMOKE: 2 of the 24 reads, outside the repository; never of record"
@@ -1490,6 +1734,19 @@ def _bext_selftest(chk, tmp: Path) -> None:
             and any(x.startswith(f"discordance over 2 reads ({unit2}): ") for x in lines10)
             and not any(x.startswith(("in-band:", "label convention (", "the first stage's report:"))
                         for x in lines10), lines10[:2])
+        p10 = bk_printed(lines10)
+        chk("driver: ...its §2.3 lines over its 2 reads: 0.0 over 2 sessions and 4 label values",
+            len(p10) == 1 and (p10[0][1], p10[0][2]) == zeros(2), p10[:1])
+        chk("driver: ...and BK's d = 0 values asked for its 2 sessions alone, the plan's first two",
+            bk_seen.get("smoke2") == [[fss[0].session_id, fss[1].session_id]],
+            [len(x) for x in bk_seen.get("smoke2", [])])
+        gv_calls: list = []
+        envb, _lb = env_for("bkmiss", bk_reads=lambda s_: bk_d0_reads(s_, synth([])),
+                            gver=lambda s_, l_, p_: gv_calls.append(len(s_)) or {"status": "PASS",
+                                                                                 "sessions": len(s_)})
+        chk("driver: a stage whose BK d = 0 table lacks a session is refused before G-VER and the load (§2.3's table "
+            "is read at step 3)",
+            refused(lambda: run_backend_ext(envb)) and made.count("bkmiss") == 0 and gv_calls == [], gv_calls)
 
         def edited(tag, edit, resha=True) -> Path:              # the first stage's report, edited, under tmp
             r = cells.read_json(Path(env1.report))
@@ -1532,6 +1789,10 @@ def _bext_selftest(chk, tmp: Path) -> None:
         chk("driver: (a smoke of 2 ends COMPLETE, its report a valid one of 2 reads, the case below)",
             rc_sh == 0 and cells.read_json(tmp / "short" / "srep.json")["per_arm"][schema.SHADOW_ARM]["obtained"] == 2,
             "")
+        chk("driver: a first-stage smoke of 2 asks BK's d = 0 values for its 2 sessions alone, the plan's first two "
+            "(not the floor table's 24)",
+            bk_seen.get("short") == [[fss[0].session_id, fss[1].session_id]],
+            [len(x) for x in bk_seen.get("short", [])])
 
         def refusal(fn) -> str:
             try:

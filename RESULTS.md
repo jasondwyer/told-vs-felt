@@ -21,6 +21,133 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-18 — **n — the BACKEND extension's driver v2g, committed by path before backend-ext-2: the seat's two
+  aggregate lines against BK's recorded d = 0 values, printed after the distribution line, with nothing in the read
+  path (the seat's answers of 2026-11-18, fourth sitting, §2.3; the PI's "route as given"). The n package is
+  unchanged.**
+  - **Headline:**
+    - the driver `7aefd06b…5b67` (v2g), on `1272702`'s `scripts/n_sessions.py` (v2f, `e29839c8…1152`), which no
+      commit since has changed; git's numstat against it is +283 −22; the n package is unchanged at `f927608c…3c03`;
+    - its self-test: 397/397 on the laptop (the reviewed draft, before the review's fixes, 394/394), in the raw
+      [`2026-11-18_n-step4-driver-v2g_selftest.txt`](results/raw/2026-11-18_n-step4-driver-v2g_selftest.txt). The box
+      runs it at backend-ext-2's start;
+    - one blind review, of the reviewed draft `b8ebc595…66b5`: 0 BUG, 2 RISK, 3 NIT, 6 surviving mutants and 5
+      observations. Every finding is applied in v2g's final bytes (+52 −30 on the reviewed draft), and every surviving
+      mutant has a test written to kill it, except M5, whose line the fix removed. Raw:
+      [`2026-11-18_n-step4-driver-v2g_review.md`](results/raw/2026-11-18_n-step4-driver-v2g_review.md);
+    - nothing of v2g ran on a checkpoint's weights before this commit. Its two self-test runs were each in a battery
+      window the coordinating session granted for their bytes, so no other battery ran in them; they ran under Q-F3's
+      standing rules for the laptop (model-free, `nice -n 19`).
+  - **What it adds** (one code path, both stages; nothing in the read path):
+    1. At step 3, before G-VER and the load, BK's recorded d = 0 values for the stage's sessions (`bk_d0_reads`,
+       through a new `BextEnv` seam, `bk_reads`). For a session of any cell, floor or not, the value is its one d = 0
+       read in `reduced.json` for the session's own cell and run: a "none" read with the session's cues, whose
+       recorded `margin`, `logprob_S` and `logprob_U` it takes. Two d = 0 reads for one cell and run, a session
+       without its read, or a value absent, not a JSON number (a string or a boolean) or not finite as recorded
+       refuses the stage; the message names the session (for two reads, the cell and run) and quotes no value.
+    2. On COMPLETE, directly after the distribution line, §2.3's two lines (`bk_compare`, `bk_lines`):
+       - (a) "BK's d = 0 margins": |the read's cached margin − BK's recorded d = 0 margin for its session|, median and
+         max, with `compared` (the sessions compared) and `of` (the reads);
+       - (b) "BK's d = 0 label values": |the read's cached log p − BK's recorded value| per label, S and U, each with
+         median, max, `compared` and `of`; and the two labels pooled beside, over twice the reads.
+
+       Aggregates only: no margin, no value and nothing per session leaves the function. A value not finite on this
+       box is not compared, and the count says so. The medians are `np.median`'s.
+    3. The docstrings: the module's steps 3 and 7, its backend-ext-2 paragraph and its readings' parenthetical (the
+       seat accepted R7 and R8 at its fourth sitting, §5), with one sentence added to R8: the pooled figure, printed
+       "beside §2.3 (b)'s per-label figures", is "a printed figure that binds nothing". That sentence is pending the
+       seat. `run_backend_ext`'s and the self-test's docstrings name the new step and checks.
+  - **(b) per label.** The first draft (`0a39852b…c572`) printed (b) pooled over S and U, declared as a reading, R9.
+    The coordinating session's words: "For (b), I'd follow the seat's letter, "the same per label": print S and U
+    separately, each with median, max and count. If you want the pooled figure as well, print it beside them, declared
+    under R8's kind. That way nothing waits on an R9 for the seat to strike." v2g takes the split, with the pooled
+    figure beside. The first draft never ran (the window granted for it lapsed unused), and R9 is gone.
+  - **§1.3's ids** (the answers' §1.3; the coordinating session agreed that no new render is needed). The committed
+    render already carries the labels under "space" for every session:
+    - `data/n/ids/labels.json` (HEAD's) keeps "space", with 12 labels of 3 tokens each;
+    - BK's 160 session skeletons use 12 distinct cues, and 0 of them lack a "space" entry;
+    - the prompt ids do not depend on the convention;
+    - G-VER's `labels_ok` was 4 at the resume (its committed output,
+      [`2026-11-18_n-step4_bext-resume4_out.txt`](results/raw/2026-11-18_n-step4_bext-resume4_out.txt)).
+  - **The self-test's new checks** (19 at run time, 18 in the source: the non-finite case's check runs once per
+    stage):
+    - on the committed `reduced.json`: a row for each of backend-ext's 24 sessions, floor sessions and others among
+      them, each value finite and the recorded margin equal to S − U to within 1e-9; and a row for each of the set's
+      160 sessions;
+    - the session's own d = 0 read only (not another dose's, not another cell's at the same run), in any cell; and
+      13 refusals (two reads for one cell and run, a session missing, either cue, a "valenced" and a "random" kind, a
+      margin absent, a value null, a non-numeric and a numeric string, a boolean, NaN and -Infinity), each message
+      quoting no value;
+    - a known answer in which margin, S, U and pooled differ (medians 12.5/1024, 25/1024, 37.5/1024 and 30/1024;
+      maxima 0.5, 1.0, 1.5 and 1.5), with differences of either sign and the fresh path not read; values not finite
+      not compared; nothing compared giving nulls; a read outside the table refused;
+    - the two lines' form, and the production environment's two BK seams;
+    - over the numpy double, with BK's stand-in the cached path's own values: both lines at 0.0, directly after the
+      distribution line, in the first stage (before the in-band count) and in backend-ext-2 (its last two lines);
+      backend-ext-2's printed again on its resume after COMPLETE, and once, directly after the distribution line, on
+      its resume after a PAUSE; no line on a PAUSE; on each stage's resume after a non-finite pause, the finite reads
+      alone compared (23 of 24 margins, 23 of 24 per label, 46 of 48 pooled); a smoke's lines over its 2 reads; BK's
+      values asked for once per run, for the plan's sessions in launch order (the full run's 24; each smoke's 2, in
+      both stages); and a BK table lacking a session, refused before G-VER and the load.
+  - **The blind review**: one pass by a subagent over the delta from v2f to the reviewed draft `b8ebc595…66b5`. It ran
+    no interpreter and wrote nothing, and its brief quoted the list of record v2's items 1–5 and the standing lines.
+    - **F1** (RISK) and **M1**: nothing checked which sessions the BK seam was given. In the toy flow every session is
+      a floor session, so `env.bk_reads(floor_all)` passed every check. On the box, whose 24 include sessions that are
+      not floor sessions, it would have failed at COMPLETE, after the report was written. Applied: the seam records
+      its argument, and three checks pin it (the full run's 24 in launch order, and each smoke's 2); the smokes kill
+      M1.
+    - **F2** (RISK, low) and **M2–M5**: gaps in the refusals. Applied, with the type check the reviewer offered: a
+      value must be a JSON number and finite, so a string or a boolean is refused. The refusal check goes from 7 cases
+      to 13.
+    - **M6**: the BK read could have moved after G-VER unseen. Killed: the check of a table lacking a session requires
+      that G-VER was not called.
+    - **F3–F5** (NIT): wording (a session "of any cell, floor or not", whose read is the one for "the session's own
+      cell and run"; the seat's acceptance of R7 and R8 in the readings' parenthetical) and a reflow. Applied.
+    - **O1–O5** ask for nothing. O1's counts of BK's file agree with this session's own: 240 reads at point 0, all
+      "none", one per cell and run, none of their values not finite.
+  - **Departures:**
+    - 2026-11-18, Code: a name-only `ls` of BK's skeletons folder by a glob (`ls "$SK"/*`), which expanded into the
+      skeleton folder named for the model, so a guard marker reached `ls`'s argv. It was non-Python, read-only and
+      names only. It was disclosed to the coordinating session, which logged it for Q-F3's run list. The forward form
+      is `cd` plus a glob (this entry's counts used it), or a scratch script in a battery window;
+    - 2026-11-18, Code: two `git diff --name-only` commands, `1272702 HEAD -- valence_core` and
+      `b523f6a HEAD -- valence_core/n`, named the package's folder without item 3's exclusions or the `data/mf3` one,
+      where the standing form names files (or takes `-- .` with all three). They were non-Python and read-only, and
+      printed nothing. The values-check's observation 6 found them; disclosed here for the seat to class;
+    - the reviewer's, as its report states them, for the seat to class: its reading of the diff's output from the
+      harness's tool-results folder; one `git show -s --format=%B` of `1272702`'s message body; the `valence_core`
+      checks with `-- valence_core` and the three exclusions in place of `-- .`; greps on single named files, and
+      `wc -l` on six `valence_core/n` files;
+    - the values-checker's, as its report states them, for the seat to class: `shasum` for every digest (a Perl script
+      on macOS, which item 1 permits); greps on single named repository files (RESULTS.md, five `valence_core/n` files
+      and the list-of-record raw); one `git grep -l -F` with item 3's exclusions and the `data/mf3` one; reads beyond
+      its named sources (three `valence_core/n` files by grep, the first record's keys of `data/n/ids/sessions.jsonl`,
+      the list-of-record raw's lines 18–22 and RESULTS.md's first 130 lines); in Code's scratch, line ranges of the two
+      briefs piped to `shasum`, `wc -l` on two named files and `tail -c 1 | od` on one; `git log` formats with `%ad`;
+      a `git diff --no-index -U1` piped to `head`; the skeletons by `cd` plus a glob, `echo` and `jq` on their 14
+      names; and a name-only `ls` and `git ls-files` on two named raw paths not yet created.
+  - **Values-check:** one blind pass over this entry, the close line on `6e3474d`'s entry, the self-test raw and the
+    review raw's head.
+    - 116 items: 94 CONFIRMED, 7 IMPRECISE, 0 FAIL, 15 NOT CHECKABLE; and 12 observations.
+    - Two texts moved under the check. This entry was edited after the brief named its bytes and before the checker
+      first hashed it (F3's quotation made exact), so every item on it is on the edited bytes. The review raw's head
+      was edited during the check (its local-path sentence), and item 104 confirms the new sentence.
+    - Every IMPRECISE item is applied: items 22, 41, 48, 76, 77 and 110, and item 103, on the briefed bytes, is the
+      sentence the edit during the check replaced. Observations 1–4 and 6–12 are applied; observation 6 is the
+      second departure above. Observation 5 is not: the driver's own docstring for `bk_d0_reads` carries item 22's
+      wording, and changing it would move the self-tested bytes. It waits for the next driver change.
+    - The edits were checked by tool.
+    - Raw: [`2026-11-18_n-step4-driver-v2g_valuescheck.md`](results/raw/2026-11-18_n-step4-driver-v2g_valuescheck.md).
+  - **Committed by path:**
+    - `scripts/n_sessions.py` and its self-test raw;
+    - the review raw;
+    - the values-check raw;
+    - this entry, and n-build's close line on `6e3474d`'s entry.
+
+    The commit-time count of the home-folder prefix over the staged diff (the third sitting's answers, §5.2) is 0. Not
+    pushed.
+    **Next:** backend-ext-2's launch files, through the coordinating session.
+
 - 2026-11-18 — **Dated note (coordinating session), for the seat: push #9 and its one gitleaks halt, pushed on the
   PI's "Push, with a note". Not a STOP.**
   - **The push.** `ad856f0..1272702`, 6 commits (`6df2131`, `bfc869f`, `3b2b855`, `7a54eb9`, `f3e7190` and
@@ -364,6 +491,46 @@ applied to CLAUDE.md.
 
         None touched `data/`.
       - Raw: [`2026-11-18_n-step4-fourth-sitting-pod-close_valuescheck.md`](results/raw/2026-11-18_n-step4-fourth-sitting-pod-close_valuescheck.md).
+  - **Close (PI date 2026-11-18, fourth sitting), n-build's: the seat's answers on this entry's STOP.** This session
+    read the seat's raw,
+    [`2026-11-18_n-step4-resume_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md)
+    (sha256 `c265797f…61a5`), and the conditional ruling raw,
+    [`2026-11-18_n-step4-bext2-p01_conditional-ruling.md`](results/raw/2026-11-18_n-step4-bext2-p01_conditional-ruling.md)
+    (sha256 `ba9f9632…cc32`), in full. The coordinating session committed both by path at `c7d0009`. The PI's word on
+    the paste block of 2026-11-18 (fourth sitting) was "route as given", as the coordinating session relayed it; the
+    block is committed as
+    [`2026-11-18_fourth-sitting_pi-routing.md`](results/raw/2026-11-18_fourth-sitting_pi-routing.md) (at `8038c63`).
+    This is n-build's line of the routing's item 4, under "N. n-build (and the pod session on the box)": "close lines
+    on 6e3474d's entry citing the answers raw".
+    - **Q1:** "The convention of record is "space":" the label rendered with one leading space after the generation
+      prompt, its own tokens summed, nothing appended (§1.2). LOCK-n v0.1 states it with the four counts and medians
+      beside it, and space+eot named as the near-tie it was.
+    - **§1.3's ids:** the committed render already carries the labels under "space" for every session, so no further
+      rendering is needed; driver v2g's entry gives the counts.
+    - **Q2:** `backend-ext-2 --convention space` runs from v2g's commit, which adds §2.3's two aggregate lines and
+      nothing in the read path (§2.1, §2.3). If its end-of-run pause fires, the conditional ruling applies only if its
+      four conditions hold; Code checks each mechanically and prints it with the resume as "holds" or "fails" (§2.2;
+      the ruling's header and item 2). If no pause fires, the file is not used; its item 5 has it committed with the
+      stage's entry as the record of what would have applied, and since §2.2 had it committed before the run (at
+      `c7d0009`), the stage's entry cites it.
+    - **Q3:** "The tolerance of record is C", and "The comparison is not run again" (§3). The lock states the
+      comparison as it ran, at R3's bound plus half a unit, with the medians.
+    - **Alpha** is 0.01, one-sided, exact binomial, at each evaluation: every 160 reads of a stage and at its end
+      (§4). The lock states the number of evaluations E and 1 − 0.99^E.
+    - **The driver and the schema's follow-up** (§5). Choice (b), R7 and R8 are accepted. The follow-up's names are
+      accepted, with `fidelity_rule.alpha` (0.01) added; the kind goes directly after `non-finite`; the commit lands
+      after backend-ext-2 is COMPLETE. The declarations at `1272702` and the first attempt's copy-in defect are
+      accepted as declared, with the standing line "every pre-commit check asserts, in a call of its own".
+    - **Departures** (§7): this session's at `1272702` is inert, with no strike.
+    - **This session's part,** in order:
+      - driver v2g, its self-test, one blind review on the delta, a values-check, and its commit;
+      - backend-ext-2's launch files, through the coordinating session;
+      - the schema's follow-up, settled with n-analyzer, once backend-ext-2 is COMPLETE and its report and lines are
+        on the laptop;
+      - the extension's entry;
+      - LOCK-n v0.1's draft to the seat, with the figures of record (§2.4), the comparison as it ran (§3) and alpha
+        (§4).
+    - **Values-check and departures:** with driver v2g's entry.
 
 - 2026-11-18 — **n — the BACKEND extension's driver v2f, committed by path before the resume: §1.4's distribution
   printed whole, and `backend-ext-2` wired to ADDENDUM-n2 §4.1. This is the coordinating session's choice (b),
