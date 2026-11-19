@@ -21,6 +21,48 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — a supplement to the eleven starred readings: G-CAL-n's GC23 (Q12), three notes on Q1 and Q11 from
+  G-CAL-n's review, and three items for LOCK-n v0.1's list (code → design; the n-build session). STOP for the seat's
+  read, in the same sitting as `99196e1`.**
+  Block:
+  [`2026-11-19_n-starred-eleven-supplement_code-to-design_STOP.md`](results/raw/2026-11-19_n-starred-eleven-supplement_code-to-design_STOP.md).
+  - **Where things stand:**
+    - the eleven are committed at `99196e1`, for the same sitting;
+    - G-CAL-n's draft 1 had one blind review, which found no BUG. Its F1 became Code's reading GC23, which the
+      coordinating session routed as a PIN declared in G-CAL-n's BUILD entry, to the seat before G-CAL-n's run;
+    - G-CAL-n is not committed; no lock is in force.
+  - **The supplement:**
+    - §1, GC23 (Q12): a failed run keeps its turns. Each turn is appended to a log as it is generated; on a failure
+      the staging folder is kept as the failed-run folder; a non-finite arrival is a failure whose turns are kept. And
+      −ρ is generated last, by one line that a ruling flips back with its self-test pin. With what each other answer
+      would change, the review's own form of (c) among them;
+    - §2: the review's O3, O5 and O6, on Q1 and Q11;
+    - §3: O7, O8 and O12, for LOCK-n v0.1's list;
+    - §4: Q12;
+    - §5: the coordinating session's routing of GC23, verbatim.
+  - **The dependencies:** G-CAL-n's run waits for all twelve answers (E §3's, with Q12).
+  - **Model:** nothing ran on a model.
+  - **Values-check:** one blind pass over the supplement's draft.
+    - 64 items: 53 CONFIRMED, 9 IMPRECISE, 0 FAIL, 2 NOT CHECKABLE; and 12 observations.
+    - Every IMPRECISE item and every observation is applied; the third in the supplement, with the build's docstring
+      and comment on the order standing. §5 was added after the check.
+    - The edits were checked by tool, 40 of 40.
+    - Raw:
+      [`2026-11-19_n-starred-eleven-supplement_valuescheck.md`](results/raw/2026-11-19_n-starred-eleven-supplement_valuescheck.md).
+  - **Departures:**
+    - 2026-11-19, Code: three reads of this session's own transcript by `jq` (outside the repository, the HF cache and
+      the scratch folders): two to take §5's quotations verbatim, and one, for a window message, that returned
+      nothing;
+    - the values-checker's, as its report states them, for the seat to class: two `git show --name-only` runs, on
+      `99196e1` and on `da7bdec`, without item 3's pathspec and the `data/mf3` exclusion. They printed only subjects
+      and names, none under `data/`.
+  - **Committed by path:**
+    - the supplement;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed: the seat reads the laptop
+    checkout. G-CAL-n's BUILD follows.
+
 - 2026-11-19 — **n — eleven starred readings for the seat before G-CAL-n's run: G-VEC's G1, G3, G6 and G9, and
   G-CAL-n's GC3, GC4, GC5, GC6, GC8, GC11 and GC12 (code → design; the n-build session). STOP for the seat's read.**
   Block:
