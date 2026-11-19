@@ -21,6 +21,153 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-VEC's BUILD, committed by path (n v0.2 §8 step 7; the G-VEC paragraph of n §3; ADDENDUM-n1
+  §1.1 and §6.1–§6.2): the stage's arithmetic in a new module, `valence_core/n/gvec.py`, and its command, `gvec`, in
+  the driver, on Code's readings G1–G14 as the coordinating session routed them. Nothing has run on the box. The run
+  waits for the PI's word on whether the starred readings (G1, G3, G6, G9) go to the seat first, and for the box.**
+  - **Headline:**
+    - six paths beside the raws and the entry, each as `003ae7d` left it (git's numstat against it):
+      - `valence_core/n/gvec.py` `a620349f…ec71`, new, 694 lines;
+      - `scripts/n_sessions.py` `fecde87a…3958` (+572 −4);
+      - `valence_core/n/directions.py` `f9d0114c…2db4` (+20 −2);
+      - `valence_core/n/testing.py` `f1840be7…6aeb` (+14 −0);
+      - `valence_core/n/guard.py` `3bf0f0d5…1f50` (+2 −2);
+      - `.gitignore` `a0124153…90ee` (+13): a four-line comment, the folder admitted, its contents ignored, six
+        admits, and a blank line;
+    - the n package's digest moves from `f09898ee…b8f9` to `882c9217…5ca7`, both by shell in `package_sha256_of`'s
+      form (the same computation over HEAD's files reproduces `f09898ee…b8f9`); neither has yet been printed by the
+      package's own `hashes`, which runs when the launch files are made, in a battery window of its own, and against
+      which the box compares. The import closure gains `valence_core/extract.py` (`2405b1a6…07fe`), which `gvec`
+      imports at module level and which imports, beyond the standard library, only numpy and `adapters.base`;
+    - the self-test: 462/462 on the laptop (draft 3), after draft 1's 451/451 and draft 2's 461/462, in the raw
+      [`2026-11-19_n-gvec-build_selftest.txt`](results/raw/2026-11-19_n-gvec-build_selftest.txt). Draft 2's one
+      failing check was the driver's G-VEC run of record: the stage passed, but the check's list of expected files
+      still held draft 1's four, without the two alternatives files draft 2 writes. Draft 3 fixes that list alone (+7
+      −6 in the driver's self-test, outside the package, whose digest is unchanged). On the box, by arithmetic only:
+      473, the 462 plus the box's 11 checks more (its 13 HF checks in place of the laptop's two skip lines), restated
+      at the launch files;
+    - nothing of the BUILD ran on a checkpoint's weights. Its three self-test runs were each in a battery window the
+      coordinating session granted for their bytes, under Q-F3's standing rules for the laptop (model-free,
+      `nice -n 19`);
+    - one blind review of draft 1: 0 BUG, 5 RISK, 5 NIT, 22 surviving mutants, no self-test risk and 10
+      observations. Every finding is applied, in the final bytes or, for F1's admit lines, in the BUILD commit's
+      `.gitignore`, and each mutant is killed by a check;
+    - the specification as the texts state it, Code's G1–G14 message and the coordinating session's routing of it,
+      verbatim, in the raw [`2026-11-19_n-gvec-build_spec.md`](results/raw/2026-11-19_n-gvec-build_spec.md).
+  - **What the stage does** (given in full in the module's and the driver's docstrings):
+    - before the load, model-free:
+      - refusals in the BACKEND extension's form: an existing out folder or staging folder (G-VEC never resumes),
+        the pod `emw1e4embiwe9b`, the cuBLAS setting, the stream known answer, the weights, and the driver as HEAD's
+        committed bytes for a run of record;
+      - the ids of record ((iv); the manifest `fdf73d85…ef38`), every record's ids_sha re-derived, the longest input
+        held to the window of 4,096;
+      - each passage record held to the corpus of record (`ef6b00dc…3cc3`), and the corpus's composition (BK's eight
+        states, 56 each, 96 neutral);
+      - A3's frozen inputs and rule-18 hygiene, and the (iv) render's record of A3: its input digests, its code's
+        sha256s, the contexts' digest, and each context record's place and texts;
+      - A3's axis order against the named rows', and the R6 bridge;
+    - the load, its provenance recorded whole; after it, refused before anything is written, a provenance other than
+      the one checked before the load, and a checkpoint of another shape than (64, 5120);
+    - the 544 passages, one forward each, captured at indices 31 and 32. R at both, and the site by ADDENDUM-n1 §6.1:
+      within 2% of 25.49; the nearer in R if both; an exact tie to 32. Neither is a STOP: the record alone is written
+      (exit 2), for the seat;
+    - at both indices: v by BK's recipe, and v under an uncentred U beside it;
+    - A3's recipe on the 1,344 contexts from their committed ids, with no tokenization on the box: N2's three
+      directions, their fit-only family beside, R_ℓ and the guard profile, at both indices;
+    - the cosines: the analyzer's six pairs, and all 378 among the 28 directions, at the site;
+    - the outputs into data/n/gvec/, built in `.gvec.staging` beside it and renamed into place: `gvec.json`;
+      `directions_L31.npy` and `directions_L32.npy` (the named rows); `directions_alt_L31.npy` and
+      `directions_alt_L32.npy` (the alternatives); and `gvec_cosines.json` (the analyzer's `--gvec` form);
+    - each stored row is a fixed point of the Injection's normalization, and every direction's sha16 is the
+      Injection's: what the campaign's `expect_sha` checks;
+    - `--smoke N` (1..96): the first N neutral passages and the first N contexts in A3's order, R and R_ℓ only, into a
+      new folder outside the repository, never of record.
+  - **Code's readings, G1–G14** (PINs; the coordinating session recommends carrying the starred four at the top of
+    LOCK-n v0.1's list, pending the PI's word). The coordinating session: "Start building G-VEC in scratch now, on
+    G1–G14 as you've written them." Its two requests are built: N2's
+    directions and R_ℓ at both indices; and N2's fit-only family, descriptive, with A3's all-context form the one of
+    record. The readings in brief (the spec raw's §1 in full; `gvec.py`'s docstring as built):
+    - G1* the capture convention (R-iv1, unruled). The R check tests its R clauses, not the PCA's centring, so v
+      under an uncentred U is stored beside;
+    - G2 both indices captured; the site rule, "the nearer" read as nearer in R, an exact tie to 32;
+    - G3* N2 and R_ℓ at the site index, both indices recorded;
+    - G4 A3 on the committed ids;
+    - G5 frozen inputs and hygiene before the load; the guard profile, descriptive; no R_ℓ cross-check exists;
+    - G6* extraction over all 1,344 contexts; A3's split carried and asserted; the fit-only family stored beside;
+    - G7 the outputs as above; G8 the cosines as above;
+    - G9* |R/25.49 − 1| ≤ 0.02, on 25.49 exactly; full float64; BK's figures beside;
+    - G10 Route A not wired; "direction of record: Route B";
+    - G11 the `flow_engagement` map in `directions.py`, the corpus unedited;
+    - G12 the BACKEND extension's refusals and lines, as above; G13 the (iv) manifest of record;
+    - G14 BK's pole_l2 beside ‖v‖ and ‖h̄₊ − h̄₋‖.
+
+    Departures from G1–G14's words as routed (the review's F10 and O3): per-index `.npy` files in place of one
+    `.npz`, two of them alternatives, with A3's freeze_sha in `gvec.json`; G2's tie rule; the guard profile at both
+    indices; the fit-only family stored as rows; G1's uncentred variant; the `of_record` block; G12's smoke (`--out`,
+    N in 1..96, where backend-ext's takes `--root` and `--report`, N in 1..24); and G14's ‖h̄₊ − h̄₋‖ beside ‖v‖.
+    The last two are declared here, in the driver's docstring and in G14's own line. Whether the starred four go to
+    the seat before the run is the PI's call; the coordinating session has asked, recommending the run on them as
+    PINs.
+  - **For the run** (the review's O5, O6, O7 and O9, as Code listed them, on the coordinating session's word):
+    - the box's count, 473 by arithmetic, is restated at the launch files, beside the package's own `hashes`;
+    - a STOP writes `data/n/gvec/` with the record alone. G-VEC never resumes, so a re-run needs that folder moved
+      aside first. A hard stop can leave `data/n/.gvec.staging`, which the next run refuses before the load;
+    - the box's smoke is the HF forward seam's first run, and it precedes the run of record;
+    - G3 matters only if the site is 31. Both indices' figures and rows are recorded, so a ruling needs no re-run.
+  - **Review:** one blind pass, by a subagent, over draft 1.
+    - 0 BUG, 5 RISK, 5 NIT, 22 surviving one-line mutants, no self-test risk, and 10 observations.
+    - Applied: F1 (the outputs admitted in `.gitignore`), F2 (the Injection's sha16), F3 (killing checks for M1–M22),
+      F4 (the fit-only rows stored), F5 (the model-free checks before the load), F6 (token lines by BK's names), F7
+      (the split at the record's top level), F8 (the adapter's provenance), F9 (wording) and F10 (the departures
+      listed); O1 (the uncentred variant), O8 (the `of_record` block) and O10 (the smoke's wording).
+    - Declared: O2 (in G2; the tie rule also in the departures) and O3 (the departures). In this entry: O5, O6, O7 and
+      O9 (For the run). No action: O4.
+    - Raw: [`2026-11-19_n-gvec-build_review.md`](results/raw/2026-11-19_n-gvec-build_review.md), with every
+      disposition and the report verbatim.
+  - **Departures:**
+    - 2026-11-19, Code: greps of this session's own transcript (outside the repository, the HF cache and the scratch
+      folders), to recover the G1–G14 message and the coordinating session's routing of it verbatim for the spec raw;
+    - 2026-11-19, Code: five unpruned `find`s in the self-test overlay, a copy that holds no ckpt or reports folder by
+      construction: one counting such folders (0); one listing its files to compare each with HEAD's blob; two
+      counting its files (160), before and after run 3; and one counting `__pycache__` folders (0), after run 3;
+    - the survey's, as its report states them, for the seat to class: eight `git ls-files` with a narrower positive
+      pathspec over `results/raw/`, five of them without item 3's exclusions or with one only, printing raw names, a
+      count, or nothing; one `git log --format` naming four paths without item 3's pathspec; two `git grep`s with
+      narrower pathspecs, each with all three exclusions;
+    - the reviewer's, as its report states them, for the seat to class: a driver diff the harness saved into its own
+      store and the reviewer read back; `jq` aggregates over the (iv) files and the corpus, and two values from BK's
+      `analysis.json`; one `git check-ignore -v --no-index` naming three non-existent paths under `data/n/` without
+      item 3's pathspec; and print tools beyond those its brief named;
+    - the values-checker's, as its report states them, for the seat to class: one `git log -3 --format` with no path
+      (ids and subjects only); two `git ls-files` with a narrower pathspec (one over `valence_core/n` without the
+      exclusions, printing 14 names; one for `.gitignore` with them); two `git check-ignore --no-index -v -n` runs
+      beyond the brief's letter, naming non-existent paths under `data/n/gvec/` and `data/n/.gvec.staging/` (one
+      against HEAD's patterns, one reading the new `.gitignore` as the patterns through `core.excludesFile`, with an
+      empty work tree outside the repository and the scratch folders, which also named one path outside both folders
+      and read `.git/info/exclude`); `jq` beyond the BK member (counts over the corpus, the manifest's `iv.a3` keys and
+      code digests, the (iv) files' first records without their ids); and, not barred by its reading, a shell
+      recomputation of the package digest, reads of HEAD's driver, of `RESULTS.md`'s first 23 lines and of one answers
+      raw by grep, and `od`, `tail -c`, `wc -l`, `sed -n`, `cut`, `cmp` and `head -c` on named files;
+  - **Values-check:** one blind pass over this entry's draft, the spec raw, the self-test raw (built before run 2) and
+    the review raw's head.
+    - 114 items: 89 CONFIRMED, 15 IMPRECISE, 0 FAIL, 10 NOT CHECKABLE; and 11 observations.
+    - Every IMPRECISE item is applied. Observations 1 to 4, 6, 8, 9 and 11 are applied; 5 (the second fragile point)
+      is stated in the review raw; 7 (the count) is settled by run 3, 462/462, after run 2's failure; and 10 is
+      followed: the two added departures sit in this entry, not in `gvec.py`, whose bytes would move the package
+      digest.
+    - The texts changed after the check, by those dispositions, by run 2's failure and draft 3's fix, by run 3's
+      figures filled in, and by run 3's three overlay `find`s added to the departures; the edits were checked by tool.
+    - Raw: [`2026-11-19_n-gvec-build_valuescheck.md`](results/raw/2026-11-19_n-gvec-build_valuescheck.md).
+  - **Committed by path:**
+    - the five code paths and `.gitignore`;
+    - four raws: the spec, the self-test, the review and the values-check;
+    - this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff (the third sitting's answers, §5.2) is 0. Not
+    pushed.
+    **Next:** the PI's word on the starred four (a STOP block to the seat if the PI sends them there; else the run on
+    them as PINs); the launch files and the `hashes` window; the box's smoke, then the run of record; G-CAL-n's wiring
+    meanwhile; LOCK-n v0.1 kept in scratch as its figures land.
 - 2026-11-19 — **n — the schema follow-up for the `fidelity-ceiling` kind, committed by path after backend-ext-2's
   entry (ADDENDUM-n2 v0.1 §2.1, §2.2 and §6.3 (3); the seat's answers of 2026-11-18, fourth sitting, §4 and §5; the
   PI's routing, item 4 of "N. n-build (and the pod session on the box)", on "route as given"): the kind directly after

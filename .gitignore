@@ -300,6 +300,19 @@ __pycache__/
 !/data/n/ckpt/backend-ext-2/N1-V__none__0.json
 !/data/n/reports/backend-ext-2.json
 
+# PROPOSAL-n's G-VEC outputs (n v0.2 §8 step 7 and §3 G-VEC; valence_core/n/gvec.py; scripts/n_sessions.py gvec): the
+# record, the analyzer's cosines file and the four directions files, written on the box by the run of record and copied
+# back by hash. Record, not cache (ledger 27): the directions of record and their figures. Its staging folder
+# (data/n/.gvec.staging) stays ignored.
+!/data/n/gvec/
+/data/n/gvec/*
+!/data/n/gvec/gvec.json
+!/data/n/gvec/gvec_cosines.json
+!/data/n/gvec/directions_L31.npy
+!/data/n/gvec/directions_L32.npy
+!/data/n/gvec/directions_alt_L31.npy
+!/data/n/gvec/directions_alt_L32.npy
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

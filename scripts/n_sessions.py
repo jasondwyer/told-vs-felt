@@ -128,8 +128,27 @@ At the n BUILD it wires:
                counters with no version marker (Code's reading, R10, for the seat), so the two stages' committed
                reports and cells no longer pass this package's checks: a resume or a re-print of either is refused
                here ("not a valid report"), and re-reading them needs the package as it stood at 9f64305.
+  gvec         G-VEC (n v0.2 §8 step 7; the G-VEC paragraph of n §3; ``valence_core.n.gvec``, its module docstring
+               for what it computes and Code's readings G1-G14), on the box, one invocation of about 1,900 unsteered
+               forwards. Refusals first, as the BACKEND extension's: the out folder must not exist (G-VEC never
+               resumes), nor its staging folder (``.gvec.staging`` beside it, which only a hard stop leaves); the pod,
+               the cuBLAS setting, the stream known answer; the weights; the driver, HEAD's committed bytes for a run
+               of record. Then, before the load: the ids of record ((iv); G13), every record's ids_sha re-derived and
+               the longest input held to the window; each passage record held to the corpus of record
+               (``data/n/passages.jsonl``, its sha256 pinned) and the corpus's composition (BK's eight states, 56
+               each, 96 neutral); A3's frozen inputs and rule-18 hygiene (``scripts/box_e0_corpus.py``), the (iv)
+               render's record of A3 (the input digests, the code's sha256s, the contexts' digest, each context
+               record's place and texts), and A3's axis order against the named rows'; the R6 bridge. The load and its
+               provenance, recorded whole; ``gvec.compute`` (R at 31 and 32 and the site, or the STOP; v at both, and
+               v under an uncentred U; A3's family, its fit-only family and R_ℓ at both; the cosines); the outputs into
+               data/n/gvec/ -- built in the staging folder and renamed into place -- each file's sha256 printed.
+               ``--smoke N`` (1..96): the first N neutral passages and the first N contexts in A3's order into
+               ``--out``, a new folder outside the repository, R and R_ℓ at both indices only, never of record; on
+               the box it is the first run of the HF forward seam, before the run of record. Exit 0 on PASS (or a
+               smoke), 2 on the R check's STOP (the record alone, for the seat): a later run needs data/n/gvec/ moved
+               aside first.
 
-Stages G-VEC, G-CAL-n, G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
+Stages G-CAL-n, G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
 """
 from __future__ import annotations
 
@@ -200,7 +219,7 @@ def cmd_selftest() -> int:
         if str(tmp.resolve()).startswith(str(REPO.resolve())):
             raise SystemExit("the self-test's temporary directory is inside the repository")
         for name in ("sessions", "ids", "keys", "cells", "directions", "primitive", "runner", "verify", "probe",
-                     "guard"):
+                     "gvec", "guard"):
             fn = getattr(mods[name], "_selftest", None)
             if fn is None:
                 chk(f"{name}: has a self-test", False, "missing")
@@ -291,6 +310,11 @@ def cmd_selftest() -> int:
         except BaseException as e:                      # noqa: BLE001
             chk("driver: backend-ext's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
         chk("driver: backend-ext's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
+        try:
+            _gvec_selftest(chk, tmp / "gvec-cmd")
+        except BaseException as e:                      # noqa: BLE001
+            chk("driver: G-VEC's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
+        chk("driver: G-VEC's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
     try:
         hftiny.run(chk)
     except BaseException as e:                          # noqa: BLE001
@@ -1976,11 +2000,545 @@ def _bext_selftest(chk, tmp: Path) -> None:
                 os.environ[k] = v
 
 
+# --- G-VEC (n v0.2 §8 step 7; ``valence_core.n.gvec``) --------------------------------------------------------------
+GVEC_OUT = REPO / "data" / "n" / "gvec"
+GVEC_SMOKE_RECORD = "gvec_smoke.json"
+
+
+@dataclass
+class GvecEnv:
+    """G-VEC's seams: ``production_gvec_env`` is the box's; the self-test puts the numpy double behind them."""
+    weights: Callable                   # () -> the weights of record (``weights_of_record``)
+    load_ids: Callable                  # () -> ``ids.load()``
+    e0: Callable                        # () -> scripts/box_e0_corpus.py, loaded by its path
+    env_provenance: Callable            # (path) -> the provenance the adapter will report (before the load)
+    make_adapter: Callable              # (path) -> the adapter (the weights load)
+    adapter_shape: Callable             # (adapter) -> (n_layers, d_model)
+    forward: Callable                   # (adapter) -> forward(ids, indices) -> {index: [S, D] residuals}
+    pod: Callable                       # () -> the pod id or None
+    driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path | None)
+    indices: tuple                      # the candidate indices (``gvec.CANDIDATE_INDICES``)
+    reference: float                    # R's reference (``gvec.R_REFERENCE``)
+    passages: Path                      # the corpus of record (``ids.PASSAGES_FILE``)
+    passages_sha256: str                # its sha256 (``ids.PASSAGES_SHA256``)
+    out: Path = GVEC_OUT
+    shape: tuple = (N_LAYERS, D_MODEL)
+    printer: Callable = print
+    clock: Callable = time.perf_counter
+
+
+def _hf_forward(adapter):
+    """The adapter's capture: every position's residual at each index, unsteered (``forward(...).acts``)."""
+    def forward(ids, indices):
+        return adapter.forward(list(ids), capture_layers=tuple(int(i) for i in indices)).acts
+    return forward
+
+
+def production_gvec_env() -> GvecEnv:
+    from valence_core.m import resume as m_resume
+    from valence_core.n import gvec, ids
+    return GvecEnv(weights=weights_of_record, load_ids=ids.load, e0=_e0_corpus, env_provenance=environment_provenance,
+                   make_adapter=_load_adapter, adapter_shape=lambda a: (int(a.n_layers),
+                                                                        int(a._model.config.hidden_size)),
+                   forward=_hf_forward, pod=m_resume.pod_id, driver=driver_bytes, indices=gvec.CANDIDATE_INDICES,
+                   reference=gvec.R_REFERENCE, passages=ids.PASSAGES_FILE, passages_sha256=ids.PASSAGES_SHA256)
+
+
+def gvec_passages_check(records, corpus_path, want_sha256: str) -> None:
+    """The passage records against the corpus of record, before the load: its sha256, then each record's index, id,
+    state, pole and text sha256, in the corpus's order."""
+    import hashlib
+    data = Path(corpus_path).read_bytes()
+    if hashlib.sha256(data).hexdigest() != want_sha256:
+        raise SystemExit("data/n/passages.jsonl is not the corpus of record")
+    corpus = [json.loads(x) for x in data.decode("utf-8").splitlines() if x.strip()]
+    if len(corpus) != len(records):
+        raise SystemExit(f"{len(records)} passage records for {len(corpus)} passages in the corpus")
+    for i, (c, r) in enumerate(zip(corpus, records)):
+        if (r["index"], r["id"], r["state"], r["pole"], r["text_sha256"]) != (
+                i, c["id"], c["state"], c["pole"], hashlib.sha256(c["text"].encode("utf-8")).hexdigest()):
+            raise SystemExit(f"passage record {i} is not the corpus's passage {i}")
+
+
+def gvec_a3_check(e0, loaded, contexts) -> tuple:
+    """Before the load, model-free: A3's frozen inputs and rule-18 hygiene (scripts/box_e0_corpus.py), held to the (iv)
+    render's record of them (the manifest's iv block): the input digests, the two files' sha256s and the contexts'
+    digest, and each context record's place, condition, item, variant and texts' sha256s. Returns (the input digests,
+    the code sha256s, the hygiene record, A3's axis conditions and split)."""
+    import hashlib
+
+    from valence_core import extract
+    from valence_core.n import ids
+    shas = e0.assert_frozen_inputs()
+    hyg = e0.hygiene()
+    block = loaded["manifest"]["iv"]["a3"]
+    if dict(shas) != dict(block["input_shas"]):
+        raise SystemExit("A3's frozen inputs are not those the (iv) render recorded")
+    code = {"scripts/box_e0_corpus.py": hashlib.sha256(Path(e0.__file__).read_bytes()).hexdigest(),
+            "valence_core/extract.py": hashlib.sha256(Path(extract.__file__).read_bytes()).hexdigest()}
+    if code != dict(block["code_sha256"]):
+        raise SystemExit("A3's code (scripts/box_e0_corpus.py, valence_core/extract.py) is not the (iv) render's")
+    rows = [(c.prefix, c.full, c.condition, c.item_id, c.variant) for c in e0.e0_contexts()]
+    if len(rows) != len(contexts) or ids.a3_digest(rows) != block["contexts_sha256"]:
+        raise SystemExit("A3's contexts are not those the (iv) render recorded")
+    for i, ((p, f, c, it, v), rec) in enumerate(zip(rows, contexts)):
+        if (rec["index"], rec["condition"], rec["item_id"], int(rec["variant"])) != (i, c, it, int(v)) \
+                or rec["prefix_sha256"] != hashlib.sha256(p.encode("utf-8")).hexdigest() \
+                or rec["full_sha256"] != hashlib.sha256(f.encode("utf-8")).hexdigest():
+            raise SystemExit(f"context record {i} is not A3's context {i}")
+    extract.assert_stage_splits({"stage": "G-VEC", "fit_ids": list(e0.FIT_IDS), "val_ids": list(e0.VAL_IDS)},
+                                where="G-VEC's A3 split")
+    a3 = {"axis_conditions": {k: tuple(v) for k, v in e0.AXIS_CONDITIONS.items()}, "axis_order": tuple(e0.AXIS_ORDER),
+          "fit_ids": tuple(e0.FIT_IDS), "val_ids": tuple(e0.VAL_IDS)}
+    return dict(shas), code, dict(hyg), a3
+
+
+def run_gvec(env: GvecEnv, *, out=None, smoke: int | None = None) -> int:
+    """G-VEC, in order: refusals; the weights and the driver; the ids of record, every ids_sha re-derived, held to the
+    corpus of record and to A3's frozen inputs; the R6 bridge before the load; the load and its provenance;
+    ``gvec.compute``; the outputs, built in a staging folder beside the out folder and renamed into place.
+    Everything that needs no model happens before the load. Exit 0 on PASS (or a smoke), 2 on the R check's STOP
+    (the record alone, for the seat); a refusal raises."""
+    import hashlib
+    import shutil
+
+    import numpy as np
+
+    from valence_core.m import resume as m_resume
+    from valence_core.m.keys import stream_known_answer
+    from valence_core.n import directions, guard, gvec, ids, schema, sessions
+    say = env.printer
+    if smoke is not None:
+        if not 1 <= int(smoke) <= directions.N_NEUTRAL:
+            raise SystemExit(f"--smoke takes 1..{directions.N_NEUTRAL} (neutral passages and contexts)")
+        if out is None:
+            raise SystemExit("a smoke writes only where --out names, a new folder outside the repository")
+        if _within(Path(out).resolve(), REPO.resolve()):
+            raise SystemExit(f"a smoke writes outside the repository, not {out}")
+        out_p = guard.refuse_out(Path(out))
+    else:
+        if out is not None:
+            raise SystemExit("a run of record writes only to data/n/gvec/ (--out is a smoke's)")
+        out_p = guard.refuse_out(Path(env.out))
+    if out_p.exists():
+        raise SystemExit(f"{_shown(out_p)} exists: G-VEC writes a new folder and never resumes (G7)")
+    stage = guard.refuse_out(out_p.parent / f".{out_p.name}.staging")
+    if stage.exists():
+        raise SystemExit(f"{_shown(stage)} exists: a staging folder another run left (a hard stop skips its "
+                         f"cleanup); move it aside first")
+    pod = env.pod()
+    if pod is None:
+        raise SystemExit("an n stage refuses to start without $RUNPOD_POD_ID (m's resume.pod_id)")
+    if pod != CHARACTERIZED_POD:
+        raise SystemExit(f"this pod is not the characterized one ({CHARACTERIZED_POD}, the BACKEND entry d5d08fa): "
+                         f"respawn step (ii) first")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != CHARACTERIZED_PROVENANCE["cublas_workspace_config"]:
+        raise SystemExit("CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2)")
+    ka = stream_known_answer()
+    if ka:
+        raise SystemExit(ka[0])
+    idx = tuple(int(i) for i in env.indices)
+    if smoke is not None:
+        say(f"SMOKE: {smoke} neutral passages and {smoke} contexts, outside the repository; R and R_ell only; never "
+            f"of record")
+    say(f"STAGE G-VEC: candidate indices {list(idx)}; R's reference {env.reference!r}, within {gvec.R_TOLERANCE!r}; "
+        f"out {_shown(out_p)}")
+    w = env.weights()
+    say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
+        f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
+    drv, head = env.driver()
+    dsha = hashlib.sha256(drv).hexdigest()
+    if smoke is None and drv != head:
+        raise SystemExit("a run of record runs only the committed driver: scripts/n_sessions.py is not HEAD's "
+                         "committed bytes (the box answers of 2026-11-18, §2 item 5)")
+    say(f"DRIVER scripts/n_sessions.py {dsha}: "
+        + ("HEAD's committed bytes" if drv == head else "a smoke's, not HEAD's committed bytes (unchecked)"))
+    loaded = env.load_ids()
+    if loaded["manifest_sha256"] != ids.MANIFEST_OF_RECORD:
+        raise SystemExit("data/n/ids/MANIFEST.json is not the render of record's (G13)")
+    ps, cs = list(loaded[ids.GVEC_FILE]), list(loaded[ids.A3_FILE])
+    if (len(ps), len(cs)) != (ids.N_PASSAGES, ids.N_A3_CONTEXTS):
+        raise SystemExit(f"{len(ps)} passages and {len(cs)} contexts, not {ids.N_PASSAGES} and {ids.N_A3_CONTEXTS}")
+    bad = sum(1 for r in ps + cs if sessions.ids_sha(r["ids"]) != r["ids_sha"])
+    if bad:
+        raise SystemExit(f"{bad} records' ids do not hash to their ids_sha")
+    longest = max(len(r["ids"]) for r in ps + cs)
+    if longest > schema.MAX_WINDOW:
+        raise SystemExit(f"an input of {longest} tokens is over the window {schema.MAX_WINDOW} (GA-4)")
+    gvec_passages_check(ps, env.passages, env.passages_sha256)
+    gvec.passage_groups(ps)
+    shas, code, hyg, a3 = gvec_a3_check(env.e0(), loaded, cs)
+    if tuple(a3["axis_order"]) != gvec.NAMED[1:]:
+        raise SystemExit(f"A3's axis order {tuple(a3['axis_order'])} is not the named rows' {gvec.NAMED[1:]}")
+    say(f"inputs: the ids of record {loaded['manifest_sha256']} ((iv): {len(ps)} passages, {len(cs)} contexts, every "
+        f"ids_sha re-derived; the longest {longest} tokens, within the window {schema.MAX_WINDOW}); the corpus "
+        f"{env.passages_sha256}, each record its passage; A3's frozen inputs {json.dumps(shas, sort_keys=True)}, its "
+        f"code and contexts as the render recorded them; rule-18 hygiene {json.dumps(hyg, sort_keys=True)}")
+    n_layers, d_model = env.shape
+    pre = env.env_provenance(w["path"])
+    if bridge_identifier(pre) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit(f"before the load: the environment's provenance under the default window hashes to "
+                         f"{bridge_identifier(pre)}, not the characterization's {CHARACTERIZED_IDENTIFIER} (R6)")
+    bid = m_resume.backend_identifier(pre)
+    mods = _import_production()
+    prov_rec = {"package_sha256": mods["guard"].package_sha256(),
+                "imported_sha256": mods["guard"].closure_from_modules(dict(sys.modules)),
+                "weights": {"repo": w["repo"], "revision": w["revision"], "sha256": w["sha256"]},
+                "backend_identifier": bid, "characterized_identifier": CHARACTERIZED_IDENTIFIER, "pod_id": pod,
+                "ids_manifest_sha256": loaded["manifest_sha256"], "passages_sha256": env.passages_sha256,
+                "driver_sha256": dsha, "a3_input_shas": shas, "a3_code_sha256": code, "hygiene": hyg,
+                "window": schema.MAX_WINDOW, "longest_input": longest, "smoke": smoke}
+    t0 = env.clock()
+    adapter = env.make_adapter(w["path"])
+    load_ms = max(0, int(round((env.clock() - t0) * 1000)))
+    prov = adapter.provenance()
+    if m_resume.backend_identifier(prov) != bid or bridge_identifier(prov) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit("the loaded adapter's provenance is not the one checked before the load -- refusing")
+    if tuple(env.adapter_shape(adapter)) != (n_layers, d_model):
+        raise SystemExit(f"the checkpoint is {tuple(env.adapter_shape(adapter))}, not ({n_layers}, {d_model})")
+    say(f"backend: n's identifier {bid} (window {schema.MAX_WINDOW}); the characterization's "
+        f"{CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {pod}; load {load_ms} ms")
+    prov_rec["load_ms"] = load_ms
+    prov_rec["adapter_provenance"] = m_resume.provenance_record(prov)
+    fwd = env.forward(adapter)
+    out_p.parent.mkdir(parents=True, exist_ok=True)
+    stage.mkdir()
+    try:
+        if smoke is not None:
+            neu = [r for r in ps if r["pole"] == "0"][:int(smoke)]
+            pc = gvec.passage_captures(fwd, neu, idx)
+            cap = gvec.a3_capture(fwd, cs[:int(smoke)], idx)
+            allneu = np.ones(len(neu), dtype=bool)
+            rec = {"schema": gvec.RECORD_SCHEMA, "stage": gvec.STAGE, "status": "SMOKE", "smoke": int(smoke),
+                   "R": {str(i): gvec.r_at(pc, allneu, i) for i in idx},
+                   "R_ell": {str(i): float(cap.resid_norms[i]) for i in idx}, "provenance": prov_rec}
+            (stage / GVEC_SMOKE_RECORD).write_text(json.dumps(rec, sort_keys=True, indent=1, allow_nan=False) + "\n",
+                                                   encoding="utf-8")
+            for i in idx:
+                say(f"SMOKE R at index {i} over the first {len(neu)} neutral passages: {rec['R'][str(i)]!r}; R_ell "
+                    f"over the first {int(smoke)} contexts in A3's order: {rec['R_ell'][str(i)]!r}")
+            status = "SMOKE"
+        else:
+            res = gvec.compute(fwd, ps, cs, a3=a3, d_model=d_model, indices=idx, reference=env.reference, say=say)
+            gvec.write(stage, res, prov_rec)
+            status = res["status"]
+        os.replace(stage, out_p)
+    except BaseException:
+        shutil.rmtree(stage, ignore_errors=True)
+        raise
+    for p in sorted(out_p.iterdir()):
+        say(f"file {_shown(p)} sha256 {hashlib.sha256(p.read_bytes()).hexdigest()}")
+    if status == "STOP":
+        say("G-VEC STOP: the record alone is written; the seat rules (n §2.3; ADDENDUM-n1 §6.1)")
+        return 2
+    say(f"G-VEC {status}" + (", never of record" if status == "SMOKE" else ""))
+    return 0
+
+
+def cmd_gvec(out=None, smoke: int | None = None) -> int:
+    return run_gvec(production_gvec_env(), out=out, smoke=smoke)
+
+
+def _gvec_selftest(chk, tmp: Path) -> None:
+    """G-VEC's command, model-free: its flow over the numpy double behind every seam (a run of record into a folder
+    under tmp, a STOP, a smoke, a failure mid-run), its refusals before the load, and main()'s dispatch. It writes
+    only under tmp."""
+    import hashlib
+    import types
+
+    import numpy as np
+
+    from valence_core import extract
+    from valence_core.m import resume as m_resume
+    from valence_core.n import directions, gvec, ids, schema, sessions, testing
+    tmp.mkdir(parents=True, exist_ok=True)
+    be = testing.CausalDouble(d_model=32)
+    rng = np.random.default_rng(31)
+    L = (3, 4)
+
+    def refused(fn) -> bool:
+        try:
+            fn()
+        except SystemExit:
+            return True
+        return False
+    prod = production_gvec_env()
+    chk("driver: G-VEC's production seams carry the package's indices (31, 32), its reference 25.49, the corpus of "
+        "record and data/n/gvec/",
+        (tuple(prod.indices), prod.reference, prod.passages, prod.passages_sha256, prod.out)
+        == (gvec.CANDIDATE_INDICES, gvec.R_REFERENCE, ids.PASSAGES_FILE, ids.PASSAGES_SHA256, GVEC_OUT)
+        and gvec.CANDIDATE_INDICES == (31, 32) and gvec.R_REFERENCE == 25.49 and gvec.R_TOLERANCE == 0.02, "")
+    # the inputs: a toy corpus (544 passages) and A3's 1,344 contexts, their ids records and the manifest's iv block
+    corpus, prec = [], []
+    for pole, states, n in (("+", directions.POSITIVE_STATES, directions.N_PER_STATE),
+                            ("-", directions.NEGATIVE_STATES, directions.N_PER_STATE),
+                            ("0", (directions.NEUTRAL,), directions.N_NEUTRAL)):
+        for s in states:
+            name = directions.CORPUS_STATE.get(s, s)
+            for j in range(n):
+                text = f"{name} {j}"
+                ii = [int(x) for x in rng.integers(3, be.vocab, int(rng.integers(3, 7)))]
+                corpus.append({"id": f"{name}-{j:02d}", "state": name, "pole": pole, "text": text})
+                prec.append({"index": len(prec), "id": f"{name}-{j:02d}", "state": name, "pole": pole,
+                             "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "n_tokens": len(ii),
+                             "ids_sha": sessions.ids_sha(ii), "ids": ii})
+    cfile = tmp / "passages.jsonl"
+    cfile.write_bytes("".join(json.dumps(c, sort_keys=True) + "\n" for c in corpus).encode("utf-8"))
+    csha = hashlib.sha256(cfile.read_bytes()).hexdigest()
+    conds = ("self_pos", "self_neg", "sent_pos", "sent_neg", "char_pos", "char_neg", "neutral")
+    items = tuple(f"e{i:02d}" for i in range(1, 49))
+    ctxs, crec = [], []
+    for it in items:
+        pre_ids = [int(x) for x in rng.integers(3, be.vocab, 4)]
+        for c in conds:
+            for v in range(4):
+                span = [int(x) for x in rng.integers(3, be.vocab, 3)]
+                pre, full = f"P {it}", f"P {it} {c} {v}"
+                ctxs.append(extract.Context(prefix=pre, full=full, condition=c, item_id=it, variant=v))
+                crec.append({"index": len(crec), "item_id": it, "condition": c, "variant": v,
+                             "prefix_sha256": hashlib.sha256(pre.encode("utf-8")).hexdigest(),
+                             "full_sha256": hashlib.sha256(full.encode("utf-8")).hexdigest(),
+                             "seq_len": 7, "span_start": 4, "prefix_tokens": 4,
+                             "ids_sha": sessions.ids_sha(pre_ids + span), "ids": pre_ids + span})
+    e0file = tmp / "e0stub.py"
+    e0file.write_text("# stub\n", encoding="utf-8")
+    shas_t = {"corpus_sha": "c" * 16, "frames_sha": "f" * 16, "probes_sha": "p" * 16}
+    e0 = types.SimpleNamespace(
+        __file__=str(e0file), assert_frozen_inputs=lambda: dict(shas_t),
+        hygiene=lambda: {"both_directions": True, "fit_val_disjoint": True}, e0_contexts=lambda: list(ctxs),
+        AXIS_CONDITIONS={"span_reward": ("self_pos", "self_neg"), "span_sentiment": ("sent_pos", "sent_neg"),
+                         "span_character": ("char_pos", "char_neg")},
+        AXIS_ORDER=("span_reward", "span_sentiment", "span_character"), FIT_IDS=items[:24], VAL_IDS=items[24:])
+    ex_sha = hashlib.sha256(Path(extract.__file__).read_bytes()).hexdigest()
+    block = {"input_shas": dict(shas_t),
+             "code_sha256": {"scripts/box_e0_corpus.py": hashlib.sha256(e0file.read_bytes()).hexdigest(),
+                             "valence_core/extract.py": ex_sha},
+             "contexts_sha256": ids.a3_digest([(c.prefix, c.full, c.condition, c.item_id, c.variant) for c in ctxs])}
+
+    def loaded_of(p_=None, c_=None, man=None, blk=None):
+        return {"manifest_sha256": man or ids.MANIFEST_OF_RECORD, "manifest": {"iv": {"a3": blk or block}},
+                ids.GVEC_FILE: p_ if p_ is not None else prec, ids.A3_FILE: c_ if c_ is not None else crec}
+    prov_t = dict(CHARACTERIZED_PROVENANCE, path="(toy)", choice_window_declared=schema.MAX_WINDOW)
+    made: list = []
+
+    class StubAdapter:
+        def __init__(self, prov):
+            self._prov = prov
+
+        def provenance(self):
+            return dict(self._prov)
+
+    def fwd_of(_a):
+        return lambda ids_, layers: be.forward_all(ids_, layers)
+    neu_ix = [i for i, r in enumerate(prec) if r["pole"] == "0"]
+    r4 = gvec.r_at(gvec.passage_captures(fwd_of(None), [prec[i] for i in neu_ix], L),
+                   np.ones(len(neu_ix), dtype=bool), 4)
+
+    def env_for(tag, **over):
+        lines: list = []
+
+        def mk(path, prov=None):
+            made.append(tag)
+            return StubAdapter(prov or prov_t)
+        base = dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": "5" * 64, "n_files": 1,
+                                     "path": "(toy)"},
+                    load_ids=lambda: loaded_of(), e0=lambda: e0, env_provenance=lambda p: dict(prov_t),
+                    make_adapter=mk, adapter_shape=lambda a: (6, 32), forward=fwd_of, pod=lambda: CHARACTERIZED_POD,
+                    driver=lambda: (b"drv", b"drv"), indices=L, reference=r4, passages=cfile, passages_sha256=csha,
+                    out=tmp / tag / "gvec", shape=(6, 32), printer=lines.append)
+        base.update(over)
+        if _within(Path(base["out"]).resolve(), REPO.resolve()):    # a self-test writes only under tmp
+            raise SystemExit(f"a self-test environment points out into the repository: {base['out']}")
+        return GvecEnv(**base), lines
+    saved = {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG",)}
+    try:
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = CHARACTERIZED_PROVENANCE["cublas_workspace_config"]
+        env1, lines1 = env_for("run")
+        rc1 = run_gvec(env1)
+        rec1 = json.loads((env1.out / gvec.OUT_RECORD).read_text(encoding="utf-8"))
+        names1 = sorted(p.name for p in env1.out.iterdir())
+        chk("driver: G-VEC's run of record, over the double behind every seam: PASS at the index within 2%, its six "
+            "files in a new folder (the record, the cosines file, and the named and alternative rows at each index), "
+            "the staging folder gone",
+            rc1 == 0 and rec1["status"] == "PASS" and rec1["site"]["site"] == 4
+            and names1 == sorted([gvec.OUT_RECORD, gvec.OUT_COSINES] + [gvec.directions_file(i) for i in L]
+                                 + [gvec.alt_file(i) for i in L])
+            and not (env1.out.parent / ".gvec.staging").exists(), (rc1, rec1.get("status"), names1))
+        pv = rec1["provenance"]
+        chk("driver: the record's provenance: the package and closure, the weights, the identifiers, the pod, the ids "
+            "of record, the corpus, the driver, A3's inputs and code, the hygiene, the window and the load",
+            pv["ids_manifest_sha256"] == ids.MANIFEST_OF_RECORD and pv["passages_sha256"] == csha
+            and pv["characterized_identifier"] == CHARACTERIZED_IDENTIFIER and pv["pod_id"] == CHARACTERIZED_POD
+            and pv["a3_code_sha256"] == block["code_sha256"] and pv["a3_input_shas"] == shas_t
+            and "valence_core/extract.py" in pv["imported_sha256"] and pv["window"] == schema.MAX_WINDOW
+            and pv["smoke"] is None and isinstance(pv["load_ms"], int) and len(pv["package_sha256"]) == 64
+            and pv["backend_identifier"] == m_resume.backend_identifier(prov_t)
+            and pv["adapter_provenance"] == m_resume.provenance_record(prov_t), "")
+        heads = ("STAGE G-VEC", "WEIGHTS:", "DRIVER", "inputs:", "backend:", "R at index 3", "R at index 4",
+                 "site: index 4", "file ", "G-VEC PASS")
+        chk("driver: G-VEC prints its lines in order -- STAGE, WEIGHTS, DRIVER, inputs, backend, R at both indices, "
+            "the site, each file's sha256, PASS -- and no passage, context or id",
+            [next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads]
+            == sorted(next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads)
+            and all(any(x.startswith(h) for x in lines1) for h in heads)
+            and not any('"ids"' in x or "passage record" in x for x in lines1), lines1[:4])
+        chk("driver: the model loads once, after every check that needs none", made.count("run") == 1, made)
+        env2, _l2 = env_for("stop", reference=1.0e6)
+        rc2 = run_gvec(env2)
+        chk("driver: R within 2% at neither index is the STOP: exit 2, the record alone, for the seat",
+            rc2 == 2 and [p.name for p in env2.out.iterdir()] == [gvec.OUT_RECORD]
+            and json.loads((env2.out / gvec.OUT_RECORD).read_text())["status"] == "STOP", rc2)
+        env3, l3 = env_for("smoke", driver=lambda: (b"drv-new", b"drv"))
+        rc3 = run_gvec(env3, out=tmp / "smoke-out", smoke=3)
+        rec3 = json.loads((tmp / "smoke-out" / GVEC_SMOKE_RECORD).read_text())
+        first3 = [prec[i] for i in neu_ix[:3]]
+        r_s = {str(i): gvec.r_at(gvec.passage_captures(fwd_of(None), first3, L), np.ones(3, dtype=bool), i) for i in L}
+        rl_s = {str(i): gvec.a3_capture(fwd_of(None), crec[:3], L).resid_norms[i] for i in L}
+        chk("driver: a smoke runs uncommitted bytes into --out outside the repository: R over its first neutral "
+            "passages and R_ell over its first contexts, at both indices, never of record",
+            rc3 == 0 and rec3["status"] == "SMOKE" and rec3["R"] == r_s and rec3["R_ell"] == rl_s
+            and not env3.out.exists() and any(x.startswith("SMOKE:") for x in l3)
+            and any("a smoke's, not HEAD's committed bytes" in x for x in l3), (rec3.get("R"), r_s))
+
+        def broken(_a):
+            def f(ids_, layers):
+                raise RuntimeError("the forward failed")
+            return f
+        env4, _l4 = env_for("fail", forward=broken)
+        try:
+            run_gvec(env4)
+            failed = False
+        except RuntimeError:
+            failed = True
+        chk("driver: a failure after the load leaves no out folder and no staging folder (nothing to resume)",
+            failed and not env4.out.exists() and not (env4.out.parent / ".gvec.staging").exists(), "")
+        # refusals, each before the load
+        n_made = len(made)
+        pre_out = tmp / "exists" / "gvec"
+        pre_out.mkdir(parents=True)
+        tampered = [dict(r) for r in prec]
+        tampered[5]["ids_sha"] = "0" * 16
+        long_p = [dict(r) for r in prec]
+        long_p[7] = dict(long_p[7], ids=[3] * (schema.MAX_WINDOW + 1))
+        long_p[7]["ids_sha"] = sessions.ids_sha(long_p[7]["ids"])
+        wrong_state = [dict(r) for r in prec]
+        wrong_state[0]["state"] = "relief"
+        swapped = [dict(r) for r in crec]
+        swapped[0], swapped[1] = dict(swapped[1], index=0), dict(swapped[0], index=1)
+        bad_code = dict(block, code_sha256=dict(block["code_sha256"], **{"valence_core/extract.py": "0" * 64}))
+
+        def with_rec(recs_, i, **kw):
+            out_ = [dict(r) for r in recs_]
+            out_[i].update(kw)
+            return out_
+        p_text = with_rec(prec, 2, text_sha256="0" * 64)
+        c_pre = with_rec(crec, 5, prefix_sha256="0" * 64)
+        c_full = with_rec(crec, 5, full_sha256="0" * 64)
+        leftover = tmp / "lefto" / ".gvec.staging"
+        leftover.mkdir(parents=True)
+        cases = [
+            ("an existing out folder (G-VEC never resumes)", lambda: run_gvec(env_for("x1", out=pre_out)[0])),
+            ("a staging folder a hard stop left", lambda: run_gvec(env_for("lefto")[0])),
+            ("a context record whose ids do not hash to its ids_sha",
+             lambda: run_gvec(env_for("x21", load_ids=lambda: loaded_of(c_=with_rec(crec, 3, ids_sha="0" * 16)))[0])),
+            ("a passage record whose id is not its passage's",
+             lambda: run_gvec(env_for("x22", load_ids=lambda: loaded_of(p_=with_rec(prec, 2, id="x-00")))[0])),
+            ("a passage record whose pole is not its passage's",
+             lambda: run_gvec(env_for("x23", load_ids=lambda: loaded_of(p_=with_rec(prec, 2, pole="0")))[0])),
+            ("a passage record whose text sha256 is not its passage's",
+             lambda: run_gvec(env_for("x24", load_ids=lambda: loaded_of(p_=p_text))[0])),
+            ("a context record whose prefix sha256 is not A3's",
+             lambda: run_gvec(env_for("x25", load_ids=lambda: loaded_of(c_=c_pre))[0])),
+            ("a context record whose full sha256 is not A3's",
+             lambda: run_gvec(env_for("x26", load_ids=lambda: loaded_of(c_=c_full))[0])),
+            ("--out on a run of record", lambda: run_gvec(env_for("x2")[0], out=tmp / "o2")),
+            ("a smoke without --out", lambda: run_gvec(env_for("x3")[0], smoke=2)),
+            ("a smoke whose --out is in the repository",
+             lambda: run_gvec(env_for("x4")[0], out=REPO / "data" / "n" / "gvec-smoke", smoke=2)),
+            ("a smoke of 97 (over the 96 neutral passages)",
+             lambda: run_gvec(env_for("x5")[0], out=tmp / "o5", smoke=97)),
+            ("a smoke of 0", lambda: run_gvec(env_for("x5b")[0], out=tmp / "o5b", smoke=0)),
+            ("no pod id", lambda: run_gvec(env_for("x6", pod=lambda: None)[0])),
+            ("another pod", lambda: run_gvec(env_for("x7", pod=lambda: "other-pod")[0])),
+            ("a run of record on uncommitted driver bytes",
+             lambda: run_gvec(env_for("x8", driver=lambda: (b"new", b"old"))[0])),
+            ("ids not of record", lambda: run_gvec(env_for("x9", load_ids=lambda: loaded_of(man="0" * 64))[0])),
+            ("a record whose ids do not hash to its ids_sha",
+             lambda: run_gvec(env_for("x10", load_ids=lambda: loaded_of(p_=tampered))[0])),
+            ("an input over the window", lambda: run_gvec(env_for("x11", load_ids=lambda: loaded_of(p_=long_p))[0])),
+            ("a corpus that is not of record", lambda: run_gvec(env_for("x12", passages_sha256="0" * 64)[0])),
+            ("a passage record that is not its corpus passage",
+             lambda: run_gvec(env_for("x13", load_ids=lambda: loaded_of(p_=wrong_state))[0])),
+            ("A3's code not the render's",
+             lambda: run_gvec(env_for("x14", load_ids=lambda: loaded_of(blk=bad_code))[0])),
+            ("A3's inputs not frozen",
+             lambda: run_gvec(env_for("x15", e0=lambda: types.SimpleNamespace(
+                 **dict(vars(e0), assert_frozen_inputs=lambda: dict(shas_t, corpus_sha="d" * 16))))[0])),
+            ("a context record out of A3's order",
+             lambda: run_gvec(env_for("x16", load_ids=lambda: loaded_of(c_=swapped))[0])),
+            ("a provenance off the characterization before the load",
+             lambda: run_gvec(env_for("x17", env_provenance=lambda p: dict(prov_t, gpu="another GPU"))[0])),
+        ]
+        out_r = {name: refused(fn) for name, fn in cases}
+        chk("driver: G-VEC refuses, before the load: " + "; ".join(name for name, _f in cases),
+            all(out_r.values()) and len(made) == n_made, [k for k, v in out_r.items() if not v])
+        mk_bad = env_for("x18", make_adapter=lambda p: (made.append("x18"), StubAdapter(dict(prov_t, gpu="x")))[1])[0]
+        shp_bad = env_for("x19", adapter_shape=lambda a: (6, 16))[0]
+        chk("driver: G-VEC refuses after the load a provenance not the one checked before it, and a checkpoint of "
+            "another shape, writing nothing", refused(lambda: run_gvec(mk_bad)) and refused(lambda: run_gvec(shp_bad))
+            and not mk_bad.out.exists() and not shp_bad.out.exists(), "")
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+        chk("driver: G-VEC refuses a cuBLAS setting other than the characterized one (rule 2), before the load",
+            refused(lambda: run_gvec(env_for("x20")[0])) and made.count("x20") == 0, "")
+        chk("driver: (the self-test's own guard) a G-VEC environment pointing out into the repository is refused",
+            refused(lambda: env_for("guard", out=GVEC_OUT)), "")
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    # main()'s dispatch: G-VEC takes --out and --smoke only
+    import contextlib
+    import io
+
+    def argv_error(argv) -> str:
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stderr(buf):
+                main(argv)
+        except SystemExit:
+            return buf.getvalue()
+        return "no error"
+    t_ = str(tmp)
+    for argv in (["gvec", "--root", t_], ["gvec", "--report", t_], ["gvec", "--resume"], ["gvec", "--ruling", "p01=x"],
+                 ["gvec", "--model-dir", t_], ["gvec", "--tokenizer-dir", t_], ["gvec", "--ids-dir", t_],
+                 ["gvec", "--convention", "space"], ["gvec", "--pi-date", "2026-11-19"]):
+        got = argv_error(argv)
+        chk(f"driver: main() refuses {' '.join(argv[:2])} … for gvec", "gvec takes --out and --smoke only" in got,
+            got[-160:])
+    g = globals()
+    real_run = g["run_gvec"]
+    calls: list = []
+
+    def recorder(_env, **kw):
+        calls.append(kw)
+        return 0
+    g["run_gvec"] = recorder
+    try:
+        rcs = (main(["gvec"]), main(["gvec", "--smoke", "3", "--out", str(tmp / "s")]))
+    finally:
+        g["run_gvec"] = real_run
+    chk("driver: main() hands G-VEC's --out and --smoke to the stage, and nothing on a run of record",
+        rcs == (0, 0) and calls == [{"out": None, "smoke": None}, {"out": str(tmp / "s"), "smoke": 3}], calls)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("command", nargs="?",
-                    choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "backend-ext", "backend-ext-2"))
+                    choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "backend-ext", "backend-ext-2",
+                             "gvec"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -1995,6 +2553,16 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     if a.selftest:
         return cmd_selftest()
+    if a.command == "gvec":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),
+                                      ("--convention", a.convention is not None), ("--model-dir", bool(a.model_dir)),
+                                      ("--tokenizer-dir", bool(a.tokenizer_dir)), ("--ids-dir", bool(a.ids_dir)),
+                                      ("--pi-date", bool(a.pi_date))) if given]
+        if foreign:
+            ap.error(f"{', '.join(foreign)}: gvec takes --out and --smoke only (a smoke's), and loads from the model "
+                     f"manifest's instruct path")
+        return cmd_gvec(a.out, a.smoke)
     stage_cmds = ("backend-ext", "backend-ext-2")
     stage_only = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),

@@ -13,8 +13,12 @@ convention they sit on):
     U's rows are the top ten right singular vectors;
   * R = sqrt(sum over neutral tokens of ||r||^2 / their count) (BK §3.1's RMS residual norm).
 
-The random directions are ``keys.random_directions``; N2's three directions are A3's, extracted by the existing
-``scripts/box_a3_extract.py`` machinery (``valence_core.extract``), imported unchanged at G-VEC.
+The random directions are ``keys.random_directions``; N2's three directions are A3's, by ``valence_core.extract``'s
+arithmetic imported unchanged at G-VEC (``gvec``), on the committed ids (ADDENDUM-n1 §1.1: the box tokenizes nothing).
+
+The corpus of record spells one of BK's states differently: ``CORPUS_STATE`` maps BK's name to the corpus's, and
+``bk_state`` maps back (the seat's corpus-adoption answers of 2026-11-18, §1.4: "G-VEC's wiring maps the file stem
+to BK's words in the package, the corpus unedited, and the paper's state names are BK's").
 """
 from __future__ import annotations
 
@@ -30,6 +34,14 @@ NEUTRAL = "neutral"
 N_PER_STATE = 56
 N_NEUTRAL = 96
 N_PCS = 10
+#: BK's state name -> the corpus of record's spelling of it, where the two differ (``data/n/passages.jsonl``).
+CORPUS_STATE = {"flow engagement": "flow_engagement"}
+_BK_STATE = {v: k for k, v in CORPUS_STATE.items()}
+
+
+def bk_state(corpus_state: str) -> str:
+    """BK's name for a state as the corpus of record spells it (the others are BK's already)."""
+    return _BK_STATE.get(corpus_state, corpus_state)
 
 
 def passage_mean(acts: np.ndarray) -> np.ndarray:
@@ -115,3 +127,9 @@ def _selftest(chk, tmp) -> None:
     c = cosines({"a": axis, "b": shared, "c": axis + shared})
     chk("directions: cosines keyed 'a|b' with a < b", sorted(c) == ["a|b", "a|c", "b|c"] and abs(c["a|b"]) < 1e-15,
         c)
+    names = POSITIVE_STATES + NEGATIVE_STATES + (NEUTRAL,)
+    chk("directions: the corpus's flow_engagement is BK's flow engagement; every other state is its own name, and "
+        "each corpus spelling maps back",
+        bk_state("flow_engagement") == "flow engagement"
+        and all(bk_state(s) == s for s in names if s not in CORPUS_STATE)
+        and all(bk_state(CORPUS_STATE.get(s, s)) == s for s in names), "")

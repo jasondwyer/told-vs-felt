@@ -1,0 +1,62 @@
+n -- G-VEC's BUILD (n v0.2 s8 step 7; the G-VEC paragraph of n s3; ADDENDUM-n1 s1.1, s6.1-s6.2): its self-test on the
+laptop, committed with the BUILD. PI date 2026-11-19. Code (the n-build session).
+
+The change, on 003ae7d's versions of these paths:
+  valence_core/n/gvec.py       a620349f6f42346cef5096cae0eb7b478a522933a6f0016478388d4afe46ec71  (new)
+  scripts/n_sessions.py        fecde87a6ceb5c073b38dd99b583b369a1005ab47d185b6115555042305d3958
+  valence_core/n/directions.py f9d0114c2880b409365c26ed722e60006362116d01d8b6e09b9048c638aa2db4
+  valence_core/n/testing.py    f1840be77ce05e451da8040254bb5931e8ca184ce911e1508476c43215c06aeb
+  valence_core/n/guard.py      3bf0f0d57318e4979267c806fa76f35d376c1747809b38ea17052c49ec981f50
+The package: valence_core/n's digest moves from
+  f09898eee3e38cb7000b787223ee2f9edea615905b26df8c0524ba9988e8b8f9 (003ae7d's, as its entry records it) to
+  882c9217cc3f09658d194f37245d6fe463d42e0b3651a49cfac59067c3b55ca7,
+  both computed by shell in the form valence_core/m/resume.py's package_sha256_of states. The self-test prints no
+  digest; the package's own `hashes` runs when G-VEC's launch files are made, in a battery window of its own. The
+  import closure gains valence_core/extract.py, which gvec imports at module level.
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny, and the HF-path vanilla score) run only where torch
+   and transformers are present, and elsewhere are skipped and counted as skipped (hftiny's by the driver's docstring,
+   the vanilla score's by its own branch in the driver); the schema module's own cases count as one aggregated line.
+   The overlay: git archive of HEAD 003ae7d on the self-test paths (valence_core, scripts/n_sessions.py,
+   scripts/box_e0_corpus.py, data/n, data/corpus/e0_tasks.jsonl, data/corpus/e2a_tasks.jsonl,
+   data/configs/e0_frames.json, data/configs/e0_probes.json, the model manifest and the characterization's artifact
+   by quoted pathspec globs, and results/raw/2026-11-18_respawn_determinism.txt), with item 3's exclusions and
+   data/mf3's (':!data/*/ckpt/**' ':!data/*/reports/**' ':!data/mf3/**'), so that no checkpoint or report file entered
+   it: 160 files, HEAD's 159 on those paths with four of the five above replaced and valence_core/n/gvec.py added by
+   each run's drafts.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/gvec/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, each file re-hashed in the
+   overlay just before the run; the temporary folder was empty before and after.
+
+   Run 1, draft 1 (the bytes the blind review read):
+     valence_core/n/gvec.py       5ef276df253bbdef1bb4ef9520cf4e009367bdb823f5bc54d5496d04ef55d1e7
+     scripts/n_sessions.py        636a4a0e234d162a426d9476659e3a8d65f5f05bbe9da80e3fcedba5305f35ee
+   with directions.py, testing.py and guard.py as above. Exit 0. Its whole output (sha256
+   630360970b1b1247567593716b8666ea031b4aca63e09e307c3c6ad4fa8a7c95), each line indented by five spaces here:
+       451/451 n selftest checks pass
+
+   Run 2, draft 2: gvec.py as above and
+     scripts/n_sessions.py        9ecb4951a19c36d2e8b51815c723d9e92bb6de907595254ac9389a3153e7eda1
+   with directions.py, testing.py and guard.py as above: the blind review's findings applied, with eleven checks more
+   (seven in gvec's own; four in the driver's G-VEC checks, its foreign-flag check now run over nine flags where it
+   ran over five). Exit 1. Its whole output (sha256
+   297fa4accb0735f4915c361b7283531e630116cf9f036f5bb8a10aba0e284063), each line indented by five spaces here:
+     FAIL driver: G-VEC's run of record, over the double behind every seam: PASS at the index within 2%, its four files in a new folder, the staging folder gone: (0, 'PASS')
+       461/462 n selftest checks pass
+
+   The failing check is the driver's G-VEC run of record. The stage passed (exit 0, its record PASS), but the check's
+   list of expected files still held draft 1's four, without the two alternatives files draft 2 writes (the review's
+   F4); the module's own check, which lists all six, passed.
+
+   Run 3, draft 3, the BUILD's final bytes as above: draft 2 with that check's expected list made the six files (+7 -6
+   in scripts/n_sessions.py's _gvec_selftest, outside the package, whose digest is unchanged). Exit 0. Its
+   whole output (sha256 781778ebd4d9bde4f63889639dd5b9bfc65f8c73ba5c3f9e1bb9a94592373d74), each line indented by
+   five spaces here:
+       462/462 n selftest checks pass
+
+2. THE BOX. The box has not run this BUILD. Its count there, by arithmetic only: 473, the laptop's 462 plus the box's
+   11 checks more (its 13 HF checks in place of the laptop's two skip lines, as at 003ae7d's entry); the BUILD adds no
+   box-only check. G-VEC's launch files restate it.

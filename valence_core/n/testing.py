@@ -81,6 +81,20 @@ class CausalDouble:
             rows.append(self._logits(h))
         return np.asarray(rows, dtype=np.float32).reshape(len(rows), self.vocab)
 
+    def forward_all(self, ids, capture_layers, injections=()):
+        """Every position's residual at ``capture_layers``, as the adapter's ``forward(...).acts`` holds them
+        ({layer: [S, D] float32}); G-VEC's captures run on this."""
+        self.calls.append(("forward_all", len(ids), len(injections)))
+        sums = [np.zeros(self.d_model) for _ in range(self.n_layers)]
+        layers = set(int(x) for x in capture_layers)
+        rows: dict = {l: [] for l in sorted(layers)}
+        for p, tok in enumerate(ids):
+            caps: dict = {}
+            self._step(tok, p, sums, injections, layers, caps, p)
+            for l in rows:
+                rows[l].append(caps[l])
+        return {l: np.stack(v).astype(np.float32) for l, v in rows.items()}
+
     def full(self, ids, label_ids, injections, capture_layers):
         self.calls.append(("full", len(ids), len(label_ids), len(injections)))
         seq = list(ids) + list(label_ids)[:-1]

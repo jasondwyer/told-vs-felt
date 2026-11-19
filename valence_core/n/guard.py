@@ -29,7 +29,7 @@ DATA_DIR = REPO / "data"
 N_ROOT = DATA_DIR / "n"
 REFUSED_ROOTS = (DATA_DIR / "m", DATA_DIR / "mf3", DATA_DIR / "p", DATA_DIR / "olmo", Path("/workspace/models"))
 PRODUCTION = ("schema", "sessions", "ids", "keys", "cells", "directions", "primitive", "runner", "verify", "probe",
-              "guard")
+              "gvec", "guard")
 SELFTEST_ONLY = ("testing", "hftiny")
 
 
@@ -126,7 +126,7 @@ def _selftest(chk, tmp) -> None:
     clo = closure_from_modules(dict(sys.modules))
     want = ("valence_core/__init__.py", "valence_core/adapters/base.py", "valence_core/adapters/olmo_hf.py",
             "valence_core/m/resume.py", "valence_core/m/keys.py", "valence_core/echo/probe.py",
-            "valence_core/discrim.py")
+            "valence_core/discrim.py", "valence_core/extract.py")
     chk("guard: the closure holds the modules n imports unchanged", all(w in clo for w in want),
         [w for w in want if w not in clo])
     chk("guard: the closure holds no valence_core.n module", not any(r.startswith("valence_core/n/") for r in clo), "")
