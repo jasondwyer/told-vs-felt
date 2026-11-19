@@ -147,8 +147,29 @@ At the n BUILD it wires:
                the box it is the first run of the HF forward seam, before the run of record. Exit 0 on PASS (or a
                smoke), 2 on the R check's STOP (the record alone, for the seat): a later run needs data/n/gvec/ moved
                aside first.
+  render-ids-v  ADDENDUM-n1 §1.2 (v) (``ids.render_v``): G-CAL-n's 48 prompts, ``gcal.plan`` over the (iii) file's
+               labels and ``gcal.prompt_parts``' two texts, encoded on the laptop in G-DATA's environment (as
+               render-ids-iv: the environment and the tokenizer files checked, ``--out`` a new folder outside the
+               repository, ``--pi-date`` the PI's date), extending (i)-(iv)'s manifest. A STOP writes nothing.
+  gcal         G-CAL-n (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3; ``valence_core.n.gcal``, its module docstring
+               for what it computes and Code's readings GC1-GC22), on the box: 192 turns generated ids-in, uncached,
+               and their arrival forwards. Refusals first, as G-VEC's (the out folder and its staging folder, the pod,
+               the cuBLAS setting, the stream known answer, the weights, the driver). Then, before the load: the ids
+               of record ((v) present; each of its 48 records the plan's prompt, its text's sha256
+               ``gcal.prompt_parts``', its ids_sha re-derived), the longest prompt with its cap held to the window;
+               G-VEC's outputs of record (gvec.json and the site's directions file HEAD's committed bytes, the record
+               a PASS, the valence row at of_record's sha16); the dose map (a fold into 0 refused, the seat's); the R6
+               bridge. The load and its provenance, its shape and its eos (the (v) render's); ``gcal.compute``; the
+               outputs into data/n/gcal/ -- built in a staging folder and renamed into place -- each file's sha256
+               printed, then the exposure at -rho. ``--smoke N`` (1..4): N prompts at +rho and unsteered, never -rho,
+               into ``--out``, a new folder outside the repository, never of record. Exit 0 on PASS (or a smoke), 2
+               on a STOP (a hurdle failed at +rho or -rho), 3 on a PAUSE (at +rho/2 alone), each with its record and
+               turns, for the seat.
+  gcal-decode  A-n1 §1.4's one comparison, on the laptop in G-DATA's environment: ``--gcal-dir`` (the record and turns
+               copied back from the box) and ``--tokenizer-dir``; each turn's emitted ids decoded here against the
+               box's decode; the counts and every difference printed.
 
-Stages G-CAL-n, G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
+Stages G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
 """
 from __future__ import annotations
 
@@ -219,7 +240,7 @@ def cmd_selftest() -> int:
         if str(tmp.resolve()).startswith(str(REPO.resolve())):
             raise SystemExit("the self-test's temporary directory is inside the repository")
         for name in ("sessions", "ids", "keys", "cells", "directions", "primitive", "runner", "verify", "probe",
-                     "gvec", "guard"):
+                     "gvec", "gcal", "guard"):
             fn = getattr(mods[name], "_selftest", None)
             if fn is None:
                 chk(f"{name}: has a self-test", False, "missing")
@@ -315,6 +336,11 @@ def cmd_selftest() -> int:
         except BaseException as e:                      # noqa: BLE001
             chk("driver: G-VEC's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
         chk("driver: G-VEC's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
+        try:
+            _gcal_selftest(chk, tmp / "gcal-cmd")
+        except BaseException as e:                      # noqa: BLE001
+            chk("driver: G-CAL-n's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
+        chk("driver: G-CAL-n's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
     try:
         hftiny.run(chk)
     except BaseException as e:                          # noqa: BLE001
@@ -2533,12 +2559,903 @@ def _gvec_selftest(chk, tmp: Path) -> None:
         rcs == (0, 0) and calls == [{"out": None, "smoke": None}, {"out": str(tmp / "s"), "smoke": 3}], calls)
 
 
+# --- G-CAL-n (n v0.2 §8 step 8; ``valence_core.n.gcal``) --------------------------------------------------------------
+GCAL_OUT = REPO / "data" / "n" / "gcal"
+GCAL_SMOKE_MAX = 4                  # GC19: the smoke's prompts, at +rho and unsteered only
+
+
+@dataclass
+class GcalEnv:
+    """G-CAL-n's seams: ``production_gcal_env`` is the box's; the self-test puts the numpy double behind them."""
+    weights: Callable                   # () -> the weights of record (``weights_of_record``)
+    load_ids: Callable                  # () -> ``ids.load()``
+    gvec_dir: Path                      # data/n/gvec/: G-VEC's outputs of record
+    committed: Callable                 # (path) -> HEAD's committed bytes of a repository path, or None
+    env_provenance: Callable            # (path) -> the provenance the adapter will report (before the load)
+    make_adapter: Callable              # (path) -> the adapter (the weights load)
+    adapter_shape: Callable             # (adapter) -> (n_layers, d_model)
+    step_logits: Callable               # (adapter) -> step(ids, injections) -> the last position's logits [V]
+    forward: Callable                   # (adapter) -> forward(ids, indices) -> {index: [S, D]}
+    decoder: Callable                   # (adapter) -> decode(ids) -> text, G-VER's decode
+    eos_id: Callable                    # (adapter) -> the tokenizer's eos id
+    pod: Callable                       # () -> the pod id or None
+    driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path | None)
+    indices: tuple                      # G-VEC's candidate indices (``gvec.CANDIDATE_INDICES``)
+    out: Path = GCAL_OUT
+    shape: tuple = (N_LAYERS, D_MODEL)
+    cap: int | None = None              # the self-test's smaller cap only; the stage's is gcal.CAP
+    printer: Callable = print
+    clock: Callable = time.perf_counter
+
+
+def _hf_step_logits(adapter):
+    """One uncached forward over the whole sequence, the injections placed at their positions (offset 0): the last
+    position's logits (``forward(...).logits``)."""
+    def step(ids, injections):
+        return adapter.forward(list(ids), capture_layers=(), injections=list(injections)).logits
+    return step
+
+
+def _hf_decoder(adapter):
+    return _decoder(adapter._tok)
+
+
+def committed_bytes(path):
+    """HEAD's committed bytes of a repository path (``git show HEAD:<path>``), or None when git cannot show them."""
+    import subprocess
+    rel = Path(path).resolve().relative_to(REPO.resolve()).as_posix()
+    got = subprocess.run(["git", "-C", str(REPO), "show", f"HEAD:{rel}"], capture_output=True, check=False)
+    return got.stdout if got.returncode == 0 else None
+
+
+def production_gcal_env() -> GcalEnv:
+    from valence_core.m import resume as m_resume
+    from valence_core.n import gvec, ids
+    return GcalEnv(weights=weights_of_record, load_ids=ids.load, gvec_dir=GVEC_OUT, committed=committed_bytes,
+                   env_provenance=environment_provenance, make_adapter=_load_adapter,
+                   adapter_shape=lambda a: (int(a.n_layers), int(a._model.config.hidden_size)),
+                   step_logits=_hf_step_logits, forward=_hf_forward, decoder=_hf_decoder, eos_id=lambda a: a.eos_id,
+                   pod=m_resume.pod_id, driver=driver_bytes, indices=gvec.CANDIDATE_INDICES)
+
+
+def gcal_gvec_inputs(gvec_dir, committed, indices) -> dict:
+    """G-VEC's outputs of record, before the load (GC18; rule 27): gvec.json and the site's directions file each HEAD's
+    committed bytes; the record a G-VEC PASS, its site one of the candidates and its of_record's, the directions file at
+    the record's sha256; the valence row (row 0, ``gvec.NAMED``) at of_record's sha16 (the Injection's). Returns the
+    site, R, R_ell, the row and its sha16, and the two files' sha256s."""
+    import hashlib
+
+    from valence_core.n import gvec
+    d = Path(gvec_dir)
+    rp = d / gvec.OUT_RECORD
+    if not rp.is_file():
+        raise SystemExit("data/n/gvec/gvec.json is absent: G-CAL-n runs after G-VEC's PASS is committed (GC18)")
+    data = rp.read_bytes()
+    if committed(rp) != data:
+        raise SystemExit("data/n/gvec/gvec.json is not HEAD's committed bytes (rule 27)")
+    try:
+        rec = json.loads(data.decode("utf-8"))
+        ofr, site, rsite = rec["of_record"], int(rec["of_record"]["site"]), int(rec["site"]["site"])
+        R, R_ell, v_rec = float(ofr["R"]), float(ofr["R_ell"]), str(ofr["directions"]["valence"])
+        fshas = dict(rec["files_sha256"])
+        head = (rec.get("schema"), rec.get("stage"), rec.get("status"))
+    except (ValueError, KeyError, TypeError, AttributeError) as e:
+        raise SystemExit(f"data/n/gvec/gvec.json is not a G-VEC record ({type(e).__name__})")
+    if head != (gvec.RECORD_SCHEMA, gvec.STAGE, "PASS") or site not in tuple(int(i) for i in indices) \
+            or rsite != site:
+        raise SystemExit("data/n/gvec/gvec.json is not a G-VEC PASS record at a candidate site")
+    fname = gvec.directions_file(site)
+    dp = d / fname
+    db = dp.read_bytes() if dp.is_file() else None
+    if db is None or committed(dp) != db or hashlib.sha256(db).hexdigest() != fshas.get(fname):
+        raise SystemExit(f"data/n/gvec/{fname} is absent, not HEAD's committed bytes, or not the record's")
+    v_unit = gvec.read_rows(dp)[gvec.NAMED.index("valence")]
+    v_sha = gvec.injection_sha16(v_unit)
+    if v_sha != v_rec:
+        raise SystemExit("the valence row's sha16 is not the record's of_record one")
+    return {"site": site, "R": R, "R_ell": R_ell, "v_unit": v_unit, "v_sha16": v_sha,
+            "gvec_sha256": hashlib.sha256(data).hexdigest(), "directions_sha256": hashlib.sha256(db).hexdigest()}
+
+
+def gcal_prompts_check(loaded) -> list:
+    """The (v) records, before the load: present under a v block whose prompt_template is ``gcal.prompt_parts``' (the
+    rendering's one place); 48 in index order, each the plan's prompt (label, replicate, seed) over the v block's
+    labels, which are the (iii) file's; its user turn's and its text's sha256s ``gcal.prompt_parts``'; its ids_sha
+    re-derived; gen_start the user turn's count, inside the sequence."""
+    import hashlib
+
+    from valence_core.n import gcal, ids, sessions
+    if ids.GCAL_FILE not in loaded or "v" not in loaded["manifest"]:
+        raise SystemExit("the ids of record hold no (v): G-CAL-n's prompts are rendered first (render-ids-v)")
+    v = loaded["manifest"]["v"]
+    recs = list(loaded[ids.GCAL_FILE])
+    if v["labels"] != ids.labels_of(loaded) or v["prompts"] != len(recs) or len(recs) != gcal.N_TURNS:
+        raise SystemExit("(v): its labels are not the (iii) file's, or its count is not 48")
+    if v.get("prompt_template") != "".join(gcal.prompt_parts("{zone}")):
+        raise SystemExit("(v): its prompt_template is not gcal.prompt_parts' (the rendering's one place)")
+    plan = gcal.plan(v["labels"])
+    for i, (r, p) in enumerate(zip(recs, plan)):
+        u, g = gcal.prompt_parts(r["label"])
+        if (r["index"], r["label"], r["rep"], r["seed"]) != (i, p["label"], p["rep"], p["seed"]) \
+                or r["user_sha256"] != hashlib.sha256(u.encode("utf-8")).hexdigest() \
+                or r["text_sha256"] != hashlib.sha256((u + g).encode("utf-8")).hexdigest() \
+                or sessions.ids_sha(r["ids"]) != r["ids_sha"] or r["seq_len"] != len(r["ids"]) \
+                or r["gen_start"] != r["user_tokens"] or not 0 < r["gen_start"] < r["seq_len"]:
+            raise SystemExit(f"(v) record {i} is not the plan's prompt {i} as rendered")
+    return recs
+
+
+def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
+    """G-CAL-n, in order: refusals; the weights and the driver; the ids of record (the manifest pinned), (v)'s 48
+    prompts; the generation window (rule 28(d)(c): the longest forward, a prompt and the cap - 1, within
+    ``gcal.GENERATION_WINDOW``); G-VEC's outputs of record; the dose map (before the load: a fold into 0 is refused, the
+    seat's); the R6 bridge; the load, its provenance, its shape and its eos (the v block's); ``gcal.compute``; the
+    outputs, built in a staging folder beside the out folder, each turn logged there as it is generated (GC23 (a)),
+    and renamed into place. On any failure after that folder is made, it is renamed to the failed-run folder beside
+    it (GC23 (b)), never removed, and the failure goes on. Exit 0 on PASS (or a smoke), 2 on a STOP and 3 on a PAUSE,
+    each with its record and turns, for the seat; a refusal raises."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.m.keys import stream_known_answer
+    from valence_core.n import gcal, guard, ids, schema
+    say = env.printer
+    if smoke is not None:
+        if not 1 <= int(smoke) <= GCAL_SMOKE_MAX:
+            raise SystemExit(f"--smoke takes 1..{GCAL_SMOKE_MAX} (prompts, at +rho and unsteered only: GC19)")
+        if out is None:
+            raise SystemExit("a smoke writes only where --out names, a new folder outside the repository")
+        if _within(Path(out).resolve(), REPO.resolve()):
+            raise SystemExit(f"a smoke writes outside the repository, not {out}")
+        out_p = guard.refuse_out(Path(out))
+    else:
+        if out is not None:
+            raise SystemExit("a run of record writes only to data/n/gcal/ (--out is a smoke's)")
+        out_p = guard.refuse_out(Path(env.out))
+    if out_p.exists():
+        raise SystemExit(f"{_shown(out_p)} exists: G-CAL-n writes a new folder and never resumes (GC19)")
+    stage = guard.refuse_out(out_p.parent / f".{out_p.name}.staging")
+    if stage.exists():
+        raise SystemExit(f"{_shown(stage)} exists: a staging folder another run left (a hard stop skips its "
+                         f"cleanup); move it aside first")
+    failed = guard.refuse_out(out_p.parent / f".{out_p.name}.failed")
+    if failed.exists():
+        raise SystemExit(f"{_shown(failed)} exists: a failed run's turns, kept for the seat (GC23); a re-run waits for "
+                         f"the seat's word (GC19)")
+    pod = env.pod()
+    if pod is None:
+        raise SystemExit("an n stage refuses to start without $RUNPOD_POD_ID (m's resume.pod_id)")
+    if pod != CHARACTERIZED_POD:
+        raise SystemExit(f"this pod is not the characterized one ({CHARACTERIZED_POD}, the BACKEND entry d5d08fa): "
+                         f"respawn step (ii) first")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != CHARACTERIZED_PROVENANCE["cublas_workspace_config"]:
+        raise SystemExit("CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2)")
+    ka = stream_known_answer()
+    if ka:
+        raise SystemExit(ka[0])
+    batches = gcal.SMOKE_BATCHES if smoke is not None else gcal.BATCHES
+    cap = int(env.cap) if env.cap is not None else gcal.CAP
+    if smoke is not None:
+        say(f"SMOKE: {smoke} prompts at +rho and unsteered, outside the repository; never of record")
+    say(f"STAGE G-CAL-n: batches {[b for b, _d in batches]}; TEMP {gcal.TEMP!r}, cap {cap}; out {_shown(out_p)}")
+    w = env.weights()
+    say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
+        f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
+    drv, head = env.driver()
+    dsha = hashlib.sha256(drv).hexdigest()
+    if smoke is None and drv != head:
+        raise SystemExit("a run of record runs only the committed driver: scripts/n_sessions.py is not HEAD's "
+                         "committed bytes (the box answers of 2026-11-18, §2 item 5)")
+    say(f"DRIVER scripts/n_sessions.py {dsha}: "
+        + ("HEAD's committed bytes" if drv == head else "a smoke's, not HEAD's committed bytes (unchecked)"))
+    loaded = env.load_ids()
+    if loaded["manifest_sha256"] != ids.MANIFEST_OF_RECORD:
+        raise SystemExit("data/n/ids/MANIFEST.json is not the render of record's")
+    prompts = gcal_prompts_check(loaded)
+    longest = gcal.longest_forward(max(int(r["seq_len"]) for r in prompts), cap)
+    if longest > gcal.GENERATION_WINDOW:
+        raise SystemExit(f"a prompt's longest forward is {longest} positions (its ids and the cap - 1), over the "
+                         f"generation window {gcal.GENERATION_WINDOW} (rule 28(d)(c))")
+    gv = gcal_gvec_inputs(env.gvec_dir, env.committed, env.indices)
+    try:
+        dmap = gcal.dose_map(gv["R"], gv["R_ell"])
+    except (schema.SchemaError, ValueError) as e:
+        raise SystemExit(f"the dose map is refused before the load (the seat's): {e}")
+    say(f"inputs: the ids of record {loaded['manifest_sha256']} ((v): {len(prompts)} prompts, every ids_sha re-derived, "
+        f"each the plan's; the longest forward {longest} positions, within the generation window "
+        f"{gcal.GENERATION_WINDOW}); G-VEC's record {gv['gvec_sha256']}, site {gv['site']}, R {gv['R']!r}, R_ell "
+        f"{gv['R_ell']!r}, valence {gv['v_sha16']}")
+    say(f"dose map: d_eq {dmap['d_eq']!r}, d_20 {dmap['d_20']!r} (rho {dmap['rho']!r}); points "
+        + ", ".join(f"{p['label']} {p['value']!r}" + (f" (merged {'+'.join(p['merged'])})" if p["merged"] else "")
+                    for p in dmap["points"]))
+    n_layers, d_model = env.shape
+    pre = env.env_provenance(w["path"])
+    if bridge_identifier(pre) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit(f"before the load: the environment's provenance under the default window hashes to "
+                         f"{bridge_identifier(pre)}, not the characterization's {CHARACTERIZED_IDENTIFIER} (R6)")
+    bid = m_resume.backend_identifier(pre)
+    mods = _import_production()
+    prov_rec = {"package_sha256": mods["guard"].package_sha256(),
+                "imported_sha256": mods["guard"].closure_from_modules(dict(sys.modules)),
+                "weights": {"repo": w["repo"], "revision": w["revision"], "sha256": w["sha256"]},
+                "backend_identifier": bid, "characterized_identifier": CHARACTERIZED_IDENTIFIER, "pod_id": pod,
+                "ids_manifest_sha256": loaded["manifest_sha256"], "driver_sha256": dsha,
+                "gvec_sha256": gv["gvec_sha256"], "directions_sha256": gv["directions_sha256"], "site": gv["site"],
+                "valence_sha16": gv["v_sha16"], "window": schema.MAX_WINDOW,
+                "generation_window": gcal.GENERATION_WINDOW, "longest_forward": longest, "smoke": smoke, "cap": cap}
+    t0 = env.clock()
+    adapter = env.make_adapter(w["path"])
+    load_ms = max(0, int(round((env.clock() - t0) * 1000)))
+    prov = adapter.provenance()
+    if m_resume.backend_identifier(prov) != bid or bridge_identifier(prov) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit("the loaded adapter's provenance is not the one checked before the load -- refusing")
+    if tuple(env.adapter_shape(adapter)) != (n_layers, d_model):
+        raise SystemExit(f"the checkpoint is {tuple(env.adapter_shape(adapter))}, not ({n_layers}, {d_model})")
+    eos = env.eos_id(adapter)
+    if eos is None or int(eos) != int(loaded["manifest"]["v"]["eos_id"]):
+        raise SystemExit(f"the tokenizer's eos id {eos!r} is not the (v) render's {loaded['manifest']['v']['eos_id']}")
+    say(f"backend: n's identifier {bid} (window {schema.MAX_WINDOW}); the characterization's "
+        f"{CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {pod}; load {load_ms} ms; eos {int(eos)}")
+    prov_rec["load_ms"] = load_ms
+    prov_rec["adapter_provenance"] = m_resume.provenance_record(prov)
+    step, fwd, dec = env.step_logits(adapter), env.forward(adapter), env.decoder(adapter)
+    out_p.parent.mkdir(parents=True, exist_ok=True)
+    stage.mkdir()
+    log_p = stage / gcal.OUT_PARTIAL
+    try:
+        res = gcal.compute(step, fwd, dec, prompts, v_unit=gv["v_unit"], v_sha16=gv["v_sha16"], site=gv["site"],
+                           R=gv["R"], eos_id=int(eos), batches=batches, n=smoke, cap=cap, say=say,
+                           on_turn=lambda r: gcal.append_turn(log_p, r))
+        gcal.write(stage, res, dmap, prov_rec)
+        log_p.unlink(missing_ok=True)
+        os.replace(stage, out_p)
+    except BaseException:
+        try:
+            os.replace(stage, failed)
+            say(f"FAILED: the staging folder is kept as {_shown(failed)}, with every turn generated before the failure "
+                f"(GC23); nothing is removed")
+        except OSError as e:
+            say(f"FAILED: the staging folder stays at {_shown(stage)} ({type(e).__name__}); nothing is removed")
+        raise
+    for p in sorted(out_p.iterdir()):
+        say(f"file {_shown(p)} sha256 {hashlib.sha256(p.read_bytes()).hexdigest()}")
+    say(f"exposure at -rho (PIN-n-23): {res['exposure_minus_rho']['turns']} turns, "
+        f"{res['exposure_minus_rho']['tokens']} tokens, {res['exposure_minus_rho']['draws']} draws")
+    status = res["status"]
+    if status == "STOP":
+        say("G-CAL-n STOP: a hurdle failed at +rho or -rho (n:113); the record and the turns are written; the seat rules")
+        return 2
+    if status == "PAUSE":
+        say("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone (GC14); the record and the turns are written; the seat rules")
+        return 3
+    say(f"G-CAL-n {status}" + (", never of record" if status == "SMOKE" else "; the dose map is pinnable"))
+    return 0
+
+
+def cmd_gcal(out=None, smoke: int | None = None) -> int:
+    return run_gcal(production_gcal_env(), out=out, smoke=smoke)
+
+
+def _pi_date_ok(pi_date) -> bool:
+    import datetime
+    import re
+    try:
+        return re.fullmatch(r"\d{4}-\d{2}-\d{2}", pi_date or "") is not None \
+            and datetime.date.fromisoformat(pi_date).isoformat() == pi_date
+    except ValueError:
+        return False
+
+
+def cmd_render_ids_v(tokenizer_dir: str, out: str, pi_date: str) -> int:
+    """(v), G-CAL-n's prompts (ADDENDUM-n1 §1.2 (v)), in G-DATA's environment on the laptop, into a new folder outside
+    the repository; the commit copies from it."""
+    import platform
+
+    from valence_core.n import gcal, guard, ids
+    if not _pi_date_ok(pi_date):
+        raise SystemExit("--pi-date is the PI's calendar date, YYYY-MM-DD")
+    p = Path(out).resolve()
+    if _within(p, REPO.resolve()):
+        raise SystemExit("render-ids-v writes into a new folder outside the repository; the commit copies from it")
+    out_dir = guard.refuse_out(p)
+    import tokenizers
+    import transformers
+    from transformers import AutoTokenizer
+    env = {"python": platform.python_version(), "transformers": transformers.__version__,
+           "tokenizers": tokenizers.__version__}
+    print(f"environment: python {env['python']} | transformers {env['transformers']} | tokenizers {env['tokenizers']}")
+    ids.check_environment(env)
+    shas = ids.check_tokenizer_dir(tokenizer_dir)
+    for name in ids.TOKENIZER_FILES:
+        print(f"tokenizer file {name} {shas[name]} = the manifest's {ids.MANIFEST_ENTRY}")
+    tok = AutoTokenizer.from_pretrained(tokenizer_dir, local_files_only=True)
+    enc, _enc_special = _encoders(tok)
+    labels = ids.labels_of(ids.load(ids.IDS_DIR))
+    rep = ids.render_v(labels, enc, env, shas, pi_date, ids.IDS_DIR, out_dir, prompt_parts=gcal.prompt_parts,
+                       plan=gcal.plan)
+    print("render-ids-v (ADDENDUM-n1 §1.2 (v)):")
+    print(json.dumps(ids.printable(rep), sort_keys=True))
+    return 0 if rep["status"] == "PASS" else 1
+
+
+GCAL_FLAGS = ("length_collapse", "repetition_loop", "low_diversity", "coherent")
+
+
+def gcal_decode_compare(record_bytes: bytes, turns_bytes: bytes, decode: Callable) -> dict:
+    """A-n1 §1.4's one comparison: the record a G-CAL-n record, the turns file at its sha256; each turn's emitted ids
+    decoded here, against the box's decode it records. Returns both files' sha256s; the counts; each batch's coherent
+    count under the box's flags (as recorded) and under the laptop's decode; and each difference (batch, index, the two
+    decodes, the three flags and the verdict under each, whether any differs)."""
+    import hashlib
+
+    from valence_core.n import gcal
+    try:
+        record = json.loads(record_bytes.decode("utf-8"))
+        head, want = (record["schema"], record["stage"]), record["files_sha256"][gcal.OUT_TURNS]
+    except (ValueError, KeyError, TypeError) as e:
+        raise SystemExit(f"{gcal.OUT_RECORD} is not a G-CAL-n record ({type(e).__name__})")
+    if head != (gcal.RECORD_SCHEMA, gcal.STAGE):
+        raise SystemExit(f"{gcal.OUT_RECORD} is not a G-CAL-n record")
+    tsha = hashlib.sha256(turns_bytes).hexdigest()
+    if tsha != want:
+        raise SystemExit(f"{gcal.OUT_TURNS} is not at the record's sha256")
+    rows = [json.loads(x) for x in turns_bytes.decode("utf-8").splitlines()]
+    diffs, by_batch = [], {}
+    for r in rows:
+        here = decode(r["ids"])
+        ch = gcal.coherence(here)
+        fb = {k: r["coherence"][k] for k in GCAL_FLAGS}
+        fl = {k: ch[k] for k in GCAL_FLAGS}
+        cb = by_batch.setdefault(r["batch"], {"box": 0, "laptop": 0})
+        cb["box"] += int(bool(fb["coherent"]))
+        cb["laptop"] += int(bool(fl["coherent"]))
+        if here != r["decode"]:
+            diffs.append({"batch": r["batch"], "index": r["index"], "box": r["decode"], "laptop": here,
+                          "box_flags": fb, "laptop_flags": fl, "flags_differ": fb != fl})
+    return {"record_sha256": hashlib.sha256(record_bytes).hexdigest(), "turns_sha256": tsha, "turns": len(rows),
+            "equal": len(rows) - len(diffs), "different": len(diffs),
+            "flags_differ": sum(1 for x in diffs if x["flags_differ"]), "coherent_by_batch": by_batch,
+            "differences": diffs}
+
+
+def cmd_gcal_decode(gcal_dir: str, tokenizer_dir: str) -> int:
+    """The laptop's decode of G-CAL-n's turns (A-n1 §1.4; GC17), in G-DATA's environment: the record and turns copied
+    back from the box, the tokenizer of record; prints the counts and every difference."""
+    import platform
+
+    from valence_core.n import gcal, ids
+    d = Path(gcal_dir)
+    rb, tb = (d / gcal.OUT_RECORD).read_bytes(), (d / gcal.OUT_TURNS).read_bytes()
+    import tokenizers
+    import transformers
+    from transformers import AutoTokenizer
+    env = {"python": platform.python_version(), "transformers": transformers.__version__,
+           "tokenizers": tokenizers.__version__}
+    print(f"environment: python {env['python']} | transformers {env['transformers']} | tokenizers {env['tokenizers']}")
+    ids.check_environment(env)
+    ids.check_tokenizer_dir(tokenizer_dir)
+    tok = AutoTokenizer.from_pretrained(tokenizer_dir, local_files_only=True)
+    rep = gcal_decode_compare(rb, tb, _decoder(tok))
+    print(f"files: {gcal.OUT_RECORD} sha256 {rep['record_sha256']}; {gcal.OUT_TURNS} sha256 {rep['turns_sha256']} "
+          f"(the record's)")
+    print(f"decode comparison (A-n1 §1.4): {rep['turns']} turns, {rep['equal']} equal, {rep['different']} different, "
+          f"{rep['flags_differ']} of them with a flag that differs")
+    for b, c in rep["coherent_by_batch"].items():
+        print(f"coherent {b}: {c['box']} under the box's flags, {c['laptop']} under the laptop's decode")
+    for x in rep["differences"]:
+        print(f"difference {x['batch']} {x['index']}: box {json.dumps(x['box'])} | laptop {json.dumps(x['laptop'])} | "
+              f"flags box {json.dumps(x['box_flags'], sort_keys=True)} laptop "
+              f"{json.dumps(x['laptop_flags'], sort_keys=True)}")
+    return 0
+
+
+def _gcal_selftest(chk, tmp: Path) -> None:
+    """G-CAL-n's command, model-free: its flow over the numpy double behind every seam (a run of record into a folder
+    under tmp; its PASS, STOP and PAUSE exits through a stand-in compute; a smoke; a failure mid-run), its refusals
+    before and after the load, the (v) and G-VEC input checks, the decode comparison, render-ids-v's refusals and
+    main()'s dispatch. It writes only under tmp."""
+    import contextlib
+    import hashlib
+    import io
+    import types
+
+    import numpy as np
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import gcal, gvec, ids, schema, sessions
+    tmp.mkdir(parents=True, exist_ok=True)
+    be = gcal.testing_double()
+    site, L = 3, (2, 3)
+
+    def refused(fn) -> bool:
+        try:
+            fn()
+        except SystemExit:
+            return True
+        return False
+    # G-VEC's outputs of record, a fake: the record and the site's directions file, and HEAD's bytes of each
+    gdir = tmp / "gvec_rec"
+    gdir.mkdir()
+    rng = np.random.default_rng(19)
+    rows = np.stack([gvec.unit32(rng.normal(size=be.d_model)) for _ in gvec.NAMED]).astype(np.float32)
+    fname = gvec.directions_file(site)
+    with open(gdir / fname, "wb") as fh:
+        np.save(fh, rows, allow_pickle=False)
+    v_sha = gvec.injection_sha16(rows[0])
+    R_t, Rl_t = 3.0, 3.0
+
+    def write_gvec(folder, **over):
+        folder.mkdir(parents=True, exist_ok=True)
+        if folder != gdir:
+            (folder / fname).write_bytes((gdir / fname).read_bytes())
+        rec = {"schema": gvec.RECORD_SCHEMA, "stage": gvec.STAGE, "status": "PASS", "site": {"site": site},
+               "of_record": {"site": site, "R": R_t, "R_ell": Rl_t, "directions": {"valence": v_sha},
+                             "route_line": gvec.ROUTE_LINE},
+               "files_sha256": {fname: hashlib.sha256((folder / fname).read_bytes()).hexdigest()}}
+        for k, v in over.items():
+            rec[k] = v
+        (folder / gvec.OUT_RECORD).write_text(json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+        return {p.resolve(): p.read_bytes() for p in folder.iterdir()}
+    snap = write_gvec(gdir)
+    labs = sorted(["Zone B8", "Zone D7", "Zone H0", "Zone K7", "Zone L4", "Zone M2", "Zone N1", "Zone Q3", "Zone R9",
+                   "Zone T5", "Zone V3", "Zone W6"])
+
+    def vrec(p):
+        u, g = gcal.prompt_parts(p["label"])
+        ii = [3, 4, 5, 6, 8 + p["index"] % 5]
+        return {"index": p["index"], "label": p["label"], "rep": p["rep"], "seed": p["seed"],
+                "user_sha256": hashlib.sha256(u.encode("utf-8")).hexdigest(),
+                "text_sha256": hashlib.sha256((u + g).encode("utf-8")).hexdigest(), "user_tokens": 3, "gen_start": 3,
+                "seq_len": len(ii), "ids_sha": sessions.ids_sha(ii), "ids": ii}
+    vrecs = [vrec(p) for p in gcal.plan(labs)]
+    vblock0 = {"labels": labs, "prompts": 48, "eos_id": 7, "prompt_template": "".join(gcal.prompt_parts("{zone}"))}
+
+    def loaded_of(v_=None, man=None, vblock=None, cand=None, drop_v=False):
+        out_ = {"manifest_sha256": man or ids.MANIFEST_OF_RECORD,
+                "manifest": {} if drop_v else {"v": vblock or vblock0},
+                ids.LABELS_FILE: [{"candidates": [{"labels": {lab: [1] for lab in (cand or labs)}}]}]}
+        if not drop_v:
+            out_[ids.GCAL_FILE] = v_ if v_ is not None else vrecs
+        return out_
+    prov_t = dict(CHARACTERIZED_PROVENANCE, path="(toy)", choice_window_declared=schema.MAX_WINDOW)
+    made: list = []
+
+    class StubAdapter:
+        def __init__(self, prov):
+            self._prov = prov
+
+        def provenance(self):
+            return dict(self._prov)
+
+    def dec_of(_a):
+        return lambda ii: " ".join(f"w{int(i) % 11}" for i in ii)
+
+    def env_for(tag, **over):
+        lines: list = []
+
+        def mk(path, prov=None):
+            made.append(tag)
+            return StubAdapter(prov or prov_t)
+        base = dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": "5" * 64, "n_files": 1,
+                                     "path": "(toy)"},
+                    load_ids=lambda: loaded_of(), gvec_dir=gdir, committed=lambda p: snap.get(Path(p).resolve()),
+                    env_provenance=lambda p: dict(prov_t), make_adapter=mk, adapter_shape=lambda a: (4, 8),
+                    step_logits=lambda a: (lambda ii, inj: be.prefill(ii, inj, ()).logits_last),
+                    forward=lambda a: (lambda ii, layers: be.forward_all(ii, layers)), decoder=dec_of,
+                    eos_id=lambda a: 7, pod=lambda: CHARACTERIZED_POD, driver=lambda: (b"drv", b"drv"), indices=L,
+                    out=tmp / tag / "gcal", shape=(4, 8), cap=6, printer=lines.append)
+        base.update(over)
+        if _within(Path(base["out"]).resolve(), REPO.resolve()):    # a self-test writes only under tmp
+            raise SystemExit(f"a self-test environment points out into the repository: {base['out']}")
+        return GcalEnv(**base), lines
+    prod = production_gcal_env()
+    chk("driver: G-CAL-n's production seams carry G-VEC's indices (31, 32), data/n/gvec/ as its input and data/n/gcal/ "
+        "as its out, the stage's cap",
+        (tuple(prod.indices), prod.gvec_dir, prod.out, prod.cap) == (gvec.CANDIDATE_INDICES, GVEC_OUT, GCAL_OUT, None)
+        and GCAL_OUT == REPO / "data" / "n" / "gcal", "")
+    saved = {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG",)}
+    try:
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = CHARACTERIZED_PROVENANCE["cublas_workspace_config"]
+        env1, lines1 = env_for("run")
+        rc1 = run_gcal(env1)
+        rec1 = json.loads((env1.out / gcal.OUT_RECORD).read_text(encoding="utf-8"))
+        names1 = sorted(p.name for p in env1.out.iterdir())
+        turns1 = [json.loads(x) for x in (env1.out / gcal.OUT_TURNS).read_text(encoding="utf-8").splitlines()]
+        want_rc = {"PASS": 0, "STOP": 2, "PAUSE": 3}.get(rec1["status"])
+        chk("driver: G-CAL-n's run of record over the double behind every seam: its three files in a new folder, the "
+            "staging folder gone, the exit its status's (0 PASS, 2 STOP, 3 PAUSE)",
+            names1 == sorted([gcal.OUT_RECORD, gcal.OUT_TURNS, gcal.OUT_DOSE_MAP]) and rc1 == want_rc
+            and not (env1.out.parent / ".gcal.staging").exists() and not (env1.out.parent / ".gcal.failed").exists()
+            and len(turns1) == 192
+            and rec1["dose_map"] == gcal.dose_map(R_t, Rl_t) and rec1["pinnable"] == (rec1["status"] == "PASS"),
+            (rc1, rec1.get("status"), names1))
+        pv = rec1["provenance"]
+        chk("driver: the record's provenance: the package and closure, the weights, the identifiers, the pod, the ids of "
+            "record, the driver, G-VEC's two files, the site and valence sha16, the two windows and the longest "
+            "forward, the cap and the load",
+            pv["ids_manifest_sha256"] == ids.MANIFEST_OF_RECORD and pv["site"] == site and pv["valence_sha16"] == v_sha
+            and pv["gvec_sha256"] == hashlib.sha256((gdir / gvec.OUT_RECORD).read_bytes()).hexdigest()
+            and pv["directions_sha256"] == hashlib.sha256((gdir / fname).read_bytes()).hexdigest()
+            and pv["characterized_identifier"] == CHARACTERIZED_IDENTIFIER and pv["pod_id"] == CHARACTERIZED_POD
+            and pv["window"] == schema.MAX_WINDOW and pv["cap"] == 6 and pv["smoke"] is None
+            and pv["generation_window"] == gcal.GENERATION_WINDOW
+            and pv["longest_forward"] == gcal.longest_forward(5, 6)
+            and isinstance(pv["load_ms"], int) and len(pv["package_sha256"]) == 64
+            and pv["backend_identifier"] == m_resume.backend_identifier(prov_t)
+            and pv["adapter_provenance"] == m_resume.provenance_record(prov_t), "")
+        heads = ("STAGE G-CAL-n", "WEIGHTS:", "DRIVER", "inputs:", "dose map:", "backend:", "steering check +rho:",
+                 "turn +rho 0 ", "batch +rho:", "file ", "exposure at -rho")
+        decodes = {r["decode"] for r in turns1 if " " in r["decode"]}     # several words: never a path's chance match
+        chk("driver: G-CAL-n prints its lines in order -- STAGE, WEIGHTS, DRIVER, inputs, the dose map, backend, the "
+            "steering check, the turns, the batches, each file's sha256, the exposure -- and no turn's text or id",
+            [next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads]
+            == sorted(next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads)
+            and all(any(x.startswith(h) for x in lines1) for h in heads)
+            and not any(d in x for d in decodes for x in lines1) and not any('"ids"' in x for x in lines1),
+            lines1[:6])
+        chk("driver: the model loads once, after every check that needs none", made.count("run") == 1, made)
+        g = globals()
+        real_compute = gcal.compute
+
+        def canned(status):
+            def fake(*a, **k):
+                return {"status": status, "turns": {"+rho": [], "-rho": [], "+rho/2": [], "baseline": []},
+                        "figures": {}, "exposure_minus_rho": {"turns": 0, "tokens": 0, "draws": 0},
+                        "batches": ["+rho", "-rho", "+rho/2", "baseline"]}
+            return fake
+        rcs, ends = {}, {}
+        try:
+            for st in ("PASS", "STOP", "PAUSE"):
+                gcal.compute = canned(st)
+                e_, l_ = env_for(f"canned_{st}")
+                rcs[st] = run_gcal(e_)
+                ends[st] = (l_[-1], json.loads((e_.out / gcal.OUT_RECORD).read_text())["pinnable"])
+        finally:
+            gcal.compute = real_compute
+        chk("driver: G-CAL-n's exits: PASS 0 (the dose map pinnable), a STOP 2 and a PAUSE 3, each with its record "
+            "and turns written, for the seat", rcs == {"PASS": 0, "STOP": 2, "PAUSE": 3}
+            and ends["PASS"] == ("G-CAL-n PASS; the dose map is pinnable", True)
+            and ends["STOP"][0].startswith("G-CAL-n STOP: a hurdle failed at +rho or -rho") and ends["STOP"][1] is False
+            and ends["PAUSE"][0].startswith("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone")
+            and ends["PAUSE"][1] is False, (rcs, ends))
+        env3, l3 = env_for("smoke", driver=lambda: (b"drv-new", b"drv"))
+        rc3 = run_gcal(env3, out=tmp / "smoke-out", smoke=2)
+        rec3 = json.loads((tmp / "smoke-out" / gcal.OUT_RECORD).read_text())
+        t3 = (tmp / "smoke-out" / gcal.OUT_TURNS).read_text().splitlines()
+        chk("driver: a smoke runs uncommitted bytes into --out outside the repository: +rho and the baseline only on its "
+            "first prompts, never -rho, its status SMOKE, never of record",
+            rc3 == 0 and rec3["status"] == "SMOKE" and rec3["batches"] == ["+rho", "baseline"] and len(t3) == 4
+            and rec3["exposure_minus_rho"] == {"turns": 0, "tokens": 0, "draws": 0} and not env3.out.exists()
+            and any(x.startswith("SMOKE:") for x in l3)
+            and any("a smoke's, not HEAD's committed bytes" in x for x in l3), (rc3, rec3.get("status")))
+
+        def broken(_a):
+            def f(ii, inj):
+                raise RuntimeError("the forward failed")
+            return f
+        env4, l4 = env_for("fail", step_logits=broken)
+        try:
+            run_gcal(env4)
+            failed = False
+        except RuntimeError:
+            failed = True
+        fdir4 = env4.out.parent / ".gcal.failed"
+        chk("driver: GC23 (b): a failure after the load leaves no out folder and no staging folder; the staging folder "
+            "is kept as the failed-run folder, here with no turn (the first forward failed), and the failure goes on",
+            failed and not env4.out.exists() and not (env4.out.parent / ".gcal.staging").exists() and fdir4.is_dir()
+            and not any(fdir4.iterdir()) and any(x.startswith("FAILED:") for x in l4), l4[-2:])
+
+        def flaky(_a):             # the forward fails at its 61st call, mid-way through the first batch generated
+            n_calls = [0]
+
+            def f(ii, inj):
+                n_calls[0] += 1
+                if n_calls[0] > 60:
+                    raise RuntimeError("the forward failed mid-run")
+                return be.prefill(ii, inj, ()).logits_last
+            return f
+        env5, _l5 = env_for("midfail", step_logits=flaky)
+        try:
+            run_gcal(env5)
+            failed5 = False
+        except RuntimeError:
+            failed5 = True
+        log5 = env5.out.parent / ".gcal.failed" / gcal.OUT_PARTIAL
+        logged = [json.loads(x) for x in log5.read_text(encoding="utf-8").splitlines()] if log5.is_file() else []
+        own = {(r["batch"], r["index"]): r["ids"] for r in turns1}
+        seq5 = [(b, i) for b in gcal.GENERATION_ORDER for i in range(gcal.N_TURNS)]
+        chk("driver: GC23 (a)-(b): a failure mid-run keeps, in the failed-run folder's log, every turn generated "
+            "before it, in the order of generation, each the run of record's own turn with its arrival not yet scored",
+            failed5 and not env5.out.exists() and len(logged) >= 1
+            and [(r["batch"], r["index"]) for r in logged] == seq5[:len(logged)]
+            and all(r["ids"] == own[(r["batch"], r["index"])] and r["arrival"] is None for r in logged), len(logged))
+        env6, _l6 = env_for("nanarr", forward=lambda a: (lambda ii, layers: {int(layers[0]): np.full((len(ii), 8),
+                                                                                                    np.nan)}))
+        try:
+            run_gcal(env6)
+            failed6 = False
+        except ValueError:
+            failed6 = True
+        log6 = env6.out.parent / ".gcal.failed" / gcal.OUT_PARTIAL
+        n6 = len(log6.read_text(encoding="utf-8").splitlines()) if log6.is_file() else -1
+        chk("driver: GC23 (c): a non-finite arrival score is a failure, after every turn is generated; the failed-run "
+            "folder's log holds all 192 turns", failed6 and not env6.out.exists() and n6 == 192, n6)
+        # refusals, each before the load
+        n_made = len(made)
+        pre_out = tmp / "exists" / "gcal"
+        pre_out.mkdir(parents=True)
+        leftover = tmp / "lefto" / ".gcal.staging"
+        leftover.mkdir(parents=True)
+        (tmp / "leftf" / ".gcal.failed").mkdir(parents=True)
+
+        def with_v(i, **kw):
+            out_ = [dict(r) for r in vrecs]
+            out_[i].update(kw)
+            return out_
+        long_v = with_v(4, ids=[3] * schema.MAX_WINDOW)
+        long_v[4].update(seq_len=schema.MAX_WINDOW, ids_sha=sessions.ids_sha([3] * schema.MAX_WINDOW))
+
+        def gv_env(tag, **rec_over):
+            folder = tmp / f"gvec_{tag}"
+            s_ = write_gvec(folder, **rec_over)
+            return env_for(tag, gvec_dir=folder, committed=lambda p: s_.get(Path(p).resolve()))[0]
+        nocommit = env_for("x31", committed=lambda p: None)[0]
+        bad_dir = tmp / "gvec_baddir"
+        s_bad = write_gvec(bad_dir)
+        (bad_dir / fname).write_bytes((gdir / fname).read_bytes()[:-4] + b"\x00\x00\x00\x00")
+        baddir_env = env_for("x32", gvec_dir=bad_dir, committed=lambda p: s_bad.get(Path(p).resolve()))[0]
+        cd_dir = tmp / "gvec_cdiff"            # the directions file at the record's sha256, but not HEAD's bytes
+        s_cd = write_gvec(cd_dir)
+        cdiff_env = env_for("x40", gvec_dir=cd_dir,
+                            committed=lambda p: b"other" if Path(p).name == fname else s_cd.get(Path(p).resolve()))[0]
+        cases = [
+            ("an existing out folder (G-CAL-n never resumes)", lambda: run_gcal(env_for("x1", out=pre_out)[0])),
+            ("a staging folder a hard stop left", lambda: run_gcal(env_for("lefto")[0])),
+            ("a failed run's folder (GC23: a re-run waits for the seat's word)",
+             lambda: run_gcal(env_for("leftf")[0])),
+            ("--out on a run of record", lambda: run_gcal(env_for("x2")[0], out=tmp / "o2")),
+            ("a smoke without --out", lambda: run_gcal(env_for("x3")[0], smoke=2)),
+            ("a smoke whose --out is in the repository",
+             lambda: run_gcal(env_for("x4")[0], out=REPO / "data" / "n" / "gcal-smoke", smoke=2)),
+            ("a smoke of 5", lambda: run_gcal(env_for("x5")[0], out=tmp / "o5", smoke=5)),
+            ("a smoke of 0", lambda: run_gcal(env_for("x5b")[0], out=tmp / "o5b", smoke=0)),
+            ("no pod id", lambda: run_gcal(env_for("x6", pod=lambda: None)[0])),
+            ("another pod", lambda: run_gcal(env_for("x7", pod=lambda: "other-pod")[0])),
+            ("a run of record on uncommitted driver bytes",
+             lambda: run_gcal(env_for("x8", driver=lambda: (b"new", b"old"))[0])),
+            ("ids not of record", lambda: run_gcal(env_for("x9", load_ids=lambda: loaded_of(man="0" * 64))[0])),
+            ("ids without (v)", lambda: run_gcal(env_for("x10", load_ids=lambda: loaded_of(drop_v=True))[0])),
+            ("a (v) record with another label",
+             lambda: run_gcal(env_for("x11", load_ids=lambda: loaded_of(v_=with_v(0, label="Zone Q3")))[0])),
+            ("a (v) record with another seed",
+             lambda: run_gcal(env_for("x12", load_ids=lambda: loaded_of(v_=with_v(1, seed=1)))[0])),
+            ("a (v) record with another replicate",
+             lambda: run_gcal(env_for("x13", load_ids=lambda: loaded_of(v_=with_v(2, rep=3)))[0])),
+            ("a (v) record whose text sha256 is not prompt_parts'",
+             lambda: run_gcal(env_for("x14", load_ids=lambda: loaded_of(v_=with_v(3, text_sha256="0" * 64)))[0])),
+            ("a (v) record whose user turn's sha256 is not prompt_parts'",
+             lambda: run_gcal(env_for("x14b", load_ids=lambda: loaded_of(v_=with_v(3, user_sha256="0" * 64)))[0])),
+            ("a (v) block whose prompt_template is not prompt_parts'",
+             lambda: run_gcal(env_for("x14c", load_ids=lambda: loaded_of(
+                 vblock=dict(vblock0, prompt_template="<|user|>\n{zone}\n")))[0])),
+            ("a (v) record whose ids do not hash to its ids_sha",
+             lambda: run_gcal(env_for("x15", load_ids=lambda: loaded_of(v_=with_v(5, ids_sha="0" * 16)))[0])),
+            ("a (v) record whose gen_start is not the user turn's count",
+             lambda: run_gcal(env_for("x16", load_ids=lambda: loaded_of(v_=with_v(6, gen_start=2)))[0])),
+            ("a (v) record whose gen_start is at its end",
+             lambda: run_gcal(env_for("x16b", load_ids=lambda: loaded_of(v_=with_v(6, gen_start=5, user_tokens=5)))[0])),
+            ("a (v) record whose seq_len is not its ids'",
+             lambda: run_gcal(env_for("x17", load_ids=lambda: loaded_of(v_=with_v(7, seq_len=9)))[0])),
+            ("(v) out of index order",
+             lambda: run_gcal(env_for("x18", load_ids=lambda: loaded_of(v_=[vrecs[1], vrecs[0]] + vrecs[2:]))[0])),
+            ("(v) of 47 prompts", lambda: run_gcal(env_for("x19", load_ids=lambda: loaded_of(v_=vrecs[:47]))[0])),
+            ("(v) labels that are not the (iii) file's",
+             lambda: run_gcal(env_for("x20", load_ids=lambda: loaded_of(cand=labs[:11] + ["Zone A1"]))[0])),
+            ("a prompt whose longest forward is over the generation window",
+             lambda: run_gcal(env_for("x21", load_ids=lambda: loaded_of(v_=long_v))[0])),
+            ("G-VEC's record absent", lambda: run_gcal(env_for("x30", gvec_dir=tmp / "no-gvec")[0])),
+            ("G-VEC's record not HEAD's committed bytes", lambda: run_gcal(nocommit)),
+            ("G-VEC's record a STOP", lambda: run_gcal(gv_env("x33", status="STOP"))),
+            ("G-VEC's record of another stage", lambda: run_gcal(gv_env("x34", stage="G-CAL-n"))),
+            ("G-VEC's site not a candidate index",
+             lambda: run_gcal(gv_env("x35", of_record={"site": 1, "R": R_t, "R_ell": Rl_t,
+                                                       "directions": {"valence": v_sha}}, site={"site": 1}))),
+            ("G-VEC's directions file not the record's", lambda: run_gcal(baddir_env)),
+            ("G-VEC's directions file at the record's sha256 but not HEAD's bytes", lambda: run_gcal(cdiff_env)),
+            ("G-VEC's directions file HEAD's bytes but not at the record's sha256",
+             lambda: run_gcal(gv_env("x41", files_sha256={fname: "0" * 64}))),
+            ("G-VEC's record whose site block is not its of_record's site",
+             lambda: run_gcal(gv_env("x39", site={"site": 2}))),
+            ("G-VEC's record with no site block", lambda: run_gcal(gv_env("x42", site=None))),
+            ("G-VEC's of_record with no directions",
+             lambda: run_gcal(gv_env("x43", of_record={"site": site, "R": R_t, "R_ell": Rl_t}))),
+            ("G-VEC's record with no files_sha256 map", lambda: run_gcal(gv_env("x44", files_sha256=None))),
+            ("a G-VEC R that is not positive (the dose map's ValueError)",
+             lambda: run_gcal(gv_env("x45", of_record={"site": site, "R": -1.0, "R_ell": Rl_t,
+                                                       "directions": {"valence": v_sha}}))),
+            ("a valence row not of_record's sha16",
+             lambda: run_gcal(gv_env("x36", of_record={"site": site, "R": R_t, "R_ell": Rl_t,
+                                                       "directions": {"valence": "0" * 16}}))),
+            ("a dose map that folds into 0 (the seat's)",
+             lambda: run_gcal(gv_env("x37", of_record={"site": site, "R": 25.49, "R_ell": 0.3 * 25.49 * 0.4,
+                                                       "directions": {"valence": v_sha}}))),
+            ("a provenance off the characterization before the load",
+             lambda: run_gcal(env_for("x38", env_provenance=lambda p: dict(prov_t, gpu="another GPU"))[0])),
+        ]
+        out_r = {name: refused(fn) for name, fn in cases}
+        chk("driver: G-CAL-n refuses, before the load: " + "; ".join(name for name, _f in cases),
+            all(out_r.values()) and len(made) == n_made, [k for k, v in out_r.items() if not v])
+        mk_bad = env_for("y1", make_adapter=lambda p: (made.append("y1"), StubAdapter(dict(prov_t, gpu="x")))[1])[0]
+        shp_bad = env_for("y2", adapter_shape=lambda a: (4, 16))[0]
+        eos_bad = env_for("y3", eos_id=lambda a: 8)[0]
+        chk("driver: G-CAL-n refuses after the load a provenance not the one checked before it, a checkpoint of another "
+            "shape and an eos id not the (v) render's, writing nothing",
+            refused(lambda: run_gcal(mk_bad)) and refused(lambda: run_gcal(shp_bad))
+            and refused(lambda: run_gcal(eos_bad)) and not mk_bad.out.exists() and not shp_bad.out.exists()
+            and not eos_bad.out.exists(), "")
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+        chk("driver: G-CAL-n refuses a cuBLAS setting other than the characterized one (rule 2), before the load",
+            refused(lambda: run_gcal(env_for("y4")[0])) and made.count("y4") == 0, "")
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    # the decode comparison (A-n1 §1.4), on the run's own outputs
+    rb_b, tb = (env1.out / gcal.OUT_RECORD).read_bytes(), (env1.out / gcal.OUT_TURNS).read_bytes()
+    first_id = turns1[0]["ids"][:1]
+    same = gcal_decode_compare(rb_b, tb, dec_of(None))
+    off = gcal_decode_compare(rb_b, tb, lambda ii: dec_of(None)(ii) + ("!" if ii[:1] == first_id else ""))
+    flip = gcal_decode_compare(rb_b, tb, lambda ii: "" if ii[:1] == first_id else dec_of(None)(ii))
+    other = json.dumps(dict(json.loads(rb_b.decode("utf-8")), stage="G-VEC")).encode("utf-8")
+    keys_d = {"batch", "index", "box", "laptop", "box_flags", "laptop_flags", "flags_differ"}
+    chk("driver: the decode comparison names both files by sha256 and counts every turn, equal where the laptop's "
+        "decode is the box's; it names each difference with the three flags and the verdict under both decodes, and "
+        "each batch's coherent count under both; a turns file not at the record's sha256, and a record of another "
+        "stage, are refused", same["record_sha256"] == hashlib.sha256(rb_b).hexdigest()
+        and same["turns_sha256"] == hashlib.sha256(tb).hexdigest()
+        and same["turns"] == 192 and same["equal"] == 192 and same["different"] == 0 and same["flags_differ"] == 0
+        and sorted(same["coherent_by_batch"]) == sorted(b for b, _d in gcal.BATCHES)
+        and all(c["box"] == c["laptop"] for c in same["coherent_by_batch"].values())
+        and off["different"] >= 1 and all(set(x) == keys_d for x in off["differences"])
+        and flip["flags_differ"] >= 1 and all(x["laptop_flags"]["length_collapse"] for x in flip["differences"])
+        and refused(lambda: gcal_decode_compare(rb_b, tb + b"\n", dec_of(None)))
+        and refused(lambda: gcal_decode_compare(other, tb, dec_of(None))),
+        (same["different"], off["different"], flip["flags_differ"]))
+    libs = ("transformers", "tokenizers")
+    before = [m for m in libs if m in sys.modules]
+    r_in = refused(lambda: cmd_render_ids_v(str(tmp / "no-tok"), str(ids.IDS_DIR / "v"), "2026-11-20"))
+    r_date = refused(lambda: cmd_render_ids_v(str(tmp / "no-tok"), str(tmp / "v-out"), "Nov 20"))
+    after = [m for m in libs if m in sys.modules]
+    chk("driver: render-ids-v refuses an --out inside the repository and a --pi-date not YYYY-MM-DD, importing no "
+        "tokenizer library", r_in and r_date and not (set(after) - set(before)), (before, after))
+
+    def argv_error(argv) -> str:
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stderr(buf):
+                main(argv)
+        except SystemExit:
+            return buf.getvalue()
+        return "no error"
+    t_ = str(tmp)
+    day = "2026-11-19"
+    foreign_g = [["--root", t_], ["--report", t_], ["--resume"], ["--ruling", "p01=x"], ["--convention", "space"],
+                 ["--model-dir", t_], ["--tokenizer-dir", t_], ["--ids-dir", t_], ["--pi-date", day]]
+    foreign_d = [["--root", t_], ["--report", t_], ["--resume"], ["--ruling", "p01=x"], ["--smoke", "2"],
+                 ["--convention", "space"], ["--model-dir", t_], ["--ids-dir", t_], ["--out", t_], ["--pi-date", day]]
+    v_argv = ["render-ids-v", "--tokenizer-dir", t_, "--out", t_, "--pi-date", day]
+    bad_argvs = ([(["gcal"] + f, "gcal takes --out and --smoke only") for f in foreign_g]
+                 + [(["gcal-decode", "--gcal-dir", t_, "--tokenizer-dir", t_] + f,
+                     "gcal-decode takes --gcal-dir and --tokenizer-dir") for f in foreign_d]
+                 + [(["gvec", "--gcal-dir", t_], "--gcal-dir: gcal-decode's option only"),
+                    (["gcal", "--gcal-dir", t_], "--gcal-dir: gcal-decode's option only"),
+                    (["gcal-decode", "--gcal-dir", t_], "gcal-decode takes --gcal-dir and --tokenizer-dir"),
+                    (["gcal-decode", "--tokenizer-dir", t_], "gcal-decode takes --gcal-dir and --tokenizer-dir"),
+                    (["render-ids-v", "--tokenizer-dir", t_, "--out", t_], "render-ids-v needs"),
+                    (v_argv + ["--model-dir", t_], "render-ids-v needs"),
+                    (v_argv + ["--ids-dir", t_], "render-ids-v needs")])
+    g = globals()
+    real_run = g["run_gcal"]
+    calls: list = []
+
+    def recorder(_env, **kw):
+        calls.append(kw)
+        return 0
+    # the review's B1: every main() call here runs with no pod id and a cuBLAS setting the stage refuses, so that no
+    # call can reach a load on the box, even were the swap below not to take
+    held = {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG", "RUNPOD_POD_ID")}
+    same_g = cmd_gcal.__globals__ is g
+    try:
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+        os.environ.pop("RUNPOD_POD_ID", None)
+        got_a = [(argv, argv_error(argv)) for argv, _w in bad_argvs]
+        g["run_gcal"] = recorder
+        try:
+            rcs_m = (main(["gcal"]), main(["gcal", "--smoke", "2", "--out", str(tmp / "s")])) if same_g else None
+        finally:
+            g["run_gcal"] = real_run
+    finally:
+        for k, v in held.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    chk("driver: main() refuses each of gcal's nine foreign flags, each of gcal-decode's ten, --gcal-dir anywhere but "
+        "gcal-decode, gcal-decode without both its folders, and render-ids-v without its three or with a folder option",
+        all(w in got for (_argv, got), (_a2, w) in zip(got_a, bad_argvs)),
+        [a for (a, got), (_a2, w) in zip(got_a, bad_argvs) if w not in got])
+    chk("driver: main() hands G-CAL-n's --out and --smoke to the stage, and nothing on a run of record (the swapped "
+        "module is cmd_gcal's; every call ran with no pod id and a cuBLAS setting the stage refuses)",
+        same_g and rcs_m == (0, 0) and calls == [{"out": None, "smoke": None}, {"out": str(tmp / "s"), "smoke": 2}],
+        calls)
+    absent = REPO / "data" / "n" / "gcal" / "absent-selftest.json"
+    try:
+        got_c = committed_bytes(absent)
+    except Exception as e:                              # noqa: BLE001
+        got_c = f"raised {type(e).__name__}"
+    chk("driver: committed_bytes is git's HEAD, never the working tree: None for a path HEAD does not hold",
+        got_c is None and not absent.exists(), got_c)
+
+    class RecordingAdapter:        # the HF seams' wiring, over a stand-in that records what each seam hands it
+        def __init__(self):
+            self.calls: list = []
+            self._tok = types.SimpleNamespace(decode=self._decode)
+
+        def _decode(self, token_ids, **kw):
+            self.calls.append(("decode", list(token_ids), kw))
+            return "x y"
+
+        def forward(self, ids_, capture_layers=(), injections=()):
+            self.calls.append(("forward", list(ids_), tuple(capture_layers), list(injections)))
+            return types.SimpleNamespace(logits=np.arange(4.0),
+                                         acts={int(i): np.zeros((len(ids_), 2)) for i in capture_layers})
+    ra = RecordingAdapter()
+    pl = gcal.placed(gcal.injection_for(1.0, rows[0], site, R_t, v_sha), 2)
+    lg_r = _hf_step_logits(ra)([3, 4, 5], pl)
+    acts_r = _hf_forward(ra)([3, 4], (site,))
+    txt_r = _hf_decoder(ra)([5, 6])
+    chk("driver: the HF seams' wiring, over a recording stand-in: the step hands the adapter's forward the whole "
+        "sequence and every placed injection, no capture, and returns its last-position logits; the capture is "
+        "unsteered at the indices given; the decode is G-VER's",
+        len(pl) == 1 and ra.calls[0] == ("forward", [3, 4, 5], (), list(pl)) and list(lg_r) == [0.0, 1.0, 2.0, 3.0]
+        and ra.calls[1] == ("forward", [3, 4], (site,), []) and set(acts_r) == {site}
+        and ra.calls[2] == ("decode", [5, 6], {"skip_special_tokens": False, "clean_up_tokenization_spaces": False})
+        and txt_r == "x y", ra.calls)
+    from valence_core.n import hftiny
+    if hftiny.available():
+        a_t = hftiny.tiny_adapter()
+        a_t._tok = types.SimpleNamespace(decode=lambda ii, **kw: " ".join(f"t{int(i)}" for i in ii))   # stand-in
+        w_t = int(a_t._model.config.hidden_size)
+        v_t = gvec.unit32(np.random.default_rng(23).normal(size=w_t))
+        inj_t = gcal.injection_for(1.0, v_t, 1, 3.0, gvec.injection_sha16(v_t))
+        st_t, ids_h = _hf_step_logits(a_t), [3, 4, 5, 6, 7, 8]
+        lu_t = np.asarray(st_t(ids_h, ()), dtype=np.float64)
+        ls_t = np.asarray(st_t(ids_h, gcal.placed(inj_t, 3)), dtype=np.float64)
+        ref_t = np.asarray(a_t.forward(ids_h, capture_layers=()).logits, dtype=np.float64)
+        turn_t = gcal.generate(st_t, ids_h, 3, inj_t, 5, eos_id=127, cap=4)
+        cap_t = _hf_forward(a_t)(turn_t["ids"] or [3], (1,))
+        chk("driver: on the HF path (hftiny, a tiny OLMo-2 config): G-CAL-n's step is the adapter's own last-position "
+            "logits; an injection placed from gen_start moves them and passes the steering check; a turn generates "
+            "ids-in under it; its capture is one row per id; the decode runs through a stand-in tokenizer",
+            lu_t.shape == (128,) and float(np.max(np.abs(lu_t - ref_t))) <= 1e-5
+            and float(np.max(np.abs(ls_t - lu_t))) > 1e-6
+            and gcal.steering_check(st_t, {"ids": ids_h, "gen_start": 3}, inj_t) > 0.0
+            and 0 <= turn_t["n_tok"] <= 4 and all(0 <= i < 128 for i in turn_t["ids"])
+            and np.asarray(cap_t[1]).shape == (max(1, turn_t["n_tok"]), w_t)
+            and isinstance(_hf_decoder(a_t)(turn_t["ids"]), str),
+            (lu_t.shape, float(np.max(np.abs(ls_t - lu_t)))))
+    else:
+        chk("driver: G-CAL-n's HF path: skipped (no torch/transformers here; runs on the box through hftiny)", True, "")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("command", nargs="?",
-                    choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "backend-ext", "backend-ext-2",
-                             "gvec"))
+                    choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "render-ids-v", "backend-ext",
+                             "backend-ext-2", "gvec", "gcal", "gcal-decode"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -2550,9 +3467,31 @@ def main(argv=None) -> int:
     ap.add_argument("--ruling", action="append", default=[], metavar="PAUSE_ID=PATH")
     ap.add_argument("--smoke", type=int, default=None)
     ap.add_argument("--convention", default=None)
+    ap.add_argument("--gcal-dir", default=None)
     a = ap.parse_args(argv)
     if a.selftest:
         return cmd_selftest()
+    if a.gcal_dir is not None and a.command != "gcal-decode":
+        ap.error("--gcal-dir: gcal-decode's option only")
+    if a.command == "gcal":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),
+                                      ("--convention", a.convention is not None), ("--model-dir", bool(a.model_dir)),
+                                      ("--tokenizer-dir", bool(a.tokenizer_dir)), ("--ids-dir", bool(a.ids_dir)),
+                                      ("--pi-date", bool(a.pi_date))) if given]
+        if foreign:
+            ap.error(f"{', '.join(foreign)}: gcal takes --out and --smoke only (a smoke's), and loads from the model "
+                     f"manifest's instruct path")
+        return cmd_gcal(a.out, a.smoke)
+    if a.command == "gcal-decode":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),
+                                      ("--smoke", a.smoke is not None), ("--convention", a.convention is not None),
+                                      ("--model-dir", bool(a.model_dir)), ("--ids-dir", bool(a.ids_dir)),
+                                      ("--out", bool(a.out)), ("--pi-date", bool(a.pi_date))) if given]
+        if foreign or not (a.gcal_dir and a.tokenizer_dir):
+            ap.error("gcal-decode takes --gcal-dir and --tokenizer-dir, and nothing else")
+        return cmd_gcal_decode(a.gcal_dir, a.tokenizer_dir)
     if a.command == "gvec":
         foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                       ("--resume", a.resume), ("--ruling", bool(a.ruling)),
@@ -2594,6 +3533,10 @@ def main(argv=None) -> int:
         if not (a.tokenizer_dir and a.out and a.pi_date):
             ap.error("render-ids-iv needs --tokenizer-dir, --out and --pi-date")
         return cmd_render_ids_iv(a.tokenizer_dir, a.out, a.pi_date)
+    if a.command == "render-ids-v":
+        if not (a.tokenizer_dir and a.out and a.pi_date) or a.model_dir or a.ids_dir:
+            ap.error("render-ids-v needs --tokenizer-dir, --out and --pi-date, and nothing else")
+        return cmd_render_ids_v(a.tokenizer_dir, a.out, a.pi_date)
     if a.command == "hashes":
         return cmd_hashes()
     if a.command == "gver-trial":

@@ -21,6 +21,126 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-CAL-n's BUILD, committed by path (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3;
+  ADDENDUM-n1 §1.1, §1.2 (v) and §1.4): the stage in a new module, `valence_core/n/gcal.py`, and its commands, `gcal`,
+  `gcal-decode` and `render-ids-v`, in the driver, on Code's readings GC1–GC23 as the coordinating session routed them.
+  Nothing has run on the box. The run waits for the seat's answers on the twelve starred readings, for G-VEC's PASS
+  committed, for (v)'s render, and for the PI's word on the box.**
+  - **Headline:**
+    - six paths beside the raws and the entry, each against `d7d5e5b`'s (git's numstat):
+      - `valence_core/n/gcal.py` `aba3700c…a3a0`, new, 738 lines;
+      - `scripts/n_sessions.py` `37b8268d…f030` (+948 −5);
+      - `valence_core/n/ids.py` `cc614c75…8e76` (+254 −15);
+      - `valence_core/n/keys.py` `6a0f9ad3…812e` (+28 −1);
+      - `valence_core/n/guard.py` `ef3a7e5b…7a3e` (+1 −1);
+      - `.gitignore` `908f447b…2f2c` (+10): a four-line comment, the folder admitted, its contents ignored, three
+        admits, and a blank line. The staging folder and the failed-run folder stay ignored;
+    - the n package's digest moves from `882c9217…5ca7` to `8f785fba…0152`, both by shell in `package_sha256_of`'s
+      form (the same computation over HEAD's files reproduces `882c9217…5ca7`). Neither has yet been printed by the
+      package's own `hashes`, which runs when G-CAL-n's launch files are made, in a battery window of its own;
+    - the self-test: 540/540 on the laptop (draft 3), after draft 1's 524/524 and draft 2's 536/536, in the raw
+      [`2026-11-19_n-gcal-build_selftest.txt`](results/raw/2026-11-19_n-gcal-build_selftest.txt). On the box, by
+      arithmetic only: 551, the 540 plus the box's 11 checks more, restated at the launch files;
+    - nothing of the BUILD ran on a checkpoint's weights. Its three self-test runs were each in a battery window the
+      coordinating session granted for their bytes, model-free, under `nice -n 19`;
+    - one blind review of draft 1: 0 BUG; 12 findings (5 RISK, 6 NIT and 1 NIT/RISK); 16 surviving mutants; 6 box
+      risks; 13 observations. Every finding is applied, F1 in draft 3 as GC23, and each mutant meets a check. B3, B4
+      and O13 go to G-CAL-n's launch files. The raw, with every disposition:
+      [`2026-11-19_n-gcal-build_review.md`](results/raw/2026-11-19_n-gcal-build_review.md);
+    - the specification: Code's GC1–GC22 and the coordinating session's routing of them, verbatim, in G-CAL-n's spec
+      raw (`99196e1`); GC23 in the supplement's §1, and the coordinating session's routing of it, verbatim, in its §5
+      (`d7d5e5b`).
+  - **What the stage does** (given in full in the module's and the driver's docstrings):
+    - before the load, model-free:
+      - refusals in G-VEC's form: an existing out folder, staging folder or failed-run folder; the pod; the cuBLAS
+        setting; the stream known answer; the weights; and the driver as HEAD's committed bytes for a run of record;
+      - the ids of record and (v)'s 48 prompts: each the plan's prompt, its user turn's and whole text's sha256s and
+        the v block's template `gcal.prompt_parts`', its `ids_sha` re-derived from its ids, and `gen_start` the user
+        turn's count;
+      - the generation window (rule 28(d)(c)): 4,096 positions, declared apart from the choice-read window. A prompt's
+        longest forward is its ids and the cap − 1, and nothing truncates;
+      - G-VEC's outputs of record: HEAD's committed bytes, a PASS at a candidate site, and the valence row at
+        of_record's sha16;
+      - the dose map (a fold into 0 refused, the seat's), and the R6 bridge;
+    - the load; after it, refused before anything is written: a provenance other than the one checked before the
+      load, a checkpoint of another shape, and an eos id other than (v)'s;
+    - the generation: four batches of 48 turns, ids-in and uncached, at TEMP 0.7 with a cap of 80 and the eos as the
+      stop. Each steered batch is d·ρ·R·v from the generation prompt's first token. The order of generation is +ρ,
+      +ρ/2, the baseline, then −ρ (GC23 (d)), and the record keeps n:113's order. A steering check runs before each
+      batch at a positive dose, and each turn is logged as it is generated (GC23 (a));
+    - the hurdles, at every dose: coherence by GC11's heuristic, and arrival by Welch's t against the baseline, |t| ≥ 2
+      with the pole's sign. A fail at ±ρ is a STOP (exit 2); a fail at +ρ/2 alone is a PAUSE (exit 3); otherwise a
+      PASS (exit 0), the dose map pinnable;
+    - the outputs into data/n/gcal/, built in `.gcal.staging` and renamed into place: `gcal.json`, `gcal_turns.jsonl`
+      and `dose_map.json`. On a failure the staging folder is kept as `.gcal.failed` (GC23 (b));
+    - `--smoke N` (1..4): +ρ and the baseline only, on the first N prompts, into a new folder outside the
+      repository, never of record;
+    - `gcal-decode` (A-n1 §1.4): the laptop's one decode comparison, both files named by sha256, each difference with
+      its flags under both decodes;
+    - `render-ids-v` (A-n1 §1.2 (v)): G-CAL-n's prompts rendered on the laptop into a new folder outside the
+      repository. The ids' manifest of record is unchanged until (v)'s own render commit.
+  - **Code's readings, GC1–GC23** (PINs). The starred eight go to the seat before the run: GC3, GC4, GC5, GC6, GC8,
+    GC11 and GC12 in `99196e1`, and GC23 in `d7d5e5b`. GC1 and GC2 are on LOCK-n v0.1's list, and GC14 is a PAUSE.
+  - **Departures from GC1–GC22's words**, (1)–(8) declared in `gcal.py`'s docstring and (9) here:
+    - (1) Welch's t recorded as None, and the arrival a fail, when it is undefined;
+    - (2) a turn with no emitted id has no arrival score and is left out of the t;
+    - (3) GC11's "outer punctuation" read as the Unicode punctuation categories;
+    - (4) a STOP writes the record, the turns and the dose map, where GC2 said "the record alone";
+    - (5) the draw is `sample`'s inverse CDF in float64, where GC9 said it "mirrors the adapter's";
+    - (6) the dose map is printed before the load, against GC15's order;
+    - (7) `--smoke` takes 1 to 4, where GC19 said 2 prompts;
+    - (8) the double gains no sampler (GC21); the self-test draws from its logits with the production sampler;
+    - (9) the step is the adapter's own uncached forward with the injections, G-VEC's pattern, where GC9 said "on the
+      unchanged adapter's hooks (primitive.HFBackend's pattern)" (the BUILD values-check's O8).
+  - **Wording owed at each file's next change** (the BUILD values-check's O1, O2 and O8). None of it changes what the
+    code does, and draft 3's self-tested bytes are the BUILD's:
+    - the driver's docstring for the `gcal` command still says GC1–GC22, and leaves the failed-run folder out of its
+      refusals;
+    - `gcal.py`'s says the outputs are renamed into data/n/gcal/ "on every end", where a failure renames the staging
+      folder to `.gcal.failed`;
+    - (9) joins `gcal.py`'s list of departures.
+  - **Values-check:** one blind pass over the BUILD's texts: the self-test raw, the review raw, this entry before this
+    bullet, and the message.
+    - 128 items: 106 CONFIRMED, 7 IMPRECISE, 1 FAIL, 14 NOT CHECKABLE; and 9 observations.
+    - The FAIL (the reviewer's first departure, worded too wide) and every IMPRECISE item are applied. Observations 4–7
+      and 9 are applied in the texts; 1 and 2 are the wording owed above, and 8 is departure (9), owed to `gcal.py`'s
+      docstring; 3, a count the mid-run check could pin, is for the driver's next change, and the self-test raw words
+      that check to what it asserts.
+    - The edits were checked by tool, 31 of 31.
+    - Raw:
+      [`2026-11-19_n-gcal-build_valuescheck.md`](results/raw/2026-11-19_n-gcal-build_valuescheck.md).
+  - **Model:** nothing ran on a model.
+  - **Departures:**
+    - 2026-11-19, Code: one `ls data/*` in Code's scratch copy of the overlay, whose glob expanded to the model's data
+      folder, a guard marker in the argv. It printed names only, and touched nothing in the repository and no ckpt or
+      reports file;
+    - the reviewer's three, as its report states them, for the seat to class: it read `valence_core/n/runner.py`,
+      grepped runner.py and schema.py, and ran `wc -l` over runner.py and primitive.py, the two files outside the
+      brief's list; it grepped `scripts/n_analyze.py` once beyond the `--dose-map` reader and DoseMap the brief named;
+      and it read its own over-large diff in the harness's tool-results folder;
+    - G-CAL-n's survey's three, as its report states them (the spec raw's §3), for the seat to class with this entry:
+      one `shasum` run on its brief (a Perl script on this machine); one grep over RESULTS.md with a guard marker in
+      its pattern; one `git grep` with `'*.py'` as its positive pathspec in place of `.`, the exclusions present;
+    - the values-checker's, as its report states it, for the seat to class: one `cmp` loop over the overlay's twelve
+      unchanged `valence_core/n/*.py` against the repository's copies, where its brief allowed `cmp` of overlay files
+      only against draft 3's. The same twelve files were read in full by the digest recompute the brief permits;
+    - 2026-11-19, Code: the BUILD's first commit window failed at its gate, and nothing was committed.
+      - The cause: my build script took HEAD's package digest from the working tree, which by then held the placed
+        files. Its pre-check failed, and the script still rewrote the self-test raw's source, so the staged raw no
+        longer matched it. The gate caught both.
+      - What was restored, by path: the ten paths unstaged by `git restore --staged`; `RESULTS.md`, `.gitignore`,
+        `scripts/n_sessions.py`, `valence_core/n/ids.py`, `keys.py` and `guard.py` restored by `git restore`; and
+        `valence_core/n/gcal.py` and the three raws removed, each first checked byte-equal to its source.
+      - The fix: HEAD's digest from HEAD's committed blobs, and no output written after a failed pre-check. The texts
+        rebuilt byte-identical, and a second window committed them.
+  - **Committed by path:**
+    - the six paths above;
+    - the self-test raw, the review raw, the values-check raw, and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed: the seat reads the laptop
+    checkout. Next: the seat's answers on the twelve; G-VEC's run, its launch files held for the PI's answer on its
+    run order; (v)'s render commit, after the seat's answers on GC5 and GC6; then G-CAL-n's launch files.
+
 - 2026-11-19 — **n — a supplement to the eleven starred readings: G-CAL-n's GC23 (Q12), three notes on Q1 and Q11 from
   G-CAL-n's review, and three items for LOCK-n v0.1's list (code → design; the n-build session). STOP for the seat's
   read, in the same sitting as `99196e1`.**

@@ -1,0 +1,57 @@
+n -- G-CAL-n's BUILD (n v0.2 s8 step 8; the G-CAL-n paragraph of n s3; ADDENDUM-n1 s1.1, s1.2 (v), s1.4): its
+self-test on the laptop, committed with the BUILD. PI date 2026-11-19. Code (the n-build session).
+
+The change, on d7d5e5b's versions of these paths (each the same bytes at 99196e1 and 1185e15):
+  valence_core/n/gcal.py       aba3700ccfc52bd51c9e74f06697d9f1311adc08352b37e52d93d74b3383a3a0  (new, 738 lines)
+  scripts/n_sessions.py        37b8268d62fd95c2c2ea11d5de26d0b452657c9a9196931539aae6f8a0bdf030  (+948 -5)
+  valence_core/n/ids.py        cc614c7505b97ac56c38a1208ce46035546a86332aa20c080e369187492e8e76  (+254 -15)
+  valence_core/n/keys.py       6a0f9ad37cfd71ab3771cb79db6a32cd83737fda7d249bcc086a6fd18ff6812e  (+28 -1)
+  valence_core/n/guard.py      ef3a7e5be8008b34ab08ce348491c723d4c05be66604136f0f9973bcb5457a3e  (+1 -1)
+The package: valence_core/n's digest moves from
+  882c9217cc3f09658d194f37245d6fe463d42e0b3651a49cfac59067c3b55ca7 (da7bdec's, unchanged at d7d5e5b) to
+  8f785fba0fa89462810e11b5c35a0521f3862a3d1b35c4995a54fe68671b0152,
+  both computed by shell in the form valence_core/m/resume.py's package_sha256_of states; the same shell over HEAD's
+  clean files reproduces the first, as da7bdec's entry records it. The self-test prints no digest; the package's own
+  `hashes` runs when G-CAL-n's launch files are made, in a battery window of its own.
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny; the HF-path vanilla score; G-CAL-n's HF path) run only
+   where torch and transformers are present, and elsewhere are skipped and counted as skipped; the schema module's own
+   cases count as one aggregated line.
+   The overlay: a git archive of 1185e15 on G-VEC's BUILD self-test paths (that BUILD's self-test raw lists them),
+   with item 3's exclusions and data/mf3's, so that no checkpoint or report file entered it: 161 files, 1185e15's 160
+   on those paths with the four changed files above replaced and valence_core/n/gcal.py added by each run's drafts.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/gcal/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, each file re-hashed in the
+   overlay just before the run; the temporary folder was empty before and after.
+
+   Run 1, draft 1 (the bytes the blind review read):
+     valence_core/n/gcal.py       be63ef4107e2cb709a9a73747c2e5f9af06597e417da5b0dfa06ead24d941f5e
+     scripts/n_sessions.py        5258bcfc17b5716b7edb0e2bb745f7f4e10c24d5830a0370d1ff40083e446a02
+   with ids.py, keys.py and guard.py as above. Exit 0. Its whole output (sha256
+   b91e86edeb0a24aa9440d011745665c51daf0f365c7b0953ab09382edb4cfe22), each line indented by five spaces here:
+       524/524 n selftest checks pass
+
+   Run 2, draft 2: the blind review's findings applied, all but F1, with twelve checks more (nine in gcal's own; three
+   in the driver's G-CAL-n checks: committed_bytes, the HF seams over a recording stand-in, and the hftiny line, a skip
+   on the laptop):
+     valence_core/n/gcal.py       5cd43ea0cbbe24da0872601ddd337b5f6e71fccb68e6e17844412e901c98fdaf
+     scripts/n_sessions.py        34c5f037999b5cc8e4fbd88b8bfd9517eb94cb3bd3d4c807a8d5808b1c78bee5
+   with ids.py, keys.py and guard.py as above. Exit 0. Its whole output (sha256
+   b8ddd2860f400e6e92cfeb6309adbc010c36e7fcb1f9a651cb86406646f0b8b8), each line indented by five spaces here:
+       536/536 n selftest checks pass
+
+   Run 3, draft 3, the BUILD's final bytes as above: draft 2 with GC23 (a)-(d) built as the coordinating session routed
+   it, with four checks more (two in gcal's own: the order of generation with each turn handed on as generated, and
+   the turn log's line form; two in the driver's: a failure mid-run, whose failed-run folder's log must hold the turns
+   generated before it as a non-empty prefix of the order of generation, each the run of record's own turn, and a
+   non-finite arrival, whose folder's log must hold all 192). Exit 0. Its whole output (sha256
+   84c5abf21dcae74d735445b877894b06859508414abede772eae9ba1fea00a3c), each line indented by five spaces here:
+       540/540 n selftest checks pass
+
+2. THE BOX. The box has not run this BUILD. Its count there, by arithmetic only: 551, the laptop's 540 plus the box's
+   11 checks more (its 13 HF checks in place of the laptop's two skip lines, as at da7bdec's entry). G-CAL-n's HF-path
+   check is one line at either site, a skip on the laptop and a check on the box, so it adds nothing to the difference.
+   G-CAL-n's launch files restate the count.

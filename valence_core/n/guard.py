@@ -29,7 +29,7 @@ DATA_DIR = REPO / "data"
 N_ROOT = DATA_DIR / "n"
 REFUSED_ROOTS = (DATA_DIR / "m", DATA_DIR / "mf3", DATA_DIR / "p", DATA_DIR / "olmo", Path("/workspace/models"))
 PRODUCTION = ("schema", "sessions", "ids", "keys", "cells", "directions", "primitive", "runner", "verify", "probe",
-              "gvec", "guard")
+              "gvec", "gcal", "guard")
 SELFTEST_ONLY = ("testing", "hftiny")
 
 

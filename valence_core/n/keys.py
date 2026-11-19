@@ -3,7 +3,9 @@ unchanged).
 
   ``n-rand|{i}``   the i-th random direction's Gaussian draw (§2.3), i = 0..23;
   ``n-fid|{s}``    the 10% keyed fidelity sample (§2.1), s = BK's run;
-  ``n-n4|{group}`` N4's 80/80 schedule (§2.4), group = "S-first" or "U-first" by the session's ``present`` order.
+  ``n-n4|{group}`` N4's 80/80 schedule (§2.4), group = "S-first" or "U-first" by the session's ``present`` order;
+  ``n-gcal|{i}``   G-CAL-n's sampler seed for prompt i, i = 0..47 (GC10): the stream's first draw, an integer in
+                   [0, 2^31), the same for prompt i in all four batches.
 
 PIN (Code, declared at the BUILD; LOCK-n v0.1 pins each):
   * random directions -- each key's stream draws ``standard_normal(d_model)`` (float64); the 24 draws, as columns in
@@ -52,6 +54,20 @@ def fid_sampled(bk_run: int) -> bool:
     return bool(stream(f"n-fid|{int(bk_run)}").random() < FID_FRACTION)
 
 
+N_GCAL = 48
+
+
+def gcal_key(i: int) -> str:
+    if not 0 <= int(i) < N_GCAL:
+        raise ValueError(f"G-CAL-n prompt index {i} outside 0..{N_GCAL - 1}")
+    return f"n-gcal|{int(i)}"
+
+
+def gcal_seed(i: int) -> int:
+    """G-CAL-n's sampler seed for prompt i (GC10): the first draw of the key's stream, an integer in [0, 2^31)."""
+    return int(stream(gcal_key(i)).integers(0, 2 ** 31))
+
+
 def n4_schedule(present_first_is_S: Sequence[bool]) -> list[str]:
     """Per session (in the session set's order), "S" or "U": the zone N4-T's line names and N4-Ts's referent."""
     groups = {"S-first": [i for i, f in enumerate(present_first_is_S) if f],
@@ -96,3 +112,14 @@ def _selftest(chk, tmp) -> None:
         and (sum((not t) and f for t, f in zip(told_s, pf)), sum((not t) and (not f) for t, f in zip(told_s, pf)))
         == (39, 41), "")
     chk("keys: the schedule is deterministic", sch == n4_schedule(pf), "")
+    sd = [gcal_seed(i) for i in range(N_GCAL)]
+    chk("keys: G-CAL-n's 48 seeds are each key's first draw in [0, 2^31), deterministic and distinct (GC10)",
+        sd == [int(stream(f"n-gcal|{i}").integers(0, 2 ** 31)) for i in range(48)] and sd == [gcal_seed(i) for i in
+                                                                                         range(48)]
+        and all(0 <= s < 2 ** 31 for s in sd) and len(set(sd)) == 48, sd[:3])
+    for bad in (-1, 48):
+        try:
+            gcal_key(bad)
+            chk(f"keys: G-CAL-n prompt index {bad} refused", False, "accepted")
+        except ValueError:
+            chk(f"keys: G-CAL-n prompt index {bad} refused", True, "")

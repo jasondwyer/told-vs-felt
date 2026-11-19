@@ -32,7 +32,14 @@ THE FILES (§1.2):
         that adding them changes no id, so the two conventions coincide here (a difference is a STOP). The render
         extends (i)-(iii)'s manifest (``MANIFEST_I_III``): its fields unchanged, the two files added to ``files``,
         and an ``iv`` block (its PI date, the base manifest's sha256, the inputs' sha256s, the conventions).
-(v) is rendered when its texts exist, by the same procedure.
+  (v)   ``gcal_prompts.jsonl`` (``render_v``; ADDENDUM-n1 §1.2 (v); G-CAL-n's GC5 and GC6): G-CAL-n's 48 declared
+        prompts, ``gcal.plan`` over the (iii) file's 12 labels (sorted), each the user turn and the generation prompt
+        of ``gcal.prompt_parts`` encoded whole with no special tokens added (the rendering of record), its
+        ``gen_start`` the first id where it leaves the user turn's own ids, asserted equal to their count (rule
+        28(d)'s form: a merge across the boundary is a STOP), the text's sha256 and the seed beside. The end-of-turn
+        token must encode to one id, recorded in the ``v`` block for the box to assert. The render extends (i)-(iv)'s
+        manifest (``MANIFEST_I_IV``) as (iv)'s extended (i)-(iii)'s: its fields unchanged, the file added to ``files``,
+        and a ``v`` block (its PI date, the base manifest's sha256, the labels, the prompt and its convention, the eos).
 
 The render's report and the driver print versions, sha256s and counts, never an id; the report keeps its first
 ``FIRST_PROBLEMS`` problem lines. ``load`` reads the files back for G-VER and the runner, each file's sha256 and record
@@ -63,8 +70,13 @@ TOKENIZER_FILES = ("special_tokens_map.json", "tokenizer.json", "tokenizer_confi
 SESSIONS_FILE, N4_FILE, LABELS_FILE, MANIFEST_FILE = ("sessions.jsonl", "n4_variants.jsonl", "labels.json",
                                                       "MANIFEST.json")
 GVEC_FILE, A3_FILE = "gvec_passages.jsonl", "a3_contexts.jsonl"
+GCAL_FILE = "gcal_prompts.jsonl"
 FILES_I_III = (SESSIONS_FILE, N4_FILE, LABELS_FILE)
 FILES_IV = (GVEC_FILE, A3_FILE)
+FILES_V = (GCAL_FILE,)
+N_GCAL_PROMPTS = 48
+#: (i)-(iv)'s MANIFEST.json sha256 (``data/n/ids/`` at ``b523f6a``): the manifest ``render_v`` extends.
+MANIFEST_I_IV = "fdf73d854ebd6fbe02ced28a0c49af1c9658763627aaaa55afd781084f80ef38"
 #: (i)-(iii)'s MANIFEST.json sha256 (``data/n/ids/`` at ``d76f34f``, the ids of record's first commit): the manifest
 #: ``render_iv`` extends.
 MANIFEST_I_III = "7f51bd914eb03510442f01bfbf7cad7ba74c7e9fb98edb307db350d9772a821d"
@@ -266,26 +278,41 @@ def printable(rep: Mapping) -> dict:
     return dict(rep)
 
 
-def _base_of(manifest: Mapping) -> bytes:
-    """The (i)-(iii) manifest an (i)-(iv) manifest extends, as ``render`` wrote it: its fields without ``iv``, its files
-    without (iv)'s, in ``_dumps`` form with the trailing newline (``_dumps`` is canonical, so these are its bytes)."""
-    base = {k: v for k, v in manifest.items() if k != "iv"}
-    base["files"] = {k: v for k, v in manifest["files"].items() if k in FILES_I_III}
+def _base_of(manifest: Mapping, block: str = "iv") -> bytes:
+    """The manifest a block's render extended, as that render's base was written, in ``_dumps`` form with the trailing
+    newline (``_dumps`` is canonical, so these are its bytes): for ``iv``, the (i)-(iii) manifest (no ``iv`` or ``v``
+    block, (i)-(iii)'s files); for ``v``, the (i)-(iv) manifest (no ``v`` block, (i)-(iv)'s files)."""
+    if block == "iv":
+        drop, keep = ("iv", "v"), FILES_I_III
+    elif block == "v":
+        drop, keep = ("v",), FILES_I_III + FILES_IV
+    else:
+        raise ValueError(f"no base for a {block!r} block")
+    base = {k: v for k, v in manifest.items() if k not in drop}
+    base["files"] = {k: v for k, v in manifest["files"].items() if k in keep}
     return (_dumps(base) + "\n").encode("utf-8")
 
 
+#: The three forms ``load`` accepts: the files' names, sorted, and the blocks each form carries.
+_FORMS = {tuple(sorted(FILES_I_III)): (), tuple(sorted(FILES_I_III + FILES_IV)): ("iv",),
+          tuple(sorted(FILES_I_III + FILES_IV + FILES_V)): ("iv", "v")}
+
+
 def load(ids_dir=IDS_DIR) -> dict:
-    """The committed files, each checked against MANIFEST.json (sha256 and record count): (i)-(iii), or (i)-(iii) and
-    (iv) under an ``iv`` block whose base is the manifest's own (i)-(iii) part, byte for byte."""
+    """The committed files, each checked against MANIFEST.json (sha256 and record count): (i)-(iii); (i)-(iii) and
+    (iv) under an ``iv`` block whose base is the manifest's own (i)-(iii) part, byte for byte; or (i)-(v), its ``v``
+    block's base the manifest's own (i)-(iv) part, byte for byte, as well."""
     d = Path(ids_dir)
     manifest = json.loads((d / MANIFEST_FILE).read_text(encoding="utf-8"))
-    names = sorted(manifest.get("files", {}))
-    if manifest.get("schema") != IDS_SCHEMA or names not in (sorted(FILES_I_III), sorted(FILES_I_III + FILES_IV)) \
-            or (names == sorted(FILES_I_III + FILES_IV)) != ("iv" in manifest):
-        raise SystemExit(f"{MANIFEST_FILE}: not an {IDS_SCHEMA} manifest of (i)-(iii), or of (i)-(iv) with its iv "
-                         f"block")
-    if "iv" in manifest and _sha256_bytes(_base_of(manifest)) != manifest["iv"].get("base_manifest_sha256"):
-        raise SystemExit(f"{MANIFEST_FILE}: its (i)-(iii) part is not the base manifest its iv block names")
+    blocks = _FORMS.get(tuple(sorted(manifest.get("files", {}))))
+    if manifest.get("schema") != IDS_SCHEMA or blocks is None \
+            or tuple(b for b in ("iv", "v") if b in manifest) != blocks:
+        raise SystemExit(f"{MANIFEST_FILE}: not an {IDS_SCHEMA} manifest of (i)-(iii), of (i)-(iv) with its iv "
+                         f"block, or of (i)-(v) with its iv and v blocks")
+    for b in blocks:
+        if _sha256_bytes(_base_of(manifest, b)) != manifest[b].get("base_manifest_sha256"):
+            raise SystemExit(f"{MANIFEST_FILE}: its {'(i)-(iii)' if b == 'iv' else '(i)-(iv)'} part is not the base "
+                             f"manifest its {b} block names")
     out: dict = {"manifest": manifest, "manifest_sha256": _sha256_bytes((d / MANIFEST_FILE).read_bytes())}
     for fname, meta in manifest["files"].items():
         if not (d / fname).is_file():
@@ -458,6 +485,118 @@ def render_iv(passages_bytes: bytes, contexts: Sequence[tuple], encode: Encode, 
         shutil.rmtree(stage, ignore_errors=True)
         raise
     files_rep = {fname: dict(back["manifest"]["files"][fname]) for fname in FILES_I_III + FILES_IV}
+    files_rep[MANIFEST_FILE] = {"sha256": _sha256_bytes(mdata), "records": len(manifest["files"])}
+    rep.update(status="PASS", files=files_rep)
+    return rep
+
+
+def labels_of(loaded: Mapping) -> list:
+    """The 12 labels of record, sorted: the (iii) file's, every candidate holding the same 12."""
+    sets = {tuple(sorted(c["labels"])) for c in loaded[LABELS_FILE][0]["candidates"]}
+    if len(sets) != 1 or len(next(iter(sets))) != N_LABELS:
+        raise SystemExit(f"{LABELS_FILE}: its candidates do not hold one set of {N_LABELS} labels")
+    return list(next(iter(sets)))
+
+
+def render_v(labels: Sequence[str], encode: Encode, env: Mapping[str, str], tokenizer_sha256s: Mapping[str, str],
+             pi_date: str, base_dir, out_dir, *, prompt_parts: Callable, plan: Callable, base_pin: str = MANIFEST_I_IV,
+             expect: int = N_GCAL_PROMPTS) -> dict:
+    """Render (v) into ``out_dir``, a folder that must not exist yet, as a complete ids folder, as ``render_iv`` does:
+    staged beside it, (i)-(iv)'s five files copied from ``base_dir`` (their manifest at ``base_pin``, each file's bytes
+    re-checked as copied), the (v) file and the extended MANIFEST.json; read back by ``load`` (every record's ``ids_sha``
+    re-derived, the base re-derived from the new manifest) and renamed into place; on any failure removed, nothing left.
+    ``plan(labels)`` gives the prompts and ``prompt_parts(label)`` each prompt's two texts (gcal's, passed in, so the
+    rendering choice stays in its one place). Each prompt's ids are its two texts encoded whole, ``gen_start`` the first
+    id where they leave the user turn's own, asserted equal to that count. Returns the report: counts and sha256s, no
+    id, and its first ``FIRST_PROBLEMS`` problem lines. A STOP writes nothing."""
+    import shutil
+    problems: list = []
+    rep: dict = {"status": "STOP", "prompts": {"n": 0, "ok": 0, "boundary_merged": 0}, "files": {},
+                 "first_problems": problems}
+
+    def note(line: str) -> None:
+        if len(problems) < FIRST_PROBLEMS:
+            problems.append(line)
+    out = Path(out_dir)
+    stage = out.with_name(out.name + ".staging")
+    if out.exists() or stage.exists():
+        raise SystemExit(f"{out.name}: it or its staging folder exists -- the render writes once, into a new folder")
+    base = load(base_dir)
+    bman = base["manifest"]
+    if base["manifest_sha256"] != base_pin or sorted(bman["files"]) != sorted(FILES_I_III + FILES_IV):
+        note(f"the base manifest is not (i)-(iv)'s of record ({base['manifest_sha256'][:8]})")
+        return rep
+    if bman["environment"] != dict(env) or bman["tokenizer_files"] != dict(tokenizer_sha256s):
+        note("the environment or the tokenizer files are not the base manifest's")
+        return rep
+    eos = [int(x) for x in encode(EOT)]
+    if len(eos) != 1:
+        note(f"the end-of-turn token encodes to {len(eos)} ids, not one")
+        return rep
+    try:
+        prompts = list(plan(labels))
+    except ValueError as e:
+        note(f"the plan: {e}")
+        return rep
+    rep["prompts"]["n"] = len(prompts)
+    if len(prompts) != expect:
+        note(f"{len(prompts)} prompts, not {expect}")
+        return rep
+    recs = []
+    for pr in prompts:
+        user, gen = prompt_parts(pr["label"])
+        where = f"prompt {int(pr['index'])} ({pr['label']})"
+        a, b = [int(x) for x in encode(user)], [int(x) for x in encode(user + gen)]
+        k = 0
+        while k < len(a) and k < len(b) and a[k] == b[k]:
+            k += 1
+        if k != len(a):
+            rep["prompts"]["boundary_merged"] += 1
+            note(f"{where}: the generation prompt merges across the boundary ({k} of the user turn's {len(a)} ids "
+                 f"kept)")
+            continue
+        if not 0 < k < len(b):
+            note(f"{where}: a degenerate boundary, {k} of {len(b)} ids")
+            continue
+        recs.append({"index": int(pr["index"]), "label": pr["label"], "rep": int(pr["rep"]), "seed": int(pr["seed"]),
+                     "user_sha256": _sha256_bytes(user.encode("utf-8")),
+                     "text_sha256": _sha256_bytes((user + gen).encode("utf-8")), "user_tokens": len(a),
+                     "gen_start": k, "seq_len": len(b), "ids_sha": ids_sha(b), "ids": b})
+    rep["prompts"]["ok"] = len(recs)
+    if len(recs) != expect:
+        return rep
+    rep["prompts"]["seq_len"] = [min(r["seq_len"] for r in recs), max(r["seq_len"] for r in recs)]
+    rep["prompts"]["gen_start"] = [min(r["gen_start"] for r in recs), max(r["gen_start"] for r in recs)]
+    blob = "".join(_dumps(r) + "\n" for r in recs).encode("utf-8")
+    tmpl_user, tmpl_gen = prompt_parts("{zone}")
+    manifest = dict(bman)
+    manifest["files"] = {**bman["files"], GCAL_FILE: {"sha256": _sha256_bytes(blob), "records": len(recs)}}
+    manifest["v"] = {"pi_date": pi_date, "base_manifest_sha256": base["manifest_sha256"],
+                     "labels": sorted(str(x) for x in labels), "prompts": len(recs), "eos_id": eos[0],
+                     "eos_text": EOT, "prompt_template": tmpl_user + tmpl_gen,
+                     "conventions": {"prompts": "the user turn and the generation prompt of gcal.prompt_parts, encoded "
+                                                "whole with no special tokens added (the rendering of record)",
+                                     "gen_start": "the first id where the whole leaves the user turn's own ids, "
+                                                  "asserted equal to their count"}}
+    mdata = (_dumps(manifest) + "\n").encode("utf-8")
+    stage.mkdir(parents=True)
+    try:
+        for fname in FILES_I_III + FILES_IV:
+            data = (Path(base_dir) / fname).read_bytes()
+            if _sha256_bytes(data) != bman["files"][fname]["sha256"]:
+                raise SystemExit(f"{fname}: not the base manifest's bytes as copied")
+            _atomic_write(stage / fname, data)
+        _atomic_write(stage / GCAL_FILE, blob)
+        _atomic_write(stage / MANIFEST_FILE, mdata)
+        back = load(stage)
+        bad = sum(1 for r in back[GCAL_FILE] if ids_sha(r["ids"]) != r["ids_sha"])
+        if bad or _sha256_bytes(_base_of(back["manifest"], "v")) != base_pin:
+            raise SystemExit(f"{out.name}: the staging folder does not read back as rendered")
+        os.replace(stage, out)
+    except BaseException:
+        shutil.rmtree(stage, ignore_errors=True)
+        raise
+    files_rep = {fname: dict(back["manifest"]["files"][fname]) for fname in FILES_I_III + FILES_IV + FILES_V}
     files_rep[MANIFEST_FILE] = {"sha256": _sha256_bytes(mdata), "records": len(manifest["files"])}
     rep.update(status="PASS", files=files_rep)
     return rep
@@ -886,3 +1025,103 @@ def _selftest(chk, tmp) -> None:
         rec_ok, rec_d = False, str(e)[:80]
     chk("ids: the committed data/n/ids/ is (i)-(iv), its MANIFEST.json at MANIFEST_OF_RECORD, extending (i)-(iii)'s",
         rec_ok, rec_d)
+
+    # (v): render_v on the synthetic (i)-(iv) folder above, under the character tokenizer with the eos one id
+    from . import gcal, keys
+    from .sessions import ASSISTANT_OPEN
+    enc_v = lambda t: [7] if t == EOT else enc(t)                                    # noqa: E731
+    labs = ["Zone W6", "Zone B8", "Zone D7", "Zone H0", "Zone K7", "Zone L4", "Zone M2", "Zone N1", "Zone Q3",
+            "Zone R9", "Zone T5", "Zone V3"]
+    pin_iv = _sha256_bytes((ok_dir / MANIFEST_FILE).read_bytes())
+
+    def run_v(name, labels_=None, enc_=enc_v, env_=None, shas_=None, base=None, **over):
+        return render_v(labs if labels_ is None else labels_, enc_, env if env_ is None else env_,
+                        shas if shas_ is None else shas_, "2026-11-20", base or ok_dir, tmp / name,
+                        prompt_parts=gcal.prompt_parts, plan=gcal.plan, **dict({"base_pin": pin_iv}, **over))
+    rep_v = run_v("v_ok")
+    v_dir = tmp / "v_ok"
+    written_v = sorted(p.name for p in v_dir.iterdir()) if v_dir.exists() else []
+    chk("ids (v): a render of the 48 prompts PASSes and writes a complete ids folder of seven files, its staging folder "
+        "gone", rep_v["status"] == "PASS" and written_v == sorted(FILES_I_III + FILES_IV + FILES_V + (MANIFEST_FILE,))
+        and not (tmp / "v_ok.staging").exists(), (rep_v["status"], written_v, rep_v["first_problems"][:2]))
+    ld_v = load(v_dir)
+    man_v = ld_v["manifest"]
+    tu, tg = gcal.prompt_parts("{zone}")
+    chk("ids (v): the extended manifest keeps (i)-(iv)'s fields and file entries, adds the file and the v block (its "
+        "date, base, the sorted labels, the count, the eos as one id, the prompt's template, the conventions)",
+        {k: v for k, v in man_v.items() if k not in ("files", "v")} == {k: v for k, v in man_iv.items() if k != "files"}
+        and {k: man_v["files"][k] for k in FILES_I_III + FILES_IV} == man_iv["files"]
+        and sorted(man_v["files"]) == sorted(FILES_I_III + FILES_IV + FILES_V)
+        and man_v["v"]["base_manifest_sha256"] == pin_iv and man_v["v"]["pi_date"] == "2026-11-20"
+        and man_v["v"]["labels"] == sorted(labs) and man_v["v"]["prompts"] == 48 and man_v["v"]["eos_id"] == 7
+        and man_v["v"]["eos_text"] == EOT and man_v["v"]["prompt_template"] == tu + tg
+        and man_v["iv"] == man_iv["iv"], man_v.get("v"))
+    chk("ids (v): the new manifest's (i)-(iv) part is the base manifest byte for byte, and its (i)-(iii) part still the "
+        "iv block's base", _base_of(man_v, "v") == (ok_dir / MANIFEST_FILE).read_bytes()
+        and _sha256_bytes(_base_of(man_v, "iv")) == bpin, "")
+    chk("ids (v): (i)-(iv)'s files are copied byte for byte",
+        all((v_dir / f).read_bytes() == (ok_dir / f).read_bytes() for f in FILES_I_III + FILES_IV), "")
+    pl = gcal.plan(labs)
+    gv = ld_v[GCAL_FILE]
+    good = len(gv) == 48
+    for i, r in enumerate(gv):
+        u_, g_ = gcal.prompt_parts(r["label"])
+        good = good and r["ids"] == enc_v(u_ + g_) and r["gen_start"] == r["user_tokens"] == len(enc_v(u_)) \
+            and r["seq_len"] == len(r["ids"]) and r["ids_sha"] == ids_sha(r["ids"]) \
+            and r["text_sha256"] == _sha256_bytes((u_ + g_).encode()) and r["user_sha256"] == _sha256_bytes(u_.encode()) \
+            and (r["index"], r["label"], r["rep"], r["seed"]) == (i, pl[i]["label"], pl[i]["rep"], keys.gcal_seed(i))
+    chk("ids (v): each record is the plan's prompt i: its two texts' ids, gen_start at the user turn's own count, the "
+        "texts' sha256s, the seed keys.gcal_seed(i), ids_sha", good, "")
+    chk("ids (v): the report carries counts and sha256s, no id; the files are the seven on disk",
+        '"ids"' not in _dumps(rep_v) and printable(rep_v) == rep_v and rep_v["prompts"]["ok"] == 48
+        and rep_v["prompts"]["boundary_merged"] == 0
+        and all(rep_v["files"][f]["sha256"] == _sha256_bytes((v_dir / f).read_bytes())
+                for f in FILES_I_III + FILES_IV + FILES_V + (MANIFEST_FILE,))
+        and rep_v["files"][MANIFEST_FILE]["records"] == 6, rep_v["prompts"])
+    try:
+        run_v("v_ok")
+        chk("ids (v): the render writes once, into a new folder", False, "no refusal")
+    except SystemExit:
+        chk("ids (v): the render writes once, into a new folder", True, "")
+
+    def stop_v(name, label, problem, **k):
+        r = run_v(name, **k)
+        ok = r["status"] == "STOP" and not (tmp / name).exists() and not (tmp / (name + ".staging")).exists()
+        chk(f"ids (v): {label} STOPs, and nothing is written", ok and r["first_problems"]
+            and problem in r["first_problems"][0], r["first_problems"][:1])
+        return r
+    stop_v("v_pin", "a base manifest that is not (i)-(iv)'s of record", "not (i)-(iv)", base_pin="0" * 64)
+    stop_v("v_three", "a base folder of (i)-(iii)", "not (i)-(iv)", base=base_iv, base_pin=bpin)
+    stop_v("v_env", "an environment other than the base manifest's", "environment",
+           env_={**env, "transformers": "5.15.0"})
+    stop_v("v_tok", "a tokenizer file other than the base manifest's", "tokenizer",
+           shas_={**shas, TOKENIZER_FILES[0]: "1" * 64})
+    stop_v("v_eos", "an end-of-turn token that is not one id", "not one", enc_=enc)
+    stop_v("v_eleven", "a label set of 11", "the plan", labels_=labs[:11])
+
+    def enc_bm(t):                          # merges the user turn's last newline into the generation prompt
+        j = t.find("\n" + ASSISTANT_OPEN)
+        return enc(t[:j]) + [9999] + enc(t[j + 2:]) if j >= 0 else enc_v(t)
+    r_bm = stop_v("v_merge", "a generation prompt that merges across the boundary", "merges", enc_=enc_bm)
+    chk("ids (v): ...and every prompt is counted (48 merged)", r_bm["prompts"]["boundary_merged"] == 48,
+        r_bm["prompts"])
+
+    def refused_load_v(folder, edit, label, word):
+        dst = tmp / ("loadv_" + folder)
+        shutil.copytree(v_dir, dst)
+        edit(dst)
+        try:
+            load(dst)
+            chk(f"ids (v): {label} is refused", False, "no refusal")
+        except SystemExit as e:
+            chk(f"ids (v): {label} is refused", word in str(e), str(e)[:100])
+    refused_load_v("nov", man_edit(lambda m: m.pop("v")), "a manifest of the seven files without its v block",
+                   "v blocks")
+    refused_load_v("sixv", man_edit(lambda m: m["files"].pop(GCAL_FILE)), "a manifest of (i)-(iv) with a v block",
+                   "iv block")
+    refused_load_v("basebadv", man_edit(lambda m: m["files"][A3_FILE].update(records=3)),
+                   "a manifest whose (i)-(iv) part is not the base its v block names", "base manifest")
+    chk("ids (v): the pins: (v)'s file name and count; the manifest (v) extends is (iv)'s of record; the labels of "
+        "record are the committed (iii) file's 12, sorted",
+        FILES_V == ("gcal_prompts.jsonl",) and N_GCAL_PROMPTS == 48 and MANIFEST_I_IV.startswith("fdf73d85")
+        and labels_of(load(IDS_DIR)) == sorted(labels_of(load(IDS_DIR))) and len(labels_of(load(IDS_DIR))) == 12, "")

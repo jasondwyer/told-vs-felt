@@ -313,6 +313,16 @@ __pycache__/
 !/data/n/gvec/directions_alt_L31.npy
 !/data/n/gvec/directions_alt_L32.npy
 
+# PROPOSAL-n's G-CAL-n outputs (n v0.2 §8 step 8 and §3 G-CAL-n; valence_core/n/gcal.py; scripts/n_sessions.py gcal):
+# the record, the turns and the dose map's five figures, written on the box by the run of record and copied back by
+# hash. Record, not cache (ledger 27): the seat reads every turn (rule 25), and LOCK-n v0.1 pins the map. Its staging
+# folder (data/n/.gcal.staging) and a failed run's folder (data/n/.gcal.failed, GC23) stay ignored.
+!/data/n/gcal/
+/data/n/gcal/*
+!/data/n/gcal/gcal.json
+!/data/n/gcal/gcal_turns.jsonl
+!/data/n/gcal/dose_map.json
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s
