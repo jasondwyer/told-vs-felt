@@ -21,6 +21,62 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — the ids of record, third commit: (v)'s render, G-CAL-n's 48 prompts in the rendering of record
+  (ADDENDUM-n1 §1.2 (v) and §1.5; the seat's answers of 2026-11-19, first sitting, §1.7 and §1.8; the PI's routing,
+  item 2, on "Route as given"), committed by path with G-VER's pin moved. Model-free, on the laptop.**
+  - **Headline:**
+    - `render-ids-v`, HEAD `035947e`'s own code from an overlay checked equal to HEAD's, in G-DATA's environment
+      (python 3.12.9, transformers 5.5.0, tokenizers 0.22.2) with the manifest's three tokenizer files: PASS, exit 0;
+      48 of 48 prompts, none merged across the boundary, `gen_start` 25 and `seq_len` 31 on every prompt; the end of
+      turn one id, the `v` block's `eos_id`;
+    - `data/n/ids/`: `gcal_prompts.jsonl` new (`a1197eb5…e35d`, 48 records) and `MANIFEST.json` extended
+      (`53a8cd74…99d8`, six files, a `v` block); the five (i)–(iv) files unchanged, byte for byte;
+    - `valence_core/n/ids.py` (`fd3e9c63…7022`, +12 −9): `MANIFEST_OF_RECORD`, G-VER's pin, moves from `fdf73d85…ef38`
+      to `53a8cd74…99d8`, with its comment, and the self-test's committed-ids check moves from (i)–(iv) to (i)–(v), as
+      the BUILD review's O11 named;
+    - the n package's digest moves from `e5606ddf…b36c` to `1bb0daea…af51`, by shell and by the package's own
+      `hashes` on the pin-moved overlay;
+    - the self-test with the pin moved and the render's files in place: 545/545, exit 0; G-VER's site check on the
+      (i)–(v) folder (the BUILD review's O11): PASS, its sessions, ids, n4 variants and spans 160 of 160 and its labels
+      4 of 4;
+    - Code's cross-check by `jq` (the BUILD review's O10): every one of the 160 sessions of record opens with exactly
+      one of (v)'s 12 prompts, by its user turn and by its whole, none unmatched;
+    - the three runs in battery windows the coordinating session granted for their bytes, under `nice -n 19`.
+  - **The raw**, with the commands, what the render asserts and writes, Code's readings R-v1–R-v5, the tokenizer
+    folder, run 1's output whole, the files, the cross-check, G-VER's output, the package and `hashes`' output:
+    [`2026-11-19_n-ids-v_render.md`](results/raw/2026-11-19_n-ids-v_render.md). The self-test run is in its table of
+    runs, as (iv)'s was in (iv)'s raw.
+  - **Readings for the seat** (the raw's R-v1–R-v5): the prompts, BK's zone prompt in `gcal.prompt_parts`, encoded
+    whole with no special token added (Q7, Q8); the stop, `<|endoftext|>`, one id; the manifest extended in place; the
+    committed-ids check moved; and the code of record, HEAD's, not a draft.
+  - **What it unblocks:** G-CAL-n's input checks find (v), without which the driver refuses a run. G-CAL-n's launch
+    files still wait for G-VEC's PASS, and so for the seat's ruling on `355e3a2`'s STOP.
+  - **Departures:** none of Code's. The values-checker's, as its report states them, for the seat to class: four
+    `git show --name-only` runs without item 3's pathspec (on `035947e`, `a33252a`, `d76f34f` and `b523f6a`, printing
+    names and ids); one `git log --format=%h` over `data/n/ids/` with the exclusions in place of `.`; and one
+    `grep -A 3` of `valence_core/n/sessions.py` that printed a code constant holding token ids, not from the render's
+    files and not repeated in its report. Not barred, by its reading: `jq` on HEAD's `MANIFEST.json`, reads beyond its
+    named sources, a `diff` header showing the draft's modification time, and a zsh error that ran nothing.
+  - **Values-check:** one blind pass over this entry's draft and the render raw's.
+    - 69 items: 57 CONFIRMED, 3 IMPRECISE, 1 FAIL, 8 NOT CHECKABLE; and 9 observations.
+    - The FAIL (item 36): the drafts printed the end-of-turn token id, against ADDENDUM-n1 §1.2's "never an id". It is
+      taken out of both texts; the `v` block carries it as data. The three IMPRECISE items (40, 45 and 64) are
+      applied in the checker's words or near them.
+    - Observations 2 and 3, the BUILD review's O10 and O11 routed to this commit, are closed by Code's cross-check and
+      by run 3's G-VER trial; observation 4 by run 3's `hashes`; observations 5–9 are applied; observation 1 is the
+      FAIL's.
+    - The NOT CHECKABLE items are this session's acts and plans, and run 2's bytes, which its output cannot show.
+    - Run 3, the cross-check and their sections came after the check. No second full pass was made; the claims they
+      changed or added were re-checked by tool.
+    - Raw: [`2026-11-19_n-ids-v_valuescheck.md`](results/raw/2026-11-19_n-ids-v_valuescheck.md).
+  - **Committed by path:** `data/n/ids/gcal_prompts.jsonl`, `data/n/ids/MANIFEST.json`, `valence_core/n/ids.py`, the
+    render raw, the values-check raw, this entry, and a dated note on `035947e`'s entry on the coordinating session's
+    three low items in that entry's values-check raw.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    **Next:** G-CAL-n's launch files after G-VEC's PASS is committed; the tile (R12) with F5 and R13 after G-CAL-n's
+    run; LOCK-n v0.1's draft items.
+
 - 2026-11-19 — **n — G-CAL-n's delta, committed by path: the seat's three changes to the stage (the answers of
   2026-11-19, first sitting: the whole turn steered, §1.9; the order +ρ, the baseline, +ρ/2, −ρ, with the early STOP
   at a +ρ fail, §1.12 (d); a PAUSE on an incoherent baseline, §5 O7), with the wording owed at the BUILD. One blind
@@ -130,6 +186,19 @@ applied to CLAUDE.md.
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
     **Next:** (v)'s render under the rendering of record, in its own battery window and commit; G-CAL-n's launch
     files after G-VEC's PASS is committed, which waits for the seat's ruling on G-VEC's STOP (`355e3a2`).
+  - **Dated note (2026-11-19), on the coordinating session's three low items in this entry's values-check raw**
+    (`2026-11-19_n-gcal-delta_valuescheck.md`):
+    - its line 47 lists Code's acts and plans among the NOT CHECKABLE items as "(3, 8, 12, 52–56, 94, 97, 98)", a
+      range that takes in item 54, which the report marks CONFIRMED. The list reads 3, 8, 12, 52, 53, 55, 56, 94, 97
+      and 98; with items 45, 46, 51 and 48 beside them, the NOT CHECKABLE items are the report's 14, as this entry
+      counts them;
+    - its line 38's "the box's 555 is the laptop's 544 plus 11 checks more" is draft 5's figure; draft 6's, committed,
+      is 556 = 545 + 11, as this entry and the self-test raw say;
+    - its lines 182 and 202 quote the checker's search patterns ("/Users/", "/private/", "tmp/claude"), with no user
+      name or path: a bare `/Users/` count over the commit finds those two lines, while this entry's count is of the
+      full home-folder prefix, 0;
+    - the checker's report also lists, apart from its departures, one zsh error from an unquoted `===`, which ran
+      nothing (the raw's line 320).
 
 - 2026-11-19 — **n — G-VEC on n's box, from its BUILD's commit `da7bdec`: the smoke held, and the run of record
   STOPPED at the R check, R within 2% of 25.49 at neither candidate index (n §2.3: "reproduced at G-VEC within 2%,

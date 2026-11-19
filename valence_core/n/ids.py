@@ -80,10 +80,10 @@ MANIFEST_I_IV = "fdf73d854ebd6fbe02ced28a0c49af1c9658763627aaaa55afd781084f80ef3
 #: (i)-(iii)'s MANIFEST.json sha256 (``data/n/ids/`` at ``d76f34f``, the ids of record's first commit): the manifest
 #: ``render_iv`` extends.
 MANIFEST_I_III = "7f51bd914eb03510442f01bfbf7cad7ba74c7e9fb98edb307db350d9772a821d"
-#: The committed MANIFEST.json's sha256: (i)-(iv)'s, as (iv)'s render wrote it (the ids of record's second commit;
-#: (i)-(iii)'s, ``MANIFEST_I_III``, before it). G-VER's pin (``verify.verify``'s ``manifest_pin``); ADDENDUM-n1 §1.5
-#: puts it in LOCK-n v0.1's "rendering and spans".
-MANIFEST_OF_RECORD = "fdf73d854ebd6fbe02ced28a0c49af1c9658763627aaaa55afd781084f80ef38"
+#: The committed MANIFEST.json's sha256: (i)-(v)'s, as (v)'s render wrote it (the ids of record's third commit;
+#: (i)-(iv)'s, ``MANIFEST_I_IV``, before it, and (i)-(iii)'s, ``MANIFEST_I_III``, before that). G-VER's pin
+#: (``verify.verify``'s ``manifest_pin``); ADDENDUM-n1 §1.5 puts it in LOCK-n v0.1's "rendering and spans".
+MANIFEST_OF_RECORD = "53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8"
 #: The corpus of record (the seat's answers of 2026-11-18, §0): its file, sha256 and passage count, and A3's frozen
 #: context count (``scripts/box_e0_corpus.py``: 48 tasks x 7 conditions x 4 paraphrases).
 PASSAGES_FILE = REPO / "data" / "n" / "passages.jsonl"
@@ -1016,15 +1016,18 @@ def _selftest(chk, tmp) -> None:
         and PASSAGES_SHA256.startswith("ef6b00dc") and (N_PASSAGES, N_A3_CONTEXTS) == (544, 1344), "")
     try:
         ld_rec = load(IDS_DIR)
-        rec_ok = (ld_rec["manifest_sha256"] == MANIFEST_OF_RECORD != MANIFEST_I_III
-                  and sorted(ld_rec["manifest"]["files"]) == sorted(FILES_I_III + FILES_IV)
+        rec_ok = (ld_rec["manifest_sha256"] == MANIFEST_OF_RECORD
+                  and MANIFEST_OF_RECORD not in (MANIFEST_I_III, MANIFEST_I_IV)
+                  and sorted(ld_rec["manifest"]["files"]) == sorted(FILES_I_III + FILES_IV + FILES_V)
                   and ld_rec["manifest"]["iv"]["base_manifest_sha256"] == MANIFEST_I_III
-                  and len(ld_rec[GVEC_FILE]) == N_PASSAGES and len(ld_rec[A3_FILE]) == N_A3_CONTEXTS)
+                  and ld_rec["manifest"]["v"]["base_manifest_sha256"] == MANIFEST_I_IV
+                  and len(ld_rec[GVEC_FILE]) == N_PASSAGES and len(ld_rec[A3_FILE]) == N_A3_CONTEXTS
+                  and len(ld_rec[GCAL_FILE]) == N_GCAL_PROMPTS)
         rec_d = ld_rec["manifest_sha256"][:8]
     except SystemExit as e:
         rec_ok, rec_d = False, str(e)[:80]
-    chk("ids: the committed data/n/ids/ is (i)-(iv), its MANIFEST.json at MANIFEST_OF_RECORD, extending (i)-(iii)'s",
-        rec_ok, rec_d)
+    chk("ids: the committed data/n/ids/ is (i)-(v), its MANIFEST.json at MANIFEST_OF_RECORD, extending (i)-(iv)'s, "
+        "which extends (i)-(iii)'s", rec_ok, rec_d)
 
     # (v): render_v on the synthetic (i)-(iv) folder above, under the character tokenizer with the eos one id
     from . import gcal, keys
