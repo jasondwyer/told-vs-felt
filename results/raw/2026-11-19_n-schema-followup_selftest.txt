@@ -1,0 +1,72 @@
+n -- the schema follow-up for the fidelity-ceiling kind (ADDENDUM-n2 v0.1 s2.1, s2.2 and s6.3 (3); the seat's answers
+of 2026-11-18, fourth sitting, s4 and s5; the PI's "route as given"): its self-test on the laptop, committed with the
+change. PI date 2026-11-19. Code (the n-build session).
+
+The change, on HEAD 9f64305, whose four files are 732a58f's (git diff --name-only 732a58f 9f64305 -- valence_core
+scripts ':!data/*/ckpt/**' ':!data/*/reports/**' ':!data/mf3/**' prints nothing):
+  valence_core/n/schema.py     5cbf60db8484da1e87fdd33bf84a65aeb2a06194113b266cbcefdec429c9574c
+  valence_core/n/runner.py     e8e81ab07b5f9ec08ccf7fa43e5383cf498fec8a7544c0544ce4189ca44bf787
+  valence_core/n/primitive.py  dca64c0f4bf0874cd7268959997490ae9575a56c2fc8d9ee6784bb8c5eb68a2a
+  scripts/n_sessions.py        e284a9f286c03ff25fa330890f9f949f98983072bc0414dcfb792d4dc34c32b6
+The package: valence_core/n's digest moves from
+  f927608c33d12b34c2bef728966038dac1ecfbb041cbd992b7ffd4cf01a73c03 (HEAD's: v2f's raw records it, and the package's
+  own `hashes` printed it on the box at backend-ext-2) to
+  f09898eee3e38cb7000b787223ee2f9edea615905b26df8c0524ba9988e8b8f9,
+  computed by shell in the form valence_core/m/resume.py's package_sha256_of states (the folder's *.py files sorted by
+  path, each contributing "{path}\n{byte length}\n" and then its bytes); the same computation over HEAD's files
+  reproduces the first digest. The self-test prints no digest. The package's own `hashes` runs when G-VEC's launch
+  files are made, in a battery window of its own, and the box compares against it.
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny, and the HF-path vanilla score) run only where torch
+   and transformers are present, and elsewhere are skipped and counted as skipped (the driver's docstring); the schema
+   module's own cases count as one aggregated line.
+   The overlay: git archive of HEAD 732a58f on v2g's self-test paths, with item 3's exclusions and data/mf3's
+   (':!data/*/ckpt/**' ':!data/*/reports/**' ':!data/mf3/**'), so that no checkpoint or report file entered it; the
+   four files replaced by each run's drafts. HEAD moved after the overlay was made, to 9f64305 (backend-ext-2's
+   entry), which changed none of the overlay's paths.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/schema/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its four files, each file re-hashed in the
+   overlay just before the run.
+
+   Run 1, the first draft:
+     valence_core/n/schema.py     fdfc8466ed49547255351a110d1b5a3beaeaede4e9f614f79eb99e68bfe64e97
+     valence_core/n/runner.py     c615681c5c70187e9ffccb4dbde1c4a6b6745a9bbe670266c19e182ed3e6f1ec
+     valence_core/n/primitive.py  56d6c50922087156357450d6eb6fe1b37eb737d10cdbaf9a1540b9054d97e735
+     scripts/n_sessions.py        9420982630b8b79d230a7a8c69f0e6385949600f8da9582e90cd70446e0d3a32
+   Exit 1. Its whole output (sha256 8a4123f332824f6f7f028e950bd03fcd7788fd006870595d586a30c7da9c993e), each line
+   indented by five spaces here:
+     FAIL runner: a binomial fire at a cadence point stands on its batch's arms: [{'pause_id': 'p01', 'kind': 'fidelity-ceiling', 'read_id': 'N1-P|valence|+1|floor_b0/3', 'launch_index': 2, 'arms_in_scope': ['N1-P'], 'adjudicated': False, 'ruling_sha256': None, 'binomial': None, 'also_fired': [], 'resumed_at_launch_index': None}]
+     FAIL runner: an exceedance short of the cadence fires at the run's end, a read-less pause on the batch's arms: [{'pause_id': 'p01', 'kind': 'fidelity-ceiling', 'read_id': 'N1-V|valence|+1|floor_b0/3', 'launch_index': 2, 'arms_in_scope': ['N1-V'], 'adjudicated': False, 'ruling_sha256': None, 'binomial': None, 'also_fired': [], 'resumed_at_launch_index': None}]
+     FAIL runner: after its ruling the end-of-run fire is reproduced, cleared, not re-fired; the stage COMPLETE: [{'adjudicated': True, 'also_fired': [], 'arms_in_scope': ['N1-V'], 'binomial': None, 'kind': 'fidelity-ceiling', 'launch_index': 2, 'pause_id': 'p01', 'read_id': 'N1-V|valence|+1|floor_b0/3', 'resumed_at_launch_index': 3, 'ruling_sha256': '49f9270fe95c79c7e8715448a83c44c37c94f9f34d5d3431a58
+       400/403 n selftest checks pass
+
+   The third FAIL line ends mid-digest because the driver cuts every FAIL line at 400 characters
+   (scripts/n_sessions.py's cmd_selftest).
+   The three failing checks are the run-level binomial tests. Their test double adds 2.0 to logit 9 in every steered
+   re-computation, a margin discordance of about 2 nats (the second draft's comment), which is above the example
+   identity's new ceiling of 0.25; so each of those stages paused at once as fidelity-ceiling at its read 2, before its
+   binomial was reached.
+
+   Run 2, the second draft, the bytes the blind review read: runner.py
+     10a337075941c9331fd7eb8fea710cef209e24b126fd40be4b46d67bfd93fabe
+   (the three tests run under an identity whose ceiling, and the identity bound with it, is 10.0, above that
+   discordance; and one new check runs the same discordance under the example ceiling of 0.25, which pauses as
+   fidelity-ceiling at its read, counted, before any binomial evaluation), with run 1's other three files. Exit 0. Its
+   whole output (sha256 98646a2eb17594e481a3306ab5287618db0c33851f9c9cb013a35c3595107f31), each line indented by five
+   spaces here:
+       404/404 n selftest checks pass
+
+   Run 3, the third draft, the change's final bytes as above: the blind review's findings applied, all but F5 (F7 by
+   declaration), with five checks more (four in the runner, one in the primitive; the schema module's three new cases
+   sit inside its one line). Exit 0. Its whole output (sha256
+   b7f87ff9e57223a34eaf65a024da4b2a013946286dc7897a7622dbffa6cfd868), each line indented by five spaces here:
+       409/409 n selftest checks pass
+
+2. THE BOX. The box has not run this change. Its count there, by arithmetic only: 420, the laptop's 409 plus the
+   box's 11 checks more: its 13 HF checks (twelve in hftiny, and the driver's HF-path vanilla score) in place of the
+   laptop's two skip lines, as 408 on the box against v2g's 397 on the laptop, at backend-ext-2's start. The change
+   adds no box-only check. The box's next self-test, at G-VEC's launch, is the first run of hftiny's box-only
+   identity under this schema (the review's O5).

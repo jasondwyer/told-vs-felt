@@ -21,6 +21,199 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — the schema follow-up for the `fidelity-ceiling` kind, committed by path after backend-ext-2's
+  entry (ADDENDUM-n2 v0.1 §2.1, §2.2 and §6.3 (3); the seat's answers of 2026-11-18, fourth sitting, §4 and §5; the
+  PI's routing, item 4 of "N. n-build (and the pod session on the box)", on "route as given"): the kind directly after
+  `nonfinite`; the fidelity rule's `alpha`, `ceiling` and `median_rel`; the counter `fidelity_ceiling_exceeded`; and
+  the stage's refusal of an alpha that is not its identity's. The n package's digest moves; n-analyzer moves its schema
+  pin in its own commit.**
+  - **Headline:**
+    - four files, on HEAD `9f64305`, where all four are as `732a58f` left them (git's numstat against HEAD):
+      `valence_core/n/schema.py` `5cbf60db…574c` (+141 −25), `valence_core/n/runner.py` `e8e81ab0…f787` (+98 −17),
+      `valence_core/n/primitive.py` `dca64c0f…8a2a` (+7 −2) and the driver `scripts/n_sessions.py` `e284a9f2…32b6`
+      (+11 −3). `valence_core/n/hftiny.py` and `scripts/n_analyze.py` do not change;
+    - the n package's digest moves from `f927608c…3c03`, HEAD's, which the package's own `hashes` printed on the box
+      at backend-ext-2, to `f09898ee…b8f9`, computed by shell in the form that `valence_core/m/resume.py`'s
+      `package_sha256_of` states; the same computation over HEAD's files reproduces `f927608c…3c03`. The self-test
+      prints no digest. The package's own `hashes` runs when G-VEC's launch files are made, in a battery window of its
+      own, and the box compares against it; the digest is marked there as checked by the package;
+    - the self-test: 409/409 on the laptop, after the first draft's 400/403 and the reviewed draft's 404/404 (below),
+      in the raw [`2026-11-19_n-schema-followup_selftest.txt`](results/raw/2026-11-19_n-schema-followup_selftest.txt).
+      On the box, by arithmetic only: 420, the 409 plus the box's 11 checks more (its 13 HF checks in place of the
+      laptop's two skip lines);
+    - nothing of the change ran on a checkpoint's weights. Its three self-test runs were each in a battery window the
+      coordinating session granted for their bytes, under Q-F3's standing rules for the laptop (model-free,
+      `nice -n 19`);
+    - one blind review, of the change and of the first draft's fix: 0 BUG, 5 RISK, 3 NIT, 7 surviving mutants and 9
+      observations. Every finding but F5 is applied (F7 by declaration), and each mutant now has a check that kills
+      it. F5 goes to the seat and to n-analyzer;
+    - the pin: n-analyzer moves `SCHEMA_SHA256` in `scripts/n_analyze.py` (now `0ea39600…0db6`, `d791bd9`'s
+      `schema.py`, which is HEAD's) to this commit's `schema.py`, in its own commit.
+  - **What the change does** (the seat's names in the answers' §5; the form agreed with n-analyzer, which confirmed
+    it on 2026-11-19):
+    - `schema.PAUSE_KINDS` is ("rendering", "nonfinite", "fidelity-ceiling", "identity-bound", "fidelity-binomial"):
+      the kind "directly after `non-finite`, ahead of `identity-bound`" (the answers' §5);
+    - `fidelity_rule` gains three fields:
+      - `alpha`: never null, 0 < alpha < 1;
+      - `ceiling`: null exactly at backend-ext; elsewhere at least `CEILING_FLOOR`, 0.25, A-n2 §2.1's floor;
+      - `median_rel`: null exactly at backend-ext; elsewhere at least 0, a floor that is Code's addition (F7).
+      p0 stays `p0_count` and `p0_n`, "entered as (k + 1, n + 2)" (the answers' §5);
+    - the identity bound equals `fidelity_rule.ceiling` where both are set (A-n2 §2.2: "its bound is C");
+    - `counters.fidelity_ceiling_exceeded` is null exactly where the identity sets no ceiling; elsewhere it is an int
+      at least the number of pauses that name the kind;
+    - `check_report`: a batch's alpha must equal the identity's `fidelity_rule.alpha`, and a `fidelity-ceiling` trigger
+      needs the identity's ceiling;
+    - the runner: on every re-computed read, at any dose, a |cached margin − fresh margin| above the ceiling fires
+      `fidelity-ceiling` at once (A-n2 §2.1: "pauses at once"), directly after `nonfinite` in the precedence, and is
+      counted. Where no ceiling is set (backend-ext) it never fires, and the monitors refuse a ceiling that is not
+      positive. A stage whose inputs' alpha is not its identity's `fidelity_rule.alpha` is refused before any read;
+    - `example_identity`: the campaign's ceiling and identity bound are 0.25, its median rel 0.01 and its alpha 0.01;
+      before the lock (backend-ext), the ceiling and median rel are null and the alpha is 0.01. The tests that relied on
+      the old example bound of 0.0 moved with it:
+      - in `primitive.py`, the shadow's expected bound is 0.25, and the biased fresh path adds 2.0 (was 0.5);
+      - in `runner.py`, the out-of-bound d = 0 read is shifted 0.5 (was 0.25);
+      - in `schema.py`, three refuse cases;
+    - the driver's backend-ext identity gains `alpha` (`BEXT_ALPHA`, 0.01) with a null ceiling and median rel, and its
+      self-test expects them.
+  - **The three drafts and their runs** (the self-test raw), each in a battery window the coordinating session granted
+    for its four files:
+    - The first draft's `runner.py` (`c615681c…f1ec`), with the second draft's other three files, ran 400/403, exit 1.
+      The three failing checks are the run-level binomial tests: "a binomial fire at a cadence point stands on its
+      batch's arms", "an exceedance short of the cadence fires at the run's end, a read-less pause on the batch's
+      arms", and "after its ruling the end-of-run fire is reproduced, cleared, not re-fired; the stage COMPLETE".
+    - The cause: their test double adds 2.0 to logit 9 in every steered re-computation, about 2 nats of margin
+      discordance (the second draft's comment; below 4 nats, by the review's O1), which is above the new example
+      ceiling of 0.25. Each of those stages therefore paused as `fidelity-ceiling` at its read 2, before its binomial
+      was reached.
+    - The second draft, the one the review read, is +13 −3 on the first, in the self-test only:
+      - those three tests run under an identity whose ceiling, and the identity bound with it, is 10.0;
+      - one new check runs the same discordance under the example ceiling of 0.25. It pauses as `fidelity-ceiling` at
+        its read, counted, before any binomial evaluation.
+      It ran 404/404, exit 0.
+    - The coordinating session asked for "the reason in the entry for not using a discordance between TAU and C under
+      the example identity". Code's reason: TAU bounds the relative discordance and C the absolute one in nats, and
+      the double's margin scales have not been measured, so a discordance placed between the two bounds would rest on
+      an unmeasured scale.
+    - The third draft applies the review (below) and ran 409/409, exit 0: four checks more in the runner and one in
+      the primitive, with the schema module's three new cases inside its one line.
+    - The first draft's output is kept, in the raw (`8a4123f3…993e`).
+  - **Where `check_report` runs** (the coordinating session's condition (a), by grep over the package, the driver and
+    `scripts/n_analyze.py`; lines in the committed files, and in HEAD's `scripts/n_analyze.py`):
+    - `runner.py:326` (`_prior_report`, from `run()` at `:397`): the stage's own report on disk, at every invocation
+      that finds one (a resume; a fresh run over one is refused after the check);
+    - `runner.py:551`: each report, as it is written;
+    - `n_sessions.py:867` (`prior_state`) and `:902` (`first_stage_check`), called only from `run_backend_ext`
+      (`:1055`, `:1057`), which serves the BACKEND extension's two commands, backend-ext and backend-ext-2. Both
+      stages are COMPLETE;
+    - `n_analyze.py:5660`: the verdicts path's loader, which refuses at `:5666` any stage that is not "campaign";
+    - `n_analyze.py:4258`: the battery's fixture, whose counters lack the new field. n-analyzer has it in hand in its
+      own draft;
+    - the self-tests: `runner.py:700` and `:751`, `n_sessions.py:1786` and `:1788`, and the schema's own.
+
+    So on a path still to run, beyond the self-tests' and n-analyzer's battery's own fixtures, `check_report` reads
+    only a stage's own report through the runner (G-TIME-n's and the campaign's, written under this schema) and the
+    campaign's report in `scripts/n_analyze.py`. That condition (a) concerns reports written under the old schema is
+    Code's reading; the coordinating session, on these call sites: "(a) holds, with the call sites as you list them;
+    the entry states them."
+  - **The reports and cells that no longer pass** (condition (b), and the review's O2), by reading the checks; no run
+    was made on them. Each identity's `fidelity_rule` lacks `alpha`, `ceiling` and `median_rel`, and each report's
+    counters lack `fidelity_ceiling_exceeded`. A cell fails through `cells.load_cell`, whose `check_cell` checks the
+    stage identity the cell carries. They are:
+    - the first stage's `data/n/reports/backend-ext.json`, as committed at `6df2131` and at `6e3474d` (HEAD's), and its
+      cell `data/n/ckpt/backend-ext/N1-V__none__0.json`, committed at `6df2131`;
+    - `data/n/reports/backend-ext-2.json` and its cell `data/n/ckpt/backend-ext-2/N1-V__none__0.json`, committed at
+      `9f64305`.
+    No campaign report exists. The figures of record stand as printed; re-reading either stage needs the package as it
+    stood at `9f64305`.
+  - **Code's readings for the seat (PINs: the texts do not decide them). LOCK-n v0.1's draft carries all of them, F7
+    and F5 into its list for the seat** (condition (c)):
+    - **R10, no version marker.** After this change, a report or cell written under the old schema does not pass the
+      checks. The grounds:
+      - the seat's §5 sequences the commit "after backend-ext-2 is COMPLETE, not before";
+      - n-analyzer's words in v2f's entry: "load_campaign and verdicts refuse any identity whose stage is not
+        "campaign"";
+      - no campaign report exists.
+    - **R11, the counter null where no ceiling is set.** §5 accepts the name `counters.fidelity_ceiling_exceeded`,
+      not its value where there is no ceiling. Null there follows the schema's existing form: "`label_mass_below_floor`
+      is null where no floor is set."
+    - **R12, the batch nests.** The binomial's batch is cumulative since the last adjudicated fire, so its
+      evaluations nest rather than tile. §4 describes an evaluation's statistic as "the count above TAU in the
+      evaluation's reads". The lock states which form binds. The coordinating session: "R12 especially, since it is
+      how alpha's per-evaluation count reads against nested batches."
+    - **R13, a ceiling ruling clears nothing in the batch.** A ruled `fidelity-ceiling` pause leaves its read in the
+      binomial's batch, as a trial, and as an exceedance where its rel is above TAU. Two texts in `runner.py` say it
+      less exactly and are corrected at its next change: the docstring's "a trial, and an exceedance", and the resume
+      check's name, "reproduced on replay and cleared" (the pause is adjudicated; the batch is not cleared).
+    - **R14, the ceiling at G-TIME-n.** The identity sets the ceiling at every stage but backend-ext, so a timing
+      re-computation above C pauses G-TIME-n.
+    - **F7, the median rel's floor.** `check_stage_identity` refuses a median rel below 0, where the agreed form names
+      no floor: Code's addition.
+    - **F5, not built.** The review proposes refusing a `p0_count` below 1 after the lock, with the example campaign's
+      p0 at (1, 26). That is outside the agreed form, and it would move n-analyzer's fixtures. It goes to the seat and
+      to n-analyzer.
+  - **The pin, settled by text.** §6.3 (3) says "the pin moving as before". "Before", by the commit subjects:
+    - `2822721`: "the schema pin moved from 5a97527 to 14e65d8 (n-build's schema commit changed the file the analyzer
+      pins; …)";
+    - `977b78b`: "the schema pin moved from 14e65d8 to n-build's follow-up commit d791bd9".
+    So n-build commits `schema.py`, and n-analyzer then moves `SCHEMA_SHA256` in its own commit. Code sends it this
+    commit and `schema.py`'s sha256, with F5, F7 and the review's O4.
+  - **The box** (the review's O5). hftiny's box-only identity sets the identity bound to 1e-3. The stage-identity
+    rules would now refuse it: its ceiling stays 0.25, and 1e-3 is below the floor. It passes because hftiny calls
+    `check_record` alone, which does not re-check the identity. A change there could not be tested on the laptop, so
+    it is left. The box's next self-test, at G-VEC's launch, is its first run under this schema; its count there, by
+    arithmetic, is 420, which G-VEC's launch files can require exactly.
+  - **Review:** one blind pass, by a subagent, over the second draft and the first draft's fix.
+    - 0 BUG, 5 RISK, 3 NIT, 7 surviving one-line mutants, and 9 observations.
+    - Applied: F1 (the alpha refusal tested), F2 (the ceiling exactly at C, its reach to sampled and timing
+      re-computations, and a resume through a ruled ceiling pause), F3 (the inclusive bound pinned in the schema and the
+      primitive), F4 (a bound below the ceiling refused, a median rel of 0.0 accepted), F6 (docstrings, a comment and a
+      check's name) and F8 (one name for the fidelity rule). These kill M1 to M7.
+    - Declared: F7, R10 to R14. Not applied: F5 (above), O5 (above) and O9 (two unreachable lines, harmless).
+    - Raw: [`2026-11-19_n-schema-followup_review.md`](results/raw/2026-11-19_n-schema-followup_review.md), with every
+      disposition and the report verbatim.
+  - **Departures:**
+    - 2026-11-19, Code: greps of this session's own transcript, the harness's record, which its compaction summary
+      names for details from before the compaction. The transcript is outside the repository, the HF cache and the
+      scratch folders. The greps recovered the runs' commands, the first draft's hashes and the coordinating session's
+      words;
+    - 2026-11-19, Code: one `git log` over the two report paths with `%ad` (the author date) beside ids and subjects,
+      where item 1 names commit times; and `git rev-parse` of the three report versions' blob ids, printed rather than
+      compared in the shell;
+    - 2026-11-19, Code: `git diff --name-only 732a58f HEAD -- scripts valence_core`, without item 3's exclusions or
+      `data/mf3`'s, in the check after backend-ext-2's commit; it printed a count of 0. The self-test raw now cites
+      the compliant form, which prints nothing;
+    - the reviewer's, as its report states them, for the seat to class: five `/usr/bin/grep -n` runs, each over one
+      named file in Code's scratch that it was allowed to read in full, where the brief barred grep there; and three
+      `git grep` commands with a narrower positive pathspec in place of `.`, each with all three exclusions;
+    - the values-checker's, as its report states them, for the seat to class: one `awk` filter over `grep -n` output
+      from `valence_core/n/schema.py`, where its brief barred interpreters; two `sed` substitutions in pipelines; git
+      commands without item 3's pathspec that print names, ids or subjects only (`git diff --name-only 732a58f
+      9f64305 -- valence_core scripts`, the form the self-test raw's draft cited, which printed nothing;
+      `git ls-tree --name-only` on `valence_core/n` at `732a58f` and at HEAD; three `git log --format` calls on single
+      commits with no path); and, not barred by its reading, a shell loop recomputing the package digest from named
+      files, reads beyond its named sections (ADDENDUM-n2 and the answers whole, `RESULTS.md`'s lines 20–23, HEAD's
+      `scripts/n_sessions.py`), `shasum` and `cat` on three scratch names that did not exist, and `head`, `tail`,
+      `cut`, `wc` and `tr` on named scratch files.
+  - **Values-check:** one blind pass over this entry's draft, the self-test raw and the review raw's head.
+    - 115 items: 87 CONFIRMED, 11 IMPRECISE, 1 FAIL, 16 NOT CHECKABLE; and 14 observations.
+    - The FAIL is corrected: the schema's moved tests are three refuse cases, not four.
+    - Nine IMPRECISE items are applied. Two stand, items 23 and 75 ("granted for its four files"): run 2's window
+      named all four files' sha256s in its check, and the brief quoted only its first line.
+    - Observations 1 to 8 and 10 to 14 are applied. Observation 9, R13's wording in `runner.py`'s docstring, and the
+      code side of observation 10, the resume check's name, wait for the next change to `runner.py`, as R13 states.
+    - The edits were checked by tool.
+    - Raw: [`2026-11-19_n-schema-followup_valuescheck.md`](results/raw/2026-11-19_n-schema-followup_valuescheck.md).
+  - **Committed by path:**
+    - the four files;
+    - three raws: the self-test, the review and the values-check;
+    - this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff (the third sitting's answers, §5.2) is 0. Not
+    pushed.
+    **Next:** n-analyzer's pin move, in its own commit; then G-VEC's wiring, and its launch files through the
+    coordinating session; G-CAL-n wired while G-VEC waits for the box; LOCK-n v0.1 kept in scratch as its figures
+    land, and sent to the seat once, complete, after step 9, with ADDENDUM-n2 §4.2's declarations, R10 to R14, F7
+    and F5.
 - 2026-11-19 — **n step 4 — backend-ext-2 on n's box, from driver v2g's commit `732a58f`: the BACKEND extension's 24
   reads under the label convention of record, "space", COMPLETE with no pause, so the conditional ruling was not used
   (the seat's answers of 2026-11-18, fourth sitting, §2; ADDENDUM-n2 v0.1 §4.1; the PI's routing, item 2 of "N.

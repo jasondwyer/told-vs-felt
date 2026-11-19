@@ -123,6 +123,11 @@ At the n BUILD it wires:
                no in-band count and no comparison. Exit 0 iff the reads are COMPLETE and every one is finite; a PAUSE
                as backend-ext's. ``--smoke``, ``--resume`` and ``--ruling`` as backend-ext's; a smoke is not checked
                against the first stage.
+               Both stages are COMPLETE (6e3474d, 9f64305). The schema follow-up (ADDENDUM-n2 §6.3 (3)) adds
+               ``alpha``, ``ceiling`` and ``median_rel`` to the fidelity rule and ``fidelity_ceiling_exceeded`` to the
+               counters with no version marker (Code's reading, R10, for the seat), so the two stages' committed
+               reports and cells no longer pass this package's checks: a resume or a re-print of either is refused
+               here ("not a valid report"), and re-reading them needs the package as it stood at 9f64305.
 
 Stages G-VEC, G-CAL-n, G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
 """
@@ -595,7 +600,8 @@ def bext_identity(*, package_sha256: str, imported_sha256: dict, weights: str, b
         "capture_layers": list(range(int(layer) + 1, int(n_layers))), "n_layers": int(n_layers),
         "d_model": int(d_model), "read_window": schema.MAX_WINDOW, "dose_map": None, "directions": {},
         "fidelity_rule": {"tau": schema.TAU, "p0_count": 0, "p0_n": 2400, "cadence": 160,
-                          "sample_key": "n-fid|{s}", "sample_rule": BEXT_SAMPLE_RULE},
+                          "sample_key": "n-fid|{s}", "sample_rule": BEXT_SAMPLE_RULE, "alpha": BEXT_ALPHA,
+                          "ceiling": None, "median_rel": None},       # pre-lock: no C and no median (ADDENDUM-n2)
         "identity_bound": None,
     }
     schema.check_stage_identity(ident)
@@ -1169,13 +1175,15 @@ def _bext_selftest(chk, tmp: Path) -> None:
                           weights="5" * 64, backend_identifier="6" * 16, pod_id="example-pod",
                           rendering_id=ids.MANIFEST_OF_RECORD)
     chk("driver: the backend-ext identity passes check_stage_identity: no lock, dose map, direction or bound; the "
-        "band 33..63; bare; window 4,096; the fidelity rule n §2.1's with G-DATA (vi)'s p0",
+        "band 33..63; bare; window 4,096; the fidelity rule n §2.1's with G-DATA (vi)'s p0, alpha 0.01, and no "
+        "ceiling or median rel",
         ident["stage"] == "backend-ext" and ident["lock_sha256"] is None and ident["dose_map"] is None
         and ident["directions"] == {} and ident["identity_bound"] is None
         and ident["capture_layers"] == list(range(33, 64)) and ident["label_convention"] == "bare"
         and ident["read_window"] == 4096 and (ident["n_layers"], ident["d_model"], ident["layer"]) == (64, 5120, 32)
         and ident["fidelity_rule"] == {"tau": schema.TAU, "p0_count": 0, "p0_n": 2400, "cadence": 160,
-                                       "sample_key": "n-fid|{s}", "sample_rule": BEXT_SAMPLE_RULE}, "")
+                                       "sample_key": "n-fid|{s}", "sample_rule": BEXT_SAMPLE_RULE, "alpha": 0.01,
+                                       "ceiling": None, "median_rel": None}, "")
 
     entry = manifest_entry(Path(ids.OLMO_MANIFEST).read_bytes())
     chk("driver: the model manifest's instruct entry: G-ACQ's aggregate, 22 files, its revision and path",

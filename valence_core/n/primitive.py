@@ -395,7 +395,12 @@ def _selftest(chk, tmp) -> None:
     sh, sh_caps = rd(spec("N1-V", "none", "0"))
     ok_record("primitive: the shadow's record passes check_record", sh)
     chk("primitive: the shadow carries the identity check, within the bound (cached == fresh in the double)",
-        sh["identity"] == {"bound": 0.0, "within": True} and sh["fidelity"]["absdiff"] == 0.0, sh["identity"])
+        sh["identity"] == {"bound": 0.25, "within": True} and sh["fidelity"]["absdiff"] == 0.0, sh["identity"])
+    sh0, _caps0 = read(be, s, ids, s.ids_sha, spec("N1-V", "none", "0"), LS, LU, caps_l, fidelity_reason="dose-rule",
+                       shadow=None, identity_bound=0.0, launch_index=0, capture_row=0)
+    chk("primitive: an absdiff equal to the bound is within it (0.0 against a bound of 0.0 on the double: the bound "
+        "is inclusive)", sh0["identity"] == {"bound": 0.0, "within": True} and sh0["fidelity"]["absdiff"] == 0.0,
+        sh0["identity"])
     chk("primitive: the shadow's mask is all zeros", sh["mask_sha16"] == mask_sha(np.zeros(len(ids), np.int8)), "")
     try:
         rd(spec("N1-V", "valence", "+1"))
@@ -451,7 +456,7 @@ def _selftest(chk, tmp) -> None:
         chk("primitive: a span reaching the read position is refused", False, "accepted")
     except AssertionError:
         chk("primitive: a span reaching the read position is refused", True, "")
-    biased = CausalDouble(fresh_bias=(9, 0.5))
+    biased = CausalDouble(fresh_bias=(9, 2.0))              # a differing fresh path beyond the bound C = 0.25
     sh_b, _ = rd(spec("N1-V", "none", "0"), backend=biased)
     st_b, _ = rd(spec("N1-V", "valence", "+1"), shadow=sh_b, backend=biased)
     chk("primitive: a fresh path that differs is recorded as an exceedance, not refused",

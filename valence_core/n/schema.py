@@ -99,9 +99,11 @@ BK's run, so the sample is of sessions: Code's reading; the draw is the lock's) 
 re-computation G-TIME-n takes to time it).
 
 IDENTITY (n §2.1: "the d = 0 read is the vanilla forward's margin within the backend's measured nondeterminism ...
-the bound stated in LOCK v0.1"). On an unsteered read that carries a re-computation, at the campaign or G-TIME-n
-(N4's reads included): ``within`` is the fidelity block's ``absdiff <= bound`` (the comparison's form is Code's
-reading). At ``backend-ext``, which measures the bound, the block is null.
+the bound stated in LOCK v0.1"; ADDENDUM-n2 §2.2: the same quantity at d = 0, the cached shadow against the fresh
+forward, "and its bound is C", the identity's ``fidelity_rule.ceiling``). On an unsteered read that carries a
+re-computation, at the campaign or G-TIME-n (N4's reads included): ``within`` is the fidelity block's
+``absdiff <= bound`` (the comparison's form is Code's reading: a discordance equal to the bound is within it). At
+``backend-ext``, which measures the discordance C is derived from, the block is null.
 
 N4 (n §2.4). ``told_variant`` "TOLD" (N4-T) or "SHAM" (N4-Ts); ``schedule_zone`` the zone the 80/80 schedule assigns
 the session ("S" or "U": the zone the TOLD line names; the referent zone of the sham arm's E, §4); ``told_line`` the
@@ -141,6 +143,12 @@ floors are per point) and N1-P, and a merged point is read once under the label 
 the seat's answers of 2026-11-16, §2.3; ADDENDUM-n1 §5.1-§5.2). An arm is complete exactly when its obtained
 read_ids are its plan's.
 
+VERSIONS (Code's reading, R10, for the seat). The schema follow-up (ADDENDUM-n2 §6.3 (3)) moved no version marker:
+``n-cell-v1`` and ``n-report-v1`` name the shapes whose fidelity rule carries ``alpha``, ``ceiling`` and
+``median_rel`` and whose counters carry ``fidelity_ceiling_exceeded``. The cells and reports written before it -- the
+BACKEND extension's two stages, committed at 6df2131, 6e3474d and 9f64305 -- carry the same names in their earlier
+shape and do not pass these checks; they are read under the package as it stood at 9f64305.
+
 THE STAGE REPORT (``n-report-v1``), settled with n-analyzer. Written at the end of every invocation that ends by the
 rules below. An invocation that ends otherwise (an exception, a refused write, a kill, a lost box) writes none; the
 next one's replay of the records on disk finds what it left (the runner's design). The report holds no margin or
@@ -164,10 +172,13 @@ carries:
     mismatch. The schema checks that it follows its own pause; that pauses and resumptions interleave as the runner
     launches them is the runner's to keep and the reader's to check. A read that fires two triggers is one pause:
     its ``kind`` by the precedence the seat fixed (the seat's answers of 2026-11-16, §3): rendering, nonfinite,
-    identity-bound, fidelity-binomial, and the rest in ``also_fired``. An identity-bound trigger is a d = 0 read's
-    (n §6: "the identity bound exceeded at d = 0"). A pause at which the binomial fired, as its kind or in
-    ``also_fired``, carries the batch (first <= last, 0 <= k <= n, n > 0, 0 < alpha < 1), which ends at the pause's
-    read where it has one;
+    fidelity-ceiling (directly after nonfinite: ADDENDUM-n2 §2.1; the seat's answers of 2026-11-18, fourth sitting,
+    §5), identity-bound, fidelity-binomial, and the rest in ``also_fired``. A fidelity-ceiling trigger is a
+    re-computed read's |cached margin - fresh margin| above the identity's ``fidelity_rule.ceiling``, at any dose
+    (ADDENDUM-n2 §2.1: "pauses at once"); it is a read's. An identity-bound trigger is a d = 0 read's (n §6: "the
+    identity bound exceeded at d = 0"). A pause at which the binomial fired, as its kind or in ``also_fired``,
+    carries the batch (first <= last, 0 <= k <= n, n > 0, its p0 and its alpha the identity's ``fidelity_rule``'s),
+    which ends at the pause's read where it has one;
   * a rendering mismatch during a stage is a pause; G-VER's, before any read, is a G-VER-STOP (accepted: the seat's
     answers of 2026-11-16, §3; n §6 lists "a rendering mismatch" among its pause-and-adjudicate triggers, and n §3
     gives G-VER "mismatch → STOP"). A rendering pause's read is not launched, so nothing else fires with it. It
@@ -184,7 +195,8 @@ carries:
     it: the seat's answers of 2026-11-16, §3);
   * n §4's counters and the identity-bound count, over the stage. ``rendering_mismatches`` is the number of the
     stage's rendering pauses, or at a G-VER-STOP the number of G-VER's mismatches, at least one; nothing resumes
-    after a STOP. ``nonfinite_reads`` and ``identity_out_of_bound`` count at least the pauses that name their kinds.
+    after a STOP. ``nonfinite_reads``, ``fidelity_ceiling_exceeded`` and ``identity_out_of_bound`` count at least the
+    pauses that name their kinds; ``fidelity_ceiling_exceeded`` is null exactly where no ceiling is set (backend-ext).
     ``label_mass_below_floor`` is null where no floor is set.
 
 The end state is one of COMPLETE, PAUSE, PI-STOP, G-VER-STOP, CAP, by these rules (Code's, settled with n-analyzer):
@@ -247,6 +259,8 @@ SESSION_SET_SHA256 = "be50011a5ab1e8a4261dbde72afc84313d3bdeba9e40078272928bd497
 #: names the criterion and prints it to ten places); G-DATA (vi).
 TAU = 0.017883544377937845
 TAU4 = TAU / 4
+#: ADDENDUM-n2 §2.1: C = max(0.25, 2 x the extension's largest margin discordance) nats; 0.25 is its floor.
+CEILING_FLOOR = 0.25
 #: n §2.3: rho = 0.30 (BK Table A2); "a point within 0.05 of an existing one is merged".
 RHO = 0.3
 MERGE_DISTANCE = 0.05
@@ -406,7 +420,7 @@ FIDELITY_FIELDS: dict[str, tuple[str, bool, str]] = {
 }
 
 IDENTITY_CHECK_FIELDS: dict[str, tuple[str, bool, str]] = {
-    "bound": ("float", False, "the lock's identity bound (n §2.1), nats"),
+    "bound": ("float", False, "the lock's identity bound (n §2.1), which is C (ADDENDUM-n2 §2.2), nats"),
     "within": ("bool", False, "fidelity.absdiff <= bound"),
 }
 
@@ -455,8 +469,10 @@ STAGE_IDENTITY_FIELDS: dict[str, tuple[str, bool, str]] = {
     "d_model": ("int", False, "5120"),
     "dose_map": ("dose_map", True, "the dose map of record; null only at backend-ext"),
     "directions": ("dir_sha16", False, "direction_id -> sha16 for every direction the stage injects"),
-    "fidelity_rule": ("fidelity_rule", False, "TAU, p0, cadence and the sample's key"),
-    "identity_bound": ("float", True, "the lock's identity bound; null only at backend-ext"),
+    "fidelity_rule": ("fidelity_rule", False, "TAU, p0, cadence, alpha, the ceiling, the median rel and the "
+                                              "sample's key"),
+    "identity_bound": ("float", True, "the lock's identity bound, which is fidelity_rule.ceiling (ADDENDUM-n2 §2.2); "
+                                      "null only at backend-ext"),
 }
 
 DOSE_MAP_FIELDS: dict[str, tuple[str, bool, str]] = {
@@ -470,9 +486,17 @@ DOSE_MAP_FIELDS: dict[str, tuple[str, bool, str]] = {
 
 FIDELITY_RULE_FIELDS: dict[str, tuple[str, bool, str]] = {
     "tau": ("float", False, "TAU"),
-    "p0_count": ("int", False, "BK's exceedances at TAU (G-DATA (vi): 0)"),
-    "p0_n": ("int", False, "BK's reads (G-DATA (vi): 2400)"),
+    "p0_count": ("int", False, "p0's count: k + 1 from the extension's k exceedances at TAU (ADDENDUM-n2 §1.1, "
+                               "Laplace's rule); at backend-ext, BK's 0 (G-DATA (vi))"),
+    "p0_n": ("int", False, "p0's trials: n + 2 from the extension's n reads (ADDENDUM-n2 §1.1); at backend-ext, BK's "
+                           "2400 (G-DATA (vi))"),
     "cadence": ("int", False, "the binomial's cadence in reads (n §2.1: 160)"),
+    "alpha": ("float", False, "the binomial's alpha, one-sided, per evaluation (the seat's answers of 2026-11-18, "
+                              "fourth sitting, §4: 0.01)"),
+    "ceiling": ("float", True, "C in nats, the bound on a re-computed read's |cached margin - fresh margin| at any "
+                               "dose (ADDENDUM-n2 §2.1): at least 0.25; null only at backend-ext"),
+    "median_rel": ("float", True, "the extension's median rel under the convention of record (ADDENDUM-n2 §3's "
+                                  "second row); null only at backend-ext"),
     "sample_key": ("str", False, "'n-fid|{s}'"),
     "sample_rule": ("str", False, "the lock's words for the 10% sample; at backend-ext, where every read is at d = "
                                   "0, the entry's"),
@@ -816,6 +840,20 @@ def check_stage_identity(identity: Any, where: str = "stage_identity") -> None:
     for k in ("lock_sha256", "dose_map", "identity_bound"):
         if (identity[k] is None) != pre_lock:
             _fail(f"{where}.{k}", "is null exactly at backend-ext")
+    fr = identity["fidelity_rule"]
+    for k in ("ceiling", "median_rel"):
+        if (fr[k] is None) != pre_lock:
+            _fail(f"{where}.fidelity_rule.{k}", "is null exactly at backend-ext")
+    if not 0.0 < fr["alpha"] < 1.0:
+        _fail(f"{where}.fidelity_rule.alpha", f"is {fr['alpha']!r}, not in (0, 1)")
+    if fr["ceiling"] is not None and not fr["ceiling"] >= CEILING_FLOOR:
+        _fail(f"{where}.fidelity_rule.ceiling",
+              f"is {fr['ceiling']!r}, below ADDENDUM-n2 §2.1's floor {CEILING_FLOOR!r}")
+    if fr["median_rel"] is not None and not fr["median_rel"] >= 0.0:      # Code's addition to the agreed form
+        _fail(f"{where}.fidelity_rule.median_rel", f"is {fr['median_rel']!r}, below 0")
+    if (identity["identity_bound"] is not None and fr["ceiling"] is not None
+            and identity["identity_bound"] != fr["ceiling"]):
+        _fail(f"{where}.identity_bound", "is not fidelity_rule.ceiling (ADDENDUM-n2 §2.2: the identity bound is C)")
     if not 0 < identity["read_window"] <= MAX_WINDOW:
         _fail(f"{where}.read_window", f"is not in (0, {MAX_WINDOW}] (GA-4)")
     if identity["capture_layers"] != list(range(identity["layer"] + 1, identity["n_layers"])):
@@ -825,7 +863,6 @@ def check_stage_identity(identity: Any, where: str = "stage_identity") -> None:
         _fail(f"{where}.layer_bk", "is not 32 (BK Table 1)")
     if not 0 <= identity["layer"] < identity["n_layers"] - 1:
         _fail(f"{where}.layer", "is out of range")
-    fr = identity["fidelity_rule"]
     if fr["tau"] != TAU or fr["sample_key"] != "n-fid|{s}" or not 0 <= fr["p0_count"] <= fr["p0_n"]:
         _fail(f"{where}.fidelity_rule", f"differs from n §2.1 / G-DATA (vi): {fr!r}"[:300])
     dm = identity["dose_map"]
@@ -1082,7 +1119,7 @@ REPORT_SCHEMA = "n-report-v1"
 GREAD_SCHEMA = "n-gread-v1"
 END_STATES = ("COMPLETE", "PAUSE", "PI-STOP", "G-VER-STOP", "CAP")
 #: In precedence order: a read that fires several triggers is one pause of the first kind, the rest in also_fired.
-PAUSE_KINDS = ("rendering", "nonfinite", "identity-bound", "fidelity-binomial")
+PAUSE_KINDS = ("rendering", "nonfinite", "fidelity-ceiling", "identity-bound", "fidelity-binomial")
 STOP_KINDS = ("G-VER-STOP", "PI-STOP")
 GREAD_AXES = {"valence": ("+1", "+1/2", "+d_20", "+d_eq"), "span_reward": ("f0.10", "f0.20")}
 GREAD_STATUSES = ("PASS", "FAIL", "NOT-COMPUTED")
@@ -1141,7 +1178,7 @@ BINOMIAL_FIELDS: dict[str, tuple[str, bool, str]] = {
     "n": ("int", False, "re-computations counted"),
     "p0_count": ("int", False, "the identity's fidelity_rule.p0_count"),
     "p0_n": ("int", False, "the identity's fidelity_rule.p0_n"),
-    "alpha": ("float", False, "the lock's alpha for the binomial"),
+    "alpha": ("float", False, "the identity's fidelity_rule.alpha, the binomial's"),
 }
 STOP_FIELDS: dict[str, tuple[str, bool, str]] = {
     "kind": ("str", False, "STOP_KINDS"),
@@ -1165,6 +1202,10 @@ COUNTERS_FIELDS: dict[str, tuple[str, bool, str]] = {
     "fidelity": ("fid_counts", False, "'arm|dose' -> {trials, exceed_tau, exceed_tau4}"),
     "nonfinite_reads": ("int", False, "records with a non-finite margin, cached or fresh (finite false on either "
                                       "path); at least the pauses that name nonfinite"),
+    "fidelity_ceiling_exceeded": ("int", True, "re-computed records whose |cached margin - fresh margin| is above "
+                                               "the identity's ceiling; at least the pauses that name "
+                                               "fidelity-ceiling; null exactly where no ceiling is set "
+                                               "(backend-ext)"),
     "identity_out_of_bound": ("int", False, "records whose identity check is not within; at least the pauses that "
                                             "name identity-bound"),
     "rendering_mismatches": ("int", False, "token sequences refused before a read, never a record: the number of "
@@ -1385,6 +1426,8 @@ def check_report(report: Any, where: str = "report") -> None:
         if ("identity-bound" in [p["kind"]] + list(also) and p["read_id"] is not None
                 and p["read_id"].split("|")[2:3] != ["0"]):
             _fail(wp, "an identity-bound trigger is a d = 0 read's (n §6: \"the identity bound exceeded at d = 0\")")
+        if "fidelity-ceiling" in [p["kind"]] + list(also) and ident["fidelity_rule"]["ceiling"] is None:
+            _fail(wp, "a fidelity-ceiling trigger needs the identity's ceiling (ADDENDUM-n2 §2.1); none is set")
         if (p["read_id"] is None) != (p["launch_index"] is None):
             _fail(wp, "read_id and launch_index are null together")
         if p["read_id"] is None and p["kind"] != "fidelity-binomial":
@@ -1413,8 +1456,8 @@ def check_report(report: Any, where: str = "report") -> None:
             binomial_pauses += 1
             fr = ident["fidelity_rule"]
             if not (b["first_launch_index"] <= b["last_launch_index"] and 0 <= b["k"] <= b["n"] and b["n"] > 0
-                    and b["p0_count"] == fr["p0_count"] and b["p0_n"] == fr["p0_n"] and 0.0 < b["alpha"] < 1.0):
-                _fail(f"{wp}.binomial", "is not a well-formed batch under the identity's p0")
+                    and b["p0_count"] == fr["p0_count"] and b["p0_n"] == fr["p0_n"] and b["alpha"] == fr["alpha"]):
+                _fail(f"{wp}.binomial", "is not a well-formed batch under the identity's p0 and alpha")
             if li is not None and b["last_launch_index"] != li:
                 _fail(f"{wp}.binomial.last_launch_index", "a fire at a read ends its batch at that read")
             if b["k"] > bs["exceed_tau"] or b["n"] > bs["trials"]:
@@ -1464,6 +1507,12 @@ def check_report(report: Any, where: str = "report") -> None:
     if (c["nonfinite_reads"] < sum(1 for ks in named if "nonfinite" in ks)
             or c["identity_out_of_bound"] < sum(1 for ks in named if "identity-bound" in ks)):
         _fail(w("counters"), "counts fewer non-finite or identity-bound reads than the pauses that name them")
+    fce = c["fidelity_ceiling_exceeded"]
+    if (fce is None) != (ident["fidelity_rule"]["ceiling"] is None):
+        _fail(w("counters.fidelity_ceiling_exceeded"), "is null exactly where the identity sets no ceiling")
+    if fce is not None and (fce < 0 or fce < sum(1 for ks in named if "fidelity-ceiling" in ks)):
+        _fail(w("counters.fidelity_ceiling_exceeded"), "is negative, or counts fewer reads than the pauses that name "
+                                                       "fidelity-ceiling")
 
 
 def check_gread(art: Any, where: str = "gread") -> None:
@@ -1518,6 +1567,7 @@ def check_gread(art: Any, where: str = "gread") -> None:
 
 __all__ = [
     "RECORD_SCHEMA", "CELL_SCHEMA", "UNIT", "STAGES", "PROPOSAL_SHA256", "SESSION_SET_SHA256", "TAU", "TAU4",
+    "CEILING_FLOOR",
     "RHO", "MERGE_DISTANCE", "MAX_WINDOW", "DOSE_RULE_LABELS", "dose_points",
     "BK_CELLS", "N_SESSIONS", "N_FLOOR", "N_RANDOM", "ARMS", "RANDOM_IDS", "DIRECTION_IDS", "DOSES",
     "DOSE_SLUGS", "ARM_CELLS", "ARM_SPAN_KIND", "TOLD_VARIANT", "TOLD_LINE", "SHAM_LINE", "FIDELITY_REASONS",
@@ -1542,7 +1592,8 @@ def example_identity(stage: str = "campaign", *, R: float = 25.5, R_ell: float =
     """A stage identity with placeholder digests and a dose map computed by the map's own formulas and merge rule
     (the defaults give d_eq = 0.3125 and d_20 = 0.625, nothing merged; R_ell = 50.0 merges +d_20 into +1, 40.0
     merges +d_20 into +1 and +d_eq into +1/2); at backend-ext the lock, dose map, directions and bound are absent,
-    as there."""
+    as there. The fidelity rule's alpha is 0.01 at both; the campaign's ceiling and identity bound are 0.25 and its
+    median rel 0.01, and at backend-ext the ceiling and median rel are null."""
     pre = stage == "backend-ext"
     d_eq = (0.10 * R_ell) / (RHO * R)
     d_20 = min(1.0, 2.0 * d_eq)
@@ -1560,8 +1611,9 @@ def example_identity(stage: str = "campaign", *, R: float = 25.5, R_ell: float =
                                       "points": dose_points(d_eq, d_20)},
         "directions": {} if pre else dirs,
         "fidelity_rule": {"tau": TAU, "p0_count": 0, "p0_n": 2400, "cadence": 160, "sample_key": "n-fid|{s}",
-                          "sample_rule": "example"},
-        "identity_bound": None if pre else 0.0,
+                          "sample_rule": "example", "alpha": 0.01, "ceiling": None if pre else 0.25,
+                          "median_rel": None if pre else 0.01},
+        "identity_bound": None if pre else 0.25,
     }
 
 
@@ -1690,6 +1742,8 @@ def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", 
     fid = {"N1-V|0": {"trials": 160, "exceed_tau": exc, "exceed_tau4": max(3, exc)}}
     named = [[p["kind"]] + list(p["also_fired"]) for p in (pauses or [])]
     counts = {"nonfinite_reads": sum(1 for ks in named if "nonfinite" in ks),
+              "fidelity_ceiling_exceeded": (None if identity["fidelity_rule"]["ceiling"] is None
+                                            else sum(1 for ks in named if "fidelity-ceiling" in ks)),
               "identity_out_of_bound": sum(1 for ks in named if "identity-bound" in ks),
               "rendering_mismatches": 1 if end_state == "G-VER-STOP" else sum(1 for ks in named
                                                                             if ks[0] == "rendering")}
@@ -2002,9 +2056,9 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("the shadow without its identity check", sh, setk("identity", None))
     refuse("the shadow without its re-computation", sh, lambda o: (o.__setitem__("fidelity", None),
            o.__setitem__("identity", None)))
-    refuse("an identity check on a steered read", b, setk("identity", {"bound": 0.0, "within": True}))
-    refuse("identity.within wrong", example_record(ident, "N1-V", "none", "0", 3, fresh_shift=0.25),
-           lambda o: o["identity"].update(within=True))
+    refuse("an identity check on a steered read", b, setk("identity", {"bound": 0.25, "within": True}))
+    refuse("identity.within wrong (a discordance of 0.5 against the bound 0.25)",
+           example_record(ident, "N1-V", "none", "0", 3, fresh_shift=0.5), lambda o: o["identity"].update(within=True))
     refuse("a bound not the lock's", sh, lambda o: o["identity"].update(bound=0.5))
     refuse("a non-finite read keeping its margin", nonfinite, setk("margin", 1.0))
     refuse("a finite read with a null margin", b, setk("margin", None))
@@ -2020,7 +2074,7 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("a fresh duration above the read's", b, setk("duration_ms_fresh", 413))
     refuse("a time-stage identity block without a re-computation",
            example_record(tim, "N1-V", "none", "0", 3, fidelity=None),
-           lambda o: o.update(identity={"bound": 0.0, "within": False}), lambda o: check_record(o, tim))
+           lambda o: o.update(identity={"bound": 0.25, "within": False}), lambda o: check_record(o, tim))
     narrow = dict(ident, read_window=1274)
     refuse("a read whose forward exceeds the stage's read_window (1273 + 3 - 1 > 1274)", b, lambda o: None,
            lambda o: check_record(o, narrow))
@@ -2046,6 +2100,40 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("another proposal", ident, lambda o: o.__setitem__("proposal_sha256", "0" * 64), si)
     refuse("another session set", ident, lambda o: o.__setitem__("session_set_sha256", "0" * 64), si)
     refuse("TAU changed", ident, lambda o: o["fidelity_rule"].__setitem__("tau", 0.02), si)
+    # ADDENDUM-n2 §2.1-§2.2 and the seat's answers of 2026-11-18, fourth sitting, §4-§5
+    refuse("a ceiling below 0.25, the identity bound with it", ident, lambda o: (
+        o["fidelity_rule"].__setitem__("ceiling", 0.2), o.__setitem__("identity_bound", 0.2)), si, expect="floor")
+    refuse("no ceiling at campaign", ident, lambda o: o["fidelity_rule"].__setitem__("ceiling", None), si,
+           expect="fidelity_rule.ceiling")
+    refuse("a ceiling at backend-ext", ext, lambda o: o["fidelity_rule"].__setitem__("ceiling", 0.25), si,
+           expect="fidelity_rule.ceiling")
+    refuse("no median rel at campaign", ident, lambda o: o["fidelity_rule"].__setitem__("median_rel", None), si,
+           expect="fidelity_rule.median_rel")
+    refuse("a median rel at backend-ext", ext, lambda o: o["fidelity_rule"].__setitem__("median_rel", 0.01), si,
+           expect="fidelity_rule.median_rel")
+    refuse("a negative median rel", ident, lambda o: o["fidelity_rule"].__setitem__("median_rel", -0.001), si,
+           expect="below 0")
+    for a_ in (0.0, 1.0, -0.01):
+        refuse(f"alpha {a_} (not in (0, 1))", ident, lambda o, a_=a_: o["fidelity_rule"].__setitem__("alpha", a_),
+               si, expect="fidelity_rule.alpha")
+    refuse("a fidelity rule without alpha", ident, lambda o: o["fidelity_rule"].pop("alpha"), si)
+    refuse("an identity bound not the ceiling", ident, lambda o: o.__setitem__("identity_bound", 0.3), si,
+           expect="identity bound is C")
+    accept("a ceiling above the floor, the identity bound equal to it", lambda: si(dict(
+        ident, identity_bound=0.3, fidelity_rule=dict(ident["fidelity_rule"], ceiling=0.3))))
+    refuse("an identity bound below the ceiling (0.25 against 0.3)", ident,
+           lambda o: o["fidelity_rule"].__setitem__("ceiling", 0.3), si, expect="identity bound is C")
+    accept("a median rel of 0.0 (its floor is inclusive)", lambda: si(dict(
+        ident, fidelity_rule=dict(ident["fidelity_rule"], median_rel=0.0))))
+    accept("a d = 0 read whose absdiff equals the bound is within it (exactly 0.25 = C: the bound is inclusive)",
+           lambda: check_record(example_record(ident, "N1-V", "none", "0", 3, fresh_shift=0.25), ident))
+    accept("the example identities: campaign ceiling = identity bound = 0.25, median rel 0.01, alpha 0.01; "
+           "backend-ext no ceiling and no median rel, alpha 0.01", lambda: None if (
+               (ident["fidelity_rule"]["ceiling"], ident["identity_bound"], ident["fidelity_rule"]["median_rel"],
+                ident["fidelity_rule"]["alpha"]) == (0.25, 0.25, 0.01, 0.01)
+               and (ext["fidelity_rule"]["ceiling"], ext["fidelity_rule"]["median_rel"], ext["fidelity_rule"]["alpha"],
+                    ext["identity_bound"]) == (None, None, 0.01, None)
+               and CEILING_FLOOR == 0.25) else _fail("example_identity", "not the agreed defaults"))
     refuse("capture layers not the band past the site (two layers, [32, 63])", ident,
            lambda o: o.__setitem__("capture_layers", [32, 63]), si)
     refuse("capture layers of the old form, the site and the last ([31, 63])", ident,
@@ -2267,6 +2355,34 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
            lambda o: o["counters"].__setitem__("nonfinite_reads", 0), cr)
     refuse("report: identity_out_of_bound below its pauses", rep_also,
            lambda o: o["counters"].__setitem__("identity_out_of_bound", 0), cr)
+    # the fidelity ceiling (ADDENDUM-n2 §2.1) and the binomial's alpha (the seat's answers, fourth sitting, §4-§5)
+    refuse("report: a batch's alpha not the identity's", rep_end_binom,
+           lambda o: first_pause(o)["binomial"].__setitem__("alpha", 0.05), cr, expect="p0 and alpha")
+    rep_ceil = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
+                              pauses=[example_pause(1, kind="fidelity-ceiling")])
+    accept("report: a fidelity-ceiling pause at a read, counted", lambda: cr(rep_ceil))
+    accept("report: a fidelity-ceiling pause with identity-bound after it, at a d = 0 read", lambda: cr(example_report(
+        ident, end_state="PAUSE", obtained_fraction=0.5,
+        pauses=[example_pause(1, kind="fidelity-ceiling", also_fired=("identity-bound",))])))
+    refuse("report: identity-bound before fidelity-ceiling", example_report(
+        ident, end_state="PAUSE", obtained_fraction=0.5,
+        pauses=[example_pause(1, kind="fidelity-ceiling", also_fired=("identity-bound",))]),
+        lambda o: (first_pause(o).update(kind="identity-bound", also_fired=["fidelity-ceiling"])), cr,
+        expect="PAUSE_KINDS' order")
+    refuse("report: fidelity_ceiling_exceeded below its pauses", rep_ceil,
+           lambda o: o["counters"].__setitem__("fidelity_ceiling_exceeded", 0), cr, expect="fidelity-ceiling")
+    refuse("report: a negative fidelity_ceiling_exceeded", rep,
+           lambda o: o["counters"].__setitem__("fidelity_ceiling_exceeded", -1), cr, expect="is negative")
+    refuse("report: fidelity_ceiling_exceeded null under a ceiling", rep,
+           lambda o: o["counters"].__setitem__("fidelity_ceiling_exceeded", None), cr, expect="null exactly")
+    rep_ext = example_report(ext)
+    accept("report: backend-ext, no ceiling and a null fidelity_ceiling_exceeded", lambda: cr(rep_ext))
+    refuse("report: fidelity_ceiling_exceeded set where no ceiling is (backend-ext)", rep_ext,
+           lambda o: o["counters"].__setitem__("fidelity_ceiling_exceeded", 0), cr, expect="null exactly")
+    refuse("report: a fidelity-ceiling pause where no ceiling is (backend-ext)", example_report(
+        ext, end_state="PAUSE", obtained_fraction=0.5,
+        pauses=[example_pause(1, kind="fidelity-ceiling", launch_index=5)]),
+        lambda o: None, cr, expect="needs the identity's ceiling")
     refuse("gread: a CV form not 'kfold10' (kfold-10)", gr, lambda o: o["probe"].update(cv="kfold-10"), cg)
     # the capture band per layer (ADDENDUM-n1 §6.2); the cap's loads (the seat's answers of 2026-11-16, §3);
     # G-READ-n's CV form, its seed and its PASS rule (ADDENDUM-n1 §6.3-§6.4)

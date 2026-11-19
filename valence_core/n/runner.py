@@ -34,14 +34,26 @@ PINs (Code, declared at the BUILD; each is LOCK-n v0.1's to pin, and the BUILD e
     since the last adjudicated binomial fire, which its ruling clears (n §2.1 gives the class, p0 and the cadence,
     not what a ruling clears; under p0 = 0 an uncleared exceedance would fire at every later cadence point). The
     cadence is in reads (n §2.1: "cadence every 160 reads"; the identity's ``cadence``): once a batch has passed a
-    multiple of it, the exact tail P(X >= k | n trials, p0) is compared with the lock's alpha at the batch's next
-    trial, so that a fire's batch ends at a read it counts. ``p0 = 0`` makes any exceedance fire at the next
-    evaluation (rule 21's zero-base-rate form). When no read remains to launch (the plan done, or the cap spent), a
-    batch with trials since its last evaluation is evaluated once more: the end-of-run evaluation, whose fire has no
-    read. A resume keeps the stage's cap and alpha: a report on disk under another is refused.
-  * NON-FINITE and IDENTITY -- a non-finite read, or an unsteered read whose identity check is not within the bound,
-    pauses at once (§6: "NaN/inf; the identity bound exceeded at d = 0"). Every kind a read fires is recorded: the
-    first in ``schema.PAUSE_KINDS``' order is the pause's kind, the rest are ``also_fired``.
+    multiple of it, the exact tail P(X >= k | n trials, p0) is compared with the alpha at the batch's next trial,
+    so that a fire's batch ends at a read it counts. The alpha is the identity's ``fidelity_rule.alpha``, and a
+    stage whose inputs carry another is refused before any read. Its value is the seat's: 0.01, one-sided, "at each
+    evaluation" (the answers of 2026-11-18, fourth sitting, §4), which describes an evaluation's statistic as "the
+    count above TAU in the evaluation's reads". The batch here is cumulative since the last adjudicated fire, so the
+    evaluations nest rather than tile; which form binds is LOCK-n's to state (Code's reading, for the seat).
+    ``p0 = 0`` makes any exceedance fire at the next evaluation (rule 21's zero-base-rate form); the lock's p0 is the
+    box's (ADDENDUM-n2 §1.1). A ruling on a fidelity-ceiling pause clears nothing in the batch: its read stays a trial,
+    and an exceedance, of the binomial (Code's reading, for the seat). When no read remains to launch (the plan done,
+    or the cap spent), a batch with trials since its last evaluation is evaluated once more: the end-of-run
+    evaluation, whose fire has no read. A resume keeps the stage's cap and alpha: a report on disk under another is
+    refused.
+  * NON-FINITE, CEILING and IDENTITY -- a non-finite read; a re-computed read, at any dose, whose |cached margin -
+    fresh margin| is above the identity's ``fidelity_rule.ceiling`` (ADDENDUM-n2 §2.1: "pauses at once"; none where
+    no ceiling is set, at backend-ext); or an unsteered read whose identity check is not within the bound, pauses at
+    once (§6: "NaN/inf; the identity bound exceeded at d = 0"). Every kind a read fires is recorded: the first in
+    ``schema.PAUSE_KINDS``' order is the pause's kind, the rest are ``also_fired``. The ceiling binds at G-TIME-n as
+    at the campaign: the identity sets it at every stage but backend-ext, so a timing re-computation above it pauses
+    G-TIME-n (Code's reading, for the seat). With the identity bound equal to the ceiling (ADDENDUM-n2 §2.2), a
+    finite d = 0 read above it fires fidelity-ceiling first and identity-bound after it.
   * RENDERING -- a token sequence that is not the session's of record (``sessions.RenderingMismatch`` from the
     renderer, or an ``ids_sha`` other than BK's) is a rendering pause before the read, which is not launched (§6's
     "a rendering mismatch"; G-VER's check, repeated per read).
@@ -153,6 +165,7 @@ class Monitors:
     p0_count: int
     p0_n: int
     alpha: float
+    ceiling: float | None = None            # ADDENDUM-n2 §2.1's C, nats; None where the identity sets none
     trials: int = 0                         # the stage's, cumulative: binomial_state
     exceed: int = 0
     evaluations: int = 0
@@ -167,11 +180,14 @@ class Monitors:
     next_due: int = 0                       # the batch's read count at which the next evaluation falls due
     by_cell: dict = field(default_factory=dict)          # 'arm|dose' -> [trials, exceed_tau, exceed_tau4]
     nonfinite: int = 0
+    ceiling_exceeded: int = 0
     identity_out: int = 0
 
     def __post_init__(self) -> None:
         if int(self.cadence) <= 0 or not 0 <= int(self.p0_count) <= int(self.p0_n) or int(self.p0_n) <= 0:
             raise ValueError("the binomial needs a positive cadence and 0 <= p0_count <= p0_n, p0_n > 0")
+        if self.ceiling is not None and not float(self.ceiling) > 0.0:
+            raise ValueError("the fidelity ceiling, where set, is positive")
         self.next_due = int(self.cadence)
 
     def observe(self, rec: Mapping) -> tuple[list, dict | None, list]:
@@ -182,6 +198,10 @@ class Monitors:
         if not rec["finite"] or (f is not None and not f["finite"]):
             self.nonfinite += 1
             kinds.append("nonfinite")
+        if (self.ceiling is not None and f is not None and f["absdiff"] is not None
+                and f["absdiff"] > self.ceiling):            # ADDENDUM-n2 §2.1: at any dose, at once
+            self.ceiling_exceeded += 1
+            kinds.append("fidelity-ceiling")
         if rec["identity"] is not None and not rec["identity"]["within"]:
             self.identity_out += 1
             kinds.append("identity-bound")
@@ -243,7 +263,7 @@ class StageInputs:
     label_ids: Callable                   # cue -> list[int]
     backend: object
     directions: Mapping[str, np.ndarray]  # direction_id -> unit vector [d_model]
-    alpha: float                          # the binomial's alpha (the lock's)
+    alpha: float                          # the binomial's: the identity's fidelity_rule.alpha; run() refuses another
     hour_cap_ms: int | None
     load_ms: int                          # this invocation's model load, wall-clock ms, as the driver measured it;
                                           # required: no default stands in for a measurement. Reported beside the cap,
@@ -346,7 +366,9 @@ def _report(inputs: StageInputs, ident: Mapping, plan: Sequence[PlannedRead], pa
                 "loads_ms": [int(x) for x in loads_ms]},
         "counters": {"fidelity": {k: {"trials": v[0], "exceed_tau": v[1], "exceed_tau4": v[2]}
                                   for k, v in sorted(mon.by_cell.items())},
-                     "nonfinite_reads": mon.nonfinite, "identity_out_of_bound": mon.identity_out,
+                     "nonfinite_reads": mon.nonfinite,
+                     "fidelity_ceiling_exceeded": None if mon.ceiling is None else mon.ceiling_exceeded,
+                     "identity_out_of_bound": mon.identity_out,
                      "rendering_mismatches": sum(1 for p in pauses if p["kind"] == "rendering"),
                      "label_mass_below_floor": None},
     }
@@ -363,8 +385,11 @@ def run(inputs: StageInputs, plan: Sequence[PlannedRead], *, resume: bool) -> di
     if [p.launch_index for p in plan] != list(range(len(plan))) or len({p.read_id for p in plan}) != len(plan):
         raise SystemExit("the plan's launch indices are not 0, 1, ... in order, or a read repeats")
     fr = ident["fidelity_rule"]
+    if float(inputs.alpha) != float(fr["alpha"]):
+        raise SystemExit(f"the stage's alpha {float(inputs.alpha)!r} is not its identity's fidelity_rule.alpha "
+                         f"{float(fr['alpha'])!r} -- refusing (a batch the schema refuses is never written)")
     mon = Monitors(cadence=int(fr["cadence"]), p0_count=int(fr["p0_count"]), p0_n=int(fr["p0_n"]),
-                   alpha=float(inputs.alpha))
+                   alpha=float(inputs.alpha), ceiling=None if fr["ceiling"] is None else float(fr["ceiling"]))
     root = Path(inputs.root)
     root.mkdir(parents=True, exist_ok=True)
     cell_keys = sorted({(p.arm, p.direction_id, p.dose_label) for p in plan})
@@ -610,9 +635,40 @@ def _selftest(chk, tmp) -> None:
     k_nf = m2.observe(nf)[0]
     chk("runner: a non-finite d = 0 read fires nonfinite first, identity-bound after it", k_nf == ["nonfinite",
         "identity-bound"], k_nf)
-    out_b = schema.example_record(ident0, "N1-V", "none", "0", 3, fresh_shift=0.25)
-    chk("runner: an identity check outside the bound fires identity-bound alone",
-        m2.observe(out_b)[0] == ["identity-bound"], "")
+    out_b = schema.example_record(ident0, "N1-V", "none", "0", 3, fresh_shift=0.5)
+    chk("runner: an identity check outside the bound (0.5 against 0.25) fires identity-bound alone, where the "
+        "monitors hold no ceiling", m2.observe(out_b)[0] == ["identity-bound"], "")
+    # the fidelity ceiling (ADDENDUM-n2 §2.1): at any dose, at once, after nonfinite in PAUSE_KINDS' order
+    m6 = Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01, ceiling=0.25)
+    k_c = m6.observe(rec_at(20, fresh_shift=0.5))[0]
+    chk("runner: a re-computed +1 read whose |cached - fresh margin| is above the ceiling (0.5 > 0.25) fires "
+        "fidelity-ceiling at once, counted", k_c == ["fidelity-ceiling"] and m6.ceiling_exceeded == 1, k_c)
+    k_below = m6.observe(rec_at(21, fresh_shift=0.2))[0]
+    chk("runner: ...one below the ceiling (0.2) fires nothing", k_below == [] and m6.ceiling_exceeded == 1, k_below)
+    k_d0 = m6.observe(schema.example_record(ident0, "N1-V", "none", "0", 3, fresh_shift=0.5))[0]
+    chk("runner: ...a d = 0 read above it fires fidelity-ceiling, then identity-bound (the bound is C), in that order",
+        k_d0 == ["fidelity-ceiling", "identity-bound"] and m6.ceiling_exceeded == 2, k_d0)
+    k_eq = m6.observe(rec_at(22, fresh_shift=0.25))[0]
+    chk("runner: ...one exactly at the ceiling (|2.125 - 1.875| = 0.25) fires nothing: \"above C\" (ADDENDUM-n2 §2.1)",
+        k_eq == [] and m6.ceiling_exceeded == 2, k_eq)
+    m8 = Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01, ceiling=0.25)
+    k_reach = [m8.observe(schema.example_record(ident0, "N1-V", "valence", "+1/2", 3, launch=40 + j, fidelity=fr_,
+                                                fresh_shift=0.5))[0] for j, fr_ in enumerate(("sample", "timing"))]
+    chk("runner: ...a keyed-sample and a timing re-computation above it fire it too (every re-computed read, at any "
+        "dose)", k_reach == [["fidelity-ceiling"], ["fidelity-ceiling"]] and m8.ceiling_exceeded == 2, k_reach)
+    k_nf6 = Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01, ceiling=0.25).observe(nf)[0]
+    chk("runner: ...a non-finite read fires nonfinite, never the ceiling (no finite discordance to compare)",
+        k_nf6 == ["nonfinite", "identity-bound"], k_nf6)
+    m7 = Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01)
+    k_none = m7.observe(rec_at(30, fresh_shift=5.0))[0]
+    chk("runner: ...with no ceiling (backend-ext) a discordance of 5 nats fires no fidelity-ceiling",
+        k_none == [] and m7.ceiling_exceeded == 0, k_none)
+    try:
+        Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01, ceiling=0.0)
+        bad_ceiling = False
+    except ValueError:
+        bad_ceiling = True
+    chk("runner: ...a ceiling that is not positive is refused", bad_ceiling, "")
 
     # the cadence is in reads: a boundary crossed at reads with no re-computation falls due at the next trial
     def plain_at(i):
@@ -709,6 +765,10 @@ def _selftest(chk, tmp) -> None:
         and rep_lb["cap"]["used_ms"] == rep_la["cap"]["used_ms"], (rep_la["cap"], rep_lb["cap"]))
     chk("runner: a fresh run over records on disk is refused", refused(lambda: run(inputs_for("ok"), plan,
                                                                                    resume=False)), "")
+    ident_a = dict(ident, fidelity_rule=dict(ident["fidelity_rule"], alpha=0.05))
+    chk("runner: a stage whose inputs' alpha (0.01) is not its identity's fidelity_rule.alpha (0.05) is refused before "
+        "any read, with nothing written", refused(lambda: run(inputs_for("alpha", identity=ident_a), plan,
+                                                              resume=False)) and not (tmp / "alpha").exists(), "")
     from .primitive import _logp
     shadow3 = cells.load_cell(tmp / "ok" / "cells", "N1-V", "none", "0", identity=ident)[0]["records"][0]
     rows3, _caps3 = be.full(toy_ids[3], [5, 9, 17], [], ident["capture_layers"])
@@ -768,7 +828,9 @@ def _selftest(chk, tmp) -> None:
             rows[:, 9] += np.float32(2.0)
         return rows, caps
     fb_w.full = biased_full_w
-    ident4 = dict(ident, fidelity_rule=dict(ident["fidelity_rule"], cadence=4))
+    # the binomial's tests run under a ceiling above their injected discordance (+2.0 on a logit, about 2 nats), the
+    # bound with it, so that the binomial alone is under test; the ceiling's own run-level case is below
+    ident4 = dict(ident, identity_bound=10.0, fidelity_rule=dict(ident["fidelity_rule"], cadence=4, ceiling=10.0))
     rep_wb = run(inputs_for("wbinom", backend=fb_w, identity=ident4), wide, resume=False)
     pw = rep_wb["pauses"]
     chk("runner: a binomial fire at a cadence point stands on its batch's arms",
@@ -867,7 +929,26 @@ def _selftest(chk, tmp) -> None:
             rows[:, 9] += np.float32(2.0)
         return rows, caps
     fb_be.full = biased_full
-    rep7 = run(inputs_for("binom", backend=fb_be), plan, resume=False)
+    rep_c = run(inputs_for("ceil", backend=fb_be), plan, resume=False)
+    pc = rep_c["pauses"]
+    chk("runner: that steered discordance (about 2 nats) under the example ceiling (C = 0.25) pauses at once as "
+        "fidelity-ceiling at its read, counted, before any binomial evaluation (ADDENDUM-n2 §2.1)",
+        rep_c["end_state"] == "PAUSE" and len(pc) == 1 and pc[0]["kind"] == "fidelity-ceiling"
+        and pc[0]["launch_index"] == 2 and pc[0]["binomial"] is None and pc[0]["also_fired"] == []
+        and pc[0]["arms_in_scope"] == ["N1-V"]
+        and rep_c["counters"]["fidelity_ceiling_exceeded"] == 1 and rep_c["binomial_state"]["evaluations"] == 0, pc)
+    ruling_c = tmp / "ruling_ceil.md"
+    ruling_c.write_text("ceiling ruling\n")
+    rep_c2 = run(inputs_for("ceil", backend=fb_be, rulings={"p01": ruling_c}), plan, resume=True)
+    pc2 = rep_c2["pauses"]
+    chk("runner: after its ruling the fidelity-ceiling pause is reproduced on replay and cleared, and the next steered "
+        "re-computation above C pauses again, the counter at 2",
+        rep_c2["end_state"] == "PAUSE" and len(pc2) == 2 and pc2[0]["adjudicated"]
+        and pc2[0]["resumed_at_launch_index"] == 3 and pc2[1]["kind"] == "fidelity-ceiling"
+        and pc2[1]["launch_index"] == 3 and not pc2[1]["adjudicated"]
+        and rep_c2["counters"]["fidelity_ceiling_exceeded"] == 2, pc2)
+    ident_hi = dict(ident, identity_bound=10.0, fidelity_rule=dict(ident["fidelity_rule"], ceiling=10.0))
+    rep7 = run(inputs_for("binom", backend=fb_be, identity=ident_hi), plan, resume=False)
     p7 = rep7["pauses"]
     chk("runner: an exceedance short of the cadence fires at the run's end, a read-less pause on the batch's arms",
         rep7["end_state"] == "PAUSE" and len(p7) == 1 and p7[0]["kind"] == "fidelity-binomial"
@@ -875,7 +956,7 @@ def _selftest(chk, tmp) -> None:
         and rep7["binomial_state"]["evaluations"] == 1, p7)
     ruling_b = tmp / "ruling_binom.md"
     ruling_b.write_text("binomial ruling\n")
-    rep8 = run(inputs_for("binom", backend=fb_be, rulings={"p01": ruling_b}), plan, resume=True)
+    rep8 = run(inputs_for("binom", backend=fb_be, identity=ident_hi, rulings={"p01": ruling_b}), plan, resume=True)
     chk("runner: after its ruling the end-of-run fire is reproduced, cleared, not re-fired; the stage COMPLETE",
         rep8["end_state"] == "COMPLETE" and len(rep8["pauses"]) == 1 and rep8["pauses"][0]["adjudicated"]
         and rep8["pauses"][0]["resumed_at_launch_index"] is None
