@@ -300,6 +300,70 @@ applied to CLAUDE.md.
           `git ls-files`, both with the pathspec;
         - it read one committed raw outside its sources, the third sitting's PI-routing raw, in full.
       - Raw: [`2026-11-18_n-step4-resume-pod-close_valuescheck.md`](results/raw/2026-11-18_n-step4-resume-pod-close_valuescheck.md).
+  - **Close (PI date 2026-11-18, fourth sitting), the pod session's: the seat's answers on the resume, this session's
+    part.** This session read the seat's answers,
+    [`2026-11-18_n-step4-resume_design-to-code_answers.md`](results/raw/2026-11-18_n-step4-resume_design-to-code_answers.md)
+    (sha256 `c265797f…61a5`, 20,924 bytes), and the conditional ruling raw,
+    [`2026-11-18_n-step4-bext2-p01_conditional-ruling.md`](results/raw/2026-11-18_n-step4-bext2-p01_conditional-ruling.md)
+    (sha256 `ba9f96322a580d1c6cb5d198fc1750328a6cabfb7a21aa3fba8f2860c5aacc32`, 2,857 bytes; if it is used, its full
+    sha256 is the pause's `ruling_sha256`), in full.
+    - The coordinating session committed both by path at `c7d0009`, on the PI's "route as given".
+    - This session re-hashed each one equal to its committed blob there and to the tails in the coordinating session's
+      relay. The conditional ruling also equals the full value the answers state.
+    - **This session's share** is the box side of the PI's routing items 2 and 5, under "N. n-build (and the pod
+      session on the box)", as the coordinating session relayed them, and item 4's close line on `6e3474d`'s entry
+      citing the answers raw, which is this line:
+      - item 2, `backend-ext-2 --convention space` on the box, from driver v2g's commit (the routing's default, which
+        the PI's "route as given" took), with its files relayed through the coordinating session.
+        - It runs in the copy that n-build's launch files name. One option is `copy-resume4-1272702`, which holds the
+          resumed, COMPLETE first-stage report; it is at v2f's commit, so the launch files set how it meets v2g's. The
+          other is a new copy at v2g's commit, with the stage root and report copied in by plain `cp` and checked by
+          sha256.
+        - The conditional ruling raw goes beside the box script in n-build's launch files, as the file for
+          `--resume --ruling <pause id>=PATH`. Its scope is the stage's first pause, of kind `fidelity-binomial`, at
+          the run's end, with all 24 planned reads obtained, under driver v2f's commit or a later driver whose read
+          path is unchanged; v2g changes nothing in the read path.
+        - If that pause fires, the ruling is applied only if its four conditions hold, each printed with the resume's
+          line. If any fails, the pause waits for the seat with the output and the report, and nothing is resumed.
+          Code checks the conditions mechanically and weighs nothing (rule 21). If no pause fires, the file is not
+          used.
+      - item 5, the box stays up until backend-ext-2 is COMPLETE and its report and lines are on the laptop. The
+        failed attempt's paths and the other leftovers are cleaned after that, on the PI's word: those this session's
+        resume close line on this entry lists as left on the box.
+    - **Ruled for this session:**
+      - the departures of its close line on this entry, and its values-checker's as that report states them, are
+        inert, with no strike (§7). One line is added to the list of record v2's reading: "a bundle of a committed
+        range, verified and fetched under a side ref with no checkout, is a transport, not a read; it is kept where
+        the entry says";
+      - the address-and-port count over copied files before their commit, counts only, is inert and allowed (§6.3);
+      - a tracked-and-clean check of a named file takes `git rev-parse HEAD:<path>` against `git hash-object` (§6.4,
+        standing);
+      - the first attempt's copy-in defect is accepted as declared, with the standing line "every pre-commit check
+        asserts, in a call of its own" (§5).
+
+      This session's close line on `6df2131`'s entry disclosed three departures. Its address-and-port count over the
+      copied cell is of §6.3's class. Its two unpruned `find` commands and its Python start are not named in these
+      answers; they remain for the seat to class.
+    - **Departures:** none of this session's since its close line on this entry. The values-checker's, as its report
+      states them, are in the raw.
+    - **The box,** pod `emw1e4embiwe9b`, was up at this line's drafting, on the PI's word "Keep it up" while the seat
+      ruled and on routing item 5 since: idle, with everything left as it is, until backend-ext-2's files come.
+    - **A blind values-check of this line:** 36 items: 28 CONFIRMED, 4 IMPRECISE, 0 FAIL, 4 NOT CHECKABLE; and 11
+      observations.
+      - The four IMPRECISE items (13, 23, 26 and 33) are applied.
+      - Observations 1 to 9 are applied, observation 9 in part (the leftovers named by pointer). Observations 10 and
+        11 ask for nothing.
+      - The four NOT CHECKABLE items are this session's own acts and the raw itself: its reads in full, its re-hash,
+        the box's state at the drafting, and this check's raw.
+      - Every edit was checked by tool.
+      - The checker's departures, as its report states them, for the seat to class:
+        - reads of RESULTS.md beyond its sources' named parts: a heading listing, two short line ranges and two
+          whole-file fixed-string searches;
+        - four existence tests under `results/raw`;
+        - greps on its named files.
+
+        None touched `data/`.
+      - Raw: [`2026-11-18_n-step4-fourth-sitting-pod-close_valuescheck.md`](results/raw/2026-11-18_n-step4-fourth-sitting-pod-close_valuescheck.md).
 
 - 2026-11-18 — **n — the BACKEND extension's driver v2f, committed by path before the resume: §1.4's distribution
   printed whole, and `backend-ext-2` wired to ADDENDUM-n2 §4.1. This is the coordinating session's choice (b),
