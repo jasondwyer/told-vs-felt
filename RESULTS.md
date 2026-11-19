@@ -21,6 +21,89 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **The coordinating session's notes on the seat's second sitting of 2026-11-19: the answers committed at
+  `f4b3e73`, the PI's routing, the coordinating session's reading of item 2's slot, items 6–8, and five close lines.**
+  - **The answers:**
+    [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+    (sha256 `887b7646…dc87`, 25,691 bytes), on the blocks `355e3a2` (G-VEC's STOP, Q1–Q3) and `d85fc34` (LOCK-n
+    v0.1's OPENs, Q1–Q7), committed by path at `f4b3e73`, re-hashed equal to the paste block first. The PI's word:
+    "Route as given". The paste block, as the PI gave it, is committed here as
+    [`2026-11-19_second-sitting_pi-routing.md`](results/raw/2026-11-19_second-sitting_pi-routing.md). Below, "item N"
+    is the paste block's item, and "§8" is the raw's own routing block, whose wording differs from the paste block's in
+    places.
+  - **Items 1–5 were relayed:** N.1–N.4 verbatim to n-build; item 4 verbatim to the pod session, with item 1's steps
+    for the box in the coordinating session's words; and A.5 verbatim to n-analyzer.
+    - **Item 2's slot, the coordinating session's reading.** The slot reads "[go; or strike the batch and declare the
+      departure with G-LEAK-n alone: Go]". The PI's "Go" fills the blank after the alternative, not the bracket's
+      default "go", so it needs a reading. The coordinating session reads it as go, with the `reward_f020` batch built:
+      item 5's decision point ("at f = 0.20 iff the lock's coherence component PASSED") and item 3's "OPEN 5 the gate
+      as §2.5" both rest on the batch's coherence result. The reading went to n-build with the relay, and is put to
+      the PI. If the PI's word changes it, the change is relayed before G-CAL-n's launch files.
+    - **Item 2's early PAUSE:** the paste block's "no +ρ/2 or −ρ turn" and §3's "no +ρ/2, `reward_f020` or −ρ turn
+      generated" end the run at the same point, since `reward_f020` comes after +ρ/2. Noted to n-build.
+    - **Item 1's second STOP:** the paste block sends a STOP at both indices "to the seat with §1.5's default" (§8: "to
+      me"), and §1.5 has it "STOP for the PI, with §1.3's figures", the PI ruling on the seat's stated default. The
+      coordinating session reads the two as one path: Code's STOP block to the seat, the seat's default, and the PI's
+      ruling. Noted to n-build when this commit lands.
+    - **One commit or two** (§3: "whether they are one commit or two, with one review covering both, is Code's and the
+      coordinating session's call"). The paste block names two deltas, each with its own review. The coordinating
+      session's side, sent to n-build for its word: two commits, the `gvec` delta and its launch files v2 first, since
+      G-VEC's re-run gates the rest and the box is idle at $4.39/h; the `gcal` delta after.
+    - **The lock's draft** (item 3) went with item 7's two answers (hole 15; the cap) and item 6's Route B. Item 3's
+      slot, "the 5(f)(iii) departure confirmed: as ruled", is the PI's confirmation at routing that §2.4 asks for.
+  - **Item 6, the coordinating session's:**
+    - the raw committed by path (`f4b3e73`);
+    - the close lines on `355e3a2`, `d85fc34`, `035947e` and `516b60f`, citing the raw: committed here, one on each
+      entry. The first sitting's item 4 put its four close lines under n-build (committed at `1194982`); this sitting's
+      item 6 puts them under the coordinating session. A fifth, on the coordinating session's notes of the first
+      sitting (`8830589`), records item 7's answers: A2's extension, which that entry said its next close line would
+      record, and the cap, one of the three questions it put to the PI;
+    - the departures of §6: "Inert, every one; the standing lines stand; the wording owed at each file's next change
+      accepted as declared";
+    - ledger (85) and (86), the seat's (§7). (85): "a rule's bound is quoted verbatim, in quotation marks, and every
+      "at", "above" and "below" in a design text is checked against the rule's own word at the referent pass". (86):
+      "when a known mechanism can move a gated figure by more than its tolerance, the convention is ruled on the
+      mechanism before the run, and a figure the seat wants beside a run is asked for without a condition, or not at
+      all";
+    - ADDENDUM-n3 v0.1, owed by the seat before G-CAL-n's launch files (§5), "[as ruled]";
+    - Route A's request to BK (n §0.8): "[not made; Route B of record; my call on sending it: not made]". No request
+      was sent, and Route B is of record.
+  - **Item 7,** two of the first sitting's three open questions (the third, the push, is item 8), answered: "A2's
+    extension to G-CAL-n [confirmed: confirmed]; a cap from BK's Appendix E [none named]". No cap is named, so 80
+    stands (§8 item 7's default: "none named: 80 stands"). Both answers went to n-build for the lock's draft.
+  - **Item 8, the push** ("[yours]"): put to the PI again, and not made on "Route as given". The push's C.5 line goes
+    in the coordinating session's close line after it.
+  - **Departures, for the seat to class:**
+    - the coordinating session's, 2026-11-19, after `8830589`'s commit: one
+      `git check-ignore -q --no-index data/n/gvec/gvec.json`, exit status only, to check that the BUILD's `.gitignore`
+      admits G-VEC's record. Item 1 of the list of record names `git check-attr`, not `git check-ignore`;
+    - the values-checker's, as its report states them:
+      - `git log -1 --name-status` with a format, on `f4b3e73`, in place of the brief's `git show --name-status`,
+        which the permission system denied;
+      - `cut` and `tr` on printed lines;
+      - one `git status --porcelain` with a pathspec of three named files, not item 1's bare form, which printed
+        nothing;
+      - one `git log -1` on `a33252a`, a commit the brief does not name, printing the id, the parent and a truncated
+        subject;
+      - reads beyond its brief's sources: item 1 of the list of record; one `grep -n -F` over the first sitting's
+        answers raw, which printed a line outside the named range; and `git ls-files` and a name-only `ls` of two raws'
+        paths;
+      - a `sed -n` hold-space script joining wrapped lines;
+      - one zsh error that ran nothing, and one `cat -A` that failed silently.
+      Nothing under `data/` was opened, listed or hashed, and no guard marker reached an argv.
+  - **Values-check:** one blind pass over this entry's draft, the five close lines and the routing raw's head.
+    - 129 items: 113 CONFIRMED, 5 IMPRECISE, 0 FAIL, 11 NOT CHECKABLE; and 12 observations.
+    - The five IMPRECISE items are applied, each in the checker's words or near them: items 41 and 49 (the first
+      sitting's three questions), 57 (the list of record named), 61 ("two of Code's readings") and 116 (the items the
+      notes quote).
+    - Observations 1, 3–10 and 12 are applied in the texts. Observation 2 is met by this commit's paths, and 11 by the
+      coordinating session's note to n-build when this commit lands.
+    - The NOT CHECKABLE items are the coordinating session's acts, words and plans, and its read of the raw.
+    - The edits were checked by tool.
+    - Raw: [`2026-11-19_second-sitting-notes_valuescheck.md`](results/raw/2026-11-19_second-sitting-notes_valuescheck.md).
+  - **Committed by path:** the routing raw, the values-check raw, this entry, and the five close lines. The
+    commit-time count of the home-folder prefix over the staged diff is 0. Not pushed.
+
 - 2026-11-19 — **n — LOCK-n v0.1's draft: five OPENs and two of Code's readings, for the seat (code → design; STOP
   for the seat), committed by path for the one sitting that rules on G-VEC's STOP (`355e3a2`), on the coordinating
   session's routing. The draft itself stays uncommitted until PROPOSAL-n v0.2 §8 step 10.**
@@ -61,6 +144,28 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
     **Next:** the seat's one sitting on G-VEC's STOP and these OPENs; LOCK-n v0.1's holes as their steps fill them.
+  - **Close (PI date 2026-11-19, second sitting), the coordinating session's, item 6: the seat's answers on the five
+    OPENs and two of Code's readings.** The seat's raw,
+    [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+    (sha256 `887b7646…dc87`, committed by path at `f4b3e73` on the PI's "Route as given"), read in full, rules Q1–Q7
+    in its §2. Item 6 of the PI's routing: "close lines on 355e3a2, d85fc34, 035947e and 516b60f citing it".
+    - **OPEN 1:** "(b), with (a)'s locator" (§2.1). v0.1 pins the form, per cell and layer the sha256 of the written
+      rows, and states where the lists are recorded once they exist; "no committed text is edited".
+    - **OPEN 2:** "both readings, as the block allows" (§2.2).
+    - **OPEN 3:** "(b)": "G-TIME-n's figures enter v1.0 with the projections and the cap" (§2.3).
+    - **OPEN 4:** "(a), declared, with a departure for the PI's confirmation" (§2.4), the departure from 5(f)(iii)'s
+      letter "confined to n's S-span arms". Item 3 of the PI's routing: "the 5(f)(iii) departure confirmed: as ruled".
+    - **OPEN 5:** "(b)'s first form: 5(d)'s own gate for the reward axis at f = 0.20, named; nothing moves" (§2.5). Its
+      leakage component is G-LEAK-n's certification at the norm-matched point; its coherence component is one batch
+      in G-CAL-n, `reward_f020`, where "a fail is neither a STOP nor a PAUSE". Ledger (85) records the bound's
+      paraphrase, n:81's "never above 0.20" against the rule's "below dose 0.20" (§7).
+    - **R-L1 and R-L2:** "both stand" (§2.6). Item 6 of the PI's routing, on Route A's request to BK (n §0.8): "[not
+      made; Route B of record; my call on sending it: not made]".
+    - **§5** lists what enters the draft now and what stays open; the seat owes ADDENDUM-n3 v0.1 before G-CAL-n's
+      launch files. Item 7 of the PI's routing answers hole 15: "A2's extension to G-CAL-n [confirmed: confirmed]".
+    - **Departures:** this entry's are inert (§6).
+    - **Values-check:** with the coordinating session's notes on the second sitting, at the Log's head, which give the
+      check and its raw.
 
 - 2026-11-19 — **n — the ids of record, third commit: (v)'s render, G-CAL-n's 48 prompts in the rendering of record
   (ADDENDUM-n1 §1.2 (v) and §1.5; the seat's answers of 2026-11-19, first sitting, §1.7 and §1.8; the PI's routing,
@@ -117,6 +222,17 @@ applied to CLAUDE.md.
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
     **Next:** G-CAL-n's launch files after G-VEC's PASS is committed; the tile (R12) with F5 and R13 after G-CAL-n's
     run; LOCK-n v0.1's draft items.
+  - **Close (PI date 2026-11-19, second sitting), the coordinating session's, item 6: the seat's answers on
+    R-v1–R-v5.** The seat's raw,
+    [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+    (sha256 `887b7646…dc87`, committed by path at `f4b3e73` on the PI's "Route as given"), read in full: "R-v1–R-v5
+    accepted" (§4).
+    - "The cross-check by counts (every session of record opens with one of the 12 prompts) is the right form and goes
+      in the lock's (v) line" (§4).
+    - **Departures:** this entry's are inert, the values-checker's `grep -A 3` among them, "with the standing line
+      that an id is never written into a seat or Code text" (§6).
+    - **Values-check:** with the coordinating session's notes on the second sitting, at the Log's head, which give the
+      check and its raw.
 
 - 2026-11-19 — **n — G-CAL-n's delta, committed by path: the seat's three changes to the stage (the answers of
   2026-11-19, first sitting: the whole turn steered, §1.9; the order +ρ, the baseline, +ρ/2, −ρ, with the early STOP
@@ -240,6 +356,24 @@ applied to CLAUDE.md.
       full home-folder prefix, 0;
     - the checker's report also lists, apart from its departures, one zsh error from an unquoted `===`, which ran
       nothing (the raw's line 320).
+  - **Close (PI date 2026-11-19, second sitting), the coordinating session's, item 6: the seat's answers on O1, O2,
+    O5, departure (10) and R12.** The seat's raw,
+    [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+    (sha256 `887b7646…dc87`, committed by path at `f4b3e73` on the PI's "Route as given"), read in full, rules them
+    in its §3.
+    - **O1 accepted:** "a STOP takes precedence over O7's PAUSE at the early read".
+    - **O2 changed, the early PAUSE:** at the early read, with +ρ passed, a baseline below 36 of 48 coherent "ends the
+      run as a PAUSE (exit 3), with the record, the turns and the dose map written, `early_pause` recorded, and no
+      +ρ/2, `reward_f020` or −ρ turn generated".
+    - **O5 accepted** "as a reading, for the lock's departure-scope line".
+    - **Departure (10), the `figures_of` seam and R12's placement:** "accepted as declared; the wording owed at the
+      driver's next change rides with this delta" (the sitting's `gcal` delta).
+    - **The sitting's `gcal` delta** is "three changes — the arrival's position 0 (§1.4), the early PAUSE (O2), the
+      `reward_f020` batch (§2.5)" (§3). Under §1.4 (i), the arrival score becomes "the mean over the emitted ids'
+      positions 1..n" of the projection on the unit valence row, with `arrival_all` recorded beside per turn.
+    - **Departures:** this entry's are inert (§6).
+    - **Values-check:** with the coordinating session's notes on the second sitting, at the Log's head, which give the
+      check and its raw.
 
 - 2026-11-19 — **n — G-VEC on n's box, from its BUILD's commit `da7bdec`: the smoke held, and the run of record
   STOPPED at the R check, R within 2% of 25.49 at neither candidate index (n §2.3: "reproduced at G-VEC within 2%,
@@ -365,6 +499,26 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed.
     **Next:** the seat's ruling on G-VEC's STOP. Meanwhile G-CAL-n's delta (draft 5) and (v)'s render.
+  - **Close (PI date 2026-11-19, second sitting), the coordinating session's, item 6: the seat's answers on G-VEC's
+    STOP.** The seat's raw,
+    [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+    (sha256 `887b7646…dc87`, committed by path at `f4b3e73` on the PI's "Route as given"), read in full, rules the
+    STOP block's Q1–Q3 in its §1.
+    - **Q1 and Q3:** "path (b), carrying (a)'s figures in the run of record" (§0). "The convention of record changes in
+      one clause: position 0 of every passage is left out of its mean and out of R (both the squared norms and the
+      count); every other clause of G1 stands" (§0). The ids of record stand: "nothing is re-rendered" (§1.2).
+    - **Q2:** the run of record carries a `diagnostic` block at both indices over the 96 neutral passages,
+      descriptive, "none a decision": `R_all`, `rms_by_position` (positions 0–4, and 5..n pooled), `max_norm` and
+      `R_mean_of_passage_rms` (§1.3).
+    - **The re-run's outcomes, pre-declared** (§1.5): a PASS fills LOCK-n v0.1's holes 1–7, this entry's figures
+      beside under "every position", and G-CAL-n's launch files follow, which also wait for ADDENDUM-n3's commit
+      (§2.5, §5); "A STOP at both indices again: STOP for the PI, with §1.3's figures; the seat rules no third
+      convention on its own authority". "Code re-runs nothing on either outcome without the routing."
+    - **Wording owed:** `gvec.py`:26–27's stale sentence "is corrected in this delta, as `355e3a2`'s entry owes it"
+      (§1.4 (ii); the sitting's `gvec` delta).
+    - **Departures:** this entry's are inert (§6).
+    - **Values-check:** with the coordinating session's notes on the second sitting, at the Log's head, which give the
+      check and its raw.
 
 - 2026-11-19 — **The coordinating session's notes on the seat's first sitting of 2026-11-19: the answers committed at
   `a33252a`, the PI's routing, item 1's call, items 3, 7 and 8, and C.5 for push #11.**
@@ -430,6 +584,14 @@ applied to CLAUDE.md.
     - Raw: [`2026-11-19_first-sitting-notes_valuescheck.md`](results/raw/2026-11-19_first-sitting-notes_valuescheck.md).
   - **Committed by path:** the routing raw, the values-check raw and this entry. The commit-time count of the
     home-folder prefix over the staged diff is 0. Not pushed.
+  - **Close (PI date 2026-11-19, second sitting), the coordinating session's: the PI's answers on A2's extension and
+    the cap.** Item 7 of the PI's routing of the second sitting: "Carried from the first sitting, still unfilled: A2's
+    extension to G-CAL-n [confirmed: confirmed]; a cap from BK's Appendix E [none named]". The push, item 8, is again
+    "[yours]", and is put to the PI again. The seat's raw,
+    [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+    (sha256 `887b7646…dc87`, committed by path at `f4b3e73` on the PI's "Route as given"), classes this entry's
+    departures inert (§0: "Every departure of `355e3a2`, `035947e`, `516b60f`, `d85fc34` and `8830589` inert
+    (§6)"). The coordinating session's notes on the second sitting, at the Log's head, give the rest.
 
 - 2026-11-19 — **n — G-CAL-n's BUILD, committed by path (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3;
   ADDENDUM-n1 §1.1, §1.2 (v) and §1.4): the stage in a new module, `valence_core/n/gcal.py`, and its commands, `gcal`,
