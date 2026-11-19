@@ -1,7 +1,7 @@
 """PROPOSAL-n -- G-CAL-n (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3; ADDENDUM-n1 §1.1, §1.2 (v), §1.4): the
 dose map and BK's two hurdles, built on Code's readings GC1-GC23 as the coordinating session routed them (PINs declared
-in the BUILD entry; GC3, GC4, GC5, GC6, GC8, GC11, GC12 and GC23 go to the seat before the run, with G-VEC's G1, G3,
-G6 and G9).
+in the BUILD entry), as the seat ruled the starred eight (a33252a, 2026-11-19): GC8's steering is the whole turn (Q9),
+GC23 (d)'s order is the seat's, with an early STOP at +ρ (§1.12), and an incoherent baseline is a PAUSE (O7).
 
 THE STAGE, n:113 verbatim: "d_eq and d_20 computed from R_ℓ and R and pinned. BK's two hurdles on one batch per pole
 per dose, in BK's order: 48 conditioning turns generated under steering at +ρ, −ρ and +ρ/2 (TEMP 0.7, their prompt;
@@ -31,14 +31,16 @@ first-token kernel gate licenses no generation); the next token drawn at TEMP 0.
 position's logits by an inverse-CDF draw from the turn's numpy generator, seeded by seed_i (``keys.gcal_seed``, GC10);
 a stop at the end-of-turn token (the tokenizer's eos, ``<|endoftext|>``, the rendering's assistant end) or at 80 new
 tokens (GC3); no newline stop, no ban set (GC7); the emitted ids exclude the stop token. A steered batch adds
-ṽ(d) = d·ρ·R·v at the site from the generation prompt's first token onward (GC8): ``Injection.at_frac`` on the valence
-row of record at the site, R from gvec.json's ``of_record``, ``expect_sha`` its sha16, then ``with_sign`` (runner's
-``_injection`` arithmetic). The batches, in n:113's order: +ρ (d = +1), −ρ (d = −1), +ρ/2 (d = +1/2), and the 48
-unsteered baseline turns on the same prompts and seeds (GC13). They are generated in ``GENERATION_ORDER`` (GC23 (d)):
-+ρ, +ρ/2, the baseline, then −ρ, so that a failure in another batch spends no −ρ turn. The record and the turns file
-keep n:113's order, and each turn's seed fixes its draws, so the order changes no turn's inputs; a ruling against (d)
-changes that one line. Before each batch at a positive dose (+ρ, +ρ/2; the
-smoke's +ρ), ``steering_check`` takes the first prompt's first-step logits steered and unsteered, and the stage refuses
+ṽ(d) = d·ρ·R·v at the site on every position from the user turn's first token (``STEER_FROM``, position 0) through the
+last generated token (the seat's Q9, §1.9): ``Injection.at_frac`` on the valence row of record at the site, R from
+gvec.json's ``of_record``, ``expect_sha`` its sha16, then ``with_sign`` (runner's ``_injection`` arithmetic). The
+batches, in n:113's order: +ρ (d = +1), −ρ (d = −1), +ρ/2 (d = +1/2), and the 48 unsteered baseline turns on the same
+prompts and seeds (GC13). They are generated in ``GENERATION_ORDER``, the seat's §1.12: +ρ, the baseline, +ρ/2, then
+−ρ. Each batch's arrival scores are computed as soon as it is generated; once +ρ and the baseline exist, +ρ's two
+hurdles are read, and a fail there ends the run as a STOP, with the record, the turns and the dose map written and no
+−ρ turn generated (the early STOP). The record and the turns file keep n:113's order, and each turn's seed fixes its
+draws, so the order changes no turn's inputs. Before each batch at a positive dose (+ρ, +ρ/2; the smoke's +ρ),
+``steering_check`` takes the first prompt's first-step logits steered and unsteered, and the stage refuses
 before that batch's first turn unless they differ: the injection must reach the forward. No −ρ forward is spent on it.
 The generation window (rule 28(d)(c)), declared apart from the choice-read window (``schema.MAX_WINDOW``, GA-4), is
 ``GENERATION_WINDOW`` positions. A turn's longest forward is its prompt's ids and ``cap`` − 1 emitted ids
@@ -52,8 +54,11 @@ above 0.5 (no trigram: 0); low lexical diversity is distinct/total words below 5
 turn is coherent iff none fires; a batch passes iff at least 36 of 48 are. Arrival: each turn's emitted ids alone,
 forwarded unsteered, captured at the site; the turn's score is the mean over its positions of the projection on the
 unit valence row; a batch passes iff Welch's t of its scores against the baseline's has |t| >= 2 with the pole's sign
-(positive at +ρ and +ρ/2, negative at −ρ). Both hurdles are computed at every dose whatever the other gave. Status:
-STOP if either fails at +ρ or −ρ (n:113); PAUSE, for the seat, if only +ρ/2 fails (GC14); PASS otherwise. Each batch's
+(positive at +ρ and +ρ/2, negative at −ρ). Both hurdles are computed at every dose generated (after an early STOP,
++ρ alone) whatever the other gave; outside a smoke, +ρ's once, at the early read, and the record's +ρ figures are that
+read's. Status:
+STOP if either fails at +ρ or −ρ (n:113; at +ρ, the early STOP); PAUSE, for the seat, if only +ρ/2 fails (GC14) or if
+the baseline has fewer than 36 of 48 coherent (the seat's O7); PASS otherwise. Each batch's
 figures also carry the shift n:113 names, descriptive: its scores' mean and SD (ddof 1), the baseline's, and the
 difference of the means; and its stops: eos, cap and empty turns (rule 23). The −ρ exposure counts the turns, the
 emitted tokens and the draws (the emitted tokens and each drawn end of turn).
@@ -63,15 +68,17 @@ and the analyzer's expressions; the points by ``schema.dose_points`` (a fold int
 depends on G-VEC alone, so the driver computes it before the load; the record says it is pinnable only on a PASS.
 
 THE OUTPUTS (GC15): ``gcal.json`` (the record), ``gcal_turns.jsonl`` (one line per turn) and ``dose_map.json`` (the
-five floats in ``ganl --dose-map``'s form), written staged and renamed into data/n/gcal/ by the driver, on every end.
+five floats in ``ganl --dose-map``'s form), written staged and renamed into data/n/gcal/ by the driver, on every PASS,
+STOP and PAUSE.
 GC23 (a)-(c) keep G-CAL-n one shot (GC19) and stop a failure from destroying turns that rule 25 and §0.4's count need:
 each turn is appended to the staging folder's log (``OUT_PARTIAL``, by ``append_turn``: one JSON line, flushed and
 fsynced) as soon as it is generated, and the log is removed only on a clean end, once the three outputs are written.
 On any failure after the staging folder is made, the driver renames that folder to the failed-run folder
 (data/n/.gcal.failed) and never removes it, and a later run refuses while it exists. A non-finite arrival score stays a
-failure (a raise), its turns kept by the same rename.
+failure, a raise when its batch is scored (+ρ's and the baseline's before +ρ/2 and −ρ are generated), its turns kept
+by the same rename.
 
-Departures from GC1-GC22's words, declared: (1) GC12's Welch's t is recorded as None, and the batch's arrival as a
+Departures from GC1-GC23's words, declared: (1) GC12's Welch's t is recorded as None, and the batch's arrival as a
 fail, when it is undefined (fewer than two scores on a side, or both sides at zero variance); (2) a turn with no
 emitted id (the end of turn drawn first) has no arrival score and is left out of the t, its count recorded; (3) GC11's
 "outer punctuation" is read as the Unicode punctuation categories (P*); (4) GC2's "the record alone": a STOP, like a
@@ -80,7 +87,10 @@ the adapter's (softmax at TEMP, multinomial)": the draw is ``sample``'s inverse 
 generator, reproducible from the logits and the seed alone; (6) GC15's stdout order: the dose map is printed before the
 load, since it depends on G-VEC alone; (7) GC19's smoke of 2 prompts: ``--smoke`` takes 1 to 4, and the launch passes
 2; (8) GC21's "testing.CausalDouble gains a seeded numpy sampler": the double gains none, and the self-test draws from
-its logits with ``sample`` itself, the production sampler.
+its logits with ``sample`` itself, the production sampler; (9) GC9's "on the unchanged adapter's hooks
+(primitive.HFBackend's pattern)": the step is the adapter's own uncached forward with the injections, G-VEC's pattern;
+(10) GC23 (c)'s "a raise after every turn is generated": under the seat's order a batch is scored as soon as it is
+generated, so the raise comes when its batch is scored.
 """
 from __future__ import annotations
 
@@ -121,9 +131,12 @@ GENERATION_WINDOW = 4096
 OUT_RECORD, OUT_TURNS, OUT_DOSE_MAP = "gcal.json", "gcal_turns.jsonl", "dose_map.json"
 OUT_PARTIAL = "gcal_turns.partial.jsonl"        # GC23 (a): the staging folder's log of the turns as generated
 DOSE_MAP_KEYS = ("d_eq", "d_20", "rho", "R", "R_ell")     # ganl --dose-map's five figures
-#: GC23 (d): the order of generation, −ρ last; the record and the turns file keep n:113's (BATCHES). A ruling against
-#: (d) sets this one line back to n:113's order, ("+rho", "-rho", "+rho/2", "baseline").
-GENERATION_ORDER = ("+rho", "+rho/2", "baseline", "-rho")
+#: the order of generation, the seat's §1.12 (a33252a): +ρ, the baseline, +ρ/2, −ρ, so that +ρ's two hurdles are read
+#: before any −ρ turn exists (the early STOP); the record and the turns file keep n:113's (BATCHES).
+GENERATION_ORDER = ("+rho", "baseline", "+rho/2", "-rho")
+#: Q9 (the seat's §1.9): a steered turn is steered on every position from the user turn's first token, position 0 of
+#: the rendered ids (the rendering adds no special token), through the last generated token.
+STEER_FROM = 0
 
 
 def prompt_parts(zone: str) -> tuple[str, str]:
@@ -142,17 +155,20 @@ CONVENTIONS = {
                   f"generator seeded by keys.gcal_seed(i); stop at the eos or 80 new tokens; no newline stop, no ban "
                   f"set; emitted ids exclude the stop token; a steering check before each batch at a positive dose; "
                   f"the generation window {GENERATION_WINDOW}; the batches generated in the order "
-                  f"{', '.join(GENERATION_ORDER)} (GC3, GC4, GC7, GC9, GC10, GC23 (d))",
+                  f"{', '.join(GENERATION_ORDER)}, +rho's hurdles read once the baseline exists, a fail there an early "
+                  f"STOP with no -rho turn (GC3, GC4, GC7, GC9, GC10; the seat's §1.12)",
     "persistence": "each turn appended to the staging folder's log as it is generated, the log removed on a clean end; "
                    "on a failure the staging folder kept as the failed-run folder, never removed (GC23 (a)-(c))",
-    "steering": "d·ρ·R·v at the site from the generation prompt's first token onward (GC8)",
+    "steering": f"d·ρ·R·v at the site on every position from the user turn's first token (position {STEER_FROM}) "
+                f"through the last generated token (the seat's Q9, §1.9)",
     "coherence": "on the box's decode; words whitespace-split, outer P* stripped, lower-cased; length collapse < 4 "
                  "words; repetition loop 1 - distinct/total trigrams > 0.5; low diversity distinct/total words < 5/20; "
                  "a batch passes at >= 36 of 48 (GC11)",
     "arrival": "the emitted ids alone, unsteered, at the site; the mean projection on the unit valence row; Welch's t "
-               "against the baseline, |t| >= 2 with the pole's sign, at every dose; the shift beside it, descriptive "
-               "(GC12)",
-    "status": "STOP if either hurdle fails at +rho or -rho; PAUSE if only +rho/2 fails; PASS otherwise (GC14)",
+               "against the baseline, |t| >= 2 with the pole's sign, at every dose generated (after an early STOP, "
+               "+rho alone); the shift beside it, descriptive (GC12)",
+    "status": "STOP if either hurdle fails at +rho or -rho (at +rho, the early STOP); PAUSE if only +rho/2 fails, or "
+              "if the baseline has fewer than 36 of 48 coherent; PASS otherwise (GC14; the seat's O7)",
 }
 
 
@@ -174,9 +190,9 @@ def sample(logits, temp: float, rng: np.random.Generator) -> int:
     return int(min(int(np.searchsorted(c, rng.random() * c[-1], side="right")), len(c) - 1))
 
 
-def placed(injection: Injection | None, gen_start: int) -> tuple:
-    """GC8: the injection placed from ``gen_start`` onward, as every steered step places it; () unsteered."""
-    return () if injection is None else (injection.with_positions(PositionSpec.from_index(int(gen_start))),)
+def placed(injection: Injection | None, start: int) -> tuple:
+    """The injection placed from ``start`` onward (``STEER_FROM`` for every steered step, Q9); () unsteered."""
+    return () if injection is None else (injection.with_positions(PositionSpec.from_index(int(start))),)
 
 
 def longest_forward(max_seq_len: int, cap: int = CAP) -> int:
@@ -187,12 +203,13 @@ def longest_forward(max_seq_len: int, cap: int = CAP) -> int:
 def generate(step_logits: Callable, prompt_ids: Sequence[int], gen_start: int, injection: Injection | None,
              seed: int, *, eos_id: int, temp: float = TEMP, cap: int = CAP) -> dict:
     """One turn: ``step_logits(ids, injections) -> the last position's logits``, one call per step over the whole
-    sequence so far (uncached); the injection, if any, placed from ``gen_start`` onward. Returns the emitted ids (the
-    stop token excluded), their count, the stop ("eos" or "cap") and whether the cap was hit."""
+    sequence so far (uncached); the injection, if any, placed from ``STEER_FROM`` onward, the whole turn (Q9).
+    ``gen_start``, the prompt's boundary, is checked to lie inside it. Returns the emitted ids (the stop token
+    excluded), their count, the stop ("eos" or "cap") and whether the cap was hit."""
     ids = [int(x) for x in prompt_ids]
     if not 0 < int(gen_start) < len(ids):
         raise ValueError(f"gen_start {gen_start} is not inside the prompt's {len(ids)} ids")
-    inj = placed(injection, gen_start)
+    inj = placed(injection, STEER_FROM)
     rng = np.random.default_rng(int(seed))
     out: list[int] = []
     stop = "cap"
@@ -207,11 +224,11 @@ def generate(step_logits: Callable, prompt_ids: Sequence[int], gen_start: int, i
 
 
 def steering_check(step_logits: Callable, rec: Mapping, injection: Injection) -> float:
-    """``rec``'s prompt's first-step logits, steered (placed from its gen_start) and unsteered: their largest absolute
-    difference, which must be finite and above 0, else ValueError before the batch's first turn (the injection must
-    reach the forward)."""
+    """``rec``'s prompt's first-step logits, steered (placed from ``STEER_FROM``, as every steered step) and unsteered:
+    their largest absolute difference, which must be finite and above 0, else ValueError before the batch's first turn
+    (the injection must reach the forward)."""
     ids = [int(x) for x in rec["ids"]]
-    a = np.asarray(step_logits(ids, placed(injection, rec["gen_start"])), dtype=np.float64)
+    a = np.asarray(step_logits(ids, placed(injection, STEER_FROM)), dtype=np.float64)
     b = np.asarray(step_logits(ids, ()), dtype=np.float64)
     dev = float(np.max(np.abs(a - b))) if a.shape == b.shape and a.size else float("nan")
     if not (math.isfinite(dev) and dev > 0.0):
@@ -291,6 +308,12 @@ def stops(turns: Sequence[Mapping]) -> dict:
             "empty": sum(1 for r in turns if int(r["n_tok"]) == 0)}
 
 
+def coherent_enough(k: int) -> bool:
+    """The coherence bar, in one place for every steered batch and the baseline (GC11; the seat's O7): at least
+    COHERENT_MIN coherent turns."""
+    return int(k) >= COHERENT_MIN
+
+
 def batch_figures(turns: Sequence[Mapping], baseline_scores: Sequence[float], sign: int) -> dict:
     """A steered batch's two hurdles: its coherent count and pass, and its arrival t and pass, with the shift beside the
     t (descriptive: each side's mean and SD, and the difference of the means)."""
@@ -300,18 +323,19 @@ def batch_figures(turns: Sequence[Mapping], baseline_scores: Sequence[float], si
     ok = t is not None and ((t >= T_BAR) if sign > 0 else (t <= -T_BAR))
     m, s = moments(sc)
     bm, bs = moments(baseline_scores)
-    return {"coherent": k, "of": len(turns), "coherence_pass": k >= COHERENT_MIN,
+    return {"coherent": k, "of": len(turns), "coherence_pass": coherent_enough(k),
             "arrival": {"scored": len(sc), "baseline_scored": len(baseline_scores), "t": t, "sign": int(sign),
                         "pass": bool(ok), "mean": m, "sd": s, "baseline_mean": bm, "baseline_sd": bs,
                         "diff": None if m is None or bm is None else m - bm},
-            "pass": bool(k >= COHERENT_MIN and ok)}
+            "pass": bool(coherent_enough(k) and ok)}
 
 
 def stage_status(figures: Mapping) -> str:
-    """GC14: STOP if either hurdle fails at +ρ or −ρ; PAUSE if only +ρ/2 fails; PASS otherwise."""
+    """GC14 and the seat's O7 (a33252a, §5): STOP if either hurdle fails at +ρ or −ρ; PAUSE if only +ρ/2 fails, or if
+    the baseline has fewer than COHERENT_MIN coherent turns; PASS otherwise."""
     if any(not figures[b]["pass"] for b in STOP_BATCHES):
         return "STOP"
-    if any(not figures[b]["pass"] for b in PAUSE_BATCHES):
+    if any(not figures[b]["pass"] for b in PAUSE_BATCHES) or not figures["baseline"]["coherence_pass"]:
         return "PAUSE"
     return "PASS"
 
@@ -337,15 +361,25 @@ def injection_for(d: float, v_unit, site: int, R: float, v_sha16: str) -> Inject
 
 def compute(step_logits: Callable, forward_capture: Callable, decode: Callable, prompts: Sequence[Mapping], *,
             v_unit, v_sha16: str, site: int, R: float, eos_id: int, batches=BATCHES, n: int | None = None,
-            temp: float = TEMP, cap: int = CAP, say: Callable = print, on_turn: Callable | None = None) -> dict:
+            temp: float = TEMP, cap: int = CAP, say: Callable = print, on_turn: Callable | None = None,
+            figures_of: Callable | None = None) -> dict:
     """The stage's turns and figures. ``prompts`` are the (v) records (index, label, seed, ids, gen_start), in order;
-    ``n`` keeps the first n (the smoke's). Every batch is generated first, in ``GENERATION_ORDER`` (GC23 (d)), a batch
-    at a positive dose after its steering check, each turn handed to ``on_turn`` as soon as it is generated (GC23 (a));
-    then every turn's arrival forward; then the hurdles. The result keeps ``batches``' order. A smoke (``batches``
-    without −ρ) gets no hurdle and the status SMOKE. ``temp`` and ``cap`` are the stage's TEMP and CAP; the self-test
-    alone passes a smaller cap, for speed."""
+    ``n`` keeps the first n (the smoke's). The batches are generated in ``GENERATION_ORDER`` (the seat's §1.12: +ρ, the
+    baseline, +ρ/2, −ρ), a batch at a positive dose after its steering check, each turn handed to ``on_turn`` as soon as
+    it is generated (GC23 (a)), and each batch's arrival scores computed as soon as the batch is generated. Once +ρ and
+    the baseline exist, +ρ's hurdles are evaluated, once (the result's +ρ figures are that evaluation): a fail ends the
+    run there, a STOP with no −ρ turn generated (the early STOP); otherwise every batch runs and the status is
+    ``stage_status``'s. The result keeps ``batches``' order,
+    of the batches run. A smoke (``batches`` without −ρ) gets no hurdle and the status SMOKE. ``figures_of`` is
+    ``batch_figures`` (looked up when called) unless a self-test passes a stand-in; ``temp`` and ``cap`` are the stage's
+    TEMP and CAP; the self-test alone passes a smaller cap, for speed."""
+    fig = figures_of if figures_of is not None else batch_figures
     recs = list(prompts)[: (len(prompts) if n is None else int(n))]
+    names_all = [b for b, _d in batches]
+    smoke = "-rho" not in names_all
     turns: dict = {}
+    early = False
+    early_fig = None                # +ρ's figures, from the one evaluation at the early read
     for name, d in sorted(batches, key=lambda bd: GENERATION_ORDER.index(bd[0])):
         inj = injection_for(d, v_unit, site, R, v_sha16)
         if d > 0.0 and recs:
@@ -366,18 +400,29 @@ def compute(step_logits: Callable, forward_capture: Callable, decode: Callable, 
                 on_turn(row)
             say(f"turn {name} {int(rec['index'])} {rec['label']}: n_tok {g['n_tok']}, stop {g['stop']}, "
                 f"coherent {coh['coherent']}")
-        turns[name] = rows
-    for name, _d in batches:
-        for r in turns[name]:
+        for r in rows:
             r["arrival"] = arrival_score(forward_capture, r["ids"], site, v_unit)
-    names = [b for b, _d in batches]
-    smoke = "-rho" not in names
+        turns[name] = rows
+        if not smoke and "+rho" in turns and "baseline" in turns and len(turns) == 2:
+            base0 = [float(r["arrival"]) for r in turns["baseline"] if r["arrival"] is not None]
+            early_fig = fig(turns["+rho"], base0, 1)
+            if not early_fig["pass"]:
+                early = True
+                say("early STOP: a hurdle failed at +rho, before any -rho turn; no further batch is generated (the "
+                    "seat's §1.12)")
+                break
+    names = [b for b in names_all if b in turns]
     base = [float(r["arrival"]) for r in turns["baseline"] if r["arrival"] is not None]
-    figures: dict = {"baseline": {"coherent": sum(1 for r in turns["baseline"] if r["coherence"]["coherent"]),
-                                  "of": len(turns["baseline"]), "scored": len(base)}}
+    bk = sum(1 for r in turns["baseline"] if r["coherence"]["coherent"])
+    figures: dict = {"baseline": {"coherent": bk, "of": len(turns["baseline"]), "scored": len(base),
+                                  "coherence_pass": coherent_enough(bk)}}
     for name, d in batches:
-        if d != 0.0:
-            figures[name] = batch_figures(turns[name], base, 1 if d > 0 else -1)
+        if name not in turns:
+            continue
+        if name == "+rho" and early_fig is not None:
+            figures[name] = early_fig
+        elif d != 0.0:
+            figures[name] = fig(turns[name], base, 1 if d > 0 else -1)
         figures[name]["stops"] = stops(turns[name])
         f = figures[name]
         if d != 0.0:
@@ -385,12 +430,12 @@ def compute(step_logits: Callable, forward_capture: Callable, decode: Callable, 
                 f"{f['arrival']['t']!r} over {f['arrival']['scored']} against {len(base)} (pass "
                 f"{f['arrival']['pass']}); stops eos {f['stops']['eos']}, cap {f['stops']['cap']}, empty "
                 f"{f['stops']['empty']}")
-    status = "SMOKE" if smoke else stage_status(figures)
+    status = "SMOKE" if smoke else ("STOP" if early else stage_status(figures))
     minus = turns.get("-rho", [])
     exposure = {"turns": len(minus), "tokens": sum(int(r["n_tok"]) for r in minus),
                 "draws": sum(int(r["n_tok"]) + int(r["stop"] == "eos") for r in minus)}
     return {"status": status, "turns": turns, "figures": figures, "exposure_minus_rho": exposure,
-            "batches": names}
+            "batches": names, "early_stop": early}
 
 
 def _dumps(obj) -> str:
@@ -426,11 +471,13 @@ def write(out_dir, result: Mapping, dmap: Mapping, provenance: Mapping) -> dict:
     rec = {"schema": RECORD_SCHEMA, "stage": STAGE, "status": result["status"],
            "proposal_sha256": schema.PROPOSAL_SHA256, "batches": list(result["batches"]),
            "figures": result["figures"], "dose_map": dict(dmap), "pinnable": result["status"] == "PASS",
+           "early_stop": bool(result.get("early_stop", False)),
            "exposure_minus_rho": result["exposure_minus_rho"], "conventions": CONVENTIONS,
            "constants": {"n_turns": N_TURNS, "temp": TEMP, "cap": CAP, "coherent_min": COHERENT_MIN, "t_bar": T_BAR,
                          "min_words": MIN_WORDS, "trigram_repeat_max": TRIGRAM_REPEAT_MAX,
                          "diversity_min": DIVERSITY_MIN, "generation_window": GENERATION_WINDOW,
-                         "generation_order": list(GENERATION_ORDER)},
+                         "generation_order": [b for b in GENERATION_ORDER if b in result["batches"]],
+                         "first_steered_position": STEER_FROM},
            "provenance": dict(provenance), "files_sha256": shas}
     (d / OUT_RECORD).write_text(_dumps(rec) + "\n", encoding="utf-8")
     return rec
@@ -566,8 +613,14 @@ def _selftest(chk, tmp) -> None:
         g_e == {"ids": [5, 6], "n_tok": 2, "stop": "eos", "cap_hit": False} and log_e == [3, 4, 5]
         and g_c == {"ids": [5, 6, 8, 9], "n_tok": 4, "stop": "cap", "cap_hit": True} and log_c == [3, 4, 5, 6]
         and max(log_c) == longest_forward(3, 4) == 6, (g_e, log_e, g_c, log_c))
+    def forced(pass_):             # the hurdles' figures as computed, their pass forced: the self-test's seam only
+        def f(turns_, base_, sign_):
+            out = batch_figures(turns_, base_, sign_)
+            out["pass"] = bool(pass_)
+            return out
+        return f
     res = compute(step, cap_fn, dec, prompts, v_unit=vu, v_sha16=vsha, site=site, R=R, eos_id=eos, cap=6,
-                  say=lambda s: None)
+                  say=lambda s: None, figures_of=forced(True))
     t_all = [r for b in res["batches"] for r in res["turns"][b]]
     chk("gcal: the flow generates 4 batches x 48 turns in n:113's order, each within its cap, no eos among them, each "
         "stop eos or cap", res["batches"] == ["+rho", "-rho", "+rho/2", "baseline"] and len(t_all) == 192
@@ -575,13 +628,14 @@ def _selftest(chk, tmp) -> None:
                 and r["cap_hit"] == (r["stop"] == "cap") for r in t_all), "")
     steered = [s for s in seen if s[1]]
     alphas = sorted({s[1][0][2] for s in steered})
-    chk("gcal: steering is placed from gen_start onward at alpha |d|·rho·R with d's sign; the baseline unsteered",
-        all(s[1][0][0] == "from" and s[1][0][1] == 3 for s in steered)
+    chk("gcal: steering is placed on the whole turn, from the user turn's first token (STEER_FROM, position 0), at "
+        "alpha |d|·rho·R with d's sign; the baseline unsteered",
+        STEER_FROM == 0 and all(s[1][0][0] == "from" and s[1][0][1] == 0 for s in steered)
         and alphas == sorted({round(1.0 * schema.RHO * R, 12), round(-1.0 * schema.RHO * R, 12),
                               round(0.5 * schema.RHO * R, 12)})
         and sum(1 for s in seen if not s[1]) >= N_TURNS, alphas)
     again = compute(step, cap_fn, dec, prompts, v_unit=vu, v_sha16=vsha, site=site, R=R, eos_id=eos, cap=6,
-                    say=lambda s: None)
+                    say=lambda s: None, figures_of=forced(True))
     chk("gcal: the flow is deterministic: the same seeds give the same turns; prompt i's seed is the same in all four "
         "batches", [r["ids"] for b in res["batches"] for r in res["turns"][b]]
         == [r["ids"] for b in again["batches"] for r in again["turns"][b]]
@@ -597,6 +651,8 @@ def _selftest(chk, tmp) -> None:
         "pole's sign)", all(f[b]["coherent"] == sum(1 for r in res["turns"][b] if r["coherence"]["coherent"])
                            and f[b]["arrival"]["sign"] == (1 if b != "-rho" else -1) for b in STEERED)
         and f["baseline"]["of"] == 48 and res["exposure_minus_rho"]["turns"] == 48
+        and f["baseline"]["coherent"] == sum(1 for r in res["turns"]["baseline"] if r["coherence"]["coherent"])
+        and f["baseline"]["coherence_pass"] == (f["baseline"]["coherent"] >= COHERENT_MIN)
         and res["exposure_minus_rho"]["tokens"] == sum(r["n_tok"] for r in res["turns"]["-rho"]), "")
     base_t = [r["arrival"] for r in res["turns"]["baseline"] if r["arrival"] is not None]
     inj_p = injection_for(1.0, vu, site, R, vsha)
@@ -629,16 +685,79 @@ def _selftest(chk, tmp) -> None:
                                     cap=6, say=lambda s: None)) and len(n_deaf) == 2, n_deaf)
     handed: list = []
     res_o = compute(step, cap_fn, dec, prompts, v_unit=vu, v_sha16=vsha, site=site, R=R, eos_id=eos, cap=6,
-                    say=lambda s: None,
+                    say=lambda s: None, figures_of=forced(True),
                     on_turn=lambda r: handed.append((r["batch"], r["index"], list(r["ids"]), r["arrival"])))
     seq = [(b, i) for b in GENERATION_ORDER for i in range(N_TURNS)]
-    chk("gcal: GC23 (d): the batches are generated in GENERATION_ORDER (+rho, +rho/2, the baseline, -rho last), each "
-        "turn handed to on_turn as it is generated, before its arrival is scored; the result keeps n:113's order and "
-        "the same turns", GENERATION_ORDER == ("+rho", "+rho/2", "baseline", "-rho")
+    chk("gcal: the seat's order (§1.12): the batches are generated in GENERATION_ORDER (+rho, the baseline, +rho/2, "
+        "-rho), each turn handed to on_turn as it is generated, before its arrival is scored; the result keeps n:113's "
+        "order and the same turns", GENERATION_ORDER == ("+rho", "baseline", "+rho/2", "-rho")
         and sorted(GENERATION_ORDER) == sorted(b for b, _d in BATCHES)
         and [(b, i) for b, i, _ids, _a in handed] == seq and all(a is None for *_x, a in handed)
         and res_o["batches"] == [b for b, _d in BATCHES]
         and all(ids_ == res_o["turns"][b][i]["ids"] == res["turns"][b][i]["ids"] for b, i, ids_, _a in handed), "")
+    alph_es: list = []
+
+    def step_es(ids, injections):  # the double's step, recording every alpha it is handed
+        alph_es.extend(round(i.alpha, 12) for i in injections)
+        return be.prefill(ids, injections, ()).logits_last
+    es_calls: list = []
+
+    def fail_rec(turns_, base_, sign_):    # forced(False), recording each call's inputs
+        es_calls.append(([r["batch"] for r in turns_], list(base_), sign_))
+        return forced(False)(turns_, base_, sign_)
+    es = compute(step_es, cap_fn, dec, prompts, v_unit=vu, v_sha16=vsha, site=site, R=R, eos_id=eos, cap=6,
+                 say=lambda s: None, figures_of=fail_rec)
+    base_es = [r["arrival"] for r in es["turns"]["baseline"] if r["arrival"] is not None]
+    chk("gcal: the early STOP (the seat's §1.12): a fail at +rho, read once the baseline exists, ends the run as a "
+        "STOP with +rho and the baseline alone, and no +rho/2 or -rho forward is made; the read is one evaluation, of "
+        "+rho's 48 turns against the baseline's scores at the positive pole, and the record's +rho figures are its "
+        "result; a pass runs every batch",
+        es["status"] == "STOP" and es["early_stop"] is True and es["batches"] == ["+rho", "baseline"]
+        and sorted(es["turns"]) == ["+rho", "baseline"] and sorted(es["figures"]) == ["+rho", "baseline"]
+        and es["exposure_minus_rho"] == {"turns": 0, "tokens": 0, "draws": 0}
+        and es_calls == [(["+rho"] * N_TURNS, base_es, 1)] and es["figures"]["+rho"]["pass"] is False
+        and es["figures"]["+rho"]["arrival"]["sign"] == 1 and es["figures"]["+rho"]["of"] == N_TURNS
+        and set(alph_es) == {round(schema.RHO * R, 12)} and res["early_stop"] is False and len(res["batches"]) == 4,
+        (es["status"], es["batches"], sorted(set(alph_es)), [(c[0][:1], len(c[1]), c[2]) for c in es_calls]))
+
+    def step_mute(ids, injections):  # the double's step, the end of turn certain whenever no injection is handed
+        lg = np.asarray(be.prefill(ids, injections, ()).logits_last, dtype=np.float64)
+        if not injections:
+            lg = np.full_like(lg, -50.0)
+            lg[eos] = 50.0
+        return lg
+    mute = compute(step_mute, cap_fn, dec, prompts, v_unit=vu, v_sha16=vsha, site=site, R=R, eos_id=eos, cap=6,
+                   say=lambda s: None, figures_of=forced(True))
+    chk("gcal: the seat's O7 in the flow: a baseline below 36 coherent (here every baseline turn empty) is a PAUSE, "
+        "every batch generated and no early STOP, its coherent count its turns'",
+        mute["status"] == "PAUSE" and mute["early_stop"] is False and len(mute["batches"]) == 4
+        and all(r["n_tok"] == 0 for r in mute["turns"]["baseline"])
+        and mute["figures"]["baseline"]["coherent"] == 0 and mute["figures"]["baseline"]["coherence_pass"] is False
+        and all(mute["figures"][b]["coherent"] == sum(1 for r in mute["turns"][b] if r["coherence"]["coherent"])
+                for b in STEERED), (mute["status"], mute["figures"]["baseline"]))
+    # O7 at its bar through the flow: prompt i's last two ids carry i, and an unsteered step makes baseline turn i
+    # six distinct words (ids 13..18, never the eos) when i < k, and draws the end of turn first otherwise
+    prompts_k = [dict(p_, ids=[3, 4, 5, 9 + p_["index"] // 12, 9 + p_["index"] % 12]) for p_ in prompts]
+
+    def step_k(k):
+        def f(ids, injections):
+            if injections:
+                return be.prefill(ids, injections, ()).logits_last
+            idx, at = (int(ids[3]) - 9) * 12 + int(ids[4]) - 9, len(ids) - 5
+            lg = np.full(be.vocab, -50.0)
+            lg[eos if idx >= k else 13 + at] = 50.0
+            return lg
+        return f
+    b36, b35 = (compute(step_k(k), cap_fn, dec, prompts_k, v_unit=vu, v_sha16=vsha, site=site, R=R, eos_id=eos,
+                        cap=6, say=lambda s: None, figures_of=forced(True)) for k in (36, 35))
+    chk("gcal: the seat's O7 at its bar, through the flow: a baseline of exactly 36 coherent turns is no PAUSE, and "
+        "one of exactly 35 is (§5: below 36 of 48), its coherent count its turns'",
+        b36["figures"]["baseline"]["coherent"] == 36 and b36["figures"]["baseline"]["coherence_pass"] is True
+        and b36["status"] == "PASS" and b35["figures"]["baseline"]["coherent"] == 35
+        and b35["figures"]["baseline"]["coherence_pass"] is False and b35["status"] == "PAUSE"
+        and all(sum(1 for r in b_["turns"]["baseline"] if r["coherence"]["coherent"]) == b_["figures"]["baseline"]
+                ["coherent"] for b_ in (b36, b35)),
+        (b36["figures"]["baseline"], b36["status"], b35["figures"]["baseline"], b35["status"]))
     log_p = tmp / "turn_log.jsonl"
     append_turn(log_p, {"index": 0, "batch": "+rho", "ids": [1, 2]})
     append_turn(log_p, {"index": 1, "batch": "+rho", "ids": []})
@@ -653,11 +772,16 @@ def _selftest(chk, tmp) -> None:
     # the status rule, on literal figures
     def fig(p_):
         return {"pass": p_}
-    chk("gcal: status (GC14): a fail at +rho or -rho is a STOP; a fail at +rho/2 alone a PAUSE; else PASS",
-        stage_status({"+rho": fig(True), "-rho": fig(True), "+rho/2": fig(True)}) == "PASS"
-        and stage_status({"+rho": fig(False), "-rho": fig(True), "+rho/2": fig(True)}) == "STOP"
-        and stage_status({"+rho": fig(True), "-rho": fig(False), "+rho/2": fig(False)}) == "STOP"
-        and stage_status({"+rho": fig(True), "-rho": fig(True), "+rho/2": fig(False)}) == "PAUSE", "")
+    okb, badb = {"coherence_pass": True}, {"coherence_pass": False}
+    chk("gcal: status (GC14, the seat's O7): a fail at +rho or -rho is a STOP; a fail at +rho/2 alone, or a baseline "
+        "below 36 coherent, a PAUSE; a STOP before an incoherent baseline's PAUSE; else PASS",
+        stage_status({"+rho": fig(True), "-rho": fig(True), "+rho/2": fig(True), "baseline": okb}) == "PASS"
+        and stage_status({"+rho": fig(False), "-rho": fig(True), "+rho/2": fig(True), "baseline": okb}) == "STOP"
+        and stage_status({"+rho": fig(True), "-rho": fig(False), "+rho/2": fig(False), "baseline": okb}) == "STOP"
+        and stage_status({"+rho": fig(True), "-rho": fig(True), "+rho/2": fig(False), "baseline": okb}) == "PAUSE"
+        and stage_status({"+rho": fig(True), "-rho": fig(True), "+rho/2": fig(True), "baseline": badb}) == "PAUSE"
+        and stage_status({"+rho": fig(True), "-rho": fig(False), "+rho/2": fig(True), "baseline": badb}) == "STOP",
+        "")
     turns_ok = [{"coherence": {"coherent": True}, "arrival": 1.0 + 0.01 * i} for i in range(48)]
     base_sc = [0.01 * i for i in range(48)]
     bf = batch_figures(turns_ok, base_sc, 1)
@@ -674,8 +798,10 @@ def _selftest(chk, tmp) -> None:
     four = coherence("the light is soft")
     nine = coherence("a b c d a b c d a b c")          # 9 trigrams, 4 distinct: 5/9 repeat
     low = coherence(" ".join(["w1", "w2", "w3", "w4"] * 5))
-    chk("gcal: each bar from its other side: 36 coherent pass; 4 words do not collapse; a trigram fraction of 5/9 "
-        "loops; 4 distinct per 20 is low", k36["coherent"] == 36 and k36["coherence_pass"] and k36["pass"]
+    chk("gcal: each bar from its other side: 36 coherent pass (the one coherence bar, coherent_enough, false at 35 "
+        "and true at 36); 4 words do not collapse; a trigram fraction of 5/9 loops; 4 distinct per 20 is low",
+        k36["coherent"] == 36 and k36["coherence_pass"] and k36["pass"]
+        and not coherent_enough(35) and coherent_enough(36)
         and four["n_words"] == 4 and not four["length_collapse"] and four["coherent"]
         and abs(nine["trigram_repeat"] - 5 / 9) < 1e-12 and nine["repetition_loop"] and not nine["low_diversity"]
         and low["diversity"] == 4 / 20 and low["low_diversity"], (k36["coherent"], four, nine, low))
@@ -709,7 +835,7 @@ def _selftest(chk, tmp) -> None:
                   batches=SMOKE_BATCHES, n=2, say=lambda s: None)
     chk("gcal: a smoke runs +rho and the baseline only, on the first prompts, never -rho, its status SMOKE",
         smk["status"] == "SMOKE" and smk["batches"] == ["+rho", "baseline"] and len(smk["turns"]["+rho"]) == 2
-        and smk["exposure_minus_rho"] == {"turns": 0, "tokens": 0, "draws": 0}, "")
+        and smk["exposure_minus_rho"] == {"turns": 0, "tokens": 0, "draws": 0} and smk["early_stop"] is False, "")
     # the outputs
     out = tmp / "gcal_out"
     out.mkdir()
@@ -722,7 +848,17 @@ def _selftest(chk, tmp) -> None:
         and rec["files_sha256"] == {OUT_TURNS: hashlib.sha256((out / OUT_TURNS).read_bytes()).hexdigest(),
                                     OUT_DOSE_MAP: hashlib.sha256((out / OUT_DOSE_MAP).read_bytes()).hexdigest()}
         and json.loads((out / OUT_RECORD).read_text(encoding="utf-8"))["pinnable"] == (res["status"] == "PASS")
+        and rec["early_stop"] is False and rec["constants"]["first_steered_position"] == 0
+        and rec["constants"]["generation_order"] == list(GENERATION_ORDER)
         and sorted(p.name for p in out.iterdir()) == sorted([OUT_RECORD, OUT_TURNS, OUT_DOSE_MAP]), "")
+    out_es = tmp / "gcal_out_es"
+    out_es.mkdir()
+    rec_es = write(out_es, es, dm, {"driver_sha256": "d" * 64})
+    chk("gcal: an early STOP's record: +rho and the baseline, the order run (constants.generation_order, the seat's "
+        "§1.12) +rho then the baseline, early_stop true, not pinnable, its 96 turns",
+        rec_es["batches"] == ["+rho", "baseline"] and rec_es["constants"]["generation_order"] == ["+rho", "baseline"]
+        and rec_es["early_stop"] is True and rec_es["status"] == "STOP" and rec_es["pinnable"] is False
+        and len((out_es / OUT_TURNS).read_text(encoding="utf-8").splitlines()) == 2 * N_TURNS, "")
 
 
 def testing_double():

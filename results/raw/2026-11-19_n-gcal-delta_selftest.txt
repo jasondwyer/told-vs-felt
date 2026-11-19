@@ -1,0 +1,50 @@
+n -- G-CAL-n's delta, the seat's three changes (the answers of 2026-11-19, first sitting: s1.9, s1.12 (d), s5 O7):
+its self-test on the laptop, committed with the delta. PI date 2026-11-19. Code (the n-build session).
+
+The change, on 89a55c3's versions of these paths, the BUILD's (each the same bytes at every commit since):
+  valence_core/n/gcal.py       61bcafc923ab97a762a332858cdd00208fc20b60cc3d4c5e65068dca152d14fc  (+208 -72)
+  scripts/n_sessions.py        655430f36b15839170170785a28af7d042e4812cec0c808a3512bef0ca0ad027  (+109 -36)
+The package: valence_core/n's digest moves from
+  8f785fba0fa89462810e11b5c35a0521f3862a3d1b35c4995a54fe68671b0152 (89a55c3's, unchanged at every commit since) to
+  e5606ddf27b18e6db807912b6240692e9f7d393366908a96905893440a59b36c,
+  both computed by shell in the form valence_core/m/resume.py's package_sha256_of states. The self-test prints no
+  digest; the package's own `hashes` runs when G-CAL-n's launch files are made, in a battery window of its own.
+
+1. THE LAPTOP. Model-free, as at the BUILD: the HF cases run only where torch and transformers are present, and
+   elsewhere are skipped and counted as skipped; the schema module's own cases count as one aggregated line.
+   The overlay: the BUILD's (161 files: a git archive of 1185e15 on G-VEC's BUILD self-test paths), with the BUILD's
+   keys.py, ids.py and guard.py and each run's two drafts in place.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/gcal/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, each file re-hashed in the
+   overlay just before the run; the temporary folder was empty before and after.
+
+   Run 4, draft 4 (the bytes the blind review read):
+     valence_core/n/gcal.py 8a1a90cd1914bb78d15c64224eb124ef3be801d77d549531cdf93d5b043fe98c (800 lines)
+     scripts/n_sessions.py  20b30972f45b51f9769b3f4c3db9be49fc17a017aadf95dd5dcd56f3bd5b4665 (3621 lines)
+     exit 0; output 1 line, sha256 49901248be8eb86a6ae18bc7690e9b9fb4190cbe117773cbea4ef79db7888c10, verbatim:
+  542/542 n selftest checks pass
+
+   Run 5, draft 5 (the review applied):
+     valence_core/n/gcal.py 5a4c7e80f493dbd1f30b9513d5cc74ed6fe9debbe8479b65b5157f8f1cb4e82a (851 lines)
+     scripts/n_sessions.py  655430f36b15839170170785a28af7d042e4812cec0c808a3512bef0ca0ad027 (3624 lines)
+     exit 0; output 1 line, sha256 150f718f81d696493e70d19426ebdeede6b18ff1ef9b93e3418b611d1c532ec5, verbatim:
+  544/544 n selftest checks pass
+   Draft 5 adds two checks to draft 4's 542, both in gcal.py's own self-test: the incoherent baseline's PAUSE in the
+   flow (the review's F2) and an early STOP's record (its O3). No other check is added or removed: draft 5's other
+   self-test changes extend existing checks.
+
+   Run 6, draft 6 (draft 5 with one self-test check more, the values-check's observation 2; the bytes committed):
+     valence_core/n/gcal.py 61bcafc923ab97a762a332858cdd00208fc20b60cc3d4c5e65068dca152d14fc (874 lines)
+     scripts/n_sessions.py  655430f36b15839170170785a28af7d042e4812cec0c808a3512bef0ca0ad027 (3624 lines, draft 5's)
+     exit 0; output 1 line, sha256 af912421488c638ecd1502e05ad4c7a6c04e5554820d110417e5d158a9a4f158, verbatim:
+  545/545 n selftest checks pass
+   Draft 6 adds one check to draft 5's 544, in gcal.py's own self-test and nowhere else: O7 at its bar through the
+   flow, a baseline of exactly 36 coherent turns no PAUSE and one of exactly 35 a PAUSE. It is +23 -0 on draft 5, in
+   one hunk inside _selftest; no production line changes.
+
+2. THE BOX, by arithmetic only: 556, the 545 plus the box's 11 checks more (its 14 HF checks in place of the laptop's
+   three skip lines, as at the BUILD; B1's pin is inside G-CAL-n's one HF-path check, a skip on the laptop and a check
+   on the box, so the difference stays 11); restated at G-CAL-n's launch files, where the box runs it.

@@ -21,6 +21,116 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-CAL-n's delta, committed by path: the seat's three changes to the stage (the answers of
+  2026-11-19, first sitting: the whole turn steered, §1.9; the order +ρ, the baseline, +ρ/2, −ρ, with the early STOP
+  at a +ρ fail, §1.12 (d); a PAUSE on an incoherent baseline, §5 O7), with the wording owed at the BUILD. One blind
+  review on the delta, every finding applied in draft 5; one self-test check more in draft 6. Nothing has run on the
+  box.**
+  - **Headline:**
+    - two paths beside the raws and the entry, each against `89a55c3`'s, the BUILD's (git's numstat; the same bytes at
+      every commit since):
+      - `valence_core/n/gcal.py` `61bcafc9…14fc` (+208 −72; 874 lines), draft 6's;
+      - `scripts/n_sessions.py` `655430f3…d027` (+109 −36; 3624 lines), draft 5's;
+    - the n package's digest moves from `8f785fba…0152` to `e5606ddf…b36c`, both by shell in `package_sha256_of`'s
+      form. Neither is printed by the package's own `hashes` until G-CAL-n's launch files are made;
+    - the self-test: draft 4 (the bytes the review read) 542/542, draft 5 544/544 (the review applied), and draft 6
+      545/545 (one check more, tests only), in the raw
+      [`2026-11-19_n-gcal-delta_selftest.txt`](results/raw/2026-11-19_n-gcal-delta_selftest.txt). On the box, by
+      arithmetic only: 556, the 545 plus the box's 11 checks more (its 14 HF checks in place of the laptop's three skip
+      lines, as at the BUILD), restated at the launch files;
+    - nothing ran on a checkpoint's weights: the three self-test runs were in battery windows the coordinating session
+      granted for their bytes, model-free, under `nice -n 19`;
+    - one blind review of draft 4: 0 BUG; 7 findings (2 RISK, 5 NIT); 5 surviving mutants; 3 box risks; 9
+      observations. Every finding is applied in draft 5; each of the review's mutants meets a check; B1's pin is added;
+      O3, O7 and O9's precondition are applied; and O1, O2 and O5 go to the seat below. Draft 6 adds tests only, for
+      the values-check's observation 2 (below). The raw, with every disposition:
+      [`2026-11-19_n-gcal-delta_review.md`](results/raw/2026-11-19_n-gcal-delta_review.md).
+  - **The three changes:**
+    - **§1.9 (Q9), the whole turn:** `STEER_FROM = 0`. A steered turn is steered from the user turn's first token,
+      position 0 of the rendered ids (the (v) render adds no special token), through the last generated token, in
+      `generate` and in the steering check alike. The record names the first steered position
+      (`constants.first_steered_position`), and CONVENTIONS["steering"] says it.
+    - **§1.12 (d), the order and the early STOP:** the batches are generated in `GENERATION_ORDER`, +ρ, the baseline,
+      +ρ/2, −ρ, and each batch's arrival scores are computed as soon as it is generated. Once +ρ and the baseline
+      exist, +ρ's two hurdles are evaluated, once. A coherence or arrival fail there ends the run as a STOP (exit 2),
+      "G-CAL-n STOP: a hurdle failed at +rho, before any -rho turn (the seat's early STOP, §1.12)", with the record,
+      the turns and the dose map written and no +ρ/2 or −ρ turn generated. Otherwise all four batches are generated
+      and the status is as built. The record keeps n:113's order, records `early_stop`, and its
+      `constants.generation_order` names the order run. The seat's fallback (the order alone) is not needed.
+    - **§5 O7, the incoherent baseline:** a STOP if a hurdle fails at +ρ or −ρ; a PAUSE (exit 3) if one fails at
+      +ρ/2 alone, or if the baseline has fewer than 36 of 48 coherent turns; PASS otherwise. The baseline's
+      `coherence_pass` is recorded, by the one bar every batch uses (`coherent_enough`).
+  - **The wording owed at the BUILD, applied:** the driver's `gcal` docstring (GC1–GC23, and the failed-run folder
+    among its refusals); `gcal.py`'s "on every PASS, STOP and PAUSE"; departure (9) in `gcal.py`'s docstring; and the
+    BUILD values-check's O3, the mid-run failure check's count pinned exactly.
+  - **Declared, for the seat:**
+    - **Departure (10)**, from GC23 (c)'s words, "a raise after every turn is generated": under the seat's order each
+      batch is scored as soon as it is generated, so a non-finite arrival score raises when its batch is scored (+ρ's
+      and the baseline's before +ρ/2 and −ρ are generated), not after every turn. GC23 (b)'s kept turns still cover
+      it: the failed-run folder holds the log of every turn generated. The reviewer reads (10) as sound and as
+      required by §1.12's "as soon as a steered batch and the baseline exist" (its O6).
+    - **The self-test seam:** `compute`'s `figures_of` (default None, `batch_figures` looked up when called). The
+      self-tests force the hurdles' pass through it, since the double's +ρ outcome is not knowable without a run.
+      Production passes none, which the canned compute's keyword check pins. The driver's self-test patches
+      `gcal.batch_figures` around two runs, restores it in `finally` blocks, and asserts the restore after the last.
+    - **Readings, with no code change, for the seat before G-CAL-n's run:**
+      - O1: a STOP takes precedence over O7's PAUSE, by (d)'s words ("a coherence or arrival fail at +ρ ends the run
+        as a STOP"). An incoherent baseline with a +ρ fail exits 2, and a baseline of empty turns, whose t is
+        undefined, does just that. Beside that reading stands §5's reason for O7: an incoherent baseline "points at the
+        prompt, the rendering or TEMP, and neither hurdle can be read against it" (the reviewer's O1);
+      - O2: an incoherent baseline does not end the run early ("otherwise all four batches are generated"), so with
+        +ρ passing, the 48 −ρ turns are generated before the PAUSE. One condition at the early read would change it;
+      - O5: G-CAL-n steers position 0 in every steered turn; the campaign does so only in a session whose first turn
+        is an S turn, and in the SU arms.
+    - **R12, the tile, by the launch order (Code's call, §3):** after G-CAL-n's run, as its own runner and schema
+      delta before G-TIME-n, in one commit with F5's assertions and R13's two runner texts; n-analyzer's fixtures and
+      schema pin follow that commit. The reason: the change moves the package digest, and G-CAL-n's launch files pin
+      the digest they run under. G-CAL-n reads no fidelity monitor, so the tile changes nothing it runs; one runner
+      change after its run keeps this delta to the seat's three changes, and lands the tile, F5 and R13 together, for
+      one review and one fixture move.
+    - **Draft 6, tests only (the values-check's observation 2, closed on the coordinating session's word):** a
+      rewrite of the baseline's call to the shared helper into an inline `>` or `>= 35` passed every check of draft 5,
+      since no flow run had a baseline of exactly 36 coherent turns. Draft 6 adds one check to `gcal.py`'s self-test:
+      flow runs whose baseline has exactly 36 coherent turns (no PAUSE) and exactly 35 (a PAUSE). It is +23 −0 on
+      draft 5, in one hunk inside `_selftest`, and changes no production line. The blind review's scope stays the
+      draft 4 → 5 delta. No second full values-check pass was made over the texts; the claims draft 6 changed were
+      re-checked by tool.
+    - **Wording owed at the driver's next change (its observation 8):** `run_gcal`'s docstring, the `gcal` command's
+      docstring and the exits check's name still say the record and the turns, without the dose map.
+  - **Departures:**
+    - Code: none for this delta's texts. The review report and the values-check report were each extracted from the
+      subagent's hand-back by `jq`, as at the BUILD. The `jq` reads of this session's transcript are declared where
+      their texts are: n-build's close line on `89a55c3`'s entry (committed at `1194982`) and G-VEC's run entry
+      (`355e3a2`);
+    - the reviewer's, as its report states them: one `awk` filter over grep's listing of the driver's top-level
+      definitions (awk is an interpreter, which its brief barred); and one read, with the file-reading tool, of the
+      harness's saved copy of a `git diff --no-index` output too large to print inline, outside the scratch folder and
+      the repository. Its report also lists, apart from its departures, reads beyond its brief's named files: the
+      supplement raw, the HF adapter's file, `guard.py` and `hftiny.py`, and one name-only `ls` of
+      `valence_core/adapters/`, for the seat to class;
+    - the values-checker's, as its report states them, for the seat to class: two `sed` filters over
+      `git diff --no-index` output, printing S/ for the scratch folder's path; one `git log -1 --format='%H %s' HEAD`
+      without item 3's pathspec; and, by its reading not barred, reads beyond its brief's named sources, one
+      `git grep -l -F` and one `git ls-files` with item 3's pathspec, and a redirect to the shell's own output.
+  - **Values-check:** one blind pass over this entry's draft, the review raw's head and §1, and the self-test raw.
+    - 103 items: 82 CONFIRMED, 7 IMPRECISE, 0 FAIL, 14 NOT CHECKABLE; and 9 observations.
+    - The seven IMPRECISE items are applied, each in the checker's words or near them: the box's 11 is a count of
+      checks more, its 14 HF checks in place of three skip lines (items 11, 79 and 103); the brief named the deltas'
+      files by sha256 (62); F4's two texts (74); M4's assertions in each self-test (78); and the self-test raw's count
+      statement (102).
+    - Observations 1, 3, 4, 5, 7 and 9 are applied; 2 is closed by draft 6; 6 is settled by G-VEC's run entry,
+      committed at `355e3a2`; 8 is declared above.
+    - The NOT CHECKABLE items are this session's acts and plans, Code's reasoning on R12's timing, and the checker's
+      own departures.
+    - Every edit was checked by tool.
+    - Raw: [`2026-11-19_n-gcal-delta_valuescheck.md`](results/raw/2026-11-19_n-gcal-delta_valuescheck.md).
+  - **Committed by path:** the two code files; the three raws (the self-test, the review, the values-check); and this
+    entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    **Next:** (v)'s render under the rendering of record, in its own battery window and commit; G-CAL-n's launch
+    files after G-VEC's PASS is committed, which waits for the seat's ruling on G-VEC's STOP (`355e3a2`).
+
 - 2026-11-19 — **n — G-VEC on n's box, from its BUILD's commit `da7bdec`: the smoke held, and the run of record
   STOPPED at the R check, R within 2% of 25.49 at neither candidate index (n §2.3: "reproduced at G-VEC within 2%,
   else STOP"; ADDENDUM-n1 §6.1). G-VEC ran as built (the seat's answers of 2026-11-19, first sitting, §1.1–§1.4; the

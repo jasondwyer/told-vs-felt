@@ -152,22 +152,27 @@ At the n BUILD it wires:
                render-ids-iv: the environment and the tokenizer files checked, ``--out`` a new folder outside the
                repository, ``--pi-date`` the PI's date), extending (i)-(iv)'s manifest. A STOP writes nothing.
   gcal         G-CAL-n (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3; ``valence_core.n.gcal``, its module docstring
-               for what it computes and Code's readings GC1-GC22), on the box: 192 turns generated ids-in, uncached,
-               and their arrival forwards. Refusals first, as G-VEC's (the out folder and its staging folder, the pod,
-               the cuBLAS setting, the stream known answer, the weights, the driver). Then, before the load: the ids
-               of record ((v) present; each of its 48 records the plan's prompt, its text's sha256
-               ``gcal.prompt_parts``', its ids_sha re-derived), the longest prompt with its cap held to the window;
-               G-VEC's outputs of record (gvec.json and the site's directions file HEAD's committed bytes, the record
-               a PASS, the valence row at of_record's sha16); the dose map (a fold into 0 refused, the seat's); the R6
-               bridge. The load and its provenance, its shape and its eos (the (v) render's); ``gcal.compute``; the
-               outputs into data/n/gcal/ -- built in a staging folder and renamed into place -- each file's sha256
-               printed, then the exposure at -rho. ``--smoke N`` (1..4): N prompts at +rho and unsteered, never -rho,
-               into ``--out``, a new folder outside the repository, never of record. Exit 0 on PASS (or a smoke), 2
-               on a STOP (a hurdle failed at +rho or -rho), 3 on a PAUSE (at +rho/2 alone), each with its record and
-               turns, for the seat.
+               for what it computes and Code's readings GC1-GC23, as the seat ruled them, a33252a), on the box: up to
+               192 turns generated ids-in, uncached, in the seat's order (+rho, the baseline, +rho/2, -rho), each
+               batch's arrival forwards as soon as it is generated; a fail at +rho ends the run there, a STOP with no
+               -rho turn. Refusals first, as G-VEC's (the out folder, its staging folder and its failed-run folder, the
+               pod, the cuBLAS setting, the stream known answer, the weights, the driver). Then, before the load: the
+               ids of record ((v) present; each of its 48 records the plan's prompt, its user turn's and text's
+               sha256s and the v block's template ``gcal.prompt_parts``', its ids_sha re-derived), the longest forward
+               held to the generation window; G-VEC's outputs of record (gvec.json and the site's directions file
+               HEAD's committed bytes, the record a PASS, the valence row at of_record's sha16); the dose map (a fold
+               into 0 refused, the seat's); the R6 bridge. The load and its provenance, its shape and its eos (the (v)
+               render's); ``gcal.compute``; the outputs into data/n/gcal/ -- built in a staging folder, each turn
+               logged there as it is generated, and renamed into place; on a failure the staging folder is kept as the
+               failed-run folder -- each file's sha256 printed, then the exposure at -rho. ``--smoke N`` (1..4): N
+               prompts at +rho and unsteered, never -rho, into ``--out``, a new folder outside the repository, never of
+               record. Exit 0 on PASS (or a smoke), 2 on a STOP (a hurdle failed at +rho or -rho; at +rho, the early
+               STOP), 3 on a PAUSE (at +rho/2 alone, or an incoherent baseline), each with its record and turns, for
+               the seat.
   gcal-decode  A-n1 §1.4's one comparison, on the laptop in G-DATA's environment: ``--gcal-dir`` (the record and turns
                copied back from the box) and ``--tokenizer-dir``; each turn's emitted ids decoded here against the
-               box's decode; the counts and every difference printed.
+               box's decode; both files' sha256s, the counts, and every difference printed, with its two decoded texts
+               and its flags under both decodes.
 
 Stages G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
 """
@@ -2823,10 +2828,16 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
         f"{res['exposure_minus_rho']['tokens']} tokens, {res['exposure_minus_rho']['draws']} draws")
     status = res["status"]
     if status == "STOP":
-        say("G-CAL-n STOP: a hurdle failed at +rho or -rho (n:113); the record and the turns are written; the seat rules")
+        if res.get("early_stop"):
+            say("G-CAL-n STOP: a hurdle failed at +rho, before any -rho turn (the seat's early STOP, §1.12); the "
+                "record, the turns and the dose map are written; the seat rules")
+        else:
+            say("G-CAL-n STOP: a hurdle failed at -rho (n:113); the record, the turns and the dose map are written; "
+                "the seat rules")
         return 2
     if status == "PAUSE":
-        say("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone (GC14); the record and the turns are written; the seat rules")
+        say("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone (GC14), or the baseline is incoherent (O7); the record, "
+            "the turns and the dose map are written; the seat rules")
         return 3
     say(f"G-CAL-n {status}" + (", never of record" if status == "SMOKE" else "; the dose map is pinnable"))
     return 0
@@ -2951,9 +2962,10 @@ def cmd_gcal_decode(gcal_dir: str, tokenizer_dir: str) -> int:
 
 def _gcal_selftest(chk, tmp: Path) -> None:
     """G-CAL-n's command, model-free: its flow over the numpy double behind every seam (a run of record into a folder
-    under tmp; its PASS, STOP and PAUSE exits through a stand-in compute; a smoke; a failure mid-run), its refusals
-    before and after the load, the (v) and G-VEC input checks, the decode comparison, render-ids-v's refusals and
-    main()'s dispatch. It writes only under tmp."""
+    under tmp; its PASS, STOP and PAUSE exits through a stand-in compute; a smoke; a failure at the first forward and
+    one mid-run; a non-finite arrival score; the early STOP), its refusals before and after the load, the (v) and
+    G-VEC input checks, the decode comparison, render-ids-v's refusals and main()'s dispatch. It writes only under
+    tmp."""
     import contextlib
     import hashlib
     import io
@@ -3057,7 +3069,19 @@ def _gcal_selftest(chk, tmp: Path) -> None:
     try:
         os.environ["CUBLAS_WORKSPACE_CONFIG"] = CHARACTERIZED_PROVENANCE["cublas_workspace_config"]
         env1, lines1 = env_for("run")
-        rc1 = run_gcal(env1)
+        real_bf = gcal.batch_figures
+
+        def forced_bf(pass_):          # the hurdles' figures as computed, their pass forced: the self-test's seam only
+            def f(t_, b_, s_):
+                out = real_bf(t_, b_, s_)
+                out["pass"] = bool(pass_)
+                return out
+            return f
+        gcal.batch_figures = forced_bf(True)   # the double's +rho outcome is not the test's: every batch runs
+        try:
+            rc1 = run_gcal(env1)
+        finally:
+            gcal.batch_figures = real_bf
         rec1 = json.loads((env1.out / gcal.OUT_RECORD).read_text(encoding="utf-8"))
         names1 = sorted(p.name for p in env1.out.iterdir())
         turns1 = [json.loads(x) for x in (env1.out / gcal.OUT_TURNS).read_text(encoding="utf-8").splitlines()]
@@ -3066,7 +3090,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
             "staging folder gone, the exit its status's (0 PASS, 2 STOP, 3 PAUSE)",
             names1 == sorted([gcal.OUT_RECORD, gcal.OUT_TURNS, gcal.OUT_DOSE_MAP]) and rc1 == want_rc
             and not (env1.out.parent / ".gcal.staging").exists() and not (env1.out.parent / ".gcal.failed").exists()
-            and len(turns1) == 192
+            and len(turns1) == 192 and rec1["early_stop"] is False
             and rec1["dose_map"] == gcal.dose_map(R_t, Rl_t) and rec1["pinnable"] == (rec1["status"] == "PASS"),
             (rc1, rec1.get("status"), names1))
         pv = rec1["provenance"]
@@ -3097,8 +3121,11 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         g = globals()
         real_compute = gcal.compute
 
+        kw_seen: list = []
+
         def canned(status):
             def fake(*a, **k):
+                kw_seen.append(sorted(k))
                 return {"status": status, "turns": {"+rho": [], "-rho": [], "+rho/2": [], "baseline": []},
                         "figures": {}, "exposure_minus_rho": {"turns": 0, "tokens": 0, "draws": 0},
                         "batches": ["+rho", "-rho", "+rho/2", "baseline"]}
@@ -3115,9 +3142,10 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         chk("driver: G-CAL-n's exits: PASS 0 (the dose map pinnable), a STOP 2 and a PAUSE 3, each with its record "
             "and turns written, for the seat", rcs == {"PASS": 0, "STOP": 2, "PAUSE": 3}
             and ends["PASS"] == ("G-CAL-n PASS; the dose map is pinnable", True)
-            and ends["STOP"][0].startswith("G-CAL-n STOP: a hurdle failed at +rho or -rho") and ends["STOP"][1] is False
+            and ends["STOP"][0].startswith("G-CAL-n STOP: a hurdle failed at -rho (n:113)") and ends["STOP"][1] is False
             and ends["PAUSE"][0].startswith("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone")
-            and ends["PAUSE"][1] is False, (rcs, ends))
+            and ends["PAUSE"][1] is False
+            and len(kw_seen) == 3 and all("figures_of" not in k for k in kw_seen), (rcs, ends, kw_seen))
         env3, l3 = env_for("smoke", driver=lambda: (b"drv-new", b"drv"))
         rc3 = run_gcal(env3, out=tmp / "smoke-out", smoke=2)
         rec3 = json.loads((tmp / "smoke-out" / gcal.OUT_RECORD).read_text())
@@ -3126,6 +3154,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
             "first prompts, never -rho, its status SMOKE, never of record",
             rc3 == 0 and rec3["status"] == "SMOKE" and rec3["batches"] == ["+rho", "baseline"] and len(t3) == 4
             and rec3["exposure_minus_rho"] == {"turns": 0, "tokens": 0, "draws": 0} and not env3.out.exists()
+            and rec3["early_stop"] is False and not any("early STOP" in x for x in l3)
             and any(x.startswith("SMOKE:") for x in l3)
             and any("a smoke's, not HEAD's committed bytes" in x for x in l3), (rc3, rec3.get("status")))
 
@@ -3155,20 +3184,36 @@ def _gcal_selftest(chk, tmp: Path) -> None:
                 return be.prefill(ii, inj, ()).logits_last
             return f
         env5, _l5 = env_for("midfail", step_logits=flaky)
-        try:
+        try:                           # the 61st forward fails before the early read, which needs 98 at least
             run_gcal(env5)
             failed5 = False
         except RuntimeError:
             failed5 = True
         log5 = env5.out.parent / ".gcal.failed" / gcal.OUT_PARTIAL
         logged = [json.loads(x) for x in log5.read_text(encoding="utf-8").splitlines()] if log5.is_file() else []
-        own = {(r["batch"], r["index"]): r["ids"] for r in turns1}
+        own = {(r["batch"], r["index"]): r for r in turns1}
         seq5 = [(b, i) for b in gcal.GENERATION_ORDER for i in range(gcal.N_TURNS)]
+        k5, calls5, past5 = 0, 0, False   # the turns whose every forward precedes the 61st, in the order of generation
+        for b in gcal.GENERATION_ORDER:
+            if dict(gcal.BATCHES)[b] > 0:
+                calls5 += 2                # the steering check's two forwards
+                if calls5 > 60:
+                    break
+            for i in range(gcal.N_TURNS):
+                r = own[(b, i)]
+                calls5 += int(r["n_tok"]) + (1 if r["stop"] == "eos" else 0)
+                if calls5 > 60:
+                    past5 = True
+                    break
+                k5 += 1
+            if past5:
+                break
         chk("driver: GC23 (a)-(b): a failure mid-run keeps, in the failed-run folder's log, every turn generated "
-            "before it, in the order of generation, each the run of record's own turn with its arrival not yet scored",
-            failed5 and not env5.out.exists() and len(logged) >= 1
-            and [(r["batch"], r["index"]) for r in logged] == seq5[:len(logged)]
-            and all(r["ids"] == own[(r["batch"], r["index"])] and r["arrival"] is None for r in logged), len(logged))
+            "before it and no other, in the order of generation, each the run of record's own turn with its arrival "
+            "not yet scored", failed5 and not env5.out.exists() and k5 >= 1 and len(logged) == k5
+            and [(r["batch"], r["index"]) for r in logged] == seq5[:k5]
+            and all(r["ids"] == own[(r["batch"], r["index"])]["ids"] and r["arrival"] is None for r in logged),
+            (len(logged), k5))
         env6, _l6 = env_for("nanarr", forward=lambda a: (lambda ii, layers: {int(layers[0]): np.full((len(ii), 8),
                                                                                                     np.nan)}))
         try:
@@ -3177,9 +3222,34 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         except ValueError:
             failed6 = True
         log6 = env6.out.parent / ".gcal.failed" / gcal.OUT_PARTIAL
-        n6 = len(log6.read_text(encoding="utf-8").splitlines()) if log6.is_file() else -1
-        chk("driver: GC23 (c): a non-finite arrival score is a failure, after every turn is generated; the failed-run "
-            "folder's log holds all 192 turns", failed6 and not env6.out.exists() and n6 == 192, n6)
+        rows6 = [json.loads(x) for x in log6.read_text(encoding="utf-8").splitlines()] if log6.is_file() else []
+        chk("driver: GC23 (c), under the seat's order: a non-finite arrival score is a failure when its batch is "
+            "scored, here +rho's after its 48 turns and before any other batch; the failed-run folder's log holds "
+            "those 48", failed6 and not env6.out.exists() and len(rows6) == 48
+            and all(r["batch"] == "+rho" for r in rows6), len(rows6))
+        alph7: list = []
+
+        def recording(_a):             # the double's step, recording every alpha it is handed
+            def f(ii, inj):
+                alph7.extend(round(i.alpha, 12) for i in inj)
+                return be.prefill(ii, inj, ()).logits_last
+            return f
+        env7, l7 = env_for("earlystop", step_logits=recording)
+        gcal.batch_figures = forced_bf(False)
+        try:
+            rc7 = run_gcal(env7)
+        finally:
+            gcal.batch_figures = real_bf
+        rec7 = json.loads((env7.out / gcal.OUT_RECORD).read_text(encoding="utf-8"))
+        t7 = (env7.out / gcal.OUT_TURNS).read_text(encoding="utf-8").splitlines()
+        chk("driver: the seat's early STOP (§1.12): a fail at +rho ends the run as a STOP (exit 2) with the record, "
+            "the turns and the dose map written, +rho and the baseline alone, and no step is ever handed a -rho or "
+            "+rho/2 injection; the hurdles' seam is restored after the last patch",
+            rc7 == 2 and rec7["status"] == "STOP" and rec7["early_stop"] is True and gcal.batch_figures is real_bf
+            and rec7["batches"] == ["+rho", "baseline"] and len(t7) == 96 and (env7.out / gcal.OUT_DOSE_MAP).is_file()
+            and rec7["exposure_minus_rho"]["turns"] == 0 and len(set(alph7)) == 1 and min(alph7) > 0
+            and any(x.startswith("G-CAL-n STOP: a hurdle failed at +rho, before any -rho turn") for x in l7),
+            (rc7, rec7.get("status"), sorted(set(alph7))))
         # refusals, each before the load
         n_made = len(made)
         pre_out = tmp / "exists" / "gcal"
@@ -3319,6 +3389,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         and sorted(same["coherent_by_batch"]) == sorted(b for b, _d in gcal.BATCHES)
         and all(c["box"] == c["laptop"] for c in same["coherent_by_batch"].values())
         and off["different"] >= 1 and all(set(x) == keys_d for x in off["differences"])
+        and turns1[0]["n_tok"] > 0
         and flip["flags_differ"] >= 1 and all(x["laptop_flags"]["length_collapse"] for x in flip["differences"])
         and refused(lambda: gcal_decode_compare(rb_b, tb + b"\n", dec_of(None)))
         and refused(lambda: gcal_decode_compare(other, tb, dec_of(None))),
@@ -3432,15 +3503,17 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         inj_t = gcal.injection_for(1.0, v_t, 1, 3.0, gvec.injection_sha16(v_t))
         st_t, ids_h = _hf_step_logits(a_t), [3, 4, 5, 6, 7, 8]
         lu_t = np.asarray(st_t(ids_h, ()), dtype=np.float64)
-        ls_t = np.asarray(st_t(ids_h, gcal.placed(inj_t, 3)), dtype=np.float64)
+        ls_t = np.asarray(st_t(ids_h, gcal.placed(inj_t, gcal.STEER_FROM)), dtype=np.float64)
+        ls1_t = np.asarray(st_t(ids_h, gcal.placed(inj_t, 1)), dtype=np.float64)
         ref_t = np.asarray(a_t.forward(ids_h, capture_layers=()).logits, dtype=np.float64)
         turn_t = gcal.generate(st_t, ids_h, 3, inj_t, 5, eos_id=127, cap=4)
         cap_t = _hf_forward(a_t)(turn_t["ids"] or [3], (1,))
         chk("driver: on the HF path (hftiny, a tiny OLMo-2 config): G-CAL-n's step is the adapter's own last-position "
-            "logits; an injection placed from gen_start moves them and passes the steering check; a turn generates "
-            "ids-in under it; its capture is one row per id; the decode runs through a stand-in tokenizer",
+            "logits; an injection placed from STEER_FROM (the whole turn) moves them, differs from one placed from "
+            "position 1 (position 0 is steered), and passes the steering check; a turn generates ids-in under it; its "
+            "capture is one row per id; the decode runs through a stand-in tokenizer",
             lu_t.shape == (128,) and float(np.max(np.abs(lu_t - ref_t))) <= 1e-5
-            and float(np.max(np.abs(ls_t - lu_t))) > 1e-6
+            and float(np.max(np.abs(ls_t - lu_t))) > 1e-6 and float(np.max(np.abs(ls_t - ls1_t))) > 1e-6
             and gcal.steering_check(st_t, {"ids": ids_h, "gen_start": 3}, inj_t) > 0.0
             and 0 <= turn_t["n_tok"] <= 4 and all(0 <= i < 128 for i in turn_t["ids"])
             and np.asarray(cap_t[1]).shape == (max(1, turn_t["n_tok"]), w_t)
