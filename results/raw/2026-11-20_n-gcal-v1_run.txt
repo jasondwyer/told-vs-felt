@@ -1,0 +1,180 @@
+n step 8 -- G-CAL-n on n's box, pod emw1e4embiwe9b (H100 SXM): the smoke and then the run of record, by gcal_v1.sh
+from ADDENDUM-n3's commit 0744136, in a fresh sparse copy, as run by the pod session. The PI's routing of the seat's
+third sitting, PI date 2026-11-19, "Route as given" (its block committed at 0744136 as
+results/raw/2026-11-19_third-sitting_pi-routing.md, d593e1f8…5024), item N.3 [go]: "G-CAL-n's launch files on G-VEC's
+PASS entry and ADDENDUM-n3's commit, with B3's time at 240 turns; the smoke (no gate turn); the run of record; the
+gate's line in the entry; the record, turns file and dose map to the laptop [go]"; item N.5: "The box: up through
+G-CAL-n [stays up]". The coordinating session's relay: "G-CAL-n: LAUNCH CLEARED". No pod address or port in this
+file. The run's own output is gcal_v1_out.txt (all of stdout and stderr, unedited); its exit file is gcal_v1.exit,
+which holds "exit N". The launch was announced to the coordinating session before it started, naming gcal_v1.sh and its
+sha256, the box names and the command.
+
+RESULT: gcal v1 PASS, exit 0. The smoke held. The run of record generated every batch in the seat's order (+rho, the
+baseline, +rho/2, the gate's reward_f020, -rho), 48 turns each, 240 in all, with no early line printed; its four batch
+lines, the exposure line, the gate's line in the lock's form and the end line, as printed:
+  "batch +rho: coherent 48 of 48 (pass True); arrival t 17.07489083913163 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0"
+  "batch -rho: coherent 48 of 48 (pass True); arrival t -21.88317331747181 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0"
+  "batch +rho/2: coherent 48 of 48 (pass True); arrival t 6.8330847117275315 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0"
+  "batch reward_f020 (the reward axis's 5(d) gate at f = 0.20, coherence alone): coherent 48 of 48 (pass True); stops eos 0, cap 48, empty 0, one id 0; neither a STOP nor a PAUSE (the second sitting, §2.5)"
+  "exposure at -rho (PIN-n-23): 48 turns, 3840 tokens, 3840 draws"
+  "reward axis 5(d) gate, coherence: 48 of 48, PASS"
+  "G-CAL-n PASS; the dose map is pinnable"
+It wrote data/n/gcal/'s three files: gcal.json 4c92f228…bb8f, gcal_turns.jsonl d2450096…76d9 and dose_map.json
+d4a73b54…efb3. The script's checks of a PASS all held: the prints for the full path, the three outputs at their printed
+sha256s, the record against the turns file, the gate's line, the dose map and G-VEC's record, its identity, and the
+copy's changed set data/n/gcal/ alone. The checks are of form and consistency; the hurdles' values are the seat's to
+read (rule 25). Nothing is re-run.
+
+1. FILES. From n-build's scratchpad/step4b/gcal2/launch/, re-hashed on the laptop before shipping and on the box
+   after:
+     gcal_v1.sh                    f326190190d6483fc6599aa5d85bc573b5fd7b88aafccf70fc2b884110559d66 (388 lines, read in
+                                   full; COMMIT 07441363e6b650dcd0964ef2536244b9b4b75a79; its DRIVER_SHA256 equal to
+                                   scripts/n_sessions.py in the copy at 0744136, 593a140d…a549)
+     gcal_manifest_v1.txt          f958d83072409809813bd07d81231ef674a55f56808feff24bb36ae0310071d6 (63 lines)
+     gcal_hashes_v1.txt            8d9307b0cb419e1ddb589b910c79898448516ff350644775e496382aeaaf212a (13 lines)
+   The launch note, gcal_launch_note_v1.md (a3463cfd…d0ae, 180 lines), was read in full and stays on the laptop. All
+   four files equal the values the coordinating session relayed with the clearance (shasum -c, 4 of 4 OK). The three box
+   files went to /workspace/nsite/gcal-v1, a new folder, by tar over ssh, with no Mac metadata on the laptop side and no
+   ownership and no '._*' on the box side. The folder holds exactly its three names, none dotted. Every box name was
+   checked first by an existence test alone; the note's proposed names were used, and none collided.
+
+2. THE SYNC, as G-VEC v2's. A bundle of bc50244..main was made on the laptop, with main at 0744136 before and after it
+   was made (its head 0744136 refs/heads/main; it verified on the laptop; sha256 e8e3052f…2593, 393,283 B). It was
+   shipped with the pod session's sync and copy scripts to /workspace/nsite/sync12 (new) and fetched into the box repo
+   under a new side ref, refs/bundles/n-site12 -> 0744136, 2 commits after bc50244 (e3b48ed, G-VEC's PASS entry, and
+   0744136); the prerequisite was in the box repo under refs/bundles/n-site11. The range's contents were transported,
+   not read (the fourth sitting's s7). There was no fast-forward: the box checkout stayed at ad856f0 and clean (the bare
+   form, git status --porcelain).
+
+3. THE COPY. /workspace/nsite/copy-gcal-0744136 is G-CAL-n's fresh copy, new:
+   - a local clone of the box checkout with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - detached at 0744136 (held through refs/bundles/n-site12), clean three ways (the bare form; with --ignored; and in
+     the script's own step-0 form: optional locks off, the global excludes file off, --untracked-files=normal
+     --ignored), with nothing extracted over it.
+   The globs data/*/ckpt and data/*/reports matched nothing, each compared with its literal form. None of data/n/gcal,
+   data/n/.gcal.staging and data/n/.gcal.failed was present. data/n/gvec held exactly the six names the commit's tree
+   holds there, gvec.json and directions_L32.npy at the script's pins (03467e75…53b0 and 33cc0ef6…c0c5), and data/n/ids
+   exactly the commit's 7 names; data/n/bk, valence_core/n/gcal.py and the characterization's raw and artifact were
+   present. The driver hashed to 593a140d…a549, the script's DRIVER_SHA256. /workspace had 153G available of 466G before
+   the clone and 152G after. G-CAL-n copies nothing in. G-VEC's two copies, copy-gvec-da7bdec and copy-gvec-616e940,
+   were not touched. The note's step 3: command -v awk sed on the box gave /usr/bin/awk and /usr/bin/sed, exit 0.
+
+4. RUN. Before the launch (launch_gcal1.sh, e4329784…f345):
+   - no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at 0 MiB of 81559 MiB;
+   - the three files on the box at the relayed hashes; awk and sed present; the copy at 0744136, clean three ways, and
+     holding none of data/n/gcal, data/n/.gcal.staging and data/n/.gcal.failed;
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+   The command ran under nohup in the background. The relay gave its shape ("bash <folder>/gcal_v1.sh <copy> <python,
+   absolute> <work>", the environment as for G-VEC's runs, the out and exit files in a new out folder); it is G-VEC v2's
+   command with G-CAL-n's names, held in a quoted heredoc and checked equal by cmp to the pod session's held copy, its
+   sha256 98838dce…64b9 at the laptop and at the box:
+     ( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/gcal-v1/gcal_v1.sh
+          /workspace/nsite/copy-gcal-0744136 /workspace/venv/bin/python /workspace/nsite/work-gcal-v1 )
+          > /workspace/nsite/out-gcal-v1/gcal_v1_out.txt 2>&1; echo "exit $?" > /workspace/nsite/out-gcal-v1/gcal_v1.exit
+   The out folder /workspace/nsite/out-gcal-v1 was made just before; the work folder did not exist, and the script made
+   it. The wrapper's PID was 10656, alive on a kill -0 check after the start, and the end-wait was on the PID alone,
+   with no stat, listing, tail, Monitor or read of the run's outputs until it had ended.
+
+5. OUTCOMES (the pod session's reading; n-build reads the whole output, 401 lines):
+   step 0, the copy                     held: HEAD 0744136; "the copy: changed set none; none of data/n/gcal,
+                                        data/n/.gcal.staging and data/n/.gcal.failed present"
+   step 1, the manifest                 63 of 63 OK
+   step 2, the self-test                "  581/581 n selftest checks pass", selftest exit=0, "selftest: 581/581, as
+                                        expected". Two library warnings came before it, as at G-VEC's runs. No note
+                                        line about the self-test's temporary folder was printed, so the script's rmdir
+                                        of it succeeded.
+   step 3, the hashes                   hashes exit=0; "hashes: equal to the laptop's"
+   step 4, the smoke (never of record)  smoke exit=0, after one load. Its SMOKE, STAGE, WEIGHTS, DRIVER, inputs, dose map
+                                        and backend lines each appeared once; +rho and the baseline on the first two
+                                        prompts, no -rho and no gate turn. Its backend line, its steering check, its
+                                        batch line, its exposure line and its end line, as printed:
+      "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 29037 ms; eos 100257"
+      "steering check +rho: the first prompt's first-step logits, steered and unsteered, differ by up to 10.60546875"
+      "batch +rho: coherent 2 of 2 (pass False); arrival t 4.031734969296614 over 2 against 2 (pass True); stops eos 0, cap 2, empty 0, one id 0"
+      "exposure at -rho (PIN-n-23): 0 turns, 0 tokens, 0 draws"
+      "G-CAL-n SMOKE, never of record"
+                                        The script's smoke checks, as printed:
+      "smoke prints: SMOKE 1, STAGE 1, DRIVER 1, inputs 1, dose map 1, steering checks 1 (+rho 1), turns +rho 2 and baseline 2 of 4, batch lines 1, file lines 3, exposure 1, gate lines 0, end 1"
+      "the record: status SMOKE; batches ['+rho', 'baseline']; early_stop False, early_pause False; turns 4; exposure {'draws': 0, 'tokens': 0, 'turns': 0}"
+      "the smoke's identity: equal to step 3's"
+      "the copy after the smoke: unchanged"
+                                        Its stderr, smoke.err, held transformers' "Loading weights" bar alone, which the
+                                        script printed after the smoke. The smoke's three files stay on the box and are
+                                        copied back (section 7).
+   step 5, the run of record            after a second load: the STAGE, WEIGHTS, DRIVER, inputs, dose map and backend
+                                        lines; three steering checks; 240 turn lines, 48 per batch in the seat's order;
+                                        the four batch lines; three file lines; the exposure line; the gate's line; the
+                                        end line; run exit=0. Its backend line, its dose map line and its three steering
+                                        checks, as printed:
+      "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 29787 ms; eos 100257"
+      "dose map: d_eq 0.2869170055735837, d_20 0.5738340111471674 (rho 0.3); points +1 1.0, +1/2 0.5, +d_20 0.5738340111471674, +d_eq 0.2869170055735837, -1 -1.0, f0.10 0.1, f0.20 0.2"
+      "steering check +rho: the first prompt's first-step logits, steered and unsteered, differ by up to 10.60546875"
+      "steering check +rho/2: the first prompt's first-step logits, steered and unsteered, differ by up to 3.65625"
+      "steering check reward_f020: the first prompt's first-step logits, steered and unsteered, differ by up to 8.109375"
+                                        Descriptive, counted by tool: of the run's 240 turn lines, 240 end 'n_tok 80, stop cap, coherent True'; of the smoke's 4, 4.
+                                        Its stderr, run.err, held the "Loading weights" bar alone, printed after the run.
+   step 6, the outputs                  as printed:
+      "the end: PASS; end lines PASS 1, early STOP 0, STOP at -rho 0, early PAUSE 0, PAUSE at +rho/2 0; path full"
+      "prints: STAGE 1, DRIVER 1, inputs 1, dose map 1, backend 1, steering checks 3, turns 240 (+rho 48, baseline 48, +rho/2 48, reward_f020 48, -rho 48), batch lines 4 (valence 3, gate 1), early lines 0 (STOP 0, PAUSE 0), file lines 3, exposure 1 (zero 0), gate lines 1 (in the lock's form 1), FAILED lines 0, smoke lines 0"
+      "prints as wanted for PASS (full): yes"
+      "outputs: 3 of 3 named files present, 3 of them at their printed sha256; 3 entries in data/n/gcal"
+      "the record: status PASS; batches ['+rho', '-rho', '+rho/2', 'baseline', 'reward_f020']; early_stop False, early_pause False; turns 240; exposure {'draws': 3840, 'tokens': 3840, 'turns': 48}"
+      "the record's identity: equal to step 3's"
+      "the record: sha256 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f"
+      "the copy's changed set: data/n/gcal/ alone"
+   last line                            as printed:
+  "gcal v1 PASS: copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, smoke exit=0; checks (0 = held, 9 = not run): smoke record 0, smoke identity 0, copy after the smoke 0; run exit=0; prints 0, outputs 0, record 0, identity 0, changed set 0"
+
+6. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU at 0 MiB. The exit
+   file reads "exit 0"; the output has 401 lines, its last line the PASS line above. The pod session took no
+   look inside the copy, which now holds data/n/gcal/ with its three files, or inside the work folder, beyond the files
+   copied back by name and the existence tests of the two failed-run folders.
+
+7. COPIED BACK by copyback12.sh (b17eba95…81fe), by explicit name, each sha256 equal at the box, in staging and at the
+   destination, with no folder listed; each destination new, made with mkdir -p:
+   - to n-build's step4b/gcal2/box/out/: gcal_v1_out.txt and gcal_v1.exit (out-gcal-v1); selftest.txt, hashes.txt,
+     smoke.txt, smoke.err, smoke-identity.txt, run.txt, run.err and run-identity.txt (the work folder), all ten
+     present; and this file, copied last, by a second call, after every other file was copied and verified;
+   - to step4b/gcal2/box/smoke/: the three files smoke.txt's file lines name, each at the sha256 its line prints;
+   - to step4b/gcal2/box/rec/data/n/gcal/: the three files run.txt's file lines name, each at the sha256 its line
+     prints.
+   Neither failed-run folder existed (<work>/.smoke.failed and the copy's data/n/.gcal.failed, each by an existence
+   test), so nothing went to failed/ or failed-smoke/, and neither was made.
+   Their sha256s:
+     95004ba61a2da80c49d4aa882bd6e415dba213aa9fb61fb7327205f2c196a9f4  out/gcal_v1_out.txt
+     28d3b9e880a77975493dc7e359144c0295a4f694cfe0af4f928c22307bc5c320  out/gcal_v1.exit
+     4dbec3c53f0323e1e9bc08781b5fd7f1f1f16dcde22c29a1e007a3e4ed3f5cd7  out/selftest.txt
+     8d9307b0cb419e1ddb589b910c79898448516ff350644775e496382aeaaf212a  out/hashes.txt
+     fd132370b3cccc1d9fb56c267dc0167d2121b014f76cc7609373cb7c9a967db1  out/smoke.txt
+     813d6966c153229c352ed21338ff70a40989b0ef44bdc8ca3b1e1644415d21ba  out/smoke.err
+     8d9307b0cb419e1ddb589b910c79898448516ff350644775e496382aeaaf212a  out/smoke-identity.txt
+     71d814c437676b4babb6b6929d03728448c9a56965557bc4811e0545694d9fb5  out/run.txt
+     9911893566e2a2fec861217639c069fa368b06625b38e51ee7f0e90f171ce513  out/run.err
+     8d9307b0cb419e1ddb589b910c79898448516ff350644775e496382aeaaf212a  out/run-identity.txt
+     d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3  smoke/dose_map.json
+     74a2d8f8ba52daa3c42e305962e0c079a6ce5e1d72b6f6438e8823926125616e  smoke/gcal.json
+     f50a05359e3ff9b3296b4081c36ad526c57d448a7b2067f9ce9adf8d69cb8749  smoke/gcal_turns.jsonl
+     d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3  rec/data/n/gcal/dose_map.json
+     4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f  rec/data/n/gcal/gcal.json
+     d245009633123c792bd9bc22599f0744bc03791c5ef9a6cc6cb0835aad4876d9  rec/data/n/gcal/gcal_turns.jsonl
+   hashes.txt, smoke-identity.txt and run-identity.txt are each byte-equal to gcal_hashes_v1.txt (8d9307b0…212a). The
+   smoke's and the run's dose_map.json are byte-equal (d4a73b54…efb3).
+   The address and port were counted on every file copied back, all text, counts only (the seat's s6.3): first on the
+   box, before anything left it, by count_box.sh (85591293…f61a; the two values sent on its standard input, never in an
+   argv, and counted by bash builtins), and again in the pod session's staging on the laptop, before anything was
+   copied on to n-build's folders: 0 in each, both times. This file was counted on the laptop alone, where it was
+   written. At G-VEC's two runs the count ran in staging alone; this time it ran on the box first, as the relay asks
+   ("before they leave the box"). copyback12.sh and count_box.sh were first run against a stand-in box on the laptop
+   (bash only, nothing real touched): 21 of 21 cases as expected.
+
+8. LEFT ON THE BOX, nothing removed; cleanup waits for the coordinating session's relay of the PI's word:
+   - /workspace/nsite/gcal-v1 (n-build's three files);
+   - /workspace/nsite/copy-gcal-0744136 (the copy, with data/n/gcal/'s three files);
+   - /workspace/nsite/work-gcal-v1 (the work files and the smoke's three files) and /workspace/nsite/out-gcal-v1;
+   - /workspace/nsite/sync12 (the pod session's sync and copy scripts and the bundle);
+   - the box repo's side ref refs/bundles/n-site12, with the box checkout unmoved at ad856f0;
+   - every earlier folder as before, G-VEC's among them.
+   The box is up and idle. The routing's item N.5 keeps it up through G-CAL-n ("The box: up through G-CAL-n [stays
+   up]."); what follows is the PI's word.

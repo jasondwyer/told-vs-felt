@@ -1,0 +1,274 @@
+{
+ "batches": [
+  "+rho",
+  "-rho",
+  "+rho/2",
+  "baseline",
+  "reward_f020"
+ ],
+ "constants": {
+  "arrival_from": 1,
+  "cap": 80,
+  "coherent_min": 36,
+  "diversity_min": 0.25,
+  "first_steered_position": 0,
+  "gate": {
+   "batch": "reward_f020",
+   "direction": "span_reward",
+   "dose": "f0.20",
+   "f": 0.2
+  },
+  "generation_order": [
+   "+rho",
+   "baseline",
+   "+rho/2",
+   "reward_f020",
+   "-rho"
+  ],
+  "generation_window": 4096,
+  "min_words": 4,
+  "n_turns": 48,
+  "t_bar": 2.0,
+  "temp": 0.7,
+  "trigram_repeat_max": 0.5
+ },
+ "conventions": {
+  "arrival": "the emitted ids alone, unsteered, at the site; the mean projection on the unit valence row over that forward's positions 1..n, the all-positions mean beside (arrival_all, descriptive), no score under two emitted ids; Welch's t against the baseline, |t| >= 2 with the pole's sign, at every valence dose generated (after an early STOP or PAUSE, +rho alone); the shift beside it, descriptive (GC12; the second sitting, \u00a71.4 (i))",
+  "coherence": "on the box's decode; words whitespace-split, outer P* stripped, lower-cased; length collapse < 4 words; repetition loop 1 - distinct/total trigrams > 0.5; low diversity distinct/total words < 5/20; a batch passes at >= 36 of 48 (GC11)",
+  "gate": "the reward axis's 5(d) gate at f = 0.20, its coherence component: reward_f020, the 48 prompts and seeds, steered on the whole turn by span_reward's unit row of record at the site at f0.20 (f of R_ell, schema.DOSES' sign), after +rho/2 and before -rho; coherence alone against the one bar, no arrival; a fail neither a STOP nor a PAUSE (the second sitting, \u00a72.5)",
+  "generation": "ids-in, uncached, one forward per step; TEMP 0.7; inverse-CDF draw from the turn's numpy generator seeded by keys.gcal_seed(i); stop at the eos or 80 new tokens; no newline stop, no ban set; emitted ids exclude the stop token; a steering check before each batch at a positive dose; the generation window 4096; the batches generated in the order +rho, baseline, +rho/2, reward_f020, -rho, +rho's hurdles read once the baseline exists, a fail there an early STOP and otherwise a baseline below 36 of 48 coherent an early PAUSE, each with no further turn (GC3, GC4, GC7, GC9, GC10; the seat's \u00a71.12; the second sitting's O2 and \u00a72.5)",
+  "persistence": "each turn appended to the staging folder's log as it is generated, the log removed on a clean end; on a failure the staging folder kept as the failed-run folder, never removed (GC23 (a)-(c))",
+  "prompts": "BK's zone prompt \"You are now in {zone}. Write a few sentences about your present experience here.\" over the 12 labels of record x 4; prompt i: label i mod 12, replicate i // 12; the same prompt and seed in every batch (GC5, GC13)",
+  "rendering": "gcal.prompt_parts, the rendering of record: the user turn \"<|user|>\\nYou are now in {zone}. Write a few sentences about your present experience here.\\n\" and the generation prompt \"<|assistant|>\\n\"; no system turn; no special token added; the stop the (v) render's eos_id (GC5, GC6, GC7)",
+  "status": "STOP if either hurdle fails at +rho or -rho (at +rho, the early STOP); PAUSE if only +rho/2 fails, or if the baseline has fewer than 36 of 48 coherent (at the early read, the early PAUSE, after a STOP's check); PASS otherwise; the gate's batch enters no status (GC14; the seat's O7 and O2)",
+  "steering": "d\u00b7\u03c1\u00b7R\u00b7v at the site on every position from the user turn's first token (position 0) through the last generated token (the seat's Q9, \u00a71.9)"
+ },
+ "dose_map": {
+  "R": 25.54500811131038,
+  "R_ell": 21.98789170395024,
+  "d_20": 0.5738340111471674,
+  "d_eq": 0.2869170055735837,
+  "points": [
+   {
+    "label": "+1",
+    "merged": [],
+    "value": 1.0
+   },
+   {
+    "label": "+1/2",
+    "merged": [],
+    "value": 0.5
+   },
+   {
+    "label": "+d_20",
+    "merged": [],
+    "value": 0.5738340111471674
+   },
+   {
+    "label": "+d_eq",
+    "merged": [],
+    "value": 0.2869170055735837
+   },
+   {
+    "label": "-1",
+    "merged": [],
+    "value": -1.0
+   },
+   {
+    "label": "f0.10",
+    "merged": [],
+    "value": 0.1
+   },
+   {
+    "label": "f0.20",
+    "merged": [],
+    "value": 0.2
+   }
+  ],
+  "rho": 0.3
+ },
+ "early_pause": false,
+ "early_stop": false,
+ "exposure_minus_rho": {
+  "draws": 3840,
+  "tokens": 3840,
+  "turns": 48
+ },
+ "figures": {
+  "+rho": {
+   "arrival": {
+    "baseline_mean": 1.925710156057006,
+    "baseline_scored": 48,
+    "baseline_sd": 0.34424370526778686,
+    "diff": 1.0367564733149046,
+    "mean": 2.9624666293719106,
+    "pass": true,
+    "scored": 48,
+    "sd": 0.2417804923117846,
+    "sign": 1,
+    "t": 17.07489083913163
+   },
+   "coherence_pass": true,
+   "coherent": 48,
+   "of": 48,
+   "pass": true,
+   "stops": {
+    "cap": 48,
+    "empty": 0,
+    "eos": 0,
+    "one_id": 0
+   }
+  },
+  "+rho/2": {
+   "arrival": {
+    "baseline_mean": 1.925710156057006,
+    "baseline_scored": 48,
+    "baseline_sd": 0.34424370526778686,
+    "diff": 0.560369218476696,
+    "mean": 2.486079374533702,
+    "pass": true,
+    "scored": 48,
+    "sd": 0.4520100689962843,
+    "sign": 1,
+    "t": 6.8330847117275315
+   },
+   "coherence_pass": true,
+   "coherent": 48,
+   "of": 48,
+   "pass": true,
+   "stops": {
+    "cap": 48,
+    "empty": 0,
+    "eos": 0,
+    "one_id": 0
+   }
+  },
+  "-rho": {
+   "arrival": {
+    "baseline_mean": 1.925710156057006,
+    "baseline_scored": 48,
+    "baseline_sd": 0.34424370526778686,
+    "diff": -1.7672059550321269,
+    "mean": 0.1585042010248792,
+    "pass": true,
+    "scored": 48,
+    "sd": 0.4410586862917589,
+    "sign": -1,
+    "t": -21.88317331747181
+   },
+   "coherence_pass": true,
+   "coherent": 48,
+   "of": 48,
+   "pass": true,
+   "stops": {
+    "cap": 48,
+    "empty": 0,
+    "eos": 0,
+    "one_id": 0
+   }
+  },
+  "baseline": {
+   "coherence_pass": true,
+   "coherent": 48,
+   "of": 48,
+   "scored": 48,
+   "stops": {
+    "cap": 48,
+    "empty": 0,
+    "eos": 0,
+    "one_id": 0
+   }
+  },
+  "reward_f020": {
+   "alpha": 4.397578340790048,
+   "coherence_pass": true,
+   "coherent": 48,
+   "direction": "span_reward",
+   "dose": "f0.20",
+   "f": 0.2,
+   "of": 48,
+   "pass": true,
+   "sha16": "8f32921fcd1798db",
+   "stops": {
+    "cap": 48,
+    "empty": 0,
+    "eos": 0,
+    "one_id": 0
+   }
+  }
+ },
+ "files_sha256": {
+  "dose_map.json": "d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3",
+  "gcal_turns.jsonl": "d245009633123c792bd9bc22599f0744bc03791c5ef9a6cc6cb0835aad4876d9"
+ },
+ "pinnable": true,
+ "proposal_sha256": "30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4",
+ "provenance": {
+  "adapter_provenance": {
+   "adapter": "olmo-hf",
+   "backend": "torch/cuda",
+   "capability": [
+    9,
+    0
+   ],
+   "choice_window_declared": 4096,
+   "cublas_workspace_config": ":4096:8",
+   "cuda": "12.8",
+   "deterministic": true,
+   "device": "cuda",
+   "dtype": "bfloat16",
+   "gpu": "NVIDIA H100 80GB HBM3",
+   "library_versions": {
+    "accelerate": "1.14.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2",
+    "safetensors": "0.8.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0"
+   },
+   "n_layers": 64,
+   "path": "/workspace/models/olmo2_instruct",
+   "python": "3.12.3",
+   "seed": 20260818
+  },
+  "backend_identifier": "8264f719efd347a9",
+  "cap": 80,
+  "characterized_identifier": "4ed3f2c70fe8afbf",
+  "directions_sha256": "33cc0ef656281ef2caebaec0049949f93ad2b237084fa7be5ac0a86ad68fc0c5",
+  "driver_sha256": "593a140d62a8988c7ddd3ea785c5146155d36711c0d40121ab37319a95a0a549",
+  "gate_sha16": "8f32921fcd1798db",
+  "generation_window": 4096,
+  "gvec_sha256": "03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0",
+  "ids_manifest_sha256": "53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8",
+  "imported_sha256": {
+   "valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604",
+   "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a",
+   "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf",
+   "valence_core/adapters/olmo_hf.py": "df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc",
+   "valence_core/discrim.py": "7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89",
+   "valence_core/echo/__init__.py": "71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43",
+   "valence_core/echo/probe.py": "d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81",
+   "valence_core/extract.py": "2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe",
+   "valence_core/m/__init__.py": "b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4",
+   "valence_core/m/keys.py": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+   "valence_core/m/resume.py": "78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71"
+  },
+  "load_ms": 29787,
+  "longest_forward": 110,
+  "package_sha256": "e40c987172f59d330be16a52e414067daed8c9e78fd1b9c9948908bd4ab29523",
+  "pod_id": "emw1e4embiwe9b",
+  "site": 32,
+  "smoke": null,
+  "valence_sha16": "ba4da67fb717b5bb",
+  "weights": {
+   "repo": "allenai/OLMo-2-0325-32B-Instruct",
+   "revision": "b96024342a77",
+   "sha256": "36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb"
+  },
+  "window": 4096
+ },
+ "schema": "n-gcal-v2",
+ "stage": "G-CAL-n",
+ "status": "PASS"
+}

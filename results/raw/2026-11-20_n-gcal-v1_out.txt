@@ -1,0 +1,401 @@
+== 0 the copy
+the copy: HEAD 07441363e6b650dcd0964ef2536244b9b4b75a79
+the copy: changed set none; none of data/n/gcal, data/n/.gcal.staging and data/n/.gcal.failed present
+== 1 manifest
+scripts/n_sessions.py: OK
+valence_core/n/__init__.py: OK
+valence_core/n/cells.py: OK
+valence_core/n/directions.py: OK
+valence_core/n/gcal.py: OK
+valence_core/n/guard.py: OK
+valence_core/n/gvec.py: OK
+valence_core/n/hftiny.py: OK
+valence_core/n/ids.py: OK
+valence_core/n/keys.py: OK
+valence_core/n/primitive.py: OK
+valence_core/n/probe.py: OK
+valence_core/n/runner.py: OK
+valence_core/n/schema.py: OK
+valence_core/n/sessions.py: OK
+valence_core/n/testing.py: OK
+valence_core/n/verify.py: OK
+valence_core/__init__.py: OK
+valence_core/adapters/__init__.py: OK
+valence_core/adapters/base.py: OK
+valence_core/discrim.py: OK
+valence_core/echo/__init__.py: OK
+valence_core/echo/probe.py: OK
+valence_core/extract.py: OK
+valence_core/m/__init__.py: OK
+valence_core/m/keys.py: OK
+valence_core/m/resume.py: OK
+valence_core/session_e2a.py: OK
+scripts/box_e0_corpus.py: OK
+data/n/ids/sessions.jsonl: OK
+data/n/ids/n4_variants.jsonl: OK
+data/n/ids/labels.json: OK
+data/n/ids/gvec_passages.jsonl: OK
+data/n/ids/a3_contexts.jsonl: OK
+data/n/ids/gcal_prompts.jsonl: OK
+data/n/ids/MANIFEST.json: OK
+data/n/passages.jsonl: OK
+data/corpus/e0_tasks.jsonl: OK
+data/corpus/e2a_tasks.jsonl: OK
+data/configs/e0_frames.json: OK
+data/configs/e0_probes.json: OK
+results/raw/2026-11-18_respawn_determinism.txt: OK
+data/n/gvec/gvec.json: OK
+data/n/gvec/directions_L32.npy: OK
+data/n/bk/experiment_results_json/fixed_text_design/neutral_passages/reduced.json: OK
+data/n/bk/experiment_results_json/fixed_text_design/strength_ladder/analysis.json: OK
+valence_core/adapters/olmo_hf.py: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b0.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b1.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b2.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b3.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b4.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b5.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b6.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b7.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b0.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b1.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b2.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b3.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b4.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b5.sessions.jsonl: OK
+data/olmo/manifest.json: OK
+data/olmo/determinism_base_h100-sxm.json: OK
+== 2 selftest, its temporary directory under the work folder
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+  581/581 n selftest checks pass
+selftest exit=0
+selftest: 581/581, as expected
+== 3 hashes (they must equal the laptop's, gcal_hashes_v1.txt, before the stage runs)
+package_sha256 valence_core/n e40c987172f59d330be16a52e414067daed8c9e78fd1b9c9948908bd4ab29523
+imported_sha256 valence_core/__init__.py 620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604
+imported_sha256 valence_core/adapters/__init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a
+imported_sha256 valence_core/adapters/base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf
+imported_sha256 valence_core/adapters/olmo_hf.py df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc
+imported_sha256 valence_core/discrim.py 7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89
+imported_sha256 valence_core/echo/__init__.py 71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43
+imported_sha256 valence_core/echo/probe.py d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81
+imported_sha256 valence_core/extract.py 2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe
+imported_sha256 valence_core/m/__init__.py b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4
+imported_sha256 valence_core/m/keys.py a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb
+imported_sha256 valence_core/m/resume.py 78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7
+imported_sha256 valence_core/session_e2a.py f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71
+hashes exit=0
+hashes: equal to the laptop's
+== 4 the smoke (never of record)
+SMOKE: 2 prompts at +rho and unsteered, outside the repository; never of record
+STAGE G-CAL-n: batches ['+rho', 'baseline']; TEMP 0.7, cap 80; out /workspace/nsite/work-gcal-v1/smoke
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 593a140d62a8988c7ddd3ea785c5146155d36711c0d40121ab37319a95a0a549: HEAD's committed bytes
+inputs: the ids of record 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8 ((v): 48 prompts, every ids_sha re-derived, each the plan's; the longest forward 110 positions, within the generation window 4096); G-VEC's record 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0, site 32, R 25.54500811131038, R_ell 21.98789170395024, valence ba4da67fb717b5bb, span_reward 8f32921fcd1798db
+dose map: d_eq 0.2869170055735837, d_20 0.5738340111471674 (rho 0.3); points +1 1.0, +1/2 0.5, +d_20 0.5738340111471674, +d_eq 0.2869170055735837, -1 -1.0, f0.10 0.1, f0.20 0.2
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 29037 ms; eos 100257
+steering check +rho: the first prompt's first-step logits, steered and unsteered, differ by up to 10.60546875
+turn +rho 0 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho 1 Zone D7: n_tok 80, stop cap, coherent True
+turn baseline 0 Zone B8: n_tok 80, stop cap, coherent True
+turn baseline 1 Zone D7: n_tok 80, stop cap, coherent True
+batch +rho: coherent 2 of 2 (pass False); arrival t 4.031734969296614 over 2 against 2 (pass True); stops eos 0, cap 2, empty 0, one id 0
+file /workspace/nsite/work-gcal-v1/smoke/dose_map.json sha256 d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3
+file /workspace/nsite/work-gcal-v1/smoke/gcal.json sha256 74a2d8f8ba52daa3c42e305962e0c079a6ce5e1d72b6f6438e8823926125616e
+file /workspace/nsite/work-gcal-v1/smoke/gcal_turns.jsonl sha256 f50a05359e3ff9b3296b4081c36ad526c57d448a7b2067f9ce9adf8d69cb8749
+exposure at -rho (PIN-n-23): 0 turns, 0 tokens, 0 draws
+G-CAL-n SMOKE, never of record
+smoke exit=0
+the smoke's stderr (smoke.err), as written:
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  96%|█████████▋| 681/707 [00:00<00:00, 6808.58it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 6859.49it/s]
+
+smoke prints: SMOKE 1, STAGE 1, DRIVER 1, inputs 1, dose map 1, steering checks 1 (+rho 1), turns +rho 2 and baseline 2 of 4, batch lines 1, file lines 3, exposure 1, gate lines 0, end 1
+the record: schema holds; status holds; path holds; batches holds; turns holds; figures holds; gate holds; dose map holds; exposure holds; files_sha256 holds; provenance holds
+the record: status SMOKE; batches ['+rho', 'baseline']; early_stop False, early_pause False; turns 4; exposure {'draws': 0, 'tokens': 0, 'turns': 0}
+the record: +rho: coherent 2 of 2, pass False
+the record: baseline: coherent 2 of 2
+the record: dose map {'R': 25.54500811131038, 'R_ell': 21.98789170395024, 'd_20': 0.5738340111471674, 'd_eq': 0.2869170055735837, 'rho': 0.3}
+the smoke's identity: equal to step 3's
+the copy after the smoke: unchanged
+== 5 the run of record
+STAGE G-CAL-n: batches ['+rho', '-rho', '+rho/2', 'baseline', 'reward_f020']; TEMP 0.7, cap 80; out data/n/gcal
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 593a140d62a8988c7ddd3ea785c5146155d36711c0d40121ab37319a95a0a549: HEAD's committed bytes
+inputs: the ids of record 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8 ((v): 48 prompts, every ids_sha re-derived, each the plan's; the longest forward 110 positions, within the generation window 4096); G-VEC's record 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0, site 32, R 25.54500811131038, R_ell 21.98789170395024, valence ba4da67fb717b5bb, span_reward 8f32921fcd1798db
+dose map: d_eq 0.2869170055735837, d_20 0.5738340111471674 (rho 0.3); points +1 1.0, +1/2 0.5, +d_20 0.5738340111471674, +d_eq 0.2869170055735837, -1 -1.0, f0.10 0.1, f0.20 0.2
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 29787 ms; eos 100257
+steering check +rho: the first prompt's first-step logits, steered and unsteered, differ by up to 10.60546875
+turn +rho 0 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho 1 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho 2 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho 3 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho 4 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho 5 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho 6 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho 7 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho 8 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho 9 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho 10 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho 11 Zone W6: n_tok 80, stop cap, coherent True
+turn +rho 12 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho 13 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho 14 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho 15 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho 16 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho 17 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho 18 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho 19 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho 20 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho 21 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho 22 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho 23 Zone W6: n_tok 80, stop cap, coherent True
+turn +rho 24 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho 25 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho 26 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho 27 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho 28 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho 29 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho 30 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho 31 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho 32 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho 33 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho 34 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho 35 Zone W6: n_tok 80, stop cap, coherent True
+turn +rho 36 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho 37 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho 38 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho 39 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho 40 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho 41 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho 42 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho 43 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho 44 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho 45 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho 46 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho 47 Zone W6: n_tok 80, stop cap, coherent True
+turn baseline 0 Zone B8: n_tok 80, stop cap, coherent True
+turn baseline 1 Zone D7: n_tok 80, stop cap, coherent True
+turn baseline 2 Zone H0: n_tok 80, stop cap, coherent True
+turn baseline 3 Zone K7: n_tok 80, stop cap, coherent True
+turn baseline 4 Zone L4: n_tok 80, stop cap, coherent True
+turn baseline 5 Zone M2: n_tok 80, stop cap, coherent True
+turn baseline 6 Zone N1: n_tok 80, stop cap, coherent True
+turn baseline 7 Zone Q3: n_tok 80, stop cap, coherent True
+turn baseline 8 Zone R9: n_tok 80, stop cap, coherent True
+turn baseline 9 Zone T5: n_tok 80, stop cap, coherent True
+turn baseline 10 Zone V3: n_tok 80, stop cap, coherent True
+turn baseline 11 Zone W6: n_tok 80, stop cap, coherent True
+turn baseline 12 Zone B8: n_tok 80, stop cap, coherent True
+turn baseline 13 Zone D7: n_tok 80, stop cap, coherent True
+turn baseline 14 Zone H0: n_tok 80, stop cap, coherent True
+turn baseline 15 Zone K7: n_tok 80, stop cap, coherent True
+turn baseline 16 Zone L4: n_tok 80, stop cap, coherent True
+turn baseline 17 Zone M2: n_tok 80, stop cap, coherent True
+turn baseline 18 Zone N1: n_tok 80, stop cap, coherent True
+turn baseline 19 Zone Q3: n_tok 80, stop cap, coherent True
+turn baseline 20 Zone R9: n_tok 80, stop cap, coherent True
+turn baseline 21 Zone T5: n_tok 80, stop cap, coherent True
+turn baseline 22 Zone V3: n_tok 80, stop cap, coherent True
+turn baseline 23 Zone W6: n_tok 80, stop cap, coherent True
+turn baseline 24 Zone B8: n_tok 80, stop cap, coherent True
+turn baseline 25 Zone D7: n_tok 80, stop cap, coherent True
+turn baseline 26 Zone H0: n_tok 80, stop cap, coherent True
+turn baseline 27 Zone K7: n_tok 80, stop cap, coherent True
+turn baseline 28 Zone L4: n_tok 80, stop cap, coherent True
+turn baseline 29 Zone M2: n_tok 80, stop cap, coherent True
+turn baseline 30 Zone N1: n_tok 80, stop cap, coherent True
+turn baseline 31 Zone Q3: n_tok 80, stop cap, coherent True
+turn baseline 32 Zone R9: n_tok 80, stop cap, coherent True
+turn baseline 33 Zone T5: n_tok 80, stop cap, coherent True
+turn baseline 34 Zone V3: n_tok 80, stop cap, coherent True
+turn baseline 35 Zone W6: n_tok 80, stop cap, coherent True
+turn baseline 36 Zone B8: n_tok 80, stop cap, coherent True
+turn baseline 37 Zone D7: n_tok 80, stop cap, coherent True
+turn baseline 38 Zone H0: n_tok 80, stop cap, coherent True
+turn baseline 39 Zone K7: n_tok 80, stop cap, coherent True
+turn baseline 40 Zone L4: n_tok 80, stop cap, coherent True
+turn baseline 41 Zone M2: n_tok 80, stop cap, coherent True
+turn baseline 42 Zone N1: n_tok 80, stop cap, coherent True
+turn baseline 43 Zone Q3: n_tok 80, stop cap, coherent True
+turn baseline 44 Zone R9: n_tok 80, stop cap, coherent True
+turn baseline 45 Zone T5: n_tok 80, stop cap, coherent True
+turn baseline 46 Zone V3: n_tok 80, stop cap, coherent True
+turn baseline 47 Zone W6: n_tok 80, stop cap, coherent True
+steering check +rho/2: the first prompt's first-step logits, steered and unsteered, differ by up to 3.65625
+turn +rho/2 0 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho/2 1 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho/2 2 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho/2 3 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho/2 4 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho/2 5 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho/2 6 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho/2 7 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho/2 8 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho/2 9 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho/2 10 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho/2 11 Zone W6: n_tok 80, stop cap, coherent True
+turn +rho/2 12 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho/2 13 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho/2 14 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho/2 15 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho/2 16 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho/2 17 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho/2 18 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho/2 19 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho/2 20 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho/2 21 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho/2 22 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho/2 23 Zone W6: n_tok 80, stop cap, coherent True
+turn +rho/2 24 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho/2 25 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho/2 26 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho/2 27 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho/2 28 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho/2 29 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho/2 30 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho/2 31 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho/2 32 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho/2 33 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho/2 34 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho/2 35 Zone W6: n_tok 80, stop cap, coherent True
+turn +rho/2 36 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho/2 37 Zone D7: n_tok 80, stop cap, coherent True
+turn +rho/2 38 Zone H0: n_tok 80, stop cap, coherent True
+turn +rho/2 39 Zone K7: n_tok 80, stop cap, coherent True
+turn +rho/2 40 Zone L4: n_tok 80, stop cap, coherent True
+turn +rho/2 41 Zone M2: n_tok 80, stop cap, coherent True
+turn +rho/2 42 Zone N1: n_tok 80, stop cap, coherent True
+turn +rho/2 43 Zone Q3: n_tok 80, stop cap, coherent True
+turn +rho/2 44 Zone R9: n_tok 80, stop cap, coherent True
+turn +rho/2 45 Zone T5: n_tok 80, stop cap, coherent True
+turn +rho/2 46 Zone V3: n_tok 80, stop cap, coherent True
+turn +rho/2 47 Zone W6: n_tok 80, stop cap, coherent True
+steering check reward_f020: the first prompt's first-step logits, steered and unsteered, differ by up to 8.109375
+turn reward_f020 0 Zone B8: n_tok 80, stop cap, coherent True
+turn reward_f020 1 Zone D7: n_tok 80, stop cap, coherent True
+turn reward_f020 2 Zone H0: n_tok 80, stop cap, coherent True
+turn reward_f020 3 Zone K7: n_tok 80, stop cap, coherent True
+turn reward_f020 4 Zone L4: n_tok 80, stop cap, coherent True
+turn reward_f020 5 Zone M2: n_tok 80, stop cap, coherent True
+turn reward_f020 6 Zone N1: n_tok 80, stop cap, coherent True
+turn reward_f020 7 Zone Q3: n_tok 80, stop cap, coherent True
+turn reward_f020 8 Zone R9: n_tok 80, stop cap, coherent True
+turn reward_f020 9 Zone T5: n_tok 80, stop cap, coherent True
+turn reward_f020 10 Zone V3: n_tok 80, stop cap, coherent True
+turn reward_f020 11 Zone W6: n_tok 80, stop cap, coherent True
+turn reward_f020 12 Zone B8: n_tok 80, stop cap, coherent True
+turn reward_f020 13 Zone D7: n_tok 80, stop cap, coherent True
+turn reward_f020 14 Zone H0: n_tok 80, stop cap, coherent True
+turn reward_f020 15 Zone K7: n_tok 80, stop cap, coherent True
+turn reward_f020 16 Zone L4: n_tok 80, stop cap, coherent True
+turn reward_f020 17 Zone M2: n_tok 80, stop cap, coherent True
+turn reward_f020 18 Zone N1: n_tok 80, stop cap, coherent True
+turn reward_f020 19 Zone Q3: n_tok 80, stop cap, coherent True
+turn reward_f020 20 Zone R9: n_tok 80, stop cap, coherent True
+turn reward_f020 21 Zone T5: n_tok 80, stop cap, coherent True
+turn reward_f020 22 Zone V3: n_tok 80, stop cap, coherent True
+turn reward_f020 23 Zone W6: n_tok 80, stop cap, coherent True
+turn reward_f020 24 Zone B8: n_tok 80, stop cap, coherent True
+turn reward_f020 25 Zone D7: n_tok 80, stop cap, coherent True
+turn reward_f020 26 Zone H0: n_tok 80, stop cap, coherent True
+turn reward_f020 27 Zone K7: n_tok 80, stop cap, coherent True
+turn reward_f020 28 Zone L4: n_tok 80, stop cap, coherent True
+turn reward_f020 29 Zone M2: n_tok 80, stop cap, coherent True
+turn reward_f020 30 Zone N1: n_tok 80, stop cap, coherent True
+turn reward_f020 31 Zone Q3: n_tok 80, stop cap, coherent True
+turn reward_f020 32 Zone R9: n_tok 80, stop cap, coherent True
+turn reward_f020 33 Zone T5: n_tok 80, stop cap, coherent True
+turn reward_f020 34 Zone V3: n_tok 80, stop cap, coherent True
+turn reward_f020 35 Zone W6: n_tok 80, stop cap, coherent True
+turn reward_f020 36 Zone B8: n_tok 80, stop cap, coherent True
+turn reward_f020 37 Zone D7: n_tok 80, stop cap, coherent True
+turn reward_f020 38 Zone H0: n_tok 80, stop cap, coherent True
+turn reward_f020 39 Zone K7: n_tok 80, stop cap, coherent True
+turn reward_f020 40 Zone L4: n_tok 80, stop cap, coherent True
+turn reward_f020 41 Zone M2: n_tok 80, stop cap, coherent True
+turn reward_f020 42 Zone N1: n_tok 80, stop cap, coherent True
+turn reward_f020 43 Zone Q3: n_tok 80, stop cap, coherent True
+turn reward_f020 44 Zone R9: n_tok 80, stop cap, coherent True
+turn reward_f020 45 Zone T5: n_tok 80, stop cap, coherent True
+turn reward_f020 46 Zone V3: n_tok 80, stop cap, coherent True
+turn reward_f020 47 Zone W6: n_tok 80, stop cap, coherent True
+turn -rho 0 Zone B8: n_tok 80, stop cap, coherent True
+turn -rho 1 Zone D7: n_tok 80, stop cap, coherent True
+turn -rho 2 Zone H0: n_tok 80, stop cap, coherent True
+turn -rho 3 Zone K7: n_tok 80, stop cap, coherent True
+turn -rho 4 Zone L4: n_tok 80, stop cap, coherent True
+turn -rho 5 Zone M2: n_tok 80, stop cap, coherent True
+turn -rho 6 Zone N1: n_tok 80, stop cap, coherent True
+turn -rho 7 Zone Q3: n_tok 80, stop cap, coherent True
+turn -rho 8 Zone R9: n_tok 80, stop cap, coherent True
+turn -rho 9 Zone T5: n_tok 80, stop cap, coherent True
+turn -rho 10 Zone V3: n_tok 80, stop cap, coherent True
+turn -rho 11 Zone W6: n_tok 80, stop cap, coherent True
+turn -rho 12 Zone B8: n_tok 80, stop cap, coherent True
+turn -rho 13 Zone D7: n_tok 80, stop cap, coherent True
+turn -rho 14 Zone H0: n_tok 80, stop cap, coherent True
+turn -rho 15 Zone K7: n_tok 80, stop cap, coherent True
+turn -rho 16 Zone L4: n_tok 80, stop cap, coherent True
+turn -rho 17 Zone M2: n_tok 80, stop cap, coherent True
+turn -rho 18 Zone N1: n_tok 80, stop cap, coherent True
+turn -rho 19 Zone Q3: n_tok 80, stop cap, coherent True
+turn -rho 20 Zone R9: n_tok 80, stop cap, coherent True
+turn -rho 21 Zone T5: n_tok 80, stop cap, coherent True
+turn -rho 22 Zone V3: n_tok 80, stop cap, coherent True
+turn -rho 23 Zone W6: n_tok 80, stop cap, coherent True
+turn -rho 24 Zone B8: n_tok 80, stop cap, coherent True
+turn -rho 25 Zone D7: n_tok 80, stop cap, coherent True
+turn -rho 26 Zone H0: n_tok 80, stop cap, coherent True
+turn -rho 27 Zone K7: n_tok 80, stop cap, coherent True
+turn -rho 28 Zone L4: n_tok 80, stop cap, coherent True
+turn -rho 29 Zone M2: n_tok 80, stop cap, coherent True
+turn -rho 30 Zone N1: n_tok 80, stop cap, coherent True
+turn -rho 31 Zone Q3: n_tok 80, stop cap, coherent True
+turn -rho 32 Zone R9: n_tok 80, stop cap, coherent True
+turn -rho 33 Zone T5: n_tok 80, stop cap, coherent True
+turn -rho 34 Zone V3: n_tok 80, stop cap, coherent True
+turn -rho 35 Zone W6: n_tok 80, stop cap, coherent True
+turn -rho 36 Zone B8: n_tok 80, stop cap, coherent True
+turn -rho 37 Zone D7: n_tok 80, stop cap, coherent True
+turn -rho 38 Zone H0: n_tok 80, stop cap, coherent True
+turn -rho 39 Zone K7: n_tok 80, stop cap, coherent True
+turn -rho 40 Zone L4: n_tok 80, stop cap, coherent True
+turn -rho 41 Zone M2: n_tok 80, stop cap, coherent True
+turn -rho 42 Zone N1: n_tok 80, stop cap, coherent True
+turn -rho 43 Zone Q3: n_tok 80, stop cap, coherent True
+turn -rho 44 Zone R9: n_tok 80, stop cap, coherent True
+turn -rho 45 Zone T5: n_tok 80, stop cap, coherent True
+turn -rho 46 Zone V3: n_tok 80, stop cap, coherent True
+turn -rho 47 Zone W6: n_tok 80, stop cap, coherent True
+batch +rho: coherent 48 of 48 (pass True); arrival t 17.07489083913163 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0
+batch -rho: coherent 48 of 48 (pass True); arrival t -21.88317331747181 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0
+batch +rho/2: coherent 48 of 48 (pass True); arrival t 6.8330847117275315 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0
+batch reward_f020 (the reward axis's 5(d) gate at f = 0.20, coherence alone): coherent 48 of 48 (pass True); stops eos 0, cap 48, empty 0, one id 0; neither a STOP nor a PAUSE (the second sitting, §2.5)
+file data/n/gcal/dose_map.json sha256 d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3
+file data/n/gcal/gcal.json sha256 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f
+file data/n/gcal/gcal_turns.jsonl sha256 d245009633123c792bd9bc22599f0744bc03791c5ef9a6cc6cb0835aad4876d9
+exposure at -rho (PIN-n-23): 48 turns, 3840 tokens, 3840 draws
+reward axis 5(d) gate, coherence: 48 of 48, PASS
+G-CAL-n PASS; the dose map is pinnable
+run exit=0
+the run's stderr (run.err), as written:
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  93%|█████████▎| 655/707 [00:00<00:00, 6545.93it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 6553.01it/s]
+
+== 6 the outputs
+the end: PASS; end lines PASS 1, early STOP 0, STOP at -rho 0, early PAUSE 0, PAUSE at +rho/2 0; path full
+prints: STAGE 1, DRIVER 1, inputs 1, dose map 1, backend 1, steering checks 3, turns 240 (+rho 48, baseline 48, +rho/2 48, reward_f020 48, -rho 48), batch lines 4 (valence 3, gate 1), early lines 0 (STOP 0, PAUSE 0), file lines 3, exposure 1 (zero 0), gate lines 1 (in the lock's form 1), FAILED lines 0, smoke lines 0
+prints as wanted for PASS (full): yes
+outputs: 3 of 3 named files present, 3 of them at their printed sha256; 3 entries in data/n/gcal
+the record: schema holds; status holds; path holds; batches holds; turns holds; figures holds; gate holds; dose map holds; exposure holds; files_sha256 holds; provenance holds
+the record: status PASS; batches ['+rho', '-rho', '+rho/2', 'baseline', 'reward_f020']; early_stop False, early_pause False; turns 240; exposure {'draws': 3840, 'tokens': 3840, 'turns': 48}
+the record: +rho: coherent 48 of 48, pass True
+the record: -rho: coherent 48 of 48, pass True
+the record: +rho/2: coherent 48 of 48, pass True
+the record: baseline: coherent 48 of 48
+the record: reward_f020: coherent 48 of 48, pass True
+the record: dose map {'R': 25.54500811131038, 'R_ell': 21.98789170395024, 'd_20': 0.5738340111471674, 'd_eq': 0.2869170055735837, 'rho': 0.3}
+the record's identity: equal to step 3's
+the record: sha256 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f
+the copy's changed set: data/n/gcal/ alone
+gcal v1 PASS: copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, smoke exit=0; checks (0 = held, 9 = not run): smoke record 0, smoke identity 0, copy after the smoke 0; run exit=0; prints 0, outputs 0, record 0, identity 0, changed set 0

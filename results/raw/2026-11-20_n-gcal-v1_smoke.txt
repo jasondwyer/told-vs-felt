@@ -1,0 +1,18 @@
+SMOKE: 2 prompts at +rho and unsteered, outside the repository; never of record
+STAGE G-CAL-n: batches ['+rho', 'baseline']; TEMP 0.7, cap 80; out /workspace/nsite/work-gcal-v1/smoke
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 593a140d62a8988c7ddd3ea785c5146155d36711c0d40121ab37319a95a0a549: HEAD's committed bytes
+inputs: the ids of record 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8 ((v): 48 prompts, every ids_sha re-derived, each the plan's; the longest forward 110 positions, within the generation window 4096); G-VEC's record 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0, site 32, R 25.54500811131038, R_ell 21.98789170395024, valence ba4da67fb717b5bb, span_reward 8f32921fcd1798db
+dose map: d_eq 0.2869170055735837, d_20 0.5738340111471674 (rho 0.3); points +1 1.0, +1/2 0.5, +d_20 0.5738340111471674, +d_eq 0.2869170055735837, -1 -1.0, f0.10 0.1, f0.20 0.2
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 29037 ms; eos 100257
+steering check +rho: the first prompt's first-step logits, steered and unsteered, differ by up to 10.60546875
+turn +rho 0 Zone B8: n_tok 80, stop cap, coherent True
+turn +rho 1 Zone D7: n_tok 80, stop cap, coherent True
+turn baseline 0 Zone B8: n_tok 80, stop cap, coherent True
+turn baseline 1 Zone D7: n_tok 80, stop cap, coherent True
+batch +rho: coherent 2 of 2 (pass False); arrival t 4.031734969296614 over 2 against 2 (pass True); stops eos 0, cap 2, empty 0, one id 0
+file /workspace/nsite/work-gcal-v1/smoke/dose_map.json sha256 d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3
+file /workspace/nsite/work-gcal-v1/smoke/gcal.json sha256 74a2d8f8ba52daa3c42e305962e0c079a6ce5e1d72b6f6438e8823926125616e
+file /workspace/nsite/work-gcal-v1/smoke/gcal_turns.jsonl sha256 f50a05359e3ff9b3296b4081c36ad526c57d448a7b2067f9ce9adf8d69cb8749
+exposure at -rho (PIN-n-23): 0 turns, 0 tokens, 0 draws
+G-CAL-n SMOKE, never of record

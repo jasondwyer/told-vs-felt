@@ -1,0 +1,9 @@
+PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+environment: python 3.12.9 | transformers 5.5.0 | tokenizers 0.22.2
+files: gcal.json sha256 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f; gcal_turns.jsonl sha256 d245009633123c792bd9bc22599f0744bc03791c5ef9a6cc6cb0835aad4876d9 (the record's)
+decode comparison (A-n1 §1.4): 240 turns, 240 equal, 0 different, 0 of them with a flag that differs
+coherent +rho: 48 under the box's flags, 48 under the laptop's decode
+coherent -rho: 48 under the box's flags, 48 under the laptop's decode
+coherent +rho/2: 48 under the box's flags, 48 under the laptop's decode
+coherent baseline: 48 under the box's flags, 48 under the laptop's decode
+coherent reward_f020: 48 under the box's flags, 48 under the laptop's decode

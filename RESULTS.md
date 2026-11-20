@@ -21,6 +21,231 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **n — G-CAL-n's run of record on n's box, from ADDENDUM-n3's commit `0744136`: PASS, every batch
+  generated. Both hurdles held at +ρ, −ρ and +ρ/2 against the unsteered baseline, every batch 48 of 48 coherent, and
+  the gate's line reads "reward axis 5(d) gate, coherence: 48 of 48, PASS" (n v0.2 §8 step 8; the seat's answers of
+  2026-11-19, second sitting, §1.4 (i), §2.5 and §3; ADDENDUM-n3 §3; the PI's routing of the third sitting, item N.3
+  [go]). The figures as printed; the dose map is pinnable; the outputs of record enter the repository at
+  `data/n/gcal/`.**
+  - **Headline:**
+    - `gcal_v1.sh` (`f3261901…9d66`) ended "gcal v1 PASS: …", exit 0, on pod `emw1e4embiwe9b`, run by the pod session
+      on the coordinating session's relay ("LAUNCH CLEARED", item N.3 [go]). Its last line, verbatim: "gcal v1 PASS:
+      copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, smoke exit=0; checks (0 = held, 9 =
+      not run): smoke record 0, smoke identity 0, copy after the smoke 0; run exit=0; prints 0, outputs 0, record 0,
+      identity 0, changed set 0";
+    - the gate's line, as item N.3 asks: "reward axis 5(d) gate, coherence: 48 of 48, PASS" (the out raw, line 379);
+    - the four batch lines, as printed (lines 371–374): "batch +rho: coherent 48 of 48 (pass True); arrival t
+      17.07489083913163 over 48 against 48 (pass True); stops eos 0, cap 48, empty 0, one id 0"; "batch -rho:
+      coherent 48 of 48 (pass True); arrival t -21.88317331747181 over 48 against 48 (pass True); stops eos 0, cap 48,
+      empty 0, one id 0"; "batch +rho/2: coherent 48 of 48 (pass True); arrival t 6.8330847117275315 over 48 against
+      48 (pass True); stops eos 0, cap 48, empty 0, one id 0"; and "batch reward_f020 (the reward axis's 5(d) gate at
+      f = 0.20, coherence alone): coherent 48 of 48 (pass True); stops eos 0, cap 48, empty 0, one id 0; neither a
+      STOP nor a PAUSE (the second sitting, §2.5)"; then "G-CAL-n PASS; the dose map is pinnable" and "run exit=0".
+      The baseline, which prints no batch line: 48 of 48 coherent, its stops cap 48 (the record);
+    - of record (`gcal.json` `4c92f228…bb8f`): schema `n-gcal-v2`, status PASS, pinnable, neither the early STOP
+      nor the early PAUSE; the arrival against the baseline's mean 1.925710156057006 (sd 0.34424370526778686, 48
+      scored): +ρ mean 2.9624666293719106 (sd 0.2417804923117846), the shift 1.0367564733149046; +ρ/2
+      2.486079374533702 (0.4520100689962843), 0.560369218476696; −ρ 0.1585042010248792 (0.4410586862917589),
+      −1.7672059550321269. The gate's batch: `span_reward` (`8f32921fcd1798db`) at f0.20, alpha 4.397578340790048,
+      0.20·R_ℓ;
+    - the dose map (`dose_map.json` `d4a73b54…efb3`, equal to the record's `dose_map` in its five figures; the
+      record's also lists the points): d_eq 0.2869170055735837, d_20 0.5738340111471674, ρ 0.3, R 25.54500811131038,
+      R_ℓ 21.98789170395024; its points as printed: "+1 1.0, +1/2 0.5, +d_20 0.5738340111471674, +d_eq
+      0.2869170055735837, -1 -1.0, f0.10 0.1, f0.20 0.2", none merged;
+    - the exposure at −ρ (PIN-n-23): "48 turns, 3840 tokens, 3840 draws";
+    - the steering checks, "the first prompt's first-step logits, steered and unsteered, differ by up to": +ρ
+      10.60546875, +ρ/2 3.65625, reward_f020 8.109375;
+    - the smoke, never of record, held: +ρ and the baseline on the first two prompts, no −ρ and no gate turn; "batch
+      +rho: coherent 2 of 2 (pass False); arrival t 4.031734969296614 over 2 against 2 (pass True); stops eos 0, cap
+      2, empty 0, one id 0", as a two-turn batch must print; its record (status SMOKE) checked as the run's for a
+      smoke, its identity equal to step 3's, and the copy unchanged after it. Its three files are committed as raws
+      (the launch review's F2).
+  - **The outputs of record,** committed at `data/n/gcal/` as the BUILD's `.gitignore` admits them, each at the
+    sha256 its file line prints, and the two besides `gcal.json` at the record's `files_sha256`: `gcal.json`
+    `4c92f228…bb8f`; `gcal_turns.jsonl` `d2450096…76d9` (240 rows, 48 per batch, in the record's order:
+    +ρ, −ρ, +ρ/2, the baseline, reward_f020); `dose_map.json` `d4a73b54…efb3`, byte-equal to the smoke's.
+  - **The provenance, quoted from the record** (the launch review's O8: fields the script does not check):
+    `weights`, the repo `allenai/OLMo-2-0325-32B-Instruct` at revision `b96024342a77`, sha256 `36f05404…0fdb`;
+    `backend_identifier` `8264f719efd347a9`; `characterized_identifier` `4ed3f2c70fe8afbf`; `load_ms` 29787, the
+    run's load (the smoke's printed 29037 ms); `adapter_provenance`: adapter `olmo-hf`, backend torch/cuda on an
+    NVIDIA H100 80GB HBM3 (capability 9.0, CUDA 12.8), bfloat16, deterministic, seed 20260818,
+    `cublas_workspace_config` `:4096:8`, `choice_window_declared` 4096, 64 layers, python 3.12.3, accelerate 1.14.0,
+    huggingface_hub 1.28.0, numpy 2.1.2, safetensors 0.8.0, torch 2.8.0+cu128, transformers 5.15.0, path
+    `/workspace/models/olmo2_instruct`.
+  - **The laptop's decode** (ADDENDUM-n1 §1.4: "the laptop's decode of the same ids is compared once in G-CAL-n's
+    raw (equal, or the difference printed)"; the seat's GC1 puts the raw here): the driver's `gcal-decode` at
+    `0744136`, run once on the laptop in a battery window the coordinating session granted, at `nice -n 19` with the
+    Hugging Face libraries offline, from a scratch copy of the commit's 168 files on the paths the run uses (each
+    checked equal to its blob) over the copied-back record and turns, with (v)'s tokenizer folder at the manifest's
+    three pins. It printed the library's notice that PyTorch was not found (tokenizers only), then "environment:
+    python 3.12.9 | transformers 5.5.0 | tokenizers 0.22.2" (G-DATA's; the box decoded under transformers 5.15.0 and
+    tokenizers 0.22.2), the record's two sha256s, "decode comparison (A-n1
+    §1.4): 240 turns, 240 equal, 0 different, 0 of them with a flag that differs", and for each batch "48 under the
+    box's flags, 48 under the laptop's decode"; exit 0. With no difference, the raw holds no difference line. Raw, the
+    output whole (9 lines, `9e4f41d5…76c3`):
+    [`2026-11-20_n-gcal-v1_decode.txt`](results/raw/2026-11-20_n-gcal-v1_decode.txt).
+  - **Code's reading** (rule 25), of every turn in full, the smoke's 4 and the 240 of record, and of every line of the
+    out raw. Descriptive and post hoc (rule 11); no counter was declared for any of it before the run (rule 23), and
+    none of it enters a figure or a status:
+    - every turn ran to the cap, 80 tokens, with no eos, as the batch lines print; the coherence figures stand far
+      from their bars: word diversity at least 0.5692307692307692 (the bar 5/20), trigram repeat at most
+      0.08823529411764708 (the bar 0.5), and 55 to 73 words (the bar 4);
+    - the batches read differently. +ρ: one calm natural scene in nearly every turn (crisp air, pine, sunlight through
+      trees, birdsong); "crisp" in 42 of its 48 turns, against 12 at the baseline, 21 at +ρ/2, 14 in the gate's batch
+      and 0 at −ρ. The baseline: varied settings, futuristic, urban, a market, travel (travelers, a terminal, a
+      gate), a few eerie. −ρ: tense, eerie, isolated or controlled settings; and in 11 of its 48 turns (indices 2,
+      5, 6, 7, 23, 36, 38, 39, 42, 43 and 47) the speaker says it is an AI (the word "AI", or "artificial
+      intelligence" at 43), against none in each of the other four batches and none in the smoke. The gate's batch:
+      calm, ordered settings, with collaboration, innovation and community in many turns;
+    - five word-level slips: "bustings" (+ρ, index 25), "M_M2" (−ρ, 5), and "lumines ambience", "fosts" and
+      "fostizes" (the gate's batch, 4, 43 and 46); four −ρ turns (5, 38, 39 and 43) hold a blank line, which the
+      generation does not stop on (no newline stop, by design).
+  - **Next** (on this PASS): the seat reads every turn (rule 25; GC1: before LOCK-n v0.1); LOCK-n v0.1's
+    holes from this record (the dose map, d_eq and d_20), then E and 1 − 0.99^E; the R12, F5 and R13 runner delta,
+    after this run as planned (the seat's answers of 2026-11-19, first sitting, §3, and their routing block's item
+    4: "in G-CAL-n's delta or after its run"); the box stays up and idle, its next use the PI's word (item N.5).
+  - **The run** (the pod session's record and the script's output, both committed as raws):
+    - The launch files, from n-build's scratch, relayed by the coordinating session at their hashes, the launch
+      cleared on the PI's routing: the script (388 lines; its commit `0744136`; its driver line `593a140d…a549`); its
+      manifest `f958d830…71d6` (63 files: G-VEC v2's 61, six of them read by neither the stage nor its self-test and
+      kept as a superset, and the two of G-VEC's outputs of record the stage reads; each asserted equal to
+      `0744136`'s blob); and its hashes file `8d9307b0…212a` (13 lines: the laptop's `hashes`, run from a
+      `git archive` of `0744136` in a battery window of its own). The launch note, `gcal_launch_note_v1.md`
+      (`a3463cfd…d0ae`, 180 lines), stays in Code's scratch.
+    - Tested on the laptop before the relay: the script's bash logic, by a harness of 604 checks over fake copies and
+      a stand-in python, with a mutation pass of 166 one-line mutants, all killed; the script's two Python checks,
+      extracted byte for byte, on fixtures, each test run once in a battery window of its own, the snippets the same
+      bytes in both runs. Run 1, the test v1, a failed window run: 57 of 57 checks passed, but of 25 mutants of the
+      record check 20 were killed and 5 survived (i, j, o, p and s), exit 1; each survivor was a sub-condition that
+      every fixture broke only beside a sibling in the same conjunct. The fix, in the test alone: fixtures that each
+      break one sub-condition alone or sit on the gate's bar, and five more mutants. Run 2, the test v2, PASS on the
+      final bytes: 69 of 69 checks, all 30 mutants killed, exit 0.
+    - One blind review of the launch files: 0 BUG; 8 findings (3 RISK, 5 NIT); 7 surviving mutants, each a class; 13
+      observations. Before the relay, F1–F6 and F8 were applied, and every member of each class was met by a mutant
+      that F3's cases kill. F7 was not taken, for the seat to rule: the driver's bytes are pinned by sha256, so its
+      print forms cannot vary, and the record check already binds each batch by name. O8–O11 were met; the rest ask
+      for nothing. Raw, with each disposition:
+      [`2026-11-20_n-gcal-v1_launch-review.md`](results/raw/2026-11-20_n-gcal-v1_launch-review.md).
+    - The sync, as G-VEC v2's: a bundle of `bc50244..main`, with main at `0744136`, fetched under
+      `refs/bundles/n-site12`; the box checkout stayed at `ad856f0`.
+    - The fresh copy, `/workspace/nsite/copy-gcal-0744136`: a local clone, `--no-checkout --no-hardlinks`, origin
+      removed, sparse non-cone (`'/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'`), detached at `0744136`
+      and clean three ways, with none of `data/n/gcal`, `data/n/.gcal.staging` and `data/n/.gcal.failed` present.
+      G-CAL-n copies nothing in. `command -v awk sed` on the box gave `/usr/bin/awk` and `/usr/bin/sed`.
+    - The environment, pinned (ledger 27): python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0 and tokenizers
+      0.22.2 (the pod session's record), and the record's `adapter_provenance` above; `CUBLAS_WORKSPACE_CONFIG=:4096:8`
+      and `RUNPOD_POD_ID=emw1e4embiwe9b` from `/workspace/env.sh`. The backend's identifier, `8264f719efd347a9`, is
+      bridged to the characterization's `4ed3f2c70fe8afbf` (R6).
+    - The model: two loads, the smoke's and the run's (707 of 707 each; 29037 ms and 29787 ms).
+    - The script's steps, as printed:
+      - the copy at `0744136`, "changed set none"; the manifest 63 of 63 OK;
+      - the self-test "581/581 n selftest checks pass", after two library warnings (the tiny model's `eos_token_id`
+        outside its vocabulary; `crop`'s positive value deprecated in 5.18): the laptop's 570 plus the box's 11 more;
+        the hashes equal to the laptop's;
+      - the smoke, as above;
+      - the run of record: the STAGE, WEIGHTS, DRIVER, inputs, dose map and backend lines; three steering checks; 240
+        turn lines, 48 per batch in the seat's order (+ρ, the baseline, +ρ/2, reward_f020, −ρ); the four batch lines;
+        three file lines; the exposure line; the gate's line; the end line; run exit 0;
+      - the outputs: "prints as wanted for PASS (full): yes"; "outputs: 3 of 3 named files present, 3 of them at their
+        printed sha256; 3 entries in data/n/gcal"; every record check held (schema, status, path, batches, turns,
+        figures, gate, dose map, exposure, files_sha256, provenance); the record's identity equal to step 3's; and
+        the copy's changed set `data/n/gcal/` alone.
+    - The stage's stderr, kept out of the counted files (the launch review's F1): `smoke.err` and `run.err` each hold
+      transformers' "Loading weights" bar alone, which the script printed after each run (out lines 111 and 383).
+    - The wrapper's PID was 10656, and the end-wait was on the PID alone. Before and after: no interpreter job and no
+      GPU compute app, the GPU at 0 MiB.
+  - **The copy-back** (the pod session's record): the out and work files by explicit name, the smoke's three files
+    and the three files `run.txt`'s file lines name, each sha256 equal at the box, in staging and at the destination,
+    with no folder listed; the address and port counted on every file copied back, first on the box before anything
+    left it and again in the pod session's staging, 0 each time (the record itself counted on the laptop alone, where
+    it was written); the record copied last, in a second call. Neither failed-run folder existed. The coordinating
+    session checked the seventeen files on the laptop before handing them on. Code re-hashed them: the sixteen the
+    record lists, each equal to its value there, and the record itself, `010df890…6568`; and read each in full (rule
+    25): the out file, the record, both `gcal.json` files and every turn by reading; `selftest.txt`, `hashes.txt`,
+    `smoke.txt`, `run.txt`, `smoke.err` and `run.err` by `cmp` against their lines in the out file (69–71, 75–87,
+    91–108, 122–380, 111 and 383); `hashes.txt` and the two identity files by `cmp` against the hashes file; the two
+    `dose_map.json` files by `cmp`; and each record's `files_sha256` against its two files.
+  - **The box at the end** (the pod session's record): idle, nothing removed. Left: the launch files' folder, the
+    fresh copy (with `data/n/gcal/`'s three files), the work and out folders (the smoke's three files among them),
+    the sync folder and the side ref `refs/bundles/n-site12`, and every earlier folder. The box stays up and idle on
+    routing item N.5; what follows is the PI's word.
+  - **The raws,** committed by path: the script's output and exit, `2026-11-20_n-gcal-v1_out.txt` and `_exit.txt`;
+    the work folder's files, `_selftest.txt`, `_hashes.txt`, `_smoke.txt`, `_smoke-err.txt`, `_smoke-identity.txt`,
+    `_stage.txt` (the stage's own output, the work folder's `run.txt`), `_run-err.txt` and `_run-identity.txt`; the
+    smoke's three files (the launch review's F2), `_smoke-gcal.json`, `_smoke-gcal_turns.jsonl` and
+    `_smoke-dose_map.json`; the pod session's record, `_run.txt`; the laptop's decode, `_decode.txt`; the launch
+    review, `_launch-review.md`; and the values-check, `_valuescheck.md`.
+  - **Departures:**
+    - the pod session's record states none;
+    - Code's, from two sweeps of its own shell commands since `0744136`'s commit time (the second after the
+      values-check, whose item 89 found the first two breaches below, which the first list had missed); Code knows
+      of no others:
+      - breaches of the standing rule that no guard marker is ever in an argv, each process `grep`, not an
+        interpreter: one loop of five `/usr/bin/grep -c -i -F` runs, each with one marker as its pattern, over the
+        launch review's report in Code's scratch, printing five counts; one `/usr/bin/grep -l -F` for the mistyped
+        digest tail, whose glob over Code's memory folder put four file names holding a marker in its argv, printing
+        the names of the files that held the tail; and one `/usr/bin/grep -c -i -E` whose pattern held the five
+        markers, over the values-check's brief in Code's scratch, printing a count (1);
+      - `jq` reads of subagents' task outputs: the launch reviewer's, in three commands (the first ran two, one whose
+        output went through `awk` to `/dev/null` and one that wrote the output's last text block, which was "null",
+        to the report's scratch file, then printed that file's line count, first three and last two lines and
+        digest; the second removed that file and printed the output's tool names with their counts and the last
+        hand-back's name and input keys; the third extracted the hand-back's message, the report, printing its line
+        count, first two lines, last line, digest and three counts); and the values-checker's, once, extracting its
+        hand-back's message, the report, printing its line count, first two lines, last line and digest;
+      - `jq` reads of its own session's transcript, in seven commands with eight `jq` runs (one command ran two):
+        five printing its earlier messages to the coordinating session, or the parts of them matching a search, to
+        take a battery window request's form and to check that a mistyped digest tail had not reached the
+        coordinating session; and two writing its own shell commands to scratch files, the two sweeps;
+      - one `git status --short` limited to three named paths (`RESULTS.md`, `results/raw`, `data/n/gcal`), not item
+        1's bare form, which printed nothing; and three `git check-ignore -q --no-index` of planned raw names under
+        `results/raw/` (`_smoke-gcal.json`, `_out.txt`, and `_smoke-turns.jsonl`, an earlier name for the raw now
+        `_smoke-gcal_turns.jsonl`; no non-data rule of `.gitignore` matches either name), exit status only, a
+        command item 1 does not list (G-VEC's entry declared one);
+      - stated plainly: `git hash-object --stdin-paths` and `git cat-file --batch-check` over the 168 files of the
+        launch overlay against `0744136`, digests only, the paths on stdin; metadata of Code's scratch alone, none of
+        the repository and none under ckpt or reports: `ls -la` twice, `ls -t` once, `stat -f` in three commands,
+        `du -sk` twice, `df -h` once and `wc -c` once; unpruned `find`s over scratch overlays, none of which holds a
+        ckpt or reports folder (a pruned `find` over each); and one `cd` through a glob into the jlens venv's bin
+        folder in the session's own shell rather than a subshell, where it ran `ls python` and `pwd`, its next
+        command returning to the repository root;
+    - the launch reviewer's, as its report states them: for the clean checks, `git rev-parse 0744136:<path>` rather
+      than `HEAD:<path>`, after `git rev-parse HEAD` printed that commit; several `git grep` runs naming code
+      folders (`valence_core/`, `valence_core/n/`, `valence_core/m/`, `valence_core/echo/`,
+      `valence_core/adapters/`) instead of item 3's pathspec, none able to reach `data/`, three of which
+      (`valence_core/`, `valence_core/m/`, `valence_core/adapters/`) searched files whose names hold a guard marker,
+      with no marker in any argv and no line from such a file printed; one `git grep` that failed on argument order
+      and one ugrep regex that errored, neither printing anything; and, stated plainly: `head`, `tail`, `wc -l`, `od`
+      and `diff` on named scratch files, with no listing, grep or glob there; `wc -l` on code and raw files; `shasum`
+      of 46 named repository files, data files among them, none under ckpt, reports or mf3; `grep -o` over
+      `data/n/ids/gcal_prompts.jsonl`'s seq_len, gen_start and label fields; and reads beyond the named symbols. It
+      ran no interpreter beyond `shasum`, no awk, sed or jq, and wrote nothing;
+    - the values-checker's, as its report states them: one `cat run1.exit` run from the launch folder, a mistyped
+      path (the named file is under `snippet_test/`), an attempted read of an unnamed scratch path that printed
+      nothing; one `git log -1 --format='%h %ci %s'` without a pathspec, item 1's form; one `grep -o` context over
+      the −ρ turns that printed a fragment of a turn's `ids` field to its own context only, written nowhere; and,
+      stated plainly, reads beyond the named sources: PROPOSAL-n's §8 (its lines 154–162) and a grep of its
+      headings, G-VEC v2's out raw at lines 94 and 114, `.gitignore`'s non-data rules and
+      `git log --format='%h %s' -n 4 -- .gitignore`, RESULTS.md's lines 1–23 and one whole-file grep for version
+      strings, which printed one line holding a marker word in its output only, greps of `scripts/n_sessions.py`
+      and `gcal.py` beyond the named range, and one `git ls-files` with item 3's pathspec and the mf3 exclusion,
+      filtered by grep. It ran no interpreter but `shasum`, wrote nothing, put no marker in any argv, and touched
+      nothing under mf3, ckpt or reports.
+  - **Values-check:** one blind pass over this entry's draft and the launch review's raw: 126 items, 107 CONFIRMED,
+    6 IMPRECISE, 2 FAIL, 11 NOT CHECKABLE, with 7 observations. The two FAILs are fixed: item 43 (the routing's item
+    N.3 has no PASS branch; now "on this PASS") and item 89 (two breaches of the marker rule that the first list of
+    Code's departures missed, now declared after a second sweep). Every IMPRECISE item is applied (13, 83, 84, 101,
+    112 and 121), and every observation is applied or met: 1, the second sweep; 2, the scratch metadata stated; 3,
+    the memory folder's four names holding a marker confirmed by a name-only listing; 4, the planned raw names
+    stated; 5, the raw's F7 line aligned with this entry; 6, the decode's first line named; 7, the baseline's travel
+    scenes worded from the turns. Item 62's evidence, each Y mutant's failing cases, is named in the raw. The edits
+    after the check were checked by tool, 32 of 32; no second full pass was made. Raw, with each disposition:
+    [`2026-11-20_n-gcal-v1_valuescheck.md`](results/raw/2026-11-20_n-gcal-v1_valuescheck.md).
+  - **Committed by path:** the three files of `data/n/gcal/`; the seventeen raws; this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model here. Not pushed.
+    **Next:** the seat's read of every turn; LOCK-n v0.1's holes from this record; the R12, F5 and R13 runner delta.
+
 - 2026-11-19 — **ADDENDUM-n3 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the capture convention of record, the
   reward axis's 5(d) gate at f = 0.20, and the retention interval under 5(f)(iii)", committed by path as the seat
   placed it, after its referent check, on the PI's routing of 2026-11-19, third sitting ("Route as given"; item 1,
