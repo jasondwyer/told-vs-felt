@@ -21,6 +21,165 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **n — LOCK-n v0.1's draft placed untracked at the root as `LOCK-n.md` for the seat's read, on the PI's
+  routing of 2026-11-20, first sitting, item 3: sha256 `5acca00f…586a`, 1010 lines, every anchor at `1641948`, holes
+  1–17 filled and 18 v1.0's. Code → design: a STOP for the seat's read, with one question (the closure). The read
+  raw, the two battery windows' riders, the checks and the values-check committed by path; `LOCK-n.md` itself is not
+  committed (n v0.2 §8 step 10 commits it after the seat's read). Model-free: nothing ran on a model or on the box.**
+  - **Headline:** `LOCK-n.md` at the root, untracked, sha256
+    `5acca00f55d19516198cceb1035216b08f514c60045e4ec306790f3a7611586a`, 1010 lines: Code's draft 9, byte for byte,
+    placed in this commit's window. The routing, verbatim (rt20:15, the raw
+    [`2026-11-20_first-sitting_pi-routing.md`](results/raw/2026-11-20_first-sitting_pi-routing.md)):
+    > 3. LOCK-n v0.1's draft filled from the two records (§5.1: holes 1–9, 11, 15, 16, the gate line, the interval declaration, E = 48 and 1 − 0.99^48 = 0.3827, the monitor sentence with the power note), placed for the seat's read before step 10 [untracked at root under the lock's name, sha256 and line count in the entry].
+
+    The read raw,
+    [`2026-11-20_n-lock-v0_1_code-to-design_read.md`](results/raw/2026-11-20_n-lock-v0_1_code-to-design_read.md)
+    (`988cc25b…52f1`), gives what is placed and why there, the 18 holes, what the last pass changed besides them, and Q1
+    for the seat. The seat reads `LOCK-n.md` whole against its answers of 2026-11-20, ADDENDUM-n3 and n:117, in one
+    sitting (the answers of 2026-11-20, §5.2).
+  - **The holes**, numbered as the opens STOP raw names them (`d85fc34`, §1):
+    - 1–7, G-VEC's (`e3b48ed`); 8 and 9, G-CAL-n's dose map and files (`db00d6d`);
+    - 10, `read_plan_sha256` `7f7d7301…88a6`, by the package's own function in a battery window (draft 4b);
+    - 11, E = 48 and 1 − 0.99^48 = 0.3827098590577118;
+    - 12, `scripts/n_analyze.py` v7, `735da934…a7a8` (`b6ea27f`);
+    - 13, G-ANL-n's artifact of record, `data/n/gates/G-ANL-n.json` `e775cbb4…6088` (`1641948`): verdict PASS, its
+      analyzer v7, d_eq and d_20 unmerged, its reach PASS shape a (28 triples, 225 tuples) and FAIL shape b (25, 201);
+    - 14, the n package `06b55761…1d39`, unmoved since `ef105f1`, with its closure: the twelve files of `516b60f`'s
+      closure at the same sha256s, by Code's reading of the diff, the package's own `hashes` not re-run (Q1);
+    - 15, A2's extension, confirmed (rt19b:23); 16, the seat's read of every G-CAL-n turn (the answers of 2026-11-20,
+      §2.4); 17, ADDENDUM-n3 §6.3's three standing lines, carried as written;
+    - 18, G-TIME-n's figures, v1.0's.
+
+    The answers of 2026-11-20, §5.1, list 10 and 17 as still open; the drafts had filled both (draft 4b and draft 5),
+    and the read raw says so.
+  - **The drafting, declared** (the coordinating session's words): "drafted in scratch in parallel with n-analyzer's
+    v7, on the coordinating session's word of 2026-11-20". The start covered G-CAL-n's holes (drafts 4 and 4b). On the
+    same word it was widened to the parts of ADDENDUM-n3 §8.3's step (5) that did not need v7 (draft 5: §6's texts as
+    the second sitting ruled them, §1.2's two R's, §5.2's declaration with §5.3's departure, the distribution left a
+    HOLE for a battery window). §8.3 lists (4) before (5), so the parallel start is a departure from a listed order,
+    declared for the seat to class; Code asked first (one question) and did none of it before the answer. Then:
+    - draft 6, on item 3, from the answers of 2026-11-20: hole 16, the power sentence with E's acceptance, the six
+      cosines, each batch's coherence count and stops, N2's decision point in the seat's words, and holes 12, 14 and
+      17 as §5.1 names them;
+    - draft 6b, §21's distribution from the window;
+    - draft 7, the pass after v7, prepared in scratch at `b6ea27f` on the coordinating session's word ("no Python,
+      nothing at root"): holes 12 and 14, G-CAL-n's form of record in §10 and §15 (the second sitting's "the arrival's
+      form (§1.4)"), §13's tile as built, O4 and O6, ADDENDUM-n3's and the seat's later answers' sha256s in §23;
+    - draft 8, at `1641948`: hole 13;
+    - draft 9: the values-check's findings on the lock applied (below).
+
+    Each draft is kept in Code's scratch: 4 `6caee7c4…4035`, 4b `24a9f04a…f912`, 5 `5d8f5c44…d474`, 6
+    `c5f75e08…bdf1`, 6b `c1143927…c91d`, 7 `9ea4d696…312b`, 8 `4d16aee3…a925`, 9 `5acca00f…586a`. Nothing was
+    committed before v7 landed and was verified. `LOCK-n.md` is placed only now, after G-ANL-n's canonical run and its
+    commit, because v7's `verdicts_precheck` resolves the lock's path and so stats an untracked `LOCK-n.md` (the
+    coordinating session's revised order).
+  - **The anchors**, re-pinned by content in two hops, by Code's awk tools: a cited block of lines found once,
+    unchanged, in the file at the new commit.
+    - `516b60f` → `b6ea27f`: of draft 6b's 509 anchors, 173 point into the seven cited files that changed since
+      (RESULTS.md, schema.py, runner.py, gcal.py, gvec.py, n_analyze.py, n_sessions.py). 164 were found once (145
+      moved, 19 at the same lines). The nine blocks the changes rewrote are re-cited by hand to the lines that now
+      carry them.
+    - `b6ea27f` → `1641948`: RESULTS.md alone changed among the cited files, and its 94 anchors were each found once
+      and moved.
+    - One continuation anchor in §1 (":310"), which the tools did not read as an anchor, was re-pinned by hand at
+      draft 9 (schema.py:315), on the values-check's item 60.
+
+    Outside the sections each pass rewrote, draft 7 differs from draft 6b, and draft 8's template from draft 7's, only
+    in anchor numbers (compared with every anchor normalized). Draft 9 holds 556 anchors; each new one has a witness
+    phrase in its cited lines (77 rows).
+  - **The two battery windows**, each granted by the coordinating session on 2026-11-20, run once under `nice -n 19`,
+    model-free, and equal to a shell derivation run before it:
+    - `plan_sha.py` (`f8c840ef…6a4c`): exit 0, "reads 7680, distinct 7680", `read_plan_sha256` `7f7d7301…88a6`.
+      Rider [`2026-11-20_n-lock-v0_1_plan-sha.md`](results/raw/2026-11-20_n-lock-v0_1_plan-sha.md) (`1a897671…f62c`);
+      output [`2026-11-20_n-lock-v0_1_plan-sha_out.txt`](results/raw/2026-11-20_n-lock-v0_1_plan-sha_out.txt)
+      (`cc1dd781…8e26`, 3 lines).
+    - `interval.py` (`6d143dc0…a766`): exit 0, the 160 per-session intervals per span kind and their distribution
+      (§21), the output byte for byte the shell derivation's. Rider
+      [`2026-11-20_n-lock-v0_1_interval.md`](results/raw/2026-11-20_n-lock-v0_1_interval.md) (`170300f4…5487`);
+      output [`2026-11-20_n-lock-v0_1_interval_out.txt`](results/raw/2026-11-20_n-lock-v0_1_interval_out.txt)
+      (`ad82c1b7…7660`, 178 lines).
+
+    Both shell cross-checks were re-run for this record on 2026-11-20, each reproducing its first output byte for
+    byte. The riders show local paths as `<repo>`, `<scratch>` and `<venv>`.
+  - **The checks**, shell only:
+    [`2026-11-20_n-lock-v0_1_check.txt`](results/raw/2026-11-20_n-lock-v0_1_check.txt) (`14fb3779…d62c`).
+    - check9 on draft 9, the placed bytes, at `1641948`: exit 0, 42 ok. It covers holes 12 to 14 recomputed (the
+      closure's files reached only by `cd` and the shell's own glob and redirection), hole 13 by jq, 77 witness rows,
+      every anchor's basis, each of the values-check's findings on the lock asserted applied, the structure, and the
+      change from draft 8 confined to the header, §1, §3, §5, §13 and Sources.
+    - check8 on draft 8: exit 0, 72 ok; check7 on draft 7: exit 0.
+    - Draft 6's checks on draft 9: one FAIL, the HOLE count, now 0. Draft 5's checks on draft 9: exit 0.
+  - **The values-check:** one blind values-check (brief `1da437ec…c0d1`) of draft 8, the read raw and this entry as
+    drafted. It found 66 items: 48 CONFIRMED, 10 IMPRECISE, 3 FAIL and 5 NOT CHECKABLE, with 8 observations.
+    - The three FAILs are fixed: the continuation anchor ":310" in draft 9; and two gaps in this entry's departures,
+      the whole-commit `--stat`, and awk, `bc`, a `cd` through a glob into BK's skeleton folder and the kit's verify of
+      `ef105f1`.
+    - Every IMPRECISE item is applied: 51 and 62 in draft 9; 39 in the read raw; 11, 14, 22, 28, 29, 30 and 33 here.
+    - Of the NOT CHECKABLE items, 9's suggested wording is applied in the read raw. 10, 13 and 17 are the
+      coordinating session's words and Code's question, left as stated. 36 is this commit's own count, which the gate
+      prints.
+    - Observations 2 to 5 are applied in draft 9 and 6 here; 7 is declared below; 1 and 8 are met by the FAILs' fixes.
+    - The edits are checked by tool: check9 asserts each finding on the lock applied, and a check of the read raw and
+      this entry finds each finding on them applied, 22 of 22.
+
+    The report is committed whole, with one scrub (a scratch root's folder name it quoted as a search string), as
+    [`2026-11-20_n-lock-v0_1_valuescheck.md`](results/raw/2026-11-20_n-lock-v0_1_valuescheck.md) (`d75f9313…bff4`).
+  - **Departures, declared for the seat to class** (Code's, from `ef105f1`'s commit to this one; Code's sweeps of its
+    own commands, 88 since v7 landed, then 193 and 226 since `ef105f1`'s commit, the last ending at itself, found no
+    others):
+    - two breaches of the guard-marker rule, while drafting draft 6, disclosed to the coordinating session then:
+      - `ls -1 LOCK-* PROPOSAL-n* ADDENDUM-n*` at the root, whose glob put p's three lock files, whose names hold the
+        marker, in `ls`'s argv;
+      - a loop naming one of those files in the command's text, and so in `git log`'s and `sed`'s argv.
+      No Python ran then.
+    - one `git show --stat --format=%h d85fc34 | head -20`: a whole-commit `--stat` with no pathspec, a form item 1
+      does not list. That commit holds RESULTS.md and two raws, nothing under `data/`.
+    - nine jq reads of Code's own transcript: four recovering the commands the riders quote verbatim, one finding the
+      interval cross-check's invocation, and four for the sweeps of Code's commands behind this list, one of them a
+      check for subagent launches. A tenth failed before reading: a zsh loop without word splitting, its redirection
+      refused, nothing written. And two jq reads of the values-checker's task output, the hand-back's message only (its
+      keys, then the message).
+    - two `git diff --name-status` between commits, and the same form inside the second hop's script and check8, with
+      item 3's pathspec but without the mf3 exclusion; no range touched `data/mf3`, so nothing under it was listed.
+    - awk: Code's anchor and check tools, the plan cross-check, one memory edit, and line-numbered reads of RESULTS.md
+      and the routing raw; one `bc -l` for 1 − 0.99^48.
+    - one `cd` through a glob into BK's skeleton folder, with `ls` and a jq read there; and the two windows' `cd`
+      through a glob to the interpreter, as their riders state.
+    - the kit's verify of `ef105f1`, after its commit.
+    - Reads, stated plainly:
+      - jq over `data/n/gvec/gvec.json`, `data/n/gvec/gvec_cosines.json`, `results/raw/2026-11-19_n-gvec-v1_gvec.json`,
+        `data/n/gcal/gcal.json`, `data/n/gcal/dose_map.json` and `data/n/gates/G-ANL-n.json` (the last one's byte count
+        by `wc -c`), and over the first record of `data/n/ids/sessions.jsonl` and of one BK skeleton file;
+      - `sed -n` and `grep` over committed code, RESULTS.md and the raws; the seven cited files at `516b60f` and
+        `b6ea27f`, and RESULTS.md at `1641948`, through `git show`;
+      - `git show`, `diff`, `log`, `grep`, `ls-files`, `hash-object` and `rev-parse` over committed files, with item
+        3's pathspec wherever a command traverses the tree, but for the `--stat` above; `ls-tree` and `cat-file -s`
+        inside the kit's digest function, over `valence_core/n/`;
+      - the heads of two lock-placement raws, of RESULTS.md and of the routing raws, and one `ls | grep -c` with
+        bracketed marker patterns over `valence_core/n/`;
+      - the closure's twelve files, hashed by shell;
+      - the two shell cross-checks, run and re-run (the interval one reaches BK's skeleton files by `cd` and a glob
+        inside its script);
+      - `wc -c` of the answers of 2026-11-20, of scratch files and of the shared notes; `git diff --no-index
+        --numstat` between Code's drafts; `ls`, `ls -p`, `ls -A` and `ls -la` of scratch folders (scratch metadata);
+        memory writes; the shared notes.
+    - the values-checker's, as its report states them:
+      - author names printed by `git log --format='%h %an'`, where item 1 lists ids, subjects and commit times;
+      - `git ls-tree` without `--name-only` on four `valence_core` folders at `1641948` and `516b60f`, which printed
+        blob ids with mode and type and no size;
+      - `git log --format=%h -- <path>` and clean checks naming data files outside ckpt, reports and mf3 without item
+        3's pathspec;
+      - one failed `echo` in zsh;
+      - one stray environment assignment before `cut`.
+  - **Committed by path:**
+    - `results/raw/2026-11-20_n-lock-v0_1_code-to-design_read.md`, `_plan-sha.md`, `_plan-sha_out.txt`,
+      `_interval.md`, `_interval_out.txt`, `_check.txt` and `_valuescheck.md`;
+    - this entry.
+
+    `LOCK-n.md` is placed at the root untracked, as its bytes above. The commit-time count of the home-folder prefix
+    over the staged diff is 0. Nothing ran on a model. Not pushed. Next: the seat's read of `LOCK-n.md`, with Q1; then
+    n v0.2 §8 step 10.
+
 - 2026-11-20 — **n — G-ANL-n's canonical run on the pinned dose map (n v0.2 §3 "G-ANL-n", §8 step 9): PASS.
   `scripts/n_analyze.py ganl --dose-map data/n/gcal/dose_map.json` ran once, on v7 at `b6ea27f`, in a battery window
   the coordinating session granted: its battery 242/242, every one of the 246 coverage ids reached, and the pinned

@@ -1,0 +1,290 @@
+LOCK-n v0.1, the draft placed untracked as LOCK-n.md: Code's checks, shell only (bash, git, shasum, awk, sed, tr, grep,
+cut, wc, cmp, diff, jq; no Python), at HEAD 1641948, PI date 2026-11-20.
+
+The draft: Code's draft 9, sha256 5acca00f55d19516198cceb1035216b08f514c60045e4ec306790f3a7611586a, 1010 lines;
+LOCK-n.md is placed as these bytes in the commit window. Its template, with @HEAD@ for the anchors' commit, is
+filled with 1641948. Draft 9 is draft 8 (4d16aee3b5a9faa1541b11a3b1870e6e10fa821c601fd25de33895e1426fa925, 994
+lines) with one blind values-check's findings on the lock applied.
+
+The scripts, in Code's scratch (sha256):
+  check9.sh        af62b764aabd7669c9ebd4ef70814e8774bc097fe6bce5fb9cde8cbfb24d1680
+  check8.sh        453ce5e28ef9737c2404de1ae6f7e19f64b2cdaf640bd3bf55a5026281bc3f15
+  check7.sh        b1aa7c18b5d5b293d78962be823ef4ba2645499620f6f59c21f19c0194f61bde
+  check6.sh        9bde785559601e5802675513fc8a02ab445a89bfc940db87cedb718c03074a75
+  check5.sh        5b366e41c5fc544d6eb56c85ab7eeb1afa299450740a064c83223f0b1bf2a126
+  anchors.awk      c9a18da34f9b502ebbf25a5672b20f684fbefffe3031f79c69544042d8f28321
+  repin.awk        be2871e83ffa2fddd8e174fb170013b1e073e87474ea725fc60256c2e66c36d5
+  repin_apply.awk  754bbff065ae1a083d3cf7b942700c491661ec80b260f2df5db4250784edddbc
+  norm.awk         33a22cd0b945d9ade854aa7f7ce7fab523131707eadcdf40c8cce68cc2b5372a
+  repin_h.sh       f4e21adaa989786b2621b92b10fefe75264e71c92ff58f0bf52e4c6f69b1acd8
+  witness9.txt     1575da2e1ecd6be51a580175583699876ff6db040c0537287b76b19d26371be3
+
+What check9.sh asserts (each ok or FAIL line below is one assertion; it exits 1 on any FAIL):
+  the commit; draft 8 and its template as checked; the draft is its template filled; hole 13 by shasum and jq;
+  holes 12 and 14 and the closure recomputed (the closure's files reached only by cd and the shell's own glob and
+  redirection, the table compared inside awk); 77 witness rows, each a phrase in its cited lines at 1641948 and the
+  anchor cited in the draft; every anchor's basis (draft 8's own at this commit, or a witness row); no bare
+  continuation anchor outside quotes; m:N defined; each of the values-check's findings on the lock applied (the old
+  phrase gone from draft 8, the new one in the draft); no HOLE or placeholder; widths; the gate line once; the lock's
+  two lines; and the change from draft 8 confined to the header, §1, §3, §5, §13 and Sources.
+
+The "HOLE lines" counts below differ by pattern: check9, check8 and check6 count HOLE bullets, of which the draft has
+none; check5 counts the word **HOLE** anywhere, which the draft's opening note holds once ("every value not yet fixed
+is a **HOLE** naming the step that fills it").
+
+=== check9.sh on the draft, at 1641948: exit 0
+ok   HEAD is 1641948
+ok   draft 8 and its template as checked, draft 8 its template filled
+ok   the draft is draft 9's template with @HEAD@ = 1641948
+ok   hole 13: G-ANL-n.json at 1641948, clean, once in full
+ok   jq: verdict PASS, analyzer v7, seven points unmerged, the reach as §9 states it
+ok   hole 12: n_analyze.py at 1641948, clean, once in full
+ok   the schema pin: ef105f1's schema.py, unchanged, at n_analyze.py:3050, once in full
+ok   ADDENDUM-n3: bound at n_analyze.py:77, named in §23
+ok   PROPOSAL-n-bk-reconciliation-v0_2.md: clean at 1641948, its sha256 in the draft
+ok   ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md: clean at 1641948, its sha256 in the draft
+ok   ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md: clean at 1641948, its sha256 in the draft
+ok   ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md: clean at 1641948, its sha256 in the draft
+ok   data/n/ids/MANIFEST.json: clean at 1641948, its sha256 in the draft
+ok   results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md: clean at 1641948, its sha256 in the draft
+ok   results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md: clean at 1641948, its sha256 in the draft
+ok   hole 14: the package at ef105f1 = 1641948 = the worktree
+ok   the shell form gives 516b60f's blobs idsv:195's figure
+ok   the move to d3415b10…a519 at 616e940
+ok   the move to e40c9871…9523 at bc50244
+ok   the move to 06b55761…1d39 at ef105f1
+ok   no valence_core file outside the package changed since 516b60f; the worktree is 1641948's
+ok   the closure: 12 files at idsv's sha256s now; §18's table the same 12 rows
+ok   77 witness rows checked
+ok   every anchor: draft 8's own at this commit, or a witness row
+ok   R anchors: 98, as at draft 8
+anchors in the draft: 556
+ok   no bare continuation anchor outside quotes
+ok   m:N defined in the Conventions; its file untouched since 516b60f
+ok   applied: item 60, the continuation anchor
+ok   applied: item 62, the span sentence
+ok   applied: item 51, the ans19:51 quotation
+ok   applied: observation 3, the seed row
+ok   applied: observation 4, the site quote anchored
+ok   applied: observation 5, draft 7's note
+ok   observation 4: the raw in the Sources, at its commit
+ok   the Draft 9 note
+ok   no HOLE left
+ok   no placeholder left
+ok   no prose line over 120 characters
+ok   the gate line once, alone
+ok   the lock's two lines, once each, whole
+  changed lines (old + new) in Sources 1
+  changed lines (old + new) in header 26
+  changed lines (old + new) in §1 8
+  changed lines (old + new) in §13 2
+  changed lines (old + new) in §3 7
+  changed lines (old + new) in §5 2
+ok   the diff from draft 8 ran and found changes
+ok   the change from draft 8 is confined to the header, §1, §3, §5, §13 and Sources
+lines: 1010; sha256 5acca00f55d19516198cceb1035216b08f514c60045e4ec306790f3a7611586a
+
+=== check8.sh on draft 8 (994 lines), at 1641948: exit 0
+ok   HEAD is 1641948
+ok   1641948's parent is b6ea27f
+ok   draft 7 unchanged
+ok   the draft is draft 8's template with @HEAD@ = 1641948
+ok   b6ea27f..1641948 changed .gitignore and RESULTS.md and added the artifact and two raws
+ok   hole 13: G-ANL-n.json at 1641948, clean
+ok   hole 13's value once in full
+ok   the artifact's path in the draft
+ok   the artifact is 32,018 B (R:31–35)
+ok   jq: verdict PASS, analyzer v7, seven points unmerged, the reach as the draft states
+ok   the artifact's d_eq and d_20 are gcal.json's, as §4 and §9 print them
+ok   §9 states the reach
+ok   hole 12: n_analyze.py at 1641948 = b6ea27f's, clean
+ok   hole 12's value once in full
+ok   the schema pin: ef105f1's schema.py, unchanged, at n_analyze.py:3050, once in full
+ok   ADDENDUM-n3: worktree, 1641948 and 0744136 agree; bound at :77; in §23
+ok   PROPOSAL-n-bk-reconciliation-v0_2.md: clean at 1641948, its sha256 in the draft
+ok   ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md: clean at 1641948, its sha256 in the draft
+ok   ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md: clean at 1641948, its sha256 in the draft
+ok   ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md: clean at 1641948, its sha256 in the draft
+ok   data/n/ids/MANIFEST.json: clean at 1641948, its sha256 in the draft
+ok   results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md: clean at 1641948, its sha256 in the draft
+ok   results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md: clean at 1641948, its sha256 in the draft
+ok   n_analyze.py:70–77 holds four bound sha256s
+ok   hole 14: the package at ef105f1 = 1641948 = the worktree
+ok   no valence_core/n file changed since ef105f1
+ok   hole 14's value once in full
+ok   the shell form gives 516b60f's blobs idsv:195's figure, in the draft in full
+ok   the move to d3415b10…a519 at 616e940
+ok   the move to e40c9871…9523 at bc50244
+ok   the move to 06b55761…1d39 at ef105f1
+ok   no valence_core file outside the package changed since 516b60f
+ok   the package's import lines since 516b60f: directions (within) and shutil (stdlib) only
+ok   valence_core's worktree is 1641948's (tracked files)
+ok   the closure: idsv:196–207's 12 files, each at its sha256 now
+ok   §18's table: the same 12 rows, in idsv's order
+ok   69 witness rows checked
+ok   every anchor: hop 2's map, draft 7's own on an unchanged file, or a witness
+ok   anchors in the draft: 550
+ok   R anchors: draft 7's 94 and hole 13's four
+ok   PROPOSAL-n-bk-reconciliation-v0_2.md: unchanged since 516b60f
+ok   ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md: unchanged since 516b60f
+ok   ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md: unchanged since 516b60f
+ok   CLAUDE.md: unchanged since 516b60f
+ok   ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md: added at 0744136, unchanged since
+ok   results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md: added at f4b3e73, unchanged since
+ok   results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md: added at d639bdd, unchanged since
+ok   results/raw/2026-11-19_n-ids-v_render.md: unchanged since 516b60f
+ok   results/raw/2026-11-19_second-sitting_pi-routing.md: added at ab72d0f, unchanged since
+ok   results/raw/2026-11-20_n-gcal-v1_out.txt: added at db00d6d, unchanged since
+ok   valence_core/n/keys.py: unchanged since 516b60f
+ok   valence_core/n/sessions.py: unchanged since 516b60f
+ok   valence_core/n/ids.py: unchanged since 516b60f
+ok   valence_core/n/verify.py: unchanged since 516b60f
+ok   valence_core/n/probe.py: unchanged since 516b60f
+ok   valence_core/n/guard.py: unchanged since 516b60f
+ok   valence_core/m/resume.py: unchanged since 516b60f
+ok   data/n/ids/MANIFEST.json: unchanged since 516b60f
+ok   data/n/gates/G-ANL-n.json: added at 1641948, unchanged since
+ok   quoted from ans19b:58–58, in the draft
+ok   quoted from ans20:45–45, in the draft
+ok   quoted from runner.py:40–41, in the draft
+ok   quoted from ans20:54–54, in the draft
+ok   quoted from ans19b:71–71, in the draft
+ok   no HOLE left
+ok   no placeholder left
+ok   no prose line over 120 characters
+ok   the gate line once, alone
+ok   the lock's two lines, once each, whole
+ok   draft 7's template unchanged, and draft 7 is it filled
+  changed lines (old + new) in Sources 1
+  changed lines (old + new) in header 7
+  changed lines (old + new) in §24 8
+  changed lines (old + new) in §9 11
+ok   the diff from draft 7 ran and found changes
+ok   the change from draft 7 is confined to the header, §9, §24 and Sources
+lines: 994; sha256 4d16aee3b5a9faa1541b11a3b1870e6e10fa821c601fd25de33895e1426fa925
+
+=== check7.sh on draft 7 (sha256 9ea4d696270ab693de30d9f07349e96087f4e1c6d4f58b987afb11bfaf7e312b, 979 lines), the
+=== pass's first hop, every anchor at b6ea27f: exit 0
+ok   draft 6b unchanged
+ok   draft 7 is its template with @HEAD@ = b6ea27f
+ok   b6ea27f resolves
+ok   hole 12: n_analyze.py at b6ea27f
+ok   n_analyze.py: the worktree's blob is b6ea27f's
+ok   hole 12's value once in full
+ok   ef105f1's schema.py
+ok   schema.py unchanged at b6ea27f
+ok   n_analyze.py:3050 pins it
+ok   the schema pin once in full
+ok   ADDENDUM-n3: the worktree, b6ea27f and 0744136 agree
+ok   n_analyze.py:77 binds it
+ok   §23 names ADDENDUM-n3 in full
+ok   PROPOSAL-n-bk-reconciliation-v0_2.md: clean at b6ea27f, its sha256 in the draft
+ok   ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md: clean at b6ea27f, its sha256 in the draft
+ok   ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md: clean at b6ea27f, its sha256 in the draft
+ok   ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md: clean at b6ea27f, its sha256 in the draft
+ok   data/n/ids/MANIFEST.json: clean at b6ea27f, its sha256 in the draft
+ok   results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md: clean at b6ea27f, its sha256 in the draft
+ok   results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md: clean at b6ea27f, its sha256 in the draft
+ok   n_analyze.py:70–77 holds four bound sha256s
+ok   hole 14: the package at ef105f1 = b6ea27f = the worktree
+ok   no valence_core/n file changed since ef105f1
+ok   hole 14's value once in full
+ok   the shell form gives 516b60f's blobs idsv:195's figure, in the draft in full
+ok   the move to d3415b10…a519 at 616e940
+ok   the move to e40c9871…9523 at bc50244
+ok   the move to 06b55761…1d39 at ef105f1
+ok   no valence_core file outside the package changed since 516b60f
+ok   the package's import lines since 516b60f: directions (within) and shutil (stdlib) only
+ok   valence_core's worktree is b6ea27f's (tracked files)
+ok   the closure: idsv:196–207's 12 files, each at its sha256 now
+ok   §18's table: the same 12 rows, in idsv's order
+ok   62 witness rows checked
+ok   every anchor in draft 7 is mapped from 6b, a witness, or 6b's own on an unchanged file
+ok   anchors in draft 7: 546 (at least 500, so the extraction ran)
+ok   PROPOSAL-n-bk-reconciliation-v0_2.md: unchanged since 516b60f
+ok   ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md: unchanged since 516b60f
+ok   ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md: unchanged since 516b60f
+ok   CLAUDE.md: unchanged since 516b60f
+ok   ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md: added at 0744136, unchanged since
+ok   results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md: added at f4b3e73, unchanged since
+ok   results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md: added at d639bdd, unchanged since
+ok   results/raw/2026-11-19_n-ids-v_render.md: unchanged since 516b60f
+ok   results/raw/2026-11-19_second-sitting_pi-routing.md: added at ab72d0f, unchanged since
+ok   results/raw/2026-11-20_n-gcal-v1_out.txt: added at db00d6d, unchanged since
+ok   valence_core/n/keys.py: unchanged since 516b60f
+ok   valence_core/n/sessions.py: unchanged since 516b60f
+ok   valence_core/n/ids.py: unchanged since 516b60f
+ok   valence_core/n/verify.py: unchanged since 516b60f
+ok   valence_core/n/probe.py: unchanged since 516b60f
+ok   valence_core/n/guard.py: unchanged since 516b60f
+ok   valence_core/m/resume.py: unchanged since 516b60f
+ok   data/n/ids/MANIFEST.json: unchanged since 516b60f
+ok   quoted from ans19b:58–58, in the draft
+ok   quoted from ans20:45–45, in the draft
+ok   quoted from runner.py:40–41, in the draft
+ok   quoted from ans20:54–54, in the draft
+ok   quoted from ans19b:71–71, in the draft
+ok   one HOLE: §9's hole 13, G-ANL-n's artifact
+ok   no placeholder left
+ok   no prose line over 120 characters
+ok   the gate line once, alone
+  changed lines (old + new) in Sources 4
+  changed lines (old + new) in header 24
+  changed lines (old + new) in §1 4
+  changed lines (old + new) in §10 17
+  changed lines (old + new) in §13 11
+  changed lines (old + new) in §15 9
+  changed lines (old + new) in §18 25
+  changed lines (old + new) in §21 20
+  changed lines (old + new) in §23 14
+  changed lines (old + new) in §24 12
+  changed lines (old + new) in §6 4
+  changed lines (old + new) in §9 11
+ok   the diff from 6b (re-pinned) ran and found changes
+ok   the change is confined to header, §1, §6, §7, §9, §10, §13, §15, §18, §21, §23, §24, Sources
+lines: 979; sha256 9ea4d696270ab693de30d9f07349e96087f4e1c6d4f58b987afb11bfaf7e312b
+
+=== check6.sh (draft 6's checks: the records' sha256s, the power sentence, the two tables, the seat's quotes and draft
+=== 5's) on the draft: exit 1, its one FAIL the HOLE count, which it fixes at draft 6's 4; the draft holds none
+ok   ans20 is the committed raw
+ok   draft 5 unchanged
+ok   gvec_cosines.json at the sha256 hole 5 cites
+ok   gcal.json at the sha256 §4 cites
+ok   data/n/gvec/gvec_cosines.json clean at HEAD
+ok   data/n/gvec/gvec.json clean at HEAD
+ok   data/n/gcal/gcal.json clean at HEAD
+ok   gvec.json's cosines.named equals gvec_cosines.json
+ok   the power sentence quoted once, verbatim (ans20:43)
+ok   the power sentence runs from 'the tile is 160 reads;' to 'and not the others.'
+ok   the six cosine rows, each once, as jq prints them
+ok   the five batch rows, each once, as jq prints them
+ok   gcal.json's figures hold exactly five batches
+ok   11 ans20 quotes checked against their cited lines and the joined draft
+ok   25 of draft 5's quotes checked in the joined draft
+ok   ans20's short form once
+ok   the gate line once
+ok   no other line begins with the gate's words
+ok   no placeholder left
+ok   no prose line over 120 characters
+FAIL HOLE lines: 0
+OPEN lines: 1
+lines: 1010
+
+=== check5.sh (draft 5's checks: ADDENDUM-n3's paragraphs and OPENs quoted verbatim, the gate line, widths) on the
+=== draft: exit 0
+ok   A-n3:54 quoted once, verbatim
+ok   A-n3:56 quoted once, verbatim
+ok   A-n3:62 quoted once, verbatim
+ok   A-n3:64 quoted once, verbatim
+ok   A-n3:60's three OPENs rebuild its text from OPEN 1 on
+ok   OPEN 1 quoted once
+ok   OPEN 2 quoted once
+ok   OPEN 3 quoted once
+ok   no placeholder left
+ok   the gate line once
+ok   no other line begins with the gate's words
+ok   draft 4b unchanged
+ok   no prose line over 120 characters
+HOLE lines: 1
+OPEN lines: 1
+lines: 1010
