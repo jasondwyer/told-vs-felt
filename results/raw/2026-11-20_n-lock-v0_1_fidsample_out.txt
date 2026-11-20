@@ -1,0 +1,19 @@
+numpy 2.5.1; m's stream known answer holds
+session set sha256 be50011a5ab1e8a4261dbde72afc84313d3bdeba9e40078272928bd497c3ba84, 160 sessions
+sampled 15 of 160
+floor_b1/6
+floor_b1/8
+floor_b2/14
+floor_b3/15
+floor_b5/28
+floor_b7/36
+neu_b0/56
+neu_b1/73
+neu_b1/77
+neu_b2/82
+neu_b3/107
+neu_b3/111
+neu_b4/122
+neu_b4/132
+neu_b5/148
+sha256 of the sampled ids joined by newlines, no trailing newline: 3c70f5fff77112cc60d66b24617d13d774aabbfe8540a75a83c1b250acffa81d

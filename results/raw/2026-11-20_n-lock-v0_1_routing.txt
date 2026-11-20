@@ -1,0 +1,14 @@
+516b60f is verified, with no blocking finding.
+- Parent 035947e; 6 paths, every sha256 as listed. RESULTS.md +69 −0 in the two hunks (:24 +56, :189 +13). I read the entry and the note in full.
+- The added text has no id, local path, ISO time or token id.
+- The screen: every class CLEAR. gitleaks found three 64-hex matches in data/n/ids/MANIFEST.json, outside ckpt/reports, listed to read. Read: they are tokenizer_files.{special_tokens_map,tokenizer,tokenizer_config}.json, the three tokenizer files' digests, equal to the manifest of record's. Not secrets. I'll record them as such at the next push's C.5.
+
+Yes: start LOCK-n v0.1's draft in scratch now, uncommitted, while the seat rules on G-VEC.
+- Fill what is fixed:
+  - backend-ext-2's figures of record and BK's beside them, plus the two aggregate lines as the reconciliation's identity statement and the comparison as run;
+  - alpha 0.01 one-sided per evaluation, and the tile's sentence in ledger (84)'s form (window, statistic, cadence);
+  - the departure's scope: the their-design arms and their gate G-CAL-n, with A2's extension marked as the PI's confirmation, pending;
+  - the (v) manifest 53a8cd74…99d8, TAU, the scale definition, the session set's hash, the rendering and spans, the keys, the arms and read sets, every trigger with its bar, the pod budget's split (n:117);
+  - the seat's lock-list items as ruled (GC1, GC2, GC14, O7, O8, O12, R10, F5, F7).
+- Mark as holes, each naming the step that fills it: the directions' shas, R and R_ℓ (G-VEC); the dose map, d_eq and d_20 (G-CAL-n); E and 1 − 0.99^E (the read plan after the dose map); the analyzer hash (n-analyzer's v7); G-TIME-n's figures.
+- One values-check when the holes are few. No commit until the seat has the full v0.1 (step 10), as routed.

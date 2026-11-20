@@ -21,6 +21,108 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **n — LOCK-n v0.1 — COMMITTED (PROPOSAL-n v0.2 §8 step 10), on the seat's read of draft 9 and the
+  PI's routing of 2026-11-20, second sitting, item N.1 ("Route as given"): `LOCK-n.md`, sha256 `88d9fe7b…e9d5`, 1058
+  lines, Code's draft 10, which is draft 9 with the seat's seven text edits, its §4's sentence in §10's G-VER row, and
+  the values of its two riders, each run once in one model-free battery window. The seat's raw, the two riders and
+  their outputs, the routing raw and this entry are committed by path with it. Nothing ran on a model or on the
+  box.**
+  - **Headline:** LOCK-n v0.1 is of record from this commit. `LOCK-n.md`, sha256
+    `88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5`, 1058 lines, is the figure every stage identity
+    from here carries as `lock_sha256` (schema.py:453; the seat's read, §6). The routing, the PI's item N.1 as the
+    coordinating session relayed it, verbatim:
+    > 1. LOCK-n v0.1 (411b15c's draft, 5acca00f…586a): the lock stands. Before step 10: (a) one battery window, model-free, with two riders — the package's own hashes at the lock's HEAD (Q1: a different digest or closure is a STOP for the seat), and the realized fidelity sample under n-fid|{s}, its count and the sha256 of its ids, outputs committed byte for byte as raws (§3); (b) the seven edits of §2 — the status line at commit; §3's superseded-convention bullet reframed; the scratch source replaced by the routing committed as a raw; §5's sample digest and N4-schedule sentence; §18 citing the hashes run; §22's standing line (iv) and §23 citing this raw; (c) the changed claims re-checked by tool. Then commit "LOCK-n v0.1 — COMMITTED" by path (n §8 step 10) with this raw, the riders, the routing raw and the entry, the lock's sha256 in the entry [go].
+
+    The seat's read,
+    [`2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`](results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md)
+    (`794ee42f…f084`, 81 lines, placed by the PI untracked and committed here by path on the routing), finds every
+    value it re-read at its source and rules the BUILD's open flags (its §4); nothing in the design changes.
+  - **The riders** (the seat's §3), in one battery window the coordinating session granted on 2026-11-20: five calls,
+    each its own, at HEAD `411b15c`, model-free, the interpreter at `nice -n 19` with `-I` and `-B`, Q-F3's campaign
+    beside and untouched; the pre-check and the after-check, shell scripts, both PASS.
+    - **Q1, the closure:** the package's own `hashes` (`scripts/n_sessions.py hashes`) printed `06b55761…1d39` and the
+      twelve files of §18 at §18's sha256s, its 13 lines byte for byte §18's claim (`cmp`): no STOP. Rider
+      [`2026-11-20_n-lock-v0_1_hashes.md`](results/raw/2026-11-20_n-lock-v0_1_hashes.md) (`9f2dba7c…bacd`); output
+      [`2026-11-20_n-lock-v0_1_hashes_out.txt`](results/raw/2026-11-20_n-lock-v0_1_hashes_out.txt) (`a853932b…522b`).
+    - **The realized fidelity sample:** 15 of 160 sessions under `n-fid|{s}` (6 floor, 9 neutral), the sha256 of their
+      ids in the session set's order `3c70f5ff…a81d`; the PIN's words evaluated directly beside `keys.fid_sampled`,
+      and numpy's stream known answer holding. A shell derivation of the keyed draw is not cheap (numpy's SeedSequence
+      and PCG64; this laptop's `awk` and `bc` have no bitwise operators), so the shell re-derived the count and the
+      digest from the printed ids. Rider
+      [`2026-11-20_n-lock-v0_1_fidsample.md`](results/raw/2026-11-20_n-lock-v0_1_fidsample.md) (`c5fedf67…013d`);
+      output [`2026-11-20_n-lock-v0_1_fidsample_out.txt`](results/raw/2026-11-20_n-lock-v0_1_fidsample_out.txt)
+      (`bb920829…b95e`).
+  - **The edits** (the seat's §2 and §4), in draft 10, each as the seat worded it:
+    1. the status line;
+    2. §3's first-ruled capture convention, reframed;
+    3. the routing committed as a raw and named in the header and the Sources:
+       [`2026-11-20_n-lock-v0_1_routing.txt`](results/raw/2026-11-20_n-lock-v0_1_routing.txt) (`8b5c09cd…83c0`, 14
+       lines), the coordinating session's routing of the draft, of 2026-11-19: lines 2–15, byte for byte, of the copy
+       Code saved on receipt (`9fc5cd6d…b7d0`, 16 lines, 1,929 bytes). Its lines 1 and 16, the message wrapper, are
+       not kept: line 1 names the sending session by its id, which no committed text carries. The coordinating
+       session's answer of 2026-11-20 chose this form and checked that lines 2–15 hold no session id;
+    4. §5's realized sample pinned and Code's flag closed; §13's power sentence marked "[the realized sample: 15
+       sessions, §5]", in square brackets inside the quotation (the coordinating session had no objection);
+    5. §5's N4 sentence, verbatim, after Code's flag;
+    6. §18 citing the `hashes` run, its printed digest line quoted;
+    7. §22's standing line (iv), and §23's raw by path and sha256;
+
+    and §4's sentence, in the on-fire cell of §10's G-VER row: a G-VER-STOP of any of its causes, the six named, "a
+    STOP for the seat, never a pause and never an exclusion; no read is launched and the campaign does not start". The
+    Conventions gain `ans20b:N`; a Draft 10 note joins the header's history; the Sources gain the seat's raw and the
+    riders.
+  - **Left as the lock has them, declared for the seat** (Code's call, on the ground that neither §2 nor §4 lists
+    them):
+    - §5: "Code's declared values; the seat has not ruled the two seeds in the raws read." (§4 accepts the seeds as
+      pinned);
+    - §21: "**The BUILD's open flags** (R:5372–5407), with no ruling on them in the seat's raws read but one:" (§4
+      rules them all);
+    - §24: "From here: LOCK-n v0.1, committed by path at §8 step 10, once the seat has the full v0.1;" (this commit
+      is that step).
+  - **The re-check by tool**, shell only, with no subagent and no second full pass: check10, exit 0, 34 ok.
+    - It replays the 13 edits Code made to draft 10, recovered from Code's transcript by jq, on draft 9's bytes, and
+      gets draft 10 byte for byte: nothing else changed.
+    - It checks each edit against its source: the seat's sentences, extracted from its raw by tool; rider 1's printed
+      lines against §18's text and table; rider 2's count and digest against §5 and §13; the routing raw against the
+      saved copy; each `ans20b:N` anchor's witness at its line; MANIFEST's `n4_schedule_sha256`; and the structure (no
+      HOLE, no placeholder, no prose line over 120 characters, the gate line and the lock's two lines once each).
+    - Twelve mutants of draft 10 each fail it on their targeted line.
+  - **The kit:** `kit_place_v2.sh` (`d868c29b…52ae`) is `kit_place.sh` with one kind added, `untr=<sha256>`, for a
+    file already in the working tree, untracked, at that sha256: here `LOCK-n.md` (replaced, from the bytes the seat
+    read, `5acca00f…586a`, by draft 10) and the seat's raw (committed as placed, its bytes unchanged). Its test, in
+    throwaway repositories, passes 7 of 7. `kit_gate.sh` and `kit_verify.sh` are as at `411b15c`.
+  - **Departures, declared for the seat to class** (Code's, from `411b15c`'s commit to this one; Code's sweep of its
+    own shell commands, 83 since that commit, the last ending at itself, found no others):
+    - the coordinating session's two forms, as it named them: (1) the after-check's `find` over `valence_core/`,
+      `scripts/` and `data/n/bk/`, not item 1's pruned form (no ckpt or reports folder is under the three); (2) the
+      pre-check's `git diff --quiet` and `git status --porcelain` naming those folders without item 3's pathspec, the
+      narrow form, with no tree-wide status;
+    - the index checks, `git diff --cached --name-only` without item 3's pathspec, in the pre-check, the after-check
+      and one state check of Code's; the index was empty each time;
+    - jq reads of Code's own transcript, in seven commands: recovering the window's five commands, the awk command, the
+      outputs of calls 1, 3 and 5, the 13 edits the replay uses and the PI's items, and the sweeps behind this list;
+    - throwaway git repositories under Code's scratch for the kit's test (`git init`, `add` and `commit` there; the
+      repository untouched);
+    - `awk` and `bc` probes for bitwise operators (none);
+    - one failed `echo` in zsh, and one `cat -A` that BSD `cat` refused (its output discarded);
+    - the kit's verify of `411b15c` after its commit, and the reads of that commit for the coordinating session's
+      report;
+    - one `pgrep -lf` with bracketed patterns after the window (no process);
+    - the fixture tests of the window's two scripts and of check10, in Code's scratch, and one `rm -r` of a scratch
+      test folder of Code's own before a re-run;
+    - reads, stated plainly: `sed -n`, `grep`, `awk`, `cat` and `wc` over committed code, `LOCK-n.md`, RESULTS.md and
+      the raws; `git show HEAD:data/n/ids/MANIFEST.json` through jq; memory files by name; scratch files; the shared
+      notes, read and written; `ls` and `ls -la` of scratch folders.
+  - **Committed by path:**
+    - `LOCK-n.md`;
+    - `results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`;
+    - `results/raw/2026-11-20_n-lock-v0_1_hashes.md`, `_hashes_out.txt`, `_fidsample.md`, `_fidsample_out.txt` and
+      `_routing.txt`;
+    - this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    Next: G-TIME-n's launch files under v0.1 (item N.2), to the coordinating session first.
+
 - 2026-11-20 — **n — LOCK-n v0.1's draft placed untracked at the root as `LOCK-n.md` for the seat's read, on the PI's
   routing of 2026-11-20, first sitting, item 3: sha256 `5acca00f…586a`, 1010 lines, every anchor at `1641948`, holes
   1–17 filled and 18 v1.0's. Code → design: a STOP for the seat's read, with one question (the closure). The read
