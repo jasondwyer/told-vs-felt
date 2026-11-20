@@ -21,6 +21,119 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **ADDENDUM-n3 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the capture convention of record, the
+  reward axis's 5(d) gate at f = 0.20, and the retention interval under 5(f)(iii)", committed by path as the seat
+  placed it, after its referent check, on the PI's routing of 2026-11-19, third sitting ("Route as given"; item 1,
+  decisions (n-5) [adopt] and (n-6) [confirmed], and §1, §2, §4, §6 and §7 [as ruled]; item 7, [as ruled]).**
+  - **The file.** `ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md` at root, sha256
+    `7f4a7a75b61002b58e62a400e99f4de2abc8ec0646329fdf624ce31540be9313`, 20,327 bytes, re-hashed before the commit.
+    - It is an addendum, not a new version: PROPOSAL-n v0.2 (`30a3d0f5…04f4`) stays the proposal of record, with
+      ADDENDUM-n1 v0.1 (`a61f13d`) and ADDENDUM-n2 v0.1 (`7a54eb9`) (its header).
+    - G-CAL-n's launch files wait on this commit (its §0.3). G-VEC's PASS entry, n-build's, which they are built on
+      (item 3), is in at `e3b48ed`.
+  - **The record of decisions (n-5) and (n-6): the PI's routing, verbatim** (the addendum's §8.2 and §8.3 (2)). The
+    whole paste block, with the PI's word, is committed here as a raw,
+    [`2026-11-19_third-sitting_pi-routing.md`](results/raw/2026-11-19_third-sitting_pi-routing.md), byte for byte as
+    saved on receipt. From it:
+    - its header, "DESIGN → PI → CODE (master session) — PI date 2026-11-19 (third sitting)". The routing thus
+      confirms the date the addendum's header asks the PI to confirm at routing, 2026-11-19;
+    - the PI's word on the block, "Route as given";
+    - its items 1, 7 and 8, verbatim:
+
+      > 1. ADDENDUM-n3 v0.1: referent check of its §8.4 (an unresolved substantive item → STOP); then commit "ADDENDUM-n3 v0.1 — COMMITTED" with this routing verbatim. Decisions: (n-5) §3's gate — the reward_f020 batch and §3.4's decision point (N2 at f = 0.20 iff the lock's coherence line PASSED and the cap does not bind, else f = 0.10 with 0.20 beside) [adopt]; (n-6) §5.3's 5(f)(iii) departure on the S-span arms, as your "as ruled" of the second sitting stands [confirmed]; §1, §2, §4, §6, §7 as the seat's rulings already routed [as ruled].
+
+      > 7. The addendum committed by path after its referent check; close lines on 616e940 and bc50244 citing it; the departures of 616e940, bc50244 and ab72d0f inert (the check-ignore and the checkers' forms included); your item-2 "Go" read as go confirmed by the addendum's (n-5) [as ruled]. The coordinating session's two-commit order (gvec first, gcal after) accepted.
+
+      > 8. The push of ecf349d..HEAD (19 commits at this writing) behind the amended screen [yours].
+
+    - Items 1–5 went verbatim to the n-build session, item 5 also to the pod session, and item 6 verbatim to the
+      n-analyzer session.
+    - Item 1's referent check and commit are carried here, under item 7's "The addendum committed by path after its
+      referent check", as ADDENDUM-n2's were (`7a54eb9`). The relay told n-build so.
+    - Item 8 was done before this block arrived: push #12, `ecf349d..bc50244`, on the PI's "Push now" (its C.5 line
+      below). Origin was at `bc50244` when the block arrived.
+  - **Item 7's other rulings:**
+    - close lines on `616e940`'s and `bc50244`'s entries citing the addendum, committed here, with one on the
+      coordinating session's `ab72d0f` entry for its own items;
+    - the departures of `616e940`, `bc50244` and `ab72d0f` are inert, "the check-ignore and the checkers' forms
+      included";
+    - the coordinating session's reading of the second sitting's item 2, the PI's "Go" read as go with the
+      `reward_f020` batch built, is "confirmed by the addendum's (n-5)";
+    - the coordinating session's two-commit order, the `gvec` delta first and the `gcal` delta after, is accepted.
+  - **Referent check** (§8.4; §8.3 (1)), by a fresh blind checker against every referent §8.4 lists and the other
+    sources the addendum cites, every referent read at `bc50244`: 122 listings, 112 CONFIRMED, 6 IMPRECISE (minor), 2
+    IMPRECISE (substantive), 1 FAIL and 1 NOT CHECKABLE, with 7 observations.
+    - **The two substantive items, graded resolved by the PI's routing, so no STOP under §8.3 (1):**
+      - 78, decision (n-5)'s declined branch as §3.6 and §8.2 (2) word it: the batch kept where the second sitting's
+        offered alternative struck it, and A-n1 §5.3's cap clause passed over. Item 1's "[adopt]" leaves that branch
+        unused; the checker's words are "The adopted branch is unaffected";
+      - 111, §8.2 (4)'s "already routed on 2026-11-19": some of the rulings in §1.2, §2.2–§2.3, §4 and §7 are first
+        made in the addendum. Items 4 and 1 route them: "616e940's and bc50244's readings accepted (…); the review's O5
+        and O6 accepted into A-n3 §2.2–§2.3, B2's second clause not taken (§3.3) [as ruled]"; and "§1, §2, §4, §6, §7
+        as the seat's rulings already routed [as ruled]".
+    - **The FAIL, graded not substantive:** 122, the anchor "valence_core/n/directions.py:10–11 (BK §3.1's sentence)",
+      reworded at `616e940`. §0.1's quotation matches `f4b3e73`'s `directions.py`:11 and the second sitting's §1.2; the
+      checker did not read BK.
+    - **The NOT CHECKABLE item,** 8 (G-VEC's re-run "as the PI reports it"), is recorded at `e3b48ed`, n-build's run
+      entry: PASS at index 32.
+    - The seat may regrade any of the three graded items.
+    - The six minor items and the seven observations are recorded for the seat in the raw, unapplied, since the
+      addendum is committed as placed. Observations 3 and 4 bear on what runs next and went to the n-analyzer and
+      n-build sessions as information.
+    - Raw: [`2026-11-19_addendum-n3_referent-check.md`](results/raw/2026-11-19_addendum-n3_referent-check.md).
+  - **C.5, push #12** (the line owed since that push). `ab72d0f`'s entry put it in the coordinating session's next close
+    line; it is carried here instead, and the close line on that entry points here. `ecf349d..bc50244`, 19 commits,
+    pushed 2026-11-19 on the PI's "Push now", behind the amended screen (`screen4.py` with `gl5.py`, in the form the seat
+    amended on 2026-11-18, fourth sitting, §6).
+    - The screen's six classes were CLEAR over the range.
+    - gitleaks 8.30.1 (default rules) found 5 and exited 1, as it does on any finding. gl5 exited 1, its code for READ
+      items (2 is its halt):
+      - 2 classed as digests by nesting and file, so no halt: `data/n/gvec/gvec.json` at `355e3a2`, and a report file
+        under `data/n/reports` at `9f64305`, a count by path class;
+      - 3 listed to READ, in `data/n/ids/MANIFEST.json` at `516b60f`: its `tokenizer_files` digests, read and cleared
+        at `516b60f`'s check and again at the push.
+  - **Departures, the coordinating session's, for the seat to class:**
+    - at push #12: one `jq` over gitleaks' JSON report that printed each finding's file, commit and 8-character prefix,
+      with the report file's name masked. One finding was a digest inside `data/n/reports`, where item 4 has the screen
+      print a count;
+    - two `jq` reads of subagents' task outputs, each its final message only, to extract the referent check's report
+      and the values-check's (the class n-build declares);
+    - the referent checker's, as its report states them: one `git status --porcelain` on the addendum's path alone;
+      one loop of `git log -1` over ten named commits, printing author dates where item 1 names commit times; one
+      `git show f4b3e73:` of `directions.py`, with a `git log --format` on that path, read only to explain listing 122;
+      reads beyond its brief's named sources;
+      text tools (`sed`, `cut`, `cat -n`, `wc`, `printf` with `grep -c`); and two `git grep` runs with the exclusions.
+      Nothing under `data/` was listed, read or hashed, and no guard marker reached an argv;
+    - the values-checker's, as its report states them:
+      - text tools on named files: `cat -n`, `sed -n` and substitutions, `head`, `tail -c` with `od -c`, `wc -l`,
+        `cut`, `tr`, `printf`, `cmp`, `diff` with process substitution, and `grep`;
+      - reads beyond its named sources: RESULTS.md's head and newest entry starts; greps of the second sitting's answers
+        and of A-n1 beyond their named sections; the list of record's items, diffed against the referent brief; and one
+        `git log` on A-n1's path;
+      - one `git log --no-walk` on five named commits, and one `git show --name-status` of `7a54eb9` with a format
+        printing its author and commit time;
+      - name-only listings of three scratch folders, gitleaks' JSON report named there and not opened;
+      - one zsh error that ended a call.
+      Nothing under `data/` was listed, read or hashed, and no guard marker reached an argv.
+  - **Values-check:** one blind pass over this entry's draft, the three close lines, the routing raw's head, and the
+    referent-check raw's header and grading.
+    - 120 items: 99 CONFIRMED, 8 IMPRECISE, 0 FAIL, 13 NOT CHECKABLE; and 7 observations.
+    - The eight IMPRECISE items are applied, each in the checker's words or near them.
+    - The seven observations are applied:
+      - 1, the `jq` extractions declared;
+      - 2, `e3b48ed` named, with the NOT CHECKABLE listing's disposition;
+      - 3, the regrade line aligned;
+      - 4, item 1's third bracket in the heading;
+      - 5, the C.5 line's change of place stated;
+      - 6, the exit statuses and gl5's READ class stated;
+      - 7, "correct" bounded to the referents the checker read.
+    - The NOT CHECKABLE items are the coordinating session's acts, words and plans, and the commit's own facts.
+    - The edits were checked by tool, 41 of 41; no second full pass was made.
+    - Raw: [`2026-11-19_addendum-n3_valuescheck.md`](results/raw/2026-11-19_addendum-n3_valuescheck.md).
+  - **Committed by path:** the addendum; the routing raw; the referent-check raw; the values-check raw; this entry;
+    and three close lines, on the entries of `616e940`, `bc50244` and `ab72d0f`. The commit-time count of the
+    home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+
 - 2026-11-19 — **n — G-VEC's re-run on n's box, from the gvec delta's commit `616e940`: PASS at index 32. R over
   positions 1..n, the convention of record, is within 2% of 25.49 at both candidate indices, and the site rule took the
   nearer, 32 (n §2.3; ADDENDUM-n1 §6.1; the seat's answers of 2026-11-19, second sitting, §1.2–§1.5; the PI's routing,
@@ -235,6 +348,19 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
     **Next:** G-CAL-n's launch files after G-VEC's PASS and ADDENDUM-n3's commit, with the time at 240 turns (B3).
+  - **Close (PI date 2026-11-19, third sitting), the coordinating session's, item 7: the seat's ruling on this delta,
+    ADDENDUM-n3 v0.1.** The addendum,
+    [`ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md`](ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md)
+    (sha256 `7f4a7a75…9313`), committed by path with this line on the PI's "Route as given", carries this delta into
+    the design chain: the arrival score (§2.1), the gate's coherence batch, `reward_f020` (§3.3), and G-CAL-n's form of
+    record (§4).
+    - Item 1 adopts the gate: "(n-5) §3's gate — the reward_f020 batch and §3.4's decision point (N2 at f = 0.20 iff
+      the lock's coherence line PASSED and the cap does not bind, else f = 0.10 with 0.20 beside) [adopt]".
+    - Item 4 accepts this delta's readings, as quoted in the close line on `616e940`'s entry, and the review's three
+      items for the seat: "the review's O5 and O6 accepted into A-n3 §2.2–§2.3, B2's second clause not taken (§3.3)".
+    - **Departures:** this entry's are inert (item 7).
+    - **Values-check:** with the coordinating session's ADDENDUM-n3 entry at the Log's head, which gives the check
+      and its raw.
 - 2026-11-19 — **n — G-VEC's delta on the seat's second sitting: the capture convention of record (position 0 of every
   passage out of its mean and out of R) and the diagnostic block, with the stale sentence and `directions.py`'s
   readings; G-VEC's first run's STOP record moved to `results/raw/`; committed by path (the answers of 2026-11-19,
@@ -310,6 +436,18 @@ applied to CLAUDE.md.
     **Next:** launch files v2 and the `hashes` window; to the coordinating session, then the pod session; the smoke,
     then the run of record, on "launch cleared". A PASS fills LOCK-n v0.1's holes 1–7 and opens G-CAL-n's launch
     files, which also wait for ADDENDUM-n3's commit; G-CAL-n's delta is built meanwhile.
+  - **Close (PI date 2026-11-19, third sitting), the coordinating session's, item 7: the seat's ruling on this delta,
+    ADDENDUM-n3 v0.1.** The addendum,
+    [`ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md`](ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md)
+    (sha256 `7f4a7a75…9313`), committed by path with this line on the PI's "Route as given", makes this delta's
+    convention the convention of record: "position 0 of every passage is left out of its mean and out of R, the
+    squared norms and the count both" (§1.1). Item 4 accepts this delta's readings with `bc50244`'s: "616e940's and
+    bc50244's readings accepted (schemas n-gvec-v2 / n-gcal-v2; neutral_tokens_in_R; the diagnostic's null-and-listed
+    form; the v1 record's move to results/raw/; one_id; early_pause; the gate's sign +1 and its figures; no gate turn in
+    the smoke)".
+    - **Departures:** this entry's are inert (item 7).
+    - **Values-check:** with the coordinating session's ADDENDUM-n3 entry at the Log's head, which gives the check
+      and its raw.
 
 - 2026-11-19 — **The coordinating session's notes on the seat's second sitting of 2026-11-19: the answers committed at
   `f4b3e73`, the PI's routing, the coordinating session's reading of item 2's slot, items 6–8, and five close lines.**
@@ -393,6 +531,13 @@ applied to CLAUDE.md.
     - Raw: [`2026-11-19_second-sitting-notes_valuescheck.md`](results/raw/2026-11-19_second-sitting-notes_valuescheck.md).
   - **Committed by path:** the routing raw, the values-check raw, this entry, and the five close lines. The
     commit-time count of the home-folder prefix over the staged diff is 0. Not pushed.
+  - **Close (PI date 2026-11-19, third sitting), the coordinating session's: item 7 on this entry.** The PI's routing
+    of the third sitting, item 7: "the departures of 616e940, bc50244 and ab72d0f inert (the check-ignore and the
+    checkers' forms included); your item-2 "Go" read as go confirmed by the addendum's (n-5) [as ruled]. The
+    coordinating session's two-commit order (gvec first, gcal after) accepted." The addendum is ADDENDUM-n3 v0.1,
+    committed by path with this line; its §3.3 is the `reward_f020` batch this entry's reading kept. The push this
+    entry put to the PI was made on the PI's "Push now" (push #12); its C.5 line is in the ADDENDUM-n3 entry at the
+    Log's head.
 
 - 2026-11-19 — **n — LOCK-n v0.1's draft: five OPENs and two of Code's readings, for the seat (code → design; STOP
   for the seat), committed by path for the one sitting that rules on G-VEC's STOP (`355e3a2`), on the coordinating
