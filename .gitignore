@@ -323,6 +323,11 @@ __pycache__/
 !/data/n/gcal/gcal_turns.jsonl
 !/data/n/gcal/dose_map.json
 
+# PROPOSAL-n's G-ANL-n artifact (n v0.2 §3 G-ANL-n, §8 step 9; scripts/n_analyze.py ganl): record (ledger 27).
+!/data/n/gates/
+/data/n/gates/*
+!/data/n/gates/G-ANL-n.json
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

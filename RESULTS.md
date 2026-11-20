@@ -21,6 +21,183 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **n — G-ANL-n's canonical run on the pinned dose map (n v0.2 §3 "G-ANL-n", §8 step 9): PASS.
+  `scripts/n_analyze.py ganl --dose-map data/n/gcal/dose_map.json` ran once, on v7 at `b6ea27f`, in a battery window
+  the coordinating session granted: its battery 242/242, every one of the 246 coverage ids reached, and the pinned
+  map's reach equal to the hand derivation under both branches of the reward axis's 5(d) gate. The artifact of
+  record, `data/n/gates/G-ANL-n.json`, enters the repository with its `.gitignore` admit; its sha256 is LOCK-n v0.1's
+  hole 13 (the answers of 2026-11-20, first sitting, §5.1; the PI's routing of that sitting, item 5). Model-free:
+  nothing ran on a model or on the box.**
+  - **Headline:** the run's last line, verbatim,
+    "G-ANL-n: PASS: data/n/gates/G-ANL-n.json (written; sha256 e775cbb42d36c00d3bf1b0a350af197f559d838d8c74978f75678ea57c546088)";
+    exit 0, stderr empty. The artifact, sha256
+    `e775cbb42d36c00d3bf1b0a350af197f559d838d8c74978f75678ea57c546088`,
+    32,018 B, 462 lines, the printed sha256 equal to the file's.
+  - **The authority:** the PI's routing of 2026-11-20, first sitting, item 5, verbatim from its raw,
+    [`2026-11-20_first-sitting_pi-routing.md`](results/raw/2026-11-20_first-sitting_pi-routing.md) (`db8d8db4…ddcc`,
+    at `bc85386`, line 19): "5. The pin move and fixtures with F5, R13 and the tile's range in its own commit; O6's
+    p0_count < p0_n assertion at the schema's next change, not its own delta; then G-ANL-n's canonical run on the
+    pinned map, its artifact's sha256 to hole 13 [as ruled]." The seat's answers of that sitting,
+    [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+    (`001e8c12…bd11`, at `d639bdd`), §5.1, list among the lock's holes "**Still open:**" "13 (G-ANL-n's canonical
+    artifact)". The pin move is v7, `b6ea27f`; the coordinating session verified it, its screen CLEAR, before this
+    window was asked for.
+  - **The run,** by `ganl_steps.sh` in Code's scratch, its three steps each once as its own foreground call, as the
+    window's terms set:
+    - `check`, read-only: 16 of 16 PASS. HEAD `b6ea27f`; the nine inputs below at a manifest's sha256s (`shasum -c`;
+      the manifest written by `shasum` from the committed files), each committed and clean; `data/n/gates` absent; no
+      `LOCK-n.md` at the root; the scratch temp folder empty; no earlier output in scratch; no Python process
+      (`pgrep -f '[p]ython'`) but PID 8051, Q-F3's campaign, which ran throughout.
+    - `run`: `( cd <repo>/<venv>/bin && [[ -x ./python ]] && TMPDIR=<scratch>/n9/ganl/tmp nice -n 19 ./python -I -B
+      <repo>/scripts/n_analyze.py ganl --dose-map <repo>/data/n/gcal/dose_map.json )`, its stdout and stderr captured
+      apart in scratch: canonical (no `--out`), the dose map's path absolute (the subshell's working folder is the
+      venv's `bin`), the interpreter reached by a glob in a `cd`, so that no guard marker was in any argument; rc 0.
+    - `after`, read-only, and one `pgrep` after it: the temp folder empty; the inputs unchanged (`shasum -c`);
+      `data/n/gates/` holding `G-ANL-n.json` alone; PID 8051 the only Python process.
+  - **The inputs, by sha256,** each committed and clean at `b6ea27f`: `scripts/n_analyze.py` `735da934…a7a8`
+    (`b6ea27f`); the pinned dose map, `data/n/gcal/dose_map.json` `d4a73b54…efb3` (`db00d6d`), 121 B, d_eq
+    0.2869170055735837, d_20 0.5738340111471674, ρ 0.3, R 25.54500811131038, R_ℓ 21.98789170395024; and the analyzer's
+    BOUND_RELS: PROPOSAL-n v0.2 `30a3d0f5…04f4` (`5916097`), ADDENDUM-n1 v0.1 `e979f8f2…5e03` (`a61f13d`),
+    ADDENDUM-n2 v0.1 `41f76c49…bb3f` (`7a54eb9`), ADDENDUM-n3 v0.1 `7f4a7a75…9313` (`0744136`),
+    `valence_core/n/schema.py` `1cab28df…edff` (`ef105f1`), and BK's `prereg.json` `c55ab6b9…0cb5` and `reduced.json`
+    `ec5fea59…ba1d` (28,053,197 B), both at `5916097`, under
+    `data/n/bk/experiment_results_json/fixed_text_design/neutral_passages/`. The analyzer's five file constants,
+    `PROPOSAL_SHA256`, `ADDENDUM_SHA256`, `ADDENDUM2_SHA256`, `ADDENDUM3_SHA256` and `SCHEMA_SHA256`, equal the five
+    files' sha256s. The analyzer itself checks itself and BOUND_RELS committed and clean before its battery and again
+    after it, and the dose map by its own refusals (the five keys, each a finite float, §2.3's formulas).
+  - **The output, as the window request declared it before the run** (every line held): stdout 245 lines, the
+    INVOCATION line, 242 `[PASS]` lines (one carrying `[CI]`) and no `[FAIL]`, the summary line
+    "242/242 n_analyze battery checks pass" after two spaces, and the PASS line; stderr 0 bytes; exit 0. The battery's
+    243 lines are byte-identical to v7's battery of record's: lines 3–245 of this run's raw equal lines 3–245 of
+    [`2026-11-20_n-analyze_v7_selftest.txt`](results/raw/2026-11-20_n-analyze_v7_selftest.txt). Raw:
+    [`2026-11-20_n-ganl_out.txt`](results/raw/2026-11-20_n-ganl_out.txt) (`73ee821e…067c`, 246 lines: a header line,
+    then the stdout whole, the repository root shown as `<repo>`; its INVOCATION line names the venv's folder as it
+    is, as v7's self-test raw does, where the run's line above shows `<venv>`).
+  - **The artifact** (`n-ganl-v1`, as `ganl_artifact` writes it): stage G-ANL-n, verdict PASS; the analyzer by path
+    and sha256, the committed file's, and the proposal, the three addenda and the schema module by sha256, each the
+    file's; the battery: 242 of 242 checks, expected 242, its 246 coverage ids, its outputs' digest
+    (`69b2a0d0…5e7e`), its reachability over its own grid of maps, in triples and tuples per shape and branch ((a)
+    PASS 28 and 225, FAIL 25 and 201; (b) 25 and 201 under both; (c) PASS 24 and 193, FAIL 25 and 201; (d) 17 and
+    137 under both), and BK's reproduction and fidelity figures (`bk_fidelity`: 2,400 reads, 0 above τ, 570 above
+    τ/4, the largest ratio 0.012143); the tuple space, 385 tuples and 2,561 evaluations; PINS (32) and OPEN (9), as
+    the analyzer at `b6ea27f` holds them; and the pinned dose map:
+    - d_eq 0.2869170055735837 and d_20 0.5738340111471674, its points "+1 1.0, +1/2 0.5, +d_20 0.5738340111471674,
+      +d_eq 0.2869170055735837, -1 -1.0, f0.10 0.1, f0.20 0.2", none merged, as G-CAL-n's record lists them;
+    - its reach under each branch of the gate (PIN-n-42), each with `dose_iff_n1` true, `raised` false and
+      `agrees_with_hand` true: PASS, shape (a), 28 triples and 225 tuples; FAIL, shape (b), 25 triples and 201
+      tuples. In `coupling_shape`'s terms, (a), PASS's shape here, is the coupling in which none of N1's +1, dose's
+      d_eq point and N2's decision point coincide, N2 decided at f = 0.20; (b), FAIL's, the one in which N2 is decided
+      at f = 0.10, at dose's point (ADDENDUM-n3 §3.4).
+    The record's branch is the lock's to give: the seat's answers of 2026-11-20, §0, read G-CAL-n's gate line as PASS
+    and 2·d_eq = 0.574 ≤ 1, "so **N2 decides at f = 0.20** (A-n3 §3.4)"; VERDICTS reads that line from the lock
+    (PIN-n-40), not from this artifact, which reports both branches (PIN-n-42).
+  - **The `.gitignore` admit,** accepted by the coordinating session as narrower than m's and p's `*.json` form and
+    matching n's block, which admits named files: after line 324 (`!/data/n/gcal/dose_map.json`), five lines, a blank
+    line, the comment "# PROPOSAL-n's G-ANL-n artifact (n v0.2 §3 G-ANL-n, §8 step 9; scripts/n_analyze.py ganl):
+    record (ledger 27).", then `!/data/n/gates/`, `/data/n/gates/*` and `!/data/n/gates/G-ANL-n.json`; +5 −0. Shown
+    by tool to admit that one path only:
+    - in a scratch repository holding empty files at eleven paths, `git status --porcelain --ignored -uall` under
+      HEAD's `.gitignore` and under the new one: only the artifact's line changes, from `!!` to `??`. The other ten
+      keep their lines: under `data/n/gates/`, `write_once`'s temporary name (`.G-ANL-n.json.12345.tmp`), a `.bak`,
+      another name and a file in a subfolder, ignored before by line 263 (`/data/n/*`) and after by the new line 328
+      (`/data/n/gates/*`); outside it, one file each under `data/n/`, `data/n/gvec/`, `data/n/verdicts/` and
+      `data/m/gates/` and two under `data/n/gcal/`, in the same state under both. The folder `data/n/gates/` itself,
+      ignored by line 263 before, is re-included by the new line 327 (`!/data/n/gates/`), so git looks inside it,
+      where line 328 ignores every name but the artifact's, which line 329 re-includes. A first test of the same
+      names by `git check-ignore`, with no files present, agreed for every file, and read the folder, tested as a
+      trailing-slash path with no folder there, as ignored under both (the values-check's observation 4);
+    - in the tree, `git status --porcelain --ignored -uall -- data/n` with item 3's exclusions listed one line before
+      the admit, `!! data/n/gates/G-ANL-n.json`; the commit's gate asserted that, with the admit placed, it lists one
+      line, `?? data/n/gates/G-ANL-n.json`, and the artifact was staged by `git add` without `-f`.
+  - **Next:** the artifact's sha256 to LOCK-n v0.1's hole 13, by the coordinating session's relay to n-build, whose
+    lock commit places `LOCK-n.md` after this run. Not pushed.
+  - **Departures, for the seat to class.** None read anything under `data/*/ckpt`, `data/*/reports` or `data/mf3`,
+    ran repository code outside the window above or started a model process.
+    - Code's, from a sweep of its own tool calls (this session's transcript, by `jq`) from the first call after v7's
+      second sweep through the sweep itself: 142 calls, the transcript's calls 3404 through 3545 (84 shell commands;
+      17 reads, 8 writes and 8 edits by the session's file tools; 5 messages to the coordinating session; one
+      subagent; 17 task-list updates and wrap-ups; one tool search and one notifications read). After it come only
+      the filling of this entry's counts, the edits' check, the hashes and the commit-window request, which the next
+      sweep holds. Code knows of no others:
+      - after v7's second sweep and before its commit window, 17 calls that neither of v7's sweeps holds (the
+        values-check's observation 1): the second sweep's own analysis (`/usr/bin/grep` counts and line prints over
+        its two scratch files, with two `perl -ne` filters); the last fills and edits of v7's entry and the checks of
+        its widths (four `perl -0 -i -pe` and three `perl -CSD -ne` runs over v7's scratch drafts, one `sed -n` print
+        of a draft, one read and one edit of it by the session's tools, `tail -c` and `od -c` of the drafts); one
+        `sed -n '22,24p'` of RESULTS.md through `cat -A`; one `grep -n -o` of placeholder tokens over the scratch copy
+        of v7's values-check raw; the commit message's write; `/usr/bin/grep -c` of the home path and of bracketed
+        marker patterns over v7's scratch copies, and one `awk` over `shasum` output of them; the commit-window
+        request; and a notes append;
+      - before v7's commit window, a re-hash of v7's commit files and of `scripts/n_analyze.py`, with `git rev-parse
+        HEAD:RESULTS.md` against `git hash-object`; in it, beyond its planned steps (place, gate, stage, count and the
+        commit), one read-only pre-check of the gate's text conditions (counts) over the eight scratch copies, and one
+        print of the line it hit, the values-check raw's line 155 (a quotation of v6's raw's placeholder names); one
+        asserting check of the commit message's last line and hash head; and, after the commit, its verification:
+        `git rev-parse` and `git rev-list --parents`; `git show --name-status` with item 3's pathspec; for each of the
+        five paths, `git hash-object --path=` of its scratch copy, `git hash-object` of the tree's file, and `git
+        cat-file blob HEAD:<path>` into `cmp` and into `shasum`; `git cat-file commit` into `cmp`; `git diff -U0` of
+        RESULTS.md and `git status --porcelain` of the five paths, without item 3's pathspec; `git diff --stat` and
+        `git diff --cached --name-only` with it; and `origin/main` by `rev-parse` and `rev-list --count`; each told to
+        the coordinating session at the time;
+      - git in named-path forms outside item 3's pathspec, for the window request, the run and this commit:
+        `rev-parse HEAD:<path>`, `hash-object`, `status --porcelain` and `log -1` of the nine inputs (the first three
+        also inside `ganl_steps.sh check`); `rev-parse HEAD:<path>`, `hash-object` and `log -1` of `.gitignore`;
+        `rev-parse HEAD:<path>` and `hash-object` of the seat's answers and the PI's routing raw; `check-ignore -v` of
+        the artifact's path; `show HEAD:.gitignore` into a scratch copy; and, with item 3's exclusions, `git status
+        --porcelain --ignored -uall` limited to `data/n` and to `data/n/gates`, one line each, printed;
+      - `test -e` and `-L` of `data/n/gates` (the window request asked for it) and of a root `LOCK-n.md`, and `ls -A`
+        of `data/n/gates` after the run (in `after`); over the artifact, `/usr/bin/grep -c` of the home path, the user
+        name, the temporary roots and "tmp" (each 0) and `LC_ALL=C /usr/bin/grep -c` of lines outside printable ASCII
+        (35), `wc -l`, `shasum`, and a `cp` into scratch;
+      - `cat` of the pinned dose map (121 B, whole); `sed -n` line prints of `.gitignore` (lines 255–262 and
+        300–330), of the seat's answers (lines 8 and 54), of the PI's routing raw (line 19) and of v7's entry in
+        RESULTS.md (lines 24–301, filtered by `grep`); `/usr/bin/grep -n` over `.gitignore`, the seat's answers, the
+        analyzer and RESULTS.md's entry headers; the analyzer's code (six reads) and RESULTS.md (three reads, lines
+        20–59, 240–279 and 568–642) by the session's file reader; `sed -n '3,245p'` of v7's committed self-test raw
+        into `cmp`, and one `grep -c` of it for a digest prefix (0);
+      - `jq` over the artifact (selected fields, its keys, the battery's fields and the bindings, and `after`'s
+        fields); over this session's transcript, its tool calls into scratch for the sweep (three runs: twice for the
+        first sweep, the first anchored on its own text, and once for this one) and the outputs of four calls
+        (`check`, `run`, `after` and the `pgrep`) for the values-checker, a pattern that also matched ten earlier
+        calls, whose extracts Code removed after printing only their commands' first 90 characters and line counts;
+        and over the values-checker's task transcript, its hand-back's fields and then its message, saved as its
+        report;
+      - `git init` of two scratch repositories in Code's scratch, for the admit's proof: in the first, `git -C` it
+        `check-ignore` over twelve paths with no files; in the second, empty files at eleven paths, `git status
+        --porcelain --ignored -uall -- data` under each `.gitignore`, and `check-ignore -v -n` of the folder;
+      - one `pgrep -f '[p]ython'` after `after`, for the close report;
+      - Perl, over Code's scratch only, fifteen runs: in the 17 calls after v7's second sweep, the nine named above
+        (two `perl -ne`, four `perl -0 -i -pe` and three `perl -CSD -ne`); since `b6ea27f`'s commit, six
+        `perl -CSD -ne` counts of line lengths (the admit's comment, twice; HEAD's `.gitignore`'s longest line; this
+        entry's draft, three times); and, at this commit, v7's `place.pl`, through the place and gate steps;
+      - stated plainly: `sed` substitution filters, line prints and one insertion (`324r`), `cut`, `wc`, `tr`,
+        `paste`, `sort`, `uniq`, `fold`, `cmp`, `diff`, `head`, `tail`, `cp`, `mv`, `rm`, `chmod 444`, `mkdir` and
+        empty-file redirections, over named repository and scratch files; `ls -1` of Code's scratch folder and of the
+        shared notes folder (names, filtered); reads of Code's memory file and memory index, and of its backup in the
+        shared notes folder (the file reader, `wc -l`, `head` and `tail`); writes to Code's scratch notes, its memory
+        files and that backup; `zsh -n` of two scripts; one blind values-checker started as a subagent.
+    - The values-checker's, as its report states them: one `awk` call, by accident, inside an unused substitution,
+      nothing printed, against its brief's "no interpreter"; beyond "`shasum` alone" on the bound files and the other
+      inputs, `git rev-parse HEAD:<path>` against `git hash-object` and `git log -1 --format=%h` and `--diff-filter=A`
+      with item 3's pathspec (ids and digests only), the same forms on the three named raws, v7's values-check raw,
+      RESULTS.md and `.gitignore`, and `%cs` (a calendar date) of `b6ea27f` and of the dose map's commit; text tools
+      (`sed`, `cut`, `tr`, `wc`, including `-c` and `-l` of the artifact and the dose map, `cmp`, `diff`, `od -c`,
+      `head`, `tail`, `fold`, `paste`, `sort`, `uniq`, `seq`, `printf` and `cat`), `/usr/bin/grep` with bracketed
+      marker patterns only, and name-only `ls`, `ls -A data/n/gates` included; reads beyond its named sources: v7's
+      committed values-check raw (its line 155 printed), RESULTS.md's headers and lines 18–306, Code's scratch notes,
+      and the sweep's lines 3319, 3398–3421 and 3439, masked; in a scratch repository of its own, four empty files and
+      two `git status --porcelain --ignored -uall -- data`; in Code's first proof repository, `check-ignore` and one
+      `cmp` of its `.gitignore`.
+  - **Values-check:** one blind values-check of the entry, the raw and the admit, its report committed whole with
+    Code's dispositions,
+    [`2026-11-20_n-ganl_valuescheck.md`](results/raw/2026-11-20_n-ganl_valuescheck.md) (`9968bea1…42ba`):
+    101 claims, 75 CONFIRMED, 9 IMPRECISE, 2 FAIL, 15 NOT CHECKABLE, 8 observations. Both FAILs fixed: the sweep now
+    starts at the first call after v7's second sweep, with the 17 calls it had missed declared above (item 62); the
+    file reader's reads are counted over the whole sweep (item 77). Every IMPRECISE item applied; observations 1–5
+    and 7 applied (the admit's proof run again with files present, 4; the raw's header names the venv's folder, 5),
+    6 met (the placement adds the blank line after the entry) and 8 noted (a claim about another session's act rests
+    on its records). The edits checked by tool, 38 of 38.
+
 - 2026-11-20 — **n package — `scripts/n_analyze.py` v7: the tile (R12), F5 and R13 followed on n-build's delta
   (`ef105f1`), the seat's rulings on v6's readings carried in, and ADDENDUM-n3's gate in VERDICTS — N2's decision point
   under it and §7.3's report line (the answers of 2026-11-19, first sitting, §3 and §4; second sitting, §2.5;
