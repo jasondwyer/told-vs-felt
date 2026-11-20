@@ -1,0 +1,10 @@
+{
+ "cosines": {
+  "span_character|span_reward": 0.7501587511209901,
+  "span_character|span_sentiment": 0.32985395487927766,
+  "span_character|valence": 0.1392181026452373,
+  "span_reward|span_sentiment": 0.31065936209323797,
+  "span_reward|valence": 0.18040702496573224,
+  "span_sentiment|valence": 0.13346260721287628
+ }
+}

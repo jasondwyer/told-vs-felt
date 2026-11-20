@@ -21,6 +21,139 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-VEC's re-run on n's box, from the gvec delta's commit `616e940`: PASS at index 32. R over
+  positions 1..n, the convention of record, is within 2% of 25.49 at both candidate indices, and the site rule took the
+  nearer, 32 (n §2.3; ADDENDUM-n1 §6.1; the seat's answers of 2026-11-19, second sitting, §1.2–§1.5; the PI's routing,
+  item N.1, on "Route as given"). The figures as printed; the outputs of record, the directions and their figures,
+  enter the repository at `data/n/gvec/`.**
+  - **Headline:**
+    - `gvec_v2.sh` (`e5f76f5b…c49e`) ended "gvec v2 PASS: …", exit 0, on pod `emw1e4embiwe9b`, run by the pod session
+      on the coordinating session's relay ("LAUNCH CLEARED", item N.1 [go]);
+    - the run of record printed "R over positions 1..n: 4067 of the 4163 neutral tokens, position 0 of each of the 96
+      neutral passages left out (the convention of record)", "R at index 31: 25.845165564150104 (|R/25.49 - 1| =
+      0.013933525466854002; within 2%)", "R at index 32: 25.54500811131038 (|R/25.49 - 1| = 0.002158027120846784;
+      within 2%)" and "site: index 32 (ADDENDUM-n1 §6.1)", then "G-VEC PASS";
+    - of record (`gvec.json` `03467e75…53b0`): site 32, R 25.54500811131038, R_ℓ 21.98789170395024 (A3's 1,344
+      contexts at the site), Route B; the four named rows at index 32 by their sha16s: valence `ba4da67fb717b5bb`,
+      span_reward `8f32921fcd1798db`, span_sentiment `f4136430145a2960`, span_character `006f5174a82193f9`;
+    - the diagnostic block, descriptive (§1.3: "none a decision"): R_all, over every position, 44.04249774012646 at 31
+      and 45.107750142385356 at 32, each printed "equal" to the first run's R; the RMS at position 0
+      236.25771185629893 and 246.14916807441028, and at positions 1–4 and over 5..n from 22.96714802957467 to
+      26.005746614723453; the largest norm at position 0 236.47362245635114 and 246.36549932477016, and over 1..n
+      39.760931076789625 and 38.112332850706395; R_mean_of_passage_rms 25.78685277768362 and 25.486362146647043; the
+      token counts 96 at positions 0–4 and 3,683 over 5..n; no figure null;
+    - the smoke, never of record, held: R 25.339489694487117 at 31 and 25.11012424863722 at 32 over two neutral
+      passages; R_ℓ 22.23089391504287 and 22.167402391674045 over two contexts; its R_all printed "equal" to the first
+      run's smoke R at both;
+    - the six named cosines (`gvec_cosines.json`), descriptive: span_character|span_reward 0.7501587511209901,
+      span_character|span_sentiment 0.32985395487927766, span_character|valence 0.1392181026452373,
+      span_reward|span_sentiment 0.31065936209323797, span_reward|valence 0.18040702496573224, span_sentiment|valence
+      0.13346260721287628.
+  - **The outputs of record,** committed at `data/n/gvec/` as the BUILD's `.gitignore` admits them, each at the sha256
+    its file line prints, the five besides `gvec.json` also at the record's `files_sha256`: `gvec.json` `03467e75…53b0`,
+    `gvec_cosines.json` `fc8877be…0dad`, `directions_L31.npy` `d1246ae9…7e45`, `directions_L32.npy` `33cc0ef6…c0c5`,
+    `directions_alt_L31.npy` `72aec8e0…826f`, `directions_alt_L32.npy` `63740f07…9521`. Each `.npy` holds four float32
+    rows of 5120 (its header `'<f4'`, shape (4, 5120)); each row's sha16, recomputed by shell from its bytes (row i the
+    20,480 bytes from offset 128 + 20,480·i), equals the record's, row by row in `directions.order` and
+    `directions.alt_order` (`directions.sha16` and `directions.alt_sha16`), 16 of 16.
+  - **Next** (item N.1's PASS branch): LOCK-n v0.1's holes 1–7 from this record, in Code's scratch draft; G-CAL-n's
+    launch files, drafted now, which go to the box only after ADDENDUM-n3's commit.
+  - **The run** (the pod session's record and the script's output, both committed as raws):
+    - The launch files, from n-build's scratch, relayed by the coordinating session at their hashes, the launch
+      cleared on the PI's routing: the script (352 lines; its commit `616e940`; its driver line `2728146e…570c`); its
+      manifest `00180e67…6a3e` (61 files, each asserted equal to `616e940`'s blob); and its hashes file `c40ed07b…7368`
+      (13 lines: the laptop's `hashes`, run from a `git archive` of `616e940` in a battery window of its own). The
+      launch note, `gvec_launch_note_v2.md` (`125b1541…23fe`, 154 lines), stays in Code's scratch.
+    - Tested on the laptop before the relay: the script's bash logic, by a harness of 418 checks over fake copies and a
+      stand-in python, with a mutation pass of 82 one-line mutants, all killed; the script's three Python checks on 73
+      fixtures, in a battery window, 90 of 90, with 23 mutants of them, all killed. One blind review of the launch files
+      as first drafted: 0 BUG; 8 findings (5 RISK, 3 NIT); 8 surviving mutants; 11 observations. Before the relay every
+      finding was applied and every surviving mutant met by a case that kills it; O7, O9 and O10 were applied and O8
+      met by the relay; O3 stands, borne out by the box's 571/571; the other six ask for nothing. Raw, with each
+      disposition:
+      [`2026-11-19_n-gvec-v2_launch-review.md`](results/raw/2026-11-19_n-gvec-v2_launch-review.md).
+    - The sync, as sync10's: a bundle of `a33252a..main`, with main at `bc50244`, fetched under
+      `refs/bundles/n-site11`; the box checkout stayed at `ad856f0`.
+    - The fresh copy, `/workspace/nsite/copy-gvec-616e940`: a local clone, `--no-checkout --no-hardlinks`, origin
+      removed, sparse non-cone (`'/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/'`), detached at `616e940` and
+      clean, with and without `--ignored`, with neither `data/n/gvec` nor `data/n/.gvec.staging` present. G-VEC copies
+      nothing in.
+    - The environment, pinned (ledger 27): python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0 and tokenizers 0.22.2
+      (the pod session's record), and numpy 2.1.2 (the record's `adapter_provenance`, which also holds the first
+      three); `CUBLAS_WORKSPACE_CONFIG=:4096:8` and
+      `RUNPOD_POD_ID=emw1e4embiwe9b` from `/workspace/env.sh`; bf16, deterministic, seed 20260818. The backend's
+      identifier, `8264f719efd347a9`, is backend-ext-2's, bridged to the characterization's `4ed3f2c70fe8afbf` (R6).
+    - The model: two loads, the smoke's and the run's (707 of 707 each; 119470 ms and 28510 ms).
+    - The script's steps, as printed:
+      - the copy at `616e940`, "changed set none"; the manifest 61 of 61 OK;
+      - the self-test "571/571 n selftest checks pass", after two library warnings (the laptop's 560 plus the box's 11
+        more: its 14 HF checks in place of the laptop's three skip lines); the hashes equal to the laptop's;
+      - the smoke: its SMOKE, STAGE, DRIVER, R and R_ℓ, diagnostic and end lines once each; its record held, its
+        identity equal to step 3's, and the copy unchanged after it. Its record stays on the box;
+      - the run of record: the STAGE, WEIGHTS, DRIVER and inputs lines; the backend line; "passages: 544 (224
+        positive, 224 negative, 96 neutral), one forward each, captured at (31, 32)"; the nine token lines; R's count
+        line; R at both indices; the two diagnostic lines; the site line; the contexts line; R_ℓ at both indices; six
+        cosine lines; six file lines; "G-VEC PASS"; run exit 0;
+      - the outputs: "prints as wanted for PASS: yes"; the six named files present, each at its printed sha256; every
+        record check held (schema, status, R, site, diagnostic, counts, convention, files_sha256, driver, pod, not a
+        smoke), with "the site rule, re-derived from the record's R: PASS at index 32"; the record's identity equal to
+        step 3's; and the copy's changed set `data/n/gvec/` alone.
+    - The wrapper's PID was 9048, and the end-wait was on the PID alone. Before and after: no interpreter job and no
+      GPU compute app, the GPU at 0 MiB.
+  - **The copy-back** (the pod session's record): the out and work files by explicit name, and the six files
+    `run.txt`'s file lines name. Each sha256 was equal at the box, in staging and at the destination, with no folder
+    listed and an address and port count of 0 on the text files. Code re-hashed the fifteen files on the laptop: the
+    fourteen the record lists, each equal to its value there, and the record itself, `d29bd9d1…53e3`; and read each in
+    full (rule 25): the text files and `gvec.json` by reading;
+    `hashes.txt` and the two identity files by `cmp` against the hashes file; `selftest.txt`, `smoke.txt`, `run.txt`
+    and `hashes.txt` by `cmp` against their lines in the out file; the four `.npy` files by their headers and their
+    rows' sha16s.
+  - **The box at the end** (the pod session's record): idle, nothing removed. Left: the launch files' folder, the
+    fresh copy (with `data/n/gvec/`'s six files), the work and out folders (the smoke's record among them), the sync
+    folder and the side ref `refs/bundles/n-site11`, and every earlier folder. The box stays up and idle on routing
+    item N.4.
+  - **The raws,** committed by path: the script's output and exit, `2026-11-19_n-gvec-v2_out.txt` and `_exit.txt`; the
+    work folder's files, `_selftest.txt`, `_hashes.txt`, `_smoke.txt`, `_stage.txt` (the stage's own output, the work
+    folder's `run.txt`), `_smoke-identity.txt` and `_run-identity.txt`; the pod session's record, `_run.txt`; the
+    launch review, `_launch-review.md`; and the values-check, `_valuescheck.md`.
+  - **Departures:**
+    - the pod session's two acts, as its record's §7 states them, which the coordinating session accepted: its record
+      copied last, in a second call, after every other file was copied and verified; and the address-and-port count
+      run in its laptop staging, before anything reached n-build's folders, not on the box ("as at the first run", its
+      record says). The coordinating session's message to n-build gives the reading it accepted, in no committed text:
+      the pod session read the relay's "as at v1" as deciding over its "before they leave the box";
+    - Code's: two `jq` reads of subagents' task outputs, each its final message only, to extract the launch review's
+      report and the values-check's; one
+      `git log -1 --format=%B` of `355e3a2`, a format item 1 does not list and without item 3's pathspec, printing that
+      commit's message, read as this entry's template; and one `git check-ignore -q --no-index` of
+      `data/n/gvec/directions_L31.npy`, its exit status only, a command item 1 does not list (the coordinating
+      session's own at `ab72d0f` was of this class);
+    - the launch reviewer's, as its report states them: one `grep` whose glob `valence_core/m/*.py` put the m
+      package's two runner files, whose names hold a guard marker, in its argv, their contents scanned and nothing
+      matched or printed; one `grep -c` for a carriage return over three named scratch files, counts only; one
+      `git log -1 --format='%H %s'` without item 3's pathspec; `git ls-tree` over folders or `.` instead of item 3's
+      pathspec (`valence_core/n/`, twice; the adapters folder, without `--name-only`, printing modes, ids and names; and
+      the BK skeleton folder reached by a glob `cd`), and `git cat-file` and `git rev-parse` on named files, data files
+      among them, none under ckpt, reports or mf3; and, stated plainly and not barred by its brief, reads beyond its
+      named list and three name-only `ls`;
+    - the values-checker's, as its report states them: one `jq -r 'keys_unsorted | join(", ")'` over the scratch copy
+      of `gvec.json`, printing its 18 top-level key names, which a strict reading of its brief's "no interpreter of any
+      kind but shasum" would count; two `git log` runs with `%ad` (author dates) in their `--format`, where item 1
+      names commit times, one over the tree with item 3's pathspec and the mf3 exclusion and one on `.gitignore`; and,
+      not barred by its reading: reads beyond the named sources (RESULTS.md beyond the three named entries, n §2.3's
+      line, ADDENDUM-n1 §6.1's line, the PI's routing block in full); `git show` of `.gitignore` at `da7bdec` and its
+      parent and of two code files at `616e940`, into `grep` or `shasum`; two `git grep -F` runs in item 3's form with
+      the mf3 exclusion, whose matches printed tracked lines, some holding a guard-marker word in their output only;
+      and `wc -c` and `od -c` on the four `.npy` scratch copies.
+  - **Values-check:** one blind pass over this entry's draft and the launch review's raw: 99 items, 84 CONFIRMED, 5
+    IMPRECISE, 1 FAIL, 9 NOT CHECKABLE, with 10 observations. The FAIL (item 60: two phrases quoted as the pod
+    session's reading, which no committed text holds) is fixed; every IMPRECISE item is applied; every observation is
+    applied or met. The edits after the check were checked by tool, 27 of 27; no second full pass was made. Raw, with
+    each disposition: [`2026-11-19_n-gvec-v2_valuescheck.md`](results/raw/2026-11-19_n-gvec-v2_valuescheck.md).
+  - **Committed by path:** the six files of `data/n/gvec/`; the eleven raws; this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model here. Not pushed.
+    **Next:** LOCK-n v0.1's holes 1–7; G-CAL-n's launch files, to the box after ADDENDUM-n3's commit.
 - 2026-11-19 — **n — G-CAL-n's delta on the seat's second sitting: the arrival over the emitted ids' positions 1..n,
   the early PAUSE, and the reward axis's 5(d) gate's coherence batch, `reward_f020`, with the wording owed at the
   driver's next change; committed by path (the answers of 2026-11-19, second sitting, §1.4 (i), §2.5 and §3, committed

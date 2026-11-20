@@ -1,0 +1,147 @@
+n step 7 -- G-VEC's re-run on n's box, pod emw1e4embiwe9b (H100 SXM): the smoke and then the run of record, by
+gvec_v2.sh from the gvec delta's commit 616e940, in a fresh sparse copy, as run by the pod session (the seat's answers
+of the second sitting committed at f4b3e73; the PI's routing, PI date 2026-11-19, second sitting, "Route as given",
+its block committed at ab72d0f, item 1 [go]: "launch files v2 and the hashes window; the smoke, then the run of
+record"; the coordinating session's relay, "G-VEC v2: LAUNCH CLEARED"). No pod address or port in this file. The run's
+own output is gvec_v2_out.txt (all of stdout and stderr, unedited); its exit file is gvec_v2.exit, which holds
+"exit N". The launch was announced to the coordinating session before it started, naming gvec_v2.sh and its sha256,
+the box names and the command.
+
+RESULT: gvec v2 PASS, exit 0. The smoke held. The run of record found R, now over positions 1..n, within 2% of 25.49
+at both candidate indices, and the site rule took the nearer, index 32:
+  "R at index 31: 25.845165564150104 (|R/25.49 - 1| = 0.013933525466854002; within 2%)"
+  "R at index 32: 25.54500811131038 (|R/25.49 - 1| = 0.002158027120846784; within 2%)"
+  "site: index 32 (ADDENDUM-n1 §6.1)"
+It wrote the six files of data/n/gvec/ (gvec.json 03467e75…53b0). The script's checks of a PASS all held: the
+prints, the six outputs at their printed sha256s, the record (its site re-derived from its own R, "PASS at index 32"),
+its identity, and the copy's changed set data/n/gvec/ alone. Beside R, the diagnostic block's R_all, over every
+position, equals the first run's R at both indices (descriptive, §1.3):
+  "the record's R_all at 31: 44.04249774012646, the first run's R 44.04249774012646: equal (descriptive); not finite: []"
+  "the record's R_all at 32: 45.107750142385356, the first run's R 45.107750142385356: equal (descriptive); not finite: []"
+Nothing is re-run.
+
+1. FILES. From n-build's scratchpad/step4b/gvec2/launch/, re-hashed on the laptop before shipping and on the box
+   after:
+     gvec_v2.sh                    e5f76f5b8a89558b62e197b5d2fa0f8a9620eb6d47ba6b06c55a2dde6776c49e (352 lines, read in
+                                   full; COMMIT 616e9407c724f47b47fd018e5ddc8c9f2ad89103; its DRIVER_SHA256 equal to
+                                   scripts/n_sessions.py in the copy at 616e940, 2728146e…570c)
+     gvec_manifest_v2.txt          00180e67ae7b939839b4d4d977e17c610346317c90cbf8c65dad83a7224b6a3e (61 lines)
+     gvec_hashes_v2.txt            c40ed07bd627cda8fe42539c5aa53211fa5ee88248786e8d32fd8d6da4577368 (13 lines)
+   The launch note, gvec_launch_note_v2.md (125b1541…23fe, 154 lines), was read in full and stays on the laptop. All
+   four files equal the values the coordinating session relayed with the clearance. The three box files went to
+   /workspace/nsite/gvec-v2, a new folder, by tar over ssh, with no Mac metadata on the laptop side and no ownership and
+   no '._*' on the box side. The folder holds exactly its three names. Every box name was checked first by an existence
+   test alone; the note's proposed names were used, and none collided.
+
+2. THE SYNC, as sync10's. A bundle of a33252a..main was made on the laptop, with main at bc50244 before and after it
+   was made (its head bc50244 refs/heads/main; it verified on the laptop; sha256 e3f4d656…debb, 244,488 B). It was
+   shipped with the pod session's sync and copy scripts to /workspace/nsite/sync11 (new) and fetched into the box repo
+   under a new side ref, refs/bundles/n-site11 -> bc50244, 10 commits after a33252a and holding 616e940; the
+   prerequisite was in the box repo under refs/bundles/n-site10. The range's contents were transported, not read (the
+   fourth sitting's s7). There was no fast-forward: the box checkout stayed at ad856f0 and clean (the bare form, git
+   status --porcelain).
+
+3. THE COPY. /workspace/nsite/copy-gvec-616e940 is G-VEC v2's fresh copy, new:
+   - a local clone of the box checkout with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone: '/*' '!/data/mf3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - detached at 616e940 (held through refs/bundles/n-site11), clean (the bare form, and with --ignored, as the
+     script's step 0 reads it), with nothing extracted over it.
+   The globs data/*/ckpt and data/*/reports matched nothing, each compared with its literal form. Neither data/n/gvec
+   nor data/n/.gvec.staging was present, and the first run's record was at its moved path,
+   results/raw/2026-11-19_n-gvec-v1_gvec.json. data/n/bk, valence_core/n/gcal.py and the characterization's raw and
+   artifact were present, and data/n/ids held exactly the 7 names the commit's tree holds there. The driver hashed to
+   2728146e…570c. /workspace had 154G available of 466G before the clone and 153G after. G-VEC copies nothing in. The
+   first run's copy, copy-gvec-da7bdec, with its data/n/gvec/, was not touched.
+
+4. RUN. Before the launch (launch_gvec2.sh, c00f2025…fa1f):
+   - no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at 0 MiB of 81559 MiB;
+   - the three files on the box at the relayed hashes; the copy at 616e940 and clean, with and without --ignored;
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+   The command ran under nohup in the background. The relay gave its shape ("bash <folder>/gvec_v2.sh <copy> <python>
+   <work>", the environment as for the first run, the out and exit files in a new out folder); it is the first run's
+   command with v2's names, held in a quoted heredoc and checked equal by cmp to the pod session's held copy, its
+   sha256 fab3d79a…9e87 at the laptop and at the box:
+     ( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/gvec-v2/gvec_v2.sh
+          /workspace/nsite/copy-gvec-616e940 /workspace/venv/bin/python /workspace/nsite/work-gvec-v2 )
+          > /workspace/nsite/out-gvec-v2/gvec_v2_out.txt 2>&1; echo "exit $?" > /workspace/nsite/out-gvec-v2/gvec_v2.exit
+   The out folder /workspace/nsite/out-gvec-v2 was made just before; the work folder did not exist, and the script made
+   it. The wrapper's PID was 9048, alive on a kill -0 check after the start, and the end-wait was on the PID alone.
+
+5. OUTCOMES (the pod session's reading; n-build reads the whole output, 161 lines):
+   step 0, the copy                     held: HEAD 616e940; "the copy: changed set none; neither data/n/gvec nor
+                                        data/n/.gvec.staging present"
+   step 1, the manifest                 61 of 61 OK
+   step 2, the self-test                "571/571 n selftest checks pass", selftest exit=0, "selftest: 571/571, as
+                                        expected". Two library warnings came before it, as at the first run.
+   step 3, the hashes                   hashes exit=0; "hashes: equal to the laptop's"
+   step 4, the smoke (never of record)  smoke exit=0, after one load. Its SMOKE, STAGE, DRIVER, R and R_ell (at 31 and
+                                        32), diagnostic (at 31 and 32) and end lines each appeared once, each
+                                        diagnostic line ending in its token counts (2 at each of positions 0-4).
+                                        The smoke's record, R_all, identity and copy lines:
+      "the smoke's record: holds (status SMOKE, smoke 2; R {'31': 25.339489694487117, '32': 25.11012424863722}; R_ell {'31': 22.23089391504287, '32': 22.167402391674045}; never of record)"
+      "the smoke's R_all at 31: 42.62270212364156, the first run's smoke R 42.62270212364156: equal (descriptive); not finite: []"
+      "the smoke's R_all at 32: 43.66884683035452, the first run's smoke R 43.66884683035452: equal (descriptive); not finite: []"
+      "the smoke's identity: equal to step 3's"
+      "the copy after the smoke: unchanged"
+                                        Its record, <work>/smoke/gvec_smoke.json, stays on the box.
+   step 5, the run of record            after a second load: the STAGE, WEIGHTS, DRIVER and inputs lines; the backend
+                                        line (n's 8264f719efd347a9, window 4096; the characterization's 4ed3f2c70fe8afbf,
+                                        R6); "passages: 544 (224 positive, 224 negative, 96 neutral), one forward each,
+                                        captured at (31, 32)"; the nine token lines; R's count line, as the script
+                                        requires it; R at 31 and at 32, each within 2%; the diagnostic lines at 31 and
+                                        32, each ending "tokens 0 96, 1 96, 2 96, 3 96, 4 96, 5..n 3683", none with a
+                                        null figure; "site: index 32 (ADDENDUM-n1 §6.1)"; the contexts line; R_ell at
+                                        31 and at 32; six cosine lines; six file lines; "G-VEC PASS"; run exit=0
+   step 6, the outputs                  "prints as wanted for PASS: yes"; "outputs: 6 of 6 named files present, 6 of them
+                                        at their printed sha256; 6 entries in data/n/gvec"; every record check holds
+                                        (schema, status, R, site, diagnostic, counts, convention, files_sha256, driver,
+                                        pod, not a smoke); the record's summary line:
+      "the record: status PASS; site 32; R {'31': 25.845165564150104, '32': 25.54500811131038}; rel {'31': 0.013933525466854002, '32': 0.002158027120846784}; within {'31': True, '32': True}; of_record R 25.54500811131038, R_ell 21.98789170395024; direction of record: Route B"
+                                        "the site rule, re-derived from the record's R: PASS at index 32"; "the
+                                        record's identity: equal to step 3's"; "the copy's changed set: data/n/gvec/
+                                        alone"
+   last line                            "gvec v2 PASS: copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and
+                                        equal 0, smoke exit=0; …; run exit=0; prints 0, outputs 0, record 0, identity 0,
+                                        changed set 0"
+
+6. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU at 0 MiB. The exit
+   file reads "exit 0". The pod session took no look inside the copy, which now holds data/n/gvec/ with its six files,
+   or inside the work folder beyond the files copied back by name.
+
+7. COPIED BACK by copyback11.sh (c99de692…028b), by explicit name, each sha256 equal at the box, in staging and at the
+   destination, with no folder listed:
+   - to n-build's step4b/gvec2/box/out/ (new, made with mkdir -p): gvec_v2_out.txt and gvec_v2.exit (out-gvec-v2);
+     selftest.txt, hashes.txt, smoke.txt, smoke-identity.txt, run.txt and run-identity.txt (the work folder), all
+     eight present; and this file, copied last, by a second call, after every other file was copied and verified (the
+     first run's script copied it before its rec part ran);
+   - to n-build's step4b/gvec2/box/rec/data/n/gvec/ (new, made with mkdir -p): the six files run.txt's file lines name,
+     each at the sha256 its line prints.
+   Their sha256s:
+     626ed5ee285deec1dac9f0f22e750e335194f9eb1733648c6fcdd3441180a530  out/gvec_v2_out.txt
+     28d3b9e880a77975493dc7e359144c0295a4f694cfe0af4f928c22307bc5c320  out/gvec_v2.exit
+     70e383412d84ca119ee3ca7ca2b929c891d89271420238f14a23d80a0545c0cf  out/selftest.txt
+     c40ed07bd627cda8fe42539c5aa53211fa5ee88248786e8d32fd8d6da4577368  out/hashes.txt
+     6dfb320dbac329226348887fc872e1eb548dc3dd4ce8a4442eb97a38597ec913  out/smoke.txt
+     c40ed07bd627cda8fe42539c5aa53211fa5ee88248786e8d32fd8d6da4577368  out/smoke-identity.txt
+     b46b59de133f2c65370a11fd92752d61ff72082273c1d93a520a9d6177f8b33b  out/run.txt
+     c40ed07bd627cda8fe42539c5aa53211fa5ee88248786e8d32fd8d6da4577368  out/run-identity.txt
+     d1246ae9d187da8ae7227763558c5c40a01ee443b328e75272d336e89cab7e45  rec/data/n/gvec/directions_L31.npy
+     33cc0ef656281ef2caebaec0049949f93ad2b237084fa7be5ac0a86ad68fc0c5  rec/data/n/gvec/directions_L32.npy
+     72aec8e0d8a4f82b898b52d9047a361a60bb3f74c98dd2e6b5552d4bca11826f  rec/data/n/gvec/directions_alt_L31.npy
+     63740f0726d003147cda09dff6e1abefea92aec9a52f2191d596cce65dee9521  rec/data/n/gvec/directions_alt_L32.npy
+     03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0  rec/data/n/gvec/gvec.json
+     fc8877be53194408cdcf7bbb09d1ec9ff3dfbe13b575bf6674190e3c03db0dad  rec/data/n/gvec/gvec_cosines.json
+   hashes.txt, smoke-identity.txt and run-identity.txt are each byte-equal to gvec_hashes_v2.txt (sha256 c40ed07b…7368).
+   The address and port were counted on the text files only (counts only, the seat's s6.3): the eight out files, the
+   two .json files of the rec part and this file, as at the first run, in the pod session's staging on the laptop
+   before anything was copied on to n-build's folders: 0 in each.
+
+8. LEFT ON THE BOX, nothing removed; cleanup waits for the coordinating session's relay of the PI's word:
+   - /workspace/nsite/gvec-v2 (n-build's three files);
+   - /workspace/nsite/copy-gvec-616e940 (the copy, with data/n/gvec/'s six files);
+   - /workspace/nsite/work-gvec-v2 (the work files and the smoke's record) and /workspace/nsite/out-gvec-v2;
+   - /workspace/nsite/sync11 (the pod session's sync and copy scripts and the bundle);
+   - the box repo's side ref refs/bundles/n-site11, with the box checkout unmoved at ad856f0;
+   - every earlier folder as before, the first run's among them.
+   The box stays up and idle (the routing's item 4: "The box: up through G-VEC's re-run and G-CAL-n [stays up].").

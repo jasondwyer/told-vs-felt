@@ -1,0 +1,161 @@
+== 0 the copy
+the copy: HEAD 616e9407c724f47b47fd018e5ddc8c9f2ad89103
+the copy: changed set none; neither data/n/gvec nor data/n/.gvec.staging present
+== 1 manifest
+scripts/n_sessions.py: OK
+valence_core/n/__init__.py: OK
+valence_core/n/cells.py: OK
+valence_core/n/directions.py: OK
+valence_core/n/gcal.py: OK
+valence_core/n/guard.py: OK
+valence_core/n/gvec.py: OK
+valence_core/n/hftiny.py: OK
+valence_core/n/ids.py: OK
+valence_core/n/keys.py: OK
+valence_core/n/primitive.py: OK
+valence_core/n/probe.py: OK
+valence_core/n/runner.py: OK
+valence_core/n/schema.py: OK
+valence_core/n/sessions.py: OK
+valence_core/n/testing.py: OK
+valence_core/n/verify.py: OK
+valence_core/__init__.py: OK
+valence_core/adapters/__init__.py: OK
+valence_core/adapters/base.py: OK
+valence_core/discrim.py: OK
+valence_core/echo/__init__.py: OK
+valence_core/echo/probe.py: OK
+valence_core/extract.py: OK
+valence_core/m/__init__.py: OK
+valence_core/m/keys.py: OK
+valence_core/m/resume.py: OK
+valence_core/session_e2a.py: OK
+scripts/box_e0_corpus.py: OK
+data/n/ids/sessions.jsonl: OK
+data/n/ids/n4_variants.jsonl: OK
+data/n/ids/labels.json: OK
+data/n/ids/gvec_passages.jsonl: OK
+data/n/ids/a3_contexts.jsonl: OK
+data/n/ids/gcal_prompts.jsonl: OK
+data/n/ids/MANIFEST.json: OK
+data/n/passages.jsonl: OK
+data/corpus/e0_tasks.jsonl: OK
+data/corpus/e2a_tasks.jsonl: OK
+data/configs/e0_frames.json: OK
+data/configs/e0_probes.json: OK
+results/raw/2026-11-18_respawn_determinism.txt: OK
+data/n/bk/experiment_results_json/fixed_text_design/neutral_passages/reduced.json: OK
+data/n/bk/experiment_results_json/fixed_text_design/strength_ladder/analysis.json: OK
+valence_core/adapters/olmo_hf.py: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b0.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b1.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b2.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b3.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b4.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b5.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b6.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b7.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b0.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b1.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b2.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b3.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b4.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b5.sessions.jsonl: OK
+data/olmo/manifest.json: OK
+data/olmo/determinism_base_h100-sxm.json: OK
+== 2 selftest, its temporary directory under the work folder
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+  571/571 n selftest checks pass
+selftest exit=0
+selftest: 571/571, as expected
+== 3 hashes (they must equal the laptop's, gvec_hashes_v2.txt, before the stage runs)
+package_sha256 valence_core/n d3415b10f568a7a943353f92ac653bc6715b41ca18b38464e99436f98559a519
+imported_sha256 valence_core/__init__.py 620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604
+imported_sha256 valence_core/adapters/__init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a
+imported_sha256 valence_core/adapters/base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf
+imported_sha256 valence_core/adapters/olmo_hf.py df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc
+imported_sha256 valence_core/discrim.py 7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89
+imported_sha256 valence_core/echo/__init__.py 71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43
+imported_sha256 valence_core/echo/probe.py d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81
+imported_sha256 valence_core/extract.py 2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe
+imported_sha256 valence_core/m/__init__.py b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4
+imported_sha256 valence_core/m/keys.py a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb
+imported_sha256 valence_core/m/resume.py 78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7
+imported_sha256 valence_core/session_e2a.py f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71
+hashes exit=0
+hashes: equal to the laptop's
+== 4 the smoke (never of record)
+SMOKE: 2 neutral passages and 2 contexts, outside the repository; R over positions 1..n, R_ell and the diagnostic block; never of record
+STAGE G-VEC: candidate indices [31, 32]; R's reference 25.49, within 0.02; out /workspace/nsite/work-gvec-v2/smoke
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 2728146e85a726850bbb0a3c4cca1ea650c9dd6a131a687960532e3d6c6f570c: HEAD's committed bytes
+inputs: the ids of record 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8 ((iv): 544 passages, 1344 contexts, every ids_sha re-derived; the longest 90 tokens, within the window 4096); the corpus ef6b00dc56f28678dce0cf7f81b2ae198862e5a83120037cca37f3c8fc533cc3, each record its passage; A3's frozen inputs {"corpus_sha": "3c53e5a54fbaa233", "frames_sha": "9654b9398743116f", "probes_sha": "ec2296182e726969"}, its code and contexts as the render recorded them; rule-18 hygiene {"both_directions": true, "fit_val_disjoint": true, "n_extraction_texts": 124, "n_probes": 12}
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  15%|█▌        | 109/707 [00:00<00:00, 1070.05it/s]Loading weights:  31%|███       | 217/707 [00:00<00:00, 898.37it/s] Loading weights:  44%|████▎     | 309/707 [00:00<00:00, 785.38it/s]Loading weights:  76%|███████▌  | 535/707 [00:00<00:00, 1281.77it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 1441.82it/s]
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 119470 ms
+SMOKE R at index 31 over the first 2 neutral passages: 25.339489694487117; R_ell over the first 2 contexts in A3's order: 22.23089391504287
+SMOKE R at index 32 over the first 2 neutral passages: 25.11012424863722; R_ell over the first 2 contexts in A3's order: 22.167402391674045
+diagnostic at index 31, descriptive: R_all 42.62270212364156; rms_by_position 0 236.32292453363263, 1 23.310899075243885, 2 15.91543059402035, 3 22.919090851768807, 4 27.620927333193478, 5..n 25.56561523015053; max_norm 0 236.47362245635114, 1..n 35.42741902081584; R_mean_of_passage_rms 25.356140798653428; tokens 0 2, 1 2, 2 2, 3 2, 4 2, 5..n 84
+diagnostic at index 32, descriptive: R_all 43.66884683035452; rms_by_position 0 246.21872592107482, 1 22.947044718606488, 2 15.717671229827584, 3 22.091661163422827, 4 26.85661336895092, 5..n 25.36444474585695; max_norm 0 246.36549932477016, 1..n 34.79955953684892; R_mean_of_passage_rms 25.107820557037787; tokens 0 2, 1 2, 2 2, 3 2, 4 2, 5..n 84
+file /workspace/nsite/work-gvec-v2/smoke/gvec_smoke.json sha256 ccf2a497a9abdec7911fd2162047d6f2cae163b165c44842cc9724a2b452f8cc
+G-VEC SMOKE, never of record
+smoke exit=0
+smoke prints: the SMOKE line 1, the STAGE line 1, the DRIVER line 1, R and R_ell at 31 1 and at 32 1, the diagnostic line at 31 1 and at 32 1, the end line 1 (each must be 1)
+the smoke's record: holds (status SMOKE, smoke 2; R {'31': 25.339489694487117, '32': 25.11012424863722}; R_ell {'31': 22.23089391504287, '32': 22.167402391674045}; never of record)
+the smoke's R_all at 31: 42.62270212364156, the first run's smoke R 42.62270212364156: equal (descriptive); not finite: []
+the smoke's R_all at 32: 43.66884683035452, the first run's smoke R 43.66884683035452: equal (descriptive); not finite: []
+the smoke's identity: equal to step 3's
+the copy after the smoke: unchanged
+== 5 the run of record
+STAGE G-VEC: candidate indices [31, 32]; R's reference 25.49, within 0.02; out data/n/gvec
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 2728146e85a726850bbb0a3c4cca1ea650c9dd6a131a687960532e3d6c6f570c: HEAD's committed bytes
+inputs: the ids of record 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8 ((iv): 544 passages, 1344 contexts, every ids_sha re-derived; the longest 90 tokens, within the window 4096); the corpus ef6b00dc56f28678dce0cf7f81b2ae198862e5a83120037cca37f3c8fc533cc3, each record its passage; A3's frozen inputs {"corpus_sha": "3c53e5a54fbaa233", "frames_sha": "9654b9398743116f", "probes_sha": "ec2296182e726969"}, its code and contexts as the render recorded them; rule-18 hygiene {"both_directions": true, "fit_val_disjoint": true, "n_extraction_texts": 124, "n_probes": 12}
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 9975.96it/s]
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 28510 ms
+passages: 544 (224 positive, 224 negative, 96 neutral), one forward each, captured at (31, 32)
+tokens, contentment: 56 passages, min 38, mean 46.77, max 59
+tokens, distress: 56 passages, min 41, mean 52.61, max 63
+tokens, dread: 56 passages, min 41, mean 51.61, max 62
+tokens, flow engagement: 56 passages, min 41, mean 51.20, max 61
+tokens, frustration: 56 passages, min 47, mean 54.68, max 68
+tokens, neutral: 96 passages, min 35, mean 43.36, max 57
+tokens, relief: 56 passages, min 41, mean 49.70, max 61
+tokens, serenity: 56 passages, min 39, mean 45.75, max 57
+tokens, weariness: 56 passages, min 38, mean 51.48, max 66
+R over positions 1..n: 4067 of the 4163 neutral tokens, position 0 of each of the 96 neutral passages left out (the convention of record)
+R at index 31: 25.845165564150104 (|R/25.49 - 1| = 0.013933525466854002; within 2%)
+R at index 32: 25.54500811131038 (|R/25.49 - 1| = 0.002158027120846784; within 2%)
+diagnostic at index 31, descriptive: R_all 44.04249774012646; rms_by_position 0 236.25771185629893, 1 25.940217649022404, 2 23.709320766176013, 3 23.660934576375784, 4 26.005746614723453, 5..n 25.946186977609; max_norm 0 236.47362245635114, 1..n 39.760931076789625; R_mean_of_passage_rms 25.78685277768362; tokens 0 96, 1 96, 2 96, 3 96, 4 96, 5..n 3683
+diagnostic at index 32, descriptive: R_all 45.107750142385356; rms_by_position 0 246.14916807441028, 1 25.44692690245153, 2 23.025559801354554, 3 22.96714802957467, 4 25.403520301599507, 5..n 25.6771318763628; max_norm 0 246.36549932477016, 1..n 38.112332850706395; R_mean_of_passage_rms 25.486362146647043; tokens 0 96, 1 96, 2 96, 3 96, 4 96, 5..n 3683
+site: index 32 (ADDENDUM-n1 §6.1)
+contexts: 1344 (A3's frozen corpus), one forward each, captured at (31, 32)
+R_ell at index 31: 22.263774836705206; N2's norms span_reward 4.91209, span_sentiment 3.38635, span_character 2.10291
+R_ell at index 32: 21.98789170395024; N2's norms span_reward 4.92973, span_sentiment 3.23275, span_character 2.05199
+cosine span_character|span_reward: 0.7501587511209901
+cosine span_character|span_sentiment: 0.32985395487927766
+cosine span_character|valence: 0.1392181026452373
+cosine span_reward|span_sentiment: 0.31065936209323797
+cosine span_reward|valence: 0.18040702496573224
+cosine span_sentiment|valence: 0.13346260721287628
+file data/n/gvec/directions_L31.npy sha256 d1246ae9d187da8ae7227763558c5c40a01ee443b328e75272d336e89cab7e45
+file data/n/gvec/directions_L32.npy sha256 33cc0ef656281ef2caebaec0049949f93ad2b237084fa7be5ac0a86ad68fc0c5
+file data/n/gvec/directions_alt_L31.npy sha256 72aec8e0d8a4f82b898b52d9047a361a60bb3f74c98dd2e6b5552d4bca11826f
+file data/n/gvec/directions_alt_L32.npy sha256 63740f0726d003147cda09dff6e1abefea92aec9a52f2191d596cce65dee9521
+file data/n/gvec/gvec.json sha256 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0
+file data/n/gvec/gvec_cosines.json sha256 fc8877be53194408cdcf7bbb09d1ec9ff3dfbe13b575bf6674190e3c03db0dad
+G-VEC PASS
+run exit=0
+== 6 the outputs
+prints: STAGE 1, DRIVER 1, passages 1, token lines 9, R's count 1, R at 31 1 and at 32 1, the diagnostic line at 31 1 and at 32 1, site 1, contexts 1, R_ell lines 2, cosines 6, file lines 6, PASS 1, the STOP lines 0 and 0, smoke lines 0
+prints as wanted for PASS: yes
+outputs: 6 of 6 named files present, 6 of them at their printed sha256; 6 entries in data/n/gvec
+the record: schema holds; status holds; R holds; site holds; diagnostic holds; counts holds; convention holds; files_sha256 holds; driver holds; pod holds; not a smoke holds
+the record: status PASS; site 32; R {'31': 25.845165564150104, '32': 25.54500811131038}; rel {'31': 0.013933525466854002, '32': 0.002158027120846784}; within {'31': True, '32': True}; of_record R 25.54500811131038, R_ell 21.98789170395024; direction of record: Route B
+the site rule, re-derived from the record's R: PASS at index 32
+the record's R_all at 31: 44.04249774012646, the first run's R 44.04249774012646: equal (descriptive); not finite: []
+the record's R_all at 32: 45.107750142385356, the first run's R 45.107750142385356: equal (descriptive); not finite: []
+the record's identity: equal to step 3's
+the record: sha256 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0
+the copy's changed set: data/n/gvec/ alone
+gvec v2 PASS: copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, smoke exit=0; checks (0 = held, 9 = not run): smoke record 0, smoke identity 0, copy after the smoke 0; run exit=0; prints 0, outputs 0, record 0, identity 0, changed set 0
