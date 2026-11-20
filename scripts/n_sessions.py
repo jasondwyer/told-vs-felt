@@ -155,23 +155,25 @@ At the n BUILD it wires:
                render-ids-iv: the environment and the tokenizer files checked, ``--out`` a new folder outside the
                repository, ``--pi-date`` the PI's date), extending (i)-(iv)'s manifest. A STOP writes nothing.
   gcal         G-CAL-n (n v0.2 §8 step 8; the G-CAL-n paragraph of n §3; ``valence_core.n.gcal``, its module docstring
-               for what it computes and Code's readings GC1-GC23, as the seat ruled them, a33252a), on the box: up to
-               192 turns generated ids-in, uncached, in the seat's order (+rho, the baseline, +rho/2, -rho), each
-               batch's arrival forwards as soon as it is generated; a fail at +rho ends the run there, a STOP with no
-               -rho turn. Refusals first, as G-VEC's (the out folder, its staging folder and its failed-run folder, the
-               pod, the cuBLAS setting, the stream known answer, the weights, the driver). Then, before the load: the
-               ids of record ((v) present; each of its 48 records the plan's prompt, its user turn's and text's
-               sha256s and the v block's template ``gcal.prompt_parts``', its ids_sha re-derived), the longest forward
-               held to the generation window; G-VEC's outputs of record (gvec.json and the site's directions file
-               HEAD's committed bytes, the record a PASS, the valence row at of_record's sha16); the dose map (a fold
-               into 0 refused, the seat's); the R6 bridge. The load and its provenance, its shape and its eos (the (v)
-               render's); ``gcal.compute``; the outputs into data/n/gcal/ -- built in a staging folder, each turn
-               logged there as it is generated, and renamed into place; on a failure the staging folder is kept as the
-               failed-run folder -- each file's sha256 printed, then the exposure at -rho. ``--smoke N`` (1..4): N
-               prompts at +rho and unsteered, never -rho, into ``--out``, a new folder outside the repository, never of
-               record. Exit 0 on PASS (or a smoke), 2 on a STOP (a hurdle failed at +rho or -rho; at +rho, the early
-               STOP), 3 on a PAUSE (at +rho/2 alone, or an incoherent baseline), each with its record and turns, for
-               the seat.
+               for what it computes and Code's readings GC1-GC23, as the seat ruled them, a33252a and f4b3e73), on the
+               box: up to 240 turns generated ids-in, uncached, in the seat's order (+rho, the baseline, +rho/2, the
+               gate's reward_f020, -rho), each valence batch's arrival forwards as soon as it is generated; at the
+               early read a fail at +rho ends the run as a STOP, and otherwise an incoherent baseline as a PAUSE, with
+               no further turn. Refusals first, as G-VEC's (the out folder, its staging folder and its failed-run
+               folder, the pod, the cuBLAS setting, the stream known answer, the weights, the driver). Then, before
+               the load: the ids of record ((v) present; each of its 48 records the plan's prompt, its user turn's and
+               text's sha256s and the v block's template ``gcal.prompt_parts``', its ids_sha re-derived), the longest
+               forward held to the generation window; G-VEC's outputs of record (gvec.json and the site's directions
+               file HEAD's committed bytes, the record a PASS, the valence and span_reward rows at of_record's
+               sha16s); the dose map (a fold into 0 refused, the seat's); the R6 bridge. The load and its provenance,
+               its shape and its eos (the (v) render's); ``gcal.compute``; the outputs into data/n/gcal/ -- built in a
+               staging folder, each turn logged there as it is generated, and renamed into place; on a failure the
+               staging folder is kept as the failed-run folder -- each file's sha256 printed, then the exposure at
+               -rho and the gate's line in the lock's form. ``--smoke N`` (1..4): N prompts at +rho and unsteered,
+               never -rho or the gate, into ``--out``, a new folder outside the repository, never of record. Exit 0
+               on PASS (or a smoke), 2 on a STOP (a hurdle failed at +rho or -rho; at +rho, the early STOP), 3 on a
+               PAUSE (at +rho/2 alone, or an incoherent baseline: at the early read, the early PAUSE), each with its
+               record, its turns and the dose map, for the seat; a fail at the gate's batch is neither.
   gcal-decode  A-n1 §1.4's one comparison, on the laptop in G-DATA's environment: ``--gcal-dir`` (the record and turns
                copied back from the box) and ``--tokenizer-dir``; each turn's emitted ids decoded here against the
                box's decode; both files' sha256s, the counts, and every difference printed, with its two decoded texts
@@ -2664,11 +2666,12 @@ def production_gcal_env() -> GcalEnv:
 def gcal_gvec_inputs(gvec_dir, committed, indices) -> dict:
     """G-VEC's outputs of record, before the load (GC18; rule 27): gvec.json and the site's directions file each HEAD's
     committed bytes; the record a G-VEC PASS, its site one of the candidates and its of_record's, the directions file at
-    the record's sha256; the valence row (row 0, ``gvec.NAMED``) at of_record's sha16 (the Injection's). Returns the
-    site, R, R_ell, the row and its sha16, and the two files' sha256s."""
+    the record's sha256; the valence row (row 0, ``gvec.NAMED``) and span_reward's (the gate's, the second sitting's
+    §2.5) each at of_record's sha16 (the Injection's). Returns the site, R, R_ell, the two rows and their sha16s, and
+    the two files' sha256s."""
     import hashlib
 
-    from valence_core.n import gvec
+    from valence_core.n import gcal, gvec
     d = Path(gvec_dir)
     rp = d / gvec.OUT_RECORD
     if not rp.is_file():
@@ -2680,6 +2683,7 @@ def gcal_gvec_inputs(gvec_dir, committed, indices) -> dict:
         rec = json.loads(data.decode("utf-8"))
         ofr, site, rsite = rec["of_record"], int(rec["of_record"]["site"]), int(rec["site"]["site"])
         R, R_ell, v_rec = float(ofr["R"]), float(ofr["R_ell"]), str(ofr["directions"]["valence"])
+        g_rec = str(ofr["directions"][gcal.GATE_DIRECTION])
         fshas = dict(rec["files_sha256"])
         head = (rec.get("schema"), rec.get("stage"), rec.get("status"))
     except (ValueError, KeyError, TypeError, AttributeError) as e:
@@ -2692,12 +2696,18 @@ def gcal_gvec_inputs(gvec_dir, committed, indices) -> dict:
     db = dp.read_bytes() if dp.is_file() else None
     if db is None or committed(dp) != db or hashlib.sha256(db).hexdigest() != fshas.get(fname):
         raise SystemExit(f"data/n/gvec/{fname} is absent, not HEAD's committed bytes, or not the record's")
-    v_unit = gvec.read_rows(dp)[gvec.NAMED.index("valence")]
+    rows = gvec.read_rows(dp)
+    v_unit = rows[gvec.NAMED.index("valence")]
     v_sha = gvec.injection_sha16(v_unit)
     if v_sha != v_rec:
         raise SystemExit("the valence row's sha16 is not the record's of_record one")
-    return {"site": site, "R": R, "R_ell": R_ell, "v_unit": v_unit, "v_sha16": v_sha,
-            "gvec_sha256": hashlib.sha256(data).hexdigest(), "directions_sha256": hashlib.sha256(db).hexdigest()}
+    g_unit = rows[gvec.NAMED.index(gcal.GATE_DIRECTION)]
+    g_sha = gvec.injection_sha16(g_unit)
+    if g_sha != g_rec:
+        raise SystemExit(f"the {gcal.GATE_DIRECTION} row's sha16 is not the record's of_record one (the gate's row)")
+    return {"site": site, "R": R, "R_ell": R_ell, "v_unit": v_unit, "v_sha16": v_sha, "g_unit": g_unit,
+            "g_sha16": g_sha, "gvec_sha256": hashlib.sha256(data).hexdigest(),
+            "directions_sha256": hashlib.sha256(db).hexdigest()}
 
 
 def gcal_prompts_check(loaded) -> list:
@@ -2732,11 +2742,14 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
     """G-CAL-n, in order: refusals; the weights and the driver; the ids of record (the manifest pinned), (v)'s 48
     prompts; the generation window (rule 28(d)(c): the longest forward, a prompt and the cap - 1, within
     ``gcal.GENERATION_WINDOW``); G-VEC's outputs of record; the dose map (before the load: a fold into 0 is refused, the
-    seat's); the R6 bridge; the load, its provenance, its shape and its eos (the v block's); ``gcal.compute``; the
-    outputs, built in a staging folder beside the out folder, each turn logged there as it is generated (GC23 (a)),
-    and renamed into place. On any failure after that folder is made, it is renamed to the failed-run folder beside
-    it (GC23 (b)), never removed, and the failure goes on. Exit 0 on PASS (or a smoke), 2 on a STOP and 3 on a PAUSE,
-    each with its record and turns, for the seat; a refusal raises."""
+    seat's); the R6 bridge; the load, its provenance, its shape and its eos (the v block's); ``gcal.compute`` (+rho,
+    the baseline, +rho/2, the gate's reward_f020 batch, -rho; the early read after the baseline); the outputs, built
+    in a staging folder beside the out folder, each turn logged there as it is generated (GC23 (a)), and renamed into
+    place; then the exposure at -rho and the gate's line in the lock's form (the second sitting, §2.5). On any failure
+    after that folder is made, it is renamed to the failed-run folder beside it (GC23 (b)), never removed, and the
+    failure goes on. Exit 0 on PASS (or a smoke), 2 on a STOP (the early STOP at +rho among them) and 3 on a PAUSE
+    (the early PAUSE among them, an incoherent baseline at the early read), each with its record, its turns and the
+    dose map, for the seat; a fail at the gate's batch is neither a STOP nor a PAUSE; a refusal raises."""
     import hashlib
 
     from valence_core.m import resume as m_resume
@@ -2780,7 +2793,8 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
     cap = int(env.cap) if env.cap is not None else gcal.CAP
     if smoke is not None:
         say(f"SMOKE: {smoke} prompts at +rho and unsteered, outside the repository; never of record")
-    say(f"STAGE G-CAL-n: batches {[b for b, _d in batches]}; TEMP {gcal.TEMP!r}, cap {cap}; out {_shown(out_p)}")
+    shown_b = [b for b, _d in batches] + ([gcal.GATE_BATCH] if smoke is None else [])
+    say(f"STAGE G-CAL-n: batches {shown_b}; TEMP {gcal.TEMP!r}, cap {cap}; out {_shown(out_p)}")
     w = env.weights()
     say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
         f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
@@ -2807,7 +2821,7 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
     say(f"inputs: the ids of record {loaded['manifest_sha256']} ((v): {len(prompts)} prompts, every ids_sha re-derived, "
         f"each the plan's; the longest forward {longest} positions, within the generation window "
         f"{gcal.GENERATION_WINDOW}); G-VEC's record {gv['gvec_sha256']}, site {gv['site']}, R {gv['R']!r}, R_ell "
-        f"{gv['R_ell']!r}, valence {gv['v_sha16']}")
+        f"{gv['R_ell']!r}, valence {gv['v_sha16']}, {gcal.GATE_DIRECTION} {gv['g_sha16']}")
     say(f"dose map: d_eq {dmap['d_eq']!r}, d_20 {dmap['d_20']!r} (rho {dmap['rho']!r}); points "
         + ", ".join(f"{p['label']} {p['value']!r}" + (f" (merged {'+'.join(p['merged'])})" if p["merged"] else "")
                     for p in dmap["points"]))
@@ -2824,7 +2838,7 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
                 "backend_identifier": bid, "characterized_identifier": CHARACTERIZED_IDENTIFIER, "pod_id": pod,
                 "ids_manifest_sha256": loaded["manifest_sha256"], "driver_sha256": dsha,
                 "gvec_sha256": gv["gvec_sha256"], "directions_sha256": gv["directions_sha256"], "site": gv["site"],
-                "valence_sha16": gv["v_sha16"], "window": schema.MAX_WINDOW,
+                "valence_sha16": gv["v_sha16"], "gate_sha16": gv["g_sha16"], "window": schema.MAX_WINDOW,
                 "generation_window": gcal.GENERATION_WINDOW, "longest_forward": longest, "smoke": smoke, "cap": cap}
     t0 = env.clock()
     adapter = env.make_adapter(w["path"])
@@ -2846,8 +2860,9 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
     stage.mkdir()
     log_p = stage / gcal.OUT_PARTIAL
     try:
+        gate = None if smoke is not None else {"unit": gv["g_unit"], "sha16": gv["g_sha16"], "R_ell": gv["R_ell"]}
         res = gcal.compute(step, fwd, dec, prompts, v_unit=gv["v_unit"], v_sha16=gv["v_sha16"], site=gv["site"],
-                           R=gv["R"], eos_id=int(eos), batches=batches, n=smoke, cap=cap, say=say,
+                           R=gv["R"], eos_id=int(eos), batches=batches, gate=gate, n=smoke, cap=cap, say=say,
                            on_turn=lambda r: gcal.append_turn(log_p, r))
         gcal.write(stage, res, dmap, prov_rec)
         log_p.unlink(missing_ok=True)
@@ -2864,6 +2879,10 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
         say(f"file {_shown(p)} sha256 {hashlib.sha256(p.read_bytes()).hexdigest()}")
     say(f"exposure at -rho (PIN-n-23): {res['exposure_minus_rho']['turns']} turns, "
         f"{res['exposure_minus_rho']['tokens']} tokens, {res['exposure_minus_rho']['draws']} draws")
+    gfig = res["figures"].get(gcal.GATE_BATCH)
+    if gfig is not None:               # the line LOCK-n carries for N2's decision (the second sitting, §2.5)
+        say(f"reward axis 5(d) gate, coherence: {gfig['coherent']} of {gfig['of']}, "
+            f"{'PASS' if gfig['pass'] else 'FAIL'}")
     status = res["status"]
     if status == "STOP":
         if res.get("early_stop"):
@@ -2874,8 +2893,13 @@ def run_gcal(env: GcalEnv, *, out=None, smoke: int | None = None) -> int:
                 "the seat rules")
         return 2
     if status == "PAUSE":
-        say("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone (GC14), or the baseline is incoherent (O7); the record, "
-            "the turns and the dose map are written; the seat rules")
+        if res.get("early_pause"):
+            say("G-CAL-n PAUSE: the baseline is below 36 of 48 coherent at the early read (O7), before any +rho/2, "
+                "gate or -rho turn (the seat's early PAUSE, O2); the record, the turns and the dose map are written; "
+                "the seat rules")
+        else:
+            say("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone (GC14; an incoherent baseline ends the run at the "
+                "early read); the record, the turns and the dose map are written; the seat rules")
         return 3
     say(f"G-CAL-n {status}" + (", never of record" if status == "SMOKE" else "; the dose map is pinnable"))
     return 0
@@ -3000,10 +3024,12 @@ def cmd_gcal_decode(gcal_dir: str, tokenizer_dir: str) -> int:
 
 def _gcal_selftest(chk, tmp: Path) -> None:
     """G-CAL-n's command, model-free: its flow over the numpy double behind every seam (a run of record into a folder
-    under tmp; its PASS, STOP and PAUSE exits through a stand-in compute; a smoke; a failure at the first forward and
-    one mid-run; a non-finite arrival score; the early STOP), its refusals before and after the load, the (v) and
-    G-VEC input checks, the decode comparison, render-ids-v's refusals and main()'s dispatch. It writes only under
-    tmp."""
+    under tmp, the gate's batch among its turns and the run tied to G-VEC's rows at its site; its PASS, STOP and
+    PAUSE exits through a stand-in compute, the early PAUSE's among them; a smoke; a failure at the first forward and
+    one mid-run; a non-finite arrival score; the early STOP; the early PAUSE on non-empty incoherent turns), its
+    refusals before and after the load, the (v) and G-VEC input checks (the gate's row among them), the decode
+    comparison, render-ids-v's refusals, main()'s dispatch, and on the box the HF path (the gate's steering check among
+    it). It writes only under tmp."""
     import contextlib
     import hashlib
     import io
@@ -3032,15 +3058,21 @@ def _gcal_selftest(chk, tmp: Path) -> None:
     with open(gdir / fname, "wb") as fh:
         np.save(fh, rows, allow_pickle=False)
     v_sha = gvec.injection_sha16(rows[0])
-    R_t, Rl_t = 3.0, 3.0
+    g_sha = gvec.injection_sha16(rows[gvec.NAMED.index(gcal.GATE_DIRECTION)])
+    R_t, Rl_t = 3.0, 4.0                # R and R_ell apart, so that no check takes one for the other (the review's F3)
+
+    def ofr_of(**over):            # G-VEC's of_record as the fake writes it, both rows' sha16s, a field changed
+        out_ = {"site": site, "R": R_t, "R_ell": Rl_t,
+                "directions": {"valence": v_sha, gcal.GATE_DIRECTION: g_sha}}
+        out_.update(over)
+        return out_
 
     def write_gvec(folder, **over):
         folder.mkdir(parents=True, exist_ok=True)
         if folder != gdir:
             (folder / fname).write_bytes((gdir / fname).read_bytes())
         rec = {"schema": gvec.RECORD_SCHEMA, "stage": gvec.STAGE, "status": "PASS", "site": {"site": site},
-               "of_record": {"site": site, "R": R_t, "R_ell": Rl_t, "directions": {"valence": v_sha},
-                             "route_line": gvec.ROUTE_LINE},
+               "of_record": dict(ofr_of(), route_line=gvec.ROUTE_LINE),
                "files_sha256": {fname: hashlib.sha256((folder / fname).read_bytes()).hexdigest()}}
         for k, v in over.items():
             rec[k] = v
@@ -3077,8 +3109,19 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         def provenance(self):
             return dict(self._prov)
 
-    def dec_of(_a):
+    def dec_of(_a):                # at the self-test's cap of 6, every turn with an id coherent, an empty one not
+        return lambda ii: (" ".join(f"w{int(i) % 11}" for i in ii) + " and the light is soft") if ii else ""
+
+    def dec_plain(_a):             # the plain decode: a turn of one id collapses (fewer than 4 words), non-empty
         return lambda ii: " ".join(f"w{int(i) % 11}" for i in ii)
+
+    def base_step(ii, inj):        # the double's logits; at an unsteered turn's first step (the prompts' 5 ids) the
+        # end of turn is never drawn, so every baseline turn has an id and the run of record reaches every batch
+        # (the review's F1)
+        lg = np.array(be.prefill(ii, inj, ()).logits_last, dtype=np.float64)
+        if not inj and len(ii) == 5:
+            lg[7] = -50.0
+        return lg
 
     def env_for(tag, **over):
         lines: list = []
@@ -3090,7 +3133,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
                                      "path": "(toy)"},
                     load_ids=lambda: loaded_of(), gvec_dir=gdir, committed=lambda p: snap.get(Path(p).resolve()),
                     env_provenance=lambda p: dict(prov_t), make_adapter=mk, adapter_shape=lambda a: (4, 8),
-                    step_logits=lambda a: (lambda ii, inj: be.prefill(ii, inj, ()).logits_last),
+                    step_logits=lambda a: base_step,
                     forward=lambda a: (lambda ii, layers: be.forward_all(ii, layers)), decoder=dec_of,
                     eos_id=lambda a: 7, pod=lambda: CHARACTERIZED_POD, driver=lambda: (b"drv", b"drv"), indices=L,
                     out=tmp / tag / "gcal", shape=(4, 8), cap=6, printer=lines.append)
@@ -3128,9 +3171,32 @@ def _gcal_selftest(chk, tmp: Path) -> None:
             "staging folder gone, the exit its status's (0 PASS, 2 STOP, 3 PAUSE)",
             names1 == sorted([gcal.OUT_RECORD, gcal.OUT_TURNS, gcal.OUT_DOSE_MAP]) and rc1 == want_rc
             and not (env1.out.parent / ".gcal.staging").exists() and not (env1.out.parent / ".gcal.failed").exists()
-            and len(turns1) == 192 and rec1["early_stop"] is False
+            and len(turns1) == 240 and rec1["early_stop"] is False and rec1["early_pause"] is False
+            and rec1["status"] == "PASS" and rec1["batches"] == list(gcal.RECORD_ORDER)
             and rec1["dose_map"] == gcal.dose_map(R_t, Rl_t) and rec1["pinnable"] == (rec1["status"] == "PASS"),
             (rc1, rec1.get("status"), names1))
+        gf1 = rec1["figures"][gcal.GATE_BATCH]
+        chk("driver: the gate's batch in the run of record (the second sitting, §2.5): span_reward's row of G-VEC's "
+            "record, its sha16 of_record's, at f0.20 of R_ell (the campaign's alpha), its 48 turns in the turns file "
+            "after the baseline's, its count, pass and stops in the record",
+            gf1["sha16"] == g_sha == rec1["provenance"]["gate_sha16"]
+            and gf1["alpha"] == schema.expected_alpha("f0.20", 0.20, {"R_ell": Rl_t})
+            and [r["batch"] for r in turns1[-gcal.N_TURNS:]] == [gcal.GATE_BATCH] * gcal.N_TURNS
+            and gf1["coherent"] == sum(1 for r in turns1[-gcal.N_TURNS:] if r["coherence"]["coherent"])
+            and gf1["of"] == gcal.N_TURNS and "stops" in gf1
+            and lines1.count(f"reward axis 5(d) gate, coherence: {gf1['coherent']} of 48, "
+                             f"{'PASS' if gf1['pass'] else 'FAIL'}") == 1, gf1)
+        p0 = next(r for r in turns1 if r["batch"] == "+rho" and r["index"] == 0)
+        regen = gcal.generate(base_step, vrecs[0]["ids"], vrecs[0]["gen_start"],
+                              gcal.injection_for(1.0, rows[0], site, R_t, v_sha), vrecs[0]["seed"], eos_id=7, cap=6)
+        sc1 = next((r for r in turns1 if r["batch"] == "+rho" and r["n_tok"] >= 2), None)
+        want_a = None if sc1 is None else float(np.mean(
+            (be.forward_all(sc1["ids"], (site,))[site].astype(np.float64) @ rows[0].astype(np.float64))[1:]))
+        chk("driver: the run of record is G-VEC's rows at its site: +rho's turn 0 is generate's own under the valence "
+            "row's injection at R, and a scored +rho turn's arrival is its projection on that row over positions 1..n "
+            "(the review's M4)",
+            regen["ids"] == p0["ids"] and sc1 is not None and abs(sc1["arrival"] - want_a) < 1e-12,
+            (regen["ids"], p0["ids"]))
         pv = rec1["provenance"]
         chk("driver: the record's provenance: the package and closure, the weights, the identifiers, the pod, the ids of "
             "record, the driver, G-VEC's two files, the site and valence sha16, the two windows and the longest "
@@ -3146,10 +3212,12 @@ def _gcal_selftest(chk, tmp: Path) -> None:
             and pv["backend_identifier"] == m_resume.backend_identifier(prov_t)
             and pv["adapter_provenance"] == m_resume.provenance_record(prov_t), "")
         heads = ("STAGE G-CAL-n", "WEIGHTS:", "DRIVER", "inputs:", "dose map:", "backend:", "steering check +rho:",
-                 "turn +rho 0 ", "batch +rho:", "file ", "exposure at -rho")
+                 "turn +rho 0 ", f"steering check {gcal.GATE_BATCH}:", "batch +rho:", f"batch {gcal.GATE_BATCH} ",
+                 "file ", "exposure at -rho", "reward axis 5(d) gate, coherence: ")
         decodes = {r["decode"] for r in turns1 if " " in r["decode"]}     # several words: never a path's chance match
         chk("driver: G-CAL-n prints its lines in order -- STAGE, WEIGHTS, DRIVER, inputs, the dose map, backend, the "
-            "steering check, the turns, the batches, each file's sha256, the exposure -- and no turn's text or id",
+            "steering checks, the turns, the batches and the gate's, each file's sha256, the exposure, the gate's line "
+            "in the lock's form -- and no turn's text or id",
             [next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads]
             == sorted(next((i for i, x in enumerate(lines1) if x.startswith(h)), -1) for h in heads)
             and all(any(x.startswith(h) for x in lines1) for h in heads)
@@ -3161,38 +3229,48 @@ def _gcal_selftest(chk, tmp: Path) -> None:
 
         kw_seen: list = []
 
-        def canned(status):
+        def canned(status, early_pause=False):
             def fake(*a, **k):
-                kw_seen.append(sorted(k))
+                kw_seen.append((sorted(k), k.get("gate")))
                 return {"status": status, "turns": {"+rho": [], "-rho": [], "+rho/2": [], "baseline": []},
                         "figures": {}, "exposure_minus_rho": {"turns": 0, "tokens": 0, "draws": 0},
-                        "batches": ["+rho", "-rho", "+rho/2", "baseline"]}
+                        "batches": ["+rho", "-rho", "+rho/2", "baseline"], "early_pause": early_pause}
             return fake
         rcs, ends = {}, {}
         try:
-            for st in ("PASS", "STOP", "PAUSE"):
-                gcal.compute = canned(st)
-                e_, l_ = env_for(f"canned_{st}")
-                rcs[st] = run_gcal(e_)
-                ends[st] = (l_[-1], json.loads((e_.out / gcal.OUT_RECORD).read_text())["pinnable"])
+            for st, ep in (("PASS", False), ("STOP", False), ("PAUSE", False), ("PAUSE", True)):
+                gcal.compute = canned(st, ep)
+                e_, l_ = env_for(f"canned_{st}_{ep}")
+                key = st + (" early" if ep else "")
+                rcs[key] = run_gcal(e_)
+                ends[key] = (l_[-1], json.loads((e_.out / gcal.OUT_RECORD).read_text())["pinnable"],
+                             sorted(p.name for p in e_.out.iterdir()))
         finally:
             gcal.compute = real_compute
-        chk("driver: G-CAL-n's exits: PASS 0 (the dose map pinnable), a STOP 2 and a PAUSE 3, each with its record "
-            "and turns written, for the seat", rcs == {"PASS": 0, "STOP": 2, "PAUSE": 3}
-            and ends["PASS"] == ("G-CAL-n PASS; the dose map is pinnable", True)
+        chk("driver: G-CAL-n's exits: PASS 0 (the dose map pinnable), a STOP 2 and a PAUSE 3 (the early PAUSE's its "
+            "own line), each with its record, its turns and the dose map written, for the seat; a run of record hands "
+            "compute the gate's row, its sha16 and R_ell, never a figures seam",
+            rcs == {"PASS": 0, "STOP": 2, "PAUSE": 3, "PAUSE early": 3}
+            and ends["PASS"][:2] == ("G-CAL-n PASS; the dose map is pinnable", True)
+            and all(v[2] == sorted([gcal.OUT_RECORD, gcal.OUT_TURNS, gcal.OUT_DOSE_MAP]) for v in ends.values())
             and ends["STOP"][0].startswith("G-CAL-n STOP: a hurdle failed at -rho (n:113)") and ends["STOP"][1] is False
             and ends["PAUSE"][0].startswith("G-CAL-n PAUSE: a hurdle failed at +rho/2 alone")
-            and ends["PAUSE"][1] is False
-            and len(kw_seen) == 3 and all("figures_of" not in k for k in kw_seen), (rcs, ends, kw_seen))
+            and ends["PAUSE early"][0].startswith("G-CAL-n PAUSE: the baseline is below 36 of 48 coherent at the "
+                                                  "early read")
+            and ends["PAUSE"][1] is False and ends["PAUSE early"][1] is False
+            and len(kw_seen) == 4 and all("figures_of" not in k for k, _g in kw_seen)
+            and all(g_ is not None and g_["sha16"] == g_sha and g_["R_ell"] == Rl_t
+                    and gvec.injection_sha16(g_["unit"]) == g_sha for _k, g_ in kw_seen), (rcs, ends))
         env3, l3 = env_for("smoke", driver=lambda: (b"drv-new", b"drv"))
         rc3 = run_gcal(env3, out=tmp / "smoke-out", smoke=2)
         rec3 = json.loads((tmp / "smoke-out" / gcal.OUT_RECORD).read_text())
         t3 = (tmp / "smoke-out" / gcal.OUT_TURNS).read_text().splitlines()
         chk("driver: a smoke runs uncommitted bytes into --out outside the repository: +rho and the baseline only on its "
-            "first prompts, never -rho, its status SMOKE, never of record",
+            "first prompts, never -rho or the gate, its status SMOKE, never of record",
             rc3 == 0 and rec3["status"] == "SMOKE" and rec3["batches"] == ["+rho", "baseline"] and len(t3) == 4
             and rec3["exposure_minus_rho"] == {"turns": 0, "tokens": 0, "draws": 0} and not env3.out.exists()
-            and rec3["early_stop"] is False and not any("early STOP" in x for x in l3)
+            and rec3["early_stop"] is False and rec3["early_pause"] is False and not any("early STOP" in x for x in l3)
+            and gcal.GATE_BATCH not in rec3["figures"] and not any("early PAUSE" in x for x in l3)
             and any(x.startswith("SMOKE:") for x in l3)
             and any("a smoke's, not HEAD's committed bytes" in x for x in l3), (rc3, rec3.get("status")))
 
@@ -3219,7 +3297,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
                 n_calls[0] += 1
                 if n_calls[0] > 60:
                     raise RuntimeError("the forward failed mid-run")
-                return be.prefill(ii, inj, ()).logits_last
+                return base_step(ii, inj)
             return f
         env5, _l5 = env_for("midfail", step_logits=flaky)
         try:                           # the 61st forward fails before the early read, which needs 98 at least
@@ -3233,7 +3311,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         seq5 = [(b, i) for b in gcal.GENERATION_ORDER for i in range(gcal.N_TURNS)]
         k5, calls5, past5 = 0, 0, False   # the turns whose every forward precedes the 61st, in the order of generation
         for b in gcal.GENERATION_ORDER:
-            if dict(gcal.BATCHES)[b] > 0:
+            if b in gcal.CHECKED:
                 calls5 += 2                # the steering check's two forwards
                 if calls5 > 60:
                     break
@@ -3270,7 +3348,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         def recording(_a):             # the double's step, recording every alpha it is handed
             def f(ii, inj):
                 alph7.extend(round(i.alpha, 12) for i in inj)
-                return be.prefill(ii, inj, ()).logits_last
+                return base_step(ii, inj)
             return f
         env7, l7 = env_for("earlystop", step_logits=recording)
         gcal.batch_figures = forced_bf(False)
@@ -3284,10 +3362,42 @@ def _gcal_selftest(chk, tmp: Path) -> None:
             "the turns and the dose map written, +rho and the baseline alone, and no step is ever handed a -rho or "
             "+rho/2 injection; the hurdles' seam is restored after the last patch",
             rc7 == 2 and rec7["status"] == "STOP" and rec7["early_stop"] is True and gcal.batch_figures is real_bf
+            and rec7["early_pause"] is False
             and rec7["batches"] == ["+rho", "baseline"] and len(t7) == 96 and (env7.out / gcal.OUT_DOSE_MAP).is_file()
             and rec7["exposure_minus_rho"]["turns"] == 0 and len(set(alph7)) == 1 and min(alph7) > 0
             and any(x.startswith("G-CAL-n STOP: a hurdle failed at +rho, before any -rho turn") for x in l7),
             (rc7, rec7.get("status"), sorted(set(alph7))))
+        alph8: list = []
+
+        def mute_base(_a):             # the double's step, and an unsteered turn one id (13) then the end of turn:
+            def f(ii, inj):            # non-empty and, on the plain decode, incoherent (the review's F2)
+                alph8.extend(round(i.alpha, 12) for i in inj)
+                lg = np.asarray(be.prefill(ii, inj, ()).logits_last, dtype=np.float64)
+                if not inj:
+                    lg = np.full_like(lg, -50.0)
+                    lg[13 if len(ii) == 5 else 7] = 50.0
+                return lg
+            return f
+        env8, l8 = env_for("earlypause", step_logits=mute_base, decoder=dec_plain)
+        gcal.batch_figures = forced_bf(True)
+        try:
+            rc8 = run_gcal(env8)
+        finally:
+            gcal.batch_figures = real_bf
+        rec8 = json.loads((env8.out / gcal.OUT_RECORD).read_text(encoding="utf-8"))
+        t8 = (env8.out / gcal.OUT_TURNS).read_text(encoding="utf-8").splitlines()
+        b8 = [json.loads(x) for x in t8 if json.loads(x)["batch"] == "baseline"]
+        chk("driver: the seat's early PAUSE (O2, the second sitting §3): +rho passing and a baseline below 36 of 48 "
+            "coherent, every baseline turn non-empty, end the run as a PAUSE (exit 3) with the record, the turns and "
+            "the dose map written, +rho and the baseline alone, no +rho/2, gate or -rho injection ever handed; the "
+            "hurdles' seam restored",
+            rc8 == 3 and rec8["status"] == "PAUSE" and rec8["early_pause"] is True and rec8["early_stop"] is False
+            and len(b8) == 48 and all(r["n_tok"] == 1 and not r["coherence"]["coherent"] for r in b8)
+            and gcal.batch_figures is real_bf and rec8["batches"] == ["+rho", "baseline"] and len(t8) == 96
+            and (env8.out / gcal.OUT_DOSE_MAP).is_file() and rec8["exposure_minus_rho"]["turns"] == 0
+            and set(alph8) == {round(schema.RHO * R_t, 12)}
+            and l8[-1].startswith("G-CAL-n PAUSE: the baseline is below 36 of 48 coherent at the early read"),
+            (rc8, rec8.get("status"), sorted(set(alph8))))
         # refusals, each before the load
         n_made = len(made)
         pre_out = tmp / "exists" / "gcal"
@@ -3366,8 +3476,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
             ("G-VEC's record a STOP", lambda: run_gcal(gv_env("x33", status="STOP"))),
             ("G-VEC's record of another stage", lambda: run_gcal(gv_env("x34", stage="G-CAL-n"))),
             ("G-VEC's site not a candidate index",
-             lambda: run_gcal(gv_env("x35", of_record={"site": 1, "R": R_t, "R_ell": Rl_t,
-                                                       "directions": {"valence": v_sha}}, site={"site": 1}))),
+             lambda: run_gcal(gv_env("x35", of_record=ofr_of(site=1), site={"site": 1}))),
             ("G-VEC's directions file not the record's", lambda: run_gcal(baddir_env)),
             ("G-VEC's directions file at the record's sha256 but not HEAD's bytes", lambda: run_gcal(cdiff_env)),
             ("G-VEC's directions file HEAD's bytes but not at the record's sha256",
@@ -3379,14 +3488,17 @@ def _gcal_selftest(chk, tmp: Path) -> None:
              lambda: run_gcal(gv_env("x43", of_record={"site": site, "R": R_t, "R_ell": Rl_t}))),
             ("G-VEC's record with no files_sha256 map", lambda: run_gcal(gv_env("x44", files_sha256=None))),
             ("a G-VEC R that is not positive (the dose map's ValueError)",
-             lambda: run_gcal(gv_env("x45", of_record={"site": site, "R": -1.0, "R_ell": Rl_t,
-                                                       "directions": {"valence": v_sha}}))),
+             lambda: run_gcal(gv_env("x45", of_record=ofr_of(R=-1.0)))),
             ("a valence row not of_record's sha16",
-             lambda: run_gcal(gv_env("x36", of_record={"site": site, "R": R_t, "R_ell": Rl_t,
-                                                       "directions": {"valence": "0" * 16}}))),
+             lambda: run_gcal(gv_env("x36", of_record=ofr_of(directions={"valence": "0" * 16,
+                                                                         gcal.GATE_DIRECTION: g_sha})))),
+            ("the gate's span_reward row not of_record's sha16 (the second sitting, §2.5)",
+             lambda: run_gcal(gv_env("x46", of_record=ofr_of(directions={"valence": v_sha,
+                                                                         gcal.GATE_DIRECTION: "0" * 16})))),
+            ("G-VEC's of_record with no span_reward sha16",
+             lambda: run_gcal(gv_env("x47", of_record=ofr_of(directions={"valence": v_sha})))),
             ("a dose map that folds into 0 (the seat's)",
-             lambda: run_gcal(gv_env("x37", of_record={"site": site, "R": 25.49, "R_ell": 0.3 * 25.49 * 0.4,
-                                                       "directions": {"valence": v_sha}}))),
+             lambda: run_gcal(gv_env("x37", of_record=ofr_of(R=25.49, R_ell=0.3 * 25.49 * 0.4)))),
             ("a provenance off the characterization before the load",
              lambda: run_gcal(env_for("x38", env_provenance=lambda p: dict(prov_t, gpu="another GPU"))[0])),
         ]
@@ -3423,8 +3535,8 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         "each batch's coherent count under both; a turns file not at the record's sha256, and a record of another "
         "stage, are refused", same["record_sha256"] == hashlib.sha256(rb_b).hexdigest()
         and same["turns_sha256"] == hashlib.sha256(tb).hexdigest()
-        and same["turns"] == 192 and same["equal"] == 192 and same["different"] == 0 and same["flags_differ"] == 0
-        and sorted(same["coherent_by_batch"]) == sorted(b for b, _d in gcal.BATCHES)
+        and same["turns"] == 240 and same["equal"] == 240 and same["different"] == 0 and same["flags_differ"] == 0
+        and sorted(same["coherent_by_batch"]) == sorted(gcal.RECORD_ORDER)
         and all(c["box"] == c["laptop"] for c in same["coherent_by_batch"].values())
         and off["different"] >= 1 and all(set(x) == keys_d for x in off["differences"])
         and turns1[0]["n_tok"] > 0
@@ -3539,6 +3651,7 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         w_t = int(a_t._model.config.hidden_size)
         v_t = gvec.unit32(np.random.default_rng(23).normal(size=w_t))
         inj_t = gcal.injection_for(1.0, v_t, 1, 3.0, gvec.injection_sha16(v_t))
+        gate_tn = gcal.gate_injection({"unit": v_t, "sha16": gvec.injection_sha16(v_t), "R_ell": 3.0}, 1)
         st_t, ids_h = _hf_step_logits(a_t), [3, 4, 5, 6, 7, 8]
         lu_t = np.asarray(st_t(ids_h, ()), dtype=np.float64)
         ls_t = np.asarray(st_t(ids_h, gcal.placed(inj_t, gcal.STEER_FROM)), dtype=np.float64)
@@ -3548,11 +3661,13 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         cap_t = _hf_forward(a_t)(turn_t["ids"] or [3], (1,))
         chk("driver: on the HF path (hftiny, a tiny OLMo-2 config): G-CAL-n's step is the adapter's own last-position "
             "logits; an injection placed from STEER_FROM (the whole turn) moves them, differs from one placed from "
-            "position 1 (position 0 is steered), and passes the steering check; a turn generates ids-in under it; its "
-            "capture is one row per id; the decode runs through a stand-in tokenizer",
+            "position 1 (position 0 is steered), and passes the steering check, and so does the gate's injection "
+            "(f0.20 of R_ell; the review's B2); a turn generates ids-in under it; its capture is one row per id; the "
+            "decode runs through a stand-in tokenizer",
             lu_t.shape == (128,) and float(np.max(np.abs(lu_t - ref_t))) <= 1e-5
             and float(np.max(np.abs(ls_t - lu_t))) > 1e-6 and float(np.max(np.abs(ls_t - ls1_t))) > 1e-6
             and gcal.steering_check(st_t, {"ids": ids_h, "gen_start": 3}, inj_t) > 0.0
+            and gcal.steering_check(st_t, {"ids": ids_h, "gen_start": 3}, gate_tn) > 0.0
             and 0 <= turn_t["n_tok"] <= 4 and all(0 <= i < 128 for i in turn_t["ids"])
             and np.asarray(cap_t[1]).shape == (max(1, turn_t["n_tok"]), w_t)
             and isinstance(_hf_decoder(a_t)(turn_t["ids"]), str),

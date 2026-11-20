@@ -21,6 +21,87 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-19 — **n — G-CAL-n's delta on the seat's second sitting: the arrival over the emitted ids' positions 1..n,
+  the early PAUSE, and the reward axis's 5(d) gate's coherence batch, `reward_f020`, with the wording owed at the
+  driver's next change; committed by path (the answers of 2026-11-19, second sitting, §1.4 (i), §2.5 and §3, committed
+  at `f4b3e73`; the PI's routing, item N.2, on "Route as given", its slot for the batch "Go", which the coordinating
+  session read as go and put to the PI). Model-free, on the laptop: the delta "may be built on this raw and runs on
+  nothing before the addendum's commit" (§2.5); its self-test is model-free, and nothing of it runs on the box before
+  ADDENDUM-n3's commit.**
+  - **Headline:**
+    - the arrival (§1.4 (i)): a turn's score is the mean over its emitted ids' positions 1..n of the projection on
+      the unit valence row (`ARRIVAL_FROM`, `directions.CAPTURE_FROM`, one constant for G-VEC's means and this), and
+      the all-positions mean is recorded beside per turn, `arrival_all`, descriptive; a turn of one emitted id has no
+      score and is left out of the t, its count recorded (`one_id`, beside `empty`, in every batch's stops), as
+      departure (2) treats the end-of-turn-first turn; the baseline alike;
+    - the early PAUSE (§3, O2): at the early read, once +ρ has passed, a baseline below 36 of 48 coherent ends the run
+      as a PAUSE (exit 3), with the record, the turns and the dose map written, `early_pause` recorded, and no +ρ/2,
+      gate or −ρ turn generated; a STOP at +ρ comes first (O1); `stage_status` is unchanged for a run that reaches it;
+    - the gate's batch (§2.5): the 48 prompts and seeds, TEMP 0.7, cap 80, steered on the whole turn from position 0
+      by `span_reward`'s unit row of record at the site at 0.20·R_ℓ (`gate_injection`: `runner._injection`'s
+      arithmetic for N2-E at f0.20, its alpha `schema.expected_alpha`'s; the row checked against gvec.json's
+      `of_record` before the load), its steering check printed; generated after +ρ/2 and before −ρ; scored for
+      coherence alone against the one bar, with no arrival; a fail neither a STOP nor a PAUSE. The record carries its
+      count, pass and stops, the turns file its 48 turns, and the exposure line stays −ρ's. After the exposure line the
+      stage prints its result in the lock's form, "reward axis 5(d) gate, coherence: k of 48, PASS" (or FAIL): the
+      lock pins the coherence result, and n-analyzer's delta after G-CAL-n's run reads "the lock's line, not
+      `gcal.json`" (§2.5);
+    - the wording owed at the driver's next change (`035947e`'s entry; the seat's §3: it "rides with this delta"):
+      `run_gcal`'s docstring, the `gcal` command's docstring and the exits check's name now name the dose map beside
+      the record and the turns, and `run_gcal`'s docstring the gate's batch and the early PAUSE; the exits check now
+      also asserts the three files in each exit's folder;
+    - the record: schema `n-gcal-v2`; `early_pause`; the constants `arrival_from` and `gate`;
+    - `valence_core/n/gcal.py` `2b99902b…a430` (+371 −128), `scripts/n_sessions.py` `593a140d…a549` (+191 −76); the n
+      package's digest moves from `d3415b10…a519` to `e40c9871…9523`, by shell;
+    - the self-test: 570/570, run 1 on draft 2 and run 2 on draft 3, each in a battery window the coordinating
+      session granted, under `nice -n 19`; 581 on the box by arithmetic.
+  - **Code's readings, for the seat** (`gcal.py`'s docstring): a one-id turn's `arrival_all` recorded while its
+    `arrival` is None; the `one_id` stop count; the gate's turns with `d` None and arrival fields None; the gate's
+    figures with its direction, dose label, f, alpha and row sha16 beside its count, pass and stops; `early_pause`
+    beside `early_stop`; the gate's sign +1, schema.DOSES's for f0.20 (§2.5 names no sign); no gate turn in the smoke,
+    the box's self-test running the gate's steering check on the tiny HF model before the run of record; the schema
+    `n-gcal-v2`.
+  - **For the seat, from the review** (its O5, O6 and B2's second clause), for ADDENDUM-n3 and the read: under §1.4 (i)
+    a baseline with fewer than two scored turns leaves Welch's t undefined, a fail at +ρ, so the early STOP precedes
+    the early PAUSE even for an incoherent baseline; a one-id turn's `arrival_all` is the projection at position 0
+    alone, the sink's, so a pooled summary of `arrival_all` at the read should split those turns out or drop them; and
+    the smoke could run the gate's two-forward steering check with no turn (the review's B2; the delta applies only
+    its cheap cover, the box's HF check running that check on the tiny model).
+  - **The blind review** of draft 1: 0 BUG; 10 findings (5 RISK, 5 NIT); 4 surviving mutants; 4 box risks; 8
+    observations. Every finding is applied in draft 2, and each mutant meets a check. F1 and F2: the self-tests' main
+    flows now reach every batch by construction, and three flows run on non-empty incoherent turns, so "coherent" and
+    "has an id" are told apart; F3: R and R_ell apart in the driver's fake G-VEC record. B3 goes to G-CAL-n's launch
+    files. Raw, with each disposition:
+    [`2026-11-19_n-gcal-delta2_review.md`](results/raw/2026-11-19_n-gcal-delta2_review.md).
+  - **Draft 3, the bytes committed,** on the values-check's observations 1, 2, 6 and 7: the owed wording above;
+    `gcal.py`'s docstring, "Both hurdles are computed at every valence dose generated", the gate's batch scored on
+    coherence alone, and the shift carried by each steered valence batch's figures; the command's docstring reflowed;
+    the driver's print-order check now pins the gate's line after the exposure line. `gcal.py` +8 −8 and
+    `scripts/n_sessions.py` +22 −17 on draft 2; no check added or removed. The blind review's scope stays draft 1.
+  - **The self-test raw:**
+    [`2026-11-19_n-gcal-delta2_selftest.txt`](results/raw/2026-11-19_n-gcal-delta2_selftest.txt).
+  - **Departures**, for the seat to class:
+    - Code's: two `jq` reads of subagents' task outputs, each its final message only, to extract the review's report
+      and the values-check's;
+    - the reviewer's, as its report states them: two `git rev-parse` runs of revision names with no path; one diff's
+      output, which the harness saved to its own folder, read there with the file-reading tool and counted with
+      `grep -c`; reads beyond its named symbols, one `git grep -l` among them, with the exclusions;
+    - the values-checker's, as its report states them: one `awk` run, which its brief bars, whose output was never
+      printed (`head` refused its count); and, not barred by its own reading: RESULTS.md read beyond the named
+      entries (the G-CAL-n BUILD entry, for the box's 11; greps for self-test counts and for `v7`);
+      `valence_core/m/resume.py`'s `package_sha256_of`; one `git log -1` of `d85fc34` with the pathspec and the mf3
+      exclusion, cut by `grep -o`; one `git ls-files` with that pathspec, counted by `grep -c`, no name printed;
+      numstats of draft 1's driver under four diff algorithms; and HEAD found by `git log -5` with the pathspec.
+  - **Values-check:** one blind pass over the entry and the two raws as they stood at draft 2: 81 items, 65
+    CONFIRMED, 5 IMPRECISE, 0 FAIL, 11 NOT CHECKABLE, with 7 observations. Every IMPRECISE item is applied;
+    observations 1, 2, 6 and 7 in the code, as draft 3, and 3, 4 and 5 in the texts. The edits after the check were
+    checked by tool, 42 of 42; no second full pass was made. Raw, with each disposition:
+    [`2026-11-19_n-gcal-delta2_valuescheck.md`](results/raw/2026-11-19_n-gcal-delta2_valuescheck.md).
+  - **Committed by path:** `valence_core/n/gcal.py`, `scripts/n_sessions.py`; the self-test, review and values-check
+    raws; this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    **Next:** G-CAL-n's launch files after G-VEC's PASS and ADDENDUM-n3's commit, with the time at 240 turns (B3).
 - 2026-11-19 — **n — G-VEC's delta on the seat's second sitting: the capture convention of record (position 0 of every
   passage out of its mean and out of R) and the diagnostic block, with the stale sentence and `directions.py`'s
   readings; G-VEC's first run's STOP record moved to `results/raw/`; committed by path (the answers of 2026-11-19,

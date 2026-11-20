@@ -1,0 +1,48 @@
+n -- G-CAL-n's delta on the seat's second sitting (the answers of 2026-11-19, second sitting: s1.4 (i), s2.5, s3):
+its self-test on the laptop, committed with the delta. PI date 2026-11-19. Code (the n-build session).
+
+The change, on 616e940's versions of these paths (draft 3, the bytes committed):
+  valence_core/n/gcal.py   2b99902b501ab2c82b84c5bfdaef55d522973bea6718bf742fa815f2c8eda430  (+371 -128)
+  scripts/n_sessions.py    593a140d62a8988c7ddd3ea785c5146155d36711c0d40121ab37319a95a0a549  (+191 -76)
+The package: valence_core/n's digest moves from
+  d3415b10f568a7a943353f92ac653bc6715b41ca18b38464e99436f98559a519 (616e940's) to
+  e40c987172f59d330be16a52e414067daed8c9e78fd1b9c9948908bd4ab29523,
+  both computed by shell in the form valence_core/m/resume.py's package_sha256_of states. The self-test prints no
+  digest; the package's own `hashes` runs when G-CAL-n's launch files are made, in a battery window of its own.
+
+1. THE LAPTOP. Model-free, as at the BUILD: the HF cases run only where torch and transformers are present, and
+   elsewhere are skipped and counted as skipped; the schema module's own cases count as one aggregated line.
+   The overlay: 162 files, 160 of them equal to HEAD 616e940's blobs by a join on git hash-object (run 1 against the
+   index's, run 2 against HEAD's tree through git cat-file --batch-check), with the run's two drafts in place.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch> PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/gcal2/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, each file re-hashed in the
+   overlay just before and after it; the temporary folder was empty before and after.
+
+   Run 1, draft 2 (the review applied; draft 1 did not run):
+     valence_core/n/gcal.py   4bd8f8bf6ea93b89b5c60b822a7c639c81e609b43d2a4d4d4695ed48d780c376 (1117 lines)
+     scripts/n_sessions.py    313aa2401620daed305344fae65cac06fcf85d12fc0e63a7950555e4c5118e96 (3772 lines)
+     exit 0; output 1 line, sha256 b3898c6ebb6c8bbcaecc50b970b2ee92397c6a1314b1f18dd4cf4bf5ea3313e0, verbatim:
+  570/570 n selftest checks pass
+   Draft 2 adds ten checks to 616e940's 560: seven in gcal.py's own self-test (the arrival's positions, the gate's
+   batch, the gate's steering check, a STOP's precedence at the early read, the gate's fail, compute's refusals of a
+   gate, and an early PAUSE's record) and three in the driver's G-CAL-n self-test (the gate's batch in the run of
+   record, the early PAUSE's flow, and the run tied to G-VEC's rows, the review's M4). No other check is added or
+   removed: the other self-test changes extend existing checks, and one, gcal.py's O7 flow check, is rewritten as the
+   early PAUSE's (O2).
+
+   Run 2, draft 3 (the values-check's observations 1, 2, 6 and 7 applied; the bytes committed):
+     valence_core/n/gcal.py   2b99902b501ab2c82b84c5bfdaef55d522973bea6718bf742fa815f2c8eda430 (1117 lines)
+     scripts/n_sessions.py    593a140d62a8988c7ddd3ea785c5146155d36711c0d40121ab37319a95a0a549 (3777 lines)
+     exit 0; output 1 line, sha256 b3898c6ebb6c8bbcaecc50b970b2ee92397c6a1314b1f18dd4cf4bf5ea3313e0, verbatim:
+  570/570 n selftest checks pass
+   Draft 3 adds and removes no check. On draft 2 it extends two of the driver's: the print-order check now pins the
+   gate's line after the exposure line, and the exits check also asserts the record, the turns and the dose map in
+   each exit's folder; the rest is docstrings and that check's name.
+
+2. THE BOX, by arithmetic only: 581, the 570 plus the box's 11 checks more (its HF checks in place of the laptop's
+   skip lines, as at the BUILD and at 616e940; the gate's steering check is inside G-CAL-n's one HF-path check, a
+   skip on the laptop and a check on the box, so the difference stays 11); restated at G-CAL-n's launch files, where
+   the box runs it.
