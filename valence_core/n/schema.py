@@ -177,8 +177,13 @@ carries:
     re-computed read's |cached margin - fresh margin| above the identity's ``fidelity_rule.ceiling``, at any dose
     (ADDENDUM-n2 §2.1: "pauses at once"); it is a read's. An identity-bound trigger is a d = 0 read's (n §6: "the
     identity bound exceeded at d = 0"). A pause at which the binomial fired, as its kind or in ``also_fired``,
-    carries the batch (first <= last, 0 <= k <= n, n > 0, its p0 and its alpha the identity's ``fidelity_rule``'s),
-    which ends at the pause's read where it has one;
+    carries the batch, the tile it evaluated (the seat's answers of 2026-11-19, first sitting, §3, R12: the reads
+    since the previous evaluation, ``cadence`` of them, or the stage's tail at its end): first <= last, 0 <= k <= n,
+    n > 0, its p0 and its alpha the identity's ``fidelity_rule``'s; it ends at the pause's read where it has one.
+    Code's form checks of the tile (the records on disk are the plan's first reads, 0..M-1, as the runner asserts):
+    its first read is a multiple of ``cadence``; a fire at a read spans ``cadence`` reads, ending there, and a
+    read-less fire (the tail) fewer; n is at most the span; and the fires' tiles are disjoint, in launch order, their
+    trials and exceedances summing within the stage's;
   * a rendering mismatch during a stage is a pause; G-VER's, before any read, is a G-VER-STOP (accepted: the seat's
     answers of 2026-11-16, §3; n §6 lists "a rendering mismatch" among its pause-and-adjudicate triggers, and n §3
     gives G-VER "mismatch → STOP"). A rendering pause's read is not launched, so nothing else fires with it. It
@@ -187,8 +192,8 @@ carries:
     and no read: it is the stage's last pause and resumes nothing. A G-VER-STOP comes before any read: its report
     holds no record and no pause;
   * the fidelity binomial's running state over the stage: its trials and exceedances, which are the fidelity
-    counters' totals; its evaluations; and its fires, each a pause's batch, whose k and n are within the stage's
-    exceedances and trials;
+    counters' totals; its evaluations, one per tile and one for the tail; and its fires, each a pause's batch, whose
+    k and n are within the stage's exceedances and trials;
   * the STOP's record, its detail one line of at most 200 characters; the cap, whose ``used_ms`` is the sum of the
     records' ``duration_ms`` (both paths): it counts the reads' and re-computations' model time, with each
     invocation's model load reported beside it in ``loads_ms`` and outside it (the lock's clause as the seat ruled
@@ -487,10 +492,11 @@ DOSE_MAP_FIELDS: dict[str, tuple[str, bool, str]] = {
 FIDELITY_RULE_FIELDS: dict[str, tuple[str, bool, str]] = {
     "tau": ("float", False, "TAU"),
     "p0_count": ("int", False, "p0's count: k + 1 from the extension's k exceedances at TAU (ADDENDUM-n2 §1.1, "
-                               "Laplace's rule); at backend-ext, BK's 0 (G-DATA (vi))"),
-    "p0_n": ("int", False, "p0's trials: n + 2 from the extension's n reads (ADDENDUM-n2 §1.1); at backend-ext, BK's "
-                           "2400 (G-DATA (vi))"),
-    "cadence": ("int", False, "the binomial's cadence in reads (n §2.1: 160)"),
+                               "Laplace's rule), so at least 1 after the lock (F5); at backend-ext, BK's 0 "
+                               "(G-DATA (vi))"),
+    "p0_n": ("int", False, "p0's trials: n + 2 from the extension's n reads (ADDENDUM-n2 §1.1), so at least 3 after "
+                           "the lock (F5); at backend-ext, BK's 2400 (G-DATA (vi))"),
+    "cadence": ("int", False, "the binomial's cadence in reads (n §2.1: 160): a tile's length (R12)"),
     "alpha": ("float", False, "the binomial's alpha, one-sided, per evaluation (the seat's answers of 2026-11-18, "
                               "fourth sitting, §4: 0.01)"),
     "ceiling": ("float", True, "C in nats, the bound on a re-computed read's |cached margin - fresh margin| at any "
@@ -865,6 +871,11 @@ def check_stage_identity(identity: Any, where: str = "stage_identity") -> None:
         _fail(f"{where}.layer", "is out of range")
     if fr["tau"] != TAU or fr["sample_key"] != "n-fid|{s}" or not 0 <= fr["p0_count"] <= fr["p0_n"]:
         _fail(f"{where}.fidelity_rule", f"differs from n §2.1 / G-DATA (vi): {fr!r}"[:300])
+    if not fr["cadence"] > 0:                               # a tile's length (R12); Code's check
+        _fail(f"{where}.fidelity_rule.cadence", f"is {fr['cadence']!r}, not positive (n §2.1: 160)")
+    if not pre_lock and not (fr["p0_count"] >= 1 and fr["p0_n"] >= 3):    # F5 (2026-11-19, first sitting, §3)
+        _fail(f"{where}.fidelity_rule", f"p0 is {fr['p0_count']!r} of {fr['p0_n']!r}: after the lock p0_count is at "
+                                        f"least 1 and p0_n at least 3, by Laplace's rule (F5)")
     dm = identity["dose_map"]
     if dm is not None:
         if dm["rho"] != RHO:
@@ -1172,10 +1183,11 @@ PAUSE_FIELDS: dict[str, tuple[str, bool, str]] = {
                                              "then"),
 }
 BINOMIAL_FIELDS: dict[str, tuple[str, bool, str]] = {
-    "first_launch_index": ("int", False, "the first read of the trials counted"),
-    "last_launch_index": ("int", False, "the last read of the trials counted"),
-    "k": ("int", False, "exceedances at TAU among the trials"),
-    "n": ("int", False, "re-computations counted"),
+    "first_launch_index": ("int", False, "the tile's first read (R12)"),
+    "last_launch_index": ("int", False, "the tile's last read: its cadence-th, at which it fired, or at the end-of-run "
+                                        "evaluation the stage's last"),
+    "k": ("int", False, "exceedances at TAU among the tile's trials"),
+    "n": ("int", False, "the tile's trials: its reads with a re-computation"),
     "p0_count": ("int", False, "the identity's fidelity_rule.p0_count"),
     "p0_n": ("int", False, "the identity's fidelity_rule.p0_n"),
     "alpha": ("float", False, "the identity's fidelity_rule.alpha, the binomial's"),
@@ -1188,7 +1200,9 @@ STOP_FIELDS: dict[str, tuple[str, bool, str]] = {
 BINOMIAL_STATE_FIELDS: dict[str, tuple[str, bool, str]] = {
     "trials": ("int", False, "re-computations counted by the binomial so far: the fidelity counters' total"),
     "exceed_tau": ("int", False, "their exceedances at TAU: the fidelity counters' total"),
-    "evaluations": ("int", False, "cadence evaluations made, the end-of-run one included"),
+    "evaluations": ("int", False, "tile evaluations made: one at each tile's cadence-th read, and the tail's at the "
+                                  "stage's end (a tile with no trial, and a tail of any reads, included: Code's "
+                                  "reading, for the seat)"),
     "fires": ("int", False, "evaluations that fired; each is a pause's binomial (its kind or also_fired)"),
 }
 CAP_FIELDS: dict[str, tuple[str, bool, str]] = {
@@ -1402,6 +1416,8 @@ def check_report(report: Any, where: str = "report") -> None:
             _fail(w(f"per_arm.{a}.obtained"), "is not the sum of its cells' records")
     standing = False
     binomial_pauses = 0
+    prev_last = None                                    # the previous fire's tile's last read
+    fired_n = fired_k = 0                               # the fires' tiles' trials and exceedances, summed
     bs = report["binomial_state"]
     last, last_rendering = -1, False
     n_pauses = len(report["pauses"])
@@ -1460,9 +1476,26 @@ def check_report(report: Any, where: str = "report") -> None:
                 _fail(f"{wp}.binomial", "is not a well-formed batch under the identity's p0 and alpha")
             if li is not None and b["last_launch_index"] != li:
                 _fail(f"{wp}.binomial.last_launch_index", "a fire at a read ends its batch at that read")
+            cad, span = fr["cadence"], b["last_launch_index"] - b["first_launch_index"] + 1
+            if b["first_launch_index"] % cad != 0:
+                _fail(f"{wp}.binomial.first_launch_index", "is not a multiple of the cadence: a tile starts at one, "
+                                                           "the records being the plan's reads 0..M-1 (R12)")
+            if (li is not None and span != cad) or (li is None and span >= cad):
+                _fail(f"{wp}.binomial", "a fire at a read evaluates a whole tile, the cadence's reads ending there, "
+                                        "and a read-less fire the tail, shorter than a tile (R12)")
+            if b["n"] > span:
+                _fail(f"{wp}.binomial.n", "is above the tile's span: its trials are among its reads (R12)")
+            if prev_last is not None and b["first_launch_index"] <= prev_last:
+                _fail(f"{wp}.binomial.first_launch_index", "is not after the previous fire's tile: the tiles are "
+                                                           "disjoint, in launch order (R12)")
+            prev_last = b["last_launch_index"]
+            fired_n, fired_k = fired_n + b["n"], fired_k + b["k"]
             if b["k"] > bs["exceed_tau"] or b["n"] > bs["trials"]:
                 _fail(f"{wp}.binomial", "counts more exceedances or trials than the stage's binomial state")
         standing = standing or not p["adjudicated"]
+    if fired_n > bs["trials"] or fired_k > bs["exceed_tau"]:
+        _fail(w("binomial_state"), "the fires' tiles, disjoint, count more trials or exceedances in sum than the "
+                                   "stage's state (R12)")
     if bs["fires"] != binomial_pauses:
         _fail(w("binomial_state.fires"), "is not the number of pauses whose read fired the binomial")
     fid = report["counters"]["fidelity"]
@@ -1593,7 +1626,8 @@ def example_identity(stage: str = "campaign", *, R: float = 25.5, R_ell: float =
     (the defaults give d_eq = 0.3125 and d_20 = 0.625, nothing merged; R_ell = 50.0 merges +d_20 into +1, 40.0
     merges +d_20 into +1 and +d_eq into +1/2); at backend-ext the lock, dose map, directions and bound are absent,
     as there. The fidelity rule's alpha is 0.01 at both; the campaign's ceiling and identity bound are 0.25 and its
-    median rel 0.01, and at backend-ext the ceiling and median rel are null."""
+    median rel 0.01, and at backend-ext the ceiling and median rel are null. Its p0 is BK's 0 of 2400 at
+    backend-ext, and after the lock 1 of 26 (Laplace's rule on 0 exceedances in 24 reads; F5's floor is 1 of 3)."""
     pre = stage == "backend-ext"
     d_eq = (0.10 * R_ell) / (RHO * R)
     d_20 = min(1.0, 2.0 * d_eq)
@@ -1610,8 +1644,9 @@ def example_identity(stage: str = "campaign", *, R: float = 25.5, R_ell: float =
         "dose_map": None if pre else {"rho": RHO, "R": R, "R_ell": R_ell, "d_eq": d_eq, "d_20": d_20,
                                       "points": dose_points(d_eq, d_20)},
         "directions": {} if pre else dirs,
-        "fidelity_rule": {"tau": TAU, "p0_count": 0, "p0_n": 2400, "cadence": 160, "sample_key": "n-fid|{s}",
-                          "sample_rule": "example", "alpha": 0.01, "ceiling": None if pre else 0.25,
+        "fidelity_rule": {"tau": TAU, "p0_count": 0 if pre else 1, "p0_n": 2400 if pre else 26, "cadence": 160,
+                          "sample_key": "n-fid|{s}", "sample_rule": "example", "alpha": 0.01,
+                          "ceiling": None if pre else 0.25,
                           "median_rel": None if pre else 0.01},
         "identity_bound": None if pre else 0.25,
     }
@@ -1738,8 +1773,9 @@ def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", 
         per_arm["N1-V"] = {"planned": 24, "obtained": 24, "complete": True}
     hit = hour_cap_ms is not None and used_ms >= hour_cap_ms
     batches = [p["binomial"] for p in (pauses or []) if p["binomial"] is not None]
-    exc = max([b["k"] for b in batches], default=0)
-    fid = {"N1-V|0": {"trials": 160, "exceed_tau": exc, "exceed_tau4": max(3, exc)}}
+    exc = sum(b["k"] for b in batches)                  # the fires' tiles are disjoint: their counts sum
+    trials = max(160, sum(b["n"] for b in batches))
+    fid = {"N1-V|0": {"trials": trials, "exceed_tau": exc, "exceed_tau4": max(3, exc)}}
     named = [[p["kind"]] + list(p["also_fired"]) for p in (pauses or [])]
     counts = {"nonfinite_reads": sum(1 for ks in named if "nonfinite" in ks),
               "fidelity_ceiling_exceeded": (None if identity["fidelity_rule"]["ceiling"] is None
@@ -1750,7 +1786,7 @@ def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", 
     return {"schema": REPORT_SCHEMA, "stage_identity": dict(identity), "stage_identity_sha256":
             identity_sha256(identity), "read_plan_sha256": read_plan_sha256(identity) if campaign else None,
             "end_state": end_state, "per_arm": per_arm, "cells": cells, "pauses": list(pauses or []),
-            "binomial_state": {"trials": 160, "exceed_tau": exc, "evaluations": max(1, len(batches)),
+            "binomial_state": {"trials": trials, "exceed_tau": exc, "evaluations": max(1, len(batches)),
                                "fires": len(batches)},
             "stop": stop,
             "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used_ms, "hit": hit, "loads_ms": list(loads_ms)},
@@ -1758,13 +1794,23 @@ def example_report(identity: Mapping[str, Any], *, end_state: str = "COMPLETE", 
 
 
 def example_pause(n: int, *, kind: str = "nonfinite", launch_index: int | None = 500, adjudicated: bool = False,
-                  arms: tuple = ("N1-V",), also_fired: tuple = (), resumed_at: int | None = None) -> dict:
+                  arms: tuple = ("N1-V",), also_fired: tuple = (), resumed_at: int | None = None,
+                  identity: Mapping[str, Any] | None = None) -> dict:
     """A valid pause record (for ``example_report``); its batch is set when the binomial fired at it, and its read is
-    a d = 0 read when it names identity-bound."""
+    a d = 0 read when it names identity-bound. The batch is a tile (R12) under ``identity``'s p0 and alpha
+    (``example_identity()``'s where none is given): at a read L, the cadence reads ending there, each a trial -- a
+    whole tile, as ``check_report`` requires, when L + 1 is a multiple of the cadence (159, 319, 479, ...); at the
+    run's end (no read), a tail of 100 reads from read 0. The default read, 500, ends no tile, so a binomial fire at
+    a read names its L."""
     binom = None
     if kind == "fidelity-binomial" or "fidelity-binomial" in also_fired:
-        binom = {"first_launch_index": 0, "last_launch_index": 159 if launch_index is None else launch_index,
-                 "k": 1, "n": 160, "p0_count": 0, "p0_n": 2400, "alpha": 0.01}
+        fr = (identity if identity is not None else example_identity())["fidelity_rule"]
+        if launch_index is None:
+            first, last = 0, 99
+        else:
+            first, last = max(0, launch_index - int(fr["cadence"]) + 1), launch_index
+        binom = {"first_launch_index": first, "last_launch_index": last, "k": 1, "n": last - first + 1,
+                 "p0_count": fr["p0_count"], "p0_n": fr["p0_n"], "alpha": fr["alpha"]}
     d0 = "identity-bound" in (kind,) + tuple(also_fired)
     return {"pause_id": f"p{n:02d}", "kind": kind,
             "read_id": None if launch_index is None else ("N1-V|none|0|floor_b0/3" if d0
@@ -2117,6 +2163,21 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
         refuse(f"alpha {a_} (not in (0, 1))", ident, lambda o, a_=a_: o["fidelity_rule"].__setitem__("alpha", a_),
                si, expect="fidelity_rule.alpha")
     refuse("a fidelity rule without alpha", ident, lambda o: o["fidelity_rule"].pop("alpha"), si)
+    # F5 (the seat's answers of 2026-11-19, first sitting, §3): after the lock p0 is at least 1 of 3, Laplace's rule
+    refuse("F5: p0_count 0 at the campaign", ident, lambda o: o["fidelity_rule"].__setitem__("p0_count", 0), si,
+           expect="(F5)")
+    refuse("F5: p0_n 2 at the campaign, p0_count 1", ident, lambda o: o["fidelity_rule"].__setitem__("p0_n", 2), si,
+           expect="(F5)")
+    refuse("F5: p0_count 0 at G-TIME-n", dict(ident, stage="time"),
+           lambda o: o["fidelity_rule"].__setitem__("p0_count", 0), si, expect="(F5)")
+    accept("F5: p0 1 of 3 after the lock (its floor is inclusive)", lambda: si(dict(
+        ident, fidelity_rule=dict(ident["fidelity_rule"], p0_count=1, p0_n=3))))
+    refuse("a cadence of 0 (a tile's length)", ident, lambda o: o["fidelity_rule"].__setitem__("cadence", 0), si,
+           expect="not positive")
+    accept("F5: the example identities' p0, 1 of 26 after the lock and BK's 0 of 2400 at backend-ext",
+           lambda: None if ((ident["fidelity_rule"]["p0_count"], ident["fidelity_rule"]["p0_n"]) == (1, 26)
+                            and (ext["fidelity_rule"]["p0_count"], ext["fidelity_rule"]["p0_n"]) == (0, 2400))
+           else _fail("example_identity", "not F5's p0"))
     refuse("an identity bound not the ceiling", ident, lambda o: o.__setitem__("identity_bound", 0.3), si,
            expect="identity bound is C")
     accept("a ceiling above the floor, the identity bound equal to it", lambda: si(dict(
@@ -2199,11 +2260,13 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
     refuse("report: a ruling on an unadjudicated pause", rep_pause,
            lambda o: first_pause(o).update(ruling_sha256="f" * 64), cr)
     refuse("report: a batch on a non-finite pause that did not fire it", rep_pause, lambda o: first_pause(o).update(
-        binomial=example_pause(1, kind="fidelity-binomial")["binomial"]), cr)
+        binomial=example_pause(1, kind="fidelity-binomial")["binomial"]), cr,
+        expect="is set exactly when the pause's read fired the binomial")
     refuse("report: a binomial pause without its batch", rep_end_binom,
-           lambda o: first_pause(o).update(binomial=None), cr)
+           lambda o: first_pause(o).update(binomial=None), cr,
+           expect="is set exactly when the pause's read fired the binomial")
     refuse("report: a batch under another p0", rep_end_binom,
-           lambda o: first_pause(o)["binomial"].update(p0_count=1), cr)
+           lambda o: first_pause(o)["binomial"].update(p0_count=2), cr)
     refuse("report: a non-binomial pause with no read", rep_pause,
            lambda o: first_pause(o).update(read_id=None, launch_index=None), cr)
     refuse("report: PAUSE with no standing pause", rep_adj, lambda o: o.__setitem__("end_state", "PAUSE"), cr)
@@ -2311,16 +2374,52 @@ def _selftest(verbose: bool = False) -> tuple[int, int]:
         o.__setitem__("end_state", "COMPLETE")), cr)
     # a binomial fire in also_fired carries its batch, which ends at the read that fired it
     rep_nf_binom = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
-                                  pauses=[example_pause(1, also_fired=("fidelity-binomial",))])
+                                  pauses=[example_pause(1, also_fired=("fidelity-binomial",), launch_index=479)])
     rep_binom_read = example_report(ident, end_state="PAUSE", obtained_fraction=0.5,
-                                    pauses=[example_pause(1, kind="fidelity-binomial")])
+                                    pauses=[example_pause(1, kind="fidelity-binomial", launch_index=479)])
     for name, r in (("a non-finite pause whose read also fired the binomial", rep_nf_binom),
                     ("a binomial fire at a read", rep_binom_read)):
         accept(f"report: {name}", lambda r=r: check_report(r))
     refuse("report: a binomial in also_fired without its batch", rep_nf_binom,
            lambda o: first_pause(o).update(binomial=None), cr)
-    refuse("report: a fire's batch not ending at its read", rep_binom_read,
-           lambda o: first_pause(o)["binomial"].update(last_launch_index=499), cr)
+    refuse("report: a fire's batch not ending at its read (a whole tile, 160-319, before the fire at 479)",
+           rep_binom_read, lambda o: first_pause(o)["binomial"].update(first_launch_index=160, last_launch_index=319),
+           cr, expect="ends its batch at that read")
+    # the tile's form (R12; Code's checks, the records being the plan's reads 0..M-1): its first read a multiple of the
+    # cadence; a fire at a read a whole tile ending there, a read-less fire the tail, shorter; n within the span; the
+    # fires' tiles disjoint, in launch order, their counts summing within the stage's
+    accept("report: the example fire's batch is the tile 320-479, 160 reads, each a trial",
+           lambda: None if ((rep_binom_read["pauses"][0]["binomial"]["first_launch_index"],
+                             rep_binom_read["pauses"][0]["binomial"]["last_launch_index"],
+                             rep_binom_read["pauses"][0]["binomial"]["n"]) == (320, 479, 160))
+           else _fail("example_pause", "not the tile 320-479"))
+    refuse("report: a batch of more trials than its reads (n 161 over the tile's 160)", rep_binom_read,
+           lambda o: first_pause(o)["binomial"].update(n=161), cr, expect="above the tile's span")
+    refuse("report: a fire at a read over more than a tile (reads 0-479)", rep_binom_read,
+           lambda o: first_pause(o)["binomial"].update(first_launch_index=0), cr, expect="evaluates a whole tile")
+    refuse("report: a tile not starting at a multiple of the cadence (a tail over reads 1-100)", rep_end_binom,
+           lambda o: first_pause(o)["binomial"].update(first_launch_index=1, last_launch_index=100), cr,
+           expect="multiple of the cadence")
+    refuse("report: a read-less fire's tail as long as a tile (reads 0-159)", rep_end_binom,
+           lambda o: first_pause(o)["binomial"].update(last_launch_index=159), cr, expect="shorter than a tile")
+    accept("report: a read-less fire's tail one read short of a tile (reads 0-158)", lambda: check_report(
+        (lambda o: (first_pause(o)["binomial"].update(last_launch_index=158), o)[1])(copy.deepcopy(rep_end_binom))))
+    rep_two = example_report(ident, end_state="PAUSE", obtained_fraction=0.5, pauses=[
+        example_pause(1, kind="fidelity-binomial", launch_index=319, adjudicated=True, resumed_at=320),
+        example_pause(2, kind="fidelity-binomial", launch_index=479)])
+    accept("report: two fires on adjacent tiles (160-319, 320-479)", lambda: check_report(rep_two))
+    refuse("report: two fires' exceedances summing beyond the stage's (1 each; the state 1)", rep_two,
+           lambda o: (o["binomial_state"].__setitem__("exceed_tau", 1),
+                      o["counters"]["fidelity"]["N1-V|0"].__setitem__("exceed_tau", 1)), cr, expect="in sum")
+    rep_ft = example_report(ident, end_state="PAUSE", obtained_fraction=0.5, pauses=[
+        example_pause(1, kind="fidelity-binomial", launch_index=159, adjudicated=True, resumed_at=160),
+        example_pause(2, kind="fidelity-binomial", launch_index=None)])
+    rep_ft["pauses"][1]["binomial"].update(first_launch_index=160, last_launch_index=259)
+    accept("report: a fire at read 159 and the run's tail after it (160-259), on disjoint tiles",
+           lambda: check_report(rep_ft))
+    refuse("report: a tail overlapping the previous fire's tile (reads 0-99 against 0-159)", rep_ft,
+           lambda o: o["pauses"][1]["binomial"].update(first_launch_index=0, last_launch_index=99), cr,
+           expect="disjoint")
     # a pause's scope holds its read's arm; the binomial's state is the counters' and holds its batches; every cell
     # is at a kept point
     ident_m = example_identity(R_ell=40.0)                  # +d_20 merges into +1, +d_eq into +1/2

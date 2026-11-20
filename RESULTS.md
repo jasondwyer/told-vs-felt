@@ -21,6 +21,122 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **n — the R12, F5 and R13 runner delta, after G-CAL-n's run: the fidelity binomial's window is the
+  tile, F5's floor on p0 is asserted in the schema, and R13's two runner texts are corrected; committed by path (the
+  seat's answers of 2026-11-19, first sitting, §3 and §4 (b), and their routing block's item 4: "in G-CAL-n's delta or
+  after its run by the launch order"; the coordinating session's routing after `db00d6d`). Model-free, on the laptop;
+  it moves the n package's digest, before G-TIME-n.**
+  - **Headline:**
+    - the tile (R12): the runner's cumulative-since-the-last-fire batch becomes the tile, the `cadence` reads launched
+      since the previous evaluation, in launch order, evaluated at its cadence-th read, a trial or not. A fire's
+      batch is the tile, its first and last reads, ending at the read that fired it. The next tile starts at the next
+      read, after a fire as after none, so every read lies in exactly one tile and a ruling clears nothing:
+      `clear_batch` is gone, with its two calls in `run()` and the self-test's one. When no read remains to launch,
+      the stage's tail, the reads since the last evaluation where there are any, is evaluated once, a fire there
+      having no read. The alpha, p0 and SCOPE stand: a fire stands on the arms with a trial in its tile;
+    - the tiles' premise, asserted (the review's O3 and F2): the records on disk are the plan's first reads, 0..M−1,
+      since every pause halts the invocation, a rendering pause's place is attempted first on the resume and a CAP
+      ends the stage; `run()` now refuses any other set before a launch. So tile j is reads j·cadence through
+      (j + 1)·cadence − 1, and the tail starts at a multiple of the cadence;
+    - F5: `check_stage_identity` refuses, at every stage but backend-ext, a fidelity rule whose `p0_count` is below 1
+      or whose `p0_n` is below 3 ("by Laplace's rule"). The example identity's p0 is 1 of 26 after the lock and BK's
+      0 of 2400 at backend-ext; `example_pause` takes its batch's p0 and alpha from an identity, as agreed with
+      n-analyzer;
+    - R13's two texts: the runner's PIN now reads "its read stays in its tile as a trial, and as an exceedance where
+      its rel is above TAU (R13)", and the self-test's check now says the ruled ceiling pause is "adjudicated", not
+      "cleared";
+    - the schema's form checks of a fire's batch, Code's, on the premise above: its first read is a multiple of the
+      cadence; a fire at a read spans exactly the cadence's reads, and a read-less fire (the tail) fewer, its end not
+      bound to the stage's last read (the values-check's observation 4; of the family of F3's optional bound, not
+      taken); n is at most the span; the fires' tiles are disjoint, in launch order, their trials and exceedances
+      summing within the stage's state; and a cadence that is not positive is refused. The batch's and the binomial
+      state's field texts name the tile;
+    - `valence_core/n/runner.py` `9bf75cbb…d61e` (+169 −87) and `valence_core/n/schema.py` `1cab28df…edff`
+      (+129 −30), draft 3: draft 2 with the values-check's observations 2 and 3 (two self-test cases pinned to their
+      check's message; one docstring sentence). The n package's digest moves from `e40c9871…9523` to
+      `06b55761…1d39`, by shell;
+    - the self-test: 575/575 on draft 1, 578/578 on draft 2 and 578/578 on draft 3, each in a battery window the
+      coordinating session granted, under `nice -n 19`; 589 on the box by arithmetic.
+  - **Code's readings, for the seat** (the runner's PIN and the schema's field text): a tile with no trial is
+    evaluated, cannot fire, and counts in `evaluations`; the tail is evaluated when it holds any read, whatever its
+    trials; and the schema's form checks above are Code's, not the seat's.
+  - **For the seat:**
+    - power (n-analyzer's note, 2026-11-19): only the reads at the dose rule's points (0, +1 and −1) always carry a
+      re-computation; at the other points only the keyed sample's sessions do (n §2.1's 10%). Under the runner's
+      ORDER PIN (the 160 shadows first, then arm-major in `schema.ARMS` order, cell by cell, sessions in order) and
+      G-CAL-n's dose map, nothing merged, each of the 18 tiles outside N1-R is one cell's 160 reads at one point: 160
+      trials at the 7 dose-rule cells (the shadows, N1-V's and N1-P's ±1, N4-T and N4-Ts), the keyed sample's
+      sessions only, about a tenth as many, at the other 11. N1-R's cells are 40 reads each (its floor sessions), so
+      each of its 30 tiles spans four cells and mixes its ±1 points with the others (the values-check's observation
+      7; Code's reading of the order). §3's "about two and a half" standard errors for a doubling over a tile hold
+      for the 160-trial tiles, not the others;
+    - E for the lock: under G-CAL-n's dose map of record, nothing merged, the campaign's 7,680 reads are 48 tiles, a
+      whole multiple of 160, with no tail;
+    - the review's O4: a binomial fire at a read with no re-computation stands on that read's arm too, though it had
+      no trial in the tile (the schema holds a pause's read's arm in its scope); before this delta a fire always stood
+      on a trial;
+    - the review's O6, not applied: F5 as asserted admits p0 = 1 (3 of 3, say), which Laplace's rule excludes; at
+      p0 >= 1 the binomial cannot fire, and `p0_count < p0_n` would close it.
+  - **n-analyzer** moves its schema pin and its fixtures in its own commit, after this one (§3: "n-analyzer moves its
+    fixtures in its own commit"): its pin is `003ae7d`'s schema; and its cumulative fixtures (the review's O5) and a
+    fire at read 500, `example_pause`'s default, whose batch 341–500 does not start at a multiple of the cadence (the
+    review's F2), are not tiles the new checks accept. `example_pause`'s docstring now says its default read ends no
+    tile (the values-check's observation 3).
+  - **The blind review** of draft 1: 0 BUG; 5 findings (3 RISK, 2 NIT); 8 surviving mutants; 8 observations. Every
+    finding is applied in draft 2, and each mutant meets a case that kills it: F2 makes a fire's tile exact at a
+    read, F3 sums the fires' counts, and O3 is the assert above. Raw, with each disposition:
+    [`2026-11-20_n-tile-delta_review.md`](results/raw/2026-11-20_n-tile-delta_review.md).
+  - **The self-test raw:** [`2026-11-20_n-tile-delta_selftest.txt`](results/raw/2026-11-20_n-tile-delta_selftest.txt).
+  - **Departures**, for the seat to class:
+    - Code's, from two sweeps of its own shell commands since `db00d6d`'s commit time, the second made after the
+      values-check (117 commands, its first 65 the first sweep's); Code knows of no others:
+      - `jq` reads of the subagents' task outputs, each the hand-back's message only, to extract the review's report
+        and the values-check's; and two `jq` reads of its own session's transcript, each writing its shell commands
+        to a scratch file, the sweeps behind this list;
+      - one `git status --porcelain` limited to two named folders (`valence_core/n`, `scripts`), not item 1's bare
+        form; it printed nothing;
+      - stated plainly: `git show HEAD:<path>` of the two named code files into scratch copies; the kit's package
+        digest over HEAD (`git ls-tree --name-only`, `git cat-file -s` and `git show` of `valence_core/n`'s files) and
+        over the overlay (`wc -c` of the same files), the digest's form; the overlay check's `git hash-object` and
+        `git cat-file --batch-check` over the scratch overlay's 168 files against `db00d6d`, the paths on stdin, in
+        six runs; one run of the kit's verify of `db00d6d`'s commit; `git grep` runs over code with `':!data/**'`,
+        and over named files; unpruned `find`s for `__pycache__` in the scratch overlay, a copy of G-CAL-n's launch
+        overlay, which holds no ckpt or reports folder; removals of Code's own scratch check folders; `awk`, for
+        edits of its scratch files and its memory index and for searches and counts over named files, in scratch and
+        in the repository (`valence_core/n/schema.py`, `RESULTS.md`, `scripts/n_analyze.py`); writes to its memory
+        folder, outside the repository; and one `cat -v` of the harness's output file for run 3's background launch,
+        which held only its exit note;
+    - the reviewer's, as its report states them: `shasum` and a read of its brief, outside the brief's own list of
+      scratch files, at the caller's instruction; `sed -n` line-range prints, with no substitution, of named
+      repository files (`valence_core/n/primitive.py`, `scripts/n_sessions.py`, `valence_core/n/cells.py`,
+      `valence_core/n/gcal.py`, `valence_core/n/probe.py`, `valence_core/n/hftiny.py`, `scripts/n_analyze.py`),
+      stated in case the seat counts `sed` an interpreter; and reads beyond the named sources (HEAD's two files, those
+      modules, the first sitting's answers in full, the values-check raw's head and lists), with git commands in the
+      brief's forms;
+    - the values-checker's, as its report states them: none that a rule bars, by its reading; stated plainly, reads
+      beyond the named repository sources, each file checked tracked and clean (`valence_core/m/resume.py` :86 and
+      :320–349; two greps of `scripts/n_analyze.py`, for its schema pin and its `example_pause` calls; RESULTS.md
+      grepped whole beyond its two named entries); git commands outside item 3's pathspec form
+      (`git log -4 --format='%h %H %ci'` with no pathspec, and `git log --format='%h %ci' bc50244..HEAD --
+      valence_core/n scripts/n_sessions.py`, which names a folder and printed nothing); for the digest,
+      `git cat-file -s` and `blob` of HEAD's sixteen n files, `wc -c` (by redirection) and `cat` of the overlay's
+      sixteen, and `git hash-object` of those sixteen against HEAD's blobs; two commands stopped by zsh's `=`
+      expansion before their later parts ran, one holding a stray assignment, `awk_free=1` (no awk ran); and zsh's
+      own arithmetic for the P values. It ran no interpreter but `shasum`, wrote nothing, used no network, put no
+      marker in any argv, touched nothing under mf3, ckpt or reports, and in Code's scratch read only the named files
+      and the overlay's `valence_core/n` files, by name (one name-only `ls`).
+  - **Values-check:** one blind values-check of the entry and the two raws at draft 2: 101 items, 82 CONFIRMED, 9
+    IMPRECISE, 0 FAIL, 10 NOT CHECKABLE, with 7 observations. Every IMPRECISE item is applied; observations 2 and 3
+    in the code, as draft 3, and 1, 4, 5, 6 and 7 in the texts; the edits checked by tool, 55 of 55. Raw, with
+    each disposition:
+    [`2026-11-20_n-tile-delta_valuescheck.md`](results/raw/2026-11-20_n-tile-delta_valuescheck.md).
+  - **Committed by path:** `valence_core/n/runner.py`, `valence_core/n/schema.py`; the self-test, review and
+    values-check raws; this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+    **Next:** n-analyzer's pin move and fixtures, with F5, R13 and the tile's range, in its own commit; LOCK-n v0.1's
+    holes from G-CAL-n's record.
+
 - 2026-11-20 — **n — G-CAL-n's run of record on n's box, from ADDENDUM-n3's commit `0744136`: PASS, every batch
   generated. Both hurdles held at +ρ, −ρ and +ρ/2 against the unsteered baseline, every batch 48 of 48 coherent, and
   the gate's line reads "reward axis 5(d) gate, coherence: 48 of 48, PASS" (n v0.2 §8 step 8; the seat's answers of

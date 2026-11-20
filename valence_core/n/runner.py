@@ -28,24 +28,30 @@ PINs (Code, declared at the BUILD; each is LOCK-n v0.1's to pin, and the BUILD e
     launched, or refused as a rendering mismatch. The runner halts at a pause, so every such attempt came after the
     ruling.
   * SCOPE -- a pause stands on the arm of the read that fired it (n §6's "the arm's launches"), and a binomial fire
-    on the arms with a trial in its batch. A pause on a shadow (N1-V's d = 0 read) also stands on every arm whose
-    steered reads of that session pair with it (5(f)(i)): their margins are read against it.
-  * FIDELITY BINOMIAL -- trials are the reads that carry a re-computation. The binomial counts a batch: the reads
-    since the last adjudicated binomial fire, which its ruling clears (n §2.1 gives the class, p0 and the cadence,
-    not what a ruling clears; under p0 = 0 an uncleared exceedance would fire at every later cadence point). The
-    cadence is in reads (n §2.1: "cadence every 160 reads"; the identity's ``cadence``): once a batch has passed a
-    multiple of it, the exact tail P(X >= k | n trials, p0) is compared with the alpha at the batch's next trial,
-    so that a fire's batch ends at a read it counts. The alpha is the identity's ``fidelity_rule.alpha``, and a
-    stage whose inputs carry another is refused before any read. Its value is the seat's: 0.01, one-sided, "at each
-    evaluation" (the answers of 2026-11-18, fourth sitting, §4), which describes an evaluation's statistic as "the
-    count above TAU in the evaluation's reads". The batch here is cumulative since the last adjudicated fire, so the
-    evaluations nest rather than tile; which form binds is LOCK-n's to state (Code's reading, for the seat).
-    ``p0 = 0`` makes any exceedance fire at the next evaluation (rule 21's zero-base-rate form); the lock's p0 is the
-    box's (ADDENDUM-n2 §1.1). A ruling on a fidelity-ceiling pause clears nothing in the batch: its read stays a trial,
-    and an exceedance, of the binomial (Code's reading, for the seat). When no read remains to launch (the plan done,
-    or the cap spent), a batch with trials since its last evaluation is evaluated once more: the end-of-run
-    evaluation, whose fire has no read. A resume keeps the stage's cap and alpha: a report on disk under another is
-    refused.
+    on the arms with a trial in its tile. A pause on a shadow (N1-V's d = 0 read) also stands on every arm whose
+    steered reads of that session pair with it (5(f)(i)): their margins are read against it. A binomial fire at a
+    read with no re-computation stands on that read's arm too, though it had no trial in the tile (the schema holds
+    a pause's read's arm in its scope; for the seat).
+  * FIDELITY BINOMIAL -- trials are the reads that carry a re-computation. The binomial's window is the tile (the
+    seat's answers of 2026-11-19, first sitting, §3, R12): the reads launched since the previous evaluation, in
+    launch order, ``cadence`` of them (n §2.1: "cadence every 160 reads"; the identity's ``cadence``). A tile is
+    evaluated at its cadence-th read, a trial or not: its k exceedances at TAU among its n trials, the exact tail
+    P(X >= k | n trials, p0) against the alpha. A fire's batch is the tile, its first and last reads, and it ends at
+    the read that fired it. The next tile starts at the next read, after a fire as after none, so that every read
+    lies in exactly one tile and a ruling clears nothing. The records on disk are the plan's first reads, 0..M-1
+    (every pause halts the invocation, a rendering pause's place is attempted first on the resume, and a CAP ends
+    the stage), and any other set is refused before a launch: so tile j is reads j * cadence through
+    (j + 1) * cadence - 1, and the tail starts at a multiple of the cadence. A tile with no trial is evaluated too,
+    and cannot fire (Code's reading, for the seat).
+    The alpha is the identity's ``fidelity_rule.alpha``, and a stage whose inputs carry another is refused before
+    any read. Its value is the seat's: 0.01, one-sided, "at each evaluation" (the answers of 2026-11-18, fourth
+    sitting, §4). ``p0 = 0`` makes any exceedance fire at its tile's evaluation (rule 21's zero-base-rate form); the
+    lock's p0 is the box's (ADDENDUM-n2 §1.1), at least 1 of 3 by Laplace's rule (F5, the schema's). A ruling on a
+    fidelity-ceiling pause clears nothing: its read stays in its tile as a trial, and as an exceedance where its rel
+    is above TAU (R13). When no read remains to launch (the plan done, or the cap spent), the stage's tail, the
+    reads since the last evaluation where there are any, however few and whatever their trials, is evaluated once
+    (Code's reading, for the seat): the end-of-run evaluation, whose fire has no read. A resume keeps the stage's cap
+    and alpha: a report on disk under another is refused.
   * NON-FINITE, CEILING and IDENTITY -- a non-finite read; a re-computed read, at any dose, whose |cached margin -
     fresh margin| is above the identity's ``fidelity_rule.ceiling`` (ADDENDUM-n2 §2.1: "pauses at once"; none where
     no ceiling is set, at backend-ext); or an unsteered read whose identity check is not within the bound, pauses at
@@ -170,14 +176,12 @@ class Monitors:
     exceed: int = 0
     evaluations: int = 0
     fires: int = 0
-    batch_reads: int = 0                    # since the last adjudicated fire
-    batch_trials: int = 0
-    batch_exceed: int = 0
-    batch_first: int | None = None
-    batch_last: int | None = None
-    batch_arms: set = field(default_factory=set)
-    unevaluated: int = 0                    # the batch's trials since its last evaluation
-    next_due: int = 0                       # the batch's read count at which the next evaluation falls due
+    tile_reads: int = 0                     # the tile: the reads since the last evaluation (FIDELITY BINOMIAL above)
+    tile_trials: int = 0
+    tile_exceed: int = 0
+    tile_first: int | None = None           # its first and last reads' launch indices
+    tile_last: int | None = None
+    tile_arms: set = field(default_factory=set)          # the arms with a trial in it
     by_cell: dict = field(default_factory=dict)          # 'arm|dose' -> [trials, exceed_tau, exceed_tau4]
     nonfinite: int = 0
     ceiling_exceeded: int = 0
@@ -188,11 +192,10 @@ class Monitors:
             raise ValueError("the binomial needs a positive cadence and 0 <= p0_count <= p0_n, p0_n > 0")
         if self.ceiling is not None and not float(self.ceiling) > 0.0:
             raise ValueError("the fidelity ceiling, where set, is positive")
-        self.next_due = int(self.cadence)
 
     def observe(self, rec: Mapping) -> tuple[list, dict | None, list]:
-        """Count one record. Returns the kinds it fires, in PAUSE_KINDS' order; the binomial's batch, if it fired
-        at this read; and that fire's arms."""
+        """Count one record. Returns the kinds it fires, in PAUSE_KINDS' order; the binomial's batch (its tile), if
+        the tile's evaluation at this read fired; and that fire's arms."""
         kinds: list = []
         f = rec["fidelity"]
         if not rec["finite"] or (f is not None and not f["finite"]):
@@ -205,52 +208,48 @@ class Monitors:
         if rec["identity"] is not None and not rec["identity"]["within"]:
             self.identity_out += 1
             kinds.append("identity-bound")
-        self.batch_reads += 1
-        batch, arms = None, []
+        self.tile_reads += 1
+        if self.tile_first is None:
+            self.tile_first = rec["launch_index"]
+        self.tile_last = rec["launch_index"]
         if f is not None:
             self.trials += 1
-            self.batch_trials += 1
-            self.unevaluated += 1
-            if self.batch_first is None:
-                self.batch_first = rec["launch_index"]
-            self.batch_last = rec["launch_index"]
-            self.batch_arms.add(rec["arm"])
+            self.tile_trials += 1
+            self.tile_arms.add(rec["arm"])
             c = self.by_cell.setdefault(f"{rec['arm']}|{rec['dose_label']}", [0, 0, 0])
             c[0] += 1
             if f["exceeds_tau"] is True:
                 self.exceed += 1
-                self.batch_exceed += 1
+                self.tile_exceed += 1
                 c[1] += 1
             if f["exceeds_tau4"] is True:
                 c[2] += 1
-            if self.batch_reads >= self.next_due:
-                batch, arms = self.evaluate()
-                if batch is not None:
-                    kinds.append("fidelity-binomial")
+        batch, arms = None, []
+        if self.tile_reads >= int(self.cadence):           # the tile's cadence-th read, a trial or not
+            batch, arms = self.evaluate()
+            if batch is not None:
+                kinds.append("fidelity-binomial")
         return kinds, batch, arms
 
     def evaluate(self) -> tuple[dict | None, list]:
-        """One evaluation of the batch: the batch and its arms if it fires, else (None, [])."""
+        """One evaluation of the tile: its batch and arms if it fires, else (None, []). The next tile starts at the
+        next read, after a fire as after none (PIN above)."""
         self.evaluations += 1
-        self.unevaluated = 0
-        self.next_due = (self.batch_reads // self.cadence + 1) * self.cadence
-        if binom_tail(self.batch_exceed, self.batch_trials, self.p0_count / self.p0_n) > self.alpha:
-            return None, []
-        self.fires += 1
-        return ({"first_launch_index": self.batch_first, "last_launch_index": self.batch_last,
-                 "k": self.batch_exceed, "n": self.batch_trials, "p0_count": self.p0_count, "p0_n": self.p0_n,
-                 "alpha": self.alpha}, sorted(self.batch_arms))
+        batch, arms = None, []
+        if binom_tail(self.tile_exceed, self.tile_trials, self.p0_count / self.p0_n) <= self.alpha:
+            self.fires += 1
+            batch = {"first_launch_index": self.tile_first, "last_launch_index": self.tile_last,
+                     "k": self.tile_exceed, "n": self.tile_trials, "p0_count": self.p0_count, "p0_n": self.p0_n,
+                     "alpha": self.alpha}
+            arms = sorted(self.tile_arms)
+        self.tile_reads = self.tile_trials = self.tile_exceed = 0
+        self.tile_first = self.tile_last = None
+        self.tile_arms = set()
+        return batch, arms
 
     def pending(self) -> bool:
-        """Trials in the batch since its last evaluation."""
-        return self.unevaluated > 0
-
-    def clear_batch(self) -> None:
-        """An adjudicated fire's ruling clears its batch (PIN above)."""
-        self.batch_reads = self.batch_trials = self.batch_exceed = self.unevaluated = 0
-        self.batch_first = self.batch_last = None
-        self.batch_arms = set()
-        self.next_due = int(self.cadence)
+        """Reads in the tile since the last evaluation: at the stage's end, its tail."""
+        return self.tile_reads > 0
 
 
 @dataclass
@@ -406,6 +405,9 @@ def run(inputs: StageInputs, plan: Sequence[PlannedRead], *, resume: bool) -> di
     for r in on_disk:
         if not 0 <= r["launch_index"] < len(plan) or plan_ids[r["launch_index"]] != r["read_id"]:
             raise SystemExit(f"read {r['launch_index']} on disk is not the plan's read at that place -- refusing")
+    if [r["launch_index"] for r in on_disk] != list(range(len(on_disk))):
+        raise SystemExit("the records on disk are not the plan's first reads, 0..M-1 -- refusing (the tiles are the "
+                         "plan's reads in order: FIDELITY BINOMIAL above)")
     used_ms = sum(r["duration_ms"] for r in on_disk)
     if prior is not None:
         if prior["cap"]["hour_cap_ms"] != inputs.hour_cap_ms:
@@ -447,8 +449,6 @@ def run(inputs: StageInputs, plan: Sequence[PlannedRead], *, resume: bool) -> di
         if (p["read_id"], p["kind"], p["also_fired"], p["binomial"]) != (r["read_id"], kinds[0], kinds[1:], batch):
             raise SystemExit(f"pause {p['pause_id']}: the records do not reproduce it -- refusing")
         matched.add(p["pause_id"])
-        if batch is not None:
-            mon.clear_batch()
     missing = sorted(p["pause_id"] for p in prior_at.values() if p["pause_id"] not in matched)
     if missing:
         raise SystemExit(f"pauses {missing}: no record on disk reproduces them -- refusing")
@@ -527,7 +527,6 @@ def run(inputs: StageInputs, plan: Sequence[PlannedRead], *, resume: bool) -> di
                 if batch != prior_end["binomial"]:
                     raise SystemExit(f"pause {prior_end['pause_id']}: the end-of-run evaluation does not reproduce "
                                      f"it -- refusing")
-                mon.clear_batch()
             elif batch is not None:
                 pauses.append(_pause(len(pauses) + 1, "fidelity-binomial", None, None, arms, binomial=batch))
                 inputs.printer("PAUSE fidelity-binomial at the run's end")
@@ -612,24 +611,28 @@ def _selftest(chk, tmp) -> None:
         "+1 (R_ell 50.0), 5,280 with +d_eq also in +1/2 (R_ell 40.0), N1-P's 160 +1/2 reads among them",
         merged_ok, merged_detail)
 
-    # the monitors: batch, cadence, clearing, kinds in precedence order
+    # the monitors: the tile (R12), its evaluation, kinds in precedence order
     def rec_at(i, **kw):
         return schema.example_record(ident0, "N1-V", "valence", "+1", 3, launch=i, **kw)
     m = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01)
     fired = [m.observe(r) for r in (rec_at(0), rec_at(1, fresh_shift=0.5), rec_at(2), rec_at(3))]
-    chk("runner: an exceedance fires the binomial at the next cadence point, not before",
+    chk("runner: an exceedance fires the binomial at its tile's evaluation, the tile's cadence-th read, not before",
         [k for k, _b, _a in fired] == [[], [], [], ["fidelity-binomial"]], [k for k, _b, _a in fired])
     b = fired[3][1]
-    chk("runner: the fire's batch is reads 0-3, 1 of 4, under the identity's p0",
+    chk("runner: the fire's batch is its tile, reads 0-3, 1 of 4, under the monitors' p0",
         b is not None and (b["first_launch_index"], b["last_launch_index"], b["k"], b["n"]) == (0, 3, 1, 4)
         and (b["p0_count"], b["p0_n"]) == (0, 2400), b)
     again = [m.observe(rec_at(i))[0] for i in range(4, 8)]
-    chk("runner: an uncleared exceedance fires again at the next cadence point", again[-1] == ["fidelity-binomial"],
-        again)
-    m.clear_batch()
-    after = [m.observe(rec_at(i))[0] for i in range(8, 12)]
-    chk("runner: a cleared batch does not fire on clean trials", after == [[], [], [], []], after)
-    chk("runner: evaluations and fires counted", (m.evaluations, m.fires) == (3, 2), (m.evaluations, m.fires))
+    chk("runner: the next tile starts at the next read, without the earlier exceedance: four clean trials fire "
+        "nothing (R12: every read in exactly one tile)", again == [[], [], [], []], again)
+    after = [m.observe(rec_at(i, fresh_shift=0.5 if i == 9 else 0.0)) for i in range(8, 12)]
+    b_after = after[3][1]
+    chk("runner: ...and a third tile fires on its own exceedance alone, its batch reads 8-11, 1 of 4",
+        [k for k, _b, _a in after] == [[], [], [], ["fidelity-binomial"]] and b_after is not None
+        and (b_after["first_launch_index"], b_after["last_launch_index"], b_after["k"], b_after["n"])
+        == (8, 11, 1, 4), after[3])
+    chk("runner: evaluations and fires counted: three tiles, two fires", (m.evaluations, m.fires) == (3, 2),
+        (m.evaluations, m.fires))
     m2 = Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01)
     nf = schema.example_record(ident0, "N1-V", "none", "0", 3, finite=False)
     k_nf = m2.observe(nf)[0]
@@ -670,15 +673,59 @@ def _selftest(chk, tmp) -> None:
         bad_ceiling = True
     chk("runner: ...a ceiling that is not positive is refused", bad_ceiling, "")
 
-    # the cadence is in reads: a boundary crossed at reads with no re-computation falls due at the next trial
+    # the tile is in reads: evaluated at its cadence-th read, a trial or not; a tile with no trial; the tail
     def plain_at(i):
         return schema.example_record(ident0, "N1-V", "valence", "+1/2", 3, launch=i)      # no re-computation
+
+    def n2_at(i):
+        return schema.example_record(ident0, "N2-E", "span_reward", "f0.10", 3, launch=i)  # no re-computation
     m3 = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01)
-    k3 = [m3.observe(r) for r in (rec_at(0, fresh_shift=0.5), plain_at(1), plain_at(2), plain_at(3), rec_at(4))]
-    b3 = k3[4][1]
-    chk("runner: a cadence boundary crossed at reads with no re-computation is evaluated at the next trial",
-        [k for k, _b, _a in k3] == [[], [], [], [], ["fidelity-binomial"]] and b3 is not None
-        and (b3["first_launch_index"], b3["last_launch_index"], b3["k"], b3["n"]) == (0, 4, 1, 2), k3[4])
+    k3 = [m3.observe(r) for r in (rec_at(0, fresh_shift=0.5), n2_at(1), n2_at(2), n2_at(3), rec_at(4))]
+    b3 = k3[3][1]
+    chk("runner: a tile is evaluated at its cadence-th read though that read has no re-computation; the batch's first "
+        "and last are the tile's reads (0, 3), 1 of its 1 trial, and the fire's arms the trials' alone (N1-V, not the "
+        "N2-E reads without one)",
+        [k for k, _b, _a in k3] == [[], [], [], ["fidelity-binomial"], []] and b3 is not None
+        and (b3["first_launch_index"], b3["last_launch_index"], b3["k"], b3["n"]) == (0, 3, 1, 1)
+        and k3[3][2] == ["N1-V"], k3[3])
+    m3e = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01)
+    k3e = [m3e.observe(r) for r in (plain_at(0), rec_at(1, fresh_shift=0.5), plain_at(2), plain_at(3))]
+    b3e = k3e[3][1]
+    chk("runner: a tile that opens on a read with no re-computation begins there: its batch is (0, 3), 1 of 1, not "
+        "from its first trial",
+        b3e is not None and (b3e["first_launch_index"], b3e["last_launch_index"], b3e["k"], b3e["n"]) == (0, 3, 1, 1),
+        b3e)
+    m3b = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01)
+    k3b = [m3b.observe(plain_at(i)) for i in range(4)]
+    chk("runner: a tile with no trial is evaluated at its cadence-th read and cannot fire",
+        [k for k, _b, _a in k3b] == [[], [], [], []] and (m3b.evaluations, m3b.fires) == (1, 0)
+        and not m3b.pending(), (m3b.evaluations, m3b.fires))
+
+    def pole_at(i, **kw):
+        return schema.example_record(ident0, "N1-P", "valence", "+1", 3, launch=i, **kw)
+    m3c = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01)
+    k3c = [m3c.observe(pole_at(i, fresh_shift=0.5 if i == 2 else 0.0) if i < 4
+                       else rec_at(i, fresh_shift=0.5 if i == 9 else 0.0)) for i in range(10)]
+    tail_due = m3c.pending()
+    b_tail, a_tail = m3c.evaluate()
+    chk("runner: ten reads at cadence 4 are evaluated at reads 3 and 7, the tail (reads 8-9) pending after them; the "
+        "first tile (N1-P's reads) fires on N1-P alone, and the end-of-run evaluation on the tail's own exceedance, "
+        "its batch the tail's reads, 1 of 2, its arms the tail's (N1-V), none carried from an earlier tile",
+        [i for i, (k, _b, _a) in enumerate(k3c) if k] == [3] and k3c[3][2] == ["N1-P"] and tail_due
+        and (m3c.evaluations, m3c.fires) == (3, 2) and b_tail is not None
+        and (b_tail["first_launch_index"], b_tail["last_launch_index"], b_tail["k"], b_tail["n"]) == (8, 9, 1, 2)
+        and a_tail == ["N1-V"] and not m3c.pending(), (b_tail, a_tail, m3c.evaluations, m3c.fires))
+    m3d = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01)
+    m3d.observe(plain_at(0))
+    chk("runner: a tail of one read with no trial is pending, and its evaluation fires nothing",
+        m3d.pending() and m3d.evaluate() == (None, []) and m3d.evaluations == 1 and not m3d.pending(), "")
+    m9 = Monitors(cadence=4, p0_count=0, p0_n=2400, alpha=0.01, ceiling=0.25)
+    k9 = [m9.observe(rec_at(i, fresh_shift=0.5 if i == 0 else 0.0)) for i in range(4)]
+    b9 = k9[3][1]
+    chk("runner: a ceiling read stays in its tile as a trial and, its rel above TAU, as an exceedance (R13): the "
+        "ceiling fires at read 0 and the tile, 1 of 4, at read 3",
+        [k for k, _b, _a in k9] == [["fidelity-ceiling"], [], [], ["fidelity-binomial"]] and b9 is not None
+        and (b9["k"], b9["n"]) == (1, 4), [k for k, _b, _a in k9])
     m160 = Monitors(cadence=160, p0_count=0, p0_n=2400, alpha=0.01)
     k160 = [m160.observe(rec_at(i, fresh_shift=0.5 if i == 0 else 0.0))[0] for i in range(160)]
     m160b = Monitors(cadence=160, p0_count=1, p0_n=2400, alpha=0.01)
@@ -829,13 +876,29 @@ def _selftest(chk, tmp) -> None:
         return rows, caps
     fb_w.full = biased_full_w
     # the binomial's tests run under a ceiling above their injected discordance (+2.0 on a logit, about 2 nats), the
-    # bound with it, so that the binomial alone is under test; the ceiling's own run-level case is below
+    # bound with it, so that the binomial alone is under test; the ceiling's own run-level case is below. Under the
+    # example identity's p0 = 1/26 (F5), 2 exceedances of 4 trials fire at P = 0.00843 and 2 of 2 at 0.00148, against
+    # alpha 0.01; one of 4 would not (P = 0.145)
     ident4 = dict(ident, identity_bound=10.0, fidelity_rule=dict(ident["fidelity_rule"], cadence=4, ceiling=10.0))
     rep_wb = run(inputs_for("wbinom", backend=fb_w, identity=ident4), wide, resume=False)
     pw = rep_wb["pauses"]
-    chk("runner: a binomial fire at a cadence point stands on its batch's arms",
+    chk("runner: a binomial fire at a tile's cadence-th read stands on its tile's arms",
         rep_wb["end_state"] == "PAUSE" and len(pw) == 1 and pw[0]["kind"] == "fidelity-binomial"
         and pw[0]["launch_index"] == 3 and pw[0]["arms_in_scope"] == ["N1-P", "N1-V"], pw)
+    ruling_wb = tmp / "ruling_wbinom.md"
+    ruling_wb.write_text("binomial tile ruling\n")
+    rep_wb2 = run(inputs_for("wbinom", backend=fb_w, identity=ident4, rulings={"p01": ruling_wb}), wide, resume=True)
+    pw2 = rep_wb2["pauses"]
+    b_w2 = pw2[1]["binomial"] if len(pw2) == 2 else None
+    chk("runner: after its ruling the tile's fire is reproduced, and the resume's next tile, reads 4-7, fires at "
+        "read 7 (a read with no re-computation) on its own two exceedances: its batch (4, 7, 2, 2), on the read's "
+        "arm and the tile's",
+        rep_wb2["end_state"] == "PAUSE" and len(pw2) == 2 and pw2[0]["adjudicated"]
+        and pw2[0]["resumed_at_launch_index"] == 4 and pw2[1]["kind"] == "fidelity-binomial"
+        and pw2[1]["launch_index"] == 7 and b_w2 is not None
+        and (b_w2["first_launch_index"], b_w2["last_launch_index"], b_w2["k"], b_w2["n"]) == (4, 7, 2, 2)
+        and pw2[1]["arms_in_scope"] == ["N1-P", "N1-V", "N2-E"]
+        and (rep_wb2["binomial_state"]["evaluations"], rep_wb2["binomial_state"]["fires"]) == (2, 2), pw2)
     sh_be = CausalDouble()
     orig_sh = sh_be.prefill
 
@@ -918,7 +981,8 @@ def _selftest(chk, tmp) -> None:
     chk("runner: ids whose ids_sha is not BK's are a rendering pause before the read, which is not launched",
         ok_tk, ptk)
 
-    # a fidelity exceedance below the cadence: the end-of-run evaluation fires a read-less pause; its ruling clears it
+    # two fidelity exceedances in a tail shorter than a tile: the end-of-run evaluation fires a read-less pause, which
+    # its ruling adjudicates (a ruling clears nothing)
     fb_be = CausalDouble()
     orig_full = fb_be.full
 
@@ -941,8 +1005,8 @@ def _selftest(chk, tmp) -> None:
     ruling_c.write_text("ceiling ruling\n")
     rep_c2 = run(inputs_for("ceil", backend=fb_be, rulings={"p01": ruling_c}), plan, resume=True)
     pc2 = rep_c2["pauses"]
-    chk("runner: after its ruling the fidelity-ceiling pause is reproduced on replay and cleared, and the next steered "
-        "re-computation above C pauses again, the counter at 2",
+    chk("runner: after its ruling the fidelity-ceiling pause is reproduced on replay and adjudicated, and the next "
+        "steered re-computation above C pauses again, the counter at 2",
         rep_c2["end_state"] == "PAUSE" and len(pc2) == 2 and pc2[0]["adjudicated"]
         and pc2[0]["resumed_at_launch_index"] == 3 and pc2[1]["kind"] == "fidelity-ceiling"
         and pc2[1]["launch_index"] == 3 and not pc2[1]["adjudicated"]
@@ -950,14 +1014,15 @@ def _selftest(chk, tmp) -> None:
     ident_hi = dict(ident, identity_bound=10.0, fidelity_rule=dict(ident["fidelity_rule"], ceiling=10.0))
     rep7 = run(inputs_for("binom", backend=fb_be, identity=ident_hi), plan, resume=False)
     p7 = rep7["pauses"]
-    chk("runner: an exceedance short of the cadence fires at the run's end, a read-less pause on the batch's arms",
+    chk("runner: two exceedances in a tail shorter than a tile (2 of its 4 trials) fire at the run's end, a read-less "
+        "pause on the tail's arms",
         rep7["end_state"] == "PAUSE" and len(p7) == 1 and p7[0]["kind"] == "fidelity-binomial"
         and p7[0]["launch_index"] is None and p7[0]["binomial"]["n"] == 4 and obtained(rep7) == 6
         and rep7["binomial_state"]["evaluations"] == 1, p7)
     ruling_b = tmp / "ruling_binom.md"
     ruling_b.write_text("binomial ruling\n")
     rep8 = run(inputs_for("binom", backend=fb_be, identity=ident_hi, rulings={"p01": ruling_b}), plan, resume=True)
-    chk("runner: after its ruling the end-of-run fire is reproduced, cleared, not re-fired; the stage COMPLETE",
+    chk("runner: after its ruling the end-of-run fire is reproduced, adjudicated, not re-fired; the stage COMPLETE",
         rep8["end_state"] == "COMPLETE" and len(rep8["pauses"]) == 1 and rep8["pauses"][0]["adjudicated"]
         and rep8["pauses"][0]["resumed_at_launch_index"] is None
         and (rep8["binomial_state"]["evaluations"], rep8["binomial_state"]["fires"]) == (1, 1), rep8["pauses"])
@@ -1008,8 +1073,9 @@ def _selftest(chk, tmp) -> None:
 
     # the cap: spent before any read, or reached by the last read
     rep10 = run(inputs_for("cap0", cap=0), plan, resume=False)
-    chk("runner: a spent cap ends the invocation as CAP before any read", rep10["end_state"] == "CAP" and
-        obtained(rep10) == 0 and rep10["cap"]["hit"], rep10["end_state"])
+    chk("runner: a spent cap ends the invocation as CAP before any read, and with no read there is no tail to "
+        "evaluate", rep10["end_state"] == "CAP" and obtained(rep10) == 0 and rep10["cap"]["hit"]
+        and rep10["binomial_state"]["evaluations"] == 0, (rep10["end_state"], rep10["binomial_state"]))
     total_ms = rep["cap"]["used_ms"]
     chk("runner: the fake clock: 4 reads with a re-computation at 750 ms, 2 without at 250", total_ms == 3500,
         total_ms)
@@ -1020,3 +1086,19 @@ def _selftest(chk, tmp) -> None:
     rep12 = run(inputs_for("cap2", cap=3250), plan, resume=False)
     chk("runner: a cap spent before the last read ends as CAP, that read not launched",
         rep12["end_state"] == "CAP" and obtained(rep12) == 5 and rep12["cap"]["hit"], obtained(rep12))
+
+    # the tail: reads with no re-computation are still a tail, evaluated at the run's end (Code's reading, for the
+    # seat); and the tiles' premise, the records on disk the plan's first reads 0..M-1, asserted before any launch
+    ident_c4 = dict(ident, fidelity_rule=dict(ident["fidelity_rule"], cadence=4))
+    rep_t = run(inputs_for("tail", identity=ident_c4), plan, resume=False)
+    chk("runner: a tail whose reads carry no re-computation (reads 4-5, at +1/2) is evaluated at the run's end: "
+        "COMPLETE with two evaluations, the tile 0-3 and the tail, and no fire",
+        rep_t["end_state"] == "COMPLETE" and obtained(rep_t) == 6
+        and (rep_t["binomial_state"]["evaluations"], rep_t["binomial_state"]["fires"]) == (2, 0),
+        rep_t["binomial_state"])
+    import shutil
+    shutil.copytree(tmp / "ok", tmp / "holes")
+    hole = cells.cell_path(tmp / "holes" / "cells", "N1-V", "valence", "+1")
+    hole.unlink()                                           # reads 2 and 3 gone: 0, 1, 4 and 5 on disk
+    chk("runner: records on disk that are not the plan's first reads, 0..M-1 (reads 2 and 3 missing), are refused "
+        "before any launch", refused(lambda: run(inputs_for("holes"), plan, resume=True)) and not hole.exists(), "")

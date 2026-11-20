@@ -1,0 +1,56 @@
+n -- the R12, F5 and R13 runner delta (the seat's answers of 2026-11-19, first sitting: s3 and s4 (b); its routing
+block's item 4): its self-test on the laptop, committed with the delta. PI date 2026-11-20. Code (the n-build session).
+
+The change, on db00d6d's versions of these paths (draft 3, the bytes committed):
+  valence_core/n/runner.py   9bf75cbba57796ce4f7ade36f199ecdf11369e60e731ba99910263569c3bd61e  (+169 -87)
+  valence_core/n/schema.py   1cab28df54c4c2c699b005fc6d2a99693d569911e292ad9dbdb8b6994db8edff  (+129 -30)
+The package: valence_core/n's digest moves from
+  e40c987172f59d330be16a52e414067daed8c9e78fd1b9c9948908bd4ab29523 (db00d6d's) to
+  06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39,
+  both computed by shell in the form valence_core/m/resume.py's package_sha256_of states. The self-test prints no
+  digest.
+
+1. THE LAPTOP. Model-free, as at the BUILD: the HF cases run only where torch and transformers are present, and
+   elsewhere are skipped and counted as skipped; the schema module's own cases count as one aggregated line.
+   The overlay: 168 files, 166 of them equal to HEAD db00d6d's blobs by a join on git hash-object against git
+   cat-file --batch-check (the paths on stdin), with each run's two drafts in place.
+   The command, in a subshell, from the jlens venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch>/step4b/tile/tmp PYTHONDONTWRITEBYTECODE=1 nice -n 19 \
+       ./python <scratch>/step4b/tile/overlay/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, each draft re-hashed in the
+   overlay just before and after it; the temporary folder was empty before and after.
+
+   Run 1, draft 1 (before the review):
+     valence_core/n/runner.py   db18cb48212d066db9a2dba8a5ce1fc343b684a9c4b54058c637fa8b2d9781dd (1058 lines)
+     valence_core/n/schema.py   21cbe29483863017df07b900325cfb5bc84a9678483647ce060f306f6fa8b389 (2492 lines)
+     exit 0; output 1 line, sha256 79c2940f21fca0d7e8dff42384f8c917bde8ebf92f964367e81cf472905bef94, verbatim:
+  575/575 n selftest checks pass
+   Draft 1 rewrites the monitors' cases for the tile and adds five checks to db00d6d's 570, all in runner.py's
+   self-test: a tile with no trial, ten reads making three evaluations and a tail, a tail of one read with no trial,
+   R13 at the monitors, and a run-level resume after a tile's fire whose next tile fires at a read with no
+   re-computation. The schema module's own accept/refuse calls grow from 217 to 228 (its cases at run time from 239
+   to 250, by reading: five loops call more than once, 22 cases more in every version).
+
+   Run 2, draft 2 (the review applied):
+     valence_core/n/runner.py   9bf75cbba57796ce4f7ade36f199ecdf11369e60e731ba99910263569c3bd61e (1104 lines)
+     valence_core/n/schema.py   bedba2c792cb3410b8ab8434dfe166f3d4d0d5a4e58bf5fb6401490a1f3ac66a (2524 lines)
+     exit 0; output 1 line, sha256 59841608b8580c9434962afdddbf6afab966be9e07a8fe0595480c509a330f09, verbatim:
+  578/578 n selftest checks pass
+   Draft 2 adds three more: a tile opening on a read with no re-computation, a run whose tail has no re-computation,
+   and records on disk with a hole, refused before any launch; it strengthens three (the fires' arms at the monitors'
+   two tile cases, and the spent cap's evaluations) and rewords one. The schema module's own accept/refuse calls grow
+   to 233 (255 cases at run time, by reading).
+
+   Run 3, draft 3 (the values-check's observations 2 and 3; the bytes committed):
+     valence_core/n/runner.py   9bf75cbba57796ce4f7ade36f199ecdf11369e60e731ba99910263569c3bd61e (1104 lines)
+     valence_core/n/schema.py   1cab28df54c4c2c699b005fc6d2a99693d569911e292ad9dbdb8b6994db8edff (2527 lines)
+     exit 0; output 1 line, sha256 59841608b8580c9434962afdddbf6afab966be9e07a8fe0595480c509a330f09, verbatim:
+  578/578 n selftest checks pass
+   Draft 3 changes only the schema: its two cases on a batch's presence name their check's message (expect=), and
+   example_pause's docstring says its default read, 500, ends no tile. No check is added or removed; the schema
+   module's accept/refuse calls stay 233. The output is run 2's, byte for byte. Run 3 was launched in the tool's
+   background mode, the command as above.
+
+2. THE BOX. Nothing ran there. Its count would be 589 by arithmetic: the laptop's 578 plus the box's 11 more (its HF
+   checks in place of the laptop's skip lines), when a stage next runs the package self-test there.
