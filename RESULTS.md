@@ -21,6 +21,136 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **The coordinating session's notes on the seat's first sitting of 2026-11-20: the reads committed at
+  `d639bdd`, the PI's routing, the box's cleanup in part, four close lines (item 6), and the push to come (item 7).**
+  - **The reads:**
+    [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+    (sha256 `001e8c12…bd11`, 18,696 bytes), on the entries of `e3b48ed`, `0744136`, `db00d6d` and `ef105f1`,
+    committed by path at `d639bdd`, re-hashed equal to the paste block first. The PI's word: "Route as given". The
+    paste block, as the PI gave it, is committed here as
+    [`2026-11-20_first-sitting_pi-routing.md`](results/raw/2026-11-20_first-sitting_pi-routing.md). Below, "item N" is
+    the paste block's item and "§N" a section of the raw; the raw's own routing block, §7, words the items
+    differently in places.
+  - **Items 1–5 were relayed:** N.1–N.4 verbatim to n-build; item 4 verbatim to the pod session, with the cleanup's
+    scope in the coordinating session's words (below); and A.5 verbatim to n-analyzer.
+    - **O6 (item 5).** The paste block puts "O6's p0_count < p0_n assertion at the schema's next change, not its own
+      delta" under n-analyzer; `valence_core/n/schema.py` is n-build's file. The coordinating session told n-build
+      that O6 rides its next change to the schema, "with the wording owed there" (§3), and n-analyzer that O6 is not
+      part of its v7.
+    - **The lock's placement (item 3).** Item 3 places the draft "for the seat's read before step 10 [untracked at root
+      under the lock's name, sha256 and line count in the entry]", and §5.2 says "the form of that placement is Code's
+      and the coordinating session's call". The coordinating session's proposal, sent to n-build for its word: the
+      filled draft untracked at root under the lock's own name, announced by a short Code → design raw that names its
+      sha256 and line count, with an entry, committed by path in a commit window the coordinating session grants;
+      nothing goes to root before the form is agreed.
+    - **The box (item 4):** "through G-TIME-n and the campaign; the backend-ext leftovers cleaned now [stays up]". The
+      box stays up (§5.3). The pod session's list of the backend-ext leftovers, in its scratch and not committed,
+      names 30 folders under `/workspace/nsite` and four side refs in the box's repository. It states that four of the
+      folders hold data never copied to the laptop: the step-4 smoke's work folder (the smoke root's cell files), and
+      the copies made by backend-ext's run of record, its resume and backend-ext-2 (their stage roots' arrays). Those
+      stages' reports are on the laptop. It also states that the work and copy folders "may also hold files beyond
+      those copied back by name", unread; eight of the other 26 are such folders (items 3, 9, 13, 14, 18, 19, 24 and
+      29). Before this sitting the coordinating session put the four to the PI, with three choices: keep them, clean
+      all 30, or hold the cleanup. The list itself says "The routing calls these leftovers". The coordinating
+      session's reading is that item 4's words, which do not name the four, do not settle them, and it puts them to
+      the PI again. So the cleanup went ahead on the other 26 folders, by a script the coordinating session read and
+      cleared before it ran (`cleanup_v1.sh`, `1cc99953…28be`, 82 lines): exit 0, 26 of 26 folders absent, the box's
+      checkout main at `ad856f0` and clean, and the GPU idle before and after (its output `f90b107c…70d7`, checked by
+      tool against the cleared 26). The four are held for the PI's word; the refs stay off, and the box's repository
+      is untouched.
+  - **Item 6, the coordinating session's:**
+    - the raw committed by path (`d639bdd`);
+    - the close lines on `e3b48ed`, `db00d6d`, `ef105f1` and `0744136`, citing the raw: committed here, one on each
+      entry;
+    - the departures of §6 inert, "the three marker-in-argv grep processes included" (item 6). §6: "Inert, every one;
+      the standing lines stand; the wording owed at each file's next change accepted as declared";
+    - "ADDENDUM-n3's referent-check gradings accepted, with the dated note on §8.4's directions.py anchor (§4)": the
+      note is in the close line on `0744136`'s entry, and the addendum's bytes are unchanged;
+    - "O4 accepted [as ruled]", in the close line on `ef105f1`'s entry.
+  - **Item 7, the push** ("[push]"): `bc50244..HEAD` "behind the amended screen" (`screen4.py` with `gl5.py`), run in
+    the coordinating session's own battery window after n-analyzer's mutant window closes. The paste block's "4
+    commits at this writing" are `e3b48ed`, `0744136`, `db00d6d` and `ef105f1`; `d639bdd` and this commit join the
+    range. The push's C.5 line goes in the coordinating session's next entry.
+  - **Departures, for the seat to class:**
+    - the coordinating session's, since `0744136`'s commit, from two sweeps of its own shell commands, the second made
+      after the values-check (199 commands, its first 142 the first sweep's; the commands after it are this commit's
+      own); the coordinating session knows of no others:
+      - unpruned `find`s, in place of item 1's pruned form: three over n-build's scratch copy of G-CAL-n's launch
+        overlay, a copy of 168 of `0744136`'s files, its code and the data files the stage reads, in which a pruned
+        count finds no `ckpt` or `reports` folder: two for `__pycache__` folders, and one listing its 168 files, none
+        under a `ckpt` or `reports` folder or under `data/mf3` by a count over the list (its one `mf3` folder is the
+        tracked code package `valence_core/mf3`); one for `__pycache__` in n-build's scratch folder for the lock, in
+        which a pruned count finds no `ckpt` or `reports` folder; and one `-maxdepth 1` name match in the launch
+        folder;
+      - commit-message reads, in forms item 1 does not list: one `git log -1 --format=%B` of `db00d6d` (the class
+        `e3b48ed`'s entry declared) and four `git cat-file commit`, of `db00d6d`, `ef105f1`, `f4b3e73` and `d639bdd`,
+        each through `sed '1,/^$/d'`, compared by `cmp` save `f4b3e73`'s, printed;
+      - git commands naming a folder or the tree without item 3's exclusions or the `data/mf3` one: three
+        `git diff --name-only HEAD` (`data/n/gcal` with `valence_core/n` once, `valence_core` twice), each printing a
+        count, the form Code disclosed on 2026-11-18; one `git diff --quiet HEAD` on `valence_core/n` and
+        `scripts/n_sessions.py`, its exit status only; and item 1's name forms, `git show --name-only` of `e3b48ed`
+        and `0744136`, `git ls-tree --name-only` of `db00d6d`'s `scripts/` and of `0744136`'s `valence_core/`, and
+        `git show --name-status` with `git diff --cached --name-only` and `--name-status` at `d639bdd`'s commit;
+      - the string `mf3`, not one of m's five guard markers, in the argv of ten commands: grep patterns, `echo` and
+        `printf` labels, and the `':!data/mf3/**'` exclusion in git pathspecs. No guard marker reached an argv;
+      - `jq` reads of its own session's transcript: one for its "LAUNCH CLEARED" relays; three for this list's two
+        sweeps, the second run twice, each writing its shell commands since `0744136`'s commit to a scratch file; and
+        three of its tool results, for the zsh errors below. Also one `jq` of the first line of each of its subagents'
+        transcripts, for their start times, and two commands of `jq` over the values-checker's task output, one taking
+        its last text (empty) and one its hand-back's message;
+      - process reads in the battery windows' checks: `pgrep -il python` in 25 commands, `ps -o` of the Q-F3
+        campaign's PID (8051) in two, and `ps -axo` listings of the processes running from n-build's scratch folder,
+        filtered by `grep`, in two. None read the campaign's files;
+      - stated plainly:
+        - `jq` over two committed files under `data/n/ids` at `0744136` (the prompts file's count and longest prompt;
+          the manifest's tokenizer pins), and `git cat-file blob` of `0744136`'s `data/n/gvec/gvec.json` into
+          `grep -o -F` for four record values;
+        - one `ls -la` of n-build's snippet-test scratch folder; `wc -c` and `wc -l` of scratch files, of the seat's
+          raw before its commit and of this commit's routing raw, and `wc -l` of a memory file;
+        - the package digest's forms over `ef105f1` (`git ls-tree --name-only`, `git cat-file -s` and `blob` of
+          `valence_core/n`'s files) and over the scratch overlays and the working tree (`wc -c` of the same files);
+        - `git hash-object --stdin-paths` and `git cat-file --batch-check` over n-build's scratch overlays against
+          `0744136` and `db00d6d`, the paths on stdin, and `git cat-file --batch-check` in its default form over two
+          commit windows' new paths at their parents, printing the last field ("missing");
+        - `git grep` over named files and over pathspec globs of raws (once with `ADDENDUM-n3*.md`), with
+          `':!data/**'` save one, this entry's search for "amended screen" over `RESULTS.md` and two raw globs;
+        - `awk` and `sed` (line-range prints, and substitution, deletion and insertion scripts) over named files, its
+          scratch files and command output;
+        - loops over globs of scratch names, its own and other sessions', and one over its subagents' transcripts
+          (`agent-*.jsonl`), not each printed whole before its loop (the briefs' line "A glob is expanded and read
+          before it is looped over", stated for the seat);
+        - reads by name of n-build's and the pod session's notes in the app's side-session notes folder;
+        - three zsh errors, each stopping only its own part: a glob loop with no match (its error silenced by the
+          loop's own `2>/dev/null`, rerun with literal names), a `*(/N)` qualifier refused as a bad pattern, and
+          `echo ===`; and one `cat -A` that failed silently;
+        - writes to its memory folder, outside the repository (`cat >>`, `printf >>`, `sed -i ''` on its index, and
+          two `rm -f` of its own temporary memory files);
+    - the values-checker's, as its report states them: one `awk` command, against its brief, refused by the
+      permission system before it ran; one `git cat-file commit` that printed the commit's header (its tree and parent
+      ids, and the author and committer lines); one `git ls-tree --name-only` naming a folder without item 3's
+      exclusions; `wc -c` of the seat's raw; `diff -U0` with `git show` on stdin; `sed -n` prints; reads beyond its
+      named sources, some printing lines with a guard-marker word or `mf3` in output only; and git forms with the
+      exclusions.
+  - **Values-check:** one blind pass by a subagent over this entry's draft, the four close lines, the routing raw and
+    their placement in a draft of the new `RESULTS.md`, under a brief with the list of record v2's items 1–5 verbatim,
+    no interpreter but `shasum`, no write and no network: 121 items, 97 CONFIRMED, 7 IMPRECISE, 2 FAIL and 15 NOT
+    CHECKABLE, with 12 observations.
+    - The two FAILs (items 67 and 68) were two classes of the coordinating session's own departures missing from its
+      list: commit-message reads, and git commands naming a folder without item 3's exclusions. Both are added in the
+      checker's words, item 68's line with observation 6's forms and the second sweep's.
+    - The seven IMPRECISE items (15, 45, 54, 58, 60, 61 and 63) are applied, each in the checker's words or near them.
+    - Observations 1–10 and 12 are applied or met: "§N" defined (1); the eight work and copy folders (2); the four
+      as the coordinating session's reading (3); the process reads (4); `mf3` in argv (5); the name forms (6); the
+      `gvec.json` read (7); the `cat -A` (8); the silenced glob error, confirmed from the transcript (9); the routing
+      raw's head naming the items quoted (10); and the second sweep's re-check (12). Observation 11, the run-in of
+      `e3b48ed`'s entry into the next heading, is HEAD's and stays: this commit inserts lines only.
+    - After the check: the cleanup's result in the box bullet, from the pod session's report and checked by tool, in
+      place of "The result goes in the coordinating session's next entry."; the command count; and this bullet. The
+      edits were checked by tool; no second full pass was made.
+    - Raw: [`2026-11-20_first-sitting-notes_valuescheck.md`](results/raw/2026-11-20_first-sitting-notes_valuescheck.md).
+  - **Committed by path:** the routing raw, the values-check raw, this entry, and the four close lines. The
+    commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+
 - 2026-11-20 — **n — the R12, F5 and R13 runner delta, after G-CAL-n's run: the fidelity binomial's window is the
   tile, F5's floor on p0 is asserted in the schema, and R13's two runner texts are corrected; committed by path (the
   seat's answers of 2026-11-19, first sitting, §3 and §4 (b), and their routing block's item 4: "in G-CAL-n's delta or
@@ -136,6 +266,25 @@ applied to CLAUDE.md.
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
     **Next:** n-analyzer's pin move and fixtures, with F5, R13 and the tile's range, in its own commit; LOCK-n v0.1's
     holes from G-CAL-n's record.
+  - **Close (PI date 2026-11-20, first sitting), the coordinating session's, item 6: the seat's read of this delta.**
+    The seat's raw,
+    [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+    (sha256 `001e8c12…bd11`), committed by path at `d639bdd` on the PI's "Route as given", reads this delta in §3:
+    "Readings accepted: a tile with no trial is evaluated, cannot fire and counts in `evaluations`; the tail is
+    evaluated when it holds any read; the form checks are Code's."
+    - For the lock (§3; item 3): E = 48, "the campaign's 7,680 reads in tiles of 160 with no tail under the dose map
+      of record, nothing merged", and 1 − 0.99⁴⁸ = 0.3827, "the chance of at least one false pause over the campaign
+      at alpha 0.01"; and n-analyzer's power note in the lock's monitor sentence: "The lock says so in one sentence; no
+      read is added."
+    - O4 (§3; item 6, "O4 accepted [as ruled]"): "a fire at a read with no re-computation stands on that read's arm
+      too."
+    - O6 (§3; item 5): "`p0_count < p0_n` is Laplace's rule's own guarantee and is asserted at the schema's next
+      change, with the wording owed there; not a delta of its own. The lock's p0 is 1 of 26 and cannot reach it." The
+      schema is n-build's file, so the assertion rides n-build's next change to it.
+    - Next (§3; item 5): n-analyzer's pin move and fixtures, in its own commit, with F5, R13 and the tile's range; then
+      G-ANL-n's canonical run on the pinned map, its artifact's sha256 to hole 13.
+    - **Departures:** this entry's are inert (§6; item 6).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-20 — **n — G-CAL-n's run of record on n's box, from ADDENDUM-n3's commit `0744136`: PASS, every batch
   generated. Both hurdles held at +ρ, −ρ and +ρ/2 against the unsteered baseline, every batch 48 of 48 coherent, and
@@ -361,6 +510,24 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model here. Not pushed.
     **Next:** the seat's read of every turn; LOCK-n v0.1's holes from this record; the R12, F5 and R13 runner delta.
+  - **Close (PI date 2026-11-20, first sitting), the coordinating session's, item 6: the seat's read of this run and
+    of every turn.** The seat's raw,
+    [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+    (sha256 `001e8c12…bd11`), committed by path at `d639bdd` on the PI's "Route as given": "G-CAL-n PASSED and
+    stands" (§0), the seat's own arithmetic agreeing with the record (§2.1, §2.3).
+    - Item 2: "the stage stands; the dose map pinned, d_eq 0.2869170055735837, d_20 0.5738340111471674, no point
+      merged, the cap not binding; the gate PASSED (48 of 48) so N2 decides at f = 0.20 (A-n3 §3.4); the paired t and
+      arrival_all beside as §2.2; the four observations of §2.4 banked, none a figure or a status; the launch review's
+      F7 stays not taken [as read]".
+    - GC1, the seat's read of every turn (§2.4): "The 240 decodes, the smoke's 4 beside, the laptop's decode equal to
+      the box's in 240 of 240". Its four observations, descriptive and post hoc, none entering a figure or a status,
+      are banked for a pre-registration only: (a) +ρ homogenizes; (b) −ρ breaks the frame, in 11 of 48 turns; (c) the
+      reward direction at f = 0.20 slips, three non-words in 48 turns; (d) every turn runs to the cap, 240 of 240. For
+      the lock: "The lock pins the line as printed" (§2.3), and "the lock records cap 48 of 48 per batch beside the
+      coherence counts" (§2.4 (d)).
+    - "Code's readings of `bc50244` and `db00d6d` accepted" (§2.5).
+    - **Departures:** this entry's are inert (§6), "the three marker-in-argv grep processes included" (item 6).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-19 — **ADDENDUM-n3 v0.1 — COMMITTED: PROPOSAL-n v0.2's addendum, "the capture convention of record, the
   reward axis's 5(d) gate at f = 0.20, and the retention interval under 5(f)(iii)", committed by path as the seat
@@ -474,6 +641,18 @@ applied to CLAUDE.md.
   - **Committed by path:** the addendum; the routing raw; the referent-check raw; the values-check raw; this entry;
     and three close lines, on the entries of `616e940`, `bc50244` and `ab72d0f`. The commit-time count of the
     home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+  - **Close (PI date 2026-11-20, first sitting), the coordinating session's, item 6: the seat's read of this commit
+    and its referent check.** The seat's raw,
+    [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+    (sha256 `001e8c12…bd11`), committed by path at `d639bdd` on the PI's "Route as given", §4: "The referent check's
+    gradings stand as Code graded them: 78 and 111 resolved by the routing; 122 not substantive". Item 6:
+    "ADDENDUM-n3's referent-check gradings accepted, with the dated note on §8.4's directions.py anchor (§4)".
+    - **The dated note, 2026-11-20,** in §4's words: "the anchor "`directions.py`:10–11" in A-n3 §8.4 is the file at
+      `f4b3e73`, reworded at `616e940`; the sentence it anchors is BK §3.1's and stands." The addendum's bytes are
+      unchanged (`7f4a7a75…9313`).
+    - "The six minor items and seven observations are read and ask for no change to the addendum" (§4).
+    - **Departures:** this entry's are inert (§6; item 6).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-19 — **n — G-VEC's re-run on n's box, from the gvec delta's commit `616e940`: PASS at index 32. R over
   positions 1..n, the convention of record, is within 2% of 25.49 at both candidate indices, and the site rule took the
@@ -608,6 +787,19 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model here. Not pushed.
     **Next:** LOCK-n v0.1's holes 1–7; G-CAL-n's launch files, to the box after ADDENDUM-n3's commit.
+  - **Close (PI date 2026-11-20, first sitting), the coordinating session's, item 6: the seat's read of this run.**
+    The seat's raw,
+    [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+    (sha256 `001e8c12…bd11`), committed by path at `d639bdd` on the PI's "Route as given": "G-VEC PASSED by the rule
+    as texted and the seat's read confirms the record" (§0).
+    - Item 1: "the record stands as the stage of record; site 32, R 25.54500811131038 (31: 25.845165564150104 beside),
+      R_ℓ 21.98789170395024, Route B, the four rows' sha16s, the six files' sha256s, the band 33–63, the first run's R
+      under "every position" beside — holes 1–7 as §1.4 [as read]".
+    - The diagnostic block, read (§1.3): "Nothing here decides anything; it says the first run's 1.73× was the sink and
+      nothing else." The cosines (§1.2): "the lock records the six cosines as built".
+    - "Code's readings of `616e940` and `e3b48ed` accepted" (§1.4).
+    - **Departures:** this entry's are inert (§6; item 6).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 - 2026-11-19 — **n — G-CAL-n's delta on the seat's second sitting: the arrival over the emitted ids' positions 1..n,
   the early PAUSE, and the reward axis's 5(d) gate's coherence batch, `reward_f020`, with the wording owed at the
   driver's next change; committed by path (the answers of 2026-11-19, second sitting, §1.4 (i), §2.5 and §3, committed
