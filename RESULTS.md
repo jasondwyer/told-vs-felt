@@ -21,6 +21,210 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **The coordinating session's notes on the seat's second sitting of 2026-11-20: the lock's read,
+  committed in step 10's commit `deabf3f`; the PI's routing; four close lines (item 5); the first sitting's push and the
+  box's four folders on record; and the push to come (item 6).**
+  - **The read:**
+    [`2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`](results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md)
+    (sha256 `794ee42f…f084`, 15,217 bytes), the seat's read of `LOCK-n.md` and of the entries of `411b15c`, `1641948`,
+    `b6ea27f` and `bc85386`. The PI placed it untracked, and the coordinating session re-hashed it equal to the paste
+    block first. n-build's step-10 commit `deabf3f` carries it by path ("commit by path on my routing, in the lock's
+    commit"). The PI's word: "Route as given". The paste block, as the PI gave it, is committed here as
+    [`2026-11-20_second-sitting_pi-routing.md`](results/raw/2026-11-20_second-sitting_pi-routing.md). Below, "item N"
+    is the paste block's item and "§N" a section of the raw; the raw's own routing block, §8, words the items
+    differently in places.
+  - **Items 1–4 were relayed verbatim:** items 1–3 to n-build, with item 5 and the two of its parts that touch the
+    lock's commit; items 2 and 3 to the pod session; item 4 to n-analyzer, with item 5.
+    - **§4's G-VER sentence.** Item 5 has "the BUILD's flags as §4 rules them". §4's bullet on a G-VER-STOP ends "One
+      sentence in §10's G-VER row.", and the raw's §8, item 5, reads "the G-VER sentence into §10". The coordinating
+      session told n-build that this sentence is a change to the lock beside §2's seven edits, in the raw's words, and
+      ruled nothing. n-build read §4 the same way; the sentence is in §10's G-VER row at `deabf3f`.
+    - **The routing raw (item 1).** §2's edit 3: "The coordinating session's routing of the draft is committed as a raw
+      in the lock's commit", "byte for byte as saved". Its source is n-build's scratch copy
+      `S/step4b/lock/routing_lock.txt` (`S` being n-build's scratch folder, as the raw writes it; `9fc5cd6d…b7d0`, 16
+      lines). Its lines 1 and 16 are the harness's message wrapper, and line 1 names the sending session by its id. On
+      n-build's question, the coordinating session answered that its routing is lines 2–15, byte for byte, which hold
+      no session id (checked by tool), and that those lines are committed, the drop declared:
+      `results/raw/2026-11-20_n-lock-v0_1_routing.txt` at `deabf3f`. The coordinating session's copy of this sitting's
+      paste block is committed here, as the first sitting's was at `bc85386`.
+    - **n-build's defaults**, to which the coordinating session had no objection: square brackets marking §13's
+      insertion inside a quotation; three sentences left as the lock has them and declared in `deabf3f`'s entry (in
+      §5, §21 and §24), on the ground that neither §2 nor §4 lists them (the coordinating session noted that "the rest
+      as the lock has them", §0 and item 5, is said of the BUILD's flags); a Draft 10 note; and the re-check by tool,
+      shell only.
+    - **Items 2 and 3, G-TIME-n and the box:** "2. G-TIME-n's launch files under v0.1 after the commit; the box's run;
+      the projections to me for the cap at v1.0; then G-VER; v1.0 by D_n 2026-12-15 [go, after step 10]." and "3. The
+      box: up through G-TIME-n and the campaign; the backend-ext leftovers cleaned now [as ruled this morning]." Item 3
+      restates this morning's ruling: the box stays up and idle, and nothing runs on it before G-TIME-n's launch files
+      are relayed. For item 2, n-build found G-TIME-n's stage command not yet built (the driver's docstring: "Stages
+      G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.", `scripts/n_sessions.py`:182). After
+      step 10's commit it surveyed the spec read-only and sent Code's PINs GT1–GT17, seven starred for the seat before
+      any run; the coordinating session put their routing to the PI. No code is written before the PI routes them.
+  - **The riders' window (item 1 (a)):** granted at HEAD `411b15c` after the coordinating session read n-build's
+    request note and the window's three scripts and two data files whole, checked its seven files at their sha256s,
+    and checked the laptop (only Q-F3's campaign, PID 8051, running). Five calls, model-free. At the close, checked by
+    tool:
+    - the six run files at the reported sha256s, both exits 0 and both stderr files empty;
+    - rider 1's 13 lines byte for byte §18's claim (`06b55761…1d39` and the twelve files): Q1 answered, no STOP;
+    - rider 2: 15 of 160 sessions (6 floor, 9 neutral), each id the cell rule's, the runs ascending, and the ids'
+      digest `3c70f5ff…a81d` re-derived by the coordinating session's shell;
+    - the tree after: HEAD unchanged, nothing staged, `LOCK-n.md` at the seat's bytes, and nothing under
+      `valence_core/`, `scripts/` or `data/n/bk/` newer than the window's stamp (a pruned `find`).
+
+    The coordinating session named two forms for n-build's entry: the after-check's unpruned `find` over three folders
+    that hold no ckpt or reports folder (by a pruned `find` of its own), and the pre-check's narrow `git diff` and
+    `git status`.
+  - **Step 10's commit, `deabf3f`:** the commit window was granted after the coordinating session read the request
+    note, the entry, the message, the pre-check and the kit's new `kit_place_v2.sh` whole and the manifest's seven
+    lines (one printed cut short, at 220 characters), and checked by tool: each source at its sha256; the two
+    outputs, the routing raw and the scripts and outputs the two riders embed against their sources (`cmp`); draft 10
+    against draft 9 (15 hunks: §2's seven edits, §4's sentence, the Draft 10 note, the Conventions and the Sources);
+    and the texts free of the home prefix, the user name, temp paths and session ids. After the commit, verified by
+    tool:
+    - the parent `411b15c`; the eight paths (A `LOCK-n.md`, M `RESULTS.md`, A the six raws), the seven besides
+      RESULTS.md each at the manifest's sha256;
+    - the message equal to its source, its one non-ASCII character the em dash of the PI's name for the commit;
+    - RESULTS.md's one hunk, +102 −0, equal to the entry;
+    - `LOCK-n.md` at `88d9fe7b…e9d5`, 1058 lines, clean at HEAD; the package digest by shell at HEAD `06b55761…1d39`;
+      and the home-folder count over the diff 0.
+
+    Screened in the coordinating session's own window, `411b15c..deabf3f`: 1 commit, 8 file-diffs, 1,649 added lines
+    (messages included), every class CLEAR; gitleaks found no leaks; gl5 0.
+  - **The commits of the first sitting's items 3 and 5** (`b6ea27f`, v7; `1641948`, G-ANL-n's run; `411b15c`, the
+    lock's placement) were each verified by tool by the coordinating session at its commit and screened in its own
+    window: `b6ea27f` 1 commit, 5 file-diffs, 2,657 added lines; `1641948` 1, 5 and 1,122; `411b15c` 1, 8 and 1,254;
+    every class CLEAR, gitleaks no findings, gl5 0.
+  - **Item 5, the coordinating session's:**
+    - the raw committed by path in the lock's commit (`deabf3f`);
+    - the close lines on `411b15c`, `1641948`, `b6ea27f` and `bc85386`, citing the raw: committed here, one on each
+      entry;
+    - "the departures of §7 and both parallel starts inert": §7, "Inert, every one; the standing lines stand"; and the
+      parallel starts of §5, v7's ("inert") and the lock's draft 5 beside it ("likewise inert");
+    - "the BUILD's flags as §4 rules them […]": in the lock at `deabf3f`, §4's sentence is in §10's G-VER row and the
+      raw is named in §23; the sentences in §5 and §21 that say the seat has not ruled stay as the lock had them,
+      declared in `deabf3f`'s entry.
+  - **The first sitting's push (its item 7):** `bc50244..bc85386` (6 commits), pushed 2026-11-20 on the PI's
+    item 7 ("[push]"); the screen's classes CLEAR, nothing inside ckpt or reports; gitleaks 8.30.1 (default rules)
+    found 3, all digests by nesting and file (gl5, exit 0); no halts.
+  - **The box's four folders (`bc85386`'s box bullet):** the PI's word, after the first sitting's routing: "Keep
+    them". The four folders that hold data never copied to the laptop (the pod session's list, items 4, 8, 23 and 28)
+    stay on the box; the cleanup is complete at `cleanup_v1.sh`'s 26, and the refs stay off. Relayed to the pod
+    session.
+  - **Item 6, the push** ("[push]"): `bc85386..HEAD` "behind the amended screen, after step 10's commit", in the
+    coordinating session's own battery window after this commit. The range holds `b6ea27f`, `1641948`, `411b15c`,
+    `deabf3f` and this commit. Its C.5 line goes in the coordinating session's next entry.
+  - **Departures, for the seat to class:**
+    - the coordinating session's, since `bc85386`'s commit, from sweeps of its own shell commands, the last made after
+      the values-check (134 commands to the last sweep, of which the values-check read the first 128; the commands
+      after the last sweep are this commit's own); the coordinating session knows of no others:
+      - **guard markers in the argv of two `grep` processes:** a glob of its memory folder (`-- *.md`, in a search for
+        the word "ascii") expanded to the names of its 98 memory files, four of which carry marker words, against its
+        own memory note on globs over marker-named folders. The Q-F3 campaign's process (PID 8051) ran on, by the next
+        windows' process checks. No other marker reached an argv;
+      - the string `mf3`, not one of m's five guard markers, in the argv of six `grep` processes: patterns the
+        coordinating session wrote as adjacent quoted strings to keep it out, which the shell joins into one word;
+      - the string `python`, not a guard marker, in two `grep` patterns: the v7 self-test raw's INVOCATION line, and a
+        scan of G-ANL-n's commit steps for write commands; neither ran during a window's process check;
+      - pruned `find`s only, four: one over n-build's step-4b scratch folder with a `-newer` test, stopped by the
+        coordinating session when it ran past the tool's time limit, having printed nothing; one with `-maxdepth 3`
+        over n-build's scratch root for the kit's scripts; and two over `valence_core/`, `scripts/` and `data/n/bk/`,
+        one printing the pruned folders (none) and one with `-newer` the riders' stamp (none);
+      - one recursive `grep -rn -F` for `fid_sampled` over `valence_core/n` and one named script, without item 3's
+        form or the prune; a pruned `find` just after it found no ckpt or reports folder under `valence_core/`;
+      - commit-message reads, in forms item 1 does not list: `git cat-file commit` of `b6ea27f`, `1641948`, `411b15c`
+        and `deabf3f`, each through `sed '1,/^$/d'` and compared by `cmp`, the first three also counted for non-ASCII
+        bytes (`deabf3f`'s count was taken on its message file before the commit); and one loop over the last 300
+        commits' messages, counting the non-ASCII bytes of each (19 with any);
+      - git commands in checks without item 3's pathspec:
+        - item 1's name forms: `git show --name-status` of `b6ea27f`, `1641948` and `411b15c` (`deabf3f`'s took it),
+          and `git diff --cached --name-only` in seven commands (four later ones took it);
+        - `git ls-files --` naming one file, four times (G-ANL-n's artifact before its commit, `LOCK-n.md`,
+          and `added.txt` twice); one `git status --porcelain` naming three paths (the seat's raw, `LOCK-n.md` and
+          `RESULTS.md`); and `git diff --name-only` and `--quiet` naming files or `valence_core/n`;
+        - `git diff -U0` of each verified commit against its parent on `RESULTS.md`, three in each of four
+          verifications, and `git show --format= -U0` of `bc85386` on `RESULTS.md`, twice;
+      - `jq` reads of its own session's transcript, in nine commands: sweeps of its shell and other tool calls for
+        this list, its last timestamp, its tool results marked as errors, two tool results by id, and the extraction
+        of this check's brief from its own Agent call (once with a time bound that missed the call, writing an empty
+        file, then without); a `wc -c`, a `wc -l` and a `cat -v` of its own stopped task's output file (`[killed]`,
+        nothing else); and, in one command, two `jq` over the values-checker's task output, for its hand-back's message
+        (the report, into scratch) and a count of its hand-backs (one);
+      - one `jq` of selected fields of `data/n/gates/G-ANL-n.json`, one `wc -c` of it and one `cmp -s` against
+        n-analyzer's copy, at the close of G-ANL-n's run and in its commit window, before its commit (outside ckpt and
+        reports);
+      - byte and line counts: `wc -c` of files in 13 commands (among them G-ANL-n's artifact and its stderr file
+        before that commit, the seat's raw before its commit, and the package digest's form over `valence_core/n`),
+        and `wc -l` in 49 commands (files and command output); and `wc -c` of piped bytes in eight more (non-ASCII
+        counts);
+      - process reads in the windows' checks: `pgrep -il python` in 14 commands. None read the campaign's
+        files;
+      - stated plainly:
+        - name-only `ls` of other sessions' scratch folders (n-analyzer's v7 mutant outputs, its v7 folder's `tmp`
+          and commit folder, and its G-ANL-n folder with its `tmp`; n-build's lock folder, its subfolders, its scratch
+          root, a glob of its kit folders, the riders' folder with its `tmp` and test folder, and the step-10 commit
+          folder), of `data/n/gates`, of the app's side-session notes folder (filtered by name) and of its memory
+          folder; and one `ls -l` of its own transcript, for its size;
+        - one zsh error, stopping only its own part: a glob with no match (`"$NB"/kit*`) in a name-only `ls -d`, so
+          that `ls` did not run;
+        - two `grep` processes over a glob of n-analyzer's mutant outputs, and two over a glob of its memory folder
+          (above), neither glob listed first;
+        - `diff`s of n-analyzer's two scratch copies of the analyzer (paths masked), of n-build's draft 9 and draft 10,
+          and of `kit_place.sh` and `kit_place_v2.sh`;
+        - reads by name of n-build's and n-analyzer's notes, scripts and drafts, of n-build's saved routing copy (its
+          wrapper's id masked in the output), of committed code, raws and RESULTS.md, and of its own memory files and
+          scratch outputs, by `sed`, `grep`, `awk`, `cat`, `cmp`, `od`, `fold`, `head`, `tail` (once `tail -c 1500`
+          of a memory file), `git show <rev>:<path>`, `git cat-file blob` and the Read tool; zsh runs of its own build
+          script in scratch; and a `cp` of n-build's PINs note into its scratch, with `cmp` and a `grep -c` for the
+          home prefix and the pod's addresses;
+        - one loop run without its `cd`, its reads failing on missing names, rerun with it, one name still missing in
+          that folder;
+        - one empty file, `added.txt`, written at the repository root by a command whose `cd` into scratch was skipped
+          after its first step failed; untracked and never staged, it was removed by `rm -f` after a check that it was
+          empty. The same command's other reads failed on missing names, and its `cmp` of two empty inputs printed a
+          false "added = …" line, disregarded;
+        - one hash abbreviation written by eye in a message to n-build (`f91b8b5b…e1ee8` for `…eee8`), caught by
+          n-build and corrected in the coordinating session's notes; it is in no committed text but this account of
+          it;
+        - writes to its memory folder, outside the repository (`cat >>` and `sed -i ''`), one of them an empty file
+          made by an empty heredoc, removed by `rm -f` after a check that it was empty;
+        - `TaskStop` of its own background `find`;
+        - beside the shell: session listings and event reads, one notifications read, one read of the pod's state
+          through the pod API, messages to the three sessions, and one file sent to the PI (a copy of n-build's PINs
+          note); none is a departure under the rules quoted, listed for completeness.
+    - the values-checker's, as its report states them: `od -c` once and `fold -w 200` twice, outside its brief's tool
+      list; `git show <rev>:<path>` reads of committed files, and `git cat-file commit` of `deabf3f` through
+      `sed '1,/^$/d'`, four times; `git log --format='%h'`, `git rev-parse` and `git hash-object` without item 3's
+      pathspec; two `git grep -c -F` over HEAD's tree with item 3's pathspec, one printing a match count for one file
+      under `data/` outside ckpt and reports (`data/echo/stageC_reads.json`, a coincidental hex fragment); `wc -c`,
+      `wc -l` and `tail -c` counts; `diff` and `cmp` with `git show` on process substitution, and a `diff` of
+      n-build's draft 9 and draft 10; about 35 `jq` calls over the coordinating session's transcript, one printing
+      part of the compaction summary with three session ids and the home path, in its own tool output only; reads
+      beyond its named sources; name-only listings of the memory folder (its marker-named names filtered and masked
+      before printing) and of n-analyzer's mutant outputs (as counts); two outputs discarded to `/dev/null` by
+      mistake; and the quotations used as `grep` patterns after a bracketed check found no marker word in them. By its
+      account no marker word, nor the campaign folder's plain name, reached its argv.
+  - **Values-check:** one blind pass by a subagent over this entry's draft, the four close lines, the routing raw and
+    their placement in a draft of the new `RESULTS.md`, under a brief with the list of record v2's items 1–5 verbatim,
+    no interpreter but `shasum`, no write and no network: 80 items, 61 CONFIRMED, 10 IMPRECISE, 7 FAIL and 2 NOT
+    CHECKABLE, with 9 observations.
+    - The seven FAILs: five classes or counts missing from the coordinating session's own departures (items 37, 38,
+      45, 54 and 55: git forms without item 3's pathspec and their counts, a zsh error, byte and line counts, a
+      recursive grep); one false claim in that list (item 40, "No guard marker reached an argv": two `grep` processes
+      over a glob of its memory folder carried marker-named file names); and the routing raw's head saying the entry
+      and close lines quote items 1–6, when items 2 and 3 were paraphrased (item 78). All seven are fixed: the classes
+      and counts added, the claim replaced by the declaration above, and items 2 and 3 quoted.
+    - The ten IMPRECISE items (10, 21, 30, 36, 42, 43, 46, 48, 49 and 61) are applied, each in the checker's words or
+      near them.
+    - Observations 1–9 are applied or met: `S` defined (1); "[push]" once (2); the slip's account (3); the false
+      "added" line (4); the brief cited from its second extraction (5, in the raw); the other three commits'
+      verifications and screens (6); "added lines (messages included)" (7); the counts filled from the last sweep (8);
+      the calls beside the shell listed (9).
+    - After the check: the counts from the last sweep, this bullet and the checker's departures. The edits were
+      checked by tool; no second full pass was made.
+    - Raw: [`2026-11-20_second-sitting-notes_valuescheck.md`](results/raw/2026-11-20_second-sitting-notes_valuescheck.md).
+  - **Committed by path:** the routing raw, the values-check raw, this entry and the four close lines. The commit-time
+    count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+
 - 2026-11-20 — **n — LOCK-n v0.1 — COMMITTED (PROPOSAL-n v0.2 §8 step 10), on the seat's read of draft 9 and the
   PI's routing of 2026-11-20, second sitting, item N.1 ("Route as given"): `LOCK-n.md`, sha256 `88d9fe7b…e9d5`, 1058
   lines, Code's draft 10, which is draft 9 with the seat's seven text edits, its §4's sentence in §10's G-VER row, and
@@ -281,6 +485,25 @@ applied to CLAUDE.md.
     `LOCK-n.md` is placed at the root untracked, as its bytes above. The commit-time count of the home-folder prefix
     over the staged diff is 0. Nothing ran on a model. Not pushed. Next: the seat's read of `LOCK-n.md`, with Q1; then
     n v0.2 §8 step 10.
+  - **Close (PI date 2026-11-20, second sitting), the coordinating session's, item 5: the seat's read of the placed
+    draft.** The seat's raw,
+    [`2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`](results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md)
+    (sha256 `794ee42f…f084`), committed by path in the lock's commit `deabf3f` on the PI's "Route as given": "The lock
+    stands." (§0)
+    - Item 1: "the lock stands. Before step 10: (a) one battery window, model-free, with two riders — the package's
+      own hashes at the lock's HEAD (Q1: a different digest or closure is a STOP for the seat), and the realized
+      fidelity sample under n-fid|{s}, its count and the sha256 of its ids, outputs committed byte for byte as raws
+      (§3); (b) the seven edits of §2 […]; (c) the changed claims re-checked by tool."
+    - Q1 (§3.1): "Code's reading of the diff is sound and is not the instrument". The package's own `hashes`, run
+      once in the riders' window, printed `06b55761…1d39` and the twelve files at §18's sha256s, byte for byte §18's
+      claim: no STOP. The realized fidelity sample is 15 of 160 sessions, its ids' digest `3c70f5ff…a81d` (§3.2).
+      Both outputs are committed at `deabf3f`, and the lock there cites them (§5, §18).
+    - The BUILD's flags (§4; item 5, "as §4 rules them (a G-VER-STOP of any cause a STOP for the seat before any
+      read; the addenda bound through the lock, no schema field; G-READ-n's two seeds pinned; the rest as the lock
+      has them)"): §4's G-VER bullet ends "One sentence in §10's G-VER row." The sentence is in that row at `deabf3f`.
+    - **Departures:** this entry's are inert (§7, "`411b15c`: Code's sweeps and their `jq`; the two window scripts in
+      scratch; the forms its entry states"; item 5).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-20 — **n — G-ANL-n's canonical run on the pinned dose map (n v0.2 §3 "G-ANL-n", §8 step 9): PASS.
   `scripts/n_analyze.py ganl --dose-map data/n/gcal/dose_map.json` ran once, on v7 at `b6ea27f`, in a battery window
@@ -458,6 +681,17 @@ applied to CLAUDE.md.
     and 7 applied (the admit's proof run again with files present, 4; the raw's header names the venv's folder, 5),
     6 met (the placement adds the blank line after the entry) and 8 noted (a claim about another session's act rests
     on its records). The edits checked by tool, 38 of 38.
+  - **Close (PI date 2026-11-20, second sitting), the coordinating session's, item 5: the seat's read of this run.**
+    The seat's raw,
+    [`2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`](results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md)
+    (sha256 `794ee42f…f084`), committed by path in the lock's commit `deabf3f` on the PI's "Route as given", §5:
+    "G-ANL-n's canonical run accepted: PASS, battery 242/242, every coverage id reached, the pinned map's reach equal
+    to the hand derivation under both gate branches; the artifact `e775cbb4…6088` is hole 13's. Code's binding of a
+    pause's read to PIN-n-37 (the review's F1) accepted."
+    - Item 4: "G-ANL-n's PASS accepted, e775cbb4…6088 to hole 13".
+    - **Departures:** this entry's are inert (§7, "`1641948`: the run's `cd` through a glob into the venv's bin so
+      that no marker reached an argument; the `pgrep` lines; the checker's forms"; item 5).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-20 — **n package — `scripts/n_analyze.py` v7: the tile (R12), F5 and R13 followed on n-build's delta
   (`ef105f1`), the seat's rulings on v6's readings carried in, and ADDENDUM-n3's gate in VERDICTS — N2's decision point
@@ -737,6 +971,21 @@ applied to CLAUDE.md.
     commit-time count over the staged diff (the seat's answers of 2026-11-18, third sitting, §5.2) is 0. Not pushed.
     **Next:** G-ANL-n's canonical run on the pinned map, in its own window and commit, its artifact's sha256 to
     LOCK-n v0.1's hole 13 (the answers of 2026-11-20, §3 and §7 item 5).
+  - **Close (PI date 2026-11-20, second sitting), the coordinating session's, item 5: the seat's read of v7.** The
+    seat's raw,
+    [`2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`](results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md)
+    (sha256 `794ee42f…f084`), committed by path in the lock's commit `deabf3f` on the PI's "Route as given", §5:
+    "R-A–R-E accepted as Code reads them" and "PIN-n-40, PIN-n-41, PIN-n-42 accepted; the gate line's form, once a
+    relay, is now committed text (the lock's §21; A-n3 §3.3; this raw)."
+    - Item 4: "R-A–R-E and PIN-n-40–42 accepted; […] nothing changes in v7; v1.0 carries the gate line verbatim
+      and its own lock: line at step 13 [as ruled]".
+    - The parallel start (§5): "v7 drafted in scratch in parallel with the runner delta, one development run of
+      draft 1 before the delta's commit (not of record), nothing committed before it, the
+      review–mutants–values-check–battery order as the coordinating session accepted — inert; the declaration's
+      one failed part is recorded as Code declared it." Item 5: "both parallel starts inert".
+    - **Departures:** this entry's are inert (§7, "`b6ea27f`: Code's parallel start (§5) and its `jq` reads; the
+      reviewer's and the values-checker's forms as its entry states them"; item 5).
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-20 — **The coordinating session's notes on the seat's first sitting of 2026-11-20: the reads committed at
   `d639bdd`, the PI's routing, the box's cleanup in part, four close lines (item 6), and the push to come (item 7).**
@@ -867,6 +1116,14 @@ applied to CLAUDE.md.
     - Raw: [`2026-11-20_first-sitting-notes_valuescheck.md`](results/raw/2026-11-20_first-sitting-notes_valuescheck.md).
   - **Committed by path:** the routing raw, the values-check raw, this entry, and the four close lines. The
     commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed.
+  - **Close (PI date 2026-11-20, second sitting), the coordinating session's, item 5: the seat's read of this
+    entry.** The seat's raw,
+    [`2026-11-20_n-lock-v0_1-read_design-to-code_answers.md`](results/raw/2026-11-20_n-lock-v0_1-read_design-to-code_answers.md)
+    (sha256 `794ee42f…f084`), committed by path in the lock's commit `deabf3f` on the PI's "Route as given", §7:
+    "`bc85386`: the coordinating session's forms as stated." Inert (item 5, "the departures of §7 […] inert").
+    - The push this entry announced (its item 7) and the PI's word on the box's four held folders: in the coordinating
+      session's entry of the second sitting, at the Log's head.
+    - **Values-check:** with the coordinating session's entry at the Log's head, which gives the check and its raw.
 
 - 2026-11-20 — **n — the R12, F5 and R13 runner delta, after G-CAL-n's run: the fidelity binomial's window is the
   tile, F5's floor on p0 is asserted in the schema, and R13's two runner texts are corrected; committed by path (the
