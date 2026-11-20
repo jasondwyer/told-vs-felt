@@ -21,6 +21,285 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-20 — **n package — `scripts/n_analyze.py` v7: the tile (R12), F5 and R13 followed on n-build's delta
+  (`ef105f1`), the seat's rulings on v6's readings carried in, and ADDENDUM-n3's gate in VERDICTS — N2's decision point
+  under it and §7.3's report line (the answers of 2026-11-19, first sitting, §3 and §4; second sitting, §2.5;
+  ADDENDUM-n3 v0.1 §3.2–§3.5 and §8.3 (4); the answers of 2026-11-20, first sitting, §3; the PI's routings: of
+  2026-11-19, the first sitting's item A.6, the second's A.5 and the third's A.6; of 2026-11-20, the first sitting's
+  A.5). Battery 242/242; reviewed blind and mutation-tested (47 of 49 mutants killed). Five readings, R-A to R-E, are
+  Code's, flagged for the seat. Model-free: nothing ran on a model or on the box, and no stage ran.**
+  - **The file:** `scripts/n_analyze.py`, sha256
+    `735da934272048a795203e8fdef9bfa5a4bde2ba38cdf9ba79d81f313788a7a8`
+    (`418c2136…072d` at `1185e15`), LOCK-n v0.1's hole 12 (the answers of 2026-11-20, §5.1).
+    - **The schema pin** moved from `003ae7d`'s `valence_core/n/schema.py` (`5cbf60db…574c`) to `ef105f1`'s
+      (`1cab28df…edff`), n-build's R12, F5 and R13 delta, which the coordinating session verified before any of this
+      commit's dependent parts were written (its conditions 1 and 2).
+    - **ADDENDUM-n3 v0.1** (`7f4a7a75…9313`, committed at `0744136`) joins the bound files, by sha256 as ADDENDUM-n1
+      and ADDENDUM-n2 are: in VERDICTS, the NOT-RUN output and G-ANL-n's artifact, and checked by the battery
+      (STR-ADDENDUM3-SHA). The commands are unchanged.
+    - The seat's answers and the PI's routings are cited by path:
+      - 2026-11-19's first sitting's answers,
+        [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+        (sha256 `e6ff066d…6d5a`, committed at `a33252a`), and its routing,
+        [`2026-11-19_first-sitting_pi-routing.md`](results/raw/2026-11-19_first-sitting_pi-routing.md)
+        (`dfcaff17…cef4`, at `8830589`);
+      - its second sitting's answers,
+        [`2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md`](results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md)
+        (`887b7646…dc87`, at `f4b3e73`), and its routing,
+        [`2026-11-19_second-sitting_pi-routing.md`](results/raw/2026-11-19_second-sitting_pi-routing.md)
+        (`76b1e963…0417`, at `ab72d0f`);
+      - its third sitting's routing,
+        [`2026-11-19_third-sitting_pi-routing.md`](results/raw/2026-11-19_third-sitting_pi-routing.md)
+        (`d593e1f8…5024`, at `0744136`);
+      - 2026-11-20's first sitting's answers,
+        [`2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md`](results/raw/2026-11-20_n-gvec-gcal-reads_design-to-code_answers.md)
+        (`001e8c12…bd11`, at `d639bdd`), and its routing,
+        [`2026-11-20_first-sitting_pi-routing.md`](results/raw/2026-11-20_first-sitting_pi-routing.md)
+        (`db8d8db4…ddcc`, at `bc85386`).
+    - The battery's run of record, from this path on these bytes: 242/242 checks, every one of the 246
+      coverage ids reached, exit 0. The raw:
+      [`2026-11-20_n-analyze_v7_selftest.txt`](results/raw/2026-11-20_n-analyze_v7_selftest.txt).
+  - **The PI's routings** ("Route as given", each), their n-analyzer items, each under "A. n-analyzer", verbatim:
+    - 2026-11-19's first sitting's, item 6 (A.6):
+      > 6. PIN-n-37 (a)–(c), PIN-n-38, PIN-n-39 as ruled; F5's fixtures in the pin-move commit; the tile's range when the runner carries it [as ruled].
+    - its second sitting's, item 5 (A.5):
+      > 5. N2's decision point under the gate (§2.5: at f = 0.20 iff the lock's coherence component PASSED and the cap does not bind, else f = 0.10 with 0.20 beside), in the delta after G-CAL-n's run with F5, R13, the tile's range and the pin move; the battery reaches both branches [as ruled].
+    - its third sitting's, item 6 (A.6), with decision (n-5), §3's gate and §3.4's decision point, "[adopt]" (its item
+      1):
+      > 6. A-n3 §3.4's decision point and §7.3's report line in the delta after G-CAL-n's run, with F5, R13, the tile's range and the pin move; the battery reaches both branches [as ruled].
+    - 2026-11-20's first sitting's, item 5 (A.5; its answers' own routing block, §7 item 5, words it a little
+      differently):
+      > 5. The pin move and fixtures with F5, R13 and the tile's range in its own commit; O6's p0_count < p0_n assertion at the schema's next change, not its own delta; then G-ANL-n's canonical run on the pinned map, its artifact's sha256 to hole 13 [as ruled].
+  - **The first sitting's rulings, as carried** (2026-11-19's; the answers of 2026-11-20, §3, accept the runner
+    delta's readings and put "n-analyzer's pin move and fixtures next, in its own commit, with F5, R13 and the tile's
+    range"; O6 rides the schema's next change, n-build's):
+    - **R12, the tile** (§3; §4 (b): "the range is the tile, so a read lies in exactly one range, and the reads after a
+      cleared fire belong to the next tile").
+      - `report_problems` binds a standing pause's batch to the runner's tile at `ef105f1`, not to the trials since
+        the last cleared batch. A fire at read L has the tile of the cadence's reads ending at L. A fire at the run's
+        end has the stage's tail: the reads after the last whole tile through the stage's last read.
+      - The batch's n and k are the tile's records'. A ruling clears nothing, so no adjudicated pause moves a tile,
+        and a ruled read inside a tile stays in it as a trial, and as an exceedance where its rel is above TAU (R13).
+      - `check_report`'s form of a tile already fixes a fire at a read's bounds, and a tail's start once the tail's
+        end is bound; those checks here cannot fire alone, and are kept so the binding is stated whole. The tail's
+        end, which `check_report` leaves open (the values-check's observation 4 on n-build's delta), and the tile's
+        n and k are bound here alone.
+      - The review's F1, applied (Code's binding, for the seat, in PIN-n-37): a pause's read, where it is on disk,
+        sits at the pause's launch index, and a standing pause's scope is the runner's SCOPE at `ef105f1`
+        (`runner_scope`: its read's arm, its tile's trials' arms and, for a shadow, every arm with a steered read of
+        its session), where v6 asked only that it hold its batch's trials' arms.
+      - `paused_points` is unchanged in code: a binomial pause stands on every read launched in its batch's range,
+        now the tile.
+    - **§4 (b)'s interim, read and not built.** The seat's sentence: "Until the runner carries the tile, the range is
+      the runner's batch counted from the clear (the seat means the runner's batch)." Code put the plan to skip it to
+      n-build and the coordinating session (2026-11-19); the coordinating session raised no objection. It would
+      govern no record:
+      - VERDICTS reads only a campaign's report, and no campaign has run;
+      - the stage reports written with the binomial monitor before the tile, the BACKEND extension's, are no
+        campaign's: backend-ext's, whose end-of-run fire (`p01`, 10 of 24 above TAU) the seat cleared as the
+        measurement, and backend-ext-2's, whose 24 reads fired nothing (the extension's smoke of 2026-11-18, which
+        also fired at its end, was never of record);
+      - the runner carries the tile from `ef105f1`, and the reader loads only the schema it pins, which moves to
+        `ef105f1` in this commit, so no reader ever pairs the interim with a runner that writes the cumulative
+        batch;
+      - G-ANL-n's canonical run comes after this commit.
+
+      If the seat wants it built after all, it says so at its next sitting.
+    - **PIN-n-37 (a) and (c)** accepted, **PIN-n-38** accepted as read, **PIN-n-39** accepted (the both-ways binding
+      for the ceiling, the one-way binding kept for the non-finite and identity kinds), and N2's pause causes naming
+      an arm under (a) accepted: the registers say so, with the module docstring and the PINS header.
+    - **F5** (§3), the fixtures: the battery's campaign identities are the pinned schema's example after the lock, p0
+      1 of 26 (F5's floor 1 of 3), read from the identity and never written in the analyzer; the fires the
+      battery builds take their campaign identity's p0 and alpha, save VD-REFUSE's read-less `p2`, which takes the
+      schema example's rule, the same values. A new check, VD-F5-FIXTURES, states it for VD-PAUSE-POINTS' A, B and C,
+      and that the schema refuses v6's fixtures' p0, 0 of 2,400, at the campaign.
+    - **R13** (§3): the analyzer's texts now say a ruling clears nothing, a ceiling pause's read staying in its tile as
+      a trial, and as an exceedance where its rel is above TAU. VD-BATCH-CLEARS shows it, a ceiling read ruled inside
+      the tail that fires later, counted there (2 of 2), and a report leaving it out refused.
+  - **ADDENDUM-n3's gate, as carried** (the second sitting's §2.5; ADDENDUM-n3 §3.3–§3.5, decision (n-5) adopted):
+    - **The decision point** (§3.4): N2 is decided at f = 0.20 iff the lock's gate line records PASS and the cap does
+      not bind (2·d_eq ≤ 1); otherwise at f = 0.10 against N1-V at d_eq, with f = 0.20 beside. Every N2 outcome,
+      INDETERMINATE included, carries the deciding f, the reasons f = 0.10 decides, in §3.4's order, and the gate as
+      the lock records it.
+    - **The lock's line** (§3.3, §3.5; PIN-n-40): VERDICTS reads one whole line of §3.3's form, "reward axis 5(d) gate,
+      coherence: <k> of 48, PASS" or ending in FAIL, as n-build's lock draft carries it (agreed through the
+      coordinating session, 2026-11-19, a relay that no committed text records). It refuses no such line, two or
+      more, any other shape, k outside 0–48, and a result the bar, 36 of 48, contradicts. It reads `gcal.json`
+      nowhere (§3.5). A G-CAL-n that ends early writes no line, so VERDICTS refuses, finding none (PIN-n-40).
+    - **§7.3's report line** (§3.4; PIN-n-41): N2's sentence names the deciding point by "at f = [f]", which
+      INDETERMINATE's form now carries too, and when f = 0.10 decides, a clause of Code's form whose reasons are
+      A-n3's words verbatim, "the gate's coherence FAIL" and "the cap", checked against the addendum's bytes. The
+      clause is a slot filled at VERDICTS from N2's outcome, as [f] is, so the outcome space stays 385 tuples and
+      2,561 evaluations. The code forms' digest moves with the new forms.
+    - **The leakage half** (§3.2: "No text or build changes for this component; the lock names it as the gate's
+      leakage half."): nothing is built for it. The decision reads the coherence line and the cap alone.
+    - **The pinned map's reach** (PIN-n-42): G-ANL-n's artifact reports it under both gate branches, and the run
+      STOPs if either branch raises, breaks dose-iff-N1 or disagrees with the hand derivation. On G-CAL-n's map of
+      record (`db00d6d`) the cap does not bind and nothing merges, and the answers of 2026-11-20 state the decision
+      (§0, §2): the gate PASSED and 2·d_eq = 0.574 ≤ 1, so N2 decides at f = 0.20.
+  - **Code's readings, for the seat** (in PIN-n-40 and PIN-n-41; strikable until LOCK-n v1.0):
+    - **R-A** (the referent check's observation 3): N2's [f] is filled by §3.4's deciding point; "the gate's clause"
+      (the second sitting's §2.5) is read as §7.3's reason clause alone, and no other §5 sentence changes.
+    - **R-B** (observation 4, extended to d_eq): every point §3.2 and §3.4 place at d_20 or d_eq is that point's kept
+      point under A-n1 §5.1's merge, named by its keeper's label, with the ratio printed. §3.4's "where the norms are
+      equal exactly" then holds only where d_eq is unmerged: not under the cap on a map where d_eq merges, and not under
+      a gate FAIL on the battery's shape c (0.49 into +1/2, ratio 0.98).
+    - **R-C** (the gate FAILs and the cap binds): §3.4's "the reason (the gate's coherence FAIL, or the cap)" does not
+      say which; the clause names both, in §3.4's order, since either alone decides f = 0.10.
+    - **R-D** (§7.3's line): A-n3 gives what the report names, not a sentence; "the deciding point" is the deciding
+      f, and the reason is a clause of Code's form around A-n3's two reasons.
+    - **R-E** (§3.4 (i)'s "LOCK-n v0.1's gate line"; §3.5's "the lock's gate line"): read in the v1.0 lock VERDICTS is
+      given (PIN-n-26), which carries v0.1's line (n-build's words); v0.1 is not opened.
+  - **The parallel start, for the seat to class.** The declaration the coordinating session asked for, worded before
+    any run (A.5 and A.6 there are the second and third sittings' gate items): "v7's A.5/A.6 code drafted in scratch
+    from db00d6d in parallel with n-build's R12/F5/R13 delta, on the coordinating session's word of 2026-11-20;
+    nothing ran or committed before that delta". One part of it no longer holds: draft 1 ran once before the delta
+    was committed, in a development window the coordinating session granted (239/241, not of record). Nothing was
+    committed before the delta.
+    - Its conditions: scratch only, and Python only in its windows; the delta's parts written against `ef105f1` as
+      committed; the battery, review and values-check of record on v7's final bytes. The battery of record and this
+      values-check run on them. The blind review read draft 3, written after the delta, and its dispositions, draft
+      4's, were mutation-tested, not reviewed again, in the order the coordinating session accepted (the review with
+      mutants, then the values-check, then the battery of record): for the seat to class against condition 4.
+    - Committed text did tie v7 to n-build's delta: 2026-11-19's first sitting's item A.6 puts the tile's range "when
+      the runner carries it", and its second and third sittings' gate items put the gate "in the delta after G-CAL-n's
+      run with F5, R13, the tile's range and the pin move" (the second's words; the third's alike); `ef105f1`'s entry,
+      committed after the parallel start, has n-analyzer move its pin and fixtures "in its own commit, after this
+      one". `1185e15`'s entry ends "**Next:** G-ANL-n's canonical run, when G-CAL-n pins d_eq.", which those items
+      overtook, with §3's F5 ("before the canonical run").
+  - **The battery:** 230 checks become 242, and 233 coverage ids become 246.
+    - New checks (twelve, with thirteen coverage ids, NUM-GATE-DECISION-F riding on NUM-CAP-DECISION-F's check):
+      - N2-GATE-F10, N2-GATE-DECIDES, N2-GATE-INDET and N2-GATE-GREAD (the decision point and N2's outcome);
+      - SENT-FILLED-N2-GATE and SENT-ADDENDUM3 (§7.3's line, A-n3's words from its bytes);
+      - REACH-GATE-FAIL and RD-GATE-FAIL (both branches, the reader path on shape c under FAIL);
+      - VD-GATE and LOCK-GATE (the lock's line through VERDICTS, and its parse);
+      - STR-ADDENDUM3-SHA and VD-F5-FIXTURES.
+    - Rewritten or extended:
+      - for the gate: SENT-FILLED-N2-CAP, SENT-ADDENDUM, SENT-CODE-FORMS (the new forms and the lock line's head,
+        pinned beside them), NUM-CAP-DECISION-F, the REACH checks, NUM-REACH-CLASS, STR-GANL-ARTIFACT, CMD-NOTRUN and
+        VD-MERGED-ROUTE-A, whose Route A lock now records 30 of 48, FAIL;
+      - for the tile: RD-PAUSE-POINTS (seventeen cases, every range a tile or a tail), VD-PAUSE-POINTS (A–C, each
+        campaign ending at its standing tile), VD-CEILING (D, a ceiling read also firing on its tile),
+        VD-BATCH-CLEARS (a tail ended by the cap, a ruled ceiling read inside it) and VD-REFUSE (58 cases: the tile's
+        and the scope's refusals, the lock's gate line's, and the fire at read 500 moved to read 159, the end of a
+        tile whose reads each carry a trial);
+      - the battery's report writer counts the binomial's evaluations as the runner does (a tile each, and the tail
+        where the stage ran out of reads).
+  - **Review** (raw: [`2026-11-20_n-analyze_v7_review.md`](results/raw/2026-11-20_n-analyze_v7_review.md)):
+    - **Blind.** A reviewer read draft 3's run copy, frozen at `309a1c43…926a` (242/242). It found no MAJOR:
+      - in the production code, F1 MINOR (a standing pause's read and scope bound one way only, from v6) and F2–F4
+        NOTEs;
+      - in the battery, B1–B4 MINOR and B5–B8 NOTEs;
+      - 41 mutants, 11 of them predicted to survive.
+    - **Dispositions.** All taken, in draft 4 (`7cc0c78f…10be`), and SENT-CODE-FORMS' description in draft 5 (the
+      values-check):
+      - F1: a pause's read, on disk, at its launch index, and a standing pause's scope the runner's SCOPE
+        (`runner_scope`), each with a refusal case: Code's binding, for the seat (PIN-n-37);
+      - F2–F4 in texts, the never-firing disjunct removed (F3), and SENT-CODE-FORMS' description at the values-check;
+      - B1–B4 as new cases: two lock lines the whole line's reconstruction alone refuses, and one beside a line
+        missing the head's space, refused as two; a FAIL lock without the cap through every row; a TAU/4-only read in
+        a standing tile; a ruled ceiling read inside the tail (R13);
+      - B5–B8: the fixtures' scopes and kinds the runner's; a tail of one read (Code's own, found while it drafted
+        its mutants); N2-GATE-INDET's gate checked on both its outcomes; texts.
+    - **Mutants.** 49 ran on draft 4's run copy (`9cf85798…3a91`, 242/242): the reviewer's 41 less V33, whose line F3
+      removes, V37 re-expressed on the new scope check, and nine of Code's. **47 of 49 killed.**
+      - V28 and V38 survived, as the reviewer predicted. V28's STOP across both gate branches is reached by no map
+        the battery derives. V38, which binds adjudicated batches too, found one that was not a tile of the records,
+        VD-REFUSE's fire at read 479 (a tile with no trial), in a case refused anyway, its message among the first
+        three; the final bytes move that fire to read 159, its resumption to 160 (the values-check's R41).
+      - The other eight it predicted would survive are killed, each by a case the dispositions added.
+      - No kill rested on that fixture: it is used in one VD-REFUSE case, "pause-read", and the ten killed mutants
+        that failed VD-REFUSE name their failing cases, none of them that one; the final bytes' other changes are texts
+        no check reads to pass or fail, and each run mutant's line occurs once in them, so no mutant is run again
+        (the coordinating session accepted it).
+    - **The committed bytes** differ from the mutant base in the repository line, that fixture's read, and texts
+      (the review raw's §5).
+  - **Values-check** (raw: [`2026-11-20_n-analyze_v7_valuescheck.md`](results/raw/2026-11-20_n-analyze_v7_valuescheck.md)):
+    Two blind passes.
+    - Pass 1: 221 claims, 175 CONFIRMED, 23 IMPRECISE, 6 FAIL, 17 NOT CHECKABLE, with 8 observations. The FAILs: the
+      interim's grounds named one stage report written with the monitor before the tile, where there were two
+      (backend-ext's `p01` fired); the quoted declaration says nothing ran before the delta, where draft 1 had; Code's
+      mutants were nine, not eight, here and in the review raw; "None read anything under `data/`" left out Code's
+      reads of G-CAL-n's committed files; and the review raw's account of V38 rested on a fixture whose tile held no
+      trial (its R41), now moved.
+    - Pass 2: 182 claims, 156 CONFIRMED, 9 IMPRECISE, 0 FAIL, 17 NOT CHECKABLE, with 7 observations; every pass-1 FAIL
+      resolved.
+    - Every FAIL, IMPRECISE item and observation is applied, and the edits after pass 2 are checked by tool, 23 of
+      23. The passes changed the analyzer in one fixture (pass 1's R41) and seven text regions, all in draft 5.
+  - **Runs.** Each was in a battery window the coordinating session granted, on bytes named to it first by sha256,
+    one process at a time, at `nice -n 19` with `-I -B` (the coordinating session's form since the parallel start:
+    no bytecode written into the tree), with temp folders in Code's scratch, in the foreground. The interpreter was
+    reached by `cd` into the venv's bin by glob, in a subshell, so no argv named its path. The analyzer prints the
+    interpreter's path and its own arguments, not the interpreter's flags, so the self-test raw names them in its
+    header.
+    - Draft 1 (the parallel start): 1 run, 239/241, the forms' digest still v6's (`41d0d654…b1da`), as expected.
+    - Draft 3: 1 run, 242/242.
+    - Draft 4, the mutant base: 1 run, 242/242; then the 49 mutants, three per call, the last call one.
+    - The run of record, on the final bytes: 1, after `commit_steps.sh install` put them in `scripts/n_analyze.py`,
+      the one write to the repository before the commit window.
+
+    Q-F3's campaign ran on the laptop beside them, as the coordinating session's windows allow. By its grants, no
+    other battery window was open during any of them.
+  - **Departures, for the seat to class.** None read anything under `data/*/ckpt`, `data/*/reports` or `data/mf3`,
+    ran repository code outside the windows above or started a model process.
+    - Code's, from a sweep of its own shell commands since `1185e15`'s commit (taken from this session's transcript
+      by `jq`, below), and a second sweep after the battery of record, 85 commands more; Code knows of no others:
+      - one `ls` of `results/raw` piped to `/usr/bin/grep -c`, to find a routing raw's name, which printed a count
+        ("2"), against the standing line "no listing of `results/raw`";
+      - a shell loop that checked the shared notes' backup wrote one temp file under the system's `/tmp`, outside
+        Code's scratch; Code listed it by a name glob and removed it by a glob (`x_` and digits), unread;
+      - reads of G-CAL-n's three committed files under `data/n/gcal/`, when `db00d6d` landed: `shasum`, `rev-parse`
+        and `hash-object` of the three, `wc -c` of `gcal.json` and `dose_map.json`, and `cat` of `dose_map.json`
+        (121 B, read whole), to check them tracked, clean and equal to the relay; and one `test -f` of a
+        `.gitignore` path under `data/n/` (none exists), when Code checked whether `data/n/gates/` is admitted;
+      - `jq` over the reviewer's and the values-checker's subagent transcripts (the reviewer's tool names, the
+        hand-back's fields, and each hand-back's message, saved as its report) and over this session's own
+        transcript (its shell commands, into a scratch file, for the sweeps);
+      - git in named-path forms outside item 3's pathspec: `git show` and `git diff` of `ef105f1`'s two n files and
+        of RESULTS.md into scratch copies; four `git show HEAD:<path> | shasum` blob reads right after v6's commit;
+        `git show --stat` of `ef105f1` limited to three named paths and of `1185e15` limited to RESULTS.md (counts);
+        `git log --diff-filter=A` of seven named files; `git log -3` of `.gitignore`; `git log -1` of two commits with
+        no pathspec; one `git cat-file -t` of `0744136`; one `git merge-base --is-ancestor`; and one `git status
+        --porcelain` limited to v6's five committed paths, right after v6's commit. Each printed names, hashes,
+        counts, subjects, one commit's body or the named files' own text. With item 3's pathspec, one `git log -30`
+        printed author dates and commit bodies (the search for committed text on v7's order);
+      - Perl scripts in Code's scratch, run on 2026-11-20 over scratch files only: `split.pl` three times,
+        `count.pl` twice, `count_set.pl` once (the check that each run mutant's line occurs once in draft 5), v6's
+        `apply_all.pl` once (building the 49 mutants), `table.pl` twice, v6's `fillbrief.pl` three times (the three
+        briefs), `assemble_review.pl` six times and `check_pass2_edits.pl` once (the second pass's edits); and, at the
+        commit, v7's `place.pl`, through `commit_steps.sh`'s place and gate steps;
+      - two commands carried a guard marker in their text, inside a heredoc the shell read as input: a memory map
+        naming memory files whose names hold markers, and a notes line quoting v6's INVOCATION line. If the harness
+        hands a command to the shell as its argument, the markers were in that argument;
+      - stated plainly: `awk` and `perl` for edits, splices, tables and filters over Code's scratch files and its
+        backup in the shared notes folder; `awk` as a line filter over RESULTS.md once and over the memory index
+        twice, by name, and to abbreviate `shasum` output of repository files; `sed` for line prints, substitution
+        filters and one script, over named repository and scratch files and the backup; `od -c` and `cat -v`, `-e`
+        and `-A` of named files; `ls -la` of the shared notes folder, the memory index and scratch folders; `wc -c`
+        of memory files; one `find . -exec touch -c {} +` over Code's scratch, against its four-day cleanup, with
+        two `find` counts there, one with `-mtime +0`; `chmod 444` of the frozen review copy; one `rm` of Code's own
+        temp file in the shared notes folder; the mutant runner, a zsh script in scratch; writes to its memory folder
+        and to the shared notes folder, both outside the repository. With item 3's pathspec, a second author-date
+        print, `git log --format='%h %ad' -2` on the schema.
+
+      One of v6's own, undeclared in its entry, is corrected in the dated note on that entry.
+    - The reviewer's, as its report states them: two `awk` line filters and one `sed -n` print over the frozen copy,
+      `/usr/bin/grep` and `wc -l` over named files, a `while read` loop over a patterns file it wrote under its own
+      folder, and name-only `ls` of the review folders.
+    - The values-checker's, as its reports state them: each ran one `awk` call and `sed` prints (pass 2 also `sed`
+      prefix strips), against its brief's "no interpreter"; `date -j -u -f` on sweep timestamps against `git log
+      --format=%ct`, printing only the order; the usual text tools and name-only `ls` of scratch folders; pass 2
+      `shasum -c` on the mutant manifest, and one command stopped at zsh's `=` expansion after its first part ran;
+      reads beyond their named sources (v6's values-check raw, the 2026-11-18 third sitting's answers, the 2026-11-20
+      routing raw, the v6 self-test raw, RESULTS.md's BACKEND and smoke entries, scratch files); sweep timestamps, and
+      in pass 2 the run outputs' INVOCATION lines, printed to their own sessions only; writes under their checker
+      folders only.
+  - **Committed by path:** the file, the self-test, review and values-check raws, this entry, the close line on
+    `1185e15`'s entry (2026-11-19's first sitting's §4 and its routing item A.6) and the dated note on it. The
+    commit-time count over the staged diff (the seat's answers of 2026-11-18, third sitting, §5.2) is 0. Not pushed.
+    **Next:** G-ANL-n's canonical run on the pinned map, in its own window and commit, its artifact's sha256 to
+    LOCK-n v0.1's hole 13 (the answers of 2026-11-20, §3 and §7 item 5).
+
 - 2026-11-20 — **The coordinating session's notes on the seat's first sitting of 2026-11-20: the reads committed at
   `d639bdd`, the PI's routing, the box's cleanup in part, four close lines (item 6), and the push to come (item 7).**
   - **The reads:**
@@ -2014,6 +2293,36 @@ applied to CLAUDE.md.
     item 4). The commit-time count
     over the staged diff (the third sitting's §5.2) is 0. Not pushed. **Next:** G-ANL-n's canonical run, when G-CAL-n
     pins d_eq.
+  - **Close (PI date 2026-11-20; the n-analyzer session's line, per the seat's answers of 2026-11-19, first sitting,
+    their header and §8 item 6): the seat's ruling on this entry's readings.** The seat's answers,
+    [`2026-11-19_n-starred-twelve_design-to-code_answers.md`](results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md)
+    (sha256 `e6ff066d…6d5a`, committed at `a33252a`), §4, rule this entry's readings:
+    - PIN-n-37's (a) is accepted, and so is (c).
+    - (b) is ruled by §3's R12: the range is the tile, so a read lies in exactly one range, and the reads after a
+      cleared fire belong to the next tile. Until the runner carries the tile, the range is the runner's batch
+      counted from the clear.
+    - PIN-n-38 is accepted as read. PIN-n-39 is accepted: both ways for the ceiling, one way for the non-finite and
+      identity kinds. N2's pause causes naming an arm under (a) are accepted.
+    - §3 accepts F5, this session's fixtures to move in its own commit, before the canonical run (the routing's
+      item 6: "in the pin-move commit").
+
+    Carried at v7, this session's entry of the same date: the schema pin moves to `ef105f1`, where the runner
+    carries the tile, and `report_problems` binds a standing batch to it; the interim was read and not built, its
+    grounds in that entry; F5's fixtures and the registers move as ruled.
+  - **Dated note (PI date 2026-11-20; the n-analyzer session's, on the coordinating session's verification of
+    `1185e15` and its own reading of that commit's steps): three corrections to this entry and its values-check raw,
+    none changing a figure.**
+    - The values-check raw's line "No placeholder is left in the entry, the close lines or the raws" means open slots.
+      Its reproduced second-pass report mentions, as text, the names of two placeholders (the entry's values-check
+      line and the review raw's run-of-record result), each between double at-signs, so a mechanical scan for
+      at-sign-delimited names matches them there.
+    - This entry's "The checkers' departures" bullet leaves out two that the raw's dispositions list: pass 1's zsh `=`
+      expansion error and the loop the harness refused before it ran; and pass 2's grep filename prefixes carrying
+      the scratch folder's name, printed to its own session only.
+    - This entry's departures leave out one of Code's own. The commit's gate step checked the self-test raw's
+      INVOCATION line with `/usr/bin/grep`, the whole line as its pattern, so the venv's folder name, which holds a
+      guard marker, was in that command's arguments. Found while the next version's commit steps were drafted; their
+      gate matches the line with no marker in any argument.
 
 - 2026-11-19 — **n — G-VEC's BUILD, committed by path (n v0.2 §8 step 7; the G-VEC paragraph of n §3; ADDENDUM-n1
   §1.1 and §6.1–§6.2): the stage's arithmetic in a new module, `valence_core/n/gvec.py`, and its command, `gvec`, in

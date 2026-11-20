@@ -13,16 +13,20 @@ and G-READ-n's states as inputs; (3) the sentence layer -- one §7 sentence set 
 (4) the reader -- the campaign's cell files through the schema's own checks, the cross-record checks the schema leaves
 to the analyzer, the declared read plan re-derived; (5) counters (rule 23) and secondaries (§4 (a)-(f)).
 
-Code's readings are registered in PINS (PIN-n-7 to PIN-n-37 ruled by the seat: PIN-n-29 and -32 amended and PIN-n-30's
+Code's readings are registered in PINS (PIN-n-7 to PIN-n-39 ruled by the seat: PIN-n-29 and -32 amended and PIN-n-30's
 sentences amended by its answers of 2026-11-18, §5, PIN-n-33 amended and the fourth form labelled by those of its second
 sitting, results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3, PIN-n-37 amended by those of its
-third, results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6, with three readings of Code's in it;
-those, and later ones, strikable until LOCK-n v1.0). ADDENDUM-n2 v0.1 (bound by sha256) adds the fidelity-ceiling
-pause kind (§2.1; PIN-n-39) and the second sensitivity row (§3; PIN-n-38), which the reader carries. The seat's
-rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in OPEN, as
+third, results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6, its three readings and PIN-n-38 and -39
+ruled by its answers of 2026-11-19, first sitting, results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md
+§4, (b) by R12, the tile; later ones strikable until LOCK-n v1.0). ADDENDUM-n2 v0.1 (bound by sha256) adds the
+fidelity-ceiling pause kind (§2.1; PIN-n-39) and the second sensitivity row (§3; PIN-n-38), which the reader carries.
+ADDENDUM-n3 v0.1 (bound by sha256) adds the reward axis's 5(d) gate: N2's decision point under it (§3.4, the PI's
+decision (n-5), [adopt]; PIN-n-41), the lock's gate line VERDICTS reads (§3.3, §3.5; PIN-n-40) and the pinned map's
+reach under both of its branches (PIN-n-42). The seat's rulings on the question block
+(results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9) in OPEN, as
 results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1 (bound by sha256) give them, with the
 answers of 2026-11-18 (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md, §5) and of its second
-sitting (§3) where they amend them. G-ANL-n's canonical run waits for G-CAL-n's dose map.
+sitting (§3) where they amend them. G-ANL-n's canonical run binds G-CAL-n's dose map (--dose-map).
 
   --selftest            the battery (model-free); prints "  [PASS|FAIL] name got" per check; exit 0 iff every check
                         passes, the count equals EXPECTED_CHECKS and every coverage id is reached (n §3: "a skipped
@@ -69,6 +73,8 @@ ADDENDUM_REL = "ADDENDUM-n1-rendering-of-record-and-gread-band-v0_1.md"     # th
 ADDENDUM_SHA256 = "e979f8f2af08ddb1f32e3054c002b1d0a3278e49a24b4f6df2cb6c042de95e03"
 ADDENDUM2_REL = "ADDENDUM-n2-fidelity-on-the-box-of-record-v0_1.md"          # the seat's, 2026-11-18 (third sitting)
 ADDENDUM2_SHA256 = "41f76c49d756e09481a70f398469d9febc96bb534f28cd18d265ea87add2bb3f"
+ADDENDUM3_REL = "ADDENDUM-n3-capture-convention-reward-gate-and-interval-v0_1.md"   # the seat's, 2026-11-19 (third)
+ADDENDUM3_SHA256 = "7f4a7a75b61002b58e62a400e99f4de2abc8ec0646329fdf624ce31540be9313"
 ANALYZER_REL = "scripts/n_analyze.py"
 UNIT = "N-pod"
 D_N = "2026-12-15"                    # §7.4; the routing of 2026-11-06 ("Everything else as the 11-05 routing had it")
@@ -101,6 +107,11 @@ NO_READ = "no read obtained"                # §5 N4, verbatim
 F10, F20 = "f=0.10", "f=0.20"
 F_TEXT = {F10: "0.10", F20: "0.20"}       # N2's [f] slot (ADDENDUM-n1 §7.6: "at f = [f]")
 F_LABEL = {F10: "f0.10", F20: "f0.20"}    # the record labels of N2's reads (n-build's schema)
+# The reward axis's 5(d) gate (ADDENDUM-n3 §3): its coherence component's result as LOCK-n's line records it (§3.3,
+# §3.5; PIN-n-40), which N2's decision point reads with the cap (§3.4; PIN-n-41)
+GATE_STATES = ("PASS", "FAIL")
+GATE_N, GATE_BAR = 48, 36                 # §3.3: "scored ... against the one bar, 36 of 48"
+GATE_LINE_HEAD = "reward axis 5(d) gate, coherence: "     # §3.3's lock form, as n-build's lock draft carries it
 
 # NOT-RUN causes (§5 "Unit outcome first"): LOCK v1.0 not committed by D_n -- "(no box; a gate STOPPED and no
 # re-specification was locked; the PI declined v1.0 for any reason)" -- or locked and "produces no arm's full read set
@@ -358,10 +369,21 @@ class DoseMap:
         """OPEN-Q7 as ruled (ADDENDUM-n1 §5.3): the cap binds iff 2·d_eq > 1, so d_20 = 1 by §2.3's cap."""
         return 2.0 * self.d_eq > 1.0
 
-    def n2_decision_f(self) -> str:
-        """OPEN-Q7 as ruled: N2 is decided at f = 0.10 when the cap binds (against N1-V at d_eq, where the norms are
-        equal exactly), else at f = 0.20 as §5 writes it; the other f is reported beside."""
-        return F10 if self.cap_binds() else F20
+    def n2_decision_f(self, gate: str) -> str:
+        """ADDENDUM-n3 §3.4 (the PI's decision (n-5), [adopt]; ADDENDUM-n1 §5.3 extended, OPEN-Q7 as ruled; PIN-n-41):
+        N2 is decided at f = 0.20 iff (i) the lock's gate line records the coherence component PASSED and (ii) the cap
+        does not bind; otherwise at f = 0.10 against N1-V at d_eq's point, its kept point under a merge (PIN-n-41's
+        reading (b)); the other f is reported beside. ``gate`` is that line's result, PASS or FAIL, with no default:
+        every caller names the branch it reads."""
+        return F10 if self.n2_reasons(gate) else F20
+
+    def n2_reasons(self, gate: str) -> tuple[str, ...]:
+        """Why f = 0.10 decides N2, in §3.4's order ("the gate's coherence FAIL, or the cap"): 'gate', 'cap', both
+        where both hold (PIN-n-41's reading (c)), none where f = 0.20 decides. Refuses a gate result not PASS or
+        FAIL."""
+        if gate not in GATE_STATES:
+            raise ValueError(f"the gate's result {gate!r} is not one of {GATE_STATES}")
+        return tuple(r for r, on in (("gate", gate == "FAIL"), ("cap", self.cap_binds())) if on)
 
     def n1p_points(self) -> tuple[float, ...]:
         """OPEN-Q2 as ruled (ADDENDUM-n1 §5.2): the points N1-P reads, the kept points of +1, +d_20, +d_eq and −1,
@@ -375,6 +397,29 @@ class DoseMap:
         unless the cap binds or a merge moved a point, the mismatch then printed beside (reported only; no §5
         outcome reads N2's slope)."""
         return ((self.d_eq, 2.0 * self.d_eq), (self.norm_matched(F10), self.norm_matched(F20)))
+
+
+@dataclass(frozen=True)
+class Gate:
+    """The reward axis's 5(d) gate as LOCK-n v1.0's line records it (ADDENDUM-n3 §3.3, §3.5; PIN-n-40): the
+    reward_f020 batch's coherent count k of 48 and its result, PASS iff k ≥ 36. Refuses (ValueError) a count that is
+    not an integer 0-48 or a result the bar contradicts."""
+    k: int
+    result: str
+
+    def __post_init__(self) -> None:
+        if not (type(self.k) is int and 0 <= self.k <= GATE_N):
+            raise ValueError(f"the gate's count {self.k!r} is not an integer 0-{GATE_N}")
+        if self.result not in GATE_STATES or (self.result == "PASS") != (self.k >= GATE_BAR):
+            raise ValueError(f"the gate's result {self.result!r} with {self.k} of {GATE_N} contradicts the bar, "
+                             f"{GATE_BAR} of {GATE_N}")
+
+    def line(self) -> str:
+        """The lock's whole line for this gate (§3.3's form, its 'k' the count)."""
+        return f"{GATE_LINE_HEAD}{self.k} of {GATE_N}, {self.result}"
+
+    def doc(self) -> dict:
+        return {"k": self.k, "of": GATE_N, "result": self.result}
 
 
 # =====================================================================================================================
@@ -410,11 +455,13 @@ def certified(mean: float, L: float, P: float | None) -> bool:
 
 @dataclass
 class State:
-    """What the outcome layer reads: per-arm completeness and standing pauses, the estimates of §4, G-READ-n's cells
-    and the dose map. Built from the campaign's records by the reader (build_state) or literally by the battery."""
+    """What the outcome layer reads: per-arm completeness and standing pauses, the estimates of §4, G-READ-n's cells,
+    the dose map and the lock's gate (PIN-n-40), which N2's decision point reads with the cap (PIN-n-41). Built from
+    the campaign's records and the lock by the reader (build_state) or literally by the battery."""
     dmap: DoseMap
     complete: dict[str, bool]
     paused: dict[str, bool]
+    gate: Gate
     V: dict[float, Est] = field(default_factory=dict)        # N1-V per resolved point (95%), 0 excluded
     slope_V: Est | None = None
     floor_V: float | None = None
@@ -542,8 +589,12 @@ def n2_reads(st: State, f: str) -> list[tuple[str, Any]]:
 
 
 def n2_outcome(st: State) -> dict:
-    """§5 N2, at its decision f (OPEN-Q7 as ruled, ADDENDUM-n1 §5.3: f = 0.10 against N1-V at d_eq when the cap binds,
-    else f = 0.20; the other f beside, with its ratio). INDETERMINATE iff one of the reads its certification reads is
+    """§5 N2, at its decision f (ADDENDUM-n3 §3.4, OPEN-Q7 as ruled and extended; PIN-n-41: f = 0.20 iff the lock's
+    gate line records the coherence component PASSED and the cap does not bind, else f = 0.10 against N1-V at d_eq's
+    point; the other f beside, with its ratio). Every outcome carries the decision f, the reasons f = 0.10 decides
+    ('gate', 'cap', in §3.4's order; none at f = 0.20) and the gate as the lock records it, which N2's report line
+    names (§3.4: "names the deciding point and, when f = 0.10 decides, the reason"). INDETERMINATE iff one of the
+    reads its certification reads is
     not usable -- missing, non-finite, its sessions' shadows not usable, or emptied in a sensitivity row -- or a pause
     stands on one of them (OPEN-Q6 as ruled; PIN-n-29 as amended, ADDENDUM-n1 §7.4's N2 clause read point by point:
     N2-E at the decision f, N1-V, N1-R's 24 directions and N1-P at the norm-matched point; PIN-n-36). Pauses are read
@@ -555,12 +606,13 @@ def n2_outcome(st: State) -> dict:
     enters no N2 outcome). The guards decide nothing; each guard's figures are reported beside with its pause, read at
     its points as N2's are (PIN-n-37's reading (c)). The other f's figures beside are each 'not computed' where their
     reads are not usable, and name the arms whose reads there a pause stands on (PIN-n-37)."""
-    f_dec = st.dmap.n2_decision_f()
+    f_dec = st.dmap.n2_decision_f(st.gate.result)
+    why = {"f": f_dec, "reasons": list(st.dmap.n2_reasons(st.gate.result)), "gate": st.gate.doc()}
     f_bes = F20 if f_dec == F10 else F10
     reads = n2_reads(st, f_dec)
     causes = [f"pause:{a}" for a, k in reads if st.paused_on(a, k)] + [c for a, k in reads for c in st.named_at(a, k)]
     if causes:
-        return {"state": "INDETERMINATE", "f": f_dec, "causes": causes}
+        return {"state": "INDETERMINATE"} | why | {"causes": causes}
     m = st.dmap.norm_matched(f_dec)
     ceil_m = ceiling_cert(st, m)
     cert_e = above(st.E[f_dec].mean, ceil_m)
@@ -580,8 +632,9 @@ def n2_outcome(st: State) -> dict:
               "guards": {g: {f: (d[f] if (f in d and not st.causes_at(a, f)) else NOT_COMPUTED) for f in (F10, F20)}
                          | {"paused": any(st.paused_on(a, f) for f in (F10, F20))}
                          for g, a, d in (("span_sentiment", "N2-S", st.S), ("span_character", "N2-C", st.C))}}
-    return {"state": state, "f": f_dec, "point": m, "ceiling": ceil_m, "certified_E": cert_e, "certified_V": cert_v,
-            "match_ratio": st.dmap.match_ratio(f_dec), "cap_binds": st.dmap.cap_binds(), "beside": beside}
+    return {"state": state} | why | {"point": m, "ceiling": ceil_m, "certified_E": cert_e, "certified_V": cert_v,
+                                     "match_ratio": st.dmap.match_ratio(f_dec), "cap_binds": st.dmap.cap_binds(),
+                                     "beside": beside}
 
 
 def n4_outcome(st: State) -> dict:
@@ -606,14 +659,15 @@ def n4_outcome(st: State) -> dict:
 
 def outcomes(st: State) -> dict:
     """§5 in order: N1, dose (reads N1), N2, N4; the tuple's G-READ-n coordinate is valence at d_eq. The inputs that
-    label nulls (§0.6): G-READ-n for valence at +1 (N1) and for span_reward at N2's decision f (OPEN-Q7 as ruled)."""
+    label nulls (§0.6): G-READ-n for valence at +1 (N1) and for span_reward at N2's decision f (OPEN-Q7 as ruled,
+    under the gate: PIN-n-41)."""
     n1 = n1_outcome(st)
     dose = dose_outcome(st, n1)
     n2 = n2_outcome(st)
     n4 = n4_outcome(st)
     r = st.dmap.resolved()
     grs = {"d_eq": st.gr("valence", r["d_eq"]), "+1": st.gr("valence", 1.0),
-           "E": st.gr("span_reward", st.dmap.n2_decision_f())}
+           "E": st.gr("span_reward", st.dmap.n2_decision_f(st.gate.result))}
     return {"N1": n1, "dose": dose, "N2": n2, "N4": n4, "gread": grs,
             "tuple": (n1["state"], dose["state"], n2["state"], n4["state"], "PASS" if grs["d_eq"] == "PASS" else "FAIL")}
 
@@ -707,18 +761,25 @@ C_DOSE_INDET = "INDETERMINATE: the dose question is not evaluated ([causes])"
 N2_HEAD = "N2, descriptive (§7.3; it licenses no thesis sentence): "
 # A.7's three forms as the seat's answers of 2026-11-18 §5.3 amend them (PIN-n-30, PIN-n-34): every figure with its CI
 # and, where its mean is below 0, ZONE_WORDS in [zoneE] / [zoneV], closing the figure's parenthetical, or the sentence
-# where the figure has none (SHARED's valence figure).
-C_N2 = {"SPECIFIC": N2_HEAD + ("SPECIFIC: at f = [f] this program's evaluative axis (span_reward) does not move BK's "
-                               "apparatus beyond the leak ceiling (Δm = [xE] nats [CIE] against [c][zoneE]) while the "
-                               "valence direction of record at the norm-matched point does (Δm = [xV] nats [CIV][zoneV]) "
-                               "— [label]"),
-        "SHARED": N2_HEAD + ("SHARED: at f = [f] this program's evaluative axis (span_reward) moves BK's apparatus "
-                             "beyond the leak ceiling (Δm = [xE] nats [CIE] against [c][zoneE]); the valence direction "
-                             "of record at the norm-matched point: Δm = [xV] nats [CIV][zoneV]"),
-        "NULL": N2_HEAD + ("NULL: at f = [f] neither this program's evaluative axis (span_reward, Δm = [xE] nats "
+# where the figure has none (SHARED's valence figure). ADDENDUM-n3 §3.4: the report line names the deciding point
+# ("at f = [f]", INDETERMINATE's too) and, when f = 0.10 decides, the reason, in [why] (PIN-n-41's reading (d)).
+WHY_SLOT = "[why]"
+C_N2 = {"SPECIFIC": N2_HEAD + ("SPECIFIC: at f = [f][why] this program's evaluative axis (span_reward) does not move "
+                               "BK's apparatus beyond the leak ceiling (Δm = [xE] nats [CIE] against [c][zoneE]) while "
+                               "the valence direction of record at the norm-matched point does (Δm = [xV] nats "
+                               "[CIV][zoneV]) — [label]"),
+        "SHARED": N2_HEAD + ("SHARED: at f = [f][why] this program's evaluative axis (span_reward) moves BK's "
+                             "apparatus beyond the leak ceiling (Δm = [xE] nats [CIE] against [c][zoneE]); the valence "
+                             "direction of record at the norm-matched point: Δm = [xV] nats [CIV][zoneV]"),
+        "NULL": N2_HEAD + ("NULL: at f = [f][why] neither this program's evaluative axis (span_reward, Δm = [xE] nats "
                            "[CIE][zoneE]) nor the valence direction of record at the norm-matched point (Δm = [xV] nats "
                            "[CIV][zoneV]) moves BK's apparatus beyond the leak ceiling ([c]) — [label]"),
-        "INDETERMINATE": N2_HEAD + "INDETERMINATE: N2 is not evaluated ([causes])"}
+        "INDETERMINATE": N2_HEAD + "INDETERMINATE: N2 is not evaluated at f = [f][why] ([causes])"}
+# ADDENDUM-n3 §3.4's two reasons, its words verbatim ("the reason (the gate's coherence FAIL, or the cap)"; the battery
+# asserts them against the addendum's bytes), and Code's clause around them (PIN-n-41's reading (d)): [why] is empty
+# where f = 0.20 decides, and names both reasons, in §3.4's order, where both hold (reading (c)).
+ADDENDUM3_FORMS = {"REASON_GATE": "the gate's coherence FAIL", "REASON_CAP": "the cap"}
+N2_WHY = " (N2's deciding point, by {reasons})"
 C_N4 = {"PASS": ("PASS: BK's apparatus registers an instructed preference on this checkpoint: m_told = [x] nats [CI98] "
                  "against E = [e]; it licenses the answered reading of nulls in this format on this checkpoint (§0.6, "
                  "with G-READ-n), nothing else"),
@@ -729,7 +790,7 @@ C_N4 = {"PASS": ("PASS: BK's apparatus registers an instructed preference on thi
 C_NOT_RUN = "NOT-RUN: [reason]; no question of PROPOSAL-n v0.2 §1 is answered on N-pod"
 SLOTS = ("[on their / on a reconstructed direction]", "[x]", "[CI]", "[y]", "[z]", "[max(L, P)]", "[value]", "[c]",
          "[a]", "[failing]", "[x−]", "[CI−]", "[label]", "[causes]", "[n4]", "[xE]", "[CIE]", "[xV]", "[CI98]", "[e]",
-         "[-e]", "[reason]", "[f]", "[CIV]", "[zoneE]", "[zoneV]", "[merge]", "[point]")
+         "[-e]", "[reason]", "[f]", "[CIV]", "[zoneE]", "[zoneV]", "[merge]", "[point]", WHY_SLOT)
 CONJUNCT_TEXT = {"i": "conjunct (i) (Δm(+1) ≥ 0.545 nats with its 95% CI excluding 0)",
                  "iv": "conjunct (iv) (Δm(−1) < 0 with its 95% CI excluding 0)",
                  "ci+1": "the 95% CI at d = +1 excluding 0",
@@ -737,6 +798,16 @@ CONJUNCT_TEXT = {"i": "conjunct (i) (Δm(+1) ≥ 0.545 nats with its 95% CI excl
                  "iii": "conjunct (iii) (G-LEAK-n certification at d = +1)",
                  "sign": "the mean Δm at d = +1 above 0",
                  "sign-against": "the mean Δm at d = +1 above 0 (" + MOVE_AGAINST + ")"}
+
+
+def why_text(reasons: Sequence[str]) -> str:
+    """N2's [why] fill (PIN-n-41's readings (c) and (d)): empty where f = 0.20 decides; else Code's clause naming
+    ADDENDUM-n3 §3.4's reasons in its words and order ('gate', then 'cap'), both where both hold."""
+    words = {"gate": ADDENDUM3_FORMS["REASON_GATE"], "cap": ADDENDUM3_FORMS["REASON_CAP"]}
+    rs = list(reasons)
+    if rs not in ([], ["gate"], ["cap"], ["gate", "cap"]):
+        raise ValueError(f"N2's reasons {rs!r} are not a subsequence of ('gate', 'cap')")
+    return "" if not rs else N2_WHY.format(reasons=" and ".join(words[r] for r in rs))
 
 
 def label(n4_state: str, gread_state: str) -> str:
@@ -910,7 +981,7 @@ def gleak_table(st: State) -> list[dict]:
 
 GREAD_SECTION5 = {("valence", "+1"): "N1 NOT-REPLICATED's label (§5 N1)",
                   ("valence", "d_eq"): "the dose sentence's label (§5 Dose); the tuple's coordinate"}
-GREAD_N2_LABEL = "N2's span_reward null label (§0.6, at N2's decision f: OPEN-Q7 as ruled)"
+GREAD_N2_LABEL = "N2's span_reward null label (§0.6, at N2's decision f: OPEN-Q7 as ruled, ADDENDUM-n3 §3.4)"
 
 
 def gread_table(st: State) -> list[dict]:
@@ -925,7 +996,7 @@ def gread_table(st: State) -> list[dict]:
                      "enters": GREAD_SECTION5.get(("valence", lab))})
     for f in (F10, F20):
         rows.append({"axis": "span_reward", "point": st.dmap.f_point(f), "label": f, "state": st.gr("span_reward", f),
-                     "enters": GREAD_N2_LABEL if f == st.dmap.n2_decision_f() else None})
+                     "enters": GREAD_N2_LABEL if f == st.dmap.n2_decision_f(st.gate.result) else None})
     return rows
 
 
@@ -1032,6 +1103,20 @@ def addendum_spans(text: str) -> dict[str, str]:
             "add_ans": s3[1], "add_cna": s3[2], "add_b4": lines[j + 2]}
 
 
+def addendum3_spans(text: str) -> dict[str, str]:
+    """ADDENDUM-n3 §3.3's lock form (its two italic spans: the coherence line, its count as 'k', between quotation
+    marks, and FAIL) and §3.4's reasons (the parenthetical after 'the reason', split at ', or '), each paragraph found
+    by its bold head, from the addendum's bytes; §3.3's paragraph whole, for its bar."""
+    lines = text.splitlines()
+    p33 = next(s for s in lines if s.startswith("**3.3 The coherence component"))
+    p34 = next(s for s in lines if s.startswith("**3.4 N2's decision point**"))
+    sp = italic_spans(p33)
+    a = p34.index("the reason (") + len("the reason (")
+    rs = p34[a:p34.index(")", a)].split(", or ")
+    return {"a3_line": sp[0], "a3_fail": sp[1], "a3_spans": str(len(sp)), "a3_reason_gate": rs[0],
+            "a3_reason_cap": rs[-1], "a3_reasons": str(len(rs)), "a3_p33": p33}
+
+
 #: The oracle's own transcription of the seat's answers of 2026-11-18, §5.4's figure with its note and §5.6's fourth
 #: form, and of the second sitting's §3.2, the fourth form's ending and its parenthetical for N4 (the battery reads no
 #: raw, so a second copy, made apart from the module's: a slip in either fails T2, for the fourth form, its label and
@@ -1118,7 +1203,7 @@ def evaluations() -> list[tuple]:
 # =====================================================================================================================
 # 9. The battery (§3 G-ANL-n). Selftest-only helpers carry the `_bt` prefix.
 # =====================================================================================================================
-EXPECTED_CHECKS = 230
+EXPECTED_CHECKS = 242
 
 _REQ: list[str] = []
 _REQ += [f"N1-{x}" for x in ("REPLICATED", "PARTIAL-i", "PARTIAL-iv", "PARTIAL-i-iv", "NOTREP-ci+1", "NOTREP-ii",
@@ -1135,7 +1220,7 @@ _REQ += ["N2-SPECIFIC", "N2-SHARED-V-CERT", "N2-SHARED-V-UNCERT", "N2-NULL", "N2
          "N2-INDET-incomplete:N2-E", "N2-INDET-incomplete:N1-V", "N2-INDET-incomplete:N1-R",
          "N2-INDET-incomplete:N1-P", "N2-GUARDS-DECIDE-NOTHING", "N2-POINT-ELSEWHERE", "N2-POINT-CAUSES",
          "N2-F10-BESIDE", "N2-MATCH-RATIO", "N2-CAP-F10", "N2-UNSIGNED", "N2-BESIDE-FIELDS", "N2-BESIDE-NOT-COMPUTED",
-         "N2-PAUSE-POINTWISE"]
+         "N2-PAUSE-POINTWISE", "N2-GATE-F10", "N2-GATE-DECIDES", "N2-GATE-INDET", "N2-GATE-GREAD"]
 _REQ += ["N4-PASS", "N4-REVERSE", "N4-DEAD", "N4-INDET-TERMINAL", "N4-NOREAD-incomplete:N4-T",
          "N4-NOREAD-incomplete:N4-Ts", "N4-NOREAD-pause:N4-T", "N4-NOREAD-pause:N4-Ts", "N4-NOREAD-E-undefined",
          "N4-ORD-REV-OVER-DEAD", "N4-ORD-PASS-OVER-DEAD", "N4-BND-MEAN-EQ-E", "N4-BND-MEAN-EQ-NEGE",
@@ -1147,27 +1232,31 @@ _REQ += [f"GREAD-{c}" for c in ("PASS", "FAIL", "NOT-COMPUTED", "ENTERS-N1", "EN
 _REQ += ["GLEAK-N1P-INCOMPLETE", "GLEAK-POINTWISE"]
 _REQ += ["SENT-VERBATIM", "SENT-FAILING-PARTIAL", "SENT-FAILING-NOTREP", "SENT-CAUSES", "SENT-REFUSES",
          "SENT-CODE-FORMS", "SENT-ADDENDUM", "SENT-FILLED-DOSE-ND", "SENT-FILLED-N1-AGAINST", "SENT-FILLED-N2-CAP",
-         "SENT-RULING", "SENT-FILLED-DOSE-FOURTH", "SENT-FILLED-N2-ZONE", "SENT-FOURTH-FILLS"]
+         "SENT-RULING", "SENT-FILLED-DOSE-FOURTH", "SENT-FILLED-N2-ZONE", "SENT-FOURTH-FILLS",
+         "SENT-FILLED-N2-GATE", "SENT-ADDENDUM3"]
 _REQ += [f"TUP-T{i}" for i in range(1, 11)] + ["TUP-DETERMINISM", "TUP-COUNT"]
 _REQ += ["REACH-DOSE-IFF-N1", "REACH-SHAPE-a", "REACH-SHAPE-b", "REACH-SHAPE-c", "REACH-SHAPE-d", "REACH-N4-FREE",
-         "REACH-NO-RAISE", "REACH-FOURTH"]
+         "REACH-NO-RAISE", "REACH-FOURTH", "REACH-GATE-FAIL"]
 _REQ += ["NUM-KEYSTREAM-M159", "NUM-KNOWN-ANSWER", "NUM-BOOT-DETERMINISM", "NUM-BOOT-CONSTANT", "NUM-BOOT-LOOP",
          "NUM-PCT-METHOD", "NUM-SLOPE-CLOSED-FORM", "NUM-SLOPE-BESIDE", "NUM-SLOPE-INTERCEPT", "NUM-SD0",
          "NUM-NONFINITE-STOP", "NUM-BK-FITS-COINCIDE", "NUM-CAP-DECISION-F", "NUM-N1P-POINTS",
          "NUM-BK-REPRO", "NUM-BK-FIDELITY", "NUM-DOSEMAP-SHAPES", "NUM-DOSEMAP-REFUSE",
-         "NUM-DOSEMAP-POINTS", "NUM-PEARSON", "CNT-LABEL-MASS", "NUM-N2-POINTS"]
-_REQ += ["STR-PROPOSAL-SHA", "STR-ADDENDUM-SHA", "STR-ADDENDUM2-SHA", "STR-VERBATIM-IN-PROPOSAL", "STR-TAU-PREREG",
+         "NUM-DOSEMAP-POINTS", "NUM-PEARSON", "CNT-LABEL-MASS", "NUM-N2-POINTS", "NUM-GATE-DECISION-F"]
+_REQ += ["STR-PROPOSAL-SHA", "STR-ADDENDUM-SHA", "STR-ADDENDUM2-SHA", "STR-ADDENDUM3-SHA",
+         "STR-VERBATIM-IN-PROPOSAL", "STR-TAU-PREREG",
          "STR-NO-REPO-IMPORT", "STR-NO-HEAVY", "STR-OPEN-HOOK", "STR-NO-CANONICAL-WRITE", "STR-PINS"]
 _REQ += ["RD-POSITIVE", "RD-FILLED", "RD-NULL", "RD-SPECIFIC", "RD-PARTIAL", "RD-INDET", "RD-NONFINITE", "RD-MERGED",
          "RD-PAUSE", "RD-PAUSE-POINTS", "RD-GREAD", "RD-SENSITIVITY", "RD-SECONDARY", "RD-REFUSE", "RD-FILLED-FIGURES",
          "RD-FILLED-FORMS", "RD-SHADOW", "RD-ASYM", "RD-MERGED-DEQ", "RD-GREAD-MIXED", "CNT-COUNTERS",
-         "RD-SECONDARY-FLOOR", "RD-CAP-BINDS", "RD-CAP-SLOPES", "RD-POINTWISE", "RD-CEILING", "RD-SECOND-ROW"]
+         "RD-SECONDARY-FLOOR", "RD-CAP-BINDS", "RD-CAP-SLOPES", "RD-POINTWISE", "RD-CEILING", "RD-SECOND-ROW",
+         "RD-GATE-FAIL"]
 _REQ += ["NUM-DOSEMAP-SCHEMA", "NUM-MERGE-EDGE", "NUM-REACH-CLASS", "CMD-NOTRUN", "CMD-NOTRUN-REFUSE",
          "CMD-GANL-REFUSE", "STR-GANL-ARTIFACT"]
 _REQ += ["VD-COMPLETE", "VD-WRITE-ONCE", "VD-EXPOSURE", "VD-SENSITIVITY", "VD-STDOUT", "VD-PISTOP-STANDING",
          "VD-PAUSE-POINTS", "VD-PAUSE-RENDERING", "VD-NOTRUN-CAP", "VD-NOTRUN-PISTOP", "VD-NOTRUN-GVER", "VD-REFUSE",
          "VD-GREAD-MIXED", "VD-PRECHECK", "VD-SOME-ARMS", "VD-MERGED-ROUTE-A", "VD-ONE-OUTCOME", "VD-PLAIN",
-         "VD-SECOND-ROW", "VD-CEILING", "VD-SECOND-ROW-TRIGGER", "VD-SECOND-ROW-PAUSE", "VD-BATCH-CLEARS"]
+         "VD-SECOND-ROW", "VD-CEILING", "VD-SECOND-ROW-TRIGGER", "VD-SECOND-ROW-PAUSE", "VD-BATCH-CLEARS",
+         "VD-GATE", "LOCK-GATE", "VD-F5-FIXTURES"]
 REQUIRED_COVERAGE = frozenset(_REQ)
 
 
@@ -1219,15 +1308,17 @@ MAP_C = DoseMap(0.49, 2 * 0.49)        # d_20 merged into +1 without the cap, d_
 MAP_D = DoseMap(0.97, 1.0)             # d_20 and d_eq merged into +1 (shape d)
 _X = Est(1.0, 0.9, 1.1)                # large positive, CI excludes 0, certified at the battery's L 0.05
 _Z = Est(0.0, -0.05, 0.05)             # null: CI includes 0, uncertified
+#: a gate per branch for literal states and map_reach (PIN-n-42): the count at the top, and just below the bar
+GATE_FIXTURE = {"PASS": Gate(GATE_N, "PASS"), "FAIL": Gate(GATE_BAR - 1, "FAIL")}
 
 
-def literal_state(dmap: DoseMap = MAP_A, **over) -> State:
+def literal_state(dmap: DoseMap = MAP_A, gate: Gate = GATE_FIXTURE["PASS"], **over) -> State:
     """A complete, unpaused state with every outcome at its 'positive' value (N1 REPLICATED, dose DETECTABLE, N2
     SHARED, N4 PASS) at L = 0.05 everywhere and P = 0.04 at each point N1-P reads (±1, d_20's and d_eq's: OPEN-Q2 as
-    ruled); keyword overrides replace fields. Used by the battery and by map_reach, which the canonical `ganl` run calls
-    on the pinned map (hence no `_bt` prefix)."""
+    ruled), under the gate given (PASS, 48 of 48, unless one is named); keyword overrides replace fields. Used by the
+    battery and by map_reach, which the canonical `ganl` run calls on the pinned map (hence no `_bt` prefix)."""
     pts = dmap.points()
-    st = State(dmap=dmap, complete={a: True for a in ARMS}, paused={a: False for a in ARMS},
+    st = State(dmap=dmap, complete={a: True for a in ARMS}, paused={a: False for a in ARMS}, gate=gate,
                V={p: (Est(-0.7, -0.8, -0.6) if p < 0 else Est(max(p, 0.3), max(p, 0.3) - 0.1, max(p, 0.3) + 0.1))
                   for p in pts if p != 0.0},
                slope_V=Est(0.9, 0.8, 1.0), floor_V=0.3, L={p: 0.05 for p in pts if p != 0.0},
@@ -1418,7 +1509,7 @@ def _bt_outcomes(B: _Battery) -> None:
     pw, want_pw = {}, {}
     fig_k = ("E", "V", "ceiling", "certified", "certified_V")
     for sh, dm_ in (("a", MAP_A), ("b", MAP_B)):
-        f_d = dm_.n2_decision_f()
+        f_d = dm_.n2_decision_f("PASS")                     # literal_state's gate
         f_o = F10 if f_d == F20 else F20
         m_, mo = dm_.norm_matched(f_d), dm_.norm_matched(f_o)
         base_b = n2_outcome(literal_state(dm_))["beside"][f_o]
@@ -1513,6 +1604,49 @@ def _bt_outcomes(B: _Battery) -> None:
     B.chk("the decision f decides: span_reward uncertified at f = 0.10 and certified at f = 0.20 gives SHARED on "
           "shape (a), decided at 0.20, and SPECIFIC when the cap binds, decided at 0.10 (OPEN-Q7 as ruled)",
           sa == "SHARED" and sb == "SPECIFIC", (sa, sb), cover=["N2-CAP-F10"])
+    # ADDENDUM-n3 §3.4 (PIN-n-41): the gate's branch. f = 0.10 decides where the gate FAILs, with the cap or without
+    # it, the reasons in §3.4's order; on shape (c) under the FAIL, d_eq's kept point is +1/2 (reading (b): 0.98)
+    GF = GATE_FIXTURE["FAIL"]
+    gq = {"a PASS": n2_outcome(literal_state()), "a FAIL": n2_outcome(literal_state(gate=GF)),
+          "b PASS": n2_outcome(literal_state(MAP_B)), "b FAIL": n2_outcome(literal_state(MAP_B, gate=GF)),
+          "c FAIL": n2_outcome(literal_state(MAP_C, gate=GF))}
+    got_q = {k: (g["f"], g["reasons"], g["gate"], g["point"], round(g["match_ratio"], 12),
+                 g["beside"][F20 if g["f"] == F10 else F10]["point"],
+                 round(g["beside"][F20 if g["f"] == F10 else F10]["match_ratio"], 12)) for k, g in gq.items()}
+    gp_doc, gf_doc = {"k": 48, "of": 48, "result": "PASS"}, {"k": 35, "of": 48, "result": "FAIL"}
+    want_q = {"a PASS": (F20, [], gp_doc, 2 / 3, 1.0, 1 / 3, 1.0),
+              "a FAIL": (F10, ["gate"], gf_doc, 1 / 3, 1.0, 2 / 3, 1.0),
+              "b PASS": (F10, ["cap"], gp_doc, 0.72, 1.0, 1.0, 1.44),
+              "b FAIL": (F10, ["gate", "cap"], gf_doc, 0.72, 1.0, 1.0, 1.44),
+              "c FAIL": (F10, ["gate"], gf_doc, 0.5, 0.98, 1.0, 0.98)}
+    B.chk("N2's decision point under the gate (ADDENDUM-n3 §3.4; PIN-n-41): the gate's FAIL decides at f = 0.10 "
+          "against d_eq's point, f = 0.20 beside at d_20's (shape a: ratio 1 both), the reasons 'gate', 'cap' or both "
+          "in §3.4's order, the gate recorded as the lock gives it; on shape (c) d_eq's kept point is +1/2, the ratio "
+          "0.98 at f = 0.10 and at f = 0.20 beside against +1 (reading (b): equal norms only where d_eq is not merged)",
+          got_q == want_q, {k: got_q[k] for k in want_q if got_q.get(k) != want_q[k]}, cover=["N2-GATE-F10"])
+    e_unc_ = {F10: Est(0.01, -0.02, 0.04)}
+    sp_, sf_ = (n2_outcome(literal_state(E=e_unc_))["state"], n2_outcome(literal_state(E=e_unc_, gate=GF))["state"])
+    B.chk("the gate decides the point (ADDENDUM-n3 §3.4): span_reward uncertified at f = 0.10 and certified at f = "
+          "0.20 gives SHARED under the gate's PASS on shape (a), decided at 0.20, and SPECIFIC under its FAIL, decided "
+          "at 0.10", sp_ == "SHARED" and sf_ == "SPECIFIC", (sp_, sf_), cover=["N2-GATE-DECIDES"])
+    ie, iv = (n2_outcome(literal_state(gate=GF, complete={"N2-E": False})),
+              n2_outcome(literal_state(gate=GF, complete={"N1-V": False})))
+    B.chk("under the gate's FAIL an INDETERMINATE N2 names the points f = 0.10 reads (incomplete:N2-E@f0.10; "
+          "incomplete:N1-V@+d_eq), and carries its decision f, its reason and the gate (PIN-n-36, PIN-n-41)",
+          ie["state"] == iv["state"] == "INDETERMINATE" and ie["causes"] == ["incomplete:N2-E@f0.10"]
+          and iv["causes"] == ["incomplete:N1-V@+d_eq"] and ie["f"] == iv["f"] == F10
+          and ie["reasons"] == iv["reasons"] == ["gate"] and ie["gate"] == iv["gate"] == gf_doc,
+          (ie, iv), cover=["N2-GATE-INDET"])
+    g10f = {("span_reward", F10): "FAIL"}
+    ep_, ef_ = (outcomes(literal_state(gread=g10f))["gread"]["E"],
+                outcomes(literal_state(gread=g10f, gate=GF))["gread"]["E"])
+    ent = {g: [r["label"] for r in gread_table(literal_state(gate=GATE_FIXTURE[g])) if r["enters"] == GREAD_N2_LABEL]
+           for g in GATE_STATES}
+    B.chk("N2's label input follows the gate's branch: span_reward's G-READ-n at f = 0.10 FAIL reads PASS under the "
+          "gate's PASS (f = 0.20's cell) and FAIL under its FAIL, and G-READ-n's table marks the cell that enters at "
+          "the decision f alone (OPEN-Q3 as ruled; PIN-n-41)",
+          ep_ == "PASS" and ef_ == "FAIL" and ent == {"PASS": [F20], "FAIL": [F10]}, (ep_, ef_, ent),
+          cover=["N2-GATE-GREAD"])
     neg = Est(-0.3, -0.4, -0.2)
     un = {"E-negative": n2_outcome(literal_state(E={F20: neg}))["state"],
           "V-negative": n2_outcome(literal_state(E={F20: Est(0.01, -0.02, 0.04)}, V={2 / 3: neg}))["state"]}
@@ -1658,7 +1792,7 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
            "F_AT": F_AT == verb["add_f"], "labels": ANSWERED == verb["add_ans"] and CNA == verb["add_cna"],
            "once": T_DOSE_ND_ANSWERED.count(OLD_MOVE) == C_DOSE_ND_NOT_READABLE.count(OLD_MOVE) == 1
            and A6_DOSE_ND_READABLE_N4.count(MOVE_NOT_CERTIFIED) == 1
-           and all(C_N2[s].count(F_AT) == 1 for s in ("SPECIFIC", "SHARED", "NULL")),
+           and all(C_N2[s].count(F_AT) == 1 for s in N2_STATES),
            "replaced": all(f.count(MOVE_NC) == 1 for f in (D_ND_ANSWERED, D_ND_NOT_READABLE, D_ND_READABLE_N4))
            and OLD_MOVE not in D_ND_ANSWERED + D_ND_NOT_READABLE and MOVE_NOT_CERTIFIED not in D_ND_READABLE_N4
            and MOVE_NC == MOVE_NOT_CERTIFIED.replace(DEQ_FIGURE, DEQ_FIGURE + MERGE_SLOT) != MOVE_NOT_CERTIFIED,
@@ -1671,6 +1805,22 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
           "its quotation; each replaced exactly once by the movement not certified, the [merge] slot after its "
           "figure (OPEN-Q8 as ruled; the seat's answers of 2026-11-18 §5.4); secondary (b) reads struck in §4's own "
           "clauses", all(add.values()), [k for k, v in add.items() if not v], cover=["SENT-ADDENDUM"])
+    a3 = {"lock form": verb["a3_line"] == f'"{GATE_LINE_HEAD}k of {GATE_N}, PASS"' and verb["a3_fail"] == "FAIL"
+          and verb["a3_spans"] == "2",
+          "bar": f"against the one bar, {GATE_BAR} of {GATE_N}" in verb["a3_p33"],
+          "reasons": verb["a3_reasons"] == "2" and verb["a3_reason_gate"] == ADDENDUM3_FORMS["REASON_GATE"]
+          and verb["a3_reason_cap"] == ADDENDUM3_FORMS["REASON_CAP"],
+          "why": [why_text(r) for r in ([], ["gate"], ["cap"], ["gate", "cap"])]
+          == ["", f" (N2's deciding point, by {verb['a3_reason_gate']})",
+              f" (N2's deciding point, by {verb['a3_reason_cap']})",
+              f" (N2's deciding point, by {verb['a3_reason_gate']} and {verb['a3_reason_cap']})"]
+          and all(_bt_raises(lambda r=r: why_text(r))[0] for r in (["cap", "gate"], ["gate", "gate"], ["leak"])),
+          "slot": all(C_N2[s].count(F_AT + WHY_SLOT) == 1 and C_N2[s].count(WHY_SLOT) == 1 for s in N2_STATES)}
+    B.chk("ADDENDUM-n3's words, from its bytes: §3.3's lock form ('reward axis 5(d) gate, coherence: k of 48, PASS' "
+          "or FAIL) and its bar (36 of 48) are the line's head, count and bar here; §3.4's two reasons ('the gate's "
+          "coherence FAIL, or the cap') are the [why] clause's words, character for character, none where f = 0.20 "
+          "decides and both in §3.4's order where both hold; [why] follows 'at f = [f]' once in each of N2's four "
+          "forms (PIN-n-40, PIN-n-41)", all(a3.values()), [k for k, v in a3.items() if not v], cover=["SENT-ADDENDUM3"])
     # The seat's answers of 2026-11-18 §5 (transcribed: the battery reads no raw), each against words written here
     spec_v = ("while the valence direction of record at the norm-matched point does (Δm = [xV] nats "
               "[CIV][, against the conditioned zone])")                       # §5.3's quotation, its "…" dropped
@@ -1756,9 +1906,11 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
             i = b + 1
         return out
     stray = sorted({t for v in cf.values() for t in brackets(v) if t not in SLOTS})
-    B.chk(f"the module's {len(cf)} sentence forms beyond §5's verbatim cells (Code's, OPEN-Q8 as ruled, ADDENDUM-n1 "
-          "§7.6's and the seat's of 2026-11-18) are pinned by digest (CODE_FORMS_SHA256), pairwise distinct, and use "
-          "declared slots only", dig == CODE_FORMS_SHA256 and len(set(cf.values())) == len(cf) and not stray,
+    B.chk(f"the module's {len(cf)} forms beyond §5's verbatim cells (its sentence forms: Code's, OPEN-Q8 as ruled, "
+          "ADDENDUM-n1 §7.6's, the seat's of 2026-11-18 and ADDENDUM-n3's, with Code's clause around §3.4's reasons; "
+          "beside them the lock line's head, which the reader parses) are pinned by digest (CODE_FORMS_SHA256), "
+          "pairwise distinct, and use declared slots only",
+          dig == CODE_FORMS_SHA256 and len(set(cf.values())) == len(cf) and not stray,
           (dig, stray), cover=["SENT-CODE-FORMS"])
     # ADDENDUM-n1 §7.6's forms filled, against literal text written here (the v3 review's B1-B3)
     def s4(x): return f"{x:+.4f}"
@@ -1851,11 +2003,13 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
     head = "N2, descriptive (§7.3; it licenses no thesis sentence): "
     e_lo = Est(0.01, -0.02, 0.04)
     v72 = Est(0.72, 0.62, 0.82)
-    spec = (head + "SPECIFIC: at f = 0.10 this program's evaluative axis (span_reward) does not move BK's apparatus "
-            f"beyond the leak ceiling (Δm = {s4(0.01)} nats {c4(e_lo)} against {p4(0.05)}) while the valence direction "
-            f"of record at the norm-matched point does (Δm = {s4(0.72)} nats {c4(v72)}) — ")
-    want_2 = {"SHARED": head + "SHARED: at f = 0.10 this program's evaluative axis (span_reward) moves BK's apparatus "
-                               f"beyond the leak ceiling (Δm = {s4(0.2)} nats {c4(Est(0.2, 0.1, 0.3))} against "
+    spec = (head + "SPECIFIC: at f = 0.10 (N2's deciding point, by the cap) this program's evaluative axis "
+            f"(span_reward) does not move BK's apparatus beyond the leak ceiling (Δm = {s4(0.01)} nats {c4(e_lo)} "
+            f"against {p4(0.05)}) while the valence direction of record at the norm-matched point does (Δm = "
+            f"{s4(0.72)} nats {c4(v72)}) — ")
+    want_2 = {"SHARED": head + "SHARED: at f = 0.10 (N2's deciding point, by the cap) this program's evaluative axis "
+                               "(span_reward) moves BK's apparatus beyond the leak ceiling (Δm = "
+                               f"{s4(0.2)} nats {c4(Est(0.2, 0.1, 0.3))} against "
                                f"{p4(0.05)}); the valence direction of record at the norm-matched point: Δm = "
                                f"{s4(0.72)} nats {c4(v72)}",
               "SPECIFIC": spec + "answered", "SPECIFIC, f0.10 FAIL": spec + "concluded, not answered",
@@ -1866,9 +2020,10 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
                      ("SPECIFIC, f0.20 FAIL", {"E": {F10: e_lo}, "gread": {("span_reward", F20): "FAIL"}})):
         st_f = literal_state(MAP_B, **over)
         got_2[k2] = sentence_set_filled(outcomes(st_f), st_f, route="B", auc={"d_eq": 0.9})["7.3"]["text"]
-    B.chk("N2's sentence where the cap binds (2·0.72 > 1), filled, equals literal text: 'at f = 0.10', span_reward's "
-          "figures at f = 0.10, the valence direction's at d_eq, each with its CI (PIN-n-30, PIN-n-34), the ceiling "
-          "there; its label from span_reward's G-READ-n at f = 0.10 alone (OPEN-Q7 as ruled)", got_2 == want_2,
+    B.chk("N2's sentence where the cap binds (2·0.72 > 1), filled, equals literal text: 'at f = 0.10' with the cap "
+          "named as its reason (ADDENDUM-n3 §3.4; PIN-n-41), span_reward's figures at f = 0.10, the valence "
+          "direction's at d_eq, each with its CI (PIN-n-30, PIN-n-34), the ceiling there; its label from span_reward's "
+          "G-READ-n at f = 0.10 alone (OPEN-Q7 as ruled)", got_2 == want_2,
           [k for k in want_2 if got_2.get(k) != want_2[k]], cover=["SENT-FILLED-N2-CAP"])
     zw = ", against the conditioned zone"
     m23 = MAP_A.norm_matched(F20)
@@ -1910,6 +2065,50 @@ def _bt_sentences(B: _Battery, verb: Mapping[str, str]) -> None:
           "certified or not, on either figure, and on neither at a mean of exactly 0 (the seat's answers of 2026-11-18 "
           "§5.3: PIN-n-30, PIN-n-34); the sign decides no N2 outcome (seven sentences)", got_z == want_z,
           [k for k in want_z if got_z.get(k) != want_z[k]], cover=["SENT-FILLED-N2-ZONE"])
+    # ADDENDUM-n3 §3.4 (PIN-n-41's readings (c) and (d)): the report line names the deciding point in every state and,
+    # where f = 0.10 decides, the reason -- the gate's FAIL, the cap, or both in §3.4's order -- in literal text
+    gfl = GATE_FIXTURE["FAIL"]
+    v13 = Est(1 / 3, 1 / 3 - 0.1, 1 / 3 + 0.1)
+    why_g, why_c = " (N2's deciding point, by the gate's coherence FAIL)", " (N2's deciding point, by the cap)"
+    why_gc = " (N2's deciding point, by the gate's coherence FAIL and the cap)"
+    sh10 = ("SHARED: at f = 0.10{w} this program's evaluative axis (span_reward) moves BK's apparatus beyond the leak "
+            f"ceiling (Δm = {s4(0.2)} nats {c4(Est(0.2, 0.1, 0.3))} against {p4(0.05)}); the valence direction of "
+            "record at the norm-matched point: Δm = {v}")
+    want_g = {
+        "SHARED, gate FAIL (a)": head + sh10.format(w=why_g, v=f"{s4(1 / 3)} nats {c4(v13)}"),
+        "SHARED, gate FAIL and the cap (b)": head + sh10.format(w=why_gc, v=f"{s4(0.72)} nats {c4(v72)}"),
+        "SPECIFIC, gate FAIL (a)": head + "SPECIFIC: at f = 0.10" + why_g + " this program's evaluative axis "
+        f"(span_reward) does not move BK's apparatus beyond the leak ceiling (Δm = {s4(0.01)} nats {c4(e_lo)} against "
+        f"{p4(0.05)}) while the valence direction of record at the norm-matched point does (Δm = {s4(1 / 3)} nats "
+        f"{c4(v13)}) — answered",
+        "INDETERMINATE, gate FAIL (a)": head + "INDETERMINATE: N2 is not evaluated at f = 0.10" + why_g
+        + " (incomplete:N2-E@f0.10)",
+        "INDETERMINATE, the cap (b)": head + "INDETERMINATE: N2 is not evaluated at f = 0.10" + why_c
+        + " (incomplete:N2-E@f0.10)",
+        "INDETERMINATE, gate PASS (a)": head + "INDETERMINATE: N2 is not evaluated at f = 0.20 (incomplete:N2-E@f0.20)"}
+    got_g = {}
+    for kg, dm_, gt_, over in (("SHARED, gate FAIL (a)", MAP_A, gfl, {}),
+                               ("SHARED, gate FAIL and the cap (b)", MAP_B, gfl, {}),
+                               ("SPECIFIC, gate FAIL (a)", MAP_A, gfl, {"E": {F10: e_lo}}),
+                               ("INDETERMINATE, gate FAIL (a)", MAP_A, gfl, {"complete": {"N2-E": False}}),
+                               ("INDETERMINATE, the cap (b)", MAP_B, GATE_FIXTURE["PASS"],
+                                {"complete": {"N2-E": False}}),
+                               ("INDETERMINATE, gate PASS (a)", MAP_A, GATE_FIXTURE["PASS"],
+                                {"complete": {"N2-E": False}})):
+        st_f = literal_state(dm_, gt_, **over)
+        got_g[kg] = sentence_set_filled(outcomes(st_f), st_f, route="B", auc={"d_eq": 0.9})["7.3"]["text"]
+    st_t = literal_state(MAP_A, gfl)
+    stops = []
+    for f_, rs_ in ((F20, ["gate"]), (F10, []), (F10, ["cap", "gate"]), (F10, ["gate", "gate"])):
+        o_t = outcomes(st_t)
+        o_t["N2"] = dict(o_t["N2"], f=f_, reasons=rs_)
+        stops.append(_bt_raises(lambda o_=o_t: sentence_set_filled(o_, st_t, route="B", auc={"d_eq": 0.9}),
+                                (AnlStop,))[0])
+    B.chk("N2's report line names its deciding point in each state, INDETERMINATE's included, and the reason where "
+          "f = 0.10 decides (the gate's coherence FAIL; the cap; both, in ADDENDUM-n3 §3.4's order), in literal text "
+          "(six sentences); filling STOPs on a decision f its reasons do not give or reasons out of §3.4's order "
+          "(PIN-n-41)", got_g == want_g and all(stops) and len(stops) == 4,
+          [k for k in want_g if got_g.get(k) != want_g[k]] or stops, cover=["SENT-FILLED-N2-GATE"])
 
 
 def _canon(x: Any) -> str:
@@ -2047,17 +2246,18 @@ _PATTERNS = ([{}] + [{"paused": {a: True}} for a in N1_ARMS] + [{"complete": {a:
 _N2_PATTERNS = ({}, {"paused": {"N2-E": True}}, {"complete": {"N2-E": False}})
 
 
-def map_reach(dmap: DoseMap, fourth: set | None = None) -> tuple[set, bool, bool]:
-    """The (N1, dose, N2) triples the outcome layer produces over a grid of states on one dose map: six estimates at
-    each distinct point of +1, −1, d_eq, d_20, the slope above or not above its floor, span_reward's effect at N2's
-    decision f certified or not, and every completeness / pause pattern, two point by point (N1-P at −1 and N1-R at
-    +1/2, which make N1 INDETERMINATE and leave N2 evaluated wherever its point is not +1/2: PIN-n-29 as amended);
-    returns the set, whether dose INDETERMINATE <=> N1 INDETERMINATE held throughout, and whether nothing raised.
-    ``fourth``, if given, collects (dose, its movement certified against the conditioned zone), the input of the seat's
-    fourth form (PIN-n-35)."""
+def map_reach(dmap: DoseMap, fourth: set | None = None, *, gate: str) -> tuple[set, bool, bool]:
+    """The (N1, dose, N2) triples the outcome layer produces over a grid of states on one dose map under one branch of
+    the gate (its result, PASS or FAIL: GATE_FIXTURE's; PIN-n-42): six estimates at each distinct point of +1, −1,
+    d_eq, d_20, the slope above or not above its floor, span_reward's effect at N2's decision f certified or not, and
+    every completeness / pause pattern, two point by point (N1-P at −1 and N1-R at +1/2, which make N1 INDETERMINATE
+    and leave N2 evaluated wherever its point is not +1/2: PIN-n-29 as amended); returns the set, whether dose
+    INDETERMINATE <=> N1 INDETERMINATE held throughout, and whether nothing raised. ``fourth``, if given, collects
+    (dose, its movement certified against the conditioned zone), the input of the seat's fourth form (PIN-n-35)."""
     r = dmap.resolved()
     pts = sorted({1.0, -1.0, r["d_eq"], r["d_20"]}, reverse=True)
-    fd = dmap.n2_decision_f()
+    fd = dmap.n2_decision_f(gate)
+    g = GATE_FIXTURE[gate]
     pats = list(_PATTERNS) + [pointwise(dmap, {("N1-P", -1.0): ["incomplete"]}),
                               pointwise(dmap, {("N1-R", 0.5): ["incomplete"]})]
     seen, iff, clean = set(), True, True
@@ -2067,7 +2267,7 @@ def map_reach(dmap: DoseMap, fourth: set | None = None) -> tuple[set, bool, bool
             for pat, pat2 in itertools.product(pats, _N2_PATTERNS):
                 over = {"V": V, "floor_V": 0.3 if slope_ok else 1.5,
                         "E": {fd: Est(0.3, 0.2, 0.4) if e_cert else Est(0.01, -0.02, 0.04)}}
-                st = _apply(literal_state(dmap, **over), pat, pat2)
+                st = _apply(literal_state(dmap, g, **over), pat, pat2)
                 try:
                     o = outcomes(st)
                 except (Exception, SystemExit):                     # noqa: BLE001
@@ -2081,13 +2281,25 @@ def map_reach(dmap: DoseMap, fourth: set | None = None) -> tuple[set, bool, bool
     return seen, iff, clean
 
 
+def coupling_shape(dmap: DoseMap, gate: str) -> str:
+    """Which of N1's +1, dose's d_eq point and N2's decision point coincide, under one branch of the gate (PIN-n-42):
+    (d) d_eq's point is +1; (b) N2 is decided at f = 0.10, so at dose's point -- the cap binds or the gate FAILs
+    (ADDENDUM-n3 §3.4); (c) N2 is decided at f = 0.20 at +1, d_20's point there without the cap; (a) none."""
+    if dmap.resolved()["d_eq"] == 1.0:
+        return "d"
+    if dmap.n2_decision_f(gate) == F10:
+        return "b"
+    return "c" if dmap.norm_matched(F20) == 1.0 else "a"
+
+
 def map_reach_by_hand(shape: str) -> set:
     """Hand-derived reachable (N1, dose, N2) triples per coupling shape: which of N1's +1, dose's d_eq point and N2's
     decision point coincide (the question block's Q5 derivation,
-    results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, with N2's decision f as OPEN-Q7 is ruled). (a) none; (b)
-    the cap binds and d_eq's point is not +1: N2 is decided at dose's point, so no DETECTABLE beside NULL; (c) d_20's
-    point is +1 without the cap: N2 is decided at N1's +1, which REPLICATED and PARTIAL certify, so no NULL beside them;
-    (d) d_eq's point is +1: all three meet there."""
+    results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, with N2's decision f as OPEN-Q7 is ruled and ADDENDUM-n3
+    §3.4 extends it). (a) none; (b) N2 is decided at f = 0.10, the cap binding or the gate FAILing, and d_eq's point is
+    not +1: N2 is decided at dose's point, so no DETECTABLE beside NULL; (c) d_20's point is +1 without the cap and the
+    gate PASSes: N2 is decided at N1's +1, which REPLICATED and PARTIAL certify, so no NULL beside them; (d) d_eq's
+    point is +1: all three meet there."""
     det = ("DETECTABLE", "NOT-DETECTABLE")
     dec = ("REPLICATED", "PARTIAL", "NOT-REPLICATED")
     if shape == "a":
@@ -2112,17 +2324,26 @@ def map_reach_by_hand(shape: str) -> set:
 
 def _bt_reachability(B: _Battery) -> None:
     res, fourth = {}, {}
-    for shape, dm in (("a", MAP_A), ("b", MAP_B), ("c", MAP_C), ("d", MAP_D)):
-        fourth[shape] = set()
-        seen, iff, clean = map_reach(dm, fourth[shape])
-        res[shape] = (seen, iff, clean)
-    B.chk("reachability: on every enumerated state of the four shapes, dose is INDETERMINATE iff N1 is (so 160 of the "
-          "384 product tuples are unreachable on any map: 64 with N1 INDETERMINATE and dose decided, 96 the reverse)",
-          all(v[1] for v in res.values()), cover=["REACH-DOSE-IFF-N1"])
-    B.chk("reachability: the outcome layer raised on no enumerated state", all(v[2] for v in res.values()),
-          cover=["REACH-NO-RAISE"])
+    maps4 = (("a", MAP_A), ("b", MAP_B), ("c", MAP_C), ("d", MAP_D))
+    for (shape, dm), gate in itertools.product(maps4, GATE_STATES):
+        fourth[(shape, gate)] = set()
+        seen, iff, clean = map_reach(dm, fourth[(shape, gate)], gate=gate)
+        res[(shape, gate)] = (seen, iff, clean)
+    B.chk("reachability: on every enumerated state of the four shapes, under each branch of the gate, dose is "
+          "INDETERMINATE iff N1 is (so 160 of the 384 product tuples are unreachable on any map: 64 with N1 "
+          "INDETERMINATE and dose decided, 96 the reverse)",
+          all(v[1] for v in res.values()) and len(res) == 8, cover=["REACH-DOSE-IFF-N1"])
+    B.chk("reachability: the outcome layer raised on no enumerated state, under either branch of the gate",
+          all(v[2] for v in res.values()), cover=["REACH-NO-RAISE"])
+    fail_want = {"a": ("b", 25), "b": ("b", 25), "c": ("b", 25), "d": ("d", 17)}
+    fail_got = {s: (coupling_shape(dm, "FAIL"), len(res[(s, "FAIL")][0])) for s, dm in maps4}
+    B.chk("reachability under the gate's FAIL (ADDENDUM-n3 §3.4; PIN-n-42): N2 is decided at f = 0.10, at dose's "
+          "point, so shapes (a), (b) and (c) couple as (b) does (25 triples, the hand derivation's) and (d) stays (d) "
+          "(17); under its PASS each shape is its own (below)",
+          fail_got == fail_want and all(res[(s, "FAIL")][0] == map_reach_by_hand(fail_want[s][0]) for s, _ in maps4)
+          and all(coupling_shape(dm, "PASS") == s for s, dm in maps4), fail_got, cover=["REACH-GATE-FAIL"])
     for shape, n in (("a", 28), ("b", 25), ("c", 24), ("d", 17)):
-        seen = res[shape][0]
+        seen = res[(shape, "PASS")][0]
         want = map_reach_by_hand(shape)
         what = {"a": "all points distinct", "b": "the cap binds, N2 decided at d_eq's point (OPEN-Q7 as ruled)",
                 "c": "d_20 merged into +1 without the cap, N2 decided there",
@@ -2132,10 +2353,10 @@ def _bt_reachability(B: _Battery) -> None:
               f"{n * 8} reachable tuples + NOT-RUN", seen == want and len(want) == n,
               (sorted(seen - want)[:3], sorted(want - seen)[:3]), cover=[f"REACH-SHAPE-{shape}"])
     want4 = {("DETECTABLE", False), ("NOT-DETECTABLE", False), ("NOT-DETECTABLE", True), ("INDETERMINATE", False)}
-    B.chk("reachability: on each of the four shapes the dose is NOT-DETECTABLE both with a movement at d_eq certified "
-          "against the conditioned zone (the seat's fourth form) and without one, and no other dose carries one "
-          "(PIN-n-35)", all(f == want4 for f in fourth.values()), {s: sorted(f) for s, f in fourth.items()},
-          cover=["REACH-FOURTH"])
+    B.chk("reachability: on each of the four shapes, under either branch of the gate, the dose is NOT-DETECTABLE both "
+          "with a movement at d_eq certified against the conditioned zone (the seat's fourth form) and without one, "
+          "and no other dose carries one (PIN-n-35)", all(f == want4 for f in fourth.values()) and len(fourth) == 8,
+          {f"{s} {g}": sorted(f) for (s, g), f in fourth.items()}, cover=["REACH-FOURTH"])
     st = literal_state()
     free = set()
     for told, e in ((Est(1.0, 0.8, 1.2, 98), 0.1), (Est(-1.0, -1.2, -0.8, 98), 0.1), (Est(0.05, -0.1, 0.2, 98), 0.1),
@@ -2149,7 +2370,8 @@ def _bt_reachability(B: _Battery) -> None:
                                                                             ("INDETERMINATE", True))}
     B.chk("reachability: N4 reads its own arms only -- each of its five forms beside N1 REPLICATED and N1 "
           "INDETERMINATE", want <= free, sorted(want - free)[:3], cover=["REACH-N4-FREE"])
-    B.extra["reachability"] = {s: {"triples": len(v[0]), "tuples": len(v[0]) * 8 + 1} for s, v in res.items()}
+    B.extra["reachability"] = {s: {g: {"triples": len(res[(s, g)][0]), "tuples": len(res[(s, g)][0]) * 8 + 1}
+                                   for g in GATE_STATES} for s, _ in maps4}
 
 
 # --- numerics --------------------------------------------------------------------------------------------------------
@@ -2316,13 +2538,21 @@ def _bt_numerics(B: _Battery) -> None:
           "moved by a merge on shape (c) (0.49 to +1/2, 0.98 to +1)",
           n2a == ((1 / 3, 2 / 3), (1 / 3, 2 / 3)) and n2b == ((0.72, 1.44), (0.72, 1.0))
           and n2c == ((0.49, 2 * 0.49), (0.5, 1.0)), (n2a, n2b, n2c), cover=["NUM-N2-POINTS"])
-    caps = {"a": (MAP_A.cap_binds(), MAP_A.n2_decision_f()), "b": (MAP_B.cap_binds(), MAP_B.n2_decision_f()),
-            "c": (MAP_C.cap_binds(), MAP_C.n2_decision_f()), "d": (MAP_D.cap_binds(), MAP_D.n2_decision_f()),
-            "edge": (DoseMap(0.5, 1.0).cap_binds(), DoseMap(0.5, 1.0).n2_decision_f())}
-    B.chk("OPEN-Q7 as ruled: the cap binds iff 2·d_eq > 1 (shapes b and d; not at d_eq = 0.5 exactly, where 2·d_eq = "
-          "1 and the norms match at f = 0.20), and N2 is then decided at f = 0.10, else at f = 0.20",
-          caps == {"a": (False, F20), "b": (True, F10), "c": (False, F20), "d": (True, F10), "edge": (False, F20)},
-          caps, cover=["NUM-CAP-DECISION-F"])
+    maps5 = {"a": MAP_A, "b": MAP_B, "c": MAP_C, "d": MAP_D, "edge": DoseMap(0.5, 1.0)}
+    caps = {(k, g): (m.cap_binds(), m.n2_decision_f(g), m.n2_reasons(g)) for k, m in maps5.items() for g in GATE_STATES}
+    want_caps = {("a", "PASS"): (False, F20, ()), ("a", "FAIL"): (False, F10, ("gate",)),
+                 ("b", "PASS"): (True, F10, ("cap",)), ("b", "FAIL"): (True, F10, ("gate", "cap")),
+                 ("c", "PASS"): (False, F20, ()), ("c", "FAIL"): (False, F10, ("gate",)),
+                 ("d", "PASS"): (True, F10, ("cap",)), ("d", "FAIL"): (True, F10, ("gate", "cap")),
+                 ("edge", "PASS"): (False, F20, ()), ("edge", "FAIL"): (False, F10, ("gate",))}
+    refused = [_bt_raises(lambda g=g: MAP_A.n2_decision_f(g))[0] for g in ("pass", "", None, "PASSED", "FAILED")]
+    B.chk("OPEN-Q7 as ruled and ADDENDUM-n3 §3.4 (PIN-n-41): the cap binds iff 2·d_eq > 1 (shapes b and d; not at "
+          "d_eq = 0.5 exactly, where 2·d_eq = 1 and the norms match at f = 0.20); N2 is decided at f = 0.20 iff the "
+          "gate PASSes and the cap does not bind, else at f = 0.10, its reasons in §3.4's order (the gate's FAIL, the "
+          "cap; both where both hold); a gate result other than PASS or FAIL is refused",
+          caps == want_caps and all(refused) and len(caps) == 10,
+          ([k for k in want_caps if caps.get(k) != want_caps[k]], refused),
+          cover=["NUM-CAP-DECISION-F", "NUM-GATE-DECISION-F"])
     n1p = {"a": MAP_A.n1p_points(), "b": MAP_B.n1p_points(), "c": MAP_C.n1p_points(), "d": MAP_D.n1p_points()}
     B.chk("OPEN-Q2 as ruled (c): N1-P's points are the kept points of +1, +d_20, +d_eq and −1, descending -- four on "
           "shape (a), three where d_20 folds into +1 (b), +1/2 where d_eq folds there (c), two where both fold into +1 "
@@ -2394,9 +2624,10 @@ def _bt_bk(B: _Battery) -> None:
 #: §2); PIN-n-27, -28 and -31 accepted, PIN-n-29 and -32 amended, PIN-n-30 accepted with its sentences amended
 #: (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md §5); PIN-n-33 amended, PIN-n-34 to PIN-n-36
 #: accepted (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3); PIN-n-37 amended
-#: (results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6), its three readings (a)-(c) Code's;
-#: PIN-n-38 and PIN-n-39, ADDENDUM-n2's in the reader, declared since; Code's readings strikable by the seat until
-#: LOCK-n v1.0.
+#: (results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6), its readings (a) and (c) accepted and (b)
+#: ruled by R12, the tile, PIN-n-38 accepted as read and PIN-n-39 accepted
+#: (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4); PIN-n-40 to PIN-n-42, ADDENDUM-n3's,
+#: declared since; Code's readings strikable by the seat until LOCK-n v1.0.
 PINS = {
     "PIN-n-7": "'exceeds its floor' is the signed mean slope above the floor (floor ≥ 0)",
     "PIN-n-8": "'its CI excluding 0' is lo > 0 or hi < 0; an endpoint at 0 does not exclude; either side",
@@ -2516,19 +2747,26 @@ PINS = {
                 "(§6), re-computed or not; and, where one of those reads is a session's shadow (N1-V's d = 0 read), "
                 "every planned steered read of that session, each read against it (the shadow extension). Code's "
                 "narrower form (the trials alone) is struck. Code's binding of a standing batch to the runner's -- its "
-                "range, its n and k, its scope holding its trials' arms -- stands as the ground the reading needs, "
-                "with every pause's read held to the plan (report_problems); it follows the runner's batch, cumulative "
-                "since the last cleared fire, which a ceiling ruling does not clear (the runner's R12 and R13, Code's "
-                "readings for the seat), and moves with their rulings. Three readings here are Code's, for the seat, "
-                "strikable until LOCK-n v1.0: (a) the points are §6's whatever the pause's scope, §6 stating them "
-                "without it; (b) the range is the report's, from the batch's first trial (BINOMIAL_FIELDS), so reads "
-                "launched after a cleared batch and before the next batch's first trial lie in no range; (c) a guard's "
-                "beside flag reads its points, as N2 does, §6 naming N1's and N4's pauses alone as per arm. N1's and "
+                "range, its n and k, and the pause's scope the runner's SCOPE (its read's arm, its tile's trials' arms "
+                "and, for a shadow, every arm with a steered read of its session: the v7 review's F1, Code's for the "
+                "seat) -- stands as the ground the reading needs, with every pause's read held to the plan and, on "
+                "disk, to its launch index (report_problems). Its three readings, as the seat ruled "
+                "them (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4): (a) accepted, 'the "
+                "points are §6's whatever the scope; the scope binds the batch'; (b) ruled by §3 (R12), 'the range is "
+                "the tile, so a read lies in exactly one range, and the reads after a cleared fire belong to the next "
+                "tile': the runner's tile at ef105f1, a fire's batch the cadence's reads ending at its read, or the "
+                "stage's tail at the run's end, which report_problems binds; a ruling clears nothing, a ceiling "
+                "pause's read staying in its tile as a trial, and as an exceedance where its rel is above TAU (R13); "
+                "§4 (b)'s interim (the runner's batch counted from the clear, until the runner carries the tile) is "
+                "not built, the runner carrying the tile before any campaign report this reader reads; (c) accepted, "
+                "a guard's beside flag reads its points, as N2 does, §6 naming N1's and N4's pauses alone as per arm. "
+                "N2's pause causes name an arm under (a), accepted there; the arm need not be in the scope. N1's and "
                 "N4's pauses stay per arm, as their incompleteness is (n:134; §5 N4, OPEN-Q6 as ruled): PIN-n-24's 'a "
                 "pause standing (under PI-STOP only) making the arms in its scope INDETERMINATE' is read as those "
                 "per-arm rules, and for N2 and its guards through the points read here. The other f's figures beside a "
                 "decided N2 stay computed and name the arms whose reads there a pause stands on ('paused')",
-    "PIN-n-38": "ADDENDUM-n2 §3's second sensitivity row, its trigger replacing the second sitting's 'where it "
+    "PIN-n-38": "accepted as read (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4): "
+                "ADDENDUM-n2 §3's second sensitivity row, its trigger replacing the second sitting's 'where it "
                 "empties' (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §1.4): 'Where it "
                 "drops more than half of an arm's reads at a point' is no emptied test, and is read per arm and "
                 "record label: of the arm's reads present and finite there (N1-V's d = 0 reads, the shadows, are no "
@@ -2542,7 +2780,9 @@ PINS = {
                 "anything'). A point it leaves with no session, and an arm whose slope it leaves with no common "
                 "session (N1-V's, or an N1-R direction's; N2's slopes are descriptive and mark nothing), it marks "
                 "'median-emptied', as the TAU/4 row marks them 'tau4-emptied' (PIN-n-20, PIN-n-36)",
-    "PIN-n-39": "ADDENDUM-n2 §2.1's fidelity-ceiling pause kind in the reader: a re-computed read is above the ceiling "
+    "PIN-n-39": "accepted (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4: the both-ways "
+                "binding for the ceiling, the one-way binding kept for the non-finite and identity kinds): "
+                "ADDENDUM-n2 §2.1's fidelity-ceiling pause kind in the reader: a re-computed read is above the ceiling "
                 "where its comparison is set (both paths finite) and its absdiff exceeds the identity's ceiling C, "
                 "strictly ('above C nats'). The reader binds the kind both ways: a stage report's pause naming it, as "
                 "its kind or in also_fired, names a read on disk above it, and every record above it is the read of a "
@@ -2551,6 +2791,46 @@ PINS = {
                 "pause for PIN-n-37's points. The identity bound at d = 0 is C (§2.2), read through the records' "
                 "identity block as before. The same converse for the non-finite and identity-bound kinds is not "
                 "applied: PIN-n-24 binds them one way, as accepted",
+    "PIN-n-40": "ADDENDUM-n3 §3.3's lock form, as n-build's lock draft carries it (agreed through the coordinating "
+                "session, PI date 2026-11-19, a relay that no committed text records): LOCK-n v1.0 records the "
+                "reward axis's 5(d) gate in one whole line, 'reward axis 5(d) gate, coherence: <k> of 48, PASS' or "
+                "the same line ending in FAIL, k the reward_f020 batch's coherent count as a decimal integer 0-48, "
+                "PASS iff k ≥ 36 (§3.3's bar). Code's form, for the seat: the parse (lines read stripped, as "
+                "PIN-n-26's are; a line is the gate's if it starts with 'reward axis 5(d) gate, coherence:', so one "
+                "naming the leakage half, §3.2, is not, and the lock carries the line once: a lock with a second line "
+                "of its own beginning with the head, a quotation of the line or its form, is refused, two being "
+                "found, while a quotation inside another line, or blockquoted, is not read) and the refusals (no such "
+                "line, two or more, any other shape, k outside 0-48, a result the bar contradicts). Code's reading, "
+                "for the seat: §3.4 (i)'s 'LOCK-n v0.1's gate line' (§3.5: 'the lock's gate line') is read in the "
+                "v1.0 lock VERDICTS is given, which carries v0.1's line (n-build's words, relayed by the coordinating "
+                "session: it fills v0.1's hole and carries into v1.0); v0.1 is not opened, so a v1.0 line that "
+                "differed from v0.1's would be read as given, the carrying being the lock's. A G-CAL-n that ended "
+                "early (a STOP, or the early PAUSE) gives the lock no line (§3.5: 'from a `gcal.json` whose status is "
+                "PASS'), so VERDICTS refuses, finding none; the analyzer never reads gcal.json (§3.5)",
+    "PIN-n-41": "ADDENDUM-n3 §3.4 as adopted (the PI's decision (n-5), [adopt]; ADDENDUM-n1 §5.3 extended, OPEN-Q7): "
+                "N2 is decided at f = 0.20 iff the lock's gate line (PIN-n-40) records PASS and the cap does not bind "
+                "(2·d_eq ≤ 1); otherwise at f = 0.10 against N1-V at d_eq's point, f = 0.20 beside against its "
+                "norm-matched point, the ratio printed; INDETERMINATE, SPECIFIC, SHARED and NULL as n §5 texts them at "
+                "whichever f decides; N2-S and N2-C read at both as built, deciding nothing; span_reward's G-READ-n "
+                "cell at the deciding f labels the null (OPEN-Q3). The leakage half reads nothing new (§3.2: 'No text "
+                "or build changes for this component'). Four readings are Code's, for the seat, strikable until LOCK-n "
+                "v1.0: (a) the referent check's observation 3: 'at f = [f]' is filled by the deciding f, and the "
+                "second sitting's 'the gate's clause' is §7.3's reason alone, no other §5 sentence changing; (b) its "
+                "observation 4, extended to d_eq: the points §3.2 and §3.4 place at d_20 or d_eq are their kept points "
+                "under ADDENDUM-n1 §5.1's merge, named by the keeper's label (PIN-n-36), the ratio printed, so §3.4's "
+                "'where the norms are equal exactly' holds only where d_eq is not merged (not where it merges under "
+                "the cap, nor under the gate's FAIL on shape (c): 0.49 into +1/2, the ratio 0.98); (c) where the gate "
+                "FAILs and the cap binds, both reasons are named, in §3.4's order; (d) §7.3's report line names the "
+                "deciding point by 'at f = [f]' in all four states, INDETERMINATE's included, and, where f = 0.10 "
+                "decides, the reason in [why], ' (N2's deciding point, by <reasons>)', the reasons §3.4's words "
+                "verbatim ('the gate's coherence FAIL', 'the cap'), the clause Code's form. [why] is filled at "
+                "VERDICTS from N2's outcome, as [f] is, so the outcome space stays 385 tuples and 2,561 evaluations",
+    "PIN-n-42": "the gate enters at VERDICTS, from the lock (PIN-n-40), so G-ANL-n's artifact reports the pinned map's "
+                "reach under each branch, keyed PASS and FAIL (Code's form): its coupling shape (under the FAIL, N2 is "
+                "decided at f = 0.10, at dose's point: shape (b), or (d) where d_eq's point is +1), its triples and "
+                "their agreement with the hand derivation; a raise, a dose not INDETERMINATE iff N1 is, or a "
+                "disagreement under either branch STOPs the canonical run. map_reach takes the branch with no default; "
+                "its states carry GATE_FIXTURE's gate, 48 of 48 or 35 of 48 (the count decides nothing)",
 }
 #: The seat's rulings on the question block (results/raw/2026-11-16_n-ganl_code-to-design_prebuild.md, Q1-Q9), in
 #: results/raw/2026-11-16_n-ganl_design-to-code_answers.md and ADDENDUM-n1 v0.1, with the amendments of the answers of
@@ -2578,7 +2858,8 @@ OPEN = {
                "not computed where their reads are missing); N4, no read obtained, when a pause stands on its reads",
     "OPEN-Q7": "ruled, ADDENDUM-n1 §5.3: when the cap binds (2·d_eq > 1), N2 is decided at f = 0.10 against N1-V at "
                "d_eq, with f = 0.20 beside against N1-V at d = 1 and the ratio 2·d_eq; otherwise at f = 0.20, f = 0.10 "
-               "beside",
+               "beside; extended by ADDENDUM-n3 §3.4 (the PI's decision (n-5), [adopt]): f = 0.10 decides also where "
+               "the lock's gate line records the coherence component FAILED (PIN-n-41)",
     "OPEN-Q8": "ruled: Appendix A adopted with the amendments of ADDENDUM-n1 §7.6 (the movement clause in the three "
                "NOT-DETECTABLE forms, the sign clause, the labels by §0.6, 'at f = [f]') and of the 2026-11-18 answers "
                "§5.3, §5.4 and §5.6 (N2's figures with their CIs and the zone's words; the merge note in the "
@@ -2687,7 +2968,7 @@ def _bt_snapshot() -> dict:
     return out
 
 
-def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes, a2text: bytes) -> None:
+def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes, a2text: bytes, a3text: bytes) -> None:
     import ast
     B.chk("proposal: PROPOSAL-n v0.2's sha256 is the pinned 30a3d0f5...04f4", hashlib.sha256(ptext).hexdigest()
           == PROPOSAL_SHA256, hashlib.sha256(ptext).hexdigest()[:16], cover=["STR-PROPOSAL-SHA"])
@@ -2695,6 +2976,8 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes, a2text: 
           == ADDENDUM_SHA256, hashlib.sha256(atext).hexdigest()[:16], cover=["STR-ADDENDUM-SHA"])
     B.chk("addendum: ADDENDUM-n2 v0.1's sha256 is the pinned 41f76c49...bb3f", hashlib.sha256(a2text).hexdigest()
           == ADDENDUM2_SHA256, hashlib.sha256(a2text).hexdigest()[:16], cover=["STR-ADDENDUM2-SHA"])
+    B.chk("addendum: ADDENDUM-n3 v0.1's sha256 is the pinned 7f4a7a75...9313", hashlib.sha256(a3text).hexdigest()
+          == ADDENDUM3_SHA256, hashlib.sha256(a3text).hexdigest()[:16], cover=["STR-ADDENDUM3-SHA"])
     lines = ptext.decode("utf-8").splitlines()
     miss = [k for k, (n, s) in VERBATIM.items() if s not in lines[n - 1]]
     B.chk("every verbatim constant is on its declared proposal line (n:136, n:138, n:142)", miss == [], miss,
@@ -2753,9 +3036,10 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes, a2text: 
 
 
 # =====================================================================================================================
-# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at 003ae7d, sha256 5cbf60db...574c: the follow-up
-#     for ADDENDUM-n2 -- the fidelity-ceiling kind, alpha, the ceiling and the median rel in the fidelity rule, the
-#     ceiling counter -- on d791bd9's, ADDENDUM-n1 §5-§6: keepers, the capture band per layer, kfold10, the cap's loads)
+# 10. The reader (n-read-v1 / n-cell-v1, valence_core/n/schema.py at ef105f1, sha256 1cab28df...edff: R12's tile --
+#     a fire's batch the tile, its form checked -- and F5's floor on p0 after the lock, on 003ae7d's follow-up for
+#     ADDENDUM-n2 (the fidelity-ceiling kind, alpha, the ceiling and the median rel in the fidelity rule, the ceiling
+#     counter), on d791bd9's, ADDENDUM-n1 §5-§6: keepers, the capture band per layer, kfold10, the cap's loads)
 # =====================================================================================================================
 # The schema module is imported lazily, on the verdicts path and in the battery only (LAZY_SCHEMA), and bound by its
 # sha256 in every output; its checks run on every cell the analyzer loads ("the checks both sides run"). What the
@@ -2763,7 +3047,7 @@ def _bt_structure(B: _Battery, ptext: bytes, hook: _Hook, atext: bytes, a2text: 
 # each steered read's shadow exists with its ids_sha; a session's cues and present order agree across its reads; N4-T
 # and N4-Ts carry the same schedule_zone per session, 80 S and 80 U (n §2.4).
 SCHEMA_REL = "valence_core/n/schema.py"
-SCHEMA_SHA256 = "5cbf60db8484da1e87fdd33bf84a65aeb2a06194113b266cbcefdec429c9574c"     # 003ae7d
+SCHEMA_SHA256 = "1cab28df54c4c2c699b005fc6d2a99693d569911e292ad9dbdb8b6994db8edff"     # ef105f1
 LAZY_SCHEMA = "valence_core.n.schema"
 N_SESSIONS, N_FLOOR = 160, 40
 #: n §2.4's table, independently of the schema's ARM_CELLS (the reader cross-checks the two): arm -> (directions,
@@ -2782,7 +3066,7 @@ GUARD_DIRS = {"N2-E": "span_reward", "N2-S": "span_sentiment", "N2-C": "span_cha
 
 
 def schema_module():
-    """The record schema, imported lazily; refused unless its bytes are the pinned ones (003ae7d)."""
+    """The record schema, imported lazily; refused unless its bytes are the pinned ones (ef105f1)."""
     if str(REPO) not in sys.path:
         sys.path.insert(0, str(REPO))
     got = hashlib.sha256((REPO / SCHEMA_REL).read_bytes()).hexdigest()
@@ -3009,11 +3293,12 @@ def _vec(d: Mapping[int, float]) -> np.ndarray:
 STEERED_ARMS = ("N1-V", "N1-R", "N1-P", "N2-E", "N2-S", "N2-C")
 
 
-def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tuple, str],
+def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tuple, str], gate: Gate,
                 drop: Callable[[str], bool] | None = None,
                 paused_at: Mapping[tuple[str, Any], bool] | None = None,
                 emptied: str = "tau4-emptied") -> tuple[State, dict]:
-    """The outcome layer's State from the campaign (n §4), and the figures beside it. ``paused``: per arm, whether an
+    """The outcome layer's State from the campaign (n §4), and the figures beside it. ``gate``: the lock's (lock_gate;
+    PIN-n-40), with no default, every caller naming it. ``paused``: per arm, whether an
     unadjudicated pause stands on its reads (the stage report's); ``paused_at``: the points they stand on (PIN-n-37:
     paused_points), None reading ``paused`` at every point of a paused arm. ``drop``: a sensitivity row's read filter,
     the TAU/4 row's (PIN-n-16) or ADDENDUM-n2 §3's second row's (PIN-n-38), None for the primary (ungated, n §2.1);
@@ -3045,7 +3330,7 @@ def build_state(camp: Campaign, *, paused: Mapping[str, bool], gread: Mapping[tu
     for a in STEERED_ARMS:
         if a != "N1-V" and camp.usable(a) and not shadows_ok(a):
             unusable[a] = "shadow"
-    st = State(dmap=dmap, complete={a: camp.usable(a) and a not in unusable for a in ARMS},
+    st = State(dmap=dmap, gate=gate, complete={a: camp.usable(a) and a not in unusable for a in ARMS},
                paused={a: bool(paused.get(a)) for a in ARMS}, gread=dict(gread), missing=missing, nonfinite=nonfin,
                unusable=unusable, paused_at=None if paused_at is None else dict(paused_at))
     fkey = {"f0.10": F10, "f0.20": F20}
@@ -3243,20 +3528,22 @@ def code_forms() -> dict[str, str]:
     """Every sentence form the module writes beyond §5's verbatim cells, by name: Code's (the question block's Appendix
     A with VALUE_MERGED, adopted with the seat's amendments: OPEN-Q8 as ruled), ADDENDUM-n1 §7.6's, with the clause of
     §5 the addendum replaces, and the seat's of 2026-11-18 §5 and of its second sitting §3.2 (RULING_FORMS: its fourth
-    form's two branches, each ending in its label, the label's fill for N4, the merge note and the zone's words); the
-    battery pins them by digest (CODE_FORMS_SHA256), so that none changes unseen."""
+    form's two branches, each ending in its label, the label's fill for N4, the merge note and the zone's words), and
+    ADDENDUM-n3's: §3.4's two reasons and Code's clause around them (N2_WHY); beside them §3.3's lock line's head,
+    which the reader parses rather than writes; the battery pins them by digest (CODE_FORMS_SHA256), so that none
+    changes unseen."""
     f = {"C_N1_PARTIAL": C_N1_PARTIAL, "C_N1_NOT_REPLICATED": C_N1_NOT_REPLICATED, "C_N1_INDET": C_N1_INDET,
          "C_DOSE_ND_NOT_READABLE": C_DOSE_ND_NOT_READABLE, "C_DOSE_INDET": C_DOSE_INDET, "C_NOT_RUN": C_NOT_RUN,
          "VALUE_MERGED": VALUE_MERGED, "OLD_MOVE": OLD_MOVE, "B_STRUCK": B_STRUCK}
     for fam, d in (("C_N2", C_N2), ("C_N4", C_N4), ("CONJUNCT_TEXT", CONJUNCT_TEXT),
                    ("NOT_RUN_CAUSES", NOT_RUN_CAUSES), ("ROUTE_TEXT", ROUTE_TEXT), ("ADDENDUM", ADDENDUM_FORMS),
-                   ("RULING", RULING_FORMS)):
+                   ("RULING", RULING_FORMS), ("ADDENDUM3", ADDENDUM3_FORMS)):
         f |= {f"{fam}[{k}]": v for k, v in d.items()}
-    return f
+    return f | {"N2_WHY": N2_WHY, "GATE_LINE_HEAD": GATE_LINE_HEAD}
 
 
 #: sha256 of _canon(code_forms()) -- a changed form fails the battery until this pin is moved, in the open
-CODE_FORMS_SHA256 = "41d0d6544f5d12beef58d5e157bab30f10b1f53223f6f5c488fb72365abeb1da"
+CODE_FORMS_SHA256 = "4788384475d06375b27eb71a0c15458c3bd56cb250a5b4daf946c1f80079be4d"
 
 
 def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str, auc: Mapping[str, float | None],
@@ -3297,12 +3584,18 @@ def fill(sent: Mapping[str, Any], o: Mapping[str, Any], st: State, *, route: str
                         "[a]": "not computed" if a is None else f"{a:.3f}"})
     elif q == "N2":
         n2 = o["N2"]
+        # ADDENDUM-n3 §3.4 (PIN-n-41): every N2 line names the deciding point and, when f = 0.10 decides, the reason
+        rs = list(n2["reasons"])
+        if rs not in ([], ["gate"], ["cap"], ["gate", "cap"]) or bool(rs) != (n2["f"] == F10):
+            raise AnlStop(f"STOP: N2 decided at {n2['f']} with reasons {rs} (f = 0.10 decides iff the gate FAILs or "
+                          "the cap binds, the reasons in ADDENDUM-n3 §3.4's order)")
+        sub.update({"[f]": F_TEXT[n2["f"]], WHY_SLOT: why_text(n2["reasons"])})
         if n2["state"] == "INDETERMINATE":
             sub["[causes]"] = ", ".join(n2["causes"])
         else:
             e, v = st.E[n2["f"]], st.V[n2["point"]]
             # PIN-n-30 as accepted, PIN-n-34: each figure with its CI, the zone's words where its mean is below 0
-            sub.update({"[xE]": _n(e.mean), "[CIE]": _ci(e), "[c]": _u(n2["ceiling"]), "[f]": F_TEXT[n2["f"]],
+            sub.update({"[xE]": _n(e.mean), "[CIE]": _ci(e), "[c]": _u(n2["ceiling"]),
                         "[xV]": _n(v.mean), "[CIV]": _ci(v), ZONE_E: ZONE_WORDS if e.mean < 0.0 else "",
                         ZONE_V: ZONE_WORDS if v.mean < 0.0 else ""})
     elif q == "N4":
@@ -3603,10 +3896,10 @@ def _bt_gread_all(dmap: DoseMap, state: str = "PASS") -> dict:
 
 
 def _bt_eval(root: Path, sm, *, paused: Mapping[str, bool] | None = None, gread: Mapping | None = None,
-             drop: bool = False):
+             drop: bool = False, gate: Gate = GATE_FIXTURE["PASS"]):
     camp = load_campaign(root, sm)
     st, fig = build_state(camp, paused=paused or {}, gread=gread if gread is not None else _bt_gread_all(camp.dmap),
-                          drop=tau4_drop(camp) if drop else None)
+                          drop=tau4_drop(camp) if drop else None, gate=gate)
     return camp, st, fig, outcomes(st)
 
 
@@ -3824,6 +4117,17 @@ def _bt_reader(B: _Battery) -> None:
               and st7.P[1.0] > st7.L[1.0] and o7["N2"]["ceiling"] == st7.P[1.0] and o7["N2"]["state"] == "SPECIFIC",
               (len(camp7.records), o7["N2"].get("f"), o7["N2"].get("point"), o7["N2"].get("ceiling"),
                o7["N2"]["state"]), cover=["RD-MERGED"])
+        camp7f, _st7f, _fig7f, o7f = _bt_eval(mg, sm, gate=GATE_FIXTURE["FAIL"])
+        n27f = o7f["N2"]
+        bes7f = n27f.get("beside", {}).get(F20, {})
+        B.chk("reader path (shape c) under the gate's FAIL (ADDENDUM-n3 §3.4; PIN-n-41): N2 is decided at f = 0.10 "
+              "against d_eq's kept point +1/2, the ratio d_eq / 0.5 printed (reading (b): the norms are not equal "
+              "there), with f = 0.20 beside against +1 at the ratio 2·d_eq; its reason the gate's FAIL alone",
+              n27f["f"] == F10 and n27f["reasons"] == ["gate"] and n27f.get("point") == 0.5
+              and abs(n27f.get("match_ratio", 0.0) - camp7f.dmap.d_eq / 0.5) <= 1e-12 and n27f.get("match_ratio") != 1.0
+              and bes7f.get("point") == 1.0 and abs(bes7f.get("match_ratio", 0.0) - 2.0 * camp7f.dmap.d_eq) <= 1e-12,
+              (n27f.get("state"), n27f.get("f"), n27f.get("reasons"), n27f.get("point"), n27f.get("match_ratio")),
+              cover=["RD-GATE-FAIL"])
         cb = _bt_write_campaign(base / "cb", sm, R_ell=50.0, delta=p_minus)
         camp7b, st7b, fig7b, o7b = _bt_eval(cb, sm)
         bes = o7b["N2"].get("beside", {}).get(F20, {})
@@ -3958,12 +4262,25 @@ def _bt_reader(B: _Battery) -> None:
         def pq(**kw: Any) -> dict:
             return {"read_id": None, "arms_in_scope": [], "adjudicated": False, "binomial": None} | kw
 
-        def bat(lo: int, hi: int) -> dict:
-            return {"first_launch_index": lo, "last_launch_index": hi}
+        cad_ = camp.identity["fidelity_rule"]["cadence"]
+
+        def bat(lo: int) -> dict:
+            """The tile starting at read ``lo`` (R12: the cadence's reads), as a batch's range."""
+            return {"first_launch_index": lo, "last_launch_index": lo + cad_ - 1}
         li_ = {rid: r["launch_index"] for rid, r in camp.records.items()}
-        m1p = sorted(li_[r] for r in camp.planned["N1-P"] if r.split("|")[2] == "-1")
+
+        def first_li(arm: str, lab: str, d_: str | None = None) -> int:
+            return min(li_[r] for r in camp.planned[arm] if r.split("|")[2] == lab and d_ in (None, r.split("|")[1]))
         sh3, sh159 = f"N1-V|none|0|{session_key(3)}", f"N1-V|none|0|{session_key(159)}"
         steered = sorted(STEERED_ARMS)
+        rs_ = camp.dmap.resolved()
+        # the battery's launch order is plan_cells' (not the runner's ORDER, which puts the shadows first; the analyzer
+        # reads no order): each cell of 160 is one tile, and N1-R's tiles hold four of its 40-read cells (rand_00's +1,
+        # +1/2, +d_20 and +d_eq the first); every tile asserted below starts at a multiple of the cadence (R12's
+        # premise: the records are reads 0..m-1)
+        t_p, t_sh, t_r = first_li("N1-P", "-1"), first_li("N1-V", "0"), first_li("N1-R", "+1", "rand_00")
+        t_h, t_4, t_e = first_li("N1-V", "+1/2"), first_li("N4-Ts", "0"), first_li("N2-E", "f0.10")
+        r4 = {("N1-R", 1.0), ("N1-R", 0.5), ("N1-R", rs_["d_20"]), ("N1-R", rs_["d_eq"])}
         cases_pp = {
             "a read alone (N1-V at −1)": ([pq(read_id=f"N1-V|valence|-1|{session_key(7)}", arms_in_scope=["N1-V"])],
                                          {("N1-V", -1.0)}),
@@ -3975,60 +4292,57 @@ def _bt_reader(B: _Battery) -> None:
                 [pq(read_id=sh3, arms_in_scope=["N1-V"])], keys_(*steered)),
             "a neutral session's shadow (N1-R reads it not)": (
                 [pq(read_id=sh159, arms_in_scope=steered)], keys_(*(a for a in steered if a != "N1-R"))),
-            "a binomial batch over N1-P's −1 cell": ([pq(arms_in_scope=["N1-P"], binomial=bat(m1p[0], m1p[-1]))],
-                                                     {("N1-P", -1.0)}),
-            "the same batch, its scope N1-V (the scope caps nothing)": (
-                [pq(arms_in_scope=["N1-V"], binomial=bat(m1p[0], m1p[-1]))], {("N1-P", -1.0)}),
-            "a binomial batch of one shadow, a neutral session's": (
-                [pq(arms_in_scope=["N1-V", "N2-E"], binomial=bat(li_[sh159], li_[sh159]))],
-                keys_(*(a for a in steered if a != "N1-R"))),
+            "a tile over N1-P's −1 cell": ([pq(arms_in_scope=["N1-P"], binomial=bat(t_p))], {("N1-P", -1.0)}),
+            "the same tile, its scope N1-V (the scope caps nothing)": (
+                [pq(arms_in_scope=["N1-V"], binomial=bat(t_p))], {("N1-P", -1.0)}),
+            "the shadows' tile, through each shadow its session's reads": (
+                [pq(arms_in_scope=["N1-V"], binomial=bat(t_sh))], keys_(*steered)),
             "N4's pause (read per arm)": ([pq(read_id=f"N4-Ts|none|0|{session_key(9)}", arms_in_scope=["N4-Ts"])],
                                           set()),
-            "an adjudicated pause": ([pq(read_id=sh3, arms_in_scope=steered, adjudicated=True)], set())}
-        nt_v = min(li_[r] for r in camp.planned["N1-V"] if r.split("|")[2] == "+1/2"
-                   and camp.records[r]["fidelity"] is None)                # a read the keyed sample does not hold
-        n4t = li_[f"N4-Ts|none|0|{session_key(9)}"]                        # a d = 0 read, re-computed, not a shadow
-        cases_pp |= {"a range of one read with no re-computation": (
-                         [pq(arms_in_scope=["N1-V"], binomial=bat(nt_v, nt_v))], {("N1-V", 0.5)}),
-                     "an N4 trial is no shadow": ([pq(arms_in_scope=["N1-V", "N4-Ts"], binomial=bat(n4t, n4t))],
-                                                  set())}
-        # the v5 review's B1: a range over N1-P's +d_20, +d_eq and −1 cells, −1 alone re-computed by the dose rule,
-        # and the same range on a campaign with two +d_eq reads on the keyed sample: every read launched in it counts
-        # (§6's conservative form), so the sample changes nothing; and a range from N1-P's −1 cell to N4-T's first read
-        # through N2's arms, which carry no re-computation here and are not in the scope
-        lo_p = min(li_[r] for r in camp.planned["N1-P"] if r.split("|")[2] == "+d_20")
-        hi_p = max(li_[r] for r in camp.planned["N1-P"] if r.split("|")[2] == "-1")
-        rs_ = camp.dmap.resolved()
-        p3 = {("N1-P", rs_["d_20"]), ("N1-P", rs_["d_eq"]), ("N1-P", -1.0)}
-        cases_pp["a range over N1-P's +d_20 to −1 cells"] = ([pq(arms_in_scope=["N1-P"], binomial=bat(lo_p, hi_p))],
-                                                             p3)
-        n4t0 = min(li_[r] for r in camp.planned["N4-T"])
-        cases_pp["a range from N1-P's −1 cell to N4-T's first read"] = (
-            [pq(arms_in_scope=["N1-P", "N4-T"], binomial=bat(m1p[0], n4t0))],
-            {("N1-P", -1.0)} | keys_("N2-E", "N2-S", "N2-C"))
+            "an adjudicated pause": ([pq(read_id=sh3, arms_in_scope=steered, adjudicated=True)], set()),
+            "a tile with no re-computation (N1-V's +1/2 cell)": (
+                [pq(arms_in_scope=["N1-V"], binomial=bat(t_h))], {("N1-V", 0.5)}),
+            "N4-Ts's tile: its d = 0 trials are no shadows": ([pq(arms_in_scope=["N4-Ts"], binomial=bat(t_4))], set())}
+        # the v5 review's B1 under the tile: an N1-R tile over four cells at four points, +1 alone re-computed by the
+        # dose rule, and the same tile on a campaign with two +d_eq reads on the keyed sample: every read launched in it
+        # counts (§6's conservative form), so the sample changes nothing; and N2-E's f0.10 tile, no read of it
+        # re-computed here, under a scope without N2-E
+        cases_pp["an N1-R tile over rand_00's +1, +1/2, +d_20 and +d_eq cells"] = (
+            [pq(arms_in_scope=["N1-R"], binomial=bat(t_r))], r4)
+        cases_pp["N2-E's f0.10 tile, outside the scope"] = ([pq(arms_in_scope=["N1-P"], binomial=bat(t_e))],
+                                                             {("N2-E", F10)})
+        # a tail of one read (the cap spent one read past a tile): the range's two ends are one read, its point alone
+        cases_pp["a tail of one read, N2-E's first f0.10 read"] = (
+            [pq(arms_in_scope=["N2-E"], binomial={"first_launch_index": t_e, "last_launch_index": t_e})],
+            {("N2-E", F10)})
         got_pp = {k: {kk for kk, v in paused_points({"pauses": qs}, camp).items() if v}
                   for k, (qs, _w) in cases_pp.items()}
         want_pp = {k: w for k, (_qs, w) in cases_pp.items()}
         smp = _bt_write_campaign(base / "smp", sm, delta=_bt_delta_positive,
-                                 sampled=[f"N1-P|valence|+d_eq|{session_key(r)}" for r in (3, 7)])
+                                 sampled=[f"N1-R|rand_00|+d_eq|{session_key(r)}" for r in (3, 7)])
         camp_s = load_campaign(smp, sm)
-        k_s = "the same range, two +d_eq reads on the keyed sample"
-        got_pp[k_s] = {kk for kk, v in paused_points({"pauses": [pq(arms_in_scope=["N1-P"],
-                                                                     binomial=bat(lo_p, hi_p))]}, camp_s).items() if v}
-        want_pp[k_s] = p3
+        k_s = "the same N1-R tile, two +d_eq reads on the keyed sample"
+        got_pp[k_s] = {kk for kk, v in paused_points({"pauses": [pq(arms_in_scope=["N1-R"], binomial=bat(t_r))]},
+                                                     camp_s).items() if v}
+        want_pp[k_s] = r4
+        ok_t = all(x % cad_ == 0 for x in (t_p, t_sh, t_r, t_h, t_4, t_e)) and sum(
+            camp_s.records[r]["fidelity"] is not None for r in camp_s.records
+            if t_r <= camp_s.records[r]["launch_index"] < t_r + cad_) == 42
         om = _bt_write_campaign(base / "om", sm, delta=_bt_delta_positive, omit=[("N1-P", "valence", "-1")])
         k_o = "a floor session's shadow, N1-P's −1 cell planned and not on disk"
         got_pp[k_o] = {kk for kk, v in paused_points({"pauses": [pq(read_id=sh3, arms_in_scope=steered)]},
                                                      load_campaign(om, sm)).items() if v}
         want_pp[k_o] = keys_(*steered)
-        B.chk("reader path: the points a standing pause stands on (PIN-n-37 as amended, §6's conservative form), "
-              "whatever its scope: its read's point; a shadow's every planned read of its session (N1-R's only on a "
-              "floor session; a cell not on disk included); every read launched in a binomial batch's range, "
-              "re-computed or not (a range of one read with no re-computation; N1-P's +d_20 to −1 cells, with or "
-              "without the keyed sample; N2's arms between N1-P's −1 cell and N4-T, outside the scope), and through a "
-              "shadow among them its session's reads, an N4 d = 0 trial being no shadow; nothing for N4's pause (per "
-              "arm) or an adjudicated one (sixteen cases)",
-              got_pp == want_pp, [k for k in want_pp if got_pp.get(k) != want_pp[k]], cover=["RD-PAUSE-POINTS"])
+        B.chk("reader path: the points a standing pause stands on (PIN-n-37 as amended and ruled, §6's conservative "
+              "form), whatever its scope: its read's point; a shadow's every planned read of its session (N1-R's only "
+              "on a floor session; a cell not on disk included); every read launched in a binomial batch's range, the "
+              "tile (R12), re-computed or not (N1-V's +1/2 tile, none re-computed; an N1-R tile over four cells at "
+              "four points, +1 alone re-computed, with or without the keyed sample; N2-E's f0.10 tile, outside the "
+              "scope; a tail of one read, its point alone), and through the shadows' tile every session's reads, "
+              "N4-Ts's d = 0 trials being no shadows; nothing for N4's pause (per arm) or an adjudicated one "
+              "(seventeen cases, each tile starting at a multiple of the cadence)",
+              got_pp == want_pp and ok_t, [k for k in want_pp if got_pp.get(k) != want_pp[k]] or ok_t,
+              cover=["RD-PAUSE-POINTS"])
         # PIN-n-39 (ADDENDUM-n2 §2.1): the ceiling's test, strict and null-safe, and its counters on a campaign with
         # C = 0.30 (above the schema's floor; the identity bound at d = 0, §2.2): N1-V's +1 read of run 4 re-computed
         # 0.35 apart (above), its −1 read of run 6 0.27 apart (above the floor 0.25, not above C), the shadow of run 8
@@ -4106,7 +4420,7 @@ def _bt_reader(B: _Battery) -> None:
         for name, fails in (("d_eq-fails", {("valence", pts13["d_eq"]), ("span_reward", F10)}),
                             ("+1-fails", {("valence", 1.0), ("span_reward", F20)})):
             g = {k: ("FAIL" if k in fails else "PASS") for k in _bt_gread_all(camp13.dmap)}
-            st_m, _fg = build_state(camp13, paused={}, gread=g)
+            st_m, _fg = build_state(camp13, paused={}, gread=g, gate=GATE_FIXTURE["PASS"])
             o_m = outcomes(st_m)
             s_m = sentence_set_filled(o_m, st_m, route="B", auc={"d_eq": 0.81})
             mix[name] = (o_m["tuple"], s_m["7.1"]["label"], s_m["7.2"]["label"], s_m["7.2"]["form"],
@@ -4140,8 +4454,9 @@ def _bt_reader(B: _Battery) -> None:
                     cell["records"][i]["restricted"]["label_mass"] = 0.20 if i < 5 else 0.19999999999999998
         sens = _bt_write_campaign(base / "sens", sm, delta=_bt_delta_positive, fresh_shift=shifted, mutate=masses)
         camp9 = load_campaign(sens, sm)
-        st_p, fig_p = build_state(camp9, paused={}, gread=_bt_gread_all(camp9.dmap))
-        st_s, fig_s = build_state(camp9, paused={}, gread=_bt_gread_all(camp9.dmap), drop=tau4_drop(camp9))
+        st_p, fig_p = build_state(camp9, paused={}, gread=_bt_gread_all(camp9.dmap), gate=GATE_FIXTURE["PASS"])
+        st_s, fig_s = build_state(camp9, paused={}, gread=_bt_gread_all(camp9.dmap), drop=tau4_drop(camp9),
+                                  gate=GATE_FIXTURE["PASS"])
         cn = counters(camp9)
         sens_ok = {
             "primary keeps all": fig_p["n"][("N1-V", "+1")] == 160 and fig_p["n"][("N1-V", "-1")] == 160
@@ -4179,7 +4494,7 @@ def _bt_reader(B: _Battery) -> None:
         s20 = _bt_write_campaign(base / "s20", sm, delta=_bt_delta_positive, first_is_s=lambda r: r < 20,
                                  nonfinite=[f"N2-C|span_character|f0.20|{session_key(5)}"])
         camp14 = load_campaign(s20, sm)
-        st14, _f14 = build_state(camp14, paused={}, gread=_bt_gread_all(camp14.dmap))
+        st14, _f14 = build_state(camp14, paused={}, gread=_bt_gread_all(camp14.dmap), gate=GATE_FIXTURE["PASS"])
         cg = secondaries(camp14, st14, None)["c_groups"]
         g20, g19 = cg["N2-E|f0.20"]["present_first_is_S=True"], cg["N2-C|f0.20"]["present_first_is_S=True"]
         B.chk("reader path: secondary (c) reports a group's mean at exactly 20 events (the decidable-n floor, rule "
@@ -4348,8 +4663,8 @@ def not_run_doc(rec: Mapping[str, Any], record_ref: Mapping[str, Any],
     return {"schema": NOT_RUN_OUT_SCHEMA, "unit": UNIT, "outcome": NOT_RUN, "cause": rec["cause"], "reason": reason,
             "record": dict(record_ref), "date": rec["date"], "sentences": sset,
             "proposal_sha256": PROPOSAL_SHA256, "addendum_sha256": ADDENDUM_SHA256,
-            "addendum2_sha256": ADDENDUM2_SHA256, "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN,
-            **dict(extra or {})}
+            "addendum2_sha256": ADDENDUM2_SHA256, "addendum3_sha256": ADDENDUM3_SHA256,
+            "analyzer_sha256": analyzer_sha256(), "pins": PINS, "open": OPEN, **dict(extra or {})}
 
 
 def run_not_run(record: Path, out_dir: Path) -> tuple[Path, str]:
@@ -4379,13 +4694,17 @@ def one_outcome(out_dir: Path, writing: str) -> None:
 
 # --- the battery's verdicts path: reports, G-READ-n artifacts and locks to the schema, around written campaigns ---
 def _bt_lock_text(*, route: str | None = "B", names_analyzer: bool = True, routes: int = 1,
-                  v10: bool = True) -> bytes:
+                  v10: bool = True, gate: "Gate | str | None" = GATE_FIXTURE["PASS"], gates: int = 1) -> bytes:
     """A literal LOCK-n v1.0 for the battery: PIN-n-26's line saying what it is (left out when ``v10`` is false, so
-    only the title names v1.0), the analyzer's sha256 between backticks (or not), and its direction of record as
-    PIN-n-26's whole line, ``routes`` times."""
+    only the title names v1.0), the analyzer's sha256 between backticks (or not), its direction of record as PIN-n-26's
+    whole line, ``routes`` times, and the reward axis's 5(d) gate as PIN-n-40's whole line, ``gates`` times: a Gate's
+    own line, a literal line (a str, for the refusals) or none; beside it always a line naming the gate's leakage half,
+    which is not the gate's line (ADDENDUM-n3 §3.2)."""
     lines = ["# LOCK-n v1.0 (a battery literal)", ""] + ([LOCK_V10_LINE, ""] if v10 else [])
     lines += [f"`{analyzer_sha256() if names_analyzer else '0' * 64}`", ""]
     lines += [f"{ROUTE_LINE}{route}"] * (routes if route is not None else 0)
+    lines += ["", "reward axis 5(d) gate, leakage: G-LEAK-n's certification at the norm-matched point (a literal)", ""]
+    lines += [] if gate is None else [gate.line() if isinstance(gate, Gate) else gate] * gates
     return ("\n".join(lines) + "\n").encode("utf-8")
 
 
@@ -4433,7 +4752,10 @@ def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state
     """A stage report of the campaign written at ``cdir`` (None: a report of no record), as n-build's runner writes
     one, from the battery's own count of the files (_bt_files): its cells, per-arm counts against the schema's plan,
     counters and used time (``used_ms`` overrides it); the label-mass counter null, as the runner leaves it, or the
-    files' count with ``label_mass``; ``counters_over`` replaces counters. Checked by the schema's check_report."""
+    files' count with ``label_mass``; ``counters_over`` replaces counters; the binomial's state as the runner at
+    ef105f1 counts it (R12): the records' trials and exceedances, an evaluation per whole tile of the records and one
+    for the tail where the stage ran out of reads (COMPLETE or CAP, or a fire at the run's end), a fire per batch
+    given. Checked by the schema's check_report."""
     plan = sm.read_plan(ident)
     cells, cnt = _bt_files(cdir)
     per_arm = {}
@@ -4443,6 +4765,9 @@ def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state
         per_arm[a] = {"planned": planned, "obtained": got, "complete": got == planned}
     named = [[q["kind"]] + list(q["also_fired"]) for q in pauses]
     batches = [q["binomial"] for q in pauses if q["binomial"] is not None]
+    cad, m_ = ident["fidelity_rule"]["cadence"], sum(c["records"] for c in cells.values())
+    tail = m_ % cad != 0 and (end_state in ("COMPLETE", "CAP")
+                              or any(q["binomial"] is not None and q["read_id"] is None for q in pauses))
     used = cnt["used_ms"] if used_ms is None else used_ms
     ctr = {"fidelity": cnt["fidelity"], "nonfinite_reads": cnt["nonfinite_reads"],
            "identity_out_of_bound": cnt["identity_out_of_bound"],
@@ -4456,7 +4781,7 @@ def _bt_report_for(ident: Mapping[str, Any], cdir: Path | None, sm, *, end_state
            "pauses": [dict(q) for q in pauses],
            "binomial_state": {"trials": sum(x["trials"] for x in cnt["fidelity"].values()),
                               "exceed_tau": sum(x["exceed_tau"] for x in cnt["fidelity"].values()),
-                              "evaluations": len(batches), "fires": len(batches)},
+                              "evaluations": m_ // cad + int(tail), "fires": len(batches)},
            "stop": stop, "cap": {"hour_cap_ms": hour_cap_ms, "used_ms": used,
                                  "hit": hour_cap_ms is not None and used >= hour_cap_ms, "loads_ms": list(loads_ms)},
            "counters": ctr}
@@ -4525,9 +4850,10 @@ def _bt_verdicts(B: _Battery) -> None:
             except (AnlRefusal, AnlStop) as e:
                 return None, str(e)[:90]
 
-        def expect(camp_: Campaign, art_: Mapping[str, Any], route: str) -> tuple[dict, dict]:
+        def expect(camp_: Campaign, art_: Mapping[str, Any], route: str,
+                   gate: Gate = GATE_FIXTURE["PASS"]) -> tuple[dict, dict]:
             g_, auc_, _rows = gread_states(art_, camp_)
-            st_, _fig = build_state(camp_, paused={}, gread=g_)
+            st_, _fig = build_state(camp_, paused={}, gread=g_, gate=gate)
             o_ = outcomes(st_)
             return o_, json.loads(json.dumps(sentence_set_filled(o_, st_, route=route, auc=auc_)))
         lock = put("LOCK-n.md", None, _bt_lock_text())
@@ -4641,7 +4967,7 @@ def _bt_verdicts(B: _Battery) -> None:
               and dig(ex, "totals", "negative valenced") == 320 and dig(ex, "totals", "negative random") == 960, ex,
               cover=["VD-EXPOSURE"])
         g_m, _a, _r = gread_states(art_obj, camp)
-        st_s, _fs = build_state(camp, paused={}, gread=g_m, drop=tau4_drop(camp))
+        st_s, _fs = build_state(camp, paused={}, gread=g_m, drop=tau4_drop(camp), gate=GATE_FIXTURE["PASS"])
         sens = verd.get("sensitivity") or {}
         ds = dig(sens, "figures", "per_arm", "dir_slopes") or {}
         ok_s = {"shift TAU/4 only": all(camp.records[r]["fidelity"]["exceeds_tau4"] is True
@@ -4698,20 +5024,26 @@ def _bt_verdicts(B: _Battery) -> None:
               and dig(v2b, "outcomes", "N4", "causes") == ["nonfinite:N4-Ts"],
               (v2.get("tuple"), dig(v2, "outcomes", "N4", "causes"), dig(v2b, "outcomes", "N4", "causes")),
               cover=["VD-PISTOP-STANDING"])
-        # PIN-n-33 as amended and PIN-n-37 as amended (§6's conservative form): standing batches, each bound as the
-        # runner counts a batch (report_problems binds it; it binds a batch, not its fire, and the fires here are not
-        # ones the runner would write), under PI-STOP (the v5 review's B3, B6). A, on a campaign with one N1-P −1 read
-        # above TAU (ck): a fire adjudicated at N1-P's last +1 read, then the run's-end batch from the next trial
-        # (N1-P's first −1 read: its +d_20 and +d_eq carry none, and lie in no range) to the stage's last (N4-Ts's),
-        # k = 1, standing on every read launched in it: N1-P at −1 and N2's arms, which carry no re-computation here,
-        # so N2 INDETERMINATE (N4's arms per arm). C: the same clear on c2, then the non-finite read at m − 1 also
-        # firing the binomial, its batch from the same trial to that read: the same points. B, on the main campaign:
-        # the run's-end batch from the stage's first trial, its 80 reads above TAU/4 not counted (k = 0), its
-        # re-computation non-finite on the fresh path a trial: it stands on every steered read. D, on a campaign with
-        # two keyed-sample reads (cg: N2-E's last read, N2-S's first): a fire adjudicated at N2-E's last read, then the
-        # run's-end batch from N2-S's first read: it stands on the guards alone, N2-C's reads in its range though no
-        # trial of N2-C's is, so N2 decided, both guards beside paused at their points (PIN-n-37 (c)), N1 and dose
-        # decided.
+        # PIN-n-33 as amended and PIN-n-37 as amended and ruled (§4; (b) by R12, the tile): standing tiles, each bound
+        # in the form the runner at ef105f1 writes a fire's batch (report_problems binds it; it binds a tile, not its
+        # fire, and the fires here are not ones the runner would write: none would fire at the alpha under F5's p0),
+        # its scope the runner's SCOPE, under PI-STOP (the v5 review's B3, B6). The battery's launch order is
+        # plan_cells' (N1-V's steered cells, then the shadows), not the runner's ORDER (the shadows first); the
+        # analyzer reads no order, so these tiles are the runner's in form over the battery's order (the v7 review's
+        # B7). A standing pause is the stage's last event, so its tile is the stage's last: each campaign ends at that
+        # tile, the cells after it omitted. A (ca: N2-S's, N2-C's and N4's cells omitted; N2-E's last two reads, at
+        # f0.20, on the keyed sample, run 159's 0.1 apart, above TAU, and run 158's 0.015 apart, above TAU/4 alone):
+        # after a fire adjudicated at N1-P's last −1 read (its tile N1-P's −1 cell; a ruling clears nothing), a fire
+        # at the stage's last read, its tile N2-E's f0.20 cell, two trials in its 160 reads, one exceedance at TAU: it
+        # stands on N2-E at f0.20, so N2 INDETERMINATE (pause:N2-E) in the primary and the TAU/4 row, N1 and dose
+        # decided, N4 INDETERMINATE (its cells omitted). B (cs: N1-V's cells alone): a fire at the stage's last read,
+        # its tile the 160 shadows, each extending to its session's every planned read: all 20 steered points, N1,
+        # dose, N2 and N4 INDETERMINATE (N2's causes led by pause:N2-E, pause:N1-V, pause:N1-R, pause:N1-P); its
+        # scope, a neutral session's shadow's, N1-V and the arms with a steered read of that session. C (c2): after a
+        # fire adjudicated at N1-P's last +1 read, the non-finite read at m − 1, outside the identity bound, firing
+        # nonfinite, identity-bound and the binomial, its tile N4-Ts's cell (the non-finite read a trial, not an
+        # exceedance): no steered point, N4 INDETERMINATE (pause:N4-Ts, nonfinite:N4-Ts), N1, dose and N2 decided. D,
+        # the guard alone, is VD-CEILING's (a ceiling pause also firing on N2-C's f0.20 tile).
         def trials_of(c: Campaign) -> list[int]:
             return sorted(r["launch_index"] for r in c.records.values() if r["fidelity"] is not None)
 
@@ -4720,97 +5052,110 @@ def _bt_verdicts(B: _Battery) -> None:
             return ({"first_launch_index": lo, "last_launch_index": hi, "n": len(ins),
                      "k": sum(r["fidelity"]["exceeds_tau"] is True for r in ins)}, sorted({r["arm"] for r in ins}))
 
-        def clear_and_end(c: Campaign, end_read: str | None = None, clear_at: str | None = None) -> list[dict]:
-            tl = trials_of(c)
-            l1 = (max(r["launch_index"] for rid, r in c.records.items() if rid.startswith("N1-P|valence|+1|"))
-                  if clear_at is None else c.records[clear_at]["launch_index"])
-            p1 = sm.example_pause(1, kind="fidelity-binomial", launch_index=l1, adjudicated=True, resumed_at=l1 + 1)
-            f1, a1 = batch_of(c, tl[0], l1)
-            p1.update(read_id=next(rid for rid, r in c.records.items() if r["launch_index"] == l1), arms_in_scope=a1)
-            p1["binomial"].update(f1)
-            hi = tl[-1] if end_read is None else c.records[end_read]["launch_index"]
-            p2 = (sm.example_pause(2, kind="fidelity-binomial", launch_index=None) if end_read is None else
-                  dict(sm.example_pause(2, kind="nonfinite", launch_index=hi, also_fired=("fidelity-binomial",)),
-                       read_id=end_read))
-            f2, a2 = batch_of(c, next(i for i in tl if i > l1), hi)
-            p2["binomial"].update(f2)
-            p2["arms_in_scope"] = sorted(set(a2) | ({end_read.split("|")[0]} if end_read else set()))
-            return [p1, p2]
-        hot = f"N1-P|valence|-1|{session_key(5)}"          # 0.1 apart: above TAU (rel ≈ 0.09), not above C (0.25)
-        cdir_k = _bt_write_campaign(base / "ck", sm, delta=_bt_delta_positive, lock_sha256=lsha,
-                                    fresh_shift={hot: 0.1})
-        camp_k = load_campaign(cdir_k, sm)
-        art_k = put("g_k.json", _bt_gread_for(camp_k, sm))
-        pa = clear_and_end(camp_k)
-        run(cdir_k, put("report_pa.json", _bt_report_for(camp_k.identity, cdir_k, sm, end_state="PI-STOP", pauses=pa,
-                                                         stop=stop_pi)), art_k, lock, base / "out_pa")
+        def tile_of(c: Campaign, end: int | None) -> tuple[dict, list]:
+            """The runner's tile from the records (R12): the cadence's reads ending at read ``end``, or, with None,
+            the stage's tail (the reads after its last whole tile)."""
+            cad, m_ = c.identity["fidelity_rule"]["cadence"], len(c.records)
+            return batch_of(c, *(((m_ // cad) * cad, m_ - 1) if end is None else (end - cad + 1, end)))
+
+        def fired(c: Campaign, n_: int, end: int | None, *, kinds: Sequence[str] = ("fidelity-binomial",),
+                  adjudicated: bool = False) -> dict:
+            """Pause n_, whose read (``end``) fired ``kinds``, the binomial among them, in the schema's precedence --
+            or the binomial at the run's end (``end`` None): its batch the runner's tile, its scope the tile's trials'
+            arms and its read's; an adjudicated one resumed at the next read."""
+            ks = sorted(kinds, key=sm.PAUSE_KINDS.index)
+            p_ = sm.example_pause(n_, kind=ks[0], also_fired=tuple(ks[1:]), launch_index=end, adjudicated=adjudicated,
+                                  resumed_at=end + 1 if adjudicated and end is not None else None, identity=c.identity)
+            fb_, ab_ = tile_of(c, end)
+            p_["binomial"].update(fb_)
+            if end is not None:
+                p_["read_id"] = next(rid for rid, r in c.records.items() if r["launch_index"] == end)
+            p_["arms_in_scope"] = sorted(runner_scope(p_, c, ab_))
+            return p_
+
+        def last_li(c: Campaign, arm: str, lab: str) -> int:
+            return max(r["launch_index"] for r in c.records.values() if r["arm"] == arm and r["dose_label"] == lab)
+        cells_ = plan_cells(camp.dmap)
+
+        def rid_of(c: tuple, run_: int) -> str:
+            return f"{c[0]}|{c[1]}|{c[2]}|{session_key(run_)}"
+        e20, e20b = (rid_of([c for c in cells_ if c[0] == "N2-E"][-1], r_) for r_ in runs_of("N2-E")[-1:-3:-1])
+        cdir_a = _bt_write_campaign(base / "ca", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    omit=[c for c in cells_ if c[0] in ("N2-S", "N2-C", "N4-T", "N4-Ts")],
+                                    sampled=[e20, e20b], fresh_shift={e20: 0.1, e20b: 0.015})
+        camp_a = load_campaign(cdir_a, sm)
+        art_a = put("g_a.json", _bt_gread_for(camp_a, sm))
+        pa = [fired(camp_a, 1, last_li(camp_a, "N1-P", "-1"), adjudicated=True),
+              fired(camp_a, 2, len(camp_a.records) - 1)]
+        rep_pa = _bt_report_for(camp_a.identity, cdir_a, sm, end_state="PI-STOP", pauses=pa, stop=stop_pi)
+        run(cdir_a, put("report_pa.json", rep_pa), art_a, lock, base / "out_pa")
         va = doc_of(base / "out_pa")
-        pc = clear_and_end(camp2, end_read=last)
+        cdir_b = _bt_write_campaign(base / "cs", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    omit=[c for c in cells_ if c[0] != "N1-V"])
+        camp_b = load_campaign(cdir_b, sm)
+        pb = [fired(camp_b, 1, len(camp_b.records) - 1)]
+        run(cdir_b, put("report_pb.json", _bt_report_for(camp_b.identity, cdir_b, sm, end_state="PI-STOP", pauses=pb,
+                                                         stop=stop_pi)),
+            put("g_b.json", _bt_gread_for(camp_b, sm)), lock, base / "out_pb")
+        vb = doc_of(base / "out_pb")
+        pc = [fired(camp2, 1, last_li(camp2, "N1-P", "+1"), adjudicated=True),
+              fired(camp2, 2, li, kinds=("nonfinite", "identity-bound", "fidelity-binomial"))]
         run(cdir2, put("report_pc.json", _bt_report_for(camp2.identity, cdir2, sm, end_state="PI-STOP", pauses=pc,
                                                         stop=stop_pi)), art2, lock, base / "out_pc")
         vc = doc_of(base / "out_pc")
-        tl_m = trials_of(camp)
-        fb, ab = batch_of(camp, tl_m[0], tl_m[-1])
-        pb = sm.example_pause(2, kind="fidelity-binomial", launch_index=None)
-        pb["binomial"].update(fb)
-        pb["arms_in_scope"] = ab
-        run(cdir, put("report_pb.json", _bt_report_for(camp.identity, cdir, sm, end_state="PI-STOP",
-                                                       pauses=[pz_adj, pb], stop=stop_pi, label_mass=True)),
-            art, lock, base / "out_pb")
-        vb = doc_of(base / "out_pb")
-        cells_ = plan_cells(camp.dmap)
-        first_of = {a: next(c for c in cells_ if c[0] == a) for a in ("N2-S", "N2-C")}
-        last_e = [c for c in cells_ if c[0] == "N2-E"][-1]
-        def rid_of(c: tuple, run_: int) -> str:
-            return f"{c[0]}|{c[1]}|{c[2]}|{session_key(run_)}"
-        e_last, s_first = rid_of(last_e, runs_of("N2-E")[-1]), rid_of(first_of["N2-S"], runs_of("N2-S")[0])
-        cdir_g = _bt_write_campaign(base / "cg", sm, delta=_bt_delta_positive, lock_sha256=lsha,
-                                    sampled=[e_last, s_first])
-        camp_g = load_campaign(cdir_g, sm)
-        art_g = put("g_g.json", _bt_gread_for(camp_g, sm))
-        pd = clear_and_end(camp_g, clear_at=e_last)
-        run(cdir_g, put("report_pd.json", _bt_report_for(camp_g.identity, cdir_g, sm, end_state="PI-STOP", pauses=pd,
-                                                         stop=stop_pi)), art_g, lock, base / "out_pd")
-        vd = doc_of(base / "out_pd")
         n1pts = sorted(f"{a}@{lab_}" for a in ("N1-V", "N1-R", "N1-P")
                        for lab_ in ("+1", "+1/2", "+d_20", "+d_eq", "-1") if not (a == "N1-P" and lab_ == "+1/2"))
         n2pts = sorted(f"{a}@{f_}" for a in ("N2-E", "N2-S", "N2-C") for f_ in ("f0.10", "f0.20"))
-        gpts = sorted(p_ for p_ in n2pts if not p_.startswith("N2-E"))
-        g_bes = dig(vd, "outcomes", "N2", "beside", "guards") or {}
-        ok_pp = {"A": (va.get("tuple") or [])[:4] == ["INDETERMINATE"] * 4
-                 and pa[-1]["binomial"]["k"] == 1 and dig(va, "outcomes", "N1", "causes") == ["pause:N1-P"]
+        tiles_ = [(q["binomial"]["first_launch_index"], q["binomial"]["last_launch_index"], q["binomial"]["n"],
+                   q["binomial"]["k"]) for q in pa + pb + pc]
+        ok_pp = {"tiles": tiles_ == [(6240, 6399, 160, 0), (6560, 6719, 2, 1), (800, 959, 160, 0),
+                                     (5760, 5919, 160, 0), (7520, 7679, 160, 0)]
+                 and [q["arms_in_scope"] for q in pa + pb + pc] == [["N1-P"], ["N2-E"],
+                                                                     ["N1-P", "N1-V", "N2-C", "N2-E", "N2-S"],
+                                                                     ["N1-P"], ["N4-Ts"]],
+                 "A": (va.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "INDETERMINATE", "INDETERMINATE"]
                  and dig(va, "outcomes", "N2", "causes") == ["pause:N2-E"]
-                 and (dig(va, "outcomes", "N4", "causes") or [])[:2] == ["pause:N4-T", "pause:N4-Ts"]
-                 and dig(va, "figures", "pause_points") == sorted(["N1-P@-1"] + n2pts)
-                 and (dig(va, "sensitivity", "tuple") or [])[:3] == ["INDETERMINATE"] * 3
-                 and dig(va, "sensitivity", "figures", "pause_points") == sorted(["N1-P@-1"] + n2pts),
-                 "C": (vc.get("tuple") or [])[:3] == ["INDETERMINATE"] * 3
-                 and dig(vc, "outcomes", "N1", "causes") == ["pause:N1-P"]
-                 and dig(vc, "outcomes", "N2", "causes") == ["pause:N2-E"]
-                 and dig(vc, "figures", "pause_points") == sorted(["N1-P@-1"] + n2pts),
-                 "B": (fb["k"], fb["n"]) == (0, len(tl_m)) and dig(vb, "outcomes", "N2", "state") == "INDETERMINATE"
-                 and dig(vb, "outcomes", "N2", "causes") == ["pause:N2-E", "pause:N1-V", "pause:N1-R", "pause:N1-P"]
+                 and dig(va, "figures", "pause_points") == ["N2-E@f0.20"]
+                 and dig(va, "sensitivity", "outcomes", "N2", "causes") == ["pause:N2-E"]
+                 and dig(va, "sensitivity", "figures", "pause_points") == ["N2-E@f0.20"],
+                 "B": (vb.get("tuple") or [])[:4] == ["INDETERMINATE"] * 4
+                 and (dig(vb, "outcomes", "N2", "causes") or [])[:4] == ["pause:N2-E", "pause:N1-V", "pause:N1-R",
+                                                                          "pause:N1-P"]
                  and dig(vb, "figures", "pause_points") == sorted(n1pts + n2pts) and len(n1pts) == 14,
-                 "D": (vd.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
-                 and pd[-1]["arms_in_scope"] == ["N2-S", "N4-T", "N4-Ts"]
-                 and dig(vd, "figures", "pause_points") == gpts
-                 and dig(g_bes, "span_sentiment", "paused") is True and dig(g_bes, "span_character", "paused") is True
-                 and (dig(vd, "outcomes", "N4", "causes") or [])[:2] == ["pause:N4-T", "pause:N4-Ts"]}
-        B.chk("verdicts under PI-STOP with a standing batch, bound as the runner counts a batch (PIN-n-33 as amended, "
-              "PIN-n-37 as amended): A, after a fire adjudicated at N1-P's last +1 read, the run's-end batch from "
-              "N1-P's first −1 read to the stage's last trial, k = 1, stands on every read launched in it, N1-P at −1 "
-              "and N2's six points, which carry no re-computation: N1, dose and N4 INDETERMINATE (pause:N1-P; "
-              "pause:N4-T, pause:N4-Ts, per arm), N2 INDETERMINATE (pause:N2-E), in the primary and the TAU/4 row, "
-              "the figures naming the points; C, the same clear, then a non-finite read at m − 1 that also fires the "
-              "binomial: N1 and N2 the same, and the same points; B, the run's-end batch from the stage's first trial "
-              "(its 80 reads above TAU/4 not counted, k = 0; its re-computation non-finite on the fresh path a trial): "
-              "all 20 steered points, N2 INDETERMINATE (pause:N2-E, pause:N1-V, pause:N1-R, pause:N1-P); D, after a "
-              "fire adjudicated at N2-E's last read (a keyed-sample trial), the run's-end batch from N2-S's first read "
-              "(a keyed-sample trial; N2-C holds none, so is not in the scope) stands on the guards' four points "
-              "alone: N2 decided, SHARED, both guards beside paused, read at their points (PIN-n-37 (c)), N1 and dose "
-              "decided, N4 INDETERMINATE (pause:N4-T, pause:N4-Ts)",
+                 "C": (vc.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
+                 and dig(vc, "outcomes", "N4", "causes") == ["pause:N4-Ts", "nonfinite:N4-Ts"]
+                 and dig(vc, "figures", "pause_points") == []}
+        B.chk("verdicts under PI-STOP with a standing tile, bound in the form the runner at ef105f1 writes a fire's "
+              "batch (PIN-n-33 as amended, PIN-n-37 as amended and ruled, R12), each the stage's last tile: A, after a "
+              "fire adjudicated on N1-P's −1 tile (a ruling clears nothing), a fire at the stage's last read on N2-E's "
+              "f0.20 tile, two keyed-sample trials in 160 reads, one above TAU and one above TAU/4 alone (k = 1): it "
+              "stands on N2-E at f0.20, N2 INDETERMINATE (pause:N2-E) in the primary and the TAU/4 row, N1 and dose "
+              "decided; B, a fire on the shadows' tile: through each shadow its session's reads, all 20 steered "
+              "points, N1, dose, N2 and N4 INDETERMINATE, N2's causes led by pause:N2-E, pause:N1-V, pause:N1-R, "
+              "pause:N1-P, its scope the runner's (a neutral shadow's: N1-P, N1-V, N2-C, N2-E, N2-S); C, after a fire "
+              "adjudicated on N1-P's +1 tile, a non-finite read at m − 1 also firing identity-bound and on N4-Ts's "
+              "tile: no steered point, N4 INDETERMINATE (pause:N4-Ts, nonfinite:N4-Ts), N1, dose and N2 decided; each "
+              "tile's bounds, trials, exceedances and scope the records'",
               all(ok_pp.values()), [k for k, v in ok_pp.items() if not v] or (va.get("tuple"), vc.get("tuple")),
               cover=["VD-PAUSE-POINTS"])
+        # F5's fixtures (the seat's answers of 2026-11-19, first sitting, §3: "n-analyzer moves its fixtures in its own
+        # commit"): the battery's campaign identities are the pinned schema's example after the lock, its p0 read from
+        # the identity, never written here; every fire's batch takes the identity's p0 and alpha (sm.example_pause's
+        # identity); and the schema refuses a campaign identity under v6's fixtures' p0, BK's 0 of 2400, by F5
+        fr_c = camp.identity["fidelity_rule"]
+        f5_ref = _bt_raises(lambda: sm.check_stage_identity(dict(camp.identity, fidelity_rule=dict(
+            fr_c, p0_count=0, p0_n=2400))), (sm.SchemaError,))
+        ok_f5 = {"F5's floor": fr_c["p0_count"] >= 1 and fr_c["p0_n"] >= 3,
+                 "one rule": all(c_.identity["fidelity_rule"] == fr_c for c_ in (camp_a, camp_b, camp2)),
+                 "the batches": all((q["binomial"]["p0_count"], q["binomial"]["p0_n"], q["binomial"]["alpha"])
+                                    == (fr_c["p0_count"], fr_c["p0_n"], fr_c["alpha"]) for q in pa + pb + pc),
+                 "v6's p0 refused": f5_ref[0] and "(F5)" in f5_ref[1]}
+        B.chk("F5's fixtures (§3): the battery's campaign identity carries the pinned schema's p0 after the lock, at "
+              "least 1 of 3 by Laplace's rule, the same fidelity rule on A's, B's and C's campaigns; each of their "
+              "fires' batches carries the identity's p0 and alpha; the schema refuses v6's fixtures' p0, 0 of 2,400, "
+              "at the campaign (F5)",
+              all(ok_f5.values()), [k for k, v in ok_f5.items() if not v] or (fr_c["p0_count"], fr_c["p0_n"]),
+              cover=["VD-F5-FIXTURES"])
         # PIN-n-38 (ADDENDUM-n2 §3): verdicts on the second row's campaign (cs2, the reader path's cs): the TAU/4 row
         # drops over half at N1-P's −1 and N1-V's +1, so the second row is reported, its median the identity's; both
         # rows empty N1-P at −1 (tau4-emptied, median-emptied), the second also dropping run 2 at every point through
@@ -4866,6 +5211,16 @@ def _bt_verdicts(B: _Battery) -> None:
         vv = doc_of(base / "out_ceil")
         cr_ = dig(vv, "counters", "records") or {}
         gb_ = dig(vv, "outcomes", "N2", "beside", "guards") or {}
+        # VD-PAUSE-POINTS' D, under the tile (R12): the same ceiling read, the stage's last, also firing the binomial,
+        # its tile N2-C's f0.20 cell, the read its one trial and, its rel above TAU, its exceedance (a standing pause's
+        # own read; R13's ruled read inside a tile is VD-BATCH-CLEARS')
+        pc2b = fired(camp_v, 2, lic, kinds=("fidelity-ceiling", "fidelity-binomial"))
+        rv_vb, err_vb = run(cdir_v, put("report_ceil_b.json", _bt_report_for(camp_v.identity, cdir_v, sm,
+                                                                             end_state="PI-STOP", pauses=[pc1, pc2b],
+                                                                             stop=stop_pi)),
+                            base / "g_v.json", lock, base / "out_ceil_b")
+        vvb = doc_of(base / "out_ceil_b")
+        gbb = dig(vvb, "outcomes", "N2", "beside", "guards") or {}
         ok_cv = {"accepted": rv_v is not None
                  and (vv.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"],
                  "points": dig(vv, "figures", "pause_points") == [f"N2-C@{last_c[2]}"],
@@ -4874,14 +5229,23 @@ def _bt_verdicts(B: _Battery) -> None:
                  "counters": dig(cr_, "N1-V|0", "fidelity ceiling exceeded") == 1
                  and dig(cr_, "N1-V|0", "identity bound exceeded") == 1
                  and dig(cr_, f"N2-C|{last_c[2]}", "fidelity ceiling exceeded") == 1
-                 and dig(vv, "counters", "report", CEILING_COUNTER) == 2}
+                 and dig(vv, "counters", "report", CEILING_COUNTER) == 2,
+                 "binomial": rv_vb is not None and (pc2b["kind"], pc2b["also_fired"]) == ("fidelity-ceiling",
+                                                                                        ["fidelity-binomial"])
+                 and [pc2b["binomial"][x] for x in ("first_launch_index", "last_launch_index", "n", "k")]
+                 == [lic - camp_v.identity["fidelity_rule"]["cadence"] + 1, lic, 1, 1]
+                 and lic + 1 == len(camp_v.records) and pc2b["arms_in_scope"] == ["N2-C"]
+                 and vvb.get("tuple") == vv.get("tuple")
+                 and dig(vvb, "figures", "pause_points") == [f"N2-C@{last_c[2]}"]
+                 and dig(gbb, "span_character", "paused") is True and dig(gbb, "span_sentiment", "paused") is False}
         B.chk("verdicts under PI-STOP with a fidelity-ceiling pause standing at N2-C's last read (PIN-n-39; "
               "ADDENDUM-n2 §2.1), after one adjudicated at a shadow above C with identity-bound also fired: accepted, "
               "the standing pause on that point alone (PIN-n-37: a single-read pause), so N2 decided, SHARED, the "
               "span_character guard beside paused and span_sentiment not, N4 INDETERMINATE (its cells omitted); the "
               "counters count the two reads above C per arm and dose, the shadow outside the identity bound, the "
-              "report's 2",
-              all(ok_cv.values()), [k for k, v in ok_cv.items() if not v] or (err_v, vv.get("tuple")),
+              "report's 2; and the same read also firing the binomial (VD-PAUSE-POINTS' D), its tile N2-C's f0.20 "
+              "cell, the read its one trial and exceedance (R12): the same tuple, point and guards",
+              all(ok_cv.values()), [k for k, v in ok_cv.items() if not v] or (err_v, err_vb, vv.get("tuple")),
               cover=["VD-CEILING"])
         # PIN-n-38's trigger, both ways (the v6 review's B1): ct1, N1-V's +1 reads of runs 79-159 0.015 apart (rel
         # above TAU/4, below the example median 0.01): over half at that point, no point emptied, so the second row is
@@ -4942,41 +5306,88 @@ def _bt_verdicts(B: _Battery) -> None:
               "binds: in the primary, the TAU/4 row and the second row alike, the pause stands on that point alone "
               "(PIN-n-37), N2 is decided at f = 0.10 and its beside names N2-E paused",
               all(ok_pp3.values()), [k for k, v in ok_pp3.items() if not v] or err_p, cover=["VD-SECOND-ROW-PAUSE"])
-        # what a ruling clears (the runner's R13) and a run's-end batch's end (the v6 review's B4, B7): cr, N4's cells
-        # omitted, one keyed-sample read (N2-C's first cell, run 7) the last trial, not the last read, and the shadow of
-        # run 8 0.26 apart (above C): after a ceiling pause adjudicated at that shadow, a run's-end batch from the
-        # stage's first trial to its last is the runner's (a ceiling ruling clears nothing), and one from the first
-        # trial after the shadow is not
-        rid_s7 = rid_of(next(c for c in cells_ if c[0] == "N2-C"), 7)
-        cdir_r = _bt_write_campaign(base / "cr", sm, delta=_bt_delta_positive, lock_sha256=lsha,
-                                    omit=[("N4-T", "none", "0"), ("N4-Ts", "none", "0")], sampled=[rid_s7],
-                                    fresh_shift={sh8: 0.26})
+        # a ruling clears nothing (R12, R13), and a fire at the run's end stands on the stage's tail (the v6 review's
+        # B4, B7, under the tile): cb, N4's cells omitted and N2-C's f0.20 cell cut after run 79 (the cap spent, reads
+        # left to launch), so its 7,280 reads end in a tail of 80, reads 7200-7279; keyed-sample reads at N2-C's f0.10
+        # run 7 and f0.20 runs 7 and 20, the f0.20 run 7 0.1 apart (above TAU) and run 20 0.30 apart (above C and
+        # TAU), so the tail's two trials, reads 7207 and 7220, end before its last read; the shadow of run 8 0.26 apart
+        # (above C). After a ceiling pause adjudicated at that shadow, a fire adjudicated at N2-C's last f0.10 read (its
+        # tile N2-C's f0.10 cell) and a ceiling pause adjudicated at read 7220, inside the tail (R13: its read stays in
+        # its tile as a trial and an exceedance; the v7 review's B4), the fire at the run's end stands on the tail,
+        # read 7200 to the stage's last, 2 of 2: accepted, on N2-C at f0.20 alone (N2 decided, span_character beside
+        # paused). Refused by report_problems (check_report leaving a tail's end and its counts open): the tail ending
+        # at its last trial (v6's run's-end form), and the tail without the ruled ceiling read (1 of 1); and in A's
+        # campaign the standing batch counted from the clear (§4 (b)'s interim, not built: reads 6400-6719) and v6's,
+        # from the first trial after the clear (read 6719 alone), each by the schema's form of a tile (the reports
+        # altered after the battery's writer, which checks them)
+        s7_10 = rid_of(next(c for c in cells_ if c[0] == "N2-C"), 7)
+        s7_20, s20_20 = (rid_of([c for c in cells_ if c[0] == "N2-C"][-1], r_) for r_ in (7, 20))
+
+        def cut_c20(cell: dict) -> None:
+            if (cell["arm"], cell["dose_label"]) == ("N2-C", "f0.20"):
+                cell["records"] = cell["records"][:80]
+                cell["capture_rows"] = 80
+        cdir_r = _bt_write_campaign(base / "cb", sm, delta=_bt_delta_positive, lock_sha256=lsha,
+                                    omit=[("N4-T", "none", "0"), ("N4-Ts", "none", "0")],
+                                    sampled=[s7_10, s7_20, s20_20], fresh_shift={sh8: 0.26, s7_20: 0.1, s20_20: 0.30},
+                                    mutate=cut_c20)
         camp_r = load_campaign(cdir_r, sm)
-        tl_r, li8r = trials_of(camp_r), camp_r.records[sh8]["launch_index"]
+        li8r, lt7, lt20 = (camp_r.records[x]["launch_index"] for x in (sh8, s7_20, s20_20))
         pr1 = dict(sm.example_pause(1, kind=k8[0], launch_index=li8r, adjudicated=True, resumed_at=li8r + 1,
                                     also_fired=tuple(k8[1:])), read_id=sh8, arms_in_scope=sorted(STEERED_ARMS))
+        pr3 = dict(sm.example_pause(3, kind="fidelity-ceiling", launch_index=lt20, adjudicated=True,
+                                    resumed_at=lt20 + 1, arms=("N2-C",)), read_id=s20_20)
+        pr = [pr1, fired(camp_r, 2, last_li(camp_r, "N2-C", "f0.10"), adjudicated=True), pr3, fired(camp_r, 4, None)]
+        g_r = put("g_cb.json", _bt_gread_for(camp_r, sm))
+        used_r = _bt_files(cdir_r)[1]["used_ms"]
 
-        def end_batch(lo: int) -> dict:
-            fb_, ab_ = batch_of(camp_r, lo, tl_r[-1])
-            p_ = sm.example_pause(2, kind="fidelity-binomial", launch_index=None)
-            p_["binomial"].update(fb_)
-            p_["arms_in_scope"] = ab_
-            return p_
-        g_r = put("g_cr.json", _bt_gread_for(camp_r, sm))
-        rv_r, err_r = run(cdir_r, put("report_cr.json", _bt_report_for(
-            camp_r.identity, cdir_r, sm, end_state="PI-STOP", pauses=[pr1, end_batch(tl_r[0])], stop=stop_pi)),
-            g_r, lock, base / "out_cr")
-        ref_r = _bt_raises(lambda: run_verdicts(cdir_r, put("report_cr2.json", _bt_report_for(
-            camp_r.identity, cdir_r, sm, end_state="PI-STOP",
-            pauses=[pr1, end_batch(next(i for i in tl_r if i > li8r))], stop=stop_pi)), g_r, lock, "2026-12-20", None,
-            base / "out_cr2"), (AnlRefusal,))
-        ok_cl = {"the last trial is not the last read": tl_r[-1] == camp_r.records[rid_s7]["launch_index"]
-                 < len(camp_r.records) - 1,
-                 "from the first trial: accepted": rv_r is not None,
-                 "from after the shadow: refused": ref_r[0] and "its batch is not the records' trials" in ref_r[1]}
-        B.chk("verdicts binds a standing batch after an adjudicated fidelity-ceiling pause from the stage's first "
-              "trial (a ceiling ruling clears nothing, the runner's R13), refusing one from the first trial after it; "
-              "and a run's-end batch ends at the stage's last trial, here not its last read (PIN-n-37's binding)",
+        def on_cb(name: str, ps: Sequence[dict]) -> Path:
+            return put(name, _bt_report_for(camp_r.identity, cdir_r, sm, end_state="PI-STOP", pauses=ps,
+                                            stop=stop_pi, hour_cap_ms=used_r))
+
+        def with_b(ps: Sequence[dict], **kw: Any) -> list:
+            out_ = json.loads(json.dumps(list(ps)))
+            out_[-1]["binomial"].update(kw)
+            return out_
+
+        def ref_(cd: Path, rp: Path, gp: Path) -> tuple[bool, str]:
+            return _bt_raises(lambda: run_verdicts(cd, rp, gp, lock, "2026-12-20", None, base / "out_cb_refused"),
+                              (AnlRefusal,))
+
+        def altered(rep_: dict, name: str, **kw: Any) -> Path:
+            o_ = json.loads(json.dumps(rep_))
+            o_["pauses"][-1]["binomial"].update(kw)
+            return put(name, o_)
+        rv_r, err_r = run(cdir_r, on_cb("report_cb.json", pr), g_r, lock, base / "out_cb")
+        vr = doc_of(base / "out_cb")
+        gbr = dig(vr, "outcomes", "N2", "beside", "guards") or {}
+        ref_r = ref_(cdir_r, on_cb("report_cb2.json", with_b(pr, last_launch_index=lt20)), g_r)
+        ref_13 = ref_(cdir_r, on_cb("report_cb3.json", with_b(pr, n=1, k=1)), g_r)
+        ref_i = ref_(cdir_a, altered(rep_pa, "report_pa_interim.json",
+                                     first_launch_index=pa[0]["binomial"]["last_launch_index"] + 1), art_a)
+        ref_6 = ref_(cdir_a, altered(rep_pa, "report_pa_v6.json", first_launch_index=pa[-1]["launch_index"]), art_a)
+        ok_cl = {"the tail": [pr[-1]["binomial"][x] for x in ("first_launch_index", "last_launch_index", "n", "k")]
+                 == [7200, 7279, 2, 2] and len(camp_r.records) == 7280 and pr[-1]["arms_in_scope"] == ["N2-C"]
+                 and [pr[1]["binomial"][x] for x in ("first_launch_index", "last_launch_index", "n", "k")]
+                 == [7040, 7199, 1, 0] and (lt7, lt20) == (7207, 7220) and trials_of(camp_r)[-1] == lt20,
+                 "accepted": rv_r is not None
+                 and (vr.get("tuple") or [])[:4] == ["REPLICATED", "DETECTABLE", "SHARED", "INDETERMINATE"]
+                 and dig(vr, "figures", "pause_points") == ["N2-C@f0.20"]
+                 and dig(gbr, "span_character", "paused") is True and dig(gbr, "span_sentiment", "paused") is False
+                 and dig(vr, "report", "end_state") == "PI-STOP",
+                 "the tail to its last trial: refused": ref_r[0] and "its batch is not the runner's tile" in ref_r[1],
+                 "the tail without the ruled ceiling read (R13): refused": ref_13[0]
+                 and "its batch is not the runner's tile" in ref_13[1],
+                 "from the clear (the interim): refused": ref_i[0]
+                 and ref_i[1].endswith("the stage report: SchemaError at report.pauses[1].binomial"),
+                 "from the first trial after the clear (v6): refused": ref_6[0]
+                 and ref_6[1].endswith("SchemaError at report.pauses[1].binomial.first_launch_index")}
+        B.chk("verdicts binds a fire at the run's end to the stage's tail, ending at its last read, not its last trial "
+              "(check_report leaves a tail's end open), after a ceiling pause, a fire and a ceiling pause inside the "
+              "tail adjudicated before it (a ruling clears nothing: R12, R13; the ruled read inside counts as a trial "
+              "and an exceedance): accepted, on N2-C at f0.20 alone, N2 decided; refused, the tail ending at its last "
+              "trial, and the tail without the ruled read; and the standing tile counted from the clear (§4 (b)'s "
+              "interim, not built) or from the first trial after it (v6's form), each by the schema's form of a tile",
               all(ok_cl.values()), [k for k, v in ok_cl.items() if not v] or (err_r, ref_r[1][:90]),
               cover=["VD-BATCH-CLEARS"])
         # PI-STOP with some arms complete: N1-P without its −1 reads, N4-Ts with none
@@ -5017,15 +5428,17 @@ def _bt_verdicts(B: _Battery) -> None:
               and (v4r.get("tuple") or [None] * 3)[2] == "SHARED"
               and dig(v4r, "outcomes", "N1", "causes") == ["pause:N1-P", "incomplete:N1-P"],
               (err4r, v4r.get("tuple"), dig(v4r, "figures", "pause_points")), cover=["VD-PAUSE-RENDERING"])
-        # a merged dose map (R_ell 40.0: +d_20 into +1, +d_eq into +1/2) under a Route A lock, FAIL at +1/2
-        lk_a = put("LOCK-A.md", None, _bt_lock_text(route="A"))
+        # a merged dose map (R_ell 40.0: +d_20 into +1, +d_eq into +1/2, the cap binding) under a Route A lock whose
+        # gate line records 30 of 48, FAIL (PIN-n-40), FAIL at +1/2
+        g30 = Gate(30, "FAIL")
+        lk_a = put("LOCK-A.md", None, _bt_lock_text(route="A", gate=g30))
         cdir5 = _bt_write_campaign(base / "c5", sm, R_ell=40.0, delta=_bt_delta_positive, lock_sha256=sha(lk_a))
         camp5 = load_campaign(cdir5, sm)
         art5_obj = _bt_gread_for(camp5, sm, statuses={"valence|+1/2": "FAIL"})
         r5, err5 = run(cdir5, put("report5.json", _bt_report_for(camp5.identity, cdir5, sm)),
                        put("gread5.json", art5_obj), lk_a, base / "out5")
         v5 = doc_of(base / "out5")
-        o5, s5 = expect(camp5, art5_obj, "A")
+        o5, s5 = expect(camp5, art5_obj, "A", gate=g30)
         merged5 = {r["dose_label"]: r["merged"] for r in art5_obj["results"] if r["axis"] == "valence"}
         B.chk("verdicts on a merged dose map (R_ell 40.0) under a Route A lock: the artifact's results at the kept "
               "points, listing the labels merged into them, are accepted; the tuple's G-READ-n coordinate is d_eq's, "
@@ -5035,6 +5448,68 @@ def _bt_verdicts(B: _Battery) -> None:
               and dig(v5, "gread", "auc") == {"d_eq": 0.62} and v5.get("route") == "A" and v5.get("sentences") == s5
               and ROUTE_TEXT["A"] in (dig(v5, "sentences", "7.1", "text") or ""),
               (v5.get("tuple"), dig(v5, "gread", "auc"), v5.get("route"), err5), cover=["VD-MERGED-ROUTE-A"])
+        n2m, n25 = dig(verd, "outcomes", "N2") or {}, dig(v5, "outcomes", "N2") or {}
+        # the v7 review's B2: the gate's FAIL alone, on the example map (no cap), through every row VERDICTS reports:
+        # a lock recording 35 of 48, FAIL, and N1-V's +1 reads of runs 79-159 0.015 apart (VD-SECOND-ROW-TRIGGER's
+        # ct1), so the second row is reported beside the primary and the TAU/4 row
+        lk_f = put("LOCK-fail.md", None, _bt_lock_text(gate=Gate(35, "FAIL")))
+        cdir_f = _bt_write_campaign(base / "cgf", sm, delta=_bt_delta_positive, lock_sha256=sha(lk_f),
+                                    fresh_shift={f"N1-V|valence|+1|{session_key(r)}": 0.015 for r in range(79, 160)})
+        camp_f = load_campaign(cdir_f, sm)
+        _rf, err_f = run(cdir_f, put("report_f.json", _bt_report_for(camp_f.identity, cdir_f, sm)),
+                         put("g_f.json", _bt_gread_for(camp_f, sm)), lk_f, base / "out_f")
+        vf = doc_of(base / "out_f")
+        rows_f = [dig(vf, "outcomes", "N2"), dig(vf, "sensitivity", "outcomes", "N2"),
+                  dig(vf, "sensitivity", "second_row", "outcomes", "N2")]
+        ok_f = all(isinstance(r_, dict) and (r_.get("f"), r_.get("reasons"), r_.get("gate"))
+                   == (F10, ["gate"], {"k": 35, "of": 48, "result": "FAIL"}) for r_ in rows_f) \
+            and " (N2's deciding point, by the gate's coherence FAIL) " in (dig(vf, "sentences", "7.3", "text") or "")
+        B.chk("verdicts reads the lock's gate line (PIN-n-40) into N2's decision point (ADDENDUM-n3 §3.4; PIN-n-41): "
+              "under 48 of 48, PASS on the complete campaign's map (no merge, no cap) N2 is decided at f = 0.20 with "
+              "no reason and its line names none; under 30 of 48, FAIL on the merged map where the cap binds, at f = "
+              "0.10 for both reasons, in §3.4's order, its line naming both; under 35 of 48, FAIL on the example map "
+              "(no cap), at f = 0.10 by the gate alone in the primary, the TAU/4 row and the second row, its line "
+              "naming the gate; each records the gate as the lock gives it, and VERDICTS name ADDENDUM-n3 by sha256",
+              (n2m.get("f"), n2m.get("reasons"), n2m.get("gate")) == (F20, [], {"k": 48, "of": 48, "result": "PASS"})
+              and "N2's deciding point" not in (dig(verd, "sentences", "7.3", "text") or "N2's deciding point")
+              and (n25.get("f"), n25.get("reasons"), n25.get("gate"))
+              == (F10, ["gate", "cap"], {"k": 30, "of": 48, "result": "FAIL"})
+              and " (N2's deciding point, by the gate's coherence FAIL and the cap) "
+              in (dig(v5, "sentences", "7.3", "text") or "") and ok_f
+              and verd.get("addendum3_sha256") == v5.get("addendum3_sha256") == ADDENDUM3_SHA256,
+              (n2m.get("reasons"), n25.get("reasons"), n25.get("gate"), err5, err_f,
+               [r_ and (r_.get("f"), r_.get("reasons")) for r_ in rows_f]), cover=["VD-GATE"])
+
+        def lt(gl: "Gate | str | None", n: int = 1) -> str:
+            return _bt_lock_text(gate=gl, gates=n).decode("utf-8")
+        ok_g = {"48 PASS": lock_gate(lt(Gate(48, "PASS"))) == Gate(48, "PASS"),
+                "36 PASS, the bar": lock_gate(lt(Gate(36, "PASS"))) == Gate(36, "PASS"),
+                "35 FAIL": lock_gate(lt(Gate(35, "FAIL"))) == Gate(35, "FAIL"),
+                "0 FAIL": lock_gate(lt(Gate(0, "FAIL"))) == Gate(0, "FAIL"),
+                "padded": lock_gate(lt("  " + GATE_LINE_HEAD + "40 of 48, PASS  ")) == Gate(40, "PASS")}
+        bad_g = {"absent": lt(None), "twice": lt(Gate(48, "PASS"), 2),
+                 "PASS and FAIL": lt(Gate(48, "PASS")) + Gate(10, "FAIL").line() + "\n",
+                 "lower case": lt(GATE_LINE_HEAD + "48 of 48, pass"), "slash": lt(GATE_LINE_HEAD + "48/48, PASS"),
+                 "a letter": lt(GATE_LINE_HEAD + "k of 48, PASS"),
+                 "leading zero": lt(GATE_LINE_HEAD + "048 of 48, PASS"),
+                 "a sign": lt(GATE_LINE_HEAD + "+48 of 48, PASS"), "of 50": lt(GATE_LINE_HEAD + "48 of 50, PASS"),
+                 "full stop": lt(GATE_LINE_HEAD + "48 of 48, PASS."), "49": lt(GATE_LINE_HEAD + "49 of 48, PASS"),
+                 "other digits": lt(GATE_LINE_HEAD + "４８ of 48, PASS"),
+                 "PASS below the bar": lt(GATE_LINE_HEAD + "35 of 48, PASS"),
+                 "FAIL at the bar": lt(GATE_LINE_HEAD + "36 of 48, FAIL"),
+                 "a list item": lt("- " + Gate(48, "PASS").line()),
+                 # the v7 review's B1: refused by the whole line's reconstruction alone, and two candidates
+                 "no space after the head": lt(GATE_LINE_HEAD.rstrip() + "30 of 48, FAIL"),
+                 "a tab after the head": lt(GATE_LINE_HEAD.rstrip() + "\t30 of 48, FAIL"),
+                 "beside a line missing the space": lt(Gate(48, "PASS")) + GATE_LINE_HEAD.rstrip() + "10 of 48, FAIL\n"}
+        refused_g = {k: _bt_raises(lambda t=t: lock_gate(t), (AnlRefusal,))[0] for k, t in bad_g.items()}
+        B.chk(f"the lock's gate line (PIN-n-40): read whole and stripped, beside a line naming the leakage half, at "
+              f"48, 36 (the bar) and 40 PASS and at 35 and 0 FAIL; refused ({len(bad_g)} cases) when absent, twice, "
+              "PASS beside FAIL, of another shape (lower case, a slash, a letter, a leading zero, a sign, of 50, a "
+              "full stop, 49, other digits, no space or a tab after the head), against the bar either way, beside a "
+              "line missing the head's space, or not a whole line (a list item)",
+              all(ok_g.values()) and all(refused_g.values()) and len(bad_g) == 18,
+              ([k for k, v in ok_g.items() if not v], [k for k, v in refused_g.items() if not v]), cover=["LOCK-GATE"])
         # the NOT-RUNs a report derives: no arm complete before the cap, a PI-STOP, a G-VER-STOP
         keep = {("N1-V", "none", "0"), ("N1-V", "valence", "+1")}
         omit = [(arm, d_, lab) for arm, rows in PLAN_TABLE.items() for dirs, labels in rows for d_ in dirs
@@ -5112,9 +5587,11 @@ def _bt_verdicts(B: _Battery) -> None:
         rc3_cells["cells"][sorted(rc3_cells["cells"])[0]]["json_sha256"] = "1" * 64
         rc3_arm = json.loads(json.dumps(rc3))
         rc3_arm["per_arm"]["N1-V"]["complete"] = True
-        # the v5 review's B7: bz and rs name a read of the plan not on disk (N1-P's −1 cell, omitted from c4)
-        bz = sm.example_pause(1, kind="fidelity-binomial", launch_index=500, adjudicated=True, resumed_at=501,
-                              arms=("N1-P",))
+        # the v5 review's B7: bz and rs name a read of the plan not on disk (N1-P's −1 cell, omitted from c4); bz's
+        # fire at read 159, which ends a tile whose 160 reads (N1-V's +1 cell) each carry a trial (its batch reads
+        # 0-159, R12; v6's read 500 ends none, and draft 4's 479 ended a tile with no trial: the v7 values-check)
+        bz = sm.example_pause(1, kind="fidelity-binomial", launch_index=159, adjudicated=True, resumed_at=160,
+                              arms=("N1-P",), identity=camp4.identity)
         bz["binomial"]["k"] = 0
         bz["read_id"] = f"N1-P|valence|-1|{session_key(3)}"
         rid3 = f"N1-V|valence|+1|{session_key(3)}"
@@ -5140,6 +5617,11 @@ def _bt_verdicts(B: _Battery) -> None:
         lk_two = put("LOCK-two.md", None, _bt_lock_text(routes=2))
         lk_c = put("LOCK-c.md", None, _bt_lock_text(route="C"))
         lk_v09 = put("LOCK-v09.md", None, _bt_lock_text(v10=False))
+        # PIN-n-40: the gate's line absent (a G-CAL-n that ended early), twice, of another shape, against the bar
+        lk_nogate = put("LOCK-nogate.md", None, _bt_lock_text(gate=None))
+        lk_twogates = put("LOCK-twogates.md", None, _bt_lock_text(gates=2))
+        lk_gshape = put("LOCK-gshape.md", None, _bt_lock_text(gate=GATE_LINE_HEAD + "48/48, PASS"))
+        lk_gbar = put("LOCK-gbar.md", None, _bt_lock_text(gate=GATE_LINE_HEAD + "35 of 48, PASS"))
 
         def gver_with(lk: Path) -> Path:
             ident_l = dict(camp.identity, lock_sha256=sha(lk))
@@ -5179,6 +5661,10 @@ def _bt_verdicts(B: _Battery) -> None:
             "lock-no-route": (rv(empty, gver_with(lk_noroute), None, lk_noroute), "direction of record"),
             "lock-two-routes": (rv(empty, gver_with(lk_two), None, lk_two), "direction of record"),
             "lock-route-C": (rv(empty, gver_with(lk_c), None, lk_c), "direction of record"),
+            "lock-no-gate": (rv(empty, gver_with(lk_nogate), None, lk_nogate), "(0 found)"),
+            "lock-two-gates": (rv(empty, gver_with(lk_twogates), None, lk_twogates), "(2 found)"),
+            "lock-gate-shape": (rv(empty, gver_with(lk_gshape), None, lk_gshape), "its count a decimal integer"),
+            "lock-gate-bar": (rv(empty, gver_with(lk_gbar), None, lk_gbar), "contradicts the bar"),
             "cells": (rv(cdir, report_with(cells=r_cells)), "not the files on disk"),
             "identity": (rv(cdir, report_with(stage_identity=ident_pod,
                                               stage_identity_sha256=sm.identity_sha256(ident_pod))),
@@ -5251,48 +5737,54 @@ def _bt_verdicts(B: _Battery) -> None:
             camp2.identity, cdir2, sm, end_state="PI-STOP", pauses=[pz, p2], stop=stop_pi)), art2),
             "more than one pause stands")
         # PIN-n-37's inputs: a pause's read outside the plan (a rendering pause standing, its read not on disk); a
-        # standing batch not the runner's (the v5 review's F1, B3): A's run's-end batch with its count, its
-        # exceedances, its start (moved back onto a read with no re-computation), its end (one trial short of the
-        # stage's last) or its scope (without N1-P) not the records'; and C's batch, ending at a read, with its count
+        # standing tile not the runner's (the v5 review's F1, B3, under R12), each passing check_report's form: A's
+        # fire at a read (VD-PAUSE-POINTS) with its count or its exceedances not its tile's records'; VD-BATCH-CLEARS's
+        # tail ending one read short of the stage's last, or with its scope without N2-C; and C's fire at a read with
+        # its count one short. A tile's start, and a fire at a read's end, are check_report's form (VD-BATCH-CLEARS)
         rr = dict(sm.example_pause(1, kind="rendering", launch_index=len(camp.records), arms=("N1-R",)),
                   read_id=f"N1-R|rand_00|+1|{session_key(40)}")
         refs["pause-not-planned"] = (rv(cdir, on_main("rep_rr.json", [rr], end_state="PI-STOP", stop=stop_pi)),
                                      "is not a read of the plan")
-
-        def with_b(ps: Sequence[dict], **kw: Any) -> list:
-            out_ = json.loads(json.dumps(list(ps)))
-            out_[-1]["binomial"].update(kw)
-            return out_
-        b2, tl_k = pa[-1]["binomial"], trials_of(camp_k)
-        sc_ = json.loads(json.dumps(pa))
-        sc_[-1]["arms_in_scope"] = [a for a in sc_[-1]["arms_in_scope"] if a != "N1-P"]
-        for k_, ps_, want_ in (("batch-count", with_b(pa, n=b2["n"] + 1), "its batch is not the records' trials"),
-                               ("batch-exceedances", with_b(pa, k=0), "its batch is not the records' trials"),
-                               ("batch-start", with_b(pa, first_launch_index=b2["first_launch_index"] - 1),
-                                "its batch is not the records' trials"),
-                               ("batch-end", with_b(pa, last_launch_index=tl_k[-2], n=b2["n"] - 1),
-                                "its batch is not the records' trials"),
-                               ("batch-scope", sc_, "its scope does not hold the arms of its batch's trials")):
-            refs[k_] = (rv(cdir_k, put(f"rep_{k_}.json", _bt_report_for(camp_k.identity, cdir_k, sm,
-                                                                       end_state="PI-STOP", pauses=ps_,
-                                                                       stop=stop_pi)), art_k), want_)
-        refs["batch-read-count"] = (rv(cdir2, put("rep_batch-read-count.json", _bt_report_for(
-            camp2.identity, cdir2, sm, end_state="PI-STOP", pauses=with_b(pc, n=pc[-1]["binomial"]["n"] + 1),
-            stop=stop_pi)), art2), "its batch is not the records' trials")
+        sc_r = json.loads(json.dumps(pr))
+        sc_r[-1]["arms_in_scope"] = ["N1-V"]
+        # the v7 review's F1: A's standing pause naming a read on disk at another launch index (its scope that read's
+        # arm and its tile's, the runner's for that read), and A's standing pause with N4's arms added to its scope
+        rid_x = next(r_ for r_, x_ in camp_a.records.items() if x_["launch_index"] == 3)
+        ix_a, sx_a = json.loads(json.dumps(pa)), json.loads(json.dumps(pa))
+        ix_a[-1].update(read_id=rid_x, arms_in_scope=sorted({rid_x.split("|")[0], "N2-E"}))
+        sx_a[-1]["arms_in_scope"] = ["N2-E", "N4-T", "N4-Ts"]
+        tile_refs = {"batch-count": (cdir_a, camp_a, with_b(pa, n=pa[-1]["binomial"]["n"] + 1), art_a, None,
+                                     "its batch is not the runner's tile"),
+                     "batch-exceedances": (cdir_a, camp_a, with_b(pa, k=0), art_a, None,
+                                           "its batch is not the runner's tile"),
+                     "batch-end": (cdir_r, camp_r, with_b(pr, last_launch_index=pr[-1]["binomial"]["last_launch_index"]
+                                                           - 1), g_r, used_r, "its batch is not the runner's tile"),
+                     "batch-scope": (cdir_r, camp_r, sc_r, g_r, used_r, "its scope is not the runner's"),
+                     "batch-read-count": (cdir2, camp2, with_b(pc, n=pc[-1]["binomial"]["n"] - 1), art2, None,
+                                          "its batch is not the runner's tile"),
+                     "pause-read-index": (cdir_a, camp_a, ix_a, art_a, None, "is on disk at launch index 3, not"),
+                     "scope-inflated": (cdir_a, camp_a, sx_a, art_a, None, "its scope is not the runner's")}
+        for k_, (cd_, c_, ps_, gp_, cap_, want_) in tile_refs.items():
+            refs[k_] = (rv(cd_, put(f"rep_{k_}.json", _bt_report_for(c_.identity, cd_, sm, end_state="PI-STOP",
+                                                                    pauses=ps_, stop=stop_pi, hour_cap_ms=cap_)), gp_),
+                        want_)
         bad = {k: m[:70] for k, ((okr, m), want_m) in refs.items() if not (okr and want_m in m)}
         if "DONE" in refs["schema-report"][0][1] or "§3" in refs["schema-gread"][0][1]:
             bad["schema-blind"] = "a schema refusal printed the schema's text, not its field path alone"
         B.chk(f"verdicts refuses, each by its message ({len(refs)} cases): a date; a report or an artifact the schema "
               "refuses (by its field path alone); a PAUSE; a stage not a campaign; a "
-              "lock not the identity's, not naming this analyzer, not saying it is LOCK-n v1.0, or without one "
-              "direction of record A or B; a report not the cells on disk (cells, identity, per-arm counts, on a "
+              "lock not the identity's, not naming this analyzer, not saying it is LOCK-n v1.0, without one "
+              "direction of record A or B, or without one gate line of PIN-n-40's form within the bar (none, two, "
+              "another shape, PASS below 36); a report not the cells on disk (cells, identity, per-arm counts, on a "
               "complete campaign and on one with no arm complete; the counters, the ceiling's among them, label mass "
               "and used time), a pause's read not on disk or not of its kind (the ceiling's included), a read above "
               "the ceiling no pause's (PIN-n-39), a rendering pause not resumed whose read is on disk, a resumption "
               "where nothing was launched, a read after a standing pause, a standing pause not the last event, launch "
-              "indices not 0..m−1, two pauses standing, a pause's read not of the plan, a standing batch not the "
-              "runner's (its count, its exceedances, its start, its end, its scope, and one ending at a read: "
-              "PIN-n-37); G-READ-n's artifact missing, or not the campaign's (plan, "
+              "indices not 0..m−1, two pauses standing, a pause's read not of the plan, or on disk at another launch "
+              "index, a standing pause's scope not the runner's (short, or with N4's arms added), a standing tile "
+              "not the runner's (a fire at a read with its count or its exceedances off, a tail ending short of the "
+              "stage's last read, another fire at a read with its count off: PIN-n-37, R12); G-READ-n's "
+              "artifact missing, or not the campaign's (plan, "
               "identity, a cell's capture or json sha, a cell left out, the package, the layers, merged labels, a "
               "point not kept); a malformed "
               "cosines file or one without the six pairs; a report of no record beside a non-empty campaign directory",
@@ -5361,7 +5853,9 @@ def battery() -> dict:
         ptext = (REPO / PROPOSAL_REL).read_bytes()
         atext = (REPO / ADDENDUM_REL).read_bytes()
         a2text = (REPO / ADDENDUM2_REL).read_bytes()
-        verb = proposal_spans(ptext.decode("utf-8")) | addendum_spans(atext.decode("utf-8"))
+        a3text = (REPO / ADDENDUM3_REL).read_bytes()
+        verb = (proposal_spans(ptext.decode("utf-8")) | addendum_spans(atext.decode("utf-8"))
+                | addendum3_spans(a3text.decode("utf-8")))
         B.group("outcomes", lambda: _bt_outcomes(B))
         B.group("not-run", lambda: _bt_notrun(B))
         B.group("tables", lambda: _bt_tables(B))
@@ -5372,7 +5866,7 @@ def battery() -> dict:
         B.group("reader path", lambda: _bt_reader(B))
         B.group("commands", lambda: _bt_commands(B))
         B.group("verdicts", lambda: _bt_verdicts(B))
-        B.group("structure", lambda: _bt_structure(B, ptext, hook, atext, a2text))
+        B.group("structure", lambda: _bt_structure(B, ptext, hook, atext, a2text, a3text))
     snap1 = _bt_snapshot()
     B.chk("the battery wrote nothing under data/n (sha256 of every file outside ckpt / reports / verdicts, before = "
           "after)", snap0 == snap1, sorted(set(snap0) ^ set(snap1))[:2], cover=["STR-NO-CANONICAL-WRITE"])
@@ -5391,7 +5885,7 @@ def battery() -> dict:
 # =====================================================================================================================
 # 15. G-ANL-n's run (n §3 "G-ANL-n"): the battery, then the artifact, write-once, against committed blobs
 # =====================================================================================================================
-BOUND_RELS = (PROPOSAL_REL, ADDENDUM_REL, ADDENDUM2_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
+BOUND_RELS = (PROPOSAL_REL, ADDENDUM_REL, ADDENDUM2_REL, ADDENDUM3_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
               f"{BK_NP_REL}/reduced.json")
 
 
@@ -5413,16 +5907,19 @@ def committed_problems(rels: Sequence[str]) -> list[str]:
 
 
 def pinned_map_reach(dmap: DoseMap) -> dict:
-    """The (N1, dose, N2) triples the outcome layer produces on the pinned map (the battery's enumeration), its merge
-    shape, and, where the shape is one the battery derives by hand, the agreement with that derivation."""
-    r = dmap.resolved()
-    # the coupling shapes (map_reach_by_hand): dose and N2 meet N1 at +1 when d_eq sits there (d); N2 is decided at
-    # dose's point when the cap binds (b), at N1's +1 when d_20 sits there without the cap (c); else none (a)
-    m = dmap.norm_matched(dmap.n2_decision_f())
-    shape = "d" if r["d_eq"] == 1.0 else "b" if dmap.cap_binds() else "c" if m == 1.0 else "a"
-    seen, iff, clean = map_reach(dmap)
-    return {"shape": shape, "triples": len(seen), "tuples": len(seen) * 8 + 1, "dose_iff_n1": iff, "raised": not clean,
-            "agrees_with_hand": seen == map_reach_by_hand(shape)}
+    """The (N1, dose, N2) triples the outcome layer produces on the pinned map (the battery's enumeration) under each
+    branch of the gate, keyed by its result (PIN-n-42: the gate enters at VERDICTS, from the lock, so G-ANL-n reports
+    both), each with its coupling shape and its agreement with the hand derivation."""
+    out = {}
+    for gate in GATE_STATES:
+        # the coupling shapes (coupling_shape, map_reach_by_hand): dose and N2 meet N1 at +1 when d_eq sits there (d);
+        # N2 is decided at dose's point when the cap binds or the gate FAILs (b), at N1's +1 when d_20 sits there
+        # without either (c); else none (a)
+        shape = coupling_shape(dmap, gate)
+        seen, iff, clean = map_reach(dmap, gate=gate)
+        out[gate] = {"shape": shape, "triples": len(seen), "tuples": len(seen) * 8 + 1, "dose_iff_n1": iff,
+                     "raised": not clean, "agrees_with_hand": seen == map_reach_by_hand(shape)}
+    return out
 
 
 def ganl_artifact(res: Mapping[str, Any], dmap: DoseMap | None) -> dict:
@@ -5432,12 +5929,15 @@ def ganl_artifact(res: Mapping[str, Any], dmap: DoseMap | None) -> dict:
                     "(results/raw/2026-11-16_n-ganl_design-to-code_answers.md) and of 2026-11-18 §5 "
                     "(results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md), §3 of its second sitting "
                     "(results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md) and §6 of its third "
-                    "(results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md); ADDENDUM-n1 v0.1 §4-§7; "
-                    "ADDENDUM-n2 v0.1 §2.1, §3",
+                    "(results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md), and of 2026-11-19, §3 and "
+                    "§4 (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md) and §2.5 of its second "
+                    "sitting (results/raw/2026-11-19_n-gvec-stop-lock-opens_design-to-code_answers.md); ADDENDUM-n1 "
+                    "v0.1 §4-§7; ADDENDUM-n2 v0.1 §2.1, §3; ADDENDUM-n3 v0.1 §3.3-§3.5",
             "analyzer": {"path": ANALYZER_REL, "sha256": sha, "sha16": sha[:16]},
             "proposal": {"path": PROPOSAL_REL, "sha256": PROPOSAL_SHA256},
             "addendum": {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256},
             "addendum2": {"path": ADDENDUM2_REL, "sha256": ADDENDUM2_SHA256},
+            "addendum3": {"path": ADDENDUM3_REL, "sha256": ADDENDUM3_SHA256},
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "battery": {k: res.get(k) for k in ("checks_pass", "checks_total", "expected_checks", "coverage_ids",
                                                  "outputs_sha256", "reachability", "bk_repro", "bk_fidelity")},
@@ -5531,9 +6031,10 @@ def run_ganl(out: str | None, dose_map: str | None) -> int:
         print("STOP: the code moved during the battery; nothing written", file=sys.stderr)
         return 4
     art = ganl_artifact(res, dmap)
-    if dmap is not None and (art["dose_map"]["reach"]["raised"] or not art["dose_map"]["reach"]["dose_iff_n1"]
-                             or not art["dose_map"]["reach"]["agrees_with_hand"]):
-        print("STOP: the pinned map's reachability check failed; nothing written", file=sys.stderr)
+    if dmap is not None and any(x["raised"] or not x["dose_iff_n1"] or not x["agrees_with_hand"]
+                                for x in art["dose_map"]["reach"].values()):
+        print("STOP: the pinned map's reachability check failed (under either branch of the gate); nothing written",
+              file=sys.stderr)
         return 4
     try:
         how = write_once(dest, json_text(art))
@@ -5598,11 +6099,16 @@ def _bt_commands(B: _Battery) -> None:
           cover=["NUM-MERGE-EDGE"])
     cls = {k: pinned_map_reach(m) for k, m in (("a", DoseMap(0.25, 0.5)), ("b", DoseMap(0.52, 1.0)),
                                                ("c", DoseMap(0.49, 2 * 0.49)), ("d", DoseMap(0.97, 1.0)))}
-    B.chk("the pinned map's coupling shape: d_20 at +1/2 is (a) (28 triples); d_eq at +1/2 with the cap binding is "
-          "(b) (25: N2 decided at dose's point, OPEN-Q7 as ruled); d_eq at +1/2 with d_20 merged into +1 without the "
-          "cap is (c) (24); both at +1 is (d) (17); each agreeing with the hand derivation",
-          {k: (v["shape"], v["triples"], v["agrees_with_hand"]) for k, v in cls.items()}
-          == {"a": ("a", 28, True), "b": ("b", 25, True), "c": ("c", 24, True), "d": ("d", 17, True)}, cls,
+    B.chk("the pinned map's coupling shape under each branch of the gate (PIN-n-42): with the gate's PASS, d_20 at "
+          "+1/2 is (a) (28 triples); d_eq at +1/2 with the cap binding is (b) (25: N2 decided at dose's point, "
+          "OPEN-Q7 as ruled); d_eq at +1/2 with d_20 merged into +1 without the cap is (c) (24); both at +1 is (d) "
+          "(17); with its FAIL, N2 decided at f = 0.10 (ADDENDUM-n3 §3.4), the first three are (b) (25) and the last "
+          "(d); each agreeing with the hand derivation",
+          {(k, g): (v[g]["shape"], v[g]["triples"], v[g]["agrees_with_hand"]) for k, v in cls.items()
+           for g in GATE_STATES}
+          == {("a", "PASS"): ("a", 28, True), ("b", "PASS"): ("b", 25, True), ("c", "PASS"): ("c", 24, True),
+              ("d", "PASS"): ("d", 17, True), ("a", "FAIL"): ("b", 25, True), ("b", "FAIL"): ("b", 25, True),
+              ("c", "FAIL"): ("b", 25, True), ("d", "FAIL"): ("d", 17, True)}, cls,
           cover=["NUM-REACH-CLASS"])
     with tempfile.TemporaryDirectory(prefix="n_anl_cmd_") as td:
         base = Path(td)
@@ -5618,11 +6124,12 @@ def _bt_commands(B: _Battery) -> None:
         ok3, msg3 = _bt_raises(lambda: run_not_run(rp, base / "out"), (AnlRefusal,))
         B.chk("not-run writes N-pod_NOT-RUN.json once (written, then identical), refuses other bytes (write-once), "
               "carries the reason in all four sentence slots, and binds the record by its file's sha256 and the "
-              "proposal, ADDENDUM-n1 and ADDENDUM-n2 by theirs", (h1, h2) == ("written", "identical") and ok3
+              "proposal, ADDENDUM-n1, ADDENDUM-n2 and ADDENDUM-n3 by theirs", (h1, h2) == ("written", "identical")
+              and ok3
               and doc["outcome"] == NOT_RUN and all(doc["reason"] in v["text"] for v in doc["sentences"].values())
               and doc["date"] == "2026-12-16" and doc["record"] == {"name": "rec.json", "sha256": rsha}
               and doc["proposal_sha256"] == PROPOSAL_SHA256 and doc["addendum_sha256"] == ADDENDUM_SHA256
-              and doc["addendum2_sha256"] == ADDENDUM2_SHA256,
+              and doc["addendum2_sha256"] == ADDENDUM2_SHA256 and doc["addendum3_sha256"] == ADDENDUM3_SHA256,
               (h1, h2, msg3[:60], doc.get("record")), cover=["CMD-NOTRUN"])
         nr = {"uncommitted": not_run_precheck(None, bound=("scripts/__n_analyze_never_committed__.py",)),
               "of-record": not_run_precheck(None, bound=()),
@@ -5687,16 +6194,18 @@ def _bt_commands(B: _Battery) -> None:
               or (passed.code, passed.refusal), cover=["CMD-GANL-REFUSE"])
         art = ganl_artifact({"checks_pass": 1, "checks_total": 1, "expected_checks": 1, "coverage_ids": [],
                              "outputs_sha256": "0" * 64}, DoseMap(0.97, 1.0))
-        B.chk("G-ANL-n's artifact names the analyzer, proposal, ADDENDUM-n1, ADDENDUM-n2 and schema by sha256, the "
-              "tuple space (385; 2,561 evaluations, the tuple pass's own), the pinned map's points and reach, the PIN "
-              "and OPEN registers, and no time",
+        B.chk("G-ANL-n's artifact names the analyzer, proposal, ADDENDUM-n1, ADDENDUM-n2, ADDENDUM-n3 and schema by "
+              "sha256, the tuple space (385; 2,561 evaluations, the tuple pass's own), the pinned map's points and its "
+              "reach under each branch of the gate (PIN-n-42), the PIN and OPEN registers, and no time",
               art["proposal"]["sha256"] == PROPOSAL_SHA256 and art["schema_module"]["sha256"] == SCHEMA_SHA256
               and art["addendum"] == {"path": ADDENDUM_REL, "sha256": ADDENDUM_SHA256}
               and art["addendum2"] == {"path": ADDENDUM2_REL, "sha256": ADDENDUM2_SHA256}
-              and BOUND_RELS == (PROPOSAL_REL, ADDENDUM_REL, ADDENDUM2_REL, SCHEMA_REL, f"{BK_NP_REL}/prereg.json",
-                                 f"{BK_NP_REL}/reduced.json")
+              and art["addendum3"] == {"path": ADDENDUM3_REL, "sha256": ADDENDUM3_SHA256}
+              and BOUND_RELS == (PROPOSAL_REL, ADDENDUM_REL, ADDENDUM2_REL, ADDENDUM3_REL, SCHEMA_REL,
+                                 f"{BK_NP_REL}/prereg.json", f"{BK_NP_REL}/reduced.json")
               and art["tuple_space"] == {"tuples": len(tuple_space()), "evaluations": len(evaluations())}
-              == {"tuples": 385, "evaluations": 2561} and art["dose_map"]["reach"]["shape"] == "d"
+              == {"tuples": 385, "evaluations": 2561} and sorted(art["dose_map"]["reach"]) == ["FAIL", "PASS"]
+              and all(art["dose_map"]["reach"][g]["shape"] == "d" for g in GATE_STATES)
               and art["pins"] == PINS and art["open"] == OPEN and not any(k in json.dumps(art) for k in ("UTC", "T00:")),
               sorted(art), cover=["STR-GANL-ARTIFACT"])
 
@@ -5745,6 +6254,34 @@ def lock_route(text: str) -> str:
     return lines[0][-1]
 
 
+def lock_gate(text: str) -> Gate:
+    """PIN-n-40 (the line's form is ADDENDUM-n3 §3.3's, "reward axis 5(d) gate, coherence: k of 48, PASS" or FAIL, as
+    n-build's lock draft carries it; the parse is Code's form, flagged): LOCK-n v1.0, which carries v0.1's line (§3.5:
+    the lock pins the coherence result "from a `gcal.json` whose status is PASS"), records the gate in one whole line,
+    its count a decimal integer 0-48 and PASS iff the count is at least 36 (§3.3's bar). Lines are read stripped, as
+    lock_route reads its own; a line is the gate's if it starts with the head 'reward axis 5(d) gate, coherence:', so a
+    line naming the gate's leakage half is not one (§3.2), and a line missing the head's space is one, refused by its
+    shape. It refuses a lock with no such line, with two or more (a quotation of the line on a line of its own beside
+    the line of record included; a quotation inside another line, or blockquoted, is not one), with one of any other
+    shape, or with a result the bar contradicts. A G-CAL-n that ended early (a STOP, or the early PAUSE) gives the
+    lock no line, so VERDICTS refuses, finding none."""
+    head = GATE_LINE_HEAD.rstrip()
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip().startswith(head)]
+    if len(lines) != 1:
+        raise AnlRefusal(f"REFUSED: the lock does not record the reward axis's 5(d) gate in one whole line "
+                         f"'{GATE_LINE_HEAD}<k> of {GATE_N}, PASS' or '... FAIL' ({len(lines)} found)")
+    body = lines[0][len(GATE_LINE_HEAD):]
+    k_s, sep, result = body.partition(f" of {GATE_N}, ")
+    digits = bool(k_s) and all(c in "0123456789" for c in k_s) and (k_s == "0" or not k_s.startswith("0"))
+    if not (sep and digits and result in GATE_STATES and lines[0] == f"{GATE_LINE_HEAD}{k_s}{sep}{result}"):
+        raise AnlRefusal(f"REFUSED: the lock's gate line {lines[0]!r} is not '{GATE_LINE_HEAD}<k> of {GATE_N}, PASS' "
+                         "or '... FAIL', its count a decimal integer")
+    try:
+        return Gate(int(k_s), result)
+    except ValueError as e:
+        raise AnlRefusal(f"REFUSED: the lock's gate line: {e}")
+
+
 def _load_checked(path: Path, check: Callable[[Any], None], what: str) -> tuple[dict, str]:
     """A JSON file through the schema's own check: (the object, the sha256 of the bytes parsed)."""
     try:
@@ -5785,6 +6322,21 @@ def report_counters(camp: Campaign) -> dict:
             CEILING_COUNTER: None if ceil is None else over_c, "label_mass_below_floor": dict(sorted(lm.items()))}
 
 
+def runner_scope(q: Mapping[str, Any], camp: Campaign, tile_arms: "set[str] | tuple" = ()) -> set[str]:
+    """The runner's SCOPE at ef105f1 (its pin SCOPE; `_scope`): a pause's read's arm, the arms with a trial in its tile
+    where the binomial fired at it (``tile_arms``), and, for a shadow (N1-V's d = 0 read), every arm with a steered
+    read of that session in the plan, whose margins are read against it; a fire at the run's end, its tile's trials'
+    arms alone. N4's d = 0 reads are no shadows."""
+    arms = set(tile_arms)
+    if q["read_id"] is not None:
+        arm, _d, lab, sid = q["read_id"].split("|")
+        arms.add(arm)
+        if (arm, lab) == ("N1-V", "0"):
+            arms |= {a for a in STEERED_ARMS for r in camp.planned[a]
+                     if r.split("|")[3] == sid and (a, r.split("|")[2]) != ("N1-V", "0")}
+    return arms
+
+
 def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
     """PIN-n-24: the stage report bound to the campaign on disk, the properties check_report leaves to the reader:
     the identity and the plan; every cell file by its shas and record count; each arm's planned, obtained and complete
@@ -5795,17 +6347,23 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
     it names nonfinite, above the identity's ceiling where it names fidelity-ceiling (ADDENDUM-n2 §2.1; PIN-n-39) and
     outside the identity bound where it names identity-bound; every record above the ceiling is the read of a pause
     naming fidelity-ceiling (the kind bound both ways, PIN-n-39); a rendering pause not resumed names a read not on
-    disk; a resumption is where a read was launched or refused; every pause's read is a read of the plan. A standing
-    pause's binomial batch is bound to the records, since PIN-n-37 reads it (its binding the ground the seat's §6
-    keeps): it is the runner's batch -- the reads carrying a re-computation from the first after the last cleared
-    batch (an adjudicated pause's batch, which its ruling clears; else the stage's first) to the pause's read, or to
-    the stage's last for a fire at the run's end -- its n those trials and its k those above TAU, and its scope holds
-    their arms (the v5 review's F1). An adjudicated batch is not checked (its counting is the runner's; no outcome
-    reads it). Three checks here cannot fire alone and are kept so the binding is stated whole: the two shas, which
-    check_report ties to the report's
-    identity, once the identity is the cells'; and the per-arm counts, which the schema's per_arm rule (complete is
-    obtained == planned) and check_report's plan and cell-record checks imply once the identity is the cells' and the
-    cells are the files on disk."""
+    disk; a resumption is where a read was launched or refused; every pause's read is a read of the plan, and, where it
+    is on disk, at the pause's launch index (the v7 review's F1). A standing pause's binomial batch is bound to the
+    records, since PIN-n-37 reads it (its binding the ground the seat's §6 keeps): it is the runner's tile (R12: the
+    seat's answers of 2026-11-19, first sitting, §3, and §4 (b) as ruled; the runner at ef105f1) -- the cadence's reads
+    ending at the read that fired it, or, for a fire at the run's end, the stage's tail, the reads after the last whole
+    tile through the stage's last read (none where the reads number a multiple of the cadence) -- its n the tile's
+    trials (its reads with a re-computation, a non-finite one included) and its k those above TAU (the v5 review's F1).
+    A standing pause's scope is the runner's SCOPE (runner_scope; the v7 review's F1). A ruling clears nothing (R12,
+    R13): no adjudicated pause moves a tile. An adjudicated batch and scope are not checked (their counting is the
+    runner's; no outcome reads them). Some checks here cannot fire alone and are kept so the binding is stated whole:
+    the two shas, which check_report ties to the report's identity, once the identity is the cells'; the per-arm
+    counts, which the schema's per_arm rule (complete is obtained == planned) and check_report's plan and cell-record
+    checks imply once the identity is the cells' and the cells are the files on disk; and, of a standing tile's
+    bounds, a fire at a read's both ends, which check_report's form of a tile implies (its first read a multiple of
+    the cadence, its span the cadence's reads to that read), and a tail's start, which that form fixes once the
+    tail's end is bound (a tail shorter than a tile, starting at a multiple of the cadence). A tail's end, which
+    check_report leaves open, is bound here alone, as are every standing tile's n and k."""
     p = []
     ident = camp.identity
     if ident["stage"] != "campaign":
@@ -5843,25 +6401,26 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
     attempted = ({r["launch_index"] for r in camp.records.values()}
                  | {q["launch_index"] for q in rep["pauses"] if q["kind"] == "rendering"})
     planned = set().union(*camp.planned.values())
-    trial_li = sorted(r["launch_index"] for r in camp.records.values() if r["fidelity"] is not None)
-    cleared = max((q["binomial"]["last_launch_index"] for q in rep["pauses"]           # an adjudicated batch's ruling
-                   if q["adjudicated"] and q["binomial"] is not None and q["read_id"] is not None), default=-1)
+    cad = ident["fidelity_rule"]["cadence"]
     for q in rep["pauses"]:
         ra = q["resumed_at_launch_index"]
         if ra is not None and ra not in attempted:
             p.append(f"{q['pause_id']}: it resumed where no read was launched or refused")
         b = q["binomial"]
+        tile_arms: set = set()
         if b is not None and not q["adjudicated"]:
-            first_w = next((i for i in trial_li if i > cleared), None)
-            last_w = (trial_li[-1] if trial_li else None) if q["read_id"] is None else q["launch_index"]
-            ins = [r for r in camp.records.values() if r["fidelity"] is not None
-                   and b["first_launch_index"] <= r["launch_index"] <= b["last_launch_index"]]
-            if (b["first_launch_index"], b["last_launch_index"]) != (first_w, last_w) \
+            # the runner's tile (R12): the cadence's reads ending at the fire's read, or the stage's tail at its end
+            lo_w, hi_w = (((m // cad) * cad, m - 1) if q["read_id"] is None
+                          else (q["launch_index"] - cad + 1, q["launch_index"]))
+            ins = [r for r in camp.records.values() if r["fidelity"] is not None and lo_w <= r["launch_index"] <= hi_w]
+            if (b["first_launch_index"], b["last_launch_index"]) != (lo_w, hi_w) \
                     or (len(ins), sum(r["fidelity"]["exceeds_tau"] is True for r in ins)) != (b["n"], b["k"]):
-                p.append(f"{q['pause_id']}: its batch is not the records' trials since the last cleared batch "
-                         "(PIN-n-37 reads it)")
-            if not {r["arm"] for r in ins} <= set(q["arms_in_scope"]):
-                p.append(f"{q['pause_id']}: its scope does not hold the arms of its batch's trials")
+                p.append(f"{q['pause_id']}: its batch is not the runner's tile of the records, with that tile's "
+                         "trials and exceedances (R12; PIN-n-37 reads it)")
+            tile_arms = {r["arm"] for r in ins}
+        if not q["adjudicated"] and set(q["arms_in_scope"]) != runner_scope(q, camp, tile_arms):
+            p.append(f"{q['pause_id']}: its scope is not the runner's: its read's arm, the arms of its tile's "
+                     "trials and, for a shadow, every arm with a steered read of its session")
         rid = q["read_id"]
         if rid is None:
             continue
@@ -5869,6 +6428,8 @@ def report_problems(rep: Mapping[str, Any], camp: Campaign, sm) -> list[str]:
             p.append(f"{q['pause_id']}: its read {rid} is not a read of the plan")
         kinds = [q["kind"]] + list(q["also_fired"])
         rec = camp.records.get(rid)
+        if rec is not None and rec["launch_index"] != q["launch_index"]:
+            p.append(f"{q['pause_id']}: its read is on disk at launch index {rec['launch_index']}, not the pause's")
         if q["kind"] == "rendering":
             if ra is None and rec is not None:
                 p.append(f"{q['pause_id']}: a rendering pause not resumed names a read on disk")
@@ -5954,12 +6515,13 @@ def paused_points(rep: Mapping[str, Any], camp: Campaign) -> dict[tuple[str, Any
     it has one (a single-read pause -- non-finite, the ceiling, identity, rendering -- on that read, not a range; a
     rendering pause's read is not on disk, and its id names its point); a pause that fired the binomial (its kind or
     also_fired), also on every read launched in its batch's range, from first_launch_index to last_launch_index -- the
-    trials and the reads between them, re-computed or not (the batch bound to the runner's by report_problems: its
-    range, n, k and scope); and, where one of those reads is a session's shadow (N1-V's d = 0 read), on every planned
-    steered read of that session, each read against it (the shadow extension). The points are §6's whatever the
-    pause's scope: §6 states them without it, and the scope binds the batch (report_problems). Keyed as State.at is:
-    (arm, the point's value), N2's arms by the f; the steered arms only, N4's pauses being read per arm (N1's rule,
-    too, reads its pauses per arm, through `paused`; N2 reads N1's arms at these points)."""
+    runner's tile (R12; the seat's §4 (b) as ruled: a read lies in exactly one range), its reads re-computed or not
+    (the batch bound to the runner's tile by report_problems: its range, n, k and scope); and, where one of those reads
+    is a session's shadow (N1-V's d = 0 read), on every planned steered read of that session, each read against it
+    (the shadow extension). The points are §6's whatever the pause's scope (§4 (a), accepted: "the points are §6's
+    whatever the scope; the scope binds the batch", as report_problems binds it). Keyed as State.at is: (arm, the
+    point's value), N2's arms by the f; the steered arms only, N4's pauses being read per arm (N1's rule, too, reads
+    its pauses per arm, through `paused`; N2 reads N1's arms at these points)."""
     lv = label_values(camp.identity) | {"f0.10": F10, "f0.20": F20}
     out: dict[tuple[str, Any], bool] = {}
     for q in rep["pauses"]:
@@ -6096,7 +6658,8 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     makes its arm INDETERMINATE (PIN-n-20), never the unit NOT-RUN (PIN-n-24). It refuses (AnlRefusal, exit 2),
     before any output, on: a date that is not an ISO calendar date; a report the schema refuses, a PAUSE (the seat
     rules first), or one not a campaign's; a lock not the identity's lock_sha256, not naming this analyzer's sha256,
-    not saying it is LOCK-n v1.0, or stating no direction of record (PIN-n-26); a report not bound to the cells on
+    not saying it is LOCK-n v1.0, stating no direction of record (PIN-n-26), or not recording the reward axis's 5(d)
+    gate in one whole line, which N2's decision point reads (PIN-n-40, PIN-n-41); a report not bound to the cells on
     disk (PIN-n-24); an output of the other outcome already in the output directory; and, when it analyzes, a
     G-READ-n artifact missing, refused by the schema or not bound to the campaign (PIN-n-25), or a malformed cosines
     file (on the NOT-RUN path neither is read). Beside the primary, VERDICTS report the TAU/4 sensitivity row
@@ -6129,8 +6692,9 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     if not lock_names(ltext, asha):
         raise AnlRefusal("REFUSED: the lock does not name this analyzer's sha256")
     route = lock_route(ltext)
+    gate = lock_gate(ltext)
     base = {"unit": UNIT, "date": date, "proposal_sha256": PROPOSAL_SHA256, "addendum_sha256": ADDENDUM_SHA256,
-            "addendum2_sha256": ADDENDUM2_SHA256, "analyzer_sha256": asha,
+            "addendum2_sha256": ADDENDUM2_SHA256, "addendum3_sha256": ADDENDUM3_SHA256, "analyzer_sha256": asha,
             "schema_module": {"path": SCHEMA_REL, "sha256": SCHEMA_SHA256},
             "lock": {"name": Path(lock).name, "sha256": lock_sha},
             "report": {"name": Path(report).name, "sha256": rep_sha, "end_state": end}, "pins": PINS, "open": OPEN}
@@ -6162,10 +6726,10 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     gv, gv_sha = (None, None) if gvec is None else _load_gvec(gvec)
     paused, pat = paused_from(rep), paused_points(rep, camp)
     g, auc, gres = gread_states(art, camp)
-    st, fig = build_state(camp, paused=paused, gread=g, paused_at=pat)
+    st, fig = build_state(camp, paused=paused, gread=g, paused_at=pat, gate=gate)
     o = outcomes(st)
     sset = sentence_set_filled(o, st, route=route, auc=auc)
-    st_s, fig_s = build_state(camp, paused=paused, gread=g, drop=tau4_drop(camp), paused_at=pat)
+    st_s, fig_s = build_state(camp, paused=paused, gread=g, drop=tau4_drop(camp), paused_at=pat, gate=gate)
     o_s = outcomes(st_s)
     drops = row_drops(camp, tau4_drop(camp))
     over = over_half(drops)
@@ -6173,7 +6737,7 @@ def run_verdicts(campaign: Path, report: Path, gread: Path | None, lock: Path, d
     if over:                                       # ADDENDUM-n2 §3: reported where the TAU/4 row drops over half
         med = median_of(camp.identity)
         st_m, fig_m = build_state(camp, paused=paused, gread=g, drop=median_drop(camp, med), paused_at=pat,
-                                  emptied="median-emptied")
+                                  emptied="median-emptied", gate=gate)
         o_m = outcomes(st_m)
         second = {"rule": "PIN-n-38 (ADDENDUM-n2 §3): reads re-computed above the box's extension median rel dropped; "
                           "descriptive, gating nothing", "median_rel": med,
