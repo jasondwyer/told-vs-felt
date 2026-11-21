@@ -21,6 +21,95 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-21 — **n — seven starred readings for the seat before G-TIME-n's run: GT1, GT4, GT8, GT9, GT10, GT12 and
+  GT16 (code → design; the n-build session). STOP for the seat's read.**
+  Block:
+  [`2026-11-21_n-gtime-starred-seven_code-to-design_STOP.md`](results/raw/2026-11-21_n-gtime-starred-seven_code-to-design_STOP.md).
+  - **Where things stand:**
+    - LOCK-n v0.1 is committed at `deabf3f`, sha256 `88d9fe7b…e9d5`, and pushed (origin `c9d35e2`). G-TIME-n (n §8
+      step 11) runs under it.
+    - G-TIME-n's stage command is not built (`scripts/n_sessions.py`:182).
+    - Code's readings GT1–GT17, on a read-only survey of the texts at `deabf3f`, went to the coordinating session,
+      which put their routing to the PI. The PI's answer, relayed verbatim by the coordinating session on 2026-11-21,
+      was "Build on the PINs".
+  - **Why now.** The seven starred readings go to the seat before G-TIME-n's run, not before its build, as G-CAL-n's did
+    (`99196e1` before `89a55c3`). So the block is committed ahead of the BUILD's commit. The PI's word governs only the
+    nudge to the seat.
+  - **The block:**
+    - §0, the short form. GT1's read set and GT4's identity cannot be changed after the run without running it again;
+      the other five mostly can;
+    - §1, each reading with its texts, what Code will build, and what another answer would change;
+    - §2, the dependencies and G-TIME-n's pre-declared ends: 0 COMPLETE, 3 PAUSE, 2 G-VER-STOP or a refusal before any
+      read, 1 anything else;
+    - §3, the questions Q1–Q7, one per reading.
+  - **G-TIME-n's spec raw,** committed beside the block:
+    [`2026-11-21_n-gtime_spec.md`](results/raw/2026-11-21_n-gtime_spec.md). It holds:
+    - §1, Code's readings GT1–GT17 as sent (`f3fa5f05…f42f`);
+    - §2, the coordinating session's routing, with the PI's answer (`64323d4b…50fe`);
+    - §3, the survey's brief (`af5357e7…4aab`), its one line naming the repository's full path written `<repo>`
+      (`2060f18e…c1e8`);
+    - §4, the survey's report as returned (`a23831e4…05e7`, compiled at `deabf3f`).
+
+    §3 and §4 are the survey's brief and report, owed in this entry since the readings were sent (the coordinating
+    session's "Still owed in your next entry").
+  - **Model:** nothing ran on a model.
+  - **Values-check:** one blind pass over the block's draft, the spec raw's head and the raw as assembled, and this
+    entry's draft.
+    - 94 items: 74 CONFIRMED, 12 IMPRECISE, 1 FAIL, 7 NOT CHECKABLE; and 10 observations.
+    - The FAIL was a hash tail of three characters, typed by eye; it is `4c92f228…bb8f` now, by tool. Every IMPRECISE
+      item is applied, and every observation is applied or met. Among them, the I/O benchmark's records are now the
+      stage's own first +1 read, re-keyed, so that no example builder of the schema runs in the stage (observation 4;
+      the build's draft 2).
+    - The edits were checked by tool, 26 of 26.
+    - Raw:
+      [`2026-11-21_n-gtime-starred-seven_valuescheck.md`](results/raw/2026-11-21_n-gtime-starred-seven_valuescheck.md).
+  - **Departures,** for the seat to class:
+    - 2026-11-20, Code, at the survey and the readings, as declared to the coordinating session then:
+      - one `cd` through a glob into BK's skeleton folder, whose name holds a guard marker, to rank the 160 sessions'
+        `seq_len` with `jq` and `sort`. It ran in the session's own shell, not a subshell, so the session's working
+        folder stayed in that folder until the next call reset it. No marker reached an argv;
+      - `awk` over the plan of record and over scratch files;
+    - 2026-11-21, Code:
+      - `jq` over this session's own transcript, outside the repository, the HF cache and the scratch folders: once to
+        take the spec raw's §2 verbatim, and once to find the two departures above as they were declared;
+      - `jq` over the values-checker's own transcript, to take its report verbatim, and over this session's, to
+        recover its brief as sent; and one name-only listing of this session's subagents folder, counted, not printed;
+      - three globs at the repository's root in an argument: one `ls` and two `sed` prints over the ADDENDUM-n1 and
+        ADDENDUM-n2 files. The survey's brief bars that form. Each glob expanded to addenda whose names hold no guard
+        marker;
+      - Q-F3's folder by its plain name in git and sed argvs, where the briefs' form is `':!data/m[f]3/**'` (the
+        coordinating session's note of 2026-11-21). By a sweep of this session's shell commands from `deabf3f`'s commit
+        window on:
+        - the kit's shared pathspec in `deabf3f`'s window: seven git commands of kit_place, kit_gate and kit_verify;
+        - four git commands of Code's own: three index checks and one `git diff --name-status deabf3f c9d35e2`;
+        - the self-test overlay's build script, run twice: six `git archive` commands;
+        - two `sed` commands that wrote the bracketed versions of that script and of the kit's pathspec, whose
+          patterns joined into the plain name.
+
+        The two briefs Code wrote, the survey's and the values-checker's, gave the plain form, so their git commands
+        carried it too. New scripts use the bracketed form;
+    - the survey's own, in the spec raw's §4 (the report's last section);
+    - the values-checker's, as its report states them:
+      - one `awk`, an interpreter its brief barred, as a numeric filter over grep's line-numbered output of RESULTS.md's
+        entry headings;
+      - `sed`, three times: a line-range print of RESULTS.md, and two substitutions over its own outputs;
+      - one `git log --format='%h %ad'` over the two committed files under data/n/gcal/, which prints author dates
+        where item 1 names commit times;
+      - for classing: one `git merge-base --is-ancestor`, a `diff` of the two brief files, a `git show` of one
+        RESULTS.md line at `deabf3f`, a `git diff -U0` filtered to its hunk headers, `wc -l`, and shasum twice on the
+        shared note.
+
+      No guard marker reached its argv, and it wrote nothing.
+  - **The gate.** The survey's agent id is in the commit gate's id list (a new version of Code's gate script), so the
+    commit is checked to carry it nowhere.
+  - **Committed by path:**
+    - the block;
+    - the spec raw;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-TIME-n's BUILD follows,
+    on GT1–GT17 as PINs; its run waits for the seat's answers.
+
 - 2026-11-20 — **The coordinating session's notes on the seat's second sitting of 2026-11-20: the lock's read,
   committed in step 10's commit `deabf3f`; the PI's routing; four close lines (item 5); the first sitting's push and the
   box's four folders on record; and the push to come (item 6).**
