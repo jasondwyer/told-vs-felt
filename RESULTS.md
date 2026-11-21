@@ -21,6 +21,64 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-21 — **n — a supplement to the seven starred readings: Q8, G-TIME-n's two steered cells, from the BUILD's
+  blind review (code → design; the n-build session). STOP for the seat's read, in the same sitting as `2ca24e8`.**
+  Block:
+  [`2026-11-21_n-gtime-starred-seven-supplement_code-to-design_STOP.md`](results/raw/2026-11-21_n-gtime-starred-seven-supplement_code-to-design_STOP.md).
+  - **Where things stand:**
+    - the seven are committed at `2ca24e8`, for the same sitting. The coordinating session has recommended to the PI
+      that one nudge to the seat carry Q1–Q8; the PI's word governs the nudge;
+    - G-TIME-n's draft 3 had one blind review, which found no BUG. Its O2 is Q8;
+    - G-TIME-n's BUILD is not committed. Its commit follows this one, with the review's report whole and the
+      self-test of the driver it commits.
+  - **The supplement:**
+    - §0, the short form;
+    - §1, the question's ground: GT11 as routed; the three cells and what a cell holds; the review's O2, verbatim,
+      and Code's reading of it; the shadow cell's precedent; what does not depend on Q8;
+    - §2: the coordinating session's three facts for the framing, and four options, from (i) GT11 as routed to (iv)
+      committed but held from the push, with what each changes;
+    - §3: Q8;
+    - §4: two corrections to the block, GT9's re-keying (the review's F8) and GT4's "For a run of record" (F10).
+  - **The dependencies:** G-TIME-n's run waits for the seat's answers on Q1–Q8. The BUILD commits with (ii), the two
+    steered cells kept on the box, as its default.
+  - **Model:** nothing ran on a model.
+  - **Values-check:** one blind pass over this supplement and this entry, and over the BUILD's texts: its entry, the
+    self-test raw and the review raw.
+    - 128 items: 97 CONFIRMED, 7 IMPRECISE, 5 FAIL, 19 NOT CHECKABLE; and 9 observations.
+    - The five FAILs are one finding: the review's mutant M8 was not killed in draft 4. Its case tested
+      `same_filesystem` alone, and no case ran the stage's own call to it. Draft 5 adds that case, through the stage.
+      Its self-test runs in a battery window of its own before the BUILD's commit.
+    - In this supplement and this entry, every finding and observation on them is applied. One FAIL was on the
+      supplement, and observations 5, 6 and 9. The rest are applied in the BUILD's texts, and the raw's §1 gives
+      every disposition.
+    - The edits to this supplement and this entry were checked by tool, 9 of 9. Besides the findings, they carry
+      the nudge's wording, on the coordinating session's correction of 2026-11-21, one rewrap, this paragraph and
+      the checker's departures.
+    - Raw:
+      [`2026-11-21_n-gtime-supplement-and-build_valuescheck.md`](results/raw/2026-11-21_n-gtime-supplement-and-build_valuescheck.md).
+  - **Departures,** for the seat to class:
+    - Code's since `2ca24e8`'s commit are in the BUILD's entry, which follows in the same sitting;
+    - the values-checker's, as its report states them:
+      - beyond the brief's stated use of drafts 1 and 2 (their sha256s and line counts): a `grep -c 'chk('` over each,
+        and `git diff --no-index --numstat` of HEAD's driver against draft 1, draft 1 against draft 2, and draft 2
+        against draft 3. They printed counts only;
+      - one `git grep -n -i` over the quoted pathspecs `'valence_core/n/*.py'` and `'valence_core/m/*.py'`, in place
+        of item 3's pathspec with Q-F3's exclusion. No data path was in its scope;
+      - one `git diff --no-index -U3` of HEAD's driver against draft 4, run from Code's scratch folder rather than the
+        repository root, filtered to its hunk headers;
+      - for classing, not barred by its reading: a `grep -o` over `data/n/gcal/gcal.json` (tracked and clean, not
+        under ckpt or reports); reads of RESULTS.md beyond `2ca24e8`'s entry, of HEAD's driver beyond the delta, and
+        of `valence_core/n/hftiny.py`; `wc -c` for the digest's byte counts and on the scratch `.err` files; one
+        name-only `ls valence_core/n/`; one zsh "bad substitution" that stopped a loop before its `git rev-parse` ran;
+        and two `.gitignore` reads whose output, not any argv, printed Q-F3's folder's plain name.
+
+      No guard marker reached its argv, and it wrote nothing.
+  - **Committed by path:**
+    - the supplement;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-TIME-n's BUILD follows.
+
 - 2026-11-21 — **n — seven starred readings for the seat before G-TIME-n's run: GT1, GT4, GT8, GT9, GT10, GT12 and
   GT16 (code → design; the n-build session). STOP for the seat's read.**
   Block:
