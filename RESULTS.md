@@ -21,6 +21,205 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-21 — **The coordinating session's correction to its notes on the first sitting (`5f62dd1`): a guard marker
+  in the argv of 58 non-Python processes, from three per-file loops over lists holding marker-named paths, and the
+  campaign folder's plain name in 30 more `git` processes of the first loop; with its reading of G-TIME-n's launch
+  files v1, its check of n-build's launch-files window, and the screen for the push.**
+  - **The correction.** `5f62dd1`'s entry says of the 35 commands after its first sweep: "No guard marker and no
+    plain campaign name was in any of them (a bracketed sweep)". That sweep read the commands' text, not the paths a
+    loop expands into arguments.
+    - One of the 35, the check of overlay91 for n-build's launch-files window, looped over overlay91's 173 files and
+      passed each path to `git hash-object` and to `git rev-parse 91f0d35:<path>`. Twenty of the paths hold a guard
+      marker, so 40 `git` processes had one in their argv.
+    - The same loop also passed overlay91's 15 files under the code package named like the campaign folder, so 30 of
+      its `git` processes had the campaign folder's plain name in their argv. The sentence's plain-name half is
+      corrected with it. The other two loops' lists hold no such path.
+    - The sentence holds for the commands' text alone. It is corrected here; the committed text is not rewritten.
+    - The first sweep's 100 commands held no loop over such paths. Their loops ran over literal lists (of files,
+      name–digest pairs, folders, numbers and line ranges), line numbers from a stream and n-build's commit-window
+      manifests, as a check by tool after the commit found. Inside `pkgsha.sh`, they ran over `valence_core/n`'s
+      files, none of them marker-named in any of its five copies, as the values-check below found. That entry's
+      statement that no guard marker reached an argv in them stands.
+    - After `5f62dd1`'s last sweep, two more loops of the kind, one on each side of its commit:
+      - before the commit, the check of n-build's `hashes` file against the driver's closure pins, a `grep -F` per
+        pair, put the adapter module's path into one `grep`'s argv;
+      - after it, the check of the launch manifest's 66 files against `91f0d35`, a `git rev-parse 91f0d35:<path>` per
+        file, put marker-named paths into 17 more `git` processes' argv.
+    - None of the 58 processes, nor the 30, was Python. The Q-F3 campaign's process (PID 8051) ran on, by the next
+      process checks after the loops.
+    - From here, a per-file check over a list that may hold marker-named paths passes the paths on stdin (for example
+      `git cat-file --batch-check`, or `grep -f` over a file). Running inside a folder reached by `cd` and a glob
+      serves only where the marker is in a folder's name; a path whose own file name holds one goes on stdin. Never
+      with the path as an argument.
+  - **G-TIME-n's launch files v1** (n-build's message of 2026-11-21): read and accepted as the set to relay, and held.
+    The relay to the pod session waits for the seat's answers on Q1–Q8 and for the PI's word; nothing is staged on the
+    box.
+    - **The files.** The four box files are `gtime_v1.sh` (`eeee8c2e…39b6`, 519 lines), `gtime_manifest_v1.txt`
+      (`84550072…957b`, 66), `gtime_hashes_v1.txt` (`a853932b…522b`, 13) and `gtime_launch_note_v1.md`
+      (`036968c0…2369`, 237). Ten more files are for reading: the review's brief, report and dispositions, the
+      harness, the stand-in, the mutation pass, the snippet test's runner and fixture builder, the manifest's builder
+      and n-build's departures log, beside `reviewed_v1/`, the files as reviewed. Each is at the sha256 n-build sent.
+      The four box files hold no IPv4-like string, no "port" or "ssh" word, no local root and no user name.
+    - **The manifest.** Its 66 files each equal their blob at `91f0d35`, and none is under a ckpt, reports or campaign
+      path.
+    - **The reading.** The script, the note and the review's dispositions (F1–F12, M1–M8, O1–O13) were read whole.
+      B1, B2 and the copy-back in Q8's default (ii) are as routed. The respawn statement says why neither step runs
+      first on this pod, and that both run first if it was restarted or replaced.
+    - **B6's form, accepted.** The stage's stderr goes to files of its own and is printed into the out file after
+      each run, never into a counted file. The out file is the raw, so it holds every stderr line, and none inside a
+      counted line.
+    - **For the seat: the smoke's two ends** (the launch review's F3). If the smoke ends at a PAUSE (exit 3) or at
+      G-VER's STOP (exit 2) with its checks held, the launch ends there, as `gtime v1 PAUSE (the smoke)` or `gtime v1
+      STOP (the smoke)`, and the run of record does not start. The BUILD's entry did not name these two ends. On this
+      deterministic backend a PAUSE or a STOP would fire at the smoke first. A refusal at the smoke is a FAIL.
+    - **m32.** The snippet test's m32 kills more than it aims at (`and`/`or` precedence). The recomputations test it
+      aims at is isolated by its fixture's construction. Left declared.
+    - **What could need a v2.** Q8's answer may change the copy-back, which would mean a v2 note. A PIN changed among
+      Q1–Q7 that moves the driver would mean a new BUILD, and a v2 script and manifest.
+  - **n-build's launch-files window**, model-free: `hashes` from a `git archive` of `91f0d35`, then the snippet test
+    v2.
+    - **Granted** after the coordinating session checked:
+      - the window's files at their sha256s;
+      - every overlay file against its blob at `91f0d35` (173 of 173), and the package digest by shell;
+      - the two snippets, extracted at n-build's sha256s and read whole (standard library only);
+      - the `hashes` command's code;
+      - the laptop (only PID 8051).
+
+      It did not read the fixture files, whose paths mimic `data/n/ckpt` and `data/n/reports`.
+    - **Closed,** verified by tool:
+      - the six run files at n-build's sha256s and both exits 0. Run 1's stderr file is empty; run 2's stderr went
+        with its stdout into `run_2.txt`, as the request wrote it, and that file holds only its 67 expected lines;
+      - `gtime_hashes_v1.txt`, 13 lines: its package line the lock's `06b55761…1d39`, its 12 closure pairs in the
+        committed driver;
+      - the snippet test: 95 of 95 fixtures, identity_of's three lines, 62 of 62 mutants killed;
+      - the tree unchanged, and PID 8051 alone.
+    - n-build's departures in and after the window go in its next entry: a guard marker in one `grep`'s argv and in
+      one `zsh`'s, a `ps` that printed two command lines, and an unpruned `find -newer` over its launch folder, whose
+      test/ holds the harness's ckpt- and reports-shaped copies; it stopped that `find` before it finished and redid it
+      with test/ pruned.
+  - **The screen for the push** (`c9d35e2..5f62dd1`, in the coordinating session's own window): 4 commits, 17
+    file-diffs, 5,092 added lines (messages included), every class CLEAR. gitleaks 8.30.1 found one item, the known
+    file digest at `scripts/n_sessions.py`:3787 in `91f0d35`; gl5 classed it a file digest, exit 0. No halts. The push
+    waits for the PI's word (item 4 of the raw's routing block).
+  - **Departures, for the seat to class:**
+    - the coordinating session's since `5f62dd1`'s last sweep, from sweeps of its own shell commands by `jq` over its
+      transcript. That is 22 commands to the first sweep, which the values-check read, and 8 more to the last, made
+      after the check and itself the 8th; the commands after the last sweep are this commit's own. Beside the
+      correction above:
+      - `5f62dd1`'s own commands: the placement's asserts and three `cp`, the staging, three gate runs, the commit and
+        its verification.
+        - The first gate run named a loop variable `path`, which zsh ties to `PATH`. Every later `git` in that run, and
+          its `pgrep`, was not found. Its four index checks printed "ok" on two empty strings, and the gate ended FAIL.
+        - The second ended FAIL at a guessed bar of more than 800 added lines: its count, by a pattern that left out
+          blank lines, was 774 of the 931.
+        - The third, with exact counts (931 added, 0 removed, by `git diff --cached` and `--numstat` with item 3's
+          pathspec), passed. Then came the commit.
+      - the screen: `/usr/bin/python3 -I` running `screen4.py` and `gl5.py`, with `gitleaks`; `git log --format='%h %s'`
+        of the range, item 1's form without item 3's pathspec; and `jq` over gitleaks' report in two commands;
+      - the checks of n-build's window close and launch set:
+        - `shasum`, `cat` of the exit files, and a name-only `ls` of the snippet test's output folder, counted;
+        - `git show 91f0d35:scripts/n_sessions.py`, piped to `grep` per closure pair (the loop above);
+        - the manifest's paths by `awk` and `sed`, and the manifest check (the loop above), with `git cat-file blob` of
+          each blob;
+        - one pruned `find` over overlay91, its marker-named paths counted from its output by a bracketed pattern;
+        - `head -n 1` of the hashes file, and `grep -E` of `run_2.txt` for its summary lines;
+        - counts by `grep -c`: 20 over the four box files (IPv4-like strings, "port", "ssh", local roots and the user
+          name), and over the manifest (its ckpt, reports and campaign lines, four named paths and its marker-named
+          paths);
+      - git forms in checks: `git cat-file commit` and `-p` of the commit, `git cat-file blob` of its files and of
+        `RESULTS.md` at it and its parent, and `git diff` of it against its parent with item 3's pathspec, its patch
+        piped to `grep -c` for the counts;
+      - `pgrep -il python` in seven commands; `awk` in four; `wc -l` in nine, the sweep's among them, and `wc -c` in
+        two; `cmp` in three; `diff` of the checked drafts against their final texts, and of `RESULTS.md` against its
+        rebuilt draft for the insertion points; and one command that exited 1 at a `grep -c` with no match;
+      - `jq` over its transcript in one command, the sweep; reads of its own sweep files, drafts and screen outputs;
+        writes in its own scratch; and one append to its memory folder by `cat >>`, with a `tail -n 1` read of the
+        appended file (60 characters);
+      - beside the shell:
+        - two messages to n-build (the window's close and the set's acceptance);
+        - the Read tool on the launch script (twice), the note, the dispositions and its own entry draft;
+        - the Edit tool on that draft seven times, and the Write tool once (the commit message);
+        - two plan calls and one wrap-up call;
+      - **the 8 commands after the first sweep,** to the last: this commit's preparation. No guard marker and no plain
+        campaign name was in their text (a bracketed sweep), and none looped over a list of paths:
+        - reads of its own sweep files, counted, and one part of one written into scratch;
+        - the draft's build: `git rev-parse` of HEAD and of `HEAD:RESULTS.md` against `git hash-object`, `sed` ranges
+          of `RESULTS.md`, `awk` for the widths, and counts;
+        - the brief's assembly, with the list of record's items 1–5 compared by `cmp`, and `pgrep -il python` once;
+        - appends to two files of its memory folder by `cat >>`, after a `[ -f ]` test, with a `tail -n 1` read of
+          one;
+        - `jq` over the values-checker's task output in one command, for its hand-back count and its report, into
+          scratch; counts over the report; and a `grep -n -F` for one string in it;
+        - a `cp` of the checked draft in its scratch;
+        - and the last sweep, by `jq` over its transcript;
+    - the values-checker's, as its report states them:
+      - `jq` over the coordinating session's transcript in 24 commands (79 calls). They printed its shell commands
+        (compared with the sweep files by `cmp`), tool results by id, n-build's three afternoon messages and an
+        earlier one's lines, the coordinating session's messages, its Read inputs and call tallies, and the commands
+        around the sweeps. Also one `wc -l` of the transcript, and one `grep -n -F` of it for the cross-session tag,
+        which printed line numbers;
+      - the sweep files, read in about 23 commands, and one file that was not a named source, compared by `cmp`;
+      - git forms:
+        - `git show <rev>:<path>` naming one file outside `data/`, in 10 commands;
+        - `git cat-file --batch-check` twice, on stdin, and `git cat-file blob` of 66 blob ids;
+        - one `git diff 91f0d35 5f62dd1` with the full pathspec, piped to six counts, with `--numstat`;
+        - one `git ls-tree -r --name-only 91f0d35 -- valence_core`, without item 3's pathspec, counted;
+        - item 1's forms with the pathspec: `git log --format` in two commands, `git ls-files`, and
+          `git show --name-only` of five commits; and `git rev-parse` and `git --version`;
+      - n-build's files:
+        - `shasum` of 21 launch-folder files; one command shortened them with `sed`, against the brief's `cut` rule,
+          and was redone with `cut`;
+        - `cat -v` of the two exit files, and `wc -c` of the stderr file;
+        - reads by `sed`, `grep`, `head`, `tail` and `cut` of the script, the note, the dispositions, the manifest,
+          the hashes file and `run_2.txt`;
+        - 36 `grep -c` counts over the four box files;
+        - outside the launch folder: `cat -n` of `pkgsha.sh`, counts of two commit-window manifests, and name-only
+          `ls` of `valence_core/n` in the four earlier overlays;
+      - name-only listings of the coordinating session's notes, notes2 and push15 folders, n-build's launch and
+        snippet folders, five copies of `valence_core/n` (counted) and the snippet run folder (counted, 67). It
+        listed nothing in `test/`, the fixture folders or `reviewed_v1`;
+      - eight pruned `find`s over overlay91 in two commands, counted from the stream. They also walked overlay91's
+        copy of the code package named like the campaign folder, counted with the name masked;
+      - counts by `wc -l` and `grep -c`, and `cmp` in three commands; `gitleaks version` and `command -v gitleaks`
+        once each; and `od -c`, `paste` and `TZ=UTC` once each;
+      - one heredoc, which zsh may back with a temporary file; one output sent to the null device; three BSD `grep`
+        errors (a repetition count over 255) in one command; and `grep -c` exiting 1 at 0 in three commands;
+      - the memory folder's path as a masking `sed` pattern in four commands, with nothing in the folder listed,
+        globbed or read; and the Read tool on the brief and the entry.
+
+      Its own tool output alone showed local roots with the user name, session ids, n-build's session id, the pod's
+      id, agent ids, folder names holding a marker, and gitleaks' install path. None of it is in its report.
+
+      By its account it wrote no file but the heredoc above, used no interpreter but `shasum` and `jq` and no network,
+      and ran no `ps`, `pgrep` or `stat` and no whole-tree `git status`. No command text held a marker word or the
+      plain campaign name, and it passed no marker-named path as an argument. It listed and read nothing under the
+      campaign folder, `data/*/ckpt`, `data/*/reports`, the fixture folders or `test/`'s folders.
+  - **Values-check:** one blind pass by a subagent over this entry's draft and its placement in a draft of the new
+    `RESULTS.md`. Its brief quoted the list of record v2's items 1–5 verbatim and allowed no interpreter but `shasum`
+    and `jq` by name, no write and no network. It also barred passing any path that may hold a marker word as an
+    argument. The result: 71 items, 56 CONFIRMED, 7 IMPRECISE, 7 FAIL and 1 NOT CHECKABLE, with 11 observations.
+    - **The seven FAILs,** all fixed, each in the checker's words or near them:
+      - the plain-name half of the corrected sentence (item 5): the overlay loop's 30 `git` processes, now in the
+        correction and the heading;
+      - the order (9): the `hashes` loop ran before the commit, and the manifest loop after it;
+      - the files for reading (18): ten, not eight;
+      - the `wc -l` count (58): nine, the sweep's among them;
+      - three missing classes: the `git log` of the screen's range (64), the `tail -n 1` read of the memory file (66),
+        and the reads and counts over n-build's files (67).
+    - **The seven IMPRECISE items** (7, 14, 41, 47, 48, 61 and 65) are applied.
+    - **The eleven observations.**
+      - 1, 2, 5 and 6 are applied: the process checks "after the loops", run 2's stderr in `run_2.txt`, the exit-1
+        count, and the screen outputs among the reads.
+      - 4, 9 and 11 are met by items 58, 47 and 7.
+      - 3 is met here: the coordinating session's message to n-build said "all twelve you listed" when n-build had
+        listed fourteen. All fourteen are at their sha256s, and the miscount is in no committed text but this.
+      - 7, 8 and 10 are noted.
+    - **After the check:** the last sweep's sub-bullet, this bullet and the checker's departures. The edits were
+      checked by tool (`diff` of the checked draft against the final text); no second full pass was made.
+    - Raw: [`2026-11-21_first-sitting-correction_valuescheck.md`](results/raw/2026-11-21_first-sitting-correction_valuescheck.md).
+  - **Committed by path:** this entry and the values-check raw. The commit-time count of the home-folder prefix over
+    the staged diff is 0. Nothing ran on a model. Not pushed.
+
 - 2026-11-21 — **The coordinating session's notes on the seat's first sitting of 2026-11-21: LOCK-n v0.1's commit
   read, committed here by path; the PI's routing, "Route, N.1 overtaken"; two close lines (item 3); G-TIME-n's BUILD
   before the seat's ruling on the starred seven, on the PI's word, and the coordinating session's late reading of the
