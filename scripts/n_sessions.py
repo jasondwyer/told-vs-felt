@@ -8,9 +8,9 @@ At the n BUILD it wires:
                (``valence_core.n.hftiny``: a tiny OLMo-2 built from a config, no weights) run where torch and
                transformers are present -- the box -- and are skipped, and counted as skipped, elsewhere. It writes
                only under a fresh temporary directory outside the repository and reads only committed files: BK's
-               under data/n/bk, the ids under data/n/ids, the model manifest, and the box's characterization (its
-               artifact data/olmo/determinism_base_h100-sxm.json and its raw); nothing under data/mf3 or any ckpt or
-               reports directory.
+               under data/n/bk, the ids under data/n/ids, the model manifest, the box's characterization (its
+               artifact data/olmo/determinism_base_h100-sxm.json and its raw), LOCK-n.md, and G-VEC's and G-CAL-n's
+               outputs of record (data/n/gvec, data/n/gcal); nothing under data/mf3 or any ckpt or reports directory.
   hashes       the licence lines: n's package_sha256 and the import closure's file sha256s (``guard``), measured in
                this process after importing every n production module.
   gver-trial   G-VER (``valence_core.n.verify``) on the 160 sessions' committed ids (``--ids-dir``, default
@@ -178,8 +178,65 @@ At the n BUILD it wires:
                copied back from the box) and ``--tokenizer-dir``; each turn's emitted ids decoded here against the
                box's decode; both files' sha256s, the counts, and every difference printed, with its two decoded texts
                and its flags under both decodes.
+  gtime        G-TIME-n (n v0.2 §8 step 11; n §3: "Six reads of each kind (steered, shadow, fidelity re-compute,
+               capture-on) timed on the box; projections; the cap set by the PI"), on the box, under LOCK-n v0.1, on
+               Code's readings GT1-GT17 routed as PINs (the PI's "Build on the PINs", 2026-11-21; the seven starred,
+               GT1, GT4, GT8, GT9, GT10, GT12 and GT16, are the seat's before the run:
+               results/raw/2026-11-21_n-gtime-starred-seven_code-to-design_STOP.md). ``run_gtime``, one model load;
+               everything that needs no model before it:
+                 1. refusals: for a run of record the stage's own root, report and artifact (data/n/ckpt/time,
+                    data/n/reports/time.json, data/n/gtime/gtime.json), for a smoke (``--smoke N --out DIR``) a new
+                    folder outside the repository holding all three; the artifact never written twice;
+                    ``--bench-dir`` an existing folder outside the repository on the stage root's filesystem; the
+                    pod, the cuBLAS setting, the stream known answer, each --ruling a file; then a STAGE line;
+                 2. the weights of record, the lock's; the driver of record as backend-ext's; the ids of record;
+                 3. LOCK-n v0.1's inputs (``gtime_lock_inputs``: LOCK-n.md, G-VEC's and G-CAL-n's outputs of record,
+                    each HEAD's committed bytes at the lock's sha256s, and the dose map rebuilt from G-VEC's R and
+                    R_ell); the R6 bridge; n's backend identifier, the package and its closure, each the lock's; the
+                    identity (GT4); the plan's 18 lines; the campaign's counts by the package's own functions, its
+                    read plan the lock's; what is on disk, checked as the runner checks it;
+                 4. G-VER on the committed ids, the tokenizer alone loaded, before the weights (GT7);
+                 5. the load; the 18 reads through the runner and the 5(f) primitive into the stage's cells (GT1,
+                    GT2, GT5), the report at the end;
+                 6. on COMPLETE the projection (GT8, GT9, GT11): the stage's own records read back, the append
+                    benchmark, the artifact checked (``check_gtime``) and written, its figures printed (GT15).
+               Exit 0 on COMPLETE; 3 on a PAUSE (the report and no projection, for the seat; ``--resume`` with
+               ``--ruling PAUSE_ID=PATH`` continues, skip-only); 2 on G-VER's STOP (no weights load, no read, no
+               report) or a refusal before any read; 1 otherwise (GT6). Code's readings for G-TIME-n, the PINs, in
+               short (as sent in results/raw/2026-11-21_n-gtime_spec.md §1, but GT9's benchmark and GT11's outputs
+               as built, below):
+                 GT1 the read set: 18 reads, three on each of six sessions (runs 0, 32, 64, 95, 127 and 159): the
+                     shadow re-computed, N1-V valence +1 re-computed, +1/2 on the cached path alone; the kinds are
+                     attributes of reads;
+                 GT2 the launch order: the six shadows, then the six +1 reads, then the six +1/2 reads;
+                 GT3 in the driver alone: valence_core/n/ unchanged, its package and closure LOCK-n v0.1 §18's;
+                 GT4 the identity at "time": the lock's values (the LOCK_ pins), the directions {valence}, no cap;
+                 GT5 every monitor as the runner has it, the ceiling among them (R14); a fire ends the invocation;
+                 GT6 no pass rule; the exits above;
+                 GT7 G-VER before the load, not of record (n §8 step 12's is);
+                 GT8 the cap's basis: T = N x median(c) + K x median(f) (``GTIME_FORMULA``), the maxima beside, the
+                     extension's figures beside and unused;
+                 GT9 pod hours beside the cap, outside it: the loads; the I/O by option (i)'s append benchmark (the
+                     stage's first +1 record re-keyed 160 times into one cell, ``io_bench``; the line a + b k summed
+                     over the campaign's cells), the stage's own per-read I/O beside; the terms not measured, named;
+                 GT10 G-READ-n's fits on the laptop's CPU, outside the cap, timed by gread-bench;
+                 GT11 the outputs: the report, the shadow cell's JSON, the artifact (``n-gtime-v1``) and the raw,
+                     committed before the pod stops; the two steered cells' JSON (the campaign's own reads of six
+                     sessions) and every cell's capture arrays stay on the box until the seat rules on them (no looks
+                     before the campaign, n §6; the build's review, O2);
+                 GT12 no read below d = 0;
+                 GT13 no DV takes G-TIME-n's records;
+                 GT14 the pod of record; one smoke first, its figures beside and not used;
+                 GT15 the printing: the runner's per-read lines and the driver's; durations, no start or finish
+                     stamps;
+                 GT16 the projections to the PI for the cap at v1.0, the seat's read with v1.0's draft;
+                 GT17 the clock: D_n 2026-12-15.
+  gread-bench  GT10's benchmark, on the laptop (refused on a pod): probe.py's grouped 10-fold call at its pinned
+               settings, ``GREAD_BENCH_CALLS`` times at each of the two contrasts' shapes (320 and 80 rows of
+               D_MODEL), on synthetic rows; every call's ms, the count (``gread_counts``) and the projection printed;
+               nothing written.
 
-Stages G-TIME-n, G-VER, the campaign and G-READ-n are wired at their own steps.
+Stages G-VER, the campaign and G-READ-n are wired at their own steps.
 """
 from __future__ import annotations
 
@@ -351,6 +408,11 @@ def cmd_selftest() -> int:
         except BaseException as e:                      # noqa: BLE001
             chk("driver: G-CAL-n's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
         chk("driver: G-CAL-n's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
+        try:
+            _gtime_selftest(chk, tmp / "gtime-cmd")
+        except BaseException as e:                      # noqa: BLE001
+            chk("driver: G-TIME-n's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
+        chk("driver: G-TIME-n's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
     try:
         hftiny.run(chk)
     except BaseException as e:                          # noqa: BLE001
@@ -3676,12 +3738,1358 @@ def _gcal_selftest(chk, tmp: Path) -> None:
         chk("driver: G-CAL-n's HF path: skipped (no torch/transformers here; runs on the box through hftiny)", True, "")
 
 
+# --- G-TIME-n (n v0.2 §8 step 11; Code's readings GT1-GT17, routed as PINs: the PI's "Build on the PINs") --------
+
+GTIME_STAGE = "time"
+GTIME_ROOT = REPO / "data" / "n" / "ckpt" / GTIME_STAGE
+GTIME_REPORT = REPO / "data" / "n" / "reports" / f"{GTIME_STAGE}.json"
+GTIME_OUT = REPO / "data" / "n" / "gtime"
+GTIME_ARTIFACT = "gtime.json"
+GTIME_SCHEMA = "n-gtime-v1"
+GTIME_RUNS = (0, 32, 64, 95, 127, 159)          # GT1: round(k * 159 / 5) for k = 0..5, in the session set's order
+GTIME_STEERED = (("+1", "dose-rule"), ("+1/2", None))   # GT1: N1-V valence at +1 re-computed, at +1/2 cached alone
+GTIME_N = (1 + len(GTIME_STEERED)) * len(GTIME_RUNS)    # GT1: 18 reads, the shadow and the two steered on each run
+GTIME_BENCH_RECORDS = 160                       # GT9 (i): the append benchmark's records, one N1-V cell's capacity
+GTIME_BENCH_SEED = 20261121                     # the benchmark's capture rows: noise from this stream (Code's)
+GTIME_EXT_MS = {"cached": 309.0, "fresh_pair": 357.1}    # A-n2:40, "used by nothing": printed beside (GT8)
+GTIME_NOT_MEASURED = (                          # GT9 (c)
+    "the captures' copy-back (about 4.9-5.0 GB at the campaign's 7,680 rows: the schema's CAPTURES)",
+    "G-VER of record (n v0.2 §8 step 12)", "the campaign's resumes")
+GTIME_FORMULA = ("T = N x median(c) + K x median(f): c = duration_ms - duration_ms_fresh (duration_ms where a read has "
+                 "no re-computation) over the stage's reads, f = duration_ms_fresh over its re-computed reads; N the "
+                 "campaign's reads, K its re-computations (GT8)")
+GREAD_BENCH_CALLS = 10                          # GT10: the grouped 10-fold calls timed at each of the two shapes
+GREAD_BENCH_SEED = 20261122                     # GT10: the synthetic arrays' stream (Code's; the arrays are noise)
+
+#: LOCK-n v0.1's pins (LOCK-n.md, committed at deabf3f; GT4). A run checks each against the committed file that
+#: carries it before the load: LOCK-n.md and G-CAL-n's two files by sha256 (``gtime_lock_inputs``), the rest against
+#: what the stage measures (the weights, n's backend identifier, the package and its closure, the campaign's plan).
+LOCK_PATH = REPO / "LOCK-n.md"
+LOCK_SHA256 = "88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5"
+LOCK_SITE = 32                                  # L §3: the site, index 32
+LOCK_VALENCE_SHA16 = "ba4da67fb717b5bb"         # L §3 (hole 2): the valence direction of record
+LOCK_GCAL_SHA256 = "4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f"      # L §4: gcal.json
+LOCK_DOSE_MAP_SHA256 = "d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3"  # L §4: dose_map.json
+LOCK_LABEL_CONVENTION = "space"                 # L §1
+LOCK_BACKEND_IDENTIFIER = "8264f719efd347a9"    # L §17: n's identifier under its 4,096 window
+LOCK_WEIGHTS_SHA256 = "36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb"   # L §17
+LOCK_PACKAGE_SHA256 = "06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39"   # L §18 (hole 14)
+LOCK_CLOSURE = {                                # L §18: the closure at the lock, twelve files
+    "valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604",
+    "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a",
+    "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf",
+    "valence_core/adapters/olmo_hf.py": "df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc",
+    "valence_core/discrim.py": "7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89",
+    "valence_core/echo/__init__.py": "71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43",
+    "valence_core/echo/probe.py": "d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81",
+    "valence_core/extract.py": "2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe",
+    "valence_core/m/__init__.py": "b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4",
+    "valence_core/m/keys.py": "a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb",
+    "valence_core/m/resume.py": "78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7",
+    "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71",
+}
+LOCK_READ_PLAN_SHA256 = "7f7d7301607e0fa6f66df930ce6a502086fe13cd84d19fe2d3f8b0c9105b88a6"  # L §6
+LOCK_CAMPAIGN_READS = 7680                      # L §6: the read plan after the merge, nothing merged
+LOCK_P0 = (1, 26)                               # L §7: p0 = 1/26
+LOCK_CADENCE = 160                              # L §13: the tile
+LOCK_ALPHA = 0.01                               # L §13
+LOCK_C = 0.25                                   # L §8: C, the ceiling and the identity bound
+LOCK_MEDIAN_REL = 0.0013026706058596332         # L §7: the extension's median rel
+#: L §5: the identity's ``sample_rule``, "the lock's words for the 10% sample" -- keys.py's PIN, verbatim, its lines
+#: joined by single spaces (the self-test holds it to keys.py's docstring).
+LOCK_SAMPLE_RULE = ('session s is in the sample iff ``stream(f"n-fid|{s}").random() < 0.10``; every read of a sampled '
+                    'session at a point the dose rule does not cover is re-computed (§2.1: "a 10% keyed sample of the '
+                    'other points, `n-fid|{s}`"; the key is per session, so the sample is a sample of sessions)')
+
+
+def lock_fidelity_rule() -> dict:
+    """The identity's fidelity rule at LOCK-n v0.1 (GT4): TAU, p0 1 of 26, the tile of 160, alpha 0.01, C 0.25, the
+    extension's median rel, the key and the lock's words for the sample."""
+    from valence_core.n import schema
+    return {"tau": schema.TAU, "p0_count": LOCK_P0[0], "p0_n": LOCK_P0[1], "cadence": LOCK_CADENCE,
+            "sample_key": "n-fid|{s}", "sample_rule": LOCK_SAMPLE_RULE, "alpha": LOCK_ALPHA, "ceiling": LOCK_C,
+            "median_rel": LOCK_MEDIAN_REL}
+
+
+def gtime_sessions(ss) -> list:
+    """GT1: the six sessions, at their places in the session set's order, which is BK's run order."""
+    from valence_core.n import schema
+    if [round(k * 159 / 5) for k in range(6)] != list(GTIME_RUNS):
+        raise AssertionError("GTIME_RUNS is not round(k * 159 / 5) for k = 0..5")
+    if len(ss) != schema.N_SESSIONS:
+        raise SystemExit(f"{len(ss)} sessions, not the session set's {schema.N_SESSIONS}")
+    six = [ss[r] for r in GTIME_RUNS]
+    if [s.bk_run for s in six] != list(GTIME_RUNS):
+        raise SystemExit("the session set's order is not BK's run order at G-TIME-n's six places")
+    return six
+
+
+def gtime_plan(ss, identity) -> list:
+    """GT1 and GT2: the six shadows (N1-V ``none`` at d = 0, re-computed: ``dose-rule``), then N1-V ``valence`` at +1
+    on the six (``dose-rule``), then at +1/2 on the six (no re-computation: the cached path alone); launch indices
+    0..17. The shadows come first, as the runner's ORDER has them: a steered read needs its shadow on disk."""
+    from valence_core.n import runner, schema
+    six = gtime_sessions(ss)
+    kept = schema.dose_point_values(identity)
+    plan = [runner.PlannedRead(i, s, schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE, 0.0,
+                               "dose-rule", None) for i, s in enumerate(six)]
+    for dl, reason in GTIME_STEERED:
+        for s in six:
+            plan.append(runner.PlannedRead(len(plan), s, "N1-V", "valence", dl, kept[dl], reason, None))
+    return plan
+
+
+def gtime_lock_inputs(committed=None, *, lock_path=LOCK_PATH, gvec_dir=None, gcal_dir=None) -> dict:
+    """GT4: LOCK-n v0.1's inputs, before the load, each the committed file's and the lock's:
+      * LOCK-n.md, HEAD's committed bytes at LOCK_SHA256;
+      * G-VEC's outputs of record (``gcal_gvec_inputs``: gvec.json a PASS, the site's directions file at the record's
+        sha256, the valence row at of_record's sha16), the site LOCK_SITE and the valence row's sha16
+        LOCK_VALENCE_SHA16;
+      * G-CAL-n's gcal.json and dose_map.json, HEAD's committed bytes at LOCK_GCAL_SHA256 and LOCK_DOSE_MAP_SHA256,
+        gcal.json a pinnable PASS (O8: the lock takes the dose map only from a PASS);
+      * the dose map rebuilt from G-VEC's R and R_ell by ``gcal.dose_map`` equal to gcal.json's, its five figures to
+        dose_map.json's.
+    Returns the dose map, the valence row and its sha16, the site, and the files' sha256s."""
+    import hashlib
+
+    from valence_core.n import gcal, gvec
+    committed = committed or committed_bytes
+    gvec_dir = Path(gvec_dir) if gvec_dir is not None else GVEC_OUT
+    gcal_dir = Path(gcal_dir) if gcal_dir is not None else GCAL_OUT
+    lp = Path(lock_path)
+    lb = lp.read_bytes() if lp.is_file() else None
+    if lb is None or committed(lp) != lb or hashlib.sha256(lb).hexdigest() != LOCK_SHA256:
+        raise SystemExit("LOCK-n.md is absent, not HEAD's committed bytes, or not LOCK-n v0.1's (GT4)")
+    gv = gcal_gvec_inputs(gvec_dir, committed, gvec.CANDIDATE_INDICES)
+    if gv["site"] != LOCK_SITE or gv["v_sha16"] != LOCK_VALENCE_SHA16:
+        raise SystemExit("G-VEC's site or valence row is not the lock's (L §3: index 32, ba4da67fb717b5bb)")
+    files = {}
+    for name, pin in ((gcal.OUT_RECORD, LOCK_GCAL_SHA256), (gcal.OUT_DOSE_MAP, LOCK_DOSE_MAP_SHA256)):
+        p = gcal_dir / name
+        b = p.read_bytes() if p.is_file() else None
+        if b is None or committed(p) != b or hashlib.sha256(b).hexdigest() != pin:
+            raise SystemExit(f"data/n/gcal/{name} is absent, not HEAD's committed bytes, or not the lock's (L §4)")
+        files[name] = b
+    try:
+        rec = json.loads(files[gcal.OUT_RECORD].decode("utf-8"))
+        five = json.loads(files[gcal.OUT_DOSE_MAP].decode("utf-8"))
+        head = (rec.get("schema"), rec.get("stage"), rec.get("status"), rec.get("pinnable"))
+        rmap = rec["dose_map"]
+    except (ValueError, KeyError, TypeError, AttributeError) as e:
+        raise SystemExit(f"data/n/gcal/gcal.json is not a G-CAL-n record ({type(e).__name__})")
+    if head != (gcal.RECORD_SCHEMA, gcal.STAGE, "PASS", True):
+        raise SystemExit("data/n/gcal/gcal.json is not a pinnable G-CAL-n PASS (O8)")
+    dmap = gcal.dose_map(gv["R"], gv["R_ell"])
+    if rmap != dmap or five != {k: dmap[k] for k in gcal.DOSE_MAP_KEYS}:
+        raise SystemExit("the dose map rebuilt from G-VEC's R and R_ell is not G-CAL-n's record's or dose_map.json's")
+    return {"lock_sha256": LOCK_SHA256, "site": gv["site"], "R": gv["R"], "R_ell": gv["R_ell"],
+            "v_unit": gv["v_unit"], "v_sha16": gv["v_sha16"], "dose_map": dmap, "gvec_sha256": gv["gvec_sha256"],
+            "directions_sha256": gv["directions_sha256"],
+            "gcal_sha256": hashlib.sha256(files[gcal.OUT_RECORD]).hexdigest(),
+            "dose_map_sha256": hashlib.sha256(files[gcal.OUT_DOSE_MAP]).hexdigest()}
+
+
+def gtime_identity(*, package_sha256: str, imported_sha256: dict, weights: str, backend_identifier: str, pod_id: str,
+                   rendering_id: str, dose_map: dict, v_sha16: str, n_layers: int = N_LAYERS, d_model: int = D_MODEL,
+                   layer: int = LOCK_SITE) -> dict:
+    """The stage identity at "time" (GT4): LOCK-n v0.1's sha256, its dose map, its fidelity rule with C and the
+    identity bound C, the one direction G-TIME-n injects (valence), the lock's label convention and window, and the
+    package, weights, backend and pod the caller measured. No cap: the runner gets ``hour_cap_ms`` None. Checked
+    before return."""
+    from valence_core.n import schema
+    ident = {
+        "unit": schema.UNIT, "stage": GTIME_STAGE, "record_schema": schema.RECORD_SCHEMA,
+        "proposal_sha256": schema.PROPOSAL_SHA256, "lock_sha256": LOCK_SHA256, "package_sha256": package_sha256,
+        "imported_sha256": dict(imported_sha256), "weights_sha256": weights, "backend_identifier": backend_identifier,
+        "pod_id": pod_id, "session_set_sha256": schema.SESSION_SET_SHA256, "rendering_id": rendering_id,
+        "label_convention": LOCK_LABEL_CONVENTION, "layer_bk": 32, "layer": int(layer),
+        "capture_layers": list(range(int(layer) + 1, int(n_layers))), "n_layers": int(n_layers),
+        "d_model": int(d_model), "read_window": schema.MAX_WINDOW, "dose_map": dict(dose_map),
+        "directions": {"valence": str(v_sha16)}, "fidelity_rule": lock_fidelity_rule(), "identity_bound": LOCK_C,
+    }
+    schema.check_stage_identity(ident)
+    return ident
+
+
+def campaign_counts(identity, ss) -> dict:
+    """GT8's N and K and GT9's cells, by the package's own functions: the campaign's launch order
+    (``runner.campaign_order``) over the campaign's view of the stage identity -- the same dose map, so the same read
+    plan, whose ``read_plan_sha256`` the caller holds to the lock's -- each read's re-computation by its rule
+    (runner:147: ``dose-rule`` at d in {0, +1, -1}, the keyed sample elsewhere), and every cell's read count."""
+    from valence_core.n import keys, runner, schema
+    view = dict(identity, stage="campaign")
+    schema.check_stage_identity(view)
+    plan = runner.campaign_order(view, ss, keys.n4_schedule([s.present_first_is_S for s in ss]))
+    by_cell: dict = {}
+    for p in plan:
+        k = schema.cell_filename(p.arm, p.direction_id, p.dose_label)
+        by_cell[k] = by_cell.get(k, 0) + 1
+    return {"reads": len(plan), "dose_rule": sum(1 for p in plan if p.fidelity_reason == "dose-rule"),
+            "sample": sum(1 for p in plan if p.fidelity_reason == "sample"),
+            "recomputations": sum(1 for p in plan if p.fidelity_reason is not None),
+            "cells": dict(sorted(by_cell.items())), "read_plan_sha256": schema.read_plan_sha256(view)}
+
+
+def fit_line(ys) -> tuple:
+    """Least squares y = a + b * k over k = 0..n-1 (GT9 (i)), n >= 2: (a, b), by the closed form."""
+    n = len(ys)
+    if n < 2:
+        raise ValueError("a line needs two points")
+    km = (n - 1) / 2.0
+    ym = math.fsum(ys) / n
+    sxx = math.fsum((k - km) ** 2 for k in range(n))
+    sxy = math.fsum((k - km) * (float(y) - ym) for k, y in enumerate(ys))
+    b = sxy / sxx
+    return ym - b * km, b
+
+
+def rekeyed(rec, run: int, launch: int) -> dict:
+    """A copy of a read record re-keyed to BK's run ``run`` at launch index ``launch``: its session's id, cell and run,
+    its read id, its shadow's read id where it names one, and the launch index; every other field as read. The
+    benchmark's record (GT9 (i)); never a record of a stage."""
+    import copy
+
+    from valence_core.n import schema
+    cell = schema.bk_cell_of(run)
+    sid = schema.session_id(cell, run)
+    out = copy.deepcopy(dict(rec))
+    out.update(session_id=sid, bk_cell=cell, bk_run=int(run), launch_index=int(launch),
+               read_id=schema.read_id(out["arm"], out["direction_id"], out["dose_label"], sid),
+               shadow_read_id=None if out["shadow_read_id"] is None else schema.shadow_read_id(sid))
+    return out
+
+
+def same_filesystem(a, b, stat=os.stat) -> bool:
+    """GT9 (i): the benchmark's folder ``a`` and the nearest existing folder on the stage root's path ``b`` are on one
+    filesystem, by ``stat``'s device (the self-test passes another stat)."""
+    b = Path(b)
+    anchor = next(p for p in (b, *b.parents) if p.exists())
+    return stat(Path(a)).st_dev == stat(anchor).st_dev
+
+
+def io_bench(identity, bench_dir, template, *, n_records: int = GTIME_BENCH_RECORDS,
+             clock=time.perf_counter, say=None) -> dict:
+    """GT9 (i), Code's PIN: the model-free append benchmark, after the reads. ``n_records`` records -- ``template``, a
+    record of the stage (at the run of record its first N1-V ``valence`` +1 read, with its re-computation: the
+    campaign's record form, the larger one), re-keyed to BK's runs 0, 1, ... in turn (``rekeyed``) -- appended one by
+    one to the template's cell under the stage's identity (its band and width), through the runner's own writer
+    (``cells.append_record``: the rows written in place and fsynced, the whole cell re-checked and its JSON rewritten),
+    in a temporary folder under ``bench_dir`` that is removed at the end; each append timed, capture rows of noise.
+    A failed removal is no failure of the stage: it is said, with the folder left behind (``say``). No example builder
+    of the schema runs here (schema's EXAMPLES: "no production path calls them"). Returns the cell, the count, each
+    append's ms and the line a + b * k fitted to them (k the records already in the cell)."""
+    import numpy as np
+
+    from valence_core.adapters.base import sha16_arr
+    from valence_core.n import cells, guard, schema
+    bd = guard.refuse_test_out(Path(bench_dir))
+    if not bd.is_dir():
+        raise SystemExit(f"the benchmark's folder {bd} is not an existing folder")
+    key = (template["arm"], template["direction_id"], template["dose_label"])
+    if not 2 <= int(n_records) <= schema.capture_capacity(key[0]):
+        raise ValueError("the benchmark appends 2 records or more, up to the cell's capacity")
+    layers = [int(x) for x in identity["capture_layers"]]
+    rng = np.random.default_rng(GTIME_BENCH_SEED)
+    times: list = []
+    with tempfile.TemporaryDirectory(dir=bd, prefix="n-gtime-bench-", ignore_cleanup_errors=True) as t:
+        root = Path(t)
+        cell, caps = cells.load_cell(root, *key, identity=identity)
+        for k in range(int(n_records)):
+            rec = rekeyed(template, k, k)
+            rows = {l: rng.standard_normal(int(identity["d_model"])).astype(np.float32) for l in layers}
+            rec["capture"] = {"row": k, "sha16": {str(l): sha16_arr(rows[l]) for l in layers}}
+            t0 = clock()
+            cell, caps = cells.append_record(root, cell, caps, rec, rows)
+            times.append(round((clock() - t0) * 1000.0, 3))
+    if Path(t).exists() and say is not None:
+        say(f"the benchmark's folder {t} was not removed: remove it by hand (no record of the stage is in it)")
+    a, b = fit_line(times)
+    return {"cell": schema.cell_filename(*key), "records": int(n_records), "append_ms": times, "a_ms": a, "b_ms": b}
+
+
+def gtime_reads(records, io_ms: dict) -> list:
+    """The artifact's per-read rows (GT11): launch index, read id, cell, BK's run, seq_len, the read's ms and its fresh
+    share, c (the cached share), and its I/O (GT9 (b): the time from the previous read's line to its own, less its
+    duration_ms; None where that line is not in this invocation); no margin and no log-probability."""
+    from valence_core.n import schema
+    out = []
+    for r in sorted(records, key=lambda x: x["launch_index"]):
+        f = r["duration_ms_fresh"]
+        out.append({"launch_index": int(r["launch_index"]), "read_id": str(r["read_id"]),
+                    "cell": schema.cell_filename(r["arm"], r["direction_id"], r["dose_label"]),
+                    "bk_run": int(r["bk_run"]), "seq_len": int(r["seq_len"]), "duration_ms": int(r["duration_ms"]),
+                    "duration_ms_fresh": None if f is None else int(f),
+                    "cached_ms": int(r["duration_ms"]) - (0 if f is None else int(f)),
+                    "io_ms": io_ms.get(int(r["launch_index"]))})
+    return out
+
+
+def _median(xs):
+    import numpy as np
+    return float(np.median(xs)) if xs else None
+
+
+def gtime_figures(reads, counts, loads_ms, bench) -> dict:
+    """GT8's model time and GT9's pod hours from the per-read rows, the campaign's counts, the loads and the
+    benchmark. Every figure is a function of the artifact's own fields, so ``check_gtime`` recomputes it."""
+    c = [x["cached_ms"] for x in reads]
+    f = [x["duration_ms_fresh"] for x in reads if x["duration_ms_fresh"] is not None]
+    N, K = int(counts["reads"]), int(counts["recomputations"])
+    mc, mf = _median(c), _median(f)
+    xc, xf = (float(max(c)) if c else None), (float(max(f)) if f else None)
+    t_med = None if mc is None or mf is None else N * mc + K * mf
+    t_max = None if xc is None or xf is None else N * xc + K * xf
+    t_ext = N * GTIME_EXT_MS["cached"] + K * GTIME_EXT_MS["fresh_pair"]
+    sizes = list(counts["cells"].values())
+    pairs = sum(n * (n - 1) // 2 for n in sizes)
+    io_proj = bench["a_ms"] * sum(sizes) + bench["b_ms"] * pairs
+    per = [x["io_ms"] for x in reads if x["io_ms"] is not None]
+    mio = _median(per)
+    hours = (lambda ms: None if ms is None else ms / 3.6e6)
+    return {
+        "model_time": {"formula": GTIME_FORMULA, "N": N, "K": K, "median_cached_ms": mc, "median_fresh_ms": mf,
+                       "max_cached_ms": xc, "max_fresh_ms": xf, "reads": len(c), "recomputed_reads": len(f),
+                       "T_median_ms": t_med, "T_median_h": hours(t_med), "T_max_ms": t_max, "T_max_h": hours(t_max)},
+        "beside": {"extension_ms": dict(GTIME_EXT_MS), "T_extension_ms": t_ext, "T_extension_h": hours(t_ext),
+                   "note": "A-n2:40: recorded for G-TIME-n and used by nothing; printed beside, not used"},
+        "pod_hours": {"loads_ms": [int(x) for x in loads_ms],
+                      "io": {"bench": dict(bench), "campaign_cells": len(sizes), "campaign_appends": sum(sizes),
+                             "campaign_pairs": pairs, "projected_ms": io_proj, "projected_h": hours(io_proj),
+                             "per_read_reads": len(per), "per_read_median_ms": mio,
+                             "lower_bound_ms": None if mio is None else mio * sum(sizes),
+                             "lower_bound_h": None if mio is None else hours(mio * sum(sizes))},
+                      "not_measured": list(GTIME_NOT_MEASURED)},
+    }
+
+
+GTIME_KEYS = ("schema", "smoke", "lock_sha256", "stage_identity_sha256", "report_sha256", "driver_sha256", "reads",
+              "campaign", "model_time", "beside", "pod_hours")
+GTIME_READ_KEYS = ("launch_index", "read_id", "cell", "bk_run", "seq_len", "duration_ms", "duration_ms_fresh",
+                   "cached_ms", "io_ms")
+
+
+def gtime_artifact(*, smoke, stage_identity_sha256: str, report_sha256: str, driver_sha256: str, records, io_ms,
+                   counts, loads_ms, bench) -> dict:
+    """G-TIME-n's projection artifact (``n-gtime-v1``; GT11), checked before return."""
+    reads = gtime_reads(records, io_ms)
+    art = {"schema": GTIME_SCHEMA, "smoke": None if smoke is None else int(smoke), "lock_sha256": LOCK_SHA256,
+           "stage_identity_sha256": stage_identity_sha256, "report_sha256": report_sha256,
+           "driver_sha256": driver_sha256, "reads": reads,
+           "campaign": {"reads": int(counts["reads"]), "dose_rule": int(counts["dose_rule"]),
+                        "sample": int(counts["sample"]), "recomputations": int(counts["recomputations"]),
+                        "cells": {str(k): int(v) for k, v in counts["cells"].items()},
+                        "read_plan_sha256": str(counts["read_plan_sha256"])}}
+    art.update(gtime_figures(reads, art["campaign"], loads_ms, bench))
+    check_gtime(art)
+    return art
+
+
+def check_gtime(art) -> None:
+    """The artifact's form (Code's, ``n-gtime-v1``): its keys; its reads, all 18 at a run of record and the smoke's
+    count at a smoke, each row's keys and c = duration_ms minus the fresh share, the fresh share within the read's; the
+    campaign's plan and its read count the lock's (read_plan_sha256, 7,680 reads), its other counts summing as they
+    must; and every figure recomputed from the artifact's own fields, exactly (a check of consistency: the figures'
+    arithmetic is the self-test's, by literals). SystemExit naming the field, never a value; a field of the wrong shape
+    where a check reaches into it is "its form"."""
+    try:
+        _check_gtime(art)
+    except (KeyError, TypeError, AttributeError, ValueError, IndexError):
+        raise SystemExit("the G-TIME-n artifact is malformed at its form")
+
+
+def _check_gtime(art) -> None:
+    def bad(where: str):
+        raise SystemExit(f"the G-TIME-n artifact is malformed at {where}")
+    if not isinstance(art, dict) or tuple(sorted(art)) != tuple(sorted(GTIME_KEYS)):
+        bad("its keys")
+    if art["schema"] != GTIME_SCHEMA or art["lock_sha256"] != LOCK_SHA256:
+        bad("schema or lock_sha256")
+    if art["smoke"] is not None and not (isinstance(art["smoke"], int) and 1 <= art["smoke"] <= GTIME_N):
+        bad("smoke")
+    for k in ("stage_identity_sha256", "report_sha256", "driver_sha256"):
+        v = art[k]
+        if not (isinstance(v, str) and len(v) == 64 and all(ch in "0123456789abcdef" for ch in v)):
+            bad(k)
+    reads = art["reads"]
+    if not isinstance(reads, list) or len(reads) != (GTIME_N if art["smoke"] is None else art["smoke"]):
+        bad("reads")
+    for i, x in enumerate(reads):
+        if not isinstance(x, dict) or tuple(sorted(x)) != tuple(sorted(GTIME_READ_KEYS)) or x["launch_index"] != i:
+            bad(f"reads[{i}]")
+        f = x["duration_ms_fresh"]
+        if not (isinstance(x["duration_ms"], int) and x["duration_ms"] >= 0 and (f is None or (
+                isinstance(f, int) and 0 <= f <= x["duration_ms"]))
+                and x["cached_ms"] == x["duration_ms"] - (0 if f is None else f)):
+            bad(f"reads[{i}].cached_ms")
+        if x["io_ms"] is not None and not isinstance(x["io_ms"], float):
+            bad(f"reads[{i}].io_ms")
+    camp = art["campaign"]
+    if (not isinstance(camp, dict) or sorted(camp) != sorted(("reads", "dose_rule", "sample", "recomputations", "cells",
+                                                               "read_plan_sha256"))
+            or camp["read_plan_sha256"] != LOCK_READ_PLAN_SHA256 or camp["reads"] != LOCK_CAMPAIGN_READS
+            or camp["recomputations"] != camp["dose_rule"] + camp["sample"]
+            or camp["reads"] != sum(camp["cells"].values())):
+        bad("campaign")
+    bench = art["pod_hours"]["io"]["bench"]
+    if (not isinstance(bench, dict) or sorted(bench) != sorted(("cell", "records", "append_ms", "a_ms", "b_ms"))
+            or len(bench["append_ms"]) != bench["records"]
+            or (bench["a_ms"], bench["b_ms"]) != fit_line(bench["append_ms"])):
+        bad("pod_hours.io.bench")
+    want = gtime_figures(reads, camp, art["pod_hours"]["loads_ms"], bench)
+    for k in ("model_time", "beside", "pod_hours"):
+        if art[k] != want[k]:
+            bad(k)
+
+
+@dataclass
+class GtimeEnv:
+    """G-TIME-n's seams: ``production_gtime_env`` is the box's; the self-test puts the numpy double behind them."""
+    weights: Callable                   # () -> the weights of record (``weights_of_record``)
+    load_sessions: Callable             # () -> the session set
+    load_ids: Callable                  # () -> ``ids.load()``
+    lock_inputs: Callable               # () -> ``gtime_lock_inputs()``: LOCK-n v0.1's inputs, checked (GT4)
+    gver: Callable                      # (sessions, loaded, path) -> G-VER's report, the tokenizer alone loaded (GT7)
+    env_provenance: Callable            # (path) -> the provenance the adapter will report (before the load)
+    make_adapter: Callable              # (path) -> the adapter (the weights load)
+    adapter_shape: Callable             # (adapter) -> (n_layers, d_model)
+    make_backend: Callable              # (adapter) -> the 5(f) backend
+    package: Callable                   # () -> (package_sha256, closure), measured in this process
+    counts: Callable                    # (identity, sessions) -> ``campaign_counts``
+    pod: Callable                       # () -> the pod id or None
+    driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path | None)
+    shape: tuple = (N_LAYERS, D_MODEL)
+    root: Path = GTIME_ROOT
+    report: Path = GTIME_REPORT
+    out: Path = GTIME_OUT
+    bench_records: int = GTIME_BENCH_RECORDS
+    printer: Callable = print
+    clock: Callable = time.perf_counter
+
+
+def _package_closure() -> tuple:
+    mods = _import_production()
+    return mods["guard"].package_sha256(), mods["guard"].closure_from_modules(dict(sys.modules))
+
+
+def production_gtime_env() -> GtimeEnv:
+    from valence_core.m import resume as m_resume
+    from valence_core.n import ids, sessions
+    return GtimeEnv(weights=weights_of_record, load_sessions=sessions.load_sessions, load_ids=ids.load,
+                    lock_inputs=gtime_lock_inputs, gver=_gver_tokenizer, env_provenance=environment_provenance,
+                    make_adapter=_load_adapter,
+                    adapter_shape=lambda a: (int(a.n_layers), int(a._model.config.hidden_size)),
+                    make_backend=_hf_backend, package=_package_closure, counts=campaign_counts, pod=m_resume.pod_id,
+                    driver=driver_bytes)
+
+
+def _gtime_prepare(env: GtimeEnv, *, bench_dir, smoke, out, resume: bool, rulings: dict):
+    """Everything before the first read (GT14's refusals, GT4's identity, GT7's G-VER, the load), in order; a refusal
+    raises SystemExit, and G-VER's STOP returns None before the weights load."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.m.keys import stream_known_answer
+    from valence_core.n import guard, ids, runner, schema
+    say = env.printer
+    if smoke is not None:
+        if not 1 <= int(smoke) <= GTIME_N:
+            raise SystemExit(f"--smoke takes 1..{GTIME_N} reads (GT14: the smoke is the same 18 reads)")
+        if out is None:
+            raise SystemExit("a smoke writes only into --out, a new folder outside the repository")
+        if resume or rulings:
+            raise SystemExit("a smoke never resumes: its --out is a new folder")
+        o = Path(out).resolve()
+        if _within(o, REPO.resolve()):
+            raise SystemExit(f"a smoke writes outside the repository, not {out}")
+        o = guard.refuse_out(o)
+        if o.exists():
+            raise SystemExit(f"{o} exists: a smoke writes into a new folder")
+        root_p, report_p, art_p = o / "ckpt", o / f"{GTIME_STAGE}.json", o / GTIME_ARTIFACT
+    else:
+        if out is not None:
+            raise SystemExit("a run of record writes only to the stage's own root, report and artifact (--out is a "
+                             "smoke's)")
+        root_p, report_p = guard.refuse_out(Path(env.root)), guard.refuse_out(Path(env.report))
+        art_p = guard.refuse_out(Path(env.out)) / GTIME_ARTIFACT
+    if art_p.exists():
+        raise SystemExit(f"{_shown(art_p)} exists: G-TIME-n writes its projection once")
+    if bench_dir is None:
+        raise SystemExit("G-TIME-n needs --bench-dir, an existing folder outside the repository on the stage root's "
+                         "filesystem (GT9 (i))")
+    bench = guard.refuse_test_out(Path(bench_dir))
+    if not bench.is_dir():
+        raise SystemExit(f"--bench-dir {bench_dir} is not an existing folder")
+    if not same_filesystem(bench, root_p):
+        raise SystemExit(f"--bench-dir {bench} is not on the stage root's filesystem (GT9 (i): the box's volume)")
+    pod = env.pod()
+    if pod is None:
+        raise SystemExit("an n stage refuses to start without $RUNPOD_POD_ID (m's resume.pod_id)")
+    if pod != CHARACTERIZED_POD:
+        raise SystemExit(f"this pod is not the characterized one ({CHARACTERIZED_POD}, the BACKEND entry d5d08fa): "
+                         f"respawn step (ii) first")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != CHARACTERIZED_PROVENANCE["cublas_workspace_config"]:
+        raise SystemExit("CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2)")
+    ka = stream_known_answer()
+    if ka:
+        raise SystemExit(ka[0])
+    for pid, rp in rulings.items():
+        if not Path(rp).is_file():
+            raise SystemExit(f"the ruling for {pid} is not a file: {rp}")
+    if smoke is not None:
+        say(f"SMOKE: the first {smoke} of the {GTIME_N} reads, outside the repository; never of record (GT14)")
+    say(f"STAGE G-TIME-n: stage {GTIME_STAGE}, under LOCK-n v0.1 {LOCK_SHA256}; root {_shown(root_p)}, report "
+        f"{_shown(report_p)}, artifact {_shown(art_p)}; the benchmark under {bench}")
+    w = env.weights()
+    say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
+        f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
+    if w["sha256"] != LOCK_WEIGHTS_SHA256:
+        raise SystemExit("the weights of record are not the lock's (L §17)")
+    drv, head = env.driver()
+    dsha = hashlib.sha256(drv).hexdigest()
+    if smoke is None and drv != head:
+        raise SystemExit("a run of record runs only the committed driver: scripts/n_sessions.py is not HEAD's "
+                         "committed bytes (the box answers of 2026-11-18, §2 item 5)")
+    say(f"DRIVER scripts/n_sessions.py {dsha}: "
+        + ("HEAD's committed bytes" if drv == head else "a smoke's, not HEAD's committed bytes (unchecked)"))
+    ss = env.load_sessions()
+    loaded = env.load_ids()
+    if loaded["manifest_sha256"] != ids.MANIFEST_OF_RECORD:
+        raise SystemExit("data/n/ids/MANIFEST.json is not the render of record's")
+    li = env.lock_inputs()
+    dm = li["dose_map"]
+    say(f"LOCK-n v0.1's inputs (GT4): G-VEC's record {li['gvec_sha256']}, site {li['site']}, valence "
+        f"{li['v_sha16']}; G-CAL-n's record {li['gcal_sha256']} and dose map {li['dose_map_sha256']}: d_eq "
+        f"{dm['d_eq']!r}, d_20 {dm['d_20']!r}")
+    n_layers, d_model = env.shape
+    pre = env.env_provenance(w["path"])
+    if bridge_identifier(pre) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit(f"before the load: the environment's provenance under the default window hashes to "
+                         f"{bridge_identifier(pre)}, not the characterization's {CHARACTERIZED_IDENTIFIER} (R6)")
+    bid = m_resume.backend_identifier(pre)
+    if bid != LOCK_BACKEND_IDENTIFIER:
+        raise SystemExit(f"n's backend identifier {bid} is not the lock's {LOCK_BACKEND_IDENTIFIER} (L §17)")
+    pkg, clo = env.package()
+    if pkg != LOCK_PACKAGE_SHA256 or clo != LOCK_CLOSURE:
+        diff = sorted(k for k in set(clo) | set(LOCK_CLOSURE) if clo.get(k) != LOCK_CLOSURE.get(k))
+        raise SystemExit(f"the package or its closure is not the lock's (L §18; GT3): package "
+                         f"{'the lock' if pkg == LOCK_PACKAGE_SHA256 else pkg}'s, closure files differing {diff}")
+    ident = gtime_identity(package_sha256=pkg, imported_sha256=clo, weights=w["sha256"], backend_identifier=bid,
+                           pod_id=pod, rendering_id=loaded["manifest_sha256"], dose_map=dm, v_sha16=li["v_sha16"],
+                           n_layers=n_layers, d_model=d_model, layer=li["site"])
+    say(f"identity: stage {ident['stage']}, sha256 {schema.identity_sha256(ident)}; C {LOCK_C}, p0 {LOCK_P0[0]} of "
+        f"{LOCK_P0[1]}, alpha {LOCK_ALPHA}, the tile {LOCK_CADENCE}; directions {ident['directions']}; no cap")
+    plan = gtime_plan(ss, ident)
+    plan = plan[:int(smoke)] if smoke is not None else plan
+    for p in plan:
+        say(f"plan {p.launch_index} {p.read_id} {p.fidelity_reason or 'the cached path alone'}")
+    counts = env.counts(ident, ss)
+    if counts["read_plan_sha256"] != LOCK_READ_PLAN_SHA256:
+        raise SystemExit("the campaign's read plan under this identity is not the lock's (L §6)")
+    say(f"the campaign (GT8): N {counts['reads']} reads; K {counts['recomputations']} re-computations "
+        f"({counts['dose_rule']} dose-rule, {counts['sample']} keyed sample); {len(counts['cells'])} cells; its "
+        f"read_plan_sha256 the lock's")
+    prior_state(root_p, report_p, ident, plan, resume, rulings)
+    rep = env.gver(ss, loaded, w["path"])
+    say("G-VER (G-TIME-n's start, not of record; GT7):")
+    say(json.dumps(rep, sort_keys=True))
+    if rep["status"] != "PASS":
+        say("G-VER STOP: no weights load, nothing is read, no report (GT7; L:543): a STOP for the seat")
+        return None
+    t0 = env.clock()
+    adapter = env.make_adapter(w["path"])
+    load_ms = max(0, int(round((env.clock() - t0) * 1000)))
+    prov = adapter.provenance()
+    if m_resume.backend_identifier(prov) != bid or bridge_identifier(prov) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit("the loaded adapter's provenance is not the one checked before the load -- refusing")
+    if tuple(env.adapter_shape(adapter)) != (n_layers, d_model):
+        raise SystemExit(f"the checkpoint is {tuple(env.adapter_shape(adapter))}, not ({n_layers}, {d_model})")
+    say(f"backend: n's identifier {bid} (window {schema.MAX_WINDOW}); the characterization's "
+        f"{CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {pod}; load {load_ms} ms")
+    backend = env.make_backend(adapter)
+    marks: dict = {}
+
+    def say_t(line: str) -> None:                  # GT9 (b): the time of each read's line, by its launch index
+        if line.startswith("read ") and " fid=" in line:
+            try:
+                marks[int(line.split(" ", 2)[1])] = env.clock()
+            except ValueError:
+                pass
+        say(line)
+    inputs = runner.StageInputs(root=root_p, report_path=report_p, identity=ident, sessions=ss,
+                                ids_of=ids.ids_of(loaded), label_ids=ids.label_ids(loaded, LOCK_LABEL_CONVENTION),
+                                backend=backend, directions={"valence": li["v_unit"]}, alpha=LOCK_ALPHA,
+                                hour_cap_ms=None, load_ms=load_ms, rulings=rulings, printer=say_t, clock=env.clock)
+    return {"inputs": inputs, "plan": plan, "ident": ident, "counts": counts, "marks": marks, "root": root_p,
+            "report": report_p, "artifact": art_p, "bench": bench, "driver_sha256": dsha}
+
+
+def run_gtime(env: GtimeEnv, *, bench_dir, smoke: int | None = None, out=None, resume: bool = False,
+              rulings=None) -> int:
+    """G-TIME-n (n v0.2 §8 step 11; GT1-GT17), in order: the refusals, the weights and the driver, the ids, LOCK-n
+    v0.1's inputs, the R6 bridge, the identity, the plan and the campaign's counts, what is on disk, G-VER before the
+    load, the load; the 18 reads through the runner; on COMPLETE the projection: the stage's own records read back,
+    GT8's model time, GT9's pod hours with the append benchmark, the artifact checked and written, its figures
+    printed. Exit 0 on COMPLETE (the artifact written); 3 on a PAUSE (the report written and no projection, for the
+    seat); 2 on G-VER's STOP (no weights load, no read, no report) or a refusal before any read; 1 otherwise (GT6)."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import cells
+    say = env.printer
+    try:
+        ctx = _gtime_prepare(env, bench_dir=bench_dir, smoke=smoke, out=out, resume=resume,
+                             rulings=dict(rulings or {}))
+    except SystemExit as e:
+        if isinstance(e.code, str):
+            say(f"REFUSED before any read: {e.code}")
+            return 2
+        raise
+    if ctx is None:
+        return 2
+    from valence_core.n import runner
+    rpt = runner.run(ctx["inputs"], ctx["plan"], resume=resume)
+    if rpt["end_state"] != "COMPLETE":
+        say(f"G-TIME-n {rpt['end_state']}: the report is written and no projection; the seat rules (GT5)")
+        return 3 if rpt["end_state"] == "PAUSE" else 1
+    ident, plan = ctx["ident"], ctx["plan"]
+    recs: list = []
+    for key in sorted({(p.arm, p.direction_id, p.dose_label) for p in plan}):
+        cell, _caps = cells.load_cell(ctx["root"], *key, identity=ident)
+        recs.extend(cell["records"])
+    if sorted(r["launch_index"] for r in recs) != list(range(len(plan))):
+        raise SystemExit("the stage's records on disk are not its plan's reads")
+    by_li = {int(r["launch_index"]): r for r in recs}
+    marks = ctx["marks"]
+    io_ms = {i: round((marks[i] - marks[i - 1]) * 1000.0 - by_li[i]["duration_ms"], 3)
+             for i in sorted(marks) if i - 1 in marks}
+    ordered = sorted(recs, key=lambda x: x["launch_index"])
+    template = next((r for r in ordered if r["dose_label"] == "+1"), ordered[0])
+    say(f"I/O benchmark (GT9 (i)): {env.bench_records} appends of the stage's read {template['launch_index']} "
+        f"({template['read_id'].rsplit('|', 1)[0]}), re-keyed to BK's runs 0.. in turn, in a temporary folder under "
+        f"{ctx['bench']}, removed at its end")
+    bench = io_bench(ident, ctx["bench"], template, n_records=env.bench_records, clock=env.clock, say=say)
+    rep_bytes = Path(ctx["report"]).read_bytes()
+    art = gtime_artifact(smoke=smoke, stage_identity_sha256=rpt["stage_identity_sha256"],
+                         report_sha256=hashlib.sha256(rep_bytes).hexdigest(), driver_sha256=ctx["driver_sha256"],
+                         records=recs, io_ms=io_ms, counts=ctx["counts"], loads_ms=rpt["cap"]["loads_ms"],
+                         bench=bench)
+    art_p = Path(ctx["artifact"])
+    art_p.parent.mkdir(parents=True, exist_ok=True)
+    m_resume.atomic_write_json(art_p, art)
+    mt, bs, ph = art["model_time"], art["beside"], art["pod_hours"]
+    io = ph["io"]
+    say(f"model time (GT8; the cap's basis): N {mt['N']} x median c {mt['median_cached_ms']!r} ms + K {mt['K']} x "
+        f"median f {mt['median_fresh_ms']!r} ms = {mt['T_median_ms']!r} ms = {mt['T_median_h']!r} h; at the maxima "
+        f"({mt['max_cached_ms']!r}, {mt['max_fresh_ms']!r} ms) {mt['T_max_ms']!r} ms = {mt['T_max_h']!r} h; over "
+        f"{mt['reads']} reads, {mt['recomputed_reads']} re-computed")
+    say(f"beside, unused (A-n2:40): the extension's {bs['extension_ms']['cached']!r} and "
+        f"{bs['extension_ms']['fresh_pair']!r} ms give {bs['T_extension_ms']!r} ms = {bs['T_extension_h']!r} h")
+    say(f"pod hours beside the cap, outside it (GT9): loads {ph['loads_ms']} ms; the I/O by the append benchmark "
+        f"(option (i)): a {io['bench']['a_ms']!r} ms + b {io['bench']['b_ms']!r} ms per record already in the cell, "
+        f"over the campaign's {io['campaign_cells']} cells: {io['campaign_appends']} a + {io['campaign_pairs']} b = "
+        f"{io['projected_ms']!r} ms = {io['projected_h']!r} h; the stage's own per-read I/O, median "
+        f"{io['per_read_median_ms']!r} ms over {io['per_read_reads']} reads (option (ii), a lower bound: "
+        f"{io['lower_bound_ms']!r} ms); not measured: {'; '.join(ph['not_measured'])}")
+    say(f"artifact {_shown(art_p)} sha256 {hashlib.sha256(art_p.read_bytes()).hexdigest()}")
+    say("G-TIME-n COMPLETE" + (", a smoke, never of record" if smoke is not None else
+                               ": the projections are for the PI's cap at LOCK-n v1.0 (GT16)"))
+    return 0
+
+
+def cmd_gtime(bench_dir, smoke: int | None = None, out=None, resume: bool = False, rulings=None) -> int:
+    return run_gtime(production_gtime_env(), bench_dir=bench_dir, smoke=smoke, out=out, resume=resume,
+                     rulings=rulings)
+
+
+def gread_counts(band: int) -> dict:
+    """GT10's count of G-READ-n's grouped 10-fold calls (each ``probe.K_FOLDS`` fits): the primary results, every
+    (axis, point) of ``schema.GREAD_AXES``, each over the band at 1 + ``probe.N_SHUFFLES`` calls on the 160 sessions'
+    contrast (two rows a session); and the comparator, the ``schema.N_RANDOM`` random directions at the random points
+    the results are matched to -- the valence axis's four, span_reward's f0.10 and f0.20 matched to +d_eq and +d_20
+    -- each over the band at one call on the 40 floor sessions' contrast. The seat's figure: "About 404,000 fits in
+    all" (the answers of 2026-11-16, :42)."""
+    from valence_core.n import probe, schema
+    results = sum(len(v) for v in schema.GREAD_AXES.values())
+    points = len(set(schema.GREAD_AXES["valence"]))
+    primary = results * int(band) * (1 + probe.N_SHUFFLES)
+    comparator = points * schema.N_RANDOM * int(band)
+    return {"results": results, "band": int(band), "primary_calls": primary, "primary_rows": 2 * schema.N_SESSIONS,
+            "comparator_points": points, "comparator_calls": comparator, "comparator_rows": 2 * schema.N_FLOOR,
+            "folds": probe.K_FOLDS, "fits": (primary + comparator) * probe.K_FOLDS}
+
+
+def gread_bench(*, calls: int = GREAD_BENCH_CALLS, d_model: int = D_MODEL, band: int = N_LAYERS - LOCK_SITE - 1,
+                clock=time.perf_counter) -> dict:
+    """GT10: probe.py's statistic at its pinned settings (``probe.layer_auc``: k's ``fit_lr`` at seed 7, 300
+    iterations, rate 0.1, l2 0.01, on the grouped 10-fold folds of ``probe.CV_SEED``), ``calls`` times at each of the
+    two contrasts' shapes, on synthetic float32 rows (noise from ``GREAD_BENCH_SEED``) grouped as
+    ``probe.contrast_rows`` groups them; the projection to the count. Model-free; writes nothing."""
+    import numpy as np
+
+    from valence_core.n import probe
+    cnt = gread_counts(band)
+    rng = np.random.default_rng(GREAD_BENCH_SEED)
+    ms: dict = {}
+    for kind, rows in (("primary", cnt["primary_rows"]), ("comparator", cnt["comparator_rows"])):
+        sids = [f"s{i:03d}" for i in range(rows // 2)]
+        pos = {s: rng.standard_normal(int(d_model)).astype(np.float32) for s in sids}
+        neg = {s: rng.standard_normal(int(d_model)).astype(np.float32) for s in sids}
+        X, y, g = probe.contrast_rows(pos, neg)
+        ts = []
+        for _ in range(int(calls)):
+            t0 = clock()
+            probe.layer_auc(X, y, g, shuffles=0, cv_seed=probe.CV_SEED)
+            ts.append(round((clock() - t0) * 1000.0, 3))
+        ms[kind] = ts
+    t_med = cnt["primary_calls"] * _median(ms["primary"]) + cnt["comparator_calls"] * _median(ms["comparator"])
+    t_max = cnt["primary_calls"] * max(ms["primary"]) + cnt["comparator_calls"] * max(ms["comparator"])
+    return {"counts": cnt, "calls": int(calls), "d_model": int(d_model), "ms": ms, "T_median_ms": t_med,
+            "T_median_h": t_med / 3.6e6, "T_max_ms": t_max, "T_max_h": t_max / 3.6e6}
+
+
+def cmd_gread_bench() -> int:
+    """GT10's benchmark on the laptop (refused on a pod): its every call's ms, the counts and the projection, printed;
+    nothing written."""
+    import platform
+
+    import numpy as np
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import probe, schema
+    if m_resume.pod_id() is not None:
+        raise SystemExit("gread-bench times the laptop's CPU (GT10): refused on a pod")
+    r = gread_bench()
+    c = r["counts"]
+    print(f"gread-bench (GT10; G-READ-n's fits on the laptop's CPU, outside the box's cap): numpy {np.__version__}, "
+          f"python {platform.python_version()}, {os.cpu_count()} CPUs; probe.py's grouped {c['folds']}-fold call at "
+          f"its pinned settings, {r['calls']} calls at each shape, d_model {r['d_model']}")
+    print(f"counts: {c['results']} results x {c['band']} layers x (1 + {probe.N_SHUFFLES} shuffles) = "
+          f"{c['primary_calls']} calls on {c['primary_rows']} rows; {c['comparator_points']} random points x "
+          f"{schema.N_RANDOM} directions x {c['band']} layers = {c['comparator_calls']} calls on "
+          f"{c['comparator_rows']} rows; {c['fits']} fits in all")
+    for kind in ("primary", "comparator"):
+        print(f"{kind} ms per call: {r['ms'][kind]}")
+    print(f"projection: {c['primary_calls']} x median {_median(r['ms']['primary'])!r} ms + {c['comparator_calls']} x "
+          f"median {_median(r['ms']['comparator'])!r} ms = {r['T_median_ms']!r} ms = {r['T_median_h']!r} h; at the "
+          f"maxima {r['T_max_ms']!r} ms = {r['T_max_h']!r} h")
+    return 0
+
+
+def _gtime_selftest(chk, tmp: Path) -> None:
+    """G-TIME-n's and gread-bench's checks, model-free: LOCK-n v0.1's pins held to the committed files that carry them
+    (LOCK-n.md, G-VEC's and G-CAL-n's outputs of record, keys.py's sample words, the closure's twelve files, the
+    package, n's backend identifier from the characterization's provenance), the plan on the session set of record,
+    the campaign's counts over the lock's dose map, the identity, the benchmark's line and its writer, the artifact and
+    its check, the command's flow over the numpy double behind every seam -- the refusals, G-VER's STOP, the PAUSE and
+    its resume, the resume after COMPLETE, the smoke -- main()'s options, and gread-bench's counts and a small run."""
+    import contextlib
+    import copy
+    import hashlib
+    import io
+
+    import numpy as np
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import cells, gcal, gvec, guard, ids, keys, schema, sessions, testing
+    tmp = Path(tmp)
+    tmp.mkdir(parents=True, exist_ok=True)
+
+    def refused(fn) -> tuple:                           # (refused, its text); any other raise is not a refusal
+        try:
+            fn()
+        except SystemExit as e:
+            return True, str(e)
+        except BaseException as e:                      # noqa: BLE001
+            return False, f"{type(e).__name__}: {e}"[:200]
+        return False, "no refusal"
+
+    def work(p):                                        # the overlay is HEAD's archive: its bytes are the committed
+        return Path(p).read_bytes() if Path(p).is_file() else None
+
+    # LOCK-n v0.1's inputs, from the committed files
+    li = gtime_lock_inputs(work)
+    dm = li["dose_map"]
+    chk("gtime: LOCK-n v0.1's inputs from the committed files (GT4): site 32, the valence row ba4da67fb717b5bb, "
+        "G-CAL-n's two files at the lock's sha256s, and the dose map L §4's (d_eq 0.2869170055735837, d_20 "
+        "0.5738340111471674, seven points, none merged)",
+        li["site"] == 32 and li["v_sha16"] == LOCK_VALENCE_SHA16 and li["gcal_sha256"] == LOCK_GCAL_SHA256
+        and li["dose_map_sha256"] == LOCK_DOSE_MAP_SHA256 and dm["d_eq"] == 0.2869170055735837
+        and dm["d_20"] == 0.5738340111471674 and len(dm["points"]) == 7
+        and not any(p["merged"] for p in dm["points"]), {k: li[k] for k in ("site", "v_sha16")})
+    lock_bad = tmp / "LOCK-n.md"
+    lock_bad.write_bytes(LOCK_PATH.read_bytes() + b"\n")
+    gdir = tmp / "gcal-copy"
+    gdir.mkdir()
+    for name in (gcal.OUT_RECORD, gcal.OUT_DOSE_MAP):
+        (gdir / name).write_bytes((GCAL_OUT / name).read_bytes())
+    (gdir / gcal.OUT_DOSE_MAP).write_bytes((GCAL_OUT / gcal.OUT_DOSE_MAP).read_bytes() + b" ")
+    r1 = refused(lambda: gtime_lock_inputs(work, lock_path=lock_bad))
+    r2 = refused(lambda: gtime_lock_inputs(lambda p: None))
+    r3 = refused(lambda: gtime_lock_inputs(work, gcal_dir=gdir))
+    chk("gtime: ...a lock file that is not LOCK-n v0.1's, a file git cannot show, and a dose_map.json that is not the "
+        "lock's are each refused",
+        r1[0] and "LOCK-n.md" in r1[1] and r2[0] and "LOCK-n.md" in r2[1] and r3[0] and "dose_map.json" in r3[1],
+        (r1, r2, r3))
+    g = globals()
+    real_gv = g["gcal_gvec_inputs"]
+
+    def gv_with(**over):                                # G-VEC's inputs of record with one field moved
+        def f(*a, **k):
+            out = real_gv(*a, **k)
+            return dict(out, **{key: (fn(out[key]) if callable(fn) else fn) for key, fn in over.items()})
+        return f
+    try:
+        g["gcal_gvec_inputs"] = gv_with(v_sha16="0" * 16)
+        r4 = refused(lambda: gtime_lock_inputs(work))
+        g["gcal_gvec_inputs"] = gv_with(site=31)
+        r5 = refused(lambda: gtime_lock_inputs(work))
+        g["gcal_gvec_inputs"] = gv_with(R=lambda r: r * (1.0 + 1e-12))
+        r6 = refused(lambda: gtime_lock_inputs(work))
+    finally:
+        g["gcal_gvec_inputs"] = real_gv
+    chk("gtime: ...G-VEC's inputs with another valence row or another site are refused (L §3), and an R off the pinned "
+        "map by one part in 10^12 is refused at the rebuilt map's equality with G-CAL-n's record",
+        r4[0] and "L §3" in r4[1] and r5[0] and "L §3" in r5[1] and r6[0]
+        and "is not G-CAL-n's record's or dose_map.json's" in r6[1], (r4, r5, r6))
+    chk("gtime: the identity's sample_rule is keys.py's PIN, verbatim (L §5)",
+        LOCK_SAMPLE_RULE in " ".join(str(keys.__doc__).split()), "")
+    nprov = dict(CHARACTERIZED_PROVENANCE, choice_window_declared=schema.MAX_WINDOW)
+    chk("gtime: n's backend identifier, from the characterization's provenance under the 4,096 window, is the lock's "
+        "(L §17), and it bridges to the characterization's (R6)",
+        m_resume.backend_identifier(nprov) == LOCK_BACKEND_IDENTIFIER
+        and bridge_identifier(nprov) == CHARACTERIZED_IDENTIFIER, m_resume.backend_identifier(nprov))
+    pkg, clo = _package_closure()
+    chk("gtime: the package is the lock's (GT3: the build is in the driver alone); each of the closure's twelve files "
+        "hashes to its pin on disk and in this process's closure (L §18)",
+        pkg == LOCK_PACKAGE_SHA256 and all(guard.sha256_file(REPO / k) == v for k, v in LOCK_CLOSURE.items())
+        and all(clo.get(k) == v for k, v in LOCK_CLOSURE.items()),
+        (pkg, sorted(k for k in LOCK_CLOSURE if clo.get(k) != LOCK_CLOSURE[k])))
+
+    # the identity, the plan and the campaign's counts, on the session set of record
+    ss = sessions.load_sessions()
+    ident = gtime_identity(package_sha256=LOCK_PACKAGE_SHA256, imported_sha256=dict(LOCK_CLOSURE),
+                           weights=LOCK_WEIGHTS_SHA256, backend_identifier=LOCK_BACKEND_IDENTIFIER,
+                           pod_id=CHARACTERIZED_POD, rendering_id=ids.MANIFEST_OF_RECORD, dose_map=dm,
+                           v_sha16=li["v_sha16"])
+    fr = {"tau": schema.TAU, "p0_count": 1, "p0_n": 26, "cadence": 160, "sample_key": "n-fid|{s}",
+          "sample_rule": LOCK_SAMPLE_RULE, "alpha": 0.01, "ceiling": 0.25, "median_rel": 0.0013026706058596332}
+    chk("gtime: the identity at 'time' (GT4): LOCK-n v0.1's sha256, its fidelity rule (p0 1 of 26, C 0.25 the ceiling "
+        "and the identity bound, the median rel, alpha 0.01, the tile 160, the lock's sample words), the valence "
+        "direction alone, the band 33..63, the label convention 'space', the window 4,096, the dose map of record",
+        ident["stage"] == "time" and ident["lock_sha256"] == LOCK_SHA256 and ident["fidelity_rule"] == fr
+        and ident["identity_bound"] == 0.25 and ident["directions"] == {"valence": "ba4da67fb717b5bb"}
+        and ident["capture_layers"] == list(range(33, 64)) and ident["label_convention"] == "space"
+        and ident["read_window"] == 4096 and ident["dose_map"] == dm, "")
+    plan = gtime_plan(ss, ident)
+    runs = list(GTIME_RUNS)
+    want = ([("N1-V", "none", "0", "dose-rule", r) for r in runs] + [("N1-V", "valence", "+1", "dose-rule", r)
+                                                                     for r in runs]
+            + [("N1-V", "valence", "+1/2", None, r) for r in runs])
+    six = gtime_sessions(ss)
+    chk("gtime: the plan (GT1, GT2): 18 reads, launch indices 0..17, runs 0, 32, 64, 95, 127 and 159 in each block -- "
+        "the six shadows re-computed (dose-rule), then N1-V valence +1 re-computed (dose-rule), then +1/2 with none, "
+        "each at its dose map value; two floor sessions and four neutral; seq_len 1273 five times and 1268 once (run "
+        "127)",
+        [p.launch_index for p in plan] == list(range(18))
+        and [(p.arm, p.direction_id, p.dose_label, p.fidelity_reason, p.session.bk_run) for p in plan] == want
+        and [p.dose_value for p in plan] == [0.0] * 6 + [1.0] * 6 + [0.5] * 6
+        and [s.is_floor for s in six] == [True, True, False, False, False, False]
+        and [s.seq_len for s in six] == [1273, 1273, 1273, 1273, 1268, 1273], [p.read_id for p in plan[:2]])
+    counts = campaign_counts(ident, ss)
+    sizes = sorted(counts["cells"].values())
+    pairs = sum(n * (n - 1) // 2 for n in counts["cells"].values())
+    chk("gtime: the campaign's counts by the package's functions over the lock's dose map (GT8): N 7,680; K 3,637 = "
+        "3,040 dose-rule + 597 keyed sample; 138 cells, 120 of 40 rows and 18 of 160; its read_plan_sha256 the lock's "
+        "(L §6); the I/O sum's 322,560 pairs (GT9 (i))",
+        (counts["reads"], counts["recomputations"], counts["dose_rule"], counts["sample"]) == (7680, 3637, 3040, 597)
+        and sizes == [40] * 120 + [160] * 18 and counts["read_plan_sha256"] == LOCK_READ_PLAN_SHA256
+        and pairs == 322560, {k: counts[k] for k in ("reads", "recomputations", "dose_rule", "sample")})
+
+    # the benchmark's line and its writer
+    a0, b0 = fit_line([2.0 + 0.5 * k for k in range(9)])
+    try:
+        fit_line([1.0])
+        one = False
+    except ValueError:
+        one = True
+    chk("gtime: the benchmark's line is least squares a + b k, exact on a line; one point is refused",
+        abs(a0 - 2.0) < 1e-12 and abs(b0 - 0.5) < 1e-12 and one, (a0, b0))
+    toy_i = dict(schema.example_identity("time"), d_model=8, layer=1, n_layers=4, capture_layers=[2, 3])
+    schema.check_stage_identity(toy_i)
+    bdir = tmp / "bench"
+    bdir.mkdir()
+    tpl = schema.example_record(toy_i, "N1-V", "valence", "+1", 7, launch=9)       # the self-test's stand-in only
+    rk = rekeyed(tpl, 45, 3)
+    moved = ("session_id", "bk_cell", "bk_run", "launch_index", "read_id", "shadow_read_id")
+    chk("gtime: rekeyed moves a record to another of BK's runs -- its session's id, cell and run, its read id, its "
+        "shadow's id and the launch index -- and leaves every other field as it was, the template untouched",
+        rk["session_id"] == "neu_b0/45" and rk["bk_cell"] == "neu_b0" and rk["bk_run"] == 45 and rk["launch_index"] == 3
+        and rk["read_id"] == schema.read_id("N1-V", "valence", "+1", "neu_b0/45")
+        and rk["shadow_read_id"] == schema.shadow_read_id("neu_b0/45")
+        and {k: v for k, v in rk.items() if k not in moved} == {k: v for k, v in tpl.items() if k not in moved}
+        and tpl["bk_run"] == 7, {k: rk[k] for k in moved})
+    ticks = iter(range(10 ** 6))
+    b1 = io_bench(toy_i, bdir, tpl, n_records=5, clock=lambda: next(ticks) * 0.001)
+    b2 = io_bench(toy_i, bdir, tpl, n_records=3)
+    chk("gtime: the append benchmark (GT9 (i)): n re-keyed copies of a record appended to its cell through "
+        "cells.append_record, each append timed, the line fitted; its temporary folder removed, nothing left behind",
+        b1["records"] == 5 and b1["append_ms"] == [1.0] * 5 and (b1["a_ms"], b1["b_ms"]) == fit_line([1.0] * 5)
+        and b1["cell"] == schema.cell_filename("N1-V", "valence", "+1") and len(b2["append_ms"]) == 3
+        and all(x >= 0.0 for x in b2["append_ms"]) and list(bdir.iterdir()) == [],
+        (b1["append_ms"], b2["append_ms"]))
+    rb = (refused(lambda: io_bench(toy_i, REPO / "data" / "n" / "bench", tpl)),
+          refused(lambda: io_bench(toy_i, tmp / "no", tpl)))
+    try:
+        io_bench(toy_i, bdir, tpl, n_records=1)
+        r_one = False
+    except ValueError:
+        r_one = True
+    chk("gtime: ...a benchmark folder inside the repository is refused as such, one absent is refused, and fewer than "
+        "two records too",
+        rb[0][0] and "never written inside the repository" in rb[0][1] and rb[1][0]
+        and "is not an existing folder" in rb[1][1] and r_one, rb)
+
+    class FakeStat:                                     # another device for one path, the real stat for the rest
+        def __init__(self, other):
+            self.other = Path(other).resolve()
+
+        def __call__(self, p):
+            st = os.stat(p)
+            return type("S", (), {"st_dev": st.st_dev + 1})() if Path(p).resolve() == self.other else st
+    fs_dir = tmp / "fs-a"
+    fs_dir.mkdir()
+    chk("gtime: same_filesystem (GT9 (i)): a folder and a root's nearest existing folder on one device pass, and on "
+        "another device fail, the root's missing folders skipped up to the nearest that exists",
+        same_filesystem(fs_dir, tmp / "no" / "such" / "root")
+        and not same_filesystem(fs_dir, tmp / "no" / "such" / "root", stat=FakeStat(fs_dir)), "")
+
+    # the command's flow, over the numpy double behind every seam (writes only under tmp)
+    saved = {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG", "RUNPOD_POD_ID")}
+    try:
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = CHARACTERIZED_PROVENANCE["cublas_workspace_config"]
+        toys = [testing.toy_session(r) for r in range(schema.N_SESSIONS)]
+        tss = [s for s, _i in toys]
+        LS, LU = [6, 9, 17], [6, 11, 2]
+        loaded_t = {"manifest_sha256": ids.MANIFEST_OF_RECORD,
+                    "by_session": {s.session_id: {"ids": list(i)} for s, i in toys}, "by_variant": {},
+                    "candidates": {LOCK_LABEL_CONVENTION: {"name": LOCK_LABEL_CONVENTION, "kept": True,
+                                                           "labels": {tss[0].cue_S: LS, tss[0].cue_U: LU}}}}
+        u = np.random.default_rng(5).standard_normal(12)
+        u = u / np.linalg.norm(u)
+        toy_li = {"lock_sha256": LOCK_SHA256, "site": 2, "R": 25.5, "R_ell": 23.90625, "v_unit": u,
+                  "v_sha16": gvec.injection_sha16(u), "dose_map": gcal.dose_map(25.5, 23.90625),
+                  "gvec_sha256": "1" * 64, "directions_sha256": "2" * 64, "gcal_sha256": LOCK_GCAL_SHA256,
+                  "dose_map_sha256": LOCK_DOSE_MAP_SHA256}
+        prov_t = dict(CHARACTERIZED_PROVENANCE, path="(toy)", choice_window_declared=schema.MAX_WINDOW)
+        made: list = []
+        bd = tmp / "bench-flow"
+        bd.mkdir()
+
+        class StubAdapter:
+            def __init__(self, prov):
+                self._prov = prov
+
+            def provenance(self):
+                return dict(self._prov)
+
+        def genv(tag, **over):
+            be = testing.CausalDouble()
+            lines: list = []
+            ticks = [0]
+
+            def mk(_p):
+                made.append(tag)
+                return StubAdapter(prov_t)
+
+            def tick() -> float:                        # 1 ms a call: every duration the stage measures is exact
+                ticks[0] += 1
+                return ticks[0] * 0.001
+            base = dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": LOCK_WEIGHTS_SHA256,
+                                         "n_files": 1, "path": "(toy)"},
+                        load_sessions=lambda: list(tss), load_ids=lambda: loaded_t, lock_inputs=lambda: dict(toy_li),
+                        gver=lambda s_, l_, p_: {"status": "PASS", "sessions": len(s_)},
+                        env_provenance=lambda p: dict(prov_t), make_adapter=mk, adapter_shape=lambda a: (6, 12),
+                        make_backend=lambda a: be, package=lambda: (LOCK_PACKAGE_SHA256, dict(LOCK_CLOSURE)),
+                        counts=lambda i_, s_: copy.deepcopy(counts), pod=lambda: CHARACTERIZED_POD,
+                        driver=lambda: (b"drv", b"drv"), shape=(6, 12), root=tmp / tag / "root",
+                        report=tmp / tag / "report.json", out=tmp / tag / "out", bench_records=4, printer=lines.append,
+                        clock=tick)
+            base.update(over)
+            for k in ("root", "report", "out"):                       # a self-test writes only under tmp
+                if _within(Path(base[k]).resolve(), REPO.resolve()):
+                    raise SystemExit(f"a self-test environment points {k} into the repository: {base[k]}")
+            return GtimeEnv(**base), lines
+
+        env1, lines1 = genv("run")
+        rc1 = run_gtime(env1, bench_dir=bd)
+        rep1 = cells.read_json(Path(env1.report)) if Path(env1.report).is_file() else {}
+        art_p = Path(env1.out) / GTIME_ARTIFACT
+        art = cells.read_json(art_p) if art_p.is_file() else {}
+        recs1 = []
+        for key in (("N1-V", "none", "0"), ("N1-V", "valence", "+1"), ("N1-V", "valence", "+1/2")):
+            recs1 += cells.load_cell(env1.root, *key, identity=rep1.get("stage_identity"))[0]["records"]
+        recs1.sort(key=lambda r: r["launch_index"])
+        ok_art = refused(lambda: check_gtime(art))
+        chk("gtime: the command's flow over the double: exit 0, COMPLETE, 18 records in three cells, one load; the "
+            "artifact written and passing its check",
+            rc1 == 0 and rep1.get("end_state") == "COMPLETE" and len(recs1) == 18 and made.count("run") == 1
+            and art.get("schema") == GTIME_SCHEMA and not ok_art[0], (rc1, rep1.get("end_state"), ok_art))
+        c1 = [r["duration_ms"] - (r["duration_ms_fresh"] or 0) for r in recs1]
+        f1 = [r["duration_ms_fresh"] for r in recs1 if r["duration_ms_fresh"] is not None]
+        mt = art.get("model_time", {})
+        chk("gtime: ...the projection (GT8): T = 7,680 x median(c) + 3,637 x median(f) from the stage's own records, "
+            "the maxima beside, 18 reads and 12 re-computed; each unsteered read's identity check at the bound C",
+            mt.get("T_median_ms") == 7680 * float(np.median(c1)) + 3637 * float(np.median(f1))
+            and mt.get("T_max_ms") == 7680 * float(max(c1)) + 3637 * float(max(f1))
+            and (mt.get("reads"), mt.get("recomputed_reads")) == (18, 12)
+            and [r["duration_ms_fresh"] is not None for r in recs1] == [True] * 12 + [False] * 6
+            and all(r["identity"]["bound"] == 0.25 for r in recs1[:6])
+            and all(r["identity"] is None for r in recs1[6:]), mt)
+        ph = art.get("pod_hours", {})
+        chk("gtime: ...the pod hours (GT9): the load, the benchmark over 4 records with its fit, the projection over "
+            "the campaign's 138 cells, the per-read I/O on reads 1..17 (read 0 has no line before it), the three terms "
+            "not measured",
+            len(ph.get("loads_ms", [])) == 1 and ph["io"]["bench"]["records"] == 4
+            and ph["io"]["bench"]["cell"] == schema.cell_filename("N1-V", "valence", "+1")
+            and any(x.startswith("I/O benchmark (GT9 (i)): 4 appends of the stage's read 6 (N1-V|valence|+1), re-keyed")
+                    for x in lines1)
+            and ph["io"]["campaign_cells"] == 138 and ph["io"]["campaign_pairs"] == 322560
+            and [x["io_ms"] is None for x in art["reads"]] == [True] + [False] * 17
+            and ph["io"]["per_read_reads"] == 17 and ph["not_measured"] == list(GTIME_NOT_MEASURED), ph.get("io", {}))
+        io_vals = [x["io_ms"] for x in art.get("reads", [])]
+        bh = ph.get("io", {}).get("bench", {})
+        t_ext = 7680 * 309.0 + 3637 * 357.1
+        chk("gtime: ...with a clock that ticks 1 ms a call, every figure is exact: c 2 ms on the 12 re-computed reads "
+            "and 1 ms on the 6 cached-only, f 1 ms; T = 7,680 x 2 + 3,637 x 1 = 18,997 ms at the medians and the "
+            "maxima; the extension's T = 7,680 x 309.0 + 3,637 x 357.1 ms; the load 1 ms; the benchmark's appends "
+            "1 ms each, a 1 and b 0, its projection a x 7,680 + b x 322,560; the per-read I/O 2 ms on reads 1..17, "
+            "its lower bound 2 x 7,680 ms; each hours figure its ms over 3.6e6",
+            c1 == [2] * 12 + [1] * 6 and f1 == [1] * 12
+            and mt.get("T_median_ms") == 18997.0 and mt.get("T_max_ms") == 18997.0
+            and mt.get("T_median_h") == 18997.0 / 3.6e6 and mt.get("T_max_h") == 18997.0 / 3.6e6
+            and art.get("beside", {}).get("T_extension_ms") == t_ext
+            and art["beside"]["T_extension_h"] == t_ext / 3.6e6 and ph.get("loads_ms") == [1]
+            and bh.get("append_ms") == [1.0] * 4 and (bh.get("a_ms"), bh.get("b_ms")) == (1.0, 0.0)
+            and ph["io"]["projected_ms"] == 1.0 * 7680 + 0.0 * 322560 and ph["io"]["projected_h"] == 7680.0 / 3.6e6
+            and io_vals == [None] + [2.0] * 17 and ph["io"]["per_read_median_ms"] == 2.0
+            and ph["io"]["lower_bound_ms"] == 2.0 * 7680 and ph["io"]["lower_bound_h"] == 2.0 * 7680 / 3.6e6,
+            (c1, mt.get("T_median_ms"), ph.get("loads_ms"), io_vals[:3]))
+        idx = {k: next((i for i, x in enumerate(lines1) if x.startswith(k)), -1)
+               for k in ("STAGE G-TIME-n:", "WEIGHTS", "DRIVER", "LOCK-n v0.1's inputs", "identity:", "plan 0 ",
+                         "the campaign (GT8)", "G-VER (G-TIME-n's start", "backend:", "read 0 ", "model time (GT8")}
+        chk("gtime: ...its lines in order: STAGE first, then WEIGHTS, DRIVER (HEAD's), the lock's inputs, the "
+            "identity, the 18 plan lines, the campaign's counts, G-VER before the load, the reads, the model time; "
+            "the last line COMPLETE for the PI's cap",
+            idx["STAGE G-TIME-n:"] == 0 and sorted(idx.values()) == list(idx.values()) and -1 not in idx.values()
+            and sum(1 for x in lines1 if x.startswith("plan ")) == 18
+            and f"DRIVER scripts/n_sessions.py {hashlib.sha256(b'drv').hexdigest()}: HEAD's committed bytes" in lines1
+            and lines1[-1] == "G-TIME-n COMPLETE: the projections are for the PI's cap at LOCK-n v1.0 (GT16)",
+            {k: v for k, v in idx.items()})
+        chk("gtime: ...and no line holds a margin or a log-probability: the per-read lines are the runner's",
+            not any("margin" in x or "logprob" in x for x in lines1), "")
+        def fewer_campaign_reads(a):                    # the counts kept summing, the lock's 7,680 not
+            k0 = sorted(a["campaign"]["cells"])[0]
+            a["campaign"]["cells"][k0] -= 1
+            a["campaign"]["reads"] -= 1
+        for tamper, where in ((lambda a: a["model_time"].update(T_median_ms=a["model_time"]["T_median_ms"] + 1),
+                               "model_time"),
+                              (lambda a: a["reads"].pop(), "reads"),
+                              (fewer_campaign_reads, "campaign"),
+                              (lambda a: a["reads"][3].update(margin=0.0), "reads[3]"),
+                              (lambda a: a["reads"][3].update(cached_ms=a["reads"][3]["cached_ms"] + 1),
+                               "reads[3].cached_ms"),
+                              (lambda a: a["campaign"].update(read_plan_sha256="0" * 64), "campaign"),
+                              (lambda a: a["pod_hours"]["io"]["bench"].update(a_ms=0.5), "pod_hours.io.bench"),
+                              (lambda a: a.update(extra=1), "its keys")):
+            bad = copy.deepcopy(art)
+            tamper(bad)
+            got = refused(lambda: check_gtime(bad))
+            chk(f"gtime: check_gtime refuses an artifact tampered at {where}, naming the field and no value",
+                got[0] and got[1].endswith(f"malformed at {where}"), got)
+        rc1b = run_gtime(env1, bench_dir=bd)
+        rc1c = run_gtime(env1, bench_dir=bd, resume=True)
+        chk("gtime: ...a second run, or a resume, while the artifact exists is refused before any read, exit 2",
+            rc1b == 2 and rc1c == 2 and made.count("run") == 1
+            and sum(1 for x in lines1 if x.startswith("REFUSED before any read: ")
+                    and "writes its projection once" in x) == 2, lines1[-1])
+        art_p.unlink()
+        rc1d = run_gtime(env1, bench_dir=bd, resume=True)
+        art_d = cells.read_json(art_p) if art_p.is_file() else {}
+        chk("gtime: ...a resume after COMPLETE with no artifact launches nothing and writes it: two loads, no per-read "
+            "I/O (no read launched)",
+            rc1d == 0 and made.count("run") == 2 and len(art_d.get("pod_hours", {}).get("loads_ms", [])) == 2
+            and all(x["io_ms"] is None for x in art_d.get("reads", [{}]))
+            and art_d["model_time"]["T_median_ms"] == art["model_time"]["T_median_ms"], rc1d)
+
+        # G-VER's STOP, and the refusals before any read
+        env_g, lines_g = genv("gver", gver=lambda s_, l_, p_: {"status": "STOP", "causes": ["seq_len"]})
+        rc_g = run_gtime(env_g, bench_dir=bd)
+        chk("gtime: G-VER's STOP (GT7): exit 2, no weights load, no report, nothing written; its line says so",
+            rc_g == 2 and made.count("gver") == 0 and not Path(env_g.report).exists() and not Path(env_g.root).exists()
+            and lines_g[-1].startswith("G-VER STOP: no weights load, nothing is read, no report"), lines_g[-1:])
+        keep = os.environ.pop("CUBLAS_WORKSPACE_CONFIG", None)
+        env_c, lines_c = genv("cublas")
+        rc_c = run_gtime(env_c, bench_dir=bd)
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = keep or ""
+        cases = [("pod-none", dict(pod=lambda: None), {}, "without $RUNPOD_POD_ID"),
+                 ("pod-other", dict(pod=lambda: "another-pod"), {}, "not the characterized one"),
+                 ("weights", dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": "5" * 64,
+                                                   "n_files": 1, "path": "(toy)"}), {}, "not the lock's (L §17)"),
+                 ("driver", dict(driver=lambda: (b"drv", b"other")), {}, "runs only the committed driver"),
+                 ("bid", dict(env_provenance=lambda p: dict(prov_t, choice_window_declared=8192)), {},
+                  "is not the lock's 8264f719efd347a9"),
+                 ("bridge", dict(env_provenance=lambda p: dict(prov_t, python="3.12.4")), {}, "(R6)"),
+                 ("pkg", dict(package=lambda: ("0" * 64, dict(LOCK_CLOSURE))), {}, "not the lock's (L §18; GT3)"),
+                 ("closure", dict(package=lambda: (LOCK_PACKAGE_SHA256, dict(LOCK_CLOSURE, **{"valence_core/x.py":
+                                                                                               "0" * 64}))), {},
+                  "closure files differing ['valence_core/x.py']"),
+                 ("plan", dict(counts=lambda i_, s_: dict(counts, read_plan_sha256="0" * 64)), {},
+                  "is not the lock's (L §6)"),
+                 ("lockin", dict(lock_inputs=lambda: gtime_lock_inputs(lambda p: None)), {}, "LOCK-n.md is absent"),
+                 ("benchrepo", {}, dict(bench_dir=REPO / "data" / "n" / "bench"),
+                  "never written inside the repository"),
+                 ("benchnone", {}, dict(bench_dir=None), "needs --bench-dir"),
+                 ("benchgone", {}, dict(bench_dir=tmp / "no-such"), "is not an existing folder"),
+                 ("smoke0", {}, dict(smoke=0, out=tmp / "s0"), "--smoke takes 1..18"),
+                 ("smoke19", {}, dict(smoke=19, out=tmp / "s19"), "--smoke takes 1..18"),
+                 ("smokeout", {}, dict(smoke=3), "writes only into --out"),
+                 ("smokeres", {}, dict(smoke=3, out=tmp / "sr", resume=True), "a smoke never resumes"),
+                 ("smokerepo", {}, dict(smoke=3, out=REPO / "data" / "n" / "s"), "outside the repository"),
+                 ("smokeexists", {}, dict(smoke=3, out=bd), "exists: a smoke writes into a new folder"),
+                 ("recout", {}, dict(out=tmp / "o"), "(--out is a smoke's)"),
+                 ("ruling", {}, dict(resume=True, rulings={"p01": str(tmp / "no-ruling.md")}), "is not a file")]
+        bad_cases = []
+        for tag, over, kw, text in cases:
+            e_, l_ = genv(tag, **over)
+            args = dict(dict(bench_dir=bd), **kw)
+            rc_ = run_gtime(e_, **args)
+            line = next((x for x in l_ if x.startswith("REFUSED before any read: ")), "")
+            if not (rc_ == 2 and text in line and made.count(tag) == 0 and not Path(e_.report).exists()):
+                bad_cases.append((tag, rc_, line[:160]))
+        chk(f"gtime: {len(cases) + 1} refusals before any read, each exit 2 with its reason on a REFUSED line, no "
+            f"weights loaded and no report: the pod (none, another), the cuBLAS setting, the weights, the driver, n's "
+            f"backend identifier, the R6 bridge, the package, its closure, the campaign's plan, the lock's inputs, the "
+            f"benchmark's folder (in the repository, none, absent), the smoke's options, --out on a run of record, a "
+            f"ruling that is not a file",
+            not bad_cases and rc_c == 2 and made.count("cublas") == 0
+            and any("CUBLAS_WORKSPACE_CONFIG" in x for x in lines_c), bad_cases[:3])
+        import valence_core.m.keys as m_keys
+        real_ka = m_keys.stream_known_answer
+        m_keys.stream_known_answer = lambda: ["the stream's known answer differs (the self-test's stand-in)"]
+        try:
+            env_k, lines_k = genv("ka")
+            rc_k = run_gtime(env_k, bench_dir=bd)
+        finally:
+            m_keys.stream_known_answer = real_ka
+        chk("gtime: a stream whose known answer differs is refused before any read, exit 2, no weights loaded",
+            rc_k == 2 and made.count("ka") == 0 and not Path(env_k.report).exists()
+            and any(x.startswith("REFUSED before any read: the stream's known answer differs") for x in lines_k),
+            lines_k[-1:])
+        g_fs = globals()                                # the stage's own call to same_filesystem (M8)
+        real_fs = g_fs["same_filesystem"]
+        g_fs["same_filesystem"] = lambda a, b, stat=os.stat: False
+        try:
+            env_f, lines_f = genv("fsdev")
+            rc_f = run_gtime(env_f, bench_dir=bd)
+        finally:
+            g_fs["same_filesystem"] = real_fs
+        chk("gtime: a benchmark folder on another filesystem than the stage root's is refused through the stage "
+            "(GT9 (i)), before any read, exit 2, no weights loaded and no report",
+            rc_f == 2 and made.count("fsdev") == 0 and not Path(env_f.report).exists()
+            and g_fs["same_filesystem"] is real_fs
+            and any(x.startswith("REFUSED before any read: ") and "is not on the stage root's filesystem" in x
+                    for x in lines_f), lines_f[-1:])
+        post = []
+        for tag, over, text in (("postprov", dict(make_adapter=lambda p: StubAdapter(dict(prov_t, python="3.12.4"))),
+                                 "the loaded adapter's provenance is not the one checked before the load"),
+                                ("postshape", dict(adapter_shape=lambda a: (6, 13)), "the checkpoint is (6, 13)")):
+            e_, l_ = genv(tag, **over)
+            rc_ = run_gtime(e_, bench_dir=bd)
+            post.append(rc_ == 2 and not Path(e_.report).exists() and not Path(e_.root).exists()
+                        and any(x.startswith("REFUSED before any read: ") and text in x for x in l_))
+        chk("gtime: after the load and before any read, a provenance other than the one checked before it, or a "
+            "checkpoint of another shape, is refused, exit 2, with no read and no report",
+            post == [True, True], post)
+
+        # a PAUSE (a fresh path biased at the S label's second token: the ceiling at the first shadow) and its resume
+        env_p, lines_p = genv("pause", make_backend=lambda a: testing.CausalDouble(fresh_bias=(9, 2.0)))
+        rc_p = run_gtime(env_p, bench_dir=bd)
+        rep_p = cells.read_json(Path(env_p.report))
+        p1 = rep_p["pauses"][0] if rep_p["pauses"] else {}
+        chk("gtime: a fresh path that moves the margin past C (GT5): exit 3, PAUSE at read 0 -- fidelity-ceiling, the "
+            "identity bound beside it -- the report written and no artifact; its line says the seat rules",
+            rc_p == 3 and rep_p["end_state"] == "PAUSE" and p1.get("kind") == "fidelity-ceiling"
+            and p1.get("also_fired") == ["identity-bound"] and p1.get("launch_index") == 0
+            and not (Path(env_p.out) / GTIME_ARTIFACT).exists()
+            and "G-TIME-n PAUSE: the report is written and no projection; the seat rules (GT5)" in lines_p, p1)
+        n_lines = len(lines_p)
+        rc_p1 = run_gtime(env_p, bench_dir=bd)
+        chk("gtime: ...a second run without --resume, while the PAUSE's records are on disk, is refused before the "
+            "load, exit 2 (prior_state: run with --resume)",
+            rc_p1 == 2 and made.count("pause") == 1
+            and any(x.startswith("REFUSED before any read: ") and "run with --resume" in x for x in lines_p[n_lines:]),
+            lines_p[n_lines:][-1:])
+        r_md = tmp / "ruling.md"
+        r_md.write_text("a ruling\n", encoding="utf-8")
+        rc_p2 = run_gtime(env_p, bench_dir=bd, resume=True, rulings={"p01": str(r_md)})
+        rep_p2 = cells.read_json(Path(env_p.report))
+        chk("gtime: ...its resume under the ruling (skip-only): p01 adjudicated, the next shadow pauses as p02, exit 3",
+            rc_p2 == 3 and rep_p2["pauses"][0]["adjudicated"] is True
+            and [p["launch_index"] for p in rep_p2["pauses"]] == [0, 1], [p["pause_id"] for p in rep_p2["pauses"]])
+
+        # the smoke
+        env_s, lines_s = genv("smoke", driver=lambda: (b"drv", b"other"))
+        s_out = tmp / "smoke-out"
+        rc_s = run_gtime(env_s, bench_dir=bd, smoke=3, out=s_out)
+        art_s = cells.read_json(s_out / GTIME_ARTIFACT) if (s_out / GTIME_ARTIFACT).is_file() else {}
+        chk("gtime: the smoke (GT14): its first 3 reads into --out, a new folder outside the repository, with a driver "
+            "that is not HEAD's (named so); its artifact marked a smoke; the run of record's paths untouched",
+            rc_s == 0 and art_s.get("smoke") == 3 and len(art_s.get("reads", [])) == 3
+            and art_s["pod_hours"]["io"]["bench"]["cell"] == schema.cell_filename("N1-V", "none", "0")
+            and lines_s[0].startswith("SMOKE: the first 3 of the 18 reads")
+            and any("a smoke's, not HEAD's committed bytes (unchecked)" in x for x in lines_s)
+            and lines_s[-1] == "G-TIME-n COMPLETE, a smoke, never of record"
+            and not Path(env_s.root).exists() and not Path(env_s.report).exists() and not Path(env_s.out).exists(),
+            (rc_s, lines_s[-1:]))
+
+        # main()'s options for gtime and gread-bench, behind two traps (the box safety of a self-test that reaches the
+        # driver's entry point after the commit): the recorder below stands in for the stage, and, beside it, no pod id
+        # is set, so the real stage path would refuse at its pod check, and the production loaders are raising stubs
+        g = globals()
+        loaders = ("weights_of_record", "_load_adapter", "_gver_tokenizer")
+        real_loaders = {n: g[n] for n in loaders}
+
+        def trapped(*_a, **_k):
+            raise SystemExit("the self-test's trap: a production loader was reached")
+        pod_kept = os.environ.pop("RUNPOD_POD_ID", None)
+        for n in loaders:
+            g[n] = trapped
+        try:
+            penv = production_gtime_env()
+            chk("gtime: (the self-test's own guard) main()'s cases run with RUNPOD_POD_ID unset and the production "
+                "loaders trapped: weights_of_record, _load_adapter and _gver_tokenizer raise, as the production "
+                "environment holds them",
+                "RUNPOD_POD_ID" not in os.environ and all(g[n] is trapped for n in loaders)
+                and penv.weights is trapped and penv.make_adapter is trapped and penv.gver is trapped, "")
+            chk("gtime: the production environment's benchmark appends 160 records, one N1-V cell's capacity "
+                "(GT9 (i)), and its clock is time.perf_counter",
+                penv.bench_records == GTIME_BENCH_RECORDS == schema.capture_capacity("N1-V") == 160
+                and penv.clock is time.perf_counter, penv.bench_records)
+
+            def argv_error(argv) -> str:
+                err = io.StringIO()
+                try:
+                    with contextlib.redirect_stderr(err):
+                        main(argv)
+                except SystemExit as e:
+                    return err.getvalue() if e.code == 2 else f"exit {e.code}"
+                return "no error"
+            b_, o_ = str(bd), str(tmp / "o")
+            for argv, want_t in ((["gtime"], "gtime needs --bench-dir"),
+                                 (["gtime", "--bench-dir", b_, "--smoke", "3"], "--smoke N and --out DIR together"),
+                                 (["gtime", "--bench-dir", b_, "--out", o_], "--smoke N and --out DIR together"),
+                                 (["gtime", "--bench-dir", b_, "--root", o_], "gtime takes --bench-dir"),
+                                 (["gtime", "--bench-dir", b_, "--convention", "space"], "gtime takes --bench-dir"),
+                                 (["gtime", "--bench-dir", b_, "--ruling", "p01"], "--ruling takes PAUSE_ID=PATH"),
+                                 (["gvec", "--bench-dir", b_], "--bench-dir: gtime's option only"),
+                                 (["gread-bench", "--smoke", "1"], "gread-bench takes no option")):
+                got = argv_error(argv)
+                chk(f"gtime: main() refuses {' '.join(argv[:3])} … with \"{want_t}\"", want_t in got, got[-160:])
+            real_run, real_gb = g["run_gtime"], g["cmd_gread_bench"]
+            calls: list = []
+
+            def recorder(_env, **kw):
+                calls.append(kw)
+                return 0
+            g["run_gtime"] = recorder
+            g["cmd_gread_bench"] = lambda: calls.append("gread-bench") or 0
+            try:
+                rcs = (main(["gtime", "--bench-dir", b_]),
+                       main(["gtime", "--bench-dir", b_, "--resume", "--ruling", f"p01={r_md}"]),
+                       main(["gtime", "--bench-dir", b_, "--smoke", "18", "--out", o_]), main(["gread-bench"]))
+            finally:
+                g["run_gtime"], g["cmd_gread_bench"] = real_run, real_gb
+            chk("gtime: main() hands gtime's options to the stage, and gread-bench runs alone",
+                rcs == (0, 0, 0, 0) and calls == [
+                    {"bench_dir": b_, "smoke": None, "out": None, "resume": False, "rulings": {}},
+                    {"bench_dir": b_, "smoke": None, "out": None, "resume": True, "rulings": {"p01": str(r_md)}},
+                    {"bench_dir": b_, "smoke": 18, "out": o_, "resume": False, "rulings": {}}, "gread-bench"], calls)
+        finally:
+            for n, f in real_loaders.items():
+                g[n] = f
+            if pod_kept is not None:
+                os.environ["RUNPOD_POD_ID"] = pod_kept
+        chk("gtime: (the self-test's own guard) an environment pointing a stage path into the repository is refused",
+            refused(lambda: genv("guard", root=GTIME_ROOT))[0] and refused(lambda: genv("guard", out=GTIME_OUT))[0], "")
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+    # gread-bench (GT10)
+    gc = gread_counts(31)
+    chk("gread-bench: the count (GT10): 6 results x 31 layers x 201 calls = 37,386 on 320 rows; 4 random points x 24 "
+        "directions x 31 layers = 2,976 on 80 rows; 403,620 fits in all",
+        (gc["results"], gc["primary_calls"], gc["primary_rows"], gc["comparator_points"], gc["comparator_calls"],
+         gc["comparator_rows"], gc["fits"]) == (6, 37386, 320, 4, 2976, 80, 403620), gc)
+    import inspect
+
+    from valence_core.n import probe
+    ticks2 = iter(range(10 ** 6))
+    seen_la: list = []
+    real_la = probe.layer_auc
+
+    def spy_la(X, y, groups, **kw):                     # what each timed call is given
+        seen_la.append((tuple(np.asarray(X).shape), kw.get("shuffles"), kw.get("cv_seed")))
+        return real_la(X, y, groups, **kw)
+    probe.layer_auc = spy_la
+    try:
+        gb = gread_bench(calls=2, d_model=6, clock=lambda: next(ticks2) * 0.002)
+    finally:
+        probe.layer_auc = real_la
+    chk("gread-bench: a small run (2 calls at each shape, width 6) times probe.layer_auc at each shape and projects "
+        "the count: 2 ms a call gives 39,362 calls x 2 ms",
+        gb["ms"] == {"primary": [2.0, 2.0], "comparator": [2.0, 2.0]} and gb["T_median_ms"] == (37386 + 2976) * 2.0
+        and gb["T_max_ms"] == gb["T_median_ms"], gb["ms"])
+    dflt = {k: v.default for k, v in inspect.signature(gread_bench).parameters.items()}
+    chk("gread-bench: ...each timed call is probe.layer_auc on the contrast's shape -- 320 rows, then 80, at the width "
+        "given -- with no shuffle and the folds' seed CV_SEED; and the defaults are 10 calls, the model's width 5,120 "
+        "and the band of 31 layers",
+        seen_la == [((320, 6), 0, probe.CV_SEED)] * 2 + [((80, 6), 0, probe.CV_SEED)] * 2
+        and dflt["calls"] == GREAD_BENCH_CALLS == 10 and dflt["d_model"] == D_MODEL == 5120 and dflt["band"] == 31,
+        (seen_la, {k: dflt[k] for k in ("calls", "d_model", "band")}))
+    os.environ["RUNPOD_POD_ID"] = "a-pod"
+    try:
+        r_gb = refused(cmd_gread_bench)
+    finally:
+        if saved["RUNPOD_POD_ID"] is None:
+            os.environ.pop("RUNPOD_POD_ID", None)
+        else:
+            os.environ["RUNPOD_POD_ID"] = saved["RUNPOD_POD_ID"]
+    chk("gread-bench: refused on a pod (GT10: the laptop's CPU)", r_gb[0] and "refused on a pod" in r_gb[1], r_gb)
+
+
+def _parse_rulings(ap, items) -> dict:
+    """``--ruling PAUSE_ID=PATH``, each once (gtime's; backend-ext's own loop is unchanged)."""
+    rulings: dict = {}
+    for item in items:
+        pid, sep, path = item.partition("=")
+        if not sep or not pid or not path:
+            ap.error(f"--ruling takes PAUSE_ID=PATH, not {item!r}")
+        if pid in rulings:
+            ap.error(f"--ruling names {pid} twice")
+        rulings[pid] = path
+    return rulings
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("command", nargs="?",
                     choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "render-ids-v", "backend-ext",
-                             "backend-ext-2", "gvec", "gcal", "gcal-decode"))
+                             "backend-ext-2", "gvec", "gcal", "gcal-decode", "gtime", "gread-bench"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -3694,11 +5102,34 @@ def main(argv=None) -> int:
     ap.add_argument("--smoke", type=int, default=None)
     ap.add_argument("--convention", default=None)
     ap.add_argument("--gcal-dir", default=None)
+    ap.add_argument("--bench-dir", default=None)
     a = ap.parse_args(argv)
     if a.selftest:
         return cmd_selftest()
     if a.gcal_dir is not None and a.command != "gcal-decode":
         ap.error("--gcal-dir: gcal-decode's option only")
+    if a.bench_dir is not None and a.command != "gtime":
+        ap.error("--bench-dir: gtime's option only")
+    if a.command == "gtime":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--convention", a.convention is not None), ("--model-dir", bool(a.model_dir)),
+                                      ("--tokenizer-dir", bool(a.tokenizer_dir)), ("--ids-dir", bool(a.ids_dir)),
+                                      ("--pi-date", bool(a.pi_date))) if given]
+        if foreign:
+            ap.error(f"{', '.join(foreign)}: gtime takes --bench-dir, --smoke with --out, and --resume with --ruling, "
+                     f"and loads from the model manifest's instruct path")
+        if not a.bench_dir:
+            ap.error("gtime needs --bench-dir, an existing folder outside the repository on the stage root's "
+                     "filesystem (GT9 (i))")
+        if (a.smoke is None) != (a.out is None):
+            ap.error("a smoke takes --smoke N and --out DIR together; a run of record neither")
+        return cmd_gtime(a.bench_dir, a.smoke, a.out, a.resume, _parse_rulings(ap, a.ruling))
+    if a.command == "gread-bench":
+        if any(given for given in (a.root is not None, a.report is not None, a.resume, bool(a.ruling),
+                                   a.smoke is not None, a.convention is not None, bool(a.model_dir),
+                                   bool(a.tokenizer_dir), bool(a.ids_dir), bool(a.out), bool(a.pi_date))):
+            ap.error("gread-bench takes no option")
+        return cmd_gread_bench()
     if a.command == "gcal":
         foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                       ("--resume", a.resume), ("--ruling", bool(a.ruling)),

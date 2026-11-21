@@ -328,6 +328,20 @@ __pycache__/
 /data/n/gates/*
 !/data/n/gates/G-ANL-n.json
 
+# PROPOSAL-n's G-TIME-n outputs (n v0.2 §8 step 11 and §3 G-TIME-n; scripts/n_sessions.py gtime; GT11): the stage's
+# report, its shadow cell's JSON (the six d = 0 reads) and the projection artifact, written on the box by the run of
+# record and copied back by hash. Record, not cache (ledger 27): the PI sets the cap at LOCK-n v1.0 on them. The two
+# steered cells (valence +1 and +1/2: the campaign's own reads of six sessions, by the deterministic backend) stay on
+# the box's volume with every cell's capture arrays (.npy), their digests in the committed report, until the seat
+# rules on them (no looks before the campaign, n §6).
+!/data/n/ckpt/time/
+/data/n/ckpt/time/*
+!/data/n/ckpt/time/N1-V__none__0.json
+!/data/n/reports/time.json
+!/data/n/gtime/
+/data/n/gtime/*
+!/data/n/gtime/gtime.json
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

@@ -21,6 +21,232 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-21 — **n — G-TIME-n's BUILD (n v0.2 §8 step 11): the `gtime` and `gread-bench` commands in
+  `scripts/n_sessions.py`, on Code's readings GT1–GT17 as PINs (the PI's "Build on the PINs"); the driver alone, the
+  package at LOCK-n v0.1's digest. Not run.**
+  - **What is built,** in the driver alone (GT3), so `valence_core/n/` stays at `06b55761…1d39` (LOCK-n v0.1 §18):
+    - `gtime`, G-TIME-n on the box (`run_gtime`). It refuses before any read, with exit 2 and a REFUSED line, unless
+      all of these hold, in this order:
+      - the paths are the stage's own, or a smoke's (1–18 reads, no resume) new folder outside the repository, and
+        the artifact is not yet written;
+      - the bench folder exists outside the repository, on the stage root's filesystem;
+      - the pod, the cuBLAS setting and the stream's known answer are the characterized ones, and each `--ruling`
+        names a file;
+      - the weights are the lock's;
+      - a run of record runs HEAD's committed driver;
+      - the rendering is the render of record's;
+      - LOCK-n v0.1's inputs are the lock's (`gtime_lock_inputs`): LOCK-n.md; G-VEC's outputs of record, a PASS, with
+        the lock's site and valence row; G-CAL-n's `gcal.json` and `dose_map.json` at the lock's sha256s; and the dose
+        map rebuilt from G-VEC's R and R_ell, equal to both;
+      - the environment's provenance bridges to the characterization's identifier (R6), and n's backend identifier,
+        the package and its twelve-file closure are the lock's;
+      - the campaign's read plan under the stage's identity is the lock's (`campaign_counts`);
+      - a second run finds no records or report of its own unless it resumes. A resume's report is the same
+        identity's and did not end in a STOP, and its rulings match its standing pauses (`prior_state`).
+
+      Every check but the driver's holds at a smoke too (the review's F10). Then G-VER runs before the load (GT7; its
+      STOP exits 2), and the load. After the load, and before any read, the loaded adapter's provenance is checked
+      again, and the checkpoint's shape against the identity's. The 18 reads go through the runner (GT1, GT2, GT5).
+      On COMPLETE the stage writes the projection: its own records read back, the append benchmark (`io_bench`, the
+      stage's first +1 record re-keyed), and the artifact `data/n/gtime/gtime.json` (`n-gtime-v1`, checked by
+      `check_gtime`). Exits: 0 on COMPLETE, 3 on a PAUSE, 1 otherwise (GT6).
+    - `gread-bench`: GT10's benchmark of G-READ-n's fits, on the laptop, model-free, refused on a pod.
+    - The driver's docstring lists GT1–GT17 in short as its PINs, as sent but for GT9's benchmark and GT11's outputs,
+      which are as built (draft 5's wording, on the values-check's item 72). The seven starred are with the seat
+      (`2ca24e8`'s block, Q1–Q7), and Q8 is in the supplement committed just before this BUILD, at `4fdcdcc`.
+      G-TIME-n runs only after the seat's answers.
+  - **The .gitignore:** +14 lines, its second draft (`dee52f42…b272`).
+    - Admitted: the stage's report, its shadow cell's JSON (the six d = 0 reads) and the artifact.
+    - Kept on the box: the two steered cells' JSON (valence +1 and +1/2, on six of the campaign's sessions), with
+      every cell's capture arrays, until the seat rules on Q8. That is the review's O2. The build departs from GT11's
+      words toward the safer side, and GT11's form is two lines away.
+    - The block changed after the review, on O2. The review read the first draft (`1f2461bd…58b8`), which admitted
+      all three cells.
+    - Tested by dry-run adds in a throwaway repository, as the first draft's block was.
+  - **The self-test:** [`2026-11-21_n-gtime-build_selftest.txt`](results/raw/2026-11-21_n-gtime-build_selftest.txt).
+    - Draft 1 ran "621/621 n selftest checks pass", HEAD's 578 plus 43; draft 3 ran "623/623"; draft 4 ran
+      "633/633".
+    - Draft 5, this BUILD's bytes (`4616f9c3…2553`, 5,208 lines), ran "634/634": draft 4 with one check more, M8's
+      (below), and the docstring's two lines introducing the PINs reworded (three in draft 5).
+    - Each run had exit 0 and an empty stderr, in a battery window the coordinating session granted. The temporary
+      folder was empty before and after, and after each run Q-F3's campaign (PID 8051) was the only Python process.
+    - The box's count, by arithmetic only, is 645.
+  - **The blind review** of draft 3:
+    - its report, with every disposition:
+      [`2026-11-21_n-gtime-build_review.md`](results/raw/2026-11-21_n-gtime-build_review.md);
+    - no BUG; 11 findings (5 RISK, 6 NIT), 13 surviving mutants, 7 box risks and 6 observations; no departures,
+      with five items for classing after them;
+    - draft 4 builds in F1, F2, F3, F5, F6, F7 and F9, and a kill for every mutant but M8. The values-check found
+      M8 alive: draft 4's case tested `same_filesystem` alone, and no case ran the stage's own call to it. Draft 5
+      adds that case, through the stage, so every mutant is killed in the driver committed.
+  - **The values-checks:**
+    - the first, one blind pass over the supplement and its entry, this entry's draft, the review raw and the
+      self-test raw. Its raw is committed with the supplement, at `4fdcdcc`
+      ([`2026-11-21_n-gtime-supplement-and-build_valuescheck.md`](results/raw/2026-11-21_n-gtime-supplement-and-build_valuescheck.md)):
+      128 items, 97 CONFIRMED, 7 IMPRECISE, 5 FAIL and 19 NOT CHECKABLE, with 9 observations. The five FAILs were
+      one finding, M8, met by draft 5. Its §1 gives every disposition on this entry, the review raw and the
+      self-test raw, and each is applied here as it states. One goes beyond its words: item 47's last bullet adds
+      `prior_state`'s two other refusals of a resume, another identity's report and a STOP. These edits were checked
+      by tool, 20 of 20;
+    - the second, on the coordinating session's routing: one blind pass over these texts after their edits, this
+      entry's departures among them. The first read those only in an earlier draft, its counts placeholders, with no
+      transcript to check them against. Its raw:
+      [`2026-11-21_n-gtime-build_valuescheck2.md`](results/raw/2026-11-21_n-gtime-build_valuescheck2.md).
+      - 111 items: 92 CONFIRMED, 4 IMPRECISE, 3 FAIL and 12 NOT CHECKABLE; and 7 observations.
+      - The three FAILs were omissions from the departures, now listed. The four IMPRECISE items were wordings,
+        applied in its words, without its command times. Every observation is applied or met.
+      - The raw's §1 gives each disposition. These edits were checked by tool, 13 of 13.
+  - **Model:** nothing ran on a model.
+  - **Declared, from the review:**
+    - **F4:** a resume after COMPLETE (the recovery when the projection fails after the reads) runs G-VER and loads
+      the weights again. The report's `loads_ms`, and so the artifact's loads, count that load. It is the recovery's
+      cost.
+    - **F8:**
+      - GT3's "campaign_order is not used" is about the stage's own plan: `campaign_counts` runs it over the
+        campaign's view for N and K, as GT8 states;
+      - GT9 (b)'s "from one launch to the next" is built as from one per-read line to the next, an interval that also
+        holds the read's append and the loop's work: sound as option (ii)'s lower bound, by the review;
+      - the block's GT9 re-keying is corrected for the seat in the supplement's §4.
+    - **F10:** every pin is checked at every invocation, a smoke's too. It is corrected for the seat in the
+      supplement's §4.
+    - **F11** is not adopted: both functions are in one module and the two traps suffice, the review's own reading.
+    - **B5:** the closure is held to the lock's twelve files exactly at every invocation, and the self-test checks
+      inclusion only.
+    - **B7:** `GTIME_ROOT` is fixed, so a re-run of record after a box change must first move the committed outputs
+      aside. Whether it re-runs is the PI's (GT16).
+    - **Carried to G-TIME-n's launch files** (to the coordinating session first): B1 (`--bench-dir` made on the volume
+      and named), B2 (a killed benchmark's leftover folder cleaned) and B6 (stderr with stdout in the raw).
+  - **Carried from the seat block's commit** (`2ca24e8`; the coordinating session's notes of 2026-11-21):
+    - **The sweep's scope.** The commit kit's shared pathspec named Q-F3's folder plainly in both its versions, the
+      first kit and kit2. So every commit window of Code's that ran it carried the plain name. By this session's
+      verify runs, those are:
+      - the windows of `355e3a2`, `035947e`, `516b60f` and `d85fc34`, under the first kit, and earlier ones before
+        them;
+      - the windows of `616e940`, `bc50244`, `e3b48ed`, `db00d6d`, `ef105f1`, `411b15c` and `deabf3f`, under kit2.
+
+      `2ca24e8`'s entry gave its sweep from `deabf3f`'s window on. As carried here, the sweep ran from `411b15c`'s,
+      as the unused third entry had it. It counted seven kit commands and three of Code's own in that window; the
+      kit_place_v2 test's seven index checks, in throwaway repositories; seven kit commands in `deabf3f`'s window and
+      four of Code's own after it; and the overlay script's six and the two `sed` commands that `2ca24e8`'s entry
+      declares. The other windows were not swept, and windows before the kit were not checked. Kit2's v-next scripts
+      use the bracketed form.
+    - **The gate's id list** held both agent ids at `2ca24e8`'s commit, the survey's and the seat block's
+      values-checker's. `2ca24e8`'s entry named the survey's alone.
+    - **The seat block's grants.** The first request's commit files were rebuilt in place as the second's, at the same
+      paths, after their sha256s were sent. The first grant crossed the second request and lapsed unused. The second
+      grant ran, at `2ca24e8`. The third request's grant arrived after that commit and lapsed unused, and its folder
+      stays unused.
+  - **Departures,** for the seat to class:
+    - 2026-11-21, Code, by a sweep of this session's shell commands from `2ca24e8`'s commit to this entry's draft for
+      the second values-check (147 commands), by command and by output:
+      - `jq` over this session's own transcript, outside the repository, the HF cache and the scratch folders, in 19
+        commands:
+        - five to confirm the window steps of runs 1, 3 and 4 for the self-test raw (one of them printed only call
+          ids, a zsh word-splitting slip);
+        - one to check the coordinating session's framing of Q8 as sent;
+        - three runs of the replay check of the supplement's edits, which read it six times, one read per text a
+          run;
+        - ten to sweep this session's shell commands for this list.
+
+        Several of the sixteen direct commands ran `jq` over it more than once;
+      - `jq` over the blind reviewer's and the first values-checker's own transcripts, once each, to take their
+        reports verbatim;
+      - one `grep` whose pattern was the bare name of Q-F3's folder, over the first kit's scripts in Code's scratch,
+        for the sweep's scope, after the coordinating session's note on the bracketed form;
+      - one `git log` whose `--format` printed author dates (`%ad`, as month and day), where item 1 names commit
+        times, with item 3's pathspec and Q-F3's exclusion;
+      - two `git show --stat` runs, on `89a55c3` and `d7d5e5b`, with item 3's pathspec and Q-F3's exclusion, so that
+        no checkpoint or report file was in them; item 1 names `--name-only` and `--name-status`;
+      - one `git ls-files` of `data/n/ckpt/*`, names only, item 1's form. It printed the BACKEND extension's two
+        committed cells. The briefs bar any listing under `data/*/ckpt`. One of the sweeps re-printed those two names
+        from the transcript;
+      - two globs at the repository's root in an argument, in one command: one `ls` and one `grep` over
+        `PROPOSAL-n*`. The briefs bar that form. Each expanded to `PROPOSAL-n-bk-reconciliation-v0_2.md` alone, whose
+        name holds no guard marker;
+      - `awk`, an interpreter the briefs bar, three times in commands: a heading search and a numeric filter over
+        PROPOSAL-n's headings, and a date filter over a listing of this session's commands. And once inside the
+        kit's gate script, in its check of the manifest's removals, at `4fdcdcc`'s commit. Every non-dry run of the
+        kit's gate runs it there, this commit's among them. The sweeps read commands, and Code found it after the
+        second values-check;
+      - the second .gitignore draft tested by a `git init` and dry-run adds in a throwaway repository under Code's
+        scratch, not this one;
+      - reads of Code's own memory files in the shell, outside the repository, the HF cache and the scratch folders,
+        in four commands: a `wc -l` and a `grep` of one memory note, then a `sed` line print of it; a `grep` over the
+        memory index; and a `cat` of one memory note;
+      - reads of Code's notes in the app's shared notes folder in the shell, in three commands: `shasum` and `wc -l`
+        of one note, and of two; and a `grep -o` over two;
+      - stated plainly:
+        - eight index checks, `git diff --cached --name-only` counted by `wc -l`, without item 3's pathspec (item 1
+          names the form; each count was 0);
+        - one `git ls-files` run inside the overlay folder, outside any repository, which listed nothing, and one
+          unpruned `find` over that overlay, in Code's scratch, counting its files (the overlay script asserts that
+          no checkpoint or report file is in it);
+        - one `grep -rn` over the named files `valence_core/n/*.py` and `scripts/n_sessions.py`, no data path in
+          scope; one `git rev-list --children HEAD`, ids only; and one `ls -la` over three scratch folders;
+        - `jq` over scratch files, the sweep's own extractions of these commands in six commands, and the replay
+          script's edit lists; and `sed`, for line prints and substitutions, with one in-place edit of a scratch
+          draft. Neither is in the briefs' lists of interpreters;
+        - outputs, not argvs, printed Q-F3's folder's plain name three times: two script comments and a draft's text;
+      - by the same sweep, no guard marker in any argv, and no Python but the three battery windows the coordinating
+        session granted (runs 3, 4 and 5). Every other `python` in a command is `pgrep -l python` (eight commands) or a
+        word in the sweep's own `jq` patterns (two commands);
+    - after that draft, by Code's last sweep: 15 more commands, the last of them that sweep:
+      - `jq` over this session's own transcript in two of them: one run of the replay check of these texts' edits,
+        which read it six times, once per version step, and the sweep itself;
+      - `jq` over the second values-checker's own transcript twice, to take its report and its reissued report
+        verbatim;
+      - nothing else the rules bar.
+
+      After it came the commit folder's preparation and two runs of its builder. The first ran the replay check
+      again, which read the transcript six times more, and stopped at its own placeholder check, which took a
+      placeholder quoted in the second check's report for an unfilled one. The second, into a new folder, took that
+      run's replay output by its sha256. Then came the gate's dry run, and `shasum` and `wc -l` of the window
+      request's note in the shared notes folder;
+    - owed from before `2ca24e8`'s commit (Code, 2026-11-21):
+      - `jq` over this session's own transcript twice, to list its shell commands for the sweep. Neither `2ca24e8`'s
+        entry nor its unused third version declares them. And that entry's "once to find the two departures above"
+        was two calls, the second a narrower print of the first's listing;
+      - the first .gitignore draft's dry-run adds in a throwaway git repository under Code's scratch;
+    - the blind reviewer's: none, by its report. After its departures it lists five items for classing, not barred
+      by its reading (the review raw, §2): the prescribed `git diff --no-index -U3` paged through `grep` and `sed`;
+      `grep -o` over `data/n/gcal/gcal.json` and `data/n/gvec/gvec.json`, neither under ckpt or reports; `wc -l` on
+      named files and `sed -n` on cited lines; and a loop counting the draft's pinned values in LOCK-n.md;
+    - the first values-checker's are in the supplement's entry, at `4fdcdcc`. The second's, as its report states
+      them:
+      - one `grep -n` over draft 5 with a `^def ` pattern, which printed the file's def lines: beyond the parts of
+        draft 5 its brief named for reading;
+      - one `jq` over Code's extraction of the commands, printing its five largest command lengths, where its brief
+        allowed `jq` on the transcript only;
+      - two transcript reads by `jq` outside its window: the times of the five shell commands in the minute before
+        it, to place its start, and a count of the shell commands to the transcript's end with a masked fragment of
+        one, to place its end;
+      - several transcript prints of window commands' whole outputs, masked, rather than only the lines a finding
+        needed. One of them held the first 41 lines of the seat block;
+      - `git diff --no-index` with `-U2`, `-U0` or `-U1` where its brief named `-U3`;
+      - for classing, not barred by its reading: greps of RESULTS.md beyond the two entries; reads of HEAD's driver
+        at three functions; the review raw's first report lines, read with its head; `git ls-files -c -o` and
+        `-o -i --directory` with the pathspec, filtered to root names beginning `PROPOSAL-n`; `git log --no-walk`
+        over named commits; and one zsh `=` expansion error that stopped a command line before its second diff,
+        which then ran on its own.
+
+      No guard marker reached its argv. Outside the repository and Code's scratch it read only the transcript, by
+      `jq`, and it wrote nothing. Its first hand-back named the local-root prefixes literally in one sentence, which
+      the commit gate refuses; at Code's request it returned the report again with that sentence reworded, and the
+      two differ in that line alone;
+    - beside the shell (its shell reads of them are listed above), listed for completeness: reads and writes of
+      Code's own memory files and of its notes in the app's shared notes folder, messages to the coordinating
+      session, and the review's and the two values-checks' subagents. None is a departure under the rules quoted.
+  - **The gate.** The reviewer's and the first values-checker's agent ids have been in the gate's id list since its
+    fifth version, which `4fdcdcc` ran. The second values-checker's joins them in a sixth, for this commit. The
+    survey's and the seat block's values-checker's are there too, among earlier sessions' and subagents' ids.
+  - **Committed by path:**
+    - `scripts/n_sessions.py` and `.gitignore`;
+    - the self-test raw, the review raw and the second values-check's raw;
+    - this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. Next: G-TIME-n's launch
+    files, to the coordinating session first. The run waits for the seat's answers on Q1–Q8.
+
 - 2026-11-21 — **n — a supplement to the seven starred readings: Q8, G-TIME-n's two steered cells, from the BUILD's
   blind review (code → design; the n-build session). STOP for the seat's read, in the same sitting as `2ca24e8`.**
   Block:
