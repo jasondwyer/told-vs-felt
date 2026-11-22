@@ -21,6 +21,337 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-22 — **The coordinating session's notes on the seat's first sitting of 2026-11-22: G-VER's starred seven
+  and the supplement ruled, the raw committed here by path; the PI's routing, "PI: route as given"; three close lines
+  (item 5); the relays; G-VER's BUILD windows and the two commits since `cd6b30d`; the nudge; and the push to come
+  (item 8).**
+  - **The read:**
+    [`2026-11-22_n-gver-starred-seven_design-to-code_answers.md`](results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md)
+    (sha256 `c66cb2f7…650b`, 21,692 bytes, 84 lines), the seat's ruling at its first sitting of the day on n-build's
+    block on G-VER's starred seven (`d92500b`) and on its supplement (`9b71bbb`), both in full. It was placed untracked
+    over the bridge and is committed here by path, re-hashed equal before the commit. The PI's message routing it,
+    which ends "PI: route as given", is committed as
+    [`2026-11-22_first-sitting_pi-routing.md`](results/raw/2026-11-22_first-sitting_pi-routing.md). Below, "item N"
+    is item N of that message, whose items follow the raw's routing block (§6) in number and order, in the PI's own
+    words, and "§N" is a section of the raw.
+  - **What the raw rules and records** (§0–§7):
+    - **Q1** (§1.1): step 12 is a stage of its own, with its record and its entry "G-VER (n)"; m's "the verifier,
+      not a step" does not carry. As built.
+    - **Q2** (§1.2): the pins as corrected and added to, each accepted: cuBLAS's setting by name and through R6;
+      tokenizers 0.22.2 before G-VER and in the record's check; numpy's stream not held; no schema stage identity.
+      The manifest's pin is G-VER's own cause, a mismatch G-VER's STOP with the record. **The hash check widens** to
+      the instruct entry's eight non-shard files at their manifest sha256s (`config.json`,
+      `generation_config.json`, `merges.txt`, `model.safetensors.index.json`, `special_tokens_map.json`,
+      `tokenizer.json`, `tokenizer_config.json` and `vocab.json`); the 14 shards stay at byte counts.
+    - **Q3** (§1.3): after a STOP at step 12, v1.0 waits for the seat's ruling; if D_n passes first, the unit is
+      NOT-RUN with the cause `clock:gate-stopped`; nothing re-runs before the ruling, and the ids of record stand.
+    - **Q4** (§1.4): the record as built, `n-gver-v1`, at PASS and at STOP, committed with the entry and the out raw.
+      The ends are 0, 2 and 1, read by the exit, the last line and the record on disk together. A refusal before
+      G-VER is not a G-VER-STOP, "But no end other than PASS is Code's alone": every refusal goes to the seat and
+      the PI before anything else runs on the box. A refusal on a file's hash or byte count is the respawn protocol's
+      INTEGRITY incident (stop, touch nothing, escalate); one on the environment or the launch is a FAIL of the
+      launch, Code's to fix.
+    - **Q5** (§1.5): v1.0 cites the gate. Its §10 G-VER row gains the record, "PASS, 160 of 160", with the entry
+      cited and the end line verbatim.
+    - **Q6** (§1.6): a box change re-runs G-VER last before the campaign, after the characterization, the BACKEND
+      extension and G-TIME-n; the committed record is first moved aside by `git mv` into `results/raw/`.
+    - **Q7** (§1.7): on G-VER's PASS, v1.0's draft follows at once; the seat reads G-VER's entry, record and out raw
+      first and the draft second, both before step 13's commit.
+    - **The unstarred nine** stand (§2). The next draft carries §1.2's hash set, and "The run waits for nothing else
+      of the seat's."
+    - **Two dated notes on the seat's own texts** (§3), and the seat's **ledger (88)** (§7): under item 5, below.
+    - **Departures** (§4): "inert, no strike".
+    - **Record hygiene** (§5): the three commits unpushed, "nothing in the range waits on anything"; the box idle and
+      up; Q-F3's campaign running, nothing of it read; the cap of record 4 h; and what the seat owes (G-VER's read
+      with v1.0's draft in one sitting, p's three VERDICTS reads, q v0.1 and WORKFLOW.md v1.1).
+  - **Items 1–3 (N), relayed verbatim** to n-build and the pod session, as the PI gave them:
+    - item 1, Q1–Q7 and the supplement's clauses "as ruled (§1)", ending "an environment or launch refusal a FAIL of
+      the launch, Code's to fix. [as ruled]";
+    - item 2, the BUILD: the next draft "with §1.2's hash set and the stale docstring line", its self-test window,
+      "the review's report whole; one values-check; the commit window", the launch files to the coordinating session,
+      the box's run after the relay, and the entry with the record's sha256 and the two durations, ending "PASS is no
+      STOP: v1.0's draft follows it at once for the seat's read. [go]";
+    - item 3, LOCK-n v1.0's draft after G-VER's PASS, "as routed yesterday (item 4)", adding §1.5's G-VER row, the
+      cap 4 h and §3's two dated notes, "[go]".
+
+    With them went items 6 and 7 to n-build and item 7 to the pod session, for their record, and the coordinating
+    session's notes, marked as its own. To n-build: the seat read at `9b71bbb`, and draft 3 already fixes the stale
+    docstring line, so the next draft is draft 3 with §1.2's hash set; the BUILD's texts drafted for draft 3 are its
+    to carry; this commit touches `RESULTS.md` and new raws only; a battery window only while the coordinating
+    session's tree is clean, before it places or after this commit lands; and the BUILD's commit window after this
+    commit; and item 8's push. To the pod session: nothing goes to the box before
+    the coordinating session relays the launch files with "launch cleared"; and item 1's reading of the ends.
+  - **Item 4 (A), relayed verbatim** to n-analyzer: "Nothing; v7 of record; the lock: line and the gate line verbatim
+    at step 13. [as ruled]"
+  - **Item 5 (C), this commit:** "This raw committed by path; close lines on d92500b, 9b71bbb and cd6b30d citing it;
+    §4's classing as written, inert; §3's two dated notes; ledger (88). [as ruled]"
+    - The raw is committed by path here, with one close line on each of the three entries.
+    - **§4's classing** stands as written, inert. Its bullets name the survey's eight, n-build's, the checkers' and
+      the seat's own. They do not name `cd6b30d`'s departures, the coordinating session's and its values-checker's;
+      those stand declared in that entry, for the seat.
+    - **§3's two dated notes,** the seat's on its own texts ("the seat edits no committed raw"):
+      - (a) its second and third sittings routed "G-VER's launch files" and said G-VER "runs without waiting for the
+        seat", for a stage whose command was unbuilt (drv:239; L:997–998). "The coordinating session's reading
+        stands: the run waits for this raw, as G-TIME-n's waited for the second sitting's."
+      - (b) the third sitting dated `.pytest_cache/` to that evening. "The coordinating session's check (`cd6b30d`)
+        stands": the folder has been at the root since 2026-09-06.
+    - **Ledger (88),** the seat's on its own routing (§7): "before the seat routes any step as a launch, it opens
+      `main`'s command list and the driver's "wired at their own steps" sentence for that stage and names the BUILD
+      where the command is absent".
+  - **Item 6 (C):** "Battery windows for the BUILD's self-test and commit at n-build's request; the launch files read
+    whole before the relay; one model run at a time, announced. [grant when asked]" Relayed to n-build for its
+    record.
+  - **Item 7 (C):** "The box emw1e4embiwe9b: up through G-VER and the campaign. [stays up]" Relayed to n-build and the
+    pod session.
+  - **Item 8 (D), the push:** "7d01b02..HEAD — three commits now, this raw's and the BUILD's to follow — behind the
+    screen. [yours; nothing in the range waits]" The bracket gives the push to the coordinating session. It pushes
+    `7d01b02..HEAD`, this commit with it, after the commit's verify and behind the pre-push screen; the BUILD's commit
+    goes in a later push, behind its own screen. The push's C.5 line comes in its next entry. The raw's §5 has "The
+    next push on the PI's word, behind the screen"; item 8 is that word.
+  - **Since `cd6b30d`, the coordinating session's part:**
+    - **`cd6b30d`'s close:** n-build confirmed its two citations for "wired at their own steps", drv:239 and
+      L:997–998, where the sentence wraps; the coordinating session checked L:996–999 by `sed -n`. `cd6b30d`'s entry
+      says only that its two one-line greps found no line, and it stands. **One edit came after that commit's last
+      replay of its edits:** an over-wide line of its entry was rewrapped by the Edit tool after its last sweep's
+      `diff` of the checked drafts against the final texts, before the placement. It was whitespace only: the old and
+      new texts are equal after collapsing spaces and newlines, by tool. So "The edits were checked by tool" did not
+      cover that rewrap. The committed entry has no non-link line over 120 characters.
+    - **G-VER's route:** the PI answered "Build on the PINs" (2026-11-22), the button of the coordinating session's
+      third ask, "Build G-VER on n-build's PINs now, or wait for the seat first?". It went to n-build verbatim with
+      the question as asked and its three other wordings, and the coordinating session's reading, which it also put
+      to the PI: the launch waits for the seat's ruling on the seven, as G-TIME-n's did. That relay is the fenced
+      block of the spec raw's §3 (`d92500b`), equal to it by `cmp`.
+    - **Draft 1's battery window:** the request read whole (`634f7181…be88`, 54 lines); the draft equal to HEAD's
+      driver with its delta applied (`patch`, `cmp`); the overlay's 174 files at HEAD's blob ids but the driver; and
+      the delta read whole. n-build expected 688, and the coordinating session's own count confirmed it, wrongly: the
+      wrapper's "ran to its end" check runs only on a raise. Run 1 ended 687/687, exit 0, stderr empty. As grantor,
+      the coordinating session let it stand with no re-run; both miscounts go in the BUILD's entry.
+    - **The seat block's commit window:** the request read whole (`c5fc801a…ec40`, 56 lines); every input at its
+      sha256; gate v8 equal to v7 but for its usage line, a v8 note and two ids added, by `diff`; the entry read
+      whole, and the block's head, §0, §2
+      and §3; and the spec raw's §3 equal to the relay as sent. Granted for the six steps. `d92500b` was verified by
+      tool (one parent, `cd6b30d`; four paths; every blob its source's; `RESULTS.md` its parent with the entry after
+      line 23, by `cmp`; the message its file; the leak counts 0, but for a checker's quoted search pattern and
+      `local_files_only`) and screened in the coordinating session's own window: every class CLEAR, gitleaks 0.
+    - **The review's seat-facing items:** the BUILD's blind review found one BUG, and five items that change the
+      block's picture. The coordinating session's form call: F3, F4, O3, O5 and B7 go to the seat in a supplement
+      committed ahead of the BUILD, in `4fdcdcc`'s form; the driver's fixes go in the BUILD's entry.
+    - **Draft 2's battery window:** both chains (HEAD's driver and draft 1, each with its delta) equal to the draft;
+      the overlay as before; the delta from draft 1 read whole; and the count by branch, 716 = 634 + 82. Run 2 ended
+      716/716; closed after the check.
+    - **The supplement's commit window:** the request read whole (`734ee38d…b974`, 90 lines), and the entry and the
+      supplement. Held for one fix: the entry's line 35 was 147 characters and no link. Granted on `entry_v3.md`
+      (`2abd7f77…39d9`), whose `diff` changes lines 35–36 alone and whose words differ only in the rewrap's note. F5
+      stays in the supplement as §1.6, on the routing's test. `9b71bbb` was verified by tool and screened: every class
+      CLEAR, gitleaks 0.
+    - **Draft 3's battery window:** both chains equal to the draft; draft 2 to draft 3 by `diff`, lines 5176–5177
+      alone; and the overlay as before. Run 3 ended 716/716, its output byte for byte run 2's; closed after the check.
+    - **The nudge:** the PI's "Nudge now" (2026-11-22), answering "Take the seat's note to the seat now, or wait for
+      G-VER's build commit?". The note named `cd6b30d`, `d92500b` and `9b71bbb` at HEAD `9b71bbb`, both blocks clean
+      at their sha256s; n-build was told.
+  - **Departures, for the seat to class:**
+    - the coordinating session's since `cd6b30d`'s last sweep, from a sweep of its own shell commands by `jq` over
+      its transcript: 65 commands to the sweep that the values-check read, the sweep itself the last of them. No
+      guard marker and no plain campaign name was in their text (a bracketed sweep). Their loops ran over literal
+      lists (file–hash and path–source pairs, file names and suffixes, target paths, hashes, delta paths, leak
+      patterns, and command and line numbers) or lines on stdin (form strings, and the overlays' paths in a loop of
+      shell builtins). No argv held a path with either; the overlays' lines held two paths in the model's
+      marker-named data folder, which went only through files and stdin (`git hash-object --stdin-paths`, `paste`,
+      `join`) and the loop's builtins:
+      - **`cd6b30d`'s own commands** (5), after its last sweep:
+        - the placement: asserts by `git rev-parse` against `git hash-object`; `git diff --cached --name-only` and
+          `git diff --name-only HEAD` with item 3's pathspec; `git diff -U0 HEAD -- .gitignore`; `shasum`, `wc -c`
+          and `wc -l` of the seat's raw; `[ ! -e ]` of the two new raws; placeholder counts by `grep -c`; the widths
+          by `awk`; `tail -n 1` of the entry for its blank end; `sed -n` anchors of `RESULTS.md`; its build in
+          scratch; three `cp` into the repository; and `cmp`;
+        - the staging by path, and the commit;
+        - the gate: `git diff --cached --name-status` with the pathspec; `git rev-parse` of the staged paths against
+          `git hash-object`; `git cat-file blob` of the staged seat's raw into `shasum`; and `git diff --cached` with
+          the pathspec piped to counts;
+        - its verification: `git rev-parse` of the commit and its parent, and `git cat-file -p` of the commit; `git
+          diff --name-status` and `-U0`; `git cat-file blob` of the three raws at the commit into `shasum`, against
+          the sources' sha256s by `shasum`; `git cat-file blob` of `RESULTS.md` at both ends into scratch, rebuilt and
+          compared by `cmp`; `git cat-file commit` against the message file; `git diff` piped to counts; and the
+          tree's state by counts, one by `git ls-files --others` with the narrow path `results/raw` in place of item
+          3's pathspec;
+      - **after it** (3): two appends to its memory folder by `cat >>`, each read back by `tail -n 1`, with a `grep
+        -n -F` of its memory index; and `sed -n '996,999p' LOCK-n.md`;
+      - **G-VER's route** (4): `git ls-files --others` with item 3's pathspec, filtered to `results/raw/`; `jq` over
+        its transcript for its asks, its closing texts, the PI's answer and its earlier relays; `date`; `shasum` and
+        `wc -l` of n-build's two readings; `git diff --name-only ef105f1 HEAD -- valence_core/n/`, a name form with
+        a narrow path in place of item 3's pathspec; and `wc -l` of a memory file;
+      - **the three battery windows and two commit windows** (29):
+        - the requests: `shasum` and `wc -l` of each note in the side-session notes folder, whose path holds a
+          session id; and `jq` over its transcript, twice, for that folder's path;
+        - the drafts: `shasum` of every file sent; `cp` of HEAD's driver and of drafts into scratch, `patch -s -o`
+          there, and `cmp`; `diff` of draft against draft and of gate script against gate script; and `grep -c` of
+          the deltas' hunks and lines;
+        - the overlays (six runs): a `find` pruning `*/ckpt`, `*/reports` and the campaign folder, by a bracketed
+          pattern, its `-prune -print` form first, which printed no folder (six), then its names fed on stdin to `git
+          hash-object --stdin-paths` and joined to the ids by `paste` (six);
+          `git ls-files -s` with item 3's pathspec through `tr`, `sed` and `sort`, with `join` and a `while read` loop
+          (four); `cmp` against an earlier listing (five); and an unpruned `find . -type d -name __pycache__` over
+          the overlay, which holds no ckpt or reports folder by the pruned listing, counted by `wc -l` (five);
+        - the closes: `shasum`, `cat`, `wc -c` and `cmp` of the run files; `ls -A` of n-build's temporary folder,
+          counted; `[ -e data/n/gver ]`; and `git ls-files --others` with the pathspec, counted for "gver";
+        - the commit windows: `cat` and `cut` of the manifests, the paths files, the messages and the gate's new-ids
+          file; non-ASCII counts by `grep -c`; widths by `grep '.\{121,\}'`, with `LC_ALL=en_US.UTF-8` in two
+          commands, `wc -m` in one and `tail -n 1 | wc -c` in two; `diff` of the entry against its rewrap and a
+          word-by-word `diff` through `tr` into scratch; `[ -e ]` and `git ls-files` of the target paths; `jq` over its
+          transcript for the relay that the spec raw's §3 holds, and `sed -n` of that §3 into scratch, compared by
+          `cmp`; `grep -n` over n-build's window note for `7d01b02` and over the block and the spec raw; and `sed -n
+          '20,25p' RESULTS.md`;
+        - `sed -n '541,545p' LOCK-n.md`, and `grep -n` for GV4 in n-build's readings;
+      - **the two verifies** (3): `git rev-parse` and `git rev-list --parents -n 1 HEAD`; `git show --name-status`
+        with the pathspec; `git rev-parse HEAD:<path>` against `git hash-object` of the sources; `git show` of
+        `RESULTS.md` at both ends into scratch, rebuilt by `sed -n` and `cat` and compared by `cmp`; `git cat-file
+        commit` against the message file; `git diff` of the range with the pathspec, its added lines into scratch for
+        counts, with a `grep -n -F` print of the two that matched; and, once, `git grep -n -F` over the four named
+        files at HEAD for those two patterns;
+      - **the two screens** (4), in the coordinating session's own window: `/usr/bin/python3 -I` running `screen4.py`
+        and `gl5.py` (item 4), `gitleaks git` and `jq` over its report, and `git log --format='%h %s'` of the range
+        without the pathspec; before them, `gitleaks version`, `[ -e ]` of the screen folder and `shasum` of the two
+        scripts; and `jq` over its transcript, once, for the screen's earlier command form;
+      - **the nudge** (1): `git log --format='%h %s'` of `7d01b02..HEAD` with the pathspec; `shasum`, and `git
+        hash-object` against `git rev-parse`, of the two blocks; and the tree's state by counts;
+      - **this sitting's,** to the sweep (13):
+        - the seat's raw re-hashed (`shasum`, `wc -c`, `wc -l`) and `git ls-files` of it; the PI's message extracted
+          by `jq` from its transcript into scratch, hashed, with `head` and `tail -c`; and a name-only `ls` of its last
+          notes folder, with `grep -n`, `head` and `tail` of two of its drafts;
+        - a first sweep, by `jq` over its transcript into scratch, with bracketed counts and a view of the commands
+          through `sed` masks; then, by `jq` over that file, the counts of forms in a `while read` loop and a print of
+          three of its commands;
+        - `jq` over its transcript for its other tool uses, the times of its Read and Edit calls on its last notes
+          folder and the memory index, and the late edit to `cd6b30d`'s entry, with that edit's whitespace check
+          through `tr`; `git show cd6b30d:RESULTS.md` into `grep -c -F`, and through `sed -n`, `grep -v -F` and a
+          UTF-8 width count;
+        - `wc -l` and `sed -n` anchors of `RESULTS.md`; the routing raw's build (`cat`, `printf`), its fenced block cut
+          by `sed -n` and compared by `cmp`, with `od -c` of its end; this draft `RESULTS.md`'s build by `sed -n` and
+          `cat`; and widths by a UTF-8 `grep -c`, placeholder counts by `grep -c` and `tail -n 1 | wc -c`;
+        - the checked sweep, with its counts of markers and the plain name and of its other tool uses;
+      - **hash abbreviations by `cut`** (3);
+      - **the user's name in patterns:** the account name, the email's local part, the surname and the email's domain
+        as fixed strings in leak-count `grep -c -F` patterns, in the two verifies, and a two-name alternation in
+        `cd6b30d`'s gate and verify; counts only;
+      - **process reads:** `pgrep -l python` in 14 commands and `pgrep -il python` in two, each printing the
+        campaign's process (PID 8051) alone;
+      - **sizes and counts, none of a file under `data/`:** `wc -c`, `wc -l`, `wc -m`, `wc -w` and `cmp` over named
+        files and command output;
+      - **its command text:** the local roots, with the account name and the two sessions' ids, in most commands (the
+        scratch roots and its transcript's path) and in the `sed` mask patterns of three; the notes folder's id in
+        five; and partial ids as patterns in two (n-build's in a `jq` filter, the notes folder's in a form string);
+      - **writes outside the repository:** its scratch (`cd6b30d`'s `RESULTS.md` build and its verify's blobs, the
+        copies and patched drafts, the overlay listings, the relay and §3 copies, the word lists, the verifies'
+        rebuilds, the two screens' outputs, the routing extract, this commit's routing raw with its fenced-block
+        checks and the draft `RESULTS.md`, and the sweep files, in folders made by `mkdir -p`); and its memory folder;
+      - **its tool output** showed local roots and the account name inside paths, and full session ids (in the
+        notes folder's path, in its messages' delivery results and in `jq` prints of its messages' recipients); none
+        is in any committed text;
+      - **beside the shell,** to the sweep: 18 messages (16 to n-build, 1 to the pod session, 1 to n-analyzer); one
+        notifications read (none queued); two tool-schema loads; six reads of n-build's last events; the Read tool 27
+        times (memory files; its last notes folder's drafts and its copy of the list of record's items; n-build's
+        notes, drafts, deltas, overlay builder and texts; the seat's raw; and its own extracts); the Edit tool 27
+        times (once on `cd6b30d`'s entry draft, above; 20 times on its memory folder; six on this entry's draft); the
+        Write tool six times (this commit's drafts); and the plan and wrap-up calls. None is a departure under the
+        rules quoted; they are listed for completeness;
+      - **after the checked sweep, to the last** (15 commands, the last sweep the last of them). No plain
+        campaign name was in their text; one held the five guard-marker words (below), and the rest none (a bracketed
+        sweep):
+        - a print of the sweep file's last nine commands through `sed` masks; and the draft `RESULTS.md` rebuilt, with
+          its widths, placeholders and hashes;
+        - the values-check's brief: `sed -n` of the list of record's raw into scratch, compared by `cmp` with the last
+          brief's copy; the brief assembled by `sed -n` and `cat`; and **one slip:** a `grep -c -i -E` pattern, written
+          to count unbracketed guard markers in the brief, held the five marker words in plain form, so they stood in
+          that grep's argv and the shell's. It printed 0. Right after it, `pgrep -l python` printed the campaign's
+          process (PID 8051) alone and `pgrep -lf` of a bracketed `caffeinate` pattern printed one process, cut to 12
+          characters; then a bracketed recount over the brief printed 0;
+        - draft 4's battery window and its close, in the form of the three before it: the request re-hashed; `shasum`,
+          `cp`, `patch -s -o`, `cmp` and `diff` of the drafts, and `grep -c` of the deltas; the overlay's two listings,
+          as above; the run files; `ls -A`, `[ -e ]` and `git ls-files --others` counts; and one print of the
+          untracked names holding "gver", the seat's raw alone;
+        - `jq` over the values-checker's task output for its one hand-back, into scratch, with leak counts over the
+          report (the user's name among the fixed strings, counts only), and `cp` of the six checked drafts with their
+          hashes;
+        - the last sweep, by `jq` over its transcript, in two runs. Each filled these counts, assembled the
+          values-check raw (`cat`), checked the drafts (widths by a UTF-8 `grep -c`, placeholders by `grep -c`, and
+          `diff` of each checked draft against its final text) and built the new `RESULTS.md` in scratch. The first
+          found two over-wide lines in this entry; a `grep -n` placed them, and the Edit tool rewrapped them and put
+          these counts' placeholders back;
+        - beside the shell: the Agent call; 4 messages (3 to n-build, 1 to the pod session); 1 read of the pod
+          session's last events; the Read tool 7 times (draft 4's request and delta, a memory file, and this
+          entry's draft); the Edit tool 35 times (this commit's drafts and its memory folder); the Write tool 2
+          times (the values-check's brief and its raw's head); and the plan and wrap-up calls.
+    - the values-checker's, as its report states them:
+      - 77 shell commands, and the Read tool 8 times (the brief, the entry's draft, the seat's raw and the five window
+        notes);
+      - `jq` over the coordinating session's transcript in about 30 commands: records by time; the shell and message
+        inputs in full; the Edit strings; the Read inputs and their results' line counts; the 65 tool results in full;
+        the builder's text from a Read result; the notes in and out (two with ids masked); the asks and their buttons;
+        the notifications read; the delivery results (UUIDs masked); and tool-call counts. Its output showed local
+        roots and the account name in paths, full session ids, an agent id, the pod id, memory file names and the
+        co-author address, none of them in its report;
+      - `jq` over the three sweep files in 17 commands (six with the transcript as well), with full prints of the 65
+        commands, and `jq 'length'` over the two gitleaks reports once;
+      - n-build's scratch files outside the brief's list: `cat` into `cmp` of three, and `git hash-object` of five,
+        printing "ok" lines only;
+      - git forms without item 3's pathspec, each naming one file or one commit: `git status --porcelain --` of the
+        seat's raw; `git rev-parse` of HEAD, of commits and of `<rev>:<path>`; `git hash-object` of named files; `git
+        show <rev>:RESULTS.md` at four commits through `sed -n`, `grep`, `tr` and `cmp`; `git show` of the spec raw
+        at `d92500b` through `sed -n` (2); `git rev-list --parents -n 1` (2); and `git cat-file commit` (2). With
+        the pathspec: `git show --name-status --format=` (2), and `git ls-files -- .` (2, counts only, one by the
+        quoted bracketed pattern; they printed 174 and 2);
+      - content reads by `cat -n`, `sed -n`, `head`, `tail`, `od -c`, `cut`, `grep -n`, `-c` and `-o`, and `diff` (a
+        word diff through `tr` in process substitution): of the drafts and the seat's raw; named lines of `LOCK-n.md`
+        and the driver; ranges of HEAD's `RESULTS.md` and of the committed block; the three deltas' headers and draft
+        1's lines 50–68; the nine run files, the screens' text outputs and the verify folders' added lines (two
+        printed); and the previous sweep's last command, masked;
+      - a name-only `ls` of five scratch folders; sizes and counts by `wc -c`, `wc -l`, `wc -m`, `cmp` and `od -c`,
+        none of a file under `data/`;
+      - command text holding the notes folder's path (a session id) in one command, the scratch roots and the
+        transcript's path in most, full roots in one command's `sed` masks, and eight-hex session-id fragments as
+        patterns in one scan; and the account name and the home path expanded at run time into `grep -c -F` patterns
+        over the six drafts, counts only;
+      - two `>/dev/null` sinks and process substitutions; three errors (an `echo ===` that zsh read as an
+        `=`-expansion, exit 1; one BSD `grep -o` with a repetition count over 255, exit 2; and one count loop ending at
+        exit 1 on a `grep -c` of 0).
+
+      By its account it wrote no file and used no network, no interpreter beyond `shasum` and `jq`, no `ps`, `pgrep`
+      or `stat`, and no whole-tree `git status`. It listed, read, sized or timed nothing under the campaign folder,
+      `data/*/ckpt` or `data/*/reports`, did nothing in the memory folder or the steered cells' folder, and put no
+      marker word in any argv.
+  - **Values-check:** one blind pass by a subagent over this entry's draft, the three close lines, the routing raw,
+    the commit message and their placement in a draft of the new `RESULTS.md`. Its brief quoted the list of record
+    v2's items 1–5 verbatim and allowed no interpreter but `shasum` and `jq` by name, no write and no network. It
+    barred passing any path that holds a marker word as an argument, and any act in the memory folder or the steered
+    cells' folder. The result: 84 items, 67 CONFIRMED, 13 IMPRECISE, 2 FAIL and 2 NOT CHECKABLE, with 11
+    observations.
+    - **The two FAILs,** each fixed in the checker's words: the loops' account (59), since the overlays' lines held
+      two paths in the model's marker-named data folder, through files, stdin and builtins only, and two loops ran
+      over numbers; and `cd6b30d`'s verification's forms (63), its raws compared by `git cat-file blob` into `shasum`
+      and one tree count by a narrow path.
+    - **The 13 IMPRECISE items** (20, 25, 40, 46, 61, 64, 67, 73, 74, 75, 76, 79 and 83) are applied, each in the
+      checker's words or near them. Among them: the relay's order to n-build (25); the question's four wordings
+      (40); gate v8's three hunks (46); a missing class, the local roots and session ids in its command text (76);
+      the close line on `9b71bbb` citing §0 (79); and the recipients of items 6 and 7 in the commit message (83).
+    - **The two NOT CHECKABLE items** (34 and 78) are the push's and the commit's own facts, met at them.
+    - **The 11 observations.**
+      - 2, 3, 4, 5, 6, 7, 9 and 10 are applied: the items' order in the PI's words; item 2's entry and durations;
+        the relay equal to §3's fenced block; "after that commit's last replay of its edits"; the pruned listing's
+        form; the account name in three commands' `sed` masks; the Read tool's classes; and n-build's bullet in the
+        close line on `9b71bbb`.
+      - 1 is met by the gate's re-hash of the seat's raw at the commit.
+      - 8 (the checked sweep's own echo printed 66 for its 65) and 11 (n-build's own departure, for the BUILD's
+        entry) are noted.
+    - **After the check:** the dispositions, the last sweep's sub-bullet, this bullet and the checker's departures;
+      and one fix at the commit's first gate run, which found the user's name in a pattern this entry quoted, now
+      named as a two-name alternation. The edits were checked by tool (`diff` of each checked draft against its final
+      text); no second full pass was made.
+    - Raw:
+      [`2026-11-22_first-sitting-notes_valuescheck.md`](results/raw/2026-11-22_first-sitting-notes_valuescheck.md).
+  - **Committed by path:** the seat's raw, the routing raw, the values-check raw, this entry and the three close
+    lines. The commit-time count of the home-folder prefix over the staged diff is 0. The coordinating session ran
+    nothing on a model. Not pushed at the commit (item 8: the push follows its verify).
+
 - 2026-11-22 — **n — a supplement to the seven starred readings before G-VER's run: GV4's pins corrected and added
   to, GV5's ends as the launch reads them, and clauses added to Q2, Q4 and Q6, from the BUILD's blind review (code →
   design; the n-build session). STOP for the seat's read, in the same sitting as `d92500b`.**
@@ -77,6 +408,18 @@ applied to CLAUDE.md.
     - the values-check raw and this entry.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-VER's BUILD follows.
+  - **Close (PI date 2026-11-22, first sitting), the coordinating session's, item 5: the seat's ruling on this
+    supplement.** The seat's raw,
+    [`2026-11-22_n-gver-starred-seven_design-to-code_answers.md`](results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md)
+    (sha256 `c66cb2f7…650b`), committed by path in the coordinating session's notes on the sitting, on the PI's
+    "PI: route as given".
+    - **The clauses** (§0, §1.2, §1.4, §1.6): cuBLAS's setting by name and through R6, and tokenizers 0.22.2 before
+      G-VER and in the record's check, are accepted. The hash check widens to the instruct entry's eight non-shard
+      files at their manifest sha256s, "so what the tokenizer load may read is moot". F5's three-way reading of the
+      ends is accepted as the launch files' part. A refusal before G-VER is not a G-VER-STOP, but every end but PASS
+      goes to the seat and the PI. A re-run first moves the committed record aside by `git mv`.
+    - **Departures** (§4): n-build's, whose bullet names this entry for the BUILD's to come, and the checkers', each
+      "Inert."
 
 - 2026-11-22 — **n — seven starred readings for the seat before G-VER's run: GV1, GV4, GV6, GV9, GV11, GV13 and GV14
   (code → design; the n-build session). STOP for the seat's read.**
@@ -230,6 +573,15 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-VER's BUILD follows, on
     GV1–GV16 as PINs; its run waits for the seat's answers.
+  - **Close (PI date 2026-11-22, first sitting), the coordinating session's, item 5: the seat's ruling on this
+    block.** The seat's raw,
+    [`2026-11-22_n-gver-starred-seven_design-to-code_answers.md`](results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md)
+    (sha256 `c66cb2f7…650b`), committed by path in the coordinating session's notes on the sitting, on the PI's
+    "PI: route as given".
+    - **The seven** (§1): Q1–Q7 are ruled, each reading standing as built or as Code read it, with GV3's hash set
+      widened by §1.2 and the ends read by §1.4. A refusal before G-VER is not a G-VER-STOP. The unstarred nine
+      stand (§2).
+    - **Departures** (§4): the survey's eight, n-build's and the checkers', each "Inert."
 
 - 2026-11-22 — **The coordinating session's notes on the seat's third sitting of 2026-11-21: G-TIME-n's record read,
   the raw committed here by path; the PI's routing, "PI: route as given"; the PI's cap, 4 h; two close lines (item 6);
@@ -534,6 +886,15 @@ applied to CLAUDE.md.
   - **Committed by path:** the seat's raw, the routing raw, the values-check raw, `.gitignore` (one line added), this
     entry and the two close lines. The commit-time count of the home-folder prefix over the staged diff is 0. The
     coordinating session ran nothing on a model. Not pushed.
+  - **Close (PI date 2026-11-22, first sitting), the coordinating session's, item 5: the seat's read of this
+    entry.** The seat's raw,
+    [`2026-11-22_n-gver-starred-seven_design-to-code_answers.md`](results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md)
+    (sha256 `c66cb2f7…650b`), committed by path in the coordinating session's notes on the sitting, on the PI's
+    "PI: route as given".
+    - **G-VER's route** (§3 (a)): "The coordinating session's reading stands: the run waits for this raw"; the
+      seat's ledger (88).
+    - **`.pytest_cache/`** (§3 (b)): "The coordinating session's check (`cd6b30d`) stands".
+    - **Departures** (§4): its bullets do not name this entry's; they stand declared here, for the seat.
 
 - 2026-11-21 — **n — G-TIME-n's run of record on n's box, from G-TIME-n's BUILD `91f0d35`: COMPLETE, 18 of 18 reads
   and the append benchmark; the projections for the PI's cap at LOCK-n v1.0 (n v0.2 §8 step 11; the seat's answers of
