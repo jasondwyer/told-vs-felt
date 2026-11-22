@@ -343,6 +343,13 @@ __pycache__/
 /data/n/gtime/*
 !/data/n/gtime/gtime.json
 
+# PROPOSAL-n's G-VER of record (n v0.2 §8 step 12 and §3 G-VER; scripts/n_sessions.py gver; GV1, GV9): its record,
+# written on the box by the run of record at PASS and at STOP and copied back by hash. Record, not cache (ledger 27).
+# The atomic write's temporary (gver.json.tmp) stays ignored.
+!/data/n/gver/
+/data/n/gver/*
+!/data/n/gver/gver.json
+
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,
 # G-ID-F3), its stage reports and reads, and its checkpoints travel as JSON (ledger 27), in data/m/'s

@@ -235,8 +235,54 @@ At the n BUILD it wires:
                settings, ``GREAD_BENCH_CALLS`` times at each of the two contrasts' shapes (320 and 80 rows of
                D_MODEL), on synthetic rows; every call's ms, the count (``gread_counts``) and the projection printed;
                nothing written.
+  gver         G-VER of record (n v0.2 §8 step 12; n §3: "Every session's token sequence reconstructed from the record
+               and the rendering of record before any read; mismatch -> STOP"), on the box, under LOCK-n v0.1, on
+               Code's readings GV1-GV16 routed as PINs (the PI's "Build on the PINs", 2026-11-22; the seven starred,
+               GV1, GV4, GV6, GV9, GV11, GV13 and GV14, with the supplement's clauses, ruled by the seat:
+               results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md). ``run_gver``; no weights load and
+               nothing is read, though the provenance before a load makes a CUDA context. In order:
+                 1. refusals: the record (data/n/gver/gver.json) written once; the pod; the cuBLAS setting (rule 2;
+                    R6 holds it too); then a STAGE line;
+                 2. the weights of record, the lock's (the tokenizer is read from their folder); the driver of record
+                    as backend-ext's; LOCK-n.md, HEAD's committed bytes at the lock's sha256;
+                 3. the session set and the ids of record, each loader's failure a refusal (the review's F2);
+                    MANIFEST.json's sha256 printed beside the pin (one of G-VER's own causes, L:543: a mismatch is
+                    G-VER's STOP, not a refusal); the R6 bridge and n's backend identifier, the lock's (the
+                    provenance's cuBLAS setting, libraries, GPU, CUDA and capability among what R6 holds); tokenizers'
+                    version, L §17's (the review's F4); the package and its closure, the lock's (GV4);
+                 4. the eight non-shard files ``GVER_HASHED_FILES`` names (the manifest entry's files less
+                    ``*.safetensors``), hashed in the weights folder, each the model manifest's pin (GV3 as the seat
+                    ruled; a mismatch the respawn protocol's INTEGRITY kind);
+                 5. G-VER: the tokenizer loaded from the weights folder, local files only, to decode only, and
+                    ``verify.verify`` on the committed ids, each timed;
+                 6. the record (``n-gver-v1``, GV9) checked (``check_gver``), written once and checked on disk.
+               Exit 0 on PASS and 2 on G-VER's STOP, each with the record written; 1 on a refusal before G-VER or any
+               other failure, with no record (GV5). No option and no smoke (GV8). Code's readings for G-VER of record,
+               the PINs, in short (as sent in results/raw/2026-11-22_n-gver_spec.md §1, but GV4's pins as built,
+               GV3's hash set as the seat ruled, and GV12's durations marked a lower bound, below):
+                 GV1 step 12 a stage of its own, with its record and its entry "G-VER (n)";
+                 GV2 in the driver alone: valence_core/n/ unchanged, its package and closure LOCK-n v0.1 §18's;
+                 GV3 on the box of record, the instruct folder's tokenizer decoding as the stages' G-VER does, the
+                     folder's eight non-shard files hashed against their pins first (as ruled); no laptop run;
+                 GV4 under LOCK-n v0.1: G-TIME-n's preparation where it binds a run that loads no weights, the
+                     manifest's pin left to G-VER itself (L:543); as built, cuBLAS's setting held (by name and
+                     through R6) and tokenizers' version (L §17), not held numpy's stream known answer; no schema
+                     stage identity;
+                 GV5 verify's own pass rule; the exits above;
+                 GV6 a STOP holds LOCK-n v1.0 until the seat rules; D_n's NOT-RUN cause clock:gate-stopped;
+                 GV7 the campaign keeps its own G-VER before its reads, not of record;
+                 GV8 no smoke;
+                 GV9 the record data/n/gver/gver.json (n-gver-v1), written at PASS and at STOP, committed with the
+                     entry; no stage report;
+                 GV10 the printing: durations, no start or finish stamps;
+                 GV11 v1.0 cites the record (the seat's call);
+                 GV12 the pod time, the record's two durations (a lower bound), beside the cap and outside it;
+                 GV13 a box change re-runs it after the characterization, the BACKEND extension and G-TIME-n;
+                 GV14 the seat's G-VER read before step 13's commit;
+                 GV15 the launch in gtime_v1.sh's form;
+                 GV16 the self-test's model-free cases.
 
-Stages G-VER, the campaign and G-READ-n are wired at their own steps.
+Stages the campaign and G-READ-n are wired at their own steps.
 """
 from __future__ import annotations
 
@@ -413,6 +459,12 @@ def cmd_selftest() -> int:
         except BaseException as e:                      # noqa: BLE001
             chk("driver: G-TIME-n's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
         chk("driver: G-TIME-n's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
+        try:
+            _gver_selftest(chk, tmp / "gver-cmd")
+        except BaseException as e:                      # noqa: BLE001
+            chk("driver: G-VER of record's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
+        chk("driver: G-VER of record's self-test leaves the environment as it found it", dict(os.environ) == env0,
+            "")
     try:
         hftiny.run(chk)
     except BaseException as e:                          # noqa: BLE001
@@ -5071,6 +5123,958 @@ def _gtime_selftest(chk, tmp: Path) -> None:
     chk("gread-bench: refused on a pod (GT10: the laptop's CPU)", r_gb[0] and "refused on a pod" in r_gb[1], r_gb)
 
 
+# --- G-VER of record (n v0.2 §8 step 12; Code's readings GV1-GV16, routed as PINs: the PI's "Build on the PINs") --
+
+GVER_STAGE = "G-VER (n)"                        # GV1: the step's entry (n:161) and the analyzer's gate stage
+GVER_OUT = REPO / "data" / "n" / "gver"
+GVER_RECORD = "gver.json"
+GVER_SCHEMA = "n-gver-v1"
+GVER_KEYS = ("schema", "status", "verify", "manifest", "hashed_files", "pins", "environment", "durations_ms")
+GVER_VERIFY_KEYS = ("sessions", "ids_ok", "spans_ok", "n4_ok", "labels_kept", "labels_ok", "manifest_ok", "status",
+                    "first_problems")             # verify.verify's report, as returned
+GVER_PIN_KEYS = ("lock_sha256", "package_sha256", "imported_sha256", "backend_identifier",
+                 "characterization_identifier", "pod_id", "weights_sha256", "driver_sha256")
+GVER_ENV_KEYS = ("python", "tokenizers", "torch", "transformers", "accelerate", "safetensors", "huggingface_hub",
+                 "numpy")                         # Python, tokenizers' version, and the provenance's six libraries
+#: GV12, in ms: the tokenizer's load, and the decode, which is verify.verify's whole run (the decode and its checks).
+#: Both are a lower bound of the pod time: the imports, the CUDA context and the checks before G-VER are outside them.
+GVER_DURATION_KEYS = ("tokenizer_load", "decode")
+LOCK_TOKENIZERS = "0.22.2"                      # L §17: the environment of n's runs on the box (the review's F4)
+#: GV3 as the seat ruled (results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md §1.2): every file of
+#: the weights folder that is not a shard -- the model manifest entry's files less ``*.safetensors``, these eight --
+#: hashed against its pin before the decode; the shards stay at byte counts (``check_weights_folder``; their re-hash
+#: is respawn step (i)).
+GVER_HASHED_FILES = ("config.json", "generation_config.json", "merges.txt", "model.safetensors.index.json",
+                     "special_tokens_map.json", "tokenizer.json", "tokenizer_config.json", "vocab.json")
+
+
+def gver_hashed_pins(manifest=None) -> dict:
+    """GV3: the model manifest entry's sha256 for each of ``GVER_HASHED_FILES``, which must be exactly the entry's
+    files less ``*.safetensors``; refused otherwise. Returns {name: sha256}."""
+    from valence_core.n import ids
+    files = json.loads(Path(ids.OLMO_MANIFEST if manifest is None else manifest).read_text(encoding="utf-8"))[
+        ids.MANIFEST_ENTRY]["files"]
+    if tuple(sorted(name for name in files if not name.endswith(".safetensors"))) != GVER_HASHED_FILES:
+        raise SystemExit("the model manifest's entry does not hold exactly the eight non-shard files GV3 hashes")
+    return {name: files[name]["sha256"] for name in GVER_HASHED_FILES}
+
+
+def gver_lock_check(committed, lock_path=LOCK_PATH) -> str:
+    """GV4: LOCK-n.md is HEAD's committed bytes at LOCK-n v0.1's sha256; that sha256 is returned."""
+    import hashlib
+    lp = Path(lock_path)
+    lb = lp.read_bytes() if lp.is_file() else None
+    if lb is None or committed(lp) != lb or hashlib.sha256(lb).hexdigest() != LOCK_SHA256:
+        raise SystemExit("LOCK-n.md is absent, not HEAD's committed bytes, or not LOCK-n v0.1's (GV4)")
+    return LOCK_SHA256
+
+
+def gver_hashed_files(folder, pins) -> dict:
+    """GV3: the eight non-shard files ``GVER_HASHED_FILES`` names, hashed in the weights folder before the decode;
+    each must be a regular file at its pin (the model manifest's, ``gver_hashed_pins``). Refused otherwise, naming
+    the file and no digest; a mismatch is the respawn protocol's INTEGRITY kind (the seat's §1.4). Returns
+    {name: sha256}."""
+    import hashlib
+    d = Path(folder)
+    got = {}
+    for name in GVER_HASHED_FILES:
+        p = d / name
+        if p.is_symlink() or not p.is_file():
+            raise SystemExit(f"the weights folder's {name} is not a regular file (GV3)")
+        got[name] = hashlib.sha256(p.read_bytes()).hexdigest()
+    bad = [name for name in GVER_HASHED_FILES if got[name] != dict(pins).get(name)]
+    if bad:
+        raise SystemExit(f"the weights folder's files {bad} are not at the model manifest's pins (GV3; an INTEGRITY "
+                         f"incident under the respawn protocol: stop, touch nothing, escalate)")
+    return got
+
+
+def gver_environment(provenance: dict, tokenizers: str) -> dict:
+    """GV9: the versions the decode runs under -- Python, the provenance's six libraries, and tokenizers', which GV4
+    holds to L §17's ``LOCK_TOKENIZERS`` before G-VER and in ``check_gver`` (the review's F4)."""
+    out = {"python": str(provenance["python"]), "tokenizers": str(tokenizers)}
+    out.update({str(k): str(v) for k, v in provenance["library_versions"].items()})
+    return out
+
+
+def _gver_pass_holds(v: dict, m: dict) -> bool:
+    """``verify``'s pass rule as its report and the manifest block can show it (verify.py:140-141): the manifest
+    named as of record and at the pin, every session's ids, spans and N4 sequences, a kept candidate, every kept
+    candidate's labels, and no problem."""
+    from valence_core.n import schema
+    n = v["sessions"]
+    return (v["manifest_ok"] is True and m["equal"] is True and n == schema.N_SESSIONS
+            and v["ids_ok"] == v["spans_ok"] == v["n4_ok"] == n and v["labels_kept"] > 0
+            and v["labels_ok"] == v["labels_kept"] and v["first_problems"] == [])
+
+
+def check_gver(rec, hashed_pins=None) -> None:
+    """The record's form (Code's, ``n-gver-v1``; GV9): its keys; ``verify``'s report with its nine keys, its counts
+    and its first problems (at most five, each at most 200 characters, every bracket masked as ``verify`` masks it,
+    so no token id); the status ``verify``'s, a PASS exactly when the pass rule holds on the report; the manifest's
+    sha256, the pin and their equality; the eight non-shard files at their pins (by default the model manifest's); the
+    lock's pins; the environment's versions; the two durations. SystemExit naming the field, never a value."""
+    try:
+        _check_gver(rec, hashed_pins)
+    except (KeyError, TypeError, AttributeError, ValueError, IndexError):
+        raise SystemExit("the G-VER record is malformed at its form")
+
+
+def _check_gver(rec, hashed_pins) -> None:
+    import re
+
+    from valence_core.n import ids
+
+    def bad(where: str):
+        raise SystemExit(f"the G-VER record is malformed at {where}")
+
+    def hex64(x) -> bool:
+        return isinstance(x, str) and len(x) == 64 and all(ch in "0123456789abcdef" for ch in x)
+
+    def count(x) -> bool:
+        return isinstance(x, int) and not isinstance(x, bool) and x >= 0
+    if not isinstance(rec, dict) or tuple(sorted(rec)) != tuple(sorted(GVER_KEYS)):
+        bad("its keys")
+    if rec["schema"] != GVER_SCHEMA:
+        bad("schema")
+    v = rec["verify"]
+    if (not isinstance(v, dict) or tuple(sorted(v)) != tuple(sorted(GVER_VERIFY_KEYS))
+            or not all(count(v[k]) for k in ("sessions", "ids_ok", "spans_ok", "n4_ok", "labels_kept", "labels_ok"))
+            or not isinstance(v["manifest_ok"], bool) or v["status"] not in ("PASS", "STOP")):
+        bad("verify")
+    fp = v["first_problems"]
+    if not isinstance(fp, list) or len(fp) > 5 or not all(
+            isinstance(x, str) and len(x) <= 200 and all(b == "[..]" for b in re.findall(r"\[[^\]]*\]", x))
+            for x in fp):
+        bad("verify.first_problems")
+    m = rec["manifest"]
+    if (not isinstance(m, dict) or tuple(sorted(m)) != ("equal", "pin", "sha256") or not hex64(m["sha256"])
+            or m["pin"] != ids.MANIFEST_OF_RECORD or m["equal"] is not (m["sha256"] == m["pin"])):
+        bad("manifest")
+    if rec["status"] != v["status"] or (rec["status"] == "PASS") != _gver_pass_holds(v, m):
+        bad("status")
+    pins_t = dict(gver_hashed_pins()) if hashed_pins is None else dict(hashed_pins)
+    tf = rec["hashed_files"]
+    if (not isinstance(tf, dict) or tuple(sorted(tf)) != tuple(sorted(GVER_HASHED_FILES))
+            or any(not hex64(tf[k]) or tf[k] != pins_t.get(k) for k in GVER_HASHED_FILES)):
+        bad("hashed_files")
+    p = rec["pins"]
+    if (not isinstance(p, dict) or tuple(sorted(p)) != tuple(sorted(GVER_PIN_KEYS))
+            or p["lock_sha256"] != LOCK_SHA256 or p["package_sha256"] != LOCK_PACKAGE_SHA256
+            or p["imported_sha256"] != LOCK_CLOSURE or p["backend_identifier"] != LOCK_BACKEND_IDENTIFIER
+            or p["characterization_identifier"] != CHARACTERIZED_IDENTIFIER or p["pod_id"] != CHARACTERIZED_POD
+            or p["weights_sha256"] != LOCK_WEIGHTS_SHA256 or not hex64(p["driver_sha256"])):
+        bad("pins")
+    e = rec["environment"]
+    if (not isinstance(e, dict) or tuple(sorted(e)) != tuple(sorted(GVER_ENV_KEYS))
+            or not all(isinstance(x, str) and x for x in e.values()) or e["tokenizers"] != LOCK_TOKENIZERS):
+        bad("environment")
+    d = rec["durations_ms"]
+    if not isinstance(d, dict) or tuple(sorted(d)) != tuple(sorted(GVER_DURATION_KEYS)) or not all(
+            count(x) for x in d.values()):
+        bad("durations_ms")
+
+
+def gver_record(*, rep: dict, manifest_sha256: str, hashed_files: dict, pins: dict, environment: dict,
+                durations_ms: dict, hashed_pins=None) -> dict:
+    """G-VER of record's record (``n-gver-v1``; GV9), checked before return: ``verify``'s report as returned, its
+    status, the manifest block, the eight non-shard files' sha256s, the lock's pins as held, the versions, the two
+    durations. No token id (``verify``'s report holds none) and no stamp (GV10)."""
+    from valence_core.n import ids
+    rec = {"schema": GVER_SCHEMA, "status": rep.get("status") if isinstance(rep, dict) else None,
+           "verify": rep, "manifest": {"sha256": manifest_sha256, "pin": ids.MANIFEST_OF_RECORD,
+                                       "equal": manifest_sha256 == ids.MANIFEST_OF_RECORD},
+           "hashed_files": dict(hashed_files), "pins": dict(pins), "environment": dict(environment),
+           "durations_ms": dict(durations_ms)}
+    check_gver(rec, hashed_pins)
+    return rec
+
+
+def gver_write(path, rec, *, hashed_pins=None) -> str:
+    """GV9: the record written once (``m_resume.atomic_write_json``), then read back: its bytes ``json_text``'s, the
+    record it holds the one written, its form checked again. The write is inside the cleanup (the review's F1): on any
+    failure from the write on -- the directory's fsync after the replace among them -- the file is removed, so a
+    failed record never stands, and an OSError ends as SystemExit naming it. Returns the file's sha256."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    p = Path(path)
+    if p.exists():
+        raise SystemExit(f"{_shown(p)} exists: G-VER of record writes its record once")
+    check_gver(rec, hashed_pins)
+    want = m_resume.json_text(rec).encode("utf-8")
+    p.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        try:
+            m_resume.atomic_write_json(p, rec)
+            got = p.read_bytes()
+        except OSError as ex:
+            raise SystemExit(f"the record's write or its read-back failed ({type(ex).__name__})")
+        if got != want:
+            raise SystemExit("the record on disk is not the bytes written")
+        try:
+            back = json.loads(got.decode("utf-8"))
+        except (ValueError, UnicodeDecodeError):
+            raise SystemExit("the record on disk does not parse")
+        if back != rec:
+            raise SystemExit("the record read back is not the record written")
+        check_gver(back, hashed_pins)
+    except BaseException:
+        p.unlink(missing_ok=True)
+        raise
+    return hashlib.sha256(got).hexdigest()
+
+
+@dataclass
+class GverEnv:
+    """G-VER of record's seams: ``production_gver_env`` is the box's; the self-test puts doubles behind them."""
+    weights: Callable                   # () -> the weights of record (``weights_of_record``)
+    load_sessions: Callable             # () -> the session set
+    load_ids: Callable                  # () -> ``ids.load()``
+    committed: Callable                 # (path) -> HEAD's committed bytes of a repository path, or None
+    env_provenance: Callable            # (path) -> the provenance the adapter would report (no model loads)
+    package: Callable                   # () -> (package_sha256, closure), measured in this process
+    hashed_pins: Callable               # () -> the model manifest's sha256s of the eight non-shard files (GV3)
+    load_tokenizer: Callable            # (path) -> the tokenizer, local files only, to decode only (GV3)
+    verify: Callable                    # (sessions, loaded, decode) -> ``verify.verify``'s report
+    tokenizers_version: Callable        # () -> the tokenizers library's version
+    pod: Callable                       # () -> the pod id or None
+    driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path | None)
+    lock_path: Path = LOCK_PATH
+    out: Path = GVER_OUT
+    printer: Callable = print
+    clock: Callable = time.perf_counter
+
+
+def _gver_load_tokenizer(path):
+    from transformers import AutoTokenizer
+    return AutoTokenizer.from_pretrained(str(path), local_files_only=True)      # to decode only (ADDENDUM-n1 §1.1)
+
+
+def _gver_verify(ss, loaded, decode) -> dict:
+    from valence_core.n import keys, verify
+    return verify.verify(ss, loaded, decode, keys.n4_schedule([s.present_first_is_S for s in ss]))
+
+
+def _tokenizers_version() -> str:
+    from importlib.metadata import PackageNotFoundError, version
+    try:
+        return version("tokenizers")
+    except PackageNotFoundError:
+        return "absent"
+
+
+def production_gver_env() -> GverEnv:
+    from valence_core.m import resume as m_resume
+    from valence_core.n import ids, sessions
+    return GverEnv(weights=weights_of_record, load_sessions=sessions.load_sessions, load_ids=ids.load,
+                   committed=committed_bytes, env_provenance=environment_provenance, package=_package_closure,
+                   hashed_pins=gver_hashed_pins, load_tokenizer=_gver_load_tokenizer,
+                   verify=_gver_verify, tokenizers_version=_tokenizers_version, pod=m_resume.pod_id,
+                   driver=driver_bytes)
+
+
+def _gver_loaded(what: str, fn):
+    """A loader's own failure -- the session set's ValueError, ids.load's missing file, bad JSON or missing key -- as a
+    refusal before G-VER, naming the loader and the exception's kind (the review's F2); its SystemExit passes as it
+    is."""
+    try:
+        return fn()
+    except SystemExit:
+        raise
+    except (ValueError, KeyError, OSError, TypeError) as ex:
+        raise SystemExit(f"{what}: {type(ex).__name__}: {ex}"[:300])
+
+
+def _gver_prepare(env: GverEnv) -> dict:
+    """Everything before G-VER (GV3, GV4), in order; a refusal raises SystemExit with its reason."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import guard, ids
+    say = env.printer
+    rec_p = guard.refuse_out(Path(env.out)) / GVER_RECORD
+    if rec_p.exists():
+        raise SystemExit(f"{_shown(rec_p)} exists: G-VER of record writes its record once")
+    pod = env.pod()
+    if pod is None:
+        raise SystemExit("an n stage refuses to start without $RUNPOD_POD_ID (m's resume.pod_id)")
+    if pod != CHARACTERIZED_POD:
+        raise SystemExit(f"this pod is not the characterized one ({CHARACTERIZED_POD}, the BACKEND entry d5d08fa): "
+                         f"respawn step (ii) first")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != CHARACTERIZED_PROVENANCE["cublas_workspace_config"]:
+        raise SystemExit("CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2; R6 holds it too)")
+    say(f"STAGE {GVER_STAGE}: n v0.2 §8 step 12, under LOCK-n v0.1 {LOCK_SHA256}; the record {_shown(rec_p)}; no "
+        f"weights load and nothing is read; no smoke (GV8)")
+    w = env.weights()
+    say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
+        f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
+    if w["sha256"] != LOCK_WEIGHTS_SHA256:
+        raise SystemExit("the weights of record are not the lock's (L §17)")
+    drv, head = env.driver()
+    dsha = hashlib.sha256(drv).hexdigest()
+    if drv != head:
+        raise SystemExit("a run of record runs only the committed driver: scripts/n_sessions.py is not HEAD's "
+                         "committed bytes (the box answers of 2026-11-18, §2 item 5)")
+    say(f"DRIVER scripts/n_sessions.py {dsha}: HEAD's committed bytes")
+    lock = gver_lock_check(env.committed, env.lock_path)
+    say(f"LOCK-n.md {lock}: HEAD's committed bytes, LOCK-n v0.1's (GV4)")
+    ss = _gver_loaded("the session set (sessions.load_sessions)", env.load_sessions)
+    loaded = _gver_loaded("the ids of record (ids.load)", env.load_ids)
+    msha = loaded["manifest_sha256"]
+    say(f"the ids of record: {len(ss)} sessions; MANIFEST.json {msha}, the pin {ids.MANIFEST_OF_RECORD}: "
+        + ("equal" if msha == ids.MANIFEST_OF_RECORD else "not equal, one of G-VER's causes (L:543)"))
+    pre = env.env_provenance(w["path"])
+    if bridge_identifier(pre) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit(f"the environment's provenance under the default window hashes to {bridge_identifier(pre)}, "
+                         f"not the characterization's {CHARACTERIZED_IDENTIFIER} (R6)")
+    bid = m_resume.backend_identifier(pre)
+    if bid != LOCK_BACKEND_IDENTIFIER:
+        raise SystemExit(f"n's backend identifier {bid} is not the lock's {LOCK_BACKEND_IDENTIFIER} (L §17)")
+    environment = gver_environment(pre, env.tokenizers_version())
+    if environment["tokenizers"] != LOCK_TOKENIZERS:
+        raise SystemExit(f"tokenizers {environment['tokenizers']} is not the lock's {LOCK_TOKENIZERS} (L §17)")
+    say(f"backend (no model loads; the decode runs under these libraries): n's identifier {bid}, the lock's (L §17); "
+        f"the characterization's {CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {pod}; python "
+        f"{environment['python']}, transformers {environment['transformers']}, tokenizers {environment['tokenizers']}, "
+        f"the lock's (L §17)")
+    pkg, clo = env.package()
+    if pkg != LOCK_PACKAGE_SHA256 or clo != LOCK_CLOSURE:
+        diff = sorted(k for k in set(clo) | set(LOCK_CLOSURE) if clo.get(k) != LOCK_CLOSURE.get(k))
+        raise SystemExit(f"the package or its closure is not the lock's (L §18; GV2): package "
+                         f"{'the lock' if pkg == LOCK_PACKAGE_SHA256 else pkg}'s, closure files differing {diff}")
+    say(f"package valence_core/n {pkg} and its closure of {len(clo)} files: the lock's (L §18; GV2)")
+    tpins = dict(env.hashed_pins())
+    tshas = gver_hashed_files(w["path"], tpins)
+    for name in GVER_HASHED_FILES:
+        say(f"hashed file {name} {tshas[name]}: the model manifest's pin (GV3)")
+    pins = {"lock_sha256": lock, "package_sha256": pkg, "imported_sha256": dict(clo), "backend_identifier": bid,
+            "characterization_identifier": CHARACTERIZED_IDENTIFIER, "pod_id": pod, "weights_sha256": w["sha256"],
+            "driver_sha256": dsha}
+    return {"record": rec_p, "path": w["path"], "sessions": ss, "loaded": loaded, "manifest_sha256": msha,
+            "hashed_files": tshas, "hashed_pins": tpins, "pins": pins, "environment": environment}
+
+
+def run_gver(env: GverEnv) -> int:
+    """G-VER of record (n v0.2 §8 step 12; GV1-GV16), in order: the record's path, written once; the pod; the cuBLAS
+    setting; the weights and the driver of record; LOCK-n.md; the session set and the ids of record, MANIFEST.json's
+    sha256 printed beside the pin; the R6 bridge and n's backend identifier; tokenizers' version; the package and its
+    closure; the eight non-shard files' hashes (GV3); then G-VER -- the tokenizer loaded from the weights folder, local
+    files only, to decode only, and ``verify.verify`` on the committed ids, each timed -- and the record, checked,
+    written once and checked on disk.
+    Exit 0 on PASS and 2 on G-VER's STOP, each with the record written; 1 on a refusal before G-VER or any other
+    failure, with no record (GV5)."""
+    say = env.printer
+    try:
+        ctx = _gver_prepare(env)
+    except SystemExit as e:
+        if isinstance(e.code, str):
+            say(f"REFUSED before G-VER: {e.code}")
+            say(f"{GVER_STAGE}: not run, and no record (exit 1; GV5)")
+            return 1
+        raise
+    t0 = env.clock()
+    tok = env.load_tokenizer(ctx["path"])
+    t1 = env.clock()
+    rep = env.verify(ctx["sessions"], ctx["loaded"], _decoder(tok))
+    t2 = env.clock()
+    durations = {"tokenizer_load": max(0, int(round((t1 - t0) * 1000))),
+                 "decode": max(0, int(round((t2 - t1) * 1000)))}
+    say("G-VER (n §8 step 12, of record; verify.verify on the committed ids):")
+    say(json.dumps(rep, sort_keys=True))
+    rec_p = ctx["record"]
+    try:
+        rec = gver_record(rep=rep, manifest_sha256=ctx["manifest_sha256"], hashed_files=ctx["hashed_files"],
+                          pins=ctx["pins"], environment=ctx["environment"], durations_ms=durations,
+                          hashed_pins=ctx["hashed_pins"])
+        sha = gver_write(rec_p, rec, hashed_pins=ctx["hashed_pins"])
+    except SystemExit as e:
+        if isinstance(e.code, str):
+            say(f"FAILED at the record: {e.code}; this run wrote no record")
+            say(f"{GVER_STAGE}: no record (exit 1; GV5)")
+            return 1
+        raise
+    say(f"durations (GV12; a lower bound of the pod time, beside the cap and outside it): the tokenizer's load "
+        f"{durations['tokenizer_load']} ms, the decode (verify.verify's whole run) {durations['decode']} ms")
+    say(f"record {_shown(rec_p)} sha256 {sha}")
+    if rec["status"] == "PASS":
+        say(f"{GVER_STAGE} PASS: the record is written")
+        return 0
+    say(f"{GVER_STAGE} STOP: the record is written; a STOP for the seat, never a pause and never an exclusion: no read "
+        f"is launched and the campaign does not start (L:543)")
+    return 2
+
+
+def cmd_gver() -> int:
+    return run_gver(production_gver_env())
+
+
+def _gver_selftest(chk, tmp: Path) -> None:
+    """G-VER of record's checks, model-free (GV16): the record's path, schema and stage; LOCK-n.md held to the
+    committed file; the eight non-shard files' hashes and their refusals; the environment's versions; the record and its
+    check, each field tampered; its writing, once, and a write that does not read back; the command's flow over
+    doubles behind every seam -- PASS (exit 0) and STOP (exit 2), each with the record, a manifest off its pin as
+    G-VER's own STOP, every refusal before G-VER (exit 1, no record, no tokenizer loaded), a record that fails its
+    check or its read-back (exit 1, none left) -- and main()'s options behind the traps."""
+    import contextlib
+    import copy
+    import hashlib
+    import io
+    import re
+    import types
+
+    import valence_core.n.verify as verify_mod
+    from valence_core.m import resume as m_resume
+    from valence_core.n import ids, keys, schema, sessions, testing
+    tmp = Path(tmp)
+    tmp.mkdir(parents=True, exist_ok=True)
+
+    def refused(fn) -> tuple:                           # (refused, its text); any other raise is not a refusal
+        try:
+            fn()
+        except SystemExit as e:
+            return True, str(e)
+        except BaseException as e:                      # noqa: BLE001
+            return False, f"{type(e).__name__}: {e}"[:200]
+        return False, "no refusal"
+
+    def work(p):                                        # the overlay is HEAD's archive: its bytes are the committed
+        return Path(p).read_bytes() if Path(p).is_file() else None
+
+    chk("gver: the record is data/n/gver/gver.json, schema n-gver-v1, of the stage G-VER (n), n:161's entry (GV1, GV9)",
+        GVER_OUT == REPO / "data" / "n" / "gver" and GVER_RECORD == "gver.json" and GVER_SCHEMA == "n-gver-v1"
+        and GVER_STAGE == "G-VER (n)", "")
+
+    # LOCK-n.md (GV4)
+    chk("gver: LOCK-n.md is HEAD's committed bytes at LOCK-n v0.1's sha256 (GV4)", gver_lock_check(work) == LOCK_SHA256,
+        "")
+    lock_bad = tmp / "LOCK-n.md"
+    lock_bad.write_bytes(LOCK_PATH.read_bytes() + b"\n")
+    r_l = [refused(lambda: gver_lock_check(work, lock_bad)), refused(lambda: gver_lock_check(lambda p: None)),
+           refused(lambda: gver_lock_check(work, tmp / "no-lock.md"))]
+    chk("gver: ...a lock file that is not LOCK-n v0.1's, one git cannot show, and none at all are each refused",
+        all(r[0] and "not HEAD's committed bytes, or not LOCK-n v0.1's (GV4)" in r[1] for r in r_l), r_l)
+
+    # the eight non-shard files (GV3, as the seat ruled)
+    tw = tmp / "toy-weights"
+    tw.mkdir()
+    toy = {name: f"toy {name}\n".encode("utf-8") for name in GVER_HASHED_FILES}
+    for name, b in toy.items():
+        (tw / name).write_bytes(b)
+    (tw / "model-00001-of-00014.safetensors").write_bytes(b"toy shard\n")
+    tpins = {name: hashlib.sha256(b).hexdigest() for name, b in toy.items()}
+    got_t = gver_hashed_files(tw, tpins)
+    chk("gver: the eight non-shard files (GV3, as the seat ruled), each hashed in the weights folder at its pin; a "
+        "shard in the folder is not hashed",
+        got_t == tpins and tuple(sorted(got_t)) == GVER_HASHED_FILES and len(got_t) == 8, sorted(got_t))
+    mpins = gver_hashed_pins()
+    entry = json.loads(ids.OLMO_MANIFEST.read_text(encoding="utf-8"))[ids.MANIFEST_ENTRY]["files"]
+    lock_text = LOCK_PATH.read_text(encoding="utf-8")
+    chk("gver: ...the production pins are the model manifest entry's (gver_hashed_pins): its files less "
+        "*.safetensors, the eight, each at the entry's sha256; the three tokenizer files' pins those LOCK-n v0.1 lists "
+        "(L §1)",
+        tuple(sorted(mpins)) == GVER_HASHED_FILES
+        and tuple(sorted(n for n in entry if not n.endswith(".safetensors"))) == GVER_HASHED_FILES
+        and all(re.fullmatch(r"[0-9a-f]{64}", v) and v == entry[k]["sha256"] for k, v in mpins.items())
+        and all(mpins[k] in lock_text for k in ids.TOKENIZER_FILES), sorted(mpins))
+    man_x = tmp / "manifest-ninth.json"
+    man_x.write_text(json.dumps({ids.MANIFEST_ENTRY: {"files": dict(entry, **{"extra.txt": {"sha256": "0" * 64}})}}),
+                     encoding="utf-8")
+    man_m = tmp / "manifest-seventh.json"
+    man_m.write_text(json.dumps({ids.MANIFEST_ENTRY: {"files": {k: v for k, v in entry.items() if k != "vocab.json"}}}),
+                     encoding="utf-8")
+    r_m = [refused(lambda: gver_hashed_pins(man_x)), refused(lambda: gver_hashed_pins(man_m))]
+    chk("gver: ...a manifest entry with a ninth non-shard file, and one without vocab.json, are each refused",
+        all(r[0] and "does not hold exactly the eight non-shard files" in r[1] for r in r_m), r_m)
+    off = dict(tpins, **{"tokenizer.json": "0" * 64})
+    tw2 = tmp / "toy-weights-missing"
+    tw2.mkdir()
+    for name in GVER_HASHED_FILES[:-1]:
+        (tw2 / name).write_bytes(toy[name])
+    tw3 = tmp / "toy-weights-link"
+    tw3.mkdir()
+    linked = True
+    for name in GVER_HASHED_FILES:
+        if name == "tokenizer.json":
+            try:
+                (tw3 / name).symlink_to(tw / name)
+            except OSError:                             # a filesystem that refuses symlinks (the review's B2)
+                linked = False
+        else:
+            (tw3 / name).write_bytes(toy[name])
+    r_t = [refused(lambda: gver_hashed_files(tw, off)), refused(lambda: gver_hashed_files(tw2, tpins)),
+           refused(lambda: gver_hashed_files(tw3, tpins))]
+    chk("gver: ...a file off its pin (named an INTEGRITY incident), a file missing and a file that is a symlink "
+        "(where this filesystem makes one; else that file is missing) are each refused, naming the file and no digest",
+        r_t[0][0] and "['tokenizer.json'] are not at the model manifest's pins" in r_t[0][1]
+        and "an INTEGRITY incident" in r_t[0][1]
+        and r_t[1][0] and "vocab.json is not a regular file" in r_t[1][1]
+        and r_t[2][0] and "tokenizer.json is not a regular file" in r_t[2][1]
+        and not any(re.search(r"[0-9a-f]{64}", r[1]) for r in r_t), (linked, r_t))
+
+    # the environment's versions (GV9)
+    envv = gver_environment(CHARACTERIZED_PROVENANCE, "0.22.2")
+    chk("gver: the environment's versions (GV9): Python, tokenizers' and the provenance's six libraries; on the "
+        "characterization's provenance python 3.12.3, torch 2.8.0+cu128 and transformers 5.15.0 (L §17)",
+        tuple(sorted(envv)) == tuple(sorted(GVER_ENV_KEYS)) and envv["python"] == "3.12.3"
+        and envv["torch"] == "2.8.0+cu128" and envv["transformers"] == "5.15.0" and envv["tokenizers"] == "0.22.2",
+        envv)
+
+    # the record and its check (GV9)
+    pins_t = {"lock_sha256": LOCK_SHA256, "package_sha256": LOCK_PACKAGE_SHA256, "imported_sha256": dict(LOCK_CLOSURE),
+              "backend_identifier": LOCK_BACKEND_IDENTIFIER, "characterization_identifier": CHARACTERIZED_IDENTIFIER,
+              "pod_id": CHARACTERIZED_POD, "weights_sha256": LOCK_WEIGHTS_SHA256, "driver_sha256": "d" * 64}
+    rep_pass = {"sessions": 160, "ids_ok": 160, "spans_ok": 160, "n4_ok": 160, "labels_kept": 1, "labels_ok": 1,
+                "manifest_ok": True, "status": "PASS", "first_problems": []}
+    rep_stop = dict(rep_pass, ids_ok=159, spans_ok=159, n4_ok=159, status="STOP",
+                    first_problems=["s=3 ids: n-003: committed ids are not BK's [..]"])
+    rep_pin = dict(rep_pass, status="STOP", first_problems=[
+        "MANIFEST.json's sha256 is not the pin (by default the committed render's, ids.MANIFEST_OF_RECORD; "
+        "ADDENDUM-n1 §1.5)"])
+
+    def rec_of(rep, msha=ids.MANIFEST_OF_RECORD):
+        return gver_record(rep=copy.deepcopy(rep), manifest_sha256=msha, hashed_files=dict(tpins),
+                           pins=copy.deepcopy(pins_t), environment=dict(envv),
+                           durations_ms={"tokenizer_load": 1, "decode": 2}, hashed_pins=tpins)
+    rec_p, rec_s, rec_m = rec_of(rep_pass), rec_of(rep_stop), rec_of(rep_pin, msha="0" * 64)
+    chk("gver: the record (GV9): a PASS and a STOP each pass the check, the status verify's and the report as "
+        "returned; a manifest off its pin makes a STOP record with its equality false (L:543)",
+        rec_p["status"] == "PASS" and rec_p["verify"] == rep_pass and rec_s["status"] == "STOP"
+        and rec_p["manifest"] == {"sha256": ids.MANIFEST_OF_RECORD, "pin": ids.MANIFEST_OF_RECORD, "equal": True}
+        and rec_m["status"] == "STOP" and rec_m["manifest"]["equal"] is False
+        and tuple(sorted(rec_p)) == tuple(sorted(GVER_KEYS)), "")
+    r_def = refused(lambda: check_gver(rec_p))
+    chk("gver: ...by default the record's hashed files are held to the model manifest's pins",
+        r_def[0] and r_def[1].endswith("malformed at hashed_files"), r_def)
+    for tamper, where in (
+            (lambda r: r.update(extra=1), "its keys"),
+            (lambda r: r.update(schema="n-gver-v0"), "schema"),
+            (lambda r: r["verify"].pop("labels_ok"), "verify"),
+            (lambda r: r["verify"].update(ids_ok=-1), "verify"),
+            (lambda r: r["verify"].update(ids_ok=True), "verify"),
+            (lambda r: r["verify"].update(status="REVIEW"), "verify"),
+            (lambda r: r["verify"].update(first_problems=["s=3 ids: [17, 4]"]), "verify.first_problems"),
+            (lambda r: r["verify"].update(first_problems=["[..]"] * 6), "verify.first_problems"),
+            (lambda r: r.update(status="STOP"), "status"),
+            (lambda r: (r["verify"].update(status="STOP"), r.update(status="STOP")), "status"),
+            (lambda r: r["manifest"].update(sha256="0" * 64, equal=False), "status"),
+            (lambda r: r["manifest"].update(equal=False), "manifest"),
+            (lambda r: r["manifest"].update(pin="0" * 64), "manifest"),
+            (lambda r: r["hashed_files"].update({"tokenizer.json": "0" * 64}), "hashed_files"),
+            (lambda r: r["pins"].update(pod_id="another-pod"), "pins"),
+            (lambda r: r["pins"].update(lock_sha256="0" * 64), "pins"),
+            (lambda r: r["pins"]["imported_sha256"].update({"valence_core/x.py": "0" * 64}), "pins"),
+            (lambda r: r["environment"].update(python=3), "environment"),
+            (lambda r: r["durations_ms"].update(decode=-1), "durations_ms"),
+            (lambda r: r["durations_ms"].update(decode=True), "durations_ms"),
+            (lambda r: r["verify"].update(manifest_ok=False), "status"),
+            (lambda r: r["verify"].update(sessions=159, ids_ok=159, spans_ok=159, n4_ok=159), "status"),
+            (lambda r: r["verify"].update(n4_ok=159), "status"),
+            (lambda r: r["verify"].update(labels_kept=0, labels_ok=0), "status"),
+            (lambda r: r["verify"].update(labels_ok=0), "status"),
+            (lambda r: r["verify"].update(first_problems=["x"]), "status"),
+            (lambda r: r["verify"].update(manifest_ok="yes"), "verify"),
+            (lambda r: r["pins"].update(package_sha256="0" * 64), "pins"),
+            (lambda r: r["pins"].update(backend_identifier="0" * 16), "pins"),
+            (lambda r: r["pins"].update(characterization_identifier="0" * 16), "pins"),
+            (lambda r: r["pins"].update(weights_sha256="0" * 64), "pins"),
+            (lambda r: r["pins"].update(driver_sha256="z" * 64), "pins"),
+            (lambda r: r["environment"].pop("tokenizers"), "environment"),
+            (lambda r: r["environment"].update(tokenizers="0.22.3"), "environment"),
+            (lambda r: r["durations_ms"].update(extra=1), "durations_ms")):
+        bad = copy.deepcopy(rec_p)
+        tamper(bad)
+        got_r = refused(lambda: check_gver(bad, tpins))
+        chk(f"gver: check_gver refuses a record tampered at {where}, naming the field and no value",
+            got_r[0] and got_r[1].endswith(f"malformed at {where}"), got_r)
+    r_form = refused(lambda: check_gver({1: 0, "schema": GVER_SCHEMA}, tpins))
+    chk("gver: ...and a record of the wrong shape where the check reaches into it is malformed at its form",
+        r_form == (True, "the G-VER record is malformed at its form"), r_form)
+    rep_zero = dict(rep_pass, ids_ok=0, spans_ok=0, n4_ok=0, labels_ok=0, status="STOP",
+                    first_problems=["s=0 ids: n-000: committed ids are not BK's [..]"])
+    r_zero = refused(lambda: rec_of(rep_zero))
+    chk("gver: ...a STOP whose counts are zero, the G-VER trial's shape, makes a record that passes its check",
+        not r_zero[0], r_zero)
+
+    # its writing (GV9)
+    wp = tmp / "write" / GVER_RECORD
+    sha_w = gver_write(wp, rec_p, hashed_pins=tpins)
+    b_w = wp.read_bytes()
+    r_w2 = refused(lambda: gver_write(wp, rec_s, hashed_pins=tpins))
+    chk("gver: the record written once (GV9): its bytes json_text's and its sha256 the one returned; a second write is "
+        "refused and leaves the first as it was",
+        b_w == m_resume.json_text(rec_p).encode("utf-8") and sha_w == hashlib.sha256(b_w).hexdigest()
+        and r_w2[0] and "writes its record once" in r_w2[1] and wp.read_bytes() == b_w, r_w2)
+    real_aw = m_resume.atomic_write_json
+
+    def corrupt(path, obj, **_k):                       # a write whose bytes are not json_text's
+        Path(path).write_bytes(m_resume.json_text(obj).encode("utf-8").replace(b'"schema": "n-gver-v1"',
+                                                                             b'"schema": "n-gver-v2"'))
+    m_resume.atomic_write_json = corrupt
+    try:
+        wp3 = tmp / "write-bad" / GVER_RECORD
+        r_w3 = refused(lambda: gver_write(wp3, rec_p, hashed_pins=tpins))
+    finally:
+        m_resume.atomic_write_json = real_aw
+    wp4 = tmp / "write-unchecked" / GVER_RECORD
+    r_w4 = refused(lambda: gver_write(wp4, dict(rec_p, status="STOP"), hashed_pins=tpins))
+    chk("gver: ...a write that does not read back as written is refused and the file removed; a record that fails its "
+        "check is refused before anything is written, its folder not even made",
+        r_w3[0] and "is not the bytes written" in r_w3[1] and not wp3.exists() and m_resume.atomic_write_json is real_aw
+        and r_w4[0] and r_w4[1].endswith("malformed at status") and not wp4.exists() and not wp4.parent.exists(),
+        (r_w3, r_w4))
+    real_fd = m_resume._fsync_dir
+
+    def fsync_refused(_d):                              # the directory's fsync after the replace fails (F1)
+        raise OSError("the directory's fsync refused (the self-test's stand-in)")
+    m_resume._fsync_dir = fsync_refused
+    try:
+        wp5 = tmp / "write-fsync" / GVER_RECORD
+        r_w5 = refused(lambda: gver_write(wp5, rec_p, hashed_pins=tpins))
+    finally:
+        m_resume._fsync_dir = real_fd
+    chk("gver: ...a write whose directory fsync fails after the replace is refused as SystemExit, naming the OSError, "
+        "and the record it had put in place is removed (the review's F1)",
+        r_w5 == (True, "the record's write or its read-back failed (OSError)") and not wp5.exists()
+        and m_resume._fsync_dir is real_fd, r_w5)
+
+    # the command's flow, over doubles behind every seam (writes only under tmp)
+    toys = [testing.toy_session(r) for r in range(schema.N_SESSIONS)]
+    tss = [s for s, _i in toys]
+    prov_t = dict(CHARACTERIZED_PROVENANCE, path="(toy)", choice_window_declared=schema.MAX_WINDOW)
+    toks: list = []
+    tok_objs: list = []
+    ver_calls: list = []
+
+    class StubTok:                                      # records the decode's options
+        def __init__(self, tag):
+            self.tag, self.kw = tag, []
+
+        def decode(self, token_ids, **kw):
+            self.kw.append(dict(kw))
+            return "".join(chr(97 + int(t) % 26) for t in token_ids)
+
+    def genv(tag, rep=None, **over):
+        lines: list = []
+        ticks = [0]
+
+        def tick() -> float:                            # 1 ms a call: every duration the stage measures is exact
+            ticks[0] += 1
+            return ticks[0] * 0.001
+
+        def load_tok(p):
+            toks.append((tag, str(p)))
+            tok_objs.append(StubTok(tag))
+            return tok_objs[-1]
+
+        def ver(s_, l_, dec):
+            ver_calls.append((tag, len(s_), l_.get("manifest_sha256"), dec([0, 1])))
+            return copy.deepcopy(rep if rep is not None else rep_pass)
+        base = dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": LOCK_WEIGHTS_SHA256,
+                                     "n_files": 4, "path": str(tw)},
+                    load_sessions=lambda: list(tss), load_ids=lambda: {"manifest_sha256": ids.MANIFEST_OF_RECORD},
+                    committed=work, env_provenance=lambda p: dict(prov_t),
+                    package=lambda: (LOCK_PACKAGE_SHA256, dict(LOCK_CLOSURE)), hashed_pins=lambda: dict(tpins),
+                    load_tokenizer=load_tok, verify=ver, tokenizers_version=lambda: "0.22.2",
+                    pod=lambda: CHARACTERIZED_POD, driver=lambda: (b"drv", b"drv"), lock_path=LOCK_PATH,
+                    out=tmp / tag / "out", printer=lines.append, clock=tick)
+        base.update(over)
+        if _within(Path(base["out"]).resolve(), REPO.resolve()):    # a self-test writes only under tmp
+            raise SystemExit(f"a self-test environment points out into the repository: {base['out']}")
+        return GverEnv(**base), lines
+
+    def record_of(env):
+        p = Path(env.out) / GVER_RECORD
+        return json.loads(p.read_bytes().decode("utf-8")) if p.is_file() else None
+
+    def run_c(env, cublas=CHARACTERIZED_PROVENANCE["cublas_workspace_config"]):
+        """run_gver with CUBLAS_WORKSPACE_CONFIG set as the stage's environment has it (None: unset), restored after."""
+        kept = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
+        if cublas is None:
+            os.environ.pop("CUBLAS_WORKSPACE_CONFIG", None)
+        else:
+            os.environ["CUBLAS_WORKSPACE_CONFIG"] = cublas
+        try:
+            return run_gver(env)
+        finally:
+            if kept is None:
+                os.environ.pop("CUBLAS_WORKSPACE_CONFIG", None)
+            else:
+                os.environ["CUBLAS_WORKSPACE_CONFIG"] = kept
+
+    env1, lines1 = genv("pass")
+    rc1 = run_c(env1)
+    rec1 = record_of(env1) or {}
+    ok1 = refused(lambda: check_gver(rec1, tpins))
+    chk("gver: the command's flow over the doubles: PASS, exit 0, the record written and passing its check; the "
+        "tokenizer loaded once, from the weights folder; verify once, on the 160 sessions and the loaded ids",
+        rc1 == 0 and rec1.get("status") == "PASS" and not ok1[0] and toks == [("pass", str(tw))]
+        and ver_calls == [("pass", 160, ids.MANIFEST_OF_RECORD, "ab")], (rc1, ok1, toks, ver_calls))
+    chk("gver: ...the record holds the pins as held (the driver's sha256 its bytes'), the eight files' sha256s, "
+        "the versions, and with a clock that ticks 1 ms a call the tokenizer's load 1 ms and the decode 1 ms",
+        rec1.get("pins") == dict(pins_t, driver_sha256=hashlib.sha256(b"drv").hexdigest())
+        and rec1.get("hashed_files") == tpins and rec1.get("environment") == gver_environment(prov_t, "0.22.2")
+        and rec1.get("durations_ms") == {"tokenizer_load": 1, "decode": 1}, rec1.get("durations_ms"))
+    chk("gver: ...the decode keeps special tokens and does no clean-up of spaces (the stages' G-VER form, _decoder)",
+        len(tok_objs) == 1 and tok_objs[0].kw == [{"skip_special_tokens": False, "clean_up_tokenization_spaces": False}]
+        and ver_calls[0][3] == "ab", tok_objs[0].kw if tok_objs else None)
+    idx = {k: next((i for i, x in enumerate(lines1) if x.startswith(k)), -1)
+           for k in ("STAGE G-VER (n):", "WEIGHTS:", "DRIVER scripts/n_sessions.py", "LOCK-n.md ", "the ids of record:",
+                     "backend (no model loads", "package valence_core/n", "hashed file config.json",
+                     "G-VER (n §8 step 12, of record", "durations (GV12", "record ")}
+    shown = str((Path(env1.out) / GVER_RECORD).resolve())
+    chk("gver: ...its lines in order: STAGE first, then WEIGHTS, DRIVER (HEAD's), LOCK-n.md, the ids of record with "
+        "the manifest's pin, the backend, the package, the eight non-shard files, G-VER's report as the stages print "
+        "it, the durations, the record's path and sha256; the last line PASS",
+        idx["STAGE G-VER (n):"] == 0 and sorted(idx.values()) == list(idx.values()) and -1 not in idx.values()
+        and lines1[idx["G-VER (n §8 step 12, of record"] + 1] == json.dumps(rep_pass, sort_keys=True)
+        and f"record {shown} sha256 {hashlib.sha256((Path(env1.out) / GVER_RECORD).read_bytes()).hexdigest()}" in lines1
+        and sum(1 for x in lines1 if x.startswith("hashed file ")) == 8
+        and lines1[idx["the ids of record:"]].endswith(": equal")
+        and lines1[-1] == "G-VER (n) PASS: the record is written", {k: v for k, v in idx.items()})
+    chk("gver: ...and no line holds a start or finish stamp (GV10)",
+        not any(re.search(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}|\b\d{2}:\d{2}:\d{2}\b", x) for x in lines1), "")
+
+    env2, lines2 = genv("stop", rep=rep_stop)
+    rc2 = run_c(env2)
+    rec2 = record_of(env2) or {}
+    chk("gver: G-VER's STOP (GV5, GV6): exit 2, the record written with status STOP and passing its check; the last "
+        "line a STOP for the seat, no read launched (L:543)",
+        rc2 == 2 and rec2.get("status") == "STOP" and not refused(lambda: check_gver(rec2, tpins))[0]
+        and lines2[-1].startswith("G-VER (n) STOP: the record is written; a STOP for the seat"), lines2[-1:])
+    env_z, lines_z = genv("zero", rep=rep_zero)
+    rc_z = run_c(env_z)
+    rec_z = record_of(env_z) or {}
+    chk("gver: ...a STOP whose counts are zero (the G-VER trial's shape) ends the same way: exit 2, the record written",
+        rc_z == 2 and rec_z.get("status") == "STOP" and rec_z.get("verify", {}).get("ids_ok") == 0, lines_z[-1:])
+    env3, lines3 = genv("pin", rep=rep_pin, load_ids=lambda: {"manifest_sha256": "0" * 64})
+    rc3 = run_c(env3)
+    rec3 = record_of(env3) or {}
+    chk("gver: a MANIFEST.json off its pin reaches G-VER, one of its causes (L:543): no refusal; exit 2, the record "
+        "written with the equality false; the ids line says so",
+        rc3 == 2 and rec3.get("manifest", {}).get("equal") is False and rec3.get("status") == "STOP"
+        and not any(x.startswith("REFUSED") for x in lines3)
+        and any(x.startswith("the ids of record:") and x.endswith("not equal, one of G-VER's causes (L:543)")
+                for x in lines3) and ("pin", 160, "0" * 64, "ab") in ver_calls, lines3[-1:])
+
+    # the refusals before G-VER: exit 1, no record, no tokenizer loaded, verify not called
+    def raising(exc):
+        def f(*_a, **_k):
+            raise exc
+        return f
+    w_toy = {"repo": "toy", "revision": "0" * 12, "sha256": LOCK_WEIGHTS_SHA256, "n_files": 4, "path": str(tw)}
+    cub = CHARACTERIZED_PROVENANCE["cublas_workspace_config"]
+    cases = [("pod-none", dict(pod=lambda: None), cub, "without $RUNPOD_POD_ID"),
+             ("pod-other", dict(pod=lambda: "another-pod"), cub, "not the characterized one"),
+             ("cublas-other", {}, ":16:8", "CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2"),
+             ("cublas-none", {}, None, "CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2"),
+             ("weights", dict(weights=lambda: dict(w_toy, sha256="5" * 64)), cub, "not the lock's (L §17)"),
+             ("weights-folder",
+              dict(weights=raising(SystemExit("the weights folder holds 1 files the manifest does not list"))), cub,
+              "the weights folder holds 1 files"),
+             ("driver", dict(driver=lambda: (b"drv", b"other")), cub, "runs only the committed driver"),
+             ("driver-none", dict(driver=lambda: (b"drv", None)), cub, "runs only the committed driver"),
+             ("lock", dict(committed=lambda p: None), cub, "LOCK-n.md is absent, not HEAD's committed bytes"),
+             ("sessions", dict(load_sessions=raising(ValueError("skeleton files are not BK's 14: ['x']"))), cub,
+              "the session set (sessions.load_sessions): ValueError: skeleton files are not BK's 14"),
+             ("ids", dict(load_ids=raising(SystemExit("sessions.jsonl: its sha256 is not the manifest's"))), cub,
+              "sessions.jsonl: its sha256 is not the manifest's"),
+             ("ids-missing", dict(load_ids=raising(FileNotFoundError("MANIFEST.json"))), cub,
+              "the ids of record (ids.load): FileNotFoundError: MANIFEST.json"),
+             ("ids-key", dict(load_ids=raising(KeyError("files"))), cub,
+              "the ids of record (ids.load): KeyError: 'files'"),
+             ("bridge", dict(env_provenance=lambda p: dict(prov_t, python="3.12.4")), cub, "(R6)"),
+             ("bid", dict(env_provenance=lambda p: dict(prov_t, choice_window_declared=8192)), cub,
+              "is not the lock's 8264f719efd347a9"),
+             ("tokenizers", dict(tokenizers_version=lambda: "0.22.3"), cub,
+              "tokenizers 0.22.3 is not the lock's 0.22.2 (L §17)"),
+             ("pkg", dict(package=lambda: ("0" * 64, dict(LOCK_CLOSURE))), cub, "not the lock's (L §18; GV2)"),
+             ("closure", dict(package=lambda: (LOCK_PACKAGE_SHA256, dict(LOCK_CLOSURE, **{"valence_core/x.py":
+                                                                                           "0" * 64}))), cub,
+              "closure files differing ['valence_core/x.py']"),
+             ("tokpin", dict(hashed_pins=lambda: dict(off)), cub, "are not at the model manifest's pins"),
+             ("tokmiss", dict(weights=lambda: dict(w_toy, path=str(tw2))), cub, "is not a regular file")]
+    bad_cases = []
+    for tag, over, cub_t, text in cases:
+        e_, l_ = genv(tag, **over)
+        rc_ = run_c(e_, cub_t)
+        line = next((x for x in l_ if x.startswith("REFUSED before G-VER: ")), "")
+        if not (rc_ == 1 and text in line and l_[-1] == "G-VER (n): not run, and no record (exit 1; GV5)"
+                and record_of(e_) is None and not any(t == tag for t, _p in toks)
+                and not any(c[0] == tag for c in ver_calls)):
+            bad_cases.append((tag, rc_, line[:160]))
+    chk(f"gver: {len(cases)} refusals before G-VER, each exit 1 with its reason on a REFUSED line, no tokenizer "
+        f"loaded, verify not called and no record: the pod (none, another), the cuBLAS setting (another, unset), the "
+        f"weights (not the lock's, the folder), the driver (another's, none at HEAD), LOCK-n.md, the session set (its "
+        f"loader's ValueError), the ids (ids.load's own refusal, a missing file, a missing key), the R6 bridge, n's "
+        f"backend identifier, tokenizers' version, the package, its closure, a hashed file off its pin, one missing",
+        not bad_cases, bad_cases[:3])
+    e_x, l_x = genv("exists")
+    Path(e_x.out).mkdir(parents=True)
+    (Path(e_x.out) / GVER_RECORD).write_bytes(b"{}\n")
+    rc_x = run_c(e_x)
+    chk("gver: a record already written is refused first, exit 1, and left as it was (G-VER of record writes it once)",
+        rc_x == 1 and (Path(e_x.out) / GVER_RECORD).read_bytes() == b"{}\n"
+        and l_x[0].startswith("REFUSED before G-VER: ") and "writes its record once" in l_x[0]
+        and not any(t == "exists" for t, _p in toks), l_x[:1])
+
+    # failures after G-VER: exit 1, and no record left
+    env_f, lines_f = genv("recfail", rep={"status": "PASS", "sessions": 160})
+    rc_f = run_c(env_f)
+    m_resume.atomic_write_json = corrupt
+    try:
+        env_c, lines_c = genv("readback")
+        rc_c = run_c(env_c)
+    finally:
+        m_resume.atomic_write_json = real_aw
+    chk("gver: a report that fails the record's check, and a write that does not read back, each end exit 1 with a "
+        "FAILED line and nothing left at the record's path",
+        rc_f == 1 and record_of(env_f) is None
+        and lines_f[-2].startswith("FAILED at the record: the G-VER record is malformed at verify")
+        and lines_f[-1] == "G-VER (n): no record (exit 1; GV5)"
+        and rc_c == 1 and record_of(env_c) is None and "is not the bytes written" in lines_c[-2]
+        and m_resume.atomic_write_json is real_aw, (lines_f[-2:], lines_c[-2:]))
+
+    def boom(_p):
+        raise OSError("no tokenizer here")
+    env_b, _lines_b = genv("tokboom", load_tokenizer=boom)
+    try:
+        run_c(env_b)
+        raised = None
+    except OSError as e:
+        raised = str(e)
+    chk("gver: an error at the tokenizer's load is not caught (Python's exit 1), and no record is written",
+        raised == "no tokenizer here" and record_of(env_b) is None, raised)
+
+    # the production seams' own behaviour, each behind a stand-in that loads nothing (the review's F6)
+    real_v = verify_mod.verify
+    seen_v: list = []
+
+    def spy_v(*a, **k):                                 # what verify.verify is given
+        seen_v.append((a, k))
+        return {"status": "PASS"}
+    loaded_s = {"manifest_sha256": ids.MANIFEST_OF_RECORD}
+
+    def dec_s(_ids):
+        return ""
+    verify_mod.verify = spy_v
+    try:
+        out_v = _gver_verify(tss, loaded_s, dec_s)
+    finally:
+        verify_mod.verify = real_v
+    chk("gver: the production verify seam calls verify.verify once, with the session set, the loaded ids, the decoder "
+        "and N4's schedule from the sessions' order (keys.n4_schedule), and no keyword: verify's own defaults hold the "
+        "manifest's and the tokenizer files' pins",
+        out_v == {"status": "PASS"} and len(seen_v) == 1 and seen_v[0][1] == {} and len(seen_v[0][0]) == 4
+        and seen_v[0][0][0] is tss and seen_v[0][0][1] is loaded_s and seen_v[0][0][2] is dec_s
+        and seen_v[0][0][3] == keys.n4_schedule([s.present_first_is_S for s in tss]) and verify_mod.verify is real_v,
+        seen_v[0][1] if seen_v else None)
+    seen_t: list = []
+
+    class FakeAuto:                                     # stands in for transformers.AutoTokenizer: loads nothing
+        @staticmethod
+        def from_pretrained(*a, **k):
+            seen_t.append((a, k))
+            return "a tokenizer"
+    had_t = sys.modules.get("transformers")
+    sys.modules["transformers"] = types.SimpleNamespace(AutoTokenizer=FakeAuto)
+    try:
+        got_tok = _gver_load_tokenizer(tw)
+    finally:
+        if had_t is None:
+            sys.modules.pop("transformers", None)
+        else:
+            sys.modules["transformers"] = had_t
+    chk("gver: the production tokenizer seam loads from the weights folder by its path, local files only (GV3; "
+        "ADDENDUM-n1 §1.1), here behind a stand-in for transformers that loads nothing",
+        got_tok == "a tokenizer" and seen_t == [((str(tw),), {"local_files_only": True})]
+        and sys.modules.get("transformers") is had_t, seen_t)
+    from importlib.metadata import PackageNotFoundError, version as md_version
+    try:
+        want_tv = md_version("tokenizers")
+    except PackageNotFoundError:
+        want_tv = "absent"
+    chk("gver: the production version seam reads tokenizers' own version (importlib.metadata), 'absent' where it is "
+        "not installed", _tokenizers_version() == want_tv, want_tv)
+
+    # main()'s options for gver, behind two traps (the box safety of a self-test that reaches the driver's entry point
+    # after the commit): the recorder below stands in for the stage, and, beside it, no pod id is set, so the real
+    # stage path would refuse at its pod check, and the production loaders are raising stubs
+    g = globals()
+    loaders = ("weights_of_record", "_load_adapter", "_gver_tokenizer", "_gver_load_tokenizer")
+    real_loaders = {n: g[n] for n in loaders}
+
+    def trapped(*_a, **_k):
+        raise SystemExit("the self-test's trap: a production loader was reached")
+    pod_kept = os.environ.pop("RUNPOD_POD_ID", None)
+    for n in loaders:
+        g[n] = trapped
+    try:
+        penv = production_gver_env()
+        chk("gver: (the self-test's own guard) main()'s cases run with RUNPOD_POD_ID unset and the production loaders "
+            "trapped: weights_of_record, _load_adapter, _gver_tokenizer and _gver_load_tokenizer raise, as the "
+            "production environment holds them",
+            "RUNPOD_POD_ID" not in os.environ and all(g[n] is trapped for n in loaders)
+            and penv.weights is trapped and penv.load_tokenizer is trapped, "")
+        chk("gver: the production environment's other seams are the driver's and the package's own: verify.verify "
+            "through _gver_verify, the committed bytes, the provenance before a load, the package's closure, the "
+            "model manifest's pins of the eight, ids.load, the driver's bytes; the record under data/n/gver, the lock "
+            "LOCK-n.md, the clock time.perf_counter",
+            penv.verify is _gver_verify and penv.committed is committed_bytes
+            and penv.env_provenance is environment_provenance and penv.package is _package_closure
+            and penv.hashed_pins is gver_hashed_pins and penv.load_ids is ids.load
+            and penv.load_sessions is sessions.load_sessions and penv.pod is m_resume.pod_id
+            and penv.driver is driver_bytes and penv.tokenizers_version is _tokenizers_version
+            and penv.out == GVER_OUT and penv.lock_path == LOCK_PATH and penv.clock is time.perf_counter, "")
+
+        def argv_error(argv) -> str:
+            err = io.StringIO()
+            try:
+                with contextlib.redirect_stderr(err):
+                    main(argv)
+            except SystemExit as e:
+                return err.getvalue() if e.code == 2 else f"exit {e.code}"
+            return "no error"
+        o_ = str(tmp / "o")
+        for argv, want_t in ((["gver", "--root", o_], "gver takes no option"),
+                             (["gver", "--report", o_], "gver takes no option"),
+                             (["gver", "--resume"], "gver takes no option"),
+                             (["gver", "--ruling", "p01=x"], "gver takes no option"),
+                             (["gver", "--smoke", "1"], "gver takes no option"),
+                             (["gver", "--convention", "space"], "gver takes no option"),
+                             (["gver", "--model-dir", o_], "gver takes no option"),
+                             (["gver", "--tokenizer-dir", o_], "gver takes no option"),
+                             (["gver", "--ids-dir", o_], "gver takes no option"),
+                             (["gver", "--out", o_], "gver takes no option"),
+                             (["gver", "--pi-date", "2026-11-22"], "gver takes no option"),
+                             (["gver", "--bench-dir", o_], "--bench-dir: gtime's option only"),
+                             (["gver", "--gcal-dir", o_], "--gcal-dir: gcal-decode's option only")):
+            got_a = argv_error(argv)
+            chk(f"gver: main() refuses {' '.join(argv[:3])} … with \"{want_t}\"", want_t in got_a, got_a[-160:])
+        real_run = g["run_gver"]
+        calls: list = []
+
+        def recorder(env):
+            calls.append(env)
+            return 0
+        g["run_gver"] = recorder
+        try:
+            rc_m = main(["gver"])
+        finally:
+            g["run_gver"] = real_run
+        chk("gver: main() hands gver to the stage, with the production environment",
+            rc_m == 0 and len(calls) == 1 and isinstance(calls[0], GverEnv) and calls[0].load_tokenizer is trapped,
+            len(calls))
+    finally:
+        for n, f in real_loaders.items():
+            g[n] = f
+        if pod_kept is not None:
+            os.environ["RUNPOD_POD_ID"] = pod_kept
+    chk("gver: (the self-test's own guard) an environment pointing the record into the repository is refused, and the "
+        "loaders are restored",
+        refused(lambda: genv("guard", out=GVER_OUT))[0] and all(g[n] is real_loaders[n] for n in loaders), "")
+
+
 def _parse_rulings(ap, items) -> dict:
     """``--ruling PAUSE_ID=PATH``, each once (gtime's; backend-ext's own loop is unchanged)."""
     rulings: dict = {}
@@ -5089,7 +6093,7 @@ def main(argv=None) -> int:
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("command", nargs="?",
                     choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "render-ids-v", "backend-ext",
-                             "backend-ext-2", "gvec", "gcal", "gcal-decode", "gtime", "gread-bench"))
+                             "backend-ext-2", "gvec", "gcal", "gcal-decode", "gtime", "gread-bench", "gver"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -5110,6 +6114,18 @@ def main(argv=None) -> int:
         ap.error("--gcal-dir: gcal-decode's option only")
     if a.bench_dir is not None and a.command != "gtime":
         ap.error("--bench-dir: gtime's option only")
+    if a.command == "gver":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),
+                                      ("--smoke", a.smoke is not None), ("--convention", a.convention is not None),
+                                      ("--model-dir", a.model_dir is not None),
+                                      ("--tokenizer-dir", a.tokenizer_dir is not None),
+                                      ("--ids-dir", a.ids_dir is not None), ("--out", a.out is not None),
+                                      ("--pi-date", a.pi_date is not None)) if given]
+        if foreign:
+            ap.error(f"{', '.join(foreign)}: gver takes no option (GV8: no smoke); it decodes with the tokenizer in "
+                     f"the model manifest's instruct folder and writes data/n/gver/gver.json")
+        return cmd_gver()
     if a.command == "gtime":
         foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                       ("--convention", a.convention is not None), ("--model-dir", bool(a.model_dir)),

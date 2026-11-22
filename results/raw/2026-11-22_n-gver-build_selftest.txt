@@ -1,0 +1,88 @@
+n -- G-VER of record's BUILD (n v0.2 s8 step 12; the G-VER paragraph of n s3; Code's readings GV1-GV16 routed as
+PINs, as the seat ruled them): its self-test on the laptop, committed with the BUILD. PI date 2026-11-22. Code (the
+n-build session).
+
+The change, on HEAD's version of the path (the same bytes at cd6b30d, d92500b and 9b71bbb, the supplement's commit):
+  scripts/n_sessions.py        4616f9c31f212f38af89023691a9ab713320d42360b71f4c0fba8fc3bf632553  (+1019 -3)
+The .gitignore's +7 lines, committed with it, do not enter the self-test.
+The package: valence_core/n's digest does not move. It is LOCK-n v0.1 s18's
+  06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39,
+  computed by shell in the form valence_core/m/resume.py's package_sha256_of states, over the four overlays below and
+  over HEAD's clean files. The self-test's own check holds the package's digest, measured in its process, to the
+  lock's (G-TIME-n's check; GV2).
+
+1. THE LAPTOP. Model-free: the HF cases (valence_core.n.hftiny; the HF-path vanilla score; G-CAL-n's HF path) run only
+   where torch and transformers are present, and elsewhere are skipped and counted as skipped; the schema module's own
+   cases count as one aggregated line. G-VER's cases need neither library: the one case of the production tokenizer
+   seam puts a stand-in for transformers in sys.modules for one call and restores the entry it found.
+   The overlays: a git archive of cd6b30d (run 1), of d92500b (run 2) and of 9b71bbb (runs 3 and 4) on G-TIME-n's
+   self-test paths, LOCK-n.md and the model manifest among them, with item 3's exclusions and Q-F3's, so that no
+   checkpoint or report file entered them: 174 files each, with the draft driver in place of the committed one. All
+   four were built by make_overlay_gver_v1.sh (f8cdbccba8e1a5b05a4e3f177a4d90710a16ae2f995694c7b8608e438a2edec2),
+   G-TIME-n's make_overlay_gtime_v2.sh recipe unchanged. By diff -rq, overlay3 differs from overlay2, and overlay4
+   from overlay3, in the driver alone.
+   The command, in a subshell, from the venv's bin folder reached by cd and a glob, so that no guard marker was
+   in any argv, with stdout, stderr and the exit status each to its own file:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch>/step4b/gver/tmp nice -n 19 \
+       ./python -I -B <scratch>/step4b/gver/<overlay>/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes. Before it, the driver in the
+   overlay was at the draft's sha256, the one the grant named, the temporary folder was empty and none of the run's
+   own output files existed. After it, stderr was empty, the temporary folder was empty, and Q-F3's campaign (PID
+   8051) was the only Python process.
+   Runs 3 and 4 ran as the harness's background task, so that no tool timeout could cut them short, and Code waited
+   for each exit notice.
+
+   Run 1, draft 1 (the bytes the blind review read; overlay1, from cd6b30d):
+     scripts/n_sessions.py        f5baf379457db1643a495362ab6aac96f7abb702a2d2d271262d046304367b2c
+   Exit 0. Its whole output (sha256 555eff1b00bddbfde0721e5b250ebc9c446bd9a4f0a6f8f8d8d2310548013876), each line
+   indented by five spaces here:
+       687/687 n selftest checks pass
+   That is HEAD's 634 plus G-VER's 53: 52 in _gver_selftest and the environment's check after it. The window's
+   request expected 688, and the box's figure 699. Code had counted cmd_selftest's wrapper check "ran to its end",
+   which is appended only when _gver_selftest raises, as one more check. The coordinating session's grant had
+   confirmed 54 new checks too. The run stood as run, on the coordinating session's ruling as the window's grantor,
+   with no re-run; the box's figure for draft 1 was 698. The request, the grant and the ruling are outside the
+   repository: Code's note in the sessions' notes folder (sha256 634f7181...be88) and the coordinating session's
+   messages.
+
+   Run 2, draft 2 (overlay2, from d92500b):
+     scripts/n_sessions.py        3df537d679c10af6e833180aa58fc970dd38a84d50f36408489420ba047983c1
+   It is draft 1 (+231 -67 lines) with the blind review's findings built in, as the review raw committed with this
+   BUILD states them (results/raw/2026-11-22_n-gver-build_review.md, s1): F1-F4, F6-F9 and F11 in the driver and its
+   self-test (F10 is in the .gitignore's second draft), a kill for each surviving mutant M1-M17, and B2. Its
+   self-test has 29 checks more: 15 tamper cases in check_gver's loop (35 in all), 8 refused options in main()'s loop
+   (13 in all), and 6 single checks (a zero-count STOP as a record and through the flow, the directory's fsync failing
+   after the replace, and the production verify, tokenizer and version seams). Exit 0. Its whole output (sha256
+   93d107a4cdceca677939c067577f80e389f5ade0de2ae947ba9ab2fde4103e04), each line indented by five spaces here:
+       716/716 n selftest checks pass
+   That is HEAD's 634 plus G-VER's 82: 81 in _gver_selftest and the environment's check after it.
+
+   Run 3, draft 3 (overlay3, from 9b71bbb):
+     scripts/n_sessions.py        8df113e466bdd69e61d3584f4275b6fcc7fab8467282a8f8c12694e804823f02
+   It is draft 2 (+2 -2 lines) with one docstring corrected. gver_environment's said that GV4 holds no pin on
+   tokenizers' version; it now says that GV4 holds it to L s17's LOCK_TOKENIZERS before G-VER and in check_gver. The
+   stale line was the supplement's values-check's observation 6
+   (results/raw/2026-11-22_n-gver-starred-seven-supplement_valuescheck.md). No check reads that docstring, so run 3
+   has run 2's checks. Exit 0. Its whole output (sha256
+   93d107a4cdceca677939c067577f80e389f5ade0de2ae947ba9ab2fde4103e04, run 2's bytes), each line indented by five
+   spaces here:
+       716/716 n selftest checks pass
+
+   Run 4, draft 4, the bytes committed (overlay4, from 9b71bbb):
+     scripts/n_sessions.py        55885e65751227230f5933909ea36b6c1f649538a974cff9c6458ace2375385f
+   It is draft 3 (+118 -89 lines) with the seat's hash set
+   (results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md, s1.2): GV3 hashes the weights folder's
+   eight non-shard files (GVER_HASHED_FILES, the model manifest entry's files less *.safetensors) at their pins, and
+   the record's field hashed_files holds their sha256s. The seam and parameters are renamed to match, and the module
+   docstring's gver paragraph says what was ruled. Its self-test hashes the eight, with a shard beside them that
+   is not hashed; holds the production pins to the manifest entry's files less *.safetensors; and wants the off-pin
+   refusal to name the INTEGRITY incident. It has one check more: a manifest entry with a ninth non-shard file, and one
+   without vocab.json, each refused. Exit 0. Its whole output (sha256
+   138c2c1a9dbfb7920427603f3352d2ad6187157ed66f3d5ba534c8061318cf59), each line indented by five spaces here:
+       717/717 n selftest checks pass
+   That is HEAD's 634 plus G-VER's 83: 82 in _gver_selftest and the environment's check after it.
+
+2. THE BOX. The box has not run this BUILD. Its count there, by arithmetic only: 728, the laptop's 717 plus the
+   box's 11 checks more (its 14 HF checks in place of the laptop's three skip lines: G-TIME-n's launch recorded 645
+   of 645 on the box, against its BUILD's 634 on the laptop). G-VER's checks are all model-free and count the same at
+   either site, so they add nothing to the difference. G-VER's launch files restate the count.

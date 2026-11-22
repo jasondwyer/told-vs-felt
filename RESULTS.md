@@ -21,6 +21,374 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-22 — **n — G-VER of record's BUILD (n v0.2 §8 step 12): the `gver` command in `scripts/n_sessions.py`, on
+  Code's readings GV1–GV16 as PINs (the PI's "Build on the PINs") and the seat's rulings on them (its first sitting of
+  2026-11-22); the driver alone, the package at LOCK-n v0.1's digest. Not run.**
+  - **What is built,** in the driver alone (GV2), so `valence_core/n/` stays at `06b55761…1d39` (LOCK-n v0.1 §18):
+    - `gver`, G-VER of record on the box (`run_gver`). No weights load and nothing is read, though building the
+      provenance makes a CUDA context. It refuses before G-VER, with exit 1, a REFUSED line and no record written,
+      unless all of these hold, in this order:
+      - the record, `data/n/gver/gver.json`, is not yet written;
+      - the pod is the characterized one, and the cuBLAS setting is the characterized one (rule 2; R6 holds it too);
+      - the weights are the lock's, and the tokenizer is read from their folder;
+      - the run runs HEAD's committed driver;
+      - `LOCK-n.md` is HEAD's committed bytes at the lock's sha256;
+      - the session set and the ids of record load, each loader's own failure a refusal (the review's F2);
+      - the environment's provenance bridges to the characterization's identifier (R6), and n's backend identifier is
+        the lock's;
+      - tokenizers' version is L §17's, 0.22.2 (the review's F4);
+      - the package and its twelve-file closure are the lock's;
+      - the weights folder's eight non-shard files (`GVER_HASHED_FILES`, the model manifest entry's files less
+        `*.safetensors`) are regular files, each at the manifest's pin (GV3, as the seat's §1.2 ruled it). The off-pin
+        refusal names the respawn protocol's INTEGRITY incident (the seat's §1.4).
+
+      MANIFEST.json's sha256 is printed beside the pin and left to G-VER itself, one of its causes (L:543; GV4's
+      correction), while MANIFEST.json passes `ids.load` (the supplement's §1.3). Then G-VER: the tokenizer loaded from
+      the weights folder, local files only, to decode only, and `verify.verify` on the committed ids, each timed. Then
+      the record (`n-gver-v1`, its field `hashed_files` holding the eight sha256s), checked by `check_gver`, written
+      once and checked on disk; a write that fails leaves no record (the review's F1). Exits: 0 on PASS and 2 on
+      G-VER's STOP, each with the record written; 1 on a refusal before G-VER or any other failure, with no record
+      (GV5). No option and no smoke (GV8).
+    - The driver's docstring lists GV1–GV16 in short as its PINs, as sent but for GV4's pins as built, GV3's hash set
+      as ruled, and GV12's two durations marked a lower bound (F11). The seat ruled the seven starred and the
+      supplement's clauses at its first sitting of 2026-11-22
+      ([`2026-11-22_n-gver-starred-seven_design-to-code_answers.md`](results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md),
+      committed by path with the coordinating session's notes at `5ad19de`, the commit before this one). In its short
+      form, G-VER "runs as Code built it, with two additions and one rule on its ends" (§0). For the driver that is as
+      built, but for GV3's hash set, which it widened to every non-shard file of the weights folder (§1.2); its §2
+      says "§1.2's hash set and nothing else of this raw moves the driver".
+  - **The driver's bytes** are draft 4 (`55885e65…385f`, 6,224 lines; +1,019 −3 from HEAD's `4616f9c3…2553`):
+    - draft 2 built in the review's findings;
+    - draft 3 corrected one docstring (two lines), after the supplement's values-check (its observation 6);
+    - draft 4 carries the seat's §1.2: the constant `GVER_HASHED_FILES`; its pins, `gver_hashed_pins`, which refuse
+      unless the manifest entry's files less `*.safetensors` are exactly the eight; the hash check over the eight,
+      with its INTEGRITY wording; and the record's field `hashed_files`, formerly `tokenizer_files`. The seam and the
+      parameters follow (`hashed_pins`, formerly `tokenizer_pins`), renamed by `sed` over the G-VER section's lines
+      alone. Outside that section the driver is draft 3's but for the module docstring's `gver` paragraph, which now
+      cites the seat's raw for the starred seven and gives step 4, GV3's line and the PINs' header as ruled; the other
+      stages' uses of `ids.TOKENIZER_FILES` stand as draft 3's.
+    - that is more than the seat's "one constant and the record's field" (its §2): a function, the renames, the
+      refusal's wording and the docstring, 118 lines in and 89 out. Code reads them as what that constant and field
+      need; the seat may rule otherwise.
+  - **The .gitignore:** +7 lines, its second draft (`81f5f227…b610`).
+    - Admitted: `data/n/gver/gver.json` alone. The atomic write's temporary stays ignored.
+    - The review read the first draft (`2e105c34…d8a8`), whose comment presupposed the seat's answers to Q1 and Q5
+      (its F10). The second's comment does not.
+    - Both drafts were tested by dry-run adds in throwaway repositories in Code's scratch. Of a record, its
+      temporary, another file in its folder and a stray file under `data/n/`, only the record was added, beside
+      G-TIME-n's artifact, which the existing block admits.
+  - **The self-test:** [`2026-11-22_n-gver-build_selftest.txt`](results/raw/2026-11-22_n-gver-build_selftest.txt).
+    - Draft 1 ran "687/687 n selftest checks pass": HEAD's 634 plus 53. The window's request expected 688, and the
+      box's figure 699. Code had counted `cmd_selftest`'s wrapper "ran to its end", appended only on a raise, as a
+      check, and the coordinating session's grant confirmed 54 too. The run stood as run, on the coordinating
+      session's ruling as the window's grantor, with no re-run; the box's figure for draft 1 was 698. The request,
+      the grant and the ruling are outside the repository: Code's note in the sessions' notes folder (`634f7181…be88`)
+      and the coordinating session's messages.
+    - Draft 2 (`3df537d6…83c1`, 6,195 lines) ran "716/716": draft 1 with the review's findings built in, and 29 checks
+      more.
+    - Draft 3 (`8df113e4…3f02`, 6,195 lines) ran "716/716": draft 2 with one docstring corrected, which no check
+      reads.
+    - Draft 4, this BUILD's bytes, ran "717/717": draft 3 with §1.2's hash set, and one check more (a manifest entry
+      with a ninth non-shard file, and one without `vocab.json`, each refused).
+    - Each run had exit 0 and an empty stderr, in a battery window the coordinating session granted for its bytes. The
+      temporary folder was empty before and after, and after each run Q-F3's campaign (PID 8051) was the only Python
+      process. Runs 3 and 4 ran as the harness's background task, each waited on by its exit notice.
+    - The box's count, by arithmetic only, is 728.
+  - **The blind review** of draft 1:
+    - its report, with every disposition:
+      [`2026-11-22_n-gver-build_review.md`](results/raw/2026-11-22_n-gver-build_review.md);
+    - one BUG (F1, a record that could stand after a failed write), 11 findings (1 BUG, 6 RISK, 4 NIT), 17 surviving
+      mutants, 8 box risks and 7 observations; one departure;
+    - drafts 2–4 build in F1–F4, F6–F9 and F11, a kill for every mutant by Code's reading, and B2; draft 4 builds B4
+      as the seat ruled it (§1.2); and the `.gitignore`'s second draft builds F10;
+    - five items change what the seat's block says or asks (F3, F4, O3, O5 and B7). On the coordinating session's
+      routing they are in the supplement, `9b71bbb`, with F5 beside them (its §1.6). The seat ruled all six.
+  - **The values-checks:**
+    - the first, of these texts as drafted for draft 3: 121 items, 95 CONFIRMED, 12 IMPRECISE, 1 FAIL and 13 NOT
+      CHECKABLE, and 16 observations. The FAIL is fixed and every IMPRECISE item applied; every observation is applied
+      or met, the thirteenth by its final sweep. Its edits are checked by tool, 36 of 36 (this entry 21, the review raw
+      9, the self-test raw 6). Its report is committed whole, with every disposition:
+      [`2026-11-22_n-gver-build_valuescheck.md`](results/raw/2026-11-22_n-gver-build_valuescheck.md);
+    - the second, of these texts as redrafted for draft 4 and the seat's rulings: 110 items, 90 CONFIRMED, 5
+      IMPRECISE, 1 FAIL and 14 NOT CHECKABLE, and 10 observations. The FAIL is fixed and every IMPRECISE item applied;
+      every observation is applied, met or noted. Its edits are checked by tool,
+      21 of 21 (this entry 17, the review raw 2, the self-test raw 2). Its report is committed whole,
+      with every disposition:
+      [`2026-11-22_n-gver-build_valuescheck2.md`](results/raw/2026-11-22_n-gver-build_valuescheck2.md).
+  - **Model:** nothing ran on a model.
+  - **Declared, from the readings, the review and the seat's rulings:**
+    - **The nine unstarred readings** (GV2, GV3, GV5, GV7, GV8, GV10, GV12, GV15 and GV16) stand, as the seat ruled
+      (its §2), as the spec raw's §1 has them. The exceptions are GV3's environment, whose tokenizers 0.22.2 is now
+      held as one of GV4's pins (below); GV3's hash set, widened by §1.2; and GV12's two durations, now called a lower
+      bound of the pod time (F11). GV5's "This keeps 2 for G-VER's STOP alone" holds for `run_gver`'s own ends; the
+      supplement's §1.6 gives the process's other exits 2, and the seat's §1.4 reads every end. GV7 changes nothing
+      here: the campaign keeps its own G-VER. GV15 is the launch files', which follow this BUILD.
+    - **GV4, as built and as the seat accepted it (§1.2):** G-TIME-n's preparation where it binds a run that loads no
+      weights; the manifest's pin left to G-VER (L:543); cuBLAS's setting held by name and through R6 (F3);
+      tokenizers 0.22.2 held (F4); no schema stage identity. Not held: numpy's stream known answer, since nothing is
+      drawn.
+    - **GV3, as the seat ruled it (§1.2):** the eight non-shard files hashed at their pins, so what the tokenizer load
+      may read is moot (§0, §1.2); the shards stay at byte counts, their re-hash respawn step (i).
+    - **The ends, as the seat reads them (§1.4):** a refusal is not a G-VER-STOP, but every end but PASS goes to the
+      seat and the PI before anything else runs on the box. A refusal on a file's hash or byte count is the respawn
+      protocol's INTEGRITY incident (stop, touch nothing, escalate); one on the environment or the launch is a FAIL of
+      the launch, Code's to fix. Only the off-pin hash refusal's text names the INTEGRITY incident. The launch files
+      class the rest by what each REFUSED line names (§1.4). By Code's reading, these are of the INTEGRITY kind too: a
+      missing or symlinked one of the eight, `check_weights_folder`'s listing and byte counts, and `ids.load`'s sha256
+      and count. The seat may rule otherwise.
+    - **F2:** G-TIME-n has the same pattern, its loaders' own exceptions ending by traceback, there with exit 1 and
+      not GT6's 2. It is declared and not changed: G-TIME-n's run is of record.
+    - **B7, as the seat ruled it (§1.6):** the record is written once, so a re-run of record moves the committed
+      record aside first, by `git mv` to `results/raw/<date>_n-gver_<the old box>_gver.json` at the re-run's commit.
+      After a box change, G-VER re-runs last before the campaign.
+    - **Carried to G-VER's launch files** (to the coordinating session first):
+      - F5 and B5 (each end named by the exit code, the last line and the record's presence; stderr captured; the
+        supplement's §1.6);
+      - B3 (the cuBLAS setting exported);
+      - B6 (the copy-back checked against the printed record sha256, and on exit 1 no record standing before
+        anything is copied);
+      - B8 (the copy a checkout at this BUILD's commit);
+      - F11 (the wall time printed beside the record's two durations);
+      - the seat's §1.4 for a refusal on a hash or byte count (by Code's reading above, a missing or symlinked hashed
+        file too), as the coordinating session agreed it with the pod session. The pod session reports the REFUSED
+        line word for word, with the exit code and the last line; it
+        stops, touches nothing and escalates to the coordinating session at once; it copies the out file back only on
+        that session's word; and nothing re-launches until the PI and the seat have ruled.
+  - **Departures,** for the seat to class:
+    - Code's, from `d92500b`'s commit window on, from its own sweeps of its shell commands (`jq` over this session's
+      transcript). The first round's are the 109 commands from that window to the first sweep's record, and after it
+      the texts' and the first values-check brief's hashes, with line-width, placeholder and non-ASCII counts over the
+      texts and a `diff` of the brief's list of record against the seat brief's; the BUILD's 20 from before it, which
+      `d92500b`'s entry left to this one; and, after the first values-check's window, its final sweep's. The second
+      round's are below. Code knows of no others:
+      - **two forms the briefs bar,** first:
+        - `git status --porcelain -- data/[o]lmo`, with the bracketed pattern unquoted. zsh expanded it as a glob, so
+          one git process held the model folder's marker-named path in its argv. It was not Python, and it printed
+          nothing. Q-F3's campaign process (PID 8051) ran on (`ps`). The same command's first half, `git ls-files
+          data` into `/usr/bin/grep -E '^data/[o]lmo/'`, streamed every tracked name under `data/` into the pipe,
+          whatever its folder, the ckpt and reports folders' included; the grep printed only the model folder's;
+        - globs over `results/raw/` names in two commands, three `/usr/bin/grep` runs (`2026-11-2*_n-g*.md`;
+          `2026-11-1*_n-*.md`, `2026-11-1*_n-*.txt` and `2026-11-1*_n-*ids*.*`): 18, 88, 65 and 7 names, none holding a
+          marker, by a bracketed check of a name-only listing afterwards;
+      - **`d92500b`'s commit window:** the kit's place, gate (v8) and verify scripts and the message check, in the
+        forms `d92500b`'s entry declared for `7d01b02`'s window, with `git add` and `git commit` by the paths file. Its
+        done report's checks: `git rev-parse` and `git hash-object` of each committed path in a loop (none
+        marker-named), with `shasum`; `git diff -U0` of `RESULTS.md` to its hunk header; `git cat-file commit HEAD`
+        into `cmp`; `git diff --cached --name-only` with item 3's pathspec; and `git log -1 --format` of ids and the
+        commit time;
+      - **the BUILD's 20 commands before that window** (`d92500b`'s entry counted 21; its sweep's lines 2–21 are 20):
+        - `/usr/bin/grep -n` and `sed -n` over the driver, `resume.py` and `guard.py`;
+        - a name-only `ls` of G-TIME-n's draft and launch folders in scratch;
+        - draft 1's folder made, and HEAD's driver copied after its clean check;
+        - line-width and tab counts, and `git diff --no-index` (its default form, `--stat`, `--shortstat` and `-U1`),
+          over the drafts in scratch, with `/usr/bin/grep -c` counts of the delta's lines and of the self-test's
+          `chk(` calls and tampers (through `sed -n` of its range);
+        - `cat` of the package-digest script;
+        - the overlay's recipe compared with G-TIME-n's by `diff`, and `bash` of it (`git archive` with quoted
+          pathspec globs);
+        - the window request's hashes (`shasum` and `wc -l` of the note);
+        - the `.gitignore`'s first draft copied after its clean check, with `diff`, counts and `shasum`;
+        - a dry-run `git add --all` in a throwaway repository in scratch;
+        - run 1 in its window, and its files read by `cat`, `wc -l`, `tail` and `shasum`, with `pgrep -l python`;
+        - with the file-reading tool, which runs no process: the model manifest, once;
+      - **the review:** its brief's hash; its agent id appended to the gate's id list in scratch; `jq` over the
+        reviewer's transcript to take its report from its hand-back, with a count of local roots and ids over it; and
+        `sed -n` over `resume.py`;
+      - **draft 2:**
+        - `/usr/bin/grep -n` over `sessions.py`, `resume.py`, `keys.py` and `testing.py`;
+        - the copy, counts of the self-test's calls, tampers and argvs, and line-width checks;
+        - `git diff --no-index` deltas;
+        - the `.gitignore`'s second draft, and a dry-run add in a second throwaway repository;
+        - overlay2 by the recipe;
+        - the window request's hashes, with `/usr/bin/grep -c -F` of four hash tails in the note;
+        - run 2 in its window, and its files read;
+      - **the supplement:**
+        - `/usr/bin/grep -n` over the block and `RESULTS.md`, and counts over the drafts;
+        - the values-checker's brief's hash, its id appended to the gate's list, and `jq` over its transcript to take
+          its report from its hand-back, with a count of local roots and ids over it;
+        - a name-only `ls` of the HF cache, counted by a bracketed pattern, then printed with the model names masked;
+        - `sed -n` prints of the driver, `ids.py`, the answers raw (ans21b), `LOCK-n.md`, the block, `d92500b`'s
+          values-check raw (with a `/usr/bin/grep -n` of its headings), draft 2, the review and the values-checker's
+          brief;
+        - `/usr/bin/grep` over committed raws (the globs above), over `ids.py` and the driver, and over memory notes:
+          one recursive `/usr/bin/grep -l` over the memory folder, by its path alone, three named notes and the
+          memory index;
+        - a name-only `ls` of the scratch folder and of the renders' tokenizer folder, `shasum` of its three files and
+          `wc -l` of two;
+        - `cat` of the seat folder's edits-check and commit-build scripts and of its edits list (into `head`);
+        - `bash` of the edits' replay script, with item and verdict counts over the saved report (`/usr/bin/grep`,
+          `sed`, `sort`, `uniq -c`);
+        - `sed -n` of `RESULTS.md`'s `d92500b` entry into `/usr/bin/grep` counts, and two `while read` loops of line
+          lengths over it and the commit's entry draft;
+        - `ps -p 8051`;
+        - `jq` over this session's transcript, for the edits' replay and to find earlier commands' forms;
+        - `od -c` of file ends;
+        - `cat` of the kit's gate and of the seat commit's kit files, and a name-only `ls` of the sessions' notes
+          folder;
+        - gate v9 copied from v8, with `diff`;
+        - the commit kit's assembly (`zsh` of its build script), the message check, two dry-run gates, the rewrap's
+          check script (`tr`, `diff`, `cmp`), and the window request's hashes;
+        - `pgrep -i python`.
+
+        With the file-reading tool, which runs no process: the model manifest and the renders'
+        `tokenizer_config.json`, for the supplement's §1.4;
+      - **`9b71bbb`'s commit window:** the six steps, the kit's scripts in the same forms (gate v9). Its done report's
+        checks: `git show HEAD:<path>` into `shasum` and `wc -l` for the commit's three paths; `git diff -U0
+        --no-renames` and `git diff --numstat` of `RESULTS.md`; `git cat-file commit HEAD` into `cmp`; `git diff
+        --name-only` with the pathspecs; and `git rev-parse origin/main`;
+      - **draft 3:**
+        - `sed -n` and `/usr/bin/grep` over draft 2, and `cat` of the overlay's recipe;
+        - the copy, and `diff` and `git diff --no-index` against draft 2 and HEAD's driver (`git show
+          HEAD:scripts/n_sessions.py` into `diff`);
+        - `/usr/bin/grep` over draft 3 (for `__doc__`, `getsource` and `inspect.`), `wc -l` of the two deltas, and
+          line-width counts over draft 3 and HEAD's copy, one by a `while read` loop;
+        - overlay3 by the recipe, compared with overlay2 by `diff -rq`;
+        - the window request's hashes;
+        - run 3 in its window, as the harness's background task, waited on by its exit notice;
+        - its files read by `cat`, `wc -l`, `wc -c` and `shasum`, with a name-only `ls -A` of the overlay's scripts
+          folder;
+      - **the first round's texts and sweep:**
+        - `git show d92500b:RESULTS.md` through `sed -n` and `/usr/bin/grep`;
+        - `wc`, `head -c` and `sed -n` over the seat's sweep files, into `jq`;
+        - `jq` over this session's transcript for the sweep. Its first run's bound was a timestamp string that sorted
+          the window's first command out, so it ran again;
+        - the globs' bracketed check, `ls results/raw` into `/usr/bin/grep`;
+        - bracketed counts of marker words and of loops over the swept commands' text;
+        - `cat` of the package-digest script, and its `bash` over HEAD's clean `valence_core/n`, after a `git diff
+          --name-only` and a `git ls-files -o` of that folder;
+        - line-width, ASCII and leak counts over the texts;
+        - the review raw's assembly (`cat` of its head and the report), with counts and `od -c` over the report, and a
+          `/usr/bin/grep -n -A 3` of G-TIME-n's committed review raw for its form;
+      - **throughout:** writes in scratch alone (copies, versioned drafts, redirects, `mkdir` and the throwaway
+        repositories), beside the two commit windows' writes in the repository (the place script's files and
+        `RESULTS.md`'s entry, the index and the commit); and the runs' `cd jl*/.venv/bin`, a glob expanded by zsh's
+        builtin `cd`, so that no process's argv held it, the form `1641948` declared and the seat classed inert;
+      - **after the first values-check's brief's hash,** from Code's final sweep (6 commands):
+        - the checker's id written to the gate's next id list in scratch, with `cat` of it, and gate v9 copied to v10;
+        - `jq` over the checker's transcript to take its report from its hand-back, with `wc -l`, `shasum`, counts of
+          local roots, ids and fence lines, `head -1`, and `tail -c 1` into `od -c` over the saved report;
+        - `sed -n` prints of G-VER's spec raw and `RESULTS.md` for the dispositions, and `shasum`, `wc -l` and
+          `/usr/bin/grep -n` of the draft-1 window request's note;
+        - `cp` of the three texts to their v2 files, with `shasum`;
+        - line-width counts over the v2 files (a `for` loop over the three with `wc -l` of each, and a `while read`
+          loop, `wc -m` of each line), a non-ASCII count and their placeholders;
+        - `jq` over this session's transcript for this sweep, with bracketed counts of marker words and of the
+          campaign folder's plain name over it (both 0);
+      - **the second round, after that sweep,** from Code's second sweep (26 commands to its record):
+        - the first round's edits' replay, twice (`bash` of its script, which runs `jq` over this session's
+          transcript, and `cmp`), with item and verdict counts over the first values-check's report (`/usr/bin/grep`,
+          `sed`, `sort`, `uniq -c`), `shasum` of the script, its output and the v2 texts, `wc -l` of the entry, and a
+          `/usr/bin/grep -n` for its placeholder;
+        - `shasum`, `wc -l`, line-width and leak counts over the first values-check raw's parts;
+        - the first round's commit kit: `zsh` of its build script, with a `/usr/bin/grep -n` of the filled line; the
+          message check, with `wc -l` and `wc -c` of the message; `diff` of gate v9 and v10, with `wc -l` of v10; the
+          kit's dry-run gate, with `cat` of its output; `git rev-parse HEAD` and `git diff --name-only` with the
+          pathspecs; the splice checked by `diff`, `git diff --no-index -U0` and `cmp` over its `RESULTS.md` copies in
+          scratch; `sed -n` of the place script; `wc -m` of the filled line; `pgrep -i python`, twice; and the first
+          commit window request's hashes, since withdrawn;
+        - the seat's raw, untracked: `shasum`, `wc -c` and `wc -l`, and `git status --porcelain` and `git ls-files` of
+          its path. It was read whole with the file-reading tool;
+        - draft 4:
+          - `/usr/bin/grep -n` over draft 3; draft 4's folder made and draft 3 copied in; `sed -n` of `ids.py` and of
+            draft 4's ranges;
+          - the renames by `sed -i` over draft 4's G-VER section, in scratch, checked by `diff` against draft 3 outside
+            the section and by `/usr/bin/grep` counts inside it;
+          - `/usr/bin/grep` over draft 4, one through a `while read` loop of its section's lines; line-width and tab
+            counts, and `wc -l`;
+          - `git diff --no-index` deltas (`-U0`, `--shortstat` and its default form) with `/usr/bin/grep -c` counts and
+            a `sed -n` print of the delta from draft 3; a `for` loop of `shasum` and `wc -l` over draft 4 and its two
+            deltas; `git rev-parse HEAD` and `git diff --name-only` with the pathspecs;
+          - a `for` loop over drafts 3 and 4, counting the self-test's `chk(` calls, tampers and argvs (`sed -n` into
+            `/usr/bin/grep -c`);
+        - overlay4 by the recipe (`git archive` with quoted pathspec globs), after the recipe's digest was checked, and
+          compared with overlay3 by `diff -rq`; a name-only `ls -A` of the temporary folder; a `for` loop of existence
+          tests over run 4's three output files; and `pgrep -i python`;
+        - the window request's hashes;
+        - run 4 in its window, as the harness's background task, waited on by its exit notice; its files read by
+          `cat`, `wc -l`, `wc -c`, `/usr/bin/grep -c` and `shasum`, with a name-only `ls -A` of the temporary folder
+          and of the overlay's scripts folder, and `pgrep -i python`;
+        - the second round's folder made, and the first round's texts copied in, with `shasum`;
+        - `jq` over this session's transcript for this sweep, with bracketed counts of marker words, of the campaign
+          folder's plain name (both 0) and of loops.
+
+        After it, in three commands:
+        - line-width, ASCII, placeholder and leak counts over the second round's texts (a `for` and a `while read`
+          loop, with `wc -l`), the review raw's heading found by `/usr/bin/grep -n` and its report part hashed (`sed -n`
+          into `shasum`);
+        - a `for` loop of `shasum` and `wc -l` over the texts and the brief's other named files, with `git rev-parse
+          HEAD` and the seat raw's `shasum` and `git ls-files`;
+        - a `diff` of the brief's list of record against the seat brief's (`tail`, `sed -n`), a `sed -n` print of the
+          review raw's lines 135–137, and the second values-check brief's hash and `wc -l`. The checker's bracketed
+          counts over these three are 0 marker words and 0 plain campaign names;
+      - **after the second values-check's brief's hash,** from Code's final sweep (4 commands):
+        - the second checker's id written to the gate's next id list in scratch, with `cat` of it, and gate v10 copied
+          to v11;
+        - `jq` over the second checker's transcript to take its report from its hand-back, with `wc -l`, `shasum`,
+          counts of local roots, ids, fence lines and (bracketed) marker words, `tail -c 1` into `od -c`, and `git
+          rev-parse HEAD`;
+        - `cp` of the three texts to their v2 files, with `shasum`;
+        - `jq` over this session's transcript for this sweep, with bracketed counts of marker words and of the
+          campaign folder's plain name over it (both 0).
+
+        After it: the edits' replay (`bash` of its script, which runs `jq` over this session's transcript, and `cmp`),
+        the values-check raw's and the commit kit's assembly in scratch, the kit's dry-run gate, and the window
+        request's hashes.
+
+      Code's bracketed count of marker words and of the campaign folder's plain name over the swept commands' text is
+      0. Every glob and loop among them was checked by name. But for the first item above, no guard marker stood in
+      any argv. Nothing under a ckpt or reports folder or Q-F3's folder was read, sized or timed;
+    - the reviewer's, as its report states it: one glob in a grep's arguments, `valence_core/n/*.py`, before the folder
+      was listed. No name there holds a guard marker, so none reached an argv, and it was not a loop;
+    - the first BUILD values-checker's, as its report states them:
+      - one command's text held a stray environment assignment, `awk_free=0`, before a `sed`. No awk ran, but the word
+        stood in the command's text;
+      - `sed` as a filter and for masking, a script language outside the brief's list, declared for classing;
+      - reads of the transcript beyond its shell commands and their results: the review's prompt, hashed only; the
+        file-reading tool's calls, classed by bracketed patterns, with only counts and times printed; one
+        file-reading result, its `tokenizer_class` line only; and record kinds and stamps around run 3's end, with no
+        content;
+      - once, more printed than a finding needed: one command's output in full, about 100 names under the model
+        folder, masked;
+      - `git ls-files -o --exclude-standard -- results/raw` and `git show --name-only --format= 9b71bbb --
+        results/raw`, a non-data folder named without item 3's exclusions. Neither reached anything under `data/`;
+      - a name-only `ls` of `data/` into `/usr/bin/grep -c -x` with a bracketed pattern, so that `data/`'s child names
+        went into the pipe, the campaign folder's own name among them. Only a count printed, and nothing under any
+        child was listed;
+      - two commands that misfired harmlessly: an `echo ==` that zsh's `=` expansion stopped after a `sed -n` of a
+        committed raw, and a `$c:` modifier and a `head -c 0` that gave errors;
+    - the second BUILD values-checker's, as its report states them:
+      - three commands that misfired harmlessly: an `echo ======` that zsh's `=` expansion stopped after a `cat -n` of
+        the overlay recipe; a `$c:scripts/…` that zsh read as a history modifier ("bad substitution"), in a loop over
+        commit ids, re-run with braces; and a `cat -A`, not a flag on this system, which printed nothing;
+      - `sed` as a filter, to mask digit runs and shorten the scratch root in printed output, beside `cut`, `od -c`,
+        `cmp`, `diff` and `tr`; `sed` runs a script language outside the brief's list, so it is declared for classing;
+      - git forms without item 3's exclusions:
+        - `git diff --name-only HEAD`, `git ls-files -o --exclude-standard` and `git log -1 --format`, with
+          `valence_core/n` (a non-data folder) as the pathspec;
+        - `git ls-files -o --exclude-standard -- results/raw`, counted only;
+        - `git diff --name-only HEAD` and `git ls-files` with the quoted pathspec `'data/ol*/manifest.json'` alone, a
+          data file named by a quoted glob so that no marker stood in the argv. It matched one file outside any ckpt
+          or reports folder, and only counts printed;
+      - reads of the transcript beyond its shell commands and their results: a census of record types over the whole
+        transcript, the last assistant record's stamp, and the names and stamps, with no input, of the tool calls
+        after 18:49:16Z;
+      - twice, more of the transcript printed than a finding needed: one command's output (lines 25–80 of the kit's
+        place script) and another's list of over-width lines;
+      - two redundant `jq` runs, their output sent to `/dev/null` with nothing written, and `wc -l` of the
+        transcript;
+    - the supplement's values-checker's are in its own entry (`9b71bbb`).
+  - **The gate.** The review's, the supplement's values-checker's and the two BUILD values-checkers' agent ids are in
+    the commit gate's id list (a new version of Code's gate script), so the commit is checked to carry none of them.
+  - **Committed by path:**
+    - `scripts/n_sessions.py` and `.gitignore`;
+    - the review raw, the self-test raw, the two values-check raws and this entry.
+
+    The package's digest at the commit is `06b55761…1d39`, by the kit's verify. The commit-time count of the
+    home-folder prefix over the staged diff is 0. Not pushed. G-VER's launch files follow, to the coordinating session
+    first, and the box's run follows its relay (the PI's N.2,
+    [`2026-11-22_first-sitting_pi-routing.md`](results/raw/2026-11-22_first-sitting_pi-routing.md), committed at
+    `5ad19de`).
+
 - 2026-11-22 — **The coordinating session's notes on the seat's first sitting of 2026-11-22: G-VER's starred seven
   and the supplement ruled, the raw committed here by path; the PI's routing, "PI: route as given"; three close lines
   (item 5); the relays; G-VER's BUILD windows and the two commits since `cd6b30d`; the nudge; and the push to come
