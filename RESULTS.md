@@ -21,6 +21,63 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-22 — **n — a supplement to the seven starred readings before G-VER's run: GV4's pins corrected and added
+  to, GV5's ends as the launch reads them, and clauses added to Q2, Q4 and Q6, from the BUILD's blind review (code →
+  design; the n-build session). STOP for the seat's read, in the same sitting as `d92500b`.**
+  Block:
+  [`2026-11-22_n-gver-starred-seven-supplement_code-to-design_STOP.md`](results/raw/2026-11-22_n-gver-starred-seven-supplement_code-to-design_STOP.md).
+  - **Where things stand:**
+    - The seven are committed at `d92500b`, for the same sitting. The coordinating session has asked the PI to hold
+      the seat's nudge, so that one nudge carries `cd6b30d`, `d92500b` and this supplement. The PI's word governs the
+      nudge.
+    - G-VER's draft 1 had one blind review, which found one BUG and six RISKs. Five of its items change what the
+      block tells the seat, or add to its questions: F3 and F4 in GV4, O3 for Q4, O5 for Q2 and B7 for Q6. The
+      coordinating session routed them here, ahead of the BUILD, and the driver's fixes to the BUILD's entry. On this
+      supplement's values-check (its one FAIL and its first observation), Code adds a sixth: F5, G-VER's ends as the
+      launch reads them.
+    - G-VER's BUILD is not committed. Its commit follows this one, with the review's report whole and the self-test of
+      the driver it commits. Draft 2 ran its self-test, 716 of 716, in its own battery window. A later draft, for one
+      stale docstring line, gets its own window first.
+  - **The supplement:**
+    - §0, the short form;
+    - §1:
+      - GV4's cuBLAS setting is held, through R6, and draft 2 also checks it by name (F3);
+      - tokenizers 0.22.2, L §17's, is held by draft 2 before G-VER and in the record's check (F4);
+      - for Q4: when GV4's correction reaches `verify` (O3);
+      - for Q2: what the tokenizer load may read, `config.json` among it; the pinned `tokenizer_config.json`, read
+        since the review, names `"tokenizer_class": "GPT2Tokenizer"` (O5);
+      - for Q6: what a re-run needs (B7);
+      - GV5's ends, as the launch reads them: exit 2 is also a usage error's, before the stage runs (F5);
+    - §2: the five clauses added to Q2, Q4 and Q6. The block's Q1–Q7 stand.
+  - **The dependencies:** G-VER's run waits for the seat's answers on Q1–Q7, with this supplement's clauses, for the
+    BUILD's commit, and for the launch files' relay to the box, as the block's list has them.
+  - **Model:** nothing ran on a model.
+  - **Values-check:** one blind values-check of the supplement and this entry, as drafted: 62 items, 43 CONFIRMED, 4
+    IMPRECISE, 1 FAIL and 14 NOT CHECKABLE, and 12 observations. The FAIL is fixed, with F5 added as the
+    supplement's §1.6. Every IMPRECISE item is applied. Every observation is applied but the sixth, a stale docstring
+    line in draft 2, which goes to the BUILD's next draft. The edits are checked by tool, 27 of 27 (the supplement 22,
+    this entry 5; one line rewrapped since, whitespace only). The report is committed whole, with every disposition:
+    [`2026-11-22_n-gver-starred-seven-supplement_valuescheck.md`](results/raw/2026-11-22_n-gver-starred-seven-supplement_valuescheck.md).
+  - **Departures,** for the seat to class:
+    - Code's, from `d92500b`'s commit window on, are in the BUILD's entry, which follows;
+    - the values-checker's, as its report states them:
+      - one command, refused by the session's permission check, never ran. Its grep pattern held a guard marker in
+        plain form in the command text. The checker then read the file with its file-reading tool only;
+      - for classing, within item 1 as the checker reads it: `git ls-files -s` with item 3's pathspec, filtered by a
+        bracketed pattern; `git hash-object --stdin-paths`, the path on stdin; `git diff --name-only HEAD` with the
+        pathspec and the campaign's exclusion, counted; `wc -l` and `grep -c` on the named scratch files; and
+        `git show cd6b30d:RESULTS.md` through `sed -n`;
+      - reads of committed raws the texts do not name, which the brief did not bar: G-TIME-n's out and run raws, greps
+        of its launch raws for the cuBLAS setting and `env.sh`, its BUILD review's B7, and the BACKEND extension's
+        G-VER and WEIGHTS lines.
+  - **The gate.** The BUILD review's and this values-checker's agent ids are in the commit gate's id list (a new
+    version of Code's gate script), so the commit is checked to carry neither.
+  - **Committed by path:**
+    - the supplement;
+    - the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-VER's BUILD follows.
+
 - 2026-11-22 — **n — seven starred readings for the seat before G-VER's run: GV1, GV4, GV6, GV9, GV11, GV13 and GV14
   (code → design; the n-build session). STOP for the seat's read.**
   Block:
