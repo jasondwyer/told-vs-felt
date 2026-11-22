@@ -1,0 +1,52 @@
+STAGE G-TIME-n: stage time, under LOCK-n v0.1 88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5; root data/n/ckpt/time, report data/n/reports/time.json, artifact data/n/gtime/gtime.json; the benchmark under /workspace/nsite/work-gtime-v1/bench
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 4616f9c31f212f38af89023691a9ab713320d42360b71f4c0fba8fc3bf632553: HEAD's committed bytes
+LOCK-n v0.1's inputs (GT4): G-VEC's record 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0, site 32, valence ba4da67fb717b5bb; G-CAL-n's record 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f and dose map d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3: d_eq 0.2869170055735837, d_20 0.5738340111471674
+identity: stage time, sha256 879c9602f8997b716094b152e66421824773ed186e35741ccd571ac62f740cf8; C 0.25, p0 1 of 26, alpha 0.01, the tile 160; directions {'valence': 'ba4da67fb717b5bb'}; no cap
+plan 0 N1-V|none|0|floor_b0/0 dose-rule
+plan 1 N1-V|none|0|floor_b6/32 dose-rule
+plan 2 N1-V|none|0|neu_b1/64 dose-rule
+plan 3 N1-V|none|0|neu_b2/95 dose-rule
+plan 4 N1-V|none|0|neu_b4/127 dose-rule
+plan 5 N1-V|none|0|neu_b5/159 dose-rule
+plan 6 N1-V|valence|+1|floor_b0/0 dose-rule
+plan 7 N1-V|valence|+1|floor_b6/32 dose-rule
+plan 8 N1-V|valence|+1|neu_b1/64 dose-rule
+plan 9 N1-V|valence|+1|neu_b2/95 dose-rule
+plan 10 N1-V|valence|+1|neu_b4/127 dose-rule
+plan 11 N1-V|valence|+1|neu_b5/159 dose-rule
+plan 12 N1-V|valence|+1/2|floor_b0/0 the cached path alone
+plan 13 N1-V|valence|+1/2|floor_b6/32 the cached path alone
+plan 14 N1-V|valence|+1/2|neu_b1/64 the cached path alone
+plan 15 N1-V|valence|+1/2|neu_b2/95 the cached path alone
+plan 16 N1-V|valence|+1/2|neu_b4/127 the cached path alone
+plan 17 N1-V|valence|+1/2|neu_b5/159 the cached path alone
+the campaign (GT8): N 7680 reads; K 3637 re-computations (3040 dose-rule, 597 keyed sample); 138 cells; its read_plan_sha256 the lock's
+G-VER (G-TIME-n's start, not of record; GT7):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12375 ms
+read 0 s=0 N1-V none 0 fid=0.002709 <= TAU ms=955
+read 1 s=32 N1-V none 0 fid=0.000000 <= TAU ms=655
+read 2 s=64 N1-V none 0 fid=0.005674 <= TAU ms=708
+read 3 s=95 N1-V none 0 fid=0.000000 <= TAU ms=703
+read 4 s=127 N1-V none 0 fid=0.005878 <= TAU ms=639
+read 5 s=159 N1-V none 0 fid=0.000000 <= TAU ms=667
+read 6 s=0 N1-V valence +1 fid=0.004400 <= TAU ms=707
+read 7 s=32 N1-V valence +1 fid=0.002928 <= TAU ms=689
+read 8 s=64 N1-V valence +1 fid=0.000000 <= TAU ms=722
+read 9 s=95 N1-V valence +1 fid=0.000000 <= TAU ms=652
+read 10 s=127 N1-V valence +1 fid=0.002858 <= TAU ms=674
+read 11 s=159 N1-V valence +1 fid=0.000000 <= TAU ms=669
+read 12 s=0 N1-V valence +1/2 fid=- ms=380
+read 13 s=32 N1-V valence +1/2 fid=- ms=314
+read 14 s=64 N1-V valence +1/2 fid=- ms=391
+read 15 s=95 N1-V valence +1/2 fid=- ms=284
+read 16 s=127 N1-V valence +1/2 fid=- ms=383
+read 17 s=159 N1-V valence +1/2 fid=- ms=318
+end COMPLETE: 18/18 reads; report time.json
+I/O benchmark (GT9 (i)): 160 appends of the stage's read 6 (N1-V|valence|+1), re-keyed to BK's runs 0.. in turn, in a temporary folder under /workspace/nsite/work-gtime-v1/bench, removed at its end
+model time (GT8; the cap's basis): N 7680 x median c 329.0 ms + K 3637 x median f 344.0 ms = 3777848.0 ms = 1.0494022222222221 h; at the maxima (589.0, 373.0 ms) 5880121.0 ms = 1.6333669444444445 h; over 18 reads, 12 re-computed
+beside, unused (A-n2:40): the extension's 309.0 and 357.1 ms give 3671892.7 ms = 1.0199701944444446 h
+pod hours beside the cap, outside it (GT9): loads [12375] ms; the I/O by the append benchmark (option (i)): a 176.49166218944094 ms + b 8.642846859252316 ms per record already in the cell, over the campaign's 138 cells: 7680 a + 322560 b = 4143292.6485353336 ms = 1.1509146245931483 h; the stage's own per-read I/O, median 401.586 ms over 17 reads (option (ii), a lower bound: 3084180.48 ms); not measured: the captures' copy-back (about 4.9-5.0 GB at the campaign's 7,680 rows: the schema's CAPTURES); G-VER of record (n v0.2 §8 step 12); the campaign's resumes
+artifact data/n/gtime/gtime.json sha256 d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec
+G-TIME-n COMPLETE: the projections are for the PI's cap at LOCK-n v1.0 (GT16)

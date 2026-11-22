@@ -1,0 +1,5 @@
+gread-bench (GT10; G-READ-n's fits on the laptop's CPU, outside the box's cap): numpy 2.5.1, python 3.12.9, 14 CPUs; probe.py's grouped 10-fold call at its pinned settings, 10 calls at each shape, d_model 5120
+counts: 6 results x 31 layers x (1 + 200 shuffles) = 37386 calls on 320 rows; 4 random points x 24 directions x 31 layers = 2976 calls on 80 rows; 403620 fits in all
+primary ms per call: [249.722, 248.956, 247.203, 252.817, 245.179, 249.59, 243.285, 259.071, 244.561, 244.502]
+comparator ms per call: [87.846, 86.364, 88.149, 86.171, 87.353, 91.312, 89.203, 89.219, 89.884, 95.277]
+projection: 37386 x median 248.0795 ms + 2976 x median 88.676 ms = 9538599.963 ms = 2.6496111008333334 h; at the maxima 9969172.758000001 ms = 2.7692146550000003 h

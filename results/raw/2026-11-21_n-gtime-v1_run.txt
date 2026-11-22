@@ -1,0 +1,240 @@
+n step 11 -- G-TIME-n on n's box, pod emw1e4embiwe9b (H100 SXM): the smoke and then the run of record, by gtime_v1.sh
+from G-TIME-n's BUILD 91f0d35, in a fresh sparse copy, as run by the pod session. The seat ruled Q1-Q8 at its second
+sitting of PI date 2026-11-21 (results/raw/2026-11-21_n-gtime-starred-seven_design-to-code_answers.md, 813de3db…6157),
+and the PI routed it: "PI: route as given". Its item N.3 [go], verbatim as the coordinating session relayed it:
+"G-TIME-n's launch: launch note v2 (the copy-back of item 2; the smoke's two ends as the coordinating session named
+them; the shadow cell's arrays' copy timed as a rate sample if it costs a line); relay; the box's smoke, then the run
+of record with the benchmark; gread-bench in a laptop battery window; the entry with the projections for the PI; then
+G-VER's launch files (step 12) without waiting for the seat. [go]". Its C.8: "8. The box emw1e4embiwe9b: up through
+G-TIME-n, G-VER and the campaign. [stays up]". The coordinating session's relay: "Launch cleared: G-TIME-n, on launch
+files v2." The PI's word on the open choice, the folder for the two steered cells' JSON, relayed verbatim: "Yes that
+is good". No pod address or port in this file. The run's own output is gtime_v1_out.txt (all of stdout and stderr,
+unedited); its exit file is gtime_v1.exit, which holds "exit N". The launch was announced to the coordinating session
+before it started, naming gtime_v1.sh and its sha256, the box names and the command.
+
+RESULT: gtime v1 COMPLETE, exit 0. The smoke held, and the run of record read its 18 reads, ran the append benchmark
+and wrote the report, the artifact and the three cells in the copy. Every check of the script held (0 in each). The
+run's projection lines, its artifact line and its end line, as printed (run.txt):
+  "model time (GT8; the cap's basis): N 7680 x median c 329.0 ms + K 3637 x median f 344.0 ms = 3777848.0 ms = 1.0494022222222221 h; at the maxima (589.0, 373.0 ms) 5880121.0 ms = 1.6333669444444445 h; over 18 reads, 12 re-computed"
+  "beside, unused (A-n2:40): the extension's 309.0 and 357.1 ms give 3671892.7 ms = 1.0199701944444446 h"
+  "pod hours beside the cap, outside it (GT9): loads [12375] ms; the I/O by the append benchmark (option (i)): a 176.49166218944094 ms + b 8.642846859252316 ms per record already in the cell, over the campaign's 138 cells: 7680 a + 322560 b = 4143292.6485353336 ms = 1.1509146245931483 h; the stage's own per-read I/O, median 401.586 ms over 17 reads (option (ii), a lower bound: 3084180.48 ms); not measured: the captures' copy-back (about 4.9-5.0 GB at the campaign's 7,680 rows: the schema's CAPTURES); G-VER of record (n v0.2 §8 step 12); the campaign's resumes"
+  "artifact data/n/gtime/gtime.json sha256 d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec"
+  "G-TIME-n COMPLETE: the projections are for the PI's cap at LOCK-n v1.0 (GT16)"
+The last line of the output, as printed:
+  "gtime v1 COMPLETE: copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, smoke exit=0; checks (0 = held, 9 = not run): smoke prints 0, smoke outputs 0, smoke identity 0, copy after the smoke 0, bench after the smoke 0; run exit=0; prints 0, outputs 0, identity 0, changed set 0, bench after the run 0"
+The checks are of form and consistency, never of a timing's value (the note; GT16): the figures are for the PI's cap
+at LOCK-n v1.0, on the seat's recommendation after its read of the record. Nothing is re-run.
+
+1. FILES. From n-build's scratchpad/step4b/gtime/launch/, re-hashed on the laptop before shipping and on the box after:
+     gtime_v1.sh                   eeee8c2e66f78fa99f522f2eb5e54adc80a16f1e2504e38d17196355cff139b6 (519 lines, read in full; COMMIT
+                                   91f0d35efd73ee5754b6c69a742689a89abea995; its DRIVER_SHA256 equal to
+                                   scripts/n_sessions.py in the copy at 91f0d35, 4616f9c3…2553)
+     gtime_manifest_v1.txt         84550072ddd4ad1e86a18e1f75fb91459de5eca794c3c7c5698dd5577f50957b (66 lines, read in full)
+     gtime_hashes_v1.txt           a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b (13 lines, read in full)
+   The launch note, gtime_launch_note_v2.md (87a1d360…3cd0, 271 lines), was read in full and stays on the laptop. All
+   four files equal the values the coordinating session relayed with the clearance, by tool. The three box files went
+   to /workspace/nsite/gtime-v1, a new folder, by tar over ssh, with no Mac metadata on the laptop side and no ownership
+   and no '._*' on the box side. The folder holds exactly its three names, none dotted. Every box name was checked
+   first by an existence test alone; the note's proposed names were used, and none collided.
+
+2. THE BOX, BEFORE: the note's respawn statement. box_state13.sh (9022ab72…1671), read-only, found:
+   - the same pod: env.sh's RUNPOD_POD_ID is emw1e4embiwe9b;
+   - no restart since G-CAL-n's run: the container's PID 1 started before G-CAL-n's exit file, which still reads
+     "exit 0", was written (two ages compared, PID 1's elapsed time and the exit file's age; neither printed);
+   - the volume as the pod session left it: the 14 kept folders present by name (G-CAL-n's five, G-VEC v2's five,
+     the four the PI kept) and cleanup v1's 26 folders absent by name; the box checkout main at ad856f0 and clean (the
+     bare form); refs/bundles/n-site12 at 0744136 and n-site11 at bc50244;
+   - the new names free: sync13, gtime-v1, copy-gtime-91f0d35, work-gtime-v1, out-gtime-v1 and refs/bundles/n-site13;
+   - the GPU (NVIDIA H100 80GB HBM3) at 0 MiB, with no interpreter job and no compute app.
+   The pod was neither restarted nor replaced, so neither respawn step ran, as the note says for this box.
+
+3. THE SYNC, the note's step 1, as G-CAL-n's. A bundle of 0744136..main was made on the laptop, with main at 101026c
+   before and after it was made (its head 101026c refs/heads/main; it verified on the laptop; sha256 40554c13…eed3,
+   602,964 B). It was shipped with the pod session's sync and copy scripts to /workspace/nsite/sync13 (new) and
+   fetched into the box repo under a new side ref, refs/bundles/n-site13 -> 101026c, 14 commits after 0744136 and
+   containing 91f0d35; the prerequisite was in the box repo under refs/bundles/n-site12. The range's contents were
+   transported, not read (the fourth sitting's s7). There was no fast-forward: the box checkout stayed at ad856f0 and
+   clean (the bare form).
+
+4. THE COPY, the note's step 2. /workspace/nsite/copy-gtime-91f0d35 is G-TIME-n's fresh copy, new:
+   - a local clone of the box checkout with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone, in the note's form: '/*' '!/data/m[f]3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - detached at 91f0d35 (held through refs/bundles/n-site13), clean three ways (the bare form; with --ignored; and in
+     the script's own step-0 form: optional locks off, the global excludes file off, --untracked-files=normal
+     --ignored), with nothing extracted over it.
+   The globs data/m[f]3, data/*/ckpt and data/*/reports matched nothing, each compared with its literal form, so none
+   of data/n/ckpt/time and data/n/reports/time.json was present; data/n/gtime was absent. data/n/gvec held exactly the
+   commit's 6 names there, data/n/gcal its 3 and data/n/ids its 7. The driver, LOCK-n.md, gvec.json,
+   directions_L32.npy, gcal.json and dose_map.json were at the script's pins; data/n/bk and the characterization's raw
+   and artifact were present. /workspace had 155G available of 466G before the clone and 154G available of 466G after. G-TIME-n copies nothing in.
+   The note's step 3: command -v git shasum sed grep cmp on the box gave /usr/bin/git, /usr/bin/shasum, /usr/bin/sed,
+   /usr/bin/grep and /usr/bin/cmp, exit 0.
+
+5. RUN, the note's step 4. Before the launch (launch_gtime1.sh, 4f88cce3…f8de):
+   - no interpreter job and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at 0 MiB of 81559 MiB;
+   - the three files on the box at the relayed hashes; git, shasum, sed, grep and cmp present; the copy at 91f0d35,
+     clean three ways, and holding none of data/n/ckpt/time, data/n/reports/time.json and data/n/gtime;
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8;
+   - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2.
+   The command ran under nohup in the background. It is G-CAL-n's command with G-TIME-n's names, held in a quoted
+   heredoc and checked equal by cmp to the pod session's held copy, its sha256 55a4738f…84fd at the laptop and at the box:
+     ( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/gtime-v1/gtime_v1.sh /workspace/nsite/copy-gtime-91f0d35 /workspace/venv/bin/python /workspace/nsite/work-gtime-v1 ) > /workspace/nsite/out-gtime-v1/gtime_v1_out.txt 2>&1; echo "exit $?" > /workspace/nsite/out-gtime-v1/gtime_v1.exit
+   The out folder /workspace/nsite/out-gtime-v1 was made just before; the work folder did not exist, and the script
+   made it. The wrapper's PID was 12658, the nohup'd bash -c, alive on a kill -0 check after the start. The end-wait
+   was on the PID alone, with no stat, listing, tail, Monitor or read of the run's outputs until it had ended.
+
+6. OUTCOMES (the pod session's reading; n-build reads the whole output, 231 lines, read here in full):
+   step 0, the copy                     held, as printed:
+      "the copy: HEAD 91f0d35efd73ee5754b6c69a742689a89abea995"
+      "the copy: changed set none; none of data/n/ckpt/time, data/n/reports/time.json and data/n/gtime present"
+   step 1, the manifest                 66 of 66 OK
+   step 2, the self-test                "  645/645 n selftest checks pass", selftest exit=0, "selftest: 645/645, as
+                                        expected". Two library warnings came before it, as at G-CAL-n's run. No note
+                                        line about the self-test's temporary folder was printed, so the script's rmdir
+                                        of it succeeded.
+   step 3, the hashes                   hashes exit=0; "hashes: equal to the laptop's"
+   step 4, the smoke (never of record)  smoke exit=0, after one load. Its backend line and its model time line, as
+                                        printed (smoke.txt):
+      "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12365 ms"
+      "model time (GT8; the cap's basis): N 7680 x median c 362.5 ms + K 3637 x median f 354.5 ms = 4073316.5 ms = 1.1314768055555555 h; at the maxima (593.0, 394.0 ms) 5987218.0 ms = 1.663116111111111 h; over 18 reads, 12 re-computed"
+                                        Its read lines, counted by tool: 18; of the 12 re-computed, 12 with the fidelity at or below TAU and 0 above it; the 6 +1/2 reads with fid=-.
+                                        The script's smoke checks, as printed:
+      "the smoke's prints: as wanted"
+      "the outputs: report holds; identity holds; per_arm holds; cells holds; cells on disk holds; cell digests holds; capture arrays holds; pauses holds; stop and cap holds; no margin in the report holds; artifact holds; artifact reads holds; artifact campaign holds; artifact loads holds; no margin in the artifact holds"
+      "the report: end_state COMPLETE; cells ['N1-V__none__0.json', 'N1-V__valence__p1.json', 'N1-V__valence__p1_2.json']; pauses 0; loads_ms [12365]"
+      "the smoke's identity: equal to step 3's"
+      "the copy after the smoke: unchanged"
+      "the benchmark's folder after the smoke: empty"
+                                        Its stderr, smoke.err, held transformers' "Loading weights" bar and one
+                                        deprecation warning, which the script printed after the smoke. The smoke's
+                                        folder stays on the box; its report alone is copied back (section 8).
+   step 5, the run of record            after a second load: the STAGE, WEIGHTS, DRIVER, inputs and identity lines,
+                                        the 18 plan lines, the campaign, G-VER and backend lines, 18 read lines, the
+                                        runner's end line, the I/O benchmark line, the projection lines, the artifact
+                                        line and the end line; run exit=0. Its backend line, as printed (run.txt):
+      "backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12375 ms"
+                                        Its read lines, counted by tool: 18; of the 12 re-computed, 12 with the fidelity at or below TAU and 0 above it; the 6 +1/2 reads with fid=-.
+                                        Its stderr, run.err, held the same bar and warning, printed after the run.
+   step 6, the outputs                  as printed:
+      "the run's prints: as wanted"
+      "the identity: the smoke's and the run's are one, 879c9602f8997b716094b152e66421824773ed186e35741ccd571ac62f740cf8"
+      "the outputs: report holds; identity holds; per_arm holds; cells holds; cells on disk holds; cell digests holds; capture arrays holds; pauses holds; stop and cap holds; no margin in the report holds; artifact holds; artifact reads holds; artifact campaign holds; artifact loads holds; no margin in the artifact holds"
+      "the report: end_state COMPLETE; cells ['N1-V__none__0.json', 'N1-V__valence__p1.json', 'N1-V__valence__p1_2.json']; pauses 0; loads_ms [12375]"
+      "the report's identity: equal to step 3's"
+      "the report: sha256 3ae33a39c55f29a2610c6f803ca06990babab35397c0bad67764610cf020d8a7; the artifact: sha256 d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec"
+      "cell data/n/ckpt/time/N1-V__none__0.json sha256 7b7588d6ec858e44519298634201d57bab213938f965197446aeb6b15ff44c09"
+      "cell data/n/ckpt/time/N1-V__valence__p1.json sha256 fa82337004c5fdb5fff8e36cf73a736d76efee9574bc4cfc273f53272ed610c0"
+      "cell data/n/ckpt/time/N1-V__valence__p1_2.json sha256 63634361d69bce0d230d4bb94b6a2ef875f8389b7b095a722699adbaed0d9968"
+      "the copy's changed set: data/n/ckpt/time/, data/n/gtime/ and data/n/reports/time.json alone, nothing ignored outside the root"
+      "the benchmark's folder after the run: empty"
+      "the benchmark's folder: removed, empty"
+   last line                            as printed in RESULT above.
+
+7. AFTER THE RUN (read-only looks, nothing run): no interpreter job and no GPU compute app; the GPU at 0 MiB. The exit
+   file reads "exit 0"; the output has 231 lines, its last line the COMPLETE line above. The pod session took
+   no look inside the copy or the work folder beyond the files copied back by name and the existence tests on their
+   names.
+
+8. COPIED BACK by copyback13.sh (5bfe8e1f…fcd5), by explicit name, each file's sha256 equal at the box and at the
+   destination, with no folder listed; every destination new:
+   - to n-build's step4b/gtime/box/out/: gtime_v1_out.txt and gtime_v1.exit (out-gtime-v1); selftest.txt, hashes.txt,
+     smoke.txt, smoke.err, smoke-identity.txt, run.txt, run.err and run-identity.txt (the work folder), all ten
+     present, each also equal in the pod session's staging; and this file, copied last, by a second call, after every
+     other file was copied and verified;
+   - to step4b/gtime/box/smoke/: the smoke's report <work>/smoke/time.json, the one file of the smoke's folder that
+     comes back (s1.8). The out file prints no sha256 for it at the smoke's COMPLETE, so it was checked at the box, in
+     staging and at the destination;
+   - to step4b/gtime/box/rec/, under their repository paths: data/n/reports/time.json and data/n/gtime/gtime.json
+     through the pod session's staging, and the shadow cell data/n/ckpt/time/N1-V__none__0.json straight from the box,
+     each at the out file's printed sha256. The report's json_sha256 values equal the out file's three cell lines, the
+     artifact's report_sha256 is the report's sha256, and run.txt's artifact line is the artifact's;
+   - to the folder outside the repository the PI named, ../jspace-lab-box.noindex/n/gtime-v1/ from the repository's
+     root (steered/ below), under their repository paths: the two steered cells' JSON,
+     data/n/ckpt/time/N1-V__valence__p1.json and data/n/ckpt/time/N1-V__valence__p1_2.json, each at its out file line,
+     with the report's json_sha256 beside and equal. The folder did not exist. Its parent ../jspace-lab-box.noindex/n/
+     was made just before the copy-back, and copyback13.sh made the folder itself. The two files went straight from the
+     box into it: never staged, counted, opened or listed. Their two sha256 passes, at the box and at the destination,
+     are the copy-back's own hash check. There they sit under item 2 (s1.8): no session lists, opens or hashes them
+     before the campaign's cells are committed, at step 14's close;
+   - timed, descriptive (s1.4): the shadow cell's 31 capture arrays, data/n/ckpt/time/N1-V__none__0.L33.npy to .L63.npy
+     by name, to step4b/gtime/box/arrays/ under their repository paths, in one tar stream over ssh: 6.582 s
+     wall-clock for the transfer, with the box's and the laptop's sha256 passes outside the timed span. No file's size
+     or time was read; the bytes are about 102 MB by the arrays' shape (s1.4).
+   Their sha256s:
+     8a7ca020de70357ef339a15e8ed1e3143062f72014b4585318de9ff4256df0fe  out/gtime_v1_out.txt
+     28d3b9e880a77975493dc7e359144c0295a4f694cfe0af4f928c22307bc5c320  out/gtime_v1.exit
+     c4d4b2f26a7e8a84e59fb2a79bc0778ece7aa3afd12a5d0e457c49f4aae2febb  out/selftest.txt
+     a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b  out/hashes.txt
+     d6980e11d2d2adc0427286d818559ba9b2dbef3b694ded480f13f1fbd808e442  out/smoke.txt
+     9737a84e0c3e9ab684959e05f4bc4fb19b2c75c81dc1e88159e4e2f9df391bb9  out/smoke.err
+     a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b  out/smoke-identity.txt
+     4ddecd8d33f15ee1c3550e5eaf88525656813adac863c7e44aacb64f3df5d901  out/run.txt
+     f4edf85217fe6bb76508caf60ded31c1b43dfdcf2afe1b1da3ec317a88018a6f  out/run.err
+     a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b  out/run-identity.txt
+     07f9a152076f70a0096aa32d4ed129ba502f937277ae4b1018ee18cfa6938e5b  smoke/time.json
+     3ae33a39c55f29a2610c6f803ca06990babab35397c0bad67764610cf020d8a7  rec/data/n/reports/time.json
+     d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec  rec/data/n/gtime/gtime.json
+     7b7588d6ec858e44519298634201d57bab213938f965197446aeb6b15ff44c09  rec/data/n/ckpt/time/N1-V__none__0.json
+     fa82337004c5fdb5fff8e36cf73a736d76efee9574bc4cfc273f53272ed610c0  steered/data/n/ckpt/time/N1-V__valence__p1.json
+     63634361d69bce0d230d4bb94b6a2ef875f8389b7b095a722699adbaed0d9968  steered/data/n/ckpt/time/N1-V__valence__p1_2.json
+     d7bfb4b1341e48bf8fcd16c5be87f04508c854dcb88124a922d10c07e5efd032  arrays/data/n/ckpt/time/N1-V__none__0.L33.npy
+     80a132974de5b26bf9c2597749e7533615c14deb3940b86fcd5853abb3123d29  arrays/data/n/ckpt/time/N1-V__none__0.L34.npy
+     01ecae91f91dca27850f893d3796cc0e0c611b2f41214d11de8e5c92b433ee84  arrays/data/n/ckpt/time/N1-V__none__0.L35.npy
+     66ace094c60f67a87762e7bf6a182a7c58ff40e2911ed86ccd54ad9cfeee9500  arrays/data/n/ckpt/time/N1-V__none__0.L36.npy
+     616791f7900e9c57a1726d089677dcd57412f3107a8188567e1fe4cc265e8587  arrays/data/n/ckpt/time/N1-V__none__0.L37.npy
+     096f6e9c739b72db01189946fcdbff93472ec48e07e7ef4a83e89419efbeb744  arrays/data/n/ckpt/time/N1-V__none__0.L38.npy
+     4b69613d602e1d96738c42d27bb68af8d26a6bde2ed6148cfd7be4b6df6fc50c  arrays/data/n/ckpt/time/N1-V__none__0.L39.npy
+     6a3ed805b4480e0531e6518a895d201999690a08192245531528165bf795f45e  arrays/data/n/ckpt/time/N1-V__none__0.L40.npy
+     50ff99b6ed64181ab8559ab7ddc29a0b88559f45092a599766b7aa3762835a1c  arrays/data/n/ckpt/time/N1-V__none__0.L41.npy
+     49bbe250fb202b7cfc561d7ed63d4ff8eff2c30a6e3a6b74a9e8bb7d998e0b5b  arrays/data/n/ckpt/time/N1-V__none__0.L42.npy
+     436dd562bfac911b6276b983002a6b0591246af183d00994808ce135cff7c659  arrays/data/n/ckpt/time/N1-V__none__0.L43.npy
+     cf222b7014f7117d470afa288b0c36d3a47cd56e01adf1bf995693a0659c5a30  arrays/data/n/ckpt/time/N1-V__none__0.L44.npy
+     e6e145784b3452f27edbf9a62ce722924332a1e097d31c2955967374755ea0ec  arrays/data/n/ckpt/time/N1-V__none__0.L45.npy
+     6dde4c84e34ce8bb72a3bb3e0febe4869c0815bd447166e66a95a0e6bff19f24  arrays/data/n/ckpt/time/N1-V__none__0.L46.npy
+     0c8d873e5e49690e748df99a7dbeba8cc2cd7c1d29d411f05f32c3f9dc75d8ba  arrays/data/n/ckpt/time/N1-V__none__0.L47.npy
+     1b22670aeba913dd568a79ceedd8c90a96d03097ed916080c8725efc1a855172  arrays/data/n/ckpt/time/N1-V__none__0.L48.npy
+     229da2f5d7b70f180e7ce6baadaaad4d5117d6e5f73caecbdb6d7467f4feb6ea  arrays/data/n/ckpt/time/N1-V__none__0.L49.npy
+     60fbeff372ef45c9fec64db82dd26a0927d51b9140db86ef13e7dd8e48e915a3  arrays/data/n/ckpt/time/N1-V__none__0.L50.npy
+     6f201c30e37a7cb2e437b21d9d4bb67954de134a921bb32e94d6841554deb55b  arrays/data/n/ckpt/time/N1-V__none__0.L51.npy
+     ae706b72c7adfca1abdbe79aee9367279c66d8c4b27bb61a884b4042d0c974ea  arrays/data/n/ckpt/time/N1-V__none__0.L52.npy
+     63245f95e8ad08317e31c99f200eaf73b75a8a9e665a3430f8836dc8c249da0c  arrays/data/n/ckpt/time/N1-V__none__0.L53.npy
+     d7ee0446b73fc21b51cc2e60d9612d898b34f039321312deb0578d574d308735  arrays/data/n/ckpt/time/N1-V__none__0.L54.npy
+     27dcbdc595e726fea07293051700fa57341a6800b5414ba74809a975a31c10e9  arrays/data/n/ckpt/time/N1-V__none__0.L55.npy
+     dbdf7238fe4e5155fab16a4227b759dd8113a584c27c9ebcbbfdc676bfa45e1e  arrays/data/n/ckpt/time/N1-V__none__0.L56.npy
+     da92924d111a603f17134248088185455529c8fede74d1eaa0ff918a49b6b865  arrays/data/n/ckpt/time/N1-V__none__0.L57.npy
+     4372567d3f951984db4b65f4d51d891df36053af68b88a983862b48bf7af6c5a  arrays/data/n/ckpt/time/N1-V__none__0.L58.npy
+     4cdf540d26e6f510335b55e6699ae65188e844a0bfc9249bf0d157742b026328  arrays/data/n/ckpt/time/N1-V__none__0.L59.npy
+     00affe119c51c887281b1bc28b5a7d1f502fa6673ffdb12aaaa1b0186604cbc5  arrays/data/n/ckpt/time/N1-V__none__0.L60.npy
+     d9f009d38dcb2700a9d4acb8da96111020b9dda192c3498e474e985f71f987a6  arrays/data/n/ckpt/time/N1-V__none__0.L61.npy
+     d33daa6b08d3a30accc5cf85e01b23f15a7504748a1a8632e9f6427c5ba49fd2  arrays/data/n/ckpt/time/N1-V__none__0.L62.npy
+     10bf39a2c5c76b2de5088f728c598d406aeacb19d799de5c7a2a9893db098496  arrays/data/n/ckpt/time/N1-V__none__0.L63.npy
+   hashes.txt, smoke-identity.txt and run-identity.txt are each byte-equal to gtime_hashes_v1.txt (a853932b…522b).
+   The address and port were counted on every text file copied back (the out part, the smoke's report, the run's
+   report and the artifact), counts only (the seat's s6.3): first on the box, before anything left it, by count_box.sh
+   (85591293…f61a; the two values sent on its standard input, never in an argv, and counted by bash builtins), and again in
+   the pod session's staging on the laptop, before anything was copied on to n-build's folders: 0 in each, both times.
+   The cells and the arrays were not counted: the ckpt files are closed, and the steered cells sit under item 2. This
+   file was counted on the laptop alone, where it was written. copyback13.sh was first run against a stand-in box on
+   the laptop (bash and shell tools only, nothing real touched; run_cases13.sh, 67931f7e…b08f): 38 of 38 cases as
+   expected. In the harness's first run, the 29 cases that call the stand-in box failed closed at its first call,
+   because the stand-in had no execute bit; with the bit set, the second run passed 38 of 38.
+
+9. LEFT ON THE BOX, nothing removed:
+   - /workspace/nsite/gtime-v1 (n-build's three files);
+   - /workspace/nsite/copy-gtime-91f0d35 (the copy, with the stage's root data/n/ckpt/time/, its three cells and their
+     capture arrays, the report and the artifact);
+   - /workspace/nsite/work-gtime-v1 (the work files and the smoke's folder: its report, artifact, cells and capture
+     arrays, item 2's class, until the campaign's cleanup) and /workspace/nsite/out-gtime-v1;
+   - /workspace/nsite/sync13 (the pod session's sync and copy scripts and the bundle);
+   - the box repo's side ref refs/bundles/n-site13, with the box checkout unmoved at ad856f0;
+   - every earlier folder as before.
+   The box is up and idle: C.8 keeps it up through G-TIME-n, G-VER and the campaign.
+
+10. DEPARTURES AND DECLARATIONS, for the seat to class:
+   - a laptop git ls-files, names only, run before the launch files were relayed (to find G-CAL-n v1's smoke files
+     under results/raw), whose pathspec carried the Q-F3 campaign folder's exclusion in its plain form rather than
+     bracketed; no Python and no marker word; told to the coordinating session with the announce;
+   - declared: the respawn statement's check read one file's modification time, G-CAL-n's exit file (an out file,
+     neither a ckpt file nor a report), to compare its age with the container's PID 1; neither value was printed;
+   - declared: the staged report and artifact were read by jq for the cross-checks of section 8 (the cells'
+     json_sha256 and the artifact's report_sha256), as copyback13.sh does; no other key was printed.

@@ -1,0 +1,231 @@
+the benchmark's folder (B1): /workspace/nsite/work-gtime-v1/bench, new, on the volume beside the copy
+== 0 the copy
+git: git version 2.43.0
+the copy: HEAD 91f0d35efd73ee5754b6c69a742689a89abea995
+the copy: changed set none; none of data/n/ckpt/time, data/n/reports/time.json and data/n/gtime present
+== 1 manifest
+scripts/n_sessions.py: OK
+valence_core/n/__init__.py: OK
+valence_core/n/cells.py: OK
+valence_core/n/directions.py: OK
+valence_core/n/gcal.py: OK
+valence_core/n/guard.py: OK
+valence_core/n/gvec.py: OK
+valence_core/n/hftiny.py: OK
+valence_core/n/ids.py: OK
+valence_core/n/keys.py: OK
+valence_core/n/primitive.py: OK
+valence_core/n/probe.py: OK
+valence_core/n/runner.py: OK
+valence_core/n/schema.py: OK
+valence_core/n/sessions.py: OK
+valence_core/n/testing.py: OK
+valence_core/n/verify.py: OK
+valence_core/__init__.py: OK
+valence_core/adapters/__init__.py: OK
+valence_core/adapters/base.py: OK
+valence_core/discrim.py: OK
+valence_core/echo/__init__.py: OK
+valence_core/echo/probe.py: OK
+valence_core/extract.py: OK
+valence_core/m/__init__.py: OK
+valence_core/m/keys.py: OK
+valence_core/m/resume.py: OK
+valence_core/session_e2a.py: OK
+scripts/box_e0_corpus.py: OK
+data/n/ids/sessions.jsonl: OK
+data/n/ids/n4_variants.jsonl: OK
+data/n/ids/labels.json: OK
+data/n/ids/gvec_passages.jsonl: OK
+data/n/ids/a3_contexts.jsonl: OK
+data/n/ids/gcal_prompts.jsonl: OK
+data/n/ids/MANIFEST.json: OK
+data/n/passages.jsonl: OK
+data/corpus/e0_tasks.jsonl: OK
+data/corpus/e2a_tasks.jsonl: OK
+data/configs/e0_frames.json: OK
+data/configs/e0_probes.json: OK
+results/raw/2026-11-18_respawn_determinism.txt: OK
+data/n/gvec/gvec.json: OK
+data/n/gvec/directions_L32.npy: OK
+LOCK-n.md: OK
+data/n/gcal/gcal.json: OK
+data/n/gcal/dose_map.json: OK
+data/n/bk/experiment_results_json/fixed_text_design/neutral_passages/reduced.json: OK
+data/n/bk/experiment_results_json/fixed_text_design/strength_ladder/analysis.json: OK
+valence_core/adapters/olmo_hf.py: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b0.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b1.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b2.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b3.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b4.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b5.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b6.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b7.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b0.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b1.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b2.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b3.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b4.sessions.jsonl: OK
+data/n/bk/experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b5.sessions.jsonl: OK
+data/olmo/manifest.json: OK
+data/olmo/determinism_base_h100-sxm.json: OK
+== 2 selftest, its temporary directory under the work folder
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+  645/645 n selftest checks pass
+selftest exit=0
+selftest: 645/645, as expected
+== 3 hashes (they must equal the laptop's, gtime_hashes_v1.txt, before the stage runs)
+package_sha256 valence_core/n 06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39
+imported_sha256 valence_core/__init__.py 620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604
+imported_sha256 valence_core/adapters/__init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a
+imported_sha256 valence_core/adapters/base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf
+imported_sha256 valence_core/adapters/olmo_hf.py df80b79b205c64121187ab0b307e5f35db5bd6632d45940a980c0175b8a092dc
+imported_sha256 valence_core/discrim.py 7d171ae7b416b33a9f881a277606ace4a6891ce30c96943c3b0a41bd75d2de89
+imported_sha256 valence_core/echo/__init__.py 71a6ec160a1d7beefc7f8c37c106f2fca742adc862fd9b737b7750218bf00e43
+imported_sha256 valence_core/echo/probe.py d90f9281dff612977da5a3c3ce1a07155159a48103b35dfe521e0fac30152b81
+imported_sha256 valence_core/extract.py 2405b1a687f9f882472b06fa3f9b8d47b20206414ada1b854b3c93a02d7a07fe
+imported_sha256 valence_core/m/__init__.py b5175bcb6a521ef277de105315dd8d2f637a7b03e5d7baf30406dd83d0db35c4
+imported_sha256 valence_core/m/keys.py a7d5ee3a9cde0deed785df204ae840cb56ee0e1eeefa9192fe1c1b0abb6b3beb
+imported_sha256 valence_core/m/resume.py 78f2fc8eb8b3b16ffa39c6dac7022b37dc98d8d002f50390d5c4540f22bf8fb7
+imported_sha256 valence_core/session_e2a.py f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71
+hashes exit=0
+hashes: equal to the laptop's
+== 4 the smoke (never of record)
+SMOKE: the first 18 of the 18 reads, outside the repository; never of record (GT14)
+STAGE G-TIME-n: stage time, under LOCK-n v0.1 88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5; root /workspace/nsite/work-gtime-v1/smoke/ckpt, report /workspace/nsite/work-gtime-v1/smoke/time.json, artifact /workspace/nsite/work-gtime-v1/smoke/gtime.json; the benchmark under /workspace/nsite/work-gtime-v1/bench
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 4616f9c31f212f38af89023691a9ab713320d42360b71f4c0fba8fc3bf632553: HEAD's committed bytes
+LOCK-n v0.1's inputs (GT4): G-VEC's record 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0, site 32, valence ba4da67fb717b5bb; G-CAL-n's record 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f and dose map d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3: d_eq 0.2869170055735837, d_20 0.5738340111471674
+identity: stage time, sha256 879c9602f8997b716094b152e66421824773ed186e35741ccd571ac62f740cf8; C 0.25, p0 1 of 26, alpha 0.01, the tile 160; directions {'valence': 'ba4da67fb717b5bb'}; no cap
+plan 0 N1-V|none|0|floor_b0/0 dose-rule
+plan 1 N1-V|none|0|floor_b6/32 dose-rule
+plan 2 N1-V|none|0|neu_b1/64 dose-rule
+plan 3 N1-V|none|0|neu_b2/95 dose-rule
+plan 4 N1-V|none|0|neu_b4/127 dose-rule
+plan 5 N1-V|none|0|neu_b5/159 dose-rule
+plan 6 N1-V|valence|+1|floor_b0/0 dose-rule
+plan 7 N1-V|valence|+1|floor_b6/32 dose-rule
+plan 8 N1-V|valence|+1|neu_b1/64 dose-rule
+plan 9 N1-V|valence|+1|neu_b2/95 dose-rule
+plan 10 N1-V|valence|+1|neu_b4/127 dose-rule
+plan 11 N1-V|valence|+1|neu_b5/159 dose-rule
+plan 12 N1-V|valence|+1/2|floor_b0/0 the cached path alone
+plan 13 N1-V|valence|+1/2|floor_b6/32 the cached path alone
+plan 14 N1-V|valence|+1/2|neu_b1/64 the cached path alone
+plan 15 N1-V|valence|+1/2|neu_b2/95 the cached path alone
+plan 16 N1-V|valence|+1/2|neu_b4/127 the cached path alone
+plan 17 N1-V|valence|+1/2|neu_b5/159 the cached path alone
+the campaign (GT8): N 7680 reads; K 3637 re-computations (3040 dose-rule, 597 keyed sample); 138 cells; its read_plan_sha256 the lock's
+G-VER (G-TIME-n's start, not of record; GT7):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12365 ms
+read 0 s=0 N1-V none 0 fid=0.002709 <= TAU ms=952
+read 1 s=32 N1-V none 0 fid=0.000000 <= TAU ms=639
+read 2 s=64 N1-V none 0 fid=0.005674 <= TAU ms=715
+read 3 s=95 N1-V none 0 fid=0.000000 <= TAU ms=661
+read 4 s=127 N1-V none 0 fid=0.005878 <= TAU ms=701
+read 5 s=159 N1-V none 0 fid=0.000000 <= TAU ms=696
+read 6 s=0 N1-V valence +1 fid=0.004400 <= TAU ms=723
+read 7 s=32 N1-V valence +1 fid=0.002928 <= TAU ms=744
+read 8 s=64 N1-V valence +1 fid=0.000000 <= TAU ms=738
+read 9 s=95 N1-V valence +1 fid=0.000000 <= TAU ms=727
+read 10 s=127 N1-V valence +1 fid=0.002858 <= TAU ms=746
+read 11 s=159 N1-V valence +1 fid=0.000000 <= TAU ms=696
+read 12 s=0 N1-V valence +1/2 fid=- ms=316
+read 13 s=32 N1-V valence +1/2 fid=- ms=286
+read 14 s=64 N1-V valence +1/2 fid=- ms=343
+read 15 s=95 N1-V valence +1/2 fid=- ms=374
+read 16 s=127 N1-V valence +1/2 fid=- ms=391
+read 17 s=159 N1-V valence +1/2 fid=- ms=378
+end COMPLETE: 18/18 reads; report time.json
+I/O benchmark (GT9 (i)): 160 appends of the stage's read 6 (N1-V|valence|+1), re-keyed to BK's runs 0.. in turn, in a temporary folder under /workspace/nsite/work-gtime-v1/bench, removed at its end
+model time (GT8; the cap's basis): N 7680 x median c 362.5 ms + K 3637 x median f 354.5 ms = 4073316.5 ms = 1.1314768055555555 h; at the maxima (593.0, 394.0 ms) 5987218.0 ms = 1.663116111111111 h; over 18 reads, 12 re-computed
+beside, unused (A-n2:40): the extension's 309.0 and 357.1 ms give 3671892.7 ms = 1.0199701944444446 h
+pod hours beside the cap, outside it (GT9): loads [12365] ms; the I/O by the append benchmark (option (i)): a 161.6620937888198 ms + b 8.261098034102895 ms per record already in the cell, over the campaign's 138 cells: 7680 a + 322560 b = 3906264.6621783655 ms = 1.0850735172717683 h; the stage's own per-read I/O, median 417.478 ms over 17 reads (option (ii), a lower bound: 3206231.04 ms); not measured: the captures' copy-back (about 4.9-5.0 GB at the campaign's 7,680 rows: the schema's CAPTURES); G-VER of record (n v0.2 §8 step 12); the campaign's resumes
+artifact /workspace/nsite/work-gtime-v1/smoke/gtime.json sha256 4cb6b3702c79d092cb542c3b6cdb81d37602fb1343b8988b5f9b61d45fe52ecf
+G-TIME-n COMPLETE, a smoke, never of record
+smoke exit=0
+the smoke's stderr (smoke.err), as written:
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  87%|████████▋ | 613/707 [00:00<00:00, 6067.28it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 5947.65it/s]
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+
+the smoke's prints: as wanted
+the outputs: report holds; identity holds; per_arm holds; cells holds; cells on disk holds; cell digests holds; capture arrays holds; pauses holds; stop and cap holds; no margin in the report holds; artifact holds; artifact reads holds; artifact campaign holds; artifact loads holds; no margin in the artifact holds
+the report: end_state COMPLETE; cells ['N1-V__none__0.json', 'N1-V__valence__p1.json', 'N1-V__valence__p1_2.json']; pauses 0; loads_ms [12365]
+the smoke's identity: equal to step 3's
+the copy after the smoke: unchanged
+the benchmark's folder after the smoke: empty
+== 5 the run of record
+STAGE G-TIME-n: stage time, under LOCK-n v0.1 88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5; root data/n/ckpt/time, report data/n/reports/time.json, artifact data/n/gtime/gtime.json; the benchmark under /workspace/nsite/work-gtime-v1/bench
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 4616f9c31f212f38af89023691a9ab713320d42360b71f4c0fba8fc3bf632553: HEAD's committed bytes
+LOCK-n v0.1's inputs (GT4): G-VEC's record 03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0, site 32, valence ba4da67fb717b5bb; G-CAL-n's record 4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f and dose map d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3: d_eq 0.2869170055735837, d_20 0.5738340111471674
+identity: stage time, sha256 879c9602f8997b716094b152e66421824773ed186e35741ccd571ac62f740cf8; C 0.25, p0 1 of 26, alpha 0.01, the tile 160; directions {'valence': 'ba4da67fb717b5bb'}; no cap
+plan 0 N1-V|none|0|floor_b0/0 dose-rule
+plan 1 N1-V|none|0|floor_b6/32 dose-rule
+plan 2 N1-V|none|0|neu_b1/64 dose-rule
+plan 3 N1-V|none|0|neu_b2/95 dose-rule
+plan 4 N1-V|none|0|neu_b4/127 dose-rule
+plan 5 N1-V|none|0|neu_b5/159 dose-rule
+plan 6 N1-V|valence|+1|floor_b0/0 dose-rule
+plan 7 N1-V|valence|+1|floor_b6/32 dose-rule
+plan 8 N1-V|valence|+1|neu_b1/64 dose-rule
+plan 9 N1-V|valence|+1|neu_b2/95 dose-rule
+plan 10 N1-V|valence|+1|neu_b4/127 dose-rule
+plan 11 N1-V|valence|+1|neu_b5/159 dose-rule
+plan 12 N1-V|valence|+1/2|floor_b0/0 the cached path alone
+plan 13 N1-V|valence|+1/2|floor_b6/32 the cached path alone
+plan 14 N1-V|valence|+1/2|neu_b1/64 the cached path alone
+plan 15 N1-V|valence|+1/2|neu_b2/95 the cached path alone
+plan 16 N1-V|valence|+1/2|neu_b4/127 the cached path alone
+plan 17 N1-V|valence|+1/2|neu_b5/159 the cached path alone
+the campaign (GT8): N 7680 reads; K 3637 re-computations (3040 dose-rule, 597 keyed sample); 138 cells; its read_plan_sha256 the lock's
+G-VER (G-TIME-n's start, not of record; GT7):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+backend: n's identifier 8264f719efd347a9 (window 4096); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; load 12375 ms
+read 0 s=0 N1-V none 0 fid=0.002709 <= TAU ms=955
+read 1 s=32 N1-V none 0 fid=0.000000 <= TAU ms=655
+read 2 s=64 N1-V none 0 fid=0.005674 <= TAU ms=708
+read 3 s=95 N1-V none 0 fid=0.000000 <= TAU ms=703
+read 4 s=127 N1-V none 0 fid=0.005878 <= TAU ms=639
+read 5 s=159 N1-V none 0 fid=0.000000 <= TAU ms=667
+read 6 s=0 N1-V valence +1 fid=0.004400 <= TAU ms=707
+read 7 s=32 N1-V valence +1 fid=0.002928 <= TAU ms=689
+read 8 s=64 N1-V valence +1 fid=0.000000 <= TAU ms=722
+read 9 s=95 N1-V valence +1 fid=0.000000 <= TAU ms=652
+read 10 s=127 N1-V valence +1 fid=0.002858 <= TAU ms=674
+read 11 s=159 N1-V valence +1 fid=0.000000 <= TAU ms=669
+read 12 s=0 N1-V valence +1/2 fid=- ms=380
+read 13 s=32 N1-V valence +1/2 fid=- ms=314
+read 14 s=64 N1-V valence +1/2 fid=- ms=391
+read 15 s=95 N1-V valence +1/2 fid=- ms=284
+read 16 s=127 N1-V valence +1/2 fid=- ms=383
+read 17 s=159 N1-V valence +1/2 fid=- ms=318
+end COMPLETE: 18/18 reads; report time.json
+I/O benchmark (GT9 (i)): 160 appends of the stage's read 6 (N1-V|valence|+1), re-keyed to BK's runs 0.. in turn, in a temporary folder under /workspace/nsite/work-gtime-v1/bench, removed at its end
+model time (GT8; the cap's basis): N 7680 x median c 329.0 ms + K 3637 x median f 344.0 ms = 3777848.0 ms = 1.0494022222222221 h; at the maxima (589.0, 373.0 ms) 5880121.0 ms = 1.6333669444444445 h; over 18 reads, 12 re-computed
+beside, unused (A-n2:40): the extension's 309.0 and 357.1 ms give 3671892.7 ms = 1.0199701944444446 h
+pod hours beside the cap, outside it (GT9): loads [12375] ms; the I/O by the append benchmark (option (i)): a 176.49166218944094 ms + b 8.642846859252316 ms per record already in the cell, over the campaign's 138 cells: 7680 a + 322560 b = 4143292.6485353336 ms = 1.1509146245931483 h; the stage's own per-read I/O, median 401.586 ms over 17 reads (option (ii), a lower bound: 3084180.48 ms); not measured: the captures' copy-back (about 4.9-5.0 GB at the campaign's 7,680 rows: the schema's CAPTURES); G-VER of record (n v0.2 §8 step 12); the campaign's resumes
+artifact data/n/gtime/gtime.json sha256 d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec
+G-TIME-n COMPLETE: the projections are for the PI's cap at LOCK-n v1.0 (GT16)
+run exit=0
+the run's stderr (run.err), as written:
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  98%|█████████▊| 694/707 [00:00<00:00, 6924.32it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 6907.86it/s]
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+
+== 6 the outputs
+the run's prints: as wanted
+the identity: the smoke's and the run's are one, 879c9602f8997b716094b152e66421824773ed186e35741ccd571ac62f740cf8
+the outputs: report holds; identity holds; per_arm holds; cells holds; cells on disk holds; cell digests holds; capture arrays holds; pauses holds; stop and cap holds; no margin in the report holds; artifact holds; artifact reads holds; artifact campaign holds; artifact loads holds; no margin in the artifact holds
+the report: end_state COMPLETE; cells ['N1-V__none__0.json', 'N1-V__valence__p1.json', 'N1-V__valence__p1_2.json']; pauses 0; loads_ms [12375]
+the report's identity: equal to step 3's
+the report: sha256 3ae33a39c55f29a2610c6f803ca06990babab35397c0bad67764610cf020d8a7; the artifact: sha256 d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec
+cell data/n/ckpt/time/N1-V__none__0.json sha256 7b7588d6ec858e44519298634201d57bab213938f965197446aeb6b15ff44c09
+cell data/n/ckpt/time/N1-V__valence__p1.json sha256 fa82337004c5fdb5fff8e36cf73a736d76efee9574bc4cfc273f53272ed610c0
+cell data/n/ckpt/time/N1-V__valence__p1_2.json sha256 63634361d69bce0d230d4bb94b6a2ef875f8389b7b095a722699adbaed0d9968
+the copy's changed set: data/n/ckpt/time/, data/n/gtime/ and data/n/reports/time.json alone, nothing ignored outside the root
+the benchmark's folder after the run: empty
+the benchmark's folder: removed, empty
+gtime v1 COMPLETE: copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, smoke exit=0; checks (0 = held, 9 = not run): smoke prints 0, smoke outputs 0, smoke identity 0, copy after the smoke 0, bench after the smoke 0; run exit=0; prints 0, outputs 0, identity 0, changed set 0, bench after the run 0

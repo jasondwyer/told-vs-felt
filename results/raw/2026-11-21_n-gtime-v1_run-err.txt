@@ -1,0 +1,2 @@
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  98%|█████████▊| 694/707 [00:00<00:00, 6924.32it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 6907.86it/s]
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
