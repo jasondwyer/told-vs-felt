@@ -1,0 +1,5 @@
+[transformers] Model config: eos_token_id must be `None` or an integer within the vocabulary (between 0 and 127), got 50279. This may result in unexpected behavior.
+[transformers] Calling `crop` with a positive value is deprecated and will be removed in version 5.18. Please use a negative integer to remove that number of tokens from the cache instead.
+FAIL ids (iv): a failure after the first write leaves nothing: no folder and no staging folder: True
+FAIL driver: G-CAL-n's run of record over the double behind every seam: its three files in a new folder, the staging folder gone, the exit its status's (0 PASS, 2 STOP, 3 PAUSE): (0, 'PASS', ['.nfsef6af272b614389700002054', 'dose_map.json', 'gcal.json', 'gcal_turns.jsonl'])
+  726/728 n selftest checks pass

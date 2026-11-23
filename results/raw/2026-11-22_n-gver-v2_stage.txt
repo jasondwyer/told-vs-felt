@@ -1,0 +1,20 @@
+STAGE G-VER (n): n v0.2 §8 step 12, under LOCK-n v0.1 88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5; the record data/n/gver/gver.json; no weights load and nothing is read; no smoke (GV8)
+WEIGHTS: allenai/OLMo-2-0325-32B-Instruct revision b96024342a77, files_aggregate_sha256 36f05404dc39ec1759e711f560dc41dcb155f10c0230b671ded9b597fc830fdb; 22 files at /workspace/models/olmo2_instruct, each at the manifest's byte count (the full re-hash is respawn step (i))
+DRIVER scripts/n_sessions.py 55885e65751227230f5933909ea36b6c1f649538a974cff9c6458ace2375385f: HEAD's committed bytes
+LOCK-n.md 88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5: HEAD's committed bytes, LOCK-n v0.1's (GV4)
+the ids of record: 160 sessions; MANIFEST.json 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8, the pin 53a8cd74fd3427acb618ab2a3c9034f0b6ed4a2dd5e197bd5a865aa23ce699d8: equal
+backend (no model loads; the decode runs under these libraries): n's identifier 8264f719efd347a9, the lock's (L §17); the characterization's 4ed3f2c70fe8afbf under the default window (R6); pod emw1e4embiwe9b; python 3.12.3, transformers 5.15.0, tokenizers 0.22.2, the lock's (L §17)
+package valence_core/n 06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39 and its closure of 12 files: the lock's (L §18; GV2)
+hashed file config.json e977b63b4196481a109089de5a4d4479eb18df70297d9c3e18d865cf5b098e51: the model manifest's pin (GV3)
+hashed file generation_config.json e5f94fd06e9143cc95086db8ff4ce18511ac5026703c509ba0ca77c421d740c8: the model manifest's pin (GV3)
+hashed file merges.txt b6fe424e334903f7fb84d3a106d9730455f4744b9fe3c21ee136d97a00e72502: the model manifest's pin (GV3)
+hashed file model.safetensors.index.json 3314e3c934d083407d4d2a28d8e5efa14fdd95661729fa6ba3e30edd016ff8f1: the model manifest's pin (GV3)
+hashed file special_tokens_map.json 78afb564e81264029b25f9caf24bda2521d5bdaeff5cd3fdbc01d3da2e8ce2f2: the model manifest's pin (GV3)
+hashed file tokenizer.json 73fd5254624f39a88e3faac6a8e11300fc3c735ed37880d4f4f08db898eaecca: the model manifest's pin (GV3)
+hashed file tokenizer_config.json fff5b9441e8fe1d696eebed3541e719776e5b096692ef38cea68b891fc4f3fc7: the model manifest's pin (GV3)
+hashed file vocab.json 9e14712c91b37c7aab74b1306baa46ac342d620637a4b44523cdc3aec7d24195: the model manifest's pin (GV3)
+G-VER (n §8 step 12, of record; verify.verify on the committed ids):
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+durations (GV12; a lower bound of the pod time, beside the cap and outside it): the tokenizer's load 14719 ms, the decode (verify.verify's whole run) 264 ms
+record data/n/gver/gver.json sha256 d1dcc3373a648b463fd3985e86217bf936d03240eb6952ad5208bda6827de90a
+G-VER (n) PASS: the record is written

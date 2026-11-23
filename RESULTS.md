@@ -21,6 +21,349 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-22 — **n — G-VER (n): G-VER of record on n's box, from G-VER's BUILD `2834c2d`: PASS, 160 of 160, with
+  the record of record. Launch files v2 ran it, after v1 ended FAIL at its self-test, a FAIL of the launch (an NFS
+  silly-rename in its temporary folder on the network volume), fixed in v2 alone (n v0.2 §8 step 12; the seat's first
+  sitting of 2026-11-22, committed at `5ad19de`; the PI's routing, items N.1 [as ruled] and N.2 [go]; the PI's
+  "Launch it").
+  The record enters the repository.**
+  - **Headline:**
+    - `gver_v2.sh` (`07938072…3b56`) ended "gver v2 PASS: …", exit 0, on pod `emw1e4embiwe9b`. The pod session ran
+      it on the coordinating session's relay ("G-VER of record, launch set v2: launch cleared, on the PI's "Launch
+      it".", as the pod session's record quotes it) and its reply to the announcement ("launch as announced"). Its last
+      line, verbatim (the out raw, line 130): "gver v2 PASS: the record is of record, PASS; copy OK, manifest OK,
+      selftest exit=0 count 0, hashes exit=0 and equal 0, the copy before the stage 0; stage exit=0, wall time 18041
+      ms, read as PASS, the record on-disk; checks (0 = held, 9 = not run): prints 0, record line 0, record 0, changed
+      set 0".
+    - The stage's end line, the last of its stdout (line 118): "G-VER (n) PASS: the record is written".
+    - **The record's sha256** (N.2): `data/n/gver/gver.json`, schema `n-gver-v1`,
+      `d1dcc3373a648b463fd3985e86217bf936d03240eb6952ad5208bda6827de90a`. That is the stage's record line (line 117)
+      and the script's own check of the file (line 125), each present once.
+    - **PASS, 160 of 160:** verify's report, verbatim (line 115): `{"first_problems": [], "ids_ok": 160,
+      "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160,
+      "status": "PASS"}`.
+    - **The two durations** (N.2; GV12), as the durations line prints them (line 116), "a lower bound of the pod time,
+      beside the cap and outside it": the tokenizer's load 14719 ms and the decode, verify.verify's whole run, 264 ms.
+      Beside them, the stage's wall time, 18041 ms, from before its process started to after it ended, with the two
+      durations inside it (F11; line 120); and the launch's own wall time, 78573 ms (descriptive; line 129).
+    - PASS is no STOP: LOCK-n v1.0's draft follows at once (N.2), untracked at the root, for the seat's read (N.3,
+      "as routed yesterday": the third sitting's item 4). The seat's next sitting reads this entry, the record and the
+      out raw first and the draft second, both before step 13's commit (§1.7).
+  - **The record of record,** at `data/n/gver/gver.json`, which the BUILD's `.gitignore` admits alone; the copy's
+    changed set after the run was `data/n/gver/` alone, nothing ignored (line 128). Its fields, read whole:
+    - `status` PASS, and verify's report as above;
+    - `manifest`: the pin `53a8cd74…99d8`, MANIFEST.json's sha256 the same, `equal` true;
+    - `hashed_files`: the weights folder's eight non-shard files (§1.2), each at the model manifest's pin, as its
+      "hashed file" line prints it (lines 106–113);
+    - `pins`: LOCK-n.md `88d9fe7b…e9d5`; the package `06b55761…1d39` and its closure of 12 files, the twelve
+      `imported_sha256` lines of `hashes` (lines 82–93); the driver `55885e65…385f`; n's identifier
+      `8264f719efd347a9` and the characterization's `4ed3f2c70fe8afbf`; the pod `emw1e4embiwe9b`; the weights'
+      aggregate `36f05404…0fdb`;
+    - `environment`: python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0, tokenizers 0.22.2, accelerate 1.14.0,
+      safetensors 0.8.0, huggingface_hub 1.28.0 and numpy 2.1.2;
+    - `durations_ms`: `tokenizer_load` 14719 and `decode` 264.
+
+    The script's Python check held all thirteen of its checks (line 126) and printed the record's figures (line 127).
+  - **v1's FAIL, and the fix** (§1.4: the environment or the launch "is a FAIL of the launch, Code's to fix …, its
+    out file a raw and the fix stated in the entry"):
+    - `gver_v1.sh` (`34103c35…6f63`), cleared and relayed with "launch cleared", ran first on the same pod and ended
+      "gver v1 FAIL: the stage did not run (above); …", exit 1 (the last of its out raw's 106 lines). Its self-test
+      counted "  726/728 n selftest checks pass" (line 79), so step 4 printed "STAGE NOT STARTED: the self-test or the
+      hashes did not hold" (line 101). No weights were checked or loaded, the stage never ran, and no record stood
+      (line 104). The launch's wall time was 90824 ms (line 105). No hash or byte count was named, so it was not of
+      the INTEGRITY kind, and the hash-refusal procedure did not apply.
+    - The two failed checks, verbatim (lines 77–78):
+      - "FAIL ids (iv): a failure after the first write leaves nothing: no folder and no staging folder: True"
+      - "FAIL driver: G-CAL-n's run of record over the double behind every seam: its three files in a new folder,
+        the staging folder gone, the exit its status's (0 PASS, 2 STOP, 3 PAUSE): (0, 'PASS',
+        ['.nfsef6af272b614389700002054', 'dose_map.json', 'gcal.json', 'gcal_turns.jsonl'])"
+    - **The diagnosis** (Code's, read-only, from the copy-back and the code at `2834c2d`; its note in the shared notes
+      folder, `2026-11-22_n-build_gver-v1-fail-diagnosis.md`, `3bd8ca91…fce0`, 139 lines, which the coordinating
+      session read and whose fix it cleared):
+      - `.nfs…` is the Linux NFS client's silly-rename. The client makes one when a file it still counts in use is
+        unlinked, or is the target of a rename, and removes it once that use ends.
+      - v1 made the self-test's temporary folder under its work folder, on `/workspace`, the network volume.
+      - In the second check (`scripts/n_sessions.py`:3284), G-CAL-n's partial log, `gcal_turns.partial.jsonl`, was
+        unlinked (line 2982) moments after its last close. The client silly-renamed it, `os.replace` (2983) carried
+        the name into the folder the check lists (3281), and the listing found it.
+      - In the first (`valence_core/n/ids.py`:934), `shutil.rmtree(stage, ignore_errors=True)` (ids.py:485) met the
+        same on one of the five files the test's staging folder held, and the folder stayed.
+      - A race on the volume, not a defect of the code or of the box's files. G-CAL-n's launch (581/581) and
+        G-TIME-n's (645/645) ran the same self-test form on this box and passed. v1's run also bears out the expected
+        total: 726 passed and 2 failed is 728 checks on the box, the count the arithmetic gave.
+    - **The fix: launch files v2, nothing else.** The driver and the package are unchanged: a fix to the first check
+      would move LOCK-n v0.1 §18's package pin, and the second check's path is G-CAL-n's production path, of record.
+      - `gver_v2.sh` (`07938072…3b56`, 502 lines) is `gver_v1.sh` with 10 lines removed and 22 added, 11 of them code.
+        The self-test's `TMPDIR` is a new folder the script makes on the box's local disk, `LOCAL_TMP=/tmp` resolved:
+        `/tmp/gver-v2-selftest-work-gver-v2` (line 74). Before the work folder is made, it refuses anything of that
+        name that exists (a folder, a file or a symlink, dangling or not), a `LOCAL_TMP` that resolves under
+        `/workspace`, and a `LOCAL_TMP` that is not a folder. It removes the folder with `rmdir` once empty. Every
+        other check, end and print is v1's; `check_record`'s Python and its bash function equal v1's by `cmp`, the
+        Python at the battery window's `2e697088…5c34`; the manifest and the hashes file are v1's, at `69fa4ec4…0fb6`
+        and `a853932b…522b`.
+      - The launch note v2 (`86502c94…9225`, 409 lines) adds a box step before the launch, `df -T /tmp` and `df -T
+        /workspace` reported verbatim, `/tmp` local and not nfs. It keeps the expected count at 728/728 and the
+        hash-refusal procedure as agreed, and it runs v2 from a fresh copy, with new folders, v1's left as they are.
+      - Tested on the laptop, in bash alone: the harness, 709 of 709 (its first run 708 of 709, the one failure the
+        harness's own `mkdir` shim; the shim fixed, the script not changed); the null mutant, 709 of 709; 22 one-line
+        mutants over the 11 changed code lines, all killed; and the replay of the window's 32 driver outputs, 130 of
+        130. On the coordinating session's call, the delta had no blind review of its own.
+      - The set went to the coordinating session frozen (its set note `266a8670…5e6c`, its index `7532f855…cca7`).
+        It checked the set by tool and cleared it. The PI's word, verbatim: "Launch it" (PI date 2026-11-22). It
+        answered the coordinating session's question, "Launch v2 now on my relay, or should the seat read v1's failure
+        first?". So v2 ran before the seat read v1's FAIL, which the seat reads here.
+    - v2's self-test counted "  728/728 n selftest checks pass" (line 77) in that folder, and the script removed it:
+      no note line, and the pod session's `test -e` and `test -L` on its name exit 1 after the run.
+  - **The provenance,** from the out raw and the pod session's record:
+    - the weights `allenai/OLMo-2-0325-32B-Instruct` at revision `b96024342a77`, aggregate sha256 `36f05404…0fdb`, 22
+      files, each at the manifest's byte count (line 100);
+    - the driver `55885e65…385f` and LOCK-n.md `88d9fe7b…e9d5`, HEAD's committed bytes, LOCK-n v0.1's (lines
+      101–102); the ids of record, 160 sessions, MANIFEST.json at its pin, "equal" (line 103);
+    - n's backend identifier `8264f719efd347a9`, the lock's, and the characterization's `4ed3f2c70fe8afbf` under the
+      default window (R6) (line 104); the package `06b55761…1d39` with its twelve-file closure, the lock's (line 105),
+      as `hashes` printed them and the laptop's file holds them (lines 81–93);
+    - python 3.12.3, torch 2.8.0+cu128, transformers 5.15.0 and tokenizers 0.22.2;
+      `CUBLAS_WORKSPACE_CONFIG=:4096:8` and `RUNPOD_POD_ID=emw1e4embiwe9b` from `/workspace/env.sh` (the script
+      exported `:4096:8` again, line 2); git 2.43.0 on the box (line 4); the wrapper's bash 5.2.21;
+    - the local disk: `/tmp` on overlay, the container's root, and `/workspace` on nfs4, the network volume (the pod
+      session's record, §3).
+  - **Code's reading** (rule 25): v2's out raw whole (130 lines), the pod session's record of it whole (214 lines) and
+    the record whole; v1's out raw whole (106 lines) and its pod record whole (178 lines). The work folders' files are
+    each byte-equal to their lines in the out raws, by `cmp`:
+    - v2: `manifest.txt` lines 8–73, byte-equal to v1's; `selftest.txt` 75–77; `hashes.txt` 81–93, byte-equal to
+      `gver_hashes_v1.txt`; `gver.txt` 99–118; and `gver.err` empty (line 121);
+    - v1: `manifest.txt` lines 8–73; `selftest.txt` 75–79; `hashes.txt` 83–95.
+
+    Descriptive and post hoc (rule 11); no counter was declared for any of it before the run (rule 23), and none of it
+    enters a figure or a status: `CUBLAS_WORKSPACE_CONFIG` was already `:4096:8` before the script at both launches,
+    from `env.sh`; the self-test's two library warnings (the tiny model's `eos_token_id` outside its vocabulary;
+    `crop`'s) came before its count line, as at G-TIME-n's and G-CAL-n's runs; verify's `labels_kept` and `labels_ok`
+    are both 4.
+  - **The run** (the pod session's records, both committed as raws):
+    - v2's files reached `/workspace/nsite/gver-v2` at their relayed sha256s. The box before: the same pod, neither
+      restarted nor replaced since v1's launch, so neither respawn step ran; no new sync, `refs/bundles/n-site14` at
+      `2834c2d` since v1's; the GPU at 0 MiB.
+    - The local disk, the note's box step 1: `df -T /tmp` overlay and `df -T /workspace` nfs4, both verbatim in the
+      record (the server's host name masked here, below); `/tmp/gver-v2-selftest-work-gver-v2` absent.
+    - The fresh copy, `/workspace/nsite/copy-gver-2834c2d-v2`: a local clone, `--no-checkout --no-hardlinks`, origin
+      removed, sparse non-cone (`'/*' '!/data/m[f]3/' '!/data/*/ckpt/' '!/data/*/reports/'`), detached at `2834c2d`,
+      clean three ways, with no `data/n/gver`; the driver, LOCK-n.md and MANIFEST.json at the script's pins. v1's copy
+      was not read.
+    - The command, its sha256 `27e95ab3…6a4b` at the laptop and at the box, ran under `nohup`; the wrapper's PID was
+      15808, alive at +3 s, and ended before +30 min. The end-wait was on the PID alone.
+  - **The copy-back** (the pod session's record, §8), by `copyback15.sh` (`e3eb14bf…72fb`): by explicit name, the out
+    folder's two files, the work folder's five and the record, each sha256 equal at the box, in staging and at the
+    destination, and the pod session's record, written on the laptop and copied last, with no folder listed and
+    nothing on the box removed. The address and port were counted on every file copied back, on the box and again in
+    staging (the pod session's record on the laptop alone, where it was written): 0 each time. The coordinating
+    session checked the nine files by `shasum -c` and found under the copy-back's folder those names and no others;
+    Code checked them again by sha256 and by `cmp` of each work file against its lines.
+  - **The box at the end** (the pod session's record, §9): idle, nothing removed. Left: the launch files' folder; the
+    copy, holding the record; the work and out folders; v1's four folders, `sync14` and the side ref
+    `refs/bundles/n-site14`; and every earlier folder. The self-test's folder on `/tmp` is gone. The box stays up
+    through the campaign (C.7).
+  - **Production observations, for the seat** (Code's reading of the code at `2834c2d`, from the diagnosis;
+    descriptive, no change asked):
+    - **G-VER's record folder** is not exposed at PASS or STOP: `gver.json` is written by a rename onto a new name
+      and read back, and nothing there is unlinked. At a failure at the record, the cleanup's `unlink` could leave a
+      `.nfs…` entry; that end is a FAIL anyway, and the copy's changed-set check would show the entry.
+    - **G-CAL-n's listing:** `run_gcal` unlinks the partial log, renames the staging folder to `data/n/gcal/`, and
+      lists that folder, printing and hashing every file in it (`scripts/n_sessions.py`:2992–2993). A `.nfs…` entry
+      would be printed and hashed. Its run of record held: its out raw lists exactly the three files and no `.nfs…`
+      name (`results/raw/2026-11-20_n-gcal-v1_out.txt`, lines 375–377). Its outputs are committed by name, and §1.6
+      does not re-run G-CAL-n after a box change.
+    - **The runner's cell roots:** a cell's JSON is rewritten on each append, by `atomic_write_json` over the existing
+      file (`valence_core/n/cells.py`:248), so a cell root on the volume (`data/n/ckpt/<stage>/`) can briefly hold a
+      `.nfs…` name. A check by name is untouched by it: G-TIME-n's launch checked its cells by name and digest and
+      never listed a root, and the reports name their cells. A check that lists a root and expects its exact
+      contents, or counts its files, would be exposed, and so would a self-test with its `TMPDIR` on `/workspace`.
+    - **The campaign's launch files** (step 14), on that reading: cells checked by name, never a root's listing; the
+      self-test's `TMPDIR` on the local disk; the copy-back by name, as now.
+    - The weights folder is listed exactly by `check_weights_folder` (`scripts/n_sessions.py`:694), but nothing there
+      is unlinked or replaced; a `.nfs…` name there would be a refusal the launch classes INTEGRITY, the safe side.
+  - **Three of Code's readings, for the seat to class** (declared here, not sent before the run: the coordinating
+    session's call at v1's clearing). The launch files end INTEGRITY (exit 4) on three causes beyond the seat's
+    §1.2 and §1.4 and Code's reading in the BUILD's entry:
+    - MANIFEST.json's own base hash ("MANIFEST.json: its (i)-(iii) part is not the base manifest its iv block
+      names"), a file's hash;
+    - step 1 finding a file of the copy off the commit's bytes after a clean checkout (shasum's `FAILED`), the
+      copy's files of record changed on the volume (the launch review's F3); a file missing there is a FAIL;
+    - an exception inside the weights folder's checks, a traceback in `gver.err` naming `check_weights_folder` or
+      `gver_hashed_files` (the launch review's B4).
+
+    Each only stops the launch and escalates; none fired at either launch. One reading went the other way: the
+    weights folder missing itself is a FAIL of the launch, the seat's "a missing folder" (the launch review's F2).
+  - **The raws,** committed by path:
+    - v2: the script's output and exit, `2026-11-22_n-gver-v2_out.txt` and `_exit.txt`; the work folder's files,
+      `_selftest.txt`, `_hashes.txt`, `_stage.txt` (the stage's own output, the work folder's `gver.txt`) and
+      `_run-err.txt` (its stderr, empty); and the pod session's record, `_run.txt`;
+    - v1: `2026-11-22_n-gver-v1_out.txt` and `_exit.txt`; `_selftest.txt`, `_manifest.txt` and `_hashes.txt`; the pod
+      session's record, `_run.txt`; and the launch review, `_launch-review.md` (the report as returned, with every
+      disposition);
+    - the values-check, `2026-11-22_n-gver_valuescheck.md`.
+    - v2's `manifest.txt` is not committed: it is byte-equal to v1's manifest raw.
+    - **One edit, a mask:** v2's pod record is committed with its line 73, the `df -T /workspace` line, holding the
+      network volume's server host name masked as `<the volume server>`. The type nfs4, the mount path with the
+      volume's id (already in committed files) and the figures stand. As copied back, `bfcacae9…9d57`; as committed,
+      `e1a343c6…7424`; the one line differs. The coordinating session left the choice to Code ("Commit them as they are
+      or masked, your call"); neither field is an IP address or a port. Every other raw is byte for byte as copied
+      back or as built.
+    - Raws: [`2026-11-22_n-gver-v2_out.txt`](results/raw/2026-11-22_n-gver-v2_out.txt),
+      [`2026-11-22_n-gver-v2_run.txt`](results/raw/2026-11-22_n-gver-v2_run.txt),
+      [`2026-11-22_n-gver-v1_out.txt`](results/raw/2026-11-22_n-gver-v1_out.txt),
+      [`2026-11-22_n-gver-v1_launch-review.md`](results/raw/2026-11-22_n-gver-v1_launch-review.md).
+  - **Departures,** for the seat to class:
+    - the pod session's, its v2 record §10:
+      - declared in the announcement: `box_state15.sh`'s first run stopped at bash's parse of it (an apostrophe
+        inside a `${1:?…}` message opened a quote); bash had run only `set -u` and one assignment, so no check ran and
+        nothing was read or written; the message was fixed, every box script parse-checked with `bash -n`, and the
+        check run again;
+      - declared in the announcement: the no-restart check compared two durations, PID 1's elapsed time on the box and
+        the age of the pod session's own laptop output file of v1's state check (that file's modification time, read
+        on the laptop); no file of the box was read for its time;
+      - noted: the two `df -T` outputs are in its record verbatim, among them the network volume's server name and the
+        volume's id (the server's name masked here, above);
+    - the pod session's, its v1 record §10: the respawn statement's check read one file's modification time,
+      G-TIME-n's exit file (an out file, neither a ckpt file nor a report), with neither value printed; after the end
+      and before the copy-back, the out file's key lines and its self-test section were printed from the box and
+      read, after its address and port count, to judge whether the hash-refusal procedure applied; and the output it
+      reported to the coordinating session elided two mechanical blocks, each checked by tool, the file copied back
+      whole;
+    - Code's, since the BUILD's last sweep (its entry's): from its own log; from Code's own sweep of its tool calls
+      from there to their extraction for this entry (528 calls, 219 of them shell commands); from the values-check's
+      sweep of that span and on to the check's brief; and from Code's final sweep of its commands after the brief.
+      That sweep found 53 tool calls, 14 of them shell commands, of the kinds below: `sed -n` of two memory notes; a
+      name-only `ls` of the subagents' folder, counted, and `jq` over the checker's transcript to take its report
+      from its hand-back; `shasum` and `wc -l` of the diagnosis note in the notes folder; `sed -n` and
+      `/usr/bin/grep -c` over committed raws; `jq` over this session's transcript for the sweep; and `cp`, `diff`,
+      `bash -n` and width checks in Code's scratch. Code's bracketed counts of marker words and of the campaign
+      folder's plain name over their text are both 0. After it: the edits' replay (`bash` of its script, which runs
+      `jq` over this session's transcript, and `cmp`), the values-check raw's and the commit kit's assembly in
+      scratch, the kit's dry-run gate, and the window request's hashes. Code knows of no others:
+      - **a guard marker in an argv,** twice, both early in v1's launch work: two `/usr/bin/grep -n -E` processes
+        whose pattern held a constant's name with the marker in capitals, one over `valence_core/n/ids.py` and one
+        over the driver's lines that an `awk` printed. Each was also in its Bash command's zsh argv. Neither was in v1's
+        set note, which said that none of its departures put a guard marker in an argv; the second shared its command
+        with the `awk` listed there. Neither was Python;
+      - **a metadata print under item 2:** two `git show --stat` runs in one command, of two committed run entries
+        (`7d01b02` and `db00d6d`), to read their file lists while modelling this entry's raws. They printed (from
+        `7d01b02`'s list) the byte size of one committed checkpoint file under `data/n/ckpt/` and the line count of
+        one committed report under `data/n/reports/`. `git show --name-only` was the permitted form. Neither figure is
+        repeated here;
+      - **the model's data folder by a `cd` glob,** not inside a subshell, to read the model manifest into `jq` by a
+        redirect; the shell kept that folder as its working folder for one more call, which `cd`'d back (v1's set
+        note). The harness and its mutants read the same manifest by a `cd` glob inside a subshell, a builtin, then
+        `git show` with a bare relative name;
+      - **an interpreter other than shasum:** the battery window's three runs, on the coordinating session's grant
+        (Python, twice directly and once through the snippet test's script); `jq` over Code's sweep files in scratch
+        and over the two transcripts (below); the `awk` above (`NR>=5512 && NR<=6090` over the driver) and one `awk`
+        printing the lines over 120 characters in three of v2's own texts in scratch; and one environment assignment
+        whose name held the word "awk", before a `cat`, where no awk ran;
+      - **Q-F3's campaign script by its plain name,** in one `pgrep -f` pattern before the battery window's request;
+        it matched PID 8051 alone (v1's set note);
+      - **narrow pathspecs:** two `git grep`s in one command, over `valence_core/n` with `valence_core/m/resume.py`
+        and the driver, and over `valence_core/n` with `valence_core/m/resume.py`, in place of item 3's form; and one
+        `git diff --cached --name-only` without item 3's pathspec, into `wc -l`;
+      - **finds and listings:** one command with three unpruned finds over the v2 copy-back folder in Code's scratch
+        (it holds no ckpt or reports path), with `shasum` and `wc -lc` of its nine files; one pruned `find` over Code's
+        scratch by file name; `ls -la` of Code's scratch folders, among them the launch folder, whose test folder holds
+        the harness's fake copies, and the kit's folder; one `ls -la` of the notes folder and one of this session's
+        transcript file; name-only `ls` of the subagents' folder (counted), of the laptop's `/tmp`, and of folders in
+        Code's scratch; at the filesystem's root, one existence test of one name, after an `ls -d` there whose glob
+        matched nothing, so that zsh did not run it; and in the notes folder, one `ls -la` of the v2 set note's name
+        with a trailing glob that matched nothing, so that zsh did not run it;
+      - **byte counts:** `wc -c` of files in Code's scratch, the window runs' stderr files and the commit message among
+        them, and the non-ASCII bytes of v1's set note in the notes folder;
+      - **shell reads and writes outside the repository, the HF cache and Code's scratch:**
+        - Code's memory notes: a `sed -n` print of seven, `/usr/bin/grep -n` over the memory index twice, and one
+          shell append to the memory index by `printf >>`, with a `tail -n 2` of it;
+        - the notes folder: the window request and v1's set note written there by redirect, and v2's set note by the
+          fill tool (its temporary written, removed on its two failed runs, renamed into place on the next two);
+          reads there by `cat`, `shasum`, `wc -l`, `/usr/bin/grep -c`, `sed -n`, `tr` and `cmp`; existence tests; a
+          name-only `ls`; and one `rm` of the v2 set note's first output, unsent, before its regeneration;
+        - the background commands' output files in this session's task folder, by `cat`;
+        - this session's transcript, by `jq`, for this sweep; and the launch reviewer's transcript, by `jq`, to
+          extract its hand-back, the report;
+      - **removals in Code's scratch,** of Code's own outputs: the v2 note and index, three times (after the two failed
+        fills, and once more with the set note after the third, regenerated byte-identical), and the first staging of
+        these raws, each regenerated after;
+      - **throwaway repositories in Code's scratch:** the harness's fake copies, run per case and per mutant, whose
+        paths are shaped like `data/n/ckpt` and `data/n/reports`; and the overlay `overlay2834`, by `git archive` with
+        the model's data folder named by quoted pathspec globs, which git expands itself, extracted by `tar`;
+      - **tool checks:** `bash -c 'type …'`, `grep --version` and `bash --version`;
+      - **the BUILD's commit window, as granted:**
+        - the checks before it: `git show HEAD:RESULTS.md` into `wc -l` and `cmp`, `sed -n` of RESULTS.md, and `git
+          rev-parse origin/main`;
+        - its steps: the kit's place v4, `git add --pathspec-from-file`, the gate v11, the message check, `git
+          commit` and the kit's verify v3;
+        - the done report: `git show HEAD:<path>` into `shasum` and `wc -l` for its seven paths, `git diff -U0` and
+          `git diff --numstat` of RESULTS.md, the package-digest script, `git cat-file commit HEAD` into `cmp`, `git
+          diff --name-only` with the pathspecs, `git rev-parse origin/main` and `pgrep -i python`;
+      - **the battery window's three runs,** in the window's form, on the coordinating session's grant: `cd
+        jl*/.venv/bin` inside a subshell, a glob at the repository's root that zsh's builtin `cd` expanded to the
+        marker-named virtual-environment folder; no process argv held it;
+      - **the manifest builder's run** (`make_manifest_gver_v1.sh`): inside it, the model's data folder is entered by a
+        `cd` glob in a command substitution and by a variable holding its name in subshells (builtins); and `git
+        ls-tree -r` runs over the adapters folder and BK's skeletons, whose marker-holding names it prints are read by
+        redirects in a `while` loop;
+      - **process checks:** `pgrep -i python` twice, before and after the BUILD's commit; `pgrep -x python3` with `ps
+        -p 8051 -o pid= -o etime=` before the battery window's request, which printed the elapsed time of Q-F3's
+        campaign process (the check's O6: for the seat to class); `ps -p 8051` with `pgrep -f n_sessions` four times in
+        the window; and `pgrep -f` of the harness and the mutation tool three times, once in a background wait loop;
+      - **not shell commands:** a `Monitor` call on the v2 mutation lanes' outputs in Code's scratch, and a file-tool
+        read of the model manifest;
+      - **throughout the span,** ordinary reads and writes in the repository and Code's scratch: `sed -n`,
+        `/usr/bin/grep`, `cat`, `cmp`, `diff` and `git diff --no-index`, `git show <rev>:<path>`, `jq` over Code's
+        sweep files, `mkdir`, `cp`, `mv` and redirects, `bash` of Code's scratch scripts (the harness, the mutation
+        tool, the staging, fill, index, abbreviation and replay scripts, the package digest), `zsh` of the BUILD's
+        commit-build script, `date`, `od -c` and `xargs`. The commands from the BUILD's last sweep to its window
+        request are of the kinds its entry's "After it" list names.
+    - the launch reviewer's, as its report states them (the review raw, §1's last part): one grep refused by the
+      permission system before it ran, whose glob would have put the adapter module's marker-named path in its argv;
+      one zsh loop over PATH refused by a safety check (no marker); reads beyond the brief's list, not barred; and
+      `git diff --name-only` and `git ls-files` printing marker-holding names in their output only;
+    - the values-checker's, as its report states them:
+      - one command whose text held an environment assignment whose name held the word "awk", before `sed`, where no
+        awk ran;
+      - `sed` as a filter and for masking, beside `cut`, `tr`, `od`, `diff`, `cmp`, `sort` and `uniq`;
+      - one `git check-ignore -v --no-index` on three named paths under `data/n/gver/` (two of them not files), a git
+        form outside item 1, which printed only `.gitignore`'s line numbers, patterns and the names;
+      - git forms without item 3's pathspec: `git log -3 --format` of ids, commit times and subjects, with no path;
+        `git log --format=%h -1` over one named data path; `git log --format` over two named raws; and `git rev-parse
+        origin/main`;
+      - more of T printed than a finding needed, in its tool output only: the coordinating session's messages after
+        the BUILD's sweep in full, one of them holding a fragment of the server's host name, which its report does not
+        repeat; and truncated, masked views of all 237 swept commands;
+      - masked tool-result lines that named one ckpt file and one report path, from the `--stat` output;
+      - `wc -c` of derived streams: non-ASCII counts of scratch files, and the length of the masked host pattern; none
+        under ckpt or reports.
+
+      It states nothing else: no Python, no write, no network; no guard marker in any argv or command text; nothing
+      under `data/*/ckpt`, `data/*/reports` or `data/m[f]3` read, listed or sized; no whole-tree git status; no
+      listing, find or glob in Code's scratch; and in the notes folder only the three named notes read.
+  - **One blind values-check** of this entry's draft, the launch review raw and the staged raws, on a brief that quotes
+    the list of record v2's items 1–5: 86 items, 68 CONFIRMED, 12 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE; and 11
+    observations. Its sweep took 237 shell commands to the brief's hash, 219 to Code's extraction and 18 after it. Its
+    bracketed counts over their text: a guard marker 2, both declared above; the campaign folder's plain name 1,
+    declared above.
+    - The FAIL (item 64) was the departures list's completeness. The kinds it found missing are now listed above, in
+      its words or near them: the BUILD's commit window, the battery window's three runs in the window's form, the
+      manifest builder's run, the process checks, a `git diff --cached` without the pathspec, and the ordinary reads
+      and writes throughout the span.
+    - The twelve IMPRECISE items (2, 25, 36, 40, 53, 55, 57–61 and 73) are applied in the checker's words.
+    - Of the observations: O1, O2, O3, O5, O6, O7, O8 and O9 are applied; O4 is met by the gate's declared count of
+      the scratch folder's name (the two pod records' mentions); O10 and O11 are noted.
+    - The edits were checked by tool, 23 of 23. Raw, the report as returned, with every disposition:
+      [`2026-11-22_n-gver_valuescheck.md`](results/raw/2026-11-22_n-gver_valuescheck.md).
+  - **Committed by path,** with the commit kit's gate v12: v11 with two agent ids added to its scanned list, the
+    launch reviewer's and this check's. The commit-time count of the home-folder prefix over the staged diff is 0. On
+    the laptop nothing ran on a model, and no Python ran after the launch window's three runs. This entry is not
+    pushed: the push after it needs the PI's word (D.8's range ended at the BUILD, which is on origin, `2834c2d`).
+  - **Next:** LOCK-n v1.0's draft at once (N.3), untracked at the root, for the seat: §1.5's G-VER row (this entry,
+    the record's sha256, "PASS, 160 of 160", the end line verbatim), the cap 4 h, §3's two dated notes, and the carry
+    list as routed. The seat reads this entry, the record and the out raw first and the draft second, both before step
+    13's commit (§1.7; D_n 2026-12-15). The box stays up and idle.
+
 - 2026-11-22 — **n — G-VER of record's BUILD (n v0.2 §8 step 12): the `gver` command in `scripts/n_sessions.py`, on
   Code's readings GV1–GV16 as PINs (the PI's "Build on the PINs") and the seat's rulings on them (its first sitting of
   2026-11-22); the driver alone, the package at LOCK-n v0.1's digest. Not run.**

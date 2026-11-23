@@ -1,0 +1,214 @@
+n step 12 -- G-VER of record on n's box, pod emw1e4embiwe9b (H100 SXM): gver_v2.sh, G-VER's launch set v2, from
+G-VER's BUILD 2834c2d, in a fresh sparse copy, as run by the pod session. v2 is v1 with the self-test's temporary
+folder moved to the box's local disk, after v1 ended FAIL at its self-test (726 of 728; its out file b39fe931…e738).
+The PI's word, as the coordinating session relayed it: "Launch it" (PI date 2026-11-22), answering the coordinating
+session's question "Launch v2 now on my relay, or should the seat read v1's failure first?"; so v2 ran before the
+seat read v1's FAIL. The coordinating session's relay: "G-VER of record, launch set v2: launch cleared, on the PI's
+"Launch it"."; its reply to the pod session's announcement: "launch as announced: G-VER v2, with the command whose
+sha256 is 27e95ab3f1ae67d76a2a7b8af8d9091797c433f767f3ea3fceb954ce0a166a4b." No pod address or port in this file. The
+run's own output is gver_v2_out.txt (all of stdout and stderr, unedited); its exit file is gver_v2.exit, which holds
+"exit N". The launch was announced to the coordinating session before it started, naming the two df -T outputs and
+the two tests on the self-test folder, the pod's state, the side ref, the copy, the three files' sha256s, the tools,
+the python, the box names and the command with its sha256.
+
+RESULT: PASS (exit 0). G-VER of record v2 ended PASS, read three ways, and every check of the script held: the record
+data/n/gver/gver.json is of record, sha256 d1dcc3373a648b463fd3985e86217bf936d03240eb6952ad5208bda6827de90a. The exit
+file reads "exit 0". The out file's last line, verbatim:
+gver v2 PASS: the record is of record, PASS; copy OK, manifest OK, selftest exit=0 count 0, hashes exit=0 and equal 0, the copy before the stage 0; stage exit=0, wall time 18041 ms, read as PASS, the record on-disk; checks (0 = held, 9 = not run): prints 0, record line 0, record 0, changed set 0
+Read three ways (the note's F5): the exit 0, that PASS line last, and the record a regular file in the copy (test -L,
+-f and -e). The out file has no REFUSED, FAILED or Traceback line and no note line. The record: status PASS; verify's
+sessions 160, ids_ok 160, spans_ok 160, n4_ok 160, labels_kept 4, labels_ok 4, manifest_ok true, first_problems none;
+MANIFEST.json's sha256 equal to its pin 53a8cd74…99d8. The two durations (GV12): the tokenizer's load 14719 ms and
+the decode 264 ms, inside the stage's wall time of 18041 ms (F11); the launch's wall time 78573 ms (descriptive). PASS
+is no STOP (N.2). The last line and the exit file went to the coordinating session first, then the copy-back as the
+note gives it for PASS. Nothing re-ran, and nothing else ran on the box.
+
+1. FILES. From n-build's scratchpad/step4b/gver/launch/ (v2/gver_v2.sh and v1's two files), re-hashed on the laptop at
+   the relay, frozen in the pod session's scratch, and re-hashed on the box after shipping:
+     gver_v2.sh                    07938072…3b56 (502 lines, read in full, ASCII; COMMIT
+                                   2834c2d9aa058fe250d3fb21cfdf263702338c80; its DRIVER_SHA256 55885e65…385f, equal
+                                   to scripts/n_sessions.py in the copy at 2834c2d; LOCAL_TMP=/tmp)
+     gver_manifest_v1.txt          69fa4ec4…0fb6 (66 lines, v1's, unchanged)
+     gver_hashes_v1.txt            a853932b…522b (13 lines, v1's, unchanged)
+   The launch note, v2/gver_launch_note_v2.md (86502c94…9225, 409 lines), was read in full and stays on the laptop.
+   All four files equal the values the coordinating session relayed with the clearance, by tool, with their line
+   counts. The three box files went to /workspace/nsite/gver-v2, a new folder, by tar over ssh (ship_n15.sh,
+   f33dad07…0855), with no Mac metadata on the laptop side and no ownership and no '._*' on the box side. The folder
+   holds exactly its three names, none dotted, each at its relayed sha256 on the box. Every box name was checked
+   first by existence tests alone (test ! -e and test ! -L); the note's proposed names were used, and none collided.
+   There is no sync folder: no bundle was needed (section 2), and the pod session's scripts ran over ssh's standard
+   input, so no file of the pod session's is on the box.
+
+2. THE BOX, BEFORE: the note's statement, "If the pod has been restarted or replaced since G-TIME-n's run, both
+   respawn steps run first, and this launch waits", and the coordinating session's first step, to confirm that the
+   pod "has not been restarted or replaced since v1's launch". box_state15.sh (988776ae…6541), read-only, found:
+   - the same pod: env.sh's RUNPOD_POD_ID is emw1e4embiwe9b;
+   - no restart since v1's launch: the container's PID 1 started before the pod session's state check for v1 ran,
+     which was before v1's launch (two durations compared, PID 1's elapsed time on the box and the age of the pod
+     session's own laptop output file of that check; neither printed; no file of the box was read for its time);
+   - the volume as the pod session left it: the 24 kept folders present by name (v1's five, G-TIME-n's five,
+     G-CAL-n's five, G-VEC v2's five, the four the PI kept) and cleanup v1's 26 folders absent by name; the box
+     checkout main at ad856f0 and clean (the bare form);
+   - refs/bundles/n-site14 at 2834c2d9aa058fe250d3fb21cfdf263702338c80, a commit in the box repo's objects, so no new
+     sync (the note's box step 2); n-site13 at 101026c, n-site12 at 0744136 and n-site11 at bc50244;
+   - the new names free: gver-v2, copy-gver-2834c2d-v2, work-gver-v2 and out-gver-v2;
+   - /tmp resolving to itself, and on /tmp/gver-v2-selftest-work-gver-v2 "test ! -e" exit 0 and "test ! -L" exit 0;
+   - the GPU (NVIDIA H100 80GB HBM3, driver 595.112.07) at 0 MiB of 81559 MiB, with no interpreter job, no
+     n_sessions.py process and no compute app; the wrapper's bash /usr/bin/bash 5.2.21, so the script's ms clock
+     (EPOCHREALTIME) is there.
+   The pod was neither restarted nor replaced, so neither respawn step ran. box_state15.sh's first run stopped at
+   bash's parse of it (exit 2, "unexpected EOF while looking for matching" a double quote): an apostrophe inside a
+   ${1:?...} message in the script opened a quote. Bash had run only set -u and one assignment, so no check ran and
+   nothing was read or written. The message was fixed, every box script was parse-checked with bash -n, and the
+   second run gave the findings above. Both were declared in the announcement.
+
+3. THE LOCAL DISK, the note's box step 1 (df15.sh, 7040919b…b65e; the address and port on its standard input, never
+   in an argv). Both outputs were counted for the address and port on the box before any line was printed, and again
+   on the laptop: 0 in each. Neither holds an IPv4 address, so both are verbatim:
+---- df -T /tmp (exit 0; IPv4 addresses shown as <IPv4>: 0) ----
+Filesystem     Type    1K-blocks  Used Available Use% Mounted on
+overlay        overlay  31457280 16220  31441060   1% /
+---- df -T /workspace (exit 0; IPv4 addresses shown as <IPv4>: 0) ----
+Filesystem                                                  Type 1K-blocks      Used Available Use% Mounted on
+<the volume server>:/runpodfs/networkvolumes/o73qvy742n nfs4 488282112 328296448 159985664  68% /workspace
+---- end ----
+   /tmp is overlay, one of the note's local types, on the container's root; /workspace is nfs4, the network volume.
+   df15.sh was first run against a stand-in df on the laptop (test_df15.sh, bash alone): six cases as expected, the
+   address and the port each stopping the print and an IPv4 address shown as <IPv4>.
+
+4. THE COPY, the note's box step 3. /workspace/nsite/copy-gver-2834c2d-v2 is G-VER v2's fresh copy, new
+   (make_copy15.sh, 494bb06d…cc69, v1's make_copy14.sh with v2's destination):
+   - a local clone of the box checkout with --no-checkout and --no-hardlinks, origin removed;
+   - sparse, non-cone, in the note's form: '/*' '!/data/m[f]3/' '!/data/*/ckpt/' '!/data/*/reports/';
+   - detached at 2834c2d (held through refs/bundles/n-site14), clean three ways (the bare form; with --ignored; and
+     in the script's own step-0 form: optional locks off, the global excludes file off, --untracked-files=normal
+     --ignored), with nothing extracted over it.
+   The globs data/m[f]3, data/*/ckpt and data/*/reports matched nothing, each compared with its literal form;
+   data/n/gver was absent (no file, folder or symlink of that name). data/n/ids held exactly the commit's 7 names
+   there. The driver, LOCK-n.md and data/n/ids/MANIFEST.json were at the script's pins (55885e65…385f,
+   88d9fe7b…e9d5, 53a8cd74…99d8), the model manifest at the launch manifest's line (d39e5066…ac3e), and the
+   .gitignore at the note's 81f5f227…b610. /workspace had 153G available of 466G before the clone and 152G after.
+   v1's copy was not read. G-VER copies nothing in.
+   The note's box step 4: command -v git shasum grep cmp tee tail head cut cat dirname basename mkdir rmdir on the box
+   (cmdv15.sh, 8eb69a99…36f9) gave all thirteen in /usr/bin, exit 0; /workspace/venv/bin/python was present and
+   executable.
+
+5. RUN, the note's box step 5. Before the launch (launch_gver2.sh, d3da702d…fe0f, v1's launch_gver1.sh with v2's
+   names and the local disk's checks again):
+   - no interpreter job, no n_sessions.py process and no GPU compute app; the GPU (NVIDIA H100 80GB HBM3) at 0 MiB of
+     81559 MiB;
+   - /tmp of type overlay, resolving to itself; /tmp/gver-v2-selftest-work-gver-v2 absent (test ! -e and test ! -L);
+   - the out and work folders absent; the three files on the box at the relayed hashes; the note's thirteen tools
+     present; the copy at 2834c2d, clean three ways, and holding no data/n/gver;
+   - with /workspace/env.sh: RUNPOD_POD_ID=emw1e4embiwe9b and CUBLAS_WORKSPACE_CONFIG=:4096:8 (the script exports
+     :4096:8 itself);
+   - python 3.12.3 | torch 2.8.0+cu128 | transformers 5.15.0 | tokenizers 0.22.2.
+   The command ran under nohup in the background. It is v1's command with v2's names, held in a quoted heredoc and
+   checked equal by cmp to the pod session's held copy, its sha256 27e95ab3…6a4b at the laptop and at the box; the
+   command as the box printed it is cmp-equal to the held copy:
+( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/gver-v2/gver_v2.sh /workspace/nsite/copy-gver-2834c2d-v2 /workspace/venv/bin/python /workspace/nsite/work-gver-v2 ) > /workspace/nsite/out-gver-v2/gver_v2_out.txt 2>&1; echo "exit $?" > /workspace/nsite/out-gver-v2/gver_v2.exit
+   The out folder /workspace/nsite/out-gver-v2 was made just before; the work folder did not exist, and the script
+   made it. The wrapper's PID was 15808, the nohup'd bash -c, alive on a kill -0 check at +3 s. The PID, the library
+   versions, the command's sha256 as printed and the +3 s check went to the coordinating session at once. The
+   end-wait was on the PID alone, with no stat, listing, tail, Monitor or read of the run's outputs until it had
+   ended: the PID ended before +30 min, so no "PID alive at +30 min" report was due.
+
+6. OUTCOMES (the pod session's reading of the out file, all 130 lines, read in full after the copy-back, from the
+   staged copy):
+   step 0, the copy                     held: HEAD 2834c2d9aa058fe250d3fb21cfdf263702338c80, the changed set none and
+                                        data/n/gver absent; git 2.43.0. CUBLAS_WORKSPACE_CONFIG was :4096:8 before
+                                        the script, from env.sh, and the script exported :4096:8.
+   step 1, the manifest                 66 of 66 OK: lines 8-73, the manifest's 66 paths in its order, each ": OK"
+                                        (by tool); manifest.txt is byte-equal to those lines, and to v1's.
+   step 2, the self-test                in /tmp/gver-v2-selftest-work-gver-v2, as its header line says: two library
+                                        warnings, then "  728/728 n selftest checks pass", "selftest exit=0" and
+                                        "selftest: 728/728, as expected". No note line about the self-test's folder
+                                        was printed, so the script's rmdir of it succeeded; after the run, test -e and
+                                        test -L on its name each exit 1. selftest.txt (3 lines) is byte-equal to the
+                                        out file's lines 75-77.
+   step 3, the hashes                   hashes exit=0; "hashes: equal to the laptop's"; lines 81-93 byte-equal to
+                                        hashes.txt, which is byte-equal to gver_hashes_v1.txt.
+   step 3b, the copy again              "the copy: changed set none; data/n/gver absent".
+   step 4, G-VER of record              the stage's 20 lines, 99-118, byte-equal to gver.txt: the STAGE line; the
+                                        WEIGHTS line (revision b96024342a77, files_aggregate_sha256 36f05404…0fdb, 22
+                                        files, each at the manifest's byte count); the DRIVER line (55885e65…385f)
+                                        and the LOCK-n.md line (88d9fe7b…e9d5), HEAD's committed bytes; the ids line,
+                                        160 sessions, MANIFEST.json at its pin 53a8cd74…99d8, "equal"; the backend
+                                        line (n's identifier 8264f719efd347a9, the characterization's
+                                        4ed3f2c70fe8afbf, pod emw1e4embiwe9b, python 3.12.3, transformers 5.15.0,
+                                        tokenizers 0.22.2); the package line (06b55761…1d39 and its closure of 12
+                                        files); the eight "hashed file" lines, each at the model manifest's pin;
+                                        G-VER's line; verify's report; the durations line; the record line; and "G-VER
+                                        (n) PASS: the record is written", last. stage exit=0; the stage's wall time
+                                        18041 ms; gver.err empty. verify's report, verbatim:
+{"first_problems": [], "ids_ok": 160, "labels_kept": 4, "labels_ok": 4, "manifest_ok": true, "n4_ok": 160, "sessions": 160, "spans_ok": 160, "status": "PASS"}
+   step 5, the end                      read together: PASS; "the stage's prints: as wanted"; the record's sha256 as
+                                        the stage printed it (B6); the record's checks, all thirteen held (keys,
+                                        schema, status, verify, the pass rule, manifest, hashed_files, pins,
+                                        environment, durations, the verify line, the durations line, the ids line);
+                                        the copy's changed set data/n/gver/ alone, nothing ignored; the launch's wall
+                                        time 78573 ms (descriptive).
+   last line                            as printed in RESULT above.
+
+7. AFTER THE RUN (read-only looks, nothing run): the PID ended before +30 min. No interpreter job, no n_sessions.py
+   process and no GPU compute app; the GPU at 0 MiB of 81559 MiB. The exit file reads "exit 0"; the out file has 130
+   lines, its last line the PASS line above. The out and exit files were counted for address and port on the box (0
+   and 0) before any line of them was printed. copyback15.sh's probe then printed the exit line, the last line, the
+   record's state by test -L, -f and -e, and the out file's key lines (none at this end). after_run15.sh
+   (3cfd225b…8a41) printed no line of the out file. The pod session took no look inside the copy or the work folder
+   beyond the files copied back by name and the existence tests on their names, and none inside the self-test's
+   folder on /tmp beyond test -e and test -L on its name.
+
+8. COPIED BACK by copyback15.sh (e3eb14bf…72fb), by explicit name, each file's sha256 equal at the box, in staging
+   and at the destination, with no folder listed; every destination new:
+   - the end read three ways on the box first, copying nothing: PASS;
+   - to n-build's step4b/gver/box2/out/: gver_v2_out.txt and gver_v2.exit (out-gver-v2); manifest.txt,
+     selftest.txt, hashes.txt, gver.txt and gver.err (the work folder); and this file, copied last, by a second call,
+     after every other file was copied and verified;
+   - to step4b/gver/box2/rec/, under its repository path: data/n/gver/gver.json, its sha256 at the box, in staging
+     and at the destination equal to the out file's "the record: sha256 ..." line and to gver.txt's "record
+     data/n/gver/gver.json sha256 ..." line, each present once.
+   Their sha256s:
+     d86d7a27c2bc534ad8a62581c7f1f6d73880c8aafeb273215b193cea5f98f4e8  out/gver_v2_out.txt
+     28d3b9e880a77975493dc7e359144c0295a4f694cfe0af4f928c22307bc5c320  out/gver_v2.exit
+     5fe61e3e719af310749c9b6e725f369cffa283b5eb66f3fe086f62248978b628  out/manifest.txt
+     60979451d805e84d791e10332b441f8bf3f6334d0b8f06adf31113ffd81d097b  out/selftest.txt
+     a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b  out/hashes.txt
+     cd5c7e2809255e159f8f7ad9effde8e2152014cf3034bd6ffc13d235ef557ce5  out/gver.txt
+     e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  out/gver.err
+     d1dcc3373a648b463fd3985e86217bf936d03240eb6952ad5208bda6827de90a  rec/data/n/gver/gver.json
+   hashes.txt is byte-equal to gver_hashes_v1.txt (a853932b…522b); gver.err is empty (e3b0c442…b855 is the sha256
+   of no bytes).
+   The address and port were counted on every file copied back, counts only: first on the box, before anything left
+   it, by count_box.sh (85591293…f61a; the two values sent on its standard input, never in an argv, and counted by
+   bash builtins), and again in the pod session's staging on the laptop, before anything was copied on to n-build's
+   folders: 0 in each, both times. This file was counted on the laptop alone, where it was written.
+   copyback15.sh is v1's copyback14.sh with v2's names and n-build's box2/ folders, its key lines taking in the
+   script's note lines too. It was first run against a stand-in box on the laptop (bash and shell tools only, nothing
+   real touched; run_cases15.sh 7497e9ff…1c38 with the stand-in fakebx15.sh 786f214e…080b): 40 of 40 cases as
+   expected, twice, v1's 37 and three for v2 (v2's refusal of its self-test folder, its note line at a FAIL, and v1's
+   last line, which v2's reading takes as no end of v2's). A small mutation pass (mut15.sh, b1aceaa8…a08f) then ran
+   the null mutant, 40 of 40, and seven one-line mutants of the script's safety branches, each killed by its own case.
+
+9. LEFT ON THE BOX, nothing removed:
+   - /workspace/nsite/gver-v2 (n-build's three files);
+   - /workspace/nsite/copy-gver-2834c2d-v2 (the copy, holding the record data/n/gver/gver.json; its changed set
+     data/n/gver/ alone, by the script's step 5);
+   - /workspace/nsite/work-gver-v2 (the work files copied back by name; nothing else of it looked at) and
+     /workspace/nsite/out-gver-v2;
+   - v1's folders (gver-v1, copy-gver-2834c2d, work-gver-v1, out-gver-v1), sync14 and the side ref
+     refs/bundles/n-site14, untouched, with the box checkout unmoved at ad856f0;
+   - every earlier folder as before.
+   The self-test's folder on /tmp is gone: the script removed it with rmdir once it was empty. The box is up and idle:
+   C.7 keeps it up through G-VER and the campaign.
+
+10. DEPARTURES AND DECLARATIONS, for the seat to class:
+   - declared in the announcement: box_state15.sh's first run stopped at bash's parse of it (section 2); no check ran,
+     and nothing was read or written; the script's message was fixed, every box script parse-checked with bash -n,
+     and the check run again;
+   - declared in the announcement: the no-restart check compared two durations, PID 1's elapsed time on the box and
+     the age of the pod session's own laptop output file of v1's state check (that file's modification time, read on
+     the laptop); no file of the box was read for its time, so v1's read of G-TIME-n's exit file's modification time
+     was not repeated;
+   - noted: the two df -T outputs (section 3) are in this file verbatim, among them the network volume's server name
+     and the volume's id; neither holds an IP address or a port.
