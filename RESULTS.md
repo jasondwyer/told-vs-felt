@@ -21,6 +21,144 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-23 — **n — LOCK-n v1.0 — COMMITTED (PROPOSAL-n v0.2 §8 step 13), on the seat's read of the draft (its
+  first sitting of 2026-11-23) and the PI's routing of it, item N.2, with the PI's word: `LOCK-n.md`, sha256
+  `59e0b1bc…00aa`, 1453 lines, the draft the seat read (`2b2fe5d6…6efc`, 1446 lines) with the seat's four edits
+  (its §3) and nothing else. The seat's raw and the routing raw are committed at `221b806`; this commit carries
+  `LOCK-n.md`, the check's raw and this entry, by path, and the root draft is removed after its verify. Nothing ran
+  on a model or on the box.**
+  - **Headline:** LOCK-n v1.0 is of record from this commit, superseding LOCK-n v0.1 (`88d9fe7b…e9d5`, kept verbatim
+    beneath as lines 396–1453). `LOCK-n.md`, sha256
+    `59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa`, 1453 lines, is the lock the N-pod campaign
+    follows: the figure the campaign's identity carries as `lock_sha256` (schema.py:453) and VERDICTS checks against
+    it (n_analyze.py:6687–6689; v1.0 §12). D_n is 2026-12-15 (v1.0 §3), measured on this commit's committer date
+    (n:152).
+  - **The routing,** rt23a's item N.2 (rt23a:24–26), verbatim:
+    > 2. Step 13's commit: LOCK-n.md as §3 leaves the draft, by path, with the entry "LOCK-n v1.0 — COMMITTED"
+    > naming the committed file's sha256 (the campaign identity's lock_sha256), this raw and the routing raw;
+    > the draft file removed after a cmp against the committed file. [go — by D_n 2026-12-15; PI's word: ___]
+
+    The PI's word on it, as the coordinating session relayed it: "Go: commit step 13".
+
+    rt23a is the PI's routing raw of the sitting,
+    [`2026-11-23_first-sitting_pi-routing.md`](results/raw/2026-11-23_first-sitting_pi-routing.md)
+    (`50b4f4e0…4a4a`), committed at `221b806` with the seat's raw (rt23a item 5).
+  - **The seat's read,** ans23a:
+    [`2026-11-23_n-lock-v1_0-read_design-to-code_answers.md`](results/raw/2026-11-23_n-lock-v1_0-read_design-to-code_answers.md)
+    (`b81b5988…300c`, 73 lines; placed untracked by the seat, committed at `221b806`).
+    - It read the draft whole, the v1.0 part line by line against the records it cites and the tail by `cmp`, and
+      finds nothing wrong in it (§0, §1). Every sha256 the part names was equal at its read: 25 of 25 named files,
+      BK's 26 of 26, and the report by digest alone.
+    - Code's three readings are accepted (§2).
+    - §1's last bullet answers the two questions of `6912d6e`'s entry: no gate re-run is scheduled between step 13's
+      commit and step 14's BUILD (edit 4 says so in the lock), and no re-read of G-VER's record is owed.
+  - **The four edits** (ans23a §3): the words are the seat's, the line breaks Code's, at the part's 120 characters.
+    1. **The status line.** The draft's lines 3–5, its italic draft paragraph, are replaced by ans23a:39–40's two
+       lines, byte for byte. The drafting paragraph beneath them stays (line 6), "as history, as v0.1's did".
+    2. **v1.0 §13's step-14 paragraph.** ans23a:44's clause follows "classed INTEGRITY, not a launch FAIL" (lines
+       385–389): G-TIME-n's two steered cells' JSON, committed by path with the campaign's own cells at step 14's
+       close.
+    3. **v1.0 §5.** ans23a:45's sentence follows the chain's list, as a bullet of its own (lines 191–194) before the
+       G-VER row's: the box of record is unchanged through the chain.
+    4. **v1.0 §12.** ans23a:46's sentence is at its end, the last line of its last bullet (line 361).
+
+    Nothing else changes (ans23a:48). `diff` of the draft against this file is four hunks, `3,5c3,4`, `191a191,194`,
+    `357a361` and `381,382c385,389`, seven lines more. Its output is the check raw's §1, byte for byte (`564c6cd6…1994`,
+    23 lines).
+  - **Left as the draft has them** (ans23a:48), for the seat to see:
+    - v1.0 §13's "(this file's lines 3–5)" names the draft's lines; from this commit the status line is lines 3–4;
+    - v1.0 §13's text block keeps Code's words for the status line, which the seat set with its clause added (ans23a
+      §2, §3 item 1);
+    - v1.0 §11's "for the seat" and "the seat rules them at its read": ruled at ans23a §2.
+  - **The re-check by tool,** shell only and with no subagent, as at step 10 for v0.1. check13 (`4663a0ee…6ef8`), at
+    HEAD `221b806`: 24 ok, PASS. What it checks:
+    - **the inputs:** the root draft equal to the bytes the seat read, the seat's raw at its sha256, v0.1 at `deabf3f`
+      and at HEAD, and the analyzer v7 clean;
+    - **the diff:** the four hunks above, and no other;
+    - **each edit against ans23a's words:** edit 1 byte for byte, edits 2–4 word for word with whitespace runs folded,
+      and each at its place;
+    - **the structure:** no placeholder; no line over 120 characters in the v1.0 part outside tables and blockquotes;
+      the analyzer's three rules as n_analyze.py reads them (`lock_route`: the whole line `lock: LOCK-n v1.0` and one
+      route line, Route B; `lock_gate`: one gate line, 48 of 48, PASS; `lock_names`: v7's sha256 between backticks);
+      and the tail, v0.1's 1058 lines byte for byte.
+
+    mut13 (`982b2767…7ad5`): the null mutant passes, and 20 mutants, each one change aimed at one check, each fail
+    check13 on their target. Both outputs are in the check raw (§2, §3),
+    [`2026-11-23_n-lock-v1_0-commit_check.txt`](results/raw/2026-11-23_n-lock-v1_0-commit_check.txt) (`db6282c9…023a`,
+    109 lines).
+  - **The root draft's removal** follows rt23a item 2's "the draft file removed after a cmp against the committed
+    file". The root draft is not the committed file: it is the committed file less the four edits. So after the
+    commit's verify, after13 (`2bc14ba3…5dd8`) checks:
+    - by `cmp`, that HEAD's `LOCK-n.md` is draft 11 and clean;
+    - that the root draft is still the bytes the seat read, and untracked;
+    - that `diff` of the root draft against `LOCK-n.md` is the four edits' diff (the raw's §1), so the root draft holds
+      nothing this commit and its raw do not;
+    - the committer date against D_n.
+
+    Then it removes the root draft and checks that it is gone. Its fixture test (`9c908c13…214e`), in throwaway
+    repositories in Code's scratch, passes 8 of 8: the removal, and seven failures each caught before it; its output
+    is the check raw's §4. after13's own output comes after the commit: it goes to the coordinating session in the
+    done report, and into the next entry's raw.
+  - **The kit,** as at `6912d6e`: `kit_place_v4.sh` (`LOCK-n.md` a `mod` line, the raw a `new` line),
+    `kit_gate_v14.sh`, `check_msg.sh` and `kit_verify_v3.sh`. The package digest `06b55761…1d39` is passed to the gate
+    and the verify; no code changes.
+  - **Departures, declared for the seat to class** (Code's, from `6912d6e`'s entry's final sweep to this entry's
+    final sweep):
+    - **After `6912d6e`'s entry's final sweep, through its window** (23 commands):
+      - the entry's last build in Code's scratch: `head`, `tail` and `sed` over its source and `fill_entry.sh`; the
+        replay re-run (`replay_vc2.sh`), after an `rm -r` of its scratch folder and an `rm` of the five scratch files
+        it rebuilt;
+      - `check_msg.sh` restored from Code's transcript by `jq` in three commands (the earlier `cat` of it found, then
+        its result's nine lines written back), after a `cat` of the file failed on its absence;
+      - `build_lock_commit.sh` (`bash -n`, then its run), `check_msg.sh`, the gate's dry run, and the dry run's splice
+        read back (`git show HEAD:RESULTS.md` into `grep`, `head`, `tail`, `cmp` and `diff -U0`);
+      - `fill_window2.sh`, which wrote the window request into the shared notes folder;
+      - the window's six steps, as granted;
+      - the reads of `6912d6e` for the done report: a loop over its manifest's three raw paths (`git show
+        "HEAD:<path>"` into `shasum` and `wc -l`), `git diff -U0 HEAD~1 HEAD -- RESULTS.md` for the hunk, and `git
+        cat-file commit HEAD` into `cmp` with the message;
+      - reads of Code's scratch (the entry's copies, the G-VER entry's commit-build script, the kit's library) by
+        `cat`, `sed -n`, `grep -n`, `wc -l` and `od -c`.
+    - **Since the seat's raw reached Code** (43 commands):
+      - reads of the seat's raw, rt23a, the draft, RESULTS.md, the kit and the generator: `sed -n`, `grep -n`, `cat`,
+        `cut`, `head`, `tail`, `wc` (one `wc -l -c`, of the seat's raw), `diff` and `cmp`; `git show
+        deabf3f:LOCK-n.md` and `HEAD:LOCK-n.md` into `grep -c` and `cmp`; `sed -n` of `scripts/n_analyze.py`'s lock
+        rules; `grep -n` of `valence_core/n/schema.py`;
+      - `git log -1 --format=%B 6912d6e`, a message's body, where item 1 names subjects;
+      - one BSD `awk` for the byte lengths of the edits' lines;
+      - draft 11 made by `cp -n` and four Edit calls;
+      - check13 (two runs, the first a FAIL on two positions of its own, fixed in the script), mut13, and make_raw13
+        (a preview run, and the run of record at `221b806`, each running both); their temporary folders were made by
+        `mktemp` in Code's scratch and removed by their traps (`rm -rf`);
+      - after13's fixture test, in throwaway git repositories in Code's scratch (`git init`, `config`, `add` and
+        `commit` there), with the repository read once (`git -C <repository> show deabf3f:LOCK-n.md`);
+      - the entry's preview fills, two of them stopped by the fill's own width check;
+      - `touch -c` of six of Code's scratch files by name, draft 10's copy and the kit, so that the scratch folder's
+        cleanup keeps them;
+      - one `cmp` over a wrong line range of the check raw (it printed a difference; at the range the raw's first hunk
+        gives, the two are equal).
+    - **In both spans:** `jq` reads of Code's own transcript (sweep 3's counts, the replay, the restoration, and this
+      entry's two sweeps with their views and counts); one failed `echo` in zsh (`echo ======`, an equals expansion,
+      which stopped its command before a second `cat`, run again on its own); and the process checks, `ps -p 8051 -o
+      pid=` and `pgrep -f n_sessions` (no process), five times each.
+    - **Counts.** By bracketed patterns over the sweep's commands and file-tool paths: no guard marker and no plain
+      name of the campaign folder. The loops' arguments were tool ids, line numbers, Code's scratch paths and named
+      repository paths (the three raws of `6912d6e`, four files at `221b806`, and the root draft), none of them
+      marker-named. Three tool outputs named the campaign folder plainly: two Read calls (the list of record's memory
+      note and the seat's raw, which name it as closed) and one `sed -n` of the gate's head, whose comment names its
+      exclusion. Three commands redirected output to `/dev/null` (two `git ls-files --error-unmatch` checks of the
+      root draft and one `jq` probe's errors); three more name it only in a pattern (the counts').
+    - **Also:** the shared notes, one read (the G-VER entry's window request, by Read, `wc -l` and `grep -n`), one
+      written (`6912d6e`'s window request), and the folder listed by name; memory files by name (Read, Edit); two
+      messages to the coordinating session.
+  - **Committed by path:** `LOCK-n.md`; `results/raw/2026-11-23_n-lock-v1_0-commit_check.txt`; this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Nothing ran on a model. Not pushed:
+    the push of `d714372..HEAD` with this commit is the coordinating session's, behind the screen (rt23a item 7).
+    Next: step 14's BUILD (rt23a item 3), the seat's handoff being in the project (rt23a item 5): the driver's pins
+    moved to this file's sha256 and `hour_cap_ms` 14,400,000, with its spec raw and starred readings for the seat's
+    next thread before any run.
+
 - 2026-11-23 — **The coordinating session's notes on the seat's first sitting of 2026-11-23, the seat thread's last
   before its handoff: LOCK-n v1.0's draft read whole and accepted, with four edits at step 13's commit; the raw
   committed here by path, before that commit (item 5's second form); the PI's routing, "PI: route as given", with item

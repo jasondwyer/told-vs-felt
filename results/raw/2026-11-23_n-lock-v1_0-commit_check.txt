@@ -1,0 +1,109 @@
+# n: LOCK-n v1.0 at step 13 — the seat's four edits as a diff, check13, its mutation pass and after13's fixture test (Code's; model-free)
+
+Code (n-build), PI date 2026-11-23, at HEAD `221b806`, the parent of step 13's commit. Shell only; nothing ran on
+a model or on the box. The files, by the short names the scripts print:
+- D10: `LOCK-n-v1.0-draft.md` at the root, untracked: the draft the seat read whole (Code's draft 10), sha256
+  `2b2fe5d6b5f28f3773dcd398a7fb891a292cd5d561fa8028d3cda680eb306efc`, 1446 lines; the scripts read its copy in
+  Code's scratch, and check13 asserts the two equal by `cmp`.
+- D11: Code's draft 11, in Code's scratch: D10 with the four edits of R §3 and nothing else, the file step 13 commits
+  as `LOCK-n.md`; sha256 `59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa`, 1453 lines.
+- R: `results/raw/2026-11-23_n-lock-v1_0-read_design-to-code_answers.md`, the seat's read of D10 (its first sitting
+  of 2026-11-23), sha256 `b81b59883dbb1192aca2bec5883500c0a3c1924d79c8d2956d54c977019f300c`, 73 lines.
+- The scripts, in Code's scratch and not committed: check13.sh `4663a0ee54f72419f610c20de80f85598d79dc0f4af6f4992982a07ff1af6ef8`, mut13.sh `982b2767d6ed1b08aa937545003dcffc0ad005a3beae241fd66147c1b3b97ad5`, and after13.sh `2bc14ba3a115e71bbbc4121b7958f222fb8f170a99ef033422c7d9a2d49f5dd8`
+  (window step 7, run after the commit's verify) with its fixture test, test_after13.sh `9c908c130b57ef0a58f846687bb8706c46dc301cf6c8c8a0f82bb630ebed214e`.
+
+## 1. `diff D10 D11`, byte for byte: four hunks (sha256 `564c6cd6737b4e60099a0ff39ba908353d7ae267e2349af37e8cc49adb451994`, 23 lines)
+
+3,5c3,4
+< *Status: a DRAFT for the seat's read, not of record. It is committed by path at PROPOSAL-n v0.2 §8 step 13, on the
+< PI's routing after the seat reads it whole, by the Clock's D_n (v1.0 §3), and is of record from that commit,
+< superseding LOCK-n v0.1. v0.1's text follows this part, verbatim.*
+---
+> **Status: LOCK-n v1.0 — COMMITTED at PROPOSAL-n v0.2 §8 step 13 (commit named in its entry), by D_n 2026-12-15; of
+> record from that commit, superseding LOCK-n v0.1; the lock the N-pod campaign follows.**
+191a191,194
+> - The box of record is unchanged through the chain: pod `emw1e4embiwe9b` (v0.1 §17), on which the characterization,
+>   the BACKEND extension, G-VEC, G-CAL-n, G-TIME-n and G-VER of record each ran; a box change before the campaign
+>   re-runs the characterization, the extension, G-TIME-n and G-VER, in that order (ans21b §1.7; ans22a §1.6), and after
+>   this commit is a new lock version.
+357a361
+>   No gate re-run is scheduled in that interval; one would move the pin first, in a delta Code declares in its entry.
+381,382c385,389
+<   and the weights folder missing on the box of record classed INTEGRITY, not a launch FAIL. Then G-READ-n, and
+<   VERDICTS on the PI's word (n:159's step 15).
+---
+>   and the weights folder missing on the box of record classed INTEGRITY, not a launch FAIL; and G-TIME-n's two
+>   steered cells' JSON (`N1-V__valence__p1.json` `fa823370…10c0`, `N1-V__valence__p1_2.json` `63634361…9968`, their
+>   sha256s in G-TIME-n's report), held outside the repository under the list of record's item 2 since `7d01b02`, are
+>   committed by path with the campaign's own cells at step 14's close, before the pod stops (ans21b §1.8; rt21b item 2).
+>   Then G-READ-n, and VERDICTS on the PI's word (n:159's step 15).
+
+## 2. `bash check13.sh` (D11): exit 0
+
+ok: D10 is the draft the seat read, 2b2fe5d6b5f28f3773dcd398a7fb891a292cd5d561fa8028d3cda680eb306efc
+ok: the root draft LOCK-n-v1.0-draft.md equals D10 (cmp)
+ok: R is the seat's raw, b81b59883dbb1192aca2bec5883500c0a3c1924d79c8d2956d54c977019f300c
+ok: LOCK-n v0.1 at deabf3f is 88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5
+ok: HEAD's LOCK-n.md is v0.1's bytes
+ok: the analyzer is v7, 735da934272048a795203e8fdef9bfa5a4bde2ba38cdf9ba79d81f313788a7a8, clean at HEAD
+ok: the diff D10 -> D11 is four hunks: 3,5c3,4 191a191,194 357a361 381,382c385,389 
+ok: edit 1: D11:3-4 are R:39-40 byte for byte
+ok: edit 1 replaces D10:3-5, the italic draft paragraph
+ok: the drafting paragraph stays beneath it (D11:6)
+ok: edit 2: D11:385-389 are D10:381-382 with R:44's clause after its anchor (words)
+ok: edit 2 sits in v1.0 s13's step-14 paragraph
+ok: edit 3: D11:191-194 are one bullet holding R:45's sentence (words)
+ok: edit 3 follows the chain's item 8, before the G-VER row's bullet
+ok: edit 4: D11:361 is R:46's sentence, in s12's last bullet
+ok: edit 4 is v1.0 s12's last line
+ok: no placeholder
+ok: 1453 lines: the v1.0 part's 395 and v0.1's 1058
+ok: no line over 120 characters in the v1.0 part outside tables and blockquotes
+ok: the tail is v0.1's 1058 lines, byte for byte
+ok: lock_route: the whole line 'lock: LOCK-n v1.0' (1)
+ok: lock_route: one route line, Route B
+ok: lock_gate: one gate line, 48 of 48, PASS
+ok: lock_names: the analyzer's sha256 between backticks
+D11 59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa, 1453 lines; the diff 564c6cd6737b4e60099a0ff39ba908353d7ae267e2349af37e8cc49adb451994
+check13 PASS: 24 ok
+
+## 3. `bash mut13.sh`: exit 0 (the null mutant first, then 20 mutants of D11, each one change aimed at one
+check, each required to make check13 exit 1 with a FAIL line naming its target)
+
+m00: PASS, as the null mutant must (check13 PASS: 24 ok)
+m01: killed on its target, "FAIL: edit 1: D11:3-4 are not R:39-40..." (1 FAIL lines)
+m02: killed on its target, "FAIL: edit 1: D11:3-4 are not R:39-40..." (1 FAIL lines)
+m03: killed on its target, "FAIL: edit 3: D11:191-194 are not R:45's sentence..." (1 FAIL lines)
+m04: killed on its target, "FAIL: edit 3: D11:191 is not a bullet..." (1 FAIL lines)
+m05: killed on its target, "FAIL: edit 4: D11:361 is not R:46's sentence..." (1 FAIL lines)
+m06: killed on its target, "FAIL: edit 2: D11:385-389 are not D10:381-382 with the clause..." (1 FAIL lines)
+m07: killed on its target, "FAIL: edit 2: D11:385-389 are not D10:381-382 with the clause..." (1 FAIL lines)
+m08: killed on its target, "FAIL: the diff's hunks are:..." (1 FAIL lines)
+m09: killed on its target, "FAIL: the tail is not v0.1's bytes..." (2 FAIL lines)
+m10: killed on its target, "FAIL: 1 over-wide lines..." (4 FAIL lines)
+m11: killed on its target, "FAIL: the gate lines: 2..." (6 FAIL lines)
+m12: killed on its target, "FAIL: no whole line 'lock: LOCK-n v1.0'..." (2 FAIL lines)
+m13: killed on its target, "FAIL: 1 placeholder lines..." (2 FAIL lines)
+m14: killed on its target, "FAIL: the tail is not v0.1's bytes..." (3 FAIL lines)
+m15: killed on its target, "FAIL: the route lines: 2..." (6 FAIL lines)
+m16: killed on its target, "FAIL: lock_names: the analyzer's sha256..." (3 FAIL lines)
+m17: killed on its target, "FAIL: edit 4 is not at s12's end..." (3 FAIL lines)
+m18: killed on its target, "FAIL: D11:5-6 are not the blank and the drafting paragraph..." (2 FAIL lines)
+m19: killed on its target, "FAIL: edit 3 is not after the chain's list..." (2 FAIL lines)
+m20: killed on its target, "FAIL: edit 2's neighbours are not s13's paragraph..." (2 FAIL lines)
+mutants killed on their targets: 20 of 20
+mut13 PASS
+
+## 4. `bash test_after13.sh`: exit 0 (after13, window step 7, in throwaway git repositories in Code's
+scratch: the removal case first, then seven failures, each required to end "AFTER13 FAIL" before any removal)
+
+t1: AFTER13 PASS, the root draft removed
+t2: AFTER13 FAIL as wanted, "FAIL: the root draft is not draft 10...", the root draft kept
+t3: AFTER13 FAIL as wanted, "FAIL: HEAD's LOCK-n.md is not draft 11...", the root draft kept
+t4: AFTER13 FAIL as wanted, "FAIL: LOCK-n.md is not clean at HEAD...", the root draft kept
+t5: AFTER13 FAIL as wanted, "FAIL: the root draft is tracked...", the root draft kept
+t6: AFTER13 FAIL as wanted, "FAIL: HEAD's parent is not...", the root draft kept
+t7: AFTER13 FAIL as wanted, "FAIL: the root draft is not there...", the root draft absent by the case's setup
+t8: AFTER13 FAIL as wanted, "FAIL: HEAD is not...", the root draft kept
+cases: 8, wrong: 0
+test_after13 PASS

@@ -1,3 +1,398 @@
+# LOCK-n.md — v1.0 (PROPOSAL-n's lock for the campaign, unit N-pod; PROPOSAL-n v0.2 §3 "LOCK-n v1.0", §8 step 13)
+
+**Status: LOCK-n v1.0 — COMMITTED at PROPOSAL-n v0.2 §8 step 13 (commit named in its entry), by D_n 2026-12-15; of
+record from that commit, superseding LOCK-n v0.1; the lock the N-pod campaign follows.**
+
+*Drafted by Code (the n-build session) at HEAD `d714372`, on the PI's routing of the seat's third sitting of
+2026-11-21, item 4, and of its first and second sittings of 2026-11-22, items 3 and 2 (v1.0 §0). Its form is a
+lock's, "re-issued above the prior version's text kept verbatim" (WORKFLOW.md:43), as LOCK-m-F3 v1.0's is: a v1.0
+part above v0.1's text. A tool at that HEAD placed each file's sha256 and line count from the file it names, tracked
+and clean there, the package's digest from the commit's blobs, the two tables (v1.0 §7, v1.0 §9) from their committed
+sources, and the cited lines of RESULTS.md and the driver's `LOCK_SHA256` line (v1.0 §12) from their text. A tool
+found every quotation, and BK's commit and tree ids, in its source, and checked that each commit this part names for a
+file is the one that last changed it. Code typed the prose. Nothing in this file has run.*
+
+## v1.0 §0. What v1.0 carries
+
+- n:120, verbatim:
+
+  > **LOCK-n v1.0.** Projections, the cap, D_n, hashes of this document, the lock chain, the analyzer, BK's input files.
+
+- The PI's routing of the third sitting of 2026-11-21, item 4 (rt21c:24–29), verbatim:
+
+  > 4. LOCK-n v1.0's draft (step 13), after G-VER's PASS: the filled draft placed untracked at root under the lock's name for the seat's read, as v0.1's was (sha256 and line count in its entry), carrying n:120's list — the projections of item 1, the cap in the PI's hours, D_n 2026-12-15, the document's hashes, the lock chain, the analyzer v7, BK's input files — with G-TIME-n's zero line in §0.4's table, the three dated notes of the first sitting's raw §1 corrected, A-n3 §7's notes carried, `lock: LOCK-n v1.0` with the route line and the gate line verbatim; the seat reads it whole before the commit. [go]
+
+- The PI's routing of the first sitting of 2026-11-22, item 3 (rt22a:29–31), verbatim:
+
+  > 3. LOCK-n v1.0's draft after G-VER's PASS, as routed yesterday (item 4), adding §1.5's G-VER row (the entry, the record's sha256, "PASS, 160 of 160", the end line verbatim), the cap 4 h, and §3's two dated notes of this raw. [go]
+
+- The PI's routing of the second sitting of 2026-11-22, item 2 (rt22b:20–24), verbatim:
+
+  > 2. LOCK-n v1.0's draft at once: placed untracked at the root under the lock's name, with its sha256 and line count, carrying the list as routed (the projections, the cap 4 h, D_n 2026-12-15, the hashes, the lock chain, the analyzer v7 and its gate line verbatim, BK's files, the G-VER row with fd5d61c and "PASS, 160 of 160", G-TIME-n's zero line, the dated notes, v0.1's text verbatim beneath); the seat reads it whole before step 13's commit. [go]
+
+- The seat's §2 of that sitting (ans22b:30), the list in full, verbatim:
+
+  > - **LOCK-n v1.0's draft** (step 13), at once: Code places the filled draft untracked at the root under the lock's name, as v0.1's was, with its sha256 and line count in a note or entry; it carries, as routed at the third sitting of 2026-11-21 (item 4) and the first of 2026-11-22 (item 3): the projections (T 1.0494 h at the medians, 1.6334 h at the maxima; the I/O range 0.9–2.6 h and its shape; the copy-back rate 15.5 MB/s; G-READ-n's 2.650 h on the laptop), **the cap 4 h of model time** (the PI's figure), D_n 2026-12-15, the hashes of PROPOSAL-n v0.2 and the three addenda, the lock chain, the analyzer v7 and its gate line verbatim, BK's input files; §10's G-VER row with this entry, the record's sha256, "PASS, 160 of 160" and the end line verbatim; G-TIME-n's zero line in §0.4's table; the three dated notes of the first sitting of 2026-11-21 (§5, §21, §24 of v0.1) corrected; A-n3 §7's notes and the two of the first sitting of 2026-11-22 carried; `lock: LOCK-n v1.0` with the route line; v0.1's text kept verbatim beneath (WORKFLOW §5). The seat reads it whole against this raw, the G-TIME-n record read and the addenda, in one sitting, before step 13's commit.
+
+- Here:
+  - v1.0 §1, the projections;
+  - v1.0 §2, the cap, in the PI's hours;
+  - v1.0 §3, D_n;
+  - v1.0 §4, the hashes of record ("hashes of this document");
+  - v1.0 §5, the lock chain, with G-VER's row and its record;
+  - v1.0 §6, the analyzer, v7;
+  - v1.0 §7, BK's input files;
+  - v1.0 §8, the lock's lines: `lock: LOCK-n v1.0`, and the route line and the gate line;
+  - v1.0 §9, §0.4's table with G-TIME-n's zero line;
+  - v1.0 §10, the dated notes: v0.1's three, corrected; A-n3 §7's four, carried; the seat's two of 2026-11-22;
+  - v1.0 §11, Code's readings in this draft, and what its commit closes;
+  - v1.0 §12, how the campaign cites this file;
+  - v1.0 §13, what follows.
+
+  Then v0.1's text follows, verbatim: `LOCK-n.md` as committed at `deabf3f`, 1058 lines, sha256
+  `88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5`.
+- **Conventions.** Anchors are at HEAD `d714372`; `path:N` is line N of that file there. "v1.0 §N" is a section of this
+  part. "v0.1 §N" is a section of v0.1's text below, where "§N" alone keeps v0.1's own meaning and v0.1's anchors and
+  short forms stand as v0.1 states them. Short forms added here:
+  - `L:N` — line N of v0.1's text, as `LOCK-n.md` at `deabf3f` numbers it;
+  - `ans21a:N` — `results/raw/2026-11-21_n-lock-committed-close_design-to-code_answers.md` (the seat's read of
+    v0.1's commit, 2026-11-21, first sitting);
+  - `ans21b:N` — `results/raw/2026-11-21_n-gtime-starred-seven_design-to-code_answers.md` (second sitting);
+  - `ans21c:N` — `results/raw/2026-11-21_n-gtime-record-read_design-to-code_answers.md` (third sitting);
+  - `ans22a:N` — `results/raw/2026-11-22_n-gver-starred-seven_design-to-code_answers.md` (first sitting of
+    2026-11-22);
+  - `ans22b:N` — `results/raw/2026-11-22_n-gver-record-read_design-to-code_answers.md` (second sitting of
+    2026-11-22);
+  - `rt21a:N`, `rt21b:N` and `rt21c:N` — the PI's routing raws of the three sittings of 2026-11-21,
+    `results/raw/2026-11-21_first-sitting_pi-routing.md`, `…_second-sitting_…` and `…_third-sitting_…`;
+  - `rt22a:N` and `rt22b:N` — the PI's routing raws of the two sittings of 2026-11-22,
+    `results/raw/2026-11-22_first-sitting_pi-routing.md` and `results/raw/2026-11-22_second-sitting_pi-routing.md`;
+  - `n:N`, `A-n1:N`, `A-n2:N`, `A-n3:N` and `C:N` as v0.1 has them; `runner.py` and `schema.py` are under
+    `valence_core/n/`, `n_analyze.py` under `scripts/`.
+
+## v1.0 §1. The projections (n:120; rt21c item 1; ans21c §1.2–§1.4)
+
+- The PI's item 1 (rt21c:17–20), verbatim:
+
+  > 1. G-TIME-n's record accepted as read (§1); the figures of §1.2–§1.4 are the ones LOCK-n v1.0 carries: T = 1.0494 h at the medians (329.0 / 344.0 ms), 1.6334 h at the maxima; the I/O range 0.9–2.6 h and its shape (a flat 0.45 s per append with periodic stalls, not growth with cell size), outside the cap; the copy-back rate 15.5 MB/s; gread-bench 2.650 h on the laptop. Nothing re-runs. [as ruled]
+
+- Each figure as the seat read it, verbatim:
+  - **T at the medians, the cap's basis** (ans21c:18): "medians 329.0 and 344.0 ms → T = 3,777,848 ms = **1.0494 h**
+    (the cap's basis, as ruled)";
+  - **at the maxima** (ans21c:19): "maxima 589 and 373 ms → 5,880,121 ms = **1.6334 h**";
+  - **the planning value, revised** (ans21c:23): "The planning value stands revised: n:101's 0.9–1.8 h at the A100's
+    rate becomes 1.05 h on this box at the medians, 1.63 h at the envelope.";
+  - **the loads, beside the cap** (ans21c:26): "12,365 ms at the smoke, 12,375 ms at the run; one per invocation, so
+    one per resume.";
+  - **the I/O's shape** (ans21c:27): "a flat cost of about 450 ms per append (quartiles 428, 454, 499 ms; the first
+    append 646 ms), with **nine stalls of 1.0–11.8 s from k = 100 on, one every six or seven appends**", and "So the
+    series is not a cost that grows with the records already in the cell";
+  - **the I/O, outside the cap** (ans21c:31): "The seat reads the range as **0.9–2.6 h**, the stalls the
+    uncertainty, and declines to choose a point";
+  - **the copy-back's rate** (ans21c:32): "15.5 MB/s, so the campaign's 4.9–5.0 GB (A-n1 §6.2; schema.py:83–85) is
+    about 5–6 minutes. Descriptive.";
+  - **G-READ-n's fits** (ans21c:35): "9,538,600 ms = **2.650 h**, 2.769 h at the maxima; 403,620 fits, the count as
+    ruled. Outside the box and the cap; after the campaign".
+- G-TIME-n's record, committed at `7d01b02` (G-TIME-n's entry):
+  - the artifact `data/n/gtime/gtime.json` (`n-gtime-v1`):
+    `d6d475b7a52f8b4c306ce25b45ed998bd62f572d349e693bdda86560ee692cec`;
+  - its report `data/n/reports/time.json`, taken by `shasum` in the list of record's digest form (item 1), the file
+    not read: `3ae33a39c55f29a2610c6f803ca06990babab35397c0bad67764610cf020d8a7`.
+
+## v1.0 §2. The cap (n:120; rt21c item 2; ans21c §2)
+
+- **The PI's cap: 4 h of model time.** rt21c:21, verbatim: "2. The cap, in hours of model time: the seat
+  recommends 4 h (§2); 3 h defensible. [4 h — PI's figure: 4 h]"; and rt22a:30, "the cap 4 h".
+- In the runner's unit, `hour_cap_ms` (runner.py:266): 4 × 3,600,000 = **14,400,000 ms**, the runner's input from
+  the lock (ans20b:39, "the lock is where they live"). Step 14's BUILD is to pass it (unbuilt; G-TIME-n's stage passed
+  none, n_sessions.py:4373), and a resume keeps the stage's cap (runner.py:413–414).
+- **What it counts**, as v0.1 §11 states it and unchanged: the reads' and re-computations' model time as the runner
+  computes `cap`; each invocation's load beside and outside it (`loads_ms`).
+- **G-READ-n's fits**, "where they run on the box", are "counted against the cap in v1.0's accounting (A-n1:56),
+  outside the runner's figure, the lock stating the sum" (v0.1 §11 (a), L:602–603). They run on the laptop
+  (ans21c:35, above), and there they are outside the cap as the seat ruled (ans21b:23: "on the laptop they are outside
+  the cap by the same sentence"), so the sum v1.0 states is the runner's figure alone, nothing added.
+- **Beside the cap**, as the seat's §2 sets them (ans21c:45, verbatim: "v1.0 carries it with T at the medians and
+  the maxima beside, the I/O range of §1.3 and the budget line"):
+  - T, 1.0494 h at the medians and 1.6334 h at the maxima (v1.0 §1);
+  - the I/O, 0.9–2.6 h, outside the cap (v1.0 §1);
+  - the budget line (ans21c:45), verbatim: "With it, the 8 h N-pod budget (n:101; L:587) holds the pod session at
+    the top of §1.3's range: 4 h of cap + up to 2.6 h of I/O + the loads and G-VER + the copy-back's minutes, with
+    margin for a pause and its resume."
+- **A cap that binds** (ans21c:43), verbatim: "A CAP end state ends the campaign; a resume refuses another cap
+  (runner.py:412–416), so a cap that binds is a new lock version, not a longer session."
+
+## v1.0 §3. D_n (n:120; n:152; n:159)
+
+- n:152's §7.4, verbatim: "D_n (N-pod) proposed **2026-12-15**; D_n-lap proposed **2027-01-15**; each the day
+  inclusive to 23:59:59 UTC, committer date of the unit's LOCK v1.0".
+- **D_n = 2026-12-15**, the day inclusive, as v0.1 §23 carries it: this file's commit at n:159's step 13, "Commit
+  LOCK-n v1.0 with D_n.", falls on or before it.
+- n:134, verbatim: "A unit is **NOT-RUN** iff its LOCK v1.0 is not committed by its Clock date". The analyzer's
+  causes for it are `clock:no-box`, `clock:gate-stopped`, `clock:pi-declined` and `clock:not-locked`
+  (n_analyze.py:120–124).
+
+## v1.0 §4. The hashes of record (n:120, "hashes of this document")
+
+Each by `shasum` at `d714372`, tracked and clean there:
+- **the proposal and addenda**, each v0.1 §23's sha256, unchanged:
+  - PROPOSAL-n v0.2 `30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4`;
+  - ADDENDUM-n1 v0.1 `e979f8f2af08ddb1f32e3054c002b1d0a3278e49a24b4f6df2cb6c042de95e03`;
+  - ADDENDUM-n2 v0.1 `41f76c49d756e09481a70f398469d9febc96bb534f28cd18d265ea87add2bb3f`;
+  - ADDENDUM-n3 v0.1 `7f4a7a75b61002b58e62a400e99f4de2abc8ec0646329fdf624ce31540be9313`;
+- **CLAUDE.md**, whose rules the lock cites: `955788dec22ee820917693bf49137619bda1a30eb37e07f118b3940473de8a62`;
+- **WORKFLOW.md** v1.0, whose §5 sets this file's form (WORKFLOW.md:43):
+  `e7195706efee2704abc6d4e5bae984118e6add58013c9fbf3bdb1da971c6b061`;
+- **LOCK-n v0.1**, the text below, committed at `deabf3f`:
+  `88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5`;
+- **the seat's raws since v0.1:**
+  - ans21a `b99dc4977c85294244f8effbcfa42fe24632be264a99f880ca29cbe35c0c169b`;
+  - ans21b `813de3dbdce78443a4e3bed7c420e928b5d3e87a81a7d0dc131b93eabc3b6157`;
+  - ans21c `c9b1ee42fc6d378a5737da800b7c6655dc17ec7b714fc4ffd397a7eaf1dd1f36`;
+  - ans22a `c66cb2f77b9d0ae67b765d0975dd6c6539adeceffb814432f184d82e9541650b`;
+  - ans22b `cec42b7479e00b7f4b568c6d56c746d961f27f030d6656f06519aa059382f281`;
+- **the PI's routing raws of them:**
+  - rt21a `ea54a89862ba103a592f7099b602bf1a4bb888aad1bb47f0dd0d2c4b740bf873`;
+  - rt21b `269fa500bb2f99d5bf3edec1ef796e5b960a60698ac212c1281c71980c1ed01d`;
+  - rt21c `80236a374659b7cb4975d5a1f04ee528b0ba8e5f2d5b4d8498c55bc1fb14b46c`;
+  - rt22a `6cb6eb62039ab1a36653306edaef335a37d03b53720e6d4b174d488405bc57a2`;
+  - rt22b `925d5c5ec7da81c4bf972494e62c32f8e9827ae8fa82f009ad916709857caba1`;
+- **the driver and the package at `d714372`:**
+  - `scripts/n_sessions.py`, G-VER's BUILD (`2834c2d`):
+    `55885e65751227230f5933909ea36b6c1f649538a974cff9c6458ace2375385f`;
+  - the package `valence_core/n`, v0.1 §18's, by the commit kit's `pkg_rev` over `d714372`'s blobs (its sixteen
+    `.py` files), the figure G-VER's record carries as `package_sha256`:
+    `06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39`.
+
+## v1.0 §5. The lock chain (n:120), with G-VER's row (ans22a §1.5)
+
+- The seat's §1.5 (ans22a:31), verbatim: "v1.0's §10 G-VER row gains the record: "of record at `<commit>`,
+  `data/n/gver/gver.json` `<sha256>`, PASS, 160 of 160", with the entry "G-VER (n)" cited and the gate's end line
+  quoted verbatim, as the analyzer's gate line is at step 13 (ans20b:75). The campaign's own G-VER at its start stays
+  the row's "before any read"."
+- **The chain, in order**, each record at its commit, by `shasum` at `d714372`:
+  1. G-DATA's copies of BK's input files (v1.0 §7) and G-ACQ's weights of record (v0.1 §17);
+  2. G-VEC, committed at `e3b48ed` (v0.1 §3):
+     - `data/n/gvec/gvec.json` `03467e754072d8c4d6815631964248f4421fa5d0724df6cc95999af6f41a53b0`;
+     - `data/n/gvec/directions_L32.npy` `33cc0ef656281ef2caebaec0049949f93ad2b237084fa7be5ac0a86ad68fc0c5`;
+  3. G-CAL-n, committed at `db00d6d` (v0.1 §4):
+     - `data/n/gcal/gcal.json` `4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f`;
+     - `data/n/gcal/dose_map.json` `d4a73b54f65b664694ae328d980ca57074d34ce09249ab7a53c7d8ac5158efb3`;
+     - `data/n/gcal/gcal_turns.jsonl` `d245009633123c792bd9bc22599f0744bc03791c5ef9a6cc6cb0835aad4876d9`;
+  4. G-ANL-n, committed at `1641948` (v0.1 §9): `data/n/gates/G-ANL-n.json`
+     `e775cbb42d36c00d3bf1b0a350af197f559d838d8c74978f75678ea57c546088`;
+  5. LOCK-n v0.1, committed at `deabf3f`, which G-TIME-n's artifact (its `lock_sha256`) and G-VER's record (its
+     `pins.lock_sha256`) carry: `88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5`;
+  6. G-TIME-n: its artifact and report (v1.0 §1), committed at `7d01b02`; COMPLETE;
+  7. G-VER of record, committed at `fd5d61c`, PASS, accepted as the gate of record (ans22b:7, "Accepted as the gate
+     the campaign follows; v1.0 cites it"; rt22b item 1): `data/n/gver/gver.json`
+     `d1dcc3373a648b463fd3985e86217bf936d03240eb6952ad5208bda6827de90a`;
+  8. LOCK-n v1.0: this file, once committed (v1.0 §12, §13).
+- The box of record is unchanged through the chain: pod `emw1e4embiwe9b` (v0.1 §17), on which the characterization,
+  the BACKEND extension, G-VEC, G-CAL-n, G-TIME-n and G-VER of record each ran; a box change before the campaign
+  re-runs the characterization, the extension, G-TIME-n and G-VER, in that order (ans21b §1.7; ans22a §1.6), and after
+  this commit is a new lock version.
+- **G-VER's row, at v1.0.** The seat's "v1.0's §10 G-VER row" is v0.1 §10's row (L:543), its "where" cell "before
+  any read", kept verbatim below (the seat's "§10" is v0.1's numbering; this part's own v1.0 §10 is the dated notes),
+  so v1.0 carries the row's record here (Code's reading, for the seat). The record, as §1.5 words it: of record at
+  `fd5d61c`, `data/n/gver/gver.json`
+  `d1dcc3373a648b463fd3985e86217bf936d03240eb6952ad5208bda6827de90a`, PASS, 160 of 160. The entry is "G-VER (n)", at
+  `fd5d61c`. The gate's end line, verbatim, is the last line of the stage's output
+  (`results/raw/2026-11-22_n-gver-v2_stage.txt`:20), and the launch's output holds it at
+  `results/raw/2026-11-22_n-gver-v2_out.txt`:118:
+
+  ```text
+  G-VER (n) PASS: the record is written
+  ```
+
+  The campaign's own G-VER at its start stays the row's "before any read" (ans22a:31).
+
+## v1.0 §6. The analyzer (n:120)
+
+- `scripts/n_analyze.py`, v7 of record, committed at `b6ea27f` and unchanged since, sha256
+  `735da934272048a795203e8fdef9bfa5a4bde2ba38cdf9ba79d81f313788a7a8`.
+- Its schema pin is `valence_core/n/schema.py`, the file at `d714372`:
+  `1cab28df54c4c2c699b005fc6d2a99693d569911e292ad9dbdb8b6994db8edff`.
+- It binds PROPOSAL-n v0.2 and the three addenda by sha256 (v1.0 §4; v0.1 §9). G-ANL-n's artifact is in v1.0 §5.
+- VERDICTS reads three things from this file (n_analyze.py:6684–6695):
+  - its sha256, against the campaign identity's `lock_sha256`;
+  - the analyzer's sha256, named in it as a whole line or between backticks (`lock_names`, n_analyze.py:3138–3140),
+    as above;
+  - the lock's lines (v1.0 §8).
+- The PI's routing for n-analyzer, rt21c:32, rt22a:34 and rt22b:30, verbatim: "Nothing; v7 of record; the lock: line
+  and the gate line verbatim at step 13."
+
+## v1.0 §7. BK's input files (n:120; n:107, G-DATA (ii))
+
+- In `data/n/bk/`: 26 files, each a byte-for-byte copy at its path in BK's repository,
+  github.com/camberg23/act-on-valence, at commit `7631f8a06cdeffaf8b7a89212e5ccbe55a657732` (tree
+  `d6f1d50525874355d1ea992f8f652358742ae282`), licensed CC BY 4.0. Its `SOURCE.md`:
+  `f09173dfb6c3520f708d4814f5649dc38ea7154e432b3fb1f418fb786576be02`.
+- `data/n/bk/SHA256SUMS` lists each file's sha256: `359e0a1244b06bb4aff4cfa3b39651b9b06564dbd374f5b3fdcf7b04f1e962d7`.
+- `shasum -a 256 -c SHA256SUMS`, run from that folder at `d714372`, printed 26 lines ending ": OK". The 26, as
+  `SHA256SUMS` lists them:
+
+| file in `data/n/bk/` | sha256 |
+|---|---|
+| `LICENSE` | `9570384ac7ead07b588e752250f4a769218179c80d6d717b0f6acfbf44b3a998` |
+| `experiment_results_csv/figure3.csv` | `f63db30d742f7228336cc0a163107ad157a8924de9455b7478663e7d6a3790fe` |
+| `experiment_results_csv/figure4.csv` | `c8f8dbe831ad18bb6709c609f00d97c4c9ebc9d331cb3dbe5e4640425509e638` |
+| `experiment_results_csv/figureA10.csv` | `3017537d8804e245031054a90a60ea4798b4e329509c7785d758b6bd2cbb50a2` |
+| `experiment_results_csv/figureA8.csv` | `40702105b70d58e722bb052953ad03faab6da8ce0dacb1e3e8ed4e93adab7fad` |
+| `experiment_results_csv/table1_banks.csv` | `346634ac1810a3cbcf98d6c712f7804a6c7202e79a2c9e7dd6f6a7983d631278` |
+| `experiment_results_json/fixed_text_design/neutral_passages/analysis.json` | `12c35645a914427e821fb6fa42d5bb94360fa4a42b9caf19dac65601d4236b2f` |
+| `experiment_results_json/fixed_text_design/neutral_passages/prereg.json` | `c55ab6b9b9f45402edaa2ed964df85521bc21d665a28a40f0f1aeb8b4ef40cb5` |
+| `experiment_results_json/fixed_text_design/neutral_passages/reduced.json` | `ec5fea59c6ef217c377b898eb9dbf4a6088d5e224bed57c5f76c0336ba1aba1d` |
+| `experiment_results_json/fixed_text_design/neutral_passages/spec.json` | `fbbc0253f34b0742a7fef7720d8ce20e15a675fbe8c2a4dba7b68c80d251700f` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b0.sessions.jsonl` | `6934b5d519e2301a9c4ab8c56de64862d223f13c67c02d761b60c66cdb2b10c7` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b1.sessions.jsonl` | `72480815b29f79b06530970ab59b65d50d6e244427ae5ef4a67fecdded75291d` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b2.sessions.jsonl` | `64cf413bfeb7b5822ba4ec029b166b2a8658ef417491d495646dfb57fb035bb2` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b3.sessions.jsonl` | `ef37b1e20129fc03f4610877905bb343fc262713ca4a25640aa8e824dee96716` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b4.sessions.jsonl` | `1fff725e92a96d3e512f8501092e790d5937dbad0af17138fcd30d16da7aecb6` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b5.sessions.jsonl` | `17b2daefa38f499a723e97be5385da30c3a05c2c183532c52d2456e6754c7af8` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b6.sessions.jsonl` | `0ff355d2768af1412e8343ab6105ab61d05d788ffc78efcacb543e5595c27c75` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/floor_b7.sessions.jsonl` | `6419a3a47466070bdd62aa854ce03fd34a378e962f0fa6aa2967e49211ca40bd` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b0.sessions.jsonl` | `dda9f443674425fc200f42f434d4aeb4d748a43155b119a2203371979de6f8fa` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b1.sessions.jsonl` | `9a49b6208543f4e20951779e601194fb0a2f4433e63650669a1c03a55567e425` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b2.sessions.jsonl` | `5fb7f0eaa600c77d112e6627533061d1915ac6ea082f6e803f67aed653248ee1` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b3.sessions.jsonl` | `8f245f6abba2901e94f3829ce9c747493c1ab2f6fa9063eb836df5266692f95b` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b4.sessions.jsonl` | `78bdd0f88b9ecfdd12ec84a6854789a2418a673e80cd7b573ebcae2ed3545dc7` |
+| `experiment_results_json/fixed_text_design/skeletons/olmo_32b/neutral/neu_b5.sessions.jsonl` | `aa89a91d6cad0b706159ae173a0e76f263f5a80d104bfce4a13f23a168892816` |
+| `experiment_results_json/fixed_text_design/strength_ladder/analysis.json` | `63ca37918a0fbc18cfd1dabe021852f322ccb33fe590050415f5260bb7f2462b` |
+| `experiment_results_json/fixed_text_design/strength_ladder/spans.json` | `2b344c462d174ccbb939568c8575fa593cd1e6b09e407815dd1e44e91826ef1b` |
+
+## v1.0 §8. The lock's lines (PIN-n-26, PIN-n-40; A-n3:62; rt21c item 4)
+
+- v1.0 writes its own `lock:` line (A-n3:62: "R-L2 stands: `lock: LOCK-n v0.1`, `direction of record: Route B`; v1.0
+  writes its own `lock:` line."), as a whole line:
+
+  ```text
+  lock: LOCK-n v1.0
+  ```
+
+- The route line and the gate line of record are v0.1's, verbatim, each once in this file: v0.1 §20's block holds the
+  route line (L:844) and v0.1 §21's block the gate line (L:935). The seat's read of v0.1 has VERDICTS read "v1.0's
+  lock, which carries v0.1's gate line verbatim" (ans20b:50). This is how this draft meets rt21c item 4's "with the
+  route line and the gate line verbatim" (Code's reading, for the seat).
+- The analyzer reads each as the one stripped line that starts with its head, and refuses a file with none, or with
+  two or more (`lock_route` and `lock_gate`, n_analyze.py:6243–6282); a quotation inside another line, or blockquoted,
+  is not one (n_analyze.py:6264–6265). So this part shows the three lines the analyzer reads as a quotation only:
+
+  > ```text
+  > lock: LOCK-n v1.0
+  > direction of record: Route B
+  > reward axis 5(d) gate, coherence: 48 of 48, PASS
+  > ```
+
+- v0.1 §20's block also holds v0.1's own `lock:` line. `verdicts` checks for the line `lock: LOCK-n v1.0`
+  (n_analyze.py:6248) and does not read v0.1's.
+
+## v1.0 §9. §0.4's table, with G-TIME-n's zero line (ans21b:25; ans21c:37)
+
+- The seat's ruling (ans21b:25), verbatim: "G-TIME-n gains one line in §0.4's table at v1.0's text — 0 generations,
+  0 forwards with a negative valenced state, 0 negative random-direction forwards — with its 12 positive-pole steered
+  reads named in the line's "where" cell, descriptive; §23's counts 48 / 320 / 960 are unchanged (L:986–987)."
+- And its read of the record (ans21c:37), verbatim: "zero negative-pole reads of any kind; the 12 steered reads
+  positive-pole at +1 and +1/2 on the six sessions. G-TIME-n's zero line goes into v1.0's §0.4 table, as ruled."
+- n §0.4's table (n:18–26), with G-TIME-n's line placed after G-CAL-n's, in gate order. The line's "where" cell
+  names the 12 reads in the words of G-TIME-n's entry (`7d01b02`; RESULTS.md:2014–2015, its two cells named at
+  RESULTS.md:2026):
+
+| where | generations under negative steering | forwards with a negative valenced state (no generation) | negative random-direction forwards |
+|---|---|---|---|
+| G-CAL-n (coherence + arrival on one batch; §3) | 48 turns at −ρ (≤ 80 tokens each) | — | — |
+| G-TIME-n (§8 step 11; its 12 steered reads are positive-pole, N1-V `valence` at +1 and at +1/2 on the six sessions; descriptive) | 0 | 0 | 0 |
+| N1-V at d = −1 (sign test, §5 N1 (iii)) | — | 160 | — |
+| N1-R at d = −1 (floor for the sign test) | — | — | 960 |
+| N1-P (same-pole, §2.4) at −1 | — | 160 | — |
+| **total, "struck beyond d = −1"** | **48** | **320** | **960** |
+| *"as written" adds* | *+48 at −ρ/2* | *+640 (N1-V −1/2, −d_eq; N2-E −d_eq, −d_20)* | *+1,920* |
+| *"struck" removes* | *−48 (the arrival hurdle then runs on the positive pole only; BK's rule needs both poles — a declared departure)* | *−320 (N1 (iii) not evaluated)* | *−960* |
+
+## v1.0 §10. The dated notes
+
+- **v0.1's three sentences, corrected** (ans21a:15, verbatim: "**The three sentences, dated notes:** (a) §5, "Code's
+  declared values; the seat has not ruled the two seeds in the raws read" — ruled at the read's §4: `cv_seed`
+  20261116 and `shuffle_seed` 20260905 stand as pinned; (b) §21, "with no ruling on them in the seat's raws read but
+  one" — the read's §4 rules every flag listed; (c) §24, "From here: LOCK-n v0.1, committed by path at §8 step 10,
+  once the seat has the full v0.1" — done at `deabf3f`. v1.0 rewrites each; nothing is edited now."). Each of v0.1's
+  sentences stands below, verbatim, as v0.1's text is kept (WORKFLOW.md:43); the seat made each a dated note in its raw
+  (ans21a:8, :15), and v1.0 carries the corrected words (ans21a:8, "LOCK-n v1.0 carries the corrected words at step
+  13"; ans21a:40), these:
+  - (a), v0.1 §5 (L:430): `cv_seed` 20261116 and `shuffle_seed` 20260905 stand as pinned, ruled at the seat's read
+    of v0.1's draft 9 (ans20b §4; ans20b:46);
+  - (b), v0.1 §21 (L:870): the seat's read of v0.1's draft 9 (ans20b §4) rules every flag the sentence lists as
+    unruled; the one it names as ruled since, `loads_ms` for a crashed invocation, is A-n3:60's (v0.1 §11);
+  - (c), v0.1 §24 (L:995–996): LOCK-n v0.1 was committed by path at §8 step 10, at `deabf3f`.
+- **A-n3 §7's four, carried** (A-n3:68–71), verbatim:
+
+  > - n:81 "never above 0.20 (5(f)(iv); no 5(d) gate is needed for the reward axis)" and n:48 (B3) "N2-E's reads capped at f = 0.20 (d_20), so no reward-axis read needs 5(d)'s gate": the rule says "below dose 0.20"; the gate is owed and is §3's. Ledger (85).
+  > - A-n1 §6.2 "the lock pins the per-cell hash lists" and the seat's answers of 2026-11-16 (n-build, :41), the same words: read as "the lock pins their form and the place of their record" (§6.1).
+  > - `a33252a` §1.1 "every token in the passage mean and in R" and §1.11 O6 "position 0 stays in the mean": superseded by §1 and §2. Ledger (86).
+  > - The second sitting's paste block, item 2 (`ab72d0f`'s routing raw), "no +ρ/2 or −ρ turn": the batch between them, `reward_f020`, is likewise not generated at an early STOP or PAUSE (§4).
+
+- **The seat's two of 2026-11-22** (ans22a §3, rt22a:30–31's "§3's two dated notes of this raw"), verbatim:
+
+  > - **(a) "G-VER's launch files".** The seat's raw of the second sitting (`813de3db…6157`: §1.7, §2's last bullet, §6 item 3) and of the third (`c9b1ee42…1f36`: §0, §5 item 3) routed G-VER as launch files and said it "runs without waiting for the seat". G-VER of record had no stage command (drv:239: "Stages G-VER, the campaign and G-READ-n are wired at their own steps"; L:997–998), which the G-TIME-n spec raw's §2.5 had already said of `main`'s command list. The seat read the step's readiness from the verifier module's presence and from the stages' internal G-VER lines — ledger (55)'s class, in the seat's own routing. The coordinating session's reading stands: the run waits for this raw, as G-TIME-n's waited for the second sitting's. Ledger (88), §7.
+  > - **(b) `.pytest_cache/`.** The third sitting's §4 dated it to that evening. The coordinating session's check (`cd6b30d`) stands: the folder has been at the root since 2026-09-06, ignored by its own `.gitignore`, and the seat's `--directory` listing printed it as an empty folder. Ignored by name since `cd6b30d`; nothing of record in it.
+
+## v1.0 §11. Code's readings in this draft, and what its commit closes
+
+- **Code's readings, for the seat** (each marked where it stands; the seat rules them at its read):
+  - **G-VER's row** (v1.0 §5): the seat's "v1.0's §10 G-VER row" (ans22a:31) is v0.1 §10's row (L:543), kept
+    verbatim below, so this part carries the row's record;
+  - **the lock's lines** (v1.0 §8): the route line and the gate line of record are v0.1's, once each, below; this part
+    shows them, with the `lock:` line, in a quotation the analyzer does not read;
+  - **the committed status line** (v1.0 §13): Code's words for it, as the seat set v0.1's (ans20b:18).
+- **What v0.1 left to v1.0, and where this part closes it:** hole 18, G-TIME-n's figures (L:75; v0.1 §16, §22), in
+  v1.0 §1; the cap and its sum (L:554; L:587–607), in v1.0 §2, with the forwards' planning value revised and the loads
+  measured (v1.0 §1); v1.0's own `lock:` line (L:847; L:852), in v1.0 §8; D_n (L:985), in v1.0 §3; the three
+  sentences of v0.1 §5, §21 and §24, in v1.0 §10; and step 13's place in the order (L:996), in v1.0 §13.
+
+## v1.0 §12. How the campaign cites this file
+
+- From step 13's commit, this file's committed sha256 is the lock the campaign follows: the campaign's identity
+  carries it as `lock_sha256`, and VERDICTS refuses a lock that is not that one (n_analyze.py:6687–6689).
+- The driver pins LOCK-n v0.1's sha256 now (`LOCK_SHA256`, n_sessions.py:3820), and its stages refuse a `LOCK-n.md`
+  that is "absent, not HEAD's committed bytes, or not LOCK-n v0.1's" (n_sessions.py:3913–3914 for G-TIME-n,
+  :5167–5168 for G-VER). Step 14's BUILD moves the pin to this file's committed sha256 (v1.0 §13).
+- Between step 13's commit and step 14's BUILD those checks refuse on this tree: `LOCK-n.md` is v1.0 there and the
+  pin v0.1's, so a G-TIME-n or G-VER command in that interval would need the pin moved first.
+  No gate re-run is scheduled in that interval; one would move the pin first, in a delta Code declares in its entry.
+
+## v1.0 §13. What follows
+
+- **Before the commit**, the seat reads this draft whole, in one sitting (rt21c item 4; ans22b:30, "in one sitting,
+  before step 13's commit"), against its raw of the second sitting of 2026-11-22, the G-TIME-n record read and the
+  addenda (ans22b:30's "against this raw, the G-TIME-n record read and the addenda", "this raw" being ans22b). ans22a
+  §1.7 set the order, G-VER's entry, record and out raw first and the draft second, both before the commit; the
+  seat's second sitting of 2026-11-22 read the first three (ans22b:3).
+- **The commit, n:159's step 13** ("Commit LOCK-n v1.0 with D_n."), by path, by D_n (v1.0 §3), on the PI's routing:
+  `LOCK-n.md` becomes this file as the seat's read leaves it, of record from that commit. At the commit the status
+  line above (this file's lines 3–5) becomes, in v0.1's committed form and wrapped as v0.1's is at L:3–4, these two
+  lines (Code's words, for the seat to set, as it set v0.1's at ans20b:18):
+
+  ```text
+  **Status: LOCK-n v1.0 — COMMITTED at PROPOSAL-n v0.2 §8 step 13 (commit named in its entry); of record from that
+  commit, superseding LOCK-n v0.1.**
+  ```
+
+  The drafting paragraph below it stays as history, as v0.1's first italic paragraph did (ans20b:18).
+- **Then n:159's step 14**, the N-pod campaign within one pod session, after the seat's handoff (ans22b:31). Its BUILD
+  moves the driver's pins to v1.0 (its lock sha256, the cap's 14,400,000 ms; v1.0 §12). Its launch files carry the
+  seat's three requirements and its correction (ans22b §1.3–§1.4; rt22b item 3): the self-test's temporary folder on
+  the box's local disk; every cell checked by name and digest, no cell root listed or counted; the copy-back by name;
+  and the weights folder missing on the box of record classed INTEGRITY, not a launch FAIL; and G-TIME-n's two
+  steered cells' JSON (`N1-V__valence__p1.json` `fa823370…10c0`, `N1-V__valence__p1_2.json` `63634361…9968`, their
+  sha256s in G-TIME-n's report), held outside the repository under the list of record's item 2 since `7d01b02`, are
+  committed by path with the campaign's own cells at step 14's close, before the pod stops (ans21b §1.8; rt21b item 2).
+  Then G-READ-n, and VERDICTS on the PI's word (n:159's step 15).
+
+---
+
+Where v0.1's text below, or the text it carries, differs from v1.0, v1.0 is of record (as LOCK-m-F3 v1.0 ends its
+part, LOCK-m-F3.md:321).
+
 # LOCK-n v0.1 — PROPOSAL-n's first lock, unit N-pod (PROPOSAL-n v0.2 §3 "LOCK-n v0.1", §8 step 10)
 
 **Status: LOCK-n v0.1 — COMMITTED at PROPOSAL-n v0.2 §8 step 10 (commit named in its entry); of record from that
