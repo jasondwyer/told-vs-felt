@@ -21,6 +21,224 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-22 — **n — LOCK-n v1.0's draft placed untracked at the root as `LOCK-n-v1.0-draft.md` for the seat's
+  read (n v0.2 §8 step 13), on the PI's routing of 2026-11-21, third sitting, item 4, and of 2026-11-22, first
+  sitting, item 3, and second sitting, item 2: sha256 `2b2fe5d6…6efc`, 1446 lines, every anchor at `d714372`. Code
+  → design: the seat reads it whole, in one sitting, before the commit (rt21c item 4; ans22b:30), against its raw of
+  the second sitting, the G-TIME-n record read and the addenda; it read G-VER's entry, record and out raw at that
+  sitting (ans22b:3), as ans22a §1.7 ordered. The checks' output and the two values-checks committed by path; the
+  draft is not committed (step 13 commits it as `LOCK-n.md`). Model-free: nothing ran on a model or on the box.**
+  - **Headline:** `LOCK-n-v1.0-draft.md` at the root, untracked, sha256
+    `2b2fe5d6b5f28f3773dcd398a7fb891a292cd5d561fa8028d3cda680eb306efc`, 1446 lines: Code's draft 10, byte for
+    byte, placed after the second values-check, on the PI's answer (below), before this entry's commit. Its first 388
+    lines are the v1.0 part; the last 1058 are v0.1's text, byte for byte `git show
+    d714372:LOCK-n.md` (`88d9fe7b…e9d5`). The form is a lock's, "re-issued above the prior version's text kept verbatim"
+    (WORKFLOW.md:43), as LOCK-m-F3 v1.0's is, with its closing sentence: where v0.1's text differs, v1.0 is of record.
+    Its v1.0 §0 quotes n:120's list, the three sittings' items and the seat's §2 (ans22b:30) verbatim. The short forms
+    `ans21a`–`ans22b` and `rt21a`–`rt22b` are the draft's own (its v1.0 §0); `L:N` is a line of v0.1's text.
+  - **What v1.0 carries**, by its sections:
+    - §1, the projections of item 1 in the PI's words and the seat's (ans21c §1.2–§1.4), the loads among them, with
+      G-TIME-n's artifact and report by sha256;
+    - §2, the cap: the PI's 4 h, `hour_cap_ms` 14,400,000; what it counts, as v0.1 §11 has it; G-READ-n's fits outside
+      it, as the seat ruled (ans21b:23); the budget line and a cap that binds, in the seat's words (ans21c §2);
+    - §3, D_n 2026-12-15 (n §7.4; v0.1 §23); §4, the hashes of record at `d714372`, the package's digest among them;
+    - §5, the lock chain from G-DATA to G-VER of record and v1.0 itself, with G-VER's row as ans22a §1.5 words it: of
+      record at `fd5d61c`, `data/n/gver/gver.json` `d1dcc337…e90a`, PASS, 160 of 160, the entry "G-VER (n)", the
+      end line verbatim; and G-VER accepted as the gate of record (ans22b:7);
+    - §6, the analyzer v7 (`735da934…a7a8`) and what VERDICTS reads from the lock; §7, BK's 26 input files with their
+      sha256s from `SHA256SUMS`, `shasum -c` run at `d714372`;
+    - §8, the whole line `lock: LOCK-n v1.0`, and the three lines the analyzer reads shown in a quotation it does not
+      read; §9, n §0.4's table with G-TIME-n's zero line (ans21b:25);
+    - §10, v0.1's three sentences corrected (ans21a:15; ans21a:8), and A-n3 §7's notes and the seat's two of
+      2026-11-22 (ans22a §3) verbatim;
+    - §11, Code's readings and what the commit closes; §12, how the campaign cites this file; §13, what follows, with
+      the committed status line's words for the seat to set and step 14's launch-file requirements (ans22b §1.3–§1.4).
+
+    What v0.1 left to v1.0 is among them, and v1.0 §11 says where: hole 18, G-TIME-n's figures (L:75; v0.1 §16);
+    the cap, its sum, the forwards' planning value revised and the loads measured (L:554; L:587–607); v1.0's own
+    `lock:` line (L:847; L:852); D_n (L:985); and step 13's place in the order (L:996).
+  - **The analyzer's lock rules, on the draft,** as the generator asserts them by shell: the whole line
+    `lock: LOCK-n v1.0` (v1.0 §8; n_analyze.py:6248); exactly one route line, `direction of record: Route B`, v0.1's
+    at L:844; exactly one gate line, `reward axis 5(d) gate, coherence: 48 of 48, PASS`, v0.1's at L:935
+    (n_analyze.py:6243–6282); and v7's sha256 between backticks (n_analyze.py:3138–3140). v1.0 §8's quotation of the
+    three lines is a blockquote, which neither rule reads (n_analyze.py:6264–6265). No Python read the draft.
+  - **Code's readings, for the seat** (each flagged in the draft; v1.0 §11 collects them):
+    - G-VER's row: ans22a:31's "v1.0's §10 G-VER row" is v0.1 §10's row (L:543), kept verbatim below, so v1.0 §5
+      carries the row's record;
+    - the lock's lines: rt21c item 4's "with the route line and the gate line verbatim" is met by v0.1's two lines,
+      once each, below the part, which shows them only in a quotation (v1.0 §8; ans20b:50);
+    - the committed status line: Code's words for it (v1.0 §13), for the seat to set, as it set v0.1's (ans20b:18).
+
+    Two readings of draft 7 are now the seat's rulings, cited where they stand: v1.0 carries the corrected words of
+    v0.1's three sentences (ans21a:8; ans21a:40), and G-READ-n's fits on the laptop are outside the cap (ans21b:23).
+  - **The placement:** `LOCK-n.md` is tracked since `deabf3f`, so "untracked at root under the lock's name" (rt21c
+    item 4; "at the root", ans22b:30 and the second sitting's item 2) cannot hold in both words. The coordinating
+    session put it to the PI, "Place the LOCK-n v1.0 draft as an untracked LOCK-n-v1.0-draft.md, or over LOCK-n.md?",
+    and the PI answered "New untracked file" (PI date 2026-11-22). So the draft is `LOCK-n-v1.0-draft.md`, untracked,
+    and `LOCK-n.md` stays v0.1 (`88d9fe7b…e9d5`), committed and unmodified, until step 13's commit. A draft over
+    the tracked file would also have stopped the driver's lock checks on this tree (n_sessions.py:3913–3914,
+    :5167–5168).
+  - **For the seat,** from the second values-check: whether a gate re-run can fall between step 13's commit and step
+    14's BUILD, when the driver's checks refuse (v1.0 §12); and whether the draft's sitting re-reads G-VER's record,
+    which ans22a:7 put in "the sitting that reads v1.0's draft" and the second sitting read on its own (ans22b:3).
+  - **The drafting**, in Code's scratch, by a generator over the part's source, each draft by the generator as it then
+    stood: each file's sha256 and line count placed from the file, tracked and clean at the HEAD of its anchors; the
+    report's sha256 by `shasum`, the file not read (item 1); the package's digest by the commit kit's `pkg_rev`; the
+    two tables from `SHA256SUMS` and n:18–26; RESULTS.md's cited lines and the driver's `LOCK_SHA256` line by their
+    text; v0.1's text appended by `git show`. The final generator (`gen_v10.sh`, `a65a4b85…4542`) and source
+    (`v10_part_src.md`, `c2805eae…c914`) make draft 10. The drafts, each kept: 1 `d8fc9114…ce66`, 2 `006c338b…80be`,
+    3 `db7b69ba…4f47`, 4 `571aec04…b0d0`, 5 `342cd01f…361b`, 6 `fa20f98c…89f2`, 7 `5cadc821…5908`, 8 `cde614e3…6c34`,
+    9 `c3316e62…45fd` and 10 `2b2fe5d6…6efc`:
+    - 2 restructures the sentences that a 64-character hash had widened past 120 characters (each hash to a line's end
+      or a bullet of its own; no value changed); 3 rewraps the six lines 2 left over 120;
+    - 4 follows Code's read of draft 3 against its sources: the header's tool sentence rewritten; "item N.3" made
+      "item 3"; the end line cited at the stage raw's last line (`results/raw/2026-11-22_n-gver-v2_stage.txt`:20;
+      draft 3 cited the out raw's line 118 as its last); rt22a:30 and :30–31 for :29; §2's "the runner's input from
+      the lock (ans20b:39…)" added and "pins it" made "passes it"; R2 stated, and v0.1 §11 (a)'s words quoted beside
+      R3; the package's digest placed by tool; §8's refusal "with none, or with two or more"; the source of §9's
+      "where" cell; "ans20b:46" added in §10 (a); and §11's sentence on the identity dropped;
+    - 5 adds the I/O's shape in the seat's words (ans21c:27); 6 corrects §11's commit sentence (the status line
+      changes at the commit, as v0.1's did); 7 flags R1 and R4 where they apply, and is what the first values-check
+      read;
+    - 8 applies the first values-check (below) and the second sitting: anchored at `d714372`, with ans22b, rt22b and
+      WORKFLOW.md among the sources and hashes; N.2 and the seat's §2 quoted; G-VER's acceptance; the loads; R1 and R3
+      cited as rulings; the three lines quoted in §8; §11–§13, with the committed status line; the closing sentence;
+    - 9 moves WORKFLOW.md's hash to a line of its own and re-orders v1.0 §5's item 7 (the acceptance before the record;
+      no value changed), the two lines that 8's hashes widened past 120 characters; says the driver's cited line is
+      placed by its text too; and drops a second blank line before v0.1's text; 9 is what the second values-check read;
+    - 10 applies the second values-check (below): the header names the driver's `LOCK_SHA256` line alone as placed by
+      its text; v1.0 §10's dated-note sentence in the checker's words; v1.0 §12 states the interval between step 13's
+      commit and step 14's BUILD; v1.0 §13's order of reads is brought up to the second sitting, with "this raw" named;
+      and the committed status line is shown wrapped as it would be committed. Its BK table is built by `sed` over the
+      file's stream, the same 26 rows byte for byte.
+  - **The checks**, shell only, on draft 10's bytes in Code's scratch (the bytes placed), at `d714372`:
+    [`2026-11-22_n-lock-v1_0_check.txt`](results/raw/2026-11-22_n-lock-v1_0_check.txt) (`e742dc0d…7e47`): the
+    final generator re-run and equal to them by `cmp`; no line of the v1.0 part over 120 characters outside its tables
+    and blockquotes; 63 quotations, each found in the v1.0 part and in its source (`check_quotes.sh`, `431d234b…3c7c`);
+    the 12 files the part names a commit for (eight commits), each commit the file's last change (`check_ids.sh`,
+    `24547e71…2038`); and the tail equal to `git show d714372:LOCK-n.md`. The checks raws of draft 7
+    (`16a1fb92…4fa7`) and draft 9 (`099033cf…2ff7`), which the two values-checks read, are not committed. Draft 7's
+    was made twice, its first copy (`ddfdce0a…69d5`) removed after a one-line edit of the generator's printed counts
+    and made again.
+  - **The values-checks**, two, blind, each committed whole with its dispositions:
+    - the first (brief `5c22ca32…6ef4`), of draft 7, this entry as then drafted and draft 7's checks raw:
+      [`2026-11-22_n-lock-v1_0_valuescheck.md`](results/raw/2026-11-22_n-lock-v1_0_valuescheck.md) (`80fb0234…7fbd`).
+      127 items: 104 CONFIRMED, 11 IMPRECISE, 3 FAIL, 9 NOT CHECKABLE; 12 observations. The three FAILs, all in this
+      entry's departures list, are fixed; every IMPRECISE item is applied; the observations are applied, met or noted;
+    - the second (brief `1ffb07d5…ed45`), of draft 9, this entry as then revised, draft 9's checks raw and the first
+      values-check's raw:
+      [`2026-11-22_n-lock-v1_0_valuescheck2.md`](results/raw/2026-11-22_n-lock-v1_0_valuescheck2.md) (`5d9c73a8…5f71`).
+      106 items: 82 CONFIRMED, 14 IMPRECISE, 5 FAIL, 5 NOT CHECKABLE; 8 observations. The five FAILs, three in this
+      entry's departures list and two in the first values-check raw's head ("draft 8" where it read draft 9), are
+      fixed; every IMPRECISE item is applied; the observations are applied, met or noted. The edits after it are
+      replayed by tool (32 of 32, over the seven sources of its texts, by `replay_vc2.sh` in Code's scratch).
+  - **Departures, declared for the seat to class** (Code's, from G-VER (n)'s entry's final sweep to this entry's last
+    brief): from Code's own sweeps of its tool calls in two spans, each to its own extraction (the first, 162 calls,
+    86 of them shell commands; the second, from the first brief's hash, 104 calls, 32 of them shell commands); from
+    the values-checks' sweeps of those spans and on to each one's brief; and from Code's final sweep after the last
+    brief. Code's bracketed counts of marker words and of the campaign folder's plain name over the commands' text
+    are both 0. The kinds:
+    - **before `fd5d61c`'s window**, after its entry's final sweep: the entry's edits-check and commit-build scripts by
+      `bash`, the build's scratch folder removed by `rm -r` and built again; the message written by a `sed` redirect,
+      with `wc -c` of it; the message check run outside the window; the dry gate's output redirected to a scratch
+      file; `git show HEAD:RESULTS.md` into `cmp`; and the window request's fill script;
+    - **the window's six steps** for `fd5d61c`, as granted, and then a check of the commit by tool: `git show` of the
+      manifest's 16 paths into `shasum`, and of RESULTS.md, the commit's 17th, into `shasum` and `wc -l`; `git diff
+      -U0` of RESULTS.md between its parent and it for the hunk's line; `git cat-file commit` into `cmp` with the
+      message; `ps -p 8051`, which printed 8051 (Q-F3's campaign, running); and `pgrep -f n_sessions` (none);
+    - `sed -n` of three memory notes, by name, after a `cd` into the memory folder (two by a `for` loop over their
+      names; no glob there); memory writes and edits (12, over four notes);
+    - reads of committed files outside data/*/ckpt and data/*/reports by `sed -n`, `head`, `tail`, `wc -l`, `cat -n`
+      and `/usr/bin/grep`: the proposal, the addenda, `LOCK-n.md`, `LOCK-m-F3.md` and one line of `LOCK-m-F0.md`,
+      `WORKFLOW.md`, the seat's and the PI's raws, G-VER's out and stage raws, RESULTS.md, the analyzer, the runner,
+      `schema.py`, the driver, `gtime.json` and `gver.json` (these two also by `jq`); `wc -l` and `shasum` of the
+      seat's raw of the second sitting before its commit; and by the file tool, `data/n/bk/SHA256SUMS`,
+      `data/n/bk/SOURCE.md`, `LOCK-n.md`, the seat's raw of the second sitting before its commit, the PI's routing raw
+      of that sitting, one memory note, and Code's commit-window request in the notes folder;
+    - `git ls-files` with quoted pathspecs; `git ls-tree --name-only`; `git log -1` with `--format` of ids, subjects
+      and commit times; `git rev-parse`; `git hash-object`; and `git rev-list <commit>..HEAD -- <path>` over eleven
+      named paths outside data/*/ckpt and data/*/reports (`check_ids.sh`; the report by `git rev-parse` alone);
+    - `shasum` of `data/n/reports/time.json`, and its clean check by `git rev-parse` and `git hash-object` (item 1's
+      digest forms; the file not read), its digest appended to a note in scratch;
+    - the package's digest by the commit kit's `pkg_rev` (`git ls-tree`, `git cat-file -s` and `git show` of the
+      sixteen `.py` blobs of `valence_core/n` into `shasum`), in a child `bash` and inside the generator; and one call
+      of Code's older digest script on the wrong folder, the repository's root, where its name-only `ls` found no
+      `.py` file: it printed the empty input's digest, unused;
+    - `shasum -a 256 -c SHA256SUMS` in `data/n/bk/`, by a subshell's `cd`, by hand and inside the generator;
+    - in Code's scratch: its scripts by `bash` (the generator, the two checks, the checks-raw script, the fill script
+      and the kit's), and `bash -n` of them; writes by redirect (the notes file after `mkdir -p` and a `printf`,
+      `values.txt`, the sweeps, the checks raws, the reports by `jq`, the entry's pre-filled copy by `sed`, the first
+      values-check raw by a grouped `cat` and `printf`, and the second brief's items file by a grouped `head`, `sed` and
+      `tail`); removals by `rm` (the first checks raw and its re-run file; a first extraction of the first report,
+      which took the wrong message; the entry's pre-filled copy and its fill, before they were made again); reads by
+      `sed -n`, `head`, `tail`, `wc -l`, `wc -c`, `cat`, `od`, `diff` and `cmp`; width checks and screens by
+      `/usr/bin/grep`; name-only `ls` of scratch folders, one with a glob over the scratch's subfolders; `jq` over this
+      session's transcript (the sweeps; one command's result) and over the checkers' transcripts (their hand-backs);
+      and the file tool's Write, Edit and Read;
+    - redirects to `/dev/null`, in eight commands (six before the first brief; two after it, on the fill script's
+      output);
+    - **a narrow pathspec:** one `git grep -n -F` over `results/raw/2026-11-2*_design-to-code_answers.md` (quoted),
+      in place of item 3's form;
+    - **a recursive search in scratch:** one `/usr/bin/grep -r -l -F` of the package's digest over the G-VER entry's
+      scratch folder (no ckpt or reports file is in it), printing file names only;
+    - **a glob over the repository's root:** `LOCK-m*.md`, in one `ls` and one `for` loop; it expanded to
+      `LOCK-m-F0.md` and `LOCK-m-F3.md`, neither marker-named (the form is `git ls-files` with a quoted pathspec);
+    - **two slips in zsh:** one `echo` whose word began with `=`, which zsh's equals expansion refused ("not found";
+      nothing ran), and one environment assignment whose name held the word "awk", before a `sed`, where no awk ran;
+    - **the campaign folder's plain name in output:** five of Code's command outputs printed it (four before the first
+      brief, in lines read from committed files and memory notes; one after it, in a comment line of the commit kit's
+      gate script in scratch), and the file tool's read of the seat's raw of the second sitting printed it three
+      times; never in a command's text;
+    - **marker-named paths in a variable:** the generator built v1.0 §7's table by a `while read` loop that passed
+      `SHA256SUMS`'s 26 paths, 14 of them marker-named, in a variable to bash's builtin `printf`, at every run, drafts
+      1–9 and their re-runs. No process was exec'd with them, but it is the loop-and-variable form the list names.
+      Neither the first values-check nor Code's sweeps found it; the second did. From draft 10 the table is built by
+      `sed` over the file's stream, byte for byte the same rows;
+    - **since the first brief:** gate v13 built in scratch from v12 by `sed` (a note file written by `printf`, read by
+      `sed`'s `r` and removed), with `diff` and `bash -n`; one name-only `ls` of the repository's root into
+      `/usr/bin/grep` (item 1's form), for WORKFLOW's name; `git show --name-status --format=` of `d714372` with item
+      3's pathspec; `jq` over the first checker's transcript for its tool names and its hand-back's field sizes, as well
+      as for its hand-back; in scratch, a `mv`, a `sed -i ''` deleting one line, a temporary file written and removed,
+      and `rm` of the first values-check raw and its head before they were made again; and an exported variable,
+      `EXPECT_HEAD`, for the generator and the checks;
+    - **after the second brief** (Code's final sweep, 63 calls, 16 of them shell commands, to its own extraction):
+      gate v14 built as v13 was; `jq` over the second checker's transcript for its hand-back; `mkdir` of a snapshot
+      folder in scratch and `cp` of the seven sources into it; the replay script (`jq` over this session's
+      transcript, its writes in a new folder, `cmp`); one `sed` over `data/n/bk/SHA256SUMS` into `cmp`, the table's
+      new form, its rows in a stream; `mv` of three scratch files to kept names; the placement at the repository's
+      root, `cp -n` of draft 10 to `LOCK-n-v1.0-draft.md`, with `shasum`, `git ls-files --error-unmatch` (its output
+      to `/dev/null`, a ninth such redirect), `git check-ignore -q` and `git status --porcelain` of the two named
+      files; and one message to the coordinating session with the draft's sha256 and line count, after loading the
+      messaging tool. No output in it printed the campaign folder's plain name. After it: six of the entry's lines
+      rewrapped in its source, the replay run again (its first output folder removed by `rm -r`) and the second
+      values-check raw made again with the new count, the entry's fill, the commit kit's assembly in scratch, the
+      kit's dry-run gate, and the window request's hashes;
+
+    No Python ran; nothing went to the box. Code knows of no others. The values-checkers', as their reports state them:
+    - the first's: four device redirects, no file written; one `git show --name-only --format=` of `fd5d61c` without
+      item 3's pathspec, its count alone printed; one environment assignment named with "awk" before a `cut`, no awk
+      run; two prints from T beyond a finding's need (one matched another day's record by the time of day alone; one
+      printed two lines of `LOCK-m-F3.md`, one naming the campaign folder's package path plainly, output only);
+      `wc -l`, `tail -c`, a failed `head -c 0` and `iconv` into `cmp` on files whose text holds a marker, by their
+      own paths; `git show deabf3f:LOCK-n.md` into `shasum`, and one commit body read by `git log -1 --format=%B
+      deabf3f` into a bracketed `grep -o`; and `wc -c` of the sixteen package blobs, by `git show`;
+    - the second's: `cat` of the draft into `shasum`, once, by its own path; one `echo ==` that zsh refused ("= not
+      found"), the rest of its command line not run; `bc`, twice, to sum per-call counts (both sums 0); one
+      `> /dev/stdout` on a `jq` over T into a failed `head -n 0`, nothing written or printed; two environment
+      assignments named with "awk", no awk run; one `git diff --numstat fd5d61c d714372 -- RESULTS.md`, for RESULTS.md
+      alone; `shasum -c`'s output in `data/n/bk/` held in a variable and passed twice to zsh's builtin `printf`, each
+      into `grep -c`, its counts alone printed and no process exec'd with the paths; and prints from T beyond need
+      (the span's commands, local roots masked, and one command while it located the span's end).
+  - **Committed by path:** `results/raw/2026-11-22_n-lock-v1_0_check.txt`, `_valuescheck.md` and `_valuescheck2.md`;
+    this entry. The hashes and counts in this entry and in the two values-check raws' heads were placed by
+    `fill_entry.sh` (`b718ef87…cf8d`), the version that made every one of those fills.
+
+    `LOCK-n-v1.0-draft.md` is placed at the root untracked, as its bytes above. The commit-time count of the home-folder
+    prefix over the staged diff is 0. Nothing ran on a model. Not pushed. Next: the seat's read (ans22b:30); then n
+    v0.2 §8 step 13's commit, by D_n, on the PI's routing: the draft as the read leaves it, its status line in v1.0
+    §13's words as the seat sets them, over `LOCK-n.md` by path with the v1.0 entry, the untracked draft removed only
+    after a `cmp` against the committed file (the coordinating session's form).
+
 - 2026-11-22 — **The coordinating session's notes on the seat's second sitting of 2026-11-22: G-VER (n) accepted as
   the gate of record, the raw committed here by path; the PI's routing, "PI: route as given"; a close line on
   `fd5d61c` (item 5); the relays; G-VER's launch since `5ad19de`, v1's FAIL and v2's PASS, with the commits `2834c2d`

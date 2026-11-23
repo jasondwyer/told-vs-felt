@@ -1,0 +1,37 @@
+# LOCK-n v1.0's draft: the checks, shell only, at HEAD d714372 (n v0.2 §8 step 13; Code, 2026-11-22)
+
+The draft: Code's draft 10, sha256 2b2fe5d6b5f28f3773dcd398a7fb891a292cd5d561fa8028d3cda680eb306efc, 1446 lines: the v1.0 part 388, v0.1's text 1058.
+The tools, by sha256, in Code's scratch:
+- gen_v10.sh a65a4b85e07f02ba3bb1379730423eda61b492e459e8289d8cde874d2e124542
+- v10_part_src.md c2805eae24e856a532955ca072296e382759ac9a9d642540c9e6ee28bf4bc914
+- check_quotes.sh 431d234b3583c282eb70f186f872319ece2eae407349c81a7d91d75ddd453c7c
+- check_ids.sh 24547e713a95c09557c8d1bbce1321f4ea1d60876bb9418e96e0cbab894b2038
+- make_check_raw.sh b381194a13e5a0388a8888af58a5f2fec52c55c2aff1096628a2b5528206c555
+- kit_lib_v3.sh (the commit kit's library; its pkg_rev) 7170415f978c81944e7e8341d8b4601212425c70dd4693db91ac3e9ea804bc37
+
+## 1. The generator, re-run to a new file, and cmp with the draft
+
+draft: 2b2fe5d6b5f28f3773dcd398a7fb891a292cd5d561fa8028d3cda680eb306efc, 1446 lines (388 of the v1.0 part, 1058 of v0.1's text)
+the analyzer's rules: the lock line present; one route line, Route B; one gate line, 48 of 48, PASS; v7's sha named
+at HEAD d714372: RESULTS.md:2014-2015 and :2026 by their text; n_sessions.py:3820 pins LOCK-n.md; data/n/bk 26 of 26 OK
+gen exit: 0
+cmp: the re-run equals the draft, byte for byte
+
+## 2. Lines of the v1.0 part over 120 characters (UTF-8), outside its tables and blockquotes
+
+lines: none
+
+## 3. check_quotes.sh
+
+the draft's v1.0 part: its first 388 lines
+quotations: 63 found in the draft and in their sources, 0 not
+exit: 0
+
+## 4. check_ids.sh
+
+commits named for files: 12 the last change, 0 not
+exit: 0
+
+## 5. The tail and v0.1
+
+the last 1058 lines equal git show d714372:LOCK-n.md, byte for byte
