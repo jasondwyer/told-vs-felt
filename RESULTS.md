@@ -21,6 +21,253 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-23 — **n — the N-pod campaign's BUILD (n v0.2 §8 step 14): the `campaign` command in
+  `scripts/n_sessions.py`, on Code's readings CP1–CP20 as PINs (the PI's "Build on the PINs"); the lock pin moved to
+  LOCK-n v1.0's committed sha256, and the cap 14,400,000 ms; the driver alone, the package at the lock's digest. Not
+  run.**
+  - **Citations.** LOCK-n.md is cited as LOCK-n v1.0 cites it (LOCK-n.md:54–57) for `L:N`, line N of v0.1's text as
+    `deabf3f` numbers it, and "v1.0 §N", a section of v1.0's part; "L §N" (v1.0's "v0.1 §N") is a section of v0.1's
+    text, and `LOCK-n.md:N` a line of the file at `098218c`.
+  - **What is built,** in the driver alone (CP1), so `valence_core/n/` stays at `06b55761…1d39` (L §18):
+    - **The pin (CP4).** `LOCK_SHA256` is LOCK-n v1.0's committed sha256, `59e0b1bc…00aa`: one pin, read by every
+      stage's lock check. `LOCK_VERSION = "v1.0"` stands beside it for the printed lines. Wording that would be false
+      under v1.0 now names "the lock" or `LOCK_VERSION`: the two lock refusals, four printed lines, nine docstrings or
+      comments, five self-test check names and two asserted values. Where "LOCK-n v0.1" stays, it names what ran or
+      was set under v0.1, whose text v1.0 keeps beneath its own: the GT and GV readings' docstring lines, the `gtime`
+      and `gver` paragraphs' heads, `lock_fidelity_rule`'s docstring, `gtime_lock_inputs`'s docstring (v0.1's §3–§4,
+      which v1.0 carries), one backend-ext printed line and one `gver` check name.
+    - **The cap (CP5).** `LOCK_HOUR_CAP_MS` is 14,400,000, held to v1.0 §2's span "4 × 3,600,000 = **14,400,000
+      ms**" (LOCK-n.md:106) and passed to the runner as `hour_cap_ms`. A resume keeps it (runner:412–416). The
+      identity carries no cap field.
+    - **`campaign`** (`run_campaign`), one model load an invocation. It refuses before any read, with exit 1, a
+      REFUSED line and nothing written, unless all of these hold, in this order:
+      - G-VER's STOP record, `data/n/reports/campaign_gver_stop.json`, is absent (CP9);
+      - the pod is the characterized one, and the cuBLAS setting is the characterized one (rule 2);
+      - numpy's stream known answer holds;
+      - each `--ruling` is a repository file at HEAD's committed bytes (the review's O6);
+      - the weights are the lock's (L §17);
+      - the run runs HEAD's committed driver, and `LOCK-n.md` is HEAD's committed bytes at the lock's sha256;
+      - the session set and the ids of record load;
+      - the lock's inputs hold (`gtime_lock_inputs`: G-VEC's record and site, G-CAL-n's record and dose map);
+      - the 28 directions the campaign injects are each at the lock's sha16 (L §3; CP3): the four named rows of
+        G-VEC's committed directions file, and the 24 random rows the keys draw. A row off its pin is named as the
+        respawn protocol's INTEGRITY incident;
+      - the realized fidelity sample and N4's schedule, re-derived by the package's keys, are the lock's (L §5; CP3);
+      - the environment's provenance bridges to the characterization's identifier (R6), and n's backend identifier
+        is the lock's;
+      - tokenizers' version is L §17's, 0.22.2;
+      - the package and its closure are the lock's (L §18);
+      - the plan, in the runner's ORDER, is 7,680 reads at the lock's `read_plan_sha256` (L §6; CP1);
+      - what is on disk passes the runner's own checks (`prior_state`), and a report on disk did not end COMPLETE or
+        CAP (CP5);
+      - the weights folder's eight non-shard files are each at the model manifest's pin (CP7).
+
+      MANIFEST.json's sha256 is printed beside the pin and left to G-VER (L:543, LOCK-n.md:938). The identity at
+      "campaign" carries the lock's sha256, its dose map and fidelity rule, the identity bound, and the 28 directions
+      by sha16 (CP3). Its `rendering_id` is the manifest's pin, so that a MANIFEST.json off its pin is G-VER's STOP at
+      a resume as at the start (the review's O4).
+
+      Then G-VER, the stage's own and not of record, in G-VER of record's form (CP7): the tokenizer from the weights
+      folder, local files only, and `verify.verify` on the committed ids, each timed. Its record (`n-gver-v1`) is
+      checked by `check_gver`.
+      - At a STOP at the campaign's start, with no report and no record on disk, the driver writes G-VER's record
+        and the campaign's report in the schema's G-VER-STOP form, both or neither (CP9 (a); the review's F4).
+      - At a STOP at a resume, nothing is written, and G-VER's record is printed whole (CP9 (b)).
+      - At PASS, the weights load. The loaded adapter's provenance and shape are held to those checked before the
+        load, and the reads run through the runner, with the lock's cap.
+
+      Exits (CP12):
+      - 0 COMPLETE;
+      - 3 PAUSE, each standing pause's excerpt printed (CP8), or one line where it cannot be formed (the review's F3);
+      - 5 CAP;
+      - 6 G-VER's STOP;
+      - 1 a refusal or a failure, any SystemExit from a seam among them (the review's B7);
+      - 2 is left to argparse.
+    - **`campaign --resume --ruling PAUSE_ID=PATH`** continues, skip-only.
+    - **`campaign --pi-stop RAW`** writes the PI's stop while a pause stands, with no load and no read (CP9 (c)). The
+      report becomes PI-STOP, its stop record citing the committed raw's sha256, and the exit is 7.
+    - **No smoke and no `--out`** (CP2): every other option is refused. `--selftest`, which the driver takes before
+      any command, runs the self-test.
+    - **The driver's docstring** lists CP1–CP20 in short as its PINs, as sent in the spec raw's §1, but CP4's DRIVER
+      line as built (the review's F6) and CP8's excerpt as the starred block carries it. The eight starred readings
+      are the seat's before any run: CP2, CP6, CP8, CP9, CP11, CP12, CP13 and CP16, in the block committed at
+      `fcab1e5`.
+  - **The driver's bytes** are draft 4, `47abe489…c21a`, 7,836 lines, +1,645 −33 from HEAD's
+    `55885e65…385f`. Every line count in this entry is `git diff --no-index --numstat`'s.
+    - Draft 1 (`9b51bb18…64c0`, 7,570 lines; +1,377 −31) built the pin, the cap, the command and its self-test. The
+      coordinating session's count of it, +1,376 −30, is another form's.
+    - Draft 2 (`7249b88f…d9b5`, 7,831 lines) built in the blind review's findings (+377 −116 from draft 1).
+    - Draft 3 (`fd643681…26d9`, 7,834 lines) made four corrections in docstrings and a comment after the
+      values-check (+6 −3 from draft 2; its items 14, 80 and 81, and its observations 8 and 9). No check reads them.
+    - Draft 4 corrected one docstring clause and the `campaign` command's usage message after the focused
+      values-check (+4 −2 from draft 3; its item 76 and its observation 4). No check reads either.
+  - **The .gitignore** is `fe865233…03ed`, +19 −3:
+    - In G-TIME-n's block: the comment corrected, and the two steered cells' lines added (CP10; F7 below). The two
+      cells are held outside the repository and committed with the campaign's cells at step 14's close (LOCK-n v1.0
+      §13).
+    - A campaign block admits the root `data/n/ckpt/campaign/` with its cell JSONs (`N*.json`), the report
+      `data/n/reports/campaign.json` and G-VER's STOP record `data/n/reports/campaign_gver_stop.json`. The capture
+      arrays (`*.npy`), the atomic writes' temporaries and `._*` files stay ignored.
+    - It was tested by dry-run adds (`git add --dry-run .`) in two throwaway repositories in Code's scratch, with
+      stand-in files for every name: exactly the intended files were added. HEAD's `.gitignore`, in the same test,
+      admits only G-TIME-n's shadow cell and its report.
+  - **The self-test:** [`2026-11-23_n-campaign-build_selftest.txt`](results/raw/2026-11-23_n-campaign-build_selftest.txt).
+    - Draft 1 ran "764/764 n selftest checks pass": HEAD's 717 plus the campaign's 47 (46 in `_camp_selftest` and
+      the environment's check after it).
+    - Draft 2 ran "774/774": draft 1 with the review's findings built in, and 10 checks more.
+    - Draft 3 ran "774/774", its output run 2's bytes (`5aa33ca8…def0`).
+    - Draft 4, this BUILD's bytes, ran "774/774", its output run 3's bytes.
+    - Each run had exit 0 and an empty stderr, in a battery window the coordinating session granted for its bytes,
+      as the harness's background task. The temporary folder was empty before and after each, and no n_sessions
+      process ran after either. Each window closed on the coordinating session's word.
+    - The box's count, by arithmetic only, is 785.
+  - **The blind review** of draft 1:
+    - its report, with every disposition:
+      [`2026-11-23_n-campaign-build_review.md`](results/raw/2026-11-23_n-campaign-build_review.md);
+    - two BUGs (F1, latent, a rendering pause's excerpt on N4-T's told and N4-Ts's sham reads; F2, low, a session
+      whose ids failed counted three times among G-VER's failed checks), 11 findings (2 BUG, 3 RISK, 6 NIT), 13
+      surviving mutants, 9 box risks and 11 observations;
+    - draft 2 builds in F1–F5, F8–F10, F11's docstring, B7, O4 and O6, and a kill for every mutant by Code's reading
+      (no mutant has been run);
+    - F1, F3, F4, O2, O4, O6 and B7 change what the seat's block says Code will build, and O3 and O5 are questions
+      for the seat. The block, committed at `fcab1e5`, carries them.
+  - **The values-checks:**
+    - the BUILD's, of these texts as drafted for draft 2, with draft 2's campaign texts and the `.gitignore`'s
+      comments: 91 items, 75 CONFIRMED, 10 IMPRECISE, 0 FAIL and 6 NOT CHECKABLE, and 10 observations. Its brief
+      misstated LOCK-n's `L:N` form, which its items 8, 64 and 80 follow; under the lock's own form the driver's
+      "L:543" stands. Every IMPRECISE item is applied, in the texts or in draft 3, and every observation is applied.
+      Its report is committed whole, with every disposition:
+      [`2026-11-23_n-campaign-build_valuescheck.md`](results/raw/2026-11-23_n-campaign-build_valuescheck.md);
+    - the focused one, of every line changed after this check and the seat block's first, committed with the block
+      at `fcab1e5`
+      ([`2026-11-23_n-campaign-starred-eight_valuescheck2.md`](results/raw/2026-11-23_n-campaign-starred-eight_valuescheck2.md)):
+      118 items, 102 CONFIRMED, 12 IMPRECISE, 2 FAIL and 2 NOT CHECKABLE, and 9 observations. Its points on these
+      texts are applied, and its two on the driver are draft 4's;
+    - the edits to these three texts after the BUILD's check are checked by tool:
+      49 of 49 (this entry 21, the review raw 16, the self-test raw 12).
+  - **Model:** nothing ran on a model.
+  - **Declared, from the readings and the review:**
+    - **The twelve unstarred readings** (CP1, CP3, CP4, CP5, CP7, CP10, CP14, CP15, CP17, CP18, CP19 and CP20)
+      stand as the spec raw's §1 has them, built as above. The block's §2 names two points of them for the seat:
+      CP4's driver of record and CP15's reading.
+    - **CP4 (the review's F6).** CP4 as sent says that the campaign's STAGE line prints "the BUILD's driver blob". The
+      build prints the driver's sha256 on its DRIVER line, m-F3's convention as written (mF3ans:43: "the campaign's
+      DRIVER line prints the new one").
+    - **CP10 (the review's F7).** The two steered cells' `.gitignore` lines come now, not "at step 14's close"
+      (ans21b:32). They admit nothing until the two names are placed at the close, so the close's commit needs no
+      `.gitignore` change.
+    - **The runner is a seam** (`CampEnv.run`): no self-test case launches a campaign read, and the runner's own
+      campaign behaviour is the package's self-test's. F5's cases check what a resume hands it.
+    - **The runner's private `_report` and `_pause`:** `_report` builds the start's G-VER-STOP report, and `_pause`
+      serves the self-test's fixtures alone. Both are safe while the package is frozen.
+    - **"Fresh"**, where the start's STOP form is allowed, means no report and no record on disk.
+    - **The PI's stop** is written only while a pause stands. That is Code's design; the schema allows more (the
+      block's Q4).
+    - **B3.** A pause on the read that crosses the cap ends PAUSE with the cap hit. The resume after its ruling then
+      costs one load and one G-VER only to write CAP, which is the runner's form.
+    - **O9.** G-TIME-n's committed artifact and G-VER's committed record carry v0.1's lock sha256. They would fail
+      their checks under the moved pin if anything re-checked them, and nothing on the campaign's path does.
+    - **Carried to the campaign's launch files** (to the coordinating session first):
+      - ans22b §1.3's three requirements: the self-test's temporary folder on the box's local disk; every cell
+        checked by name and digest, with no cell root listed or counted; and the copy-back by name;
+      - ans22b §1.4's INTEGRITY correction: the weights folder missing is INTEGRITY;
+      - ans23a §3's edit 2: G-TIME-n's two steered cells committed with the campaign's cells at step 14's close;
+      - the review's B4: a resume's copy checked by name and sha256 before the launch;
+      - B6: `.nfs` names passed over by the by-name copy-back;
+      - B8: the copy-back's names by `camp_copy_names`'s rule, the laptop's campaign folder holding only those, and
+        any archive built with `--exclude='._*'`;
+      - B9: the box copy a fresh checkout at this BUILD's commit.
+  - **Departures,** for the seat to class:
+    - Code's, the BUILD's own, from the seat block's first values-check's launch (T's 00:55:07, UTC, on 2026-11-24)
+      to this entry's final sweep; the seat block's commands in the same hours are its entry's (`fcab1e5`). The
+      spans and counts are the BUILD values-check's sweep and the focused check's, and the last span is Code's own.
+      Code knows of no others:
+      - **In the BUILD check's span** (138 commands, 10 of them the running list's own upkeep):
+        - draft 1's reads: `sed -n` and `/usr/bin/grep` (with `cut`, `head`, `sort` and `uniq`) over the package's
+          modules and `valence_core/m/resume.py`, two over the glob `valence_core/n/*.py`, and over HEAD's driver,
+          one a `for` loop over twelve function names; LOCK-n.md's lines; two fidelity-sample raws found by a
+          quoted-glob `git ls-files`; `jq` over the committed `data/n/gvec/gvec.json` for its keys, its site and a
+          count;
+        - draft 1 and its checks: `git show HEAD:scripts/n_sessions.py` into scratch and into `grep -c`; the edits by
+          the file tools; width, tab, trailing-blank and marker counts; a loop of `grep -c -F` per pinned sha16 over
+          LOCK-n.md; the `chk(` and argv counts by `sed -n` into `grep -c`; `diff -u` and `git diff --no-index` of
+          HEAD's driver against the draft into scratch;
+        - one write outside the scratch folder: a `sed` of the draft's random-direction pairs into
+          `/tmp/x_draft_pairs`, removed by `rm -f` in the next command and never read; the pairs were then checked in
+          the shell, 28 of 28 against LOCK-n.md's lines 697–708;
+        - the overlays: `bash` of G-VER's overlay script (`git archive` with quoted pathspecs, `tar` into scratch),
+          `diff -rq` between them, and a pruned `find` over each;
+        - the windows (drafts 1 and 2): each request note written in the sessions' notes folder, with `shasum`,
+          `wc -l` and a width count; each run once, as the harness's background task; after each, `cat` of the exit
+          file, `shasum` of the three run files, `wc -l`, `wc -c` of the empty stderr file, `tail -n 3`, a FAIL count,
+          a name-only `ls -A` of TMPDIR and `pgrep -f n_sessions`;
+        - the `.gitignore`'s draft: `git show HEAD:.gitignore` into scratch; two throwaway repositories in scratch
+          (`git init`, stand-in files by `mkdir -p` and `printf`, `git add --dry-run .`, one made again after `rm
+          -rf` of its `.git`); `grep -n` and `sed -n` over the working tree's file;
+        - the review: its brief written by the file tools, its list of record compared by `diff`; one read-only
+          subagent; its report taken by `jq` from its own transcript, with counts; `sed -n` of `verify.py`;
+        - draft 2: `/usr/bin/grep -n -E` over it and `sed -n` of the package's and the driver's lines the fixes use;
+          the edits by the file tools (one typed escape written as the character itself); `awk` twice (a `chk(`
+          count, and a print of the campaign section into a non-ASCII grep); `od -c` of the cap line; the deltas by
+          `git diff --no-index` (`--stat`, `-U0`, `-U1`, `--numstat` and in full, into scratch);
+        - the BUILD's texts: G-VER's BUILD entry and raws read by `git show 2834c2d:…` into `grep`, `sed -n` and
+          `awk`; G-VER's and G-TIME-n's box raws found by `git ls-files` and read by `wc -l` and `grep -n`; the texts
+          written by the file tools, with width, placeholder and end-of-file checks;
+        - the BUILD check: its brief assembled by `cat` and `sed -n`, its list of record compared by `diff`; `jq` over
+          this session's transcript for the seat check's span end; one read-only subagent, its id appended to the
+          gate's list;
+        - slips: one failed `/usr/bin/grep -c -P` (BSD grep has no `-P`; twice); one zsh "bad math expression" (a grep
+          matched two lines); one `shasum` on a relative path before its `cd` (no file; no effect);
+      - **In the focused check's span** (22 commands, 2 of them that check's preparation):
+        - the BUILD check's return: its report by `jq` from its own transcript, with counts; `sed -n` and `grep` of
+          LOCK-n.md's conventions and of draft 2's lines; the BUILD texts' v2 copies (`cp`, `cmp`) and their edits by
+          the file tools;
+        - draft 3: `mkdir`, `cp`, `cmp`; four edits by the file tools; `grep -n -c` of `__doc__`; `sed -n` of its
+          docstring lines; widths under the UTF-8 locale; the deltas; overlay3 by the overlay script and `diff -rq`;
+          its window request and run, as above; the list's own upkeep;
+        - the focused check: its brief assembled by `cat` and `sed -n`, with `diff` and `cmp` checks; `jq` over this
+          session's transcript for the BUILD check's brief time; the 32-file `shasum` and `wc -l` loop; one
+          read-only subagent, its id appended to both gate lists;
+      - **After the focused check's brief, to this sweep** (Code's own): draft 3's window and run 4's, as above; the
+        gate's two new versions (`cp`, the file tools, `diff` with the ids masked by `sed`, `bash -n`, a count per
+        id; one `ls` of the kit folder named one level too high, no file, re-run); the edits' replay scripts written
+        by the file tools, with `bash -n` and their runs (`jq` over this session's transcript, writes in scratch);
+        draft 4 (`mkdir`, `cp`, `cmp`, two edits by the file tools, the deltas, `grep -c` of `chk(` calls); overlay4
+        and `diff -rq`; the focused check's return and the BUILD texts' corrections; the seat block's commit window,
+        its six steps each its own call, and the done report's checks (`git show HEAD:<path>` into `shasum` and `wc
+        -l`, `git diff -U0` and `--numstat` of RESULTS.md, `git cat-file commit HEAD` into `sed` and `cmp`, a scoped
+        `git status --porcelain`, `git log -1 --format` and `git rev-parse origin/main`); F11's check (`git cat-file
+        -e` of two names at `fcab1e5`, `grep -c -F` of each in draft 4); the texts' last fills; and this sweep, `jq`
+        over this session's transcript (116 shell commands since the focused check's brief), with a bracketed count
+        of guard markers and the campaign folder's plain name (0);
+      - **In every span, the file tools:** Reads of repository files and scratch files; Writes and Edits in scratch,
+        in the sessions' notes folder (the window requests) and of one memory note and the memory index, outside
+        scratch.
+      - **Counts:** by bracketed patterns over every swept span: no guard marker and no plain name of Q-F3's folder in
+        any argv. The glob in the windows' `cd jl*/.venv/bin` expands in the builtin `cd`'s argument alone, as at
+        G-VER's BUILD.
+    - the blind reviewer's, as its report states them: `wc -l` on five named scratch files and eleven named
+      repository code files (line counts only; nothing under `data/`); the two prescribed `git diff --no-index -U3`
+      runs, the driver's piped into `/usr/bin/grep` for its hunk headers and twice into `sed -n`; and tool output,
+      never an argv, that printed Q-F3's folder plainly (its read of the `.gitignore`'s lines 230–405, and the seat
+      raws' "not opened" lines) and marker-named paths as text;
+    - the BUILD values-checker's, as its report states them: `cat -n`, `head`, `tail -n` and `echo`, outside its
+      brief's named tools, as filters on piped output only; one `git show deabf3f:LOCK-n.md | sed -n`, a read of
+      LOCK-n.md at v0.1's commit to check its numbering; and, from this session's transcript beyond the window
+      grants and closes, the outputs of eleven of Code's commands, the review's prompt (hashed only) and three `jq`
+      searches of the user records, each printing only what a finding used;
+    - the focused values-checker's are in the seat block's entry (`fcab1e5`), with its raw.
+  - **The gate.** The review's and the values-checker's agent ids, beside the survey's and the seat block's
+    values-checker's, are in the commit gate's id list (a new version of Code's gate script), so the commit is
+    checked to carry none of them.
+  - **Committed by path:**
+    - `scripts/n_sessions.py` and `.gitignore`;
+    - the review raw, the self-test raw, the values-check raw and this entry.
+
+    The package's digest at the commit is `06b55761…1d39`, by the kit's verify. The commit-time count of the
+    home-folder prefix over the staged diff is 0. Not pushed. The campaign's launch files follow, to the coordinating
+    session first, and nothing goes to the box before its "launch cleared".
+
 - 2026-11-23 — **n — eight starred readings for the seat before the N-pod campaign's run: CP2, CP6, CP8, CP9, CP11,
   CP12, CP13 and CP16 (code → design; the n-build session). STOP for the seat's read.**
   Block:

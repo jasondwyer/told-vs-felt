@@ -190,7 +190,7 @@ At the n BUILD it wires:
                     ``--bench-dir`` an existing folder outside the repository on the stage root's filesystem; the
                     pod, the cuBLAS setting, the stream known answer, each --ruling a file; then a STAGE line;
                  2. the weights of record, the lock's; the driver of record as backend-ext's; the ids of record;
-                 3. LOCK-n v0.1's inputs (``gtime_lock_inputs``: LOCK-n.md, G-VEC's and G-CAL-n's outputs of record,
+                 3. the lock's inputs (``gtime_lock_inputs``: LOCK-n.md, G-VEC's and G-CAL-n's outputs of record,
                     each HEAD's committed bytes at the lock's sha256s, and the dose map rebuilt from G-VEC's R and
                     R_ell); the R6 bridge; n's backend identifier, the package and its closure, each the lock's; the
                     identity (GT4); the plan's 18 lines; the campaign's counts by the package's own functions, its
@@ -222,8 +222,9 @@ At the n BUILD it wires:
                  GT10 G-READ-n's fits on the laptop's CPU, outside the cap, timed by gread-bench;
                  GT11 the outputs: the report, the shadow cell's JSON, the artifact (``n-gtime-v1``) and the raw,
                      committed before the pod stops; the two steered cells' JSON (the campaign's own reads of six
-                     sessions) and every cell's capture arrays stay on the box until the seat rules on them (no looks
-                     before the campaign, n §6; the build's review, O2);
+                     sessions), held outside the repository (the seat's Q8, option (iii)), committed with the
+                     campaign's cells at step 14's close (LOCK-n v1.0 §13); every cell's capture arrays out of git,
+                     their digests in the report (no looks before the campaign, n §6; the build's review, O2);
                  GT12 no read below d = 0;
                  GT13 no DV takes G-TIME-n's records;
                  GT14 the pod of record; one smoke first, its figures beside and not used;
@@ -281,8 +282,73 @@ At the n BUILD it wires:
                  GV14 the seat's G-VER read before step 13's commit;
                  GV15 the launch in gtime_v1.sh's form;
                  GV16 the self-test's model-free cases.
+  campaign     the N-pod campaign (n v0.2 §8 step 14: "The N-pod campaign within one pod session (all arms, no looks),
+               raws and checkpoints committed before the pod stops"), on the box, under LOCK-n v1.0 (the lock pin
+               moved to its committed sha256 here, CP4), on Code's readings CP1-CP20 routed as PINs (the PI's "Build
+               on the PINs", 2026-11-23; the eight starred, CP2, CP6, CP8, CP9, CP11, CP12, CP13 and CP16, are the
+               seat's before any run: results/raw/2026-11-23_n-campaign-starred-eight_code-to-design_STOP.md).
+               LOCK-n.md is cited as LOCK-n v1.0 cites it (LOCK-n.md:54-57): L:N is line N of v0.1's text as deabf3f
+               numbers it (L:543, G-VER's row, is LOCK-n.md:938 at 098218c); L §N, this driver's form for v1.0's
+               "v0.1 §N", is a section of v0.1's text.
+               ``run_campaign``, one model load an invocation; everything that needs no model before it:
+                 1. refusals: G-VER's STOP record (data/n/reports/campaign_gver_stop.json) absent; the pod, the cuBLAS
+                    setting, the stream known answer, each --ruling a committed raw (HEAD's bytes); then a STAGE line
+                    naming the stage's root and report (data/n/ckpt/campaign, data/n/reports/campaign.json);
+                 2. the weights of record, the lock's; the driver of record, HEAD's committed bytes; LOCK-n.md at the
+                    lock's sha256; the session set and the ids of record (MANIFEST.json's pin left to G-VER, L:543);
+                 3. the lock's inputs (``gtime_lock_inputs``); the 28 directions the campaign injects -- the four
+                    named rows of G-VEC's committed directions file and the 24 random ones the keys draw -- each at the
+                    lock's sha16, and the realized fidelity sample and N4's schedule re-derived, each the lock's (CP3);
+                    the R6 bridge, n's backend identifier and tokenizers' version, the lock's; the package and its
+                    closure, the lock's; the identity at "campaign" (CP3), its rendering_id the manifest's pin, so a
+                    MANIFEST.json off its pin is G-VER's STOP at a resume as at the start (L:543); the plan in the
+                    runner's ORDER, its read_plan_sha256 the lock's; what is on disk, checked as the runner checks it,
+                    and a resume after COMPLETE or CAP refused (CP5); the eight non-shard files hashed against their
+                    pins (CP7);
+                 4. G-VER, the stage's own and not of record, in G-VER of record's form (CP7): the tokenizer loaded
+                    from the weights folder to decode only, ``verify.verify`` on the committed ids, its record checked
+                    (``gver_record``);
+                 5. the load; the reads through the runner, with the lock's cap, hour_cap_ms 14,400,000 (CP5); at a
+                    PAUSE, each standing pause's excerpt (CP8), or one line naming the pause where it cannot be formed.
+               Exits (CP12): 0 COMPLETE; 3 PAUSE; 5 CAP; 6 G-VER's STOP -- at the start with G-VER's record and the
+               report in the schema's G-VER-STOP form written, both or neither (CP9 (a)), at a resume with nothing
+               written (CP9 (b)); 1 a refusal or a failure, any SystemExit from a seam among them; 2 is argparse's.
+               ``--resume`` with ``--ruling PAUSE_ID=PATH`` continues, skip-only. ``--pi-stop RAW`` writes the PI's
+               stop while a pause stands, with no load (CP9 (c)): exit 7. No smoke and no --out (CP2). Code's
+               readings for the campaign, the PINs, in short (as sent in results/raw/2026-11-23_n-campaign_spec.md
+               §1, but CP4's DRIVER line as built, the review's F6, and CP8's excerpt as the starred block carries it):
+                 CP1 a campaign command in the driver alone: valence_core/n/ unchanged, its package and closure the
+                     lock's; options --resume with --ruling, and --pi-stop;
+                 CP2 no smoke;
+                 CP3 the identity at "campaign": the lock's sha256, its dose map and fidelity rule, and the 28
+                     directions by sha16, rebuilt and held to their pins before the load; the sample's and N4's
+                     digests re-derived;
+                 CP4 one lock pin, LOCK_SHA256, moved to v1.0's committed sha256; the driver of record v1.0 §4's,
+                     the campaign's DRIVER line printing this driver's sha256 (m-F3's convention);
+                 CP5 the cap LOCK_HOUR_CAP_MS, 14,400,000 ms, held to v1.0 §2's line; a CAP ends the campaign;
+                 CP6 no looks: stdout per n:130, the PID-only end-wait, the report read between invocations for its
+                     end state, its standing pause and the cap's used_ms alone;
+                 CP7 G-VER at the start and at each resume, in G-VER of record's form, not of record;
+                 CP8 a pause's excerpt: its record, the read's lines, the monitor's figure against its bar, never a
+                     margin; the ruling's route a committed raw and a fresh sparse copy;
+                 CP9 the STOP writers: the start's G-VER STOP (G-VER's record and the report's G-VER-STOP form), a
+                     resume's G-VER STOP (nothing written), the PI's stop (--pi-stop);
+                 CP10 the root data/n/ckpt/campaign/ and the report data/n/reports/campaign.json; .gitignore admits
+                     the cell JSONs, the two reports and G-TIME-n's two steered cells, never an array;
+                 CP11 the close: the copy-back by name, G-TIME-n's two steered cells placed and hash-checked, one
+                     commit with the campaign's cells, the pod stopped after its verify;
+                 CP12 the exits above; INTEGRITY for a hash or byte-count refusal, a FAIL of the launch otherwise;
+                     every end but COMPLETE to the seat and the PI;
+                 CP13 one pod session: a restart reported before anything runs; a box change aborts the campaign;
+                 CP14 the copy-back by name from the report (``camp_copy_names``), never a listing;
+                 CP15 G-READ-n's inputs: every array back, the package frozen;
+                 CP16 no push before VERDICTS unless the PI says so;
+                 CP17 the entries "N-pod campaign — BUILD (n v0.2 §8 step 14)" and "N-pod campaign (n)";
+                 CP18 the box's cleanup after the close, on the PI's word;
+                 CP19 the self-test's model-free cases;
+                 CP20 the route: the seat block before the BUILD; the launch files to the coordinating session first.
 
-Stages the campaign and G-READ-n are wired at their own steps.
+Stage G-READ-n is wired at its own step (n v0.2 §8 step 15).
 """
 from __future__ import annotations
 
@@ -465,6 +531,11 @@ def cmd_selftest() -> int:
             chk("driver: G-VER of record's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
         chk("driver: G-VER of record's self-test leaves the environment as it found it", dict(os.environ) == env0,
             "")
+        try:
+            _camp_selftest(chk, tmp / "camp-cmd")
+        except BaseException as e:                      # noqa: BLE001
+            chk("driver: the campaign's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
+        chk("driver: the campaign's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
     try:
         hftiny.run(chk)
     except BaseException as e:                          # noqa: BLE001
@@ -3813,11 +3884,15 @@ GTIME_FORMULA = ("T = N x median(c) + K x median(f): c = duration_ms - duration_
 GREAD_BENCH_CALLS = 10                          # GT10: the grouped 10-fold calls timed at each of the two shapes
 GREAD_BENCH_SEED = 20261122                     # GT10: the synthetic arrays' stream (Code's; the arrays are noise)
 
-#: LOCK-n v0.1's pins (LOCK-n.md, committed at deabf3f; GT4). A run checks each against the committed file that
-#: carries it before the load: LOCK-n.md and G-CAL-n's two files by sha256 (``gtime_lock_inputs``), the rest against
-#: what the stage measures (the weights, n's backend identifier, the package and its closure, the campaign's plan).
+#: The lock's pins (GT4). LOCK_SHA256 is LOCK-n v1.0's (LOCK-n.md, committed at 098218c), moved there from v0.1's
+#: (88d9fe7b...e9d5, at deabf3f) by the campaign's BUILD (CP4; LOCK-n v1.0 §12: "Step 14's BUILD moves the pin to this
+#: file's committed sha256"), one pin for every stage; the rest are v0.1's values, which v1.0 carries unchanged beneath
+#: its own part. A run checks each against the committed file that carries it before the load: LOCK-n.md and
+#: G-CAL-n's two files by sha256 (``gtime_lock_inputs``), the rest against what the stage measures (the weights, n's
+#: backend identifier, the package and its closure, the campaign's plan).
 LOCK_PATH = REPO / "LOCK-n.md"
-LOCK_SHA256 = "88d9fe7b21e72db3a9ebd3a65339cc69a2528f892b50053bdf663b9c99f8e9d5"
+LOCK_SHA256 = "59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa"
+LOCK_VERSION = "v1.0"                           # the lock in force: the version LOCK_SHA256 is, named in the lines
 LOCK_SITE = 32                                  # L §3: the site, index 32
 LOCK_VALENCE_SHA16 = "ba4da67fb717b5bb"         # L §3 (hole 2): the valence direction of record
 LOCK_GCAL_SHA256 = "4c92f228684d51afe16d0d3dd47e115fe002c9a600271678449fbb2926fdbb8f"      # L §4: gcal.json
@@ -3892,7 +3967,8 @@ def gtime_plan(ss, identity) -> list:
 
 
 def gtime_lock_inputs(committed=None, *, lock_path=LOCK_PATH, gvec_dir=None, gcal_dir=None) -> dict:
-    """GT4: LOCK-n v0.1's inputs, before the load, each the committed file's and the lock's:
+    """GT4: the lock's inputs (LOCK-n v0.1's §3-§4, which v1.0 carries unchanged), before the load, each the
+    committed file's and the lock's:
       * LOCK-n.md, HEAD's committed bytes at LOCK_SHA256;
       * G-VEC's outputs of record (``gcal_gvec_inputs``: gvec.json a PASS, the site's directions file at the record's
         sha256, the valence row at of_record's sha16), the site LOCK_SITE and the valence row's sha16
@@ -3911,7 +3987,7 @@ def gtime_lock_inputs(committed=None, *, lock_path=LOCK_PATH, gvec_dir=None, gca
     lp = Path(lock_path)
     lb = lp.read_bytes() if lp.is_file() else None
     if lb is None or committed(lp) != lb or hashlib.sha256(lb).hexdigest() != LOCK_SHA256:
-        raise SystemExit("LOCK-n.md is absent, not HEAD's committed bytes, or not LOCK-n v0.1's (GT4)")
+        raise SystemExit("LOCK-n.md is absent, not HEAD's committed bytes, or not the lock's sha256 (GT4; CP4)")
     gv = gcal_gvec_inputs(gvec_dir, committed, gvec.CANDIDATE_INDICES)
     if gv["site"] != LOCK_SITE or gv["v_sha16"] != LOCK_VALENCE_SHA16:
         raise SystemExit("G-VEC's site or valence row is not the lock's (L §3: index 32, ba4da67fb717b5bb)")
@@ -3944,8 +4020,8 @@ def gtime_lock_inputs(committed=None, *, lock_path=LOCK_PATH, gvec_dir=None, gca
 def gtime_identity(*, package_sha256: str, imported_sha256: dict, weights: str, backend_identifier: str, pod_id: str,
                    rendering_id: str, dose_map: dict, v_sha16: str, n_layers: int = N_LAYERS, d_model: int = D_MODEL,
                    layer: int = LOCK_SITE) -> dict:
-    """The stage identity at "time" (GT4): LOCK-n v0.1's sha256, its dose map, its fidelity rule with C and the
-    identity bound C, the one direction G-TIME-n injects (valence), the lock's label convention and window, and the
+    """The stage identity at "time" (GT4): the lock's sha256 (LOCK_SHA256), its dose map, its fidelity rule with C and
+    the identity bound C, the one direction G-TIME-n injects (valence), the lock's label convention and window, and the
     package, weights, backend and pod the caller measured. No cap: the runner gets ``hour_cap_ms`` None. Checked
     before return."""
     from valence_core.n import schema
@@ -4199,7 +4275,7 @@ class GtimeEnv:
     weights: Callable                   # () -> the weights of record (``weights_of_record``)
     load_sessions: Callable             # () -> the session set
     load_ids: Callable                  # () -> ``ids.load()``
-    lock_inputs: Callable               # () -> ``gtime_lock_inputs()``: LOCK-n v0.1's inputs, checked (GT4)
+    lock_inputs: Callable               # () -> ``gtime_lock_inputs()``: the lock's inputs, checked (GT4)
     gver: Callable                      # (sessions, loaded, path) -> G-VER's report, the tokenizer alone loaded (GT7)
     env_provenance: Callable            # (path) -> the provenance the adapter will report (before the load)
     make_adapter: Callable              # (path) -> the adapter (the weights load)
@@ -4289,7 +4365,8 @@ def _gtime_prepare(env: GtimeEnv, *, bench_dir, smoke, out, resume: bool, ruling
             raise SystemExit(f"the ruling for {pid} is not a file: {rp}")
     if smoke is not None:
         say(f"SMOKE: the first {smoke} of the {GTIME_N} reads, outside the repository; never of record (GT14)")
-    say(f"STAGE G-TIME-n: stage {GTIME_STAGE}, under LOCK-n v0.1 {LOCK_SHA256}; root {_shown(root_p)}, report "
+    say(f"STAGE G-TIME-n: stage {GTIME_STAGE}, under LOCK-n {LOCK_VERSION} {LOCK_SHA256}; root {_shown(root_p)}, "
+        f"report "
         f"{_shown(report_p)}, artifact {_shown(art_p)}; the benchmark under {bench}")
     w = env.weights()
     say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
@@ -4309,7 +4386,7 @@ def _gtime_prepare(env: GtimeEnv, *, bench_dir, smoke, out, resume: bool, ruling
         raise SystemExit("data/n/ids/MANIFEST.json is not the render of record's")
     li = env.lock_inputs()
     dm = li["dose_map"]
-    say(f"LOCK-n v0.1's inputs (GT4): G-VEC's record {li['gvec_sha256']}, site {li['site']}, valence "
+    say(f"the lock's inputs (GT4): G-VEC's record {li['gvec_sha256']}, site {li['site']}, valence "
         f"{li['v_sha16']}; G-CAL-n's record {li['gcal_sha256']} and dose map {li['dose_map_sha256']}: d_eq "
         f"{dm['d_eq']!r}, d_20 {dm['d_20']!r}")
     n_layers, d_model = env.shape
@@ -4377,8 +4454,8 @@ def _gtime_prepare(env: GtimeEnv, *, bench_dir, smoke, out, resume: bool, ruling
 
 def run_gtime(env: GtimeEnv, *, bench_dir, smoke: int | None = None, out=None, resume: bool = False,
               rulings=None) -> int:
-    """G-TIME-n (n v0.2 §8 step 11; GT1-GT17), in order: the refusals, the weights and the driver, the ids, LOCK-n
-    v0.1's inputs, the R6 bridge, the identity, the plan and the campaign's counts, what is on disk, G-VER before the
+    """G-TIME-n (n v0.2 §8 step 11; GT1-GT17), in order: the refusals, the weights and the driver, the ids, the lock's
+    inputs, the R6 bridge, the identity, the plan and the campaign's counts, what is on disk, G-VER before the
     load, the load; the 18 reads through the runner; on COMPLETE the projection: the stage's own records read back,
     GT8's model time, GT9's pod hours with the append benchmark, the artifact checked and written, its figures
     printed. Exit 0 on COMPLETE (the artifact written); 3 on a PAUSE (the report written and no projection, for the
@@ -4528,7 +4605,7 @@ def cmd_gread_bench() -> int:
 
 
 def _gtime_selftest(chk, tmp: Path) -> None:
-    """G-TIME-n's and gread-bench's checks, model-free: LOCK-n v0.1's pins held to the committed files that carry them
+    """G-TIME-n's and gread-bench's checks, model-free: the lock's pins held to the committed files that carry them
     (LOCK-n.md, G-VEC's and G-CAL-n's outputs of record, keys.py's sample words, the closure's twelve files, the
     package, n's backend identifier from the characterization's provenance), the plan on the session set of record,
     the campaign's counts over the lock's dose map, the identity, the benchmark's line and its writer, the artifact and
@@ -4558,10 +4635,10 @@ def _gtime_selftest(chk, tmp: Path) -> None:
     def work(p):                                        # the overlay is HEAD's archive: its bytes are the committed
         return Path(p).read_bytes() if Path(p).is_file() else None
 
-    # LOCK-n v0.1's inputs, from the committed files
+    # the lock's inputs, from the committed files
     li = gtime_lock_inputs(work)
     dm = li["dose_map"]
-    chk("gtime: LOCK-n v0.1's inputs from the committed files (GT4): site 32, the valence row ba4da67fb717b5bb, "
+    chk("gtime: the lock's inputs from the committed files (GT4): site 32, the valence row ba4da67fb717b5bb, "
         "G-CAL-n's two files at the lock's sha256s, and the dose map L §4's (d_eq 0.2869170055735837, d_20 "
         "0.5738340111471674, seven points, none merged)",
         li["site"] == 32 and li["v_sha16"] == LOCK_VALENCE_SHA16 and li["gcal_sha256"] == LOCK_GCAL_SHA256
@@ -4578,7 +4655,7 @@ def _gtime_selftest(chk, tmp: Path) -> None:
     r1 = refused(lambda: gtime_lock_inputs(work, lock_path=lock_bad))
     r2 = refused(lambda: gtime_lock_inputs(lambda p: None))
     r3 = refused(lambda: gtime_lock_inputs(work, gcal_dir=gdir))
-    chk("gtime: ...a lock file that is not LOCK-n v0.1's, a file git cannot show, and a dose_map.json that is not the "
+    chk("gtime: ...a lock file that is not the lock's, a file git cannot show, and a dose_map.json that is not the "
         "lock's are each refused",
         r1[0] and "LOCK-n.md" in r1[1] and r2[0] and "LOCK-n.md" in r2[1] and r3[0] and "dose_map.json" in r3[1],
         (r1, r2, r3))
@@ -4625,7 +4702,7 @@ def _gtime_selftest(chk, tmp: Path) -> None:
                            v_sha16=li["v_sha16"])
     fr = {"tau": schema.TAU, "p0_count": 1, "p0_n": 26, "cadence": 160, "sample_key": "n-fid|{s}",
           "sample_rule": LOCK_SAMPLE_RULE, "alpha": 0.01, "ceiling": 0.25, "median_rel": 0.0013026706058596332}
-    chk("gtime: the identity at 'time' (GT4): LOCK-n v0.1's sha256, its fidelity rule (p0 1 of 26, C 0.25 the ceiling "
+    chk("gtime: the identity at 'time' (GT4): the lock's sha256, its fidelity rule (p0 1 of 26, C 0.25 the ceiling "
         "and the identity bound, the median rel, alpha 0.01, the tile 160, the lock's sample words), the valence "
         "direction alone, the band 33..63, the label convention 'space', the window 4,096, the dose map of record",
         ident["stage"] == "time" and ident["lock_sha256"] == LOCK_SHA256 and ident["fidelity_rule"] == fr
@@ -4827,7 +4904,7 @@ def _gtime_selftest(chk, tmp: Path) -> None:
             and ph["io"]["lower_bound_ms"] == 2.0 * 7680 and ph["io"]["lower_bound_h"] == 2.0 * 7680 / 3.6e6,
             (c1, mt.get("T_median_ms"), ph.get("loads_ms"), io_vals[:3]))
         idx = {k: next((i for i, x in enumerate(lines1) if x.startswith(k)), -1)
-               for k in ("STAGE G-TIME-n:", "WEIGHTS", "DRIVER", "LOCK-n v0.1's inputs", "identity:", "plan 0 ",
+               for k in ("STAGE G-TIME-n:", "WEIGHTS", "DRIVER", "the lock's inputs", "identity:", "plan 0 ",
                          "the campaign (GT8)", "G-VER (G-TIME-n's start", "backend:", "read 0 ", "model time (GT8")}
         chk("gtime: ...its lines in order: STAGE first, then WEIGHTS, DRIVER (HEAD's), the lock's inputs, the "
             "identity, the 18 plan lines, the campaign's counts, G-VER before the load, the reads, the model time; "
@@ -5160,12 +5237,12 @@ def gver_hashed_pins(manifest=None) -> dict:
 
 
 def gver_lock_check(committed, lock_path=LOCK_PATH) -> str:
-    """GV4: LOCK-n.md is HEAD's committed bytes at LOCK-n v0.1's sha256; that sha256 is returned."""
+    """GV4: LOCK-n.md is HEAD's committed bytes at the lock's sha256 (LOCK_SHA256; CP4); that sha256 is returned."""
     import hashlib
     lp = Path(lock_path)
     lb = lp.read_bytes() if lp.is_file() else None
     if lb is None or committed(lp) != lb or hashlib.sha256(lb).hexdigest() != LOCK_SHA256:
-        raise SystemExit("LOCK-n.md is absent, not HEAD's committed bytes, or not LOCK-n v0.1's (GV4)")
+        raise SystemExit("LOCK-n.md is absent, not HEAD's committed bytes, or not the lock's sha256 (GV4; CP4)")
     return LOCK_SHA256
 
 
@@ -5404,7 +5481,8 @@ def _gver_prepare(env: GverEnv) -> dict:
                          f"respawn step (ii) first")
     if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != CHARACTERIZED_PROVENANCE["cublas_workspace_config"]:
         raise SystemExit("CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2; R6 holds it too)")
-    say(f"STAGE {GVER_STAGE}: n v0.2 §8 step 12, under LOCK-n v0.1 {LOCK_SHA256}; the record {_shown(rec_p)}; no "
+    say(f"STAGE {GVER_STAGE}: n v0.2 §8 step 12, under LOCK-n {LOCK_VERSION} {LOCK_SHA256}; the record "
+        f"{_shown(rec_p)}; no "
         f"weights load and nothing is read; no smoke (GV8)")
     w = env.weights()
     say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
@@ -5418,7 +5496,7 @@ def _gver_prepare(env: GverEnv) -> dict:
                          "committed bytes (the box answers of 2026-11-18, §2 item 5)")
     say(f"DRIVER scripts/n_sessions.py {dsha}: HEAD's committed bytes")
     lock = gver_lock_check(env.committed, env.lock_path)
-    say(f"LOCK-n.md {lock}: HEAD's committed bytes, LOCK-n v0.1's (GV4)")
+    say(f"LOCK-n.md {lock}: HEAD's committed bytes, LOCK-n {LOCK_VERSION}'s (GV4; CP4)")
     ss = _gver_loaded("the session set (sessions.load_sessions)", env.load_sessions)
     loaded = _gver_loaded("the ids of record (ids.load)", env.load_ids)
     msha = loaded["manifest_sha256"]
@@ -5546,14 +5624,14 @@ def _gver_selftest(chk, tmp: Path) -> None:
         and GVER_STAGE == "G-VER (n)", "")
 
     # LOCK-n.md (GV4)
-    chk("gver: LOCK-n.md is HEAD's committed bytes at LOCK-n v0.1's sha256 (GV4)", gver_lock_check(work) == LOCK_SHA256,
-        "")
+    chk("gver: LOCK-n.md is HEAD's committed bytes at the lock's sha256 (GV4; CP4)",
+        gver_lock_check(work) == LOCK_SHA256, "")
     lock_bad = tmp / "LOCK-n.md"
     lock_bad.write_bytes(LOCK_PATH.read_bytes() + b"\n")
     r_l = [refused(lambda: gver_lock_check(work, lock_bad)), refused(lambda: gver_lock_check(lambda p: None)),
            refused(lambda: gver_lock_check(work, tmp / "no-lock.md"))]
-    chk("gver: ...a lock file that is not LOCK-n v0.1's, one git cannot show, and none at all are each refused",
-        all(r[0] and "not HEAD's committed bytes, or not LOCK-n v0.1's (GV4)" in r[1] for r in r_l), r_l)
+    chk("gver: ...a lock file that is not the lock's, one git cannot show, and none at all are each refused",
+        all(r[0] and "not HEAD's committed bytes, or not the lock's sha256 (GV4; CP4)" in r[1] for r in r_l), r_l)
 
     # the eight non-shard files (GV3, as the seat ruled)
     tw = tmp / "toy-weights"
@@ -6075,6 +6153,1518 @@ def _gver_selftest(chk, tmp: Path) -> None:
         refused(lambda: genv("guard", out=GVER_OUT))[0] and all(g[n] is real_loaders[n] for n in loaders), "")
 
 
+# --- The N-pod campaign (n v0.2 §8 step 14; Code's readings CP1-CP20, routed as PINs: the PI's "Build on the PINs") -
+
+CAMP_STAGE = "campaign"
+CAMP_ROOT = REPO / "data" / "n" / "ckpt" / CAMP_STAGE
+CAMP_REPORT = REPO / "data" / "n" / "reports" / f"{CAMP_STAGE}.json"
+CAMP_GVER_STOP = REPO / "data" / "n" / "reports" / f"{CAMP_STAGE}_gver_stop.json"    # CP9 (a): G-VER's record at a STOP
+#: CP5: LOCK-n v1.0 §2's cap, the PI's 4 h of model time in the runner's unit (``StageInputs.hour_cap_ms``); a resume
+#: keeps it (runner.py:412-416). The self-test holds it to the lock's line.
+LOCK_HOUR_CAP_MS = 14_400_000
+LOCK_CAP_LINE = "4 × 3,600,000 = **14,400,000 ms**"
+#: CP3: L §3 (holes 3 and 4): N2's three rows of the site's directions file and the 24 random directions, each by the
+#: sha16 the Injection gives it; the valence row's is LOCK_VALENCE_SHA16.
+LOCK_N2_SHA16 = {"span_reward": "8f32921fcd1798db", "span_sentiment": "f4136430145a2960",
+                 "span_character": "006f5174a82193f9"}
+LOCK_RANDOM_SHA16 = {
+    "rand_00": "ca0e6cc2ff7fd25b", "rand_01": "9fbef5356b15b93e", "rand_02": "851b54de0ab0ce6e",
+    "rand_03": "78fc1627c35a7c0e", "rand_04": "33c4a684a6146b98", "rand_05": "63361d971a560fb4",
+    "rand_06": "527ec43053cd5d05", "rand_07": "203798ca01979f8f", "rand_08": "d7f21b6d99ce2ed1",
+    "rand_09": "748eb2e3049e93f7", "rand_10": "cef33a7837764e5b", "rand_11": "f69f77914a56084c",
+    "rand_12": "3122f4163b971463", "rand_13": "65efa196c45d99e7", "rand_14": "2578b3cf779c9648",
+    "rand_15": "146f5e4851e46c3c", "rand_16": "a37d6a5c81d38fb1", "rand_17": "a69a71be7181e915",
+    "rand_18": "845c6593de9e5def", "rand_19": "8bcb29c065fd2078", "rand_20": "8cbb0ab8499afe4d",
+    "rand_21": "684b20b193e15164", "rand_22": "e18fee28fd70a75d", "rand_23": "6dfc538c917ee339",
+}
+#: CP3: L §5: the realized fidelity sample -- its count, and the sha256 of its sessions' ids joined by newlines with no
+#: trailing newline -- and N4's schedule as realized (its sha256 in MANIFEST.json's n4_schedule_sha256 form).
+LOCK_FID_SAMPLE = (15, "3c70f5fff77112cc60d66b24617d13d774aabbfe8540a75a83c1b250acffa81d")
+LOCK_N4_SCHEDULE_SHA256 = "228ab470bcc0dee798e3ae14da38c3f148801d6336c1e77f21d673ec4e8b55f3"
+#: CP12: each end state's exit; 1 is a refusal or a crash, and 2 is left to argparse's usage errors.
+CAMP_EXITS = {"COMPLETE": 0, "PAUSE": 3, "CAP": 5, "G-VER-STOP": 6, "PI-STOP": 7}
+
+
+def camp_injected() -> list:
+    """CP3: the directions the campaign's plan injects, sorted: every direction of ``schema.ARM_CELLS`` but the
+    shadow's ("none") -- valence, the 24 random and N2's three."""
+    from valence_core.n import schema
+    return sorted({d for a in schema.ARMS for d, _labels in schema.ARM_CELLS[a]} - {schema.SHADOW_DIRECTION})
+
+
+def camp_named_rows(gvec_dir, committed, site) -> dict:
+    """CP3: the site's directions file and its four named rows (``gvec.NAMED``: valence and N2's three), from G-VEC's
+    outputs of record -- gvec.json and the file each HEAD's committed bytes, the file at the record's sha256 -- each
+    row at the lock's sha16 (L §3) and at the record's ``of_record`` one. Returns {direction_id: row}, in NAMED's
+    order."""
+    import hashlib
+
+    from valence_core.n import gvec
+    d = Path(gvec_dir)
+    rp = d / gvec.OUT_RECORD
+    data = rp.read_bytes() if rp.is_file() else None
+    if data is None or committed(rp) != data:
+        raise SystemExit("data/n/gvec/gvec.json is absent or not HEAD's committed bytes (CP3)")
+    try:
+        rec = json.loads(data.decode("utf-8"))
+        ofr = {str(k): str(v) for k, v in rec["of_record"]["directions"].items()}
+        fshas = dict(rec["files_sha256"])
+    except (ValueError, KeyError, TypeError, AttributeError) as e:
+        raise SystemExit(f"data/n/gvec/gvec.json is not a G-VEC record ({type(e).__name__})")
+    fname = gvec.directions_file(int(site))
+    dp = d / fname
+    db = dp.read_bytes() if dp.is_file() else None
+    if db is None or committed(dp) != db or hashlib.sha256(db).hexdigest() != fshas.get(fname):
+        raise SystemExit(f"data/n/gvec/{fname} is absent, not HEAD's committed bytes, or not the record's (CP3)")
+    try:
+        rows = gvec.read_rows(dp)
+    except ValueError as e:
+        raise SystemExit(f"data/n/gvec/{fname}: {e}"[:300])
+    pins = dict(LOCK_N2_SHA16, valence=LOCK_VALENCE_SHA16)
+    out = {}
+    for i, name in enumerate(gvec.NAMED):
+        sha = gvec.injection_sha16(rows[i])
+        if sha != pins[name] or ofr.get(name) != sha:
+            raise SystemExit(f"the {name} row's sha16 is not the lock's (L §3) or G-VEC's record's: an INTEGRITY "
+                             f"incident under the respawn protocol (stop, touch nothing, escalate)")
+        out[name] = rows[i]
+    return out
+
+
+def camp_directions(named: dict, d_model: int) -> tuple:
+    """CP3: the 28 directions the campaign injects (``camp_injected``): the four named rows and the 24 random ones
+    ``keys.random_directions`` draws (``gvec.random_rows``; L §21's keys), each held to the lock's sha16 (L §3).
+    Returns the unit rows and the identity's ``directions`` map, direction_id -> sha16."""
+    from valence_core.n import gvec
+    units = dict(named)
+    units.update(gvec.random_rows(int(d_model)))
+    pins = dict(LOCK_RANDOM_SHA16, **LOCK_N2_SHA16, valence=LOCK_VALENCE_SHA16)
+    if sorted(units) != camp_injected() or sorted(pins) != camp_injected():
+        raise SystemExit("the directions are not the 28 the campaign injects (CP3)")
+    shas = {k: gvec.injection_sha16(units[k]) for k in sorted(units)}
+    bad = sorted(k for k in shas if shas[k] != pins[k])
+    if bad:
+        raise SystemExit(f"directions {bad[:4]} are not at the lock's sha16s (L §3): an INTEGRITY incident under the "
+                         f"respawn protocol (stop, touch nothing, escalate)")
+    return units, shas
+
+
+def camp_directions_of_record(li: dict, d_model: int) -> tuple:
+    """The production seam (CP3): the four named rows from G-VEC's committed outputs at the lock inputs' site, then
+    ``camp_directions``; the valence row's sha16 must be the lock inputs' too."""
+    named = camp_named_rows(GVEC_OUT, committed_bytes, li["site"])
+    units, shas = camp_directions(named, d_model)
+    if shas["valence"] != li["v_sha16"]:
+        raise SystemExit("the valence row is not the lock inputs' (L §3)")
+    return units, shas
+
+
+def camp_keys_check(ss) -> dict:
+    """CP3: the realized fidelity sample and N4's schedule, re-derived by the package's keys over the session set and
+    held to the lock's pins (L §5; ans20b:32, the pin "lets the campaign's report be checked against the lock"): the
+    sample's count and the sha256 of its sessions' ids joined by newlines with no trailing newline; the schedule's
+    sha256 in MANIFEST.json's form (``n4_schedule_sha256``). Returns the three figures."""
+    import hashlib
+
+    from valence_core.n import ids, keys
+    picked = [s.session_id for s in ss if keys.fid_sampled(s.bk_run)]
+    fsha = hashlib.sha256("\n".join(picked).encode("utf-8")).hexdigest()
+    if (len(picked), fsha) != LOCK_FID_SAMPLE:
+        raise SystemExit(f"the realized fidelity sample ({len(picked)} sessions) is not the lock's (L §5: "
+                         f"{LOCK_FID_SAMPLE[0]} sessions at its digest)")
+    sched = keys.n4_schedule([s.present_first_is_S for s in ss])
+    nsha = hashlib.sha256(ids._dumps(list(sched)).encode("utf-8")).hexdigest()
+    if nsha != LOCK_N4_SCHEDULE_SHA256:
+        raise SystemExit("N4's schedule re-derived is not the lock's (L §5)")
+    return {"sample": len(picked), "sample_sha256": fsha, "n4_schedule_sha256": nsha}
+
+
+def camp_identity(*, package_sha256: str, imported_sha256: dict, weights: str, backend_identifier: str, pod_id: str,
+                  rendering_id: str, dose_map: dict, directions: dict, n_layers: int = N_LAYERS,
+                  d_model: int = D_MODEL, layer: int = LOCK_SITE) -> dict:
+    """CP3: the stage identity at "campaign": G-TIME-n's fields (``gtime_identity``: the lock's sha256, its dose map,
+    its fidelity rule with C and the identity bound C, its label convention and window, and the package, weights,
+    backend and pod the caller measured) with the stage "campaign" and the 28 directions it injects, by sha16. No cap
+    field: the cap is the runner's input and the report's (CP5). Checked before return."""
+    from valence_core.n import schema
+    if sorted(directions) != camp_injected():
+        raise SystemExit("the identity's directions are not the 28 the campaign injects (CP3)")
+    ident = gtime_identity(package_sha256=package_sha256, imported_sha256=imported_sha256, weights=weights,
+                           backend_identifier=backend_identifier, pod_id=pod_id, rendering_id=rendering_id,
+                           dose_map=dose_map, v_sha16=directions["valence"], n_layers=n_layers, d_model=d_model,
+                           layer=layer)
+    ident.update(stage=CAMP_STAGE, directions={k: str(directions[k]) for k in sorted(directions)})
+    schema.check_stage_identity(ident)
+    return ident
+
+
+def camp_plan(ident: dict, ss) -> list:
+    """CP1: the campaign's reads in launch order, the package's own (``runner.campaign_order`` over N4's schedule: the
+    shadows first, then arm-major in ``schema.ARMS`` order), its count and read_plan_sha256 the lock's (L §6)."""
+    from valence_core.n import keys, runner, schema
+    plan = runner.campaign_order(ident, ss, keys.n4_schedule([s.present_first_is_S for s in ss]))
+    if schema.read_plan_sha256(ident) != LOCK_READ_PLAN_SHA256 or len(plan) != LOCK_CAMPAIGN_READS:
+        raise SystemExit("the campaign's read plan under this identity is not the lock's (L §6)")
+    return plan
+
+
+def camp_copy_names(report: dict) -> list:
+    """CP14: the copy-back's names from a campaign report, never from a listing: each cell the report names, in name
+    order, each followed by its arrays, one per capture layer (``schema.capture_filename``)."""
+    from valence_core.n import schema
+    layers = [int(x) for x in report["stage_identity"]["capture_layers"]]
+    out: list = []
+    for name in sorted(report["cells"]):
+        out.append(name)
+        out.extend(schema.capture_filename(name, layer) for layer in layers)
+    return out
+
+
+def camp_gver_mismatches(rec: dict) -> int:
+    """CP9 (a): G-VER's failed checks, counted from its record (``n-gver-v1``): the sessions whose ids failed, and among
+    the others those whose spans or N4 sequences failed (``verify`` checks neither once a session's ids fail,
+    verify.py:94-105); the kept label candidates that failed; the manifest named as of record, and the manifest's pin.
+    At least one, as the schema's G-VER-STOP form needs (schema.py:1533-1537)."""
+    v = rec["verify"]
+    n, ok = int(v["sessions"]), int(v["ids_ok"])
+    k = (n - ok) + (ok - int(v["spans_ok"])) + (ok - int(v["n4_ok"]))
+    k += int(v["labels_kept"]) - int(v["labels_ok"])
+    k += (0 if v["manifest_ok"] else 1) + (0 if rec["manifest"]["equal"] else 1)
+    return max(1, k)
+
+
+def _camp_write_report(path, rep: dict, *, new: bool) -> str:
+    """A campaign report written as the runner writes one (``m_resume.atomic_write_json``), after the schema's check,
+    then read back: its bytes ``json_text``'s and the report the one written. A write or read-back that fails ends as
+    SystemExit, naming an OSError by its kind; a new file (``new``) is then removed, so a failed report never stands,
+    while a replaced one (the PI's stop over a PAUSE report) is left for the seat. Returns the file's sha256."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import schema
+    try:
+        schema.check_report(rep)
+    except schema.SchemaError as e:
+        raise SystemExit(f"the report fails the schema's check: {e}"[:300])
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        try:
+            m_resume.atomic_write_json(p, rep)
+            got = p.read_bytes()
+        except OSError as ex:
+            raise SystemExit(f"{p.name}: the report's write or its read-back failed ({type(ex).__name__})")
+        if got != m_resume.json_text(rep).encode("utf-8") or json.loads(got.decode("utf-8")) != rep:
+            raise SystemExit(f"{p.name}: the report on disk is not the report written")
+    except BaseException:
+        if new:
+            p.unlink(missing_ok=True)
+        raise
+    return hashlib.sha256(got).hexdigest()
+
+
+def camp_gver_stop_report(ident: dict, plan, root, report_path, *, record_sha256: str, mismatches: int,
+                          detail: str) -> dict:
+    """CP9 (a): the campaign's report in the schema's G-VER-STOP form, written by the driver (the runner writes no
+    STOP, runner.py:363): the runner's own report form (``runner._report``) over the plan, with no record and no
+    pause and the cap the lock's, unhit; the stop record {kind, record_sha256: G-VER's record's, detail: one line of at
+    most 200 characters} (schema.py:1195-1199); ``rendering_mismatches`` G-VER's failed checks, at least one
+    (schema.py:1533-1537). Checked by the schema, written once, read back. Returns it."""
+    import types
+
+    from valence_core.n import runner
+    rp = Path(report_path)
+    if rp.exists():
+        raise SystemExit(f"{_shown(rp)} exists: a G-VER-STOP report is written only at the campaign's start (CP9)")
+    fr = ident["fidelity_rule"]
+    mon = runner.Monitors(cadence=int(fr["cadence"]), p0_count=int(fr["p0_count"]), p0_n=int(fr["p0_n"]),
+                          alpha=float(fr["alpha"]), ceiling=float(fr["ceiling"]))
+    ns = types.SimpleNamespace(root=Path(root), hour_cap_ms=LOCK_HOUR_CAP_MS)
+    rep = runner._report(ns, ident, plan, [], "G-VER-STOP", 0, mon, ())
+    rep["stop"] = {"kind": "G-VER-STOP", "record_sha256": str(record_sha256),
+                   "detail": " ".join(str(detail).split())[:200]}
+    rep["counters"]["rendering_mismatches"] = max(1, int(mismatches))
+    _camp_write_report(rp, rep, new=True)
+    return rep
+
+
+def camp_pi_stop(report_path, root, raw, *, committed) -> dict:
+    """CP9 (c): the PI's stop, written only while a pause stands (schema.py:208-210: "the PI may stop a unit whose
+    pause stands"), with no load and no read: the PI's raw a repository file at HEAD's committed bytes; the report on
+    disk valid, the campaign's under the lock, ended PAUSE; every cell it names at its json_sha256, read by name and
+    never by a listing. The report becomes PI-STOP, everything else as it was, with the stop record citing the raw's
+    sha256 (schema.py:1197); checked by the schema, written over the PAUSE report, read back. Returns it."""
+    import copy
+    import hashlib
+
+    from valence_core.n import cells, schema
+    rw = Path(raw)
+    if not rw.is_file():
+        raise SystemExit(f"the PI's stop raw is not a file: {raw}")
+    b = rw.read_bytes()
+    try:
+        head = committed(rw)
+    except ValueError:                                  # committed_bytes: a path outside the repository
+        head = None
+    if head != b:
+        raise SystemExit("the PI's stop raw is not a repository file at HEAD's committed bytes: the stop record cites "
+                         "a committed raw (CP9 (c))")
+    rp = Path(report_path)
+    if not rp.is_file():
+        raise SystemExit(f"{_shown(rp)} is absent: the PI's stop needs the report of a standing pause")
+    rep = cells.read_json(rp)
+    try:
+        schema.check_report(rep, where=rp.name)
+    except schema.SchemaError as e:
+        raise SystemExit(f"{rp.name}: not a valid report: {e}"[:300])
+    ident = rep["stage_identity"]
+    if ident["stage"] != CAMP_STAGE or ident["lock_sha256"] != LOCK_SHA256:
+        raise SystemExit(f"{rp.name}: not the campaign's report under the lock (LOCK-n {LOCK_VERSION})")
+    if rep["end_state"] != "PAUSE":
+        raise SystemExit(f"{rp.name}: the stage ended {rep['end_state']}: the PI's stop is written only while a pause "
+                         f"stands (schema.py:208-210)")
+    for name in sorted(rep["cells"]):
+        cp = Path(root) / name
+        if not cp.is_file() or hashlib.sha256(cp.read_bytes()).hexdigest() != rep["cells"][name]["json_sha256"]:
+            raise SystemExit(f"cell {name} on disk is not the report's: an INTEGRITY incident under the respawn "
+                             f"protocol (stop, touch nothing, escalate)")
+    stopped = copy.deepcopy(rep)
+    stopped["end_state"] = "PI-STOP"
+    stopped["stop"] = {"kind": "PI-STOP", "record_sha256": hashlib.sha256(b).hexdigest(),
+                       "detail": f"the PI's stop while a pause stands; its raw {rw.name}"[:200]}
+    _camp_write_report(rp, stopped, new=False)
+    return stopped
+
+
+def camp_excerpt(pause: dict, record, ceiling: float, rendering: str | None = None) -> list:
+    """CP8: a standing pause's excerpt for the seat, never a margin (n:130): the pause's record from the report; then
+    the monitor's figure against its bar -- a binomial fire's k of n above TAU in its tile against p0 at alpha (the
+    pause's record); for a ceiling or the identity bound, the paused read's ``absdiff``, the cached and fresh paths'
+    difference in nats, against C (its record); which path was not finite; and for a rendering pause, whose read was
+    not launched and has no record, the mismatch (``rendering``) by digest or in the package's masked form, never a
+    token id (ids.py:688)."""
+    kinds = [pause["kind"]] + list(pause["also_fired"])
+    where = (f"at read {pause['launch_index']} ({pause['read_id']})" if pause["read_id"] is not None
+             else "at the run's end (the tail's evaluation)")
+    lines = [f"EXCERPT {pause['pause_id']}: {pause['kind']} {where}; arms in scope "
+             f"{', '.join(pause['arms_in_scope'])}; also fired {', '.join(pause['also_fired']) or 'none'}"]
+    b = pause["binomial"]
+    if b is not None:
+        lines.append(f"  fidelity-binomial: {b['k']} of {b['n']} re-computed reads above TAU in the tile "
+                     f"{b['first_launch_index']}..{b['last_launch_index']}, against p0 {b['p0_count']}/{b['p0_n']} "
+                     f"at alpha {b['alpha']!r}")
+    if record is not None:
+        f = record.get("fidelity") or {}
+        if "fidelity-ceiling" in kinds:
+            lines.append(f"  fidelity-ceiling: absdiff {f.get('absdiff')!r} nats, the cached and fresh paths' "
+                         f"difference, against C {ceiling!r}")
+        if "identity-bound" in kinds:
+            idc = record.get("identity") or {}
+            lines.append(f"  identity-bound (d = 0): absdiff {f.get('absdiff')!r} nats against the bound "
+                         f"{idc.get('bound')!r}; within {idc.get('within')!r}")
+        if "nonfinite" in kinds:
+            lines.append(f"  nonfinite: the cached path finite {record.get('finite')!r}; the fresh path finite "
+                         f"{f.get('finite')!r}")
+    if pause["kind"] == "rendering":
+        lines.append(f"  rendering: the read was not launched and has no record; {rendering or 'no digest'}")
+    return lines
+
+
+def _camp_paused_record(root, ident: dict, pause: dict):
+    """The paused read's record, read by the stage's own code from its cell, by name (the list of record's item 2), or
+    None: a rendering pause, a read-less binomial fire, or no record of the read on disk."""
+    from valence_core.n import cells
+    if pause["read_id"] is None or pause["kind"] == "rendering":
+        return None
+    arm, did, dl, _sid = pause["read_id"].split("|", 3)
+    cell, _caps = cells.load_cell(root, arm, did, dl, identity=ident)
+    return next((r for r in cell["records"] if r["read_id"] == pause["read_id"]), None)
+
+
+def _camp_rendering(plan, loaded, pause: dict):
+    """A rendering pause's figure for the excerpt, re-derived as the runner derives the read's sequence
+    (runner.py:470-479): the paused read's plan entry by its launch index; for N4-T and N4-Ts its told or sham line
+    by the schedule's zone, and none elsewhere; the committed sequence by ``ids.ids_of``. The renderer's own refusal
+    in the package's masked form (``ids._problem``: its token ids masked); else, for an untold read, its ids_sha against
+    BK's, and for a told one its ids_sha as found now. Never a token id."""
+    from valence_core.n import ids, schema, sessions
+    if pause["kind"] != "rendering" or pause["launch_index"] is None:
+        return None
+    li = int(pause["launch_index"])
+    if not 0 <= li < len(plan) or plan[li].read_id != pause["read_id"]:
+        return f"the pause's read is not the plan's read {li}"
+    pr = plan[li]
+    s = pr.session
+    told = None
+    if pr.arm in schema.TOLD_VARIANT:
+        named = s.cue_S if pr.schedule_zone == "S" else s.cue_U
+        told = schema.TOLD_LINE.format(zone=named) if pr.arm == "N4-T" else schema.SHAM_LINE
+    try:
+        got = sessions.ids_sha([int(x) for x in ids.ids_of(loaded)(s, told)])
+    except sessions.RenderingMismatch as e:
+        return ids._problem(e, s.session_id)
+    if told is None:
+        return f"the session {s.session_id}'s committed sequence: ids_sha {got} against BK's {s.ids_sha}"
+    return f"the session {s.session_id}'s committed {pr.arm} sequence: ids_sha {got}, as found now"
+
+
+@dataclass
+class CampEnv:
+    """The campaign's seams: ``production_camp_env`` is the box's; the self-test puts doubles behind them."""
+    weights: Callable                   # () -> the weights of record (``weights_of_record``)
+    load_sessions: Callable             # () -> the session set
+    load_ids: Callable                  # () -> ``ids.load()``
+    committed: Callable                 # (path) -> HEAD's committed bytes, or None; ValueError outside the repository
+    lock_inputs: Callable               # () -> ``gtime_lock_inputs()``: the lock's inputs, checked
+    directions: Callable                # (lock inputs, d_model) -> the 28 unit rows and their sha16s (CP3)
+    keys_check: Callable                # (sessions) -> the sample's and N4's figures, the lock's (CP3)
+    env_provenance: Callable            # (path) -> the provenance the adapter will report (before the load)
+    package: Callable                   # () -> (package_sha256, closure), measured in this process
+    hashed_pins: Callable               # () -> the model manifest's sha256s of the eight non-shard files (CP7)
+    load_tokenizer: Callable            # (path) -> the tokenizer, local files only, to decode only (CP7)
+    verify: Callable                    # (sessions, loaded, decode) -> ``verify.verify``'s report (CP7)
+    tokenizers_version: Callable        # () -> the tokenizers library's version
+    make_adapter: Callable              # (path) -> the adapter (the weights load)
+    adapter_shape: Callable             # (adapter) -> (n_layers, d_model)
+    make_backend: Callable              # (adapter) -> the 5(f) backend
+    run: Callable                       # (inputs, plan, resume=) -> the report (``runner.run``)
+    pod: Callable                       # () -> the pod id or None
+    driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path | None)
+    shape: tuple = (N_LAYERS, D_MODEL)
+    lock_path: Path = LOCK_PATH
+    root: Path = CAMP_ROOT
+    report: Path = CAMP_REPORT
+    gver_stop: Path = CAMP_GVER_STOP
+    printer: Callable = print
+    clock: Callable = time.perf_counter
+
+
+def production_camp_env() -> CampEnv:
+    from valence_core.m import resume as m_resume
+    from valence_core.n import ids, runner, sessions
+    return CampEnv(weights=weights_of_record, load_sessions=sessions.load_sessions, load_ids=ids.load,
+                   committed=committed_bytes, lock_inputs=gtime_lock_inputs, directions=camp_directions_of_record,
+                   keys_check=camp_keys_check, env_provenance=environment_provenance, package=_package_closure,
+                   hashed_pins=gver_hashed_pins, load_tokenizer=_gver_load_tokenizer, verify=_gver_verify,
+                   tokenizers_version=_tokenizers_version, make_adapter=_load_adapter,
+                   adapter_shape=lambda a: (int(a.n_layers), int(a._model.config.hidden_size)),
+                   make_backend=_hf_backend, run=runner.run, pod=m_resume.pod_id, driver=driver_bytes)
+
+
+def _camp_prepare(env: CampEnv, *, resume: bool, rulings: dict) -> dict:
+    """Everything before G-VER, in order (CP1-CP5, and CP7's checks before the decode); a refusal raises SystemExit
+    with its reason. Nothing is written and nothing loads but the provenance's CUDA context. Each ruling is a
+    committed raw, HEAD's bytes (CP8's route; the review's O6). The identity's rendering_id is the manifest's pin
+    (``ids.MANIFEST_OF_RECORD``), so a MANIFEST.json off its pin reaches G-VER, whose STOP it is (L:543), at a resume
+    as at the start, where the loaded file's sha256 would refuse a resume as another identity (the review's O4)."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.m.keys import stream_known_answer
+    from valence_core.n import cells, guard, ids, schema
+    say = env.printer
+    root_p, report_p = guard.refuse_out(Path(env.root)), guard.refuse_out(Path(env.report))
+    stop_p = guard.refuse_out(Path(env.gver_stop))
+    if stop_p.exists():
+        raise SystemExit(f"{_shown(stop_p)} exists: the campaign ended at its start's G-VER STOP, and nothing "
+                         f"resumes after a STOP (CP9)")
+    pod = env.pod()
+    if pod is None:
+        raise SystemExit("an n stage refuses to start without $RUNPOD_POD_ID (m's resume.pod_id)")
+    if pod != CHARACTERIZED_POD:
+        raise SystemExit(f"this pod is not the characterized one ({CHARACTERIZED_POD}, the BACKEND entry d5d08fa): "
+                         f"respawn step (ii) first")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != CHARACTERIZED_PROVENANCE["cublas_workspace_config"]:
+        raise SystemExit("CUBLAS_WORKSPACE_CONFIG is not the characterized setting (rule 2)")
+    ka = stream_known_answer()
+    if ka:
+        raise SystemExit(ka[0])
+    for pid, rp in rulings.items():
+        if not Path(rp).is_file():
+            raise SystemExit(f"the ruling for {pid} is not a file: {rp}")
+        try:
+            rhead = env.committed(Path(rp))
+        except ValueError:                              # committed_bytes: a path outside the repository
+            rhead = None
+        if rhead != Path(rp).read_bytes():
+            raise SystemExit(f"the ruling for {pid} is not a repository file at HEAD's committed bytes: a ruling is a "
+                             f"committed raw (CP8's route)")
+    say(f"STAGE the N-pod campaign: stage {CAMP_STAGE} (n v0.2 §8 step 14), under LOCK-n {LOCK_VERSION} "
+        f"{LOCK_SHA256}; root {_shown(root_p)}, report {_shown(report_p)}; the cap {LOCK_HOUR_CAP_MS} ms; no smoke "
+        f"(CP2)" + ("; a resume, skip-only" if resume else ""))
+    w = env.weights()
+    say(f"WEIGHTS: {w['repo']} revision {w['revision']}, files_aggregate_sha256 {w['sha256']}; {w['n_files']} files "
+        f"at {w['path']}, each at the manifest's byte count (the full re-hash is respawn step (i))")
+    if w["sha256"] != LOCK_WEIGHTS_SHA256:
+        raise SystemExit("the weights of record are not the lock's (L §17)")
+    drv, head = env.driver()
+    dsha = hashlib.sha256(drv).hexdigest()
+    if drv != head:
+        raise SystemExit("a run of record runs only the committed driver: scripts/n_sessions.py is not HEAD's "
+                         "committed bytes (the box answers of 2026-11-18, §2 item 5)")
+    say(f"DRIVER scripts/n_sessions.py {dsha}: HEAD's committed bytes")
+    lock = gver_lock_check(env.committed, env.lock_path)
+    say(f"LOCK-n.md {lock}: HEAD's committed bytes, LOCK-n {LOCK_VERSION}'s (CP4)")
+    ss = _gver_loaded("the session set (sessions.load_sessions)", env.load_sessions)
+    loaded = _gver_loaded("the ids of record (ids.load)", env.load_ids)
+    msha = loaded["manifest_sha256"]
+    say(f"the ids of record: {len(ss)} sessions; MANIFEST.json {msha}, the pin {ids.MANIFEST_OF_RECORD}: "
+        + ("equal" if msha == ids.MANIFEST_OF_RECORD else "not equal, one of G-VER's causes (L:543)"))
+    li = env.lock_inputs()
+    dm = li["dose_map"]
+    say(f"the lock's inputs: G-VEC's record {li['gvec_sha256']}, site {li['site']}; G-CAL-n's record "
+        f"{li['gcal_sha256']} and dose map {li['dose_map_sha256']}: d_eq {dm['d_eq']!r}, d_20 {dm['d_20']!r}")
+    n_layers, d_model = env.shape
+    units, shas = env.directions(li, d_model)
+    say(f"directions (CP3): {len(shas)}, each at the lock's sha16 (L §3): "
+        + ", ".join(f"{k} {shas[k]}" for k in sorted(shas)))
+    kc = env.keys_check(ss)
+    say(f"the keys (CP3; L §5): the fidelity sample {kc['sample']} of {len(ss)} sessions, sha256 "
+        f"{kc['sample_sha256']}; N4's schedule sha256 {kc['n4_schedule_sha256']}; each the lock's")
+    pre = env.env_provenance(w["path"])
+    if bridge_identifier(pre) != CHARACTERIZED_IDENTIFIER:
+        raise SystemExit(f"before the load: the environment's provenance under the default window hashes to "
+                         f"{bridge_identifier(pre)}, not the characterization's {CHARACTERIZED_IDENTIFIER} (R6)")
+    bid = m_resume.backend_identifier(pre)
+    if bid != LOCK_BACKEND_IDENTIFIER:
+        raise SystemExit(f"n's backend identifier {bid} is not the lock's {LOCK_BACKEND_IDENTIFIER} (L §17)")
+    environment = gver_environment(pre, env.tokenizers_version())
+    if environment["tokenizers"] != LOCK_TOKENIZERS:
+        raise SystemExit(f"tokenizers {environment['tokenizers']} is not the lock's {LOCK_TOKENIZERS} (L §17)")
+    pkg, clo = env.package()
+    if pkg != LOCK_PACKAGE_SHA256 or clo != LOCK_CLOSURE:
+        diff = sorted(k for k in set(clo) | set(LOCK_CLOSURE) if clo.get(k) != LOCK_CLOSURE.get(k))
+        raise SystemExit(f"the package or its closure is not the lock's (L §18; CP1): package "
+                         f"{'the lock' if pkg == LOCK_PACKAGE_SHA256 else pkg}'s, closure files differing {diff}")
+    say(f"backend (before the load): n's identifier {bid}, the lock's (L §17); the characterization's "
+        f"{CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {pod}; python {environment['python']}, "
+        f"transformers {environment['transformers']}, tokenizers {environment['tokenizers']}; package valence_core/n "
+        f"{pkg} and its closure of {len(clo)} files, the lock's (L §18)")
+    ident = camp_identity(package_sha256=pkg, imported_sha256=clo, weights=w["sha256"], backend_identifier=bid,
+                          pod_id=pod, rendering_id=ids.MANIFEST_OF_RECORD, dose_map=dm, directions=shas,
+                          n_layers=n_layers, d_model=d_model, layer=li["site"])
+    say(f"identity: stage {ident['stage']}, sha256 {schema.identity_sha256(ident)}; C {LOCK_C}, p0 {LOCK_P0[0]} of "
+        f"{LOCK_P0[1]}, alpha {LOCK_ALPHA}, the tile {LOCK_CADENCE}; {len(ident['directions'])} directions; the cap "
+        f"{LOCK_HOUR_CAP_MS} ms, the runner's input (CP5)")
+    plan = camp_plan(ident, ss)
+    cell_keys = sorted({(p.arm, p.direction_id, p.dose_label) for p in plan})
+    say(f"the plan (CP1): {len(plan)} reads in the runner's ORDER, {sum(1 for p in plan if p.fidelity_reason)} "
+        f"re-computed, {len(cell_keys)} cells; its read_plan_sha256 the lock's (L §6)")
+    prior_state(root_p, report_p, ident, plan, resume, rulings)
+    prior = cells.read_json(report_p) if report_p.exists() else None
+    if prior is not None and prior["end_state"] in ("COMPLETE", "CAP"):
+        raise SystemExit(f"the campaign ended {prior['end_state']}: nothing is left to run (LOCK-n v1.0 §2: \"A CAP "
+                         f"end state ends the campaign\"; CP5)")
+    fresh = prior is None and not cells.done_read_ids(root_p, cell_keys)
+    tpins = dict(env.hashed_pins())
+    tshas = gver_hashed_files(w["path"], tpins)
+    for name in GVER_HASHED_FILES:
+        say(f"hashed file {name} {tshas[name]}: the model manifest's pin (CP7)")
+    pins = {"lock_sha256": lock, "package_sha256": pkg, "imported_sha256": dict(clo), "backend_identifier": bid,
+            "characterization_identifier": CHARACTERIZED_IDENTIFIER, "pod_id": pod, "weights_sha256": w["sha256"],
+            "driver_sha256": dsha}
+    return {"root": root_p, "report": report_p, "gver_stop": stop_p, "path": w["path"], "sessions": ss,
+            "loaded": loaded, "manifest_sha256": msha, "hashed_files": tshas, "hashed_pins": tpins, "pins": pins,
+            "environment": environment, "ident": ident, "plan": plan, "units": units, "bid": bid, "pod": pod,
+            "shape": (n_layers, d_model), "fresh": fresh}
+
+
+def _camp_why(e: SystemExit) -> str:
+    """A SystemExit's reason for a REFUSED or FAILED line: its message, or its code named. A SystemExit from any seam,
+    with a message or without one (None, 0, a number), ends the invocation as a refusal or a failure, exit 1, never as
+    the process's own exit (the review's B7)."""
+    return e.code if isinstance(e.code, str) else f"SystemExit({e.code!r})"
+
+
+def run_campaign(env: CampEnv, *, resume: bool = False, rulings=None) -> int:
+    """The N-pod campaign (n v0.2 §8 step 14; CP1-CP20), one invocation, in order: the refusals, the weights, the
+    driver and LOCK-n.md of record, the session set and the ids, the lock's inputs, the 28 directions and the keys,
+    the R6 bridge and n's backend identifier, tokenizers' version, the package, the identity, the plan, what is on
+    disk, the eight non-shard files' hashes; then G-VER (CP7: G-VER of record's form, the stage's own and not of
+    record), the load, and the reads through the runner, with the lock's cap; at a PAUSE, each standing pause's
+    excerpt (CP8), or, where an excerpt cannot be formed, one line naming the pause and the error's kind (the review's
+    F3). Exits (CP12): 0 COMPLETE; 3 PAUSE; 5 CAP; 6 G-VER's STOP, at the start with G-VER's record and the report in
+    the schema's G-VER-STOP form written, both or neither (CP9 (a); the review's F4), at a resume with nothing written
+    (CP9 (b)); 1 a refusal or a failure, any SystemExit a seam raises among them (``_camp_why``)."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import ids, runner, schema
+    say = env.printer
+    rulings = dict(rulings or {})
+    try:
+        ctx = _camp_prepare(env, resume=resume, rulings=rulings)
+    except SystemExit as e:
+        say(f"REFUSED before any read: {_camp_why(e)}")
+        say("the campaign: not run (exit 1; CP12)")
+        return 1
+    try:
+        t0 = env.clock()
+        tok = env.load_tokenizer(ctx["path"])
+        t1 = env.clock()
+        rep = env.verify(ctx["sessions"], ctx["loaded"], _decoder(tok))
+        t2 = env.clock()
+    except SystemExit as e:
+        say(f"FAILED at G-VER (the tokenizer's load or the decode): {_camp_why(e)}"[:400])
+        say("the campaign: not run (exit 1; CP12)")
+        return 1
+    durations = {"tokenizer_load": max(0, int(round((t1 - t0) * 1000))),
+                 "decode": max(0, int(round((t2 - t1) * 1000)))}
+    say("G-VER (the campaign's own, before any read; not of record; CP7):")
+    say(json.dumps(rep, sort_keys=True))
+    try:
+        rec = gver_record(rep=rep, manifest_sha256=ctx["manifest_sha256"], hashed_files=ctx["hashed_files"],
+                          pins=ctx["pins"], environment=ctx["environment"], durations_ms=durations,
+                          hashed_pins=ctx["hashed_pins"])
+        if rec["status"] != "PASS" and ctx["fresh"]:
+            sha = gver_write(ctx["gver_stop"], rec, hashed_pins=ctx["hashed_pins"])
+            say(f"G-VER's record {_shown(ctx['gver_stop'])} sha256 {sha}")
+            try:
+                camp_gver_stop_report(ctx["ident"], ctx["plan"], ctx["root"], ctx["report"], record_sha256=sha,
+                                      mismatches=camp_gver_mismatches(rec),
+                                      detail=f"G-VER's STOP at the campaign's start (CP9 (a)); its record "
+                                             f"{_shown(ctx['gver_stop'])}")
+            except BaseException:                       # the review's F4: the record and the report stand together
+                Path(ctx["gver_stop"]).unlink(missing_ok=True)
+                say(f"G-VER's record {_shown(ctx['gver_stop'])} removed: the report was not written (CP9 (a))")
+                raise
+            rsha = hashlib.sha256(Path(ctx["report"]).read_bytes()).hexdigest()
+            say(f"report {_shown(ctx['report'])} sha256 {rsha}: end state G-VER-STOP, no read")
+    except SystemExit as e:
+        say(f"FAILED at G-VER's record or report: {_camp_why(e)}"[:400])
+        say("the campaign: not run (exit 1; CP12)")
+        return 1
+    if rec["status"] != "PASS":
+        if not ctx["fresh"]:
+            say(json.dumps(rec, sort_keys=True))
+            say("the campaign G-VER-STOP at a resume (exit 6; CP9 (b)): no weights load and no read; nothing is "
+                "written, and the report stays as the last invocation left it; a STOP for the seat and the PI")
+            return CAMP_EXITS["G-VER-STOP"]
+        say("the campaign G-VER-STOP at its start (exit 6; CP9 (a)): no weights load and no read; a STOP for the seat "
+            "and the PI, never a pause and never an exclusion (L:543)")
+        return CAMP_EXITS["G-VER-STOP"]
+    say(f"G-VER PASS: the tokenizer's load {durations['tokenizer_load']} ms, the decode {durations['decode']} ms")
+    try:
+        t3 = env.clock()
+        adapter = env.make_adapter(ctx["path"])
+        load_ms = max(0, int(round((env.clock() - t3) * 1000)))
+        prov = adapter.provenance()
+        if m_resume.backend_identifier(prov) != ctx["bid"] or bridge_identifier(prov) != CHARACTERIZED_IDENTIFIER:
+            raise SystemExit("the loaded adapter's provenance is not the one checked before the load -- refusing")
+        if tuple(env.adapter_shape(adapter)) != tuple(ctx["shape"]):
+            raise SystemExit(f"the checkpoint is {tuple(env.adapter_shape(adapter))}, not {tuple(ctx['shape'])}")
+        say(f"backend: n's identifier {ctx['bid']} (window {schema.MAX_WINDOW}); the characterization's "
+            f"{CHARACTERIZED_IDENTIFIER} under the default window (R6); pod {ctx['pod']}; load {load_ms} ms")
+        inputs = runner.StageInputs(root=ctx["root"], report_path=ctx["report"], identity=ctx["ident"],
+                                    sessions=ctx["sessions"], ids_of=ids.ids_of(ctx["loaded"]),
+                                    label_ids=ids.label_ids(ctx["loaded"], LOCK_LABEL_CONVENTION),
+                                    backend=env.make_backend(adapter), directions=ctx["units"], alpha=LOCK_ALPHA,
+                                    hour_cap_ms=LOCK_HOUR_CAP_MS, load_ms=load_ms, rulings=rulings, printer=say,
+                                    clock=env.clock)
+        rpt = env.run(inputs, ctx["plan"], resume=resume)
+    except SystemExit as e:
+        say(f"FAILED after G-VER: {_camp_why(e)}"[:400])
+        say("the campaign: this invocation failed (exit 1; CP12); the records on disk replay at a resume")
+        return 1
+    end = rpt["end_state"]
+    if end == "PAUSE":
+        for p in rpt["pauses"]:
+            if not p["adjudicated"]:
+                try:                                    # the review's F3: the report stands PAUSE, the exit stays 3
+                    rec_p = _camp_paused_record(ctx["root"], ctx["ident"], p)
+                    ex = camp_excerpt(p, rec_p, LOCK_C, _camp_rendering(ctx["plan"], ctx["loaded"], p))
+                except (SystemExit, Exception) as e:    # noqa: BLE001
+                    ex = [f"EXCERPT {p['pause_id']} unavailable: {type(e).__name__}; the pause stands in the report"]
+                for line in ex:
+                    say(line)
+    code = CAMP_EXITS.get(end, 1)
+    say(f"the campaign {end} (exit {code}; CP12)"
+        + ("" if end == "COMPLETE" else ": every end but COMPLETE goes to the seat and the PI"))
+    return code
+
+
+def run_campaign_pi_stop(env: CampEnv, raw) -> int:
+    """CP9 (c): ``campaign --pi-stop RAW``, the PI's stop, with no load and no read: the pod, the driver of record and
+    LOCK-n.md first, then ``camp_pi_stop`` over the stage's report and root. Exit 7 with the report written; 1 on a
+    refusal, with nothing written, or on a failed write, the file as that write left it (``_camp_write_report`` with
+    new=False removes nothing)."""
+    import hashlib
+
+    from valence_core.n import guard
+    say = env.printer
+    try:
+        root_p, report_p = guard.refuse_out(Path(env.root)), guard.refuse_out(Path(env.report))
+        pod = env.pod()
+        if pod is None or pod != CHARACTERIZED_POD:
+            raise SystemExit(f"the PI's stop runs on the characterized pod ({CHARACTERIZED_POD}), where the report "
+                             f"and its cells are")
+        drv, head = env.driver()
+        if drv != head:
+            raise SystemExit("a run of record runs only the committed driver: scripts/n_sessions.py is not HEAD's "
+                             "committed bytes (the box answers of 2026-11-18, §2 item 5)")
+        lock = gver_lock_check(env.committed, env.lock_path)
+        say(f"STAGE the N-pod campaign's PI-STOP (CP9 (c)): under LOCK-n {LOCK_VERSION} {lock}; report "
+            f"{_shown(report_p)}; no load and no read")
+        rep = camp_pi_stop(report_p, root_p, raw, committed=env.committed)
+    except SystemExit as e:
+        say(f"REFUSED: {_camp_why(e)}")
+        say("the campaign's PI-STOP: not written (exit 1; CP12)")
+        return 1
+    sha = hashlib.sha256(Path(report_p).read_bytes()).hexdigest()
+    say(f"report {_shown(report_p)} sha256 {sha}: end state PI-STOP, the stop record citing the raw "
+        f"{rep['stop']['record_sha256']}")
+    say("the campaign PI-STOP (exit 7; CP12): every end but COMPLETE goes to the seat and the PI")
+    return CAMP_EXITS["PI-STOP"]
+
+
+def cmd_campaign(resume: bool, rulings: dict, pi_stop) -> int:
+    if pi_stop is not None:
+        return run_campaign_pi_stop(production_camp_env(), pi_stop)
+    return run_campaign(production_camp_env(), resume=resume, rulings=rulings)
+
+
+def _camp_selftest(chk, tmp: Path) -> None:
+    """The campaign's checks, model-free (CP19): the pins held to the committed lock (its sha256, the cap's line, every
+    pinned sha16 and digest in its text); the 24 random directions the keys draw and the four named rows of G-VEC's
+    committed directions file, each at the lock's sha16, and their refusals; the sample and N4's schedule re-derived
+    on the session set of record, and their refusals; the identity and the plan; the copy-back's names; G-VER's
+    failed checks counted; the excerpt, and a rendering pause's figure on the ids of record; the two STOP writers and
+    their refusals; the command's flow over doubles behind every seam, the runner among them -- each end's exit,
+    G-VER's STOP at the start and at a resume, a failure at G-VER's record, every refusal before any read, and the
+    blind review's cases (the excerpt's read of a paused cell and an excerpt that cannot be formed, a failed report
+    write at the start's STOP, a resume reaching the runner, the failures at G-VER and at the load, a resume after a
+    crashed first invocation, a MANIFEST.json off its pin at a resume) -- the PI's stop's flow; and main()'s options
+    behind the traps."""
+    import contextlib
+    import copy
+    import hashlib
+    import io
+    import types
+
+    import numpy as np
+
+    import valence_core.m.keys as m_keys
+    import valence_core.n.keys as keys_mod
+    from valence_core.m import resume as m_resume
+    from valence_core.n import cells, gvec, ids, runner, schema, sessions
+    tmp = Path(tmp)
+    tmp.mkdir(parents=True, exist_ok=True)
+
+    def refused(fn) -> tuple:                           # (refused, its text); any other raise is not a refusal
+        try:
+            fn()
+        except SystemExit as e:
+            return True, str(e)
+        except BaseException as e:                      # noqa: BLE001
+            return False, f"{type(e).__name__}: {e}"[:200]
+        return False, "no refusal"
+
+    def valid(rep) -> bool:                             # the schema's report check, as a truth value
+        try:
+            schema.check_report(rep)
+        except schema.SchemaError:
+            return False
+        return True
+
+    def work(p):                                        # the overlay is HEAD's archive: its bytes are the committed
+        return Path(p).read_bytes() if Path(p).is_file() else None
+
+    # the pins, held to the committed lock (CP3, CP4, CP5)
+    lock_b = LOCK_PATH.read_bytes()
+    lock_text = lock_b.decode("utf-8")
+    chk("campaign: the lock pin is the committed LOCK-n.md's sha256, LOCK-n v1.0's (59e0b1bc...00aa; CP4), its status "
+        "line (the file's third line) v1.0's, and every stage's lock check reads that one pin (gver_lock_check)",
+        hashlib.sha256(lock_b).hexdigest() == LOCK_SHA256 == gver_lock_check(work)
+        and LOCK_SHA256 == "59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa" and LOCK_VERSION == "v1.0"
+        and lock_text.splitlines()[2].startswith(f"**Status: LOCK-n {LOCK_VERSION} — COMMITTED"), LOCK_VERSION)
+    chk("campaign: the cap's constant is LOCK-n v1.0 §2's line, the whole span 4 x 3,600,000 = 14,400,000 ms (CP5; "
+        "the review's F9)",
+        LOCK_HOUR_CAP_MS == 4 * 3_600_000 == 14_400_000 and LOCK_CAP_LINE in lock_text
+        and LOCK_CAP_LINE.startswith("4 × "), "")
+    pins_all = dict(LOCK_RANDOM_SHA16, **LOCK_N2_SHA16, valence=LOCK_VALENCE_SHA16)
+    digests = [*pins_all.values(), LOCK_FID_SAMPLE[1], LOCK_N4_SCHEDULE_SHA256, LOCK_READ_PLAN_SHA256]
+    chk("campaign: the 28 directions' pins are those the plan injects, and every pinned sha16 and digest stands in the "
+        "lock's text (L §3, §5, §6): 28 sha16s, the sample's and N4's digests, the read plan's",
+        sorted(pins_all) == camp_injected() and len(camp_injected()) == 28 and len(set(digests)) == 31
+        and all(x in lock_text for x in digests), [x for x in digests if x not in lock_text][:3])
+
+    # the directions (CP3)
+    rand = gvec.random_rows(D_MODEL)
+    got_r = {k: gvec.injection_sha16(v) for k, v in rand.items()}
+    chk("campaign: the 24 random directions keys.random_directions draws at d_model 5,120 (gvec.random_rows) are each "
+        "at the lock's sha16 (L §3; CP3)",
+        got_r == LOCK_RANDOM_SHA16, sorted(k for k in got_r if got_r[k] != LOCK_RANDOM_SHA16.get(k))[:3])
+    named = camp_named_rows(GVEC_OUT, work, LOCK_SITE)
+    chk("campaign: the four named rows of G-VEC's committed directions file at the site (camp_named_rows) are each at "
+        "the lock's sha16 and the record's, in NAMED's order: valence and N2's three (L §3; CP3)",
+        list(named) == list(gvec.NAMED)
+        and {k: gvec.injection_sha16(v) for k, v in named.items()} == dict(LOCK_N2_SHA16, valence=LOCK_VALENCE_SHA16),
+        list(named))
+    units, shas = camp_directions(named, D_MODEL)
+    chk("campaign: camp_directions gives the 28 directions the plan injects at their pins, the rows as drawn and read",
+        sorted(units) == camp_injected() and shas == pins_all
+        and all(np.array_equal(units[k], rand[k]) for k in rand)
+        and all(np.array_equal(units[k], named[k]) for k in named), "")
+    named_x = dict(named, span_reward=-named["span_reward"])
+    r_d1 = refused(lambda: camp_directions(named_x, D_MODEL))
+    r_d2 = refused(lambda: camp_directions({k: v for k, v in named.items() if k != "span_character"}, D_MODEL))
+    chk("campaign: ...a named row off its pin (span_reward's sign flipped) and three named rows where four are due are "
+        "each refused",
+        r_d1[0] and "['span_reward'] are not at the lock's sha16s" in r_d1[1] and "INTEGRITY" in r_d1[1]
+        and r_d2[0] and "not the 28" in r_d2[1], (r_d1, r_d2))
+    gdir = tmp / "gvec-copy"
+    gdir.mkdir()
+    fname = gvec.directions_file(LOCK_SITE)
+    (gdir / gvec.OUT_RECORD).write_bytes((GVEC_OUT / gvec.OUT_RECORD).read_bytes())
+    (gdir / fname).write_bytes((GVEC_OUT / fname).read_bytes() + b"\0")
+    r_n1 = refused(lambda: camp_named_rows(gdir, work, LOCK_SITE))
+    rows_x = np.array(gvec.read_rows(GVEC_OUT / fname), copy=True)
+    rows_x[2] = -rows_x[2]
+    np.save(gdir / fname, rows_x, allow_pickle=False)
+    rec_x = json.loads((GVEC_OUT / gvec.OUT_RECORD).read_text(encoding="utf-8"))
+    rec_x["files_sha256"][fname] = hashlib.sha256((gdir / fname).read_bytes()).hexdigest()
+    (gdir / gvec.OUT_RECORD).write_text(json.dumps(rec_x), encoding="utf-8")
+    r_n2 = refused(lambda: camp_named_rows(gdir, work, LOCK_SITE))
+    r_n3 = refused(lambda: camp_named_rows(GVEC_OUT, lambda p: None, LOCK_SITE))
+    chk("campaign: ...a directions file off G-VEC's record's sha256, a row off its sha16 (span_sentiment's sign "
+        "flipped, the record's file sha256 moved with it), and files git cannot show are each refused",
+        r_n1[0] and "not the record's (CP3)" in r_n1[1] and r_n2[0] and "the span_sentiment row's sha16" in r_n2[1]
+        and "INTEGRITY" in r_n2[1] and r_n3[0] and "gvec.json is absent or not HEAD's" in r_n3[1], (r_n1, r_n2, r_n3))
+
+    # the keys (CP3)
+    ss = sessions.load_sessions()
+    kc = camp_keys_check(ss)
+    loaded_r = ids.load()
+    man = loaded_r["manifest"]
+    chk("campaign: the realized fidelity sample (15 of 160, its digest) and N4's schedule (its digest), re-derived by "
+        "the package's keys on the session set of record, are the lock's (L §5; CP3); N4's is the committed "
+        "MANIFEST.json's n4_schedule_sha256 too",
+        kc == {"sample": 15, "sample_sha256": LOCK_FID_SAMPLE[1], "n4_schedule_sha256": LOCK_N4_SCHEDULE_SHA256}
+        and man["n4_schedule_sha256"] == LOCK_N4_SCHEDULE_SHA256, kc)
+    ss_y = [s for s in ss if s.session_id != "floor_b1/6"]
+    r_k1 = refused(lambda: camp_keys_check(ss_y))
+    real_n4 = keys_mod.n4_schedule
+    keys_mod.n4_schedule = lambda flags: ["U" if z == "S" else "S" for z in real_n4(flags)]
+    try:
+        r_k2 = refused(lambda: camp_keys_check(ss))
+    finally:
+        keys_mod.n4_schedule = real_n4
+    chk("campaign: ...a session set without one sampled session (floor_b1/6) is refused at the sample, and a schedule "
+        "with every zone swapped (a stand-in for keys.n4_schedule) at N4's schedule",
+        r_k1[0] and "realized fidelity sample" in r_k1[1] and r_k2[0] and "N4's schedule" in r_k2[1]
+        and keys_mod.n4_schedule is real_n4, (r_k1, r_k2))
+
+    # the identity and the plan (CP1, CP3)
+    li = gtime_lock_inputs(work)
+    ident = camp_identity(package_sha256=LOCK_PACKAGE_SHA256, imported_sha256=dict(LOCK_CLOSURE),
+                          weights=LOCK_WEIGHTS_SHA256, backend_identifier=LOCK_BACKEND_IDENTIFIER,
+                          pod_id=CHARACTERIZED_POD, rendering_id=ids.MANIFEST_OF_RECORD, dose_map=li["dose_map"],
+                          directions=shas)
+    chk("campaign: the identity at 'campaign' (CP3): the lock's sha256 (v1.0's), its dose map, its fidelity rule and "
+        "the identity bound C 0.25, the band 33..63, the label convention 'space', the window 4,096, the 28 directions "
+        "at their sha16s, and no cap field (CP5)",
+        ident["stage"] == "campaign" and ident["lock_sha256"] == LOCK_SHA256 and ident["dose_map"] == li["dose_map"]
+        and ident["fidelity_rule"] == lock_fidelity_rule() and ident["identity_bound"] == 0.25
+        and ident["capture_layers"] == list(range(33, 64)) and ident["label_convention"] == "space"
+        and ident["read_window"] == 4096 and ident["directions"] == shas
+        and "cap" not in ident and "hour_cap_ms" not in ident, sorted(ident)[:4])
+    r_i = refused(lambda: camp_identity(package_sha256=LOCK_PACKAGE_SHA256, imported_sha256=dict(LOCK_CLOSURE),
+                                        weights=LOCK_WEIGHTS_SHA256, backend_identifier=LOCK_BACKEND_IDENTIFIER,
+                                        pod_id=CHARACTERIZED_POD, rendering_id=ids.MANIFEST_OF_RECORD,
+                                        dose_map=li["dose_map"], directions={"valence": LOCK_VALENCE_SHA16}))
+    chk("campaign: ...an identity with the valence direction alone is refused", r_i[0] and "not the 28" in r_i[1], r_i)
+    plan = camp_plan(ident, ss)
+    by_cell: dict = {}
+    for p in plan:
+        k_ = schema.cell_filename(p.arm, p.direction_id, p.dose_label)
+        by_cell[k_] = by_cell.get(k_, 0) + 1
+    chk("campaign: the plan (CP1): 7,680 reads, launch indices 0..7,679, the 160 shadows first, 3,637 re-computed, "
+        "138 cells (120 of 40 reads, 18 of 160), its read_plan_sha256 the lock's (L §6)",
+        len(plan) == 7680 and [p.launch_index for p in plan] == list(range(7680))
+        and all(p.arm == "N1-V" and p.dose_label == "0" for p in plan[:160])
+        and sum(1 for p in plan if p.fidelity_reason is not None) == 3637
+        and sorted(by_cell.values()) == [40] * 120 + [160] * 18
+        and schema.read_plan_sha256(ident) == LOCK_READ_PLAN_SHA256, len(plan))
+    dm_m = schema.example_identity(R_ell=50.0)["dose_map"]
+    r_p = refused(lambda: camp_plan(dict(ident, dose_map=dm_m), ss))
+    chk("campaign: ...a plan under another dose map (schema.example_identity's at R_ell 50.0: a merged point) is "
+        "refused (L §6)", r_p[0] and "(L §6)" in r_p[1], r_p)
+
+    # the copy-back's names (CP14), G-VER's failed checks (CP9 (a)), the excerpt (CP8)
+    names = camp_copy_names({"cells": {k_: {} for k_ in by_cell}, "stage_identity": ident})
+    first = sorted(by_cell)[0]
+    chk("campaign: the copy-back's names from a report (CP14), never a listing: the 138 cells in name order, each "
+        "followed by its 31 arrays (layers 33..63): 4,416 names, none twice",
+        len(names) == 138 * 32 and names[0] == first and names[1] == schema.capture_filename(first, 33)
+        and names[31] == schema.capture_filename(first, 63) and names[32] == sorted(by_cell)[1]
+        and len(set(names)) == len(names), names[:2])
+    v_ok = {"sessions": 160, "ids_ok": 160, "spans_ok": 160, "n4_ok": 160, "labels_kept": 1, "labels_ok": 1,
+            "manifest_ok": True}
+    chk("campaign: G-VER's failed checks counted from its record (CP9 (a)), as verify reports them -- a session whose "
+        "ids fail is not checked further (verify.py:94-105; the review's F2): one session's ids alone make 1; one "
+        "session's ids, another's spans, two sessions' N4 sequences, a label candidate, the manifest named as of "
+        "record and the manifest's pin make 7; a STOP with none of them still makes 1",
+        camp_gver_mismatches({"verify": dict(v_ok, ids_ok=159, spans_ok=159, n4_ok=159),
+                              "manifest": {"equal": True}}) == 1
+        and camp_gver_mismatches({"verify": dict(v_ok, ids_ok=159, spans_ok=158, n4_ok=157, labels_kept=2,
+                                                 manifest_ok=False), "manifest": {"equal": False}}) == 7
+        and camp_gver_mismatches({"verify": dict(v_ok, sessions=3, ids_ok=3, spans_ok=3, n4_ok=3),
+                                  "manifest": {"equal": True}}) == 1, "")
+    pz_b = {"pause_id": "p01", "kind": "fidelity-binomial", "read_id": plan[319].read_id, "launch_index": 319,
+            "arms_in_scope": [plan[319].arm], "adjudicated": False, "ruling_sha256": None,
+            "binomial": {"first_launch_index": 160, "last_launch_index": 319, "k": 5, "n": 40, "p0_count": 1,
+                         "p0_n": 26, "alpha": 0.01}, "also_fired": [], "resumed_at_launch_index": None}
+    ex_b = camp_excerpt(pz_b, None, LOCK_C)
+    ex_c = camp_excerpt(dict(pz_b, kind="fidelity-ceiling", binomial=None, also_fired=["identity-bound"]),
+                        {"fidelity": {"absdiff": 0.3125, "finite": True}, "identity": {"bound": 0.25, "within": False},
+                         "finite": True}, LOCK_C)
+    ex_n = camp_excerpt(dict(pz_b, kind="nonfinite", binomial=None), {"fidelity": {"finite": False}, "finite": True},
+                        LOCK_C)
+    ex_r = camp_excerpt(dict(pz_b, kind="rendering", binomial=None), None, LOCK_C,
+                        "the session x/1's committed sequence: ids_sha a against BK's b")
+    ex_t = camp_excerpt(dict(pz_b, read_id=None, launch_index=None), None, LOCK_C)
+    chk("campaign: the excerpt (CP8): the pause's record, then the monitor's figure against its bar -- the binomial's "
+        "k of n against p0 at alpha, a ceiling's and the identity bound's absdiff against C and the bound, which path "
+        "was not finite, a rendering pause by digest -- and no line holds a margin or a log-probability; a read-less "
+        "binomial fire is at the run's end (the review's F8)",
+        ex_t[0].startswith("EXCERPT p01: fidelity-binomial at the run's end (the tail's evaluation); arms in scope ")
+        and ex_t[1:] == ex_b[1:] and "None" not in ex_t[0]
+        and ex_b[0].startswith(f"EXCERPT p01: fidelity-binomial at read 319 ({plan[319].read_id}); arms in scope ")
+        and ex_b[1] == ("  fidelity-binomial: 5 of 40 re-computed reads above TAU in the tile 160..319, against p0 "
+                        "1/26 at alpha 0.01") and len(ex_b) == 2
+        and ex_c[1:] == ["  fidelity-ceiling: absdiff 0.3125 nats, the cached and fresh paths' difference, against C "
+                         "0.25", "  identity-bound (d = 0): absdiff 0.3125 nats against the bound 0.25; within False"]
+        and ex_n[1:] == ["  nonfinite: the cached path finite True; the fresh path finite False"]
+        and ex_r[1:] == ["  rendering: the read was not launched and has no record; the session x/1's committed "
+                         "sequence: ids_sha a against BK's b"]
+        and not any("margin" in x or "logprob" in x for x in ex_b + ex_c + ex_n + ex_r + ex_t), (ex_b, ex_c[1:]))
+    i_t = next(i for i, p in enumerate(plan) if p.arm == "N4-T")
+    i_s = next(i for i, p in enumerate(plan) if p.arm == "N4-Ts")
+    s_u, s_t, s_s = plan[0].session, plan[i_t].session, plan[i_s].session
+    told_t = [k[1] for k in loaded_r["by_variant"] if k[0] == s_t.session_id and k[1] != schema.SHAM_LINE]
+    sha_t = sessions.ids_sha(loaded_r["by_variant"][(s_t.session_id, told_t[0])]["ids"]) if len(told_t) == 1 else ""
+    sha_s = sessions.ids_sha(loaded_r["by_variant"][(s_s.session_id, schema.SHAM_LINE)]["ids"])
+    loaded_mv = dict(loaded_r, by_variant={k: v for k, v in loaded_r["by_variant"].items() if k[0] != s_t.session_id})
+
+    def rz(i, read_id=None, **kw) -> dict:            # a rendering pause at launch index i
+        return dict({"kind": "rendering", "launch_index": i,
+                     "read_id": plan[min(i, len(plan) - 1)].read_id if read_id is None else read_id}, **kw)
+    got_u, got_t = _camp_rendering(plan, loaded_r, rz(0)), _camp_rendering(plan, loaded_r, rz(i_t))
+    got_s, got_mv = _camp_rendering(plan, loaded_r, rz(i_s)), _camp_rendering(plan, loaded_mv, rz(i_t))
+    got_x = _camp_rendering(plan, loaded_r, rz(5, read_id=plan[6].read_id))
+    got_o = _camp_rendering(plan, loaded_r, rz(len(plan)))
+    chk("campaign: a rendering pause's figure (CP8; the review's F1), re-derived on the ids of record as the runner "
+        "derives the read's sequence: an untold read's ids_sha against BK's; N4-T's told line and N4-Ts's sham line by "
+        "the schedule's zone, each sequence's ids_sha as found now; a missing sequence in the package's masked form; "
+        "a pause whose read is not the plan's at its launch index, or past the plan; none for any other pause",
+        got_u == (f"the session {s_u.session_id}'s committed sequence: ids_sha {s_u.ids_sha} against BK's "
+                  f"{s_u.ids_sha}")
+        and len(told_t) == 1 and i_t >= 160 and i_s >= 160
+        and got_t == f"the session {s_t.session_id}'s committed N4-T sequence: ids_sha {sha_t}, as found now"
+        and got_s == f"the session {s_s.session_id}'s committed N4-Ts sequence: ids_sha {sha_s}, as found now"
+        and got_mv.startswith(f"{s_t.session_id}: {s_t.session_id}: no committed sequence for line ")
+        and got_x == "the pause's read is not the plan's read 5"
+        and got_o == f"the pause's read is not the plan's read {len(plan)}"
+        and _camp_rendering(plan, loaded_r, dict(rz(0), kind="nonfinite")) is None
+        and _camp_rendering(plan, loaded_r, dict(rz(0), launch_index=None)) is None,
+        (got_u[:90], got_t[:90], got_s[:90], got_mv[:90], got_x, got_o))
+
+    # the two STOP writers (CP9 (a), (c))
+    root_s, rep_s = tmp / "stop" / "root", tmp / "stop" / "campaign.json"
+    rep_g = camp_gver_stop_report(ident, plan, root_s, rep_s, record_sha256="a" * 64, mismatches=0,
+                                  detail="x\n" + "y" * 300)
+    back_g = cells.read_json(rep_s)
+    chk("campaign: the start's G-VER-STOP report (CP9 (a)): the schema's form, checked and written -- no pause and no "
+        "record, the plan's 7,680 reads planned and none obtained, rendering_mismatches at least one, the stop record "
+        "{kind, record_sha256, detail on one line of at most 200 characters}, the cap 14,400,000 ms unhit, no load",
+        back_g == rep_g and valid(back_g) and back_g["end_state"] == "G-VER-STOP"
+        and back_g["stop"] == {"kind": "G-VER-STOP", "record_sha256": "a" * 64, "detail": ("x " + "y" * 300)[:200]}
+        and back_g["counters"]["rendering_mismatches"] == 1 and back_g["pauses"] == [] and back_g["cells"] == {}
+        and sum(x["planned"] for x in back_g["per_arm"].values()) == 7680
+        and not any(x["obtained"] for x in back_g["per_arm"].values())
+        and back_g["cap"] == {"hour_cap_ms": 14400000, "used_ms": 0, "hit": False, "loads_ms": []}
+        and back_g["read_plan_sha256"] == LOCK_READ_PLAN_SHA256 and not root_s.exists(), back_g.get("stop"))
+    r_g2 = refused(lambda: camp_gver_stop_report(ident, plan, root_s, rep_s, record_sha256="b" * 64, mismatches=2,
+                                                 detail="z"))
+    chk("campaign: ...a second G-VER-STOP report over one on disk is refused, the first left as it was",
+        r_g2[0] and "written only at the campaign's start" in r_g2[1] and cells.read_json(rep_s) == rep_g, r_g2)
+    fr = ident["fidelity_rule"]
+
+    def fixture(tag, end, pauses, used_ms=0, ident_=None, cell_bytes=None):
+        """A campaign report on disk under tmp, in the runner's own form, with no cell or one stand-in cell."""
+        idt = ident if ident_ is None else ident_
+        root_f, rp_f = tmp / tag / "root", tmp / tag / "report.json"
+        mon = runner.Monitors(cadence=int(fr["cadence"]), p0_count=int(fr["p0_count"]), p0_n=int(fr["p0_n"]),
+                              alpha=float(fr["alpha"]), ceiling=float(fr["ceiling"]))
+        rep = runner._report(types.SimpleNamespace(root=root_f, hour_cap_ms=LOCK_HOUR_CAP_MS), idt, plan,
+                             copy.deepcopy(pauses), end, used_ms, mon, [7])
+        if cell_bytes is not None:
+            name = schema.cell_filename("N1-V", "none", "0")
+            root_f.mkdir(parents=True, exist_ok=True)
+            (root_f / name).write_bytes(cell_bytes)
+            rep["cells"][name] = {"json_sha256": hashlib.sha256(cell_bytes).hexdigest(),
+                                  "capture_sha256": {str(x): "0" * 64 for x in idt["capture_layers"]}, "records": 1}
+            rep["per_arm"]["N1-V"]["obtained"] = 1
+        rp_f.parent.mkdir(parents=True, exist_ok=True)
+        m_resume.atomic_write_json(rp_f, rep)
+        return root_f, rp_f, rep
+    pz = [runner._pause(1, "rendering", plan[0].read_id, 0, [plan[0].arm])]
+    raw = tmp / "pi-stop.md"
+    raw.write_bytes(b"The PI's stop (the self-test's stand-in).\n")
+    raw_sha = hashlib.sha256(raw.read_bytes()).hexdigest()
+    root_p1, rp_p1, rep_p1 = fixture("pistop", "PAUSE", pz, cell_bytes=b"{}\n")
+    got_ps = camp_pi_stop(rp_p1, root_p1, raw, committed=work)
+    back_ps = cells.read_json(rp_p1)
+    chk("campaign: the PI's stop (CP9 (c)) over a PAUSE report: end state PI-STOP, the stop record citing the raw's "
+        "sha256, the pause standing, every other field as it was; checked by the schema and read back",
+        valid(rep_p1) and back_ps == got_ps and valid(back_ps) and back_ps["end_state"] == "PI-STOP"
+        and back_ps["stop"]["kind"] == "PI-STOP" and back_ps["stop"]["record_sha256"] == raw_sha
+        and back_ps["pauses"] == rep_p1["pauses"] and not back_ps["pauses"][0]["adjudicated"]
+        and {k_: v_ for k_, v_ in back_ps.items() if k_ not in ("end_state", "stop")}
+        == {k_: v_ for k_, v_ in rep_p1.items() if k_ not in ("end_state", "stop")}, back_ps.get("stop"))
+    root_c, rp_c, _rep_c = fixture("pistop-cap", "CAP", [], used_ms=LOCK_HOUR_CAP_MS)
+    root_l, rp_l, _rep_l = fixture("pistop-lock", "PAUSE", pz, ident_=dict(ident, lock_sha256="0" * 64))
+    root_x, rp_x, _rep_x = fixture("pistop-cell", "PAUSE", pz, cell_bytes=b"{}\n")
+    (root_x / schema.cell_filename("N1-V", "none", "0")).write_bytes(b"{} \n")
+    root_st, rp_st, rep_st = fixture("pistop-stage", "PAUSE", pz, ident_=dict(ident, stage="time"))
+    cases_ps = [("again", lambda: camp_pi_stop(rp_p1, root_p1, raw, committed=work), "the stage ended PI-STOP"),
+                ("cap", lambda: camp_pi_stop(rp_c, root_c, raw, committed=work), "the stage ended CAP"),
+                ("lock", lambda: camp_pi_stop(rp_l, root_l, raw, committed=work), "under the lock"),
+                ("stage", lambda: camp_pi_stop(rp_st, root_st, raw, committed=work),
+                 "not the campaign's report under the lock"),
+                ("cell", lambda: camp_pi_stop(rp_x, root_x, raw, committed=work), "on disk is not the report's"),
+                ("none", lambda: camp_pi_stop(tmp / "no-report.json", root_c, raw, committed=work), "is absent"),
+                ("rawgit", lambda: camp_pi_stop(rp_x, root_x, raw, committed=lambda p: None),
+                 "not a repository file at HEAD's committed bytes"),
+                ("rawrepo", lambda: camp_pi_stop(rp_x, root_x, raw, committed=committed_bytes),
+                 "not a repository file at HEAD's committed bytes"),
+                ("rawnone", lambda: camp_pi_stop(rp_x, root_x, tmp / "no-raw.md", committed=work), "is not a file")]
+    bad_ps = []
+    for tag, fn, text in cases_ps:
+        r_ = refused(fn)
+        if not (r_[0] and text in r_[1]):
+            bad_ps.append((tag, r_))
+    chk(f"campaign: ...{len(cases_ps)} refusals of the PI's stop, each writing nothing: a report already stopped, one "
+        f"ended CAP (no pause stands), one under another lock, one of another stage (a valid report at 'time'; the "
+        f"review's M13), a cell off the report's sha256, no report, a raw git cannot show, a raw outside the "
+        f"repository, a raw that is not a file",
+        not bad_ps and cells.read_json(rp_c)["end_state"] == "CAP" and cells.read_json(rp_x)["end_state"] == "PAUSE"
+        and cells.read_json(rp_l)["end_state"] == "PAUSE" and valid(rep_st)
+        and cells.read_json(rp_st) == rep_st, bad_ps[:2])
+
+    # the command's flow, over doubles behind every seam, the runner's among them (writes only under tmp)
+    tw = tmp / "toy-weights"
+    tw.mkdir()
+    toy = {name: f"toy {name}\n".encode("utf-8") for name in GVER_HASHED_FILES}
+    for name, bt in toy.items():
+        (tw / name).write_bytes(bt)
+    tpins = {name: hashlib.sha256(bt).hexdigest() for name, bt in toy.items()}
+    prov_t = dict(CHARACTERIZED_PROVENANCE, path="(toy)", choice_window_declared=schema.MAX_WINDOW)
+    rep_pass = {"sessions": 160, "ids_ok": 160, "spans_ok": 160, "n4_ok": 160, "labels_kept": 1, "labels_ok": 1,
+                "manifest_ok": True, "status": "PASS", "first_problems": []}
+    rep_stop = dict(rep_pass, ids_ok=159, spans_ok=159, n4_ok=159, status="STOP",      # a state verify returns (F2)
+                    first_problems=["s=3 ids: n-003: committed ids are not BK's [..]"])
+    loaded_t = {"manifest_sha256": ids.MANIFEST_OF_RECORD, "by_session": {}, "by_variant": {},
+                "candidates": {LOCK_LABEL_CONVENTION: {"name": LOCK_LABEL_CONVENTION, "kept": True, "labels": {}}}}
+    made: list = []
+    toks: list = []
+    vers: list = []
+    runs: list = []
+
+    class StubAdapter:
+        def provenance(self):
+            return dict(prov_t)
+
+    class StubTok:
+        def decode(self, token_ids, **_kw):
+            return "".join(chr(97 + int(t) % 26) for t in token_ids)
+
+    def genv(tag, rep=None, end="COMPLETE", pauses=(), **over):
+        lines: list = []
+        ticks = [0]
+
+        def tick() -> float:                            # 1 ms a call: every duration the stage measures is exact
+            ticks[0] += 1
+            return ticks[0] * 0.001
+
+        def mk(_p):
+            made.append(tag)
+            return StubAdapter()
+
+        def load_tok(_p):
+            toks.append(tag)
+            return StubTok()
+
+        def ver(s_, l_, dec):
+            vers.append((tag, len(s_), l_.get("manifest_sha256"), dec([0, 1])))
+            return copy.deepcopy(rep if rep is not None else rep_pass)
+
+        def run_stub(inputs, plan_, *, resume):
+            runs.append((tag, inputs, len(plan_), resume))
+            return {"end_state": end, "pauses": copy.deepcopy(list(pauses))}
+        base = dict(weights=lambda: {"repo": "toy", "revision": "0" * 12, "sha256": LOCK_WEIGHTS_SHA256,
+                                     "n_files": 9, "path": str(tw)},
+                    load_sessions=lambda: list(ss), load_ids=lambda: copy.deepcopy(loaded_t), committed=work,
+                    lock_inputs=lambda: dict(li), directions=lambda li_, d_: (dict(units), dict(shas)),
+                    keys_check=lambda s_: dict(kc), env_provenance=lambda p: dict(prov_t),
+                    package=lambda: (LOCK_PACKAGE_SHA256, dict(LOCK_CLOSURE)), hashed_pins=lambda: dict(tpins),
+                    load_tokenizer=load_tok, verify=ver, tokenizers_version=lambda: "0.22.2", make_adapter=mk,
+                    adapter_shape=lambda a: (N_LAYERS, D_MODEL), make_backend=lambda a: "the backend", run=run_stub,
+                    pod=lambda: CHARACTERIZED_POD, driver=lambda: (b"drv", b"drv"), lock_path=LOCK_PATH,
+                    root=tmp / tag / "root", report=tmp / tag / "report.json", gver_stop=tmp / tag / "gver_stop.json",
+                    printer=lines.append, clock=tick)
+        base.update(over)
+        for k in ("root", "report", "gver_stop"):            # a self-test writes only under tmp
+            if _within(Path(base[k]).resolve(), REPO.resolve()):
+                raise SystemExit(f"a self-test environment points {k} into the repository: {base[k]}")
+        return CampEnv(**base), lines
+
+    def run_c(env, cublas=CHARACTERIZED_PROVENANCE["cublas_workspace_config"], **kw):
+        """run_campaign with CUBLAS_WORKSPACE_CONFIG set as the stage's environment has it (None: unset), restored."""
+        kept = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
+        if cublas is None:
+            os.environ.pop("CUBLAS_WORKSPACE_CONFIG", None)
+        else:
+            os.environ["CUBLAS_WORKSPACE_CONFIG"] = cublas
+        try:
+            return run_campaign(env, **kw)
+        finally:
+            if kept is None:
+                os.environ.pop("CUBLAS_WORKSPACE_CONFIG", None)
+            else:
+                os.environ["CUBLAS_WORKSPACE_CONFIG"] = kept
+
+    env1, lines1 = genv("complete")
+    rc1 = run_c(env1)
+    r1 = [r for r in runs if r[0] == "complete"]
+    in1 = r1[0][1] if r1 else None
+    chk("campaign: the command's flow over the doubles: G-VER PASS (the tokenizer once, verify once on the 160 "
+        "sessions), one load, the runner once with the plan's 7,680 reads, no resume, the cap 14,400,000 ms, alpha "
+        "0.01, the 28 directions and the identity; COMPLETE, exit 0; nothing written by the driver",
+        rc1 == 0 and len(r1) == 1 and made.count("complete") == 1 and toks.count("complete") == 1
+        and [v for v in vers if v[0] == "complete"] == [("complete", 160, ids.MANIFEST_OF_RECORD, "ab")]
+        and in1.hour_cap_ms == LOCK_HOUR_CAP_MS and in1.alpha == LOCK_ALPHA
+        and sorted(in1.directions) == camp_injected() and in1.identity == ident
+        and r1[0][2] == 7680 and r1[0][3] is False and in1.load_ms == 1
+        and not Path(env1.report).exists() and not Path(env1.gver_stop).exists(), (rc1, len(r1)))
+    idx = {k: next((i for i, x in enumerate(lines1) if x.startswith(k)), -1)
+           for k in ("STAGE the N-pod campaign:", "WEIGHTS:", "DRIVER scripts/n_sessions.py", "LOCK-n.md ",
+                     "the ids of record:", "the lock's inputs:", "directions (CP3):", "the keys (CP3",
+                     "backend (before the load)", "identity:", "the plan (CP1):", "hashed file config.json",
+                     "G-VER (the campaign's own", "G-VER PASS:", "backend: n's identifier", "the campaign COMPLETE")}
+    chk("campaign: ...its lines in order: STAGE first, then WEIGHTS, DRIVER (HEAD's), LOCK-n.md, the ids with the "
+        "manifest's pin, the lock's inputs, the 28 directions, the keys, the backend before the load, the identity, "
+        "the plan, the eight files' hashes, G-VER's report and PASS, the backend after the load; the last line "
+        "COMPLETE, exit 0; no line holds a margin or a log-probability",
+        idx["STAGE the N-pod campaign:"] == 0 and sorted(idx.values()) == list(idx.values()) and -1 not in idx.values()
+        and lines1[idx["G-VER (the campaign's own"] + 1] == json.dumps(rep_pass, sort_keys=True)
+        and sum(1 for x in lines1 if x.startswith("hashed file ")) == 8
+        and lines1[-1] == "the campaign COMPLETE (exit 0; CP12)"
+        and not any("margin" in x or "logprob" in x for x in lines1), {k: v for k, v in idx.items() if v == -1})
+    env2, lines2 = genv("pause", end="PAUSE", pauses=[pz_b])
+    rc2 = run_c(env2)
+    chk("campaign: a PAUSE ends the invocation, exit 3, each standing pause's excerpt printed before the last line "
+        "(CP8): the pause's record, then the binomial's k of n against p0 at alpha (no record of the read on disk)",
+        rc2 == 3 and lines2[-3:-1] == ex_b
+        and lines2[-1] == "the campaign PAUSE (exit 3; CP12): every end but COMPLETE goes to the seat and the PI",
+        lines2[-3:])
+    env3, lines3 = genv("cap", end="CAP")
+    rc3 = run_c(env3)
+    chk("campaign: a CAP end (the runner's, at the lock's cap) exits 5, its last line for the seat and the PI",
+        rc3 == 5
+        and lines3[-1] == "the campaign CAP (exit 5; CP12): every end but COMPLETE goes to the seat and the PI",
+        lines3[-1:])
+    env4, lines4 = genv("gstop", rep=rep_stop)
+    rc4 = run_c(env4)
+    gp4, rp4 = Path(env4.gver_stop), Path(env4.report)
+    g4 = json.loads(gp4.read_bytes().decode("utf-8")) if gp4.is_file() else {}
+    rr4 = cells.read_json(rp4) if rp4.is_file() else {}
+    chk("campaign: G-VER's STOP at the start (CP9 (a)): exit 6, no weights load and no runner; G-VER's record written "
+        "(n-gver-v1, status STOP, passing its check) and the report in the schema's G-VER-STOP form, its stop record "
+        "citing the record's sha256, rendering_mismatches 1; the last line a STOP for the seat and the PI",
+        rc4 == 6 and made.count("gstop") == 0 and not any(r[0] == "gstop" for r in runs)
+        and g4.get("status") == "STOP" and not refused(lambda: check_gver(g4, tpins))[0]
+        and rr4.get("end_state") == "G-VER-STOP" and valid(rr4)
+        and rr4["stop"]["record_sha256"] == hashlib.sha256(gp4.read_bytes()).hexdigest()
+        and rr4["counters"]["rendering_mismatches"] == 1
+        and lines4[-1].startswith("the campaign G-VER-STOP at its start (exit 6; CP9 (a))"), lines4[-2:])
+    rule = tmp / "ruling-p01.md"
+    rule.write_bytes(b"The seat's ruling (the self-test's stand-in).\n")
+    env5, lines5 = genv("gresume", rep=rep_stop)
+    _r5, rp5, _rep5 = fixture("gresume", "PAUSE", pz)
+    b5 = rp5.read_bytes()
+    rc5 = run_c(env5, resume=True, rulings={"p01": str(rule)})
+    chk("campaign: G-VER's STOP at a resume (CP9 (b)): exit 6, no weights load and no runner; nothing written -- the "
+        "report's bytes as the last invocation left them, no G-VER record -- and G-VER's record printed whole",
+        rc5 == 6 and made.count("gresume") == 0 and not any(r[0] == "gresume" for r in runs)
+        and rp5.read_bytes() == b5 and not Path(env5.gver_stop).exists()
+        and any(x.startswith('{"durations_ms"') for x in lines5)
+        and lines5[-1].startswith("the campaign G-VER-STOP at a resume (exit 6; CP9 (b))"), lines5[-1:])
+    env6, lines6 = genv("recfail", rep={"status": "PASS", "sessions": 160})
+    rc6 = run_c(env6)
+    chk("campaign: a G-VER report that fails the record's check ends exit 1 before any load, with nothing written",
+        rc6 == 1 and made.count("recfail") == 0 and not Path(env6.gver_stop).exists()
+        and not Path(env6.report).exists()
+        and lines6[-2].startswith("FAILED at G-VER's record or report: the G-VER record is malformed at verify")
+        and lines6[-1] == "the campaign: not run (exit 1; CP12)", lines6[-2:])
+
+    # the refusals before any read: exit 1, no tokenizer, G-VER not run, no load, the runner not called, nothing written
+    def raising(exc):
+        def f(*_a, **_k):
+            raise exc
+        return f
+    cub = CHARACTERIZED_PROVENANCE["cublas_workspace_config"]
+    w_toy = {"repo": "toy", "revision": "0" * 12, "sha256": LOCK_WEIGHTS_SHA256, "n_files": 9, "path": str(tw)}
+    off = dict(tpins, **{"tokenizer.json": "0" * 64})
+    cases = [("pod-none", dict(pod=lambda: None), cub, {}, "without $RUNPOD_POD_ID"),
+             ("pod-other", dict(pod=lambda: "another-pod"), cub, {}, "not the characterized one"),
+             ("cublas-none", {}, None, {}, "CUBLAS_WORKSPACE_CONFIG is not the characterized setting"),
+             ("weights", dict(weights=lambda: dict(w_toy, sha256="5" * 64)), cub, {}, "not the lock's (L §17)"),
+             ("weights-folder",
+              dict(weights=raising(SystemExit("the weights folder holds 1 files the manifest does not list"))), cub,
+              {}, "the weights folder holds 1 files"),
+             ("driver", dict(driver=lambda: (b"drv", b"other")), cub, {}, "runs only the committed driver"),
+             ("driver-none", dict(driver=lambda: (b"drv", None)), cub, {}, "runs only the committed driver"),
+             ("lock", dict(committed=lambda p: None), cub, {}, "LOCK-n.md is absent, not HEAD's committed bytes"),
+             ("sessions", dict(load_sessions=raising(ValueError("skeleton files are not BK's 14"))), cub, {},
+              "the session set (sessions.load_sessions): ValueError"),
+             ("ids", dict(load_ids=raising(KeyError("files"))), cub, {}, "the ids of record (ids.load): KeyError"),
+             ("lockin", dict(lock_inputs=lambda: gtime_lock_inputs(lambda p: None)), cub, {}, "LOCK-n.md is absent"),
+             ("dirs", dict(directions=lambda li_, d_: camp_directions(named_x, d_)), cub, {},
+              "are not at the lock's sha16s"),
+             ("keys", dict(keys_check=lambda s_: camp_keys_check(ss_y)), cub, {}, "realized fidelity sample"),
+             ("bridge", dict(env_provenance=lambda p: dict(prov_t, python="3.12.4")), cub, {}, "(R6)"),
+             ("bid", dict(env_provenance=lambda p: dict(prov_t, choice_window_declared=8192)), cub, {},
+              "is not the lock's 8264f719efd347a9"),
+             ("tokenizers", dict(tokenizers_version=lambda: "0.22.3"), cub, {},
+              "tokenizers 0.22.3 is not the lock's 0.22.2"),
+             ("pkg", dict(package=lambda: ("0" * 64, dict(LOCK_CLOSURE))), cub, {}, "not the lock's (L §18; CP1)"),
+             ("closure", dict(package=lambda: (LOCK_PACKAGE_SHA256, dict(LOCK_CLOSURE, **{"valence_core/x.py":
+                                                                                           "0" * 64}))), cub, {},
+              "closure files differing ['valence_core/x.py']"),
+             ("plan", dict(lock_inputs=lambda: dict(li, dose_map=dm_m)), cub, {}, "is not the lock's (L §6)"),
+             ("tokpin", dict(hashed_pins=lambda: dict(off)), cub, {}, "are not at the model manifest's pins"),
+             ("ruling", {}, cub, dict(resume=True, rulings={"p01": str(tmp / "no-ruling.md")}), "is not a file"),
+             ("ruling-git", dict(committed=lambda p: None if Path(p).name == rule.name else work(p)), cub,
+              dict(resume=True, rulings={"p01": str(rule)}), "a ruling is a committed raw"),
+             ("ruling-repo", dict(committed=lambda p: committed_bytes(p) if Path(p).name == rule.name else work(p)),
+              cub, dict(resume=True, rulings={"p01": str(rule)}), "a ruling is a committed raw"),
+             ("exit0", dict(lock_inputs=raising(SystemExit(0))), cub, {}, "SystemExit(0)"),
+             ("exitnone", dict(weights=raising(SystemExit(None))), cub, {}, "SystemExit(None)")]
+    bad_cases = []
+    for tag, over, cub_t, kw, text in cases:
+        e_, l_ = genv(tag, **over)
+        rc_ = run_c(e_, cub_t, **kw)
+        line = next((x for x in l_ if x.startswith("REFUSED before any read: ")), "")
+        if not (rc_ == 1 and text in line and l_[-1] == "the campaign: not run (exit 1; CP12)"
+                and tag not in toks and not any(v[0] == tag for v in vers) and tag not in made
+                and not any(r[0] == tag for r in runs) and not Path(e_.report).exists()
+                and not Path(e_.gver_stop).exists()):
+            bad_cases.append((tag, rc_, line[:160]))
+    real_ka = m_keys.stream_known_answer
+    m_keys.stream_known_answer = lambda: ["the stream's known answer differs (the self-test's stand-in)"]
+    try:
+        e_k, l_k = genv("ka")
+        rc_k = run_c(e_k)
+    finally:
+        m_keys.stream_known_answer = real_ka
+    e_d, l_d = genv("ondisk")
+    fixture("ondisk", "PAUSE", pz)
+    rc_d = run_c(e_d)
+    e_c2, l_c2 = genv("aftercap")
+    fixture("aftercap", "CAP", [], used_ms=LOCK_HOUR_CAP_MS)
+    rc_c2 = run_c(e_c2, resume=True)
+    e_cm, l_cm = genv("aftercomplete")                  # the review's F5 (iii): a valid COMPLETE report on disk
+    rep_cm = schema.example_report(ident, end_state="COMPLETE", hour_cap_ms=LOCK_HOUR_CAP_MS)
+    Path(e_cm.report).parent.mkdir(parents=True, exist_ok=True)
+    m_resume.atomic_write_json(Path(e_cm.report), rep_cm)
+    rc_cm = run_c(e_cm, resume=True)
+    e_s, l_s = genv("stopfile")
+    Path(e_s.gver_stop).parent.mkdir(parents=True, exist_ok=True)
+    Path(e_s.gver_stop).write_bytes(b"{}\n")
+    rc_s = run_c(e_s, resume=True)
+    e_g, l_g = genv("aftergstop")
+    camp_gver_stop_report(ident, plan, e_g.root, e_g.report, record_sha256="c" * 64, mismatches=1, detail="d")
+    rc_g = run_c(e_g, resume=True)
+    disk = [(rc_d, l_d, "records or a report are on disk"), (rc_c2, l_c2, "the campaign ended CAP: nothing is left"),
+            (rc_cm, l_cm, "the campaign ended COMPLETE: nothing is left"),
+            (rc_s, l_s, "exists: the campaign ended at its start's G-VER STOP"),
+            (rc_g, l_g, "the stage ended G-VER-STOP; nothing resumes after a STOP")]
+    bad_disk = [(t_, rc_) for rc_, l_, t_ in disk
+                if not (rc_ == 1 and any(x.startswith("REFUSED before any read: ") and t_ in x for x in l_))]
+    chk(f"campaign: {len(cases) + 1 + len(disk)} refusals before any read, each exit 1 with its reason on a REFUSED "
+        f"line, no tokenizer loaded, G-VER not run, no weights loaded and the runner not called: the pod (none, "
+        f"another), the cuBLAS setting, the weights (not the lock's, the folder), the driver (another's, none at "
+        f"HEAD), LOCK-n.md, the session set, the ids, the lock's inputs, a direction off its pin, the keys, the R6 "
+        f"bridge, n's backend identifier, tokenizers' version, the package, its closure, the plan, a hashed file off "
+        f"its pin, a ruling that is not a file, a ruling that is not a committed raw (git cannot show it; outside the "
+        f"repository: the review's O6), a SystemExit with no message from a seam (0, None: the review's B7), the "
+        f"stream's known answer (each writing nothing); and on disk, a report without --resume, a resume after CAP, "
+        f"a resume after COMPLETE (a valid report: the review's F5 (iii)), G-VER's STOP record, a resume after a "
+        f"G-VER-STOP report",
+        not bad_cases and not bad_disk and rc_k == 1 and "ka" not in made and "ka" not in toks
+        and any(x.startswith("REFUSED before any read: the stream's known answer differs") for x in l_k)
+        and m_keys.stream_known_answer is real_ka and valid(rep_cm)
+        and not any(t_ in made or t_ in toks for t_ in ("ondisk", "aftercap", "aftercomplete", "stopfile",
+                                                        "aftergstop")),
+        (bad_cases[:3], bad_disk))
+
+    # the review's fixes over the doubles: the excerpt's read of a paused cell, and an excerpt that cannot be formed
+    # (F5 (v), F3); the start's G-VER STOP when the report's write fails (F4); a resume reaching the runner (F5 (i));
+    # failures at G-VER and at the load (F5 (ii), B7); a resume after a crashed first invocation (F5 (iv)); a
+    # MANIFEST.json off its pin at a resume (O4)
+    pz_c = dict(pz_b, kind="fidelity-ceiling", binomial=None, read_id=plan[200].read_id, launch_index=200,
+                arms_in_scope=[plan[200].arm])
+    lc_args: list = []
+    real_lc = cells.load_cell
+
+    def lc_two(root_, arm_, did_, dl_, identity=None, **_k):  # a stand-in cell: another read's record first
+        lc_args.append((Path(root_), arm_, did_, dl_, identity))
+        return {"records": [{"read_id": plan[199].read_id, "fidelity": {"absdiff": 9.0, "finite": True},
+                             "finite": True},
+                            {"read_id": plan[200].read_id, "fidelity": {"absdiff": 0.3125, "finite": True},
+                             "finite": True}]}, None
+    cells.load_cell = lc_two
+    try:
+        e_v, l_v = genv("ceilread", end="PAUSE", pauses=[pz_c])
+        rc_v = run_c(e_v)
+        cells.load_cell = raising(SystemExit("x.json: not a valid cell, at records"))
+        e_f, l_f = genv("excfail", end="PAUSE", pauses=[pz_c])
+        rc_f = run_c(e_f)
+    finally:
+        cells.load_cell = real_lc
+    chk("campaign: the excerpt reads the paused read's record from its cell, by the read_id's arm, direction and dose "
+        "under the identity (cells.load_cell, a stand-in holding another read's record first; the review's F5 (v)): "
+        "the paused read's absdiff against C, exit 3",
+        rc_v == 3 and cells.load_cell is real_lc
+        and lc_args == [(Path(e_v.root).resolve(), plan[200].arm, plan[200].direction_id, plan[200].dose_label, ident)]
+        and l_v[-3:-1] == [f"EXCERPT p01: fidelity-ceiling at read 200 ({plan[200].read_id}); arms in scope "
+                           f"{plan[200].arm}; also fired none",
+                           "  fidelity-ceiling: absdiff 0.3125 nats, the cached and fresh paths' difference, against C "
+                           "0.25"], (rc_v, l_v[-3:]))
+    chk("campaign: an excerpt that cannot be formed (the paused cell refused by a stand-in for cells.load_cell) is one "
+        "line naming the pause and the error's kind; the exit stays 3, the report the runner's (the review's F3)",
+        rc_f == 3 and l_f[-2] == "EXCERPT p01 unavailable: SystemExit; the pause stands in the report"
+        and l_f[-1] == "the campaign PAUSE (exit 3; CP12): every end but COMPLETE goes to the seat and the PI",
+        l_f[-2:])
+    real_aw = m_resume.atomic_write_json
+
+    def aw_oserror(p, obj, **k):                        # the report's write fails; any other write is the real one
+        if Path(p).name == "report.json":
+            raise OSError("the self-test's stand-in: the write failed")
+        real_aw(p, obj, **k)
+
+    def aw_other(p, obj, **k):                          # the report's bytes on disk are not those written
+        real_aw(p, obj, **k)
+        if Path(p).name == "report.json":
+            Path(p).write_bytes(Path(p).read_bytes() + b" ")
+    m_resume.atomic_write_json = aw_oserror
+    try:
+        e_w1, l_w1 = genv("repwrite", rep=rep_stop)
+        rc_w1 = run_c(e_w1)
+        m_resume.atomic_write_json = aw_other
+        e_w2, l_w2 = genv("repback", rep=rep_stop)
+        rc_w2 = run_c(e_w2)
+    finally:
+        m_resume.atomic_write_json = real_aw
+    chk("campaign: G-VER's STOP at the start when the report's write fails (a stand-in for atomic_write_json: an "
+        "OSError; bytes on disk other than those written): exit 1, and neither G-VER's record nor the report is left "
+        "(the review's F4)",
+        (rc_w1, rc_w2) == (1, 1) and m_resume.atomic_write_json is real_aw
+        and not any(Path(e_.gver_stop).exists() or Path(e_.report).exists() for e_ in (e_w1, e_w2))
+        and any(x.startswith("FAILED at G-VER's record or report: report.json: the report's write or its read-back "
+                             "failed (OSError)") for x in l_w1)
+        and any(x.startswith("FAILED at G-VER's record or report: report.json: the report on disk is not the report "
+                             "written") for x in l_w2)
+        and all(any(x.startswith("G-VER's record ") and x.endswith(" removed: the report was not written (CP9 (a))")
+                    for x in l_) for l_ in (l_w1, l_w2))
+        and l_w1[-1] == l_w2[-1] == "the campaign: not run (exit 1; CP12)", (l_w1[-3:], l_w2[-3:]))
+    e_r, l_r = genv("resumes")
+    fixture("resumes", "PAUSE", pz)
+    rc_r = run_c(e_r, resume=True, rulings={"p01": str(rule)})
+    r_r = [r for r in runs if r[0] == "resumes"]
+    in_r = r_r[0][1] if r_r else None
+    chk("campaign: a resume with its ruling reaches the runner (the review's F5 (i)): G-VER PASS, one load, the runner "
+        "once with resume True, the ruling as given, the stage's root and report (not G-VER's STOP record's path), "
+        "the cap 14,400,000 ms, the plan's 7,680 reads; the runner's end, exit 0",
+        rc_r == 0 and len(r_r) == 1 and r_r[0][3] is True and r_r[0][2] == 7680 and made.count("resumes") == 1
+        and in_r.rulings == {"p01": str(rule)} and Path(in_r.root) == Path(e_r.root).resolve()
+        and Path(in_r.report_path) == Path(e_r.report).resolve()
+        and Path(in_r.report_path) != Path(e_r.gver_stop).resolve() and in_r.hour_cap_ms == LOCK_HOUR_CAP_MS,
+        (rc_r, len(r_r), l_r[-2:]))
+
+    class OtherAdapter(StubAdapter):
+        def provenance(self):
+            return dict(prov_t, python="3.12.4")
+    fails = [("tokfail", dict(load_tokenizer=raising(SystemExit("the tokenizer folder holds no tokenizer.json"))),
+              "FAILED at G-VER (the tokenizer's load or the decode): the tokenizer folder holds no tokenizer.json"),
+             ("verexit", dict(verify=raising(SystemExit(0))),
+              "FAILED at G-VER (the tokenizer's load or the decode): SystemExit(0)"),
+             ("provafter", dict(make_adapter=lambda p: OtherAdapter()),
+              "FAILED after G-VER: the loaded adapter's provenance is not the one checked before the load"),
+             ("shapeafter", dict(adapter_shape=lambda a: (N_LAYERS, D_MODEL + 1)),
+              f"FAILED after G-VER: the checkpoint is {(N_LAYERS, D_MODEL + 1)}, not {(N_LAYERS, D_MODEL)}"),
+             ("loadexit", dict(make_adapter=raising(SystemExit(None))), "FAILED after G-VER: SystemExit(None)")]
+    bad_f = []
+    for tag, over, text in fails:
+        e_, l_ = genv(tag, **over)
+        rc_ = run_c(e_)
+        if not (rc_ == 1 and any(x.startswith(text) for x in l_) and not any(r[0] == tag for r in runs)
+                and not Path(e_.report).exists() and not Path(e_.gver_stop).exists()):
+            bad_f.append((tag, rc_, l_[-2:]))
+    chk(f"campaign: {len(fails)} failures after the preparation, each exit 1 with its line, the runner not called and "
+        f"nothing written: the tokenizer's load refused and a SystemExit(0) from the decode (B7), the loaded "
+        f"adapter's provenance and its shape not those checked before the load (the review's F5 (ii)), a "
+        f"SystemExit(None) at the load (B7)", not bad_f, bad_f[:2])
+    e_cr, l_cr = genv("crashed", rep=rep_stop)
+    cp_cr = Path(e_cr.root) / schema.cell_filename(plan[0].arm, plan[0].direction_id, plan[0].dose_label)
+    cp_cr.parent.mkdir(parents=True, exist_ok=True)
+    cp_cr.write_bytes(json.dumps({"records": [{"read_id": plan[0].read_id}]}).encode("utf-8"))
+    b_cr = cp_cr.read_bytes()
+    rc_cr = run_c(e_cr, resume=True)
+    chk("campaign: G-VER's STOP at a resume after a crashed first invocation -- a record on disk and no report (a "
+        "stand-in cell): exit 6 with nothing written, no G-VER record and no report, the cell as it was; the start's "
+        "form is a fresh campaign's alone (the review's F5 (iv))",
+        rc_cr == 6 and not Path(e_cr.gver_stop).exists() and not Path(e_cr.report).exists()
+        and cp_cr.read_bytes() == b_cr and made.count("crashed") == 0
+        and l_cr[-1].startswith("the campaign G-VER-STOP at a resume (exit 6; CP9 (b))"), l_cr[-2:])
+    rep_man = dict(rep_pass, manifest_ok=False, status="STOP", first_problems=["MANIFEST.json is not of record"])
+    e_mo, l_mo = genv("manoff", rep=rep_man, load_ids=lambda: dict(copy.deepcopy(loaded_t), manifest_sha256="0" * 64))
+    _r_mo, rp_mo, _rep_mo = fixture("manoff", "PAUSE", pz)
+    b_mo = rp_mo.read_bytes()
+    rc_mo = run_c(e_mo, resume=True, rulings={"p01": str(rule)})
+    chk("campaign: a MANIFEST.json off its pin at a resume reaches G-VER, whose STOP it is (L:543): the identity's "
+        "rendering_id is the pin, so the report on disk is this identity's; exit 6 with nothing written (the "
+        "review's O4)",
+        rc_mo == 6 and rp_mo.read_bytes() == b_mo and not Path(e_mo.gver_stop).exists() and made.count("manoff") == 0
+        and any(x.startswith(f"the ids of record: 160 sessions; MANIFEST.json {'0' * 64}, the pin ")
+                and x.endswith("not equal, one of G-VER's causes (L:543)") for x in l_mo)
+        and ("manoff", 160, "0" * 64, "ab") in vers
+        and l_mo[-1].startswith("the campaign G-VER-STOP at a resume (exit 6; CP9 (b))"), l_mo[-2:])
+
+    # the PI's stop's flow (CP9 (c))
+    e_p, l_p = genv("piflow")
+    fixture("piflow", "PAUSE", pz)
+    rc_p = run_campaign_pi_stop(e_p, raw)
+    rr_p = cells.read_json(Path(e_p.report))
+    e_p2, l_p2 = genv("piflow-pod", pod=lambda: None)
+    fixture("piflow-pod", "PAUSE", pz)
+    rc_p2 = run_campaign_pi_stop(e_p2, raw)
+    e_p3, l_p3 = genv("piflow-drv", driver=lambda: (b"drv", b"other"))
+    fixture("piflow-drv", "PAUSE", pz)
+    rc_p3 = run_campaign_pi_stop(e_p3, raw)
+    e_p4, l_p4 = genv("piflow-other", pod=lambda: "another-pod")
+    fixture("piflow-other", "PAUSE", pz)
+    rc_p4 = run_campaign_pi_stop(e_p4, raw)
+    e_p5, l_p5 = genv("piflow-exit", pod=raising(SystemExit(0)))
+    fixture("piflow-exit", "PAUSE", pz)
+    rc_p5 = run_campaign_pi_stop(e_p5, raw)
+    chk("campaign: the PI's stop's flow (CP9 (c)): exit 7, the report PI-STOP citing the raw, no tokenizer, no load "
+        "and no runner; on no pod, on another pod (the review's F5 (vi)), with a SystemExit(0) from the pod's seam "
+        "(B7), or with a driver that is not HEAD's, exit 1 with the report left PAUSE",
+        rc_p == 7 and rr_p["end_state"] == "PI-STOP" and rr_p["stop"]["record_sha256"] == raw_sha
+        and not any(t_ in toks or t_ in made
+                    for t_ in ("piflow", "piflow-pod", "piflow-drv", "piflow-other", "piflow-exit"))
+        and not any(r[0].startswith("piflow") for r in runs)
+        and l_p[-1] == "the campaign PI-STOP (exit 7; CP12): every end but COMPLETE goes to the seat and the PI"
+        and (rc_p2, rc_p3, rc_p4, rc_p5) == (1, 1, 1, 1)
+        and all(cells.read_json(Path(e_.report))["end_state"] == "PAUSE" for e_ in (e_p2, e_p3, e_p4, e_p5))
+        and l_p2[-1] == l_p4[-1] == l_p5[-1] == "the campaign's PI-STOP: not written (exit 1; CP12)"
+        and l_p4[-2].startswith("REFUSED: the PI's stop runs on the characterized pod")
+        and l_p5[-2] == "REFUSED: SystemExit(0)", (l_p[-1:], l_p2[-2:], l_p4[-2:], l_p5[-2:]))
+
+    # main()'s options for campaign, behind two traps (the box safety of a self-test that reaches the driver's entry
+    # point after the commit): the recorders below stand in for the stage, and, beside them, no pod id is set, so the
+    # real stage path would refuse at its pod check, and the production loaders are raising stubs
+    g = globals()
+    loaders = ("weights_of_record", "_load_adapter", "_gver_tokenizer", "_gver_load_tokenizer")
+    real_loaders = {n: g[n] for n in loaders}
+
+    def trapped(*_a, **_k):
+        raise SystemExit("the self-test's trap: a production loader was reached")
+    pod_kept = os.environ.pop("RUNPOD_POD_ID", None)
+    for n in loaders:
+        g[n] = trapped
+    try:
+        penv = production_camp_env()
+        chk("campaign: (the self-test's own guard) main()'s cases run with RUNPOD_POD_ID unset and the production "
+            "loaders trapped: weights_of_record, _load_adapter, _gver_tokenizer and _gver_load_tokenizer raise, as the "
+            "production environment holds them",
+            "RUNPOD_POD_ID" not in os.environ and all(g[n] is trapped for n in loaders)
+            and penv.weights is trapped and penv.load_tokenizer is trapped and penv.make_adapter is trapped, "")
+        chk("campaign: the production environment's other seams are the driver's and the package's own: the runner's "
+            "run, the lock's inputs, the directions and keys of record, verify.verify through _gver_verify, the "
+            "committed bytes, the provenance before a load, the package's closure, the model manifest's pins of the "
+            "eight, tokenizers' version, the 5(f) backend, the session set, ids.load, the pod, the driver's bytes; the "
+            "root, report and G-VER record under data/n, the lock LOCK-n.md, the clock time.perf_counter",
+            penv.run is runner.run and penv.lock_inputs is gtime_lock_inputs
+            and penv.directions is camp_directions_of_record and penv.keys_check is camp_keys_check
+            and penv.verify is _gver_verify and penv.committed is committed_bytes
+            and penv.env_provenance is environment_provenance and penv.package is _package_closure
+            and penv.hashed_pins is gver_hashed_pins and penv.tokenizers_version is _tokenizers_version
+            and penv.make_backend is _hf_backend and penv.load_sessions is sessions.load_sessions
+            and penv.load_ids is ids.load and penv.pod is m_resume.pod_id and penv.driver is driver_bytes
+            and penv.root == CAMP_ROOT and penv.report == CAMP_REPORT and penv.gver_stop == CAMP_GVER_STOP
+            and penv.lock_path == LOCK_PATH and penv.clock is time.perf_counter, "")
+
+        def argv_error(argv) -> str:
+            err = io.StringIO()
+            try:
+                with contextlib.redirect_stderr(err):
+                    main(argv)
+            except SystemExit as e:
+                return err.getvalue() if e.code == 2 else f"exit {e.code}"
+            return "no error"
+        o_ = str(tmp / "o")
+        for argv, want_t in ((["campaign", "--smoke", "1"], "campaign takes --resume with --ruling"),
+                             (["campaign", "--out", o_], "campaign takes --resume with --ruling"),
+                             (["campaign", "--root", o_], "campaign takes --resume with --ruling"),
+                             (["campaign", "--report", o_], "campaign takes --resume with --ruling"),
+                             (["campaign", "--convention", "space"], "campaign takes --resume with --ruling"),
+                             (["campaign", "--model-dir", o_], "campaign takes --resume with --ruling"),
+                             (["campaign", "--tokenizer-dir", o_], "campaign takes --resume with --ruling"),
+                             (["campaign", "--ids-dir", o_], "campaign takes --resume with --ruling"),
+                             (["campaign", "--pi-date", "2026-11-23"], "campaign takes --resume with --ruling"),
+                             (["campaign", "--bench-dir", o_], "--bench-dir: gtime's option only"),
+                             (["campaign", "--ruling", "p01=x"], "--ruling goes with --resume"),
+                             (["campaign", "--pi-stop", o_, "--resume"], "--pi-stop takes no --resume or --ruling"),
+                             (["gtime", "--pi-stop", o_, "--bench-dir", o_], "--pi-stop: campaign's option only"),
+                             (["gver", "--pi-stop", o_], "--pi-stop: campaign's option only")):
+            got_a = argv_error(argv)
+            chk(f"campaign: main() refuses {' '.join(argv[:2])} … with \"{want_t}\"", want_t in got_a, got_a[-160:])
+        real_run, real_pi = g["run_campaign"], g["run_campaign_pi_stop"]
+        calls: list = []
+
+        def rec_run(env, *, resume=False, rulings=None):
+            calls.append(("run", env, resume, dict(rulings or {})))
+            return 0
+
+        def rec_pi(env, raw_):
+            calls.append(("pi", env, str(raw_)))
+            return 7
+        g["run_campaign"], g["run_campaign_pi_stop"] = rec_run, rec_pi
+        try:
+            rc_m1 = main(["campaign"])
+            rc_m2 = main(["campaign", "--resume", "--ruling", f"p01={o_}"])
+            rc_m3 = main(["campaign", "--pi-stop", o_])
+        finally:
+            g["run_campaign"], g["run_campaign_pi_stop"] = real_run, real_pi
+        chk("campaign: main() hands campaign to the stage with the production environment: a run, a resume with its "
+            "ruling, and --pi-stop to the PI's stop",
+            (rc_m1, rc_m2, rc_m3) == (0, 0, 7) and len(calls) == 3 and calls[0][0] == "run"
+            and isinstance(calls[0][1], CampEnv) and calls[0][1].load_tokenizer is trapped
+            and calls[0][2] is False and calls[0][3] == {} and calls[1][0] == "run" and calls[1][2] is True
+            and calls[1][3] == {"p01": o_} and calls[2][0] == "pi" and calls[2][2] == o_, len(calls))
+    finally:
+        for n, f in real_loaders.items():
+            g[n] = f
+        if pod_kept is not None:
+            os.environ["RUNPOD_POD_ID"] = pod_kept
+    chk("campaign: (the self-test's own guard) an environment pointing the report into the repository is refused, and "
+        "the loaders are restored",
+        refused(lambda: genv("guard", report=CAMP_REPORT))[0] and all(g[n] is real_loaders[n] for n in loaders), "")
+
+
 def _parse_rulings(ap, items) -> dict:
     """``--ruling PAUSE_ID=PATH``, each once (gtime's; backend-ext's own loop is unchanged)."""
     rulings: dict = {}
@@ -6093,7 +7683,8 @@ def main(argv=None) -> int:
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("command", nargs="?",
                     choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "render-ids-v", "backend-ext",
-                             "backend-ext-2", "gvec", "gcal", "gcal-decode", "gtime", "gread-bench", "gver"))
+                             "backend-ext-2", "gvec", "gcal", "gcal-decode", "gtime", "gread-bench", "gver",
+                             "campaign"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -6107,6 +7698,7 @@ def main(argv=None) -> int:
     ap.add_argument("--convention", default=None)
     ap.add_argument("--gcal-dir", default=None)
     ap.add_argument("--bench-dir", default=None)
+    ap.add_argument("--pi-stop", default=None, metavar="RAW")
     a = ap.parse_args(argv)
     if a.selftest:
         return cmd_selftest()
@@ -6114,6 +7706,26 @@ def main(argv=None) -> int:
         ap.error("--gcal-dir: gcal-decode's option only")
     if a.bench_dir is not None and a.command != "gtime":
         ap.error("--bench-dir: gtime's option only")
+    if a.pi_stop is not None and a.command != "campaign":
+        ap.error("--pi-stop: campaign's option only")
+    if a.command == "campaign":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--smoke", a.smoke is not None), ("--out", a.out is not None),
+                                      ("--convention", a.convention is not None),
+                                      ("--model-dir", a.model_dir is not None),
+                                      ("--tokenizer-dir", a.tokenizer_dir is not None),
+                                      ("--ids-dir", a.ids_dir is not None), ("--pi-date", a.pi_date is not None))
+                   if given]
+        if foreign:
+            ap.error(f"{', '.join(foreign)}: campaign takes --resume with --ruling, or --pi-stop RAW, and nothing else "
+                     f"(CP1; CP2: no smoke); it loads from the model manifest's instruct path and writes "
+                     f"data/n/ckpt/campaign/ and data/n/reports/campaign.json, and at a G-VER STOP at its start "
+                     f"data/n/reports/campaign_gver_stop.json")
+        if a.pi_stop is not None and (a.resume or a.ruling):
+            ap.error("--pi-stop takes no --resume or --ruling: the PI's stop loads nothing and launches no read (CP9)")
+        if a.ruling and not a.resume:
+            ap.error("--ruling goes with --resume: a ruling is for a standing pause (CP8)")
+        return cmd_campaign(a.resume, _parse_rulings(ap, a.ruling), a.pi_stop)
     if a.command == "gver":
         foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                       ("--resume", a.resume), ("--ruling", bool(a.ruling)),

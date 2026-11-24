@@ -332,12 +332,16 @@ __pycache__/
 # PROPOSAL-n's G-TIME-n outputs (n v0.2 §8 step 11 and §3 G-TIME-n; scripts/n_sessions.py gtime; GT11): the stage's
 # report, its shadow cell's JSON (the six d = 0 reads) and the projection artifact, written on the box by the run of
 # record and copied back by hash. Record, not cache (ledger 27): the PI sets the cap at LOCK-n v1.0 on them. The two
-# steered cells (valence +1 and +1/2: the campaign's own reads of six sessions, by the deterministic backend) stay on
-# the box's volume with every cell's capture arrays (.npy), their digests in the committed report, until the seat
-# rules on them (no looks before the campaign, n §6).
+# steered cells (valence +1 and +1/2: the campaign's own reads of six sessions, by the deterministic backend) were
+# copied back by hash to a folder outside the repository and held there under the list of record's item 2 (the seat's
+# Q8, option (iii), at its second sitting of 2026-11-21); they are committed by path with the campaign's own cells at
+# step 14's close, before the pod stops (LOCK-n v1.0 §13), by their two lines below. Every cell's capture arrays (.npy)
+# stay out of git, their digests in the committed report.
 !/data/n/ckpt/time/
 /data/n/ckpt/time/*
 !/data/n/ckpt/time/N1-V__none__0.json
+!/data/n/ckpt/time/N1-V__valence__p1.json
+!/data/n/ckpt/time/N1-V__valence__p1_2.json
 !/data/n/reports/time.json
 !/data/n/gtime/
 /data/n/gtime/*
@@ -349,6 +353,18 @@ __pycache__/
 !/data/n/gver/
 /data/n/gver/*
 !/data/n/gver/gver.json
+
+# PROPOSAL-n's N-pod campaign (n v0.2 §8 step 14; scripts/n_sessions.py campaign; CP10): the stage's cell files' JSON
+# (138, every one's name starting with its arm, N1- to N4-), its report and, at a G-VER STOP at its start, G-VER's
+# record beside the report, written on the box and copied back by name and hash, then committed by path at the
+# close, before the pod stops (n:159). Record, not cache (ledger 27). Every cell's capture arrays (.npy, 31 a cell)
+# are copied to the laptop with their hashes and never committed (ADDENDUM-n1 §6.2); a stray file that does not start
+# with N (an AppleDouble ._ file among them) stays ignored.
+!/data/n/ckpt/campaign/
+/data/n/ckpt/campaign/*
+!/data/n/ckpt/campaign/N*.json
+!/data/n/reports/campaign.json
+!/data/n/reports/campaign_gver_stop.json
 
 # Q-F3's package (valence_core/mf3; PROPOSAL-m v1.11 §3.2, ADDENDUM-m1 §4 step 5; the design seat's
 # prebuild answers of 2026-11-06, Q1): its schedules and manifest, its gate artifacts (G-SHAPE-F3,

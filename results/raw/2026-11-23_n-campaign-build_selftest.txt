@@ -1,0 +1,82 @@
+n -- the N-pod campaign's BUILD (n v0.2 s8 step 14; Code's readings CP1-CP20 routed as PINs, the PI's "Build on the
+PINs"): its self-test on the laptop, committed with the BUILD. PI date 2026-11-23. Code (the n-build session).
+
+The change, on HEAD's version of the path (098218c; the driver's last change 2834c2d):
+  scripts/n_sessions.py        55885e65751227230f5933909ea36b6c1f649538a974cff9c6458ace2375385f  (+1645 -33)
+Every line count here is git diff --no-index --numstat's. The .gitignore's change (+19 -3), committed with it, does
+not enter the self-test.
+The package: valence_core/n's digest does not move. It is the lock's (L s18)
+  06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39,
+  computed by shell over the four overlays below. The self-test's own check holds the package's digest, measured in
+  its process, to the lock's (G-TIME-n's check; CP1).
+
+1. THE LAPTOP. Model-free, as at G-VER's BUILD: the HF cases run only where torch and transformers are present, and
+   elsewhere are skipped and counted as skipped; the schema module's own cases count as one aggregated line. The
+   campaign's cases need neither library: the runner is a seam with a double behind it, so no case launches a read,
+   and no case loads a tokenizer or the weights.
+   The overlays: a git archive of 098218c on the self-test paths, LOCK-n.md and the model manifest among them, with
+   item 3's exclusions and Q-F3's, so that no checkpoint or report file entered them: 175 files each, with the draft
+   driver in place of the committed one. All four were built by make_overlay_gver_v1.sh
+   (f8cdbccba8e1a5b05a4e3f177a4d90710a16ae2f995694c7b8608e438a2edec2), unchanged since G-VER's BUILD. By diff -rq,
+   overlay2 differs from overlay1, overlay3 from overlay2 and overlay4 from overlay3, in the driver alone, and each
+   overlay's driver is its draft's bytes (by shasum). The coordinating session's c26b117, the BUILD's parent's
+   parent, changes none of the overlays' paths.
+   The command, in a subshell, from the venv's bin folder reached by cd and a glob, so that no guard marker was in
+   an exec'd process's argv (the glob expands in the builtin cd's argument alone), with stdout, stderr and the exit
+   status each to its own file:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch>/step4b/camp/tmp nice -n 19 \
+       ./python -I -B <scratch>/step4b/camp/<overlay>/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, as the harness's background
+   task, so that no tool timeout could cut it short; Code waited for each exit notice. Before each run, the
+   coordinating session's grant found the temporary folder empty and none of the run's own output files present;
+   Code's own checks found the temporary folder empty before run 1 (at overlay1's build), and both before runs 2, 3
+   and 4. After each run, stderr was empty, the temporary folder was empty, and no n_sessions process was running. Each
+   window closed on the coordinating session's word.
+
+   Run 1, draft 1 (the bytes the blind review read; overlay1):
+     scripts/n_sessions.py        9b51bb18a19a83bc44cd4fb4e6e408c042193b612758a39fdf2d9b1d52b564c0
+   It is HEAD's driver (+1377 -31 lines) with the lock pin moved to LOCK-n v1.0's committed sha256 (CP4), the cap's
+   constant (CP5), the campaign command and its self-test (CP1, CP19), and main()'s options for it. Exit 0. Its whole
+   output (sha256 cbfeff64b00c6f000537fdfea47e04cddadc159022268edbdb18091a509d40f9), each line indented by five
+   spaces here:
+       764/764 n selftest checks pass
+   That is HEAD's 717 plus the campaign's 47: 46 in _camp_selftest and the environment's check after it.
+
+   Run 2, draft 2 (overlay2):
+     scripts/n_sessions.py        7249b88f3a517bce73bf36988a32508865c6271a97d00d41e7f1c9c63e0cd9b5
+   It is draft 1 (+377 -116 lines) with the blind review's findings built in, as the review raw committed with this
+   BUILD states them (results/raw/2026-11-23_n-campaign-build_review.md, s1): F1-F5 and F8-F11 in the driver and its
+   self-test, B7, O4 and O6, and a kill for each surviving mutant M1-M13. Its self-test has 10 checks more: 8 single
+   checks (a rendering pause's figure on the ids of record; the excerpt's read of a paused cell; an excerpt that
+   cannot be formed; a failed report write at the start's STOP; a resume reaching the runner; five failures after the
+   preparation; a resume after a crashed first invocation; a MANIFEST.json off its pin at a resume) and 2 refused
+   options in main()'s loop (14 in all), with several checks extended. Exit 0. Its whole output (sha256
+   5aa33ca84dabbc142d8137269fc544036d6ce48a948fb0f9e771fbc14c29def0), each line indented by five spaces here:
+       774/774 n selftest checks pass
+   That is HEAD's 717 plus the campaign's 57: 56 in _camp_selftest and the environment's check after it.
+
+   Run 3, draft 3 (overlay3):
+     scripts/n_sessions.py        fd643681ab49f0f4ed2b2ffb11f9b562e6992be8a164e248134e948ebb2326d9
+   It is draft 2 (+6 -3 lines) with four corrections in docstrings and a comment after the BUILD's values-check
+   (results/raw/2026-11-23_n-campaign-build_valuescheck.md): the PINs' header names CP4's DRIVER line; one sentence
+   gives LOCK-n v1.0's own citation form for L:N; CampEnv.committed's comment names its ValueError; and
+   run_campaign_pi_stop's docstring covers a failed write. No check reads them, so run 3 has run 2's checks. Exit 0.
+   Its whole output (sha256 5aa33ca84dabbc142d8137269fc544036d6ce48a948fb0f9e771fbc14c29def0, run 2's bytes), each
+   line indented by five spaces here:
+       774/774 n selftest checks pass
+
+   Run 4, draft 4, the bytes committed (overlay4):
+     scripts/n_sessions.py        47abe48925930b8cb47628bce9d7ff540c5f2d0712cc968894348eb6fdd5c21a
+   It is draft 3 (+4 -2 lines) with one docstring clause and the campaign command's usage message corrected after
+   the focused values-check of the later edits (results/raw/2026-11-23_n-campaign-starred-eight_valuescheck2.md):
+   "L s N" is named as this driver's form for v1.0's "v0.1 s N", and the usage message names G-VER's STOP record
+   beside the stage's root and report. No check reads either, so run 4 has run 3's checks. Exit 0. Its whole output
+   (sha256 5aa33ca84dabbc142d8137269fc544036d6ce48a948fb0f9e771fbc14c29def0, run 3's bytes), each line indented by
+   five spaces here:
+       774/774 n selftest checks pass
+
+2. THE BOX. The box has not run this BUILD. Its count there, by arithmetic only: 785, the laptop's 774 plus the
+   box's 11 checks more. G-VER's launch v2 recorded 728 of 728 on the box with HEAD's driver
+   (results/raw/2026-11-22_n-gver-v2_selftest.txt), against that driver's 717 on the laptop. The campaign's checks
+   are all model-free and count the same at either site, so they add nothing to the difference. The campaign's
+   launch files restate the count.
