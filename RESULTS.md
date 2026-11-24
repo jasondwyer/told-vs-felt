@@ -21,6 +21,204 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-24 — **n — the N-pod campaign's launch set v1: six points and the INTEGRITY readings for the seat, to be
+  read with the eight starred readings (code → design; the n-build session). STOP for the seat's read.**
+  Block:
+  [`2026-11-24_n-campaign-launch-points_code-to-design_STOP.md`](results/raw/2026-11-24_n-campaign-launch-points_code-to-design_STOP.md).
+  - **Where things stand:**
+    - The campaign's BUILD, `e1be6d9`, is on origin. Its run waits for the seat's ruling on the eight starred
+      readings (`fcab1e5`'s block) and the PI's word, then the coordinating session's "launch cleared" (rt23a item 3).
+    - Code's launch set v1 went to the coordinating session first, on 2026-11-24, in a note of 226 lines
+      (`ba220eab…a7d7`): for the box, the launch script, its manifest, the `hashes` file and the plan; the pod
+      session's note; Code's close placement for the laptop; and the blind launch review's report with Code's
+      dispositions of it. The coordinating session read it whole and checked it by tool; at its word the set stays
+      frozen as sent. Nothing has gone to the box.
+    - The coordinating session asked the PI how the set's points reach the seat before its ruling. The PI's answer,
+      relayed verbatim on 2026-11-24, was "Commit a raw": the option in which n-build writes a short code-to-design
+      raw with all six points and the INTEGRITY readings, the coordinating session runs its commit window and
+      verifies and screens it, the push waits for the PI's word, and the PI then nudges the seat.
+  - **The raw:**
+    - its head: where things stand, the set's files by sha256, and the cited forms;
+    - §0, the short form;
+    - §1, the six points, each with what the set does, its texts, and what another answer would change. Point 2
+      bears on CP6 (the eight's Q2): CP6 as starred has the report's three fields printed "by `jq`"; the set prints
+      them by its own Python check, with counts and each check's verdict beside them (the launch review's O3(2));
+    - §2, the INTEGRITY readings: ans22b §1.4's, carried; CP12's extension, before the seat as the eight's Q6; five
+      readings of the campaign's own on the safer side; two the other way;
+    - §3, the questions LQ1–LQ8.
+
+    Where the set's note was short, the raw follows the set's own files: point 1 names a fifth check (the ruling or
+    the PI's raw a file at HEAD's committed bytes), which the note's four left out; point 3 gives the analyzer's lines
+    exactly; and G-VER's readings are in ans22b §1.4's words, with the fourth it accepted and its correction. Point 4
+    gives each crash's end at the copy-in: a FAIL ("no report") after a crash at the start, and INTEGRITY after a
+    crash in a resume that moved a cell the report names. The set's note gave the two in one sentence ending "so step
+    1b stops INTEGRITY", and the pod session's note carries the same sentence (`camp_launch_note_v1.md`:203–205).
+    Point 2's names file and point 4's crash that the copy-in's checks do not catch come from the values-check below.
+  - **The set's tests,** as its note gives them (none on a model):
+    - one blind review of the set's first drafts: 2 BUG, 6 RISK and 6 NIT; 15 surviving mutants, 9 box risks and 7
+      observations, each applied or declared in the dispositions;
+    - the box script's harness, 787 of 787, over fake sparse copies with a stand-in python (bash, git and jq);
+    - the replay of the driver's 29 own outputs (the first window's generator, over doubles) through the script with
+      the real pins, 155 of 155;
+    - a mutation pass over the script's bash: 177 one-line mutants, 172 killed and the five declared equivalent
+      surviving as declared. Its first run left 52 survivors and no defect of the script: 47 killed by 76 checks
+      added to the harness, and the five declared equivalent;
+    - the placement script's harness, 49 of 49, and its mutation pass, 14 of 14;
+    - two battery windows the coordinating session granted, six runs: `hashes`, byte for byte G-TIME-n's and G-VER's
+      file; the generator, 29 of 29; the fixture makers, 54 and then 58 fixtures; the snippet tests of the script's
+      Python check, 54 of 54 with 33 of 33 mutants killed, then 58 of 58 with 33 of 33 and 8 of 8 literal mutants.
+  - **Model:** nothing ran on a model.
+  - **Values-check:** one blind pass over the raw's draft and this entry's. Its brief quoted the list of record v2's
+    items 1–5, and allowed `shasum`, and `jq` by name for a sweep of Code's shell commands over this session's
+    transcript.
+    - 58 items: 37 CONFIRMED, 15 IMPRECISE, 4 FAIL, 2 NOT CHECKABLE; and 9 observations.
+    - The four FAILs, each fixed in the checker's words or Code's: the head's line on the PI's word (the push waits
+      for it, and the run too, not the nudge alone); a ruling's committed raw cited to CP9, where CP8 holds it; and
+      two of this entry's departures items, the launch set's span (kinds in neither the set's file nor its message)
+      and this raw's span (its count, a fourth `git grep`, and kinds not named).
+    - Every IMPRECISE item is applied, and every observation is applied or met; the raw gives each disposition.
+    - The edits were checked by tool, 39 of 39 (the raw 15, this entry 24).
+    - Raw:
+      [`2026-11-24_n-campaign-launch-points_valuescheck.md`](results/raw/2026-11-24_n-campaign-launch-points_valuescheck.md).
+  - **Departures,** for the seat to class:
+    - Code's, from the BUILD entry's final sweep to this entry's, from its own sweep of its shell commands (`jq` over
+      this session's transcript), in four spans, 324 commands in all. Code knows of no others:
+      - **The BUILD's commit, after its entry's sweep** (22 commands): checks of the BUILD's departures draft and of
+        its entry with four sources (placeholders by `grep -c` and `grep -n -o`, widths, `wc -l`, `head -c` and `tail
+        -c` into `od -c`, after a `cd` into scratch); the BUILD texts' replay run twice; checks of the two reports
+        (fences, local strings and placeholders by `grep -c`; `tail` into `od -c`); the build script, `zsh -n` and two
+        builds (`rm -r` of the first); width checks; the known-hashes file and the abbreviation check; the manifest
+        and paths by `printf`; the message and `check_msg.sh`; gate v16's dry run, a `diff` of `RESULTS.md` with its
+        splice, `diff` of gates v15 and v16 with the ids masked; `shasum` and `wc -l` of fourteen files; the window
+        request in the sessions' notes folder, after a `cd` into it that stayed the shell's folder for the next call,
+        and a `printf` append of a line to the running list; the running list's merge; the window's pre-check and its
+        six steps as granted; the done report's checks (`git show HEAD:<path>` into `shasum` and `wc -l`, `git diff
+        -U0` of `RESULTS.md` and `--numstat` of three paths between `HEAD~1` and `HEAD`, `git cat-file commit HEAD`
+        into `sed` and `cmp`, a scoped `git status --porcelain`, `git log -1 --format` and `git rev-parse`).
+      - **The launch set, to its send** (217 commands: 198 to the set's sweep 3, then 19, of which the message that
+        sent the set counted 17, its own count included. Most kinds are in the set's departures file, `ee0345a7…8788`,
+        three sweeps, and in that message; the values-check named the rest, and they are here):
+        - reads by the file tools, and by `sed -n`, `grep -n` and `git show` of committed files at `e1be6d9` (the
+          driver, the package's modules, `valence_core/m`, the analyzer, LOCK-n.md, `RESULTS.md`, the seat's raws,
+          gvrun) and of `RESULTS.md`'s lines 7836–7850 at `098218c`; `git show` of `e1be6d9`'s G-VEC, G-CAL-n and
+          G-VER files into `shasum` or `jq`, and of `data/n/reports/time.json` into `jq` for its cells' names and
+          `json_sha256`s (the read domain; the two steered cells' pins); `jq --version`; memory notes read by `grep`,
+          `sed` and `awk`, and `wc -c` of three of them; `wc -l` of three of the sessions' notes;
+        - one recursive `/usr/bin/grep -r` over `valence_core/` and the driver, without item 3's form (nothing there is
+          under ckpt or reports): it read that folder's four marker-named files by process, with no marker in its
+          argv; and a shell glob over `results/raw/` by a G-TIME-n name prefix (25 tracked names, none marker-named);
+        - the manifest's and the overlay's builders at `e1be6d9`: `git archive` with quoted pathspecs and item 3's
+          exclusions, `tar -t` counts of ckpt or reports entries (0), and the model's data folder entered by a `cd`
+          glob, as G-TIME-n's builder does;
+        - the tests in scratch, bash only with a stand-in python over fake repositories: the harness, the replay, the
+          placement harness and the mutation passes; the harness's first run and three mutation-pass runs in the
+          background, one of those stopped by its task id and re-run whole, and two background tasks' output files
+          read by `cat`; `bash -n` and `/bin/bash -n`; the blind launch review, one read-only subagent;
+        - the two battery windows, six runs, the only commands that ran Python, each its own call as the window notes
+          gave it (the venv's python reached by a `cd` through `jl*`), with `cat`, `wc`, `shasum`, `cmp`, `grep`,
+          `cut`, `head`, `tail` and `sed` over their outputs;
+        - name-only `ls` of scratch folders and of the notes folder; `pgrep -f` of script names (none running), and
+          one `pgrep -lf` of the driver's file name, for the coordinating session's question, which printed the
+          mutation pass's bash stand-in's command line; `stat -f` of eight scratch test files' modification times, to
+          time a pass;
+        - `jq` over this session's transcript for the sweeps, the BUILD window's commands and the review's hand-back;
+          the sweep-3 draft's checks (placeholders by `grep -c`, widths by `awk`, its ending) and `awk` of the set
+          note's lines over 120 characters; after the post-sweep count, `grep -n -o` of its list for the word python,
+          and `wc -l` beside `shasum` of the set's note and eight of its files;
+        - writes in scratch, but for the set's note and the window requests in the sessions' notes folder, and memory
+          notes; the BUILD's running list in scratch read by `tail -n`, `wc -l` and `shasum`, and appended by `cat >>`
+          (declared in that list's own last lines);
+        - slips, none touching a file of record: a grep pattern built by quote concatenation, which the shell joined
+          into the campaign folder's plain name in its argv (a count, 0); two `echo ====` that zsh read as a command,
+          each ending its chain; one `cat -A`, refused by BSD cat; an `awk` sum that read the wrong field, re-run; a
+          `cp` with relative names that failed, re-run with full paths; one command holding two recursive `grep`s, of
+          scratch and of the whole sessions' notes folder, that the tool moved to the background at its timeout,
+          stopped by its task id; `cd`s into the notes folder that stayed the shell's folder for the next calls (paths
+          absolute), and after one of them a `grep` of the folder's notes for the hash written by hand wrong (below);
+          one command the app's safety check refused (an `rm` of the set note's unsent first fill; none of it ran), the
+          refill then written over that file after a sha256 check; one abbreviated hash written by hand wrong in two of
+          the set's texts, found by a by-tool check of every abbreviation before the note's sha256 and fixed; plain
+          `grep` (the shell's ugrep) in reads of scratch files and of the notes folder's notes (`grep -l` by a glob),
+          never in a gate.
+      - **After the send** (3 commands): `wc -l` and `grep -n` of a memory note and the memory index, and `cat` of a
+        second memory note; `grep -n -E` and `sed -n` of the harness script in scratch, for the coordinating session's
+        reading of what the tests ran.
+      - **This raw** (64 commands to the values-check's brief's hash, and 18 after it to this entry's sweep):
+        - the state: a scoped `git status --porcelain` filtered by `grep`, `git log --format='%h %s' -3` with the
+          pathspec, and `git rev-parse HEAD origin/main`;
+        - the texts it cites: `grep -n`, `sed -n` and `wc -l` of `RESULTS.md`, the eight's block, the spec raw,
+          ans22b, gvrun, ans23b, LOCK-n.md, ADDENDUM-n3, the analyzer, `runner.py` and the driver; one `awk` over
+          `RESULTS.md`; two narrow globs over the repository's root, `ls ADDENDUM-n3*` and `sed -n '60p'
+          ADDENDUM-n3*.md` (one match, its name holding no marker); a name-only `ls` of `results/raw/` piped to `grep`
+          for a date prefix (the other names, some marker-named, passed through the pipe and none printed); four `git
+          grep`: three over the tree with item 3's pathspec and the campaign folder's exclusion, and one `-w` over two
+          quoted pathspec globs under `results/raw/` (G-VER v2's and G-TIME-n's raws, none marker-named); `git log -1
+          --format` of a raw and of the analyzer;
+        - the set's files in scratch: `cat`, `cat -n`, `sed -n`, `grep -n`, `grep -o` into `sort` and `uniq -c`, `cut`
+          and `fold` of the launch script, its dispositions, the review's report, the `hashes` file and the two
+          departures files;
+        - the sessions' notes folder: `shasum` and `grep -n` of the first window's note and `sed -n` of its points;
+          `ls` filtered by `grep`; `cat` of the seat block's window request; a loop of `shasum` over the window
+          requests, after a `cd` into the folder that stayed the shell's folder for the next call (paths absolute);
+        - the kit: name-only `ls` of two kit folders, of the kit scripts' folder and of two more scratch folders
+          filtered by `grep`; `wc -l` of two gate id lists (one
+          named in the wrong folder: no file); the launch review's id list printed with its tail masked by `sed` (its
+          first nine characters in the tool output); `grep -n` of gate v16's header;
+        - `jq` over this session's transcript: the agent calls since 2026-11-24 (time, tool-call id, description); the
+          messages sent since the BUILD's final sweep (their first 80 characters); the records holding the PI's word
+          (type and time), found by `grep -n -F` and `grep -F`; lists of the shell commands from 03:40 UTC, before the
+          BUILD's final sweep, numbered by `awk`; the shell commands since that sweep, into a scratch file, with counts
+          per span by `awk`, bracketed counts, a bracketed count of the word python and `sed -n` of its lines; and the
+          set's message by `jq` into `grep`;
+        - the drafts' checks: `wc -l` and `grep -n` of three earlier check briefs; `git ls-files` of `results/raw/`
+          into a bracketed marker count; widths by `grep -c` under two locales, and `sed -n` of the block draft after a
+          `cd` into scratch; the abbreviation check (`shasum`, `grep -h -o` over the drafts and the fill script, `cut`,
+          `sort -u` into scratch, `comm -23`); `wc -l` beside `shasum` of thirteen files; line-range hashes of the
+          launch script, with `grep -n` and `sed -n` of its fill script; the brief's list of record compared by `diff`
+          with the seat block's check's brief, and the brief's `wc -l` and `shasum`;
+        - writes in scratch alone, by the file tools and redirects;
+        - after the values-check's brief (18 commands, this sweep included):
+          - gate v17: `wc -l`, `sed -n`, `grep -n -E` and `diff` of gates v15 and v16, the ids masked by `sed`; `test
+            ! -e`, `cp` of v16 to v17 and `cmp`; `bash -n` of v17, `diff` of v16 and v17 with the ids masked, a loop of
+            `grep -c -F` per new agent id over v17 (the two ids in the command's text, their first three characters
+            printed), and `shasum` of v17;
+          - the kit's forms: `sed -E` of the seat kit's manifest with its paths masked, `cat` of its paths file, and
+            `sed -n` of the BUILD's window request in the sessions' notes folder; `git log -1 --format=%B` of `fcab1e5`
+            and `e1be6d9` into `wc -l`, `tail -n 2` and `cut` (commit bodies, beyond item 1's ids, subjects and
+            times); `sed -E` of `check_msg.sh`, masked; `wc -l`, `grep -n` and `sed -n` of the BUILD's committed
+            values-check raw; `wc -l` and `sed -E` of the BUILD's replay and commit-build scripts in scratch;
+          - the check's return: `sed -n` of the eight's block, the driver and the launch script at the lines the fixes
+            cite; `grep -n -F` of this session's transcript for the report's first line, `sed -n` of the matching
+            records into `jq` (type, time and content type), and of the report's record into `jq -r` and a scratch
+            file; the frame removed by `sed` into the report's file, with `grep -c` of unframed lines, fences, local
+            strings, ids and bracketed markers, `shasum`, `wc -l`, `head` and `tail`; a bracketed count of two folder
+            names over the report; the v2 copies by `cp` and `cmp`; the v2 drafts' widths after a `cd` into scratch,
+            with `sed -n` of one paragraph; `sed -n` of the BUILD's values-check raw's dispositions;
+          - this sweep: `jq` over this session's transcript into a scratch file, counts per span by `awk`, bracketed
+            counts, and the commands after the brief listed by `sed` and `cut`.
+      - **In every span, the file tools:** Reads of repository files, scratch files, memory notes and the sessions'
+        notes; Writes and Edits in scratch, in the sessions' notes folder, and of memory notes and the memory index.
+        And in every span, `grep -c` counts that printed 0 and so ended their command with exit 1, with no effect.
+      - **Counts:** by bracketed patterns over every span's commands: no guard marker, no plain name of Q-F3's folder
+        and no name of G-TIME-n's staging folder in any command's text. The joined argv of the launch set's first
+        sweep is the one argv that held Q-F3's folder's plain name. Python ran only in the two windows' six runs; the
+        word is in two more commands' text, the printed labels of two sweeps' counts.
+    - the blind launch reviewer's, as its report states them: `/bin/bash --version`; a `git log` with no pathspec, of
+      ids and subjects (item 1 permits it); one `%ad`, the author date, where item 1 names commit times; one output
+      saved by its tool to a file it did not read;
+    - the values-checker's, as its report states them: one `git grep` whose pathspec named three files and a quoted
+      glob over the repository's root, `'ADDENDUM-n*'` (three tracked matches, none marker-named), where named files
+      or item 3's form were wanted; and one `git check-ignore --no-index -v --stdin` of two hypothetical names under
+      `data/n/ckpt/campaign/` (strings on stdin; nothing listed, sized, timed or read), whose output, with a `grep` of
+      `git show e1be6d9:.gitignore`, printed ckpt path names with their digit runs unmasked.
+  - **The gate.** The launch review's and the values-checker's agent ids are added to the commit gate's id list (a
+    new version of Code's gate script), so the commit is checked to carry neither.
+  - **Committed by path:** the raw, the values-check raw and this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. The campaign's run waits
+    for the seat's ruling on the eight and on these points, the PI's word, and the coordinating session's "launch
+    cleared".
+
 - 2026-11-23 — **n — the N-pod campaign's BUILD (n v0.2 §8 step 14): the `campaign` command in
   `scripts/n_sessions.py`, on Code's readings CP1–CP20 as PINs (the PI's "Build on the PINs"); the lock pin moved to
   LOCK-n v1.0's committed sha256, and the cap 14,400,000 ms; the driver alone, the package at the lock's digest. Not
