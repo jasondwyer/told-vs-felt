@@ -1,0 +1,7 @@
+1. cmp: HEAD's LOCK-n.md = draft 11 (59e0b1bc...00aa)
+   LOCK-n.md clean at HEAD
+2. cmp: the root draft LOCK-n-v1.0-draft.md = draft 10 (2b2fe5d6...6efc), untracked
+3. cmp: diff LOCK-n-v1.0-draft.md LOCK-n.md = the four edits' diff (564c6cd6...1994)
+4. the committer date (UTC) 2026-11-23, on or before D_n 2026-12-15
+5. removed: LOCK-n-v1.0-draft.md; git status names no LOCK-n path
+AFTER13 PASS
