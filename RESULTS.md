@@ -21,6 +21,129 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-24 — **The coordinating session's notes on the seat's sitting of 2026-11-24, its thread's third (the
+  day's first): the eight starred readings (Q1–Q8) and the launch set's six points (LQ1–LQ8) ruled, nothing in the
+  driver changing and launch set v1 cleared to run as sent; the raw committed here by path on the PI's "route as
+  given" (item 6), with close lines citing it on the entries of `9792e14`, `e1be6d9` and `fcab1e5`; the relays; and
+  the seat's ledger (89) and (90).**
+  - **The read:**
+    [`2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md`](results/raw/2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md)
+    (sha256 `d4c0fd7e…62a7`, 31,121 bytes, 94 lines), the seat's answers to both open blocks: the eight starred
+    readings (`fcab1e5`'s block, `a3686235…a586`) and the launch set's six points (`9792e14`'s block,
+    `9ee9a57f…48f4`). It was placed untracked over the bridge. The coordinating session re-hashed it equal to the
+    sha256, bytes and lines the PI's message gives, found it the only untracked file under `results/raw`, with HEAD
+    and origin's tracking ref at `9792e14`, and read it whole. It is re-hashed equal before this commit and committed
+    here by path, unchanged. The PI's message routing it is committed as
+    [`2026-11-24_third-sitting_pi-routing.md`](results/raw/2026-11-24_third-sitting_pi-routing.md). Below, "item N"
+    is item N of that message and "§N" a section of the seat's raw.
+  - **What the raw rules** (§0–§5):
+    - **The BUILD stands** as the seat holds it (§0): nothing in the driver changes before the run.
+    - **The eight** (§1; item 1): Q1 (CP2) no smoke, the run of record the first invocation, its 160 shadows first;
+      Q2 (CP6) "no looks" as built; Q3 (CP8) the excerpt's three parts (the pause's record, the paused invocation's
+      lines, the monitor's figure against its bar, never a margin), a rendering pause by digest, each pause a raw of
+      its own in §1.3 (b)'s form, no file in m's form, and no conditional ruling in advance, for any pause kind
+      (§1.3 (d)); Q4 (CP9) the three STOP forms as built, with what follows each (§1.4); Q5 (CP11) the close's order
+      as built, step 3's check the exception ans21b §1.8 means; Q6 (CP12) the exits 0/3/5/6/7/1 and the classes
+      extended to the campaign, COMPLETE in PASS's place, every end but COMPLETE to the seat and the PI; Q7 (CP13)
+      as item 7 below; Q8 (CP16) the close commit pushed with the close, on the PI's word (§1.8).
+    - **The six points and the INTEGRITY readings** (§2 and §1.6; item 2): LQ1–LQ3, LQ5 and LQ6 as the set has
+      them (§2), and LQ7 and LQ8, on the INTEGRITY readings, likewise (§1.6); LQ4 as the set has it, the one sentence
+      of the pod session's note on crashes corrected by the raw and not re-issued. **Launch set v1 is cleared to run
+      as sent; no v2**, its files named by sha256 as `9792e14`'s block gives them.
+    - **Code's unstarred points** (§3; item 3): CP4's driver of record confirmed for n, the campaign's driver
+      `e1be6d9`'s, a dated note on v1.0 §4; CP15's reading of A-n3:60 accepted, a dated note on A-n3 §6.1; CP17's
+      entry names and CP18's cleanup stand; the spec raw's declared imprecisions and CP8's correction accepted.
+    - **Departures** (§4; item 6): Code's, as the entries of `c26b117`, `fcab1e5`, `e1be6d9` and `9792e14` declare
+      them, the coordinating session's among them, inert, no strike; the seat's own, inert. One standing line is
+      restated for the sessions: "a pattern for the campaign folder's name is written bracketed in the command's
+      text, never assembled by concatenation (ans21b §3 (b)'s family)".
+    - **Ledger (89) and (90),** the seat's (§4), recorded here in the raw's words:
+      - (89): "the ceiling's precedence over the binomial on the same read means a pure binomial fire in the campaign
+        carries every `absdiff` within C (bar a read already ruled at its own ceiling pause), so a conditional
+        clearance in `backend-ext-2`'s form would clear every binomial fire mechanically and turn the lock's pause
+        into a counter; the campaign's pauses are each adjudicated on the excerpt (§1.3 (d))."
+      - (90): "a container restart on the same pod id under the respawn protocol's two PASSes with the lock's
+        characterization identifier is one pod session for n and may resume; a different identifier or pod is a box
+        change and a new lock version (§1.7; the PI's word at routing)."
+    - **What follows** (§5): the PI's word, then the coordinating session's "launch cleared" on launch set v1 as
+      sent, then the pod session's no-restart check, then `camp_v1.sh start` on `emw1e4embiwe9b`; every end but
+      COMPLETE to the seat and the PI; the close as §1.5, its push on the PI's word. §5 also records after13's output
+      as committed (`ec413c1c…b771`), closing ans23b §6 item 3, and the box running and idle at the seat's read, up
+      since 2026-11-18.
+  - **The routing.** The PI's message on PI date 2026-11-24 named the raw with its sha256, bytes and lines, gave nine
+    items in four groups, filled the two blanks for the PI's word (items 4 and 7) with "agree", and ended "PI: route
+    as given". No question from the coordinating session came before it. The coordinating session reads it as each
+    item's default in brackets.
+  - **Items 1–4 (N), relayed verbatim** to n-build and the pod session: each message carried the PI's message whole
+    (its block equal to the PI's message by `cmp`), with what the items mean for each.
+    - To the pod session: this is not "launch cleared", and nothing runs on the box from it; "launch cleared" follows
+      this commit and its push (items 6 and 9), with the set's files by sha256; the no-restart check first; every
+      end but COMPLETE to the seat and the PI; LQ4's corrected sentence in the raw's words; item 7, with the PI's
+      word; item 8; §4's standing line; its close lines with its next entry. It was asked one thing: the date of its
+      connection re-touch, which the raw's §5 gives as "by 2026-11-26 as its note has it" and `c26b117`'s entry as
+      2026-11-27. Its answer: 2026-11-27. The raw's date is the earlier one, in `221b806`'s entry.
+    - To n-build: nothing to build, change or commit now, and no window; the pause raws' form (§1.3 (b)); the close
+      (§1.5) and its push (§1.8); §3's dated notes, in the coordinating session's close line on `e1be6d9`'s entry;
+      §4; its close lines with its next entry.
+  - **Item 5 (A), relayed verbatim** to n-analyzer: "5. Nothing; v7 of record; the STOP forms feed no-arm:gver-stop
+    and no-arm:pi-stop (§1.4). [as ruled]"; nothing asked of it. The message put both inputs' reading on §1.4,
+    which names `no-arm:gver-stop` alone (§1.4 (a)); the `no-arm:pi-stop` reading is item 5's. Without effect:
+    n-analyzer's reply confirmed both against v7.
+  - **Item 6 (C), this commit:** the raw by path; close lines citing it on the entries of `9792e14` (the six points),
+    `fcab1e5` (the eight) and `e1be6d9` (the BUILD, CP4 and CP15, with §3's two dated notes); §4's departures inert;
+    ledger (89) and (90), above. Then "launch cleared" goes to the pod session on launch set v1 as sent. Its six
+    files were re-hashed in n-build's scratch before this commit, each equal to the abbreviated sha256 and the line
+    count `9792e14`'s block gives: `camp_v1.sh` (`16485a25…58f5`, 939 lines), `camp_manifest_v1.txt`
+    (`de1f52c1…be71`, 66), `camp_hashes_v1.txt` (`a853932b…522b`, 13), `camp_plan_v1.txt` (`551eb1bf…a658`, 7,680),
+    the pod session's note `camp_launch_note_v1.md` (`42b3efd0…bb14`, 302) and `camp_place_v1.sh` (`2127906a…9ce7`,
+    136). "Launch cleared" names them by their full sha256s.
+  - **Item 7 (C), Q7's reading** (§1.7 (b)), with the PI's word "agree": a restart on the same pod id that passes
+    both respawn steps with the lock's identifier `4ed3f2c70fe8afbf` is one pod session and may resume; any other
+    restart or pod is a box change and a new lock version, the aborted run committed as it stands. Relayed in the
+    message to both sessions; ledger (90). §1.7 (b) has two parts the item leaves out: the characterization yields
+    the lock's identifier "with n's identifier unchanged", and "The restart, both PASSes and the identifier are a
+    dated note, a RESULTS.md entry, the lock unchanged"; "launch cleared" quotes them to the pod session.
+  - **Item 8 (C):** the box up through the campaign and any standing pause, "[stays up]".
+  - **Item 9 (D), the push:** this raw's commit, behind the screen, before the launch, "[yours]". The bracket leaves
+    the push the PI's, as the coordinating session's entries at `b40ce59` and `cd6b30d` read it, so the push waits
+    for this commit's verify and screen and the PI's word, and comes before "launch cleared". Push #20, under rt23a
+    item 7's "[yours]", went out on that routing's "route as given" with no separate word (`c26b117`'s entry); this
+    push follows the earlier reading. The close commit is pushed with the close, on the PI's word under §1.8.
+  - **Held for the coordinating session's next notes entry,** so that the launch waits on this raw's commit and its
+    push, not on that entry: its part since `c26b117` (that commit's close; the windows, verifies and screens of
+    `fcab1e5`, the BUILD's self-tests, `e1be6d9` and `9792e14`; pushes #21–#23; launch set v1's check); this
+    commit's verify, screen and push; "launch cleared"; and its departures since its last sweep, `c26b117`'s, this
+    sitting's among them, with, among those, the command forms behind this entry's own checks (byte and line counts,
+    `jq` reads of its transcript into scratch, an `awk` cut of the relay blocks, and a name-only listing of
+    n-build's launch folder).
+  - **Values-check:** one blind pass by a subagent over this entry's draft, the three close lines, the routing raw,
+    the commit message and their placement in a draft of the new `RESULTS.md`. Its brief quoted the list of record
+    v2's items 1–5 verbatim and allowed no interpreter but `shasum` and `jq` by name, no write and no network. It
+    barred passing any path that holds a marker word as an argument, and any act in the memory folder or the steered
+    cells' folder; it named launch set v1's six files in n-build's scratch, to be hashed and counted, not opened. The
+    result: 49 items, 40 CONFIRMED, 6 IMPRECISE, 1 FAIL and 2 NOT CHECKABLE, with 10 observations.
+    - **The FAIL** (38): the routing raw's "a departure its entry declares", where this entry holds the sitting's
+      departures for the next; fixed in the checker's words.
+    - **The six IMPRECISE items,** applied in the checker's words or near them: the sitting named the thread's
+      third, the day's first, as the log numbers sittings by the day (6); LQ7 and LQ8 ruled at §1.6, not §2 (10);
+      the push's "[yours]" left to the PI's word, as the log read the bracket before (27); the launch waiting on this
+      commit and its push (28); the run after "launch cleared" under items 4 and 6 (32); and the spacing of item
+      7's "agree" as typed, two spaces before it and one after (41).
+    - **The two NOT CHECKABLE items** (5, 30): the commit's own claims, met at the commit.
+    - **The ten observations:** 1, 2, 4, 5, 7 and 8 applied (the command forms behind this entry's checks named in
+      the held bullet; both re-touch dates cited; §1.7 (b)'s two parts; the block's abbreviated hashes; the relay's
+      attribution of the `no-arm:pi-stop` reading to §1.4; §5's record and box lines). 3, 6, 9 and 10 noted: the
+      thread's count is the seat's; the quotation check squeezed spaces, so the routing raw's quotations were
+      re-checked by tool after the edits; the relay to the pod session left the PI's word out of the push's order,
+      and "launch cleared" follows that word; and the transcript's record order.
+    - **After the check:** the dispositions, their rewraps and the fills, each checked by tool (`diff` of each
+      checked draft against its final text); no second full pass was made.
+    - Raw:
+      [`2026-11-24_third-sitting-notes_valuescheck.md`](results/raw/2026-11-24_third-sitting-notes_valuescheck.md).
+  - **Committed by path:** the seat's raw, the routing raw, the values-check raw, this entry and the three close
+    lines. The commit-time count of the home-folder prefix over the staged diff is 0. The coordinating session ran
+    nothing on a model. Not pushed at this commit (item 9: the push waits for the PI's word).
+
 - 2026-11-24 — **n — the N-pod campaign's launch set v1: six points and the INTEGRITY readings for the seat, to be
   read with the eight starred readings (code → design; the n-build session). STOP for the seat's read.**
   Block:
@@ -218,6 +341,17 @@ applied to CLAUDE.md.
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. The campaign's run waits
     for the seat's ruling on the eight and on these points, the PI's word, and the coordinating session's "launch
     cleared".
+  - **Close (PI date 2026-11-24, the thread's third sitting), the coordinating session's, item 6: the seat's ruling
+    on this commit's points.** The seat's raw,
+    [`2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md`](results/raw/2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md)
+    (sha256 `d4c0fd7e…62a7`), committed by path in the coordinating session's notes on the sitting, on the PI's
+    "route as given".
+    - **The six points and the INTEGRITY readings** (§2 and §1.6; item 2): LQ1–LQ3, LQ5 and LQ6 as the set has
+      them (§2), and LQ7 and LQ8, on the INTEGRITY readings, likewise (§1.6); LQ4 as the set has it, the pod
+      session's note's one sentence on crashes corrected by the raw and not re-issued.
+    - **Launch set v1** (§2; item 2): cleared to run as sent; no v2. Its run follows the coordinating session's
+      "launch cleared" (items 4 and 6).
+    - **This commit's departures** (§4; item 6): inert.
 
 - 2026-11-23 — **n — the N-pod campaign's BUILD (n v0.2 §8 step 14): the `campaign` command in
   `scripts/n_sessions.py`, on Code's readings CP1–CP20 as PINs (the PI's "Build on the PINs"); the lock pin moved to
@@ -465,6 +599,19 @@ applied to CLAUDE.md.
     The package's digest at the commit is `06b55761…1d39`, by the kit's verify. The commit-time count of the
     home-folder prefix over the staged diff is 0. Not pushed. The campaign's launch files follow, to the coordinating
     session first, and nothing goes to the box before its "launch cleared".
+  - **Close (PI date 2026-11-24, the thread's third sitting), the coordinating session's, item 6: the seat's ruling
+    on this BUILD, with CP4 and CP15.** The seat's raw,
+    [`2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md`](results/raw/2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md)
+    (sha256 `d4c0fd7e…62a7`), committed by path in the coordinating session's notes on the sitting, on the PI's
+    "route as given".
+    - **The BUILD** (§0; item 1): it stands as the seat holds it; nothing in the driver changes before the run.
+    - **CP4** (§3; item 3): the driver of record is confirmed for n. A dated note on v1.0 §4, in the raw's words: "the
+      campaign's driver is `e1be6d9`'s."
+    - **CP15** (§3; item 3): the reading of A-n3:60 is accepted. A dated note on A-n3 §6.1: "committed at step 14"
+      names the campaign's cell files and its report; G-READ-n's artifact's `campaign.cells` exists at step 15 and is
+      committed with G-READ-n's entry, on the laptop.
+    - **CP17 and CP18** (§3; item 3): the entry names and the cleanup stand.
+    - **This commit's departures** (§4; item 6): inert.
 
 - 2026-11-23 — **n — eight starred readings for the seat before the N-pod campaign's run: CP2, CP6, CP8, CP9, CP11,
   CP12, CP13 and CP16 (code → design; the n-build session). STOP for the seat's read.**
@@ -707,6 +854,17 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. The campaign's BUILD
     follows, on CP1–CP20 as PINs; its run waits for the seat's answers.
+  - **Close (PI date 2026-11-24, the thread's third sitting), the coordinating session's, item 6: the seat's ruling
+    on the eight.** The seat's raw,
+    [`2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md`](results/raw/2026-11-24_n-campaign-starred-eight-and-launch-points_design-to-code_answers.md)
+    (sha256 `d4c0fd7e…62a7`), committed by path in the coordinating session's notes on the sitting, on the PI's
+    "route as given".
+    - **Q1–Q6 and Q8** (§1; item 1): ruled as §1 has them; nothing in the driver changes. Under Q3, each pause is a
+      raw of its own in §1.3 (b)'s form, with no conditional ruling in advance for any pause kind (§1.3 (d));
+      ledger (89).
+    - **Q7** (§1.7; item 7): the seat's reading of n:101's "one pod session", with the PI's word "agree"; ledger
+      (90).
+    - **This commit's departures** (§4; item 6): inert.
 
 - 2026-11-23 — **The coordinating session's notes on the seat's second sitting of 2026-11-23, the first of a new
   thread: LOCK-n v1.0's commit (`098218c`) read and accepted as committed, three items made dated notes, and step 14
