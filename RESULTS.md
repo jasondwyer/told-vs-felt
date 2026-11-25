@@ -21,6 +21,303 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-25 — **n — N-pod campaign (n): the run of record on n's box, from the BUILD `e1be6d9`, COMPLETE in its
+  one stage invocation, the start, 7680 of 7680 reads, no pause and no STOP; and its close (n v0.2 §8 step 14;
+  LOCK-n v1.0 §13; the seat's raw of the thread's third sitting, PI date 2026-11-24, committed at `78cd6eb`, §1.5;
+  CP11): the report, the 138 cell JSONs and G-TIME-n's two steered cells committed by path before the pod stops, the
+  4278 capture arrays held outside the repository (CP10), the run's raws, and n-build's three close lines.**
+  - **Headline:**
+    - `camp_v1.sh start` (launch set v1, `16485a25…58f5`) ended COMPLETE, exit 0, on pod `emw1e4embiwe9b`. The pod
+      session launched it on the coordinating session's "LAUNCH CLEARED" on launch set v1 as sent and its "LAUNCH AS
+      ANNOUNCED" (PI date 2026-11-24). Its last line, verbatim: "camp v1 start COMPLETE: the campaign is complete:
+      the close follows (CP11); selftest exit=0 count 0, hashes exit=0 and equal 0, the copy before the stage 0;
+      stage exit=0, wall time 8050944 ms, read as COMPLETE; checks (0 = held, 9 = not run): prints 0, report 0,
+      changed set 0".
+    - CP6's line, verbatim: "the report (CP6's three fields): end state COMPLETE; the standing pause none; the cap's
+      used_ms 3786451 of 14400000". The model time is 1.0518 h of the cap's 4 h (26.29%), beside G-TIME-n's
+      projection of 1.0494 h at the medians. The sum of the 7680 reads' `ms` on their lines is 3786451, the same
+      figure (Code's check by tool).
+    - No pause, no STOP and no excerpt: "the runner's lines: 7680 reads from launch index 0, each the plan's; 0
+      PAUSE line(s); 0 excerpt line(s)", the script's 22 report checks each "holds", and G-VER's STOP record absent.
+      COMPLETE is the one end that need not go to the seat and the PI before anything else runs on the box (the
+      seat's §1.6), so the close followed (§1.5).
+    - No smoke (Q1, §1.1): the run of record was the first invocation. Its first 160 reads, launch indexes 0–159,
+      are the shadows (direction none, dose 0), as the runner's ORDER puts them (L:1252).
+  - **The outputs of record,** committed here by path as the BUILD's `.gitignore` admits them, each at the sha256
+    the box's close list gives, G-TIME-n's two steered cells at their pins (L:386):
+    - the report, `data/n/reports/campaign.json` `1cabeadf…c4e3` (`n-report-v1`; the read domain, its figures as
+      the entry's form takes them): end_state COMPLETE, no pause and no stop; the cap's `used_ms` 3786451 of
+      `hour_cap_ms` 14400000, not hit, `loads_ms` [125924], one load; the binomial monitor's 48 evaluations over
+      3637 trials, 0 above TAU and 0 fires; the declared counters, `exceed_tau` 0 in each of the 23 rows of arm and
+      dose (3637 trials), `exceed_tau4` (the records' `exceeds_tau4`, rel > TAU/4, L:885) 707 of the 3637 (the
+      analyzer's TAU/4 row reads it),
+      the fidelity ceiling 0, the identity bound 0, non-finite reads 0, rendering mismatches 0, and the label-mass
+      counter null; each arm complete, obtained as planned (N1-P 640, N1-R 4800, N1-V 960, N2-C, N2-E and N2-S 320
+      each, N4-T and N4-Ts 160 each; 7680 in all); 138 cells, 7680 records, 40 to 160 a cell; its
+      `read_plan_sha256` the lock's (`7f7d7301…88a6`) and its `stage_identity_sha256` the out raw's
+      (`d566764f…7f8a`);
+    - the 138 cell JSONs under `data/n/ckpt/campaign/`, each at the report's `json_sha256`, 7680 records in all (the
+      script's check, "each by name at its json_sha256: held"; and `camp_place_v1.sh`'s check 2 here);
+    - G-TIME-n's two steered cells, `data/n/ckpt/time/N1-V__valence__p1.json` `fa823370…10c0` and
+      `data/n/ckpt/time/N1-V__valence__p1_2.json` `63634361…9968`, placed by name from their holding folder outside
+      the repository, each at its pin and at G-TIME-n's committed report's `json_sha256` (§1.5 (3);
+      `camp_place_v1.sh`'s check 2b, the exception ans21b §1.8 means), with the campaign's own cells, as v1.0 §13
+      has it.
+    - G-VER's STOP record: none (the start's G-VER passed, and the file is absent on the box).
+    - The 4278 capture arrays (138 cells × 31 layers) are not committed. They stay in the staging folder outside the
+      repository, `../jspace-lab-box.noindex/n/campaign-v1/`, beside G-TIME-n's (CP10; the seat's §1.5, LQ3, where
+      G-READ-n's input layout is step 15's BUILD question). Each is at the box's sha256 in the close list, a raw
+      here; the `.gitignore` ignores every one (`camp_place_v1.sh`'s check 4).
+  - **The provenance,** from the out raw:
+    - the weights `allenai/OLMo-2-0325-32B-Instruct` at revision `b96024342a77`, aggregate sha256 `36f05404…0fdb`, 22
+      files, each at the manifest's byte count; the eight non-shard files each at the model manifest's pin (CP7);
+    - the driver `47abe489…c21a` and `LOCK-n.md` `59e0b1bc…00aa`, each "HEAD's committed bytes" at the fresh copy of
+      `e1be6d9` (CP4);
+    - the ids of record, 160 sessions, `MANIFEST.json` `53a8cd74…99d8` at its pin; the lock's inputs, G-VEC's record
+      `03467e75…53b0` (site 32), G-CAL-n's record `4c92f228…bb8f` and its dose map `d4a73b54…efb3` (d_eq
+      0.2869170055735837, d_20 0.5738340111471674); the 28 directions at the lock's sha16 (`valence`
+      `ba4da67fb717b5bb`); the keys, the fidelity sample of 15 sessions (`3c70f5ff…a81d`) and N4's schedule
+      (`228ab470…55f3`), each the lock's;
+    - n's backend identifier `8264f719efd347a9` (window 4096), the lock's (L §17), bridged to the characterization's
+      `4ed3f2c70fe8afbf` (R6); the package `06b55761…1d39` and its closure of 12 files, the lock's (L §18), and
+      `hashes` equal to the laptop's file;
+    - the stage identity `d566764f…7f8a` (C 0.25, p0 1 of 26, alpha 0.01, the tile 160, 28 directions, the cap
+      14400000 ms); the plan, 7680 reads in the runner's ORDER, 3637 re-computed, 138 cells, its `read_plan_sha256`
+      the lock's;
+    - python 3.12.3, transformers 5.15.0 and tokenizers 0.22.2, and torch 2.8.0+cu128 as the launch's wrapper printed
+      it (the start's record, §6), G-VER v2's;
+      `CUBLAS_WORKSPACE_CONFIG=:4096:8` before the script and as it exported it; git 2.43.0 on the box.
+  - **Code's reading** (rule 25): the pod session's two records, the start's (227 lines) and that of names with both
+    copy-backs (243 lines), each read whole; the nine files copied back into Code's scratch from the start and the
+    seven of names, each at the pod session's sha256, checked by name, as follows:
+    - The out raw (7824 lines): lines 1–126 and 7807–7824 whole; its 7680 read lines (127–7806) by tool. Their heads
+      equal the plan's (`camp_plan_v1.txt`, line for line, by `cmp`); the plan's 3637 re-computed reads each print
+      "fid=… <= TAU", and its 4043 others "fid=-", the cached path alone; no read prints "> TAU".
+    - The work files are each byte-equal to their lines in the out raw, by `cmp`: `manifest.txt` lines 11–76 (66
+      OK), `selftest.txt` 78 ("785/785 n selftest checks pass"), `selftest.err` 80–81, `hashes.txt` 85–97 (equal to
+      the set's `camp_hashes_v1.txt`), `camp.txt` 104–7808 (the stage's stdout), `camp.err` 7812–7813 and
+      `check.txt` 7819–7821. So both stderr files were read as the out raw prints them.
+    - The campaign's own G-VER, before any read and not of record (CP7): PASS, 160 of 160 ids, spans and N4
+      variants, 4 of 4 labels, the manifest held; the tokenizer's load 17120 ms.
+    - Descriptive and post hoc (rule 11); no counter was declared for any of it before the run (rule 23), and none
+      of it enters a figure or a status: the model's load took 125924 ms, against G-TIME-n's 12365 and 12375 ms on
+      the same pod; the stage's wall time was 8050944 ms (2.2364 h) and the launch's 8134187 ms, beside the note's
+      planning values (the model time about 1.05 h at the medians, the I/O outside the cap 0.9–2.6 h); the stderr
+      files hold transformers' "Loading weights" bar (707 of 707) and its warnings, as at G-TIME-n's run (at
+      G-CAL-n's, the stage's stderr held the bar alone).
+  - **The run** (the pod session's record and the out raw, both committed as raws):
+    - Launch set v1, from Code's scratch at the hashes the coordinating session relayed, re-hashed on the box after
+      shipping (the record's §1): `camp_v1.sh` (939 lines; its commit `e1be6d9`, its driver line `47abe489…c21a`),
+      `camp_manifest_v1.txt` `de1f52c1…be71` (66 lines), `camp_hashes_v1.txt` `a853932b…522b` (13 lines, G-VER's and
+      G-TIME-n's file byte for byte) and `camp_plan_v1.txt` `551eb1bf…a658` (7,680 lines), in a new folder on the
+      box. The launch note (`42b3efd0…bb14`, 302 lines) and `camp_place_v1.sh` stayed on the laptop.
+    - The box before (§2; the note's step 1; the seat's §1.7 (a), LQ5): the same pod; no restart since G-VER v2's
+      launch, by two durations compared (PID 1's elapsed time on the box against a laptop file's age, no box file's
+      time read); the volume as the pod session left it; the GPU at 0 MiB, with no interpreter job, no
+      `n_sessions.py` process and no compute app. The pod was neither restarted nor replaced, so neither respawn step
+      ran.
+    - The local disk and the volume (§3): `/tmp` of type overlay on the container's root, the self-test's folder
+      absent; `/workspace` the network volume, 151 GiB available.
+    - The sync (§4): a bundle of the laptop's main at `78cd6eb`, from `2834c2d`, fetched on the box as a side ref,
+      `e1be6d9` an ancestor; the box checkout stayed at `ad856f0`.
+    - The fresh copy (§5), `/workspace/nsite/copy-camp-e1be6d9`: a local clone, `--no-checkout --no-hardlinks`, origin
+      removed, neither shallow nor a worktree; sparse non-cone (`'/*' '!/data/m[f]3/' '!/data/*/ckpt/'
+      '!/data/*/reports/'`); detached at `e1be6d9`, clean three ways, the stage's three outputs absent by name; the
+      driver, `LOCK-n.md`, the ids' `MANIFEST.json` and the model manifest each at its pin; the note's eighteen tools
+      present.
+    - The launch (§6): the wrapper `launch16.sh` (`605242c2…ad2e`) checked the state again and printed the libraries;
+      the command (sha256 `c6811f22…2710`), equal by `cmp` to the pod session's held copy and as the box printed it,
+      ran under nohup as PID 17386, alive at +3 s and at +30 min. The end-wait was on the PID alone, every 180 s; it
+      ended at check 46, no connection having failed.
+    - The end (§7), read three ways on the box, copying nothing: the exit file "exit 0", the last line, and the report
+      on disk with G-VER's STOP record absent; the CP6 line, its only one; no key line. These went to the
+      coordinating session first, before anything else ran on the box; the pod session read no other line of the out
+      file.
+    - After the run (§8), read-only: no interpreter job, no `n_sessions.py` process and no GPU compute app, the GPU at
+      0 MiB; the out file at 7824 lines; the self-test's folder on `/tmp` absent.
+    - The pod session's departures and declarations are its record's §11, for the seat to class. The digests of the
+      pod session's scripts are as its records abbreviate them.
+  - **The copy-backs** (the pod session's records):
+    - The start's (the record's §9), by `copyback16.sh` (`4c768abd…dcc4`), by explicit name, no folder listed: the
+      out and exit files and the work folder's seven files into Code's scratch, each at one sha256 on the box, in the
+      pod session's staging and at the destination, the address and port counted 0 in each, on the box and in
+      staging; then the record itself, last. Code checked the nine by name against the record's digests; the
+      coordinating session had checked them against the pod session's copy-back report (first 8 … last 4).
+    - The names invocation (the names record's §1–§8): `camp_v1.sh names` on the last copy, the start's, on the
+      coordinating session's "LAUNCH AS ANNOUNCED", its command (sha256 `0e9811f8…3e90`) the start's with "start"
+      made "names", by tool. The state check found the same pod, no restart since the start's launch and the box
+      idle, so neither respawn step ran; the sync and the copy did not run, names taking the last copy. PID 19402;
+      the end-wait on the PID alone, every 30 s, ended at check 3, before the +30 min check was due; exit 0. Its out
+      raw (16 lines): the copy at `e1be6d9`, the BUILD an ancestor and the driver its blob; "the names: 138 cells and
+      their arrays, 4416 files in all, by camp_copy_names's rule from the report"; the report's checks; and the last
+      line, "camp v1 names: 4417 files in camp_close_names.txt (sha256 42682630…fe6d), each hashed by name in the
+      copy; …", the full sha256 in the raw.
+    - Into Code's scratch (§9), by `copyback17.sh` (`98e27969…91c1`), by explicit name: the out and exit files,
+      `camp_close_names.txt`, `close_paths.txt`, `close_check.txt` and `close.err` (empty), each at one sha256 at
+      the three places, the address and port 0; then the record, last. Code checked the seven by name: the list at
+      the sha256 names printed, 4417 lines, 139 JSON paths (the report first, then 138 cells) and 4278 arrays;
+      `close_paths.txt` its paths, line for line; `close_check.txt` byte-equal to the out raw's lines 13–15.
+    - The close's step 3 (§10), by `closecopy17v2.sh` (`f1f36bd3…86ae`), the coordinating session's change made as a
+      new version (the address and port counted in the report and the two list files, never in a cell or an array)
+      and tested on a stand-in box first (30 of 30; a mutation pass, 16 of 16 killed): one tar stream driven by
+      `close_paths.txt` (GNU tar 1.35, `--no-recursion`, `--exclude='._*'`) into
+      `../jspace-lab-box.noindex/n/campaign-v1/`, new, under repository paths, with the list at its root; `shasum -a
+      256 -c camp_close_names.txt` 4417 of 4417 OK in the last copy before the stream and in the staging folder after
+      it; the extracted members exactly `close_paths.txt`, in order, by name. Nothing was listed, and nothing printed
+      a size or a time. G-TIME-n's holding folder beside it was not touched.
+  - **The close, in this commit's window** (the note's close, steps 4 and 5; the seat's §1.5 (3)–(4)):
+    `camp_place_v1.sh` (`2127906a…9ce7`, launch set v1's) checked the staged copy against the close list, the list
+    against the staged report (camp_copy_names's rule, at the report's digests), and G-TIME-n's two steered cells at
+    their pins; placed each listed JSON and the two steered cells by name, each checked there; and dry-ran the
+    commit's pathspec through `git add`, every array ignored. Its PLACED line and the commit's checks are in the
+    done report to the coordinating session. The commit is one, by path: the report, the 138 cell JSONs and the two
+    steered cells (141 paths, `camp_place_v1.sh`'s pathspec), the eight raws below, and `RESULTS.md` with this entry
+    and the three close lines.
+  - **The raws** (committed here):
+    - the close list, `camp_close_names.txt` verbatim, every file's sha256, the arrays' among them (CP10's "in the
+      close's raw"): [`2026-11-25_n-campaign_close-names.txt`](results/raw/2026-11-25_n-campaign_close-names.txt)
+      (`42682630…fe6d`, 4417 lines);
+    - each invocation's out file and its exit line (CP11 step 2; CP14): the start's,
+      [`2026-11-25_n-campaign_start_out.txt`](results/raw/2026-11-25_n-campaign_start_out.txt) (`3691743f…4b2a`, 7824
+      lines) and [`2026-11-25_n-campaign_start_exit.txt`](results/raw/2026-11-25_n-campaign_start_exit.txt)
+      (`28d3b9e8…c320`, "exit 0"); names',
+      [`2026-11-25_n-campaign_names_out.txt`](results/raw/2026-11-25_n-campaign_names_out.txt) (`532fc6a4…2482`, 16
+      lines) and [`2026-11-25_n-campaign_names_exit.txt`](results/raw/2026-11-25_n-campaign_names_exit.txt)
+      (`28d3b9e8…c320`, "exit 0");
+    - the pod session's records, of the start and its copy-back,
+      [`2026-11-25_n-campaign_start_pod-record.txt`](results/raw/2026-11-25_n-campaign_start_pod-record.txt)
+      (`77e3f8e5…ba2a`, 227 lines), and of names and both copy-backs,
+      [`2026-11-25_n-campaign_names_pod-record.txt`](results/raw/2026-11-25_n-campaign_names_pod-record.txt)
+      (`99e8df44…7fad`, 243 lines), each as the pod session wrote it. In the start's record, Code's scratch folder
+      appears once by its relative name (line 25); in the record of names, G-TIME-n's holding folder appears once by
+      its name (line 194);
+    - the values-check, [`2026-11-25_n-campaign_close_valuescheck.md`](results/raw/2026-11-25_n-campaign_close_valuescheck.md)
+      (`c9669251…c2b9`, 357 lines): one blind pass over this entry's draft and the three close lines, 84 items (68
+      CONFIRMED, 10 IMPRECISE, 3 FAIL, 3 NOT CHECKABLE) and 12 observations; the three FAILs (this entry's departures)
+      fixed, every IMPRECISE item applied, each observation applied or met; the edits replayed by tool,
+      42 of 42 (this entry 40, the close lines 2); the report verbatim. The checker could not read the staged report
+      (the permission system refused its `shasum`); it checked those figures against the out raw, the plan, the lock
+      and Code's recorded outputs, and `camp_place_v1.sh` checks the report again in the window (its steps 1 and 2).
+    - The other work files are each byte-equal to their lines in the out raws, and are not committed apart;
+      `close_paths.txt` is the list's paths, line for line, and `close.err` is empty.
+  - **n-build's close lines** (the seat's raw's head: the n-build, pod and coordinating sessions add theirs), one
+    on each entry the sitting ruled on, after the coordinating session's: `fcab1e5`'s (the eight, item 1),
+    `9792e14`'s (the launch points, item 2) and `e1be6d9`'s (the BUILD, item 3).
+  - **Notes, carried:** the coordinating session's two observations at `9792e14`'s grant, run as granted with no
+    change. (a) That raw's §2 quotes "stop, touch nothing on the box, escalate at once", the launch set's own
+    wording; the respawn protocol's is "stop, touch nothing, escalate". (b) The pod session's note ends its sentence
+    "so 1b would stop INTEGRITY" and the set's note "so step 1b stops INTEGRITY", the same in substance; the seat
+    corrected that sentence at its third sitting (LQ4).
+  - **The commit kit** (v-next, in Code's scratch, bash only): the library v4, the place step v5, the gate v18 and
+    the verify v4 take a notes list, any number of close lines each after its own anchored entry, and the kind
+    "placed" for a closed path already placed by `camp_place_v1.sh`, checked by digest and blob id alone, never read
+    or copied (a dry run asserts it absent). Fixture tests over fake repositories: 22 of 22, and again after the
+    gate's id list gained the close values-checker's agent id.
+  - **Departures,** for the seat to class:
+    - Code's, from `9792e14`'s entry's final sweep to this entry's, from its own sweep of its shell commands (`jq`
+      over this session's transcript), in six spans, 94 commands in all. Code knows of no others. None holds a
+      guard marker, the campaign folder's plain name or G-TIME-n's holding folder's name:
+      - **To `9792e14`'s window request** (17 commands, the count's own included; the request's note lists their
+        kinds): the sweep's python lines located by `grep -n`, and by an `awk` filter of the sweep file by timestamp
+        into `grep -o` and `sed`; the edits' replay, four runs, with
+        `shasum`, `wc -l` and a placeholder listing; the build, twice (`zsh -n`); `cat` of a memory note, `sed -n` of
+        `RESULTS.md`'s lines 268–272 into `cut` and `cat -e`, and `tail -c` into `od -c`; widths, after a `cd` into
+        scratch, and the abbreviation check; the kit's making, the message check, and the gate's dry run with `diff`
+        and `cmp` of `RESULTS.md` against its splice; `shasum` and `wc -l` of eight scratch files; a scoped `git
+        status --porcelain` counted by `grep -c`; that count, by `jq` over this session's transcript.
+      - **The window, to push #23** (12 commands): the request note's `shasum` and `wc -l`, and its abbreviations by
+        `grep -h -o` into `sed` and `sort -u`, compared by `comm -23` with the known files' digests (`cat`, `shasum`
+        into `cut`); `grep -n -F` of the memory index, three times; the window's six steps
+        as granted, each its own call; the done report's checks: `git log -1 --format='%H %P'`, `git show HEAD:<path>`
+        into `shasum` and `wc -l` for three paths, `git diff -U0` of `RESULTS.md` and `git diff --numstat` of the
+        three paths between `HEAD~1` and `HEAD`, `git cat-file commit HEAD` into `sed` and `cmp`, a scoped `git status
+        --porcelain` counted by `grep -v -c`, `git rev-parse origin/main`, and `git show HEAD:RESULTS.md` into `cmp`
+        with the dry run's splice beside `git hash-object` against `git rev-parse`; after push #23, `git rev-parse
+        HEAD origin/main`.
+      - **The third sitting, push #24 and the launch** (7 commands): the seat's raw by `shasum`, `wc -l` and `wc -c`,
+        with `git rev-parse HEAD origin/main` and `git status --porcelain -- results/raw`; `wc -l` and `grep -n -i -E`
+        of two memory notes, and one recursive `grep -rn` over the memory folder (no glob, so no file name in an argv;
+        its output, 33 lines from 18 memory notes, named none that holds a marker); after push #24, `git rev-parse`,
+        `git log -3 --format='%h %s'` and `git show --name-status --format= 78cd6eb`, each with the pathspec, `git
+        status --porcelain -- results/raw`, and `git show 78cd6eb:<the seat's raw>` into `shasum`; a name-only `ls` of
+        four scratch folders with a bracketed marker count (0); `shasum` checks of the commit kit and launch set v1;
+        `touch -c` of fourteen scratch files by explicit path (the kit's five, the set's six and three departures
+        files), so that the scratch folder's midnight cleanup keeps them, the set's hashes checked again after.
+      - **The close's preparation and the start's copy-back** (31 commands): the launch note and `camp_place_v1.sh`
+        by `wc -l` and `grep -n`; `grep -n -E` of `RESULTS.md` for entry headings and departures paragraphs (four
+        patterns, one matching nothing); `git show -U0 --format=` of `RESULTS.md`'s changes at `78cd6eb` and
+        `fcab1e5` into `grep -n` and `sed -n` (one through a `while read` loop); the commit kit's library and scripts
+        by `wc -l` and `grep -n`; the kit's next versions made by `mkdir` and `cp` in scratch and tested there, bash
+        only: `bash -n`, a bracketed marker count (0), and two runs of the fixture harness, which makes fixture
+        repositories by `git init`, `git add` and `git commit` under a fixture identity, in scratch alone (the first
+        run's 24 cases failed at once, the scripts lacking the execute bit; the second ran them by `bash`, 22 of 22);
+        `grep -c -F` of the three close lines' anchors over `RESULTS.md`; the start's nine files and its record in
+        Code's scratch, by `shasum`, `wc -l`, `wc -c` (one line's bytes), `cat` and `cat -n`, `head`, `tail`, `sed
+        -n`, `cut`, `cmp`, `grep`, `sort`, `uniq -c`, `paste` and `bc`, and a `while read` with `case` (one `sed` with
+        a `t` label, which BSD sed refused, re-done by the `case`), their intermediate files in a check folder made in
+        scratch by `mkdir -p`; `grep -o` of `RESULTS.md`'s lines 3895–4201 for G-TIME-n's raws' names (four matched,
+        none an out raw, so the `wc -l`, `head` and `tail` of a committed raw beside it did not run); two `git
+        ls-files` with quoted globs under `results/raw/`; the screen script over the start's record and its out and
+        exit files, counts only; one `git grep -c -F` and one `git grep -l -F` for the scratch folder's word over the
+        tree with `':!data/**'` (item 3's form where nothing under `data/` is wanted), filtered to `results/raw/` by
+        `grep`, whose output named raws, some marker-named in mixed case; `jq` over this session's transcript for this
+        sweep, into a sweep folder made in scratch by `mkdir -p`, its listing with the local roots masked by `sed`, and
+        two prints of commands by `sed -n` and `fold`; `grep -n -E` of the window request's note.
+      - **The close's report, from the names copy-back, to the values-check's brief** (13 commands, the brief's hash
+        included): the seven files of names by `shasum`, `wc -l`, `cat -n`, `cut`, `head`, `tail`, `cmp` and `grep
+        -c`; the screen script over names' record, out and exit files and the close list, and `grep -n` of names'
+        record for the holding folder's name (a bracketed pattern) and the scratch folder's word; the staged report in
+        the staging folder, the read domain: its `shasum` against the list's line, and `jq` for its keys, its figures
+        and their sums, counts, states, ids and digests only; one `git grep -n -E` for the TAU/4 counter's name over
+        the tree with item 3's pathspec and the campaign folder's exclusion, whose first 20 lines (`head -n 20`) named
+        LOCK-n.md, `RESULTS.md`, a G-ANL-n file under `data/n/gates/` and two raws; `sed -n` of LOCK-n.md's lines
+        880–890; `jq` over this session's transcript for this sweep, with its listings masked by `sed`; `cp` of the
+        three close lines' drafts to their final names in scratch, a name-only `ls` of their folder, and the drafts'
+        widths and placeholders by `grep -n -E` and `grep -o` into `sort`, `uniq -c` and `tr`; `sed -n` of three of
+        the entry draft's lines; `sed -n` and `cut -f1` of the sweep's listing for nine times; `shasum` and `wc -l` of
+        the entry, the three close lines, the kit's six files and the screen script; the values-check's sources list
+        by `shasum` over 37 scratch files into scratch, after a `cd` into scratch, with its `wc -l`, `shasum` and a
+        bracketed marker count, the window request's note by `shasum` and `wc -l`, and `git rev-parse HEAD`; and the
+        check's brief by `shasum`, `wc -l` and a bracketed marker count.
+      - **After the brief, to this entry's sweep** (14 commands, the sweep's own included): `bash -n` of gate v18
+        after its id list gained the checker's id, the fixture harness's third run into a new scratch folder (22 of
+        22) with `tail -n 1`, the id count by `sed -n` into `grep -o -E` and `grep -c`, `diff` of the v17 and v18 id
+        lists counted by `grep -c`, and the screen script over five raws filtered by `grep -v`; the kit maker's `bash
+        -n` and two trial runs into new scratch folders, with `sed -n`, `sed -E` and `cut` of a trial manifest and
+        notes list; a shell function, a `cd` into the repository, and gate v18's dry run (DRY=1, with a notes list)
+        over a trial manifest, the entry draft and the package digest, output into scratch, viewed by `sed -E`,
+        `tail` and `cut`, with `wc -l` of its `RESULTS.md` beside `git show HEAD:RESULTS.md` into `wc -l` and a `diff`
+        of the two into `grep -E`; after the check, `jq` over this session's transcript for its report's record, the
+        record into a scratch file with `wc -l`, `grep -n -E` of its frame lines and `tail -n 4`, its report span by
+        `sed -n` and `sed -E` into a new scratch file (after `test ! -e`) with `wc -l`, `shasum`, `grep -v -c`,
+        `head`, `tail`, the screen script and a fence count; `cp` of the four checked drafts to their v2 names with
+        `cmp`, by a zsh word split; `grep -n -F` and `sed -n` of the entry's v2 copy, with one `cat -A`, which BSD cat
+        refused; the edits' replay by its script, twice (`bash -n`, each run into a scratch file, `cat` and `shasum`
+        of its output): the first stopped at the old text of an Edit call that had failed, and the script then
+        skipped such calls; the abbreviation check by its script (every abbreviation in the texts by `grep -o`
+        against the first and last characters of the full sha256s found by `grep -o` in the out raws, the records,
+        the close list, the sources list, the launch set's files, the seat's raw and LOCK-n.md, and against the
+        records' own abbreviations, by `sort -u` and `comm -23`); the texts' widths by `grep -n -E`, their
+        placeholders by `grep -o`, and `sed -n` of the long lines with `wc -m`; and this sweep, by `jq` over this
+        session's transcript into scratch, with its count by `cut`, `grep -n -x -F` and `tail`, and bracketed counts.
+        The commands after it (the texts' re-wrapping checks, the build of the commit's folder, the kit and the
+        gate's dry run) are in the window request's note, for n-build's next entry.
+    - Reads by the file tools: the seat's raw; `RESULTS.md`'s lines 20–31, 206–285 and 3895–4043; the commit kit;
+      the launch note and `camp_place_v1.sh`; the pod session's two records; the window request's note; memory notes;
+      and Code's own drafts in scratch (the entry's and its v2 copies, and the launch points' values-check brief and
+      replay script). Writes by them: in scratch (the launch points commit's drafts and message, the kit's next
+      versions and its tests, the close's drafts, v2 copies, facts and checks), in the sessions' notes folder (the
+      launch points' window request), and in memory notes; none in the repository.
+    - The pod session's: its records' declarations (the start's §11 and names' §12), for the seat to class.
+    - The checker's, as its report states them: a `shasum` of the staged report and a zsh word count, each refused
+      before it ran; one `git log -1 --format` without item 3's pathspec; `jq` reads of about twenty of Code's tool
+      outputs in this session's transcript (counts, booleans, names or masked lines; booleans alone for those of the
+      staged report); 18 memory notes' file names printed where a count would have served; and six repository files
+      read beyond the brief's list, as the texts cite them.
+  - **What follows:** the pod stops only after this commit's verify (§1.5 (5)). The push goes with the close, on the
+    PI's word (§1.8). G-TIME-n's folders stay until the PI's word after this commit (CP18). Then G-READ-n (step 15,
+    on the laptop, in a battery window beside Q-F3; its command the next BUILD), and VERDICTS on the PI's word.
+
 - 2026-11-24 — **The coordinating session's notes on the seat's sitting of 2026-11-24, its thread's third (the
   day's first): the eight starred readings (Q1–Q8) and the launch set's six points (LQ1–LQ8) ruled, nothing in the
   driver changing and launch set v1 cleared to run as sent; the raw committed here by path on the PI's "route as
@@ -352,6 +649,12 @@ applied to CLAUDE.md.
     - **Launch set v1** (§2; item 2): cleared to run as sent; no v2. Its run follows the coordinating session's
       "launch cleared" (items 4 and 6).
     - **This commit's departures** (§4; item 6): inert.
+  - **Close (PI date 2026-11-24, the thread's third sitting), n-build's, item 2: launch set v1, run as sent.** The
+    seat's ruling on these points is the coordinating session's close line above (the raw at `78cd6eb`, §2 and §1.6).
+    The set ran with no v2 and no file of it changed: its start invocation ended COMPLETE, exit 0, with no pause, no
+    STOP, no resume and no PI stop, so the routes of LQ1 and LQ4 were not taken. The close followed: `camp_v1.sh
+    names` and the copy-back by its list, then `camp_place_v1.sh` in the close's commit window (the N-pod campaign's
+    close entry, PI date 2026-11-25).
 
 - 2026-11-23 — **n — the N-pod campaign's BUILD (n v0.2 §8 step 14): the `campaign` command in
   `scripts/n_sessions.py`, on Code's readings CP1–CP20 as PINs (the PI's "Build on the PINs"); the lock pin moved to
@@ -612,6 +915,11 @@ applied to CLAUDE.md.
       committed with G-READ-n's entry, on the laptop.
     - **CP17 and CP18** (§3; item 3): the entry names and the cleanup stand.
     - **This commit's departures** (§4; item 6): inert.
+  - **Close (PI date 2026-11-24, the thread's third sitting), n-build's, item 3: this BUILD's driver ran the
+    campaign.** CP4 as the coordinating session's close line above confirms it: the campaign ran on this commit's
+    driver (`47abe489…c21a`, the DRIVER line of the start's out raw), unchanged. CP15: the campaign's cell files and
+    its report are committed at the close; G-READ-n's artifact waits for step 15. CP17: the close's entry takes the
+    name "N-pod campaign (n)". CP18: nothing was removed before the close commit.
 
 - 2026-11-23 — **n — eight starred readings for the seat before the N-pod campaign's run: CP2, CP6, CP8, CP9, CP11,
   CP12, CP13 and CP16 (code → design; the n-build session). STOP for the seat's read.**
@@ -865,6 +1173,13 @@ applied to CLAUDE.md.
     - **Q7** (§1.7; item 7): the seat's reading of n:101's "one pod session", with the PI's word "agree"; ledger
       (90).
     - **This commit's departures** (§4; item 6): inert.
+  - **Close (PI date 2026-11-24, the thread's third sitting), n-build's, item 1: the eight, applied as ruled.** The
+    seat's ruling is the coordinating session's close line above (the raw at `78cd6eb`, §1). Nothing in the driver
+    changed. Q1: no smoke; the run of record was the first invocation, its 160 shadows first. Q2: no look while it
+    ran; the end-wait was on the PID alone. Q3: no pause arose, so
+    no excerpt raw was written. Q4: the start's G-VER passed. Q6: the end was COMPLETE, exit 0. Q7: no restart. Q5
+    and Q8: the close as §1.5 has it, in the N-pod campaign's close entry (PI date 2026-11-25); its push waits for
+    the PI's word.
 
 - 2026-11-23 — **The coordinating session's notes on the seat's second sitting of 2026-11-23, the first of a new
   thread: LOCK-n v1.0's commit (`098218c`) read and accepted as committed, three items made dated notes, and step 14

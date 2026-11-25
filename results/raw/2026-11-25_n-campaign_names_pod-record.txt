@@ -1,0 +1,243 @@
+n step 14 -- the N-pod campaign's close, steps 2 and 3 (the launch note's CP11), on n's box, pod emw1e4embiwe9b (H100
+SXM): camp_v1.sh names on the last copy, launch set v1, then the copy-back by the close list into the laptop's staging
+folder, as run by the pod session (PI date 2026-11-25). The start ended COMPLETE (its own record,
+camp_v1_start_box_run.txt, 77e3f8e5…ba2a, in n-build's step4b/camp/box/start/), and at COMPLETE the close follows on the
+note's steps. names was announced to the coordinating session (the announcement f27f28f6…1d6e, 118 lines, naming the
+state check's readings, the two df -T outputs, the box names, the command with its sha256 and the wrapper's, step 3's
+method and what was declared), and launched on its reply: "LAUNCH AS ANNOUNCED: camp_v1.sh names on the last copy,
+through launch17.sh, with the command whose sha256 is
+0e9811f842f70cc836e63f8487e870769885f25e31d049e7eafcbe9a64413e90." That reply changed step 3 in one point: "count the
+address and the port in the list files (camp_close_names.txt, close_paths.txt) and in the report, but not in the
+cells" (the list of record's item 2), with the members compared by name only, shasum -c's output names and OK alone,
+and nothing printing a size or a time of any file under data/n/ckpt or data/n/reports. No pod address or port in this
+file; the network volume's server host and the volume's id are masked, as in the start's record. The run's own output
+is camp_v1_out.txt (all of stdout and stderr, unedited); its exit file is camp_v1.exit, which holds "exit N". No look
+was taken while it ran: the end-wait was on the PID alone.
+
+RESULT: names ended exit 0 with its list line, and the close's copy-back by that list ended OK. The exit file reads
+"exit 0"; the out file's last line, verbatim:
+camp v1 names: 4417 files in camp_close_names.txt (sha256 42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d), each hashed by name in the copy; the copy-back copies by that list and checks it with shasum -a 256 -c at each end
+N = 4417, as the coordinating session expected (its reading: the report, then 138 cells, each a JSON with its 31
+arrays, 1 + 138 x 32, and no G-VER record; the copy-back's step 0 below counts 139 JSON paths in the list). The
+script's CP6 line, verbatim, its only one:
+the report (CP6's three fields): end state COMPLETE; the standing pause none; the cap's used_ms 3786451 of 14400000
+The out file has no REFUSED, FAILED or Traceback line, no note line, none of the script's own fail lines, no failing
+check line and no shasum error line (copyback17.sh's key lines: 0). The exit, the last line and the CP6 line went to the
+coordinating session first; then the copy-back by name into n-build's step4b/camp/box/names/ (section 9) and the
+close's step 3 (section 10), whose last line, verbatim:
+CLOSECOPY17V2 OK: 4417 files by the list into the staging folder, under repository paths, the list at its root at the sha256 the box printed; shasum -a 256 -c 4417 of 4417 OK at each end; the members exactly the list's, by name; address and port 0 in the report and the two list files, on the box and in staging
+Nothing re-ran; after the end, only read-only looks and the two copy-backs' reads ran on the box.
+
+1. FILES. The launch set is the start's, unchanged: the four box files in /workspace/nsite/camp-v1, each found at its
+   relayed sha256 by name on the box, by the state check and again by the wrapper (camp_v1.sh 16485a25…58f5,
+   camp_manifest_v1.txt de1f52c1…be71, camp_hashes_v1.txt a853932b…522b, camp_plan_v1.txt 551eb1bf…a658); the launch
+   note (42b3efd0…bb14) and camp_place_v1.sh (2127906a…9ce7) on the laptop. The names invocation's own files, in the
+   pod session's scratch, each written new (any change a new version):
+     box_state17.sh               9534305a…1b8b (100 lines)
+     run_state17.sh               612507f3…2350 (27 lines)
+     df17.sh                      0d996fd3…1f2f (58 lines)
+     run_df17.sh                  879d2c43…a3b4 (20 lines)
+     launch17.sh                  cd1cdb96…350b (85 lines)
+     run_launch17.sh              50eeac6a…560c (38 lines)
+     cmd_held_camp_names.txt      0e9811f8…3e90 (1 lines)
+
+2. THE BOX, BEFORE: the note's step 1 (CP13; the seat's s1.7 (a), LQ5), "A restart or a box change stops everything".
+   box_state17.sh, read-only, box_state16.sh's form, run by run_state17.sh with the age of the pod session's held copy
+   of the start's command (cmd_held_camp_start.txt, c6811f22…2710, modified 2026-11-24; its sha256 was announced before
+   the start's launch); two durations compared, neither printed; no file of the box read for its time. Its output,
+   counted 0 for the address and port on the laptop before it was printed, verbatim:
+the pod: env.sh's RUNPOD_POD_ID is emw1e4embiwe9b
+the container: PID 1 started before the pod session's held copy of the campaign start's command was written on the laptop, which was before the start's launch, so no restart since the last launch on this box
+kept as left: 33 folders present by name (the campaign start's five, G-VER v2's four, v1's five, G-TIME-n's five, G-CAL-n's five, G-VEC v2's five, the four the PI kept)
+removed as left: cleanup v1's 26 folders absent by name
+the self-test folders /tmp/camp-v1-selftest-work-camp-v1-start (the start's) and /tmp/gver-v2-selftest-work-gver-v2 (G-VER v2's): absent, as left
+the box checkout: main at ad856f0, clean (bare form); refs/bundles/n-site16 at 78cd6eb4192e802475b8b7c78ac27e67068623c2, a commit in the box repo's objects, e1be6d9 its ancestor; n-site14 at 2834c2d, n-site13 at 101026c, n-site12 at 0744136, n-site11 at bc50244; n-site15 and n-site17 absent
+the four files in /workspace/nsite/camp-v1, each by name a regular file at its relayed sha256: camp_v1.sh 16485a25...58f5, camp_manifest_v1.txt de1f52c1...be71, camp_hashes_v1.txt a853932b...522b, camp_plan_v1.txt 551eb1bf...a658
+the last copy /workspace/nsite/copy-camp-e1be6d9: HEAD e1be6d929bb93ef78e7dff3e4500aa5c7d09bb0b; the report data/n/reports/campaign.json a regular file; G-VER's STOP record data/n/reports/campaign_gver_stop.json absent (each tested by name; nothing in the copy listed or read)
+the new names: work-camp-v1-names and out-camp-v1-names absent under /workspace/nsite (test ! -e and test ! -L on each)
+/tmp resolves to itself (cd /tmp && pwd -P: /tmp)
+/workspace/models: a folder (the weights' parent; nothing inside it listed)
+GPU: NVIDIA H100 80GB HBM3, 595.112.07, 0 MiB, 81559 MiB; no interpreter job, no n_sessions.py process, no compute app
+the wrapper's bash: /usr/bin/bash, version 5.2.21(1)-release (EPOCHREALTIME available from 5.0)
+STATE OK: same pod, no restart since the campaign start's launch, the volume as left, the four files and the last copy as left, the new names free, the box idle
+   The pod was neither restarted nor replaced, so neither respawn step ran.
+
+3. THE LOCAL DISK AND THE VOLUME, the note's step 2 (df17.sh: df16.sh with this invocation's self-test folder name,
+   which the names mode never makes; the address and port on its standard input, never in an argv). Both outputs were
+   counted for the address and port on the box before any line was printed, and again on the laptop: 0 in each.
+   Neither holds an IPv4 address. Verbatim but for the volume's server host and id, masked here as <host> and
+   <volume>:
+---- df -T /tmp (exit 0; IPv4 addresses shown as <IPv4>: 0) ----
+Filesystem     Type    1K-blocks  Used Available Use% Mounted on
+overlay        overlay  31457280 16220  31441060   1% /
+---- df -T /workspace (exit 0; IPv4 addresses shown as <IPv4>: 0) ----
+Filesystem                                                  Type 1K-blocks      Used Available Use% Mounted on
+<host>:/runpodfs/networkvolumes/<volume> nfs4 488282112 335185920 153096192  69% /workspace
+---- end ----
+   /tmp is overlay, one of the note's local types; /workspace is nfs4, the network volume. The self-test's temporary
+   folder name /tmp/camp-v1-selftest-work-camp-v1-names: test ! -e exit 0, test ! -L exit 0. The volume's space:
+   Available 153096192 KiB (146 GiB), at least 10 GiB.
+
+4-5. THE SYNC AND THE COPY (the note's steps 3 and 4): not run. names takes the last copy, the start's
+   /workspace/nsite/copy-camp-e1be6d9, which step 1 checked by name. The note's step 5: the four files have been in
+   /workspace/nsite/camp-v1 since the start; command -v of the note's eighteen tools (the start's cmdv16.sh 99da33e6…22bf,
+   unchanged, run by run_box16.sh ee343f84…1f61) found each in /usr/bin, exit 0; /workspace/venv/bin/python present and
+   executable.
+
+6. RUN, the note's step 6, on the coordinating session's "LAUNCH AS ANNOUNCED". The wrapper launch17.sh (cd1cdb96…350b,
+   launch16.sh's form with the names invocation's command and checks; run by run_launch17.sh, 50eeac6a…560c, with the
+   age of the pod session's step-1 output file for this invocation as its one argument) checked again, before the
+   launch: no restart since the step-1 state check; no interpreter job, no n_sessions.py process and no GPU compute app;
+   the GPU at 0 MiB; /tmp of type overlay, resolving to itself, this invocation's self-test folder name absent; at least
+   10 GiB available on /workspace; the out and work folders absent; the four files at the relayed hashes; the note's
+   eighteen tools present; the last copy at e1be6d9, its report a regular file, G-VER's STOP record absent; env.sh's
+   RUNPOD_POD_ID emw1e4embiwe9b. Its printout, verbatim:
+the container: PID 1 started before the pod session's step-1 state check for this invocation, so no restart since it (nor, by that check, since the campaign start's launch)
+GPU before: NVIDIA H100 80GB HBM3, 0 MiB, 81559 MiB
+/tmp: overlay, resolving to itself; /tmp/camp-v1-selftest-work-camp-v1-names absent (test ! -e and test ! -L)
+/workspace: 153096192 KiB available (at least 10 GiB)
+the four files at the relayed hashes; the note's 18 tools present; the last copy at e1be6d9, its report a regular file, G-VER's STOP record absent
+with env.sh: RUNPOD_POD_ID=emw1e4embiwe9b; CUBLAS_WORKSPACE_CONFIG=:4096:8 (the script exports :4096:8 itself)
+python 3.12.3 | torch 2.8.0+cu128 | transformers 5.15.0 | tokenizers 0.22.2
+the command (sha256 0e9811f842f70cc836e63f8487e870769885f25e31d049e7eafcbe9a64413e90):
+( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/camp-v1/camp_v1.sh names /workspace/nsite/copy-camp-e1be6d9 /workspace/venv/bin/python /workspace/nsite/work-camp-v1-names ) > /workspace/nsite/out-camp-v1-names/camp_v1_out.txt 2>&1; echo "exit $?" > /workspace/nsite/out-camp-v1-names/camp_v1.exit
+PID 19402
+PID 19402 alive at +3 s (kill -0)
+   The command ran under nohup in the background, held in a quoted heredoc and checked equal by cmp to the pod
+   session's held copy (cmd_held_camp_names.txt, 348 bytes, ASCII, one line; byte for byte the start's command with
+   "start" made "names", by tool), its sha256 0e9811f8…3e90 at the laptop and as the box printed it; the command as the
+   box printed it is cmp-equal to the held copy:
+( source /workspace/env.sh || { echo 'env.sh returned non-zero'; exit 97; }; bash /workspace/nsite/camp-v1/camp_v1.sh names /workspace/nsite/copy-camp-e1be6d9 /workspace/venv/bin/python /workspace/nsite/work-camp-v1-names ) > /workspace/nsite/out-camp-v1-names/camp_v1_out.txt 2>&1; echo "exit $?" > /workspace/nsite/out-camp-v1-names/camp_v1.exit
+   The out folder was made just before; the work folder did not exist, and the script made it. The PID and the
+   wrapper's printout went to the coordinating session at once. The end-wait was on the PID alone (wait17.sh,
+   443b45c3…4ae6: kill -0 over ssh every 30 s), with no stat, listing, tail, Monitor or read of the run's outputs until it
+   had ended.
+
+7. THE END, read three ways on the box, copying nothing (the note's "After each invocation"). The end-wait printed one
+   line, its only one, so no connection failed while it waited:
+WAIT17: PID 19402 ended (kill -0 exit 1) at check 3
+   The +30 min check (alive17.sh, 60a3aca6…e06a) waits on the laptop until 30 minutes after the launch's output before any
+   ssh call; the pod session stopped it when the end-wait saw the PID end, so it made no call, and no "PID alive at +30
+   min" report was due. copyback17.sh's probe (98e27969…91c1) then counted the out and exit files for the address and
+   port on the box, by count_box.sh (85591293…f61a; the two values on its standard input, never in an argv), before any
+   line of them was printed, and printed the exit file's line, the out file's last line, the report's and G-VER's STOP
+   record's states by test -L, -f and -e, the out file's CP6 line(s), its key lines, and the list's count and sha256
+   as the last line printed them. Its output, verbatim:
+box count (probe): address 0 and port 0 in each of 2 file(s), on the box
+the exit file: exit 0
+the out file's last line: camp v1 names: 4417 files in camp_close_names.txt (sha256 42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d), each hashed by name in the copy; the copy-back copies by that list and checks it with shasum -a 256 -c at each end
+the report data/n/reports/campaign.json: on-disk; G-VER's STOP record data/n/reports/campaign_gver_stop.json: absent
+the out file's CP6 line(s), word for word (1):
+   | the report (CP6's three fields): end state COMPLETE; the standing pause none; the cap's used_ms 3786451 of 14400000
+the out file's key lines, word for word (0):
+the list as the last line printed it: 4417 files, sha256 42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d
+COPYBACK17 the end, read three ways: NAMES
+   The exit, the last line and the CP6 line went to the coordinating session at once. The pod session read no other
+   line of the out file, on the box or in staging, and nothing of the report beyond its state by test.
+
+8. AFTER THE RUN (read-only looks, nothing run): after_run17.sh (635846a0…a605), through run_box16.sh (ee343f84…1f61),
+   which counted the address and port in its output on the laptop (0 and 0) before printing it. after_run17.sh printed
+   no line of the out file. Its output, verbatim (exit 0):
+no interpreter job
+no n_sessions.py process
+no GPU compute app
+GPU: 0 MiB, 81559 MiB
+the exit file: exit 0
+the out file's lines: 16
+test -e /tmp/camp-v1-selftest-work-camp-v1-names: exit 1
+test -L /tmp/camp-v1-selftest-work-camp-v1-names: exit 1
+   No interpreter job, no n_sessions.py process and no GPU compute app remained, and the GPU was at 0 MiB. The names
+   mode makes no self-test folder, and none is on /tmp.
+
+9. COPIED BACK into n-build's step4b/camp/box/names/ by copyback17.sh (98e27969…91c1), by explicit name, each file's
+   sha256 equal at the box, in staging and at the destination, with no folder listed; every destination new:
+   - the end read three ways on the box again first, copying nothing: NAMES;
+   - camp_v1_out.txt and camp_v1.exit (out-camp-v1-names); camp_close_names.txt, close_paths.txt, close_check.txt and
+     close.err (work-camp-v1-names), each present on the box; manifest.txt, selftest.txt, selftest.err and hashes.txt
+     listed absent, as the names mode writes none; and this file, copied last, by a second call, after every other
+     file was copied and verified.
+   Their sha256s:
+     532fc6a4109e57550bbe2e455d21cedede1087f0edefc47f5d141649d8192482  names/camp_v1_out.txt
+     28d3b9e880a77975493dc7e359144c0295a4f694cfe0af4f928c22307bc5c320  names/camp_v1.exit
+     42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d  names/camp_close_names.txt
+     2a525bc2cd6aba01c1b4a7563bf64ef4fe16c5c064019f417b2d6cd317f13247  names/close_paths.txt
+     cbd08212c4f0d36c9eddc7fe207d590d3569afacf571dc55ea32aca169c94a1d  names/close_check.txt
+     e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  names/close.err
+   close.err is empty (e3b0c442…b855 is the sha256 of no bytes). Before anything went on to n-build's folder, the
+   staged camp_close_names.txt was found at the sha256 the last line printed, with the 4417 lines it printed, its paths
+   close_paths.txt's, line for line.
+   The address and port were counted on every file copied back, counts only: first on the box, before anything left
+   it, by count_box.sh, and again in the pod session's staging on the laptop: 0 in each, both times. None of these six
+   is under data/n/ckpt or data/n/reports. This file was counted on the laptop alone, where it was written.
+   copyback17.sh is copyback16.sh's form with the names invocation's names, files and ends (NAMES, INTEGRITY, FAIL and
+   the safer side). As built, its files part runs at NAMES and at a FAIL of the launch kind; by the coordinating
+   session's word ("On any other end, copy nothing and report to me first") it was to run at NAMES alone, and the probe
+   read NAMES. It was first run against a stand-in box on the laptop (bash and shell tools only, nothing real touched;
+   run_cases17.sh feafb9dd…ba56 with the stand-in fakebx17.sh 812c323e…fd92): 39 of 39 cases as expected. A small
+   mutation pass (mut17.sh, 3b64027c…868d) then ran the null mutant, 39 of 39, and fourteen one-line mutants of the
+   script's safety branches, each killed by at least one case.
+
+10. THE CLOSE'S STEP 3, by closecopy17v2.sh (f1f36bd3…86ae; its box body cc17v2_count.sh, 5e15a1c6…7e1f), with the list's
+    sha256 as names printed it as its one argument: the copy-back by the close list alone, never a listing, into
+    ../jspace-lab-box.noindex/n/campaign-v1/ (new) beside the repository, under repository paths, with
+    camp_close_names.txt at its root. Its output, verbatim but for the laptop's free space, shown as the check it
+    passed:
+0: the list: 4417 files, 139 of them JSON (the report, G-VER's record if any, the cells), the rest arrays; at the sha256 the box printed; every path plain, under data/n/reports/ or data/n/ckpt/campaign/, none twice, the report first, the paths close_paths.txt's; the staging folder absent, its parent a folder; at least 10 GiB free on the laptop (the check held; the figure not shown)
+1: the box's list in the work folder at the same sha256; the box's tar: tar (GNU tar) 1.35
+1: the box end: shasum -a 256 -c on the list in the last copy: 4417 of 4417 OK, exit 0
+2: the box count: address 0 and port 0 in each of 3 files (the list's data/n/reports/ files and the two list files), counted on the box; no cell or array opened
+3: the stream: tar exit 0 at both ends, nothing on the box tar's stderr; 4417 members extracted, exactly close_paths.txt, in order
+4: the laptop end: shasum -a 256 -c camp_close_names.txt in the staging folder: 4417 of 4417 OK, exit 0
+5: the laptop count: address 0 and port 0 in each of 3 files (the staged data/n/reports/ files and the two list files); no cell or array opened
+CLOSECOPY17V2 OK: 4417 files by the list into the staging folder, under repository paths, the list at its root at the sha256 the box printed; shasum -a 256 -c 4417 of 4417 OK at each end; the members exactly the list's, by name; address and port 0 in the report and the two list files, on the box and in staging
+    - Refusals before any box call (step 0): the staging folder absent and its parent a folder, both by test alone,
+      nothing listed (G-TIME-n's gtime-v1 beside it untouched); the staged list at the printed sha256; every line a
+      sha256 and a plain path under data/n/reports/ or data/n/ckpt/campaign/, none twice, the report first, the paths
+      close_paths.txt's line for line.
+    - The box end (step 1): the box's own list in the work folder at the same sha256; shasum -a 256 -c on it in the
+      last copy: every line OK.
+    - The count (steps 2 and 5), as the coordinating session's change has it: the report and the two list files, on
+      the box (by bash builtins, the two values on standard input) and in the staging folder (grep -c through a
+      redirection); no cell and no array was opened by either count.
+    - The stream (step 3): tar -c in the last copy on the box, -T on close_paths.txt, --no-recursion, --exclude='._*';
+      tar -x in the staging folder; both exits 0, nothing on the box tar's stderr; the extracted member names (-v,
+      names alone) exactly close_paths.txt, in order.
+    - The laptop end (step 4): shasum -a 256 -c camp_close_names.txt in the staging folder: every line OK.
+    - shasum -c's output (names and OK alone) was kept in the pod session's scratch and counted there. Nothing printed a
+      size or a time of any file under data/n/ckpt or data/n/reports. No path of the list was in an argv on the laptop.
+    closecopy17v2.sh is v2 of closecopy17.sh (2e8f2ff2…0160), which was built and tested but never run. v2 makes the
+    coordinating session's change (the two counts read the report and the two list files, never a cell) and renames its
+    outputs. v2 was run against a stand-in box first (run_cc17v2.sh 1bd825d8…8636 with fakebx_cc17v2.sh 0b1bd0e4…adb5):
+    30 of 30 cases as expected, among them an address or a port in the report (stopped at the box count) and in a cell
+    (not read; the copy-back ends OK). Then a mutation pass (mut_cc17v2.sh 8f94b131…1dee): the null mutant 30 of 30, and
+    sixteen one-line mutants, each killed, two of them the counts' filters opening the cells.
+
+11. LEFT ON THE BOX, nothing removed:
+   - /workspace/nsite/work-camp-v1-names (the work files copied back by name; nothing else of it looked at) and
+     /workspace/nsite/out-camp-v1-names;
+   - the start's folders: camp-v1; copy-camp-e1be6d9, the last copy, holding the stage's outputs (nothing of them looked
+     at beyond the report's state by test, the close's hash check and its stream); work-camp-v1-start and
+     out-camp-v1-start; with sync16 and refs/bundles/n-site16, the box checkout unmoved at ad856f0;
+   - every earlier folder as before.
+   The box is up and idle. The close's step 4 (camp_place_v1.sh, Code's, in its window) comes next; the pod stops only
+   after the close commit's verify, on the coordinating session's word.
+
+12. DEPARTURES AND DECLARATIONS, for the seat to class:
+   - declared in the announcement, and accepted as declared in the coordinating session's "LAUNCH AS ANNOUNCED": the
+     sync and the copy not run (names takes the last copy); step 5's command -v through the start's cmdv16.sh and
+     run_box16.sh, unchanged; the no-restart check against the age of the held copy of the start's command, its
+     modification time read on the laptop and no box file's time read, and the wrapper's repeat of it against the
+     step-1 output file's age; df17.sh's check of a self-test folder name the names mode never makes; the wrapper's one
+     run of the box python (-c, the library versions); the end-wait's 30 s interval; one laptop tool output printing the
+     pod session's scratch paths (a grep of its own session transcript), in no file for any commit; the df -T
+     /workspace line naming the volume server's host and the volume's id, which this file masks (section 3); the
+     connection files' re-touch date;
+   - the coordinating session's change to step 3, made as a new version (closecopy17v2.sh, cc17v2_count.sh) and tested
+     before its use; closecopy17.sh (v1) never ran;
+   - noted: closecopy17.sh was edited in place once, before any use and before its hash went anywhere: the stand-in
+     test found an apostrophe in the message of its usage line's ${1:?...}, which opened a quoted string over the lines
+     after it (bash -n passes such a file); v2 carries the fix;
+   - noted: the coordinating session's go-ahead after the start's end reached the pod session after the announcement
+     of names had gone out; the pod session held the launch for "LAUNCH AS ANNOUNCED", as announced, and said so;
+   - noted: the +30 min check was stopped before any call (section 7);
+   - noted: section 10 shows the laptop's free space as the check it passed, not the figure.

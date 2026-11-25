@@ -1,0 +1,16 @@
+camp v1 names: the work folder /workspace/nsite/work-camp-v1-names, new, on the volume beside the copy
+CUBLAS_WORKSPACE_CONFIG before this script: :4096:8; exported now as :4096:8, the characterized setting (rule 2)
+== 0 the files beside this script, and the copy
+camp_manifest_v1.txt: sha256 de1f52c17e62d37bf46e9bf23a133e3fae017cbad88cc39cc95b766be4c8be71, as pinned
+camp_hashes_v1.txt: sha256 a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b, as pinned
+camp_plan_v1.txt: sha256 551eb1bfccf07d1bddf3ddf909aa98378fb293c4841b530c8cdcc9a8cfefa658, as pinned
+git: git version 2.43.0
+the copy: HEAD e1be6d929bb93ef78e7dff3e4500aa5c7d09bb0b
+the copy: the BUILD an ancestor of HEAD; the driver the BUILD's blob
+== 1b the report and the names, by name from the copy
+the names: 138 cells and their arrays, 4416 files in all, by camp_copy_names's rule from the report
+== the close's list
+the report (CP6's three fields): end state COMPLETE; the standing pause none; the cap's used_ms 3786451 of 14400000
+the cells: 138 named by the report, each by name at its json_sha256: held; their 4278 arrays by name: present; 7680 records
+checks: keys holds; schema holds; identity's sha256 holds; identity's pins holds; read plan holds; end state holds; cap holds; per arm holds; no margin key holds; cells by name and digest, arrays by name holds; records holds
+camp v1 names: 4417 files in camp_close_names.txt (sha256 42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d), each hashed by name in the copy; the copy-back copies by that list and checks it with shasum -a 256 -c at each end
