@@ -21,6 +21,234 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-25 — **n — two starred readings for the seat before G-READ-n's run: GR3 and GR5 (code → design; the
+  n-build session). STOP for the seat's read.**
+  Block:
+  [`2026-11-25_n-gread-starred-two_code-to-design_STOP.md`](results/raw/2026-11-25_n-gread-starred-two_code-to-design_STOP.md).
+  - **Where things stand:**
+    - The N-pod campaign's run of record and its close are committed at `95cd461`, which is on origin. The seat's
+      fourth sitting accepted them as committed and named six points it holds G-READ-n's BUILD (n §8 step 15) to
+      ([`2026-11-25_n-campaign-close-read_design-to-code_answers.md`](results/raw/2026-11-25_n-campaign-close-read_design-to-code_answers.md)
+      §1 and §3, committed at `13ca2fe`).
+    - G-READ-n has no stage command: "Stage G-READ-n is wired at its own step (n v0.2 §8 step 15)."
+      (`scripts/n_sessions.py`:351).
+    - Code's readings GR1–GR14, on a read-only survey of the texts at `95cd461`, went to the coordinating session,
+      which put them to the PI first, as the campaign's were. The PI's answer, relayed verbatim by the coordinating
+      session on 2026-11-25, was "push both and build on the pins": "build on the pins" answers that question, and
+      "push both" was the coordinating session's push #27.
+  - **Why now.** The two starred readings go to the seat before G-READ-n's run, not before its build: the PI's
+    routing of the seat's fourth sitting, item 2, "[go, on the seat's ruling before the run]"
+    ([`2026-11-25_fourth-sitting_pi-routing.md`](results/raw/2026-11-25_fourth-sitting_pi-routing.md)). So the block
+    is committed ahead of the BUILD's commit, as the campaign's was (`fcab1e5` before `e1be6d9`). The PI's routing of
+    the seat's sft read puts it first at the seat's next sitting: "G-READ-n's spec raw and starred block take
+    precedence when they land"
+    ([`2026-11-25_p-sft-read_pi-routing.md`](results/raw/2026-11-25_p-sft-read_pi-routing.md), item 4).
+  - **The block:**
+    - §0, the short form. GR3 bounds what the command reads of a cell; GR5 names the comparator the valence +1
+      result is held to. Neither needs a run to be ruled. One point made explicit, in GR3: `check_cell`, which
+      `load_cell` runs on every cell, holds each record's `margin` to `logprob_S − logprob_U` and the fidelity block's
+      numbers to their formula, in memory, so the readings' "No margin … is computed on" holds of the command's own
+      code, not of the package's check;
+    - §1, each reading with its texts, what Code will build, and what another answer would change;
+    - §2, the dependencies and G-READ-n's pre-declared ends (exit 0 when the artifact is written, whatever its six
+      statuses; 1 on any refusal or failure, with no artifact), with the readings' four citation notes;
+    - §3, the questions Q1 and Q2, one per reading.
+  - **G-READ-n's spec raw,** committed beside the block:
+    [`2026-11-25_n-gread_spec.md`](results/raw/2026-11-25_n-gread_spec.md). It holds:
+    - §1, Code's readings GR1–GR14 as sent (`17d66da9…9b43`);
+    - §2, the coordinating session's routing, with the PI's answer (`4e686ed0…1dd0`);
+    - §3, the survey's brief (`d1fa766e…13fb`), its one line naming the repository's full path written `<repo>`
+      (`43eca2d5…72ce`);
+    - §4, the survey's report as returned (`979bf23e…73c4`, compiled at `95cd461`).
+
+    Its head notes the points of §1 and §4 as sent that are imprecise (four in §1, GR3's, GR5's, GR7's and GR8's,
+    and one in §4) or true at `95cd461` and superseded since (three); the block carries GR3's and GR5's.
+  - **Model:** nothing ran on a model, and no Python ran.
+  - **Values-check:** one blind pass over the block's draft, the spec raw's head and the raw as assembled, the close
+    line on `95cd461`'s entry, and this entry's draft. Its brief quoted the list of record v2's items 1–5, and allowed
+    `shasum`, and `jq` by name for a sweep of Code's shell commands over this session's transcript.
+    - 81 items: 73 CONFIRMED, 5 IMPRECISE, 1 FAIL, 2 NOT CHECKABLE; and 11 observations.
+    - The FAIL, item 69, is the departures' item on the file tools, fixed in the checker's words: the Reads of
+      memory notes and the memory index, and the notes folder's three calls.
+    - Every IMPRECISE item is applied, and every observation is applied or met; the raw gives each disposition. Its
+      observations 7 and 8 named six more points of the readings and the report as sent, imprecise or superseded
+      since, and the spec raw's head now names them.
+    - The edits were checked by tool, 12 of 12 (the block 3, the spec raw's head 1, this entry 7, the close line 1).
+    - Raw, sha256 `73141eab…9e29`, 252 lines:
+      [`2026-11-25_n-gread-starred-two_valuescheck.md`](results/raw/2026-11-25_n-gread-starred-two_valuescheck.md).
+  - **Departures,** for the seat to class:
+    - Code's, from the campaign close entry's final sweep (the entry of `95cd461`) to this entry's, from its own sweep
+      of its tool calls (`jq` over this session's transcript). Code knows of no others:
+      - **The close's commit, to its window request** (17 commands, as the request's note gives their kinds, and
+        one after the note):
+        - re-wrapping checks of the entry's v2 copy and the built entries: widths by `grep -n -E` under
+          `LC_ALL=en_US.UTF-8`, `sed -n` of the long lines, `cut` and `wc -m`; Edits of the v2 copy between them;
+        - the commit's build script, `bash -n` and six runs. The first stopped at the replay's counts (BSD sed's ERE
+          has no backreference) before making its folder; four stopped at the width checks, each after making its
+          new folder (`commit` to `commit4`, nothing removed); the sixth built `commit5`. Each run re-ran the replay;
+        - a listing of the close sweep's last commands, masked by `sed -E`, from the sweep's file;
+        - `grep -n -i -E` of `9792e14`'s window note in the sessions' notes folder, and the kit maker's run;
+        - the message filled by `sed` from its source, a non-ASCII count (`grep -P`, which BSD grep refuses, its
+          error discarded, with a fallback), `check_msg.sh`, and the message's `shasum`, `wc -l` and a local-string
+          count;
+        - the gate's dry run: a `cd` into the repository, `git rev-parse HEAD`, the gate (`DRY=1`), `tail`,
+          `shasum`, `diff` of `git show HEAD:RESULTS.md` against the expected file into `grep -E`, and a scoped
+          `git status --porcelain` counted by `grep -v -c`;
+        - the count, by `jq` over this session's transcript into scratch, with a masked listing and bracketed
+          counts; `shasum` and `wc -l` of eighteen files for the note;
+        - after the note was written by the file tools: its `shasum`, `wc -l` and abbreviation by `cut`, and
+          bracketed counts (0 and 0).
+      - **The close's window, as granted** (10 commands): `pwd` and `git rev-parse HEAD`; the eight steps, each its
+        own call ending in an `echo` of its exit status, step 2's `echo` in double quotes (the coordinating session's
+        correction at the grant: the note's single quotes around "the kit's" would not have parsed), step 1 naming
+        the staging folder and G-TIME-n's holding folder as its arguments, as the launch set's close has them, and
+        step 8 with `head -n 12` and `tail -n 6` of its output and a count of its data lines; the done report's
+        checks (`git log -1 --format='%H %P'`; `git show --name-status` with item 3's pathspec; the data paths by
+        name only, counted by class; `git show HEAD:<path>` into `shasum` and `wc -l` for the eight raws and
+        `RESULTS.md`; `cmp` of `RESULTS.md` against the expected file; `git diff -U0 HEAD~1 HEAD -- RESULTS.md` for
+        its hunks; `git cat-file commit HEAD` against the message; `git rev-parse origin/main`; scoped status and
+        index counts).
+      - **After the close** (6 commands): the memory index's size by `wc -c` and `wc -l` and its long lines by a
+        `while read` loop of `printf` into `wc -c` and `cut`, with a `grep -c -F` of one note's name, while Code
+        edited its own lines in the index (14 Edits shortening lines, one line folded into another, after one that
+        added to a line); `git -C <repo> rev-parse` of HEAD and origin's main twice, after the coordinating
+        session's verify and after push #25.
+      - **G-READ-n's survey and readings** (18 commands, and one read-only subagent):
+        - the seat's raw by `shasum`, `wc -c -l`, `git rev-parse` and `git status --porcelain -- results/raw`;
+          `git ls-files` with item 3's pathspec into `grep -E` for n's files; a name-only `ls` of the campaign's
+          spec folder in scratch; `grep -n -E` of PROPOSAL-n and `grep -c -i -E` over nine named files;
+        - the brief's check against the campaign's (`diff` of `sed -n` ranges), its lines, widths and `shasum`;
+        - the survey: one read-only subagent on the brief; its report saved by `jq` from its task output (`tail -n
+          2 | head -n 1`), after a `jq` over this session's transcript for that command's earlier form; its first
+          and last lines, counts of fences and local paths, and `shasum`;
+        - the readings' checks: `grep -n -E` of `schema.py`, the analyzer, `LOCK-n.md`, `.gitignore`, the driver
+          and `RESULTS.md`; `grep -n -A` of `valence_core/n/guard.py` and `valence_core/m/keys.py`; `sed -n` of
+          lines of the seat's raws ans24, ans18c and ans21b, `RESULTS.md`, `.gitignore`, `LOCK-n.md`, the
+          analyzer, the driver and `valence_core/n/primitive.py`; `shasum` of twelve named files, the campaign's
+          report `data/n/reports/campaign.json` among them (a digest, item 1), with abbreviations by `cut` and
+          `grep -o -E` of the package digest in `LOCK-n.md`;
+        - the abbreviation check (a known-hashes file built by `shasum` of ten named files and `grep -o`, compared
+          by `comm`), widths, local-root and bracketed marker counts, and `tail -c` into `od -c`;
+        - the readings sent: `cp` into the sessions' notes folder, `cmp`, `shasum` and `grep -c`; `wc -c` of the
+          memory index.
+      - **The hold, and push #26** (1 command): `git -C <repo> rev-parse` of HEAD and origin's main.
+      - **This block** (40 commands to its draft's sweep, that sweep's own included):
+        - the state and the campaign's block as the form: `git rev-parse HEAD refs/remotes/origin/main`; `git diff
+          --cached --name-only` without item 3's pathspec (nothing staged; no output); `git show --name-status` of
+          `fcab1e5` with it; `grep -n` of the campaign's spec raw and block and of `RESULTS.md` for headings, entry
+          lines and close lines; `sed -n` of the campaign's spec raw; a name-only `ls -1` of scratch folders, one of
+          them ended by zsh at `echo ===` (an equals expansion, "== not found") and run again with `echo '---'`;
+          `sed -n` of the kit scripts' heads, and `grep -n -E` of the gate v18 for its id lines, the ids masked by
+          `sed`; `cat` of the campaign's spec build script;
+        - §2's extraction: `grep -n -F` over this session's transcript for the message's phrase, `sed -n` of the
+          matching records into `jq -c` (their type, time stamp, isMeta and content type and length); `sed -n` of
+          the message's record into `jq -r` for its content, viewed by `cat -n` with the session ids masked by
+          `sed`, and `sed -n '3,20p'` of it into scratch, with `grep -c`, `shasum`, a bracketed count, `head` and
+          `tail`; and `grep -n -F` over the transcript for the readings note's name, its record into `jq` for Code's
+          message text, the session ids masked;
+        - the citations: `sed -n` of `LOCK-n.md`, PROPOSAL-n, ADDENDUM-n1, the seat's raws ans21b and ans18c,
+          `schema.py` and the driver, and of `git show 95cd461:RESULTS.md`; one `sed -n` of `ADDENDUM-n1.md`, a name
+          that does not exist, after which `git ls-files 'ADDENDUM-n*'` (a quoted pathspec glob at the root; three
+          names, none marker-named) gave the full name; `grep -n` of the driver, `schema.py` and `cells.py`; `git
+          diff --name-only 95cd461 HEAD` and `git show --name-status` of `13ca2fe`, each with item 3's pathspec;
+          `git log` of one raw's commit and of the last three, with it; `grep -c -F` of `RESULTS.md` for the close
+          line's anchor; `grep -n` of the sft read's routing raw;
+        - the spec raw: the brief's scrub (`sed` of its line 2 into a new scratch file, `diff` with the root masked),
+          counts of local roots, ids and fences, `shasum`, and the survey report's HEAD lines by `grep -n`; `cmp` of
+          the readings against the sent note; the assembly (`zsh` running its script in scratch), width and
+          bracketed counts, and a bracketed `grep -o` count of the marker words the assembled raw holds (in the
+          brief's rules, the readings' and the survey's departures: text, never argv);
+        - the sweep: `jq` over this session's transcript for every tool call since the close entry's final sweep;
+          one `grep -P`, which BSD grep refuses, in a command that also set an unused shell variable named
+          `awk_free` (no `awk` ran), run again with `grep -F` and a tab; a masked view by `sed`; `grep -n -A3 -E`
+          and `grep -n -E` of the close window's note, for its step 2 and its section on the 17, and `sed -n` of
+          that section; `grep -n` and `sed -n` of the survey report's departures; `jq` over the transcript for the
+          memory index's Edits (sizes and opening words), and a `jq` scan of the tool results since the final sweep
+          for marker words and the two folders' names (the words found and the counts printed); the draft's sweep,
+          `jq` over the transcript into scratch with counts by `grep -c` and `cut`;
+        - throughout: writes in scratch alone (redirects, `mkdir -p`, and the file tools).
+      - **After the draft's sweep, the block's own** (16 commands, to this entry's final sweep):
+        - to the values-check's brief (4, as the check lists them): the four texts' line counts, widths,
+          placeholders, local-root and id counts and bracketed marker counts, and `tail -c 2` of the entry into `od
+          -An -c`; `grep -F` with a tab over the draft sweep's file, with `tail -n 1`, `sed -n '54p'` and `cut -f1`;
+          a `cd` into scratch, `shasum` of eleven named scratch files into the checker's sources list, `shasum -c`
+          of it, its `shasum` and `grep -c ''`, and `shasum` and `grep -c ''` of the close's window note; `diff` of
+          `sed -n` ranges of the close's values-check brief against this one's, its line count, widths and `shasum`;
+        - while the check ran (5): the commit gate's next version, v19 (`cp` of v18, `cmp` and `shasum`, then `bash
+          -n`, `diff` with the ids masked by `sed`, and per-version id counts); `grep -c ''`, `sed -n` and `tail -n 8`
+          of the close's dispositions source; `cat` of `check_msg.sh` and of the close's message source, and `git log
+          -1 --format=%B` of `fcab1e5` with item 3's pathspec into `tail`; `bash -n` and `zsh -n` of this commit's
+          scripts, and the sources' abbreviations by `cut`, with `grep -c ''`;
+        - after the check (7): its report saved by `jq` from its task output (`tail -n 2 | head -n 1`), with its
+          lines, first and last lines, `shasum`, and counts of fences, local paths, markers and indented lines;
+          `sed -n` of `valence_core/n/guard.py`, `valence_core/echo/probe.py` and the survey's report, and `git grep
+          -n -F` of one variable's name with item 3's pathspec, for the checker's observations 7 and 8; the v2 copies
+          (`cp`, `cmp`), with `grep -n -E` of `valence_core/echo/probe.py`; `grep -n` and `grep -n -o -E` of the
+          survey's report for its headings and two phrases; this final sweep, `jq` over this session's transcript
+          into scratch with a masked listing (`sed`, `cut` and a `while read` loop) and bracketed counts; and a `jq`
+          scan of the tool results since the close entry's final sweep for marker words and both folders' names, in
+          both forms (the words found and the counts printed);
+        - the file tools in the same span: a Read of the close's values-check brief; Edits of the entry's draft
+          before the check and of the four v2 copies after it; Writes of the check's brief, the gate's id file, the
+          kit and build scripts, the message's source and the values-check raw's head and dispositions; Edits of the
+          gate v19; Reads of the gate v19 and of the close's values-check raw's head; and one subagent, the
+          values-check.
+      - **Parts of the commands above that the spans do not name:** a `cd` into scratch before two name-only
+        listings; `test ! -e` before two writes in scratch; `wc -l` of the window's step 8 output; in the done
+        report's checks, `--no-renames` and a loop of `git show HEAD:<path>` into `shasum` over the manifest's lines
+        (by `cut`, `grep` and `while read`); `sed` trimming `shasum` output; and a `sed -n '1,40p'` filter of `grep
+        -n` output.
+      - **In every span, the file tools:** Reads, Edits and Writes of memory notes and the memory index (outside
+        scratch); in the sessions' notes folder, a Read of `9792e14`'s window note and a Write and an Edit of the
+        close's window note; Reads of repository files and of scratch files; Writes and Edits in scratch. Besides
+        them, three messages to the coordinating session (the close's window request, its done report, and the
+        readings) and two subagents (the survey and the values-check). The texts written or sent hold, as text and
+        never in an argv: G-TIME-n's holding folder's full name (the close's window note and its request); Q-F3's
+        folder's name and one marker word (the readings, and the message that sent them); and marker words (the
+        survey's brief, a memory note, this entry's draft and the values-check's brief).
+      - **Counts.** By bracketed patterns over the sweep's commands and file-tool paths: no guard marker and no
+        plain name of Q-F3's folder in any argv; G-TIME-n's holding folder's name in one, the window's step 1, as
+        the launch set's close has it. In outputs alone:
+        - marker words in six file-tool reads (the memory index, the campaign survey's brief, PROPOSAL-n,
+          `RESULTS.md`'s head, Code's readings and the close's values-check brief) and seven commands' outputs (`grep`
+          of PROPOSAL-n's lines; `grep` of `LOCK-n.md`'s and `.gitignore`'s lines; Code's message on the readings,
+          from the transcript; the spec raw's bracketed count; the survey report's departures; and the two scans'
+          own lists);
+        - Q-F3's folder's name, in its `data/` form, in three reads (the seat's raw twice, Code's readings once) and
+          four commands' outputs (`grep` of `LOCK-n.md` and `.gitignore`; `sed -n` of ans24, ans18c and
+          `RESULTS.md`; `sed -n` of ans18c:40 again; and Code's message); its bare short name in one more output, a
+          comment in the commit gate's head;
+        - G-TIME-n's holding folder's name, in its `noindex/n/` form, in three reads (the memory index, the close's
+          to-do file in scratch, and the sweep's view of step 1); its bare name in one more read (`LOCK-n.md`) and
+          one command output (the close's window note's point 2, which quotes the names record).
+    - the survey's own, in the spec raw's §4 (the report's last section, four numbered items): one `awk` in a
+      pipeline over `git grep` output, which printed nothing; two `sed -n` filters of `git grep` output; one `git
+      grep -n -i -E` whose pattern held a guard marker unbracketed, in a search of m's guard and drivers for the
+      process check; and pathspec forms other than item 3's (quoted globs, two plain paths, and
+      `':!data/**'`), whose output named raws with marker names (output, not argv). Declared beside them: two
+      ranges of the close list read by its file tool (names and digests), `openssl dgst -sha256` of six repository
+      files and of `data/n/gates/G-ANL-n.json`, and scoped `git status --porcelain` only;
+    - the values-checker's, as its report states them: reads beyond the brief's sources, to check citations in the
+      spec raw's §1 and §4 (four cited lines of ADDENDUM-n3 and a count of ADDENDUM-n2; the PI's routing raw of
+      2026-11-23's first sitting at lines 27–31 and ans21b:70, printed, and fifteen more seat and PI raws, one cited
+      line each, printing only the words a `grep -o` found; `valence_core/discrim.py`'s definition and import lines
+      and its `shasum`; `valence_core/m/guard.py`:85–96; `data/n/gates/G-ANL-n.json` by `shasum`, `wc -l` and `jq`
+      of its keys; the close list by `shasum` and `wc -l`); three `git grep` content searches, two with item 3's
+      pathspec and Q-F3's exclusion and one over named n files; shell variables or environment prefixes whose names
+      began with the letters "awk" in three commands (no `awk` ran); and three commands that errored and did
+      nothing more (`cat -A` and `head -0`, refused by the BSD tools, and one `grep -o -E` whose repetition count was
+      too large), two outputs sent to `/dev/null`.
+  - **n-build's close line** on `95cd461`'s entry, which the seat's raw's head asks of each session: its items 1–2.
+  - **The gate.** The survey's and the values-checker's agent ids are in the commit gate's id list (a new version of
+    Code's gate script), so the commit is checked to carry neither.
+  - **Committed by path:**
+    - the block;
+    - the spec raw;
+    - the values-check raw, this entry and the close line.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-READ-n's BUILD follows,
+    on GR1–GR14 as PINs; its run waits for the seat's answers on GR3 and GR5 and the PI's routing of them.
+
 - 2026-11-25 — **The coordinating session's notes on the seat's sitting of 2026-11-25, the first of its new thread:
   the seat's read of `PROPOSAL-p OLMo-sft — VERDICTS` (m:318's "the reads"), under which A0-OLMo-sft PASS stands and
   nothing moves; the raw committed here by path on the PI's "route as given" (item 2), with the close line on that
@@ -988,6 +1216,17 @@ applied to CLAUDE.md.
       readings; the pod stopped and the network volume kept until G-READ-n's artifact is committed (the PI's word:
       keep); VERDICTS on the PI's word.
     - **This commit's departures** (§4; item 4): inert.
+  - **Close (PI date 2026-11-25, the thread's fourth sitting), n-build's, items 1–2: the seat's read of the run of
+    record and its close.** The seat's raw is the one the coordinating session's close line above cites (`13ca2fe`;
+    its §1 and §3).
+    - **The run and its close** (item 1): accepted as committed here, for n-build's record: COMPLETE, 7,680 of 7,680
+      reads, no pause, no STOP; the report, the 138 cells and the two steered cells by path, the arrays outside the
+      repository at their hashes. Nothing in the driver changed.
+    - **G-READ-n's BUILD** (step 15; item 2): it goes on, on Code's readings GR1–GR14 as PINs, the PI's "build on the
+      pins" (relayed 2026-11-25), with the seat's §3, its six points, carried into them as sent. Its spec raw and the
+      block on its two starred readings, GR3 and GR5, are committed first, with their entry and this line. Its run, on
+      the laptop in a battery window beside Q-F3, from the staging folder's arrays, waits for the seat's ruling on the
+      two and the PI's routing of it.
 
 - 2026-11-24 — **The coordinating session's notes on the seat's sitting of 2026-11-24, its thread's third (the
   day's first): the eight starred readings (Q1–Q8) and the launch set's six points (LQ1–LQ8) ruled, nothing in the
