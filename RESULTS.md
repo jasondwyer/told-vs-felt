@@ -21,6 +21,256 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-25 — **The coordinating session's notes on the seat's sitting of 2026-11-25, the first of its new thread:
+  the seat's read of `PROPOSAL-p OLMo-sft — VERDICTS` (m:318's "the reads"), under which A0-OLMo-sft PASS stands and
+  nothing moves; the raw committed here by path on the PI's "route as given" (item 2), with the close line on that
+  entry and item 5's dated note; the relays; and the coordinating session's part since `13ca2fe`'s last sweep
+  (`13ca2fe`'s commit, push #26, and the PI's "Build on the PINs", whose first shell command the PI stopped), with its
+  departures.**
+  - **The read:**
+    [`2026-11-25_p-sft-verdicts-read_design-to-code_answers.md`](results/raw/2026-11-25_p-sft-verdicts-read_design-to-code_answers.md)
+    (sha256 `3f8ccda4…fdad`, 30,264 bytes, 109 lines), the seat's read of the unit's 138 sessions, unredacted, after
+    the analyzer's output (m:318): the campaign's 112 (80 A0-OLMo-sft, 32 A0s-OLMo-sft) and the gate stages' 26
+    (G-F0m-OLMo (p) 24, G-TIME-OLMo (p) 2), on the VERDICTS entry of 2026-11-16, the secondary-DVs entry, the counters
+    entry (`922d7a3`) and the analyzer of record's three outputs as committed. It was placed untracked over the
+    bridge. The coordinating session re-hashed it equal to the sha256, bytes and lines the PI's message gives, found
+    it the only untracked file under `results/raw` with HEAD and origin's tracking ref at `13ca2fe`, and read it
+    whole. It is re-hashed equal before this commit and committed here by path, unchanged. The PI's message routing it
+    is committed as [`2026-11-25_p-sft-read_pi-routing.md`](results/raw/2026-11-25_p-sft-read_pi-routing.md). Below,
+    "item N" is item N of that message and "§N" a section of the seat's raw.
+  - **What the raw rules** (§0–§7):
+    - **The verdict** (§0–§1; item 1): A0-OLMo-sft PASS stands as the analyzer computed it, m:326's order
+      re-walked by the seat: Δ_c = 72/80 − 1/2 = +0.4000 > E = 1/16 (the sham A0s-OLMo-sft 14/32); map 0 38/40 and
+      map 1 34/40; P(X ≥ 72 | Bin(80, ½)) ≈ 2.69 × 10^-14 < .01. Every recount equals the outputs; the row stays
+      *Answered* (A-p1 §1; m:338).
+    - **The carried-forward tallies** (§0 and §3; m:271): on the contrast arm, strict, forced 0 of 353 and free 0 of
+      524; the wider class, forced 1 (G-F0m-OLMo (p) s = 4, `lexical:maple`) and free 1 (the campaign's s = 36, round
+      9); the sham 0 of 196 forced and 0 of 294 free. Reported; no bar; nothing reclassified.
+    - **Descriptive and post hoc** (§2–§3; rule 11): a first-pick preference that does not persist; the read
+      quantized at bf16, with four exact first-read ties and PASS under either resolution; and the sham's label habit,
+      which the told banner overrides in pairs 0 and 1 and in 5 of 10 sessions in pair 2. No criterion reads any of
+      them.
+    - **Dispositions** (§4) of the "For the seat" items of the VERDICTS entry and of the counters entry (`922d7a3`):
+      the departure, the end notice and the names-only listing inert; the first opening, the raw's provenance and the
+      order of the reads accepted; the counters step accepted as Code's, with one question, Q1, on
+      `corrupted_spelling`'s implemented rule (item 3).
+    - **Disclosures** (§5): five for Appendix D, flagged, not applied.
+    - **Record hygiene and the close** (§6): the dated note on the pod stop's order (item 5); a slip in the seat's
+      handoff (ADDENDUM-p1's sha256 given with LOCK-m-F3 v1.0's suffix), for the next handoff, nothing in the
+      repository affected; the seat's own departures (item 6); Code's close line (item 2); and the instruct read next,
+      then dpo, with G-READ-n's spec raw and starred block first when they land (item 4).
+  - **The routing.** The PI's message on PI date 2026-11-25 named the raw with its sha256, bytes and lines, gave seven
+    items in groups B (p), C (the coordinating session) and D (the push), below a group A that reads "nothing" and
+    holds no item, and ended "PI: route as given". The coordinating session reads each item as its default in
+    brackets. The items are the raw's §7 items, items 1–6 at more length and item 7 in §7's words but for its
+    bracket, "[push]" where §7 has "[yours]" (below).
+  - **Items 1–2 (B), relayed verbatim** to the sft VERDICTS session: the PI's message whole, all seven items,
+    between two lines of dashes, the block equal to the message by `cmp`, and the sent text equal to the relay file by
+    `cmp` (extracted from the transcript by `jq`). Item 2 was put to it as the raw's head has it ("the p VERDICTS
+    session for OLMo-sft (or the coordinating session in its stead) adds its close line"): its line drafted as a file,
+    each figure and quote checked against the raw by tool, and sent to the coordinating session by path, sha256 and
+    line count for this commit, with nothing edited, staged or committed by it.
+  - **Item 3 (B), relayed verbatim** to the dpo VERDICTS session, which committed and ran the counters step
+    (`9464f61`, `1ceebbf`, `922d7a3`): items 3–4 between two lines of dashes, the block equal by `cmp` to the
+    message's lines 12–13, the sent text equal to its file. The rule as implemented is its to state, in a dated note
+    in a window from the coordinating session or in its next values-check; Python only in a battery window; it does
+    not hold this commit.
+  - **Item 4 (B), relayed verbatim** to the instruct VERDICTS session: item 4 alone (the message's line 13, equal by
+    `cmp`; the sent text equal to its file), for its record; nothing asked of it.
+  - **Item 2, this commit:** the raw by path, and the close line on the `PROPOSAL-p OLMo-sft — VERDICTS` entry,
+    after its last line: the sft VERDICTS session's, drafted on the relay and placed here verbatim (sha256
+    `38cc5b05…c6e8`, 31 lines, no line over 120 characters but its link line): the raw cited by path and full sha256
+    in Q-F0's form (`79d462b`), the PI's routing words for items 1 and 2, §6's line for Code quoted, the short form
+    and §0's rule-25 sentence, §3's carried-forward totals verbatim beside the entry's release with §0's two wider
+    cases and its strict definition, and a finding aid for §4–§6. Nothing else on the entry moves, and the
+    secondary-DVs entry gets no line.
+  - **Item 5 (C), dated note (PI date 2026-11-25):** the seat's raw of 2026-11-25 (`7f5020b9…37f4`, committed at
+    `13ca2fe`) has the pod stopped "after the commit's verify and the push" (§0) and "after the close commit and its
+    push" (§5); the record (`13ca2fe`'s entry, its item 5) has the pod `emw1e4embiwe9b` stopped on the coordinating
+    session's word after the close commit's verify and before push #25, the order the seat's raw of 2026-11-24 set at
+    its §1.5 (5). The record is right; the raw stands as committed.
+  - **Item 6 (C):** the seat's departures (§6), inert: at pickup, one name-only `ls` of the `data/*/ckpt`, `gates`
+    and `verdicts` directories, nothing opened or sized before VERDICTS; after VERDICTS, `git ls-tree -l` sizes and
+    `git show` of p's checkpoints and call log; nothing of n's cells or Q-F3's checkpoint opened, hashed or sized.
+  - **Item 7 (D), the push:** this commit's push "with the next n commit or on its own", bracketed "[push]" in the
+    PI's message and "[yours]" in §7. The coordinating session reads it as `78cd6eb`'s entry read "[yours]": the push
+    waits for this commit's verify and screen and the PI's word.
+  - **The coordinating session's part since `13ca2fe`'s last sweep,** in order:
+    - **`13ca2fe`'s close:** the after-sweep's forms counted; the `78cd6eb` values-check raw read for its form; the
+      dispositions applied, and the checked drafts, the brief and the report hashed; the final texts built (the entry
+      wrapped at 118, the close line, the message, and the values-check raw as its head and the report) with the new
+      RESULTS.md, their widths, ends, placeholders and diffs checked; the seat's raw re-hashed equal, the two raws and
+      RESULTS.md placed and checked equal by `cmp`, and the four paths staged by name; the gate, GATE PASS (personal
+      data 0, clock times 0, marker words 0, the campaign folder's plain name 2, both in the seat's raw); the commit
+      `13ca2fe`; the verify, VERIFY PASS (986 lines added, none removed); the screen (six classes CLEAR, gitleaks 0,
+      gl5 exit 0); the pre-push dry run, PASS; its memory log and index; and the push put to the PI.
+    - **Push #26** (`95cd461..13ca2fe`) on the PI's "Push it now": push #25's record and forms read; the word saved
+      and found once in the transcript's user text; the pre-push checks re-run in their own call (PASS); the push
+      (exit 0); the after-check in its own call (`ls-remote`, the tracking ref and HEAD at `13ca2fe`, 0 behind and 0
+      ahead); the record written after it; its memory log and index; and n-build and the pod session told (both
+      delivered). Both reported back: n-build logged the push and holds G-READ-n; the pod session ran nothing, with
+      the pod EXITED and the volume kept.
+    - **The PI's "Build on the PINs"** (PI date 2026-11-25), on the question of n-build's PINs for G-READ-n: the
+      coordinating session's first shell command on it, after a plan update, a read of its transcript by `jq` for its
+      earlier relays of the PINs and for the word, was stopped by the PI while it ran, with the instruction to stop
+      and wait. In the session's history, the next message, this sitting's, follows the coordinating session's reply
+      before "Build on the PINs". Nothing was relayed to n-build, which holds; the coordinating session asks the PI
+      before relaying.
+    - **This sitting,** to the checked sweep, in order: the raw re-hashed equal, with HEAD and origin's tracking ref
+      at `13ca2fe` and the scoped status of `results/raw`, and read whole; two memory notes read (the "[yours]"
+      reading and the sft unit's state); the unit's entries in RESULTS.md, the counters' commits (`9464f61`, `1ceebbf`
+      and `922d7a3`, each the dpo VERDICTS session's) and the Q-F0 read's commit and close line (`79d462b`) found; the
+      new transcript inspected and the PI's message extracted from it by `jq` (by its record's uuid), with the fourth
+      sitting's relay forms read; the relays written in six parts, assembled and checked by `cmp`, sent, and their
+      sent texts extracted by `jq` and checked equal; `13ca2fe`'s entry read for its form, and the old sweep's files
+      and classifier; a preliminary sweep, and the screen and sweep tools copied to the new scratch, equal by sha256;
+      the old transcript's turn after push #26 read (the PI's "Build on the PINs" and the stopped command); a memory
+      note for the sitting and its index line; the routing raw assembled and its head's claims checked (no paste
+      markers; the items against §7's; item 7's words); the forms counted and the swept commands read, with the gate
+      scripts' leak patterns; the entry's source written, with the old brief read as a template; the pause state
+      appended to the sitting's note; a message to the dpo session on its plan for item 3 (a dated note on `9464f61`'s
+      entry, from the script's source alone, nothing run; windows one at a time, its own after this commit's verify),
+      and the plan appended to the note; the sft session's close line received, copied and checked (sha256 equal, 31
+      lines, no line over 120 characters but its link line, no local path); messages to the sft session (its line
+      received) and to the dpo session (a blind pass first, its window after this commit's verify); and the checked
+      sweep. The dpo session's note is not part of this commit.
+  - **Departures, for the seat to class:**
+    - the coordinating session's since `13ca2fe`'s last sweep, from a sweep of its own tool calls by `jq` over its two
+      transcripts (the old session's after that sweep's last call; the resumed session's, whose first 26 calls repeat
+      push #26's and are counted once): 111 calls to the checked sweep, 61 of them shell commands, the checked sweep
+      itself the last of them. No guard marker and no plain campaign name was in their text (a bracketed count). Shell
+      commands by span: `13ca2fe`'s close (12); push #26 (14); the PI's "Build on the PINs" (1, stopped); and this
+      sitting, to the checked sweep (34).
+      - **across them, the forms that are departures or near them:**
+        - **its transcripts, read** by `jq` in 12 commands (the old transcript in six, the new in three, both in
+          three; in one of them, the new transcript's first line by `head -n 1` into `jq` and both counted by `wc
+          -l`), printing record texts: the PI's messages, its own relays and their sent texts for the `cmp`s, push
+          #25's forms, the turn after push #26, and its calls for the two sweeps; and the sweeps' own files in nine
+          more;
+        - **a tool-results file, by the shell,** in two commands: one call's persisted output, kept beside the old
+          transcript, read by `grep -n` and `sed -n`;
+        - **task outputs, by the shell,** in one: the `13ca2fe` values-checker's output, its tool calls counted by
+          name;
+        - **its memory folder, by the shell,** in six commands: four appends by heredoc, two to its routing log and
+          two to the sitting's note, each followed by a `tail` look at the file's end; and two reads of the routing
+          log and its index by `wc -l`, `tail` and `grep -o`. The folder is also named in the count patterns of two
+          more commands, with the notes folder, the id prefix of n-build's scratch and the task outputs' path form;
+        - **the sft VERDICTS session's scratch, by the shell,** in one command: its close-line file, copied by `cp`,
+          hashed, compared by `cmp`, and measured;
+        - **name-only listings** in four commands (the push folders in two, the fourth sitting's folder and the sweep
+          folders), and of `.git/hooks` by the pre-push script in both its runs; and **one time-ordered listing,** `ls
+          -1t` of the transcripts' folder into `head -n 5`, outside item 1's name-only form: five names, the memory
+          folder's among them, nothing read there and nothing under `data/`;
+        - **git forms without item 3's pathspec:** `git show HEAD:RESULTS.md` in one; `git show -s` of named commits
+          (`922d7a3`, `9464f61`, `1ceebbf`, `79d462b`) in three; `git show 79d462b -- RESULTS.md` in one; `git log`
+          with `--format` and `--date=short` over RESULTS.md since 2026-11-15 and over one named raw in two; `git log
+          -1 --format` in one; `git diff --quiet -- RESULTS.md` in one; `git rev-list --left-right --count
+          origin/main...HEAD` in two (the after-check and the record), with `git rev-list --count` over the pushed
+          range in the record; and, in the scripts the commands ran, `git show <rev>:RESULTS.md` (the gate once, the
+          verify four times), `git cat-file` (`blob` in both; `commit` and `-p` in the verify), and in both pre-push
+          runs `git rev-list --count` and `git config --get core.hooksPath`. Every `git status` was scoped to
+          `results/raw` (two commands, the verify and both pre-push runs);
+        - **leak-count patterns:** in `13ca2fe`'s gate and verify, the user's name bracketed, an email-domain fixed
+          string and an IPv4 pattern, and in the gate session-id forms and a fragment of the volume host's name as an
+          unbracketed fixed string; in the received close line's check, the user's name bracketed with the roots' and
+          session-id forms; over the gate scripts, a bracketed host pattern, the account name bracketed as a fixed
+          string, `@` and an IPv4 fragment, counted, and then the scripts' leak lines printed in two commands, roots
+          masked;
+        - **its command text:** the account name in all 61 commands, through the home root in 38 and the temporary
+          root in 41; session ids in 47 (46 in full, one more by two truncated id prefixes in a memory append); and in
+          one, the append recording the pause state, the volume host's name fragment and the email-domain string typed
+          plain, describing the gate's patterns, and so written into the sitting's memory note;
+        - **writes outside the repository:** its scratch (the old: the after-sweep's form counts in its sweep folder,
+          the final texts and their unwrapped comparison copies, the push folder and the screen folder; the new: the
+          sitting's folder, the relays, the routing raw, the sweeps and the tools) and its memory folder; and the
+          stopped command's output file in the old scratch, written in part or in full before the stop;
+        - **commands that did not run as meant,** each without effect or re-run: a `grep -o` whose `\{0,300\}` and
+          `\{0,400\}` passed BSD grep's repetition limit ("invalid repetition count(s)"), re-run with 250 on both
+          sides; the stopped command; two searches for the unit's entries as headings, which found none (its entries
+          are bullets), found by bullet text next; the leak counts over the gate scripts, whose host, name and IPv4
+          searches printed 0 because their forms were not the scripts' own, re-read by printing the lines in the next
+          two commands; and a no-op loop left in the preliminary sweep's command;
+        - **counts and tools beside item 1:** `wc -c` in four (scratch files and raws, never a path under `data/`);
+          `wc -m` in one; `od` in three; `awk` in ten (an eleventh names `wrap.awk` only, copying it); a non-ASCII
+          count in one; output to `/dev/null` in two; `TZ=America/New_York date +%F` in three (the PI-local date); and
+          `git log --date=short` in two;
+        - **network:** push #26 and `ls-remote` to origin (the after-check, the record and both pre-push runs);
+        - **the screen** in one window, `/usr/bin/python3 -I` running `screen4.py` and `gl5.py`, with `gitleaks git`
+          (item 4); no other Python ran;
+        - **its tool output** showed local roots, the account name and session ids; a marker word in six commands'
+          output (the routing log's tail; commit subjects and RESULTS.md lines naming the p unit; the PI's message;
+          the Q-F0 close line, beside the unit's entry lines; and a session's title in a reminder); the Q-F3 campaign
+          folder's plain name in five (`forms.sh`'s form label in three, the routing log's text, and a commit subject
+          naming its sessions script); and the email-domain string in two (the gate scripts' leak lines) and the
+          volume host's name fragment in one (the gate's count line printed whole); none entered any text committed in
+          this window;
+      - **beside the shell,** to the checked sweep: eight messages (three to the dpo session, two to the sft VERDICTS
+        session, and one each to the instruct session, n-build and the pod session); one tool-schema load; two
+        notifications reads; the Read tool seven times (its memory folder 3, a committed raw 1, the seat's raw 1, its
+        old scratch 1, its copy of the close line 1); the Edit tool five times (its memory folder 4, a draft 1); the
+        Write tool 11 times (10 in its scratch, one new memory note); and the plan and wrap-up calls. None is a
+        departure under the rules quoted; they are listed for completeness;
+      - **after the checked sweep, to the last:** 45 calls before the last sweep, 9 of them shell commands, and the
+        last sweep the 46th (its own record not yet in the transcript when it read it); no guard marker and no plain
+        campaign name in their text (a bracketed count):
+        - the sweep's views and checks in two commands, reading its files;
+        - the draft's build in one: the entry wrapped, HEAD's RESULTS.md by `git show HEAD:RESULTS.md`, the anchors
+          asserted, and the widths, ends, placeholders and the message's bytes checked;
+        - the brief assembled in one, its items 1–5 checked equal by `cmp` to the list of record's lines 18–22, a
+          bracketed marker count over it, and the checked drafts copied and hashed;
+        - the last gate and verify scripts read whole in one, roots masked; and this commit's gate and verify, written
+          by the Write tool, parsed by `zsh -n` in one, with a `diff` against the last gate;
+        - its memory folder in one: an append by heredoc to the sitting's note, with a `tail -c` look; and, beside the
+          shell, one Edit there rewording the pause-state line (the FAIL's fix);
+        - task outputs, by the shell, in two: the checker's output, its tool calls counted by name and its hand-back
+          extracted whole by `jq`, then screened by counts with bracketed patterns;
+        - beside the shell: the values-check (one Agent call); the Edit tool 26 times (21 on the entry's source, three
+          on the message, one on the routing raw's head and one in its memory folder); the Write tool six times (the
+          message, the brief's two parts, the gate, the verify and the values-check raw's head, all in its scratch);
+          and the plan and wrap-up calls.
+    - **the values-checker's,** as its report states them: 102 shell commands and nine Read calls (its transcript
+      holds 102 `Bash` and 9 `Read` tool calls, by a count of the tool names); the transcripts read in 31 commands
+      (the resumed one alone in 16, the old one alone in 12, both in three) by `jq`, with `grep -F` prefilters, `sed
+      -n` ranges, `wc -l` and one `cat` into `jq`, printing record texts, keys, uuids and timestamps; the sweep's
+      files in 36 commands and in six more beside other sources, `forms.sh` read by `cat -n`, not run; the
+      coordinating session's scratch outside the sweep, both folders, in about 23 commands; name-only `ls` in six;
+      repository content outside `data/` in about 20; one `git show --format='%h %ad' --date=short 79d462b --
+      RESULTS.md` without item 3's pathspec, single-file `git hash-object`, `git rev-parse <rev>:<path>` and `git
+      ls-files`, ids by `rev-parse`, one scoped `git status`, and two forms with item 3's pathspec; `wc -c` in four,
+      `head -c` in two, `tail -c` into `od -c` in two, a width count and a non-ASCII count; output to `/dev/null`
+      twice; the volume host's name fragment typed plain once, as a fixed-string count over the gate scripts (1 and
+      0), every other sensitive pattern bracketed; in its command text, the account name in every command, session ids
+      in most, the three relay recipients' id prefixes in one and two record uuids in two; in its output, local roots,
+      the account name, session ids, marker words, the campaign folder's plain name, the volume host's fragment and
+      the email-domain string, clock times and the pod id, none of them in its report but the pod id; seven commands
+      that did not run as meant, each without effect or redone; and no Python, node, perl scripts, ruby, awk or
+      osascript, no `ps`, `pgrep`, `stat`, `find` or `du`, no network, and no file written.
+  - **Values-check:** one blind pass by a subagent over this entry's draft, the close line, the routing raw, the
+    message and their placement in a draft RESULTS.md (`7ceab92e…5054`, `38cc5b05…c6e8`, `dc2375aa…0801`,
+    `c6416338…d011` and `7a06befe…f526`), on a brief in the coordinating session's scratch (`82193190…2923`, 105
+    lines), its report committed whole as
+    [`2026-11-25_p-sft-read-notes_valuescheck.md`](results/raw/2026-11-25_p-sft-read-notes_valuescheck.md): 66 items,
+    48 CONFIRMED, 14 IMPRECISE, 1 FAIL and 3 NOT CHECKABLE, and 12 observations.
+    - **The FAIL** (36), a departure class the draft had missed, fixed in the checker's words: the append recording
+      the pause state typed the volume host's name fragment and the email-domain string plain into the sitting's
+      memory note, and one memory append held two truncated session-id prefixes. That note's line has since been
+      reworded by the Edit tool to name them by description.
+    - **The 14 IMPRECISE items** (8, 10, 23, 28, 31, 33, 34, 35, 37, 38, 39, 42, 62 and 63) are applied, in the
+      checker's words or near them.
+    - **The NOT CHECKABLE items** (5, 44 and 47): the re-hash and the home-folder count at the commit, met by its gate
+      and verify; and the close line's word that the next RESULTS entry names this commit in full.
+    - **The observations:** 1 to 8 and 11 applied (the routing raw's "typed text" as the transcript records it, and
+      its head's other differences from §7; "This sitting" in call order and whole; the stopped command in the
+      entry's head; the dpo session's note not yet committed; the count patterns' other names; the marker word's two
+      sources; group A; the memory folder's name in the time-ordered listing); 9, 10 and 12 noted (item 5 quotes each
+      section in its own words; the received line's widths were counted in bytes, the claim holding either way; the
+      old transcript's last two calls are not in the resumed one).
+    - **After the check:** the dispositions, their rewraps and the fills, each checked by tool (`diff` of each checked
+      draft against its final text). No second full pass was made.
+  - **Committed by path:** the seat's raw, the routing raw, the values-check raw, this entry and the close line. The
+    commit-time count of the home-folder prefix over the staged diff is 0. The coordinating session ran nothing on a
+    model. Not pushed.
+
 - 2026-11-25 — **The coordinating session's notes on the seat's sitting of 2026-11-25, its thread's fourth: the
   N-pod campaign's run of record and its close accepted as committed at `95cd461`, G-READ-n's BUILD (step 15) a go,
   and the network volume kept until G-READ-n's artifact is committed; the raw committed here by path on the PI's
@@ -12836,6 +13086,37 @@ applied to CLAUDE.md.
       run that "refuses or stops" did not arise: the three runs exited 0 (the coordinating session's notice; the
       counters step's gate 1).
   - Not pushed. Committed by path.
+  - **The reads' close (PI date 2026-11-25; the seat's VERDICTS read, §6).** The seat's read is committed by path in
+    the commit that adds this line. That commit is the read's first commit, so `git log --diff-filter=A --
+    results/raw/2026-11-25_p-sft-verdicts-read_design-to-code_answers.md` names it:
+    [`_p-sft-verdicts-read_design-to-code_answers`](results/raw/2026-11-25_p-sft-verdicts-read_design-to-code_answers.md),
+    sha256 `3f8ccda4889e865d66a4d5d54d016a34639a056eb171fad62f7e194226fdfdad`. A commit cannot name its own hash; the
+    next RESULTS entry names it in full. The PI's routing (PI date 2026-11-25) ends "PI: route as given"; its section B
+    takes item 1 "[accept]" and item 2 "[route]".
+    - §6, for Code: "the close line on the `PROPOSAL-p OLMo-sft — VERDICTS` entry citing this file by path and sha256
+      and stating the carried-forward tallies of §3 (strict 0/353 forced and 0/524 free; wider 1 and 1; the sham 0 and
+      0) beside the entry's release; a dated note answering Q1 when convenient; nothing else moves. The secondary-DVs
+      entry needs no line."
+    - The short form: "**A0-OLMo-sft PASS stands as the analyzer computed it,** and the seat's read of all 138
+      sessions moves nothing". And §0: "The rule-25 window closes with this read (m:271)."
+    - **Beside the release (above): the carried-forward tallies**, §3's "Carried-forward totals for the unit, contrast
+      arm", verbatim: "strict — forced 0 of 353 (G-TIME 0/4, G-F0m 0/29, campaign 0/320), free 0 of 524 (0/6, 0/42,
+      0/476); wider class — forced 1 of 353 (G-F0m s = 4), free 1 of 524 (campaign s = 36). Sham arm 0 of 196 forced
+      and 0 of 294 free. The free denominators are the free rounds generated on those sessions (the outputs'
+      `free_rounds`)."
+      - The two wider cases, as §0 gives them: G-F0m-OLMo (p) s = 4, round 1, "the stage's one exclusion,
+        `lexical:maple`", and the campaign's s = 36, round 9, "on the chosen corrupted config".
+      - §0's word on them: "Reported; no bar; nothing reclassified."
+      - The strict definition is the record's, as §0 gives it: "a response about evaluating the configurations,
+        naming the tags, with no task content, as the Q-F0 read applied it".
+    - Code's finding aid, proposing nothing; the read is the record.
+      - Its §4 disposes of this entry's "For the seat" items. The departure, the end notice and the names-only listing
+        are inert. The first opening, the raw's provenance and the order of the reads are accepted.
+      - §4 accepts the counters step (`922d7a3`) as Code's, descriptive, with one question, Q1: `corrupted_spelling`'s
+        rule as implemented, for a dated note or Code's next values-check (the routing's item 3), the counter's form
+        unchanged.
+      - Its §5 flags five disclosures for Appendix D, not applied.
+      - Its §6 carries a dated note on the pod-stop order and the seat's own departures (the routing's items 5 and 6).
 
 - 2026-11-16 — **PROPOSAL-p OLMo-sft — secondary DVs (p v0.2 §4.4, §8 step 7; m:312; PIN-13): issuing no claim.**
   Secondaries (a), (b), (d) and (e), computed by the analyzer of record in the same invocation as OLMo-sft's VERDICTS
