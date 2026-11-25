@@ -14480,6 +14480,43 @@ applied to CLAUDE.md.
       of 2026-11-16, §3).
     - **Ledger (76), the seat's,** its fix verbatim: "a counter's declaration states its domain — which sessions, which
       rounds — in one sentence, apart from where and when each part is reported."
+  - **Dated note (PI date 2026-11-25): the corrupted-spelling rule as the counters step applies it.** The dpo
+    VERDICTS session, on Q1 of the seat's read of the sft VERDICTS:
+    [`2026-11-25_p-sft-verdicts-read_design-to-code_answers.md`](results/raw/2026-11-25_p-sft-verdicts-read_design-to-code_answers.md)
+    (sha256 `3f8ccda4…fdad`), committed by the coordinating session at `5ceb8dd`, §4 item 7.
+    - **The PI's routing, item 3, verbatim:** "Code states corrupted_spelling's rule as implemented (p §2.3's wording
+      vs the uncounted `don`, `col`, `close`) in a dated note or its next values-check; the counter's form unchanged
+      (rule 23) [note, no change]".
+    - **Nothing changes:** not the script, not its outputs, not the counts.
+    - **The rule as implemented.** The step defines no counter of its own. It calls p's `report.corrupted_spelling`,
+      unchanged, in `valence_core/p/report.py`. That file's sha256 is `e807c5ad…5af1`, as the counters raw (`922d7a3`)
+      prints at its imports. The step passes each round's item gold variants (m's CORR_clean), the clean pool's task
+      words, and the pinned lexicon: `data/p/lexicon/web2.txt`, sha256 `be41ad97…bab9`, which each LOCK-p v1.0 names
+      as "the lexicon (F-p11)". A round counts iff one of its words is a hit:
+      - **Words:** the stored text is split on whitespace, and each token is normalized by f0's `normalize`. That
+        lower-cases it, makes every character but a–z, 0–9, `/` and the space a space, and strips the ends.
+      - **Candidates:** a normalized word of length ≥ 2, not in p §1.1's FUNCTION_WORDS and not a word of the clean
+        pool's tasks. This is the seat's pinned definition of 2026-11-07, `38f9974`, §5.
+      - **Exclusions:** F-p11 (the seat's refinement of 2026-11-08, `daca8b0`, §3) excludes a candidate on either
+        ground:
+        - (i) "in a committed English lexicon": web2, with every part of a multi-part candidate listed. It is Code's
+          pick, declared at LOCK-p v0.1: "a full dictionary, not a frequency-ranked common-words list", where F-p11
+          named "a frozen common-words list";
+        - (ii) "equal to a gold up to trailing punctuation and a possessive or plural suffix".
+      - **The hit:** a remaining candidate is a hit iff it is not a gold and its Levenshtein distance to some
+        normalized, non-numeric gold is ≤ 1 for a gold of length ≤ 3, and ≤ 2 otherwise.
+    - **The three cases.**
+      - `don`, `col` and `close` are each a line of web2 (`/usr/bin/grep -x`, with the file at its pinned sha256).
+        None is a function word or a clean-pool task word, so F-p11 (i) excludes each before any distance is taken.
+        `Close` normalizes to `close`.
+      - The seat's ruling names the third itself: "so `there`, `could`, `close` do not count" (`daca8b0`, §3). Its
+        (ii) gives `Close.` as an example, but under report.py's PIN it is (i) that excludes it: "(ii) alone would not
+        exclude it, ``close`` not being ``closed`` up to a suffix".
+    - **The rule against p §2.3's wording.** p §2.3's sentence names the class the counter aims at. The counter is the
+      pinned definition with F-p11's two exclusions, so it counts less than that sentence describes.
+      - The rulings' clause "the counter under-counts the class and says so" (`38f9974`, §5; `daca8b0`, §3) is said
+        there of `Janbaa` and `Janyooar`, at distance ≥ 3, which that sentence's distance 2 leaves out as well.
+      - Whether `don` and `col`, excluded by (i), fall under it is for the seat.
 
 - 2026-11-16 — **p's VERDICTS ×3, held before any run: STOP for the seat on the `--decisions` input, m:318's list of
   the decisions taken with another unit's outcome known (PIN-35), and on two things the three VERDICTS entries must
