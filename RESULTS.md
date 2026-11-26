@@ -21,6 +21,303 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-25 — **THE Q-F3 CAMPAIGN (PROPOSAL-m v1.11 m:298, m:361; LOCK-m-F3 v1.0; the PI's routing of 2026-11-15,
+  evening, section A item 3): COMPLETE, exit 0, in one invocation. Its 596 launches were A1 95, A1s 40, A2 162,
+  A2s 70, A3 165 and A3s 64, and each arm ended with its domain at its floor (80, 32, 144, 56, 144 and 56). Fifteen
+  looks printed 135 BAR lines, all silent. The campaign had no pause and no STOP. NOTE-8's (a′) and (d) are both
+  EQUAL (`a734dadec8f8ce9b`). The VERDICTS session waits for `POSTING v1` (v1.0 §13 item 4).**
+  - **The words.**
+    - **The routing.** The PI's "Route as given" (PI date 2026-11-15, evening), on the seat's answers of that date
+      (`1f3ce1f9…f84b`, committed at `a215c28`). Section A, item 3, verbatim. Its one record in the repository is
+      the relay as `results/raw/2026-11-15_qf3-close-lines-campaign-go_valuescheck.md` quotes it (lines 65–68):
+
+      > 3. The campaign: (a')'s line, then launch — announced, serialized, detached, checkpointed, uncached, hour cap = 480 h, looks every 40, m:267's checklist, end notice stampless [go]. While it runs: no other model process on the laptop; other sessions' model-free test batteries at low priority, one at a time (m:249: the cap counts detached generation time).
+
+    - **The seat's §2.3** sets two conditions on the laptop for the campaign's length:
+      - for the PI, automatic macOS updates off;
+      - for every session, no other model process, and model-free test batteries at low priority, one at a time.
+    - **The coordinating session's form.**
+      - "launch cleared" came after the push (origin `fa27c45`), with automatic macOS updates off.
+      - The launch was announced, and the coordinating session closed its windows before it ("windows closed"). That
+        is the form `a215c28`'s entry gives for the battery windows: "every window closes before each launch or
+        resume".
+      - During the run: a PID-only check at +30 min, reported as "PID alive at +30 min".
+      - At the end: (d) first, then the outcome to the coordinating session before anything else.
+  - **The run** ([`_mf3-campaign-qf3`](results/raw/2026-11-15_mf3-campaign-qf3.txt)). One invocation of `campaign`
+    ran on the committed driver `7bb6f7ca…28a4` (`3f017d8`) at HEAD `41bfab4`, under LOCK-m-F3 v1.0
+    (`fe9518c7…1aa6`, `a89a4fa`), uncached, at reasoning cap 120.
+    - It loaded offline from the snapshot of record **`c000ac2c2057d94be3fa931000c31723aac53282`**
+      (`mlx-community/Qwen3.6-27B-4bit`, `refs/main`), the cache's only snapshot.
+    - The SNAPSHOT line printed before the load, and its re-read after the load was unchanged.
+    - **The lines before the sessions:** INVOCATION, DRIVER, SNAPSHOT and its re-read, then GATE, LICENCE and
+      PROVENANCE. The PROVENANCE line's start stamp is one of Q4's records (below).
+    - **Launches:** 596 in all, the six arms interleaved by §2.1's rule:
+
+      | arm | sessions | launches |
+      |---|---|---|
+      | A1 | `s=0`–`s=94` | 95 |
+      | A1s | `s=0`–`s=39` | 40 |
+      | A2 | `s=0`–`s=161` | 162 |
+      | A2s | `s=0`–`s=69` | 70 |
+      | A3 | `s=0`–`s=164` | 165 |
+      | A3s | `s=0`–`s=63` | 64 |
+
+      The launch counts were a projection (v1.0 §1; m:192): A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96, 832 in
+      all, over 21 looks.
+    - **Domain:** A1 80, A1s 32, A2 144, A2s 56, A3 144, A3s 56, each arm's floor (v1.0 §1; mf3's `schedule.FLOORS`
+      under the path). Each arm's domain is its launches less its pre-pick exclusions (the report's `arms`).
+    - **The end:**
+      - The terminal state is COMPLETE at 596 launches.
+      - The 480 h hour cap was not reached: the report's `hour_cap_reached` is false.
+      - Then come `STAGE campaign-Q-F3 COMPLETE path=uncached`, the CHECKPOINT and REPORT lines and `EXIT=0`, the
+        raw's only EXIT line.
+      - The report's `pauses` is empty and its `stop` is null.
+      - No ruling was offered, so the raw has no RULING line, and no adjudication excerpt was written.
+    - **No problem lines.** Outside the raw's header lines (`#`), no line of these kinds printed: STOP, PAUSE,
+      REFUSED, RULING, NOT APPLIED, LAPTOP PREFLIGHT REFUSES, traceback or `CHECKPOINT STATE INCONSISTENT`.
+      - The non-header lines are 742 in all: the eleven identity and end lines, 596 session lines and 135 BAR lines.
+  - **The looks and the monitors.** The BAR lines are as the stage printed them; the rest comes from the report.
+    - Looks follow m:330, every 40 launches and at the end: 14 looks at 40 to 560 launches, and the end at 596.
+    - Each look printed nine BAR lines, all `silent`: three bars on the sham arms and two guard bars per contrast arm.
+    - Each bar would have paused the unit for the seat's adjudication, never a verdict (lock §8, rows 9–13).
+    - **The bars on the sham arms**, at the end (cumulative counts, α .05 per look, no α spending):
+      - `round_degeneracy`, task rounds of A1s, A2s and A3s: 35/1530, P = 1.0000 against p0 .05 (critical 92);
+      - `reasoning_line_defect`, reasoning lines of A1s, A2s and A3s: 25/853, P = 1.0000 against p0 .10 (critical
+        101);
+      - `own_pair_lexical`, task rounds of A2s and A3s: 6/1188, P = 1.0000 against p0 .02 (critical 33).
+
+      Their counts are unchanged from look 10 on. A2s, the last sham arm to reach its floor, made its last launch
+      before look 10.
+    - **The guard** (m:316). It tests each contrast arm's pre-pick exclusions two ways, at α .05: against its sham
+      arm's by one-sided Fisher, and alone against p0 .20. At the end:
+
+      | arm | contrast | sham | Fisher P | alone P | alone critical |
+      |---|---|---|---|---|---|
+      | A1 | 15/95 | 8/40 | .8027 | .8780 | 27 |
+      | A2 | 18/162 | 14/70 | .9754 | .9991 | 42 |
+      | A3 | 21/165 | 8/64 | .5787 | .9947 | 43 |
+
+    - **The smallest P over the fifteen looks**, per bar (descriptive):
+
+      | bar | smallest P | at |
+      |---|---|---|
+      | A2's guard, alone | .4233 | look 1 |
+      | `own_pair_lexical` | .5688 | look 1 |
+      | A3's guard, Fisher | .5787 | the end |
+      | A1's guard, Fisher | .6975 | look 3 |
+      | A3's guard, alone | .7379 | look 1 |
+      | `round_degeneracy` | .8017 | look 1 |
+      | A2's guard, Fisher | .8671 | look 1 |
+      | A1's guard, alone | .8749 | look 11 |
+      | `reasoning_line_defect` | .9998 | look 1 |
+
+      Each look's lines are in the raw.
+    - **Hair triggers** (`scaffold_absorption`, `template_breakage`, `schedule_mismatch`) and G-VER: none fired and
+      no mismatch. Any of them would have stopped the campaign (m:271, m:284).
+    - **Pre-pick exclusions per arm** (m:318; the report's `arms`), pooled:
+      - A1 15/95, A2 18/162 and A3 21/165;
+      - A1s 8/40, A2s 14/70 and A3s 8/64.
+
+      Every one is at a forced round; no session line names a reasoning line.
+    - **Reported, not bars** (m:330). These are from the report's end look (`end_look`); looks 1–14's values are
+      in its `looks`.
+      - **Low label mass and top-1-not-a-label** (the report's `read_flags`). Each contrast arm is counted over the
+        first reads of its domain sessions, one per session, and its later reads stay withheld. Each sham arm is
+        counted over all its reads.
+        - Contrast: A1 0 and 8 of 80; A2 1 and 22 of 144; A3 0 and 8 of 144.
+        - Sham: A1s 13 and 23 of 191; A2s 27 and 37 of 329; A3s 15 and 28 of 333.
+      - **Degeneracy and lexical** (the report's `beside`). Each contrast arm is counted over its forced rounds only,
+        and each sham arm over all its task rounds.
+        - Contrast: A1 9 and 3 of 362; A2 11 and 1 of 632; A3 16 and 2 of 644.
+        - Sham: A1s 7 and 2 of 342; A2s 14 and 4 of 601; A3s 14 and 2 of 587.
+  - **m:271's redactions** (with m:263 and m:318).
+    - **Withheld:** the contrast sessions' free-round events (exclusions, degeneracy, any class) and their picks.
+      They are withheld to the unit's VERDICTS entry.
+      - The session lines print a contrast session's free-round exclusion without its class, as
+        `excluded:excluded@free` (lock §9, F35; ruling (h)).
+      - This entry counts none of them. Each contrast arm's domain is given pooled, not split into valid and excluded
+        at a free round. A departure at the end did count them (below, item 3).
+      - The campaign writes no reads file and reports no first-pick share, sham included. Its reads are the VERDICTS
+        entry's (m:318).
+    - **The sham arms**, which carry no contrast information:
+
+      | arm | valid | excluded at a forced round | excluded at a free round |
+      |---|---|---|---|
+      | A1s | 31 | 8: `audit@forced` 3, `content@forced` 4, `lexical@forced` 1 | 1: `lexical@free` |
+      | A2s | 53 | 14: `audit@forced` 7, `content@forced` 6, `lexical@forced` 1 | 3: `lexical@free` |
+      | A3s | 55 | 8: `audit@forced` 4, `content@forced` 3, `lexical@forced` 1 | 1: `lexical@free` |
+
+    - **The checkpoint**, `data/mf3/ckpt/Q-F3_campaign.json`, holds the picks. It is hashed, not opened.
+    - **Timing:**
+      - no session's seconds and no stage duration is computed or quoted;
+      - the report's sham generation totals (`sham_generation_ms`) are not quoted;
+      - the contrast seconds stay in the checkpoint until VERDICTS (m:318).
+    - **Records not computed against** (Q4; for Q-F3, `r2:`§4, LOCK-m-F3 v0.2 §8): the commit times, the report's
+      PROVENANCE start stamp (in the raw's PROVENANCE line), and the entry's own date.
+      - The raw carries no launch stamp and no finish stamp. The commit message restates no stamp.
+  - **The launch** (the raw's header).
+    - **(a′)**, NOTE-8's comparison before the launch (the seat's §2.2): EQUAL.
+      - Every field of the laptop's backend provenance derivable without the load equals G-F3's record.
+      - `n_layers` is named, not derived.
+      - The identifier from the fields now, with `n_layers` as G-F3 recorded it (the header's line 37), is
+        `a734dadec8f8ce9b`, equal to G-F3's report identity and to v1.0 §5's line.
+      - It ran inside the wrapper, model-free (the model libraries blocked), on Code's `a_prime.py`
+        (`66e7d72d…f617`). The header carries its output.
+    - **A dry pre-launch check** returned CLEAR just before the launch (the header's line 1). It covered the
+      identity; the precheck, with its prior gate not run; and the driver and snapshot checks. Nothing loaded.
+    - **The checklist** (m:267), with no departure, as the header states:
+      - AC power at 140 W;
+      - 630Gi of disk free;
+      - no Python process before the run (`pgrep -ifl python`: 0);
+      - `caffeinate -is` (display sleep only);
+      - the gate line, the run's own GATE line.
+
+      Beside it, on the same header line as the power and the disk: `HF_HUB_OFFLINE=1` (the licence's (g)).
+    - **The command:** m:267's line as written, `nohup caffeinate -is /bin/zsh <tmp>/a6/launch/run_campaign.sh >
+      /dev/null 2>&1 & disown`, then `echo "PID=$!"` on the next line. Both lines are in Code's `launch_campaign.sh`,
+      which Code's Bash tool ran with `/bin/zsh`.
+      - It printed `PID=7989`, and `ps -p` named that PID's command as the wrapper. The campaign's own Python
+        process, the driver, appears in other sessions' entries as PID 8051 (for example `2834c2d`).
+      - The wrapper wrote the raw, ran (a′), and ran the campaign only on (a′)'s exit 0.
+    - **The start check**, just after the launch: `kill -0` on the PID found it alive, and `ps -p` gave its command.
+    - **At +30 min**, a `kill -0` found it alive. "PID alive at +30 min" went to the coordinating session.
+    - **The end-wait:** one background loop on the PID alone, then a `pgrep` for the driver. Its output file was
+      found empty when read. Before anything else was read, `ps` on the PID and `pgrep` for the driver, the wrapper
+      and `caffeinate -is` found none.
+      - The coordinating session checked by tool that PID 7989 was gone and that no process matched the driver
+        (a bracketed `pgrep`, 0).
+    - **From the launch call to the end-wait's notification**, this session's calls were these. Code attests them
+      from the session transcript, found by transcript order between those two records with no stamp read.
+      - the start check;
+      - the +30 min check, and the read of its one-line output;
+      - the end-wait;
+      - two edits of a memory file;
+      - two task-list updates;
+      - one message to the coordinating session ("PID alive at +30 min").
+
+      There was no Python, no `git status`, and no listing, stat or read of the raw, `data/mf3/ckpt` or
+      `data/mf3/reports`. On the coordinating session's reading (not a ruling), listing these calls by kind sets no
+      bound that the report "PID alive at +30 min" does not already give. The seat may read this beside item 4,
+      below.
+    - **Q-F3's run list, owed.**
+      - Its scope, as the coordinating session set it: every laptop process that a call started with python or the
+        venv's interpreter, across all of this project's session transcripts and their subagents, from the
+        campaign's launch to its end.
+      - The coordinating session's log for it also holds non-Python commands with a guard marker in their argv
+        (below; `732a58f` and `1272702` say so). Whether the list takes that class in, or that class stands beside
+        it, is part of item 4 for the seat.
+      - It is not built here. Its membership would be set by comparing stamps with the end. The seat's answers on
+        G-TIME-F3's re-run (§4) say that "no session computes a stage total or a bound from any pair of stamps before
+        VERDICTS". On the coordinating session's reading (not a ruling), a list whose membership is set against the
+        end encodes such a bound, whatever it prints.
+      - So it is built after VERDICTS, or as the seat rules (below, item 4). No stamp was compared with the end, in
+        code or by eye.
+      - **What committed entries already declare,** by kind, with no stamp. Each was model-free, and each is
+        disclosed where it is cited: in an entry, or in the pod session's close line.
+        - **Python starts outside a battery window:**
+          - one in p's sft VERDICTS entry (`8a7cdf8`), whose command line held a marker word;
+          - two in n's analyzer BUILD entry (`5c0ae6b`), with none;
+          - two in p's counters entry (`9464f61`), whose command lines held marker words;
+          - one, a `/usr/bin/python3 --version`, in the pod session's close line at `f3e7190`, with none.
+        - **Python starts whose argv held a marker word, run outside `nice -n 19`:** three, in n's corpus entry
+          (`fa96ccf`). The seat ruled that entry's four departures inert: "the four departures are inert"
+          (`results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md`).
+        - **Non-Python processes with a guard marker in their argv** (`ls`, `grep`, `git`, `sed`, `shasum`, and loops
+          over marker-named paths), in many entries. Among them:
+          - the coordinating session's correction (`101026c`), 58 processes;
+          - n-build's driver entries (`ad856f0`, `1272702`, `732a58f`);
+          - n-build's (iv) render entry (`b523f6a`), with its values-checker's 36 `git` calls.
+        - What the coordinating session's notes log and no committed entry declares waits for the run list, which
+          enumerates every one.
+    - **The tree.** 104 commits landed between `41bfab4` and `0081351`, the HEAD when (d) ran, none of them this
+      session's.
+      - None touched `LOCK-m-F3.md`, the proposal, CLAUDE.md, the analyzer, the driver, `valence_core/m`,
+        `valence_core/mf3`, `valence_core/adapters`, `data/mf3`, `data/m` or `data/f`.
+      - Under `valence_core/`, only `valence_core/n` changed.
+      - Those paths hold no tracked change, and the driver re-hashes to `7bb6f7ca…28a4`.
+  - **The driver** (F-1; the campaign wiring's entry, `3f017d8`). The run's DRIVER line printed `7bb6f7ca…28a4`,
+    committed at HEAD `41bfab4` with identical working-tree bytes. That is the campaign wiring's blob, as its entry
+    records. v1.0 §6's value, `285eed04…0e44`, is the driver at the lock.
+  - **The identity** (the report):
+    - `lock_sha256` is v1.0's, `fe9518c7368fe1b34ee9e67f8ba663b1b3c7c02431b5f83d1b5d4b7e7b0c1aa6`, the sha256 of
+      `LOCK-m-F3.md`, which is committed-clean at HEAD.
+    - `schedule_sha256` is `8e2b119359b812dabefd9e351d0ca21c563c6ffdda6cd085d4e7f091d392ffba`. Code rebuilt it in
+      shell, by mf3's `_schedules_sha` (`valence_core/mf3/stages.py:579`), from the six campaign schedule files
+      v1.0 §4 names, each committed-clean. The two are equal.
+    - `path` is `uncached`, and `reasoning_cap` is 120.
+    - `backend_identifier` is `a734dadec8f8ce9b`: NOTE-8's (d), EQUAL.
+      - Its lines are appended to the raw after the end, as the seat's §2.2 has it ("in the campaign's raw").
+      - It ran in shell (jq and grep, no interpreter).
+    - Every other key equals G-F3's report identity: `audit_v2_sha16`, `ban_sha`, `m_module_sha256`,
+      `package_sha256`, `pool_sha16`, `proposal_sha256`, `renders_sha16`, `weights_revision` and `weights_sha256`.
+    - The report's top level carries:
+      - `unit` Q-F3, `stage` campaign and `hour_cap` 480;
+      - its `form`, "pick-free campaign report (m:318: at looks, pooled pre-pick exclusion counts per arm)";
+      - `schedule_n`: A1 4,352, A1s 1,600, A2 6,384, A2s 2,640, A3 6,384, A3s 2,640 (v1.0 §4's n).
+
+    The checkpoint's identity was not opened. The LICENCE line passed at stage start. No commit has touched
+    `LOCK-m-F3.md` since `a89a4fa`.
+  - **The outputs** (this commit, by path):
+    - **The raw,** `results/raw/2026-11-15_mf3-campaign-qf3.txt`, sha256
+      `23f1b48e92d72f6f2897606f50be66aca37fdf879c40223cd9af99ebb7f31caa`, 789 lines.
+      - **Before the scrub,** as the wrapper left it: 781 lines, sha256
+        `75ed4cf58998d1dda22d632f1d3268e4e2415c1e4496e5cf8d3b2b97e98c795b`. A copy is in the sessions' shared notes
+        folder.
+      - **After the scrub:** 781 lines, sha256 `25e9954cada25f8f1bdb5b07745461ad1bc0eca525ee6f792da154cb2e816349`.
+        Four local roots are scrubbed in G-F3's raw's forms: `<repo>/` on lines 40, 779 and 780, and `<home>/` on
+        line 42.
+      - Then the (d) block's eight lines: a header line, and (d)'s seven output lines, each under the raw's `#   `
+        prefix.
+    - **The report,** `data/mf3/reports/Q-F3_campaign_report.json`, sha256
+      `b4b48567cd12f18199e5ef9cc7795db308c89be146586a538c300627c81898d3`.
+    - **The checkpoint,** `data/mf3/ckpt/Q-F3_campaign.json`, sha256
+      `5ef0261637ca1b86cc3037ec6bcef3d0b334b2dc805b418d0fc8653188d2f92f` (hashed, not opened).
+    - **Beside them,**
+      [`_mf3-campaign-qf3_valuescheck`](results/raw/2026-11-25_mf3-campaign-qf3_valuescheck.md): this entry's
+      values-check, two blind passes with Code's dispositions.
+      - The first pass: 108 items, 1 FAIL and 7 IMPRECISE. The draft changed while it ran.
+      - The second pass, of the revised text whole: 118 items, 0 FAIL and 7 IMPRECISE.
+      - Every FAIL and IMPRECISE item is applied. The edits after the second pass were checked by tool.
+  - **For the seat: departures and facts of the record.**
+    1. **The scratchpad's routine cleanup removed the launch kit's other files.** Its rule is left out of this record
+       (the values-check's O1).
+       - Removed: `a_prime.py`, `d_check.py`, the wrapper `run_campaign.sh`, the launcher `launch_campaign.sh`, the
+         pre-launch check `prelaunch_check_campaign.py`, and their outputs: (a′)'s dry run, the dry check's CLEAR,
+         the PID line and (a′)'s launch output. Code found them missing at the end. Only the raw stayed.
+       - **How the run stayed unaffected:**
+         - (a′) ran at the launch;
+         - the wrapper's body is one compound command, which ran the campaign and wrote the raw, and zsh parsed it
+           whole before it began;
+         - the driver and the stage's code are in the repository;
+         - the wrapper reached `EXIT=0`.
+       - **What survives:**
+         - the kit's bytes, in Code's session transcript;
+         - `a_prime.py`'s sha256 (`66e7d72d…f617`) and its launch output, in the raw's header.
+    2. **(d) ran in shell** (jq and grep), not by `d_check.py`, the kit's tool for it, which the cleanup had removed.
+       Its output is the raw's last seven lines, each under the raw's `#   ` prefix, below a one-line header.
+    3. **A withheld count, made at the end.**
+       - Code's first per-arm extraction from the raw, made in composing the end notice, printed the contrast arms'
+         sessions split into valid and excluded at a free round, with a tally of the exclusion labels. It printed
+         in this session's terminal.
+       - The end notice to the coordinating session, sent after it, counted the contrast arms' free-round
+         exclusions.
+       - Code disclosed both to the coordinating session at once and asked that the counts not be passed on. This
+         entry carries none of them.
+       - The coordinating session's word: it relayed none of them, and it keeps them out of every text it writes.
+       - It is a departure in form from m:271, m:263 and m:318, and from the Q-F0 entry's practice ("This entry
+         counts none of them"). It is for the seat to class.
+       - It bears also on v1.0 §13 item 3's end notice ("ended" and the exit status, with no stamp and no window)
+         and on r2 §4's form. The notice carried no stamp and no window, but more than those two.
+    4. **Q-F3's run list: its timing and its scope** (above), for the seat to rule. It is owed after VERDICTS on the
+       coordinating session's reading.
+    5. **The end-wait's output file was empty** when read. The end was confirmed by `ps` and `pgrep` before anything
+       else was read.
+  - **What follows.**
+    - The campaign (v1.0 §13 item 3) ends here.
+    - **The VERDICTS session** "waits for `POSTING v1` (10′)": v1.0 §13 item 4, quoting the seat's answers of
+      2026-11-14, §A.7.
+    - The push of this commit waits for the PI's word.
+
 - 2026-11-25 — **n — two starred readings for the seat before G-READ-n's run: GR3 and GR5 (code → design; the
   n-build session). STOP for the seat's read.**
   Block:

@@ -1,0 +1,789 @@
+# The Q-F3 campaign (PROPOSAL-m v1.11 m:298, m:361; LOCK-m-F3 v1.0, a89a4fa; the campaign wiring, 3f017d8; the PI's routing of 2026-11-15, evening, "Route as given", section A item 3, on the seat's answers committed at a215c28) -- its first invocation: the six arms interleaved by §2.1's rule, uncached, at reasoning cap 120, until each arm's domain count reaches its floor (A1 80, A1s 32, A2 144, A2s 56, A3 144, A3s 56), the hour cap (`hour cap = 480 h`) or the PI's stop, looks every 40 launches (m:330), the launch counts the projection (A1 128, A1s 64, A2 224, A2s 96, A3 224, A3s 96; m:192); its prior G-F3's checkpoint, data/mf3/ckpt/Q-F3_qual.json, taken by path, with G-ID-F3's artifact re-checked on disk; the canonical run on the committed driver (3f017d8, sha256 7bb6f7ca...28a4), into data/mf3/ckpt/Q-F3_campaign.json and its report. Launched with m:267's line as written: `nohup caffeinate -is /bin/zsh <tmp>/a6/launch/run_campaign.sh > /dev/null 2>&1 & disown` -- the command is this wrapper, which writes this raw, exports HF_HUB_OFFLINE=1 and unsets MLXLM_USE_MODELSCOPE; caffeinate -is leaves display sleep only; the gate line is the driver's own. The wrapper is G-F3's form, its process probe printing each match's full command line, uncut, one per line. Inputs by digest only (the list of record v2's item 1). NOTE-8's (a′) (the seat's answers of 2026-11-15, evening, §2.2) runs below, right before the campaign; nothing launches unless it is EQUAL. No departure from the checklist. No stamp. A dry pre-launch check (the identity, the precheck with its prior gate not run -- the checkpoint is read by the stage's own code only --, the driver and the snapshot checks; nothing loaded) returned CLEAR just before the launch.
+# HEAD 41bfab4; driver scripts/mf3_sessions.py sha256 7bb6f7ca9a545a49e625cd10115483aa6bdb616f5d8a443af36d21ec27ec28a4; tracked changes: []
+# Inputs at launch, by digest: G-F3's checkpoint data/mf3/ckpt/Q-F3_qual.json sha256 65715bb930146761b2b4e782315b3786ab705a0cfa46c27616b1017565fc7bd8; G-ID-F3's artifact data/mf3/gates/Q-F3_G-ID.json sha256 ea8f7d3acd20c3c3b00a11d7dad48283ff20a0abe961462270c3930553e39260
+# Power: Now drawing from AC Power; Wattage 140 W; disk: 630Gi available on /; HF_HUB_OFFLINE=1
+# python processes before the run (pgrep -ifl python: the argument-list match, case-insensitive; each match's full command line, uncut): 0
+# NOTE-8's (a′), right before the campaign (<tmp>/a6/launch/a_prime.py, sha256 66e7d72d5f3a5b6fbe51745e863fc542a978458b8c3db79da1cc84b0dc02f617):
+#   (a′) NOTE-8 before the launch: the laptop's backend provenance now against G-F3's report identity, field by field (the seat's answers of 2026-11-15, evening, §2.2); model-free; HEAD 41bfab4.
+#     interpreter: jlens-qwen36/.venv/bin/python; imports of mlx, mlx_lm, mlx_vlm, torch, transformers blocked
+#     sources committed-clean at HEAD by digest: data/mf3/reports/Q-F3_qual_report.json (G-F3's report), valence_core/adapters/qwen_mlx.py (last changed at 7da9509, before G-F3's outputs at 2193832), valence_core/adapters/__init__.py (last changed at 1465b34, before them), scripts/mf3_sessions.py, LOCK-m-F3.md
+#     G-F3's report: every provenance record carries the same backend fields: True; its record gives its identity's backend_identifier: True
+#     adapter                 G-F3's record "qwen3.6-27b-4bit-mlx"
+#                             now           "qwen3.6-27b-4bit-mlx"  -> EQUAL (the class's name)
+#     backend                 G-F3's record "mlx"
+#                             now           "mlx"  -> EQUAL (a constant)
+#     choice_window_declared  G-F3's record 8192
+#                             now           8192  -> EQUAL (the class's CHOICE_WINDOW (no choice_window passed))
+#     dtype                   G-F3's record "4bit-quantized (MLX)"
+#                             now           "4bit-quantized (MLX)"  -> EQUAL (a constant)
+#     gdn_inference_mode      G-F3's record "ops (fused disabled)"
+#                             now           "ops (fused disabled)"  -> EQUAL (a constant)
+#     legacy_truncate_512     G-F3's record false
+#                             now           false  -> EQUAL (the default (not passed))
+#     library_versions        G-F3's record {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}
+#                             now           {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}  -> EQUAL (importlib.metadata)
+#     mlx_version             G-F3's record "0.31.2"
+#                             now           "0.31.2"  -> EQUAL (importlib.metadata)
+#     model_id                G-F3's record "mlx-community/Qwen3.6-27B-4bit"
+#                             now           "mlx-community/Qwen3.6-27B-4bit"  -> EQUAL (the driver's QWEN_MODEL_ID)
+#     n_encodes_clipped       G-F3's record --
+#                             now           --  -> not a backend field (resume.BACKEND_DROP)
+#     n_layers                G-F3's record 64
+#                             now           --  -> NOT DERIVED: len(the loaded model's layers) needs the load
+#     platform                G-F3's record "macOS-15.6.1-arm64-arm-64bit"
+#                             now           "macOS-15.6.1-arm64-arm-64bit"  -> EQUAL (this interpreter)
+#     python                  G-F3's record "3.12.9"
+#                             now           "3.12.9"  -> EQUAL (this interpreter)
+#     the backend identifier: from the fields now, n_layers as G-F3 recorded it, a734dadec8f8ce9b; G-F3's report identity a734dadec8f8ce9b; LOCK-m-F3 v1.0 §5's line a734dadec8f8ce9b
+#     v1.0 §5's line: - **The backend identifier** is `a734dadec8f8ce9b`: the laptop's MLX backend, as G-F3's report identity carries it. G-F3's
+#   (a′) EQUAL: every field derivable without the load equals G-F3's record; n_layers is named, not derived; the identifier from the fields now is a734dadec8f8ce9b, G-F3's report identity's and v1.0 §5's.
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python scripts/mf3_sessions.py campaign --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F3.md --analyzer-sha256 d347ea0c9b69f73ced13484f3683f0b52f79a826cc9963a81359b2adc2205e48 --package-sha256 098455d91d1ae32371c32cfe883a3ce90c51b7607526e38f5460346ce44dda13 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/mf3_sessions.py 7bb6f7ca9a545a49e625cd10115483aa6bdb616f5d8a443af36d21ec27ec28a4: committed at HEAD 41bfab4979daf1c82e52b72b35d3485d6f6583c3, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; <home>/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE campaign-Q-F3: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py d347ea0c9b69f73c, HEAD 41bfab4979daf1c82e52b72b35d3485d6f6583c3
+LICENCE campaign-Q-F3: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F3.md fe9518c7368fe1b3: committed at HEAD 41bfab4979daf1c82e52b72b35d3485d6f6583c3, working tree identical; analyzer d347ea0c9b69f73c, mf3 package 098455d91d1ae323, the 11 m files and the weights c000ac2c2057: the hashes identity_extra and the lock name, hashed at stage start; A-m2 v0.5 f27505c556a33040 committed, the reasoning block F-b at cap 120
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-11-16T04:48:41Z"}
+campaign A1 s=0 valid
+campaign A1s s=0 excluded:audit@forced
+campaign A2 s=0 valid
+campaign A2s s=0 excluded:audit@forced
+campaign A3 s=0 valid
+campaign A3s s=0 valid
+campaign A1 s=1 valid
+campaign A1s s=1 valid
+campaign A2 s=1 excluded:audit@forced
+campaign A2s s=1 valid
+campaign A3 s=1 valid
+campaign A3s s=1 excluded:audit@forced
+campaign A1 s=2 valid
+campaign A1s s=2 valid
+campaign A2 s=2 excluded:audit@forced
+campaign A2s s=2 excluded:content@forced
+campaign A3 s=2 valid
+campaign A3s s=2 excluded:lexical@free
+campaign A1 s=3 valid
+campaign A1s s=3 valid
+campaign A2 s=3 valid
+campaign A2s s=3 excluded:audit@forced
+campaign A3 s=3 valid
+campaign A3s s=3 excluded:content@forced
+campaign A1 s=4 valid
+campaign A1s s=4 valid
+campaign A2 s=4 valid
+campaign A2s s=4 excluded:lexical@free
+campaign A3 s=4 excluded:audit@forced
+campaign A3s s=4 valid
+campaign A1 s=5 valid
+campaign A1s s=5 valid
+campaign A2 s=5 valid
+campaign A2s s=5 valid
+campaign A3 s=5 valid
+campaign A3s s=5 valid
+campaign A1 s=6 valid
+campaign A1s s=6 valid
+campaign A2 s=6 valid
+campaign A2s s=6 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=1 6/157 exact one-sided P=0.8017 > alpha 0.05 vs p0 0.05; critical 14 at n=157
+BAR reasoning_line_defect@campaign-Q-F3 silent look=1 1/79 exact one-sided P=0.9998 > alpha 0.05 vs p0 0.10; critical 13 at n=79
+BAR own_pair_lexical@campaign-Q-F3 silent look=1 2/95 exact one-sided P=0.5688 > alpha 0.05 vs p0 0.02; critical 5 at n=95
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=1 contrast 0/7 vs sham 1/7 one-sided Fisher P=1.0000 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=1 0/7 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 4 at n=7
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=1 contrast 2/7 vs sham 3/7 one-sided Fisher P=0.8671 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=1 2/7 exact one-sided P=0.4233 > alpha 0.05 vs p0 0.20; critical 4 at n=7
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=1 contrast 1/6 vs sham 2/6 one-sided Fisher P=0.9091 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=1 1/6 exact one-sided P=0.7379 > alpha 0.05 vs p0 0.20; critical 4 at n=6
+campaign A3 s=6 valid
+campaign A3s s=6 valid
+campaign A1 s=7 valid
+campaign A1s s=7 valid
+campaign A2 s=7 valid
+campaign A2s s=7 valid
+campaign A3 s=7 excluded:excluded@free
+campaign A3s s=7 valid
+campaign A1 s=8 valid
+campaign A1s s=8 excluded:content@forced
+campaign A2 s=8 excluded:lexical@forced
+campaign A2s s=8 excluded:audit@forced
+campaign A3 s=8 valid
+campaign A3s s=8 valid
+campaign A1 s=9 valid
+campaign A1s s=9 valid
+campaign A2 s=9 valid
+campaign A2s s=9 valid
+campaign A3 s=9 valid
+campaign A3s s=9 valid
+campaign A1 s=10 valid
+campaign A1s s=10 valid
+campaign A2 s=10 valid
+campaign A2s s=10 valid
+campaign A3 s=10 excluded:audit@forced
+campaign A3s s=10 valid
+campaign A1 s=11 valid
+campaign A1s s=11 valid
+campaign A2 s=11 valid
+campaign A2s s=11 excluded:content@forced
+campaign A3 s=11 valid
+campaign A3s s=11 valid
+campaign A1 s=12 valid
+campaign A1s s=12 valid
+campaign A2 s=12 valid
+campaign A2s s=12 valid
+campaign A3 s=12 valid
+campaign A3s s=12 valid
+campaign A1 s=13 valid
+campaign A1s s=13 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=2 9/335 exact one-sided P=0.9872 > alpha 0.05 vs p0 0.05; critical 25 at n=335
+BAR reasoning_line_defect@campaign-Q-F3 silent look=2 5/181 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 26 at n=181
+BAR own_pair_lexical@campaign-Q-F3 silent look=2 2/212 exact one-sided P=0.9265 > alpha 0.05 vs p0 0.02; critical 9 at n=212
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=2 contrast 0/14 vs sham 2/14 one-sided Fisher P=1.0000 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=2 0/14 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.20; critical 6 at n=14
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=2 contrast 3/13 vs sham 5/13 one-sided Fisher P=0.8992 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=2 3/13 exact one-sided P=0.4983 > alpha 0.05 vs p0 0.20; critical 6 at n=13
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=2 contrast 2/13 vs sham 2/13 one-sided Fisher P=0.7035 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=2 2/13 exact one-sided P=0.7664 > alpha 0.05 vs p0 0.20; critical 6 at n=13
+campaign A2 s=13 valid
+campaign A2s s=13 valid
+campaign A3 s=13 valid
+campaign A3s s=13 valid
+campaign A1 s=14 valid
+campaign A1s s=14 valid
+campaign A2 s=14 valid
+campaign A2s s=14 valid
+campaign A3 s=14 valid
+campaign A3s s=14 excluded:lexical@forced
+campaign A1 s=15 valid
+campaign A1s s=15 valid
+campaign A2 s=15 valid
+campaign A2s s=15 excluded:lexical@free
+campaign A3 s=15 valid
+campaign A3s s=15 valid
+campaign A1 s=16 valid
+campaign A1s s=16 valid
+campaign A2 s=16 valid
+campaign A2s s=16 valid
+campaign A3 s=16 valid
+campaign A3s s=16 valid
+campaign A1 s=17 excluded:lexical@forced
+campaign A1s s=17 valid
+campaign A2 s=17 valid
+campaign A2s s=17 valid
+campaign A3 s=17 excluded:excluded@free
+campaign A3s s=17 excluded:audit@forced
+campaign A1 s=18 valid
+campaign A1s s=18 excluded:lexical@free
+campaign A2 s=18 valid
+campaign A2s s=18 valid
+campaign A3 s=18 valid
+campaign A3s s=18 valid
+campaign A1 s=19 excluded:audit@forced
+campaign A1s s=19 valid
+campaign A2 s=19 valid
+campaign A2s s=19 valid
+campaign A3 s=19 valid
+campaign A3s s=19 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=3 18/516 exact one-sided P=0.9594 > alpha 0.05 vs p0 0.05; critical 35 at n=516
+BAR reasoning_line_defect@campaign-Q-F3 silent look=3 8/284 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 38 at n=284
+BAR own_pair_lexical@campaign-Q-F3 silent look=3 4/334 exact one-sided P=0.9023 > alpha 0.05 vs p0 0.02; critical 12 at n=334
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=3 contrast 2/20 vs sham 2/20 one-sided Fisher P=0.6975 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=3 2/20 exact one-sided P=0.9308 > alpha 0.05 vs p0 0.20; critical 8 at n=20
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=3 contrast 3/20 vs sham 5/20 one-sided Fisher P=0.8824 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=3 3/20 exact one-sided P=0.7939 > alpha 0.05 vs p0 0.20; critical 8 at n=20
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=3 contrast 2/20 vs sham 4/20 one-sided Fisher P=0.9091 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=3 2/20 exact one-sided P=0.9308 > alpha 0.05 vs p0 0.20; critical 8 at n=20
+campaign A1 s=20 valid
+campaign A1s s=20 excluded:audit@forced
+campaign A2 s=20 valid
+campaign A2s s=20 excluded:content@forced
+campaign A3 s=20 valid
+campaign A3s s=20 valid
+campaign A1 s=21 valid
+campaign A1s s=21 valid
+campaign A2 s=21 valid
+campaign A2s s=21 valid
+campaign A3 s=21 valid
+campaign A3s s=21 valid
+campaign A1 s=22 valid
+campaign A1s s=22 valid
+campaign A2 s=22 valid
+campaign A2s s=22 valid
+campaign A3 s=22 valid
+campaign A3s s=22 valid
+campaign A1 s=23 valid
+campaign A1s s=23 valid
+campaign A2 s=23 valid
+campaign A2s s=23 valid
+campaign A3 s=23 valid
+campaign A3s s=23 valid
+campaign A1 s=24 valid
+campaign A1s s=24 valid
+campaign A2 s=24 valid
+campaign A2s s=24 valid
+campaign A3 s=24 valid
+campaign A3s s=24 excluded:content@forced
+campaign A1 s=25 valid
+campaign A1s s=25 valid
+campaign A2 s=25 excluded:audit@forced
+campaign A2s s=25 excluded:audit@forced
+campaign A3 s=25 valid
+campaign A3s s=25 valid
+campaign A1 s=26 valid
+campaign A1s s=26 valid
+campaign A2 s=26 valid
+campaign A2s s=26 excluded:content@forced
+BAR round_degeneracy@campaign-Q-F3 silent look=4 21/682 exact one-sided P=0.9945 > alpha 0.05 vs p0 0.05; critical 45 at n=682
+BAR reasoning_line_defect@campaign-Q-F3 silent look=4 12/374 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 48 at n=374
+BAR own_pair_lexical@campaign-Q-F3 silent look=4 4/438 exact one-sided P=0.9759 > alpha 0.05 vs p0 0.02; critical 15 at n=438
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=4 contrast 2/27 vs sham 3/27 one-sided Fisher P=0.8246 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=4 2/27 exact one-sided P=0.9813 > alpha 0.05 vs p0 0.20; critical 10 at n=27
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=4 contrast 4/27 vs sham 8/27 one-sided Fisher P=0.9503 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=4 4/27 exact one-sided P=0.8177 > alpha 0.05 vs p0 0.20; critical 10 at n=27
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=4 contrast 2/26 vs sham 5/26 one-sided Fisher P=0.9503 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=4 2/26 exact one-sided P=0.9773 > alpha 0.05 vs p0 0.20; critical 10 at n=26
+campaign A3 s=26 valid
+campaign A3s s=26 valid
+campaign A1 s=27 valid
+campaign A1s s=27 excluded:content@forced
+campaign A2 s=27 valid
+campaign A2s s=27 valid
+campaign A3 s=27 excluded:excluded@free
+campaign A3s s=27 valid
+campaign A1 s=28 excluded:excluded@free
+campaign A1s s=28 valid
+campaign A2 s=28 valid
+campaign A2s s=28 valid
+campaign A3 s=28 valid
+campaign A3s s=28 valid
+campaign A1 s=29 valid
+campaign A1s s=29 excluded:content@forced
+campaign A2 s=29 valid
+campaign A2s s=29 excluded:content@forced
+campaign A3 s=29 excluded:lexical@forced
+campaign A3s s=29 valid
+campaign A1 s=30 valid
+campaign A1s s=30 excluded:audit@forced
+campaign A2 s=30 valid
+campaign A2s s=30 excluded:audit@forced
+campaign A3 s=30 valid
+campaign A3s s=30 valid
+campaign A1 s=31 valid
+campaign A1s s=31 excluded:content@forced
+campaign A2 s=31 valid
+campaign A2s s=31 valid
+campaign A3 s=31 valid
+campaign A3s s=31 valid
+campaign A1 s=32 valid
+campaign A1s s=32 valid
+campaign A2 s=32 excluded:content@forced
+campaign A2s s=32 valid
+campaign A3 s=32 valid
+campaign A3s s=32 valid
+campaign A1 s=33 valid
+campaign A1s s=33 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=5 24/841 exact one-sided P=0.9992 > alpha 0.05 vs p0 0.05; critical 54 at n=841
+BAR reasoning_line_defect@campaign-Q-F3 silent look=5 12/458 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 58 at n=458
+BAR own_pair_lexical@campaign-Q-F3 silent look=5 4/553 exact one-sided P=0.9956 > alpha 0.05 vs p0 0.02; critical 18 at n=553
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=5 contrast 2/34 vs sham 7/34 one-sided Fisher P=0.9864 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=5 2/34 exact one-sided P=0.9952 > alpha 0.05 vs p0 0.20; critical 12 at n=34
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=5 contrast 5/33 vs sham 10/33 one-sided Fisher P=0.9620 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=5 5/33 exact one-sided P=0.8179 > alpha 0.05 vs p0 0.20; critical 12 at n=33
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=5 contrast 3/33 vs sham 5/33 one-sided Fisher P=0.8712 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=5 3/33 exact one-sided P=0.9732 > alpha 0.05 vs p0 0.20; critical 12 at n=33
+campaign A2 s=33 excluded:audit@forced
+campaign A2s s=33 excluded:audit@forced
+campaign A3 s=33 valid
+campaign A3s s=33 valid
+campaign A1 s=34 valid
+campaign A1s s=34 valid
+campaign A2 s=34 valid
+campaign A2s s=34 valid
+campaign A3 s=34 valid
+campaign A3s s=34 valid
+campaign A1 s=35 valid
+campaign A1s s=35 excluded:lexical@forced
+campaign A2 s=35 valid
+campaign A2s s=35 valid
+campaign A3 s=35 valid
+campaign A3s s=35 valid
+campaign A1 s=36 excluded:audit@forced
+campaign A1s s=36 valid
+campaign A2 s=36 valid
+campaign A2s s=36 valid
+campaign A3 s=36 valid
+campaign A3s s=36 valid
+campaign A1 s=37 valid
+campaign A1s s=37 valid
+campaign A2 s=37 valid
+campaign A2s s=37 valid
+campaign A3 s=37 valid
+campaign A3s s=37 excluded:audit@forced
+campaign A1 s=38 valid
+campaign A1s s=38 valid
+campaign A2 s=38 valid
+campaign A2s s=38 valid
+campaign A3 s=38 valid
+campaign A3s s=38 valid
+campaign A1 s=39 valid
+campaign A1s s=39 valid
+campaign A2 s=39 valid
+campaign A2s s=39 valid
+campaign A3 s=39 valid
+campaign A3s s=39 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=6 28/1023 exact one-sided P=0.9999 > alpha 0.05 vs p0 0.05; critical 64 at n=1023
+BAR reasoning_line_defect@campaign-Q-F3 silent look=6 16/560 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 69 at n=560
+BAR own_pair_lexical@campaign-Q-F3 silent look=6 4/681 exact one-sided P=0.9994 > alpha 0.05 vs p0 0.02; critical 21 at n=681
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=6 contrast 3/40 vs sham 8/40 one-sided Fisher P=0.9762 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=6 3/40 exact one-sided P=0.9921 > alpha 0.05 vs p0 0.20; critical 13 at n=40
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=6 contrast 6/40 vs sham 11/40 one-sided Fisher P=0.9503 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=6 6/40 exact one-sided P=0.8387 > alpha 0.05 vs p0 0.20; critical 13 at n=40
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=6 contrast 3/40 vs sham 6/40 one-sided Fisher P=0.9228 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=6 3/40 exact one-sided P=0.9921 > alpha 0.05 vs p0 0.20; critical 13 at n=40
+campaign A1 s=40 valid
+campaign A2 s=40 valid
+campaign A2s s=40 valid
+campaign A3 s=40 valid
+campaign A3s s=40 valid
+campaign A1 s=41 valid
+campaign A2 s=41 valid
+campaign A2s s=41 valid
+campaign A3 s=41 excluded:audit@forced
+campaign A3s s=41 valid
+campaign A1 s=42 excluded:lexical@forced
+campaign A2 s=42 valid
+campaign A2s s=42 excluded:audit@forced
+campaign A3 s=42 valid
+campaign A3s s=42 valid
+campaign A1 s=43 valid
+campaign A2 s=43 valid
+campaign A2s s=43 excluded:lexical@free
+campaign A3 s=43 valid
+campaign A3s s=43 valid
+campaign A1 s=44 valid
+campaign A2 s=44 valid
+campaign A2s s=44 valid
+campaign A3 s=44 valid
+campaign A3s s=44 excluded:content@forced
+campaign A1 s=45 excluded:content@forced
+campaign A2 s=45 valid
+campaign A2s s=45 valid
+campaign A3 s=45 valid
+campaign A3s s=45 valid
+campaign A1 s=46 valid
+campaign A2 s=46 valid
+campaign A2s s=46 valid
+campaign A3 s=46 valid
+campaign A3s s=46 valid
+campaign A1 s=47 valid
+campaign A2 s=47 valid
+campaign A2s s=47 valid
+campaign A3 s=47 excluded:audit@forced
+campaign A3s s=47 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=7 30/1170 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 72 at n=1170
+BAR reasoning_line_defect@campaign-Q-F3 silent look=7 19/643 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 78 at n=643
+BAR own_pair_lexical@campaign-Q-F3 silent look=7 5/828 exact one-sided P=0.9998 > alpha 0.05 vs p0 0.02; critical 24 at n=828
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=7 contrast 5/48 vs sham 8/40 one-sided Fisher P=0.9411 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=7 5/48 exact one-sided P=0.9752 > alpha 0.05 vs p0 0.20; critical 15 at n=48
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=7 contrast 6/48 vs sham 12/48 one-sided Fisher P=0.9674 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=7 6/48 exact one-sided P=0.9379 > alpha 0.05 vs p0 0.20; critical 15 at n=48
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=7 contrast 5/48 vs sham 7/48 one-sided Fisher P=0.8224 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=7 5/48 exact one-sided P=0.9752 > alpha 0.05 vs p0 0.20; critical 15 at n=48
+campaign A1 s=48 valid
+campaign A2 s=48 excluded:excluded@free
+campaign A2s s=48 valid
+campaign A3 s=48 valid
+campaign A3s s=48 valid
+campaign A1 s=49 valid
+campaign A2 s=49 valid
+campaign A2s s=49 excluded:lexical@forced
+campaign A3 s=49 valid
+campaign A3s s=49 valid
+campaign A1 s=50 valid
+campaign A2 s=50 valid
+campaign A2s s=50 valid
+campaign A3 s=50 valid
+campaign A3s s=50 excluded:audit@forced
+campaign A1 s=51 valid
+campaign A2 s=51 valid
+campaign A2s s=51 valid
+campaign A3 s=51 valid
+campaign A3s s=51 valid
+campaign A1 s=52 valid
+campaign A2 s=52 valid
+campaign A2s s=52 valid
+campaign A3 s=52 valid
+campaign A3s s=52 valid
+campaign A1 s=53 valid
+campaign A2 s=53 valid
+campaign A2s s=53 excluded:content@forced
+campaign A3 s=53 valid
+campaign A3s s=53 valid
+campaign A1 s=54 valid
+campaign A2 s=54 valid
+campaign A2s s=54 valid
+campaign A3 s=54 valid
+campaign A3s s=54 valid
+campaign A1 s=55 valid
+campaign A2 s=55 valid
+campaign A2s s=55 valid
+campaign A3 s=55 valid
+campaign A3s s=55 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=8 34/1310 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 80 at n=1310
+BAR reasoning_line_defect@campaign-Q-F3 silent look=8 24/721 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 87 at n=721
+BAR own_pair_lexical@campaign-Q-F3 silent look=8 6/968 exact one-sided P=0.9999 > alpha 0.05 vs p0 0.02; critical 28 at n=968
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=8 contrast 5/56 vs sham 8/40 one-sided Fisher P=0.9683 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=8 5/56 exact one-sided P=0.9926 > alpha 0.05 vs p0 0.20; critical 17 at n=56
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=8 contrast 6/56 vs sham 14/56 one-sided Fisher P=0.9877 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=8 6/56 exact one-sided P=0.9786 > alpha 0.05 vs p0 0.20; critical 17 at n=56
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=8 contrast 5/56 vs sham 8/56 one-sided Fisher P=0.8813 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=8 5/56 exact one-sided P=0.9926 > alpha 0.05 vs p0 0.20; critical 17 at n=56
+campaign A1 s=56 valid
+campaign A2 s=56 valid
+campaign A2s s=56 valid
+campaign A3 s=56 valid
+campaign A3s s=56 valid
+campaign A1 s=57 valid
+campaign A2 s=57 valid
+campaign A2s s=57 valid
+campaign A3 s=57 valid
+campaign A3s s=57 valid
+campaign A1 s=58 excluded:audit@forced
+campaign A2 s=58 valid
+campaign A2s s=58 valid
+campaign A3 s=58 valid
+campaign A3s s=58 valid
+campaign A1 s=59 valid
+campaign A2 s=59 valid
+campaign A2s s=59 valid
+campaign A3 s=59 valid
+campaign A3s s=59 valid
+campaign A1 s=60 excluded:lexical@forced
+campaign A2 s=60 valid
+campaign A2s s=60 valid
+campaign A3 s=60 valid
+campaign A3s s=60 valid
+campaign A1 s=61 valid
+campaign A2 s=61 valid
+campaign A2s s=61 valid
+campaign A3 s=61 valid
+campaign A3s s=61 valid
+campaign A1 s=62 valid
+campaign A2 s=62 valid
+campaign A2s s=62 valid
+campaign A3 s=62 excluded:content@forced
+campaign A3s s=62 valid
+campaign A1 s=63 excluded:content@forced
+campaign A2 s=63 valid
+campaign A2s s=63 valid
+campaign A3 s=63 valid
+campaign A3s s=63 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=9 34/1470 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 88 at n=1470
+BAR reasoning_line_defect@campaign-Q-F3 silent look=9 24/817 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 97 at n=817
+BAR own_pair_lexical@campaign-Q-F3 silent look=9 6/1128 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 32 at n=1128
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=9 contrast 8/64 vs sham 8/40 one-sided Fisher P=0.9039 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=9 8/64 exact one-sided P=0.9580 > alpha 0.05 vs p0 0.20; critical 19 at n=64
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=9 contrast 6/64 vs sham 14/64 one-sided Fisher P=0.9867 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=9 6/64 exact one-sided P=0.9933 > alpha 0.05 vs p0 0.20; critical 19 at n=64
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=9 contrast 6/64 vs sham 8/64 one-sided Fisher P=0.8018 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=9 6/64 exact one-sided P=0.9933 > alpha 0.05 vs p0 0.20; critical 19 at n=64
+campaign A1 s=64 valid
+campaign A2 s=64 valid
+campaign A2s s=64 valid
+campaign A3 s=64 valid
+campaign A1 s=65 valid
+campaign A2 s=65 valid
+campaign A2s s=65 valid
+campaign A3 s=65 valid
+campaign A1 s=66 valid
+campaign A2 s=66 valid
+campaign A2s s=66 valid
+campaign A3 s=66 valid
+campaign A1 s=67 valid
+campaign A2 s=67 valid
+campaign A2s s=67 valid
+campaign A3 s=67 excluded:excluded@free
+campaign A1 s=68 excluded:audit@forced
+campaign A2 s=68 valid
+campaign A2s s=68 valid
+campaign A3 s=68 valid
+campaign A1 s=69 valid
+campaign A2 s=69 valid
+campaign A2s s=69 valid
+campaign A3 s=69 valid
+campaign A1 s=70 valid
+campaign A2 s=70 valid
+campaign A3 s=70 valid
+campaign A1 s=71 valid
+campaign A2 s=71 valid
+campaign A3 s=71 valid
+campaign A1 s=72 valid
+campaign A2 s=72 excluded:audit@forced
+campaign A3 s=72 valid
+campaign A1 s=73 excluded:audit@forced
+campaign A2 s=73 valid
+campaign A3 s=73 valid
+campaign A1 s=74 valid
+campaign A2 s=74 valid
+campaign A3 s=74 valid
+campaign A1 s=75 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=10 35/1530 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 92 at n=1530
+BAR reasoning_line_defect@campaign-Q-F3 silent look=10 25/853 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 101 at n=853
+BAR own_pair_lexical@campaign-Q-F3 silent look=10 6/1188 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 33 at n=1188
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=10 contrast 10/76 vs sham 8/40 one-sided Fisher P=0.8907 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=10 10/76 exact one-sided P=0.9550 > alpha 0.05 vs p0 0.20; critical 22 at n=76
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=10 contrast 7/75 vs sham 14/70 one-sided Fisher P=0.9809 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=10 7/75 exact one-sided P=0.9961 > alpha 0.05 vs p0 0.20; critical 22 at n=75
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=10 contrast 6/75 vs sham 8/64 one-sided Fisher P=0.8771 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=10 6/75 exact one-sided P=0.9988 > alpha 0.05 vs p0 0.20; critical 22 at n=75
+campaign A2 s=75 valid
+campaign A3 s=75 valid
+campaign A1 s=76 excluded:audit@forced
+campaign A2 s=76 excluded:audit@forced
+campaign A3 s=76 valid
+campaign A1 s=77 excluded:audit@forced
+campaign A2 s=77 valid
+campaign A3 s=77 valid
+campaign A1 s=78 valid
+campaign A2 s=78 valid
+campaign A3 s=78 valid
+campaign A1 s=79 valid
+campaign A2 s=79 valid
+campaign A3 s=79 valid
+campaign A1 s=80 valid
+campaign A2 s=80 valid
+campaign A3 s=80 valid
+campaign A1 s=81 valid
+campaign A2 s=81 valid
+campaign A3 s=81 valid
+campaign A1 s=82 valid
+campaign A2 s=82 valid
+campaign A3 s=82 valid
+campaign A1 s=83 valid
+campaign A2 s=83 valid
+campaign A3 s=83 valid
+campaign A1 s=84 valid
+campaign A2 s=84 valid
+campaign A3 s=84 valid
+campaign A1 s=85 valid
+campaign A2 s=85 valid
+campaign A3 s=85 valid
+campaign A1 s=86 excluded:audit@forced
+campaign A2 s=86 valid
+campaign A3 s=86 valid
+campaign A1 s=87 valid
+campaign A2 s=87 valid
+campaign A3 s=87 excluded:audit@forced
+campaign A1 s=88 excluded:audit@forced
+campaign A2 s=88 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=11 35/1530 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 92 at n=1530
+BAR reasoning_line_defect@campaign-Q-F3 silent look=11 25/853 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 101 at n=853
+BAR own_pair_lexical@campaign-Q-F3 silent look=11 6/1188 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 33 at n=1188
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=11 contrast 14/89 vs sham 8/40 one-sided Fisher P=0.8038 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=11 14/89 exact one-sided P=0.8749 > alpha 0.05 vs p0 0.20; critical 25 at n=89
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=11 contrast 8/89 vs sham 14/70 one-sided Fisher P=0.9870 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=11 8/89 exact one-sided P=0.9985 > alpha 0.05 vs p0 0.20; critical 25 at n=89
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=11 contrast 7/88 vs sham 8/64 one-sided Fisher P=0.8850 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=11 7/88 exact one-sided P=0.9995 > alpha 0.05 vs p0 0.20; critical 25 at n=88
+campaign A3 s=88 valid
+campaign A1 s=89 valid
+campaign A2 s=89 valid
+campaign A3 s=89 valid
+campaign A1 s=90 valid
+campaign A2 s=90 excluded:content@forced
+campaign A3 s=90 excluded:lexical@forced
+campaign A1 s=91 valid
+campaign A2 s=91 excluded:audit@forced
+campaign A3 s=91 valid
+campaign A1 s=92 excluded:content@forced
+campaign A2 s=92 valid
+campaign A3 s=92 excluded:content@forced
+campaign A1 s=93 valid
+campaign A2 s=93 valid
+campaign A3 s=93 valid
+campaign A1 s=94 valid
+campaign A2 s=94 valid
+campaign A3 s=94 valid
+campaign A2 s=95 valid
+campaign A3 s=95 valid
+campaign A2 s=96 valid
+campaign A3 s=96 valid
+campaign A2 s=97 valid
+campaign A3 s=97 valid
+campaign A2 s=98 valid
+campaign A3 s=98 valid
+campaign A2 s=99 valid
+campaign A3 s=99 excluded:audit@forced
+campaign A2 s=100 valid
+campaign A3 s=100 valid
+campaign A2 s=101 valid
+campaign A3 s=101 valid
+campaign A2 s=102 valid
+campaign A3 s=102 valid
+campaign A2 s=103 valid
+campaign A3 s=103 valid
+campaign A2 s=104 valid
+campaign A3 s=104 valid
+campaign A2 s=105 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=12 35/1530 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 92 at n=1530
+BAR reasoning_line_defect@campaign-Q-F3 silent look=12 25/853 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 101 at n=853
+BAR own_pair_lexical@campaign-Q-F3 silent look=12 6/1188 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 33 at n=1188
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=12 contrast 15/95 vs sham 8/40 one-sided Fisher P=0.8027 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=12 15/95 exact one-sided P=0.8780 > alpha 0.05 vs p0 0.20; critical 27 at n=95
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=12 contrast 10/106 vs sham 14/70 one-sided Fisher P=0.9862 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=12 10/106 exact one-sided P=0.9990 > alpha 0.05 vs p0 0.20; critical 29 at n=106
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=12 contrast 10/105 vs sham 8/64 one-sided Fisher P=0.8076 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=12 10/105 exact one-sided P=0.9988 > alpha 0.05 vs p0 0.20; critical 29 at n=105
+campaign A3 s=105 excluded:audit@forced
+campaign A2 s=106 valid
+campaign A3 s=106 valid
+campaign A2 s=107 valid
+campaign A3 s=107 valid
+campaign A2 s=108 valid
+campaign A3 s=108 valid
+campaign A2 s=109 valid
+campaign A3 s=109 valid
+campaign A2 s=110 valid
+campaign A3 s=110 valid
+campaign A2 s=111 valid
+campaign A3 s=111 valid
+campaign A2 s=112 valid
+campaign A3 s=112 valid
+campaign A2 s=113 valid
+campaign A3 s=113 valid
+campaign A2 s=114 valid
+campaign A3 s=114 valid
+campaign A2 s=115 excluded:excluded@free
+campaign A3 s=115 valid
+campaign A2 s=116 valid
+campaign A3 s=116 valid
+campaign A2 s=117 valid
+campaign A3 s=117 valid
+campaign A2 s=118 valid
+campaign A3 s=118 valid
+campaign A2 s=119 excluded:content@forced
+campaign A3 s=119 valid
+campaign A2 s=120 valid
+campaign A3 s=120 valid
+campaign A2 s=121 excluded:audit@forced
+campaign A3 s=121 excluded:audit@forced
+campaign A2 s=122 valid
+campaign A3 s=122 valid
+campaign A2 s=123 valid
+campaign A3 s=123 valid
+campaign A2 s=124 valid
+campaign A3 s=124 excluded:content@forced
+campaign A2 s=125 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=13 35/1530 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 92 at n=1530
+BAR reasoning_line_defect@campaign-Q-F3 silent look=13 25/853 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 101 at n=853
+BAR own_pair_lexical@campaign-Q-F3 silent look=13 6/1188 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 33 at n=1188
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=13 contrast 15/95 vs sham 8/40 one-sided Fisher P=0.8027 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=13 15/95 exact one-sided P=0.8780 > alpha 0.05 vs p0 0.20; critical 27 at n=95
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=13 contrast 12/126 vs sham 14/70 one-sided Fisher P=0.9879 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=13 12/126 exact one-sided P=0.9995 > alpha 0.05 vs p0 0.20; critical 34 at n=126
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=13 contrast 13/125 vs sham 8/64 one-sided Fisher P=0.7547 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=13 13/125 exact one-sided P=0.9987 > alpha 0.05 vs p0 0.20; critical 34 at n=125
+campaign A3 s=125 valid
+campaign A2 s=126 valid
+campaign A3 s=126 valid
+campaign A2 s=127 valid
+campaign A3 s=127 excluded:audit@forced
+campaign A2 s=128 excluded:audit@forced
+campaign A3 s=128 excluded:audit@forced
+campaign A2 s=129 valid
+campaign A3 s=129 valid
+campaign A2 s=130 valid
+campaign A3 s=130 valid
+campaign A2 s=131 excluded:content@forced
+campaign A3 s=131 valid
+campaign A2 s=132 excluded:content@forced
+campaign A3 s=132 valid
+campaign A2 s=133 valid
+campaign A3 s=133 excluded:audit@forced
+campaign A2 s=134 valid
+campaign A3 s=134 valid
+campaign A2 s=135 valid
+campaign A3 s=135 valid
+campaign A2 s=136 valid
+campaign A3 s=136 valid
+campaign A2 s=137 valid
+campaign A3 s=137 valid
+campaign A2 s=138 valid
+campaign A3 s=138 excluded:audit@forced
+campaign A2 s=139 valid
+campaign A3 s=139 valid
+campaign A2 s=140 valid
+campaign A3 s=140 valid
+campaign A2 s=141 valid
+campaign A3 s=141 valid
+campaign A2 s=142 valid
+campaign A3 s=142 valid
+campaign A2 s=143 valid
+campaign A3 s=143 valid
+campaign A2 s=144 valid
+campaign A3 s=144 excluded:audit@forced
+campaign A2 s=145 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=14 35/1530 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 92 at n=1530
+BAR reasoning_line_defect@campaign-Q-F3 silent look=14 25/853 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 101 at n=853
+BAR own_pair_lexical@campaign-Q-F3 silent look=14 6/1188 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 33 at n=1188
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=14 contrast 15/95 vs sham 8/40 one-sided Fisher P=0.8027 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=14 15/95 exact one-sided P=0.8780 > alpha 0.05 vs p0 0.20; critical 27 at n=95
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=14 contrast 15/146 vs sham 14/70 one-sided Fisher P=0.9834 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=14 15/146 exact one-sided P=0.9995 > alpha 0.05 vs p0 0.20; critical 38 at n=146
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=14 contrast 18/145 vs sham 8/64 one-sided Fisher P=0.6046 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=14 18/145 exact one-sided P=0.9940 > alpha 0.05 vs p0 0.20; critical 38 at n=145
+campaign A3 s=145 valid
+campaign A2 s=146 valid
+campaign A3 s=146 valid
+campaign A2 s=147 valid
+campaign A3 s=147 excluded:audit@forced
+campaign A2 s=148 valid
+campaign A3 s=148 valid
+campaign A2 s=149 excluded:audit@forced
+campaign A3 s=149 valid
+campaign A2 s=150 valid
+campaign A3 s=150 valid
+campaign A2 s=151 valid
+campaign A3 s=151 valid
+campaign A2 s=152 valid
+campaign A3 s=152 valid
+campaign A2 s=153 excluded:content@forced
+campaign A3 s=153 valid
+campaign A2 s=154 valid
+campaign A3 s=154 valid
+campaign A2 s=155 valid
+campaign A3 s=155 valid
+campaign A2 s=156 valid
+campaign A3 s=156 excluded:audit@forced
+campaign A2 s=157 valid
+campaign A3 s=157 valid
+campaign A2 s=158 valid
+campaign A3 s=158 valid
+campaign A2 s=159 excluded:audit@forced
+campaign A3 s=159 valid
+campaign A2 s=160 valid
+campaign A3 s=160 excluded:excluded@free
+campaign A2 s=161 valid
+campaign A3 s=161 valid
+campaign A3 s=162 valid
+campaign A3 s=163 excluded:audit@forced
+campaign A3 s=164 valid
+BAR round_degeneracy@campaign-Q-F3 silent look=end 35/1530 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 92 at n=1530
+BAR reasoning_line_defect@campaign-Q-F3 silent look=end 25/853 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.10; critical 101 at n=853
+BAR own_pair_lexical@campaign-Q-F3 silent look=end 6/1188 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.02; critical 33 at n=1188
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A1 look=end contrast 15/95 vs sham 8/40 one-sided Fisher P=0.8027 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A1 look=end 15/95 exact one-sided P=0.8780 > alpha 0.05 vs p0 0.20; critical 27 at n=95
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A2 look=end contrast 18/162 vs sham 14/70 one-sided Fisher P=0.9754 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A2 look=end 18/162 exact one-sided P=0.9991 > alpha 0.05 vs p0 0.20; critical 42 at n=162
+BAR exclusion_guard_fisher@campaign-Q-F3 silent template=A3 look=end contrast 21/165 vs sham 8/64 one-sided Fisher P=0.5787 > alpha 0.05
+BAR exclusion_guard_abs@campaign-Q-F3 silent template=A3 look=end 21/165 exact one-sided P=0.9947 > alpha 0.05 vs p0 0.20; critical 43 at n=165
+STAGE campaign-Q-F3 COMPLETE path=uncached
+CHECKPOINT <repo>/data/mf3/ckpt/Q-F3_campaign.json
+REPORT <repo>/data/mf3/reports/Q-F3_campaign_report.json
+EXIT=0
+# NOTE-8's (d), after the invocation ended (the seat's answers of 2026-11-15, evening, §2.2): the campaign report's identity.backend_identifier against v1.0 §5's line, the identifier only. Before it ran, the PID and the campaign's processes were gone (ps, pgrep). It ran in shell (jq and grep, no interpreter): the scratch cleanup had removed the launch kit's d_check.py, with every kit file but this raw. Its output, verbatim, each line under the prefix "#   ":
+#   (d) -- Q-F3 campaign, invocation 1: the report's identity.backend_identifier against LOCK-m-F3 v1.0 s5's line, identifier only (NOTE-8 (d)); shell form (jq + grep): d_check.py was removed by the scratch cleanup
+#   HEAD: 0081351
+#   LOCK-m-F3.md committed-clean: yes
+#   lock lines matching: 1
+#   lock s5 identifier: a734dadec8f8ce9b
+#   report identifier: a734dadec8f8ce9b
+#   (d) EQUAL
