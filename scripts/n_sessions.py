@@ -347,8 +347,63 @@ At the n BUILD it wires:
                  CP18 the box's cleanup after the close, on the PI's word;
                  CP19 the self-test's model-free cases;
                  CP20 the route: the seat block before the BUILD; the launch files to the coordinating session first.
+  gread        G-READ-n (n v0.2 §8 step 15: "G-READ-n from the captures; then analysis in a later session on the PI's
+               word"), on the laptop's CPU, model-free and outside the cap (ans21b §1.5), under LOCK-n v1.0, on Code's
+               readings GR1-GR14 routed as PINs (the PI's "build on the pins", 2026-11-25; the two starred, GR3 and
+               GR5, are the seat's before the run:
+               results/raw/2026-11-25_n-gread-starred-two_code-to-design_STOP.md). ``run_gread``, one invocation,
+               its only option ``--staging DIR``, the folder outside the repository that holds the campaign's copied
+               arrays (a relative DIR is read from the repository's root, wherever the command runs). In order:
+                 1. refusals: a pod (G-READ-n runs on the laptop); numpy's stream known answer; the artifact
+                    (data/n/gates/G-READ-n.json) or its temporary file present, it is written once; the staging
+                    folder inside the repository; then a STAGE line;
+                 2. the driver, HEAD's committed bytes; LOCK-n.md at the lock's sha256; the package and its closure,
+                    measured in this process, the lock's (L §18);
+                 3. the close list (results/raw/2026-11-25_n-campaign_close-names.txt) at its pin, HEAD's committed
+                    bytes; the campaign's report, HEAD's committed bytes at the list's first line: a valid report,
+                    COMPLETE with every arm complete, its identity the campaign's under the lock (the lock, the
+                    package, the band 33-63, the read plan) and its own sha256, its 138 cells the plan's; every
+                    G-READ-n point and comparator point kept by its dose map; probe.py's seeds the lock's; the list's
+                    paths the report's cells and their arrays in ``camp_copy_names``' order, each JSON's sha256 the
+                    report's;
+                 4. every listed file re-hashed under the staging folder, each opened by name, never by a listing;
+                 5. every cell through the package's reader (``cells.load_cell``, no identity), each at the report's
+                    capture_sha256 and record count;
+                 6. the comparator: the 24 random directions at +1, +1/2, +d_20 and +d_eq, one grouped 10-fold call
+                    a layer without shuffles, each direction's band median; the first call computed twice and equal
+                    (GR10);
+                 7. the six results by ``probe.result`` (200 label shuffles, the lock's seeds), each held to its
+                    point's comparator (GR6); the artifact (``probe.artifact``, ``check_gread``) held to the
+                    analyzer's binding conditions (anl:6459-6484), written once and read back.
+               Exit 0 when the artifact is written, whatever its statuses; 1 on any refusal or failure, with no
+               artifact (GR8). No smoke, no --out and no resume (GR1, GR9). Code's readings for G-READ-n, the PINs, in
+               short (as sent in results/raw/2026-11-25_n-gread_spec.md §1, with its head's points):
+                 GR1 a gread command in the driver alone, its one option --staging DIR; refused on a pod;
+                 GR2 the inputs: the lock, the close list at its pin, the report at the list's first line, the staged
+                     files re-hashed by name, every cell through load_cell; nothing on the box, G-TIME-n's cells, or
+                     anything the list does not name;
+                 GR3 ★ what is read of a cell: the package's reader parses and checks each record whole; the command
+                     keeps its session_id and its capture row alone;
+                 GR4 the six results: valence at +1 (pole: + against -) and at +1/2, +d_20 and +d_eq (shadow);
+                     span_reward at f0.10 and f0.20 (shadow); merged as the dose map has it ([] under the lock);
+                 GR5 ★ the comparator at +1: each random direction's +1 against its own -1 (probe.py:32-33, as
+                     LOCK-n.md:1261 pins it);
+                 GR6 the comparator's form: 24 band medians a point, computed once and shared; span_reward's f0.10
+                     at +d_eq and f0.20 at +d_20; a shadow contrast on the 40 floor sessions;
+                 GR7 probe.py's settings and bar, unchanged, its seeds the lock's; NOT-COMPUTED only for incomplete
+                     reads, never here: a missing or failing input is a refusal;
+                 GR8 the pins and the refusals, in order; the exits above;
+                 GR9 no checkpoint and no resume; written once, a temporary file renamed; cells two at a time as
+                     sent, one at a time as built (a declared departure), each cell's rows copied first;
+                 GR10 numpy's defaults, the thread variables printed; one repeat check;
+                 GR11 the printing: the inputs by sha256, the environment, a line a comparator point and a result,
+                     the artifact's sha256 and the six statuses; never a margin or a per-session value;
+                 GR12 the artifact data/n/gates/G-READ-n.json (n-gread-v1), sorted keys and a one-space indent, as
+                     G-ANL-n.json is written; its .gitignore line; the entry "G-READ-n";
+                 GR13 the self-test's model-free cases;
+                 GR14 the launch in G-ANL-n's three steps, in a battery window.
 
-Stage G-READ-n is wired at its own step (n v0.2 §8 step 15).
+VERDICTS are the analyzer's (scripts/n_analyze.py), with ``--gread`` this command's committed artifact.
 """
 from __future__ import annotations
 
@@ -536,6 +591,11 @@ def cmd_selftest() -> int:
         except BaseException as e:                      # noqa: BLE001
             chk("driver: the campaign's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
         chk("driver: the campaign's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
+        try:
+            _gread_selftest(chk, tmp / "gread-cmd")
+        except BaseException as e:                      # noqa: BLE001
+            chk("driver: G-READ-n's self-test ran to its end", False, f"{type(e).__name__}: {e}"[:300])
+        chk("driver: G-READ-n's self-test leaves the environment as it found it", dict(os.environ) == env0, "")
     try:
         hftiny.run(chk)
     except BaseException as e:                          # noqa: BLE001
@@ -7665,6 +7725,1116 @@ def _camp_selftest(chk, tmp: Path) -> None:
         refused(lambda: genv("guard", report=CAMP_REPORT))[0] and all(g[n] is real_loaders[n] for n in loaders), "")
 
 
+# --- G-READ-n (n v0.2 §8 step 15): readability, from the campaign's staged captures, on the laptop ---------------
+# Code's readings GR1-GR14 as PINs (the PI's "build on the pins", relayed 2026-11-25; the two starred, GR3 and GR5,
+# are the seat's before the run: results/raw/2026-11-25_n-gread-starred-two_code-to-design_STOP.md). Model-free: the
+# fits are probe.py's, on the rows the campaign wrote; nothing loads a model and nothing touches the box.
+
+GREAD_OUT = REPO / "data" / "n" / "gates" / "G-READ-n.json"      # GR12: the artifact of record, written once
+GREAD_CLOSE_LIST = REPO / "results" / "raw" / "2026-11-25_n-campaign_close-names.txt"
+#: GR2: the N-pod campaign's close list, committed at 95cd461: 4,417 lines "<sha256>  <repository path>", the report
+#: first, then each cell's JSON and its 31 arrays in ``camp_copy_names``' order.
+GREAD_CLOSE_LIST_SHA256 = "42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d"
+GREAD_REPORT_REL = "data/n/reports/campaign.json"   # the report's repository path, CAMP_REPORT's
+GREAD_CELL_DIR = "data/n/ckpt/campaign"             # the cells' folder, CAMP_ROOT's: in the repository, under --staging
+GREAD_CV_SEED = 20261116                            # GR7: the folds' seed, the lock's (LOCK-n.md:322, :823-825)
+GREAD_SHUFFLE_SEED = 20260905                       # GR7: the label shuffles' seed, the lock's (the same lines)
+GREAD_CAPTURE_LAYERS = tuple(range(33, 64))         # GR2: the band, the lock's (LOCK-n.md:869), 31 layers
+GREAD_N_CELLS = 138                                 # GR2: the campaign's cells, the plan's with nothing merged
+#: GR6: each result's comparator point (LOCK-n.md:964-965): each valence point its own; span_reward's f0.10 at +d_eq
+#: and its f0.20 at +d_20. In GREAD_AXES' order, the results' order.
+GREAD_MATCH = {("valence", "+1"): "+1", ("valence", "+1/2"): "+1/2", ("valence", "+d_20"): "+d_20",
+               ("valence", "+d_eq"): "+d_eq", ("span_reward", "f0.10"): "+d_eq", ("span_reward", "f0.20"): "+d_20"}
+GREAD_RANDOM_POINTS = ("+1", "+1/2", "+d_20", "+d_eq")     # GR6: the comparator's points, in this order
+#: GR10: the thread variables, printed as set or unset; the command sets none (numpy's defaults, as gread-bench's).
+GREAD_THREAD_VARS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "VECLIB_MAXIMUM_THREADS",
+                     "NUMEXPR_NUM_THREADS")
+
+
+def gread_pins() -> dict:
+    """The values G-READ-n holds its inputs to (GR2, GR7, GR8): the lock's, the band, the cell count and the close
+    list's pin. The self-test's stand-in campaign gives its own."""
+    return {"lock_sha256": LOCK_SHA256, "package_sha256": LOCK_PACKAGE_SHA256, "closure": dict(LOCK_CLOSURE),
+            "read_plan_sha256": LOCK_READ_PLAN_SHA256, "capture_layers": list(GREAD_CAPTURE_LAYERS),
+            "cells": GREAD_N_CELLS, "close_list_sha256": GREAD_CLOSE_LIST_SHA256, "cv_seed": GREAD_CV_SEED,
+            "shuffle_seed": GREAD_SHUFFLE_SEED}
+
+
+def gread_close_list(data: bytes) -> list:
+    """The close list's lines as (sha256, repository path) (GR2): each "<64 hex>  <path>", the path the report's or
+    one under data/n/ckpt/campaign/, the text ending in a newline, no path twice; a refusal otherwise."""
+    import re
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError:
+        raise SystemExit("the close list is not UTF-8 (GR2)")
+    if not text.endswith("\n"):
+        raise SystemExit("the close list does not end with a newline (GR2)")
+    pat = re.compile(r"([0-9a-f]{64})  (data/n/reports/campaign\.json|data/n/ckpt/campaign/[A-Za-z0-9_.-]+)")
+    out = []
+    for i, line in enumerate(text[:-1].split("\n"), 1):
+        m = pat.fullmatch(line)
+        if m is None:
+            raise SystemExit(f"the close list's line {i} is not \"<sha256>  <a campaign path>\" (GR2)")
+        out.append((m.group(1), m.group(2)))
+    if len({p for _s, p in out}) != len(out):
+        raise SystemExit("the close list names a path twice (GR2)")
+    return out
+
+
+def gread_points(identity) -> dict:
+    """GR4: (axis, point) -> the labels merged into it, for each point of ``schema.GREAD_AXES``, as the identity's
+    dose map has them (the analyzer's binding, anl:6477-6483). A G-READ-n point or a comparator point the map does not
+    keep is a refusal (the lock keeps all seven points, none merged: LOCK-n.md:763-765)."""
+    from valence_core.n import schema
+    kept = {pt["label"]: list(pt["merged"]) for pt in identity["dose_map"]["points"]}
+    out = {}
+    for axis, labels in schema.GREAD_AXES.items():
+        for dl in labels:
+            if dl not in kept:
+                raise SystemExit(f"the dose map does not keep {axis} {dl}: G-READ-n's result there has no cell of "
+                                 f"its own (GR4)")
+            out[(axis, dl)] = kept[dl]
+    missing = [p for p in GREAD_RANDOM_POINTS if p not in kept]
+    if missing:
+        raise SystemExit(f"the dose map does not keep the comparator's points {missing} (GR6)")
+    return out
+
+
+def gread_cells(axis: str, dl: str) -> tuple:
+    """GR4: a result's + pole cell and its other cell, as (arm, direction_id, dose_label), and the contrast's name:
+    valence at +1 against valence at -1 ("pole", N1-V's two cells); every other point against the shadow (N1-V's
+    d = 0 cell, "shadow"); span_reward's + pole is N2-E's cell."""
+    from valence_core.n import schema
+    pos = ("N1-V", "valence", dl) if axis == "valence" else ("N2-E", "span_reward", dl)
+    if (axis, dl) == ("valence", "+1"):
+        return pos, ("N1-V", "valence", "-1"), "pole"
+    return pos, (schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE), "shadow"
+
+
+def gread_comparator_cells(point: str, rid: str) -> tuple:
+    """GR5 ★ and GR6: one random direction's comparator cells at a point. At +1, its +1 against its own -1, the
+    contrast valence +1 is read on (probe.py:32-33, as LOCK-n.md:1261 pins it); at +1/2, +d_20 and +d_eq, its cell
+    against the shadow. N1-R reads the 40 floor sessions."""
+    from valence_core.n import schema
+    pos = ("N1-R", rid, point)
+    if point == "+1":
+        return pos, ("N1-R", rid, "-1")
+    return pos, (schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)
+
+
+def gread_load(root, key: tuple, *, keep: bool) -> tuple:
+    """One cell through the package's reader (GR2; GR3 ★): ``cells.load_cell`` with no identity -- a missing cell is
+    a refusal, never a new one -- every layer's written rows held to the cell's capture_sha256 and each row to its
+    record's sha16; the arrays kept, read-only, only when asked."""
+    from valence_core.n import cells, schema
+    arm, did, dl = key
+    try:
+        return cells.load_cell(root, arm, did, dl, identity=None, keep_arrays=keep)
+    except FileNotFoundError:
+        raise SystemExit(f"{schema.cell_filename(arm, did, dl)}: no such cell under the staging folder (GR2)")
+
+
+def gread_rows(cell: dict, caps, layers) -> dict:
+    """GR3 ★: what the probe takes of a cell, {layer: {session_id: row}}: from each record its session_id and its
+    capture row alone, each row copied out of the read-only map; nothing else of a record is read here, and the maps
+    go with ``caps`` once the caller drops it (GR9: one cell's maps open at a time)."""
+    import numpy as np
+    out: dict = {int(l): {} for l in layers}
+    for rec in cell["records"]:
+        sid, row = rec["session_id"], int(rec["capture"]["row"])
+        for l in layers:
+            out[int(l)][sid] = np.array(caps.arrays[int(l)][row], dtype=np.float32)
+    if any(len(v) != len(cell["records"]) for v in out.values()):
+        raise SystemExit("a cell names a session twice (GR3)")
+    return out
+
+
+def gread_binding_problems(art, report) -> list:
+    """The analyzer's binding of the artifact to the campaign (PIN-n-25; anl:6459-6484), on the report it read: the
+    plan's and the identity's sha256s the report's; the cells it read exactly the report's cells by both sha256s; the
+    probe's package the identity's, its layers the identity's capture layers; each result at a point the dose map
+    keeps, listing the labels merged into it as the map does."""
+    p = []
+    ident = report["stage_identity"]
+    ca = art["campaign"]
+    if (ca["read_plan_sha256"] != report["read_plan_sha256"]
+            or ca["stage_identity_sha256"] != report["stage_identity_sha256"]):
+        p.append("its campaign's plan or identity sha256 is not the report's")
+    want = {n: {"json_sha256": c["json_sha256"], "capture_sha256": c["capture_sha256"]}
+            for n, c in report["cells"].items()}
+    if ca["cells"] != want:
+        p.append("the cells it read are not the campaign's files")
+    if art["probe"]["package_sha256"] != ident["package_sha256"]:
+        p.append("its probe ran under another n package than the campaign's")
+    if list(art["probe"]["layers"]) != list(ident["capture_layers"]):
+        p.append("its layers are not the campaign's capture layers")
+    kept = {pt["label"]: pt["merged"] for pt in ident["dose_map"]["points"]}
+    for r in art["results"]:
+        if r["dose_label"] not in kept:
+            p.append(f"a result at {r['axis']} {r['dose_label']}, a point the dose map does not keep")
+        elif r["merged"] != kept[r["dose_label"]]:
+            p.append(f"the result at {r['axis']} {r['dose_label']} lists another merge than the dose map's")
+    return p
+
+
+def gread_write(out, text: str) -> None:
+    """GR9: the artifact written once and whole: a temporary file beside it, written, flushed and fsynced, then
+    renamed onto a path still absent, and the folder fsynced. A failure at any step, the folder's fsync after the
+    rename among them, leaves neither the artifact nor the temporary file this call made."""
+    from valence_core.m import resume as m_resume
+    out = Path(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_name(out.name + ".tmp")
+    if tmp.exists() or tmp.is_symlink():
+        raise SystemExit(f"{tmp.name} exists beside the artifact (GR9)")
+    made = renamed = False
+    try:
+        with open(tmp, "x", encoding="utf-8") as fh:
+            made = True
+            fh.write(text)
+            fh.flush()
+            os.fsync(fh.fileno())
+        if out.exists() or out.is_symlink():
+            raise SystemExit(f"{out.name} appeared during the run: the artifact is written once (GR9)")
+        os.rename(tmp, out)
+        renamed = True
+        m_resume._fsync_dir(out.parent)
+    except BaseException:
+        for p, ours in ((out, renamed), (tmp, made and not renamed)):
+            if ours:
+                try:
+                    os.unlink(p)
+                except OSError:
+                    pass
+        raise
+
+
+@dataclass
+class GreadEnv:
+    """G-READ-n's seams: ``production_gread_env`` is the laptop's; the self-test puts a stand-in campaign behind
+    them."""
+    pod: Callable                       # () -> the pod id or None (m's resume.pod_id)
+    known_answer: Callable              # () -> numpy's stream known answer's failures, [] when it holds
+    committed: Callable                 # (path) -> HEAD's committed bytes, or None
+    driver: Callable                    # () -> (this driver's bytes as run, HEAD's committed bytes of its path)
+    package: Callable                   # () -> (package_sha256, closure), measured in this process
+    pins: dict                          # the values the inputs are held to (``gread_pins``)
+    out: Path = GREAD_OUT
+    lock_path: Path = LOCK_PATH
+    close_list: Path = GREAD_CLOSE_LIST
+    report: Path = CAMP_REPORT
+    printer: Callable = print
+    clock: Callable = time.perf_counter
+
+
+def production_gread_env() -> GreadEnv:
+    from valence_core.m import resume as m_resume
+    from valence_core.m.keys import stream_known_answer
+    return GreadEnv(pod=m_resume.pod_id, known_answer=stream_known_answer, committed=committed_bytes,
+                    driver=driver_bytes, package=_package_closure, pins=gread_pins())
+
+
+def _gread_ms(t0: float, clock: Callable) -> int:
+    return round((clock() - t0) * 1000)
+
+
+def _gread_prepare(env: GreadEnv, staging) -> dict:
+    """Everything before the first fit, in GR8's order but for the staging folder's location, checked fourth (a
+    declared departure, the review's F11); a refusal raises SystemExit with its reason, and nothing is written: the
+    pod (none), numpy's stream known answer, the artifact and its temporary file absent, the staging folder outside
+    the repository; the driver, HEAD's committed bytes; LOCK-n.md, the lock's; the package and its closure, measured in
+    this process, the lock's; the close list at its pin; the report at the list's first line, held to the lock;
+    probe.py's seeds, the lock's; the list's paths, the report's cells and arrays; every listed file re-hashed under
+    the staging folder, opened by name; every cell through the package's reader, at the report's capture_sha256 and
+    record count (GR2)."""
+    import hashlib
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import cells, guard, probe, schema
+    say, clock, pins = env.printer, env.clock, env.pins
+    if env.pod() is not None:
+        raise SystemExit("G-READ-n runs on the laptop's CPU (GR1; ans21b §1.5): refused on a pod")
+    ka = env.known_answer()
+    if ka:
+        raise SystemExit(ka[0])
+    out = guard.refuse_out(Path(env.out))
+    if out.exists() or out.is_symlink():
+        raise SystemExit(f"{_shown(out)} exists: G-READ-n's artifact is written once (GR9, GR12)")
+    stale = out.with_name(out.name + ".tmp")
+    if stale.exists() or stale.is_symlink():
+        raise SystemExit(f"{stale.name} exists beside the artifact's path: a write was cut short, and the run refuses "
+                         f"before any fit (GR9)")
+    st = (Path(staging) if Path(staging).is_absolute() else REPO / staging).resolve()
+    if _within(st, REPO.resolve()):
+        raise SystemExit("the staging folder is inside the repository: G-READ-n reads the campaign's arrays where the "
+                         "close copied them, outside it (GR2)")
+    if not st.is_dir():
+        raise SystemExit("the staging folder is not a folder (GR2)")
+    say(f"STAGE G-READ-n (n v0.2 §8 step 15), model-free, on the laptop's CPU, under LOCK-n {LOCK_VERSION} "
+        f"{LOCK_SHA256}; the staging folder {os.path.relpath(st, REPO)}; the artifact {_shown(out)}, written once; "
+        f"no smoke, no --out, no resume (GR1, GR9)")
+    drv, head = env.driver()
+    if head is None or drv != head:
+        raise SystemExit("G-READ-n runs only the committed driver: scripts/n_sessions.py is not HEAD's committed "
+                         "bytes (GR8)")
+    say(f"DRIVER scripts/n_sessions.py {hashlib.sha256(drv).hexdigest()}: HEAD's committed bytes")
+    lock = gver_lock_check(env.committed, env.lock_path)
+    say(f"LOCK-n.md {lock}: HEAD's committed bytes, LOCK-n {LOCK_VERSION}'s")
+    pkg, clo = env.package()
+    if pkg != pins["package_sha256"] or clo != pins["closure"]:
+        diff = sorted(k for k in set(clo) | set(pins["closure"]) if clo.get(k) != pins["closure"].get(k))
+        raise SystemExit(f"the package or its closure is not the lock's (L §18; GR8): package "
+                         f"{'the lock' if pkg == pins['package_sha256'] else pkg}'s, closure files differing {diff}")
+    say(f"the package valence_core/n {pkg} and its closure of {len(clo)} files, measured in this process: the "
+        f"lock's (L §18)")
+    cl = Path(env.close_list)
+    cb = cl.read_bytes() if cl.is_file() else None
+    if cb is None or env.committed(cl) != cb or hashlib.sha256(cb).hexdigest() != pins["close_list_sha256"]:
+        raise SystemExit("the close list is absent, not HEAD's committed bytes, or not its pin (GR2)")
+    lines = gread_close_list(cb)
+    say(f"the close list {_shown(cl)} {pins['close_list_sha256']}: {len(lines)} lines, HEAD's committed bytes")
+    rp = Path(env.report)
+    rb = rp.read_bytes() if rp.is_file() else None
+    if rb is None or env.committed(rp) != rb:
+        raise SystemExit("the campaign's report is absent or not HEAD's committed bytes (GR2)")
+    rsha = hashlib.sha256(rb).hexdigest()
+    if lines[0] != (rsha, GREAD_REPORT_REL):
+        raise SystemExit("the close list's first line is not the campaign's report at its sha256 (GR2)")
+    rep = cells.json_bytes(rb, rp.name)
+    try:
+        schema.check_report(rep)
+    except schema.SchemaError as e:
+        raise SystemExit(f"the campaign's report is not a valid report, at {cells.redacted(e)}")
+    ident = rep["stage_identity"]
+    if rep["end_state"] != "COMPLETE" or not all(a["complete"] for a in rep["per_arm"].values()):
+        raise SystemExit(f"the campaign's report ends {rep['end_state']}, not COMPLETE with every arm complete (GR7)")
+    if ident["stage"] != "campaign" or ident["lock_sha256"] != pins["lock_sha256"]:
+        raise SystemExit("the report's identity is not the campaign's under the lock (GR2)")
+    if ident["package_sha256"] != pins["package_sha256"] or ident["package_sha256"] != pkg:
+        raise SystemExit("the report's package is not the lock's and this process's (GR2; anl:6473-6474)")
+    if list(ident["capture_layers"]) != list(pins["capture_layers"]):
+        raise SystemExit("the report's capture layers are not the lock's band (GR2; LOCK-n.md:869)")
+    if (rep["read_plan_sha256"] != pins["read_plan_sha256"]
+            or schema.read_plan_sha256(ident) != rep["read_plan_sha256"]):
+        raise SystemExit("the report's read plan is not the lock's (GR2; L §6)")
+    if rep["stage_identity_sha256"] != schema.identity_sha256(ident):
+        raise SystemExit("the report's stage_identity_sha256 is not its identity's (GR2)")
+    names = {schema.cell_filename(*k): k
+             for k in sorted({tuple(r.split("|")[:3]) for r in schema.read_plan(ident)})}
+    if set(rep["cells"]) != set(names) or len(names) != pins["cells"]:
+        raise SystemExit(f"the report's cells are not the plan's {pins['cells']} (GR2)")
+    points = gread_points(ident)
+    if probe.CV_SEED != pins["cv_seed"] or probe.SHUFFLE_SEED != pins["shuffle_seed"]:
+        raise SystemExit("probe.py's seeds are not the lock's (GR7; LOCK-n.md:322, :823-825)")
+    want = [GREAD_REPORT_REL] + [f"{GREAD_CELL_DIR}/{n}" for n in camp_copy_names(rep)]
+    if [p for _s, p in lines] != want:
+        raise SystemExit("the close list's paths are not the report's cells and their arrays in camp_copy_names' "
+                         "order (GR2)")
+    listed = {p: s for s, p in lines}
+    odd = sorted(n for n, c in rep["cells"].items() if listed[f"{GREAD_CELL_DIR}/{n}"] != c["json_sha256"])
+    if odd:
+        raise SystemExit(f"{len(odd)} cell(s) listed at another sha256 than the report's json_sha256, e.g. "
+                         f"{odd[0]} (GR2)")
+    say(f"the campaign's report {_shown(rp)} {rsha}: the close list's first line; COMPLETE, every arm complete; "
+        f"identity {rep['stage_identity_sha256']}, under the lock; read plan {rep['read_plan_sha256']}; "
+        f"{len(rep['cells'])} cells and {len(lines) - 1 - len(rep['cells'])} arrays listed; the band "
+        f"{ident['capture_layers'][0]}-{ident['capture_layers'][-1]}; probe.py's seeds {probe.CV_SEED} and "
+        f"{probe.SHUFFLE_SEED}, the lock's")
+    t0 = clock()
+    for s, p in lines:
+        f = st / p
+        if f.is_symlink() or not f.is_file():
+            raise SystemExit(f"{p}: not a file under the staging folder (GR2)")
+        h = hashlib.sha256()
+        with open(f, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        if h.hexdigest() != s:
+            raise SystemExit(f"{p}: not at the close list's sha256 under the staging folder (GR2)")
+    say(f"the staging folder: {len(lines)} of {len(lines)} listed files at their sha256s, each opened by name; "
+        f"{_gread_ms(t0, clock)} ms")
+    root = st / GREAD_CELL_DIR
+    t0 = clock()
+    for n in sorted(rep["cells"]):
+        cell, _caps = gread_load(root, names[n], keep=False)
+        c = rep["cells"][n]
+        if not m_resume.same_json(cell["stage_identity"], ident):
+            raise SystemExit(f"{n}: its identity is not the report's (GR2)")
+        if cell["capture_sha256"] != c["capture_sha256"] or len(cell["records"]) != c["records"]:
+            raise SystemExit(f"{n}: its capture_sha256 or record count is not the report's (GR2)")
+    say(f"the cells: {len(rep['cells'])} of {len(rep['cells'])} through the package's reader (cells.load_cell: "
+        f"check_cell, each layer's rows against capture_sha256, each row against its sha16), each at the report's "
+        f"capture_sha256 and record count; {_gread_ms(t0, clock)} ms")
+    return {"out": out, "root": root, "report": rep, "ident": ident, "names": names, "points": points,
+            "cv": int(pins["cv_seed"]), "pkg": pkg}
+
+
+def _gread_run(env: GreadEnv, staging) -> int:
+    import hashlib
+    import json
+    import platform
+
+    import numpy as np
+
+    from valence_core.m import resume as m_resume
+    from valence_core.n import cells, probe, schema
+    say, clock = env.printer, env.clock
+    prep = _gread_prepare(env, staging)
+    rep, ident, root, cv = prep["report"], prep["ident"], prep["root"], prep["cv"]
+    layers = [int(x) for x in ident["capture_layers"]]
+    try:
+        blas = str(np.show_config(mode="dicts")["Build Dependencies"]["blas"]["name"])
+    except Exception:                                   # noqa: BLE001 -- an older numpy: the name is not reported
+        blas = "not reported"
+    say(f"environment (GR10): python {platform.python_version()}, numpy {np.__version__} (BLAS {blas}), "
+        f"{os.cpu_count()} CPUs; "
+        + ", ".join(f"{v} {os.environ[v]!r}" if v in os.environ else f"{v} unset" for v in GREAD_THREAD_VARS))
+
+    def probe_cell(key) -> dict:                        # GR2 at the second read too: still the report's cell
+        cell, caps = gread_load(root, key, keep=True)
+        name = schema.cell_filename(*key)
+        c = rep["cells"][name]
+        if (cell["capture_sha256"] != c["capture_sha256"] or len(cell["records"]) != c["records"]
+                or not m_resume.same_json(cell["stage_identity"], ident)):
+            raise SystemExit(f"{name}: not the report's cell at its second read (GR2)")
+        return gread_rows(cell, caps, layers)
+    shadow_key = (schema.SHADOW_ARM, schema.SHADOW_DIRECTION, schema.SHADOW_DOSE)
+    t0 = clock()
+    shadow = probe_cell(shadow_key)
+    say(f"the shadow: {schema.cell_filename(*shadow_key)}'s rows, {len(shadow[layers[0]])} sessions, held for the "
+        f"shadow contrasts; {_gread_ms(t0, clock)} ms")
+    comparator: dict = {}
+    repeat_done = False
+    for p in GREAD_RANDOM_POINTS:
+        t0 = clock()
+        bands = []
+        for rid in schema.RANDOM_IDS:
+            pos_k, neg_k = gread_comparator_cells(p, rid)
+            pos = probe_cell(pos_k)
+            neg = None if neg_k == shadow_key else probe_cell(neg_k)
+            per = []
+            for l in layers:
+                pm = pos[l]
+                if neg is not None:
+                    nm = neg[l]
+                else:
+                    lost = sorted(set(pm) - set(shadow[l]))
+                    if lost:
+                        raise SystemExit(f"{len(lost)} of N1-R's sessions have no shadow row (GR6)")
+                    nm = {s: shadow[l][s] for s in pm}
+                X, y, g = probe.contrast_rows(pm, nm)
+                r = probe.layer_auc(X, y, g, shuffles=0, cv_seed=cv)
+                if not repeat_done:
+                    r2 = probe.layer_auc(X, y, g, shuffles=0, cv_seed=cv)
+                    if r2["auc"] != r["auc"]:
+                        raise SystemExit("the repeat check: the first comparator call gave two AUCs on the same "
+                                         "inputs (GR10)")
+                    repeat_done = True
+                    say(f"the repeat check (GR10): the first comparator call ({p}, {rid}, layer {l}) computed twice, "
+                        f"its AUCs equal")
+                per.append(r)
+            bands.append(probe.band_median(per))
+        comparator[p] = bands
+        say(f"comparator {p}: {len(bands)} random directions, {len(layers)} layers each, no shuffles; the largest "
+            f"band median {max(bands)!r}; {_gread_ms(t0, clock)} ms")
+    results = []
+    for (axis, dl), merged in prep["points"].items():
+        t0 = clock()
+        pos_k, neg_k, contrast = gread_cells(axis, dl)
+        pos = probe_cell(pos_k)
+        neg = shadow if neg_k == shadow_key else probe_cell(neg_k)
+        data = [probe.contrast_rows(pos[l], neg[l]) for l in layers]
+        rows = len(data[0][1])
+        res = probe.result(axis, dl, merged, contrast, data, layers, comparator[GREAD_MATCH[(axis, dl)]], cv_seed=cv)
+        del data, pos, neg
+        results.append(res)
+        above = sum(1 for x in res["per_layer"] if x["above_null"])
+        say(f"result {axis} {dl}: contrast {contrast}, {rows} rows a layer, the comparator at "
+            f"{GREAD_MATCH[(axis, dl)]}; band median {res['band_median_auc']!r}, comparator max "
+            f"{res['comparator']['max']!r}: {res['status']}; {above} of {len(layers)} layers above their null; "
+            f"{_gread_ms(t0, clock)} ms")
+    art = probe.artifact(rep, prep["pkg"], layers, results, cv_seed=cv)
+    probs = gread_binding_problems(art, rep)
+    if probs:
+        raise SystemExit("the artifact is not bound to the campaign: " + "; ".join(probs))
+    text = json.dumps(art, indent=1, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\n"
+    out = Path(prep["out"])
+    gread_write(out, text)
+    try:
+        back = cells.json_bytes(out.read_bytes(), out.name)
+        schema.check_gread(back)
+        if back != art or gread_binding_problems(back, rep):
+            raise SystemExit("the artifact read back is not the one computed")
+        sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        say(f"the artifact {_shown(out)} ({schema.GREAD_SCHEMA}), sha256 {sha}: written once, read back; check_gread "
+            f"and the analyzer's binding conditions (anl:6459-6484) hold")
+        say("G-READ-n COMPLETE: " + "; ".join(f"{r['axis']} {r['dose_label']} {r['status']}" for r in results))
+    except BaseException as e:
+        try:
+            os.unlink(out)
+        except OSError:
+            pass
+        if isinstance(e, schema.SchemaError):
+            raise SystemExit(f"the artifact read back fails check_gread, at {cells.redacted(e)}")
+        raise
+    return 0
+
+
+def _gread_err(e: BaseException) -> str:
+    """A failure's cause without its values or its paths, in the analyzer's form (``_err_where``, anl:4611-4619) but
+    for an OSError with no strerror, printed "no strerror" where the analyzer prints its message: a schema error by
+    its field path, a file-system error by its type and strerror, any other error by its type alone; so no local root
+    reaches the run's out raw."""
+    if type(e).__name__ == "SchemaError":
+        return "SchemaError at " + str(e).split(": ", 1)[0]
+    if isinstance(e, OSError):
+        return f"{type(e).__name__}: {e.strerror or 'no strerror'}"
+    return type(e).__name__
+
+
+def run_gread(env: GreadEnv, staging) -> int:
+    """G-READ-n (n v0.2 §8 step 15; GR1-GR14), one invocation: ``_gread_prepare``'s refusals and checks; the shadow's
+    rows; the comparator, its first call computed twice (GR10); the six results; the artifact checked, written once
+    and read back. Exit 0 when the artifact is written, whatever its statuses; 1 on any refusal or failure, with no
+    artifact (GR8): a refusal prints its reason, a failure its cause in the analyzer's form (``_gread_err``). Python's
+    warnings are recorded, not shown, and printed after the end by category and message, never by their file (GR11)."""
+    import warnings
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        try:
+            rc = _gread_run(env, staging)
+        except SystemExit as e:
+            env.printer(f"G-READ-n REFUSED: {_camp_why(e)}")
+            rc = 1
+        except Exception as e:                          # noqa: BLE001 -- a failure ends the invocation, exit 1
+            env.printer(f"G-READ-n FAILED: {_gread_err(e)}")
+            rc = 1
+    if caught:
+        kinds: dict = {}
+        for w in caught:
+            k = f"{w.category.__name__}: {w.message}"[:160]
+            kinds[k] = kinds.get(k, 0) + 1
+        env.printer(f"warnings (GR11; each by its category and message, never its file): {len(caught)}; "
+                    + "; ".join(f"{k} (x{n})" for k, n in sorted(kinds.items())))
+    return rc
+
+
+def cmd_gread(staging) -> int:
+    return run_gread(production_gread_env(), staging)
+
+
+def _gread_selftest(chk, tmp: Path) -> None:
+    """G-READ-n's checks, model-free (GR13): the pins held to the committed files that carry them (the close list,
+    the lock's seeds, band and matching); a stand-in campaign written under the self-test's folder in the package's
+    file forms (``schema.example_record``'s records with sentinels in the margin, its two log-probability sums and
+    their fresh copies, consistent with ``check_cell``; rows of noise, each layer's capture_sha256 and each row's
+    sha16 as the package computes them, ``cells.load_cell`` reading them back; the report from
+    ``schema.example_report`` with the cells' digests; the close list in ``camp_copy_names``' order) at a band of three
+    layers and a width of four; the command's flow over it with probe.py's ``layer_auc`` replaced by a recorder, the
+    fits' inputs checked row for row (the contrasts, the shadow on the floor sessions, the comparator's matching, no
+    sentinel) and the comparator's band medians in order; the artifact written once and checked (check_gread and the
+    analyzer's binding conditions, and those conditions on tampered copies); the refusals of GR2 and GR8 a tampered
+    input can reach, one each, before any fit and with no artifact, the repeat check's among them (the checks that
+    check_report or the pinned list already make, and N1-R sessions with no shadow row, are backstopped and not
+    cased); a failure's exit and form; a failed read-back; the writer's refusals and cleanup; probe.py's real
+    layer_auc twice on one stand-in contrast; and main()'s options behind the traps."""
+    import contextlib
+    import copy
+    import hashlib
+    import io
+    import json
+    import shutil
+
+    import numpy as np
+
+    from valence_core.adapters.base import sha16_arr
+    from valence_core.m import resume as m_resume
+    from valence_core.m.keys import stream_known_answer
+    from valence_core.n import cells, guard, probe, schema
+    tmp = Path(tmp)
+    tmp.mkdir(parents=True, exist_ok=True)
+
+    def h(b: bytes) -> str:
+        return hashlib.sha256(b).hexdigest()
+
+    def work(p):                                        # the overlay is HEAD's archive: its bytes are the committed
+        return Path(p).read_bytes() if Path(p).is_file() else None
+
+    def refused(fn) -> tuple:                           # (refused, its text); any other raise is not a refusal
+        try:
+            fn()
+        except SystemExit as e:
+            return True, str(e)
+        except BaseException as e:                      # noqa: BLE001
+            return False, f"{type(e).__name__}: {e}"[:200]
+        return False, "no refusal"
+
+    # the pins, held to the committed files that carry them
+    cl_b = work(GREAD_CLOSE_LIST)
+    cl_lines = gread_close_list(cl_b) if cl_b is not None else []
+    chk("gread: the close list's pin is the committed list's sha256 (GR2): 4,417 lines, the report first, 139 JSONs "
+        "and 4,278 arrays (138 x 31)",
+        cl_b is not None and h(cl_b) == GREAD_CLOSE_LIST_SHA256 and len(cl_lines) == 4417
+        and cl_lines[0][1] == GREAD_REPORT_REL and sum(1 for _s, p in cl_lines if p.endswith(".json")) == 139
+        and sum(1 for _s, p in cl_lines if p.endswith(".npy")) == 4278 == GREAD_N_CELLS * len(GREAD_CAPTURE_LAYERS),
+        len(cl_lines))
+    lock_lines = (work(LOCK_PATH) or b"").decode("utf-8").split("\n")
+    chk("gread: the seeds are the lock's (LOCK-n.md:322) and probe.py's; the band is the lock's 33 through 63 "
+        "(LOCK-n.md:869)",
+        len(lock_lines) > 965 and "`cv_seed` 20261116 and `shuffle_seed` 20260905" in lock_lines[321]
+        and GREAD_CV_SEED == probe.CV_SEED == 20261116 and GREAD_SHUFFLE_SEED == probe.SHUFFLE_SEED == 20260905
+        and "`capture_layers` = 33 through 63, 31 layers" in lock_lines[868]
+        and GREAD_CAPTURE_LAYERS == tuple(range(33, 64)) and len(GREAD_CAPTURE_LAYERS) == 31, "")
+    chk("gread: the comparator's matching is the lock's (LOCK-n.md:964-965), in GREAD_AXES' order: each valence point "
+        "its own, span_reward's f0.10 at +d_eq and f0.20 at +d_20",
+        len(lock_lines) > 965 and lock_lines[963].endswith("the comparator for `span_reward`'s f0.10 and")
+        and lock_lines[964].startswith("  f0.20 at +d_eq and +d_20")
+        and GREAD_MATCH == {**{("valence", q): q for q in GREAD_RANDOM_POINTS},
+                            ("span_reward", "f0.10"): "+d_eq", ("span_reward", "f0.20"): "+d_20"}
+        and list(GREAD_MATCH) == [(a, d) for a, ds in schema.GREAD_AXES.items() for d in ds], "")
+    ex = schema.example_identity("campaign")
+    ex_cells = {tuple(r.split("|")[:3]) for r in schema.read_plan(ex)}
+    chk("gread: 138 cells, the plan's with nothing merged, 120 of them N1-R's; the report's path and the cells' "
+        "folder the campaign's (CAMP_REPORT, CAMP_ROOT)",
+        GREAD_N_CELLS == len(ex_cells) == 138 and sum(1 for k in ex_cells if k[0] == "N1-R") == 120
+        and REPO / GREAD_REPORT_REL == CAMP_REPORT and REPO / GREAD_CELL_DIR == CAMP_ROOT, len(ex_cells))
+    r_m = refused(lambda: gread_points(schema.example_identity("campaign", R_ell=50.0)))   # +d_20 folds into +1
+    chk("gread: a dose map that folds a G-READ-n point is refused (GR4); the lock's form, nothing merged, gives [] at "
+        "every point, in GREAD_MATCH's order",
+        r_m[0] and "+d_20" in r_m[1] and all(v == [] for v in gread_points(ex).values())
+        and list(gread_points(ex)) == list(GREAD_MATCH), r_m)
+    chk("gread: the contrasts (GR4, GR5 ★): valence +1 against -1, every other point against N1-V's d = 0 cell, "
+        "span_reward's + pole N2-E's; the comparator's +1 against its own -1, its other points against the shadow",
+        gread_cells("valence", "+1") == (("N1-V", "valence", "+1"), ("N1-V", "valence", "-1"), "pole")
+        and gread_cells("valence", "+d_eq") == (("N1-V", "valence", "+d_eq"), ("N1-V", "none", "0"), "shadow")
+        and gread_cells("span_reward", "f0.10") == (("N2-E", "span_reward", "f0.10"), ("N1-V", "none", "0"),
+                                                    "shadow")
+        and gread_comparator_cells("+1", "rand_03") == (("N1-R", "rand_03", "+1"), ("N1-R", "rand_03", "-1"))
+        and gread_comparator_cells("+d_20", "rand_03") == (("N1-R", "rand_03", "+d_20"), ("N1-V", "none", "0")), "")
+    r_cl = [refused(lambda b=b: gread_close_list(b)) for b in (b"", b"x\n", (("a" * 64) + "  data/n/x.json\n").encode(),
+                                                                (("a" * 64) + " " + GREAD_REPORT_REL + "\n").encode(),
+                                                                (("a" * 64) + "  " + GREAD_REPORT_REL).encode(),
+                                                                (2 * (("a" * 64) + "  " + GREAD_REPORT_REL + "\n"))
+                                                                .encode())]
+    chk("gread: the close list's form is refused when it is empty, not '<sha256>  <a campaign path>', one space, "
+        "unterminated, or names a path twice",
+        all(r[0] for r in r_cl) and "twice" in r_cl[-1][1] and "newline" in r_cl[-2][1], r_cl)
+
+    # the stand-in campaign: three layers (a median that is not a mean), width four; the margin a sentinel (6.9375)
+    ident = schema.example_identity("campaign")
+    ident.update(n_layers=5, layer=1, capture_layers=[2, 3, 4], d_model=4)
+    schema.check_stage_identity(ident)
+    band = [2, 3, 4]
+    ts, tu = [-0.03125, -0.0625, -0.015625], [-1.0, -2.5, -3.546875]
+    sentinels = ("6.9375", "7.046875", "0.109375")
+    by_cell: dict = {}
+    for rid in schema.read_plan(ident):
+        arm, did, dl, sid = rid.split("|")
+        by_cell.setdefault((arm, did, dl), []).append(int(sid.split("/")[1]))
+    rng = np.random.default_rng(20261125)
+    st0 = tmp / "staging"
+    croot = st0 / GREAD_CELL_DIR
+    croot.mkdir(parents=True)
+    rows_of: dict = {}                                  # cell name -> {layer: the rows written, [n, 4] float32}
+    sids_of: dict = {}                                  # cell name -> its records' session ids, in row order
+    rep = schema.example_report(ident)
+    for (arm, did, dl), runs in sorted(by_cell.items()):
+        name = schema.cell_filename(arm, did, dl)
+        cap = schema.capture_capacity(arm)
+        recs = [schema.example_record(ident, arm, did, dl, r, launch=10 * i, row=i, logprob_S_tokens=ts,
+                                      logprob_U_tokens=tu) for i, r in enumerate(runs)]
+        arrs = {}
+        for l in band:
+            a = np.zeros((cap, 4), dtype=np.float32)
+            a[:len(recs)] = rng.standard_normal((len(recs), 4)).astype(np.float32)
+            arrs[l] = a
+            np.save(croot / schema.capture_filename(name, l), a)
+        for i, rec in enumerate(recs):
+            rec["capture"]["sha16"] = {str(l): sha16_arr(arrs[l][i]) for l in band}
+        cell = {"schema": schema.CELL_SCHEMA, "stage_identity": ident, "arm": arm, "direction_id": did,
+                "dose_label": dl, "records": recs,
+                "capture_files": {str(l): schema.capture_filename(name, l) for l in band}, "capture_rows": len(recs),
+                "capture_sha256": {str(l): cells.rows_sha256(arrs[l], len(recs)) for l in band}}
+        schema.check_cell(cell)
+        m_resume.atomic_write_json(croot / name, cell)
+        rep["cells"][name] = {"json_sha256": h((croot / name).read_bytes()),
+                              "capture_sha256": dict(cell["capture_sha256"]), "records": len(recs)}
+        rows_of[name] = {l: arrs[l][:len(recs)].copy() for l in band}
+        sids_of[name] = [rec["session_id"] for rec in recs]
+    schema.check_report(rep)
+    rep_b = (json.dumps(rep, indent=1, sort_keys=True) + "\n").encode("utf-8")
+    (st0 / GREAD_REPORT_REL).parent.mkdir(parents=True)
+    (st0 / GREAD_REPORT_REL).write_bytes(rep_b)
+    srepo = tmp / "repo"
+    srepo.mkdir()
+    (srepo / "campaign.json").write_bytes(rep_b)
+
+    def listing(staging, report_b: bytes) -> bytes:     # a close list in the campaign's form, for a staging folder
+        r = json.loads(report_b)
+        out = [f"{h(report_b)}  {GREAD_REPORT_REL}"]
+        out += [f"{h((Path(staging) / GREAD_CELL_DIR / n).read_bytes())}  {GREAD_CELL_DIR}/{n}"
+                for n in camp_copy_names(r)]
+        return ("\n".join(out) + "\n").encode("utf-8")
+    cl0 = listing(st0, rep_b)
+    (srepo / "close-names.txt").write_bytes(cl0)
+    shadow_n = schema.cell_filename("N1-V", "none", "0")
+    loaded = gread_rows(*gread_load(croot, ("N1-R", "rand_00", "+1"), keep=True), band)
+    chk("gread: the stand-in campaign: 138 cells and a valid COMPLETE report; the package's reader reads a stand-in "
+        "cell back, its rows the ones written, each a copy that owns its data, no view of a map (GR3 ★: session ids "
+        "and rows alone; GR9)",
+        len(rep["cells"]) == 138 and rep["end_state"] == "COMPLETE" and len(cl0.decode().split("\n")) == 1 + 138 * 4 + 1
+        and sorted(loaded[2]) == sorted(sids_of[schema.cell_filename("N1-R", "rand_00", "+1")])
+        and all(np.array_equal(loaded[l][s], rows_of[schema.cell_filename("N1-R", "rand_00", "+1")][l][i])
+                for l in band for i, s in enumerate(sids_of[schema.cell_filename("N1-R", "rand_00", "+1")]))
+        and all(v.base is None and v.dtype == np.float32 for l in band for v in loaded[l].values()), "")
+
+    lines_out: list = []
+    calls: list = []
+    real_layer_auc = probe.layer_auc
+
+    def genv(tag, **kw) -> GreadEnv:
+        e = GreadEnv(pod=lambda: None, known_answer=lambda: [], committed=work, driver=lambda: (b"d", b"d"),
+                     package=lambda: ("2" * 64, {"valence_core/x.py": "3" * 64}),
+                     pins={"lock_sha256": "1" * 64, "package_sha256": "2" * 64,
+                           "closure": {"valence_core/x.py": "3" * 64},
+                           "read_plan_sha256": schema.read_plan_sha256(ident), "capture_layers": list(band),
+                           "cells": 138, "close_list_sha256": h(cl0), "cv_seed": GREAD_CV_SEED,
+                           "shuffle_seed": GREAD_SHUFFLE_SEED},
+                     out=guard.refuse_test_out(tmp / f"out-{tag}" / "data" / "n" / "gates" / "G-READ-n.json"),
+                     lock_path=LOCK_PATH,
+                     close_list=srepo / "close-names.txt", report=srepo / "campaign.json", printer=lines_out.append)
+        for k, v in kw.items():
+            setattr(e, k, v)
+        return e
+
+    def fake_auc(X, y, groups, *, shuffles=probe.N_SHUFFLES, seed=probe.SHUFFLE_SEED, cv_seed=probe.CV_SEED):
+        calls.append({"X": np.array(X), "y": np.array(y), "g": np.array(groups), "shuffles": shuffles,
+                      "seed": seed, "cv_seed": cv_seed})
+        if shuffles:
+            return {"auc": 0.95, "null_p95": 0.6, "above_null": True}
+        return {"auc": 0.5 + float(np.abs(np.asarray(X)).sum()) % 0.4}
+
+    def flow(env, staging, fake=fake_auc) -> int:
+        calls.clear()
+        lines_out.clear()
+        probe.layer_auc = fake
+        try:
+            return run_gread(env, staging)
+        finally:
+            probe.layer_auc = real_layer_auc
+
+    def ended() -> str:                                 # the run's end line (a warnings line may follow it)
+        return next((ln for ln in reversed(lines_out) if ln.startswith("G-READ-n ")), "")
+    chk("gread: (the self-test's own guard) every output path the flow cases write, and every staging folder but the "
+        "in-repository refusals', is outside the repository: genv's output passes guard.refuse_test_out, raising",
+        not refused(lambda: [guard.refuse_test_out(p) for p in (tmp, st0, srepo, genv("g").out)])[0], "")
+
+    def staged_hashes(d) -> dict:
+        return {p.relative_to(d).as_posix(): h(p.read_bytes()) for p in sorted(Path(d).rglob("*")) if p.is_file()}
+    before = staged_hashes(st0)
+    env = genv("complete")
+    rc = flow(env, st0)
+    out_lines = list(lines_out)
+    art_b = env.out.read_bytes() if env.out.is_file() else b""
+    art = json.loads(art_b) if art_b else {}
+    ok_art = False
+    try:
+        schema.check_gread(art)
+        ok_art = True
+    except (schema.SchemaError, KeyError, TypeError):
+        pass
+    want_cells = {n: {"json_sha256": c["json_sha256"], "capture_sha256": c["capture_sha256"]}
+                  for n, c in rep["cells"].items()}
+    chk("gread: a COMPLETE stand-in run exits 0 and writes the artifact once, in G-ANL-n's form (sorted keys, "
+        "one-space indent, a newline at the end); check_gread and the analyzer's binding conditions hold",
+        rc == 0 and ok_art and art_b == (json.dumps(art, indent=1, sort_keys=True, ensure_ascii=False,
+                                                    allow_nan=False) + "\n").encode("utf-8")
+        and not gread_binding_problems(art, rep) and not env.out.with_name(env.out.name + ".tmp").exists(),
+        (rc, out_lines[-2:]))
+    chk("gread: the artifact names the campaign by the report's sha256s and every cell it read (all 138, both "
+        "sha256s), the probe's settings (k's fit_lr, 200 shuffles, kfold10, the lock's seeds, the band, the bar)",
+        ok_art and art["campaign"] == {"read_plan_sha256": rep["read_plan_sha256"],
+                                       "stage_identity_sha256": rep["stage_identity_sha256"], "cells": want_cells}
+        and art["probe"] == {"package_sha256": "2" * 64, "lr": dict(schema.GREAD_LR), "shuffles": 200,
+                             "shuffle_seed": GREAD_SHUFFLE_SEED, "cv": "kfold10", "cv_seed": GREAD_CV_SEED,
+                             "layers": band, "bar": 0.9}, "")
+    res = {(r["axis"], r["dose_label"]): r for r in art.get("results", [])}
+    chk("gread: six results in GREAD_AXES' order, nothing merged, valence +1 the pole and the rest the shadow; "
+        "span_reward's f0.10 and f0.20 held to +d_eq's and +d_20's comparator (GR6), the four points' comparators "
+        "distinct",
+        ok_art and [(r["axis"], r["dose_label"]) for r in art["results"]] == list(GREAD_MATCH)
+        and all(r["merged"] == [] and r["contrast"] == ("pole" if k == ("valence", "+1") else "shadow")
+                and r["status"] in ("PASS", "FAIL") for k, r in res.items())
+        and res[("span_reward", "f0.10")]["comparator"] == res[("valence", "+d_eq")]["comparator"]
+        and res[("span_reward", "f0.20")]["comparator"] == res[("valence", "+d_20")]["comparator"]
+        and len({json.dumps(res[("valence", q)]["comparator"]) for q in GREAD_RANDOM_POINTS}) == 4, "")
+
+    def rows(name, l, sids):                            # the stand-in rows of a cell at a layer, for those sessions
+        idx = {s: i for i, s in enumerate(sids_of[name])}
+        return np.stack([rows_of[name][l][idx[s]] for s in sids]).astype(np.float64)
+    floor = sorted(sids_of[schema.cell_filename("N1-R", "rand_00", "+1")])
+    want_c = []
+    for q in GREAD_RANDOM_POINTS:
+        for rid in schema.RANDOM_IDS:
+            pn = schema.cell_filename("N1-R", rid, q)
+            nn = schema.cell_filename("N1-R", rid, "-1") if q == "+1" else shadow_n
+            for l in band:
+                want_c.append(np.vstack([rows(pn, l, floor), rows(nn, l, floor)]))
+    comp_calls = [c for c in calls if c["shuffles"] == 0]
+    chk("gread: the comparator's fits (GR5 ★, GR6): 4 points x 24 directions x 3 layers, the first call twice (the "
+        "repeat check), each on the 40 floor sessions' rows exactly -- +1 against the direction's own -1, the other "
+        "points against the shadow's rows -- y 40 ones then 40 zeros, the groups the sessions twice, no shuffles, the "
+        "lock's cv_seed",
+        len(comp_calls) == len(want_c) + 1 == 289 and np.array_equal(comp_calls[0]["X"], comp_calls[1]["X"])
+        and all(np.array_equal(c["X"], w) for c, w in zip(comp_calls[1:], want_c))
+        and all(list(c["y"]) == [1] * 40 + [0] * 40 and list(c["g"]) == floor + floor
+                and c["cv_seed"] == GREAD_CV_SEED for c in comp_calls), len(comp_calls))
+
+    def fake_value(X) -> float:                         # fake_auc's comparator AUC, computed as it computes it
+        return 0.5 + float(np.abs(np.asarray(X)).sum()) % 0.4
+    want_bands: dict = {}
+    k_ = 0
+    for q in GREAD_RANDOM_POINTS:
+        meds = []
+        for _rid in schema.RANDOM_IDS:
+            meds.append(probe.band_median([{"auc": fake_value(want_c[k_ + j])} for j in range(len(band))]))
+            k_ += len(band)
+        want_bands[q] = meds
+    chk("gread: the comparator's band medians (GR6): each direction's the median of its three layers' AUCs, in "
+        "RANDOM_IDS' order; each point's 24, and their max, those of every result matched to it",
+        ok_art and all(res[k]["comparator"]["band_medians"] == want_bands[GREAD_MATCH[k]]
+                       and res[k]["comparator"]["max"] == max(want_bands[GREAD_MATCH[k]]) for k in GREAD_MATCH), "")
+    all160 = sorted(sids_of[shadow_n])
+    want_p = []
+    for (axis, dl) in GREAD_MATCH:
+        pn = schema.cell_filename(*gread_cells(axis, dl)[0])
+        nn = schema.cell_filename(*gread_cells(axis, dl)[1])
+        for l in band:
+            want_p.append(np.vstack([rows(pn, l, all160), rows(nn, l, all160)]))
+    prim = [c for c in calls if c["shuffles"] != 0]
+    chk("gread: the six results' fits (GR4): 6 x 3 layers through probe.result, each on the 160 sessions' rows "
+        "exactly (valence +1 against -1, the rest against the shadow, span_reward's + pole N2-E's), 200 shuffles at "
+        "the lock's seeds",
+        len(prim) == len(want_p) == 18 and all(np.array_equal(c["X"], w) for c, w in zip(prim, want_p))
+        and all(c["shuffles"] == 200 and c["seed"] == GREAD_SHUFFLE_SEED and c["cv_seed"] == GREAD_CV_SEED
+                and list(c["y"]) == [1] * 160 + [0] * 160 and list(c["g"]) == all160 + all160 for c in prim),
+        len(prim))
+    text = "\n".join(out_lines) + art_b.decode("utf-8", "replace")
+    chk("gread: no sentinel of the margin fields (6.9375; the log-probabilities 7.046875 and 0.109375) reaches stdout, "
+        "the artifact or any fit's inputs (GR3 ★; n:130)",
+        not any(s in text for s in sentinels)
+        and not any(np.isin(np.array([6.9375, -7.046875, -0.109375]), c["X"]).any() for c in calls), "")
+    pref = ("STAGE G-READ-n", "DRIVER ", "LOCK-n.md ", "the package ", "the close list ", "the campaign's report ",
+            "the staging folder: ", "the cells: ", "environment (GR10)", "the shadow: ", "the repeat check (GR10)")
+    env_line = next((ln for ln in out_lines if ln.startswith("environment (GR10)")), "")
+    chk("gread: stdout (GR11): the inputs by sha256, the environment with all five thread variables, the repeat check, "
+        "one line a comparator point and a result, the artifact's sha256, the six statuses",
+        [x for x in pref if not any(ln.startswith(x) for ln in out_lines)] == []
+        and all(v in env_line for v in GREAD_THREAD_VARS)
+        and sum(1 for ln in out_lines if ln.startswith("comparator ")) == 4
+        and sum(1 for ln in out_lines if ln.startswith("result ")) == 6
+        and any(ln.startswith("the artifact ") and h(art_b) in ln for ln in out_lines)
+        and any(ln.startswith("G-READ-n COMPLETE: valence +1 ") for ln in out_lines), out_lines[-2:])
+    chk("gread: nothing in the staging folder changes", staged_hashes(st0) == before, "")
+    rc2 = flow(env, st0)
+    chk("gread: a second run with the artifact there is refused before any fit, the artifact unchanged (GR9: written "
+        "once)",
+        rc2 == 1 and calls == [] and ended().startswith("G-READ-n REFUSED: ") and "written once" in ended()
+        and env.out.read_bytes() == art_b, lines_out[-1:])
+
+    # every refusal, one tampered input each: exit 1, before any fit, no artifact
+    def put(name, data: bytes) -> Path:
+        p = srepo / name
+        p.write_bytes(data)
+        return p
+
+    def st_copy(tag, change) -> Path:
+        d = tmp / f"st-{tag}"
+        shutil.copytree(st0, d)
+        change(d)
+        return d
+
+    def bump(d, name, l):                               # one value of a staged array changed
+        p = Path(d) / GREAD_CELL_DIR / schema.capture_filename(name, l)
+        a = np.load(p)
+        a[0, 0] = a[0, 0] + np.float32(1.0)
+        np.save(p, a)
+    lock_p = LOCK_PATH.resolve()
+    cl_lines0 = cl0.decode().split("\n")
+    p1v = schema.cell_filename("N1-V", "valence", "+1")
+    rep_cap = copy.deepcopy(rep)
+    rep_cap["end_state"] = "CAP"
+    rep_cap["cap"] = {"hour_cap_ms": 1000, "used_ms": 1000, "hit": True, "loads_ms": [5000]}
+    rep_cap_b = (json.dumps(rep_cap, indent=1, sort_keys=True) + "\n").encode("utf-8")
+    st_cap = st_copy("cap", lambda d: (d / GREAD_REPORT_REL).write_bytes(rep_cap_b))
+    rep_sha = copy.deepcopy(rep)
+    rep_sha["cells"][p1v]["capture_sha256"]["2"] = "f" * 64
+    rep_sha_b = (json.dumps(rep_sha, indent=1, sort_keys=True) + "\n").encode("utf-8")
+    st_sha = st_copy("sha", lambda d: (d / GREAD_REPORT_REL).write_bytes(rep_sha_b))
+    st_row = st_copy("row", lambda d: bump(d, p1v, 2))
+    st_byte = st_copy("byte", lambda d: bump(d, p1v, 3))
+    st_gone = st_copy("gone", lambda d: (d / GREAD_CELL_DIR / schema.capture_filename(shadow_n, 3)).unlink())
+    drop = ("\n".join(cl_lines0[:2] + cl_lines0[3:])).encode()
+    onesp = ("\n".join(cl_lines0[:1] + [cl_lines0[1].replace("  ", " ", 1)] + cl_lines0[2:])).encode()
+    first0 = ("\n".join([("0" * 64) + "  " + GREAD_REPORT_REL] + cl_lines0[1:])).encode()
+    rep_js = copy.deepcopy(rep)
+    rep_js["cells"][p1v]["json_sha256"] = "e" * 64
+    rep_js_b = (json.dumps(rep_js, indent=1, sort_keys=True) + "\n").encode("utf-8")
+    st_js = st_copy("js", lambda d: (d / GREAD_REPORT_REL).write_bytes(rep_js_b))
+
+    def other_identity(d):                              # one staged cell under another pod id, still a valid cell
+        p = Path(d) / GREAD_CELL_DIR / p1v
+        c = json.loads(p.read_bytes())
+        c["stage_identity"]["pod_id"] = "another-pod"
+        schema.check_cell(c)
+        m_resume.atomic_write_json(p, c)
+    st_id = st_copy("id", other_identity)
+    rep_id = copy.deepcopy(rep)
+    rep_id["cells"][p1v]["json_sha256"] = h((st_id / GREAD_CELL_DIR / p1v).read_bytes())
+    rep_id_b = (json.dumps(rep_id, indent=1, sort_keys=True) + "\n").encode("utf-8")
+    (st_id / GREAD_REPORT_REL).write_bytes(rep_id_b)
+
+    def linked(d):                                      # one staged array a symlink to a copy of its own bytes
+        p = Path(d) / GREAD_CELL_DIR / schema.capture_filename(shadow_n, 2)
+        q = p.with_name(p.name + ".copy")
+        shutil.copyfile(p, q)
+        p.unlink()
+        p.symlink_to(q)
+    st_ln = st_copy("ln", linked)
+
+    def pinned(tag, data: bytes, **kw) -> GreadEnv:     # an environment on a close list of its own, at its pin
+        e = genv(tag, close_list=put(f"close-{tag}.txt", data), **kw)
+        e.pins["close_list_sha256"] = h(data)
+        return e
+
+    def pins_with(tag, **kw) -> GreadEnv:
+        e = genv(tag)
+        e.pins.update(kw)
+        return e
+    cases = [
+        ("a pod id set", genv("pod", pod=lambda: "a-pod"), st0, "refused on a pod"),
+        ("numpy's stream known answer failing", genv("ka", known_answer=lambda: ["numpy stream known answer: a "
+                                                                               "stand-in failure"]), st0,
+         "a stand-in failure"),
+        ("the staging folder inside the repository", genv("inrepo"), REPO / "data", "inside the repository"),
+        ("the staging folder not a folder", genv("nofolder"), tmp / "no-such-folder", "not a folder"),
+        ("the driver not HEAD's committed bytes", genv("drv", driver=lambda: (b"a", b"b")), st0, "committed driver"),
+        ("the driver with no committed bytes", genv("drv2", driver=lambda: (b"a", None)), st0, "committed driver"),
+        ("LOCK-n.md not HEAD's committed bytes", genv("lock", committed=lambda p: b"x" if Path(p).resolve() == lock_p
+                                                     else work(p)), st0, "LOCK-n.md is absent"),
+        ("the package not the lock's", genv("pkg", package=lambda: ("9" * 64, {"valence_core/x.py": "3" * 64})), st0,
+         "the package or its closure"),
+        ("a closure file not the lock's", genv("clo", package=lambda: ("2" * 64, {"valence_core/x.py": "4" * 64})),
+         st0, "closure files differing ['valence_core/x.py']"),
+        ("the close list off its pin", pins_with("clpin", close_list_sha256="0" * 64), st0, "the close list is absent"),
+        ("the close list not HEAD's committed bytes",
+         genv("clhead", committed=lambda p: b"y" if Path(p).resolve() == (srepo / "close-names.txt").resolve()
+              else work(p)), st0, "the close list is absent"),
+        ("a close list missing a line", pinned("drop", drop), st0, "the close list's paths are not"),
+        ("a close list line with one space", pinned("onesp", onesp), st0, "the close list's line 2 is not"),
+        ("the report not HEAD's committed bytes",
+         genv("rephead", committed=lambda p: b"z" if Path(p).resolve() == (srepo / "campaign.json").resolve()
+              else work(p)), st0, "report is absent or not HEAD's committed bytes"),
+        ("the report not the list's first line", pinned("first", first0), st0, "first line is not"),
+        ("a report ending CAP", pinned("cap", listing(st_cap, rep_cap_b), report=put("campaign-cap.json",
+                                                                                     rep_cap_b)), st_cap,
+         "ends CAP, not COMPLETE"),
+        ("the identity's lock not the pin", pins_with("idlock", lock_sha256="0" * 64), st0, "under the lock"),
+        ("the identity's package not the lock's and this process's",
+         genv("idpkg", package=lambda: ("9" * 64, {"valence_core/x.py": "3" * 64}),
+              pins=dict(genv("p").pins, package_sha256="9" * 64)), st0, "the report's package is not"),
+        ("the band not the lock's", pins_with("band", capture_layers=[2]), st0, "capture layers"),
+        ("the read plan not the lock's", pins_with("plan", read_plan_sha256="0" * 64), st0, "read plan"),
+        ("the cell count not the lock's", pins_with("ncells", cells=137), st0, "cells are not the plan's 137"),
+        ("probe.py's cv_seed not the pin", pins_with("cv", cv_seed=1), st0, "seeds are not the lock's"),
+        ("a staged array off its listed sha256", genv("byte"), st_byte, "not at the close list's sha256"),
+        ("a staged array missing", genv("gone"), st_gone, "not a file under the staging folder"),
+        ("a cell's capture_sha256 not the report's",
+         pinned("shacell", listing(st_sha, rep_sha_b), report=put("campaign-sha.json", rep_sha_b)), st_sha,
+         "capture_sha256 or record count is not the report's"),
+        ("a staged row off its record's sha16 (listed at its new sha256)", pinned("row", listing(st_row, rep_b)),
+         st_row, "does not match its row"),
+        ("the staging folder at the repository's root", genv("atrepo"), REPO, "inside the repository"),
+        ("a relative staging folder, read from the repository's root (here inside it)", genv("rel"), "data",
+         "inside the repository"),
+        ("a relative staging folder, read from the repository's root wherever the command runs (here the tampered "
+         "copy's path from the root)", genv("relb"), os.path.relpath(st_byte, REPO), "not at the close list's sha256"),
+        ("a listed JSON's sha256 not the report's json_sha256",
+         pinned("js", listing(st_js, rep_js_b), report=put("campaign-js.json", rep_js_b)), st_js,
+         "listed at another sha256 than the report's json_sha256"),
+        ("a cell under another identity than the report's",
+         pinned("idcell", listing(st_id, rep_id_b), report=put("campaign-id.json", rep_id_b)), st_id,
+         "its identity is not the report's"),
+        ("probe.py's shuffle_seed not the pin", pins_with("shuffle", shuffle_seed=1), st0, "seeds are not the lock's"),
+        ("a staged array that is a symlink", genv("ln"), st_ln, "not a file under the staging folder"),
+    ]
+    for label, e, staging, want_t in cases:
+        rc_e = flow(e, staging)
+        last = ended()
+        chk(f"gread: refused before any fit, with no artifact: {label}",
+            rc_e == 1 and calls == [] and last.startswith("G-READ-n REFUSED: ") and want_t in last
+            and not e.out.exists() and not e.out.with_name(e.out.name + ".tmp").exists(), last[-200:])
+    e_out = genv("exists")
+    e_out.out.parent.mkdir(parents=True)
+    e_out.out.write_bytes(b"x")
+    rc_x = flow(e_out, st0)
+    chk("gread: refused before any fit when the artifact's path is taken, the file left as it was (GR9)",
+        rc_x == 1 and calls == [] and "written once" in ended() and e_out.out.read_bytes() == b"x", ended())
+    e_st = genv("stale")
+    stale_p = e_st.out.with_name(e_st.out.name + ".tmp")
+    stale_p.parent.mkdir(parents=True)
+    stale_p.write_bytes(b"t")
+    rc_st = flow(e_st, st0)
+    chk("gread: refused before any fit when a cut-short write left the artifact's temporary file, that file left as it "
+        "was (GR9)",
+        rc_st == 1 and calls == [] and "exists beside the artifact's path" in ended() and stale_p.read_bytes() == b"t"
+        and not e_st.out.exists(), ended())
+
+    def raising(X, y, groups, *, shuffles=probe.N_SHUFFLES, seed=probe.SHUFFLE_SEED, cv_seed=probe.CV_SEED):
+        calls.append({"shuffles": shuffles})
+        raise ValueError("a stand-in failure inside a fit")
+    e_f = genv("fail")
+    rc_f = flow(e_f, st0, fake=raising)
+    chk("gread: a failure inside the fits exits 1, with no artifact and no temporary file, its cause printed by its "
+        "type alone (the analyzer's form: no message, no path)",
+        rc_f == 1 and ended() == "G-READ-n FAILED: ValueError" and not e_f.out.exists()
+        and not e_f.out.with_name(e_f.out.name + ".tmp").exists(), ended())
+    real_check_gread = schema.check_gread
+    n_check: list = []
+
+    def second_fails(art_, where="gread"):              # the artifact's own check passes; the read-back's fails
+        n_check.append(1)
+        if len(n_check) == 2:
+            raise schema.SchemaError("gread.results: a stand-in read-back failure")
+        return real_check_gread(art_, where)
+    e_rb = genv("readback")
+    schema.check_gread = second_fails
+    try:
+        rc_rb = flow(e_rb, st0)
+    finally:
+        schema.check_gread = real_check_gread
+    chk("gread: a read-back that fails check_gread exits 1, the written artifact removed, its cause by its field path "
+        "(GR8, GR12)",
+        rc_rb == 1 and "fails check_gread, at gread.results" in ended() and len(n_check) == 2
+        and not e_rb.out.exists() and not e_rb.out.with_name(e_rb.out.name + ".tmp").exists()
+        and schema.check_gread is real_check_gread, ended())
+    gw = tmp / "gw"
+    gw_out = gw / "G-READ-n.json"
+    gw_tmp = gw_out.with_name(gw_out.name + ".tmp")
+    r_bad = refused(lambda: gread_write(gw_out, "\ud800"))      # cannot be encoded: a failure inside the write
+    left_bad = sorted(p.name for p in gw.iterdir()) if gw.exists() else []
+    gw.mkdir(parents=True, exist_ok=True)
+    gw_tmp.write_bytes(b"t")
+    r_tmp = refused(lambda: gread_write(gw_out, "{}\n"))
+    gw_tmp.unlink()
+    gread_write(gw_out, "{}\n")
+    r_dup = refused(lambda: gread_write(gw_out, "[]\n"))
+    chk("gread: the writer leaves nothing when a write fails, refuses a temporary file already there, writes once, and "
+        "refuses a second write, leaving the first and no temporary file (GR9)",
+        not r_bad[0] and "UnicodeEncodeError" in r_bad[1] and left_bad == [] and r_tmp[0]
+        and "exists beside the artifact" in r_tmp[1] and r_dup[0] and "written once" in r_dup[1]
+        and gw_out.read_text() == "{}\n" and sorted(p.name for p in gw.iterdir()) == ["G-READ-n.json"],
+        (r_bad, left_bad, r_tmp, r_dup))
+    tamp = []
+    for change in (lambda a: a["campaign"]["cells"].pop(sorted(a["campaign"]["cells"])[0]),
+                   lambda a: a["campaign"].update(read_plan_sha256="0" * 64),
+                   lambda a: a["campaign"].update(stage_identity_sha256="0" * 64),
+                   lambda a: a["probe"].update(package_sha256="9" * 64),
+                   lambda a: a["probe"].update(layers=band[:2]),
+                   lambda a: a["results"][0].update(merged=["+d_20"])):
+        t_ = copy.deepcopy(art)
+        if ok_art:
+            change(t_)
+        tamp.append(gread_binding_problems(t_, rep) if ok_art else [])
+    chk("gread: the analyzer's binding conditions (anl:6459-6484) hold on the artifact and each fails on a tampered "
+        "copy: a cell dropped, the plan's or the identity's sha256, the package, the layers, a result's merged labels",
+        ok_art and not gread_binding_problems(art, rep) and all(len(p) == 1 for p in tamp), tamp)
+
+    def flaky(X, y, groups, *, shuffles=probe.N_SHUFFLES, seed=probe.SHUFFLE_SEED, cv_seed=probe.CV_SEED):
+        calls.append({"shuffles": shuffles})
+        return {"auc": 0.5 + 0.01 * len(calls)}
+    e_rep = genv("repeat")
+    rc_r = flow(e_rep, st0, fake=flaky)
+    chk("gread: the repeat check (GR10): a first comparator call that gives two AUCs is refused before the primary "
+        "fits, with no artifact",
+        rc_r == 1 and len(calls) == 2 and all(c["shuffles"] == 0 for c in calls) and "repeat check" in ended()
+        and not e_rep.out.exists(), ended())
+    chk("gread: probe.py's layer_auc is restored after the flow cases", probe.layer_auc is real_layer_auc, "")
+    pn = schema.cell_filename("N1-R", "rand_00", "+1/2")
+    xr = np.vstack([rows(pn, 2, floor), rows(shadow_n, 2, floor)])
+    yr, gr = np.array([1] * 40 + [0] * 40), np.array(floor + floor)
+    a1 = real_layer_auc(xr, yr, gr, shuffles=0, cv_seed=GREAD_CV_SEED)
+    a2 = real_layer_auc(xr, yr, gr, shuffles=0, cv_seed=GREAD_CV_SEED)
+    chk("gread: probe.py's own layer_auc on a stand-in comparator contrast (80 rows of four, no shuffles) gives one "
+        "AUC in [0, 1], the same twice", a1 == a2 and set(a1) == {"auc"} and 0.0 <= a1["auc"] <= 1.0, (a1, a2))
+
+    # main()'s options behind two traps: no pod id is set, and the production loaders raise
+    g = globals()
+    loaders = ("weights_of_record", "_load_adapter", "_gver_tokenizer")
+    real_loaders = {n: g[n] for n in loaders}
+    real_cmd = g["cmd_gread"]
+
+    def trapped(*_a, **_k):
+        raise SystemExit("the self-test's trap: a production loader was reached")
+    pod_kept = os.environ.pop("RUNPOD_POD_ID", None)
+    for n in loaders:
+        g[n] = trapped
+    try:
+        penv = production_gread_env()
+        chk("gread: the production environment: the artifact data/n/gates/G-READ-n.json, the committed close list and "
+            "report, LOCK-n.md, the lock's pins, and the production seams",
+            penv.out == REPO / "data" / "n" / "gates" / "G-READ-n.json" and penv.close_list == GREAD_CLOSE_LIST
+            and penv.report == CAMP_REPORT and penv.lock_path == LOCK_PATH and penv.pins == gread_pins()
+            and penv.pod is m_resume.pod_id and penv.known_answer is stream_known_answer
+            and penv.committed is committed_bytes and penv.driver is driver_bytes and penv.package is _package_closure
+            and penv.printer is print and penv.clock is time.perf_counter, "")
+
+        def argv_error(argv) -> str:
+            err = io.StringIO()
+            try:
+                with contextlib.redirect_stderr(err):
+                    main(argv)
+            except SystemExit as e:
+                return err.getvalue() if e.code == 2 else f"exit {e.code}"
+            return "no error"
+        s_ = str(tmp / "staging-arg")
+        alone = "gread takes --staging DIR alone"
+        for argv, want_t in ((["gread"], "gread needs --staging DIR"),
+                             (["gread", "--staging", s_, "--out", s_], alone),
+                             (["gread", "--staging", s_, "--smoke", "1"], alone),
+                             (["gread", "--staging", s_, "--resume"], alone),
+                             (["gread", "--staging", s_, "--root", s_], alone),
+                             (["gread", "--staging", s_, "--report", s_], alone),
+                             (["gread", "--staging", s_, "--ruling", "p01=x"], alone),
+                             (["gread", "--staging", s_, "--convention", "space"], alone),
+                             (["gread", "--staging", s_, "--model-dir", s_], alone),
+                             (["gread", "--staging", s_, "--tokenizer-dir", s_], alone),
+                             (["gread", "--staging", s_, "--ids-dir", s_], alone),
+                             (["gread", "--staging", s_, "--pi-date", "2026-11-25"], alone),
+                             (["gvec", "--staging", s_], "--staging: gread's option only"),
+                             (["gread-bench", "--staging", s_], "--staging: gread's option only"),
+                             (["campaign", "--staging", s_], "--staging: gread's option only")):
+            got = argv_error(argv)
+            shown_argv = " ".join("DIR" if x == s_ else x for x in argv)
+            chk(f"gread: main() refuses {shown_argv} with \"{want_t}\"", want_t in got, got[-160:])
+        seen: list = []
+        g["cmd_gread"] = lambda staging: seen.append(staging) or 0
+        try:
+            rc_m = main(["gread", "--staging", s_])
+        finally:
+            g["cmd_gread"] = real_cmd
+        chk("gread: main() hands --staging to the command, and nothing else", rc_m == 0 and seen == [s_], seen)
+    finally:
+        for n, f in real_loaders.items():
+            g[n] = f
+        g["cmd_gread"] = real_cmd
+        if pod_kept is not None:
+            os.environ["RUNPOD_POD_ID"] = pod_kept
+    chk("gread: (the self-test's own guard) the loaders and the command are restored",
+        all(g[n] is real_loaders[n] for n in loaders) and g["cmd_gread"] is real_cmd, "")
+
+
 def _parse_rulings(ap, items) -> dict:
     """``--ruling PAUSE_ID=PATH``, each once (gtime's; backend-ext's own loop is unchanged)."""
     rulings: dict = {}
@@ -7684,7 +8854,7 @@ def main(argv=None) -> int:
     ap.add_argument("command", nargs="?",
                     choices=("hashes", "gver-trial", "render-ids", "render-ids-iv", "render-ids-v", "backend-ext",
                              "backend-ext-2", "gvec", "gcal", "gcal-decode", "gtime", "gread-bench", "gver",
-                             "campaign"))
+                             "campaign", "gread"))
     ap.add_argument("--model-dir", default=None)
     ap.add_argument("--tokenizer-dir", default=None)
     ap.add_argument("--ids-dir", default=None)
@@ -7699,6 +8869,7 @@ def main(argv=None) -> int:
     ap.add_argument("--gcal-dir", default=None)
     ap.add_argument("--bench-dir", default=None)
     ap.add_argument("--pi-stop", default=None, metavar="RAW")
+    ap.add_argument("--staging", default=None, metavar="DIR")
     a = ap.parse_args(argv)
     if a.selftest:
         return cmd_selftest()
@@ -7708,6 +8879,24 @@ def main(argv=None) -> int:
         ap.error("--bench-dir: gtime's option only")
     if a.pi_stop is not None and a.command != "campaign":
         ap.error("--pi-stop: campaign's option only")
+    if a.staging is not None and a.command != "gread":
+        ap.error("--staging: gread's option only")
+    if a.command == "gread":
+        foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
+                                      ("--resume", a.resume), ("--ruling", bool(a.ruling)),
+                                      ("--smoke", a.smoke is not None), ("--out", a.out is not None),
+                                      ("--convention", a.convention is not None),
+                                      ("--model-dir", a.model_dir is not None),
+                                      ("--tokenizer-dir", a.tokenizer_dir is not None),
+                                      ("--ids-dir", a.ids_dir is not None), ("--pi-date", a.pi_date is not None))
+                   if given]
+        if foreign:
+            ap.error(f"{', '.join(foreign)}: gread takes --staging DIR alone (GR1: no smoke, no --out, no resume); it "
+                     f"writes data/n/gates/G-READ-n.json once")
+        if a.staging is None:
+            ap.error("gread needs --staging DIR, the folder outside the repository that holds the campaign's copied "
+                     "arrays (GR2); a relative DIR is read from the repository's root")
+        return cmd_gread(a.staging)
     if a.command == "campaign":
         foreign = [f for f, given in (("--root", a.root is not None), ("--report", a.report is not None),
                                       ("--smoke", a.smoke is not None), ("--out", a.out is not None),

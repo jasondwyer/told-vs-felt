@@ -21,6 +21,315 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-25 — **n — G-READ-n's BUILD (n v0.2 §8 step 15): the `gread` command in `scripts/n_sessions.py`, on
+  Code's readings GR1–GR14 as PINs (the PI's "build on the pins"); the driver alone, the package at the lock's digest
+  and the analyzer at v7. Not run.**
+  - **Citations.** LOCK-n.md is cited by file line, `LOCK-n.md:N` (the file is the same at `098218c` and at HEAD);
+    "L §N" is a section of v0.1's text beneath v1.0's part, the driver's form.
+  - **What is built,** in the driver alone (GR1), as the seat's fourth sitting holds the BUILD
+    ([`2026-11-25_n-campaign-close-read_design-to-code_answers.md`](results/raw/2026-11-25_n-campaign-close-read_design-to-code_answers.md)
+    §3, points 1–2): `valence_core/n/` stays at `06b55761…1d39` (L §18), and `scripts/n_analyze.py` at v7,
+    `735da934…a7a8` (LOCK-n.md:212–215).
+    - **The pins.** `GREAD_CLOSE_LIST_SHA256` is the sha256 of the campaign's close list as committed at `95cd461`,
+      `42682630…fe6d`. `GREAD_CV_SEED` 20261116 and `GREAD_SHUFFLE_SEED` 20260905 are the lock's (LOCK-n.md:322,
+      :823–825) and are held to probe.py's `CV_SEED` and `SHUFFLE_SEED`. The band is 33 through 63 (LOCK-n.md:869),
+      the cells 138, and the comparator's matching is LOCK-n.md:964–965's.
+    - **`gread --staging DIR`** (`run_gread`), model-free, one invocation. DIR is the folder outside the repository
+      that holds the campaign's copied arrays; a relative DIR is read from the repository's root. It refuses, with
+      exit 1, a REFUSED line and nothing written, unless all of these hold, in this order:
+      - no pod id is set (G-READ-n runs on the laptop's CPU);
+      - numpy's stream known answer holds;
+      - the artifact, `data/n/gates/G-READ-n.json`, and its temporary file are absent;
+      - the staging folder is a folder outside the repository;
+      - the run runs HEAD's committed driver, and `LOCK-n.md` is HEAD's committed bytes at the lock's sha256;
+      - the package and its closure, measured in the process, are the lock's (L §18);
+      - the close list is HEAD's committed bytes at its pin, each line "<sha256>  <a campaign path>", no path twice;
+      - the report, `data/n/reports/campaign.json`, is HEAD's committed bytes at the list's first line's sha256, a
+        valid report, COMPLETE with every arm complete, its identity the campaign's under the lock (the lock's and
+        this process's package, the band, the lock's read plan and the plan's own sha256), its stage identity's
+        sha256 its own, and its 138 cells the plan's;
+      - the dose map keeps every G-READ-n point and comparator point (LOCK-n.md:763–765), the labels merged into each
+        taken as the map has them (`[]` under the lock);
+      - probe.py's two seeds are the lock's;
+      - the list's paths are the report's cells and their arrays in `camp_copy_names`' order, and each JSON's sha256
+        is the report's `json_sha256`;
+      - every listed file under the staging folder, opened by name and never by a listing, is a regular file at its
+        listed sha256;
+      - every cell, read through the package's reader (`cells.load_cell`, no identity, so a missing cell is a
+        refusal), is at the report's capture_sha256 and record count, under the report's identity.
+    - **The fits.** The shadow cell's rows are read once and held. The comparator comes first: at +1, +1/2, +d_20 and
+      +d_eq, each of the 24 random directions' contrast at each layer of the band by `probe.layer_auc` without
+      shuffles, and each direction's band median; at +1 its +1 against its own −1 (GR5 ★), at the other three points
+      its cell against the shadow's rows for the 40 floor sessions. The first call is computed twice, and two AUCs
+      refuse the run before the primary fits (GR10). Then the six results by `probe.result` at 200 label shuffles and
+      the lock's seeds: valence +1 against −1 ("pole"), valence +1/2, +d_20 and +d_eq and span_reward's f0.10 and
+      f0.20 (N2-E's cells) against the shadow, each held to its point's 24 band medians (f0.10 to +d_eq's, f0.20 to
+      +d_20's). Each cell the fits use (128 of the 138: the shadow, N1-R's 120, N1-V's five valence cells and N2-E's
+      two) is read a second time, arrays kept, held to the report again, its rows copied before the next cell is
+      opened. From each record the command keeps its `session_id` and its capture row alone (GR3 ★).
+    - **The artifact** (`probe.artifact`, checked by `check_gread`) is held to the analyzer's binding conditions
+      (anl:6459–6484, adapted as `gread_binding_problems`: the report's cells where the analyzer has `camp.cells`,
+      and its messages without the analyzer's example names and merge lists), written once in G-ANL-n.json's form
+      (sorted keys, a one-space indent, a newline at the end) through a temporary file beside it renamed onto an
+      absent path, and read back: a read-back that fails removes it. The `.gitignore` admits it.
+    - **The printing** (GR11): the STAGE line, the inputs by sha256, the environment (python, numpy and its BLAS, the
+      CPUs, the five thread variables, set or unset), the repeat check, one line a comparator point (its largest band
+      median and its ms) and one a result (its contrast, rows, band median, comparator max, status, layers above their
+      null and ms), the artifact's sha256, and the six statuses. The staging folder is printed relative to the
+      repository. Never a margin or a per-session value.
+    - **Exits** (GR8): 0 when the artifact is written, whatever its statuses; 1 on any refusal or failure, with no
+      artifact. A refusal prints its reason; a failure its cause in the analyzer's form, stricter where an OSError has
+      no strerror (`_gread_err`: a field path, a strerror or a type, never a path). Python's warnings are printed
+      after the end line by category and message.
+      2 is argparse's.
+    - **main():** `gread` takes `--staging DIR` alone, and every other option is refused; `--staging` is refused for
+      every other command. `--selftest`, which the driver takes before any command, runs the self-test, here as
+      everywhere. No smoke, no `--out` and no resume (GR1, GR9).
+    - **The self-test** (GR13), `_gread_selftest`, in `cmd_selftest` after the campaign's: the pins held to the
+      committed close list and to LOCK-n.md's lines; a stand-in campaign written under the self-test's temporary
+      folder (the real plan's 138 cells and 7,680 records at a band of three layers of width four, sentinels in each
+      margin, its two log-probability sums and their fresh copies); the command's flow over it with a recorder in
+      `probe.layer_auc`'s place, every fit's inputs checked row for row and the comparator's band medians in order;
+      the artifact's form and binding; 33 refusal cases; a stale temporary file; a failure and a failed read-back;
+      the writer's refusals and cleanup; the binding conditions on six tampered copies; probe.py's own `layer_auc`
+      twice on one 80-row stand-in contrast; and main()'s options, behind the traps (no pod id; the production
+      loaders raising).
+    - **The driver's docstring** lists GR1–GR14 in short as its PINs, as sent in the spec raw's §1, GR9's line with
+      the departure below; its last line names VERDICTS as the analyzer's, with `--gread` this command's artifact.
+  - **The driver's bytes** are draft 3, `35c4c73e…4808`, 9,025 lines, +1,192 −3 from HEAD's `47abe489…c21a`. Every
+    count of lines added and removed in this entry is `git diff --no-index --numstat`'s.
+    - Draft 1 (`5a1d84a3…24e8`, 8,834 lines; +1,001 −3) built the command, its self-test and main()'s options.
+    - Draft 2 (`176aef3d…a826`, 9,021 lines; +260 −73 from draft 1) built in the blind review's findings.
+    - Draft 3 (+10 −6 from draft 2) built in the values-check's three points on the driver: two docstrings (items 102
+      and 103) and one refusal case (observation 3).
+  - **The .gitignore** is `3aac58be…6482`, +3 −0: after G-ANL-n.json's admit line, a comment and
+    `!/data/n/gates/G-READ-n.json`. The temporary file and any other file in `data/n/gates/` stay ignored. It was
+    tested by dry-run adds (`git add --dry-run .`) in a throwaway repository in Code's scratch, with stand-in files:
+    it admits the artifact and G-ANL-n.json alone; HEAD's admits G-ANL-n.json alone.
+  - **The self-test:** [`2026-11-25_n-gread-build_selftest.txt`](results/raw/2026-11-25_n-gread-build_selftest.txt).
+    - Draft 1 ran "833/833 n selftest checks pass": HEAD's 774 plus G-READ-n's 59 (58 in `_gread_selftest` and the
+      environment's check after it).
+    - Beside it, `hashes` on draft 1's overlay printed the lock's package digest and twelve closure lines equal to
+      `LOCK_CLOSURE` by `cmp`, so the command's package check passes on this laptop.
+    - Draft 2 ran "853/853": draft 1 with the review's findings built in, and 20 checks more.
+    - Draft 3, this BUILD's bytes, ran "854/854": draft 2 with one refusal case more (the values-check's
+      observation 3).
+    - Each run had exit 0 and an empty stderr, in a battery window the coordinating session granted for its bytes,
+      the self-tests as the harness's background task and `hashes` in the foreground after run 1; the temporary
+      folder was empty before and after each. Each window closed on the coordinating session's word, after its checks
+      by tool: its runs' files at Code's sha256s, the temporary folder empty, the overlay's names and blobs equal to
+      its listing before the run, the draft unchanged and the tree clean (at `05ac941` for windows 1 and 2, at
+      `b449ed6` for window 3).
+    - `b449ed6`, this commit's parent, came between runs 2 and 3: from `05ac941`, outside item 3's exclusions and
+      Q-F3's folder, it changes `RESULTS.md` and adds two raws (`git diff --name-status`), none of them an overlay
+      path. Overlays 1 and 2 are from `05ac941`, overlay 3 from `b449ed6`.
+  - **The blind review** of draft 1:
+    - its report, with every disposition:
+      [`2026-11-25_n-gread-build_review.md`](results/raw/2026-11-25_n-gread-build_review.md);
+    - no BUG; 12 findings (6 RISK, 6 NIT), 10 surviving mutants, 8 run risks and 9 observations;
+    - draft 2 builds in F1–F6 and F12, F7 in part (four refusal cases, its sentence narrowed), R5 and O6, the wording
+      of F8–F10, and a kill for every mutant by Code's reading (no mutant has been run).
+  - **The values-check:** one blind pass over these texts' drafts, draft 2's G-READ-n texts and the `.gitignore`'s
+    delta, at HEAD `05ac941`, with every disposition:
+    [`2026-11-25_n-gread-build_valuescheck.md`](results/raw/2026-11-25_n-gread-build_valuescheck.md)
+    (`9283fa73…e1b6`, 593 lines).
+    - 108 items: 89 CONFIRMED, 14 IMPRECISE, 1 FAIL (this entry's file-tools line), 4 NOT CHECKABLE (Code's plans,
+      the gate's next version, and the box's not having run this BUILD); and 11 observations.
+    - The FAIL is fixed, every IMPRECISE item applied, and every observation applied or met; draft 3 carries the three
+      points on the driver.
+    - The edits after it, made in v2 copies of the three texts by the file tools, are replayed by tool:
+      42 of 42 (this entry 24, the review raw's head 7, the self-test raw 11).
+  - **Model:** nothing ran on a model.
+  - **Declared, from the readings and the review:**
+    - **The twelve unstarred readings** (GR1, GR2, GR4 and GR6–GR14) stand as the spec raw's §1 has them, built as
+      above, with its head's points: GR7's classifier reaches the probe through `kfold_scores`, and GR8's absence
+      test is the command's own, beside `guard.refuse_out`.
+    - **GR9:** one cell's maps are open at a time, each cell's rows copied before the next is opened, and the
+      shadow's rows held for the run; GR9 as sent says two at a time.
+    - **The cells' reads:** all 138 through `load_cell` before any fit, and the 128 the fits use a second time, arrays
+      kept, each held to the report again (the review's F5).
+    - **The stand-in campaign** is written directly in the package's file forms (`schema.example_record`'s records,
+      m's `atomic_write_json`, `np.save`, `rows_sha256` and `sha16_arr`), and `cells.load_cell` reads it back; not by
+      the package's own writer, as GR13 says (`cells.append_record`, record by record), for the self-test's time.
+    - **GR13's "every refusal of GR8 and GR2, one tampered input each"** is built for the refusals a tampered input can
+      reach, as the self-test's docstring says (the review's F7); those `check_report` or the pinned list already
+      make, and N1-R sessions with no shadow row, are backstopped and not cased.
+    - **GR3's sentinels** are planted in the margin, its two log-probability sums and their fresh copies, where GR3 as
+      sent says every margin field; the restricted read and the per-token values keep `example_record`'s values, and
+      the command reads none of these fields (the review's F8).
+    - **The recorder.** The flow cases put a recorder in `probe.layer_auc`'s place, probe.py's own self-test's
+      pattern; `probe.result` and `probe.artifact` run for real over its AUCs. The real 200-shuffle fits are probe.py's
+      own self-test's.
+    - **The analyzer's binding conditions** are adapted into the driver (above), since the analyzer cannot change and
+      the driver does not import it.
+    - **The writer** is the section's own, in G-ANL-n.json's form, not m's `atomic_write_json`.
+    - **The order of the refusals:** the staging folder is checked fourth, before the driver, the lock, the package,
+      the close list, the report and the seeds, where GR8 lists it last (the review's F11; `_gread_prepare`'s
+      docstring in draft 3). Each comes before any fit.
+    - **LOCK-n.md:964–965's "or their merged points"** is not built: the lock's dose map keeps every point, and a map
+      that does not is refused (the review's O7).
+    - **A second repeat check** at 320 rows, the review's O6, is beyond GR10 and not built: the seat's call.
+    - **Each starred reading sits in one place:** GR3 in `gread_load` with `gread_rows`, GR5 in
+      `gread_comparator_cells`. The block's "another answer" for each is that change.
+  - **Carried to G-READ-n's launch files** (to the coordinating session first):
+    - GR14: G-ANL-n's three steps (check, run, after), the run in the background under `caffeinate` at `nice -n 19`,
+      the end-wait on the PID alone, in a battery window; ans4's "beside Q-F3" stands as the seat's words, though
+      Q-F3's campaign has ended (the coordinating session's fact);
+    - `--staging` given relative to the repository's root, `../jspace-lab-box.noindex/n/campaign-v1`, so that no local
+      root is in the command's raw;
+    - the run's out and err raws read whole and screened before they are committed (the review's R7);
+    - the run after the seat's ruling on GR3 and GR5 and the PI's routing of it.
+  - **Departures,** for the seat to class:
+    - Code's, from the seat block entry's final sweep (T's 23:39:31, UTC, on 2026-11-25) to this entry's, from its
+      own sweep of its tool calls (`jq` over this session's transcript). Code knows of no others:
+      - **The seat block's commit, to its window request** (10 commands; the request's note gives their kinds but for
+        its own check's, by `grep -c` where the note says `wc -l`):
+        the edits' replay, with a bracketed `grep -n -o` of `LOCK-n.md` whose output named G-TIME-n's holding folder
+        by its bare name once (its line 97); the commit folder's build (`bash -n`, the build script); the
+        abbreviation check (a known-hashes file by `shasum` of named files and the checker's sources list, compared
+        by `comm`); `grep -n -o -E` of the built spec raw for two abbreviations, and `shasum` of four repository
+        files and then of `valence_core/discrim.py`; the kit, the message's fill by `sed` and its check; the gate's
+        dry run, with `git rev-parse HEAD`, `diff` of `git show HEAD:RESULTS.md` against the expected file into
+        `grep -E`, and a scoped `git status --porcelain` count; `sed -n` of the close's window note, its local roots
+        masked by `sed`; the commit's hashes and line counts; and, after the note, its `shasum`, `grep -c` and
+        bracketed counts. After the request: `grep -n -F` and `wc -c` of the memory index.
+      - **The seat block's window, as granted** (8 commands): `pwd` and `git rev-parse HEAD`; the six steps, each its
+        own call ending in an `echo` of its exit status; the done report's checks (`git log -1 --format='%H %P'`;
+        `git show --name-status` with item 3's pathspec; the data paths by name only; `git show HEAD:<path>` into
+        `shasum` and `wc -l` for the three raws and `RESULTS.md`; the manifest's sha256s against the committed blobs;
+        `cmp` of `RESULTS.md` against the expected file; `git diff -U0 HEAD~1 HEAD -- RESULTS.md` for its hunks;
+        `git cat-file commit HEAD` against the message; `git rev-parse origin/main`; scoped status and index
+        counts).
+      - **The BUILD** (45 commands to this draft's sweep, that sweep's own included):
+        - the code read for it: a name-only `ls -1` of scratch folders and of the notes folder into `grep -E`;
+          `grep -n -E` of the driver's, `schema.py`'s, `cells.py`'s and `testing.py`'s definitions, of the analyzer
+          for its writes, of `LOCK-n.md` for the seeds and the band, of `guard.py` and m's `resume.py` and `keys.py`;
+          `sed -n` of named line ranges of the driver, `guard.py`, `resume.py`, `keys.py`, `schema.py` and `LOCK-n.md`;
+          a `grep` of `valence_core/adapters/base.py`, with `head`; the close list's first lines and line counts by
+          kind (`sed -n` with its digests abbreviated by `sed`, `grep -c`); one `cat -A` of those lines, which BSD cat
+          refuses (nothing of them printed by it), run again with `sed -n`;
+        - draft 1: `git show HEAD:scripts/n_sessions.py` into scratch, `cp` and `cmp`; the file tools' Edits; its
+          widths, tabs and bracketed marker counts; `sed -n` and `grep -n` of the draft; the `.gitignore`'s draft
+          (`git show HEAD:.gitignore` into scratch, `cp`, an Edit, `diff`); a throwaway repository in scratch
+          (`git init -q`, stand-in files, `git add --dry-run .` under each `.gitignore`); the overlay script (`cp` of
+          G-VER's, an Edit, `bash -n`) and overlay1 (`git archive` of `05ac941` on the named paths into scratch, by
+          the script); `git diff --no-index` of the draft against HEAD's driver, with `--numstat`; counts of the
+          self-test's checks by `grep -c` over a `sed -n` range; the window request's `shasum` and counts; `grep -n
+          -F` of the memory index;
+        - window 1, as granted: the self-test and then `hashes`, each its own call; after each, its exit, line
+          counts, last line, FAIL lines, `shasum` and the temporary folder's name-only count; `cmp` of the `hashes`
+          output with launch set v1's file, and with `LOCK_CLOSURE`'s lines (`sed` of the draft into a sorted file,
+          `grep` and `sort` of the output into another, both in scratch); one `ps -A -o pid=,comm=` count, which
+          found one process named python that was not Code's (the coordinating session's later scan found none);
+        - the review: its brief's list of record compared by `diff` with the campaign's, its `shasum` and the inputs';
+          its report saved by `jq` from its task output (`tail -n 2 | head -n 1`), with counts; `sed -n` of the
+          analyzer's `_err_where`;
+        - draft 2: `cp` of draft 1 and `cmp`; the file tools' Edits; `grep -n` of the draft for the lines to change;
+          its widths, tabs, a `grep -F` of one escape's text and counts of the self-test's checks and cases by `grep
+          -c` over `sed -n` ranges; one `grep -P`, which BSD grep refuses, its fallback `echo` printed; overlay2 by
+          the script; its two deltas by `git diff --no-index`, `shasum` and `grep -c`; the window request's
+          `shasum` and counts;
+        - window 2, as granted: the self-test; after it, its exit, line counts, last line, FAIL lines, `shasum` and the
+          temporary folder's count;
+        - these texts: `git show --name-status` of `e1be6d9` with item 3's pathspec and a name-only `ls -1` of the
+          campaign's BUILD folder in scratch; `grep -c`, `grep -n`, `sed -n` and `tail` of the campaign BUILD's review
+          and self-test raws and of `RESULTS.md`'s entry of it; the sweep (`jq` over this session's transcript into
+          scratch, a masked listing by `sed` and `cut`, bracketed counts).
+      - **Also, in the spans:** `head` and `tail` on command outputs and on files (the close list's first lines and last
+        byte, the entry's last bytes, the gate's and the verify's outputs, the saved report); `od -An -c` of two last
+        bytes; `fold -w 200` on two definitions greps; `cat` of an earlier known-hashes file in scratch, with
+        `sort -u`, `tr` and a `printf` loop; `mkdir -p` of six scratch folders; `grep -n -E`, `sed -n` and `cmp` of
+        `.gitignore`; `git status --porcelain -- results/raw`; and the verify output's `wc -l` and `shasum`.
+      - **Across the spans, the file tools:** Reads and Edits of the memory index and Edits of a memory note (outside
+        scratch); in the sessions' notes folder, Writes of the three window requests, one Edit of the seat block's
+        request before its sha256 was taken, and one Read of the campaign BUILD's self-test window request of
+        2026-11-23; Reads of repository files and of scratch files; Writes and Edits in scratch. Besides them: seven
+        messages to the coordinating session (three window requests, the seat block's done report and three window
+        reports) and one subagent, the review.
+      - **After the draft's sweep, to this entry's final sweep** (62 commands, the final sweep's own included):
+        - **to the values-check's brief** (4): `grep -F`, `cut` and `sed -E` of the sweep's call list; `grep`,
+          `tail -n 1` and `jq -r` of its id list, with `grep -c` counts; the checker's sources list, written in scratch
+          by a `for` loop of `shasum` run from inside scratch (`cd`), and checked by `shasum -a 256 -c` into
+          `grep -c`; `diff` of the brief's list-of-record section against the campaign BUILD's values-check brief's
+          (`sed -n` ranges in process substitutions); `grep -c` and `shasum` of the texts, the list and the brief;
+        - **while the check ran** (31): after push #28's notice, `git rev-parse HEAD refs/remotes/origin/main`,
+          `git log --format='%h %p'` and `git show --no-renames --name-status --format=` of `b449ed6` with item 3's
+          pathspec, and `git diff --name-only 05ac941 b449ed6` over the overlay paths, the driver and `.gitignore`
+          (the model's data folder by quoted pathspec globs) into `grep -c`; the campaign BUILD's kit read
+          (`ls -1`, `cut` of its manifest, `sed -n`, `head` and `grep -n` of its place script); gate v20 made (`cp`
+          of v19, `cmp`, `bash -n`, `diff` with the ids masked by `sed`, the ids counted by `sed -n`, `grep -o` and
+          `grep -c`, `shasum`); `bash -n` of the five new scripts; reads of the drafts, the brief, the sources list,
+          the seat block's message source and kit, gate v20 and the two committed values-check raws' heads (`cat -n`,
+          `sed -n`, `head`, `tail`, `cut`, `fold`, `grep -n`, `grep -o`, `sort`, `uniq -c`, `tr`, `wc -c` and
+          `sed -n 'l'`), with `shasum` and `grep -c` of the texts; `jq` over this session's transcript for the
+          coordinating session's relays (local ids masked; the output saved by the harness to a file, then read by
+          `grep -n` and `sed -n`), for the earlier sweep's own commands and for this session's file-tool times;
+          `git diff --name-status 05ac941 b449ed6` with item 3's pathspec and Q-F3's exclusion; `cp` and `cmp` of
+          the three drafts into v2 copies; name-only `ls -1` of scratch folders, and one `for` loop over a `*.sh`
+          glob in one of them that matched nothing (zsh refused it; nothing printed); `git log -1 --format=%B
+          e1be6d9` with `fold`, and a `cat` of a seat-kit file name that does not exist; `git rev-parse HEAD:<path>`
+          against `git hash-object`, and `shasum`, of four repository files; `git log --format='%h %p %ci %s' -3
+          b449ed6`; `grep -c`, `sed -n` and `tail` of the memory note;
+        - **after the report** (23): its save by `jq` from the task output (`tail -n 2 | head -n 1`), with `grep -c`,
+          `grep -n`, `head`, `tail` and `shasum`; reads of draft 2, draft 3, the analyzer, `schema.py`, the readings
+          as sent, the window-1 and draft-2 notes (local roots masked) and the earlier sweep's list (`sed -n`,
+          `grep -n`, `grep -F`, `cat -n`, `cut`, `head`); one `awk`, as a line filter on a `grep -n` of draft 2, into
+          a `head -0` that BSD `head` refused (nothing printed); three line lookups refused on an address that held
+          several line numbers (zsh's arithmetic once, `sed` twice; nothing printed by them); draft 3 (`mkdir`,
+          `cp`, `cmp`), its two deltas by `git diff --no-index` into scratch, `--numstat`, `shasum`, widths, tabs,
+          bracketed markers and the self-test's counts (`sed -n` of the section into two scratch files, `grep -c`);
+          overlay3 by the overlay script from `b449ed6` (`git archive`, `tar`), with a pruned `find`, `diff -rq`
+          against overlay2 (masked), `cmp` and the temporary folder's name-only count; name-only `ls -1` of the notes
+          folder into `grep` and `tail`; the draft-3 note's `shasum` and counts, bracketed, and one fixed-string
+          count of the staging folder's last name (`campaign-v1`; 0); the edits' replay (`edits_check.sh`: `jq` over
+          this session's transcript, `cmp`), with widths and placeholders; `grep -n -F` of the memory index;
+        - **window 3, as granted** (1): the self-test; and **after it** (3): its exit, line counts, last line, FAIL
+          lines, `shasum`, the temporary folder's count and `cmp` with run 2's output; `shasum` of run 3's output and
+          draft 3, for their abbreviations; and this sweep (`jq` over this session's transcript into scratch, masked
+          by `sed`, with `cut`, `sort`, `uniq -c` and bracketed counts);
+        - **the file tools:** two Edits of the entry's draft before the brief; two Reads of the campaign BUILD's
+          values-check brief; Writes in scratch (the brief, the id list, five scripts, the message's source, and the
+          values-check raw's head and dispositions); Reads and Edits in scratch (gate v20, the v2 texts, draft 3, the
+          raw's head and dispositions); one Write in the sessions' notes folder (the draft-3 window request); Reads
+          and Edits of the memory note and the memory index. Besides them: the values-check (one subagent), two
+          messages to the coordinating session (the draft-3 window request and its report), one `ToolSearch` (a
+          tool's schema) and one `ReadNotifications` (none queued).
+      - **Counts,** to this entry's final sweep. By bracketed patterns over the commands and file-tool paths: no guard
+        marker, no plain name of Q-F3's folder and no name of G-TIME-n's holding folder in any argv. In outputs alone,
+        to the draft's sweep:
+        - marker words in five file-tool reads (one of the driver's line ranges, two of `schema.py`'s, `guard.py`'s
+          head and the campaign BUILD's review brief) and four commands' outputs (`sed -n` of the driver's lines with
+          `guard.py`'s; `grep` of `valence_core/adapters/base.py`; `sed -n` of m's `resume.py`; and the sweep's own,
+          which lists the words it found);
+        - Q-F3's folder's bare short name, in `guard.py`'s refused roots, in one read and one command's output;
+        - G-TIME-n's holding folder's bare name in two reads of the driver and two commands' outputs (the bracketed
+          `grep` of `LOCK-n.md` and the close's window note, whose step 1 also names it in its `noindex/n/` form);
+        - after the draft's sweep: marker words in one file-tool read (the campaign BUILD's values-check brief) and
+          one command's output (`cat -n` of this BUILD's values-check brief); Q-F3's folder's bare short name in four
+          commands' outputs (the two listings of `b449ed6`'s paths, twice each; the gate's head comment; a sibling
+          session's file name in the notes folder's listing); G-TIME-n's holding folder's name in none.
+    - the reviewer's, as its report states them: one `awk`, which its brief barred by name, in a pipeline over a
+      definitions `grep` of the draft; two `sed -n` line-range filters of the prescribed diff; and, within the rules
+      as it read them, `git check-attr -a` on four named paths (two under `data/`, `.gitattributes` alone read),
+      `shasum`, `rev-parse`, `hash-object`, `grep`, `cut`, `uniq`, `LC_ALL=C sort -c`, `seq` and `diff` on the
+      committed close list (line numbers, counts and pass lines printed, no digest), its file tool's read of the HF
+      adapter module, and `wc -l` of named files;
+    - the values-checker's, as its report states them: none. For the record, within its rules: two pruned `find`s at
+      the repository's root printing counts only (one at depth 1 with ckpt and reports pruned, one at depth 3 with
+      ckpt, reports, `data` and `.git` pruned), which established that the venv's folder lies inside the repository;
+      `diff -rq` of the two overlays, as its brief allowed; and its reads of Code's commands and some outputs from the
+      transcript, paths masked and digit runs masked on ckpt and reports lines.
+  - **The gate.** The review's and the values-checker's agent ids, beside the survey's and the seat block's
+    values-checker's, are in the commit gate's id list (a new version of Code's gate script), so the commit is
+    checked to carry none of them.
+  - **Committed by path:**
+    - `scripts/n_sessions.py` (draft 3) and the `.gitignore`;
+    - the review raw, the self-test raw and the values-check raw;
+    - this entry.
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-READ-n's launch files go
+    to the coordinating session first; the run waits for the seat's ruling on GR3 and GR5 and the PI's routing of it.
+
 - 2026-11-25 — **THE Q-F3 CAMPAIGN (PROPOSAL-m v1.11 m:298, m:361; LOCK-m-F3 v1.0; the PI's routing of 2026-11-15,
   evening, section A item 3): COMPLETE, exit 0, in one invocation. Its 596 launches were A1 95, A1s 40, A2 162,
   A2s 70, A3 165 and A3s 64, and each arm ended with its domain at its floor (80, 32, 144, 56, 144 and 56). Fifteen

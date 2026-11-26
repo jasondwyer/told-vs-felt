@@ -1,0 +1,78 @@
+n -- G-READ-n's BUILD (n v0.2 s8 step 15; Code's readings GR1-GR14 routed as PINs, the PI's "build on the pins"):
+its self-test on the laptop, committed with the BUILD. PI date 2026-11-25. Code (the n-build session).
+
+The change, on HEAD's version of the path (the same bytes at 05ac941, runs 1 and 2's HEAD, and at b449ed6, run 3's
+HEAD and this commit's parent; the driver's last change e1be6d9):
+  scripts/n_sessions.py        47abe48925930b8cb47628bce9d7ff540c5f2d0712cc968894348eb6fdd5c21a  (+1192 -3)
+Every count of lines added and removed here is git diff --no-index --numstat's. The .gitignore's change (+3 -0),
+committed with it, does not enter the self-test.
+The package: valence_core/n's digest does not move. It is the lock's (L s18)
+  06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39,
+  computed by shell over the three overlays below. The self-test's own check holds the package's digest, measured in
+  its process, to the lock's (G-TIME-n's check).
+
+1. THE LAPTOP. Model-free: the HF cases run only where torch and transformers are present, and elsewhere are skipped
+   and counted as skipped; the schema module's own cases count as one aggregated line. G-READ-n's cases need neither
+   library: the fits go through a recorder in probe.layer_auc's place, probe.py's own layer_auc runs twice on one
+   80-row stand-in contrast, and no case reads the staging folder, data/n/reports or data/n/ckpt. The stand-in
+   campaign (the real plan's 138 cells and 7,680 records, at a band of two layers in run 1 and three in runs 2 and 3,
+   of width four) is written under the self-test's temporary folder.
+   The overlays: a git archive of 05ac941 (overlays 1 and 2) or of b449ed6 (overlay 3) on the self-test paths,
+   LOCK-n.md, the model manifest and the campaign's close list (results/raw/2026-11-25_n-campaign_close-names.txt)
+   among them, with item 3's exclusions and Q-F3's, so that no checkpoint or report file entered them: 176 files
+   each, with the draft driver in place of the committed one. All three were built by make_overlay_gread_v1.sh
+   (309e87408418956fa303d151945e298a1f48fc1e69ee43774ad5231c20fa791b), G-VER's overlay script with the close list's
+   path added. The three overlays hold the same names, each overlay's driver is its draft's bytes (by cmp), and
+   diff -rq of overlay2 and overlay3 finds the driver alone differing.
+   The command, in a subshell, from the venv's bin folder reached by cd and a glob, so that no guard marker was in
+   an exec'd process's argv (the glob expands in the builtin cd's argument alone), with stdout, stderr and the exit
+   status each to its own file:
+     HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TMPDIR=<scratch>/step4b/gread/tmp nice -n 19 \
+       ./python -I -B <scratch>/step4b/gread/<overlay>/scripts/n_sessions.py --selftest
+   Each run was in a battery window the coordinating session granted for its bytes, as the harness's background
+   task, so that no tool timeout could cut it short; Code waited for each exit notice. Before each run, the
+   coordinating session's grant found the temporary folder empty and none of the run's own output files present.
+   After each run, stderr was empty and the temporary folder was empty. Each window closed on the coordinating
+   session's word, after its checks by tool: its runs' files at Code's sha256s, the temporary folder empty, the
+   overlay's names and blobs equal to its listing before the run, the draft unchanged and the tree clean (at 05ac941
+   for windows 1 and 2, at b449ed6 for window 3). b449ed6, this commit's parent, came between runs 2 and 3: from
+   05ac941, outside item 3's exclusions and Q-F3's folder, it changes RESULTS.md and adds two raws
+   (git diff --name-status), none of them an overlay path.
+
+   Run 1, draft 1 (the bytes the blind review read; overlay1):
+     scripts/n_sessions.py        5a1d84a34a7a693d9fc9673f3d66b3fad166509d6103ffb8fcaaddbdc0cf24e8
+   It is HEAD's driver (+1001 -3 lines) with the gread command and its self-test, main()'s gread branch and
+   --staging, and the usage text's gread paragraph. Exit 0. Its whole output (sha256
+   e9488af84cde15f12a5061a69aa13e85b2e52cd231c6751dad5a80c8a5258bc7), each line indented by five spaces here:
+       833/833 n selftest checks pass
+   That is HEAD's 774 plus G-READ-n's 59: 58 in _gread_selftest and the environment's check after it.
+
+   Beside run 1, in the same window and after its end: scripts/n_sessions.py hashes on overlay1, the same command
+   with hashes in place of --selftest, run in the foreground. Exit 0, stderr empty; its 13 lines (sha256
+   a853932bb8d5db42e5ec05dddaf8d4b5a9ad02574abcadd19b3289af78ea522b) are launch set v1's camp_hashes_v1.txt by cmp:
+   the package line the lock's digest, and the twelve imported_sha256 lines, sorted, the twelve entries of
+   LOCK_CLOSURE by cmp. So the command's refusal of another package or closure (GR8) passes on this laptop.
+
+   Run 2, draft 2 (overlay2):
+     scripts/n_sessions.py        176aef3dcb5dcf76bff32a3a6571e62779a664069725020e8c1b2da727b5a826
+   It is draft 1 (+260 -73 lines) with the blind review's findings built in, as the review raw committed with this
+   BUILD states them (results/raw/2026-11-25_n-gread-build_review.md, s1). Its self-test has 20 checks more: 6
+   single checks (the comparator's band medians in order; a stale temporary file; a failure's exit and form; a
+   failed read-back; the writer's refusals and cleanup; the binding conditions on tampered copies), 6 refusal cases
+   (32 in all) and 8 refused options in main()'s loop (15 refused argvs in all), with several checks extended and
+   the stand-in's band three layers. Exit 0. Its whole output (sha256
+   7898ee01e19ae8cfaa748ba45c0ffe2119ebc49abc359d163539ea5313eadf81), each line indented by five spaces here:
+       853/853 n selftest checks pass
+   That is HEAD's 774 plus G-READ-n's 79: 78 in _gread_selftest and the environment's check after it.
+
+   Run 3, draft 3 (overlay3), this BUILD's driver:
+     scripts/n_sessions.py        35c4c73e504b33bb1df9989ace7241e99b55022f05bf70c84e8776f9799f4808
+   It is draft 2 (+10 -6 lines) with the values-check's three points on the driver, as the values-check raw committed
+   with this BUILD states them (results/raw/2026-11-25_n-gread-build_valuescheck.md, s1): two docstrings
+   (_gread_prepare's and _gread_err's) and one refusal case, a relative staging folder naming a tampered stand-in
+   copy from the repository's root (33 in all). Exit 0. Its whole output (sha256
+   17e27be2b340d125b6a80ed9e9838096939b24f955bb196e14b04e53cf5e68a4), each line indented by five spaces here:
+       854/854 n selftest checks pass
+   That is HEAD's 774 plus G-READ-n's 80: 79 in _gread_selftest and the environment's check after it.
+
+2. THE BOX. G-READ-n runs on the laptop alone (GR1: refused on a pod), and the box has not run this BUILD.
