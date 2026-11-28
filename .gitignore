@@ -331,6 +331,12 @@ __pycache__/
 # PROPOSAL-n's G-READ-n artifact (n v0.2 §3 G-READ-n, §8 step 15; scripts/n_sessions.py gread): record (ledger 27).
 # Its temporary file (G-READ-n.json.tmp) stays ignored.
 !/data/n/gates/G-READ-n.json
+# PROPOSAL-n's N-pod VERDICTS and secondary DVs (n v0.2 §8 step 15; scripts/n_analyze.py verdicts): record (ledger
+# 27). The analyzer's write-once temporary files (.N-pod_*.json.<pid>.tmp) stay ignored.
+!/data/n/verdicts/
+/data/n/verdicts/*
+!/data/n/verdicts/N-pod_VERDICTS.json
+!/data/n/verdicts/N-pod_secondary.json
 
 # PROPOSAL-n's G-TIME-n outputs (n v0.2 §8 step 11 and §3 G-TIME-n; scripts/n_sessions.py gtime; GT11): the stage's
 # report, its shadow cell's JSON (the six d = 0 reads) and the projection artifact, written on the box by the run of

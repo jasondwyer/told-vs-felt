@@ -1,0 +1,5539 @@
+{
+ "addendum2_sha256": "41f76c49d756e09481a70f398469d9febc96bb534f28cd18d265ea87add2bb3f",
+ "addendum3_sha256": "7f4a7a75b61002b58e62a400e99f4de2abc8ec0646329fdf624ce31540be9313",
+ "addendum_sha256": "e979f8f2af08ddb1f32e3054c002b1d0a3278e49a24b4f6df2cb6c042de95e03",
+ "analyzer_sha256": "735da934272048a795203e8fdef9bfa5a4bde2ba38cdf9ba79d81f313788a7a8",
+ "claim": "none: descriptive, issuing no claim (n §4; rule 11)",
+ "cosines": {
+  "source": {
+   "name": "gvec_cosines.json",
+   "sha256": "fc8877be53194408cdcf7bbb09d1ec9ff3dfbe13b575bf6674190e3c03db0dad"
+  },
+  "values": {
+   "span_character|span_reward": 0.7501587511209901,
+   "span_character|span_sentiment": 0.32985395487927766,
+   "span_character|valence": 0.1392181026452373,
+   "span_reward|span_sentiment": 0.31065936209323797,
+   "span_reward|valence": 0.18040702496573224,
+   "span_sentiment|valence": 0.13346260721287628
+  }
+ },
+ "date": "2026-11-27",
+ "lock": {
+  "name": "LOCK-n.md",
+  "sha256": "59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa"
+ },
+ "open": {
+  "OPEN-Q1": "ruled (b), ADDENDUM-n1 §7.1: per session, OLS through the origin over the arm's nonzero dose points; the floor refit the same way; the with-intercept slope reported beside, descriptive",
+  "OPEN-Q2": "ruled (c), ADDENDUM-n1 §5.2: N1-P reads +1, +d_20, +d_eq and −1 under the merge, so P(d) exists at every point a certification is made; the ceiling max(L, P) unchanged",
+  "OPEN-Q3": "ruled (a), ADDENDUM-n1 §7.2: answered iff N4 PASS and G-READ-n PASS for the axis and dose (N1 at +1, dose at d_eq, N2 for span_reward at its decision f); the cell (G-READ-n PASS, N4 not PASS) has its own sentence (A.6, as §7.6 and the 2026-11-18 answers §5.4 amend it), unless the movement at d_eq is certified against the conditioned zone, which takes the fourth form (§5.6), its label in that cell 'concluded, not answered (N4 [n4])' (the second sitting's §3.2)",
+  "OPEN-Q4": "confirmed: three inputs that change a sentence are not coordinates: G-READ-n (valence, +1), G-READ-n (span_reward, at N2's decision f), N4's no-read INDETERMINATE; 385 tuples, 1,921 evaluations. The seat's fourth NOT-DETECTABLE form (the 2026-11-18 answers §5.6) adds a fourth input, the dose's movement certified against the conditioned zone: 2,561 evaluations (PIN-n-35)",
+  "OPEN-Q5": "confirmed: the sentence functions are total; reachability reported per merge shape; no tuple refused",
+  "OPEN-Q6": "ruled (a), amended for N1-P, ADDENDUM-n1 §7.4: N1 INDETERMINATE when N1-V is incomplete; dose when N1 is, or N1-V's, N1-R's or N1-P's reads at d_eq are incomplete (the d_20 figure beside then reported as not computed); N2 when N2-E, N1-V, N1-R or N1-P at the norm-matched point is incomplete (read point by point, the 2026-11-18 answers §5.2: PIN-n-29 as amended; the other f's figures beside reported as not computed where their reads are missing); N4, no read obtained, when a pause stands on its reads",
+  "OPEN-Q7": "ruled, ADDENDUM-n1 §5.3: when the cap binds (2·d_eq > 1), N2 is decided at f = 0.10 against N1-V at d_eq, with f = 0.20 beside against N1-V at d = 1 and the ratio 2·d_eq; otherwise at f = 0.20, f = 0.10 beside; extended by ADDENDUM-n3 §3.4 (the PI's decision (n-5), [adopt]): f = 0.10 decides also where the lock's gate line records the coherence component FAILED (PIN-n-41)",
+  "OPEN-Q8": "ruled: Appendix A adopted with the amendments of ADDENDUM-n1 §7.6 (the movement clause in the three NOT-DETECTABLE forms, the sign clause, the labels by §0.6, 'at f = [f]') and of the 2026-11-18 answers §5.3, §5.4 and §5.6 (N2's figures with their CIs and the zone's words; the merge note in the NOT-DETECTABLE forms; the fourth NOT-DETECTABLE form), and of its second sitting's §3.2 (the fourth form's label in the sentence, in three fills)",
+  "OPEN-Q9": "ruled (a), through the origin, ADDENDUM-n1 §7.5: N2's slope over (d_eq, 2·d_eq), its floor on the random reads at d_eq's and d_20's kept points, the mismatch printed beside where they differ"
+ },
+ "pins": {
+  "PIN-n-11": "a G-READ-n cell absent or not computed is not PASS for §0.6",
+  "PIN-n-12": "one resample matrix per arm from 'n-boot|{arm}' (m:159's function), B = 4,000, shared by the arm's statistics; in the TAU/4 row, where they differ in session count, each draws the arm's stream at its own count; percentile intervals, linear interpolation; 95% 2.5/97.5, N4's 98% 1/99",
+  "PIN-n-14": "the merge rule (n-build's dose_points, agreed 2026-11-15): d_20, then d_eq, each folded into the nearest candidate (+1, +1/2, 0, −1, then +d_20 if kept) at an IEEE-double distance ≤ 0.05, a tie to the earlier candidate; a fold into 0 refused; rho == 0.3, d_eq == (0.10 * R_ell) / (rho * R), d_20 == min(1.0, 2.0 * d_eq) exactly",
+  "PIN-n-16": "the TAU/4 sensitivity row drops a read whose re-computation exceeds TAU/4; a shadow that exceeds drops its session's Δm at every dose; a session missing a point drops out of the slopes; reads with no re-computation are kept, and so are finite reads whose re-computation is non-finite (no comparison, so not above TAU/4)",
+  "PIN-n-17": "the label-mass counter counts restricted reads with two-label mass below .20 (n:99; m:283)",
+  "PIN-n-18": "secondary (d) is Pearson's r between the retention interval and Δm at +1 over N1-V's sessions",
+  "PIN-n-19": "(iv) is evaluated: the −1 pole is read under A1 'struck beyond d = −1' (routing 2026-11-06)",
+  "PIN-n-20": "a non-finite read is present but no read for the statistics: its arm is not usable (§5 'a partial read set'; cause nonfinite:<arm>); a steered arm is usable only when the shadows (N1-V's d = 0 reads) of every session it reads are present and finite (cause shadow:<arm>); an arm the TAU/4 row empties at a point is not usable in that row (cause tau4-emptied:<arm>)",
+  "PIN-n-21": "a NOT-RUN record is dated the PI date it is made; a Clock cause is refused on or before D_n, which is inclusive (§7.4), so LOCK-n v1.0 can still be committed on D_n itself",
+  "PIN-n-22": "secondaries: (a) the share of finite restricted reads picking S, per arm and dose label; (c) the Δm groups by present order and by ordered cue pair (cue_S|cue_U), per arm and dose label, over steered reads with a finite shadow (N4, unsteered, has none); (a), (c) and (d) report a figure at n ≥ 20 only (rule 28(a)'s decidable-n floor, n §4)",
+  "PIN-n-23": "the exposure counts realised (§0.4's table; §8 step 15) are the campaign's reads on disk at d = −1, finite or not: N1-V's and N1-P's negative valenced, N1-R's negative random, each with its fresh re-computations beside; G-CAL-n's generations under negative steering are its own entry's",
+  "PIN-n-24": "verdicts binds the stage report to the cells on disk (the identity, the plan, every cell by its shas and record count, each arm's planned, obtained and complete, the counters as n-build's runner counts them, the launch indices exactly 0..m−1, at most one pause standing and it the stage's last event, each pause against the reads, the cap's used time) and follows its end state: PAUSE refuses; PI-STOP, G-VER-STOP or CAP with no arm complete is NOT-RUN no-arm:<end>, an arm's full read set being the report's complete (every planned read produced, finite or not: a non-finite read makes its arm INDETERMINATE, PIN-n-20, never the unit NOT-RUN); any other end is analyzed, a pause standing (under PI-STOP only) making the arms in its scope INDETERMINATE; one outcome per unit",
+  "PIN-n-25": "G-READ-n's artifact binds the campaign (its plan and identity shas, exactly the campaign's cells by both shas, the campaign's n package, exactly its capture layers, each result at a kept point with the labels merged into it); a status is read per (axis, point) by the point's value, an absent one NOT-COMPUTED; the dose sentence's AUC is the band median at d_eq's kept label",
+  "PIN-n-26": "LOCK-n v1.0 says what it is in the whole line 'lock: LOCK-n v1.0' and states its direction of record as one whole line, 'direction of record: Route A' or 'direction of record: Route B'; verdicts checks the first and reads the route from the second (Code's form for the lock)",
+  "PIN-n-27": "a certified movement against the conditioned zone (ADDENDUM-n1 §7.3) mirrors DETECTABLE with the mean below 0: the CI excludes 0 and G-LEAK-n certifies |mean| (at +1 for N1, at d_eq for dose)",
+  "PIN-n-28": "N1's NOT-REPLICATED sentence names a certified movement against the conditioned zone in its failing list, as the sign's condition with MOVE_AGAINST beside it in parentheses (ADDENDUM-n1 §7.3 'with its sentence naming it'; the place is Code's form). The sign's name, 'the mean Δm at d = +1 above 0', is Code's form too (CONJUNCT_TEXT); the seat's clause repeats Δm(+1) and its CI, which the sentence states again after 'fails:'",
+  "PIN-n-29": "as the seat amended it (results/raw/2026-11-18_n-corpus-adoption_design-to-code_answers.md §5.2), N2's causes are read point by point: its certification reads N2-E at the decision f, and N1-V, N1-R's 24 directions and N1-P at the norm-matched point; N2 is INDETERMINATE iff one of those reads is missing or non-finite, or a pause stands on one of them; an incompleteness elsewhere in those arms (the seat's examples, N1-P at −1 and N1-R at +1/2; Code's note: +1/2 is N2's own point where d_20 folds into it, or d_eq does when the cap binds) makes N1 or dose INDETERMINATE by their own rules and leaves N2 evaluated; N1 stays per arm (n:134); the other f's figures beside are 'not computed' where their reads are missing. ADDENDUM-n1 §7.4's N2 clause is read as this (OPEN-Q6); the mechanics are PIN-n-36's",
+  "PIN-n-30": "N2's certifications stay unsigned, as n §3's G-LEAK-n states them (|mean| against the ceiling, no CI condition), and the sign enters no N2 outcome: ADDENDUM-n1 §7.3's sign rule names DETECTABLE and PARTIAL only (accepted, the 2026-11-18 answers §5.3). So N1-V moving against the conditioned zone at the norm-matched point, span_reward not certified, gives SPECIFIC, and so does N1-V beyond the ceiling with a CI that includes 0; the sentences say which: in A.7's three forms each figure carries its CI and, where its mean is below 0, the words 'against the conditioned zone' (§5.3; PIN-n-34). When the cap binds that point is d_eq; there the dose sentence, if the dose question is evaluated, names the same movement in the seat's fourth NOT-DETECTABLE form (its CI excluding 0; §5.6) or as not certified (its CI including 0)",
+  "PIN-n-31": "the capture arrays are bound by the per-layer row hashes their cells record (check_cell holds their names and layers to the band), which must equal the stage report's and G-READ-n's artifact's for the cell; the reader reads no array and needs none present -- they are G-READ-n's input, never in git (ADDENDUM-n1 §6.2), whose rows n-build's loader checks against those hashes before any fit (G-READ-n reads captures only through it: n-build's PIN, declared at its BUILD, 83a50a0) -- and refuses a file beside the cells that no cell names",
+  "PIN-n-32": "as the seat amended it (the 2026-11-18 answers §5.4): where d_eq merges into another point (+1/2 or +1), the three NOT-DETECTABLE forms and the fourth print the figure as 'Δm(d_eq) = [x] nats [CI] (read at d = [point], the point d_eq merges into under §2.3)' (MERGE_NOTE), as DETECTABLE's [value] does (VALUE_MERGED); a sentence does not state a figure as d_eq's when the read was elsewhere. The merge stays in the dose outcome's point and in G-LEAK-n's table",
+  "PIN-n-33": "as the seat amended it (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §3.1), pauses are read point by point, as incompleteness is: a pause standing on one of the reads N2 uses -- N2-E at the decision f, and N1-V, N1-R's 24 directions and N1-P at the norm-matched point -- makes N2 INDETERMINATE; one standing on any other read (N1-V at −1, an N1-R cell elsewhere) leaves N2 decided, superseding the answers of 2026-11-16 §1.6's sentence; and, the half that stands, one on a guard's reads alone (N2-S's or N2-C's) leaves N2 decided, the guard's figures reported beside with its pause. The points a pause stands on are PIN-n-37's",
+  "PIN-n-34": "§5.3's words go on every figure of A.7's three forms, SPECIFIC's span_reward figure and SHARED's valence figure too, which the seat's text does not name (it names SPECIFIC's valence figure and SHARED's and NULL's parentheticals, span_reward's included): each figure carries its CI ([CIE], [CIV]; SHARED's span_reward figure had it already) and, where its mean is below 0, ', against the conditioned zone' ([zoneE], [zoneV]), certified or not, closing its parenthetical (after 'against [c]' where it has one, so that span_reward's reads '... against [c], against the conditioned zone' in SPECIFIC and SHARED; SHARED's valence figure, outside any parenthesis, ends the sentence)",
+  "PIN-n-35": "the seat's fourth NOT-DETECTABLE form (F11 as ruled, the 2026-11-18 answers §5.6) is chosen by a fourth input that is not a coordinate (OPEN-Q4): the dose's movement at d_eq certified against the conditioned zone (PIN-n-27), which only a NOT-DETECTABLE dose carries; the tuple pass runs each NOT-DETECTABLE tuple under it, 640 evaluations more, 2,561 in all; the label by §0.6 as the others",
+  "PIN-n-36": "point by point (PIN-n-29 as amended), the reader records why each steered arm's reads at each point are not usable -- a planned read absent ('incomplete'), a read non-finite ('nonfinite'), a session's shadow not usable ('shadow': PIN-n-20 per point, N1-V's d = 0 reads a cause of its other points), the point left with no session in the TAU/4 row ('tau4-emptied') -- and computes each point's statistics where its reads are usable. The per-arm statistics -- N1-V's slopes, N1-R's floor, N2's floor (N1-R at d_eq's and d_20's points) and the N2 arms' slopes -- stay on a complete arm only; a slope with no common session in the TAU/4 row marks its arm 'tau4-emptied' and not its points, so that row decides N2 where 977b78b had it INDETERMINATE. G-LEAK-n's table reads each row the same way, so that it agrees with N2. N2's causes name a point by its record label ('incomplete:N1-P@+d_20', 'shadow:N2-E@f0.20') and a pause by its arm ('pause:N1-V'). An INDETERMINATE N2 reports no beside, as at 977b78b: §5.2's 'not computed where its reads are missing' is read for a decided N2's beside",
+  "PIN-n-37": "as the seat amended it (results/raw/2026-11-18_n-step4-run-pause_design-to-code_answers.md §6, the conservative form), for N2's rule (PIN-n-33 as amended), the points a standing pause stands on (paused_points): its read, where it has one -- a single-read pause (non-finite, the ceiling, identity, rendering) on that read, a rendering pause's, not on disk, by its id; a pause that fired the binomial, also every read launched in its batch's range, 'the trials and the reads between them' (§6), re-computed or not; and, where one of those reads is a session's shadow (N1-V's d = 0 read), every planned steered read of that session, each read against it (the shadow extension). Code's narrower form (the trials alone) is struck. Code's binding of a standing batch to the runner's -- its range, its n and k, and the pause's scope the runner's SCOPE (its read's arm, its tile's trials' arms and, for a shadow, every arm with a steered read of its session: the v7 review's F1, Code's for the seat) -- stands as the ground the reading needs, with every pause's read held to the plan and, on disk, to its launch index (report_problems). Its three readings, as the seat ruled them (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4): (a) accepted, 'the points are §6's whatever the scope; the scope binds the batch'; (b) ruled by §3 (R12), 'the range is the tile, so a read lies in exactly one range, and the reads after a cleared fire belong to the next tile': the runner's tile at ef105f1, a fire's batch the cadence's reads ending at its read, or the stage's tail at the run's end, which report_problems binds; a ruling clears nothing, a ceiling pause's read staying in its tile as a trial, and as an exceedance where its rel is above TAU (R13); §4 (b)'s interim (the runner's batch counted from the clear, until the runner carries the tile) is not built, the runner carrying the tile before any campaign report this reader reads; (c) accepted, a guard's beside flag reads its points, as N2 does, §6 naming N1's and N4's pauses alone as per arm. N2's pause causes name an arm under (a), accepted there; the arm need not be in the scope. N1's and N4's pauses stay per arm, as their incompleteness is (n:134; §5 N4, OPEN-Q6 as ruled): PIN-n-24's 'a pause standing (under PI-STOP only) making the arms in its scope INDETERMINATE' is read as those per-arm rules, and for N2 and its guards through the points read here. The other f's figures beside a decided N2 stay computed and name the arms whose reads there a pause stands on ('paused')",
+  "PIN-n-38": "accepted as read (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4): ADDENDUM-n2 §3's second sensitivity row, its trigger replacing the second sitting's 'where it empties' (results/raw/2026-11-18_n-step4-smoke-pause_design-to-code_answers.md §1.4): 'Where it drops more than half of an arm's reads at a point' is no emptied test, and is read per arm and record label: of the arm's reads present and finite there (N1-V's d = 0 reads, the shadows, are no point; N4's arms are read at their d = 0 label), more than half dropped in the TAU/4 row, by their own re-computation or, a steered read, its session's shadow's, as build_state drops them (PIN-n-16; row_drops). VERDICTS' sensitivity block carries those counts ('drops') and those points ('over_half'), and, only where one exists, the second row: the reads whose re-computation's rel is above the identity's median_rel dropped, strictly, a read with no re-computation or with a path non-finite kept and a shadow above it dropping its session at every point, as the TAU/4 row reads TAU/4; its outcomes, figures and drops beside, descriptive, gating nothing (§3: 'Neither row gates anything'). A point it leaves with no session, and an arm whose slope it leaves with no common session (N1-V's, or an N1-R direction's; N2's slopes are descriptive and mark nothing), it marks 'median-emptied', as the TAU/4 row marks them 'tau4-emptied' (PIN-n-20, PIN-n-36)",
+  "PIN-n-39": "accepted (results/raw/2026-11-19_n-starred-twelve_design-to-code_answers.md §4: the both-ways binding for the ceiling, the one-way binding kept for the non-finite and identity kinds): ADDENDUM-n2 §2.1's fidelity-ceiling pause kind in the reader: a re-computed read is above the ceiling where its comparison is set (both paths finite) and its absdiff exceeds the identity's ceiling C, strictly ('above C nats'). The reader binds the kind both ways: a stage report's pause naming it, as its kind or in also_fired, names a read on disk above it, and every record above it is the read of a pause naming it (§2.1: 'pauses at once'); the report's ceiling counter is the records' count above it; VERDICTS' record counters add 'fidelity ceiling exceeded' per arm and dose; it is a single-read pause for PIN-n-37's points. The identity bound at d = 0 is C (§2.2), read through the records' identity block as before. The same converse for the non-finite and identity-bound kinds is not applied: PIN-n-24 binds them one way, as accepted",
+  "PIN-n-40": "ADDENDUM-n3 §3.3's lock form, as n-build's lock draft carries it (agreed through the coordinating session, PI date 2026-11-19, a relay that no committed text records): LOCK-n v1.0 records the reward axis's 5(d) gate in one whole line, 'reward axis 5(d) gate, coherence: <k> of 48, PASS' or the same line ending in FAIL, k the reward_f020 batch's coherent count as a decimal integer 0-48, PASS iff k ≥ 36 (§3.3's bar). Code's form, for the seat: the parse (lines read stripped, as PIN-n-26's are; a line is the gate's if it starts with 'reward axis 5(d) gate, coherence:', so one naming the leakage half, §3.2, is not, and the lock carries the line once: a lock with a second line of its own beginning with the head, a quotation of the line or its form, is refused, two being found, while a quotation inside another line, or blockquoted, is not read) and the refusals (no such line, two or more, any other shape, k outside 0-48, a result the bar contradicts). Code's reading, for the seat: §3.4 (i)'s 'LOCK-n v0.1's gate line' (§3.5: 'the lock's gate line') is read in the v1.0 lock VERDICTS is given, which carries v0.1's line (n-build's words, relayed by the coordinating session: it fills v0.1's hole and carries into v1.0); v0.1 is not opened, so a v1.0 line that differed from v0.1's would be read as given, the carrying being the lock's. A G-CAL-n that ended early (a STOP, or the early PAUSE) gives the lock no line (§3.5: 'from a `gcal.json` whose status is PASS'), so VERDICTS refuses, finding none; the analyzer never reads gcal.json (§3.5)",
+  "PIN-n-41": "ADDENDUM-n3 §3.4 as adopted (the PI's decision (n-5), [adopt]; ADDENDUM-n1 §5.3 extended, OPEN-Q7): N2 is decided at f = 0.20 iff the lock's gate line (PIN-n-40) records PASS and the cap does not bind (2·d_eq ≤ 1); otherwise at f = 0.10 against N1-V at d_eq's point, f = 0.20 beside against its norm-matched point, the ratio printed; INDETERMINATE, SPECIFIC, SHARED and NULL as n §5 texts them at whichever f decides; N2-S and N2-C read at both as built, deciding nothing; span_reward's G-READ-n cell at the deciding f labels the null (OPEN-Q3). The leakage half reads nothing new (§3.2: 'No text or build changes for this component'). Four readings are Code's, for the seat, strikable until LOCK-n v1.0: (a) the referent check's observation 3: 'at f = [f]' is filled by the deciding f, and the second sitting's 'the gate's clause' is §7.3's reason alone, no other §5 sentence changing; (b) its observation 4, extended to d_eq: the points §3.2 and §3.4 place at d_20 or d_eq are their kept points under ADDENDUM-n1 §5.1's merge, named by the keeper's label (PIN-n-36), the ratio printed, so §3.4's 'where the norms are equal exactly' holds only where d_eq is not merged (not where it merges under the cap, nor under the gate's FAIL on shape (c): 0.49 into +1/2, the ratio 0.98); (c) where the gate FAILs and the cap binds, both reasons are named, in §3.4's order; (d) §7.3's report line names the deciding point by 'at f = [f]' in all four states, INDETERMINATE's included, and, where f = 0.10 decides, the reason in [why], ' (N2's deciding point, by <reasons>)', the reasons §3.4's words verbatim ('the gate's coherence FAIL', 'the cap'), the clause Code's form. [why] is filled at VERDICTS from N2's outcome, as [f] is, so the outcome space stays 385 tuples and 2,561 evaluations",
+  "PIN-n-42": "the gate enters at VERDICTS, from the lock (PIN-n-40), so G-ANL-n's artifact reports the pinned map's reach under each branch, keyed PASS and FAIL (Code's form): its coupling shape (under the FAIL, N2 is decided at f = 0.10, at dose's point: shape (b), or (d) where d_eq's point is +1), its triples and their agreement with the hand derivation; a raise, a dose not INDETERMINATE iff N1 is, or a disagreement under either branch STOPs the canonical run. map_reach takes the branch with no default; its states carry GATE_FIXTURE's gate, 48 of 48 or 35 of 48 (the count decides nothing)",
+  "PIN-n-7": "'exceeds its floor' is the signed mean slope above the floor (floor ≥ 0)",
+  "PIN-n-8": "'its CI excluding 0' is lo > 0 or hi < 0; an endpoint at 0 does not exclude; either side"
+ },
+ "proposal_sha256": "30a3d0f55a6681e01245f75490d1f7fdf032b4a1f2c6e59684d6a17584b104f4",
+ "report": {
+  "end_state": "COMPLETE",
+  "name": "campaign.json",
+  "sha256": "1cabeadf9ee94d411d106a9cc306b29615d34bf41e0818f97bd1ed68dfc1c4e3"
+ },
+ "schema": "n-secondary-v1",
+ "schema_module": {
+  "path": "valence_core/n/schema.py",
+  "sha256": "1cab28df54c4c2c699b005fc6d2a99693d569911e292ad9dbdb8b6994db8edff"
+ },
+ "secondaries": {
+  "a_first_pick_share": {
+   "N1-P|+1": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 71,
+    "share": 0.44375
+   },
+   "N1-P|+d_20": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 77,
+    "share": 0.48125
+   },
+   "N1-P|+d_eq": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 77,
+    "share": 0.48125
+   },
+   "N1-P|-1": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 77,
+    "share": 0.48125
+   },
+   "N1-R|+1": {
+    "below_floor": false,
+    "n": 960,
+    "pick_S": 428,
+    "share": 0.44583333333333336
+   },
+   "N1-R|+1/2": {
+    "below_floor": false,
+    "n": 960,
+    "pick_S": 429,
+    "share": 0.446875
+   },
+   "N1-R|+d_20": {
+    "below_floor": false,
+    "n": 960,
+    "pick_S": 428,
+    "share": 0.44583333333333336
+   },
+   "N1-R|+d_eq": {
+    "below_floor": false,
+    "n": 960,
+    "pick_S": 424,
+    "share": 0.44166666666666665
+   },
+   "N1-R|-1": {
+    "below_floor": false,
+    "n": 960,
+    "pick_S": 480,
+    "share": 0.5
+   },
+   "N1-V|+1": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 106,
+    "share": 0.6625
+   },
+   "N1-V|+1/2": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 93,
+    "share": 0.58125
+   },
+   "N1-V|+d_20": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 92,
+    "share": 0.575
+   },
+   "N1-V|+d_eq": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 87,
+    "share": 0.54375
+   },
+   "N1-V|-1": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 50,
+    "share": 0.3125
+   },
+   "N1-V|0": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 75,
+    "share": 0.46875
+   },
+   "N2-C|f0.10": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 75,
+    "share": 0.46875
+   },
+   "N2-C|f0.20": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 76,
+    "share": 0.475
+   },
+   "N2-E|f0.10": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 78,
+    "share": 0.4875
+   },
+   "N2-E|f0.20": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 79,
+    "share": 0.49375
+   },
+   "N2-S|f0.10": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 85,
+    "share": 0.53125
+   },
+   "N2-S|f0.20": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 89,
+    "share": 0.55625
+   },
+   "N4-Ts|0": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 69,
+    "share": 0.43125
+   },
+   "N4-T|0": {
+    "below_floor": false,
+    "n": 160,
+    "pick_S": 80,
+    "share": 0.5
+   }
+  },
+  "b_free_text": "struck (ADDENDUM-n1 §4): nothing is generated in the campaign; §0.4's table stands as the welfare report",
+  "c_groups": {
+   "N1-P|+1": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.05323864377236644,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": -0.0563665333315909,
+     "n": 79
+    }
+   },
+   "N1-P|+d_20": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": -0.015432559156021508,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.018592257878929,
+     "n": 79
+    }
+   },
+   "N1-P|+d_eq": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.020061493925862664,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": -0.018196166215696547,
+     "n": 79
+    }
+   },
+   "N1-P|-1": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.0285452198266866,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.14280415524604767,
+     "n": 79
+    }
+   },
+   "N1-R|+1": {
+    "pair=Zone B8|Zone H0": {
+     "mean": -0.06250008412264811,
+     "n": 24
+    },
+    "pair=Zone B8|Zone L4": {
+     "mean": -0.06640746470769947,
+     "n": 24
+    },
+    "pair=Zone B8|Zone Q3": {
+     "mean": 0.002596782656384559,
+     "n": 24
+    },
+    "pair=Zone B8|Zone T5": {
+     "mean": 0.007813832060078093,
+     "n": 24
+    },
+    "pair=Zone D7|Zone K7": {
+     "mean": -0.14973989313359026,
+     "n": 24
+    },
+    "pair=Zone D7|Zone T5": {
+     "mean": -0.11588448280151871,
+     "n": 24
+    },
+    "pair=Zone D7|Zone W6": {
+     "mean": -0.1249997994038546,
+     "n": 24
+    },
+    "pair=Zone H0|Zone R9": {
+     "mean": -0.00586088666083077,
+     "n": 48
+    },
+    "pair=Zone H0|Zone W6": {
+     "mean": -0.13281482757358276,
+     "n": 48
+    },
+    "pair=Zone K7|Zone M2": {
+     "mean": -0.14973896186752778,
+     "n": 24
+    },
+    "pair=Zone K7|Zone T5": {
+     "mean": -0.05598711709013878,
+     "n": 24
+    },
+    "pair=Zone L4|Zone K7": {
+     "mean": -0.0026057196865934737,
+     "n": 48
+    },
+    "pair=Zone L4|Zone M2": {
+     "mean": -0.07552050260759731,
+     "n": 48
+    },
+    "pair=Zone L4|Zone N1": {
+     "mean": -0.053383733963134374,
+     "n": 24
+    },
+    "pair=Zone L4|Zone Q3": {
+     "mean": 0.057292276806722775,
+     "n": 24
+    },
+    "pair=Zone L4|Zone T5": {
+     "mean": 0.005209155579978845,
+     "n": 24
+    },
+    "pair=Zone M2|Zone H0": {
+     "mean": -0.045573805193157936,
+     "n": 24
+    },
+    "pair=Zone N1|Zone B8": {
+     "mean": -0.14843725976162522,
+     "n": 72
+    },
+    "pair=Zone N1|Zone D7": {
+     "mean": -0.06119778502336285,
+     "n": 24
+    },
+    "pair=Zone N1|Zone M2": {
+     "mean": -0.12239762394355898,
+     "n": 24
+    },
+    "pair=Zone N1|Zone R9": {
+     "mean": 0.08072830877024757,
+     "n": 24
+    },
+    "pair=Zone N1|Zone W6": {
+     "mean": -0.16666744432008165,
+     "n": 24
+    },
+    "pair=Zone Q3|Zone M2": {
+     "mean": -0.11067787684710202,
+     "n": 24
+    },
+    "pair=Zone R9|Zone B8": {
+     "mean": -0.1158855364958129,
+     "n": 24
+    },
+    "pair=Zone R9|Zone D7": {
+     "mean": -0.013022853031942802,
+     "n": 24
+    },
+    "pair=Zone T5|Zone M2": {
+     "mean": -0.09635484956072997,
+     "n": 72
+    },
+    "pair=Zone T5|Zone N1": {
+     "mean": -0.1119798986396842,
+     "n": 24
+    },
+    "pair=Zone W6|Zone H0": {
+     "mean": 0.0859382090609595,
+     "n": 24
+    },
+    "pair=Zone W6|Zone M2": {
+     "mean": -0.08463529311456197,
+     "n": 48
+    },
+    "pair=Zone W6|Zone Q3": {
+     "mean": -0.14322889139381711,
+     "n": 24
+    },
+    "pair=Zone W6|Zone R9": {
+     "mean": -0.10676959919190317,
+     "n": 24
+    },
+    "present_first_is_S=False": {
+     "mean": -0.07057345414430374,
+     "n": 600
+    },
+    "present_first_is_S=True": {
+     "mean": -0.07395858132546455,
+     "n": 360
+    }
+   },
+   "N1-R|+1/2": {
+    "pair=Zone B8|Zone H0": {
+     "mean": -0.0364584239688129,
+     "n": 24
+    },
+    "pair=Zone B8|Zone L4": {
+     "mean": -0.05338608793598657,
+     "n": 24
+    },
+    "pair=Zone B8|Zone Q3": {
+     "mean": -0.013023944610663621,
+     "n": 24
+    },
+    "pair=Zone B8|Zone T5": {
+     "mean": -0.011718012519101206,
+     "n": 24
+    },
+    "pair=Zone D7|Zone K7": {
+     "mean": -0.0625000417432775,
+     "n": 24
+    },
+    "pair=Zone D7|Zone T5": {
+     "mean": -0.05989542586171933,
+     "n": 24
+    },
+    "pair=Zone D7|Zone W6": {
+     "mean": -0.03645812194687107,
+     "n": 24
+    },
+    "pair=Zone H0|Zone R9": {
+     "mean": -0.008464017936705074,
+     "n": 48
+    },
+    "pair=Zone H0|Zone W6": {
+     "mean": -0.05013082283820954,
+     "n": 48
+    },
+    "pair=Zone K7|Zone M2": {
+     "mean": -0.08463550416457129,
+     "n": 24
+    },
+    "pair=Zone K7|Zone T5": {
+     "mean": -0.0065108801080620005,
+     "n": 24
+    },
+    "pair=Zone L4|Zone K7": {
+     "mean": -0.007812587034238075,
+     "n": 48
+    },
+    "pair=Zone L4|Zone M2": {
+     "mean": -0.03385398903303142,
+     "n": 48
+    },
+    "pair=Zone L4|Zone N1": {
+     "mean": -0.05208355413548752,
+     "n": 24
+    },
+    "pair=Zone L4|Zone Q3": {
+     "mean": -0.03906251961043172,
+     "n": 24
+    },
+    "pair=Zone L4|Zone T5": {
+     "mean": 0.002604405454828873,
+     "n": 24
+    },
+    "pair=Zone M2|Zone H0": {
+     "mean": -0.01953107867488028,
+     "n": 24
+    },
+    "pair=Zone N1|Zone B8": {
+     "mean": -0.05381936063335692,
+     "n": 72
+    },
+    "pair=Zone N1|Zone D7": {
+     "mean": -0.04427072820059089,
+     "n": 24
+    },
+    "pair=Zone N1|Zone M2": {
+     "mean": -0.06380300200011872,
+     "n": 24
+    },
+    "pair=Zone N1|Zone R9": {
+     "mean": 0.013020486577354143,
+     "n": 24
+    },
+    "pair=Zone N1|Zone W6": {
+     "mean": -0.07161494379316842,
+     "n": 24
+    },
+    "pair=Zone Q3|Zone M2": {
+     "mean": -0.06250044508498302,
+     "n": 24
+    },
+    "pair=Zone R9|Zone B8": {
+     "mean": -0.04817697635420585,
+     "n": 24
+    },
+    "pair=Zone R9|Zone D7": {
+     "mean": 0.00520722155013124,
+     "n": 24
+    },
+    "pair=Zone T5|Zone M2": {
+     "mean": -0.041666915257243656,
+     "n": 72
+    },
+    "pair=Zone T5|Zone N1": {
+     "mean": -0.04557333898268704,
+     "n": 24
+    },
+    "pair=Zone W6|Zone H0": {
+     "mean": -0.028645140423183557,
+     "n": 24
+    },
+    "pair=Zone W6|Zone M2": {
+     "mean": -0.0677080464334886,
+     "n": 48
+    },
+    "pair=Zone W6|Zone Q3": {
+     "mean": -0.0729164997514602,
+     "n": 24
+    },
+    "pair=Zone W6|Zone R9": {
+     "mean": -0.062499459169278015,
+     "n": 24
+    },
+    "present_first_is_S=False": {
+     "mean": -0.03833356356450131,
+     "n": 600
+    },
+    "present_first_is_S=True": {
+     "mean": -0.04123271203785606,
+     "n": 360
+    }
+   },
+   "N1-R|+d_20": {
+    "pair=Zone B8|Zone H0": {
+     "mean": -0.04166679574042783,
+     "n": 24
+    },
+    "pair=Zone B8|Zone L4": {
+     "mean": -0.041667295531401694,
+     "n": 24
+    },
+    "pair=Zone B8|Zone Q3": {
+     "mean": -0.01562897846208829,
+     "n": 24
+    },
+    "pair=Zone B8|Zone T5": {
+     "mean": -0.01692626394046644,
+     "n": 24
+    },
+    "pair=Zone D7|Zone K7": {
+     "mean": -0.08593762011501786,
+     "n": 24
+    },
+    "pair=Zone D7|Zone T5": {
+     "mean": -0.06119737988676621,
+     "n": 24
+    },
+    "pair=Zone D7|Zone W6": {
+     "mean": -0.05208305088001963,
+     "n": 24
+    },
+    "pair=Zone H0|Zone R9": {
+     "mean": -0.011068393969214774,
+     "n": 48
+    },
+    "pair=Zone H0|Zone W6": {
+     "mean": -0.06054774738007307,
+     "n": 48
+    },
+    "pair=Zone K7|Zone M2": {
+     "mean": -0.09895837011765862,
+     "n": 24
+    },
+    "pair=Zone K7|Zone T5": {
+     "mean": -0.007812742360012503,
+     "n": 24
+    },
+    "pair=Zone L4|Zone K7": {
+     "mean": -0.004557543387613568,
+     "n": 48
+    },
+    "pair=Zone L4|Zone M2": {
+     "mean": -0.039713377288591846,
+     "n": 48
+    },
+    "pair=Zone L4|Zone N1": {
+     "mean": -0.05989577189686268,
+     "n": 24
+    },
+    "pair=Zone L4|Zone Q3": {
+     "mean": -0.020833331573030318,
+     "n": 24
+    },
+    "pair=Zone L4|Zone T5": {
+     "mean": 0.005208722662603786,
+     "n": 24
+    },
+    "pair=Zone M2|Zone H0": {
+     "mean": -0.014323046509754947,
+     "n": 24
+    },
+    "pair=Zone N1|Zone B8": {
+     "mean": -0.06293387496211794,
+     "n": 72
+    },
+    "pair=Zone N1|Zone D7": {
+     "mean": -0.05859367193961851,
+     "n": 24
+    },
+    "pair=Zone N1|Zone M2": {
+     "mean": -0.0625010675811765,
+     "n": 24
+    },
+    "pair=Zone N1|Zone R9": {
+     "mean": 0.020833045310510927,
+     "n": 24
+    },
+    "pair=Zone N1|Zone W6": {
+     "mean": -0.09765670830197763,
+     "n": 24
+    },
+    "pair=Zone Q3|Zone M2": {
+     "mean": -0.06380257916604215,
+     "n": 24
+    },
+    "pair=Zone R9|Zone B8": {
+     "mean": -0.058593841598302644,
+     "n": 24
+    },
+    "pair=Zone R9|Zone D7": {
+     "mean": -0.015626168058644325,
+     "n": 24
+    },
+    "pair=Zone T5|Zone M2": {
+     "mean": -0.0546878484301678,
+     "n": 72
+    },
+    "pair=Zone T5|Zone N1": {
+     "mean": -0.052083733161026956,
+     "n": 24
+    },
+    "pair=Zone W6|Zone H0": {
+     "mean": -0.031249221724156156,
+     "n": 24
+    },
+    "pair=Zone W6|Zone M2": {
+     "mean": -0.07161417153879812,
+     "n": 48
+    },
+    "pair=Zone W6|Zone Q3": {
+     "mean": -0.07812480264482691,
+     "n": 24
+    },
+    "pair=Zone W6|Zone R9": {
+     "mean": -0.05989514313626213,
+     "n": 24
+    },
+    "present_first_is_S=False": {
+     "mean": -0.04380235891150314,
+     "n": 600
+    },
+    "present_first_is_S=True": {
+     "mean": -0.046788298724685845,
+     "n": 360
+    }
+   },
+   "N1-R|+d_eq": {
+    "pair=Zone B8|Zone H0": {
+     "mean": -0.023437533767024437,
+     "n": 24
+    },
+    "pair=Zone B8|Zone L4": {
+     "mean": -0.016927436792312605,
+     "n": 24
+    },
+    "pair=Zone B8|Zone Q3": {
+     "mean": 0.010414657589098208,
+     "n": 24
+    },
+    "pair=Zone B8|Zone T5": {
+     "mean": -0.018228805827018062,
+     "n": 24
+    },
+    "pair=Zone D7|Zone K7": {
+     "mean": -0.01302072027912408,
+     "n": 24
+    },
+    "pair=Zone D7|Zone T5": {
+     "mean": -0.0468747724853437,
+     "n": 24
+    },
+    "pair=Zone D7|Zone W6": {
+     "mean": -0.015624944568462936,
+     "n": 24
+    },
+    "pair=Zone H0|Zone R9": {
+     "mean": 0.002603706018190525,
+     "n": 48
+    },
+    "pair=Zone H0|Zone W6": {
+     "mean": -0.014974151337030617,
+     "n": 48
+    },
+    "pair=Zone K7|Zone M2": {
+     "mean": -0.08463555204317556,
+     "n": 24
+    },
+    "pair=Zone K7|Zone T5": {
+     "mean": 0.011717774576168441,
+     "n": 24
+    },
+    "pair=Zone L4|Zone K7": {
+     "mean": -0.007161317505893068,
+     "n": 48
+    },
+    "pair=Zone L4|Zone M2": {
+     "mean": -0.024088531811794194,
+     "n": 48
+    },
+    "pair=Zone L4|Zone N1": {
+     "mean": -0.06119806163949589,
+     "n": 24
+    },
+    "pair=Zone L4|Zone Q3": {
+     "mean": -0.0429687153146839,
+     "n": 24
+    },
+    "pair=Zone L4|Zone T5": {
+     "mean": -0.010416650474767438,
+     "n": 24
+    },
+    "pair=Zone M2|Zone H0": {
+     "mean": -0.0052079887124789614,
+     "n": 24
+    },
+    "pair=Zone N1|Zone B8": {
+     "mean": -0.041666595015610666,
+     "n": 72
+    },
+    "pair=Zone N1|Zone D7": {
+     "mean": -0.036458234015499226,
+     "n": 24
+    },
+    "pair=Zone N1|Zone M2": {
+     "mean": -0.048177801261668485,
+     "n": 24
+    },
+    "pair=Zone N1|Zone R9": {
+     "mean": 0.02343690399829838,
+     "n": 24
+    },
+    "pair=Zone N1|Zone W6": {
+     "mean": -0.02213560965094034,
+     "n": 24
+    },
+    "pair=Zone Q3|Zone M2": {
+     "mean": -0.04427101014038515,
+     "n": 24
+    },
+    "pair=Zone R9|Zone B8": {
+     "mean": -0.02734357983395186,
+     "n": 24
+    },
+    "pair=Zone R9|Zone D7": {
+     "mean": 0.020832363097148754,
+     "n": 24
+    },
+    "pair=Zone T5|Zone M2": {
+     "mean": -0.02647593116543649,
+     "n": 72
+    },
+    "pair=Zone T5|Zone N1": {
+     "mean": -0.020833660653001,
+     "n": 24
+    },
+    "pair=Zone W6|Zone H0": {
+     "mean": -0.007812074523807573,
+     "n": 24
+    },
+    "pair=Zone W6|Zone M2": {
+     "mean": -0.0494788584256467,
+     "n": 48
+    },
+    "pair=Zone W6|Zone Q3": {
+     "mean": -0.05989560819163516,
+     "n": 24
+    },
+    "pair=Zone W6|Zone R9": {
+     "mean": -0.02083287452178717,
+     "n": 24
+    },
+    "present_first_is_S=False": {
+     "mean": -0.019271002228102577,
+     "n": 600
+    },
+    "present_first_is_S=True": {
+     "mean": -0.03125005096005166,
+     "n": 360
+    }
+   },
+   "N1-R|-1": {
+    "pair=Zone B8|Zone H0": {
+     "mean": 0.09244869591676379,
+     "n": 24
+    },
+    "pair=Zone B8|Zone L4": {
+     "mean": 0.12239550846311698,
+     "n": 24
+    },
+    "pair=Zone B8|Zone Q3": {
+     "mean": 0.13540857743391124,
+     "n": 24
+    },
+    "pair=Zone B8|Zone T5": {
+     "mean": 0.057293029304244035,
+     "n": 24
+    },
+    "pair=Zone D7|Zone K7": {
+     "mean": 0.003905982694702178,
+     "n": 24
+    },
+    "pair=Zone D7|Zone T5": {
+     "mean": -0.033853725855946815,
+     "n": 24
+    },
+    "pair=Zone D7|Zone W6": {
+     "mean": 0.04166583069554767,
+     "n": 24
+    },
+    "pair=Zone H0|Zone R9": {
+     "mean": 0.1464836793192034,
+     "n": 48
+    },
+    "pair=Zone H0|Zone W6": {
+     "mean": 0.04361870434091334,
+     "n": 48
+    },
+    "pair=Zone K7|Zone M2": {
+     "mean": -0.1263010190822779,
+     "n": 24
+    },
+    "pair=Zone K7|Zone T5": {
+     "mean": 0.061199365297736064,
+     "n": 24
+    },
+    "pair=Zone L4|Zone K7": {
+     "mean": 0.21288882608336804,
+     "n": 48
+    },
+    "pair=Zone L4|Zone M2": {
+     "mean": 0.1067711480721288,
+     "n": 48
+    },
+    "pair=Zone L4|Zone N1": {
+     "mean": -0.002604937025936523,
+     "n": 24
+    },
+    "pair=Zone L4|Zone Q3": {
+     "mean": 0.19401135466573663,
+     "n": 24
+    },
+    "pair=Zone L4|Zone T5": {
+     "mean": 0.013022426415184363,
+     "n": 24
+    },
+    "pair=Zone M2|Zone H0": {
+     "mean": -0.024738986505285904,
+     "n": 24
+    },
+    "pair=Zone N1|Zone B8": {
+     "mean": 0.010417182677580343,
+     "n": 72
+    },
+    "pair=Zone N1|Zone D7": {
+     "mean": 0.07161482436286574,
+     "n": 24
+    },
+    "pair=Zone N1|Zone M2": {
+     "mean": 0.05859251882400144,
+     "n": 24
+    },
+    "pair=Zone N1|Zone R9": {
+     "mean": 0.212240164235059,
+     "n": 24
+    },
+    "pair=Zone N1|Zone W6": {
+     "mean": 0.24869752376531143,
+     "n": 24
+    },
+    "pair=Zone Q3|Zone M2": {
+     "mean": 0.026041173958106345,
+     "n": 24
+    },
+    "pair=Zone R9|Zone B8": {
+     "mean": 0.052083031517273636,
+     "n": 24
+    },
+    "pair=Zone R9|Zone D7": {
+     "mean": 0.01562282352934193,
+     "n": 24
+    },
+    "pair=Zone T5|Zone M2": {
+     "mean": 0.055120986748388515,
+     "n": 72
+    },
+    "pair=Zone T5|Zone N1": {
+     "mean": 0.06119714530346706,
+     "n": 24
+    },
+    "pair=Zone W6|Zone H0": {
+     "mean": 0.34244896978993417,
+     "n": 24
+    },
+    "pair=Zone W6|Zone M2": {
+     "mean": 0.11263032403188682,
+     "n": 48
+    },
+    "pair=Zone W6|Zone Q3": {
+     "mean": 0.05989618294897259,
+     "n": 24
+    },
+    "pair=Zone W6|Zone R9": {
+     "mean": 0.0781262779576044,
+     "n": 24
+    },
+    "present_first_is_S=False": {
+     "mean": 0.11729119625942623,
+     "n": 600
+    },
+    "present_first_is_S=True": {
+     "mean": 0.017968846939779008,
+     "n": 360
+    }
+   },
+   "N1-V|+1": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.95158202386959,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.8212035526722286,
+     "n": 79
+    }
+   },
+   "N1-V|+1/2": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.4224539463359523,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.3959655554342476,
+     "n": 79
+    }
+   },
+   "N1-V|+d_20": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.46527793497034037,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.4683548794355799,
+     "n": 79
+    }
+   },
+   "N1-V|+d_eq": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.24691376506543014,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.20668546387546965,
+     "n": 79
+    }
+   },
+   "N1-V|-1": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": -0.6576049610419017,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": -0.6073970471828398,
+     "n": 79
+    }
+   },
+   "N2-C|f0.10": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.047068112824131744,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.035601121155261685,
+     "n": 79
+    }
+   },
+   "N2-C|f0.20": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.07908931342047033,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": -0.03995184962907625,
+     "n": 79
+    }
+   },
+   "N2-E|f0.10": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.10995400567455847,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.08386068621051157,
+     "n": 79
+    }
+   },
+   "N2-E|f0.20": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.25540100200828164,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.0830701945825612,
+     "n": 79
+    }
+   },
+   "N2-S|f0.10": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.19328868562968604,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.20886162040974027,
+     "n": 79
+    }
+   },
+   "N2-S|f0.20": {
+    "pair=Zone B8|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone B8|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone B8|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone B8|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone B8": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone D7|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone D7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone D7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone H0|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone H0|Zone R9": {
+     "n": 3
+    },
+    "pair=Zone H0|Zone W6": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone D7": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone L4": {
+     "n": 3
+    },
+    "pair=Zone K7|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone K7|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone T5": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone K7|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone K7": {
+     "n": 3
+    },
+    "pair=Zone L4|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone L4|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone Q3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone L4|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone L4|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone L4": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone N1": {
+     "n": 2
+    },
+    "pair=Zone M2|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone M2|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone B8": {
+     "n": 4
+    },
+    "pair=Zone N1|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone N1|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone V3": {
+     "n": 2
+    },
+    "pair=Zone N1|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone H0": {
+     "n": 3
+    },
+    "pair=Zone Q3|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone Q3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone T5": {
+     "n": 1
+    },
+    "pair=Zone Q3|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone K7": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone L4": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone M2": {
+     "n": 2
+    },
+    "pair=Zone R9|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone R9|Zone T5": {
+     "n": 3
+    },
+    "pair=Zone R9|Zone V3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone H0": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone K7": {
+     "n": 2
+    },
+    "pair=Zone T5|Zone M2": {
+     "n": 4
+    },
+    "pair=Zone T5|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone T5|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone T5|Zone W6": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone B8": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone M2": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone N1": {
+     "n": 1
+    },
+    "pair=Zone V3|Zone R9": {
+     "n": 2
+    },
+    "pair=Zone V3|Zone W6": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone D7": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone H0": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone M2": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone N1": {
+     "n": 3
+    },
+    "pair=Zone W6|Zone Q3": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone R9": {
+     "n": 1
+    },
+    "pair=Zone W6|Zone T5": {
+     "n": 4
+    },
+    "present_first_is_S=False": {
+     "mean": 0.26080453729009734,
+     "n": 81
+    },
+    "present_first_is_S=True": {
+     "mean": 0.3829139576691224,
+     "n": 79
+    }
+   }
+  },
+  "d_retention_r": {
+   "n": 160,
+   "pearson_r": 0.056254487770442306
+  },
+  "e_directions": {
+   "cosines": {
+    "span_character|span_reward": 0.7501587511209901,
+    "span_character|span_sentiment": 0.32985395487927766,
+    "span_character|valence": 0.1392181026452373,
+    "span_reward|span_sentiment": 0.31065936209323797,
+    "span_reward|valence": 0.18040702496573224,
+    "span_sentiment|valence": 0.13346260721287628
+   },
+   "means": {
+    "span_character|f=0.10": {
+     "ci": [
+      0.023437609941447557,
+      0.06015627829308146
+     ],
+     "level": 95,
+     "mean": 0.04140628568762715
+    },
+    "span_character|f=0.20": {
+     "ci": [
+      -0.02421856251974869,
+      0.06464864843263635
+     ],
+     "level": 95,
+     "mean": 0.02031273916475671
+    },
+    "span_reward|f=0.10": {
+     "ci": [
+      0.07890646333687891,
+      0.11542953230675589
+     ],
+     "level": 95,
+     "mean": 0.09707042918918532
+    },
+    "span_reward|f=0.20": {
+     "ci": [
+      0.1253908066994252,
+      0.2142626112248844
+     ],
+     "level": 95,
+     "mean": 0.1703126658418322
+    },
+    "span_sentiment|f=0.10": {
+     "ci": [
+      0.17871224557143547,
+      0.2234439198644948
+     ],
+     "level": 95,
+     "mean": 0.2009778221773378
+    },
+    "span_sentiment|f=0.20": {
+     "ci": [
+      0.27871346787120754,
+      0.3638744238892348
+     ],
+     "level": 95,
+     "mean": 0.32109606360224097
+    },
+    "valence|f=0.10": {
+     "ci": [
+      0.20995891610754966,
+      0.24521512505634757
+     ],
+     "level": 95,
+     "mean": 0.22705104135288715
+    },
+    "valence|f=0.20": {
+     "ci": [
+      0.42480006714297486,
+      0.5112306254423603
+     ],
+     "level": 95,
+     "mean": 0.46679717630005235
+    }
+   }
+  },
+  "floor_events": 20
+ },
+ "unit": "N-pod"
+}

@@ -1,0 +1,39 @@
+# n package, N-pod's VERDICTS run of record (PROPOSAL-n v0.2 §8 step 15; the seat's raw of 2026-11-27 §5 item 1; the PI's routing of 2026-11-27, N item 5) on v7 (b6ea27f): scripts/n_analyze.py verdicts --campaign data/n/ckpt/campaign --report data/n/reports/campaign.json --lock LOCK-n.md --gread data/n/gates/G-READ-n.json --gvec data/n/gvec/gvec_cosines.json --date 2026-11-27; the analyzer's sha256 735da934272048a795203e8fdef9bfa5a4bde2ba38cdf9ba79d81f313788a7a8 (measured after the run); HEAD b23f91dbeb2b9a88b30695417bda9a44e3f8be0e; nice 19, -I -B, one invocation, under nohup caffeinate -is; exit 0; stderr 0 bytes; 1 s; the launch files verdicts_steps_v2.sh cba11176ec4129e96eaf4d42a3b35e59176cb3da29bd4ea6df2db7853945b0de and inputs_v2.sha256 ec8cdd7434cb494a41f06334b7e642fb8365a0d02ff6d732a09bc04033d75f04. The repository's root is printed as <repo>.
+# environment at launch: bash 3.2.57(1)-release; macOS 15.6.1; hw.ncpu 14 | venv version_info = 3.12.9; numpy-2.5.1.dist-info; its python links to the base interpreter in a folder named miniconda3 | power AC Power; powermode 0 | Sleep Count:1 Dark Wake Count:0 User Wake Count:1 | the five thread variables unset
+# check at launch: check: the calendar date 2026-11-27
+# check at launch: PASS HEAD b23f91dbeb2b9a88b30695417bda9a44e3f8be0e descends from 7ab1cf6b55a8aa23792e69cafab737dcb4b39b52
+# check at launch: PASS scripts/n_analyze.py: clean, HEAD's blob, last touched at b6ea27f4ad9154c8b0a6d16e8787437ee7d649e9
+# check at launch: PASS LOCK-n.md: clean, HEAD's blob, last touched at 098218c07c67ac968648bb8e93a6c95796f16f1a
+# check at launch: PASS valence_core/n/schema.py: clean, HEAD's blob, last touched at ef105f129740840eabcf87ffbb836e078ba9636d
+# check at launch: PASS data/n/gates/G-READ-n.json: clean, HEAD's blob, last touched at 7ab1cf6b55a8aa23792e69cafab737dcb4b39b52
+# check at launch: PASS data/n/gvec/gvec_cosines.json: clean, HEAD's blob, last touched at e3b48ed98d099bb70b7f8badd335de14007a70c8
+# check at launch: PASS data/n/reports/campaign.json: clean, HEAD's blob, last touched at 95cd461e518628265eea500f4e6500bff5f912c9
+# check at launch: PASS valence_core/__init__.py: clean, HEAD's blob, last touched at c5b8f1a63fe7e39067f91a657c1ea53cee98b1ed
+# check at launch: PASS valence_core/adapters/__init__.py: clean, HEAD's blob, last touched at 1465b34c758edb258184fcac49b7776f57d65042
+# check at launch: PASS valence_core/adapters/base.py: clean, HEAD's blob, last touched at 7da95097ea36618dbeb0eea0457ca8b667aa5080
+# check at launch: PASS valence_core/n/__init__.py: clean, HEAD's blob, last touched at 5a975274463a3752cc70cdfee5dcfa62ebf3ab02
+# check at launch: PASS inputs_v2.sha256 names the ten files in order
+# check at launch:   shasum: scripts/n_analyze.py: OK
+# check at launch:   shasum: LOCK-n.md: OK
+# check at launch:   shasum: valence_core/n/schema.py: OK
+# check at launch:   shasum: data/n/gates/G-READ-n.json: OK
+# check at launch:   shasum: data/n/gvec/gvec_cosines.json: OK
+# check at launch:   shasum: data/n/reports/campaign.json: OK
+# check at launch:   shasum: valence_core/__init__.py: OK
+# check at launch:   shasum: valence_core/adapters/__init__.py: OK
+# check at launch:   shasum: valence_core/adapters/base.py: OK
+# check at launch:   shasum: valence_core/n/__init__.py: OK
+# check at launch: PASS the ten sha256s are inputs_v2.sha256's
+# check at launch: PASS valence_core/ and scripts/ clean (git status, by count)
+# check at launch: PASS the campaign's cell folder: 138 tracked, no other file, none changed since 95cd461 (names only, by count)
+# check at launch: PASS data/n/verdicts absent
+# check at launch: PASS run/ and tmp/ absent
+# check at launch: PASS the venv's bin: one match of its glob, a physical path, ./python executable
+# check at launch: PASS no process names the run, none is named python
+# check at launch: PASS the five thread variables unset
+# check at launch: PASS AC power
+# check at launch: PASS Low Power Mode off (powermode 0)
+# check at launch: PASS the venv's versions of record: version_info = 3.12.9; numpy-2.5.1.dist-info
+# check at launch: check: ALL PASS
+INVOCATION: <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/n_analyze.py verdicts --campaign <repo>/data/n/ckpt/campaign --report <repo>/data/n/reports/campaign.json --lock <repo>/LOCK-n.md --gread <repo>/data/n/gates/G-READ-n.json --gvec <repo>/data/n/gvec/gvec_cosines.json --date 2026-11-27
+VERDICTS: (REPLICATED, DETECTABLE, SPECIFIC, PASS, PASS) -> N-pod_secondary.json (written; sha256 4133c48b9941d6733496be770cf84b9fe07b6e8e1575682e97a77e38db889c05); N-pod_VERDICTS.json (written; sha256 4f29f294252cf7802f4727ed8e3e34705876d477c0848f50186f9a87ec4c68c0)

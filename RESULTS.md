@@ -21,6 +21,413 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-27 — **n — PROPOSAL-n N-pod — VERDICTS (n v0.2 §8 step 15; n:161's entry): (REPLICATED, DETECTABLE,
+  SPECIFIC, PASS, PASS). `scripts/n_analyze.py verdicts`, v7 of record (`b6ea27f`), ran once, model-free on the
+  laptop's CPU, in the run's window (on AC power) that the coordinating session granted at `b23f91d` on the PI's
+  routing of 2026-11-27 (N item 5, "[go]"): exit 0, stderr empty, 1 s. It wrote N-pod's VERDICTS and its secondary
+  DVs of record under `data/n/verdicts/`, which this commit's `.gitignore` lines admit. N1 is REPLICATED, so
+  G-READ-n's FAIL at valence +1 changes no sentence (raw (D) §2 item 3). Nothing ran on a model or on the box.**
+  - **Headline:** the analyzer's VERDICTS line, verbatim:
+    "VERDICTS: (REPLICATED, DETECTABLE, SPECIFIC, PASS, PASS) -> N-pod_secondary.json (written; sha256 4133c48b9941d6733496be770cf84b9fe07b6e8e1575682e97a77e38db889c05); N-pod_VERDICTS.json (written; sha256 4f29f294252cf7802f4727ed8e3e34705876d477c0848f50186f9a87ec4c68c0)"
+    Each printed sha256 is its file's (`after`). `N-pod_VERDICTS.json` (`n-verdicts-v1`, 8,363 lines) names
+    `N-pod_secondary.json` (`n-secondary-v1`, 5,539 lines) by that sha256. The tuple's coordinates are N1, dose, N2,
+    N4, and G-READ-n at valence d_eq (n_analyze.py:672).
+  - **The authority:** the PI's routing of 2026-11-27, section N item 5, from its raw
+    [`2026-11-27_three-raws_pi-routing.md`](results/raw/2026-11-27_three-raws_pi-routing.md) (`248ba6fe…948d`, at
+    `b23f91d`, line 21):
+    "5. VERDICTS: the n-analyzer session runs n_analyze.py verdicts ... --gread data/n/gates/G-READ-n.json (analyzer v7, 735da934...a7a8), then "— secondary DVs"; a pause or fire comes to the seat; the seat's full read of the 138 cells and G-CAL-n's turns after its output [go]."
+    The PI's own words below the block (line 51): "Route as given". The seat's raw (D),
+    [`2026-11-27_n-gread-record-read_design-to-code_answers.md`](results/raw/2026-11-27_n-gread-record-read_design-to-code_answers.md)
+    (`6b5be7a3…e420`, at `b23f91d`): §5 item 1 lists what this entry carries, and §5 item 4 gives this session §2
+    items 3 and 6.
+  - **The run.** It used the steps file v2 in Code's scratch, `verdicts_steps_v2.sh` (`cba11176…b0de`, 325 lines),
+    with its pins file `inputs_v2.sha256` (`ec8cdd74…5f04`) and its notes `NOTES_v2.md` (`290539f9…17ab`). All three
+    are in the kit's manifest (`41876a62…163a`, 13 files), which the coordinating session read and checked before it
+    granted the window. The four steps ran once each, each in its own call, as the window's terms set. The end notice
+    ("ended, exit status 0") and the report each went to the coordinating session in a message of its own. HEAD was
+    `b23f91d` from check to after; the PI date is 2026-11-27. What each step printed is in the launch review raw's
+    part 19, extracted verbatim from the transcript's tool results (calls 3810, 3812, 3814, 3818 and 3822).
+    - Before check (call 3810), one read-only step, declared to the coordinating session: the manifest 13 of 13 OK,
+      the lid open (`AppleClamshellState` No), AC power, and the calendar date.
+    - `check` (call 3812): ALL PASS on 23 assertions, each its own PASS line:
+      - HEAD descends from `7ab1cf6`;
+      - each of the ten pinned files is clean, HEAD's blob, last touched at its commit of record, and at its pinned
+        sha256;
+      - `valence_core/` and `scripts/` are clean, by count;
+      - the campaign's cell folder holds its 138 tracked cells, no other file, and none changed since `95cd461`
+        (names only, by count; dated note 2);
+      - `data/n/verdicts`, the run's folder and its temporary folder are absent;
+      - the venv's bin is one folder, at a physical path, holding an executable python. This was checked by builtins
+        alone, so no argv carried the expansion;
+      - no process names the run, and none is named python;
+      - the five thread variables are unset;
+      - AC power, and Low Power Mode off;
+      - the venv's versions of record: version_info 3.12.9 and numpy-2.5.1.
+    - `run` (call 3814): check again (ALL PASS, kept with the run), then
+      `nohup caffeinate -is /bin/bash <kit>/verdicts_steps_v2.sh inner > /dev/null 2>&1 < /dev/null &`, PID 57594.
+      caffeinate runs its command in its own PID and holds its assertion in a child, so the PID is the inner step's.
+      `inner` ran the command below, then wrote the seconds and, last, the exit status.
+    - `wait` (call 3816, its printed line read in 3818), as the harness's background task: the end-wait on the PID
+      alone (`kill -0` and the PID's own command line, every 5 s), then a check that no process names the run. It
+      printed "wait: the PID 57594 has ended; processes naming the run: 0".
+    - `after` (call 3822), once the PID had ended: ALL PASS.
+      - The raw was built, then screened: the home-prefix count 0; no scratch or temporary path; the guard markers on
+        the INVOCATION line alone (the venv folder's name, in output).
+      - stderr is empty, and stdout is the two lines. The INVOCATION line prints `<repo>` seven times.
+      - `data/n/verdicts` holds the two outputs alone, each written at the sha256 the VERDICTS line prints.
+      - `N-pod_VERDICTS.json` binds the six pins (the analyzer, the schema, the lock, the report, the cosines file,
+        the artifact) and the secondary's sha256, and neither output names a local root.
+      - The ten pinned files are still at their sha256s, HEAD is unchanged, `valence_core/` and `scripts/` are still
+        clean, the temporary folder is empty, and the sleep and wake counts did not change during the run.
+    - Nothing of the run's files was read, listed or timed until the wait had printed its end line (item 5).
+  - **The command,** as the out raw's INVOCATION line prints it, with the repository's root as `<repo>`. The venv's
+    path keeps its folder's name, as printed:
+    `INVOCATION: <repo>/jlens-qwen36/.venv/bin/python <repo>/scripts/n_analyze.py verdicts --campaign <repo>/data/n/ckpt/campaign --report <repo>/data/n/reports/campaign.json --lock <repo>/LOCK-n.md --gread <repo>/data/n/gates/G-READ-n.json --gvec <repo>/data/n/gvec/gvec_cosines.json --date 2026-11-27`
+    `inner` ran it from the venv's bin as `TMPDIR=<kit>/tmp nice -n 19 ./python -I -B …`. It has no `--out`, so the
+    outputs are of record (`data/n/verdicts`). `--gvec` is the file LOCK-n.md names as the
+    analyzer's (L:711, L:716–718), and `--date` is the laptop's calendar date at launch. The analyzer refused
+    nothing. Its checks before any output bind:
+    - the analyzer, the lock, the report, the artifact and the cosines file to HEAD's committed bytes
+      (`verdicts_precheck`, n_analyze.py:6625–6650);
+    - the lock to the identity's lock_sha256 and to this analyzer's sha256 (:6687–6693);
+    - the report to the cells on disk (:6702–6706);
+    - the artifact to the campaign (:6722–6725).
+  - **The inputs, by sha256** (`inputs_v2.sha256`, written by `shasum` from the repository's root): the six files the
+    run reads, and the four package files the schema's import runs. `shasum -c` gave 10 of 10 at check, again at
+    run's check, and again at after.
+    | file | sha256 |
+    |---|---|
+    | `scripts/n_analyze.py` | `735da934272048a795203e8fdef9bfa5a4bde2ba38cdf9ba79d81f313788a7a8` |
+    | `LOCK-n.md` | `59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa` |
+    | `valence_core/n/schema.py` | `1cab28df54c4c2c699b005fc6d2a99693d569911e292ad9dbdb8b6994db8edff` |
+    | `data/n/gates/G-READ-n.json` | `378f9972e942deb61ee4da74887e11556b625cdf41adfcfa4195636ccd31f519` |
+    | `data/n/gvec/gvec_cosines.json` | `fc8877be53194408cdcf7bbb09d1ec9ff3dfbe13b575bf6674190e3c03db0dad` |
+    | `data/n/reports/campaign.json` | `1cabeadf9ee94d411d106a9cc306b29615d34bf41e0818f97bd1ed68dfc1c4e3` |
+    | `valence_core/__init__.py` | `620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604` |
+    | `valence_core/adapters/__init__.py` | `96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a` |
+    | `valence_core/adapters/base.py` | `626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf` |
+    | `valence_core/n/__init__.py` | `427f58ccf531d2d98bd76004e2ff8b2ece9514248328e12844156a659e711cfd` |
+    VERDICTS' `campaign` block binds the stage identity `d566764f234668d5fbb2db92c6b579279fc563a62157f0c51780c3437f677f8a`, the read plan `7f7d7301607e0fa6f66df930ce6a502086fe13cd84d19fe2d3f8b0c9105b88a6` and the 138 cells, each by its `json_sha256` and `capture_sha256`.
+  - **The environment at launch** (the run's `env.txt`, which the raw's header carries):
+    - bash 3.2.57(1)-release; macOS 15.6.1; hw.ncpu 14
+    - venv version_info = 3.12.9; numpy-2.5.1.dist-info; its python links to the base interpreter in a folder named miniconda3
+    - power AC Power; powermode 0
+    - Sleep Count:1 Dark Wake Count:0 User Wake Count:1
+    - the five thread variables unset
+    The interpreter's own version was not queried, since that would have been a second interpreter process. The
+    venv's version line and its base interpreter stand for it, declared.
+  - **§5's sentences, verbatim** (`sentences`):
+    - **N1** (`7.1`): BK's fixed-text effect replicates on OLMo-2-32B Instruct in this program's implementation on a reconstructed direction: Δm(+1) = +0.8872 nats [+0.8059, +0.9720], theirs 1.09 [1.00, 1.19]; slope +0.7731 against a floor of 0.4009; leak ceiling 0.3461
+    - **Dose** (`7.2`): at d_eq = 0.2869 — this program's f = 0.10 on BK's scale — the effect is +0.2271 nats [+0.2100, +0.2452] above a leak ceiling of 0.1070: dose alone does not account for the program's null on the echo channel
+    - **N2** (`7.3`): N2, descriptive (§7.3; it licenses no thesis sentence): SPECIFIC: at f = 0.20 this program's evaluative axis (span_reward) does not move BK's apparatus beyond the leak ceiling (Δm = +0.1703 nats [+0.1254, +0.2143] against 0.2125) while the valence direction of record at the norm-matched point does (Δm = +0.4668 nats [+0.4248, +0.5112]) — answered
+    - **N4** (`N4`): PASS: BK's apparatus registers an instructed preference on this checkpoint: m_told = +13.6896 nats [+13.4382, +13.9413] against E = 0.0938; it licenses the answered reading of nulls in this format on this checkpoint (§0.6, with G-READ-n), nothing else
+  - **G-LEAK-n's ceilings** (`gleak`; four decimals here, two for the match ratio, full precision in the output):
+    | arm | label | point d | mean Δm | L | P | ceiling | certified | match ratio |
+    |---|---|---|---|---|---|---|---|---|
+    | N1-V | +1 | 1.0000 | +0.8872 | 0.3461 | 0.0009 | 0.3461 | true | — |
+    | N1-V | d_20 | 0.5738 | +0.4668 | 0.2125 | 0.0014 | 0.2125 | true | — |
+    | N1-V | +1/2 | 0.5000 | +0.4094 | 0.1914 | — | 0.1914 | true | — |
+    | N1-V | d_eq | 0.2869 | +0.2271 | 0.1070 | 0.0012 | 0.1070 | true | — |
+    | N1-V | -1 | -1.0000 | -0.6328 | 0.4727 | 0.0850 | 0.4727 | true | — |
+    | N2-E | f=0.10 | 0.2869 | +0.0971 | 0.1070 | 0.0012 | 0.1070 | false | 1.00 |
+    | N2-E | f=0.20 | 0.5738 | +0.1703 | 0.2125 | 0.0014 | 0.2125 | false | 1.00 |
+    | N2-S | f=0.10 | 0.2869 | +0.2010 | 0.1070 | 0.0012 | 0.1070 | true | 1.00 |
+    | N2-S | f=0.20 | 0.5738 | +0.3211 | 0.2125 | 0.0014 | 0.2125 | true | 1.00 |
+    | N2-C | f=0.10 | 0.2869 | +0.0414 | 0.1070 | 0.0012 | 0.1070 | false | 1.00 |
+    | N2-C | f=0.20 | 0.5738 | +0.0203 | 0.2125 | 0.0014 | 0.2125 | false | 1.00 |
+  - **G-READ-n** (`gread.table`), with the cells that enter §5 marked as the analyzer marks them:
+    | axis | label | point d | state | enters §5 |
+    |---|---|---|---|---|
+    | valence | +1 | 1.0000 | FAIL | N1 NOT-REPLICATED's label (§5 N1) |
+    | valence | +1/2 | 0.5000 | PASS | — |
+    | valence | d_20 | 0.5738 | PASS | — |
+    | valence | d_eq | 0.2869 | PASS | the dose sentence's label (§5 Dose); the tuple's coordinate |
+    | span_reward | f=0.10 | 0.2869 | PASS | — |
+    | span_reward | f=0.20 | 0.5738 | PASS | N2's span_reward null label (§0.6, at N2's decision f: OPEN-Q7 as ruled, ADDENDUM-n3 §3.4) |
+    The artifact: `G-READ-n.json` `378f9972e942deb61ee4da74887e11556b625cdf41adfcfa4195636ccd31f519`; the AUC in the output (`gread.auc`): d_eq 0.9917578125.
+    Raw (D) §2 item 3: a NOT-REPLICATED N1 under G-READ-n's FAIL at +1 would be "concluded, not answered";
+    REPLICATED and PARTIAL change no sentence. N1 is REPLICATED, so no sentence changes and N1's sentence carries no
+    label. The dated note of raw (D) §2 item 6 goes in only where N1's label is "concluded, not answered" (the PI's
+    item 4), so it does not apply. The dose sentence keys on d_eq (PASS). N2's label keys on span_reward at N2's
+    decision point, f = 0.20 (PASS), and N2's sentence ends "answered".
+  - **The counters** (`counters`):
+    - summed over the 23 arm-and-label cells: fidelity ceiling exceeded 0; fidelity exceedances at TAU 0; fidelity exceedances at TAU/4 707; fidelity re-computations 3637; identity bound exceeded 0; label mass below .20 0; non-finite margins 0; non-finite re-computations 0; reads 7680
+    - the report's binomial state: 48 evaluations, 3637 trials, 0 above TAU, 0 fires; the cap: 3786451 ms used of 14400000, hit false, loads 125924 ms; stop null; pauses 0
+    - the report's own counters: fidelity_ceiling_exceeded 0, identity_out_of_bound 0, nonfinite_reads 0, rendering_mismatches 0, label_mass_below_floor null; fidelity rows 23
+  - **The exposure counts realised** (`exposure`):
+    - N1-V negative valenced: 160 reads of 160 planned, 160 fresh re-computations; N1-P negative valenced: 160 of 160, 160; N1-R negative random: 960 of 960, 960; totals: negative valenced 320, negative random 960; generations under negative steering: none in the campaign; G-CAL-n's are its entry's
+  - **The cosines** (`cosines`, the source of secondary (e)):
+    The source: `gvec_cosines.json` `fc8877be53194408cdcf7bbb09d1ec9ff3dfbe13b575bf6674190e3c03db0dad`.
+    | pair | cosine |
+    |---|---|
+    | span_character\|span_reward | 0.7502 |
+    | span_character\|span_sentiment | 0.3299 |
+    | span_character\|valence | 0.1392 |
+    | span_reward\|span_sentiment | 0.3107 |
+    | span_reward\|valence | 0.1804 |
+    | span_sentiment\|valence | 0.1335 |
+  - **The TAU/4 sensitivity row** (`sensitivity`): descriptive, gating nothing. PIN-n-16 drops a read whose
+    re-computation exceeds TAU/4, and a shadow that exceeds drops its session at every point, so the reads dropped
+    outnumber the 707 exceedances:
+    - PIN-n-16 (n §4 (f)): reads re-computed above TAU/4 dropped: tuple (REPLICATED, DETECTABLE, SPECIFIC, PASS, PASS); over half dropped at a point: none; the second row: not reported (no point over half)
+    - reads dropped, per arm and point: N1-P@+1 62; N1-P@+d_20 33; N1-P@+d_eq 33; N1-P@-1 51; N1-R@+1 356; N1-R@+1/2 212; N1-R@+d_20 212; N1-R@+d_eq 208; N1-R@-1 339; N1-V@+1 48; N1-V@+1/2 31; N1-V@+d_20 29; N1-V@+d_eq 29; N1-V@-1 53; N2-C@f0.10 30; N2-C@f0.20 32; N2-E@f0.10 31; N2-E@f0.20 32; N2-S@f0.10 29; N2-S@f0.20 29; N4-T@0 11; N4-Ts@0 31
+    - reads dropped, summed: 1921
+  - **The launch files, reviewed and tested.**
+    - v1 (`verdicts_steps.sh` `445d65fb…c681`) went to one blind review. Its report came back as text, because a
+      subagent's file tool refuses report files, and was extracted from the hand-back. The kit's first extraction,
+      `report.md` (`6b051dbf…56bd`), kept the words verbatim but encoded every non-ASCII character twice. A second
+      extraction, `report_v2.md`, decodes them once; it equals the first with that double encoding undone, byte for
+      byte, and is the one the raw carries. The review found 0 BUG, 6 RISK and 12 NIT, plus one observation.
+    - v2 took each finding in, two of them in part, as the dispositions record.
+    - v2's first stand-in run (19 variants; bash stand-ins in fake git roots in Code's scratch) found two defects of
+      its own and a wrong stand-in, all three fixed before v2 went to anyone. The second run, on the final bytes,
+      behaved as designed in every variant.
+    - All of it is in the launch review raw (the record, below).
+  - **Dated notes** (2026-11-27):
+    1. The review's observation. `committed_problems`' docstring (n_analyze.py:5893–5894) says nothing under a ckpt
+       or reports directory is among the paths it checks. On the verdicts path the stage report is among them
+       (:6635–6641). This had no effect on the run; v7 stays of record, unedited.
+    2. `check`'s cell-folder assertion uses three names forms over a ckpt folder, each printed by count:
+       `git ls-files`, `git diff --name-only 95cd461 HEAD`, and
+       `git status --porcelain --ignored --untracked-files=all`. The coordinating session read the first two as list
+       v2 item 1's forms. It read the third as not the bare `git status --porcelain` that item 1 names, and had it
+       kept as built. It is declared here for the seat to class.
+    3. The window's grant quoted the pins file's sha256 as `ec8cdd74…5d04`. By tool it is `ec8cdd74…5f04`, and the
+       manifest checked 13 of 13 before check (call 3810), so the abbreviation alone differs. The coordinating
+       session named it its own slip, typed by eye; its grant check used the full sha256.
+  - **The record,** committed here by path:
+    - the outputs of record: `data/n/verdicts/N-pod_VERDICTS.json`
+      (`4f29f294252cf7802f4727ed8e3e34705876d477c0848f50186f9a87ec4c68c0`) and `data/n/verdicts/N-pod_secondary.json`
+      (`4133c48b9941d6733496be770cf84b9fe07b6e8e1575682e97a77e38db889c05`);
+    - `.gitignore`: 6 lines in n's block, after the G-READ-n line, admitting `data/n/verdicts/` and the two outputs.
+      The analyzer's write-once temporary files stay ignored;
+    - the out raw, [`2026-11-27_n-verdicts_out.txt`](results/raw/2026-11-27_n-verdicts_out.txt) (`34f88cce…5ed8`,
+      39 lines), as `after` built it. Its header holds the run's parameters, the environment and the check at launch,
+      then stdout's two lines, with the root as `<repo>`;
+    - the launch review raw,
+      [`2026-11-27_n-verdicts-launch_review.md`](results/raw/2026-11-27_n-verdicts-launch_review.md) (`64ee49ff…0b6a`, 1,950 lines).
+      Its 19 parts are:
+      - the launch files v2 and v1;
+      - the blind review, in the extraction that decodes it once (part 5's heading names the first extraction's
+        sha256), and its dispositions;
+      - the two checks before the grant;
+      - the stand-in tests and their logs;
+      - the window's steps as they printed (part 19).
+
+      Each part is verbatim, with the repository's root printed as `<repo>` and the scratch folder as `<scratch>`.
+      The review's report alone gains a final newline;
+    - the values-check raw, [`2026-11-27_n-verdicts_valuescheck.md`](results/raw/2026-11-27_n-verdicts_valuescheck.md)
+      (`108ed15c…015d`, 268 lines): the check's report verbatim, its dispositions, and the replay of the edits;
+    - and this entry and the next, at the Log's head.
+
+    A guard marker stands in content in five lines: the out raw's INVOCATION line, which prints the venv folder's
+    name; the stand-in logs' two printed INVOCATION lines in the launch review raw; and two lines of the values-check's
+    report in its raw, which quote the departure's seven words and the stand-in's folder name. None is in an argv.
+  - **Departures**, declared for the seat to class: the commands by kind, what they printed, and the checkout's
+    commit.
+    - **The span and the checkout:** from transcript call 3546, the first after G-ANL-n's entry's last sweep (its calls
+      3404–3545), through call 3918 at this entry's final sweep. The checkout was `b6ea27f` at call 3546
+      (2026-11-20), `1641948` from call 3578 (G-ANL-n's commit), then each later HEAD of the record, to `b23f91d`.
+    - **The sweep** (`gen_departures_v2.sh`, Code's scratch): it reads the tool calls from the transcript with Perl's
+      `decode_json`, turns each command's escaped newlines into separators, matches guard markers by bracketed
+      lowercase patterns over lowered text, and prints counts, kinds and call numbers.
+    - **This session's calls: 373.** Bash 139, Read 62, Edit 66, Write 26, the task list
+      50, wrap-up 21, SendMessage 5, Agent 2, ToolSearch 1, ReadNotifications 1.
+    - **Against the rules as written:**
+      1. **A guard marker in an argv, three times** (calls 3841, 3845 and 3870, 2026-11-27, in this sweep's first
+         form). awk has no `-i`, so to catch mixed-case markers the class pattern carried the upper- and mixed-case
+         forms of four markers, seven words, unbracketed. They stood in awk's `-v` argument and in the shell's command
+         text.
+         - Call 3841 wrote the sweep's first extraction file.
+         - Call 3845 listed the session's subagents folder by name, read the reviewer's transcript there by Perl, and
+           wrote its extraction file.
+         - Between them the three printed counts by tool and by date, the first and last call numbers with their
+           timestamps (3841, 3870), and the transcript's file name (3845). No Python ran.
+
+         The form from here on is bracketed lowercase patterns over lowered text, or `grep -i` with the bracketed
+         pattern.
+      2. **A file outside the scratch.** Call 3894's last line wrote a stray file in `/tmp`, holding secondary (a)'s
+         shares from the output of record. Its echo said that no file was kept. Call 3895 listed it with `ls -la`,
+         which printed its size and time, and removed it.
+      3. **The status form that is not the bare one** (dated note 2): `git status --porcelain --ignored
+         --untracked-files=all` in check's cell-folder assertion over `data/n/ckpt/campaign`, by count, in five runs on
+         the real tree. One run, 3766, was on v2 before its last edits; four were on the final bytes (3798, 3806 and
+         3812, and run's own check in 3814). Earlier, on 2026-11-20, in G-ANL-n's commit window:
+         - `git status --porcelain --ignored -uall -- data/n` with item 3's exclusions, twice (calls 3564 and 3580),
+           printing names outside `ckpt` and `reports`;
+         - `git status --porcelain -uall -- <five named paths>` (3580).
+      4. **`git diff --stat` with item 3's pathspec** (call 3580, G-ANL-n's commit window): a form list v2 item 6
+         points no checker to. Its rows named no path under `ckpt` or `reports`.
+    - **The sweep method's classes, each within list v2 item 1 as Code reads it:**
+      - **Ids over a reports path:** `git log --format=%h -n 3 -- data/n/reports/campaign.json` (call 3738); and
+        check's `git log --format=%H -n 1 -- <path>` and `git rev-parse --verify -q <rev>:<path>` for each pinned file,
+        the report among them.
+      - **The report's digest and blob ids:** `shasum` (3738 and 3766, and check's and after's `shasum -c`), and
+        check's `git rev-parse HEAD:<path>`, `git hash-object` and `git status --porcelain -- <path>`. Nothing of its
+        content was printed: ids, an abbreviated digest (3738), and OK and PASS lines.
+      - **Names over the cell folder, by count:** check's `git ls-files` and `git diff --name-only 95cd461 HEAD`, and
+        `git diff --name-only 7ab1cf6 HEAD -- scripts valence_core data 'LOCK-*'` (3806).
+      - **One commit's raw names:** `git show --name-only --format= b23f91d -- results/raw` (3849), which printed the
+        six names that commit added.
+      - **`git log -1 --format=%h` with no pathspec** (3655 and 3679). The seat's raw of 2026-11-25 (§4) classed the
+        same form inert for that read's values-checker.
+    - **The rest, by kind, inert by the forms above:**
+      - **G-ANL-n's commit window, 2026-11-20 (calls 3546–3584):**
+        - the G-ANL-n entry's final sweep's own greps (3546, 3547);
+        - `zsh -n` and zsh runs of scratch scripts: `check_edits.sh` (3559, 3561); `commit_steps.sh -n` (3564); and
+          its place, gate, stage and count (3571, 3573, 3575, 3576), which placed and staged five paths in the
+          repository;
+        - `git commit -q -F … -- <five paths>` (3578);
+        - the verification (3579, 3580): `git rev-list`; `git cat-file` of a blob and a commit, into `cmp` and
+          `shasum`; `git diff -U0 HEAD^ HEAD -- RESULTS.md` and `-- .gitignore` (content hunks); and
+          `git diff --cached --name-only`. `git show --name-status` carried item 3's pathspec;
+        - `od -c` (3561), and notes appended by `cat >>` heredocs (3566, 3584).
+      - **Reads of named files:** `cat`, `head`, `tail`, `sed -n`, `cut` and `/usr/bin/grep`, over:
+        - committed raws (among them `tail` of one, 3727), the analyzer, the lock, LOCK-n's v1.0 draft, RESULTS.md and
+          the schema;
+        - memory notes, by name, and scratch files;
+        - after the wait had ended: the harness's task-output files (3795, 3818), and the run's `exit.txt` (3818) and
+          `secs.txt` (3823).
+
+        Also `perl -CSD -ne` over LOCK-n's v1.0 draft (3644), which printed line numbers, heads and a count.
+      - **Counts and digests:**
+        - `shasum` of named files, and `cmp`;
+        - `wc -l` and `wc -c` of named files: raws, scratch files, a memory note (3661), the G-ANL-n artifact (3564),
+          the lock and the analyzer (3655), and the reviewer's task output (3758). None is under `ckpt` or `reports`.
+      - **git, ids and names:** `rev-parse`, `hash-object` and `merge-base --is-ancestor`; `log --format=%h -n 1`
+        over four package files (3762); `diff --name-only 7ab1cf6 HEAD -- . <exclusions>` (3806).
+      - **The outputs of record, after the run:** `jq` (calls 3827–3833, 3852, 3854, 3855, 3894 and 3902); and after's
+        `shasum`, name-only `ls -A` and `/usr/bin/grep -c` over `data/n/verdicts`.
+      - **Transcripts:** Perl's JSON::PP over this session's transcript and the two subagents', writing files in the
+        scratch (3758, 3759, 3840, 3845, 3868, 3871, 3891, 3897, 3918). Call 3840 printed the first 90 characters of calls
+        3540–3550's commands, to find the span's start.
+      - **Name-only listings:** `ls` of the repository's root (3754), of scratch folders (3727, 3775) and of the
+        session's subagents folder (3845); `find -type f` in the scratch (3728).
+      - **The system:** `pgrep` with bracketed patterns, `ps`, `pmset`, `ioreg` (3810), `sysctl`, and `sw_vers`
+        inside run's environment step.
+      - **The venv's link:** `readlink python`, `basename` and `dirname`, after a builtin `cd` into the venv's bin
+        (3761, 3764), which printed the base interpreter's folder name.
+      - **Scratch work:**
+        - `mkdir`, `cp`, `mv` (3856), `sed -i ''` (3776, 3902), `diff`, `tr`, `awk`, `sort` and `uniq`;
+        - `/bin/bash -c` (3761) and `bash -n` syntax checks;
+        - Writes and Edits of scratch files, and of memory notes by name.
+      - **The steps' modes:** v1's check (3741); v2's check (3766, 3798, 3806, 3812), run (3814), wait (3816) and
+        after (3822).
+      - **The stand-in tests:**
+        - v1's harness (3744, 3747) used plain fake folders without git, and ran the copy's `run` in the foreground.
+        - v2's harness (3770, 3785) used fake git roots in the scratch. Each root was made with `git init` and given
+          one commit with `-c user.name=standin -c user.email=standin@localhost -c commit.gpgsign=false
+          -c core.hooksPath=/dev/null`, and its runs were launched under nohup caffeinate.
+        - One traced launch of a bash script ran under nohup caffeinate (3776).
+      - **The word "python," with no interpreter:**
+        - in sixteen Bash commands' text: grep and awk patterns, echo strings, `readlink python`, and the stand-in
+          files' names (calls 3546, 3547, 3644, 3656, 3749, 3750, 3761, 3764, 3770, 3785, 3799, 3800, 3841, 3844,
+          3845, 3864);
+        - in four Write or Edit paths (3742, 3767, 3781, 3782).
+    - **Not done:**
+      - no read, listing, size or time of anything under `data/*/ckpt`, beyond the counts above, and no Read under
+        `data/` at all;
+      - no Write or Edit in the repository before this commit's window;
+      - no Python but the window's one run;
+      - no listing of `results/raw`, and no glob over the memory folder.
+
+      Code knows of no others.
+    - **The blind reviewer's calls,** swept the same way from its transcript: 58 calls (29 Bash, 27 Read, one Write
+      that the file tool refused, and the hand-back).
+      - Its `git log --name-only` (its call 28) and `git grep` (its call 29) carry item 3's exclusions.
+      - It read nothing under `data/*/ckpt` or `reports`, ran no Python, and put no guard marker in any command's
+        text.
+      - Its one `mkdir -p` made its report folder in the scratch.
+
+      Its own list is its report's §3, in the launch review raw.
+    - **The values-checker's calls,** swept the same way: 125 calls (104 Bash, 20 Read, and the hand-back).
+      - `ckpt` and `reports` stand in its commands only in item 3's exclusions, in its class patterns, and in a
+        `grep -v` that dropped the report's line from a copy of the pins.
+      - It read nothing under either, ran no Python, and put no guard marker in any command's text.
+      - Its own departures, as its report lists them:
+        - `wc -l` of the whole close list;
+        - `git check-ignore`, and `git log -n 1 <rev>` with no pathspec;
+        - a scoped porcelain status without the exact `-- .` form;
+        - one glob (`reviewer/*`), in the command that first listed its folder;
+        - record text printed beyond counts while it checked the departures;
+        - guard markers in its output only;
+        - the word "python" in its own awk patterns.
+  - **What follows:** after this output, the seat's full read of the 138 cells and of G-CAL-n's turns (raw (D) §5
+    item 2). The push is the PI's word.
+
+- 2026-11-27 — **n — PROPOSAL-n N-pod — secondary DVs (n v0.2 §8 step 15; n:159; n §4's secondaries (a)–(e)):
+  descriptive, issuing no claim (n §4; rule 11). The same run wrote them to `N-pod_secondary.json`
+  (`4133c48b…9c05`), which `N-pod_VERDICTS.json` names by sha256. Secondary (f) is the VERDICTS entry's TAU/4
+  sensitivity row (n_analyze.py:3716–3717).**
+  - (a) The first-pick share: per arm and label, the finite reads whose restricted pick is S
+    (n_analyze.py:3720–3729):
+    | cell | n | pick S | share | below floor |
+    |---|---|---|---|---|
+    | N1-P\|+1 | 160 | 71 | 0.4438 | false |
+    | N1-P\|+d_20 | 160 | 77 | 0.4813 | false |
+    | N1-P\|+d_eq | 160 | 77 | 0.4813 | false |
+    | N1-P\|-1 | 160 | 77 | 0.4813 | false |
+    | N1-R\|+1 | 960 | 428 | 0.4458 | false |
+    | N1-R\|+1/2 | 960 | 429 | 0.4469 | false |
+    | N1-R\|+d_20 | 960 | 428 | 0.4458 | false |
+    | N1-R\|+d_eq | 960 | 424 | 0.4417 | false |
+    | N1-R\|-1 | 960 | 480 | 0.5000 | false |
+    | N1-V\|+1 | 160 | 106 | 0.6625 | false |
+    | N1-V\|+1/2 | 160 | 93 | 0.5813 | false |
+    | N1-V\|+d_20 | 160 | 92 | 0.5750 | false |
+    | N1-V\|+d_eq | 160 | 87 | 0.5438 | false |
+    | N1-V\|-1 | 160 | 50 | 0.3125 | false |
+    | N1-V\|0 | 160 | 75 | 0.4688 | false |
+    | N2-C\|f0.10 | 160 | 75 | 0.4688 | false |
+    | N2-C\|f0.20 | 160 | 76 | 0.4750 | false |
+    | N2-E\|f0.10 | 160 | 78 | 0.4875 | false |
+    | N2-E\|f0.20 | 160 | 79 | 0.4938 | false |
+    | N2-S\|f0.10 | 160 | 85 | 0.5313 | false |
+    | N2-S\|f0.20 | 160 | 89 | 0.5563 | false |
+    | N4-Ts\|0 | 160 | 69 | 0.4313 | false |
+    | N4-T\|0 | 160 | 80 | 0.5000 | false |
+    - (b) free text: struck (ADDENDUM-n1 §4): nothing is generated in the campaign; §0.4's table stands as the welfare report.
+  - (c) The groups. Per arm and label, the Δm against its shadow is grouped two ways: by whether the S option was
+    presented first, and by the menu pair. Each group's mean is reported where it holds at least 20 reads
+    (n_analyze.py:3731–3743):
+    | cell | present first S: n, mean Δm | present first U: n, mean Δm | menu-pair groups | of them at n ≥ 20 |
+    |---|---|---|---|---|
+    | N1-P\|+1 | 79, -0.0564 | 81, +0.0532 | 98 | 0 |
+    | N1-P\|+d_20 | 79, +0.0186 | 81, -0.0154 | 98 | 0 |
+    | N1-P\|+d_eq | 79, -0.0182 | 81, +0.0201 | 98 | 0 |
+    | N1-P\|-1 | 79, +0.1428 | 81, +0.0285 | 98 | 0 |
+    | N1-R\|+1 | 360, -0.0740 | 600, -0.0706 | 31 | 31 |
+    | N1-R\|+1/2 | 360, -0.0412 | 600, -0.0383 | 31 | 31 |
+    | N1-R\|+d_20 | 360, -0.0468 | 600, -0.0438 | 31 | 31 |
+    | N1-R\|+d_eq | 360, -0.0313 | 600, -0.0193 | 31 | 31 |
+    | N1-R\|-1 | 360, +0.0180 | 600, +0.1173 | 31 | 31 |
+    | N1-V\|+1 | 79, +0.8212 | 81, +0.9516 | 98 | 0 |
+    | N1-V\|+1/2 | 79, +0.3960 | 81, +0.4225 | 98 | 0 |
+    | N1-V\|+d_20 | 79, +0.4684 | 81, +0.4653 | 98 | 0 |
+    | N1-V\|+d_eq | 79, +0.2067 | 81, +0.2469 | 98 | 0 |
+    | N1-V\|-1 | 79, -0.6074 | 81, -0.6576 | 98 | 0 |
+    | N2-C\|f0.10 | 79, +0.0356 | 81, +0.0471 | 98 | 0 |
+    | N2-C\|f0.20 | 79, -0.0400 | 81, +0.0791 | 98 | 0 |
+    | N2-E\|f0.10 | 79, +0.0839 | 81, +0.1100 | 98 | 0 |
+    | N2-E\|f0.20 | 79, +0.0831 | 81, +0.2554 | 98 | 0 |
+    | N2-S\|f0.10 | 79, +0.2089 | 81, +0.1933 | 98 | 0 |
+    | N2-S\|f0.20 | 79, +0.3829 | 81, +0.2608 | 98 | 0 |
+    - (d) retention: the Pearson r between N1-V's retention interval and its Δm at +1, over 160 sessions: 0.056254487770442306.
+  - (e) The directions: the means of N2's three arms (N2-E, the evaluative axis span_reward; the guards N2-S and N2-C)
+    and of the valence direction at the norm-matched points, with 95% intervals (n_analyze.py:3752–3759). The six
+    cosines are the VERDICTS entry's.
+    | direction and f | mean Δm | 95% interval |
+    |---|---|---|
+    | span_character\|f=0.10 | +0.0414 | [+0.0234, +0.0602] |
+    | span_character\|f=0.20 | +0.0203 | [-0.0242, +0.0646] |
+    | span_reward\|f=0.10 | +0.0971 | [+0.0789, +0.1154] |
+    | span_reward\|f=0.20 | +0.1703 | [+0.1254, +0.2143] |
+    | span_sentiment\|f=0.10 | +0.2010 | [+0.1787, +0.2234] |
+    | span_sentiment\|f=0.20 | +0.3211 | [+0.2787, +0.3639] |
+    | valence\|f=0.10 | +0.2271 | [+0.2100, +0.2452] |
+    | valence\|f=0.20 | +0.4668 | [+0.4248, +0.5112] |
+    - The floor (PIN-n-22) under which (a), (c) and (d) report no share, mean or r: n ≥ 20. The claim, as the output states it: none: descriptive, issuing no claim (n §4; rule 11).
+
 - 2026-11-27 — **The coordinating session's notes on the PI's routing of three seat raws: G-READ-n's record read
   (the run of record accepted; valence +1's FAIL stands as computed, a ceiling tie; ledger (91)), the Q-F3 campaign
   entry's five items and `5ceb8dd`'s departures classed (item 3 a strike in form, item 4 deferred, the rest inert),
