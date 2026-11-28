@@ -1,0 +1,24 @@
+# n, G-READ-n's run of record (PROPOSAL-n v0.2 §8 step 15; n:161) on the BUILD `0cc301d`: scripts/n_sessions.py gread --staging ../jspace-lab-box.noindex/n/campaign-v1, the driver sha256 35c4c73e504b33bb1df9989ace7241e99b55022f05bf70c84e8776f9799f4808, model-free on the laptop's CPU, at nice -n 19 with the interpreter's flags -I and -B, the interpreter reached by cd into the venv's bin by glob, TMPDIR in scratch, in the background under nohup caffeinate -is through /bin/zsh -f, launched by the step script gread_steps_v2.sh (sha256 85dfa911c71ecf47ac03a7fb811d46e7eb4be5aa2e69f37c577c617ee17da023) in the run's window (on AC power) the coordinating session granted; PI date 2026-11-27; exit 0; stderr 0 bytes; below, the run's stdout whole, 23 lines. It names no local root: the driver prints its paths relative to the repository's root.
+STAGE G-READ-n (n v0.2 §8 step 15), model-free, on the laptop's CPU, under LOCK-n v1.0 59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa; the staging folder ../jspace-lab-box.noindex/n/campaign-v1; the artifact data/n/gates/G-READ-n.json, written once; no smoke, no --out, no resume (GR1, GR9)
+DRIVER scripts/n_sessions.py 35c4c73e504b33bb1df9989ace7241e99b55022f05bf70c84e8776f9799f4808: HEAD's committed bytes
+LOCK-n.md 59e0b1bcb364af06630753ba09fde127518c451e0aa679cea1d979d0ec9900aa: HEAD's committed bytes, LOCK-n v1.0's
+the package valence_core/n 06b55761052508f93fb67993b4b4c7574483aa38d2168b8254b3c0b7417a1d39 and its closure of 12 files, measured in this process: the lock's (L §18)
+the close list results/raw/2026-11-25_n-campaign_close-names.txt 42682630ad853defe22c64fd681548a4f4ca0f37d0d9c97c6c8b13ab5ff1fe6d: 4417 lines, HEAD's committed bytes
+the campaign's report data/n/reports/campaign.json 1cabeadf9ee94d411d106a9cc306b29615d34bf41e0818f97bd1ed68dfc1c4e3: the close list's first line; COMPLETE, every arm complete; identity d566764f234668d5fbb2db92c6b579279fc563a62157f0c51780c3437f677f8a, under the lock; read plan 7f7d7301607e0fa6f66df930ce6a502086fe13cd84d19fe2d3f8b0c9105b88a6; 138 cells and 4278 arrays listed; the band 33-63; probe.py's seeds 20261116 and 20260905, the lock's
+the staging folder: 4417 of 4417 listed files at their sha256s, each opened by name; 3751 ms
+the cells: 138 of 138 through the package's reader (cells.load_cell: check_cell, each layer's rows against capture_sha256, each row against its sha16), each at the report's capture_sha256 and record count; 4728 ms
+environment (GR10): python 3.12.9, numpy 2.5.1 (BLAS accelerate), 14 CPUs; OMP_NUM_THREADS unset, OPENBLAS_NUM_THREADS unset, MKL_NUM_THREADS unset, VECLIB_MAXIMUM_THREADS unset, NUMEXPR_NUM_THREADS unset
+the shadow: N1-V__none__0.json's rows, 160 sessions, held for the shadow contrasts; 133 ms
+the repeat check (GR10): the first comparator call (+1, rand_00, layer 33) computed twice, its AUCs equal
+comparator +1: 24 random directions, 31 layers each, no shuffles; the largest band median 1.0; 68633 ms
+comparator +1/2: 24 random directions, 31 layers each, no shuffles; the largest band median 0.99375; 67749 ms
+comparator +d_20: 24 random directions, 31 layers each, no shuffles; the largest band median 0.998125; 67316 ms
+comparator +d_eq: 24 random directions, 31 layers each, no shuffles; the largest band median 0.953125; 66838 ms
+result valence +1: contrast pole, 320 rows a layer, the comparator at +1; band median 1.0, comparator max 1.0: FAIL; 31 of 31 layers above their null; 1605274 ms
+result valence +1/2: contrast shadow, 320 rows a layer, the comparator at +1/2; band median 0.9998828125, comparator max 0.99375: PASS; 31 of 31 layers above their null; 1590044 ms
+result valence +d_20: contrast shadow, 320 rows a layer, the comparator at +d_20; band median 1.0, comparator max 0.998125: PASS; 31 of 31 layers above their null; 1567429 ms
+result valence +d_eq: contrast shadow, 320 rows a layer, the comparator at +d_eq; band median 0.9917578125, comparator max 0.953125: PASS; 31 of 31 layers above their null; 1587731 ms
+result span_reward f0.10: contrast shadow, 320 rows a layer, the comparator at +d_eq; band median 0.9932421875, comparator max 0.953125: PASS; 31 of 31 layers above their null; 1600562 ms
+result span_reward f0.20: contrast shadow, 320 rows a layer, the comparator at +d_20; band median 0.9999609375, comparator max 0.998125: PASS; 31 of 31 layers above their null; 1611177 ms
+the artifact data/n/gates/G-READ-n.json (n-gread-v1), sha256 378f9972e942deb61ee4da74887e11556b625cdf41adfcfa4195636ccd31f519: written once, read back; check_gread and the analyzer's binding conditions (anl:6459-6484) hold
+G-READ-n COMPLETE: valence +1 FAIL; valence +1/2 PASS; valence +d_20 PASS; valence +d_eq PASS; span_reward f0.10 PASS; span_reward f0.20 PASS

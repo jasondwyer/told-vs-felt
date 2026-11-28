@@ -21,6 +21,303 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-27 — **n — G-READ-n (n v0.2 §8 step 15; n:161's entry): the run of record, on the laptop, from the BUILD
+  `0cc301d`: COMPLETE, exit 0 with the artifact; valence +1 FAIL, and valence +1/2, +d_20 and +d_eq and span_reward
+  f0.10 and f0.20 PASS. `scripts/n_sessions.py gread --staging ../jspace-lab-box.noindex/n/campaign-v1` ran once,
+  model-free on the laptop's CPU, in the run's window (on AC power) that the coordinating session granted on the PI's
+  routing of 2026-11-26 (item 5, "[go]"). The artifact of record, `data/n/gates/G-READ-n.json`, enters the repository
+  by the admit committed with the BUILD. Nothing ran on a model or on the box.**
+  - **Headline:** the run's last line, verbatim, "G-READ-n COMPLETE: valence +1 FAIL; valence +1/2 PASS; valence +d_20
+    PASS; valence +d_eq PASS; span_reward f0.10 PASS; span_reward f0.20 PASS"; exit 0; stderr empty. The artifact
+    (`n-gread-v1`), sha256 `378f9972e942deb61ee4da74887e11556b625cdf41adfcfa4195636ccd31f519`, 384,120 B, 6,382 lines,
+    the printed sha256 equal to the file's.
+  - **The authority:** the PI's routing of 2026-11-26, item 5, from its raw
+    [`2026-11-26_two-raws_pi-routing.md`](results/raw/2026-11-26_two-raws_pi-routing.md) (`311ffdc0…8322`, at
+    `e114b3a`, line 19): "5. Code commits raw (A) by path and runs G-READ-n (step 15) on the PI's word, launch files to
+    the coordinating session first; the seat reads the entry after the artifact data/n/gates/G-READ-n.json is
+    committed, then VERDICTS on the PI's word [go]." The PI's own words below the block: "Route as given". The seat's
+    raw (A),
+    [`2026-11-26_n-gread-starred-two_design-to-code_answers.md`](results/raw/2026-11-26_n-gread-starred-two_design-to-code_answers.md)
+    (`cd6ba27f…0209`, at `e114b3a`), §5: "Exit 0 with the artifact whatever its statuses; 1 with no artifact; a crash
+    or stop repeats whole in a new window (GR8–GR9)."
+  - **The run,** by the step script v2 in Code's scratch, `gread_steps_v2.sh` (`85dfa911…a023`, 201 lines), its four
+    steps each once and each its own call, as the window's terms set; steps 1, 2 and 4 each reported to the
+    coordinating session in a message of its own, and the end notice after them. HEAD `0cc301d` from check to after.
+    PI date 2026-11-27.
+    - `check 0cc301d`, read-only: PASS. Its assertions, each silent when it holds: HEAD the commit the window names;
+      the driver, `LOCK-n.md` and the close list committed, clean and at their pins, and the report committed and
+      clean and at the close list's first line (by blob id and digest; nothing else of it read); `pkgsha.sh`
+      (`4edcf928…6465`) at its sha256 and the
+      package's digest by it the lock's; `valence_core` unchanged since the BUILD and clean in the working tree (by
+      count; no name printed); `scripts/` clean; the `.gitignore` committed and clean, admitting the artifact and
+      ignoring its temporary file (`git check-ignore`); `data/n/gates` holding `G-ANL-n.json` alone; `jl*/.venv/bin`
+      exactly one folder holding an executable python (by builtins in a subshell, so that no argv carried the
+      expansion); the run's folder holding only its empty temporary folder; no process naming the run and none named
+      python; GR10's five thread variables unset; AC power; Low Power Mode off. Printed: the power source, AC; the
+      sleep and wake counts since boot, "Sleep Count:1 Dark Wake Count:0 User Wake Count:1"; the five thread variables,
+      each unset; HEAD.
+    - `run 0cc301d`: the same assertions, then `nohup caffeinate -is /bin/zsh -f -c "cd <repo> && cd jl*/.venv/bin &&
+      [[ -x ./python ]] && TMPDIR=<run>/tmp nice -n 19 ./python -I -B <repo>/scripts/n_sessions.py gread --staging
+      ../jspace-lab-box.noindex/n/campaign-v1 > <run>/out.txt 2> <run>/err.txt; echo "EXIT=$?" > <run>/exit.txt" >
+      /dev/null 2>&1 < /dev/null & disown`, `<run>` the run's folder in Code's scratch. At 2 s the PID's own command
+      line named the run: PASS.
+    - `wait <PID>`, as the harness's background task: the end-wait on the PID alone (`kill -0` and the PID's own
+      command line, every 600 s), then no process naming the run: "ended; polls off AC power: 0".
+    - `after 0cc301d`, read-only, once no process named the run: HEAD unchanged; the exit file "EXIT=0"; no process
+      named python; the temporary folder empty; the inputs the run read at their pins; `data/n/gates` holding
+      `G-ANL-n.json` and `G-READ-n.json` alone, and `git status --porcelain --ignored -uall -- data/n/gates`, with item
+      3's exclusions and Q-F3's beside it, listing one line, `?? data/n/gates/G-READ-n.json`; the artifact at the
+      sha256 the run printed; the err file empty; the status word, "G-READ-n COMPLETE"; out 23 lines, err 0; and it
+      printed the power source, AC, and sleep and wake counts equal to check's: PASS.
+    - Nothing of the run's files was read, listed or timed until the wait had ended (item 5).
+  - **Times and power** (the out's ms): the fit stages 9,832,753 ms, 2.731 h, each stage's time with its cells'
+    second reads (and, at +1, the repeat check's second call): the comparator's four points 270,536 ms, the six results
+    9,562,217 ms. GR9's projection for the fits alone was 2.650 h at the medians and 2.769 h at the maxima
+    (LOCK-n.md:94–95). The staging folder's hashes 3,751 ms, the cells' first reads 4,728 ms and the shadow's rows
+    133 ms. From the out file's creation to the exit file's, 9,842 s. The power source was AC at check and at after
+    and at every poll, and the sleep and wake counts were equal at both: the run did not pause.
+  - **The inputs, by sha256,** as the run printed them (the out's lines 2–8), each held by the command's refusals
+    before any fit:
+    - the driver, `scripts/n_sessions.py` `35c4c73e…4808`, and `LOCK-n.md` `59e0b1bc…00aa`, LOCK-n v1.0's, each
+      HEAD's committed bytes;
+    - the package `valence_core/n` `06b55761…1d39` and its closure of 12 files, measured in the process: the lock's
+      (L §18);
+    - the close list, `results/raw/2026-11-25_n-campaign_close-names.txt` `42682630…fe6d`, 4,417 lines, HEAD's
+      committed bytes;
+    - the campaign's report, `data/n/reports/campaign.json` `1cabeadf…c4e3`, the close list's first line: COMPLETE,
+      every arm complete; its identity `d566764f…7f8a`, under the lock; the read plan `7f7d7301…88a6`; 138 cells and
+      4,278 arrays listed; the band 33–63; probe.py's seeds 20261116 and 20260905, the lock's;
+    - the staging folder: 4,417 of 4,417 listed files at their sha256s, each opened by name;
+    - the cells: 138 of 138 through the package's reader (`cells.load_cell`: `check_cell`, each layer's rows against
+      `capture_sha256`, each row against its sha16), each at the report's `capture_sha256` and record count.
+  - **Environment (GR10):** python 3.12.9, numpy 2.5.1 (BLAS accelerate), 14 CPUs; `OMP_NUM_THREADS`,
+    `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, `VECLIB_MAXIMUM_THREADS` and `NUMEXPR_NUM_THREADS` unset. The repeat
+    check: the first comparator call (+1, `rand_00`, layer 33) computed twice, its AUCs equal.
+  - **The comparator** (GR5 as the seat ruled it, raw (A) §2: at +1 each random direction's +1 against its own −1 on
+    its 40 floor sessions; at +1/2, +d_20 and +d_eq its cell against the shadow): 24 random directions, 31 layers each,
+    no shuffles. The largest of the 24 band medians: +1, 1.0 (all 24 at 1.0); +1/2, 0.99375; +d_20, 0.998125; +d_eq,
+    0.953125.
+  - **The six results** (`probe.result`: 200 label shuffles, 320 rows a layer, the lock's seeds; PASS iff the band
+    median AUC is at least .90 and above the comparator's largest band median, `probe.verdict`, ADDENDUM-n1 §6.4), each
+    with 31 of 31 layers above their null:
+
+    | result | contrast | comparator | band median | comparator max | status |
+    |---|---|---|---|---|---|
+    | valence +1 | pole | +1 | 1.0 | 1.0 | FAIL |
+    | valence +1/2 | shadow | +1/2 | 0.9998828125 | 0.99375 | PASS |
+    | valence +d_20 | shadow | +d_20 | 1.0 | 0.998125 | PASS |
+    | valence +d_eq | shadow | +d_eq | 0.9917578125 | 0.953125 | PASS |
+    | span_reward f0.10 | shadow | +d_eq | 0.9932421875 | 0.953125 | PASS |
+    | span_reward f0.20 | shadow | +d_20 | 0.9999609375 | 0.998125 | PASS |
+
+    - **Valence +1's FAIL, as computed:** its band median, 1.0, meets the bar, and equals the comparator's largest,
+      1.0, which it must exceed (`bm > comp_max`, probe.py:82); its AUC is 1.0 at each of the 31 layers. probe.py's own
+      self-test holds the case ("probe: a comparator at the axis's level fails it", probe.py:162). What the FAIL bears
+      on is VERDICTS' and the seat's: raw (A) §5, "Its result enters n §5 only where n §0.6 says". **Flagged for the
+      seat;** Code classes nothing.
+  - **The artifact** (`probe.artifact`; the command's `check_gread` and the analyzer's binding conditions,
+    anl:6459–6484, hold: the out's line 22), in G-ANL-n.json's form (sorted keys, a one-space indent, a newline at the
+    end): `schema` "n-gread-v1"; `campaign`: the 138 cells read, each with its `json_sha256` and its `capture_sha256`
+    at each of the band's 31 layers, and the read plan's and the stage identity's sha256s; `probe`: the bar 0.9, the CV
+    "kfold10" with `cv_seed` 20261116, the band's 31 layers (33–63), k's classifier (`lr`: 300 iterations, l2 0.01,
+    rate 0.1, seed 7), the package's sha256, `shuffle_seed` 20260905 and 200 shuffles; `results`: the six, each with
+    its axis, dose label, contrast, bar, band median, status, an empty `merged`, its comparator's 24 band medians and
+    their max, and 31 per-layer rows (the layer, its AUC, its null's 95th percentile, and whether it is above it).
+    Nothing in it is a margin or a per-session value.
+  - **The out and err, read whole and screened** before this commit (the review's R7): the out names no local root, no
+    guard marker, no margin and no per-session value; its paths are relative to the repository's root; its only bytes
+    outside ASCII are its two "§" signs. The err is empty (0 bytes), so there is no err raw. Raw:
+    [`2026-11-27_n-gread_out.txt`](results/raw/2026-11-27_n-gread_out.txt) (`32172dc4…0056`, 24 lines: a header line,
+    then the stdout whole). The run's temporary folder was empty before the run and after it.
+  - **The launch review:**
+    [`2026-11-25_n-gread-launch_review.md`](results/raw/2026-11-25_n-gread-launch_review.md) (`52e6297d…89c4`, 363
+    lines): one blind pass over the step script v1, at HEAD `0cc301d`. No BUG; 15 findings (F1–F10 RISK, F11–F15 NIT);
+    on AC power, "both"; 9 run risks and 10 observations; no departure. v2 built in every finding, as the raw's §1
+    gives it; the coordinating session read v2 and its note whole and checked them by tool, and set the window's words
+    on power from the review's. Stand-ins made from v2's bytes, with `./python` replaced, tested a 45 s job exiting 3
+    through the real chain, a glob that matched nothing, a 90 s job whose wrapper was killed, and a `run` naming
+    another HEAD (§1, F10).
+  - **Next** (raw (A) §5): the seat reads this entry and the artifact's statuses on their commit, in one sitting; then
+    VERDICTS on the PI's word, `n_analyze.py verdicts … --gread` the committed artifact; the volume's cleanup on the
+    PI's word after the artifact is committed (CP18). Not pushed.
+  - **Departures,** for the seat to class:
+    - Code's, from the BUILD entry's final sweep (T's 01:48:39, UTC, on 2026-11-26) to this entry's, from its own
+      sweep of its tool calls (`jq` over this session's transcript). Code knows of no others:
+      - **Two against the rules as written:**
+        - a guard marker in an argv, once (PI date 2026-11-25, at the launch files' drafting): four memory notes read
+          by name by `sed -n '1,60p'` in a `for` loop, one of them a note whose file name holds a guard marker, so that
+          the marker stood in the shell command's text and in `sed`'s argv. Read-only, in Code's memory folder; no
+          Python process;
+        - G-TIME-n's holding folder's name in an argv, once (2026-11-27, after the run): the screen of the out and the
+          artifact for local roots used a `grep -E` pattern that held the folder's name in its `noindex/n/` form,
+          unbracketed. Only those two files were searched; nothing in or of that folder was read, listed, opened or
+          hashed.
+      - **The BUILD's commit, after its entry's final sweep** (27 commands, PI date 2026-11-25): the sweep's own
+        analysis (`grep` counts and line prints of its call list); a print of the entry draft's file-tools lines (`grep
+        -n -F`, `sed -n`, `cat -n`); the edits' replay and the texts' widths and placeholders, with a fixed-string count
+        of the scratch folder's word over the driver delta's added lines (twice); the
+        commit folder's three builds (`commit`, its width check failing after the fill; `commit_v2`, after an Edit put
+        the placeholder on its own line; `commit_v3`, after an Edit of "two overlays" to three), with `cmp` and `diff`
+        between the last two; the kit and the message's fill; gate v20's dry run, with `git rev-parse HEAD`, a `diff`
+        of `git show HEAD:RESULTS.md` against the expected file and scoped `git status --porcelain` and `git diff
+        --cached --name-only` counts and `git status --porcelain -- results/raw`; `sed` of the seat block's window
+        note, its local roots masked; `cat` of the kit's scripts with their `shasum`; `check_msg.sh`; bracketed counts
+        over the commit folder's texts and the driver's added lines (those lines written to a scratch file by a `grep`
+        redirect); `grep -n -F` line prints of the staging folder's last name in the commit folder's entry and review
+        raw (cut to 40 characters, then excerpted by `sed -E`); `git show HEAD:<path>` into `shasum` and `git
+        ls-files -s` of the driver and `.gitignore`; a name-only `ls -1` of the notes folder into `grep -c`; the window
+        note's `shasum` and counts, with `git rev-parse HEAD` and a scoped `git status --porcelain` count;
+        then, in the window as granted, `pwd` and `git rev-parse HEAD`, the six steps each its own call (place, `git
+        add --pathspec-from-file`, gate, `check_msg.sh`, `git commit -q -F … --pathspec-from-file`, verify), and the
+        verify's output read, with `git log -1`, `git show HEAD:<path>` into `shasum` and `grep -c`, `cmp`, `git diff
+        -U0 HEAD~1 HEAD -- RESULTS.md`, `git cat-file commit HEAD`, `git rev-parse` of origin and scoped counts.
+      - **The launch files v1** (13 commands, PI date 2026-11-25): `grep -n` and `sed -n` of Code's readings as sent;
+        `git log -1` and `git show --name-status` of `1641948` with item 3's pathspec, and `git ls-files` into `grep
+        -i`; name-only `ls -1` of the notes folder into `grep -i`, and of the scratch root and the campaign's launch
+        folder into `head`; `grep -n -E` of RESULTS.md for G-ANL-n's launch lines (into `cut` and `head`), and `sed -n`
+        of its G-ANL-n entry; `grep -c ''`, `grep -n -E` of the headings and `sed -n` (masked) of the campaign's
+        launch-set note; the four
+        memory notes above; `grep -n -E` and `sed -n` of the driver's draft 3 for its prints; `cat -n` and `shasum` of
+        `pkgsha.sh`, the package's digest by it, the close list's first line (its digest abbreviated by `sed`), a
+        scoped `git status --porcelain` count and `ls -1 data/n/gates`; `mkdir -p` of the run's folder and its
+        temporary folder; `bash -n` of v1 and its stand-in test; the stand-in test (`test_steps_v1.sh`, `nohup
+        caffeinate -is` over a 6 s `sleep` in the run's place, and its wait; no Python); v1's steps rehearsed read-only
+        (`check` at HEAD; `check` naming another commit, which failed as it should; `wait 1`; `after` with no run;
+        no step); `shasum` and line counts of the files and of the note, with bracketed counts.
+      - **The launch review** (4 commands, PI date 2026-11-25): `cat -n` of the BUILD review's brief, masked; `diff`
+        of the two briefs' list-of-record sections; the reviewer's id appended to the gate's new-id list; its report
+        saved by `jq` from its task output (`tail -n 2 | head -n 1`), with counts.
+      - **The launch files v2** (26 commands, PI date 2026-11-25): `pmset -g stats`, `pmset -g` (its `lowpowermode`
+        line, and its first 40 lines) and `pmset -g batt`'s first line, to read their forms; `grep -n -A 2` of the
+        driver's
+        thread-variable list; `git status --porcelain -uall` of `archive` with and without item 3's exclusions, and of
+        `data/n/gates` with `--ignored`, and `git check-ignore -q` of the artifact and its `.tmp`; `bash -n` of v2 and
+        a `bash -c` test of the `${!v+x}` form; `git rev-parse --verify` of the short HEAD; v2's steps rehearsed
+        read-only (`check` at the short HEAD and at `b449ed6`, `wait 1`, `wait 1 x`, `after` with no run, no step);
+        the stand-ins, made from v2's bytes by `make_standin_v2.sh` in two rounds (the second from the final v2),
+        launched by `run` (`nohup caffeinate -is /bin/zsh -f -c` with `./python` replaced by `/bin/sh -c '…'`, so that
+        each stand-in's argv named the run while it lived; no Python), waited on by `wait` as background tasks, and once
+        checked by `after` while a killed wrapper's child lived (it refused, reading nothing); two `kill`s of a
+        stand-in's own zsh wrapper, by its PID (the v2 note says one), then `pgrep -f` with a bracketed pattern and `ps
+        -p -o comm=` of the survivors; `cat` of the background tasks' outputs; name-only `ls -1A` of the test folders,
+        `cat` of their exit files and line counts of their out and err files; `pgrep -il python` (none); `touch` of
+        `pkgsha.sh`; `shasum` and line counts of the files and of the note, with bracketed counts. Outside a window, the
+        venv's folder was looked at, as the v2 note declared: v2's `pre`, in its rehearsals and in each stand-in's
+        `run`, tested `jl*/.venv/bin` by builtins (one folder, holding an executable python), and the stand-ins' wrapper
+        ran `cd` into that folder and `[[ -x ./python ]]` there. No interpreter ran, and nothing in the folder was read.
+      - **Before the window** (3 commands, 2026-11-27): raw (A)'s `shasum`, line count and `git ls-files` count, and
+        `git rev-parse` of HEAD and origin; `stat -f '%Sm'` of the 19 scratch paths to touch (17 files, the run's folder
+        and its temporary folder); their `touch` by explicit path, with `shasum` of v2 and `pkgsha.sh` and a name-only
+        `ls -1A` of the run's folder.
+      - **The window, as granted** (4 commands, 2026-11-27): the four steps above.
+      - **After the run, to this draft's sweep** (35 commands, 2026-11-27): `grep -n` and `sed -n` of the v2 note and
+        of Code's memory note for the end notice's form; in the run's folder, `ls -A`, `wc -c` of the err, `cat` of the
+        exit file, `shasum` of the three files, and `stat -f` of their creation and modification times and the
+        temporary folder's (for this entry's duration and date), with `date`; the screen above, over the out and the
+        artifact (counts by `grep -c`, `tr` and `wc -c`), and `head -c 1500` of the artifact; `jq` over the artifact
+        (its keys, fields, comparators, per-layer rows and counts) and `wc -c` of it; `git show` of `1641948`'s out raw
+        (`head`, `tail`, `grep -c`); `git log` (ids, dates and subjects) and `git show --name-status` of `1641948`, and
+        of `e114b3a` with its whole message (`--format='%H%n%ci%n%B'`, into `fold` and `head`), with item 3's pathspec;
+        `mkdir -p` of the record's folder and of its sweep folder; `tail -c 1 | od -An -c` of the out's last byte;
+        `shasum` and line counts of the two launch notes in the sessions' notes folder; `cat -n` as a numbering filter
+        over RESULTS.md's line ranges; `grep -n` and `sed -n` of RESULTS.md, of the BUILD's review raw, of probe.py
+        (with `git rev-parse` against `git hash-object`), of LOCK-n.md's lines 92–96, of Code's readings as sent and of
+        the routing raw (with its `shasum`); a bare scoped `git status --porcelain`, and `git status --porcelain --
+        RESULTS.md`; `cat` of the BUILD's sweep script, masked; `jq` over this session's transcript (the coordinating
+        session's relays, saved and printed with paths masked; the window's step calls and their outputs; the sweeps'
+        call times); a name-only `ls -1` of the launch and BUILD folders, with screens and `shasum` of the launch
+        files; shell arithmetic for the sums above; the out raw and the review raw assembled by `cat` and `sed -n`,
+        checked by `cmp`, widths, screens and `shasum`; this sweep (the BUILD's script copied by `sed` with its start
+        and names changed, `diff` of the two, `bash -n`, `sed -i ''`, its run).
+      - **The file tools across the spans:** 25 Edits (the BUILD's entry, self-test raw and message source in scratch,
+        6; the launch files' scratch scripts, dispositions and v2 note, 8; Code's memory note, 7, and memory index,
+        4); 15 Reads (the BUILD's commit folder, 4; raw (A), 2; the wait's task output, the run's out, the review's
+        brief and report and v2, 5; RESULTS.md, 4); 11 Writes (three notes to the coordinating session in the sessions'
+        notes folder; v1, its stand-in test, the review's brief, v2, the stand-in maker and the dispositions in scratch;
+        the out raw's header and the review raw's head). Besides them: 8 messages to the coordinating session (the
+        BUILD's window request and done report, launch files v1 and v2, the window's steps 1, 2 and 4, and the end
+        notice), one subagent (the launch review), one `ToolSearch` (a tool's schema), and the app's task-list and
+        wrap-up calls (21 and 8).
+      - **Counts,** to this draft's sweep, by bracketed patterns: over the commands and file-tool paths, one guard
+        marker and one name of G-TIME-n's holding folder (the two departures above) and no plain name of Q-F3's folder;
+        in outputs alone, marker words in eight commands' outputs (Code's readings' GR14 section, the four memory
+        notes, the BUILD review's brief, `1641948`'s out raw, RESULTS.md's headings with the scoped status listing (an
+        untracked file's name), RESULTS.md's head, the relays, and `e114b3a`'s message) and in four file-tool reads
+        (raw (A), twice; the launch review's brief; RESULTS.md's lines of `e114b3a`'s entry); Q-F3's folder's
+        repository path in three outputs (Code's readings' GR14 section, once; `1641948`'s out raw, twice; a read of
+        RESULTS.md's G-ANL-n entry, once); G-TIME-n's holding folder's name in none.
+      - **After the draft's sweep, to this entry's final sweep** (38 commands, PI date 2026-11-27, the final sweep's
+        own included):
+        - **the draft's sweep read** (6): bracketed `grep -n -i -E` and `grep -n -o -E` of its call list, the words
+          found masked by `sed -E` in the output; `sed -n` of one call, masked; fixed-word counts over the commands (a
+          `for` over the words) and `sed -n` of four of them; the process, `stat` and `diff` forms listed by `nl -ba`,
+          `grep`, `sed -E` and a `while read` loop (`grep -o -E`, `tr`, `cut`); `git ls-files` into `grep -E` and
+          `head`, and `sed -n` of PROPOSAL-n v0.2's line 161 and head, with `fold`; the numbered command list written
+          to a scratch file, masked;
+        - **the drafts and the brief** (6): the quotations checked (`sed` stripping bold from raw (A), then `grep -c
+          -F`; the routing raw's lines 19 and 38 compared in the shell), the drafts' widths, and `jq` over the
+          artifact; a width check of T3's draft, with one `awk` over `/dev/null` left in it by mistake (nothing
+          printed) and a `while read` loop with `wc -m`; `make_results.sh`'s `bash -n` and its two runs; the sources
+          list written by `shasum` and checked by `shasum -c`; `diff` of the two values-check briefs' list-of-record
+          sections, and the brief's counts and `shasum`;
+        - **while the check ran** (18): the memory note's tail and the index's line; the checker's id appended to the
+          gate's new-id list; reads of gate v20, the kit library, the place script and the BUILD's kit maker (`sed -n`,
+          `cat`, `grep -n`, ids masked); gate v21 made from v20 (`sed` ranges and `printf` into the new file, `bash
+          -n`, `diff` with the ids masked, `shasum`, an id count); reads of the BUILD's values-check head and
+          dispositions, message source and filler; the v2 copies (`cp`, `cmp`; the first loop's `set --` did not split
+          under zsh, so its `cp`s failed and copied nothing, and the replay it ran found the copies missing) and the
+          replay's run; `bash -n` of the five new scripts, the message source's counts, and the two anchors counted in
+          HEAD's RESULTS.md; the kit's placement tested in a scratch folder (the kit library sourced in a subshell, its
+          `target` run on HEAD's RESULTS.md, `cmp` against `make_results.sh`'s file); `sed` of the BUILD's
+          commit-window note, masked; the gate's id-window scan run over the artifact and the drafts (loops of `grep -q
+          -F`; no hit); bracketed counts of marker words and folder names in them; after the coordinating session's
+          notice, `git rev-parse HEAD`, scoped status and index counts, `git status --porcelain -- results/raw
+          data/n/gates`, and a `grep -n` of the kit's scripts;
+        - **after the report** (8): `grep -n` and `sed -n` of the two launch notes; the report saved by `jq` from the
+          checker's task output, with counts and screens; `sed -n` of the driver's lines 8104–8158, and `grep -n` of
+          its timers; `grep -n` of v1, its stand-in test and the stand-in maker for the venv's steps; widths,
+          placeholders, two quotations counted and the drafts' hashes abbreviated; the replay; and this final sweep;
+        - **the file tools:** 31 Edits (the entry's draft 7 and its v2 copy 18, T3's draft 1, the review raw's v2 copy
+          3, `make_results.sh` 1, Code's memory note 1); 7 Reads (the draft's sweep output 2 and its numbered list 2,
+          the BUILD's values-check brief 1, the entry's v2 copy 2); 12 Writes (the entry's and the two close lines'
+          drafts, `make_results.sh`, the brief, the replay, build, kit and message scripts and the message source, and
+          the values-check raw's head and dispositions). Besides them: the values-check (one subagent), no message, and
+          one task-list update and two wrap-ups;
+        - **counts:** over the commands and file-tool paths, no guard marker, no plain name of Q-F3's folder and no
+          name of G-TIME-n's holding folder; in outputs, marker words in three file-tool reads (the draft's sweep
+          output, twice; the BUILD's values-check brief) and Q-F3's folder's short name in one command's output (gate
+          v20's head comment); G-TIME-n's holding folder's name in none.
+    - The launch reviewer's, as its report states them: none. Its commands, as it lists them: `shasum -a 256` of the
+      six named files and of four repository files; `git rev-parse` and `git hash-object` on named files; `grep` and
+      `sed -n` over named files, marker patterns bracketed; `head` and `cut` of the close list's first line; four
+      manual pages through `col -b`; and its file-tool reads.
+    - The values-checker's, as its report states them: none that its brief's rules bar. Disclosed: one `cat` of the
+      run's exit file into `od`; two commands with environment prefixes named `awk_free` and `gsub_free` on `cut` (no
+      `awk` ran); one `jq` output sent to `/dev/stdout` inside a pipe (no file written); one bracketed `grep -c` that
+      named a file that does not exist (nothing read); `git check-ignore -v` on the artifact's path, and `git diff
+      05ac941 0cc301d -- .gitignore`; and one search of this session's transcript that printed parts of unrelated
+      records (record metadata, a compaction summary's opening line, a later tool result's head) beyond what a finding
+      needed.
+  - **Values-check:** one blind pass over these texts' drafts (the entry, the two close lines, the out raw, the launch
+    review raw, and the expected RESULTS.md with all three placed), at HEAD `e114b3a`, with every disposition:
+    [`2026-11-27_n-gread_valuescheck.md`](results/raw/2026-11-27_n-gread_valuescheck.md) (`f9b869fa…a293`, 324 lines).
+    - 98 items: 88 CONFIRMED, 6 IMPRECISE, 1 FAIL (the launch review raw's quotation of the report's "5 GB"), 3 NOT
+      CHECKABLE (Code's plans for the commit); and 6 observations.
+    - The FAIL is fixed and every IMPRECISE item applied, in the checker's words or nearly; every observation is
+      applied: the venv's folder declared as the v2 note promised (1); the fit stages' times stated with their cells'
+      second reads (2); `after`'s power line as printed, not asserted (3); "hashed" in the review raw's account of its
+      brief (4); the task-list calls counted (5); and the counts carried to this entry's final sweep (6).
+    - The edits after it, made in v2 copies of the five texts by the file tools, are replayed by tool: 23 of 23, each
+      text's count in the values-check raw's §2.
+  - **The gate.** The launch reviewer's and the values-checker's agent ids are in the commit gate's id list (gate v21,
+    a new version of Code's gate script), so the commit is checked to carry neither.
+  - **Committed by path:**
+    - `data/n/gates/G-READ-n.json`, the artifact;
+    - the out raw, the launch review raw and the values-check raw;
+    - this entry, and the close lines on `0cc301d`'s and `05ac941`'s entries (raw (A) §5's last bullet).
+
+    The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed.
+
 - 2026-11-27 — **The coordinating session's notes on the seat's two raws of 2026-11-26, the thread's second and
   third sittings: G-READ-n's two starred readings ruled (GR3 and GR5 stand as built, and the run is cleared) and the
   seat's read of `PROPOSAL-p OLMo-instruct — VERDICTS` (A0-OLMo-instruct PASS stands, nothing moves); both raws
@@ -477,6 +774,17 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-READ-n's launch files go
     to the coordinating session first; the run waits for the seat's ruling on GR3 and GR5 and the PI's routing of it.
+  - **Close (PI date 2026-11-26, the thread's second sitting), n-build's, items 1–5: GR3 and GR5 stand as built, and
+    G-READ-n ran on this BUILD.** The seat's raw,
+    [`2026-11-26_n-gread-starred-two_design-to-code_answers.md`](results/raw/2026-11-26_n-gread-starred-two_design-to-code_answers.md)
+    (sha256 `cd6ba27f…0209`), committed by path at `e114b3a` on the PI's "Route as given":
+    - §1, GR3: "Ruling: Code's reading stands as built; the PIN of record binds; the other answer is declined."
+    - §2, GR5: "Ruling: the lock's pinned reading stands as built — at +1 each random direction's +1 against its own −1
+      on its 40 floor sessions; at +1/2, +d_20 and +d_eq its cell against the shadow; the other answer is declined."
+    - §3: this entry's declared items accepted as built, the review's O6 not required before the run (a note for
+      N-lap's build), and R:12996's observation a disclosure, not a change. §4: the departures inert.
+    - Nothing of this BUILD's bytes changed, and G-READ-n's run of record ran on them: the entry `G-READ-n` (PI date
+      2026-11-27).
 
 - 2026-11-25 — **THE Q-F3 CAMPAIGN (PROPOSAL-m v1.11 m:298, m:361; LOCK-m-F3 v1.0; the PI's routing of 2026-11-15,
   evening, section A item 3): COMPLETE, exit 0, in one invocation. Its 596 launches were A1 95, A1s 40, A2 162,
@@ -1002,6 +1310,15 @@ applied to CLAUDE.md.
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed. G-READ-n's BUILD follows,
     on GR1–GR14 as PINs; its run waits for the seat's answers on GR3 and GR5 and the PI's routing of them.
+  - **Close (PI date 2026-11-26, the thread's second sitting), n-build's, items 1–2: Q1 and Q2 ruled; GR3 and GR5
+    stand as built.** The seat's raw,
+    [`2026-11-26_n-gread-starred-two_design-to-code_answers.md`](results/raw/2026-11-26_n-gread-starred-two_design-to-code_answers.md)
+    (sha256 `cd6ba27f…0209`), committed by path at `e114b3a` on the PI's "Route as given":
+    - Q1, GR3 (§1): "Ruling: Code's reading stands as built; the PIN of record binds; the other answer is declined."
+    - Q2, GR5 (§2): "Ruling: the lock's pinned reading stands as built — at +1 each random direction's +1 against its
+      own −1 on its 40 floor sessions; at +1/2, +d_20 and +d_eq its cell against the shadow; the other answer is
+      declined."
+    - G-READ-n's run of record went on the readings as built: the entry `G-READ-n` (PI date 2026-11-27).
 
 - 2026-11-25 — **The coordinating session's notes on the seat's sitting of 2026-11-25, the first of its new thread:
   the seat's read of `PROPOSAL-p OLMo-sft — VERDICTS` (m:318's "the reads"), under which A0-OLMo-sft PASS stands and
