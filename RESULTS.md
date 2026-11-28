@@ -21,6 +21,225 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-11-27 — **The coordinating session's notes on the PI's routing of three seat raws: G-READ-n's record read
+  (the run of record accepted; valence +1's FAIL stands as computed, a ceiling tie; ledger (91)), the Q-F3 campaign
+  entry's five items and `5ceb8dd`'s departures classed (item 3 a strike in form, item 4 deferred, the rest inert),
+  and the seat's read of `PROPOSAL-p OLMo-dpo — VERDICTS` (A0-OLMo-dpo PASS stands, nothing moves). The three raws
+  are committed here by path on the PI's "Route as given" (items 8, 12 and 14), with five close lines; the relays; and
+  VERDICTS cleared (item 5). The coordinating session's part since `5ceb8dd`'s last sweep, and its departures, stay
+  held for a notes entry of their own (item 18).**
+  - **The reads:**
+    - **(D)**
+      [`2026-11-27_n-gread-record-read_design-to-code_answers.md`](results/raw/2026-11-27_n-gread-record-read_design-to-code_answers.md)
+      (sha256 `6b5be7a3…e420`, 23,716 bytes, 81 lines), the thread's first sitting (PI date 2026-11-27): the seat's
+      read of the entry `G-READ-n` at `7ab1cf6`, with the artifact, the out, the launch review, the values-check and
+      the coordinating session's entry at `e114b3a`.
+    - **(E)**
+      [`2026-11-27_qf3-items-and-departures-classing_design-to-code_answers.md`](results/raw/2026-11-27_qf3-items-and-departures-classing_design-to-code_answers.md)
+      (`69522ee8…a441`, 14,427 bytes, 58 lines), the same sitting: the seat's classing of the Q-F3 campaign entry's
+      "For the seat" items 1–5 (`b449ed6`) and of the coordinating session's departures at `5ceb8dd`, with the Q-F3
+      campaign's raw and folder unopened.
+    - **(C)**
+      [`2026-11-26_p-dpo-verdicts-read_design-to-code_answers.md`](results/raw/2026-11-26_p-dpo-verdicts-read_design-to-code_answers.md)
+      (`14da65a9…0593`, 38,962 bytes, 111 lines), the 11-26 thread's fourth sitting (PI date 2026-11-26): the seat's
+      full read of the dpo unit's 138 sessions after its VERDICTS (m:318's "the reads"), the last of the three p
+      reads. It was placed beside raws (A) and (B) and not routed then (`e114b3a`'s entry).
+    - All three were placed untracked over the bridge. The coordinating session re-hashed each equal to the sha256 and
+      bytes the PI's message gives, found them untracked with HEAD and origin at `7ab1cf6`, and read each whole. Each
+      is re-hashed equal before this commit and committed here by path, unchanged. The PI's message routing them is
+      committed as [`2026-11-27_three-raws_pi-routing.md`](results/raw/2026-11-27_three-raws_pi-routing.md). Below,
+      "item N" is item N of that message, and "(D) §N", "(E) §N" and "(C) §N" are sections of the three raws.
+  - **What raw (D) rules:**
+    - **The run of record** ((D) §1; item 1): accepted. Every figure of the entry's table and of the out (the six
+      band medians, the four comparator maxima, the 24 band medians behind each, the per-layer counts) recounts equal
+      from the artifact (`378f9972…f519`), by one scratch script of the seat's outside the repository. The times,
+      the power record, the artifact's binding and the record's own checks are accepted as the entry states them.
+    - **Valence +1's FAIL** ((D) §2 items 1–4 and 7; item 2): it stands as computed under the rule as locked.
+      "Above" is strict (A-n1:58; probe:82 `bm > comp_max`; the package's self-test case at probe:162), and the band
+      median 1.0 is not above the comparator's largest, 1.0, with all 24 random directions at 1.0: a ceiling tie, not
+      a sub-bar read. It bears on one label: an N1 NOT-REPLICATED would be *concluded, not answered* (n:32, n:136;
+      anl:813–818, :982). REPLICATED and PARTIAL are untouched, and the dose and N2 labels key on d_eq and on
+      `span_reward`, all PASS. The rule is not re-read, no comparator is re-run, and nothing of the artifact or the
+      entry moves.
+    - **Ledger (91)** ((D) §2 item 5; item 3): a comparator-relative bar with no ceiling clause. The fix: every
+      comparator-relative bar states before its lock what a tie at the ceiling is, and N-lap's G-READ-n carries that
+      clause in its addendum before LOCK-n-lap v0.1. N-pod's rule stands as locked, and its FAIL as computed.
+    - **Appendix D** ((D) §2 item 6; item 4): the disclosure is carried, flagged, not applied, and the VERDICTS entry
+      adds a dated note in its figures where N1's label is *concluded, not answered*.
+    - **VERDICTS** ((D) §5 items 1–2; item 5, "[go]"): the n-analyzer session runs `scripts/n_analyze.py verdicts
+      … --gread data/n/gates/G-READ-n.json` on the committed artifact, the analyzer at v7 (`735da934…a7a8`), then
+      `— secondary DVs`, issuing no claim. A pause or a fire comes to the seat through the PI; the seat's full read
+      of the 138 cells and of G-CAL-n's turns follows the output.
+    - **Observation 1** ((D) §3; item 6): a dated note on `e114b3a`'s entry, in its close line below; raw (A) stands
+      as committed.
+    - **The box** ((D) §5 item 3; item 7): the volume's n campaign folders and G-TIME-n's folders go on the PI's word
+      (CP18), and the block leaves that word blank ("[PI's word on the folders: ___; the volume: keep]"). Nothing is
+      cleaned up. The volume and the checkpoints on it are kept while PROPOSAL-r and q are unrouted, and the pod stays
+      EXITED.
+    - **Departures** ((D) §4; item 17): n-build's two "against the rules as written" (a guard marker in `sed`'s argv
+      once; G-TIME-n's holding folder's name in a `grep -E` pattern once) are inert, no strike, each with a form note:
+      a note whose name holds a marker is read by a form that keeps the name out of the command's text, or renamed;
+      the folder's name is bracketed in screen patterns. The rest of n-build's, the launch reviewer's (none), the
+      values-checker's six and the seat's own are inert. A line for the next values-check brief: a transcript search
+      prints the record a finding needs and no other.
+  - **What raw (E) rules:**
+    - **Items 1, 2 and 5 of `b449ed6`'s entry** ((E) §1; item 9): inert. The form notes for the coordinating
+      session's brief: the scratch holding a running stage's kit is excluded from routine cleanup for the stage's
+      life, and the kit's files are hashed into the launch note before the launch; the end-wait writes its own end
+      line, so that an empty file is a finding and not a silence.
+    - **Item 3, the withheld count at the campaign's end** ((E) §1 item 3; item 10): a departure in form from m:263,
+      from m:318's look form and from LOCK-m-F3:316's end-notice form; contained in two Code sessions, relayed to no
+      one, in no committed text; inert as to the verdict; a strike in form against Code's end-notice and pre-VERDICTS
+      extraction practice; no re-run, nothing rewritten. The fix, for the coordinating session's brief now and the
+      list of record's next version: an end notice carries "ended" and the exit status alone; no per-arm extraction
+      from a contrast unit's raw runs before its VERDICTS, the first extraction being the analyzer's; a session that
+      needs a count before VERDICTS takes m:318's look form (pooled pre-pick counts per arm) and nothing of the free
+      phase. The Q-F3 VERDICTS entry's "for the seat" carries one disclosure line, and Appendix D carries it beside
+      the campaign's exclusion table.
+    - **Item 4** ((E) §1 item 4; item 11): the run list's timing and scope, after VERDICTS, as owed.
+    - **`5ceb8dd`'s departures** ((E) §2; item 16): the coordinating session's and its values-checker's, inert, no
+      strike, with two form notes: the volume host's name fragment and the email-domain string are described in notes
+      and briefs by their class, never typed plain; and no `ls -1t` on any folder. The close line on `5ceb8dd`'s entry
+      is below.
+    - **`e114b3a`'s coordinating part** ((E) §3; item 18): the seat reads it when its notes entry lands. The seat's
+      own ((E) §4): inert.
+  - **What raw (C) rules:**
+    - **The verdict** ((C) §0–§1; item 13): A0-OLMo-dpo PASS stands as the analyzer computed it, m:326's order
+      re-walked by the seat: Δ_c = 78/80 − 1/2 = +0.4750 > E = 5/32 (the sham A0s-OLMo-dpo 11/32); map 0 40/40 and
+      map 1 38/40; P(X ≥ 78 | Bin(80, ½)) ≈ 2.68 × 10^-21 < .01. Every recount equals the outputs, no session
+      was excluded in any phase, and the row stays *Answered*.
+    - **The carried-forward tallies** ((C) §0 and §3; item 14): on the contrast arm, strict, forced 0 of 356 and
+      free 0 of 534; the wider class, forced 5 (the campaign's s = 23 rounds 1 and 3, s = 38 rounds 1 and 3, s = 73
+      round 3) and free 1 (s = 73 round 7); the sham 0 of 196 forced and 0 of 294 free. Reported; no bar; nothing
+      reclassified.
+    - **Descriptive and post hoc** ((C) §2–§3; rule 11): the told preference sustained across the free phase (.975
+      at the first pick, then .84, .875, .95, .76, .89); two of the sham's first reads exact ties at .500, the first
+      in p's campaigns, with PASS not turning on their resolution; and the sham's label and menu-position habits. No
+      criterion reads any of them.
+    - **Dispositions** ((C) §4) of the VERDICTS entry's "For the seat" items and the counters step: on R1/R2 and
+      m:318's words, "the words do not fit", and the entry's recording of the facts stands as written; the rest
+      accepted or inert.
+    - **Disclosures** ((C) §5): six for Appendix D, flagged, not applied. Item 15 carries §5 item 4, the sham's
+      menu-position habit across the three units, with no rule change.
+    - **Record hygiene and the close** ((C) §6): the seat's own departures; Code's close line (item 14); the three p
+      reads done.
+  - **The routing.** The PI's message is a routing block the PI pasted, nineteen items in five groups (N, n; A, Q-F3
+    and m; B, p; C, record hygiene; D, the push), ending "PI:", and below it the PI's own words, "Route as given". The
+    coordinating session reads each item as its default in brackets. The block merges the three raws' own routing
+    blocks, most items carrying words from the raws' bodies beyond their blocks' items. Against those blocks it
+    differs in five places:
+    - group N carries raw (D)'s items 1–7 and 9, with its item 7 (observation 1) as item 6 and its item 6 (the box)
+      as item 7, the blank for the PI's word on the folders kept blank; raw (D)'s item 8, the departures, is item 17
+      in group C;
+    - items 12 and 16 each join a raw (E) item to a clause of raw (E)'s item 7: the f3 session's close line on
+      `b449ed6`'s entry with raw (E) item 7's "Code commits this raw by path" (the block's "Code commits raw (E) by
+      path"), and `5ceb8dd`'s departures with the coordinating session's close line on that entry;
+    - item 18 is raw (E)'s item 6 without its first clause, the seat's own (§4) inert; raw (E) §4 lists the seat's
+      own as raw (D) §4 does, and item 17 classes those inert;
+    - item 14 spells out raw (C) §3's tallies; raw (C)'s item 4, its §6 departures inert, has no item of its own in
+      the block; and its item 5, "This commit's push with the next commit or on its own", is item 19, "These commits'
+      push";
+    - items 12 and 15 each drop a clause: raw (E) item 4's "citing this raw by path and sha256", and raw (C) item 3's
+      "no re-analysis".
+  - **Relays, each verbatim between two lines of dashes,** each block equal by `cmp` to its lines of the routing block
+    (the sent texts extracted from the transcript by `jq`). The first sends, by session name, reached no one; each
+    text went again unchanged by session id:
+    - **to n-build,** group N and item 17 (items 1–8 and 17 its): the run of record and the FAIL stand; its close
+      line on the entry `G-READ-n` (item 8) as a file for this commit, in the instruct session's form for a line
+      placed in the commit that carries its raw; item 17's form notes; VERDICTS n-analyzer's; the folders' word blank
+      and the volume kept;
+    - **to n-analyzer,** group N (items 1–5 its): VERDICTS with `--gread` the committed artifact, the analyzer at
+      v7, then `— secondary DVs`; §2 item 3's label and §2 item 6's dated note in its entry (raw (D) §5 item 4),
+      with ledger (91), which the relay also gave it though raw (D) assigns it only §2 items 3 and 6, and which a
+      later message corrected; its launch files to the coordinating session first, the run's window after they are
+      checked, and no commit landing while the window is open; its outputs, raws and entry in their own commit window;
+    - **to f3-build,** group A (items 9–12 its): the form notes binding the coordinating session's briefs; item 3's
+      fix binding from now; the disclosure line for the Q-F3 VERDICTS entry; its close line on `b449ed6`'s entry as a
+      file for this commit; and, on its two questions after, its two declarations of `b449ed6`'s commit window kept in
+      that line, and its values-check raw committed here;
+    - **to the dpo VERDICTS session,** group B (items 13–15 its): its close line on the OLMo-dpo VERDICTS entry with
+      §3's tallies, as a file for this commit;
+    - **to the pod session,** item 7 alone: the folders' word blank, so nothing to start, clean up, terminate or
+      update; the volume and the checkpoints kept while r and q are unrouted; the pod EXITED.
+  - **Five close lines, each after its entry's last line:**
+    - **n-build's, on the entry `G-READ-n`** (item 8; after R:319 at `7ab1cf6`): sent as a file by path, sha256
+      `f1a742df…ffca`, 24 lines, and copied cmp-equal. In the instruct session's form, it cites raw (D) by path and
+      full sha256; it quotes §2's ruling, sentences of §2 items 3–5 and §4's line for the next brief, and it
+      closes the entry's Next: VERDICTS on the PI's "[go]", and the folders on the PI's word, which item 7 leaves
+      blank.
+    - **The coordinating session's, on `e114b3a`'s entry** (items 6 and 18; after R:467): observation 1's dated note,
+      in raw (D) §3's terms, and the held part's wait.
+    - **f3-build's, on `b449ed6`'s entry** (item 12; after R:1084): sent as a file by path, sha256 `0cb36dbd…1c28`,
+      56 lines, and copied from the side-session notes folder at that sha256, with its values-check raw. In the
+      instruct session's form, it cites raw (E) by path and full sha256; it quotes the routing's items 9–12 and raw
+      (E)'s fix verbatim as block quotes, closes items 1–5 in raw (E)'s words, and declares, for the seat to class,
+      two facts of `b449ed6`'s commit window: the gate's first version stopped at its pre-add phase, and gate v2 ran;
+      and the campaign folder's plain name stood in argvs and outputs in that window, and in argvs since the end. Its
+      blind values-check, one pass of 39 items (25 CONFIRMED, 7 IMPRECISE, 1 FAIL, 6 NOT CHECKABLE) and 7
+      observations, every FAIL and IMPRECISE item applied, is committed here as
+      [`2026-11-27_qf3-close-line-classing_valuescheck.md`](results/raw/2026-11-27_qf3-close-line-classing_valuescheck.md)
+      (sha256 `e0e1ed9e…b610`, 295 lines).
+    - **The coordinating session's, on `5ceb8dd`'s entry** (item 16; after R:1571): raw (E) §2's class, "inert, no
+      strike", and its two form notes in its words.
+    - **The dpo VERDICTS session's, on the `PROPOSAL-p OLMo-dpo — VERDICTS` entry** (item 14; after R:14882): sent
+      as a file by path, sha256 `e5727365…574b`, 52 lines, and copied cmp-equal. In the instruct session's form, it
+      cites raw (C) by path and full sha256; it quotes §6's line for Code and the short form, gives §3's
+      carried-forward totals verbatim beside the entry's release (strict 0/356 forced and 0/534 free; wider 5 and 1;
+      the sham 0/196 and 0/294) with §0's definitions, and adds a finding aid for §1, §2 and §4–§6. The
+      secondary-DVs entry gets no line.
+    - Each session's line is placed as sent. Nothing else on any entry moves.
+  - **Observations passed to the seat, not applied:**
+    - n-build takes item 17's form note 1 in a stricter form: a marker-named note's name is kept out of every argv
+      (the Read tool, or the name on stdin), since a glob the shell expands still hands the name to the receiving
+      program's argv. It renames nothing.
+    - The dpo session's two on raw (C) §0, neither quoted in its line: (a) the three sets as stated sum to 15 (strict
+      0 and 0, wider 5 and 1, the third register 7 and 2), where the sweep sentence reads "twelve of the sixteen
+      responses in these three sets", with four missed, and this commit's values-checker notes that raw (C) §3.3
+      places G-F0m's s = 1 round 2 "in the register of §3.1", which may be the sixteenth; (b) "three carried from the
+      earlier reads with this unit's figures and one new" accounts for four disclosures, where §5 numbers six, its
+      items 1 and 6 under neither. Raw (C) is committed unchanged.
+    - Raw (E) §0 gives items 1, 2 and 5 "a form note each", where its §1 gives form notes for items 1 and 5 alone
+      (the values-checks of f3-build's line, its O4, and of this commit, its observation 3). Raw (E) is committed
+      unchanged.
+  - **Four commits named in full, late:** the close lines placed at `5ceb8dd` (the sft VERDICTS session's) and at
+    `e114b3a` (the instruct VERDICTS session's) each say that the next RESULTS entry names the commit that adds it in
+    full, and no entry since has. Two older close lines make the same promise, R:23937 and R:24560 at `7ab1cf6` (last
+    changed at `dc1ffe1` and `79d462b`, by `git blame`), and RESULTS.md names neither commit in full either. This
+    entry names all four: `5ceb8dd31457a68e7dae41001c7478f70325adee`, `e114b3abfc17f5241f5f64cf831bf393e205ac00`,
+    `dc1ffe1eafaa26debe00f5712f246d77f213bf27` and `79d462b052088ad9ce5b6d955429f881fc22535a`.
+  - **Item 5, VERDICTS:** the n-analyzer session's launch files come to the coordinating session first, to be read and
+    checked by tool before the run's window is granted. The window opens after this commit lands, and no commit lands
+    while it is open. The run, its outputs and the entry `PROPOSAL-n N-pod — VERDICTS` are the n-analyzer session's
+    record.
+  - **Item 19, the push:** "[yours]". The push of this commit waits for its verify and screen and the PI's word.
+  - **Held for a notes entry of its own (item 18):** the coordinating session's part since `5ceb8dd`'s last sweep and
+    its departures over that span: the part `e114b3a` held (pushes #27 and #28; the windows; n-build's three battery
+    windows; the Q-F3 campaign's end; G-READ-n's launch files and window), the window and checks of `7ab1cf6`, push
+    #29 and this routing. It follows this commit, and the seat reads it when it lands.
+  - **Values-check:** one blind pass by a subagent over the entry's draft, the five close lines, f3-build's
+    values-check raw (its identity and screens), the routing raw, the message's draft and their placement in a draft
+    of RESULTS.md. It ran read-only, with no interpreter but `shasum` and `jq`. Its report is committed whole, with
+    every disposition, as
+    [`2026-11-27_three-raws-notes_valuescheck.md`](results/raw/2026-11-27_three-raws-notes_valuescheck.md): 52 items
+    (39 CONFIRMED, 7 IMPRECISE, 1 FAIL, 5 NOT CHECKABLE) and 6 observations.
+    - The seven IMPRECISE items are applied: item 4 deferred, in the head and the message (items 12 and 13); five
+      places of difference, with the two dropped clauses (item 15); raw (E) item 7's own words (item 17); the relay to
+      n-analyzer as it was, and its correction (item 22); f3-build's declaration as it is scoped (item 26); and raw
+      (C)'s standing in the routing raw's head (item 46).
+    - The FAIL (item 20) is a working file's: the extraction of n-build's sent text also caught the push-#29 notice to
+      n-build. It is re-extracted, and its blocks check equal again; no committed text changes.
+    - The five NOT CHECKABLE items are the commit's own checks and what follows it (items 3, 32, 34 and 45), met by
+      the gate and the verify or owed after the commit, and f3-build's own record (item 40).
+    - Observation 1 is applied (the two older commits named in full above); observations 3 and 4 are passed to the
+      seat above; observation 2 needs nothing; observation 5, a clock time in n-build's entry at `7ab1cf6`, is noted
+      and not raised, as Code's own stamp outside this commit; observation 6, four forms in the coordinating session's
+      own commands, goes to the held sweep (item 18).
+    - The checker's own departures are in its report, for the seat to class; among them, the campaign folder's plain
+      name in 13 commands' text, as the search side of a `sed` substitution.
+  - **Committed by path:** the three seat raws, the routing raw, the two values-check raws (the coordinating
+    session's, and f3-build's on its close line), this entry and the five close lines. The commit-time count of the
+    home-folder prefix over the staged diff is 0. The coordinating session ran nothing on a model. Not pushed.
+
 - 2026-11-27 — **n — G-READ-n (n v0.2 §8 step 15; n:161's entry): the run of record, on the laptop, from the BUILD
   `0cc301d`: COMPLETE, exit 0 with the artifact; valence +1 FAIL, and valence +1/2, +d_20 and +d_eq and span_reward
   f0.10 and f0.20 PASS. `scripts/n_sessions.py gread --staging ../jspace-lab-box.noindex/n/campaign-v1` ran once,
@@ -317,6 +536,30 @@ applied to CLAUDE.md.
     - this entry, and the close lines on `0cc301d`'s and `05ac941`'s entries (raw (A) §5's last bullet).
 
     The commit-time count of the home-folder prefix over the staged diff is 0. Not pushed.
+  - **Close (PI date 2026-11-27, the seat's record read, the thread's first sitting), n-build's: the run of record
+    accepted, and valence +1's FAIL stands as computed.** The seat's raw,
+    [`2026-11-27_n-gread-record-read_design-to-code_answers.md`](results/raw/2026-11-27_n-gread-record-read_design-to-code_answers.md)
+    (sha256 `6b5be7a39a047a76bb2ebab315100801d602a2356a54e17835397602edebe420`), is committed by path in the commit
+    that adds this line. That commit is the raw's first commit, so `git log --diff-filter=A --
+    results/raw/2026-11-27_n-gread-record-read_design-to-code_answers.md` names it. A commit cannot name its own hash;
+    the next RESULTS entry names it in full. The PI's routing (PI date 2026-11-27) takes items 1–2 "[accept]", 3
+    "[record]", 5 "[go]" and 8 "[route]" in its section N, and item 17 "[inert]" in its section C; the PI's words
+    below the block are "Route as given".
+    - §1 (routing item 1): the run of record confirmed — every figure of this entry's table and of the out recounts
+      equal from the artifact — and its times and power, its binding and screen and the record's own checks accepted.
+    - §2, the ruling (routing item 2): "Ruling: the FAIL stands as computed. The rule of record is not re-read, no
+      comparator is re-run, and nothing of the artifact or the entry moves. VERDICTS runs on it on the PI's word."
+      - §2 item 4: "A ceiling tie." §2 item 3: "N1 REPLICATED or PARTIAL — no sentence changes. N1 NOT-REPLICATED —
+        its label is *concluded, not answered*, whatever N4 reads." The n-analyzer session carries §2 items 3 and 6
+        into the VERDICTS entry (§5 item 4).
+      - §2 item 5 (routing item 3), the seat's ledger (91): "A comparator-relative bar with no ceiling clause." Its
+        fix is pre-registered for N-lap's gate alone, and "N-pod's rule stands as locked, and its FAIL as computed."
+    - §4 (routing item 17): this entry's two departures against the rules as written are inert, no strike, each with
+      a form note; the rest of n-build's, the launch reviewer's and the values-checker's are inert, the last with a
+      line for the next brief: "a transcript search prints the record a finding needs and no other".
+    - This entry's **Next**: VERDICTS has the PI's "[go]" (routing item 5), the n-analyzer session's
+      `n_analyze.py verdicts … --gread` on this artifact as committed. The volume's n campaign and G-TIME-n folders
+      (CP18) wait for the PI's word, which routing item 7 leaves blank; the checkpoints and the volume are kept.
 
 - 2026-11-27 — **The coordinating session's notes on the seat's two raws of 2026-11-26, the thread's second and
   third sittings: G-READ-n's two starred readings ruled (GR3 and GR5 stand as built, and the run is cleared) and the
@@ -465,6 +708,19 @@ applied to CLAUDE.md.
   - **Committed by path:** the two seat raws, the routing raw, the values-check raw, this entry and the close line.
     The commit-time count of the home-folder prefix over the staged diff is 0. The coordinating session ran nothing on
     a model. Not pushed.
+  - **Close (PI date 2026-11-27, the thread's first sitting), the coordinating session's, items 6 and 18: observation
+    1 noted; the held part waits.** The seat's raw,
+    [`2026-11-27_n-gread-record-read_design-to-code_answers.md`](results/raw/2026-11-27_n-gread-record-read_design-to-code_answers.md)
+    (sha256 `6b5be7a39a047a76bb2ebab315100801d602a2356a54e17835397602edebe420`), is committed by path in the commit
+    that adds this line, on the PI's "Route as given". A commit cannot name its own hash; the next RESULTS entry names
+    it in full.
+    - **Dated note (PI date 2026-11-27), observation 1** (the raw's §3; item 6): LOCK:1261 pins `probe.py:29–34`:
+      the docstring's head (probe:29), CONTRASTS (probe:30–31), COMPARATOR (probe:32–33) and the docstring's close
+      (probe:34). Raw (A)'s `probe:29–33` (its §0 and §2 item 1) is the readings' text without the docstring's
+      closing line, and its `probe:29–34` (§2 item 3) is the lock's range; both name the same two readings and
+      nothing else. The lock's citation is `probe.py:29–34`. Raw (A) stands as committed, and nothing moves.
+    - **The part held above** ("Held for the next notes entry"): the seat reads it when the coordinating session's
+      notes entry on that span lands (raw (E) §3; item 18). It is not in the commit that adds this line.
 
 - 2026-11-25 — **n — G-READ-n's BUILD (n v0.2 §8 step 15): the `gread` command in `scripts/n_sessions.py`, on
   Code's readings GR1–GR14 as PINs (the PI's "build on the pins"); the driver alone, the package at the lock's digest
@@ -1082,6 +1338,62 @@ applied to CLAUDE.md.
     - **The VERDICTS session** "waits for `POSTING v1` (10′)": v1.0 §13 item 4, quoting the seat's answers of
       2026-11-14, §A.7.
     - The push of this commit waits for the PI's word.
+  - **Close (PI date 2026-11-27): the seat's classing of this entry's five items, routed.** The seat's raw is
+    committed by path in the commit that adds this line. That commit is the raw's first commit, so `git log
+    --diff-filter=A -- results/raw/2026-11-27_qf3-items-and-departures-classing_design-to-code_answers.md` names it:
+    [`_qf3-items-and-departures-classing_design-to-code_answers`](results/raw/2026-11-27_qf3-items-and-departures-classing_design-to-code_answers.md),
+    sha256 `69522ee8837e652ca723835d0d95f40ca6687eba867bdba6060390395503a441`. A commit cannot name its own hash; the
+    next RESULTS entry names it in full. The PI's routing (PI date 2026-11-27) gives this entry its section A, items
+    9–12; the PI's words below the block are "Route as given". This line is the F3 session's.
+    - **The routing's section A, items 9–12, verbatim** (wrapped at its own spaces):
+
+      > 9. Items 1, 2 and 5 inert, with the form notes for the coordinating session's brief (a running stage's kit
+      > excluded from scratch cleanup and hashed into the launch note; the end-wait writes its own end line) [inert].
+      > 10. Item 3, the withheld count at the campaign's end: a departure in form from m:263, m:318's look form and
+      > LOCK-m-F3:316's end-notice form; contained in two Code sessions, relayed to no one; inert as to the verdict
+      > (campaign complete, analyzer frozen at G-ANL-F3, POSTING v1 the PI's); a strike in form; no re-run, nothing
+      > rewritten; the fix for the brief now and the list of record's next version (end notice = "ended" + exit
+      > status; no per-arm extraction from a contrast unit's raw before its VERDICTS); one disclosure line in the
+      > Q-F3 VERDICTS entry's "for the seat" and Appendix D [strike in form; carry].
+      > 11. Item 4 (the run list's timing and scope) after VERDICTS, as owed [defer].
+      > 12. Code commits raw (E) by path; the f3 session's close line on b449ed6's entry [route].
+
+    - **Item 2: inert** (the raw's §1 item 2): "The check of record is what ran and printed; `d_check.py` was the
+      kit's instrument, not the lock's."
+    - **Items 1 and 5: inert** (the raw's §1). Two form notes go to the coordinating session's brief (routing item
+      9):
+      - item 1's: "the scratch that holds a running stage's kit is excluded from routine cleanup for the stage's
+        life, and a launch kit's files are hashed into the launch note before the launch";
+      - item 5's: "the end-wait writes its own end line … so that an empty file is a finding and not a silence".
+    - **Item 3: a strike in form, carried** (the raw's §1 item 3). It is "inert as to the verdict", with "no re-run,
+      nothing rewritten" (the raw's §0).
+      - The raw's fix, for the coordinating session's brief now and the list of record's next version when one is
+        issued (§1 item 3), verbatim (wrapped at its own spaces):
+
+        > a stage's end notice carries "ended" and the exit status alone (LM-F3:316's form); no per-arm extraction
+        > from a contrast unit's raw runs before its VERDICTS — the first extraction is the analyzer's; a session
+        > that needs a count for its own record before VERDICTS takes the look form (m:318: pooled pre-pick counts
+        > per arm) and nothing of the free phase.
+
+      - The Q-F3 VERDICTS entry's "for the seat" carries one disclosure line, and Appendix D carries it beside the
+        campaign's exclusion table.
+    - **Item 4: deferred.** Q-F3's run list stays owed after VERDICTS ("not ruled here", the raw's §1 item 4).
+    - **For the seat, from this entry's commit window** (`b449ed6`), declared here on the coordinating session's
+      word:
+      - **The gate's first version stopped at its pre-add phase.** A bare `@@` check refused the values-check raw,
+        which quotes three placeholder names, five times in all, verbatim from its briefs and reports. Nothing was
+        staged. The fix went out as a new version, gate v2, with its hash sent, and ran on the coordinating
+        session's word. v2 keeps "no `@@`" for the entry and pins the values-check raw's five quoted tokens.
+      - **The campaign folder's plain name reached argvs and outputs.**
+        - In that window it stood, through the gate's paths, in the argv of `shasum`, `git`, `/usr/bin/grep` and
+          `cp`. It printed in the gate's output lines: v1's refusal, the place phase's line and the staged phase's
+          blob lines.
+        - Since the end it has also stood in this session's own argvs: its reads of the campaign's report, its
+          digests of the report and the checkpoint, and the record raw's file name while the record was built and
+          checked. It has stood in its values-checkers' argvs too.
+        - On this session's reading (not a ruling), the campaign had ended, so it barred nothing. Declared as a
+          form, for the seat to class.
+    - Not pushed: the push of the commit that adds this line is the PI's.
 
 - 2026-11-25 — **n — two starred readings for the seat before G-READ-n's run: GR3 and GR5 (code → design; the
   n-build session). STOP for the seat's read.**
@@ -1569,6 +1881,17 @@ applied to CLAUDE.md.
   - **Committed by path:** the seat's raw, the routing raw, the values-check raw, this entry and the close line. The
     commit-time count of the home-folder prefix over the staged diff is 0. The coordinating session ran nothing on a
     model. Not pushed.
+  - **Close (PI date 2026-11-27, the thread's first sitting), the coordinating session's, item 16: this entry's
+    departures inert, no strike.** The seat's raw,
+    [`2026-11-27_qf3-items-and-departures-classing_design-to-code_answers.md`](results/raw/2026-11-27_qf3-items-and-departures-classing_design-to-code_answers.md)
+    (sha256 `69522ee8837e652ca723835d0d95f40ca6687eba867bdba6060390395503a441`), is committed by path in the commit
+    that adds this line, on the PI's "Route as given". A commit cannot name its own hash; the next RESULTS entry names
+    it in full.
+    - §2, on this entry's "Departures, for the seat to class" (the coordinating session's 111 calls to its checked
+      sweep and 46 after, and the values-checker's 102 commands and nine Reads): "Class: inert, no strike."
+    - Its two form notes, in its words: "(a) the host fragment and the domain string are described in notes and briefs
+      by their class, never typed plain — the FAIL's fix, generalized; (b) `ls -1t` is outside item 1's name-only
+      form on any folder; a session that needs its own scratch's order reads it another way."
 
 - 2026-11-25 — **The coordinating session's notes on the seat's sitting of 2026-11-25, its thread's fourth: the
   N-pod campaign's run of record and its close accepted as committed at `95cd461`, G-READ-n's BUILD (step 15) a go,
@@ -14880,6 +15203,58 @@ applied to CLAUDE.md.
     - **`POSTING v1`:** the OLMo-dpo row by hand under ADDENDUM-p1 §2.2 (above), values-checked by Code at that entry.
     - **v2:** p's states through `p_analyze`'s `posting --posting v2` (p §4.4, §5.2).
   - Not pushed. Committed by path.
+  - **The reads' close (PI date 2026-11-27; the seat's VERDICTS read, §6).** The seat's read is committed by path in
+    the commit that adds this line. That commit is the read's first commit, so `git log --diff-filter=A --
+    results/raw/2026-11-26_p-dpo-verdicts-read_design-to-code_answers.md` names it:
+    [`_p-dpo-verdicts-read_design-to-code_answers`](results/raw/2026-11-26_p-dpo-verdicts-read_design-to-code_answers.md),
+    sha256 `14da65a9b1ef93695feaec907f20031f824190b7236dab99c1fb9e7fdc620593`. A commit cannot name its own hash; the
+    next RESULTS entry names it in full. The PI's routing (PI date 2026-11-27) takes item 13 "[accept]", item 14
+    "[route]" and item 15 "[carry]" in its section B, whose heading says it is "re-routed unchanged from the 11-26
+    block"; the PI's words below the block are "Route as given". This line is the dpo VERDICTS session's.
+    - §6, for Code: "the close line on the `PROPOSAL-p OLMo-dpo — VERDICTS` entry citing this file by path and
+      sha256 and stating the carried-forward tallies of §3 (strict 0/356 forced and 0/534 free; wider 5 and 1; the
+      sham 0 and 0) beside the entry's release; nothing else moves. The secondary-DVs entry needs no line."
+    - The short form: "**A0-OLMo-dpo PASS stands as the analyzer computed it,** and the seat's read of all 138
+      sessions moves nothing". And §0: "The rule-25 window closes with this read (m:271); with it the three p units'
+      reads are complete."
+    - **Beside the release (above): the carried-forward tallies**, §3's "Carried-forward totals for the unit,
+      contrast arm", verbatim: "strict — forced 0 of 356 (G-TIME 0/4, G-F0m 0/32, campaign 0/320), free 0 of 534
+      (0/6, 0/48, 0/480); wider class — forced 5 of 356 (the campaign's s = 23 rounds 1 and 3, s = 38 rounds 1 and
+      3, s = 73 round 3), free 1 of 534 (s = 73 round 7). Sham arm 0 of 196 forced and 0 of 294 free. The free
+      denominators are the free rounds generated on those sessions."
+      - The strict definition is the record's, as §0 gives it: "a response about evaluating the configurations,
+        naming the tags, with no task content, as the Q-F0, sft and instruct reads applied it".
+      - The wider class, as §0 gives it: "any task-round response that remarks on the corruption of the task text as
+        such, beyond an attempt at the task, in whatever words"; of its six cases, "no tag is named in any of them
+        and none is claimed".
+      - Beside, not counted, as §0 gives it: "A third register, a note on one garbled word as a typo or a request to
+        clarify it, is listed beside and not counted (7 forced, 2 free; §3.1)."
+      - §0's word on them: "Reported; no bar; nothing reclassified."
+    - Code's finding aid, proposing nothing; the read is the record.
+      - Its §1 re-walks m:326's order on the output and reaches PASS. Two of the sham's 32 first reads are exact ties
+        at .500 (s = 7 and s = 24), each resolved to the first-listed label, "so that E's j carries the tie rule";
+        "under any other resolution j would be 10, 11 or 12 and E 6/32, 5/32 or 4/32, each below Δ_c = 19/40, so
+        PASS does not turn on a tie" (§3.1, §5 item 2).
+      - Its §4 disposes of this entry's "For the seat" items. On the first, whether m:318's words fit: "the words do
+        not fit", and "The entry's recording of the facts alone under m:318 stands as written; nothing to add or
+        move." The counters step's reading of all three units' records, the 2026-11-16 decisions read as procedure,
+        G-F0m-OLMo-dpo (p)'s sham share from its stage report, the captures' handling and the order of the reads are
+        accepted; the absent battery is "accepted, inert"; the pre-run check, the end notice's "Window released."
+        and the values-checkers' disclosures are inert.
+      - §4 accepts the counters step (`922d7a3`) as Code's, descriptive, deciding nothing (rule 23). Of `0081351`'s
+        dated note and the seat's answer in the instruct read §4 item 5, it says they "cover this unit as well;
+        §3.1's by-eye list is the under-count's record here; nothing changes, no question." This session adds no
+        note.
+      - The gate stages' later picks and the seconds, which this entry left out as not owed here (above), are in the
+        read. Its §2 gives the picks, agreeing with this entry's `counters_beside`, which counts the free rounds by
+        the chosen round's property (G-TIME clean 6; G-F0m clean 42 and corrupted 6, of 48): G-TIME's A0 session,
+        "all six picks on P"; G-F0m's 8 A0 sessions, "all 8 first picks on P" and "42 of their 48 picks on P — the
+        six Q picks being exactly the stage's six corrupted free rounds". Its §2 also gives the seconds, descriptive
+        only: "the campaign's 112 sessions sum to 869.3 s (the checkpoint's `state.hour_cap_ms_used` 869,332),
+        median 5.11 s, the longest 24.97 s (s = 24); G-F0m's 24 sum to 129.4 s and G-TIME's 2 to 9.5 s".
+      - Its §5 lists six disclosures for Appendix D, flagged, not applied. The routing's item 15 carries its item 4
+        (the sham's menu-position habit across the three units) as "an Appendix-D disclosure, no rule change".
+      - Its §6 records the seat's own departures, offered as inert in its routing block (its section C, item 4).
 
 - 2026-11-16 — **PROPOSAL-p OLMo-dpo — secondary DVs (p v0.2 §8 step 7, §4.4; m:358; m:312; PIN-13): issuing no
   claim.** Secondaries (a), (b), (d) and (e), computed by the analyzer of record (`scripts/p_analyze.py` over m's
